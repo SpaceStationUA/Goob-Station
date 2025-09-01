@@ -1,0 +1,42 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+               SetSize="500 400"
+               Title="{Loc 'create-group-dialog-title'}"
+               MinSize="400 300">
+    <BoxContainer Orientation="Vertical" Margin="10">
+        <!-- Group Name Input -->
+        <BoxContainer Orientation="Horizontal" SetHeight="30">
+            <Label Text="{Loc 'create-group-dialog-group-name'}" MinWidth="100" />
+            <LineEdit Name="GroupNameEdit" Access="Public" HorizontalExpand="True" />
+        </BoxContainer>
+
+        <Control SetHeight="10" />
+
+        <!-- Player Selection -->
+        <Label Text="{Loc 'create-group-dialog-select-players'}" />
+        <Control SetHeight="5" />
+
+        <!-- Player List with checkboxes -->
+        <ScrollContainer VerticalExpand="True">
+            <cc:PlayerListControl Name="PlayerSelector" Access="Public" HorizontalExpand="True" />
+        </ScrollContainer>
+
+        <Control SetHeight="10" />
+
+        <!-- Selected Players Display -->
+        <Label Text="{Loc 'create-group-dialog-selected-players'}" />
+        <ScrollContainer SetHeight="80">
+            <RichTextLabel Name="SelectedPlayersLabel" Access="Public" />
+        </ScrollContainer>
+
+        <Control SetHeight="10" />
+
+        <!-- Buttons -->
+        <BoxContainer Orientation="Horizontal" SetHeight="30">
+            <Control HorizontalExpand="True" />
+            <Button Name="CancelButton" Access="Public" Text="{Loc 'create-group-dialog-cancel'}" MinWidth="80" />
+            <Control MinWidth="10" />
+            <Button Name="CreateButton" Access="Public" Text="{Loc 'create-group-dialog-create'}" MinWidth="80" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

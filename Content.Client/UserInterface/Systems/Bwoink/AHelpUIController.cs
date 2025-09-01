@@ -34,6 +34,8 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Mind; // Pirate Changes - For MindComponent
+using Content.Shared.Players; // Pirate Changes - For PlayerDataExt
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Audio;
@@ -120,6 +122,11 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         _bwoinkSystem = system;
         _bwoinkSystem.OnBwoinkTextMessageRecieved += ReceivedBwoink;
 
+        // Pirate Changes Start Here - Subscribe to group events
+        _bwoinkSystem.OnBwoinkGroupTextMessageReceived += ReceivedGroupBwoink;
+        _bwoinkSystem.OnBwoinkGroupListReceived += GroupListUpdated;
+        // Pirate Changes End Here
+
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenAHelp,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
@@ -132,6 +139,12 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
 
         DebugTools.Assert(_bwoinkSystem != null);
         _bwoinkSystem!.OnBwoinkTextMessageRecieved -= ReceivedBwoink;
+
+        // Pirate Changes Start Here - Unsubscribe from group events
+        _bwoinkSystem.OnBwoinkGroupTextMessageReceived -= ReceivedGroupBwoink;
+        _bwoinkSystem.OnBwoinkGroupListReceived -= GroupListUpdated;
+        // Pirate Changes End Here
+
         _bwoinkSystem = null;
     }
 
@@ -186,6 +199,36 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     {
         UIHelper?.PeopleTypingUpdated(args);
     }
+
+    // Pirate Changes Start Here - Group message handlers
+    private void ReceivedGroupBwoink(object? sender, BwoinkGroupTextMessage message)
+    {
+        var localPlayer = _playerManager.LocalSession;
+        if (localPlayer == null)
+            return;
+
+        // Only handle if player is part of the group
+        if (UIHelper is UserAHelpUIHandler userHandler)
+        {
+            userHandler.ReceiveGroupMessage(message);
+        }
+
+        if (!UIHelper!.IsOpen)
+        {
+            UnreadAHelpReceived();
+        }
+    }
+
+    private void GroupListUpdated(object? sender, BwoinkGroupListMessage message)
+    {
+        if (UIHelper is UserAHelpUIHandler userHandler)
+        {
+            // Convert List to Dictionary
+            var groupDict = message.Groups.ToDictionary(g => g.GroupId, g => g);
+            userHandler.UpdateGroups(groupDict);
+        }
+    }
+    // Pirate Changes End Here
 
     public void EnsureUIHelper()
     {
@@ -386,6 +429,8 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
             Window.OpenCentered();
     }
 
+
+
     public void Close()
     {
         Window?.Close();
@@ -522,16 +567,33 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
     public bool IsAdmin => false;
     public bool IsOpen => _window is { Disposed: false, IsOpen: true };
     private DefaultWindow? _window;
-    private BwoinkPanel? _chatPanel;
+    private UserBwoinkPanel? _userPanel; // Pirate Changes - Use tabbed panel
     private bool _discordRelayActive;
 
     public void Receive(SharedBwoinkSystem.BwoinkTextMessage message)
     {
         DebugTools.Assert(message.UserId == _ownerId);
+
+        // Always use tabbed interface
         EnsureInit(_discordRelayActive);
-        _chatPanel!.ReceiveLine(message);
+        _userPanel!.ReceiveIndividualMessage(message);
         _window!.OpenCentered();
     }
+
+    // Pirate Changes Start Here - Group message handling for players
+    public void ReceiveGroupMessage(BwoinkGroupTextMessage message)
+    {
+        EnsureInit(_discordRelayActive);
+        _userPanel!.ReceiveGroupMessage(message);
+        _window!.OpenCentered();
+    }
+
+    public void UpdateGroups(Dictionary<Guid, BwoinkGroupInfo> groups)
+    {
+        EnsureInit(_discordRelayActive);
+        _userPanel!.UpdateGroups(groups);
+    }
+    // Pirate Changes End Here
 
     public void Close()
     {
@@ -559,15 +621,12 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
     public void DiscordRelayChanged(bool active)
     {
         _discordRelayActive = active;
-
-        if (_chatPanel != null)
-        {
-            _chatPanel.RelayedToDiscordLabel.Visible = active;
-        }
+        _userPanel?.DiscordRelayChanged(active);
     }
 
     public void PeopleTypingUpdated(BwoinkPlayerTypingUpdated args)
     {
+        // Not implemented for user interface
     }
 
     public event Action? OnClose;
@@ -575,39 +634,50 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
     public Action<NetUserId, string, bool, bool>? SendMessageAction { get; set; }
     public event Action<NetUserId, string>? InputTextChanged;
 
-    public void Open(NetUserId channelId, bool relayActive)
+    public void Open(NetUserId netUserId, bool relayActive)
     {
         EnsureInit(relayActive);
         _window!.OpenCentered();
     }
 
-    private void EnsureInit(bool relayActive)
+    private void EnsureInit(bool discordRelayActive)
     {
-        if (_window is { Disposed: false })
+        if (_window != null)
             return;
-        _chatPanel = new BwoinkPanel(text => SendMessageAction?.Invoke(_ownerId, text, true, false));
-        _chatPanel.InputTextChanged += text => InputTextChanged?.Invoke(_ownerId, text);
-        _chatPanel.RelayedToDiscordLabel.Visible = relayActive;
-        _window = new DefaultWindow()
+
+        _window = new DefaultWindow
         {
-            TitleClass="windowTitleAlert",
-            HeaderClass="windowHeaderAlert",
-            Title=Loc.GetString("bwoink-user-title"),
-            MinSize = new Vector2(500, 300),
+            Title = Loc.GetString("bwoink-user-title")
         };
+
+        // Pirate Changes Start Here - Use tabbed panel
+        _userPanel = new UserBwoinkPanel();
+        _userPanel.Initialize(_ownerId, discordRelayActive);
+        _window.Contents.AddChild(_userPanel);
+
+        // Set up send message action
+        SendMessageAction = (userId, text, playSound, adminOnly) =>
+        {
+            var bwoinkSystem = IoCManager.Resolve<IEntityManager>().System<BwoinkSystem>();
+            bwoinkSystem.Send(userId, text, playSound, adminOnly);
+        };
+        // Pirate Changes End Here
+
         _window.OnClose += () => { OnClose?.Invoke(); };
         _window.OnOpen += () => { OnOpen?.Invoke(); };
-        _window.Contents.AddChild(_chatPanel);
-
-        var introText = Loc.GetString("bwoink-system-introductory-message");
-        var introMessage = new SharedBwoinkSystem.BwoinkTextMessage( _ownerId, SharedBwoinkSystem.SystemUserId, introText);
-        Receive(introMessage);
     }
+
+
+
+
+
+
 
     public void Dispose()
     {
         _window?.Dispose();
         _window = null;
-        _chatPanel = null;
+        _userPanel?.Dispose();
+        _userPanel = null;
     }
 }

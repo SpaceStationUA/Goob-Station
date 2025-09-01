@@ -37,6 +37,12 @@ namespace Content.Client.Administration.Systems
         public event EventHandler<BwoinkTextMessage>? OnBwoinkTextMessageRecieved;
         private (TimeSpan Timestamp, bool Typing) _lastTypingUpdateSent;
 
+        // Pirate Changes Start Here - Group chat events
+        public event EventHandler<BwoinkGroupTextMessage>? OnBwoinkGroupTextMessageReceived;
+        public event EventHandler<BwoinkGroupUpdateMessage>? OnBwoinkGroupUpdateReceived;
+        public event EventHandler<BwoinkGroupListMessage>? OnBwoinkGroupListReceived;
+        // Pirate Changes End Here
+
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             OnBwoinkTextMessageRecieved?.Invoke(this, message);
@@ -61,5 +67,66 @@ namespace Content.Client.Administration.Systems
             _lastTypingUpdateSent = (_timing.RealTime, typing);
             RaiseNetworkEvent(new BwoinkClientTypingUpdated(channel, typing));
         }
+
+        // Pirate Changes Start Here - Group chat methods
+        protected override void OnBwoinkGroupTextMessage(BwoinkGroupTextMessage message, EntitySessionEventArgs eventArgs)
+        {
+            OnBwoinkGroupTextMessageReceived?.Invoke(this, message);
+        }
+
+        protected override void OnBwoinkGroupUpdate(BwoinkGroupUpdateMessage message, EntitySessionEventArgs eventArgs)
+        {
+            OnBwoinkGroupUpdateReceived?.Invoke(this, message);
+        }
+
+        protected override void OnBwoinkGroupList(BwoinkGroupListMessage message, EntitySessionEventArgs eventArgs)
+        {
+            OnBwoinkGroupListReceived?.Invoke(this, message);
+        }
+
+        public void CreateGroup(string groupName, List<NetUserId> initialMembers)
+        {
+            var groupId = Guid.NewGuid();
+            RaiseNetworkEvent(new BwoinkCreateGroupMessage(groupId, groupName, initialMembers));
+        }
+
+        public void AddToGroup(Guid groupId, NetUserId userId)
+        {
+            RaiseNetworkEvent(new BwoinkAddToGroupMessage(groupId, userId));
+        }
+
+        public void RemoveFromGroup(Guid groupId, NetUserId userId)
+        {
+            RaiseNetworkEvent(new BwoinkRemoveFromGroupMessage(groupId, userId));
+        }
+
+        public void DeleteGroup(Guid groupId)
+        {
+            RaiseNetworkEvent(new BwoinkDeleteGroupMessage(groupId));
+        }
+
+        // Pirate Changes Start Here - Group rename method
+        public void RenameGroup(Guid groupId, string newName)
+        {
+            RaiseNetworkEvent(new BwoinkRenameGroupMessage(groupId, newName));
+        }
+        // Pirate Changes End Here
+
+        public void SendGroupMessage(Guid groupId, string text, bool playSound = true)
+        {
+            // Server will set the correct sender ID
+            RaiseNetworkEvent(new BwoinkGroupTextMessage(groupId, default, text, playSound: playSound));
+        }
+
+        public void MutePlayer(NetUserId userId, TimeSpan duration)
+        {
+            RaiseNetworkEvent(new BwoinkMutePlayerMessage(userId, duration));
+        }
+
+        public void UnmutePlayer(NetUserId userId)
+        {
+            RaiseNetworkEvent(new BwoinkUnmutePlayerMessage(userId));
+        }
+        // Pirate Changes End Here
     }
 }

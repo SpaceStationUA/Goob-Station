@@ -41,4 +41,11 @@ public sealed partial class CCVars
     /// <seealso cref="AhelpAdminPrefix"/>
     public static readonly CVarDef<bool> AhelpAdminPrefixWebhook =
         CVarDef.Create("ahelp.admin_prefix_webhook", false, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     Enables or disables group ahelp functionality.
+    ///     Only host can change this setting.
+    /// </summary>
+    public static readonly CVarDef<bool> AhelpGroupChatEnabled =
+        CVarDef.Create("ahelp.group_chat_enabled", true, CVar.SERVERONLY);
 }

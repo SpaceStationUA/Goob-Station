@@ -1,0 +1,58 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               SetSize="600 500"
+               Title="{Loc 'manage-group-dialog-title'}"
+               MinSize="500 400">
+    <BoxContainer Orientation="Vertical" Margin="10">
+        <!-- Group Info -->
+        <BoxContainer Orientation="Horizontal" SetHeight="30">
+            <Label Text="{Loc 'manage-group-dialog-group-name'}" MinWidth="100" />
+            <LineEdit Name="GroupNameEdit" Access="Public" HorizontalExpand="True" />
+            <Button Name="RenameButton" Access="Public" Text="{Loc 'manage-group-dialog-rename'}" MinWidth="80" />
+        </BoxContainer>
+
+        <Control SetHeight="10" />
+
+        <!-- Current Members -->
+        <Label Text="{Loc 'manage-group-dialog-current-members'}" />
+        <Control SetHeight="5" />
+
+        <ScrollContainer SetHeight="150">
+            <BoxContainer Name="MembersList" Access="Public" Orientation="Vertical" />
+        </ScrollContainer>
+
+        <Control SetHeight="10" />
+
+        <!-- Add Members Section -->
+        <Label Text="{Loc 'manage-group-dialog-add-members'}" />
+        <Control SetHeight="5" />
+
+        <BoxContainer Orientation="Horizontal" SetHeight="30">
+            <cc:PlayerListControl Name="PlayerSelector" Access="Public" HorizontalExpand="True" />
+            <Button Name="AddPlayerButton" Access="Public" Text="{Loc 'manage-group-dialog-add'}" MinWidth="80" />
+        </BoxContainer>
+
+        <Control SetHeight="10" />
+
+        <!-- Mute Controls -->
+        <BoxContainer Orientation="Horizontal" SetHeight="30">
+            <Button Name="MuteButton" Access="Public" Text="{Loc 'manage-group-dialog-mute'}" MinWidth="80" Disabled="True" />
+            <Button Name="UnmuteButton" Access="Public" Text="{Loc 'manage-group-dialog-unmute'}" MinWidth="80" Disabled="True" />
+            <Control HorizontalExpand="True" MinWidth="5" />
+            <OptionButton Name="MuteDurationButton" Access="Public" MinWidth="100" />
+        </BoxContainer>
+
+        <Control SetHeight="10" />
+
+        <!-- Action Buttons -->
+        <BoxContainer Orientation="Horizontal" SetHeight="30">
+            <controls:ConfirmButton Name="DeleteGroupButton" Access="Public"
+                                   Text="{Loc 'manage-group-dialog-delete-group'}"
+                                   ConfirmationText="{Loc 'manage-group-dialog-delete-confirm'}"
+                                   StyleClasses="Danger" />
+            <Control HorizontalExpand="True" />
+            <Button Name="CloseDialogButton" Access="Public" Text="{Loc 'manage-group-dialog-close'}" MinWidth="80" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

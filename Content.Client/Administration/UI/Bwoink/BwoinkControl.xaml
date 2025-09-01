@@ -18,7 +18,21 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     <PanelContainer StyleClasses="BackgroundDark">
         <SplitContainer Orientation="Vertical" ResizeMode="NotResizable">
             <SplitContainer Orientation="Horizontal" VerticalExpand="True">
-                <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="2" />
+                <!-- Pirate Changes Start Here - Tab system with group management -->
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2">
+                    <BoxContainer Orientation="Horizontal" SetHeight="30">
+                        <Button Name="CreateGroupButton" Access="Public" Text="{Loc 'bwoink-create-group'}" />
+                        <Control HorizontalExpand="True" MinWidth="5" />
+                        <Button Name="ManageGroupButton" Access="Public" Text="{Loc 'bwoink-manage-group'}" Disabled="True" />
+                    </BoxContainer>
+                    <TabContainer Name="ChatTabContainer" Access="Public" VerticalExpand="True">
+                        <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" VerticalExpand="True" />
+                        <ScrollContainer Name="GroupListContainer" Access="Public" HorizontalExpand="True" VerticalExpand="True">
+                            <BoxContainer Name="GroupList" Access="Public" Orientation="Vertical" />
+                        </ScrollContainer>
+                    </TabContainer>
+                </BoxContainer>
+                <!-- Pirate Changes End Here -->
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2">
                     <BoxContainer Access="Public" Name="BwoinkArea" VerticalExpand="True" />
                 </BoxContainer>

@@ -1,0 +1,27 @@
+<!--
+SPDX-FileCopyrightText: 2025 Pirate Changes
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Control
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <!-- Tab container for individual and group chats -->
+        <TabContainer Name="MainTabContainer" Access="Public" VerticalExpand="True">
+            <!-- Individual chat tab -->
+            <BoxContainer Name="IndividualChatContainer" Access="Public" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                <!-- Individual chat content will be added here programmatically -->
+                <OutputPanel Name="IndividualTextOutput" Access="Public" VerticalExpand="true" />
+                <RichTextLabel Name="IndividualTypingIndicator" Access="Public" />
+                <HistoryLineEdit Name="IndividualSenderLineEdit" Access="Public" />
+                <RichTextLabel Name="IndividualRelayedToDiscordLabel" Access="Public" Visible="False" />
+            </BoxContainer>
+            <!-- Group chats tab -->
+            <TabContainer Name="GroupTabContainer" Access="Public" HorizontalExpand="True" VerticalExpand="True">
+                <!-- Group chat panels will be added here programmatically -->
+            </TabContainer>
+        </TabContainer>
+    </BoxContainer>
+</Control>
