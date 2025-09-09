@@ -26,6 +26,8 @@
   - Maintenance
   - Service
   - External
+  - Medical
+  - Chemistry
   - Cryogenics
   special:
   - !type:AddImplantSpecial
