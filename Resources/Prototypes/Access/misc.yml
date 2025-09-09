@@ -49,6 +49,7 @@
   - GenpopEnter
   - GenpopLeave
   - Mantis
+  - Rick # Pirate Rick
 
 - type: accessGroup
   id: General

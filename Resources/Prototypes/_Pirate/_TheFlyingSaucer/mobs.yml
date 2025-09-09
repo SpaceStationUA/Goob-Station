@@ -1,0 +1,52 @@
+# Rick and Morty characters - simplified working version
+
+- type: entity
+  parent: MobHuman
+  id: MobHumanRick
+  name: "Рік Санчез"
+  description: "Геніальний, але цинічний науковець з міжгалактичними пригодами."
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: HumanoidAppearance
+    species: Human
+    age: 70
+    sex: Male
+    skinColor: "#FDBCB4"
+    eyeColor: "#4F94CD"
+    hairStyleName: HairBald
+    facialHairStyleName: FacialHairGoatee
+    facialHairColor: "#C0C0C0"
+  - type: Loadout
+    prototypes: [RickScientistGear]
+  - type: Emoting
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechSounds: Grunt
+
+- type: entity
+  parent: MobHuman
+  id: MobHumanMorty
+  name: "Морті Сміт"
+  description: "Нервовий підліток, який допомагає Ріку в експериментах."
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: HumanoidAppearance
+    species: Human
+    age: 14
+    sex: Male
+    skinColor: "#FDBCB4"
+    eyeColor: "#8B4513"
+    hairStyleName: HairShort
+    hairColor: "#8B4513"
+  - type: Loadout
+    prototypes: [MortyStudentGear]
+  - type: Emoting
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechSounds: Squeak
+  - type: ReplacementAccent
+    accent: stutter

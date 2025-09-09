@@ -1,0 +1,253 @@
+# Rick's Bottle Selector - like holy book selection
+- type: entity
+  id: RickBottleSelector
+  name: "блюспейс-селектор напоїв"
+  description: "Дивний пристрій Ріка, який дозволяє вибрати улюблену бутилку з нескінченним запасом алкоголю."
+  parent: [ BaseItem, BaseSetSelector ]
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/flask.rsi
+    state: icon
+  - type: SetSelector
+    possibleSets:
+    - RickVodkaSet
+    - RickWhiskeySet
+    - RickRumSet
+    - RickGinSet
+    - RickTequilaSet
+    - RickCognacSet
+    - RickAbsintheSet
+    - RickBeerSet
+    maxSelectedSets: 1
+
+- type: selectableSet
+  id: RickVodkaSet
+  name: "Нескінченна горілка"
+  description: "Бутилка горілки з нескінченним запасом. Технології Ріка дивовижні."
+  sprite:
+    sprite: Objects/Consumable/Drinks/vodkabottle.rsi
+    state: icon
+  content:
+  - RickVodkaBottleInfinite
+
+- type: selectableSet
+  id: RickWhiskeySet
+  name: "Нескінченний віскі"
+  description: "Бутилка віскі з нескінченним запасом."
+  sprite:
+    sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
+    state: icon
+  content:
+  - RickWhiskeyBottleInfinite
+
+- type: selectableSet
+  id: RickRumSet
+  name: "Нескінченний ром"
+  description: "Бутилка рому з нескінченним запасом."
+  sprite:
+    sprite: Objects/Consumable/Drinks/rumbottle.rsi
+    state: icon
+  content:
+  - RickRumBottleInfinite
+
+- type: selectableSet
+  id: RickGinSet
+  name: "Нескінченний джин"
+  description: "Бутилка джину з нескінченним запасом."
+  sprite:
+    sprite: Objects/Consumable/Drinks/ginbottle.rsi
+    state: icon
+  content:
+  - RickGinBottleInfinite
+
+- type: selectableSet
+  id: RickTequilaSet
+  name: "Нескінченна текіла"
+  description: "Бутилка текіли з нескінченним запасом."
+  sprite:
+    sprite: Objects/Consumable/Drinks/tequilabottle.rsi
+    state: icon
+  content:
+  - RickTequilaBottleInfinite
+
+- type: selectableSet
+  id: RickCognacSet
+  name: "Нескінченний коньяк"
+  description: "Бутилка коньяку з нескінченним запасом."
+  sprite:
+    sprite: Objects/Consumable/Drinks/cognacbottle.rsi
+    state: icon
+  content:
+  - RickCognacBottleInfinite
+
+- type: selectableSet
+  id: RickAbsintheSet
+  name: "Нескінченний абсент"
+  description: "Бутилка абсенту з нескінченним запасом."
+  sprite:
+    sprite: Objects/Consumable/Drinks/absinthe.rsi
+    state: icon
+  content:
+  - RickAbsintheBottleInfinite
+
+- type: selectableSet
+  id: RickBeerSet
+  name: "Нескінченне пиво"
+  description: "Бутилка пива з нескінченним запасом."
+  sprite:
+    sprite: Objects/Consumable/Drinks/beer.rsi
+    state: icon
+  content:
+  - RickBeerBottleInfinite
+
+# Infinite Alcohol Bottles (like sink with infinite water)
+
+- type: entity
+  parent: DrinkVodkaBottleFull
+  id: RickVodkaBottleInfinite
+  name: "нескінченна горілка Ріка"
+  description: "Бутилка горілки з нескінченним запасом завдяки блюспейс-технологіям."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Vodka
+          Quantity: 100
+  - type: DumpableSolution
+    solution: drink
+    unlimited: true
+  - type: Unremoveable
+  - type: PreventCollide
+
+- type: entity
+  parent: DrinkWhiskeyBottleFull
+  id: RickWhiskeyBottleInfinite
+  name: "нескінченний віскі Ріка"
+  description: "Бутилка віскі з нескінченним запасом завдяки блюспейс-технологіям."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Whiskey
+          Quantity: 100
+  - type: DumpableSolution
+    solution: drink
+    unlimited: true
+  - type: Unremoveable
+  - type: PreventCollide
+
+- type: entity
+  parent: DrinkRumBottleFull
+  id: RickRumBottleInfinite
+  name: "нескінченний ром Ріка"
+  description: "Бутилка рому з нескінченним запасом завдяки блюспейс-технологіям."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Rum
+          Quantity: 100
+  - type: DumpableSolution
+    solution: drink
+    unlimited: true
+
+- type: entity
+  parent: DrinkGinBottleFull
+  id: RickGinBottleInfinite
+  name: "нескінченний джин Ріка"
+  description: "Бутилка джину з нескінченним запасом завдяки блюспейс-технологіям."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Gin
+          Quantity: 100
+  - type: DumpableSolution
+    solution: drink
+    unlimited: true
+  - type: Unremoveable
+  - type: PreventCollide
+
+- type: entity
+  parent: DrinkTequilaBottleFull
+  id: RickTequilaBottleInfinite
+  name: "нескінченна текіла Ріка"
+  description: "Бутилка текіли з нескінченним запасом завдяки блюспейс-технологіям."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Tequila
+          Quantity: 100
+  - type: DumpableSolution
+    solution: drink
+    unlimited: true
+  - type: Unremoveable
+  - type: PreventCollide
+
+- type: entity
+  parent: DrinkCognacBottleFull
+  id: RickCognacBottleInfinite
+  name: "нескінченний коньяк Ріка"
+  description: "Бутилка коньяку з нескінченним запасом завдяки блюспейс-технологіям."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Cognac
+          Quantity: 100
+  - type: DumpableSolution
+    solution: drink
+    unlimited: true
+  - type: Unremoveable
+  - type: PreventCollide
+
+- type: entity
+  parent: DrinkAbsintheBottleFull
+  id: RickAbsintheBottleInfinite
+  name: "нескінченний абсент Ріка"
+  description: "Бутилка абсенту з нескінченним запасом завдяки блюспейс-технологіям."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Absinthe
+          Quantity: 100
+  - type: DumpableSolution
+    solution: drink
+    unlimited: true
+  - type: Unremoveable
+  - type: PreventCollide
+
+- type: entity
+  parent: DrinkBeerBottleFull
+  id: RickBeerBottleInfinite
+  name: "нескінченне пиво Ріка"
+  description: "Бутилка пива з нескінченним запасом завдяки блюспейс-технологіям."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Beer
+          Quantity: 100
+  - type: DumpableSolution
+    solution: drink
+    unlimited: true
+  - type: Unremoveable
+  - type: PreventCollide

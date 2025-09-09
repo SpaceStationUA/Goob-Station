@@ -1,0 +1,31 @@
+- type: entity
+  name: "спавнер Ріка"
+  id: SpawnMobHumanRickScientist
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - sprite: Clothing/OuterClothing/Coats/labcoat.rsi
+      state: equipped-OUTERCLOTHING
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHumanRick
+
+- type: entity
+  name: "спавнер Морті"
+  id: SpawnMobHumanMorty
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - sprite: Clothing/Uniforms/Jumpsuit/color.rsi
+      state: equipped-INNERCLOTHING
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHumanMorty

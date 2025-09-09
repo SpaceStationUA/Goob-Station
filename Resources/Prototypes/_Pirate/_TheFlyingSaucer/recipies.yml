@@ -1,0 +1,312 @@
+# Rick's Tech Fab Recipes - All made with Bluespace Crystals
+- type: Tag
+  id: BSCrystal
+
+# Rick's Lab Coat
+- type: latheRecipe
+  id: ClothingOuterCoatLabRick
+  result: ClothingOuterCoatLabRick
+  completetime: 5
+  materials:
+    BSCrystal: 3
+
+# Rick's Glasses
+- type: latheRecipe
+  id: ClothingEyesGlassesRick
+  result: ClothingEyesGlassesRick
+  completetime: 4
+  materials:
+    BSCrystal: 2
+
+# WEAPONS - All made with Bluespace Crystals
+
+# Pistols
+- type: latheRecipe
+  id: RickWeaponPistolViper
+  result: WeaponPistolViper
+  completetime: 6
+  materials:
+    BSCrystal: 3
+
+- type: latheRecipe
+  id: RickWeaponPistolCobra
+  result: WeaponPistolCobra
+  completetime: 7
+  materials:
+    BSCrystal: 4
+
+- type: latheRecipe
+  id: RickWeaponPistolMk58
+  result: WeaponPistolMk58
+  completetime: 8
+  materials:
+    BSCrystal: 5
+
+# SMGs
+- type: latheRecipe
+  id: RickWeaponSubMachineGunDrozd
+  result: WeaponSubMachineGunDrozd
+  completetime: 10
+  materials:
+    BSCrystal: 6
+
+- type: latheRecipe
+  id: RickWeaponSubMachineGunAtreides
+  result: WeaponSubMachineGunAtreides
+  completetime: 12
+  materials:
+    BSCrystal: 8
+
+# Rifles
+- type: latheRecipe
+  id: RickWeaponRifleLecter
+  result: WeaponRifleLecter
+  completetime: 15
+  materials:
+    BSCrystal: 10
+
+- type: latheRecipe
+  id: RickWeaponRifleAk
+  result: WeaponRifleAk
+  completetime: 18
+  materials:
+    BSCrystal: 12
+
+# Shotguns
+- type: latheRecipe
+  id: RickWeaponShotgunBulldog
+  result: WeaponShotgunBulldog
+  completetime: 12
+  materials:
+    BSCrystal: 8
+
+- type: latheRecipe
+  id: RickWeaponShotgunKammerer
+  result: WeaponShotgunKammerer
+  completetime: 10
+  materials:
+    BSCrystal: 7
+
+# Energy Weapons - using unique IDs to avoid duplicates
+- type: latheRecipe
+  id: RickWeaponLaserGun
+  result: WeaponLaserGun
+  completetime: 8
+  materials:
+    BSCrystal: 5
+
+- type: latheRecipe
+  id: RickWeaponLaserCarbine
+  result: WeaponLaserCarbine
+  completetime: 10
+  materials:
+    BSCrystal: 6
+
+- type: latheRecipe
+  id: RickWeaponLaserCannon
+  result: WeaponLaserCannon
+  completetime: 20
+  materials:
+    BSCrystal: 15
+
+- type: latheRecipe
+  id: RickWeaponPulsePistol
+  result: WeaponPulsePistol
+  completetime: 12
+  materials:
+    BSCrystal: 8
+
+- type: latheRecipe
+  id: RickWeaponPulseRifle
+  result: WeaponPulseRifle
+  completetime: 25
+  materials:
+    BSCrystal: 20
+
+# Plasma Weapons - using unique IDs to avoid duplicates
+
+- type: latheRecipe
+  id: RickWeaponPlasmaRifle
+  result: WeaponPlasmaRifleEmpty
+  completetime: 15
+  materials:
+    BSCrystal: 12
+
+- type: latheRecipe
+  id: RickWeaponPlasmaCutter
+  result: WeaponPlasmaCutterEmpty
+  completetime: 8
+  materials:
+    BSCrystal: 5
+
+# Special Weapons - using unique IDs to avoid duplicates
+- type: latheRecipe
+  id: RickWeaponForceGun
+  result: WeaponForceGun
+  completetime: 12
+  materials:
+    BSCrystal: 8
+
+- type: latheRecipe
+  id: RickWeaponTetherGun
+  result: WeaponTetherGun
+  completetime: 10
+  materials:
+    BSCrystal: 6
+
+- type: latheRecipe
+  id: RickWeaponGauntletGorilla
+  result: WeaponGauntletGorilla
+  completetime: 15
+  materials:
+    BSCrystal: 10
+
+# Explosives - using unique IDs to avoid duplicates
+- type: latheRecipe
+  id: RickGrenadeBlast
+  result: GrenadeBlast
+  completetime: 5
+  materials:
+    BSCrystal: 3
+
+- type: latheRecipe
+  id: RickGrenadeFlash
+  result: GrenadeFlash
+  completetime: 4
+  materials:
+    BSCrystal: 2
+
+- type: latheRecipe
+  id: RickGrenadeFrag
+  result: GrenadeFrag
+  completetime: 6
+  materials:
+    BSCrystal: 4
+
+# Rick's Special Items - Bottle selector removed, it's now unique to Rick
+
+# Ammunition for weapons - using unique IDs to avoid duplicates
+- type: latheRecipe
+  id: RickMagazinePistol
+  result: MagazinePistol
+  completetime: 3
+  materials:
+    BSCrystal: 1
+
+- type: latheRecipe
+  id: RickMagazineRifle
+  result: MagazineRifle
+  completetime: 4
+  materials:
+    BSCrystal: 2
+
+- type: latheRecipe
+  id: RickMagazineShotgun
+  result: MagazineShotgun
+  completetime: 3
+  materials:
+    BSCrystal: 1
+
+- type: latheRecipe
+  id: RickPowerCellHigh
+  result: PowerCellHigh
+  completetime: 5
+  materials:
+    BSCrystal: 2
+
+- type: latheRecipe
+  id: RickPowerCellHyper
+  result: PowerCellHyper
+  completetime: 8
+  materials:
+    BSCrystal: 4
+
+# Rick's Tech Fab Circuit Board
+- type: latheRecipe
+  id: RickTechFabCircuitboard
+  result: RickTechFabCircuitboard
+  completetime: 10
+  materials:
+    BSCrystal: 15
+
+# More Advanced Weapons
+
+- type: latheRecipe
+  id: RickWeaponShotgunDoubleBarreled
+  result: WeaponShotgunDoubleBarreled
+  completetime: 9
+  materials:
+    BSCrystal: 6
+
+- type: latheRecipe
+  id: RickWeaponShotgunEnforcer
+  result: WeaponShotgunEnforcer
+  completetime: 14
+  materials:
+    BSCrystal: 9
+
+- type: latheRecipe
+  id: RickWeaponRevolverInspector
+  result: WeaponRevolverInspector
+  completetime: 7
+  materials:
+    BSCrystal: 4
+
+- type: latheRecipe
+  id: RickWeaponRevolverMateba
+  result: WeaponRevolverMateba
+  completetime: 12
+  materials:
+    BSCrystal: 8
+
+# Sniper Rifles
+- type: latheRecipe
+  id: RickWeaponSniperMosin
+  result: WeaponSniperMosin
+  completetime: 20
+  materials:
+    BSCrystal: 15
+
+- type: latheRecipe
+  id: RickWeaponSniperHristov
+  result: WeaponSniperHristov
+  completetime: 25
+  materials:
+    BSCrystal: 18
+
+# Machine Guns
+- type: latheRecipe
+  id: RickWeaponLightMachineGunL6
+  result: WeaponLightMachineGunL6
+  completetime: 30
+  materials:
+    BSCrystal: 25
+
+# Exotic Weapons - using unique IDs to avoid duplicates
+- type: latheRecipe
+  id: RickWeaponDisabler
+  result: WeaponDisabler
+  completetime: 6
+  materials:
+    BSCrystal: 3
+
+- type: latheRecipe
+  id: RickWeaponTaser
+  result: WeaponTaser
+  completetime: 7
+  materials:
+    BSCrystal: 4
+
+- type: latheRecipe
+  id: RickWeaponAdvancedLaser
+  result: WeaponAdvancedLaser
+  completetime: 15
+  materials:
+    BSCrystal: 10
+
+- type: latheRecipe
+  id: RickWeaponXrayCannon
+  result: WeaponXrayCannon
+  completetime: 22
+  materials:
+    BSCrystal: 16

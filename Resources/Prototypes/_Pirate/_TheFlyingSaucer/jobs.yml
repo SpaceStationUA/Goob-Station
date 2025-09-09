@@ -1,0 +1,83 @@
+- type: job
+  id: RickScientist
+  name: "Рік Санчез"
+  description: "Геніальний науковець з міжгалактичними знаннями та портальною гарматою."
+  playTimeTracker: JobRickScientist
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Human
+  startingGear: RickScientistGear
+  icon: "JobIconScientist"
+  supervisors: "самого себе"
+  canBeAntag: true
+  access:
+  - Rick
+  - Research
+  - Science
+  - Maintenance
+  - External
+  accessGroups:
+  - Rick
+  special:
+  - !type:AddImplantSpecial
+    implants: [ DeathAcidifierImplant ]
+
+- type: job
+  id: MortyStudent
+  name: "Морті Сміт"
+  description: "Підліток, який допомагає Ріку в його наукових експериментах."
+  playTimeTracker: JobMortyStudent
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Human
+  startingGear: MortyStudentGear
+  icon: "JobIconPassenger"
+  supervisors: "Рік Санчез"
+  canBeAntag: false
+  access:
+  - Rick
+  - Maintenance
+  accessGroups:
+  - Rick
+
+# Play time trackers
+- type: playTimeTracker
+  id: JobRickScientist
+
+- type: playTimeTracker
+  id: JobMortyStudent
+
+- type: department
+  id: RickDepartment
+  name: "Лабораторія Ріка"
+  description: "Секретна лабораторія для міжгалактичних експериментів."
+  EditorHidden: true
+  color: "#52B4E9"
+  roles:
+  - RickScientist
+  - MortyStudent
+
+# Айді карти
+- type: entity
+  parent: IDCardStandard
+  id: RickIDCard
+  name: "ID картка Ріка"
+  components:
+  - type: PresetIdCard
+    job: RickScientist
+  - type: Access
+    groups:
+    - Rick
+
+- type: entity
+  parent: IDCardStandard
+  id: MortyIDCard
+  name: "ID картка Морті"
+  components:
+  - type: PresetIdCard
+    job: MortyStudent
+  - type: Access
+    groups:
+    - Rick

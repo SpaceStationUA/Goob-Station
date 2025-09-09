@@ -1,0 +1,17 @@
+- type: startingGear
+  id: RickScientistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+    outerClothing: ClothingOuterCoatLabRick
+    shoes: ClothingShoesColorBrown
+    eyes: ClothingEyesGlassesRick
+    id: RickIDCard
+    ears: ClothingHeadsetScience
+    pocket1: RickBottleSelector
+
+- type: startingGear
+  id: MortyStudentGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMorty
+    shoes: ClothingShoesColorWhite
+    id: MortyIDCard

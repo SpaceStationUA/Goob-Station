@@ -1,0 +1,8 @@
+- type: accessLevel
+  id: Rick
+  name: id-card-access-level-rick
+
+- type: accessGroup
+  id: Rick
+  tags:
+  - Rick

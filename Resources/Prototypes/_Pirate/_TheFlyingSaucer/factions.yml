@@ -1,0 +1,9 @@
+- type: npcFaction
+  id: Rick
+  friendly:
+  - Rick
+  - NanoTrasen
+  hostile:
+  - Syndicate
+  - Xeno
+  - SimpleHostile

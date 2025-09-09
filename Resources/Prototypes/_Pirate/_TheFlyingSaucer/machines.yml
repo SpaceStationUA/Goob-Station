@@ -1,0 +1,87 @@
+- type: entity
+  parent: Protolathe
+  id: RickTechFab
+  name: "техфаб Ріка"
+  description: "Спеціальний технологічний фабрикатор Ріка, який може створювати зброю та предмети з блюспейс кристалів."
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/protolathe.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: RickTechFabCircuitboard
+  - type: AccessReader
+    access: [["Rick"]]
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    staticPacks:
+    - RickPack
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+      - BSCrystal
+
+- type: latheRecipePack
+  id: RickPack
+  recipes:
+    - RickWeaponPistolViper
+    - RickWeaponPistolCobra
+    - RickWeaponPistolMk58
+    - RickWeaponSubMachineGunDrozd
+    - RickWeaponSubMachineGunAtreides
+    - RickWeaponRifleLecter
+    - RickWeaponRifleAk
+    - RickWeaponShotgunBulldog
+    - RickWeaponShotgunKammerer
+    - RickWeaponLaserGun
+    - RickWeaponLaserCarbine
+    - RickWeaponLaserCannon
+    - RickWeaponPulsePistol
+    - RickWeaponPulseRifle
+    - RickWeaponPlasmaRifle
+    - RickWeaponPlasmaCutter
+    - RickWeaponForceGun
+    - RickWeaponTetherGun
+    - RickWeaponGauntletGorilla
+    - RickGrenadeBlast
+    - RickGrenadeFlash
+    - RickGrenadeFrag
+    - RickMagazinePistol
+    - RickMagazineRifle
+    - RickMagazineShotgun
+    - RickPowerCellHigh
+    - RickPowerCellHyper
+    - RickWeaponShotgunDoubleBarreled
+    - RickWeaponShotgunEnforcer
+    - RickWeaponRevolverInspector
+    - RickWeaponRevolverMateba
+    - RickWeaponSniperMosin
+    - RickWeaponSniperHristov
+    - RickWeaponLightMachineGunL6
+    - RickWeaponDisabler
+    - RickWeaponTaser
+    - RickWeaponAdvancedLaser
+    - RickWeaponXrayCannon
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: RickTechFabCircuitboard
+  name: "плата техфабу Ріка"
+  description: "Плата для спеціального технологічного фабрикатора Ріка."
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: RickTechFab
