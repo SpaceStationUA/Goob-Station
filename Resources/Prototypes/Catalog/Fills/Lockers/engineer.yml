@@ -146,8 +146,8 @@
       weight: 0.05
 
 - type: entity
-  id: LockerAtmosphericsFilledHardsuit
-  suffix: Filled, Hardsuit
+  id: LockerAtmosphericsFilledFiresuit
+  suffix: Filled, Firesuit
   parent: LockerAtmospherics
   components:
   - type: StorageFill
@@ -168,6 +168,31 @@
       - id: AirGrenade
       - id: ClothingHandsGlovesAtmosInsulated # Goobstation - insulated atmos gloves
       - id: ClothingBackpackFirefighterTank # Assmos - Firefighter nozzle
+
+- type: entity
+  id: LockerAtmosphericsFilledHardsuit
+  suffix: Filled, Firesuit, Hardsuit
+  parent: LockerAtmospherics
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingModsuitAtmostechPowerCell # Goob edit
+      - id: OxygenTankFilled
+      - id: NitrogenTankFilled
+      - id: ClothingMaskGasAtmos
+      - id: ClothingOuterSuitAtmosFire
+      - id: ClothingHeadHelmetAtmosFire
+      - id: GasAnalyzer
+      - id: MedkitOxygenFilled
+      - id: HolofanProjector
+      - id: RPD #funkystation
+      - id: DoorRemoteFirefight # Goobstation - re adding fire door remote
+      - id: RCD
+      - id: RCDAmmo
+      - id: AirGrenade
+      - id: ClothingHandsGlovesAtmosInsulated # Goobstation - insulated atmos gloves
+      - id: ClothingBackpackFirefighterTank # Assmos - Firefighter nozzle
+      - id: ClothingOuterHardsuitAtmos # Wizard's Den - Old atmos hardsuit
 
 - type: entity
   id: LockerAtmosphericsFilled
