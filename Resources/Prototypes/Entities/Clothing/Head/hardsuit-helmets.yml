@@ -175,7 +175,7 @@
     heatingCoefficient: 0.005
     coolingCoefficient: 0.005
   - type: FireProtection
-    reduction: 0.8
+    reduction: 0.2
   - type: Armor
     modifiers:
       coefficients:
