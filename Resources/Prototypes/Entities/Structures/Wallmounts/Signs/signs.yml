@@ -1036,8 +1036,8 @@
 - type: entity
   parent: BaseSign
   id: SignSecure
-  name: "знак безпеки"
-  description: "Знак, який вказує на те, що територія попереду є безпечною зоною."
+  name: "знак небезпеки"
+  description: "Знак, який вказує на те, що територія попереду, можливо, є небезпечною."
   components:
   - type: Sprite
     state: secure
@@ -1109,8 +1109,8 @@
 - type: entity
   parent: BaseSign
   id: SignSecureMedRed
-  name: "червоний знак безпеки"
-  description: "Знак, який вказує на те, що територія попереду є безпечною зоною."
+  name: "червоний знак небезпеки"
+  description: "Знак, який вказує на те, що територія попереду, можливо, є небезпечною."
   components:
   - type: Sprite
     state: medium_secure_red
@@ -1226,8 +1226,8 @@
 - type: entity
   parent: BaseSign
   id: SignSecureMed
-  name: "знак безпеки"
-  description: "Знак, який вказує на те, що територія попереду є безпечною зоною."
+  name: "знак небезпеки"
+  description: "Знак, який вказує на те, що територія попереду, можливо, є небезпечною."
   components:
   - type: Sprite
     state: medium_secure
