@@ -166,7 +166,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAncient
   name: "старовинний комбінезон"
-  description: "Страшенно пошарпаний і обшарпаний сірий комбінезон. Виглядає так, ніби його не прали більше десяти років."
+  description: "Страшенно пошарпаний і зношений сірий комбінезон. Виглядає так, ніби його не прали більше десяти років."
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
@@ -859,7 +859,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerBlue
-  name: "синій адвокатський костюм"
+  name: "синій костюм адвоката"
   description: "Кричущий синій костюм, який носять адвокати і показушники."
   components:
   - type: Sprite
@@ -870,7 +870,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerBlack
-  name: "костюм чорного адвоката"
+  name: "чорний костюм адвоката"
   description: "Витончений чорний костюм, який носять адвокати та гангстери."
   components:
   - type: Sprite
@@ -881,7 +881,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLawyerPurple
-  name: "фіолетовий адвокатський костюм"
+  name: "фіолетовий костюм адвоката"
   description: "Стильна фіолетова річ, яку носять юристи та люди шоу-бізнесу."
   components:
   - type: Sprite
