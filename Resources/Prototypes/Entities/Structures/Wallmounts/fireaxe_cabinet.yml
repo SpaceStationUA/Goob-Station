@@ -21,7 +21,7 @@
 - type: entity
   parent: BaseItemCabinetGlass
   id: FireAxeCabinet
-  name: "шафа для пожежних сокир"
+  name: "шафа для пожежної сокири"
   description: "На сокирі є невеличка етикетка з написом \"Тільки для екстреного використання\", а також детальна інформація про безпечне використання сокири. Начебто."
   placement:
     mode: SnapgridCenter
