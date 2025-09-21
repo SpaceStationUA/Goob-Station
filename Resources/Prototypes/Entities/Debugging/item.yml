@@ -54,7 +54,7 @@
   - type: RadiationSource
     intensity: 7
 - type: entity
-  name: "газовий добувач азоту"
+  name: "Газодобувач азоту"
   parent: GasMinerNitrogen
   id: GasMinerNitrogenSM
   suffix: SM DEBUG, 4500kPa
