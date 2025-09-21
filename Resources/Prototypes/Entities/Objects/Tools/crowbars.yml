@@ -82,7 +82,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "брухт"
+  name: "лом"
   parent: BaseItem
   id: BaseCrowbar
   abstract: true
@@ -159,7 +159,7 @@
 
 # Emergency (red) Crowbar
 - type: entity
-  name: "аварійний брухт"
+  name: "аварійний лом"
   parent: BaseCrowbar
   id: CrowbarRed
   description: "Аварійний брухт, призначений для виламування дверей та пожежних замків під час відключення електроенергії."
