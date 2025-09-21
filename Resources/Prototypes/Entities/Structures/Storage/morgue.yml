@@ -28,7 +28,7 @@
 
 - type: entity
   id: Morgue
-  name: "морг"
+  name: "камера моргу"
   description: "Використовується для зберігання тіл, поки їх не заберуть. Включає високотехнологічну систему оповіщення про хибні спрацьовування!"
   placement:
     mode: SnapgridCenter
@@ -105,7 +105,7 @@
 - type: entity
   id: Crematorium
   name: "крематорій"
-  description: "Спалювач людей. Добре працює на вечірніх барбекю."
+  description: "Спалювач екіпажу. Добре працює для вечірніх барбекю."
   placement:
     mode: SnapgridCenter
   components:
