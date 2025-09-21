@@ -9,7 +9,7 @@
 - type: entity
   parent: BaseStructure
   id: CryogenicSleepUnit
-  name: "кріогенний блок для сну"
+  name: "Камера для кріогенного сну"
   description: "Суперохолоджений контейнер, який забезпечує безпеку членів екіпажу під час космічної подорожі."
   components:
   - type: Sprite
