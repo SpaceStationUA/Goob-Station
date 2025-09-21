@@ -1509,8 +1509,8 @@
 - type: entity
   parent: BaseComputer
   id: ComputerSurveillanceCameraMonitor
-  name: "монітор камер спостереження"
-  description: "Монітор камери спостереження. Ти стежиш за ними. Можливо."
+  name: "консоль камер спостереження"
+  description: "Консоль камер спостереження. Ти стежиш за ними. Можливо."
   components:
   - type: Sprite
     layers:
