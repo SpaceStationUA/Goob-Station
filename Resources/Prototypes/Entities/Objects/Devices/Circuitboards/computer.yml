@@ -319,7 +319,7 @@
   parent: BaseComputerCircuitboard
   id: SurveillanceCameraMonitorCircuitboard
   name: "плата консолі камер спостереження"
-  description: "Комп'ютерна друкована плата для монітора камери спостереження."
+  description: "Комп'ютерна друкована плата для консолі камер спостереження."
   components:
   - type: Sprite
     state: cpu_security
