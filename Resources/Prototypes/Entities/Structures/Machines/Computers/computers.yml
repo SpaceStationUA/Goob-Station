@@ -608,7 +608,7 @@
 - type: entity
   parent: BaseComputerAiAccess
   id: ComputerCriminalRecords
-  name: "консольна база даних судимостей"
+  name: "Консоль бази даних судимостей"
   description: "Це може бути використано для перевірки судимостей. Змінювати їх може лише служба безпеки."
   components:
   - type: CriminalRecordsConsole
