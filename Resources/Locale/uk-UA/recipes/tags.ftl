@@ -118,7 +118,7 @@ construction-graph-tag-brig-timer-electronics = електроніка тайм�
 construction-graph-tag-wallmount-generator-circuit-board = плата настінного генератора
 construction-graph-tag-wallmount-apu-circuit-board = плата настінного ДСЖ
 construction-graph-tag-wallmount-substation-circuit-board = плата настінної підстанції
-construction-graph-tag-surveillance-camera-monitor-board = плата монітора камери спостереження
+construction-graph-tag-surveillance-camera-monitor-board = плата консолі камер спостереження
 construction-graph-tag-television-board = плата телевізора
 construction-graph-tag-freezer-electronics = електроніка морозильної камери
 
