@@ -361,7 +361,7 @@
 - type: entity
   id: LockerHeadOfSecurity
   parent: LockerBaseSecure
-  name: "шафка начальника служби безпеки"
+  name: "шафка голови служби безпеки"
   components:
   - type: Appearance
   - type: EntityStorageVisuals
@@ -554,7 +554,7 @@
 - type: entity
   id: LockerDetective
   parent: LockerBooze
-  name: "кабінет детектива"
+  name: "шафка детектива"
   description: "Зазвичай холодна і порожня... як твоє серце."
   components:
   - type: AccessReader
