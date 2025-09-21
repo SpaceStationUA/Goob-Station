@@ -15,8 +15,8 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterPort
-  name: "Випромінювач герметизації порту PA"
-  description: "Це запускає альфа-частинки, можливо, ви не захочете стояти біля цього кінця."
+  name: "Лівий порт емітера ПЧ"
+  description: "Це запускає альфа-частинки Прискорювача Часток зліва, можливо, ви не захочете стояти біля нього."
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/PA/emitter_port.rsi
@@ -29,8 +29,8 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterFore
-  name: "Випромінювач передньої захисної оболонки PA"
-  description: "Це запускає альфа-частинки, можливо, ви не захочете стояти біля цього кінця."
+  name: "Передній порт емітера ПЧ"
+  description: "Це запускає альфа-частинки Прискорювача Часток посередині, можливо, ви не захочете стояти біля нього."
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/PA/emitter_fore.rsi
@@ -43,8 +43,8 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEmitterStarboard
-  name: "Випромінювач захисної оболонки правого борту PA"
-  description: "Це запускає альфа-частинки, можливо, ви не захочете стояти біля цього кінця."
+  name: "Правий порт емітера ПЧ"
+  description: "Це запускає альфа-частинки Прискорювача Часток зправа, можливо, ви не захочете стояти біля нього."
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/PA/emitter_starboard.rsi
@@ -59,7 +59,7 @@
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEmitterPortUnfinished
-  name: "Випромінювач герметизації порту PA"
+  name: "Лівий порт емітера ПЧ"
   suffix: Unfinished, Port
   description: "Це запускає альфа-частинки, можливо, ви не захочете стояти біля цього кінця. Виглядає незавершеним."
   components:
@@ -72,7 +72,7 @@
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEmitterForeUnfinished
-  name: "Випромінювач передньої захисної оболонки PA"
+  name: "Передній порт емітера ПЧ"
   suffix: Unfinished, Fore
   description: "Це запускає альфа-частинки, можливо, ви не захочете стояти біля цього кінця. Виглядає незавершеним."
   components:
@@ -85,7 +85,7 @@
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEmitterStarboardUnfinished
-  name: "Випромінювач захисної оболонки правого борту PA"
+  name: "Правий порт емітера ПЧ"
   suffix: Unfinished, Starboard
   description: "Це запускає альфа-частинки, можливо, ви не захочете стояти біля цього кінця. Виглядає незавершеним."
   components:
