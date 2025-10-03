@@ -60,11 +60,6 @@
       - LightTube
       - LightBulb
       - BlueLightTube
-      - LightBulbMaintenance
-      - ColoredLightTubeRed
-      - ColoredLightTubeFrostyBlue
-      - ColoredLightTubeBlackLight
-      - LightBulbMaintenanceRed
       - LightBulbBroken
       - LightTubeBroken
       - PowerCellPotato
@@ -177,7 +172,6 @@
       - WebShield
       - DehydratedSpaceCarp
       - RobustHarvestChemistryBottle
-      - UnstableMutagenChemistryBottle
       - EphedrineChemistryBottle
       - Syringe
       - HandheldHealthAnalyzer

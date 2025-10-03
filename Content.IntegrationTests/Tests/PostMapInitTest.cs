@@ -236,6 +236,7 @@ namespace Content.IntegrationTests.Tests
             "Chloris", // Goobstation
             "Serpentcrest", // Goobstation
             "BoxTP", // Pirate
+            "GlacierTP", // Pirate
         };
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";
