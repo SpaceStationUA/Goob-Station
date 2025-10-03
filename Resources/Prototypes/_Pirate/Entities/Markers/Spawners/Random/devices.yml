@@ -26,7 +26,6 @@
       - PortableGeneratorSuperPacmanMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
       - OreProcessorMachineCircuitboard
-      - MaterialReclaimerMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - SurveillanceWirelessCameraMovableCircuitboard
       - PowerComputerCircuitboard
@@ -45,7 +44,6 @@
       - SolarTrackerElectronics
       - Mousetrap
       - RadioHandheld
-      - DeepFryerMachineCircuitboard
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - RemoteSignaller
@@ -84,10 +82,7 @@
       - HandheldStationMap
     chance: 0.8
     rarePrototypes:
-      - TraversalDistorterMachineCircuitboard
       - CloningPodMachineCircuitboard
-      - MetempsychoticMachineCircuitboard
-      - ReverseEngineeringMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - DawInstrumentMachineCircuitboard
       - StasisBedMachineCircuitboard
@@ -99,7 +94,6 @@
       - NetProbeCartridge
       - HandTeleporter
       - HoloprojectorSecurity
-      - HoloprojectorEngineering
       - HandheldStationMap
       - ComputerMassMediaCircuitboard
       - SensorConsoleCircuitboard
@@ -114,8 +108,7 @@
       - SheetifierMachineCircuitboard
       - TelecomServerCircuitboard
       - MiniGravityGeneratorCircuitboard
-      - Portafib
-      - ShockCollar
+      - ClothingNeckBaseShockCollar
       - GlimmerMonitorCartridge
       - PotatoAIChip
       - CargoTelepadMachineCircuitboard

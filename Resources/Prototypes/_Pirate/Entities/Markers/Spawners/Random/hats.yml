@@ -38,7 +38,6 @@
         - ClothingHeadHatWeldingMaskFlameBlue
         - ClothingHeadHatWeldingMaskPainted
         - ClothingHeadCage
-        - ClothingHeadHelmetKendoMen
         - ClothingHeadBandMerc
         - ClothingHeadHatCowboyWhite
         - ClothingHeadHatCowboyGrey
@@ -79,9 +78,6 @@
         - ClothingHeadHatCardborg
         - ClothingHeadHatFedoraBrown
         - ClothingHeadHatFedoraGrey
-        - ClothingHeadHatFedoraBlack
-        - ClothingHeadHatFedoraChoc
-        - ClothingHeadHatFedoraWhite
         - ClothingHeadHatPaper
         - ClothingHeadHatSombrero
         - ClothingHeadHatTophat
@@ -103,8 +99,6 @@
         - ClothingHeadHatRedsoftFlipped
         - ClothingHeadHatYellowsoft
         - ClothingHeadHatWelding
-        - ClothingHeadHatFlatBlack
-        - ClothingHeadHatFlatBrown
         - ClothingHeadTinfoil
         - ClothingHeadHatStrawHat
         - ClothingHeadHatCowboyBountyHunter
@@ -114,6 +108,5 @@
         - ClothingHeadHatMagician
         - ClothingHeadHatHetmanHat
         - ClothingHeadHatTacticalMaidHeadband
-        - ClothingHeadHatPirateTricorn
       chance: 0.5
       offset: 0.2

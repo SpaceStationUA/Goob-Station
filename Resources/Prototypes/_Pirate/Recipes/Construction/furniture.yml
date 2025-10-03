@@ -1,11 +1,11 @@
 - type: construction
-  name: shower
+  name: Душ
   id: Shower
   graph: Shower
   startNode: start
   targetNode: shower
   category: construction-category-furniture
-  description: A shower, complete with bluespace water.
+  description: Душ, вода якого тече з... блюспейса
   icon:
     sprite: _Pirate/Structures/Furniture/shower.rsi
     state: shower
