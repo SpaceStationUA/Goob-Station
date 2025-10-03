@@ -101,7 +101,7 @@
         acts: ["Destruction"]
   - type: OreVein
     oreChance: 0.20
-    oreRarityPrototypeId: RandomOreDistributionHigh
+    oreRarityPrototypeId: RandomOreDistributionStandard
 
 - type: entity
   id: AsteroidAltRockMining

@@ -13,11 +13,10 @@
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'NY'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml
         - type: StationJobs
-          overflowJobs:
-            - Passenger
           availableJobs:
-          Passenger: [ -1, -1 ]
           # Command
             Captain: [ 1, 1 ]
             BlueshieldOfficer: [ 1, 1]
@@ -33,14 +32,11 @@
             Bartender: [ 1, 2 ]
             Botanist: [ 2, 3 ]
             Chef: [ 1, 2 ]
-            Clown: [ 1, 1 ]
             Reporter: [ 2, 2 ]
-            Musician: [ 1, 2 ]
             ServiceWorker: [ 2, 3 ]
             Janitor: [ 2, 2 ]
             Chaplain: [ 2, 2 ]
             Librarian: [ 1, 1 ]
-            Mime: [ 1, 1 ]
           #engineering
             AtmosphericTechnician: [ 1, 2 ]
             StationEngineer: [ 2, 3 ]
@@ -65,6 +61,11 @@
           #logistics
             SalvageSpecialist: [ 4, 4 ]
             CargoTechnician: [ 3, 3 ]
+          #civilian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 2 ]
           # Silicon
             StationAi: [ 1, 1 ]
             Borg: [ 2, 3 ]
