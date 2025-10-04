@@ -126,12 +126,14 @@
   storage:
     back:
     - PlushieLizard
+  groupBy: "Plushie" # Pirate
 
 - type: loadout
   id: PlushieSpaceLizard
   storage:
     back:
     - PlushieSpaceLizard
+  groupBy: "Plushie" # Pirate
 
 - type: loadout
   id: ThreeCandles

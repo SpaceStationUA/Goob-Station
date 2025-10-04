@@ -203,3 +203,28 @@
   - type: EmitSoundOnTrigger
     sound:
       collection: VulpkaninSneeze
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieTayler
+  name: "Іграшка злого Голови Служби Безпеки"
+  description: "Ця іграшка була натхненою певною 'точно' неіснуєчої особи."
+  components:
+  - type: Sprite
+    sprite: /Textures/_Pirate/Objects/Fun/toys.rsi
+    state: plushie_tayler
+  - type: EmitSoundOnUse
+    sound:
+      collection: Tayler
+  - type: EmitSoundOnActivate
+    sound:
+      collection: Tayler
+  - type: EmitSoundOnCollide
+    sound:
+      collection: Tayler
+  - type: EmitSoundOnLand
+    sound:
+      collection: Tayler
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: Tayler
