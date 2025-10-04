@@ -589,7 +589,6 @@
   - SecurityBackpack
   - SecurityMelee # Goobstation
   - SecurityWeapon # Pirate
-  - SecurityWeaponAmmo # Pirate
   - SecurityBelt
   - HeadofSecurityOuterClothing
   - HeadofSecurityShoes # Goobstation edit
@@ -612,7 +611,6 @@
   - SecurityBackpack
   - SecurityMelee # Goobstation
   - SecurityWeapon # Pirate
-  - SecurityWeaponAmmo # Pirate
   - SecurityNeck
   - SecurityBelt
   - WardenOuterClothing
@@ -635,7 +633,6 @@
   - SecurityBackpack
   - SecurityMelee # Goobstation
   - SecurityWeapon # Pirate
-  - SecurityWeaponAmmo # Pirate
   - SecuritySecondaryWeapon # Pirate
   - SecurityOuterClothing
   - SecurityShoes

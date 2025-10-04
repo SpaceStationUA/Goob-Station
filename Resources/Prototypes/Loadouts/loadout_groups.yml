@@ -1430,16 +1430,6 @@
   - LoadoutSecurityPistolUniversalNonLethal
 
 - type: loadoutGroup
-  id: SecurityWeaponAmmo
-  name: loadout-group-security-weapon-ammo
-  loadouts:
-  - MagazinePistol
-  - SpeedLoaderMagnum
-  - MagazineMagnum
-  - MagazineUniversalMagnum
-  - MagazineUniversalMagnumRubber
-
-- type: loadoutGroup
   id: SecuritySecondaryWeapon
   name: loadout-group-secondary-weapon
   maxLimit: 1

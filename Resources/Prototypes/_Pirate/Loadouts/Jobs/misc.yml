@@ -3,3 +3,8 @@
   id: CameraCollar
   equipment:
     neck: SurveillanceWirelessCameraCollar
+  effects:
+  - !type:SpeciesLoadoutEffect # Той, хто змінить щось в цьому еффекті, а саме, закомітить, додасть ще расу, видалить або ще щось - буде горіти в пеклі. (Імунітет до Vareniko)
+    species:
+    - Vulpkanin
+    - Tajaran

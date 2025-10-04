@@ -1151,6 +1151,7 @@
   name: loadout-group-security-neck
   minLimit: 0
   loadouts:
+  - CameraCollar # Pirate
   - Bodycam # Goobstation - Body cameras
   - ClothingNeckCWPSec
 
