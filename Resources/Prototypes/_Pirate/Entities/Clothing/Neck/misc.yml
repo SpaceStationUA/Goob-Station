@@ -31,6 +31,11 @@
   name: Нашийна камера
   description: Камера прикріплена на нашийник, виглядає стильно й... покорно. Вона слідкує за тобою.
   components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Misc/camera_collar.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Misc/camera_collar.rsi
+    quickEquip: true
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraSecurity
@@ -54,8 +59,3 @@
     component:
     - type: StationAiVision
       range: 4
-  - type: Sprite
-    sprite: _Pirate/Clothing/Neck/Misc/camera_collar.rsi
-  - type: Clothing
-    sprite: _Pirate/Clothing/Neck/Misc/camera_collar.rsi
-    quickEquip: true
