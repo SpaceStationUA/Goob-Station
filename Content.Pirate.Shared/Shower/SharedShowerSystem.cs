@@ -35,7 +35,7 @@ namespace Content.Pirate.Shared.Showers
                 Act = () => ToggleShowerHead(uid, args.User, component)
             };
 
-            if (component.ToggleShower)
+            if (!component.ToggleShower)
             {
                 toggleVerb.Text = Loc.GetString("shower-turn-on");
                 toggleVerb.Icon =
