@@ -83,7 +83,7 @@
       - HandLabeler
       - Lantern
       - CheapLighter
-      - TrayScanner
+      - trayScanner
       - ClothingMaskGas
       - ClothingMaskBreathMedical
       - ClothingEyesHudBeer
