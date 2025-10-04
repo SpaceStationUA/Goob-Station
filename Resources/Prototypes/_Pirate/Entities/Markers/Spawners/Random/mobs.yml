@@ -38,26 +38,6 @@
       rareChance: 0.2
 
 - type: entity
-  name: Salvage Snake Spawner
-  id: SnakeMobMundane25
-  parent: MarkerBase
-  suffix: 25%
-  components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Mobs/Aliens/Xenos/purple_snake.rsi
-          state: purple_snake
-    - type: RandomSpawner
-      prototypes:
-        - MobPurpleSnakeGhost
-        - MobCobraSpaceSalvage
-      chance: 0.25
-      rarePrototypes:
-        - MobSmallPurpleSnakeGhost
-      rareChance: 0.20
-
-- type: entity
   name: Watcher Spawner
   id: WatcherAISpawner
   parent: MarkerBase

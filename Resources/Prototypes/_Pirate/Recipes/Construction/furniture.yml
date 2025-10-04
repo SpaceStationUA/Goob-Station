@@ -1,15 +1,10 @@
 - type: construction
-  name: Душ
   id: Shower
   graph: Shower
   startNode: start
   targetNode: shower
   category: construction-category-furniture
-  description: Душ, вода якого тече з... блюспейса
-  icon:
-    sprite: _Pirate/Structures/Furniture/shower.rsi
-    state: shower
-    objectType: Structure
+  objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
   canBuildInImpassable: false

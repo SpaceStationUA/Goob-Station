@@ -1,0 +1,5 @@
+# Нашийники
+- type: loadout
+  id: CameraCollar
+  equipment:
+    neck: SurveillanceWirelessCameraCollar

@@ -1,7 +1,7 @@
 - type: entity
-  name: shower
+  name: Душ
   id: Shower
-  description: A shower, complete with bluespace water.
+  description: Душ, з якого тече блюспейсова вода.
   placement:
     mode: SnapgridCenter
     snap:
