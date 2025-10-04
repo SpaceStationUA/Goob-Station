@@ -1254,6 +1254,7 @@
   - HeadofSecurityCloak
   - HeadofSecurityMantle
   - Bodycam # Goobstation - Body cameras
+  - CameraCollar # Pirate
 
 - type: loadoutGroup
   id: HeadofSecurityOuterClothing
@@ -1365,6 +1366,7 @@
   loadouts:
   - DetectiveTie
   - Bodycam # Goobstation - Body cameras
+  - CameraCollar # Pirate
 
 - type: loadoutGroup
   id: DetectiveJumpsuit
