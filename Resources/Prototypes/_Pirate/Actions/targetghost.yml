@@ -1,5 +1,5 @@
 - type: entity
-  id: ActionTargetGhost
+  id: ActionJustDecorTargetGhost
   name: "Обрати того, хто побачить"
   description: "Сконцентруйся на істоті, щоб вона змогла тебе побачити."
   categories: [ HideSpawnMenu ]
@@ -20,7 +20,7 @@
 
 
 - type: entity
-  id: ActionClearTargetGhost
+  id: ActionJustDecorClearTargetGhost
   name: "Відпустити зв'язок"
   description: "Забути про обрану істоту та повернутись у тінь."
   categories: [ HideSpawnMenu ]
@@ -35,7 +35,7 @@
 
 
 - type: entity
-  id: ActionToggleGhostForm
+  id: ActionJustDecorToggleGhostForm
   name: "Змінити сутність"
   description: "Перетворися на духа чи повернись у свою тілесну форму."
   categories: [ HideSpawnMenu ]
@@ -51,7 +51,7 @@
 
 
 - type: entity
-  id: ActionGhostBlink
+  id: ActionJustDecorGhostBlink
   name: "Мерехтіння духа"
   description: "Перемістись на невелику відстань, розчиняючись у повітрі."
   categories: [ HideSpawnMenu ]
