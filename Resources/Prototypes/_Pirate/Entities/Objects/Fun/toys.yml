@@ -228,3 +228,35 @@
   - type: EmitSoundOnTrigger
     sound:
       collection: Tayler
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePocketAssistant
+  name: "Плюшевий кишеньковий асистент"
+  description: "Тепер ще більш компактний і привітний до ваших пестощів. Пахне грозою."
+  components:
+  - type: Sprite
+    sprite: /Textures/_Pirate/Objects/Fun/Plushies/pocket_assistant.rsi
+    state: icon
+  - type: Item
+    sprite: /Textures/_Pirate/Objects/Fun/Plushies/pocket_assistant.rsi
+  - type: EmitSoundOnUse
+    sound:
+      collection: FelinidMeows
+  - type: EmitSoundOnActivate
+    sound:
+      collection: FelinidMeows
+  - type: EmitSoundOnCollide
+    sound:
+      collection: FelinidMeows
+  - type: EmitSoundOnLand
+    sound:
+      collection: FelinidMeows
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: FelinidMeows
+  - type: Clothing
+    quickEquip: false
+    sprite: _Pirate/Objects/Fun/Plushies/pocket_assistant.rsi
+    slots:
+    - HEAD

@@ -61,3 +61,10 @@
     back:
     - PlushieTayler
   groupBy: "Plushie"
+
+- type: loadout
+  id: PlushiePocketAssistant
+  storage:
+    back:
+    - PlushiePocketAssistant
+  groupBy: "Plushie"

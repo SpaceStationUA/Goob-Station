@@ -106,6 +106,28 @@
         orGroup: GiftPool
       - id: PlushieRainbowLizard
         orGroup: GiftPool
+      # PIRATE PLUSHIES START VVVV
+      - id: PlushieVulpSusie
+        orGroup: GiftPool
+      - id: PlushieEntony
+        orGroup: GiftPool
+      - id: PlushieIpcCat
+        orGroup: GiftPool
+      - id: PlushieTK
+        orGroup: GiftPool
+      - id: PlushieKateryna
+        orGroup: GiftPool
+      - id: PlushieNicholasGray
+        orGroup: GiftPool
+      - id: PlushieOlia
+        orGroup: GiftPool
+      - id: PlushieSkeleton
+        orGroup: GiftPool
+      - id: PlushieTayler
+        orGroup: GiftPool
+      - id: PlushiePocketAssistant
+        orGroup: GiftPool
+      # PIRATE PLUSHIES END ^^^^
       - id: PlushieNar
         orGroup: GiftPool
       - id: PlushieCarp
