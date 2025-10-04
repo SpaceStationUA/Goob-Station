@@ -1,9 +1,7 @@
 - type: soundCollection
-  id: IPCCat
+  id: Tayler
   files:
-  - /Audio/_Pirate/Misc/Fun/Plush/IPC-cat/ipc_meow.ogg
-  - /Audio/_Pirate/Misc/Fun/Plush/IPC-cat/ipc_meow2.ogg
-  - /Audio/_Pirate/Misc/Fun/Plush/IPC-cat/ipc_mew1.ogg
-  - /Audio/_Pirate/Misc/Fun/Plush/IPC-cat/ipc_mew2.ogg
-  - /Audio/_Pirate/Misc/Fun/Plush/IPC-cat/ipc_purr1.ogg
-  - /Audio/_Pirate/Misc/Fun/Plush/IPC-cat/ipc_purr2.ogg
+  - /Audio/_Pirate/Voice/Plush/Tayler/angry-roblox.ogg
+  - /Audio/_Pirate/Voice/Plush/Tayler/firstblood.ogg
+  - /Audio/_Pirate/Voice/Plush/Tayler/vine-boom.ogg
+

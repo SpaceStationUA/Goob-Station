@@ -212,7 +212,7 @@
   components:
   - type: Sprite
     sprite: /Textures/_Pirate/Objects/Fun/toys.rsi
-    state: plushie_tayler
+    state: plushie_Tayler
   - type: EmitSoundOnUse
     sound:
       collection: Tayler
