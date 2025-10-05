@@ -36,3 +36,6 @@ tool-quality-digging-tool-name = Лопата
 
 tool-quality-ignition-name = Запалювання
 tool-quality-ignition-tool-name = Сірник
+
+tool-quality-brushing-name = Чищення щіткою
+tool-quality-brushing-tool-name = Дротяна щітка

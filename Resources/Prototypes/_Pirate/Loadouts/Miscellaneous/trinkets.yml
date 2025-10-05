@@ -1,0 +1,48 @@
+# Toys / Іграшки
+- type: loadout
+  id: PlushieEntony
+  storage:
+    back:
+    - PlushieEntony
+
+- type: loadout
+  id: PlushieIpcCat
+  storage:
+    back:
+    - PlushieIpcCat
+
+- type: loadout
+  id: PlushieTK
+  storage:
+    back:
+    - PlushieTK
+
+- type: loadout
+  id: PlushieKateryna
+  storage:
+    back:
+    - PlushieKateryna
+
+- type: loadout
+  id: PlushieNicholasGray
+  storage:
+    back:
+    - PlushieNicholasGray
+
+- type: loadout
+  id: PlushieOlia
+  storage:
+    back:
+    - PlushieOlia
+
+- type: loadout
+  id: PlushieSkeleton
+  storage:
+    back:
+    - PlushieSkeleton
+
+- type: loadout
+  id: PlushieVulpSusie
+  storage:
+    back:
+    - PlushieVulpSusie

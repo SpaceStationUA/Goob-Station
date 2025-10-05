@@ -141,3 +141,9 @@ admin-smite-super-slip-description = Змушує їх дуже, дуже сил
 admin-smite-omni-accent-description = Змушує ціль говорити майже з усіма доступними акцентами.
 
 ## Описи трюків
+admin-smite-hell-teleport-name = відправитись до пекла
+
+## Описи покарань
+admin-smite-hell-teleport-description = Телепортує ціль до пекла.
+
+## Описи трюків

@@ -12,3 +12,4 @@ steal-target-groups-rapid-syringe-gun = швидкісний шприцемет
 
 steal-target-groups-gemini-projector = голо-проекторна установка ax-32 "джеміні
 steal-target-groups-weapon-justice = ДТ-2 "Правосуддя"
+steal-target-groups-executive-briefcase = дипломат керівника

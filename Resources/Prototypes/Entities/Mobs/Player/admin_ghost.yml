@@ -261,6 +261,8 @@
       - CosmicCultMonument # DeltaV - Cosmic Cult
       - Abductor
       - TargetingGhost # Pirate, so they can see
+  - type: ExplosionResistance
+    damageCoefficient: 0
 
 - type: entity
   abstract: true

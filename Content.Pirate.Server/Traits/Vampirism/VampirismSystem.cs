@@ -4,11 +4,15 @@ using Content.Pirate.Server.Traits.Vampirism.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 
+using Robust.Shared.Analyzers;
+
 namespace Content.Pirate.Server.Traits.Vampirism;
 
+[Access(typeof(MetabolizerComponent), Other = AccessPermissions.ReadWriteExecute)]
 public sealed class VampirismSystem : EntitySystem
 {
     [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private readonly MetabolizerSystem _metabolizer = default!;
 
     public override void Initialize()
     {
@@ -40,7 +44,7 @@ public sealed class VampirismSystem : EntitySystem
             if (!TryComp<StomachComponent>(comp.Comp2.Owner, out var stomach))
                 continue;
 
-            comp.Comp1.MetabolizerTypes = ent.Comp.MetabolizerPrototypes;
+            _metabolizer.SetMetabolizerTypes((comp.Comp2.Owner, comp.Comp1), ent.Comp.MetabolizerPrototypes);
 
             if (ent.Comp.SpecialDigestible is {} whitelist)
                 stomach.SpecialDigestible = whitelist;

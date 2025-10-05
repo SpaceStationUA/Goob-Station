@@ -16,6 +16,7 @@
     service: "#9FED5896"
     engineering: "#EFB34196"
     security: "#DE3A3A96"
+    bluesec: "#3570A496" # Pirate
     bar: "#79150096"
     science: "#D381C996"
     cargo: "#A4610696"

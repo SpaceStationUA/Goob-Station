@@ -23,7 +23,7 @@ pda-bound-user-interface-lock-uplink-description = Заборонити будь
 
 comp-pda-ui-menu-title = КПК
 
-comp-pda-ui-footer = Карманний Персональний Комп'ютер
+comp-pda-ui-footer = Кишеньковий Персональний Комп'ютер
 
 comp-pda-ui-station = Станція: [color=white]{$station}[/color]
 

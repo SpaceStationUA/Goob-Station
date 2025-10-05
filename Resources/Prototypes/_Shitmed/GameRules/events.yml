@@ -24,7 +24,7 @@
     earliestStart: 15
     reoccurrenceDelay: 45
     weight: 5 # Goobstation - 7.5 -> 5
-    minimumPlayers: 10
+    minimumPlayers: 9999
     duration: 1
     chaos:
       Hostile: 75
@@ -124,7 +124,7 @@
     earliestStart: 15
     reoccurrenceDelay: 45
     weight: 4.5 # Goobstation - 7.5 -> 4.5
-    minimumPlayers: 20
+    minimumPlayers: 9999
     duration: 1
     chaos:
       Hostile: 150

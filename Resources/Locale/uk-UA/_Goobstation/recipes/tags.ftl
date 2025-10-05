@@ -43,3 +43,4 @@ construction-graph-tag-hardhat = каска
 construction-graph-tag-ushanka = вушанка
 construction-graph-tag-baseball-bat = бейсбольна бита
 construction-graph-tag-heart = серце
+construction-graph-tag-blue = саморобний щит

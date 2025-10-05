@@ -1183,64 +1183,94 @@ Entries:
   url: https://github.com/space-wizards/space-station-14/pull/38317
 - author: Errant, crazybrain
   changes:
-  - message: The admin player and object tabs now show entries in the correct visual
-      style.
+  - message: Вкладки гравців та об'єктів в адмін-панелі тепер відображають записи у правильному візуальному стилі.
     type: Fix
   id: 143
   time: '2025-06-21T01:13:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38261
 - author: SlamBamActionman
   changes:
-  - message: customvote and cancelvote command permission has been moved from Moderator
-      to Round.
+  - message: Дозвіл на використання команд customvote та cancelvote було переміщено з Модератора до Раунду.
     type: Tweak
   id: 144
   time: '2025-06-21T16:34:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38385
 - author: beck-thompson
   changes:
-  - message: Role ban panel is now prettier!
+  - message: Панель бану за ролями тепер виглядає гарніше!
     type: Tweak
   id: 145
   time: '2025-06-21T17:54:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37952
 - author: beck-thompson
   changes:
-  - message: You can now export round logs to CSV files
+  - message: Тепер ви можете експортувати лоґи раунду у файли CSV
     type: Add
   id: 146
   time: '2025-06-22T19:28:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38206
 - author: perryprog
   changes:
-  - message: The /showaccessreaders command is now usable by those with +MAPPING or
-      +DEBUG, instead of being +HOST only.
+  - message: Команда /showaccessreaders тепер доступна для тих, хто має права +MAPPING або +DEBUG, а не лише для +HOST.
     type: Tweak
   id: 147
   time: '2025-06-26T10:43:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38593
 - author: VerinSenpai
   changes:
-  - message: The addbodypart command no longer incorrectly errors out when you try
-      to pass the required number of arguments.
+  - message: Команда addbodypart більше не видає помилку, коли ви намагаєтеся передати необхідну кількість аргументів.
     type: Fix
   id: 148
   time: '2025-06-28T11:11:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38612
 - author: BramvanZijp
   changes:
-  - message: The Super Door Remote can now effect doors that the user's ID card has
-      access to, even if the remote itself somehow cannot access them.
+  - message: Суперпульт для дверей тепер може впливати на двері, до яких має доступ ID-картка користувача, навіть якщо сам пульт якимось чином не має до них доступу.
     type: Tweak
   id: 149
   time: '2025-06-29T16:21:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35536
 - author: Kowlin
   changes:
-  - message: Changed the way CSVs are exported
+  - message: Змінено спосіб експорту CSV-файлів
     type: Tweak
   id: 150
   time: '2025-06-30T21:09:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38531
+- author: Smugman
+  changes:
+  - message: Додано заблокований за ID фліппо Центрального Командування для використання адмінами.
+    type: Add
+  id: 151
+  time: '2025-07-07T18:53:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35514
+- author: perryprog
+  changes:
+  - message: Адмінські привиди тепер можуть взаємодіяти з речами під технічними тунелями, такими як маршрутизатори утилізації.
+    type: Tweak
+  id: 152
+  time: '2025-07-10T11:14:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38813
+- author: VerinSenpai
+  changes:
+  - message: Команда showrules тепер має автодоповнення.
+    type: Tweak
+  id: 153
+  time: '2025-07-11T17:48:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38855
+- author: perryprog
+  changes:
+  - message: Команда runverbas тепер повинна краще працювати з іншими командами toolshed.
+    type: Fix
+  id: 154
+  time: '2025-07-14T15:45:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38155
+- author: slarticodefast
+  changes:
+  - message: Сумка бездонного зберігання адмін-привида тепер стійка до вибухів. Те ж саме стосується і самих адмін-привидів, тому вибухівка в руках більше не викликає ланцюгової реакції.
+    type: Tweak
+  id: 155
+  time: '2025-07-16T22:35:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38384
 Name: Admin
 Order: 2

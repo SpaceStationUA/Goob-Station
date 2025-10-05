@@ -4,7 +4,7 @@ chat-emote-name-laugh = Сміється
 chat-emote-name-honk = Хонк
 chat-emote-name-sigh = Зітхання
 chat-emote-name-whistle = Свист
-chat-emote-name-crying = Плач
+chat-emote-name-crying = Плаче
 chat-emote-name-squish = Хлюп
 chat-emote-name-chitter = Бовтанка
 chat-emote-name-squeak = Писк
@@ -83,3 +83,5 @@ chat-emote-msg-thump = стукає {POSS-ADJ($entity)} хвостом.
 chat-emote-msg-gasp = зойкає.
 chat-emote-msg-weh = векає!
 chat-emote-msg-hew = хрумтить!
+
+chat-emote-msg-deathgasp-scurret = випускає останнє "ва" і затихає...

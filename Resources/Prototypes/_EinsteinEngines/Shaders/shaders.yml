@@ -15,6 +15,12 @@
   path: "/Textures/_EinsteinEngines/Shaders/flap.swsl"
 
 - type: shader
+  id: EnthrallEffect
+  kind: source
+  path: "/Textures/_EinsteinEngines/Shaders/enthrall_effect.swsl"
+
+# PIRATE VVV
+- type: shader
   id: Ethereal
   kind: source
   path: "/Textures/_EinsteinEngines/Shaders/ethereal.swsl"
@@ -23,3 +29,4 @@
   id: ColorTint
   kind: source
   path: "/Textures/_EinsteinEngines/Shaders/color_tint.swsl"
+# PIRATE ^^^

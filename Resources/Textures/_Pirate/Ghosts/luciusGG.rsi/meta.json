@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Undertale yellow",
+    "size": {
+      "x": 254,
+      "y": 171
+    },
+    "states": [
+        {
+          "name": "luciusGG",
+          "delays": [
+            [0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3]
+          ]
+        }
+      ]
+  }

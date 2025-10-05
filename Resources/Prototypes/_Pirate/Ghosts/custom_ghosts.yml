@@ -210,3 +210,12 @@
   alpha: 1
   ghostName: "Просто Декорація"
   ghostDescription: "Усі люди наділені талантами, а я просто декорація"
+
+- type: customGhost
+  id: luciusGG-ghost
+  ckey: luciusGG
+  sprite:
+    - _Pirate/Ghosts/luciusGG.rsi
+  alpha: 1
+  ghostName: luciusGG
+  ghostDescription: "Чи немає в тобі жаги до справедливості?"

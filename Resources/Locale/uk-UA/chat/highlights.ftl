@@ -55,3 +55,9 @@ highlights-psychologist = Психолог, Психологія
 highlights-personal-ai = Персональний ШІ, "пШІ"
 highlights-cyborg = Кіборг, Силікон, Борг
 highlights-station-ai = Станційний ШІ, Силікон, "ШІ", "сШІ"
+
+highlights-nanotrasen-representative = Представник Nanotrasen, Центральне Командування, "ПН", "НТ", "ЦК", "ПНТ", Місток, Командування
+highlights-blueshield-officer = Офіцер Синього Щита, Центральне Командування, "ОСЩ", "ЦК", "БШ", Місток, Командування
+#Кінець Губа
+
+# Командування

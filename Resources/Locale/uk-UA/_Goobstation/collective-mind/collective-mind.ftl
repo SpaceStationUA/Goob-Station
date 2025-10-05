@@ -16,3 +16,4 @@ collective-mind-empathy = Емпатія
 
 collective-mind-bingle = Бінглрозум
 collective-mind-xeno = Розум рою
+collective-mind-shadow-mind = Тіньовий розум

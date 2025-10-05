@@ -1,0 +1,10 @@
+- files:
+  - ipc_meow.ogg
+  - ipc_meow2.ogg
+  - ipc_mew1.ogg
+  - ipc_mew2.ogg
+  - ipc_purr1.ogg
+  - ipc_purr2.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified /Voice/Human by bunkeran"
+  source: "https://github.com/SpaceStationUA/station/tree/master/Resources/Audio/Voice/Human"

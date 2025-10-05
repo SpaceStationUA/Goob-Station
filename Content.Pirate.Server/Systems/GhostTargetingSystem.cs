@@ -106,7 +106,7 @@ namespace Content.Pirate.Server.Systems
                 if (ent != null)
                 {
                     ghost.Comp.ActionEntities.Add(ent.Value);
-                    if (actionId == "ActionToggleGhostForm")
+                    if (actionId == "ActionJustDecorToggleGhostForm")
                         ghost.Comp.ToggleGhostFormActionUid = ent.Value;
                 }
             }
@@ -127,7 +127,7 @@ namespace Content.Pirate.Server.Systems
         private void OnRemove(Entity<GhostTargetingComponent> ghost, ref ComponentRemove args)
         {
             // Відновлюємо стару форму, якщо entity був у ghost-формі
-            if (ghost.Comp.OldVisibilityLayers.HasValue)
+            if (ghost.Comp.SavedState?.VisibilityLayers.HasValue == true)
             {
                 var uid = ghost.Owner;
                 var visSys = EntityManager.System<VisibilitySystem>();
@@ -138,22 +138,22 @@ namespace Content.Pirate.Server.Systems
                     var eyeSys = EntityManager.System<EyeSystem>();
                     // Прибираємо TargetingGhost layer з EyeComponent
                     var mask = eyeNormal.VisibilityMask & ~(int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
-                    if (ghost.Comp.OldVisibilityMask.HasValue)
-                        mask = ghost.Comp.OldVisibilityMask.Value &
+                    if (ghost.Comp.SavedState.VisibilityMask.HasValue)
+                        mask = ghost.Comp.SavedState.VisibilityMask.Value &
                                ~(int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
                     eyeSys.SetVisibilityMask(uid, mask, eyeNormal);
-                    if (ghost.Comp.OldDrawFov.HasValue)
-                        eyeSys.SetDrawFov(uid, ghost.Comp.OldDrawFov.Value, eyeNormal);
+                    if (ghost.Comp.SavedState.DrawFov.HasValue)
+                        eyeSys.SetDrawFov(uid, ghost.Comp.SavedState.DrawFov.Value, eyeNormal);
                 }
 
                 // Physics
                 if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) && physics != null)
                 {
                     var physicsSys = EntityManager.System<SharedPhysicsSystem>();
-                    if (ghost.Comp.OldCanCollide.HasValue)
-                        physicsSys.SetCanCollide(uid, ghost.Comp.OldCanCollide.Value, body: physics);
-                    if (ghost.Comp.OldBodyType.HasValue)
-                        physicsSys.SetBodyType(uid, ghost.Comp.OldBodyType.Value, body: physics);
+                    if (ghost.Comp.SavedState.CanCollide.HasValue)
+                        physicsSys.SetCanCollide(uid, ghost.Comp.SavedState.CanCollide.Value, body: physics);
+                    if (ghost.Comp.SavedState.BodyType.HasValue)
+                        physicsSys.SetBodyType(uid, ghost.Comp.SavedState.BodyType.Value, body: physics);
                 }
 
                 // Відновити старі шари видимості
@@ -164,10 +164,10 @@ namespace Content.Pirate.Server.Systems
                     visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.Normal, false);
 
                     // Додаємо всі біти зі старого Layer
-                    ushort layers = (ushort) ghost.Comp.OldVisibilityLayers.Value;
-                    for (int i = 0; i < 16; i++)
+                    var layers = (ushort) ghost.Comp.SavedState.VisibilityLayers.Value;
+                    for (var i = 0; i < 16; i++)
                     {
-                        ushort flag = (ushort) (1 << i);
+                        var flag = (ushort) (1 << i);
                         if ((layers & flag) != 0)
                             visSys.AddLayer((uid, visComp2), flag, false);
                     }
@@ -176,14 +176,14 @@ namespace Content.Pirate.Server.Systems
                 }
 
                 // Видалити компоненти, якщо їх не було до перетворення
-                if (!ghost.Comp.HadContentEye && EntityManager.HasComponent<ContentEyeComponent>(uid))
+                if (!ghost.Comp.SavedState.HadContentEye && EntityManager.HasComponent<ContentEyeComponent>(uid))
                     EntityManager.RemoveComponent<ContentEyeComponent>(uid);
-                if (!ghost.Comp.HadMovementIgnoreGravity &&
+                if (!ghost.Comp.SavedState.HadMovementIgnoreGravity &&
                     EntityManager.HasComponent<MovementIgnoreGravityComponent>(uid))
                     EntityManager.RemoveComponent<MovementIgnoreGravityComponent>(uid);
-                if (!ghost.Comp.HadCanMoveInAir && EntityManager.HasComponent<CanMoveInAirComponent>(uid))
+                if (!ghost.Comp.SavedState.HadCanMoveInAir && EntityManager.HasComponent<CanMoveInAirComponent>(uid))
                     EntityManager.RemoveComponent<CanMoveInAirComponent>(uid);
-                if (!ghost.Comp.HadPhysics && EntityManager.HasComponent<PhysicsComponent>(uid))
+                if (!ghost.Comp.SavedState.HadPhysics && EntityManager.HasComponent<PhysicsComponent>(uid))
                     EntityManager.RemoveComponent<PhysicsComponent>(uid);
             }
 
@@ -253,6 +253,19 @@ namespace Content.Pirate.Server.Systems
             // Встановлюємо нову ціль і даємо їй бачити привида
             if (args.Target != EntityUid.Invalid)
             {
+                // Перевірка чи ціль не є самою entity
+                if (args.Target == uid)
+                {
+                    popupSys.PopupEntity("Ви не можете встановити себе як ціль!", uid, PopupType.Medium);
+                    return;
+                }
+
+                // Перевірка чи ціль існує
+                if (!EntityManager.EntityExists(args.Target))
+                {
+                    popupSys.PopupEntity("Ціль не існує!", uid, PopupType.Medium);
+                    return;
+                }
                 comp.Target = EntityManager.GetNetEntity(args.Target);
 
                 // Додаємо маску новій цілі
@@ -294,8 +307,6 @@ namespace Content.Pirate.Server.Systems
             }
             else
             {
-                RestoreState(uid, comp);
-                RestoreImmunities(uid, comp);
                 RemoveGhostComponents(uid, comp);
                 RemoveImmunities(uid, comp);
                 SetupEyePhysicsVisibility(uid, comp, ghostMode: false);
@@ -317,70 +328,76 @@ namespace Content.Pirate.Server.Systems
         //  Приватні методи для логіки
         private void SaveState(EntityUid uid, GhostTargetingComponent comp)
         {
+            comp.SavedState = new GhostStateSnapshot();
+
             // Додаткові компоненти
-            comp.HadFTLSmashImmune = EntityManager.HasComponent<FTLSmashImmuneComponent>(uid);
-            comp.HadUniversalLanguageSpeaker = EntityManager.HasComponent<UniversalLanguageSpeakerComponent>(uid);
-            comp.HadExaminer = EntityManager.HasComponent<ExaminerComponent>(uid);
-            comp.HadSpeechDead = false;
+            comp.SavedState.HadFTLSmashImmune = EntityManager.HasComponent<FTLSmashImmuneComponent>(uid);
+            comp.SavedState.HadUniversalLanguageSpeaker = EntityManager.HasComponent<UniversalLanguageSpeakerComponent>(uid);
+            comp.SavedState.HadExaminer = EntityManager.HasComponent<ExaminerComponent>(uid);
+            comp.SavedState.HadSpeechDead = false;
             if (EntityManager.TryGetComponent<SpeechComponent>(uid, out var speech) && speech != null)
             {
-                comp.HadSpeechDead = speech.SpeechVerb == "Dead";
-                comp.OldSpeechVerb = speech.SpeechVerb;
+                comp.SavedState.HadSpeechDead = speech.SpeechVerb == "Dead";
+                comp.SavedState.OldSpeechVerb = speech.SpeechVerb;
             }
 
             var visComp = EntityManager.EnsureComponent<VisibilityComponent>(uid);
-            comp.OldVisibilityLayers = visComp.Layer;
+            comp.SavedState.VisibilityLayers = visComp.Layer;
             if (EntityManager.TryGetComponent<EyeComponent>(uid, out var eyeGhost) && eyeGhost != null)
             {
-                comp.OldVisibilityMask = eyeGhost.VisibilityMask;
-                comp.OldDrawFov = eyeGhost.DrawFov;
+                comp.SavedState.VisibilityMask = eyeGhost.VisibilityMask;
+                comp.SavedState.DrawFov = eyeGhost.DrawFov;
             }
 
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) && physics != null)
             {
-                comp.OldCanCollide = physics.CanCollide;
-                comp.OldBodyType = physics.BodyType;
-                comp.HadPhysics = true;
+                comp.SavedState.CanCollide = physics.CanCollide;
+                comp.SavedState.BodyType = physics.BodyType;
+                comp.SavedState.HadPhysics = true;
             }
             else
             {
-                comp.HadPhysics = false;
+                comp.SavedState.HadPhysics = false;
             }
 
-            comp.OldFixtureLayers = new List<int>();
+            comp.SavedState.FixtureLayers = new List<int>();
             if (EntityManager.TryGetComponent(uid, out FixturesComponent? fixtures) && fixtures != null)
             {
                 foreach (var fixture in fixtures.Fixtures.Values)
                 {
-                    comp.OldFixtureLayers.Add(fixture.CollisionLayer);
+                    comp.SavedState.FixtureLayers.Add(fixture.CollisionLayer);
                 }
             }
 
-            comp.HadContentEye = EntityManager.HasComponent<ContentEyeComponent>(uid);
-            comp.HadMovementIgnoreGravity = EntityManager.HasComponent<MovementIgnoreGravityComponent>(uid);
-            comp.HadCanMoveInAir = EntityManager.HasComponent<CanMoveInAirComponent>(uid);
+            comp.SavedState.HadContentEye = EntityManager.HasComponent<ContentEyeComponent>(uid);
+            comp.SavedState.HadMovementIgnoreGravity = EntityManager.HasComponent<MovementIgnoreGravityComponent>(uid);
+            comp.SavedState.HadCanMoveInAir = EntityManager.HasComponent<CanMoveInAirComponent>(uid);
         }
-
         private void SaveImmunities(EntityUid uid, GhostTargetingComponent comp)
         {
-            comp.HadZombieImmune = EntityManager.HasComponent<ZombieImmuneComponent>(uid);
-            comp.HadBreathingImmunity = EntityManager.HasComponent<BreathingImmunityComponent>(uid);
-            comp.HadPressureImmunity = EntityManager.HasComponent<PressureImmunityComponent>(uid);
-            comp.HadActiveListener = EntityManager.HasComponent<ActiveListenerComponent>(uid);
-            comp.HadWeakToHoly = EntityManager.HasComponent<WeakToHolyComponent>(uid);
-            comp.HadCrematoriumImmune = EntityManager.HasComponent<CrematoriumImmuneComponent>(uid);
+            if (comp.SavedState == null)
+                comp.SavedState = new GhostStateSnapshot();
+
+            comp.SavedState.HadZombieImmune = EntityManager.HasComponent<ZombieImmuneComponent>(uid);
+            comp.SavedState.HadBreathingImmunity = EntityManager.HasComponent<BreathingImmunityComponent>(uid);
+            comp.SavedState.HadPressureImmunity = EntityManager.HasComponent<PressureImmunityComponent>(uid);
+            comp.SavedState.HadActiveListener = EntityManager.HasComponent<ActiveListenerComponent>(uid);
+            comp.SavedState.HadWeakToHoly = EntityManager.HasComponent<WeakToHolyComponent>(uid);
+            comp.SavedState.HadCrematoriumImmune = EntityManager.HasComponent<CrematoriumImmuneComponent>(uid);
         }
 
         private void AddGhostComponents(EntityUid uid, GhostTargetingComponent comp)
         {
+            if (comp.SavedState == null) return;
+
             // Додаткові компоненти
-            if (!comp.HadFTLSmashImmune)
+            if (!comp.SavedState.HadFTLSmashImmune)
                 EntityManager.EnsureComponent<FTLSmashImmuneComponent>(uid);
-            if (!comp.HadUniversalLanguageSpeaker)
+            if (!comp.SavedState.HadUniversalLanguageSpeaker)
                 EntityManager.EnsureComponent<UniversalLanguageSpeakerComponent>(uid);
-            if (!comp.HadExaminer)
+            if (!comp.SavedState.HadExaminer)
                 EntityManager.EnsureComponent<ExaminerComponent>(uid);
-            if (!comp.HadSpeechDead)
+            if (!comp.SavedState.HadSpeechDead)
             {
                 var speech = EntityManager.EnsureComponent<SpeechComponent>(uid);
                 speech.SpeechVerb = "Dead";
@@ -394,44 +411,74 @@ namespace Content.Pirate.Server.Systems
 
         private void AddImmunities(EntityUid uid, GhostTargetingComponent comp)
         {
-            if (!comp.HadZombieImmune)
+            if (comp.SavedState == null) return;
+
+            if (!comp.SavedState.HadZombieImmune)
                 EntityManager.EnsureComponent<ZombieImmuneComponent>(uid);
-            if (!comp.HadBreathingImmunity)
+            if (!comp.SavedState.HadBreathingImmunity)
                 EntityManager.EnsureComponent<BreathingImmunityComponent>(uid);
-            if (!comp.HadPressureImmunity)
+            if (!comp.SavedState.HadPressureImmunity)
                 EntityManager.EnsureComponent<PressureImmunityComponent>(uid);
-            if (!comp.HadActiveListener)
+            if (!comp.SavedState.HadActiveListener)
                 EntityManager.EnsureComponent<ActiveListenerComponent>(uid);
-            if (!comp.HadWeakToHoly)
+            if (!comp.SavedState.HadWeakToHoly)
                 EntityManager.EnsureComponent<WeakToHolyComponent>(uid).AlwaysTakeHoly = true;
-            if (!comp.HadCrematoriumImmune)
+            if (!comp.SavedState.HadCrematoriumImmune)
                 EntityManager.EnsureComponent<CrematoriumImmuneComponent>(uid);
         }
 
-        private void SetupEyePhysicsVisibility(EntityUid uid, GhostTargetingComponent comp, bool ghostMode)
+        private void SetupEyeForGhost(EntityUid uid, GhostTargetingComponent comp, bool ghostMode)
         {
-            var visSys = EntityManager.System<VisibilitySystem>();
-            if (ghostMode)
+            if (EntityManager.TryGetComponent<EyeComponent>(uid, out var eyeComp) && eyeComp != null)
             {
-                // Eye
-                if (EntityManager.TryGetComponent<EyeComponent>(uid, out var eyeComp) && eyeComp != null)
+                var eyeSys = EntityManager.System<EyeSystem>();
+                if (ghostMode)
                 {
-                    var eyeSys = EntityManager.System<EyeSystem>();
                     var mask = eyeComp.VisibilityMask | (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
                     mask |= (int) Content.Shared.Eye.VisibilityFlags.Ghost;
                     eyeSys.SetDrawFov(uid, false, eyeComp);
                     eyeSys.SetVisibilityMask(uid, mask, eyeComp);
                 }
+                else
+                {
+                    var mask = eyeComp.VisibilityMask | (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
+                    mask &= ~(int) Content.Shared.Eye.VisibilityFlags.Ghost;
+                    if (comp.SavedState?.DrawFov.HasValue == true)
+                        eyeSys.SetDrawFov(uid, comp.SavedState.DrawFov.Value, eyeComp);
+                    eyeSys.SetVisibilityMask(uid, mask, eyeComp);
+                }
+            }
+        }
 
-                // Physics
+        private void SetupPhysicsForGhost(EntityUid uid, GhostTargetingComponent comp, bool ghostMode)
+        {
+            if (ghostMode)
+            {
                 if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics2) && physics2 != null)
                 {
                     var physicsSys = EntityManager.System<SharedPhysicsSystem>();
                     physicsSys.SetCanCollide(uid, false, body: physics2);
                     physicsSys.SetBodyType(uid, Robust.Shared.Physics.BodyType.KinematicController, body: physics2);
                 }
+            }
+            else
+            {
+                if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) && physics != null)
+                {
+                    var physicsSys = EntityManager.System<SharedPhysicsSystem>();
+                    if (comp.SavedState?.CanCollide.HasValue == true)
+                        physicsSys.SetCanCollide(uid, comp.SavedState.CanCollide.Value, body: physics);
+                    if (comp.SavedState?.BodyType.HasValue == true)
+                        physicsSys.SetBodyType(uid, comp.SavedState.BodyType.Value, body: physics);
+                }
+            }
+        }
 
-                // Visibility
+        private void SetupVisibilityForGhost(EntityUid uid, GhostTargetingComponent comp, bool ghostMode)
+        {
+            var visSys = EntityManager.System<VisibilitySystem>();
+            if (ghostMode)
+            {
                 var visComp2 = EntityManager.EnsureComponent<VisibilityComponent>(uid);
                 visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.Normal, false);
                 visSys.AddLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
@@ -439,37 +486,15 @@ namespace Content.Pirate.Server.Systems
             }
             else
             {
-                // Eye
-                if (EntityManager.TryGetComponent<EyeComponent>(uid, out var eyeComp) && eyeComp != null)
-                {
-                    var eyeSys = EntityManager.System<EyeSystem>();
-                    var mask = eyeComp.VisibilityMask | (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
-                    mask &= ~(int) Content.Shared.Eye.VisibilityFlags.Ghost;
-                    if (comp.OldDrawFov.HasValue)
-                        eyeSys.SetDrawFov(uid, comp.OldDrawFov.Value, eyeComp);
-                    eyeSys.SetVisibilityMask(uid, mask, eyeComp);
-                }
-
-                // Physics
-                if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) && physics != null)
-                {
-                    var physicsSys = EntityManager.System<SharedPhysicsSystem>();
-                    if (comp.OldCanCollide.HasValue)
-                        physicsSys.SetCanCollide(uid, comp.OldCanCollide.Value, body: physics);
-                    if (comp.OldBodyType.HasValue)
-                        physicsSys.SetBodyType(uid, comp.OldBodyType.Value, body: physics);
-                }
-
-                // Visibility
-                if (comp.OldVisibilityLayers.HasValue)
+                if (comp.SavedState?.VisibilityLayers.HasValue == true)
                 {
                     var visComp2 = EntityManager.EnsureComponent<VisibilityComponent>(uid);
                     visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
                     visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.Normal, false);
-                    ushort layers = (ushort) comp.OldVisibilityLayers.Value;
-                    for (int i = 0; i < 16; i++)
+                    var layers = (ushort) comp.SavedState.VisibilityLayers.Value;
+                    for (var i = 0; i < 16; i++)
                     {
-                        ushort flag = (ushort) (1 << i);
+                        var flag = (ushort) (1 << i);
                         if ((layers & flag) != 0)
                             visSys.AddLayer((uid, visComp2), flag, false);
                     }
@@ -477,6 +502,13 @@ namespace Content.Pirate.Server.Systems
                     visSys.RefreshVisibility(uid, visibilityComponent: visComp2);
                 }
             }
+        }
+
+        private void SetupEyePhysicsVisibility(EntityUid uid, GhostTargetingComponent comp, bool ghostMode)
+        {
+            SetupEyeForGhost(uid, comp, ghostMode);
+            SetupPhysicsForGhost(uid, comp, ghostMode);
+            SetupVisibilityForGhost(uid, comp, ghostMode);
         }
 
         private void UpdateActionIcon(EntityUid action, ToggleGhostFormActionEvent args, bool ghostMode)
@@ -502,111 +534,79 @@ namespace Content.Pirate.Server.Systems
 
         private void RemoveGhostComponents(EntityUid uid, GhostTargetingComponent comp)
         {
+            if (comp.SavedState == null) return;
+
             // Додаткові компоненти
-            if (!comp.HadFTLSmashImmune && EntityManager.HasComponent<FTLSmashImmuneComponent>(uid))
+            if (!comp.SavedState.HadFTLSmashImmune && EntityManager.HasComponent<FTLSmashImmuneComponent>(uid))
                 EntityManager.RemoveComponent<FTLSmashImmuneComponent>(uid);
-            if (!comp.HadUniversalLanguageSpeaker && EntityManager.HasComponent<UniversalLanguageSpeakerComponent>(uid))
+            if (!comp.SavedState.HadUniversalLanguageSpeaker && EntityManager.HasComponent<UniversalLanguageSpeakerComponent>(uid))
                 EntityManager.RemoveComponent<UniversalLanguageSpeakerComponent>(uid);
-            if (!comp.HadExaminer && EntityManager.HasComponent<ExaminerComponent>(uid))
+            if (!comp.SavedState.HadExaminer && EntityManager.HasComponent<ExaminerComponent>(uid))
                 EntityManager.RemoveComponent<ExaminerComponent>(uid);
-            if (!comp.HadSpeechDead && EntityManager.HasComponent<SpeechComponent>(uid))
+            if (!comp.SavedState.HadSpeechDead && EntityManager.HasComponent<SpeechComponent>(uid))
             {
                 var speech = EntityManager.GetComponent<SpeechComponent>(uid);
-                speech.SpeechVerb = comp.OldSpeechVerb ?? "Normal";
+                speech.SpeechVerb = comp.SavedState.OldSpeechVerb ?? "Normal";
             }
 
             // Fixtures: змінити layer на GhostImpassable
-            if (EntityManager.TryGetComponent(uid, out FixturesComponent? fixtures) && fixtures != null)
+            if (EntityManager.TryGetComponent(uid, out FixturesComponent? fixtures) &&
+                fixtures != null &&
+                comp.SavedState.FixtureLayers != null)
             {
                 var fixtureSys = EntityManager.System<FixtureSystem>();
-                int i = 0;
-                var toUpdate = new List<(string id, Robust.Shared.Physics.Dynamics.Fixture oldFixture, int newLayer)>();
-                foreach (var kvp in fixtures.Fixtures)
-                {
-                    var id = kvp.Key;
-                    var fixture = kvp.Value;
-                    int newLayer = comp.IsGhost
-                        ? (int) Content.Shared.Physics.CollisionGroup.GhostImpassable
-                        : (comp.OldFixtureLayers != null && i < comp.OldFixtureLayers.Count
-                            ? comp.OldFixtureLayers[i]
-                            : fixture.CollisionLayer);
-                    toUpdate.Add((id, fixture, newLayer));
-                    i++;
-                }
+                var fixturesList = fixtures.Fixtures.ToList();
 
-                foreach (var (id, oldFixture, newLayer) in toUpdate)
+                for (var i = 0; i < fixturesList.Count && i < comp.SavedState.FixtureLayers.Count; i++)
                 {
-                    // Destroy old fixture
-                    fixtureSys.DestroyFixture(uid, id, oldFixture, false);
-                    // Recreate with new layer
-                    fixtureSys.TryCreateFixture(
-                        uid,
-                        oldFixture.Shape,
-                        id,
-                        oldFixture.Density,
-                        oldFixture.Hard,
-                        newLayer,
-                        oldFixture.CollisionMask,
-                        oldFixture.Friction,
-                        oldFixture.Restitution,
-                        true
-                    );
+                    var (id, fixture) = fixturesList[i];
+                    var oldLayer = comp.SavedState.FixtureLayers[i];
+
+                    if (fixture.CollisionLayer != oldLayer)
+                    {
+                        fixtureSys.DestroyFixture(uid, id, fixture, false);
+                        fixtureSys.TryCreateFixture(
+                            uid, fixture.Shape, id, fixture.Density, fixture.Hard,
+                            oldLayer, fixture.CollisionMask, fixture.Friction,
+                            fixture.Restitution, true
+                        );
+                    }
                 }
             }
 
-            if (!comp.HadContentEye && EntityManager.HasComponent<ContentEyeComponent>(uid))
+            if (!comp.SavedState.HadContentEye && EntityManager.HasComponent<ContentEyeComponent>(uid))
                 EntityManager.RemoveComponent<ContentEyeComponent>(uid);
-            if (!comp.HadMovementIgnoreGravity && EntityManager.HasComponent<MovementIgnoreGravityComponent>(uid))
+            if (!comp.SavedState.HadMovementIgnoreGravity && EntityManager.HasComponent<MovementIgnoreGravityComponent>(uid))
                 EntityManager.RemoveComponent<MovementIgnoreGravityComponent>(uid);
-            if (!comp.HadCanMoveInAir && EntityManager.HasComponent<CanMoveInAirComponent>(uid))
+            if (!comp.SavedState.HadCanMoveInAir && EntityManager.HasComponent<CanMoveInAirComponent>(uid))
                 EntityManager.RemoveComponent<CanMoveInAirComponent>(uid);
-            if (!comp.HadPhysics && EntityManager.HasComponent<PhysicsComponent>(uid))
+            if (!comp.SavedState.HadPhysics && EntityManager.HasComponent<PhysicsComponent>(uid))
                 EntityManager.RemoveComponent<PhysicsComponent>(uid);
         }
 
         private void RemoveImmunities(EntityUid uid, GhostTargetingComponent comp)
         {
-            if (!comp.HadZombieImmune && EntityManager.HasComponent<ZombieImmuneComponent>(uid))
+            if (comp.SavedState == null) return;
+
+            if (!comp.SavedState.HadZombieImmune && EntityManager.HasComponent<ZombieImmuneComponent>(uid))
                 EntityManager.RemoveComponent<ZombieImmuneComponent>(uid);
-            if (!comp.HadBreathingImmunity && EntityManager.HasComponent<BreathingImmunityComponent>(uid))
+            if (!comp.SavedState.HadBreathingImmunity && EntityManager.HasComponent<BreathingImmunityComponent>(uid))
                 EntityManager.RemoveComponent<BreathingImmunityComponent>(uid);
-            if (!comp.HadPressureImmunity && EntityManager.HasComponent<PressureImmunityComponent>(uid))
+            if (!comp.SavedState.HadPressureImmunity && EntityManager.HasComponent<PressureImmunityComponent>(uid))
                 EntityManager.RemoveComponent<PressureImmunityComponent>(uid);
-            if (!comp.HadActiveListener && EntityManager.HasComponent<ActiveListenerComponent>(uid))
+            if (!comp.SavedState.HadActiveListener && EntityManager.HasComponent<ActiveListenerComponent>(uid))
                 EntityManager.RemoveComponent<ActiveListenerComponent>(uid);
-            if (!comp.HadWeakToHoly && EntityManager.HasComponent<WeakToHolyComponent>(uid))
+            if (!comp.SavedState.HadWeakToHoly && EntityManager.HasComponent<WeakToHolyComponent>(uid))
                 EntityManager.RemoveComponent<WeakToHolyComponent>(uid);
-            if (!comp.HadCrematoriumImmune && EntityManager.HasComponent<CrematoriumImmuneComponent>(uid))
+            if (!comp.SavedState.HadCrematoriumImmune && EntityManager.HasComponent<CrematoriumImmuneComponent>(uid))
                 EntityManager.RemoveComponent<CrematoriumImmuneComponent>(uid);
         }
 
-        private void RestoreState(EntityUid uid, GhostTargetingComponent comp)
-        {
-            // Eye/Physics/Visibility відновлюються у SetupEyePhysicsVisibility
-        }
 
-        private void RestoreImmunities(EntityUid uid, GhostTargetingComponent comp)
-        {
-            // Імунітети видаляються у RemoveImmunities
-        }
 
         private void ClearSavedState(GhostTargetingComponent comp)
         {
-            comp.OldVisibilityMask = null;
-            comp.OldDrawFov = null;
-            comp.OldCanCollide = null;
-            comp.OldBodyType = null;
-            comp.HadPhysics = false;
-            comp.HadContentEye = false;
-            comp.HadMovementIgnoreGravity = false;
-            comp.HadCanMoveInAir = false;
-            comp.HadZombieImmune = false;
-            comp.HadBreathingImmunity = false;
-            comp.HadPressureImmunity = false;
-            comp.HadActiveListener = false;
-            comp.HadWeakToHoly = false;
-            comp.HadCrematoriumImmune = false;
-            comp.OldVisibilityLayers = null;
+            comp.SavedState = null;
         }
     }
 }

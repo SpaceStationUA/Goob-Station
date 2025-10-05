@@ -1,6 +1,6 @@
 cargoproduct-category-name-armory = Зброя
 cargoproduct-category-name-atmospherics = Атмосферика
-cargoproduct-category-name-cargo = Вантаж
+cargoproduct-category-name-cargo = Карго
 cargoproduct-category-name-circuitboards = Друковані плати
 cargoproduct-category-name-emergency = Надзвичайна ситуація
 cargoproduct-category-name-engineering = Інжиніринг

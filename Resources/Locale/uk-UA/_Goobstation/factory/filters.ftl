@@ -20,3 +20,14 @@ stack-filter-stack-chunk-size = Розмір вихідного шматка
 pressure-filter-window-title = Редагувати фільтр тиску
 pressure-filter-min-pressure = Мін. тиск
 pressure-filter-max-pressure = Макс. тиск
+
+anchor-filter-examine-enabled = Він налаштований пропускати лише закріплені предмети.
+anchor-filter-examine-disabled = Він налаштований пропускати лише незакріплені предмети.
+mob-filter-window-title = Редагувати фільтр мобів
+mob-state-Alive = Живий
+mob-state-Dead = Мертвий
+mob-state-Critical = Критичний
+mob-filter-examine-unset = Не налаштовано жодних станів мобів
+mob-filter-examine-set = Він налаштований пропускати мобів у цих станах: {$states}
+cuff-filter-examine-enabled = Він налаштований пропускати тільки мобів у наручниках.
+cuff-filter-examine-disabled = Він налаштований пропускати тільки мобів без наручників.

@@ -359,4 +359,81 @@
   id: 42
   time: '2025-06-09T22:56:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38186
+- author: ArtisticRoomba
+  changes:
+  - message: Енергомережа низької напруги ядра ШІ Amber була розділена, тому кожна кімната
+      тепер має свій власний АРС. Раніше, якщо ви перемикали АРС, коли турелі ШІ були
+      увімкнені, це викликало нескінченне мерехтіння, що могло спричинити напади,
+      тому це тимчасове виправлення, доки не буде знайдено справжню причину.
+    type: Tweak
+  id: 43
+  time: '2025-06-10T09:36:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38209
+- author: Vortebo
+  changes:
+  - message: На карті Relic виправлено помилки мапінгу та додано більше обладнання,
+      необхідного для роботи.
+    type: Fix
+  id: 44
+  time: '2025-06-11T22:25:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38269
+- author: Deerstop
+  changes:
+  - message: На карті Elkridge кілька зон зазнали значних переробок, включаючи Сховище,
+      офіс ГК, шлюз для виходу у відкритий космос, зону загального доступу та Зброярню.
+    type: Tweak
+  id: 45
+  time: '2025-06-13T19:17:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38259
+- author: SlamBamActionman
+  changes:
+  - message: Станція Exo отримала "патч першого дня", що виправляє різні помилки
+      мапінгу та вносить деякі невеликі зміни в баланс.
+    type: Fix
+  id: 46
+  time: '2025-06-16T16:43:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38348
+- author: SlamBamActionman
+  changes:
+  - message: Станція Exo отримала незначні зміни балансу та виправлення, а також
+      було дещо змінено її схему атмосферики.
+    type: Tweak
+  id: 47
+  time: '2025-06-19T04:06:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38435
+- author: UpAndLeaves
+  changes:
+  - message: Служба безпеки Центрального Командування тепер використовує систему загального
+      доступу (genpop).
+    type: Add
+  id: 48
+  time: '2025-07-02T03:14:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37494
+- author: SlamBamActionman
+  changes:
+  - message: Станція Exo зазнала кількох незначних змін та виправлень, включаючи
+      зміну у сховищі ядерної бомби, що дозволяє закріпити її в центрі та заблокувати
+      вікна вибухозахисними дверима.
+    type: Fix
+  - message: Ліміт гравців на станції Exo збільшено з 30-70 до 40-80.
+    type: Tweak
+  id: 49
+  time: '2025-07-03T18:51:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38689
+- author: qwerltaz
+  changes:
+  - message: На карті Bagel перероблено відділ Служби Безпеки, додавши зону загального
+      доступу (GenPop).
+    type: Tweak
+  id: 50
+  time: '2025-07-10T18:16:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38829
+- author: WarPigeon
+  changes:
+  - message: Шлюз утилізації на карті Bagel більше не повинен розгерметизовувати
+      вантажний відсік.
+    type: Fix
+  id: 51
+  time: '2025-07-19T19:40:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38956
 Order: 1

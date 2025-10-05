@@ -2,9 +2,7 @@ lock-comp-on-examined-is-locked = {$entityName} виглядає зачинен�
 lock-comp-on-examined-is-unlocked = {$entityName} виглядає відчиненим.
 lock-comp-do-lock-success = Ви зачинили {$entityName}.
 lock-comp-do-unlock-success = Ви відчинили {$entityName}.
-lock-comp-has-user-access-fail = Доступ заборонено
-
-## ToggleLockVerb
+lock-comp-has-user-access-fail = Доступ заборонено.
 
 toggle-lock-verb-unlock = Відчинити
 toggle-lock-verb-lock = Зачинити

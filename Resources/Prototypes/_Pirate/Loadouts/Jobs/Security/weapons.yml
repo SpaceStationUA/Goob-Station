@@ -42,7 +42,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Security
-      time: 216000 # 60 hrs
+      time: 216000 # 60 годин
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
@@ -61,7 +61,7 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Security
-      time: 216000 # 80 hrs
+      time: 288000 # 80 годин
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
@@ -206,3 +206,21 @@
   storage:
     back:
     - WeaponDisablerSMG
+
+- type: loadout
+  id: LoadoutSecurityEnergyGunPistol
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Staff Sergeant
+  storage:
+    back:
+    - WeaponEnergyGunPistol
+
+- type: loadout
+  id: LoadoutSecurityGunLaserCarbineAutomatic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Warrant Officer
+  storage:
+    back:
+    - WeaponGunLaserCarbineAutomatic

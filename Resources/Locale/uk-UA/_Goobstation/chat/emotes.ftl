@@ -24,7 +24,7 @@ chat-emote-msg-flap = махає {POSS-ADJ($entity)} крилами.
 chat-emote-msg-trill = видає трель!
 chat-emote-msg-warble = щебече!
 chat-emote-msg-wurble = воркоче!
-chat-emote-msg-mars = псує.
+chat-emote-msg-mars = маркає.
 
 
 # Різне

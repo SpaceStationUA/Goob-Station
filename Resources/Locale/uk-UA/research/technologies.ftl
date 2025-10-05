@@ -58,8 +58,8 @@ research-technology-wave-particle-harnessing = Приборкання хвиль
 research-technology-advanced-riot-control = Просунутий Контроль Натовпу
 research-technology-portable-microfusion-weaponry = Портативна Мікрофузійна Зброя
 research-technology-experimental-battery-ammo = Експериментальні акумуляторні боєприпаси
-research-technology-basic-shuttle-armament = Базове Озброєння Шатлу
-research-technology-advanced-shuttle-weapon = Просунуте Озброєння Шатлу
+research-technology-basic-shuttle-armament = Базове озброєння шатлів
+research-technology-advanced-shuttle-weapon = Просунуте озброєння шатлів
 
 research-technology-basic-robotics = Базова Робототехніка
 research-technology-basic-anomalous-research = Базові Аномальні Дослідження
@@ -96,3 +96,7 @@ research-technology-bluespace-cargo-transport = Блюспейс-транспо�
 research-technology-clowning-utilities = Клоунські утиліти
 research-technology-quantum-fiber-weaving = Квантове Плетіння Волокон
 research-technology-bluespace-chemistry = Блюспейс-хімія
+
+research-technology-kinetic-modifications = Кінетичні модифікації
+research-technology-thermal-weaponry = Термальна зброя
+research-technology-dual-wielding-technology = Технологія подвійного володіння

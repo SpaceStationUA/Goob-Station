@@ -12,3 +12,4 @@ janitorial-trolley-slot-component-slot-name-mop = Швабра
 mop-bucket-slot-component-slot-name-item = Предмет
 mop-bucket-slot-component-eject-verb = Вийняти
 # візок прибиральника
+janitorial-trolley-slot-component-slot-name-goldenplunger = Золотий вантуз

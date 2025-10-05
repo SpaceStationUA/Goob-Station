@@ -51,3 +51,22 @@ marking-TattooEyeMothRight = Праве Око
 
 marking-TattooEyeMothLeft-tattoo_eye_moth_l = Ліве Око
 marking-TattooEyeMothLeft = Ліве Око
+
+marking-TattooEyeVoxRight-tattoo_eye_vox_r = Праве око
+marking-TattooEyeVoxRight = Праве око
+marking-TattooEyeVoxLeft-tattoo_eye_vox_l = Ліве око
+marking-TattooEyeVoxLeft = Ліве око
+marking-TattooEyeshadowUpper-tattoo_eyeshadow_upper = Тіні для повік (верхні)
+marking-TattooEyeshadowUpper = Тіні для повік (верхні)
+marking-TattooEyeshadowLower-tattoo_eyeshadow_lower = Тіні для повік (нижні)
+marking-TattooEyeshadowLower = Тіні для повік (нижні)
+marking-TattooEyeshadowLowerReptilian-tattoo_eyeshadow_lower_reptilian = Тіні для повік (нижні)
+marking-TattooEyeshadowLowerReptilian = Тіні для повік (нижні)
+marking-TattooEyeshadowVoxSmall-tattoo_eyeshadow_small = Тіні для повік (маленькі)
+marking-TattooEyeshadowVoxSmall = Тіні для повік (маленькі)
+marking-TattooEyeshadowVoxMedium-tattoo_eyeshadow_medium = Тіні для повік (середні)
+marking-TattooEyeshadowVoxMedium = Тіні для повік (середні)
+marking-TattooEyeshadowVoxLarge-tattoo_eyeshadow_Large = Тіні для повік (великі)
+marking-TattooEyeshadowVoxLarge = Тіні для повік (великі)
+marking-TattooVoxTailRing-tattoo_vox_tail_ring = Кільце на хвості
+marking-TattooVoxTailRing = Кільце на хвості

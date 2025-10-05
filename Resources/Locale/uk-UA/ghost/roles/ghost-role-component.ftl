@@ -369,3 +369,5 @@ ghost-role-information-wizard-name = Чарівник
 ghost-role-information-wizard-desc = ТИ ЧАРІВНИК! Покажи станції, з чого зроблена твоя магія.
 ghost-role-information-emotional-support-scurret-name = Скуррет емоційної підтримки
 ghost-role-information-emotional-support-scurret-description = Підтримуйте екіпаж, будьте чарівними, часто кажіть "ва".
+ghost-role-information-moproach-name = Мопроч
+ghost-role-information-moproach-description = Милий мотильок-тарган з ще милішими черевичками-швабрами на лапках.

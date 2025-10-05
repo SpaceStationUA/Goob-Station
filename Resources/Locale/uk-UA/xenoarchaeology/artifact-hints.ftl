@@ -70,13 +70,8 @@ xenoarch-trigger-tip-throw = Кидок
 xenoarch-trigger-tip-death = Смерть
 xenoarch-trigger-tip-magnet = Магнітні хвилі
 
-## Goob stuff
-xenoarch-trigger-tip-bz = BZ
-xenoarch-trigger-tip-nitrium = Нітрій
-xenoarch-trigger-tip-healium = Хілій
-xenoarch-trigger-tip-pluoxium = Плуоксій
+### Підказки до опису
 
-### Description hints
 xenoarch-trigger-examine-wrenching = Навколо обертається якась незакріплена деталь.
 xenoarch-trigger-examine-prying = З поверхні виступає панель.
 xenoarch-trigger-examine-screwing = Є піднята секція з невеликим заглибленням.

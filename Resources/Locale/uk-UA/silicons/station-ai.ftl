@@ -39,3 +39,5 @@ station-ai-hologram-male = Чоловіча зовнішність
 station-ai-hologram-face = Безтілесна голова
 station-ai-hologram-cat = Форма кота
 station-ai-hologram-dog = Форма коргі
+station-ai-hologram-kobold = Форма кобольда
+station-ai-hologram-monkey = Форма мавпи

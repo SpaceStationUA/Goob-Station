@@ -82,10 +82,6 @@ job-name-ertjanitor = Прибиральник КШР
 job-name-boxer = Боксер
 job-name-zookeeper = Доглядач зоопарку
 job-name-visitor = Відвідувач
-
-# невикористовувані роботи
-# вони потрібні для підказок значків роботи в ID карті агента
-# Я залишаю їх для можливостей рольової гри
 job-name-geneticist = Генетик
 job-name-no-id = Без ID
 job-name-prisoner = В'язень
@@ -150,3 +146,5 @@ JobTechnicalAssistant = Технічний асистент
 JobVisitor = Відвідувач
 JobWarden = Наглядач
 JobZookeeper = Доглядач зоопарку
+
+job-name-cluwne = Клууня

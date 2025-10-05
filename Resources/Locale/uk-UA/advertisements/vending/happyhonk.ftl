@@ -9,6 +9,6 @@ advertisement-happyhonk-8 = Чому б не попросити наш обме�
 advertisement-happyhonk-9 = Happy Honk є торговою маркою Honk! co. і значно перевершує Robust Nukie Food corp.
 advertisement-happyhonk-10 = Наші страви Happy Honk неодмінно приготують для вас приємний сюрприз!
 thankyou-happyhonk-1 = Хонк!
-thankyou-happyhonk-2 = Хонк, хонк, хонк!
+thankyou-happyhonk-2 = Хонк-хонк!
 thankyou-happyhonk-3 = Іди, розділи радість! Хонк!
 thankyou-happyhonk-4 = Іди, підставляй людей! Хонк!

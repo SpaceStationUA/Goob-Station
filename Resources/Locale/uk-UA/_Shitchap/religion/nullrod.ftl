@@ -14,3 +14,5 @@ alternate-pray-prompt = Молитися до {$item}
 alternate-pray-start = {$user} починає шепотіти до {$item}...
 
 nullrod-spelldenial-popup = СИЛА БОЖА ЗМУШУЄ ТЕБЕ!
+
+nullrod-bulwark-untrained-usage-popup = Ви не можете витримати вагу власних гріхів, не кажучи вже про цей шматок сталі.

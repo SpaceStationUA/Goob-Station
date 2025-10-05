@@ -173,8 +173,16 @@
   - Headphones
   - PlushieLizard
   - PlushieSpaceLizard
+  - PlushieEntony # PIRATE
+  - PlushieIpcCat # PIRATE
+  - PlushieTK # PIRATE
+  - PlushieKateryna # PIRATE
+  - PlushieNicholasGray # PIRATE
+  - PlushieOlia # PIRATE
+  - PlushieSkeleton # PIRATE
+  - PlushieVulpSusie # PIRATE
   - PersonalAI # Goobstation
-  - GoldPersonalAI # Goobstation
+  - GoldenPersonalAI # Goobstation
   - ThreeCandles
   - Lighter
   - CigPackGreen
@@ -348,7 +356,6 @@
   minLimit: 0
   loadouts:
   - HoPHead
-  - HoPBeret
 
 - type: loadoutGroup
   id: HoPJumpsuit
@@ -1439,6 +1446,8 @@
   - LoadoutSecurityEnergyGunMini
   - LoadoutSecurityEnergyGun
   - LoadoutSecurityDisablerSMG
+  - LoadoutSecurityEnergyGunPistol
+  - LoadoutSecurityGunLaserCarbineAutomatic
 # SECURITY - PIRATE END
 
 # Medical

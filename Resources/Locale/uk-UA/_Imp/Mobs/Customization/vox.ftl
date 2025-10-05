@@ -253,7 +253,6 @@ marking-VoxTailNub-nub2 = Шрам
 marking-VoxTailRaptor = Раптор
 marking-VoxTailRaptor-raptor = Хвіст
 
-marking-VoxTailShort = Короткий донизу
 marking-VoxTailShort-short = Хвіст
 
 marking-VoxTailShort2 = Короткий догори
@@ -271,4 +270,6 @@ marking-VoxTailSplit-split = Роздвоєний
 marking-VoxSunAndMoon = Сонце та Місяць
 marking-VoxSunAndMoon-sunandmoon = Сонце та Місяць
 
-marking-VoxTail = Стандартний хвіст
+
+marking-VoxTailShort1 = Короткий вниз
+marking-VoxTailShort1-short = Хвіст

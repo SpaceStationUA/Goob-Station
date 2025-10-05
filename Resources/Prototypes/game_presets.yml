@@ -150,6 +150,7 @@
     - Changeling # Goobstation - changeling playtest
     - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
+    - Shadowling # Einstein Engines - Shadowlings
 
 - type: gamePreset
   id: Extended

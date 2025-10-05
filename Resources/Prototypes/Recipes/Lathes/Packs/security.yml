@@ -84,11 +84,13 @@
   - ClothingBackpackElectropack
   - HoloprojectorSecurity
   - HoloprojectorSecurityAdvanced
+  - AntiMindControlDevice
   - PortableRecharger
   - PowerCageHigh
   - PowerCageMedium
   - PowerCageSmall
   - TelescopicShield
+  - ClothingBackpackHarmpack
   - ClothingHeadHelmetInsulated # PIRATE psionic
   - ClothingHeadCage # PIRATE psionic
   - ClothingNeckBaseShockCollar # PIRATE
@@ -140,7 +142,7 @@
   - MagazinePistolMindbreaker # PIRATE psionic
   - MagazineBoxPistolMindbreaker # PIRATE psionic
   - ShellSoulbreaker # PIRATE psionic
-  - BoxShellSoulbreaker
+  - BoxShellSoulbreaker # PIRATE psionic
 
 - type: latheRecipePack
   id: SecurityWeapons

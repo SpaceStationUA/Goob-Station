@@ -136,7 +136,6 @@ guide-entry-blood-cult = Культ крові
 
 guide-entry-Psionic-Mantis = Псіонічний богомол
 guide-entry-vampires = Вампіри
-guide-entry-shadowlings = Тіньовики
 guide-entry-expandingrepairingstation = Розширення та ремонт станції
 guide-entry-wirepanels = Панелі з проводами
 guide-entry-airlocks = Шлюзи
@@ -215,3 +214,4 @@ guide-entry-rules-mrp-m0 = Правила MRP
 guide-entry-rules-m1 = M1
 
 guide-entry-plastic = Виробництво пластикових листів
+guide-entry-ressureregulator = Регулятор тиску

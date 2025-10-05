@@ -4,7 +4,7 @@
   quantized: true
   minTemp: 400
   reactants:
-    Ash:
+    Blood:
       amount: 5 # DeltaV - Change from 10 to 5 to fit the guidebook recipe
     Potash:
       amount: 10

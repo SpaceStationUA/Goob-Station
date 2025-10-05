@@ -184,14 +184,14 @@ accent-newyork-words-replace-61 = є
 accent-newyork-words-62 = є
 accent-newyork-words-replace-62 = є
 
-accent-newyork-words-63 = the
+accent-newyork-words-63 = цей
 accent-newyork-words-replace-63 = цей
 
 accent-newyork-words-64 = до
-accent-newyork-words-replace-64 = к
+accent-newyork-words-replace-64 = до
 
-accent-newyork-words-65 = а
-accent-newyork-words-replace-65 = а
+accent-newyork-words-65 = з
+accent-newyork-words-replace-65 = з
 
 accent-newyork-words-66 = про
 accent-newyork-words-replace-66 = за
@@ -244,7 +244,7 @@ accent-newyork-words-replace-81 = вали
 accent-newyork-words-82 = добре
 accent-newyork-words-replace-82 = норм
 
-accent-newyork-words-83 = іПЛ
+accent-newyork-words-83 = іПШ
 accent-newyork-words-replace-83 = залізяка
 
 accent-newyork-words-84 = дурень
@@ -256,8 +256,8 @@ accent-newyork-words-replace-85 = шось
 accent-newyork-words-86 = втомився від
 accent-newyork-words-replace-86 = задовбало
 
-accent-newyork-words-87 = полагодити
-accent-newyork-words-replace-87 = підлатати
+accent-newyork-words-87 = лагодити
+accent-newyork-words-replace-87 = залатати
 
 accent-newyork-words-88 = зламаний
 accent-newyork-words-replace-88 = накрився
@@ -292,10 +292,10 @@ accent-newyork-words-replace-97 = ми будем
 accent-newyork-words-98 = вони будуть
 accent-newyork-words-replace-98 = вони будуть
 
-accent-newyork-words-99 = був би
-accent-newyork-words-replace-99 = був би
+accent-newyork-words-99 = мав би
+accent-newyork-words-replace-99 = мав би
 
-accent-newyork-words-100 = слід було б
+accent-newyork-words-100 = слід було
 accent-newyork-words-replace-100 = тре було
 
 accent-newyork-words-101 = міг би
@@ -325,17 +325,17 @@ accent-newyork-words-replace-108 = та нє
 accent-newyork-words-109 = мати
 accent-newyork-words-replace-109 = є
 
-accent-newyork-words-110 = тут є
-accent-newyork-words-replace-110 = тут є
+accent-newyork-words-110 = є
+accent-newyork-words-replace-110 = є
 
-accent-newyork-words-111 = тут є
-accent-newyork-words-replace-111 = тут є
+accent-newyork-words-111 = є
+accent-newyork-words-replace-111 = є
 
 accent-newyork-words-112 = давай
 accent-newyork-words-replace-112 = го
 
 accent-newyork-words-113 = псіоніка
-accent-newyork-words-replace-113 = мозгоправство
+accent-newyork-words-replace-113 = мозкоправство
 
 accent-newyork-words-114 = хочу
 accent-newyork-words-replace-114 = хо
@@ -374,12 +374,12 @@ accent-newyork-words-125 = вона є
 accent-newyork-words-replace-125 = вона
 
 accent-newyork-words-126 = воно є
-accent-newyork-words-replace-126 = воно
+accent-newyork-words-replace-126 = це
 
 accent-newyork-words-127 = хто є
 accent-newyork-words-replace-127 = хто
 
-accent-newyork-words-128 = що є
+accent-newyork-words-128 = що
 accent-newyork-words-replace-128 = шо
 
 accent-newyork-words-129 = де є

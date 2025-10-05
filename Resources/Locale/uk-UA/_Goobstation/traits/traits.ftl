@@ -29,3 +29,8 @@ trait-movement-impaired-name = Порушення рухливості
 trait-movement-impaired-desc = Здається, ви не можете добре ходити без сторонньої допомоги. Палиця в комплекті.
 
 movement-impaired-trait-examined = [color=yellow]{CAPITALIZE(SUBJECT($target))}, здається, трохи накульгує. Схоже, {SUBJECT($target)} не може добре ходити без допомоги.[/color]
+
+trait-social-anxiety-name = Соціальна тривожність
+trait-social-anxiety-disc = У вас паралізуюча соціальна тривожність, вас лякають прояви прихильності, такі як обійми.
+trait-deaf-name = Глухий
+trait-deaf-disc = Ви абсолютно глухий, ви нічого не чуєте, навіть себе!
