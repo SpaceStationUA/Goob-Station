@@ -36,7 +36,7 @@ internal sealed class NoosphericZapRule : StationEventSystem<NoosphericZapRuleCo
         foreach (var psion in psionicList)
         {
             // Stun the psionic
-            _stamina.TakeStaminaDamage(psion, (float) 100);
+            _stamina.TakeStaminaDamage(psion, (float)500);
 
             // Potentially modify power reroll chances if they have rerolls available
             if (TryComp<PsionicComponent>(psion, out var psionicComp) && psionicComp.CanReroll)

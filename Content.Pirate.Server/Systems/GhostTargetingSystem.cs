@@ -7,7 +7,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using Robust.Shared.Physics.Dynamics;
-
 using Robust.Shared.Log;
 using Robust.Shared.GameObjects;
 using Robust.Server.GameObjects;
@@ -15,7 +14,6 @@ using Robust.Server.Player;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -28,16 +26,14 @@ using Content.Shared.Popups;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Examine;
 using Content.Shared.Speech;
-
 using Content.Server.Zombies;
 using Content.Server.Atmos.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Actions;
 using Content.Server._EinsteinEngines.Language;
-
+using Content.Shared._EinsteinEngines.Language.Components;
 using Content.Goobstation.Shared.Religion;
 using Content.Goobstation.Shared.CrematorImmune;
-
 using Content.Pirate.Shared.Components;
 using Content.Pirate.Shared;
 
@@ -55,6 +51,7 @@ namespace Content.Pirate.Server.Systems
             SubscribeLocalEvent<GhostTargetingComponent, ToggleGhostFormActionEvent>(OnToggleGhostForm);
             SubscribeLocalEvent<GhostTargetingComponent, GhostBlinkActionEvent>(OnGhostBlinkAction);
         }
+
         private void OnGhostBlinkAction(EntityUid uid, GhostTargetingComponent comp, GhostBlinkActionEvent args)
         {
             var entityManager = EntityManager;
@@ -79,7 +76,7 @@ namespace Content.Pirate.Server.Systems
                 // Ensure VisibilityComponent exists
                 var visComp = entityManager.EnsureComponent<VisibilityComponent>(effect);
                 var visSys = entityManager.System<VisibilitySystem>();
-                visSys.AddLayer((effect, visComp), (int)Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
+                visSys.AddLayer((effect, visComp), (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
                 visSys.RefreshVisibility(effect, visibilityComponent: visComp);
 
                 if (entityManager.TryGetComponent<TrailComponent>(effect, out var trail))
@@ -96,6 +93,7 @@ namespace Content.Pirate.Server.Systems
 
             xform.Coordinates = newPos;
         }
+
         private void OnStartup(Entity<GhostTargetingComponent> ghost, ref MapInitEvent args)
         {
             // Додаємо базові action-прототипи
@@ -114,7 +112,7 @@ namespace Content.Pirate.Server.Systems
             }
 
             // EyeComponent: якщо вже є ціль, одразу оновити маску видимості
-            var ghostLayer = (int)Content.Shared.Eye.VisibilityFlags.TargetingGhost;
+            var ghostLayer = (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
             if (ghost.Comp.Target != NetEntity.Invalid)
             {
                 var targetUid = EntityManager.GetEntity(ghost.Comp.Target);
@@ -139,9 +137,10 @@ namespace Content.Pirate.Server.Systems
                 {
                     var eyeSys = EntityManager.System<EyeSystem>();
                     // Прибираємо TargetingGhost layer з EyeComponent
-                    var mask = eyeNormal.VisibilityMask & ~(int)Content.Shared.Eye.VisibilityFlags.TargetingGhost;
+                    var mask = eyeNormal.VisibilityMask & ~(int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
                     if (ghost.Comp.OldVisibilityMask.HasValue)
-                        mask = ghost.Comp.OldVisibilityMask.Value & ~(int)Content.Shared.Eye.VisibilityFlags.TargetingGhost;
+                        mask = ghost.Comp.OldVisibilityMask.Value &
+                               ~(int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
                     eyeSys.SetVisibilityMask(uid, mask, eyeNormal);
                     if (ghost.Comp.OldDrawFov.HasValue)
                         eyeSys.SetDrawFov(uid, ghost.Comp.OldDrawFov.Value, eyeNormal);
@@ -161,24 +160,26 @@ namespace Content.Pirate.Server.Systems
                 if (EntityManager.TryGetComponent(uid, out VisibilityComponent? visComp2) && visComp2 != null)
                 {
                     // Видаляємо TargetingGhost і Normal
-                    visSys.RemoveLayer((uid, visComp2), (int)Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
-                    visSys.RemoveLayer((uid, visComp2), (int)Content.Shared.Eye.VisibilityFlags.Normal, false);
+                    visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
+                    visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.Normal, false);
 
                     // Додаємо всі біти зі старого Layer
-                    ushort layers = (ushort)ghost.Comp.OldVisibilityLayers.Value;
+                    ushort layers = (ushort) ghost.Comp.OldVisibilityLayers.Value;
                     for (int i = 0; i < 16; i++)
                     {
-                        ushort flag = (ushort)(1 << i);
+                        ushort flag = (ushort) (1 << i);
                         if ((layers & flag) != 0)
                             visSys.AddLayer((uid, visComp2), flag, false);
                     }
+
                     visSys.RefreshVisibility(uid, visibilityComponent: visComp2);
                 }
 
                 // Видалити компоненти, якщо їх не було до перетворення
                 if (!ghost.Comp.HadContentEye && EntityManager.HasComponent<ContentEyeComponent>(uid))
                     EntityManager.RemoveComponent<ContentEyeComponent>(uid);
-                if (!ghost.Comp.HadMovementIgnoreGravity && EntityManager.HasComponent<MovementIgnoreGravityComponent>(uid))
+                if (!ghost.Comp.HadMovementIgnoreGravity &&
+                    EntityManager.HasComponent<MovementIgnoreGravityComponent>(uid))
                     EntityManager.RemoveComponent<MovementIgnoreGravityComponent>(uid);
                 if (!ghost.Comp.HadCanMoveInAir && EntityManager.HasComponent<CanMoveInAirComponent>(uid))
                     EntityManager.RemoveComponent<CanMoveInAirComponent>(uid);
@@ -197,13 +198,14 @@ namespace Content.Pirate.Server.Systems
                         actionsSystem.RemoveAction((ghost, actionsComp), ent);
                     }
                 }
+
                 ghost.Comp.ActionEntities.Clear();
             }
         }
 
         public void OnClearTargetGhost(EntityUid uid, GhostTargetingComponent comp, ClearTargetGhostActionEvent args)
         {
-            var ghostLayer = (int)Content.Shared.Eye.VisibilityFlags.TargetingGhost;
+            var ghostLayer = (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
             var popupSys = EntityManager.System<SharedPopupSystem>();
 
             // Якщо була ціль, видаляємо маску з її ока
@@ -215,6 +217,7 @@ namespace Content.Pirate.Server.Systems
                     var eyeSys = EntityManager.System<EyeSystem>();
                     eyeSys.SetVisibilityMask(targetUid, eye.VisibilityMask & ~ghostLayer, eye);
                 }
+
                 // Popup для користувача з ім'ям цілі
                 var name = EntityManager.GetComponent<MetaDataComponent>(targetUid).EntityName;
                 popupSys.PopupEntity($"Ціль '{name}' скинута!", uid, PopupType.Medium);
@@ -223,9 +226,10 @@ namespace Content.Pirate.Server.Systems
             // Очищаємо ціль
             comp.Target = NetEntity.Invalid;
         }
+
         public void OnSetTargetGhost(EntityUid uid, GhostTargetingComponent comp, SetTargetGhostActionEvent args)
         {
-            var ghostLayer = (int)Content.Shared.Eye.VisibilityFlags.TargetingGhost;
+            var ghostLayer = (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
             var popupSys = EntityManager.System<SharedPopupSystem>();
 
             // Якщо була стара ціль, видаляємо маску з її ока
@@ -237,6 +241,7 @@ namespace Content.Pirate.Server.Systems
                     var eyeSys = EntityManager.System<EyeSystem>();
                     eyeSys.SetVisibilityMask(oldTargetUid, oldEye.VisibilityMask & ~ghostLayer, oldEye);
                 }
+
                 // Додатковий popup про очищення старої цілі
                 if (EntityManager.TryGetComponent<MetaDataComponent>(oldTargetUid, out var meta))
                 {
@@ -279,8 +284,12 @@ namespace Content.Pirate.Server.Systems
 
                 if (EntityManager.TryGetComponent<ActionComponent>(actionEntity, out var actionComp))
                 {
-                    EntityManager.System<SharedActionsSystem>().SetIcon(actionEntity, new Robust.Shared.Utility.SpriteSpecifier.Texture(new ResPath("Interface/Actions/eyeclose.png")));
+                    EntityManager.System<SharedActionsSystem>()
+                        .SetIcon(actionEntity,
+                            new Robust.Shared.Utility.SpriteSpecifier.Texture(
+                                new ResPath("Interface/Actions/eyeclose.png")));
                 }
+
                 popupSys.PopupEntity("Ви перетворилися на привида!", uid, PopupType.Medium);
             }
             else
@@ -295,8 +304,12 @@ namespace Content.Pirate.Server.Systems
 
                 if (EntityManager.TryGetComponent<ActionComponent>(actionEntity, out var actionComp))
                 {
-                    EntityManager.System<SharedActionsSystem>().SetIcon(actionEntity, new Robust.Shared.Utility.SpriteSpecifier.Texture(new ResPath("Interface/Actions/eyeopen.png")));
+                    EntityManager.System<SharedActionsSystem>()
+                        .SetIcon(actionEntity,
+                            new Robust.Shared.Utility.SpriteSpecifier.Texture(
+                                new ResPath("Interface/Actions/eyeopen.png")));
                 }
+
                 popupSys.PopupEntity("Ви повернули свою стару форму!", uid, PopupType.Medium);
             }
         }
@@ -322,6 +335,7 @@ namespace Content.Pirate.Server.Systems
                 comp.OldVisibilityMask = eyeGhost.VisibilityMask;
                 comp.OldDrawFov = eyeGhost.DrawFov;
             }
+
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) && physics != null)
             {
                 comp.OldCanCollide = physics.CanCollide;
@@ -341,6 +355,7 @@ namespace Content.Pirate.Server.Systems
                     comp.OldFixtureLayers.Add(fixture.CollisionLayer);
                 }
             }
+
             comp.HadContentEye = EntityManager.HasComponent<ContentEyeComponent>(uid);
             comp.HadMovementIgnoreGravity = EntityManager.HasComponent<MovementIgnoreGravityComponent>(uid);
             comp.HadCanMoveInAir = EntityManager.HasComponent<CanMoveInAirComponent>(uid);
@@ -360,7 +375,7 @@ namespace Content.Pirate.Server.Systems
         {
             // Додаткові компоненти
             if (!comp.HadFTLSmashImmune)
-    EntityManager.EnsureComponent<FTLSmashImmuneComponent>(uid);
+                EntityManager.EnsureComponent<FTLSmashImmuneComponent>(uid);
             if (!comp.HadUniversalLanguageSpeaker)
                 EntityManager.EnsureComponent<UniversalLanguageSpeakerComponent>(uid);
             if (!comp.HadExaminer)
@@ -402,11 +417,12 @@ namespace Content.Pirate.Server.Systems
                 if (EntityManager.TryGetComponent<EyeComponent>(uid, out var eyeComp) && eyeComp != null)
                 {
                     var eyeSys = EntityManager.System<EyeSystem>();
-                    var mask = eyeComp.VisibilityMask | (int)Content.Shared.Eye.VisibilityFlags.TargetingGhost;
-                    mask |= (int)Content.Shared.Eye.VisibilityFlags.Ghost;
+                    var mask = eyeComp.VisibilityMask | (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
+                    mask |= (int) Content.Shared.Eye.VisibilityFlags.Ghost;
                     eyeSys.SetDrawFov(uid, false, eyeComp);
                     eyeSys.SetVisibilityMask(uid, mask, eyeComp);
                 }
+
                 // Physics
                 if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics2) && physics2 != null)
                 {
@@ -414,10 +430,11 @@ namespace Content.Pirate.Server.Systems
                     physicsSys.SetCanCollide(uid, false, body: physics2);
                     physicsSys.SetBodyType(uid, Robust.Shared.Physics.BodyType.KinematicController, body: physics2);
                 }
+
                 // Visibility
                 var visComp2 = EntityManager.EnsureComponent<VisibilityComponent>(uid);
-                visSys.RemoveLayer((uid, visComp2), (int)Content.Shared.Eye.VisibilityFlags.Normal, false);
-                visSys.AddLayer((uid, visComp2), (int)Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
+                visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.Normal, false);
+                visSys.AddLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
                 visSys.RefreshVisibility(uid, visibilityComponent: visComp2);
             }
             else
@@ -426,12 +443,13 @@ namespace Content.Pirate.Server.Systems
                 if (EntityManager.TryGetComponent<EyeComponent>(uid, out var eyeComp) && eyeComp != null)
                 {
                     var eyeSys = EntityManager.System<EyeSystem>();
-                    var mask = eyeComp.VisibilityMask | (int)Content.Shared.Eye.VisibilityFlags.TargetingGhost;
-                    mask &= ~(int)Content.Shared.Eye.VisibilityFlags.Ghost;
+                    var mask = eyeComp.VisibilityMask | (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
+                    mask &= ~(int) Content.Shared.Eye.VisibilityFlags.Ghost;
                     if (comp.OldDrawFov.HasValue)
                         eyeSys.SetDrawFov(uid, comp.OldDrawFov.Value, eyeComp);
                     eyeSys.SetVisibilityMask(uid, mask, eyeComp);
                 }
+
                 // Physics
                 if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) && physics != null)
                 {
@@ -441,19 +459,21 @@ namespace Content.Pirate.Server.Systems
                     if (comp.OldBodyType.HasValue)
                         physicsSys.SetBodyType(uid, comp.OldBodyType.Value, body: physics);
                 }
+
                 // Visibility
                 if (comp.OldVisibilityLayers.HasValue)
                 {
                     var visComp2 = EntityManager.EnsureComponent<VisibilityComponent>(uid);
-                    visSys.RemoveLayer((uid, visComp2), (int)Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
-                    visSys.RemoveLayer((uid, visComp2), (int)Content.Shared.Eye.VisibilityFlags.Normal, false);
-                    ushort layers = (ushort)comp.OldVisibilityLayers.Value;
+                    visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
+                    visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.Normal, false);
+                    ushort layers = (ushort) comp.OldVisibilityLayers.Value;
                     for (int i = 0; i < 16; i++)
                     {
-                        ushort flag = (ushort)(1 << i);
+                        ushort flag = (ushort) (1 << i);
                         if ((layers & flag) != 0)
                             visSys.AddLayer((uid, visComp2), flag, false);
                     }
+
                     visSys.RefreshVisibility(uid, visibilityComponent: visComp2);
                 }
             }
@@ -465,11 +485,17 @@ namespace Content.Pirate.Server.Systems
             {
                 if (ghostMode)
                 {
-                    EntityManager.System<SharedActionsSystem>().SetIcon(action, new Robust.Shared.Utility.SpriteSpecifier.Texture(new ResPath("Interface/Actions/eyeclose.png")));
+                    EntityManager.System<SharedActionsSystem>()
+                        .SetIcon(action,
+                            new Robust.Shared.Utility.SpriteSpecifier.Texture(
+                                new ResPath("Interface/Actions/eyeclose.png")));
                 }
                 else
                 {
-                    EntityManager.System<SharedActionsSystem>().SetIcon(action, new Robust.Shared.Utility.SpriteSpecifier.Texture(new ResPath("Interface/Actions/eyeopen.png")));
+                    EntityManager.System<SharedActionsSystem>()
+                        .SetIcon(action,
+                            new Robust.Shared.Utility.SpriteSpecifier.Texture(
+                                new ResPath("Interface/Actions/eyeopen.png")));
                 }
             }
         }
@@ -488,6 +514,7 @@ namespace Content.Pirate.Server.Systems
                 var speech = EntityManager.GetComponent<SpeechComponent>(uid);
                 speech.SpeechVerb = comp.OldSpeechVerb ?? "Normal";
             }
+
             // Fixtures: змінити layer на GhostImpassable
             if (EntityManager.TryGetComponent(uid, out FixturesComponent? fixtures) && fixtures != null)
             {
@@ -499,11 +526,14 @@ namespace Content.Pirate.Server.Systems
                     var id = kvp.Key;
                     var fixture = kvp.Value;
                     int newLayer = comp.IsGhost
-                        ? (int)Content.Shared.Physics.CollisionGroup.GhostImpassable
-                        : (comp.OldFixtureLayers != null && i < comp.OldFixtureLayers.Count ? comp.OldFixtureLayers[i] : fixture.CollisionLayer);
+                        ? (int) Content.Shared.Physics.CollisionGroup.GhostImpassable
+                        : (comp.OldFixtureLayers != null && i < comp.OldFixtureLayers.Count
+                            ? comp.OldFixtureLayers[i]
+                            : fixture.CollisionLayer);
                     toUpdate.Add((id, fixture, newLayer));
                     i++;
                 }
+
                 foreach (var (id, oldFixture, newLayer) in toUpdate)
                 {
                     // Destroy old fixture

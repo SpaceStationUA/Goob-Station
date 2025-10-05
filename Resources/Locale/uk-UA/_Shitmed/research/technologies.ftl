@@ -5,3 +5,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 research-technology-autodoc = Автоматизована Хірургія
+
+research-technology-basic-augmentation = Базова аугментація
+research-technology-implanted-tools = Імплантовані інструменти
+research-technology-combat-augmentation = Бойова аугментація

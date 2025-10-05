@@ -55,25 +55,27 @@
 #endregion
 
 #region Sensory
-- type: trait
-  id: TraitHighPainTolerance
-  name: trait-high-pain-tolerance-name
-  description: trait-high-pain-tolerance-desc
-  category: Quirks
-  cost: 3
-  components:
-    - type: PainTolerant
-      painToleranceModifier: 10
-
-- type: trait
-  id: TraitLowPainTolerance
-  name: trait-low-pain-tolerance-name
-  description: trait-low-pain-tolerance-desc
-  category: Quirks
-  cost: -2
-  components:
-    - type: PainTolerant
-      painToleranceModifier: -10
+# ВІДКЛЮЧЕНО ЧЕРЕЗ ПРОБЛЕМУ З ІПШ
+#- type: trait
+#  id: TraitHighPainTolerance
+#  name: trait-high-pain-tolerance-name
+#  description: trait-high-pain-tolerance-desc
+#  category: Quirks
+#  cost: 3
+#  components:
+#    - type: PainTolerant
+#      painToleranceModifier: 10
+#
+#- type: trait
+#  id: TraitLowPainTolerance
+#  name: trait-low-pain-tolerance-name
+#  description: trait-low-pain-tolerance-desc
+#  category: Quirks
+#  cost: -2
+#  components:
+#    - type: PainTolerant
+#      painToleranceModifier: -10
+# ВІДКЛЮЧЕНО ЧЕРЕЗ ПРОБЛЕМУ З ІПШ
 #endregion
 
 #region Weight

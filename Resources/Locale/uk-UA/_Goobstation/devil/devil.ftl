@@ -37,3 +37,6 @@ invalid-possession-target = Ви не можете вселитися в цю ц
 devil-power-level-increase-weak = З кінчиків ваших пальців спалахують іскри полум'я. Ваш зв'язок з пеклом зміцнився.
 devil-power-level-increase-moderate = Ви відчуваєте приплив сили. Ваш зв'язок з пеклом зміцнився.
 devil-power-level-increase-powerful = Ви майже виконали свої завдання. Ще кілька душ.
+
+objective-condition-weight-title = Укладайте вигідні угоди.
+objective-condition-weight-description = Переконайтеся, що угоди приносять вам якомога більше користі.

@@ -137,14 +137,14 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 18000 #5 hrs
+      time: 36000 #10 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 #10 hrs
-    - !type:SpeciesRequirement # Goob - None Felinid
-      inverted: true
-      species:
-      - Felinid
+      time: 90000 #25 hrs
+    #- !type:SpeciesRequirement # Pirate remove requirement
+    #  inverted: true
+    #  species:
+    #  - Felinid
   weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"
@@ -173,11 +173,11 @@
     eyes: ClothingEyesGlassesSecurity
     id: WardenPDA
     ears: ClothingHeadsetAltWarden # Goobstation
-    pocket1: WeaponPistolMk58
+#    pocket1: WeaponPistolMk58 # PIRATE, moved to loadouts
   storage:
     back:
     - Flash
-    - MagazinePistol
+#    - MagazinePistol # PIRATE, moved to loadouts
     - ClothingMaskGasSecurity # Goobstation
 
 - type: chameleonOutfit

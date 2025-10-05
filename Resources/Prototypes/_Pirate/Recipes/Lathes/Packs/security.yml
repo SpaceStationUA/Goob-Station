@@ -1,0 +1,20 @@
+## Static
+- type: latheRecipePack
+  id: SecurityAmmoStaticPirate
+  recipes:
+  - MagazineUniversalMagnumEmpty
+  - MagazineUniversalMagnum
+  - MagazineUniversalMagnumRubber
+  - MagazineMagnumEmpty
+  - MagazineMagnum
+  - MagazineCaselessRifleEmpty
+  - MagazineCaselessRifle
+
+
+## Dynamic
+- type: latheRecipePack
+  id: SecurityAmmoPirate
+  recipes:
+  - MagazineUniversalMagnumUranium
+  - MagazineUniversalMagnumIncendiary
+  - MagazineMagnumUranium

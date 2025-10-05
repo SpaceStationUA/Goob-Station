@@ -8,6 +8,22 @@ job-alternative-name-prankster = Пранкер
 job-alternative-name-waiter = Офіціант
 job-alternative-name-maid = Покоївка
 
+# Юрист
+
+# Прокурор
+job-alternative-name-prosecutor = Прокурор
+job-description-prosecutor = Ведіть судову справу, висуваючи обвинувачення. Зрозумійте, що ваша робота - допомагати службі безпеці правильно висувати звинувачення, бо ніхто не буде влаштовувати суд.
+
+# Адвокат
+job-alternative-name-attorney = Адвокат
+job-description-attorney = Ведіть судову справу, захищаючи обвинуваченого. Посидівши кілька годин у своєму офісі, зрозумійте, що адвокат нікому не треба, і йдіть висувайте обвинувачення як прокурор.
+
+# Клерк
+job-alternative-name-clerk = Клерк
+job-description-clerk = НЕ ведіть судову справу, а лиш допомагайте з її організацією: підписуйте папери, принесіть суддю кави.
+
+# Кінець Юрист
+
 # Священик
 job-alternative-name-holy-father = Святий Отець
 job-alternative-name-atheist = Атеїст
@@ -47,12 +63,9 @@ job-description-monolith-preacher = Несамовитий голос Волі �
 # Кінець Священик
 
 # Command
-job-alternative-name-furry-femboy = Фурі-фембой
 job-alternative-name-command-officer = Офіцер командування
 job-alternative-name-station-director = Директор станції
-job-alternative-name-notarius = Нотаріус
 job-alternative-name-sherif = Шериф
-job-alternative-name-command-maid = Покоївка мостика
 job-alternative-name-secretary = Секретар
 
 # Engineering
@@ -74,7 +87,6 @@ job-alternative-name-aspirant = Аспірант
 job-alternative-name-laborant = Лаборант
 
 # Security
-job-alternative-name-security-maid = Покоївка бригу
 job-alternative-name-peacekeeper = Миротворець
 job-alternative-name-inspector = Інспектор
 job-alternative-name-forensist = Слідчий

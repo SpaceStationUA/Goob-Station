@@ -52,3 +52,6 @@ chat-language-Pig-name = Свиняча
 chat-language-Sheep-name = Овеча
 chat-language-Xeno-name = Ксено
 chat-language-DroneTalk-name = Дрон
+
+chat-language-Schechi-name = Шечі
+chat-language-NewKinPidgin-name = Ка'ракк

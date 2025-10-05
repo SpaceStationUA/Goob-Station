@@ -32,11 +32,11 @@ public sealed class OfferItemSystem : SharedOfferItemSystem
         var query = EntityQueryEnumerator<OfferItemComponent>();
         while (query.MoveNext(out var uid, out var offerItem))
         {
-            if (!TryComp<HandsComponent>(uid, out var hands) || hands.ActiveHand == null)
+            if (!TryComp<HandsComponent>(uid, out var hands) || hands.ActiveHandId == null || _hands.GetHeldItem((uid, hands), hands.ActiveHandId) == null)
                 continue;
 
             if (offerItem.Hand != null &&
-                hands.Hands[offerItem.Hand].HeldEntity == null)
+                _hands.GetHeldItem((uid, hands), offerItem.Hand) == null)
             {
                 if (offerItem.Target != null)
                 {
@@ -80,12 +80,16 @@ public sealed class OfferItemSystem : SharedOfferItemSystem
 
             _popup.PopupEntity(Loc.GetString("offer-item-give",
                 ("item", Identity.Entity(offerItem.Item.Value, EntityManager)),
-                ("target", Identity.Entity(uid, EntityManager))), component.Target.Value, component.Target.Value);
+                ("target", Identity.Entity(uid, EntityManager))),
+                component.Target.Value,
+                component.Target.Value);
             _popup.PopupEntity(Loc.GetString("offer-item-give-other",
                     ("user", Identity.Entity(component.Target.Value, EntityManager)),
                     ("item", Identity.Entity(offerItem.Item.Value, EntityManager)),
-                    ("target", Identity.Entity(uid, EntityManager)))
-                , component.Target.Value, Filter.PvsExcept(component.Target.Value, entityManager: EntityManager), true);
+                    ("target", Identity.Entity(uid, EntityManager))),
+                component.Target.Value,
+                Filter.PvsExcept(component.Target.Value, entityManager: EntityManager),
+                true);
         }
 
         offerItem.Item = null;

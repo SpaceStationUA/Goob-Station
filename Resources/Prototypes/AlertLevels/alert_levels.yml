@@ -174,3 +174,9 @@
       emergencyLightColor: CadetBlue
       forceEnableEmergencyLights: true
       shuttleTime: 600
+    white: # Pirate - Psionic Emergency
+      announcement: alert-level-white-announcement
+      sound: /Audio/_Pirate/Announcements/Alerts/code_white.ogg
+      emergencyLightColor: "#F6CCF6"
+      color: White
+      shuttleTime: 600

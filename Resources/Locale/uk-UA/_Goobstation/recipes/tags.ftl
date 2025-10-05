@@ -39,3 +39,7 @@ construction-graph-tag-welding-mask = зварювальна маска
 construction-graph-tag-plant-clipper = садові ножиці
 construction-graph-tag-item-pickaxe = кирка
 construction-graph-tag-hardhat = каска
+
+construction-graph-tag-ushanka = вушанка
+construction-graph-tag-baseball-bat = бейсбольна бита
+construction-graph-tag-heart = серце

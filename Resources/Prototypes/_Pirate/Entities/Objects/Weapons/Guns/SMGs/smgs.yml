@@ -1,0 +1,132 @@
+- type: entity
+  name: FPA-90
+  parent: [BaseWeaponPistol, BaseSecurityContraband]
+  id: WeaponSubMachineGunFPA90
+  description: Це дешевий мотлох від компанії, відомої своїми дешевими гарматами, але принаймні під час використання не потрібен захист слуху. Стріляє набоями .25 безгільзовими.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/FPA90.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    minAngle: 10
+    maxAngle: 15
+    fireRate: 20
+    burstFireRate: 20
+    shotsPerBurst: 3
+    burstCooldown: 1.1
+    selectedMode: Burst
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/Gunshots/fpa-90-suppressed-gunshot.ogg
+      params:
+        volume: -3
+        maxDistance: 8
+        rolloffFactor: 1.2
+    availableModes:
+      - Burst
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineCaselessRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCaselessRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+  - type: Appearance
+  - type: StaticPrice
+    price: 200
+  - type: Item
+    size: Large
+    shape: null
+
+- type: entity
+  name: BRDI R-25
+  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband, BaseGunWieldable]
+  id: WeaponSubMachineGunBRDIR25
+  description: Іконічна зброя, яку використовують члени Іноземного легіону Республіки Бізель. Як гордість Республіки, вона символізує свободу від тиранії Солоріанського Альянсу. Оснащена патронами .25 безгільзовими для гвинтівки.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/BRDI_R25.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -19
+    maxAngle: -16
+  - type: Gun
+    minAngle: 21
+    maxAngle: 32
+    fireRate: 5 # 300rpm in Semi & Full Auto
+    burstFireRate: 20 # 1200rpm in Burst mode.
+    shotsPerBurst: 5
+    burstCooldown: 0.8
+    cameraRecoilScalar: 0.5
+    selectedMode: Burst
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/Gunshots/fpa-90-suppressed-gunshot.ogg
+      params:
+        volume: -3
+        maxDistance: 8
+        rolloffFactor: 1.2
+    availableModes:
+    - SemiAuto
+    - Burst
+    - FullAuto
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 1500
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineCaselessRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCaselessRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+
+- type: entity
+  name: антикварний BRDI R-25
+  parent: WeaponSubMachineGunBRDIR25
+  id: WeaponSubMachineGunBRDIR25HoS
+  description: Колись цю улюблену гвинтівку тримав невідомий член Іноземного легіону Республіки Бізеля; вона брала участь у боях з Солом в кожних боях Республіки.
+  components:
+    - type: StealTarget
+      stealGroup: HoSAntiqueWeapon
+    - type: Sprite
+      sprite: _Pirate/Objects/Weapons/Guns/SMGs/BRDI_R25_antique.rsi

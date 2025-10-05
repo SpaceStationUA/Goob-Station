@@ -190,6 +190,9 @@ public sealed class PsionicAbilitiesSystem : EntitySystem
         if (!TryComp<PsionicComponent>(uid, out var psionic))
             return;
 
+        if (!psionic.Removable)
+            return;
+
         RemoveAllPsionicPowers(uid, true);
         EnsureComp<MindbrokenComponent>(uid);
         _statusEffectsSystem.TryAddStatusEffect(uid, psionic.MindbreakingStutterCondition,

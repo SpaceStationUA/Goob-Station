@@ -153,6 +153,7 @@
   - type: StorageFill
     contents:
       - id: ClothingModsuitAtmostechPowerCell # Goob edit
+      - id: ClothingOuterHardsuitAtmosOld # Pirate
       - id: OxygenTankFilled
       - id: NitrogenTankFilled
       - id: ClothingMaskGasAtmos

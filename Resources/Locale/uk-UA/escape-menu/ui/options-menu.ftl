@@ -406,3 +406,5 @@ ui-options-function-hotbar-shift0 = Слот швидкого доступу Shi
 ui-options-auto-fill-highlights = Автоматично заповнювати підсвічування інформацією про персонажа
 ui-options-highlights-color = Колір підсвічування:
 ui-options-highlights-color-example = Це підсвічений текст!
+
+ui-options-ambient-occlusion = Показувати Ambient Occlusion

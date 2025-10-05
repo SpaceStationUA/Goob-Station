@@ -7,3 +7,5 @@ bloodtrak-no-target = Недійсна ціль для відстеження.
 bloodtrak-target-lost = Недійсна ціль для відстеження.
 bloodtrak-tracking-expired = Цикл відстеження завершено.
 bloodtrak-no-match = Послідовність ДНК не знайдено в записах!
+
+bloodtrak-sample-expired = Зразок крові занадто сухий.

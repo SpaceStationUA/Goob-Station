@@ -13,3 +13,5 @@ fold-verb-clothing-jacket = Зняти куртку
 unfold-verb-clothing-jacket = Одягти куртку
 foldable-fold-fail = Ви не можете скласти {$object} тут.
 foldable-unfold-fail = Ви не можете розкласти {$object} тут.
+fold-showhair-verb = Показати волосся
+fold-hidehair-verb = Сховати волосся

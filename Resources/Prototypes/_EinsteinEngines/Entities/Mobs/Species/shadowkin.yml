@@ -14,7 +14,7 @@
   parent:
   - BaseMobSpeciesOrganic
   id: MobShadowkinBase
-  name: "Уріст Макшедоу"
+  name: Urist McShadow
   abstract: true
   components:
   - type: LanguageKnowledge # Einstein Engines - Language
@@ -149,10 +149,10 @@
       - map: ["enum.HumanoidVisualLayers.LArm"]
       - map: ["enum.HumanoidVisualLayers.RLeg"]
       - map: ["enum.HumanoidVisualLayers.LLeg"]
-#      shader: StencilClear
-#      sprite: Mobs/Species/Human/parts.rsi
-#      state: l_leg
-        shader: StencilMask
+      - shader: StencilClear
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_leg
+      - shader: StencilMask
       - map: ["enum.HumanoidVisualLayers.StencilMask"]
         sprite: Mobs/Customization/masking_helpers.rsi
         state: full
@@ -236,7 +236,7 @@
   parent: MobHumanDummy
   id: MobShadowkinDummy
   categories: [ HideSpawnMenu ]
-  description: "Манекен шедовкіна, призначений для використання в налаштуванні персонажа."
+  description: A dummy shadowkin meant to be used in character setup.
   components:
     - type: HumanoidAppearance
       species: Shadowkin
@@ -256,9 +256,9 @@
         - map: ["enum.HumanoidVisualLayers.LArm"]
         - map: ["enum.HumanoidVisualLayers.RLeg"]
         - map: ["enum.HumanoidVisualLayers.LLeg"]
-#     - shader: StencilClear
-#      sprite: Mobs/Species/Human/parts.rsi
-#      state: l_leg
+        - shader: StencilClear
+          sprite: Mobs/Species/Human/parts.rsi
+          state: l_leg
         - shader: StencilMask
           map: ["enum.HumanoidVisualLayers.StencilMask"]
           sprite: Mobs/Customization/masking_helpers.rsi

@@ -234,3 +234,4 @@ stack-red-circuit-floor = підлога з червоних схем
 stack-asteroid-astro-sand-floor = астро-піщана підлога астероїда
 
 stack-black-carpet-tile = чорна килимова плитка
+stack-techmaint-floor-dark = темна підлога техобслуговування

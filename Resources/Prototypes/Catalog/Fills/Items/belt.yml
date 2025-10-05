@@ -231,10 +231,10 @@
       #  amount: 3
       - id: HandheldCrewMonitor
       - id: ParamedHypo
-#      - id: CartridgeSaline - I hate storagefill after size edits. (just fuckin get them from the lathe/vendor bro)
-#      - id: CartridgeBicaridine
-#      - id: CartridgeDermaline
-#      - id: CartridgeAtropine # Goobstation - end
+      - id: CartridgeSaline
+      - id: CartridgeBicaridine
+      - id: CartridgeDermaline
+      - id: CartridgeAtropine # Goobstation - end
 
 - type: entity
   id: ClothingBeltPlantFilled
@@ -261,7 +261,7 @@
 - type: entity
   id: ClothingBeltMilitaryWebbingGrenadeFilled
   parent: ClothingBeltMilitaryWebbing
-  name: "розвантажувальний жилет гренадера"
+  name: grenadier chest rig
   suffix: Filled
   components:
   - type: Item

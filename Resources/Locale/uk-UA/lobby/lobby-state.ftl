@@ -14,3 +14,11 @@ lobby-state-song-text = Грає: [color=white]{$songTitle}[/color] від [colo
 lobby-state-song-no-song-text = У лобі не грає пісня.
 lobby-state-song-unknown-title = [color=dimgray]Невідома Пісня[/color]
 lobby-state-song-unknown-artist = [color=dimgray]Невідомого Автору[/color]
+
+lobby-state-playtime-comment-normal = Ви провели {$hours} {$hours ->
+    [1]годину
+    *[other]годин
+    } у грі сьогодні. Не забувайте робити перерви!
+lobby-state-playtime-comment-concerning = Ви грали {$hours} годин сьогодні. Будь ласка, зробіть перерву.
+lobby-state-playtime-comment-grasstouchless = {$hours} годин. Подумайте про вихід з гри, щоб задовольнити свої потреби.
+lobby-state-playtime-comment-selfdestructive = {$hours} годин. Серйозно?

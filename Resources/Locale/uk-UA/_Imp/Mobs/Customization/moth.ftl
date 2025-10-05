@@ -243,6 +243,6 @@ marking-WingsDragonfly-dragonfly1 = Шия
 marking-WingsDragonfly-dragonfly2 = Крила
 marking-WingsDragonfly-dragonfly3 = Хвіст
 
-marking-WingsLanterfly = Крила (Ліхтарниця)
-marking-WingsLanterfly-lanternfly = Крила
+marking-WingsLanternfly = Крила (Ліхтарниця)
+marking-WingsLanternfly-lanternfly = Крила
 

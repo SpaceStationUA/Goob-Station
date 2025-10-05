@@ -10,11 +10,12 @@ using Content.Server.Light.Components;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Damage.Systems;
-using Content.Server.Flash;
+using Content.Shared.Flash;
 using Content.Shared.Stunnable;
+using Content.Pirate.Server._EinsteinEngines.Shadowkin;
 
 
-namespace Content.Server.Shadowkin;
+namespace Content.Pirate.Server._EinsteinEngines.Shadowkin;
 
 public sealed class EtherealSystem : SharedEtherealSystem
 {
@@ -42,8 +43,10 @@ public sealed class EtherealSystem : SharedEtherealSystem
         RemComp(uid, comp);
     }
 
-    private void OnStunned(EntityUid uid, EtherealComponent component, StunnedEvent args) =>
+    private void OnStunned(EntityUid uid, EtherealComponent component, StunnedEvent args)
+    {
         RemComp(uid, component);
+    }
 
     public override void OnStartup(EntityUid uid, EtherealComponent component, MapInitEvent args)
     {

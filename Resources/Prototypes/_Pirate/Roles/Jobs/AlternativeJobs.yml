@@ -45,7 +45,31 @@
   jobDescription: job-description-janitor
   parentJobId: Janitor
 
-# region Chaplain
+#region Lawyer
+- type: alternativeJob
+  id: AlternativeJobProsecutor
+  jobName: job-alternative-name-prosecutor
+  jobDescription: job-description-prosecutor
+  jobIconProtoId: JobIconProsecutor
+  parentJobId: Lawyer
+
+- type: alternativeJob
+  id: AlternativeJobAttorney
+  jobName: job-alternative-name-attorney
+  jobDescription: job-description-attorney
+  jobIconProtoId: JobIconAttorney
+  parentJobId: Lawyer
+
+- type: alternativeJob
+  id: AlternativeJobClerk
+  jobName: job-alternative-name-clerk
+  jobDescription: job-description-clerk
+  jobIconProtoId: JobIconClerk
+  parentJobId: Lawyer
+
+#endregion
+
+#region Chaplain
 - type: alternativeJob
   id: AlternativeJobAtheist
   jobName: job-alternative-name-atheist
@@ -115,18 +139,10 @@
   jobDescription: job-description-monolith-preacher
   jobIconProtoId: JobIconMonolithPreacher
   parentJobId: Chaplain
-#endregion
 
 #endregion
 
 #region Command
-
-- type: alternativeJob
-  id: AlternativeJobFurryFemboy
-  jobName: job-alternative-name-furry-femboy
-  jobDescription: job-description-captain
-  jobIconProtoId: JobIconFurryFemboy
-  parentJobId: Captain
 
 - type: alternativeJob
   id: AlternativeJobCommandOfficer
@@ -141,22 +157,10 @@
   parentJobId: Captain
 
 - type: alternativeJob
-  id: AlternativeJobNotarius
-  jobName: job-alternative-name-notarius
-  jobDescription: job-description-hop
-  parentJobId: HeadOfPersonnel
-
-- type: alternativeJob
   id: AlternativeJobSherif
   jobName: job-alternative-name-sherif
   jobDescription: job-description-hos
   parentJobId: HeadOfSecurity
-
-- type: alternativeJob # this is very MRP please leave it
-  id: AlternativeJobCommandMaid
-  jobName: job-alternative-name-command-maid
-  jobDescription: job-description-admin-assistant
-  parentJobId: AdministrativeAssistant
 
 - type: alternativeJob
   id: AlternativeJobSecretary
@@ -255,12 +259,6 @@
 #endregion
 
 #region Security
-
-- type: alternativeJob # GOD(Void) allows this, pls dont kill me
-  id: AlternativeJobSecMaid
-  jobName: job-alternative-name-security-maid
-  jobDescription: job-description-warden
-  parentJobId: Warden
 
 - type: alternativeJob
   id: AlternativeJobPeacekeeper
@@ -369,6 +367,33 @@
   jobName: job-alternative-name-Dungeon-Master
 
 #endregion
+
+# region Law icons definitions
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconAttorney
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: attorney
+  jobName: job-alternative-name-attorney
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconProsecutor
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: prosecutor
+  jobName: job-alternative-name-prosecutor
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconClerk
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: clerk
+  jobName: job-alternative-name-clerk
+
 
 # region Chaplain icons definitions
 - type: jobIcon

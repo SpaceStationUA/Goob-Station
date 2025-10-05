@@ -78,3 +78,48 @@ traitor-nvf-roundend = [color=violet]візіонер Федерації[/color]
 
 issuers-corporate-flavor-1 = НаноТрейзен
 issuers-corporate-flavor-2 = Центральне Командування
+traitor-arcterrorist-intro = Ви - терорист КЗТ.
+traitor-arcterrorist-goal = Істоти цього світу мають бути звільнені із залізної хватки Нанотрейзен, і ви - їхня єдина надія!
+traitor-arcterrorist-allies = Ви можете співпрацювати з іншими агентами синдикату, якщо вони підтримують нашу справу. Можливо, вам вдасться переконати агентів Фронту Визволення Бджіл співпрацювати хоч раз?
+traitor-arcterrorist-uplink = Синдикат люб'язно надав один зі своїх КПК-аплінків для вашого завдання.
+traitor-arcterrorist-roundend = [color=green]активіст з Консорціуму Захисту Тварин[/color]
+traitor-beeliberationfront-intro = Ви - активіст Фронту Визволення Бджіл.
+traitor-beeliberationfront-goal = Ми повинні довести свою цінність Синдикату, інакше не зможемо приєднатися. Консорціум Захисту Тварин нас розчавить!
+traitor-beeliberationfront-allies = Ви можете співпрацювати з іншими агентами синдикату, якщо вони підтримують нашу справу. Можливо, вам вдасться завербувати когось із Консорціуму Захисту Тварин, щоб від них була хоч якась користь?
+traitor-beeliberationfront-uplink = Синдикат люб'язно надав один зі своїх КПК-аплінків, щоб перевірити, чи ми гідні.
+traitor-beeliberationfront-roundend = [color=green]активіст Фронту Визволення Бджіл[/color]
+traitor-cybersunindustries-intro = Ви - спеціаліст з Cybersun Industries.
+traitor-cybersunindustries-goal = Не створюйте значної присутності на вказаному об'єкті, оскільки більші інциденти важче приховати.
+traitor-cybersunindustries-allies = Оперативникам Cybersun можна довіряти. Членам організації MI13 можна довіряти. Усім іншим агентам синдикату довіряти не можна.
+traitor-cybersunindustries-uplink = Вам надали інструменти для роботи у вигляді аплінку синдикату, розташованого у вашому КПК.
+traitor-cybersunindustries-roundend = [color=yellow]спеціаліст з Cybersun Industries[/color]
+traitor-donkcorporation-intro = Ви - диверсант Donk Co.
+traitor-donkcorporation-goal = Ми не схвалюємо безглуздих вбивств невинних робітників; увійшов, зробив, вийшов - ось наш девіз.
+traitor-donkcorporation-allies = Членів Waffle Co. вбивати на місці; їм не дозволено перебувати на станції, поки ми тут.
+traitor-donkcorporation-uplink = Для виконання завдання вам було надано аплінк синдикату, розташований у вашому КПК.
+traitor-donkcorporation-roundend = [color=orange]співробітник Donk Corporation[/color]
+traitor-gorlexmarauders-intro = Ви - Мародер Горлексу.
+traitor-gorlexmarauders-goal = Бути поміченим - не проблема, і ви можете використовувати будь-який рівень озброєння для виконання роботи. Проте, не робіть це недбало, влаштовуючи випадкову різанину.
+traitor-gorlexmarauders-allies = Ви можете співпрацювати з будь-якими друзями коаліції Синдикату, але стежте за тими виродками з Тигрів, якщо вони з'являться.
+traitor-gorlexmarauders-uplink = Для виконання завдання вам було надано аплінк синдикату, розташований у вашому КПК.
+traitor-gorlexmarauders-roundend = [color=red]Мародер Горлексу[/color]
+traitor-tigercooperative-intro = Ви - Фанатик Кооперативу Тигрів.
+traitor-tigercooperative-goal = Пам'ятайте вчення Хай-лургіксона; спочатку вбивай, потім став питання!
+traitor-tigercooperative-allies = Довіряти можна лише просвітленим братам-Тиграм; усі інші мають бути вигнані з цього смертного світу!
+traitor-tigercooperative-uplink = Ваші друзі з Cybersun Industries надали вам аплінк синдикату, щоб ви довели свою цінність рою перевертнів. Якщо ви виконаєте свої завдання, вас асимілюють.
+traitor-tigercooperative-roundend = [color=crimson]Фанатик Кооперативу Тигрів[/color]
+traitor-wafflecorporation-intro = Ви - диверсант Waffle Co.
+traitor-wafflecorporation-goal = Ви тут не для демонстрації на всю станцію. Знову ж таки, інші диверсанти Waffle Co. можуть бути тут, тож будьте обережні. Ваша робота - лише виконати свої цілі.
+traitor-wafflecorporation-allies = Членів Donk Co. вбивати на місці; їм не дозволено перебувати на станції, поки ми тут.
+traitor-wafflecorporation-uplink = Для виконання завдання вам надано доступ до синдикатного аплінку у вашому КПК.
+traitor-wafflecorporation-roundend = [color=orange]співробітник Waffle Corporation[/color]
+traitor-wafflecorporationterrorist-intro = Ви — терорист Waffle Corporation.
+traitor-wafflecorporationterrorist-goal = Наші інвестори потребують демонстрації нашої обіцянки знищити Nanotrasen. Влаштуймо їм гучну демонстрацію!
+traitor-wafflecorporationterrorist-allies = Більшості інших агентів синдикату не можна довіряти, за винятком членів Gorlex Marauders.
+traitor-wafflecorporationterrorist-uplink = Для виконання завдання вам надано доступ до синдикатного аплінку у вашому КПК.
+traitor-wafflecorporationterrorist-roundend = [color=red]терорист з Waffle Corporation[/color]
+traitor-neulithivfederationvisionary-intro = Ви — візіонер Федерації Неулітів
+traitor-neulithivfederationvisionary-goal = Федерація Космічних Чарівників хоче, щоб ми довели, що можемо добре з ними працювати. Приверніть до себе якомога більше уваги, виконуючи своє завдання.
+traitor-neulithivfederationvisionary-allies = Членам Федерації Космічних Чарівників та іншим візіонерам можна довіряти. Довіряти іншим членам Синдикату чи ні — ваш вибір.
+traitor-neulithivfederationvisionary-uplink = Федерація надала вам аплінк у вашому КПК. Використовуйте його з розумом.
+traitor-neulithivfederationvisionary-roundend = [color=violet]візіонер Федерації[/color]

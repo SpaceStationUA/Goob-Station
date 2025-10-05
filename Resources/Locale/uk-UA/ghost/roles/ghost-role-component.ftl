@@ -364,3 +364,8 @@ ghost-role-information-tomatokiller-description = Цей маленький то
 ghost-role-information-gingerbread-name = Пряникова людина
 ghost-role-information-gingerbread-description = Істота з чистого святкового духу.
                                      Поширюйте патокову доброту і всім гарний настрій.
+
+ghost-role-information-wizard-name = Чарівник
+ghost-role-information-wizard-desc = ТИ ЧАРІВНИК! Покажи станції, з чого зроблена твоя магія.
+ghost-role-information-emotional-support-scurret-name = Скуррет емоційної підтримки
+ghost-role-information-emotional-support-scurret-description = Підтримуйте екіпаж, будьте чарівними, часто кажіть "ва".

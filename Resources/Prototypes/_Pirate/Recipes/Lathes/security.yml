@@ -1,3 +1,64 @@
+## Амуніція - Набої
+# MK 32
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazineUniversalMagnumEmpty
+  result: MagazineUniversalMagnumEmpty
+  completetime: 5
+  materials:
+    Steel: 40
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineUniversalMagnum
+  result: MagazineUniversalMagnum
+  completetime: 5
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineUniversalMagnumRubber
+  result: MagazineUniversalMagnumRubber
+  completetime: 5
+  materials:
+    Steel: 70
+    Plastic: 170
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineUniversalMagnumUranium
+  result: MagazineUniversalMagnumUranium
+  completetime: 5
+  materials:
+    Steel: 40
+    Plastic: 75
+    Uranium: 200
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineUniversalMagnumIncendiary
+  result: MagazineUniversalMagnumIncendiary
+  completetime: 5
+  materials:
+    Steel: 40
+    Plastic: 200
+
+# .45 Магнум
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineMagnumUranium
+  result: MagazineMagnumUranium
+  completetime: 5
+  materials:
+    Steel: 30
+    Plastic: 75
+    Uranium: 150
+
+
+
+
+## Різне
 - type: latheRecipe
   id: ClothingNeckBaseShockCollar
   icon:

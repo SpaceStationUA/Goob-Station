@@ -46,6 +46,7 @@
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
     - LavalandStormScheduler # Lavaland Change
+    - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: Traitorling
@@ -62,6 +63,7 @@
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
     - LavalandStormScheduler # Lavaland Change
+    - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: NukeTraitor
@@ -79,6 +81,7 @@
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
     - LavalandStormScheduler # Lavaland Change
+    - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: NukeLing
@@ -95,6 +98,7 @@
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
     - LavalandStormScheduler # Lavaland Change
+    - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: RevTraitor
@@ -111,6 +115,7 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - LavalandStormScheduler # Lavaland Change
+    - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: RevLing
@@ -128,6 +133,7 @@
     - BasicRoundstartVariation
     - BasicRoundstartVariation
     - LavalandStormScheduler # Lavaland Change
+    - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: Blob
@@ -143,6 +149,7 @@
   - BasicRoundstartVariation
   - SubGamemodesRule
   - LavalandStormScheduler # Lavaland Change
+  - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: Honkops
@@ -159,6 +166,7 @@
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
     - LavalandStormScheduler
+    - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: TheGhost
@@ -172,6 +180,7 @@
   rules:
     - CalmDynamic
     - LavalandStormScheduler
+    - PsionicEventsScheduler # Pirate
     - SubGamemodesRule
     - RareIonStormScheduler
     - SpaceTrafficControlFriendlyEventScheduler
@@ -188,6 +197,7 @@
   rules:
     - CombatDynamic
     - LavalandStormScheduler
+    - PsionicEventsScheduler # Pirate
     - SubGamemodesRule
     - IonStormScheduler
     - SpaceTrafficControlEventScheduler
@@ -204,6 +214,7 @@
   rules:
     - SecretPlusLow
     - LavalandStormScheduler
+    - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: SecretPlusMid
@@ -217,6 +228,7 @@
   rules:
     - SecretPlusMid
     - LavalandStormScheduler
+    - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: SecretPlusAdmeme
@@ -231,6 +243,7 @@
   rules:
     - SecretPlusAdmeme
     - LavalandStormScheduler
+    - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
   id: SurvivalPlusMid
@@ -245,3 +258,19 @@
   rules:
     - SecretPlusRampingMid
     - LavalandStormScheduler
+    - PsionicEventsScheduler # Pirate
+
+# survival+ but it has roundstart abductors and maybe thieves
+- type: gamePreset
+  id: Abductors
+  alias:
+  - ayylmao
+  name: abductors-title
+  description: abductors-description
+  showInVote: false
+  minPlayers: 20
+  rules:
+  - DuoAbductorRoundstart
+  - SubGamemodesRule
+  - SecretPlusRampingMid
+  - LavalandStormScheduler

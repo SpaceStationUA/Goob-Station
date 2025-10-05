@@ -172,8 +172,8 @@
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
   id: BaseBorgChassisNotIonStormable
-  name: "кіборг"
-  description: "Гібрид людини та машини, що допомагає в діяльності станції. Вони люблять, коли їх просять повторювати свої закони знову і знову."
+  name: cyborg
+  description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
   save: false
   abstract: true
   components:
@@ -251,7 +251,7 @@
   - type: IntrinsicUI
     uis:
       enum.StationMapUiKey.Key:
-        toggleAction: ActionAGhostShowStationMap
+        toggleAction: ActionShowStationMap
   - type: Targeting # Shitmed Change
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
@@ -607,8 +607,8 @@
 - type: entity
   parent: BaseBorgChassisNotIonStormable
   id: BaseXenoborgChassis
-  name: "ксеноборг"
-  description: "Гібрид людини та машини, що прагне до самовідтворення. Вони люблять витягувати мізки, щоб вставляти їх у свіжі шасі ксеноборгів для розширення своєї армії."
+  name: xenoborg
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army.
   save: false
   abstract: true
   components:

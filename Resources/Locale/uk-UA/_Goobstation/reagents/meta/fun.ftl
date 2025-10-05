@@ -52,3 +52,6 @@ reagent-desc-nostalgia = Чому це тут?
 
 reagent-name-tilenol = тіленол
 reagent-desc-tilenol = Ви відчуваєте, як стаєте витривалішим, просто тримаючи це.
+
+reagent-name-crapotoxin = крапотоксин
+reagent-desc-crapotoxin = Змушує метаболізатор неконтрольовано пускати гази.

@@ -1,0 +1,57 @@
+<Document>
+
+  # Hell Ripte
+
+  <Box>
+    <GuideEntityEmbed Entity="LegionnaireBonfire" Caption=""/>
+  </Box>
+
+  Hell Ripte - це [textlink="бойове мистецтво" link="MartialArts"], що зосереджено на розриванні натовпів демонів з жорстокою ефективністю. Це мистецтво може бути освоєне лише демонами різанини з пекла, оскільки для цього потрібна величезна кількість грубої сили та могутності.
+  Повне розуміння цього мистецтва дозволить вам пофарбувати станцію в червоний колір. Ніхто не буде в безпеці від вашої кривавої бійні.
+
+  ## Спеціальні можливості
+
+  Майстри Hell Ripte завдають надзвичайної шкоди за короткий проміжок часу, що робить їх неперевершеними в рукопашному бою.
+
+  ## Комбінації атак
+
+  ### Tear Down
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+
+  Завдає величезної ріжучої шкоди та спричиняє кровотечу.
+
+  ### Head Rip
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+
+  Відірвати голову мертвому супротивнику, дуже смертельно. Неможливо виконати, поки ціль жива.
+
+  ### Hellish Slam
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Збиває супротивника з ніг і завдає великої шкоди витривалості. Якщо вас збили з ніг, ви підведетеся.
+
+  ### Drop Kick
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+
+  Відкиньте поваленого супротивника. Чудово підходить для "малювання". Неможливо виконати, перебуваючи на землі.
+
+</Document>

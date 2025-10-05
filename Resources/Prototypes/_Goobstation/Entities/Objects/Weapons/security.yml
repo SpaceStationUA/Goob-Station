@@ -10,24 +10,24 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "гіперзаряджена флешка"
+  name: hypercharged flash
   parent: [BaseItem, BaseCentcommContraband]
   id: HyperFlash
   suffix: DO NOT MAP
-  description: "Надяскрава флеш-лампа з тригером. Ця здається набагато потужнішою за звичайну."
+  description: An ultrabright flashbulb with a trigger. This one seems to be much more potent than an ordinary one.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/flash.rsi
     layers:
     - state: flash
-      map: [ "enum.FlashVisuals.BaseLayer" ]
+      map: [ "enum.FlashVisualLayers.BaseLayer" ]
     - state: flashing
-      map: [ "enum.FlashVisuals.LightLayer" ]
+      map: [ "enum.FlashVisualLayers.LightLayer" ]
       visible: false
       shader: unshaded
   - type: Flash
-    duration: 20000
-    aoeFlashDuration: 10000
+    flashingTime: 20.0
+    aoeFlashDuration: 10.0
     slowTo: 0.2
     range: 15
   - type: MeleeWeapon
@@ -46,17 +46,17 @@
   - type: GenericVisualizer
     visuals:
       enum.FlashVisuals.Burnt:
-        enum.FlashVisuals.BaseLayer:
+        enum.FlashVisualLayers.BaseLayer:
           True: {state: burnt}
       enum.FlashVisuals.Flashing:
-        enum.FlashVisuals.LightLayer:
+        enum.FlashVisualLayers.LightLayer:
           True: {visible: true}
           False: {visible: false}
 
 # This is used by HE1S-G8 overcharged cartridge, idk where to put it
 - type: entity
   id: EnergyVortex
-  name: "енергетичний вихор"
+  name: energy vortex
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/Tesla/energy_ball.rsi
@@ -127,11 +127,11 @@
 
 
 - type: entity
-  name: "перцевий балончик"
+  name: pepperspray
   id: PepperSpray
   parent: [BaseItem, BaseSecurityContraband]
   suffix: Filled
-  description: "Маленький балончик на 50u олеорезину капсаїцину. Здатний засліплювати та оглушувати цілі, які не носять захисного спорядження."
+  description: A small 50u canister of Oleoresin Capsaicin. Capable of blinding and stunning targets who aren't wearing protective gear.
   components:
   - type: Sprite
     sprite: /Textures/_Goobstation/Objects/Specific/Security/pepperspray.rsi

@@ -9,8 +9,8 @@
 - type: entity
   id: CrateFunATV
   parent: CrateLivestock
-  name: "ящик з квадроциклом"
-  description: "Абсолютно оподатковуваний транспортний засіб, щоб допомогти вантажу з перевезенням."
+  name: ATV crate
+  description: An Absolutely Taxable Vehicle to help cargo with hauling.
   components:
   - type: StorageFill
     contents:
@@ -20,8 +20,8 @@
 - type: entity
   id: CrateFunSyndicateSegway
   parent: CrateLivestock
-  name: "ящик із сегвеєм Синдикату"
-  description: "Ящик, що містить двоколісний транспорт, який допоможе вам втекти від офіцерів служби безпеки. Або ні."
+  name: Syndicate segway crate
+  description: A crate containing a two-wheeler that will help you escape from the security officers. Or not.
   components:
     - type: StorageFill
       contents:
@@ -32,7 +32,7 @@
 - type: entity
   id: CrateFunBingleLoot
   parent: CrateBingle
-  name: "Трофеї Бінгла"
+  name: Bingle loot
   components:
   - type: StorageFill
     contents:
@@ -47,7 +47,7 @@
   id: CrateFunBingleAdmeme
   parent: CrateBingle
   suffix: Admeme voice triggered bingle crate
-  name: "Бінгл"
+  name: Bingle
   components:
   - type: SpawnOnTrigger
     proto: MobBingle
@@ -55,3 +55,59 @@
     keyPhrase: Bingle
   - type: ActiveListener
     range: 4
+
+- type: entity
+  id: CrateFunDiscoBeachBall
+  parent: CrateGenericSteel
+  name: disco beach ball crate
+  description: A crate containing a Disco Beach Ball that turns any beach trip into Studio 54.
+  components:
+  - type: StorageFill
+    contents:
+    - id: DiscoBeachBall
+      amount: 1
+
+- type: entity
+  id: CrateWizardAnomCore
+  name: Crate of Enchanting
+  description: A box containing stolen anomaly cores, used for enchanting.
+  parent: CratePirate
+  components:
+  #ONLY contains anomalies with enchantcomp.
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: RandomAnomalyCoreEnchantTable 
+        - !type:NestedSelector
+          tableId: RandomAnomalyCoreInertEnchantTable
+          rolls: 2
+
+- type: entityTable
+  id: RandomAnomalyCoreEnchantTable
+  table: !type:GroupSelector
+    children:
+    - id: AnomalyCorePyroclastic
+    - id: AnomalyCoreGravity
+    - id: AnomalyCoreIce
+    - id: AnomalyCoreFlesh
+    - id: AnomalyCoreRock
+    - id: AnomalyCoreLiquid
+    - id: AnomalyCoreElectricity
+    - id: AnomalyCoreFlora
+    - id: AnomalyCoreSanta
+
+- type: entityTable
+  id: RandomAnomalyCoreInertEnchantTable
+  table: !type:GroupSelector
+    children:
+    - id: AnomalyCorePyroclasticInert
+    - id: AnomalyCoreGravityInert
+    - id: AnomalyCoreIceInert
+    - id: AnomalyCoreFleshInert
+    - id: AnomalyCoreRockInert
+    - id: AnomalyCoreLiquidInert
+    - id: AnomalyCoreElectricityInert
+    - id: AnomalyCoreFloraInert
+    - id: AnomalyCoreSantaInert

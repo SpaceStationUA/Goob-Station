@@ -66,7 +66,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "Уріст МакСлайм"
+  name: Urist McSlime
   parent: BaseMobSpeciesOrganic
   id: BaseMobSlimePerson
   abstract: true
@@ -172,12 +172,22 @@
         scaleByQuantity: true
         damage:
           types:
-            Heat: 0.1
+            Heat: 0.25 # goob edit
+        conditions:
+        - !type:HasComponentOnEquipmentCondition # goob edit - make suits protect slimes from water damage
+          components:
+          - type: PressureProtection
+          invert: true
       - !type:PopupMessage
         type: Local
         visualType: Large
         messages: [ "slime-hurt-by-water-popup" ]
         probability: 0.25
+        conditions:
+        - !type:HasComponentOnEquipmentCondition # goob edit - make suits protect slimes from water damage
+          components:
+          - type: PressureProtection
+          invert: true
   - type: Butcherable
     butcheringType: Spike
     spawned:

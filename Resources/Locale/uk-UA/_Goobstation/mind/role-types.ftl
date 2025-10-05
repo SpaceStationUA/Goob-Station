@@ -5,3 +5,5 @@ role-subtype-heretic = Єретик
 role-subtype-pirate = Пірат
 role-subtype-changeling = Лінг
 role-subtype-brainwashed = Промиті мізки
+
+role-subtype-slaughter-demon = Демон Різанини

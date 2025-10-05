@@ -31,7 +31,7 @@
 - type: entity
   parent: CollideFloorTrap
   id: CollideFloorTrapSpawn
-  name: "спавн пастки на підлозі"
+  name: floor trap spawn
   abstract: true
   components:
     - type: Sprite
@@ -41,7 +41,7 @@
 - type: entity
   parent: CollideFloorTrap
   id: FloorTrapExplosion
-  name: "вибухова підлогова пастка"
+  name: explosion floor trap
   components:
     - type: TriggerOnCollide
       fixtureID: floortrap
@@ -56,7 +56,7 @@
 - type: entity
   parent: CollideFloorTrap
   id: FloorTrapEMP
-  name: "електромагнітна підлогова пастка"
+  name: EMP floor trap
   components:
     - type: TriggerOnCollide
       fixtureID: floortrap
@@ -96,26 +96,4 @@
       fixtureID: floortrap
     - type: SpawnOnTrigger
       proto: MobKangarooSpace
-    - type: DeleteOnTrigger
-
-- type: entity
-  parent: CollideFloorTrapSpawn
-  id: SpawnFloorTrapXenoDrone
-  suffix: Xeno. Drone
-  components:
-    - type: TriggerOnCollide
-      fixtureID: floortrap
-    - type: SpawnOnTrigger
-      proto: MobXenoDrone
-    - type: DeleteOnTrigger
-
-- type: entity
-  parent: CollideFloorTrapSpawn
-  id: SpawnFloorTrapXenoBurrower
-  suffix: Xeno. Burrower
-  components:
-    - type: TriggerOnCollide
-      fixtureID: floortrap
-    - type: SpawnOnTrigger
-      proto: MobXeno
     - type: DeleteOnTrigger

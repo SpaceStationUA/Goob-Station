@@ -12634,542 +12634,1798 @@ Entries:
 - author: clinux
   changes:
     - type: Tweak
-      message: Dwarves can now blow a BAC of 1.00
+      message: Гноми тепер можуть видихнути 1.00 проміле.
   id: 1463
   time: '2025-08-18T02:21:50.0000000+00:00'
 - author: JrInventor05
   changes:
     - type: Fix
-      message: Fixed possibility research HONKWeapons!
+      message: Виправлено можливість дослідження HONKWeapons!
   id: 1464
   time: '2025-08-18T02:22:17.0000000+00:00'
 - author: loltart
   changes:
     - type: Tweak
       message: >-
-        You no longer need to have a salvage id to use the mining shuttle
-        console!
+        Вам більше не потрібно мати ID сальвагера, щоб використовувати консоль шахтарського шатла!
   id: 1465
   time: '2025-08-18T02:23:51.0000000+00:00'
 - author: TurboTrackerss14
   changes:
     - type: Add
-      message: Added Security contraband markers to Security headgear where missing.
+      message: Додано маркери контрабанди служби безпеки до головних уборів СБ, де вони були відсутні.
   id: 1466
   time: '2025-08-18T02:26:05.0000000+00:00'
 - author: Rouden
   changes:
     - type: Tweak
-      message: Plasma cutter now has Normal size instead of Large.
+      message: Плазмовий різак тепер має звичайний розмір замість великого.
   id: 1467
   time: '2025-08-18T02:26:28.0000000+00:00'
 - author: loltart
   changes:
     - type: Fix
       message: >-
-        Command members can't roll sleeper agents anymore (they can still roll
-        corporate agent)
+        Члени командування більше не можуть стати сплячими агентами (вони все ще можуть стати
+        корпоративними агентами).
   id: 1468
   time: '2025-08-18T02:26:46.0000000+00:00'
 - author: FloatingFeeling
   changes:
     - type: Fix
-      message: Procenyl Lazide vial names now show up correctly.
+      message: Назви флаконів Procenyl Lazide тепер відображаються правильно.
   id: 1469
   time: '2025-08-18T02:27:40.0000000+00:00'
 - author: CerberusWolfie
   changes:
     - type: Fix
-      message: Fixed language fonts not working when talking on Radio or when shouting.
+      message: Виправлено, що шрифти мов не працювали під час розмови по радіо або крику.
     - type: Fix
       message: >-
-        Fixed Chinese from Sol Common showing up as broken character emojis when
-        being bolded.
+        Виправлено, що китайська мова з Sol Common відображалася як пошкоджені символи-емодзі, коли
+        була виділена жирним.
   id: 1470
   time: '2025-08-18T02:28:06.0000000+00:00'
 - author: CerberusWolfie
   changes:
     - type: Remove
-      message: NTR can no longer be an antag. No more Devil NTR.
+      message: NTR більше не може бути антагоністом. Більше ніякого диявола NTR.
   id: 1471
   time: '2025-08-18T02:28:55.0000000+00:00'
 - author: FloatingFeeling
   changes:
     - type: Tweak
-      message: The judo belt now shares the secbelt whitelist.
+      message: Пояс для дзюдо тепер має той самий білий список, що й пояс СБ.
   id: 1472
   time: '2025-08-18T02:29:19.0000000+00:00'
 - author: CerberusWolfie
   changes:
     - type: Fix
       message: >-
-        Fixed Squackroach languages. They can now speak Tau-Ceti Basic and
+        Виправлено мови Squackroach. Тепер вони можуть говорити на Tau-Ceti Basic та
         Valyrian Standard (Harpy).
   id: 1473
   time: '2025-08-18T02:30:59.0000000+00:00'
 - author: FloatingFeeling
   changes:
     - type: Tweak
-      message: The Energy Shotgun's sprite has been reverted to upstream's.
+      message: Спрайт енергетичного дробовика повернуто до версії з апстріму.
   id: 1474
   time: '2025-08-18T02:31:53.0000000+00:00'
 - author: wachte1
   changes:
     - type: Remove
-      message: Removed Wizard Helm from Magivend
+      message: Видалено шолом чарівника з Magivend.
   id: 1475
   time: '2025-08-18T02:32:58.0000000+00:00'
 - author: RatherUncreativeName
   changes:
     - type: Tweak
-      message: Cursed Heart now heals burn damage
+      message: Прокляте серце тепер лікує пошкодження від опіків.
   id: 1476
   time: '2025-08-18T02:33:34.0000000+00:00'
 - author: BombasterDS2
   changes:
     - type: Tweak
       message: >-
-        More items that could fit into basic recharger can now be fit into turbo
-        recharger.
+        Більше предметів, які могли поміститися в звичайний зарядний пристрій, тепер можна помістити в турбо
+        зарядний пристрій.
     - type: Tweak
       message: >-
-        Greatshield now be reactivated after full discharge if it's charge more
-        than 10% of max charge.
+        Великий щит тепер можна повторно активувати після повної розрядки, якщо його заряд перевищує
+        10% від максимального.
   id: 1477
   time: '2025-08-18T02:35:09.0000000+00:00'
 - author: SolsticeOfTheWinter
   changes:
     - type: Add
-      message: 'Added a command for adding implants to an entity: AddImplant'
+      message: 'Додано команду для додавання імплантів до сутності: AddImplant'
   id: 1478
   time: '2025-08-18T02:35:51.0000000+00:00'
 - author: BombasterDS2
   changes:
     - type: Tweak
       message: >-
-        Unpowered doors now can be bolted and unbolted with wrench if it's wire
-        panel is open and not secured. Cut wire allows bolting and unbolting
-        powered doors.
+        Двері без живлення тепер можна заблокувати та розблокувати гайковим ключем, якщо їхня панель
+        проводів відкрита і не закріплена. Перерізаний дріт дозволяє блокувати та розблоковувати
+        двері з живленням.
   id: 1479
   time: '2025-08-18T02:47:02.0000000+00:00'
 - author: Sarahon
   changes:
     - type: Add
-      message: Core Roleplay rule 16 - Atmos Tech
+      message: Основне правило рольової гри 16 - Атмосферний технік
   id: 1480
   time: '2025-08-18T02:48:58.0000000+00:00'
 - author: ShieldAcrados
   changes:
     - type: Fix
       message: >-
-        Fixed the Corporate Modsuit so that no error sign shows up when the
-        gauntlets are sealed
+        Виправлено корпоративний мод-костюм, щоб знак помилки не з'являвся, коли
+        рукавиці запечатані.
     - type: Add
-      message: Added a filled variant to the Corporate Modsuit
+      message: Додано заповнений варіант корпоративного мод-костюма.
   id: 1481
   time: '2025-08-18T02:51:04.0000000+00:00'
 - author: clinux
   changes:
     - type: Tweak
-      message: 'You can now place cable on reinforced hull plating! Engies rejoice! '
+      message: 'Тепер ви можете прокладати кабель по укріпленій обшивці! Інженери, радійте!'
   id: 1482
   time: '2025-08-18T02:55:07.0000000+00:00'
 - author: MarkerWicker
   changes:
     - type: Add
-      message: A new plushie exists, modeled after Mnwaar the shadowkin.
+      message: Існує нова плюшева іграшка, створена за зразком тіньового родича Мнваара.
   id: 1483
   time: '2025-08-18T02:56:44.0000000+00:00'
 - author: CerberusWolfie
   changes:
     - type: Tweak
       message: >-
-        Forced Zombies to have Xeno language and understand nothing when they
-        are zombified. You no longer retain your language knowledge when
-        zombified.
+        Зомбі змушені розмовляти мовою ксеноморфів і нічого не розуміти, коли
+        вони зомбовані. Ви більше не зберігаєте свої мовні знання, коли
+        стаєте зомбі.
     - type: Fix
-      message: Fixed Zombies being able to use sign languages without breaking accent.
+      message: Виправлено, що зомбі могли використовувати мови жестів, не порушуючи акценту.
   id: 1484
   time: '2025-08-18T02:57:55.0000000+00:00'
 - author: cheetah1984
   changes:
     - type: Tweak
-      message: Merged mining and PKA modules.
+      message: Об'єднано модулі видобутку та PKA.
   id: 1485
   time: '2025-08-18T02:58:30.0000000+00:00'
 - author: Bokser815
   changes:
     - type: Add
-      message: Added new emag loot from vending machines!
+      message: Додано новий лут з торгових автоматів за допомогою емага!
   id: 1486
   time: '2025-08-18T03:03:26.0000000+00:00'
 - author: Mocho
   changes:
     - type: Tweak
-      message: Zeds, blob zeds and borgs cannot pilot mechs anymore.
+      message: Зомбі, зомбі-блоби та борги більше не можуть керувати мехами.
   id: 1487
   time: '2025-08-18T03:06:57.0000000+00:00'
 - author: Sarahon
   changes:
     - type: Fix
-      message: Translators respect cell charge again
+      message: Перекладачі знову враховують заряд батареї.
   id: 1488
   time: '2025-08-18T03:18:08.0000000+00:00'
 - author: Orion-416
   changes:
     - type: Tweak
-      message: Librarian can now speak and understand most languages.
+      message: Бібліотекар тепер може говорити та розуміти більшість мов.
   id: 1489
   time: '2025-08-18T03:23:44.0000000+00:00'
 - author: BombasterDS2
   changes:
     - type: Tweak
       message: >-
-        Weldbots now will try to fix all stuff that can be fix with welding
-        tool.
+        Зварювальні боти тепер намагатимуться полагодити все, що можна полагодити за допомогою
+        зварювального інструменту.
   id: 1490
   time: '2025-08-18T03:25:06.0000000+00:00'
 - author: RatherUncreativeName
   changes:
     - type: Tweak
-      message: Joints and blunts can now be sold for spesos.
+      message: Косяки та бланти тепер можна продавати за спесо.
   id: 1491
   time: '2025-08-18T03:26:38.0000000+00:00'
 - author: BombasterDS2
   changes:
     - type: Tweak
       message: >-
-        Common radio message now can be sent only with intercom. You still can
-        receive radio messages with headgear.
+        Загальні радіоповідомлення тепер можна надсилати лише через інтерком. Ви все ще можете
+        отримувати радіоповідомлення за допомогою гарнітури.
   id: 1492
   time: '2025-08-18T03:27:33.0000000+00:00'
 - author: MarkerWicker
   changes:
     - type: Add
       message: >-
-        Borgs now produce sound when using certain emotes which were silent
-        before.
+        Борги тепер видають звук при використанні певних емоцій, які раніше були
+        беззвучними.
   id: 1493
   time: '2025-08-18T03:29:40.0000000+00:00'
 - author: Nyx
   changes:
     - type: Add
-      message: Added section on plastic production to Chemistry and Medical guidebooks!
+      message: Додано розділ про виробництво пластику до посібників з хімії та медицини!
   id: 1494
   time: '2025-08-18T03:35:35.0000000+00:00'
 - author: Rouden
   changes:
     - type: Add
-      message: Added flares, powercells and double gas tanks to the salvage vendor.
+      message: Додано сигнальні ракети, батареї та подвійні газові балони до асортименту продавця сальвагерів.
     - type: Fix
-      message: Fixed jackboots and seclites being contaband for salvagers.
+      message: Виправлено, що чоботи та ліхтарі СБ були контрабандою для сальвагерів.
     - type: Remove
       message: >-
-        Removed grappling gun from a salvage vendor (it is completely useless on
-        lavaland).
+        Видалено гарпун з асортименту продавця сальвагерів (він абсолютно марний на
+        лаваленді).
   id: 1495
   time: '2025-08-18T03:36:57.0000000+00:00'
 - author: Rouden
   changes:
     - type: Remove
-      message: Metal pipe was stopped. Throwed pipe no longer makes funny noise.
+      message: Металеву трубу зупинено. Кинута труба більше не видає смішного звуку.
   id: 1496
   time: '2025-08-18T03:37:26.0000000+00:00'
 - author: GnKonkort
   changes:
     - type: Add
       message: >-
-        Added new sprites for resomi, vox, lizard Blueshield officers. Sprites
-        made by Zethine
+        Додано нові спрайти для офіцерів Блюшилд рас ресомі, вокс, ящір. Спрайти
+        створені Zethine.
   id: 1497
   time: '2025-08-18T03:38:05.0000000+00:00'
 - author: SolsticeOfTheWinter
   changes:
     - type: Tweak
-      message: Reduced the rate at which Blobs spawn. You're free of slop.
+      message: Зменшено частоту появи блобів. Ви вільні від шламу.
   id: 1498
   time: '2025-08-18T03:41:10.0000000+00:00'
 - author: BombasterDS2
   changes:
     - type: Tweak
       message: >-
-        Bingles got their own language, but they can't understand any language
-        anymore (including their own language)!
+        Бінгли отримали власну мову, але вони більше не можуть розуміти жодної мови
+        (включаючи власну)!
     - type: Remove
-      message: Bingle accent was removed.
+      message: Акцент бінглів було видалено.
   id: 1499
   time: '2025-08-18T03:43:59.0000000+00:00'
 - author: CerberusWolfie
   changes:
     - type: Tweak
-      message: Resomi now take 15% more brute damage instead of 30% more.
+      message: Ресомі тепер отримують на 15% більше грубого пошкодження замість 30%.
     - type: Tweak
-      message: Rodentia now take 15% more blunt damage instead of 30% more.
+      message: Гризуни тепер отримують на 15% більше тупого пошкодження замість 30%.
   id: 1500
   time: '2025-08-18T03:44:41.0000000+00:00'
 - author: CerberusWolfie
   changes:
     - type: Tweak
-      message: Changed Moth Mime emergency boxes to be slotted.
+      message: Змінено аварійні коробки мімів-метеликів на слотові.
     - type: Fix
-      message: Fixed Non-Wizden species not getting Mime emergency boxes.
+      message: Виправлено, що види, які не є Wizden, не отримували аварійні коробки мімів.
   id: 1501
   time: '2025-08-18T03:45:24.0000000+00:00'
 - author: XWasHere
   changes:
     - type: Tweak
-      message: Moths can now eat mail, books, spesos, and devil contracts.
+      message: Метелики тепер можуть їсти пошту, книги, спесо та контракти диявола.
   id: 1502
   time: '2025-08-18T03:46:05.0000000+00:00'
 - author: FloatingFeeling
   changes:
     - type: Fix
       message: >-
-        Modsuits no longer hide all your clothing when equipped (and not
-        activated).
+        Мод-костюми більше не приховують весь ваш одяг, коли їх одягають (і не
+        активують).
   id: 1503
   time: '2025-08-18T03:46:56.0000000+00:00'
 - author: CerberusWolfie
   changes:
     - type: Tweak
-      message: Moved the SOP to Stations and Shifts and renamed some of the folders.
+      message: Переміщено СОП до "Станції та зміни" та перейменовано деякі папки.
   id: 1504
   time: '2025-08-18T03:47:18.0000000+00:00'
 - author: CerberusWolfie
   changes:
     - type: Tweak
-      message: Abductor Victims, Abductees, are Free Agents now.
+      message: Жертви викрадачів, викрадені, тепер є вільними агентами.
   id: 1505
   time: '2025-08-18T03:47:40.0000000+00:00'
 - author: OnsenCapy
   changes:
     - type: Tweak
       message: >-
-        Lowered the frequency of derelict syndicate assault borg, as they were
-        spawning every single round.
+        Зменшено частоту появи покинутих штурмових боргів синдикату, оскільки вони
+        з'являлися кожного раунду.
     - type: Tweak
-      message: Derelict syndicate assault borgs are generally less crew alligned now.
+      message: Покинуті штурмові борги синдикату тепер загалом менш прихильні до екіпажу.
   id: 1506
   time: '2025-08-18T03:49:51.0000000+00:00'
 - author: OnsenCapy
   changes:
     - type: Add
-      message: Added a new song "Abductor" to jukebox!
+      message: Додано нову пісню "Abductor" до музичного автомата!
   id: 1507
   time: '2025-08-18T03:50:14.0000000+00:00'
 - author: FloatingFeeling
   changes:
     - type: Tweak
-      message: The syndicate elite voidsuit now has a reptilian helmet sprite.
+      message: Елітний скафандр синдикату тепер має спрайт шолома для рептилій.
   id: 1508
   time: '2025-08-18T03:50:53.0000000+00:00'
 - author: OnsenCapy
   changes:
     - type: Tweak
       message: >-
-        Frequency of visitor shuttles has been reduced, as it was being
-        trigerred too many times per round.
+        Частоту прибуття шатлів для відвідувачів було зменшено, оскільки це
+        траплялося занадто багато разів за раунд.
   id: 1509
   time: '2025-08-18T03:51:22.0000000+00:00'
 - author: OnsenCapy
   changes:
     - type: Add
       message: >-
-        Added more mapping options, using textures from multiple codebases.
-        Textures from RMC, Goonstation, and more!
+        Додано більше опцій для мапінгу, використовуючи текстури з кількох кодових баз.
+        Текстури з RMC, Goonstation та інших!
     - type: Add
       message: >-
-        Added multiple new mobs, such as Gunbots, Flock drones, more xeno
-        variants, clown creatures, and more!
+        Додано кілька нових мобів, таких як ганботи, дрони-зграї, більше варіантів
+        ксеноморфів, клоунських істот та багато іншого!
     - type: Add
       message: >-
-        More vent critter events. Don't be too hasty to rush to their location,
-        you might find yourself out of your depth...
+        Більше подій з істотами у вентиляції. Не поспішайте до їхнього місцезнаходження,
+        ви можете опинитися не в своїй тарілці...
     - type: Tweak
       message: >-
-        Behonker's eye laser is no longer a guaranteed drop upon butchering the
-        Behonker.
+        Очний лазер Бехонкера більше не є гарантованим дропом після розбирання
+        Бехонкера.
   id: 1510
   time: '2025-08-18T03:52:26.0000000+00:00'
 - author: OnsenCapy
   changes:
     - type: Add
       message: >-
-        Added a new long, twin-tailed hairstyle inspired by a certain virtual
-        pop idol.
+        Додано нову довгу зачіску з двома хвостами, натхненну певним віртуальним
+        поп-ідолом.
   id: 1511
   time: '2025-08-18T03:53:06.0000000+00:00'
 - author: CerberusWolfie
   changes:
     - type: Remove
-      message: Removed the ability to burger pet carriers and backpacks/belts.
+      message: Видалено можливість робити бургери з переносок для тварин та рюкзаків/поясів.
   id: 1512
   time: '2025-08-18T03:53:14.0000000+00:00'
 - author: CometVoid
   changes:
     - type: Fix
-      message: Harpies can chirp again
+      message: Гарпії знову можуть цвірінькати.
     - type: Add
       message: >-
-        Harpies can now yip, trill, wurble, warble, mar, and laugh and scream
-        like a resomi
+        Гарпії тепер можуть гавкати, щебетати, воркувати, співати, муркотіти, сміятися та кричати
+        як ресомі.
   id: 1513
   time: '2025-08-18T03:54:01.0000000+00:00'
 - author: Froffy025
   changes:
     - type: Add
-      message: Added slime bubbling, slime popping emotes
+      message: Додано емоції бульбашок та лопання слизу.
     - type: Add
-      message: Added knuckle cracking emotes
+      message: Додано емоції хрускоту кісточками.
   id: 1514
   time: '2025-08-18T03:59:44.0000000+00:00'
 - author: Krispy-Lime
   changes:
     - type: Add
       message: >-
-        You can now create freedom cheese blocks and cheese slices (based on
-        American processed cheese). 
+        Тепер ви можете створювати сирні блоки та скибочки "свободи" (на основі
+        американського плавленого сиру).
   id: 1515
   time: '2025-08-18T04:04:07.0000000+00:00'
 - author: CometVoid
   changes:
     - type: Add
       message: >-
-        Ports syringe cases from EE, so you don't have to store your syringes in
-        cigarette boxes!
+        Портовано кейси для шприців з EE, тож вам не доведеться зберігати шприци в
+        сигаретних пачках!
   id: 1516
   time: '2025-08-18T04:05:55.0000000+00:00'
 - author: Topicranger
   changes:
     - type: Tweak
-      message: The MIDI Channel Selector now shows the instrument name of the track!
+      message: Селектор MIDI-каналів тепер показує назву інструменту треку!
     - type: Fix
       message: >-
-        Fixed admin logs not being saved to the databases when a player played
-        certain MIDI files.
+        Виправлено, що адмінські логи не зберігалися в базах даних, коли гравець відтворював
+        певні MIDI-файли.
   id: 1517
   time: '2025-08-18T04:06:35.0000000+00:00'
 - author: CerberusWolfie
   changes:
     - type: Tweak
-      message: Made Chinese more BOLD!!
+      message: Зроблено китайську мову більш ЖИРНОЮ!!
   id: 1518
   time: '2025-08-18T04:22:52.0000000+00:00'
 - author: bebright
   changes:
     - type: Add
-      message: The color of the energy sword can now be customized.
+      message: Колір енергетичного меча тепер можна налаштовувати.
   id: 1519
   time: '2025-08-18T04:29:51.0000000+00:00'
 - author: CerberusWolfie, Superlagg, Mnemotechnician, ashkitten, RadsammyT
   changes:
     - type: Tweak
-      message: Emotes are now restricted by Line of Sight.
+      message: Емоції тепер обмежені прямою видимістю.
     - type: Tweak
-      message: Sign Languages now require Line of Sight.
+      message: Мови жестів тепер вимагають прямої видимості.
     - type: Tweak
       message: >-
-        Sign Languages act like emotes for identity. You can now hide your face
-        and use sign language without exposing your name (similar to emotes).
+        Мови жестів діють як емоції для ідентифікації. Тепер ви можете приховати своє обличчя
+        і використовувати мову жестів, не розкриваючи свого імені (подібно до емоцій).
     - type: Fix
-      message: Languages that do not require speech do not make noise.
+      message: Мови, які не вимагають мовлення, не видають звуку.
   id: 1520
   time: '2025-08-18T04:45:33.0000000+00:00'
 - author: Rouden
   changes:
     - type: Add
       message: >-
-        Nukeops war declaration now shows a badass animation to everyone on the
-        station. (Power Point Ops)
+        Оголошення війни ядерними оперативниками тепер показує круту анімацію всім на
+        станції. (Power Point Ops)
   id: 1521
   time: '2025-08-18T05:01:53.0000000+00:00'
 - author: Froffy025
   changes:
     - type: Add
       message: >-
-        Added makeup, jewelry, and underwear to the markings category in
-        character customization.
+        Додано макіяж, прикраси та спідню білизну до категорії маркувань у
+        налаштуванні персонажа.
   id: 1522
   time: '2025-08-18T05:12:19.0000000+00:00'
 - author: wachte1
   changes:
     - type: Add
-      message: Fland has office chairs again
+      message: У Фланді знову є офісні стільці.
     - type: Add
-      message: Trevor now spawns in Security on Fland
+      message: Тревор тепер з'являється в службі безпеки на Фланді.
     - type: Tweak
-      message: SM Piping on Fland has been simplified to be more engineer friendly
+      message: Трубопровід SM на Фланді було спрощено, щоб бути більш дружнім до інженерів.
   id: 1523
   time: '2025-08-18T05:17:47.0000000+00:00'
 - author: Thesia000
   changes:
     - type: Tweak
-      message: Barratry mapping
+      message: Мапінг баратри.
   id: 1524
   time: '2025-08-18T05:20:44.0000000+00:00'
 - author: FloatingFeeling
   changes:
     - type: Add
-      message: Cog Station
+      message: Станція Ког.
   id: 1525
   time: '2025-08-18T05:21:37.0000000+00:00'
 - author: CreatorBot01
   changes:
     - type: Tweak
       message: >-
-        Amber, Packed and Omega now up to date with map content. and also public
-        lavaland soon...
+        Amber, Packed та Omega тепер оновлені відповідно до контенту карти. а також скоро буде
+        публічний лаваленд...
     - type: Tweak
-      message: also the silo has change nationality to cargonia. dont ask me why.
+      message: також силос змінив національність на каргонію. не питайте мене чому.
     - type: Fix
-      message: 'Deathmatch map dm-entryway.yml no longer be cursed with darkness. '
+      message: 'Карта Deathmatch dm-entryway.yml більше не буде проклята темрявою.'
   id: 1526
   time: '2025-08-18T05:23:45.0000000+00:00'
 - author: hrrrnggg my name is turbotracker and im a stupid chuddddddddd
   changes:
     - type: Tweak
       message: >-
-        Increased the size of Medical and Security autoinjectors, and the
-        cartridges.
+        Збільшено розмір медичних та охоронних автоінжекторів, а також
+        картриджів.
   id: 1527
   time: '2025-08-18T05:28:05.0000000+00:00'
 - author: bebright
   changes:
     - type: Fix
-      message: Fixed an issue with toggleable items.
+      message: Виправлено проблему з перемикаючимися предметами.
   id: 1528
   time: '2025-08-18T05:29:10.0000000+00:00'
 - author: Ilya246
   changes:
     - type: Tweak
-      message: AI is back to NTDefault.
+      message: ШІ повернуто до NTDefault.
   id: 1529
   time: '2025-08-18T05:31:04.0000000+00:00'
 - author: NanoTrasen Signal Technicians
   changes:
     - type: Fix
-      message: The Common radio channel has been returned to the masses. Rejoice.
+      message: Загальний радіоканал повернуто масам. Радійте.
   id: 1530
   time: '2025-08-19T16:26:26.0000000+00:00'
 - author: MarkerWicker
   changes:
     - type: Add
       message: >-
-        Height and width sliders are now available on the character creation
-        screen.
+        Повзунки висоти та ширини тепер доступні на екрані створення
+        персонажа.
     - type: Tweak
       message: >-
-        Characters who are smaller will sprint slower than their regularly sized
-        peers.
+        Персонажі меншого розміру будуть бігати повільніше, ніж їхні однолітки
+        звичайного розміру.
     - type: Tweak
       message: >-
-        Minimum- and maximum-sizes have been clamped down from their values on
+        Мінімальні та максимальні розміри було зменшено порівняно з їхніми значеннями на
         EE.
   id: 1531
   time: '2025-08-19T16:36:05.0000000+00:00'
 - author: Durk
   changes:
     - type: Remove
-      message: Removed felinids from command.
+      message: Видалено фелінідів з командування.
   id: 1532
   time: '2025-08-19T16:36:49.0000000+00:00'
+- author: loltart
+  changes:
+    - type: Tweak
+      message: Лутбаги тепер продаються за 500.
+  id: 1533
+  time: '2025-08-30T03:22:41.0000000+00:00'
+- author: DeusMaldPr
+  changes:
+    - type: Fix
+      message: >-
+        Транспортні засоби тепер рухаються зі швидкістю 1.4 від їх початкових значень. Це пов'язано з
+        додаванням спринту, що робить їх напівзастарілими. Остерігайтеся клоунських автомобілів.
+  id: 1534
+  time: '2025-08-30T03:23:43.0000000+00:00'
+- author: RatherUncreativeName
+  changes:
+    - type: Tweak
+      message: >-
+        Посилено Ultravasculine та додано вимогу до нагрівання для реакції
+        Ethyloxyephedrine
+  id: 1535
+  time: '2025-08-30T03:24:23.0000000+00:00'
+- author: 3PonPon3
+  changes:
+    - type: Tweak
+      message: >-
+        Збільшено ліміт маркування вусиків метелика (голова, верх) з двох (2) до
+        шести (6)!
+  id: 1536
+  time: '2025-08-30T03:25:46.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Fix
+      message: Гризуни тепер відчувають спрагу.
+  id: 1537
+  time: '2025-08-30T03:26:15.0000000+00:00'
+- author: KMano10000
+  changes:
+    - type: Fix
+      message: Деякі сяючі очі насправді не світилися.
+  id: 1538
+  time: '2025-08-30T03:26:51.0000000+00:00'
+- author: OnsenCapy
+  changes:
+    - type: Tweak
+      message: >-
+        Борги-самогубці більше не можуть забрати з собою яму Бінглів. Зустрічайте
+        бінглів віч-на-віч, бляшанки.
+    - type: Remove
+      message: >-
+        Плитки бінглів більше не слизькі, оскільки бінгли ковзали на них
+        частіше, ніж будь-хто інший.
+  id: 1539
+  time: '2025-08-30T03:28:03.0000000+00:00'
+- author: LuciferEOS
+  changes:
+    - type: Tweak
+      message: Головний інженер тепер має експериментальний RCD у своїй шафці.
+  id: 1540
+  time: '2025-08-30T03:33:23.0000000+00:00'
+- author: RatherUncreativeName
+  changes:
+    - type: Add
+      message: Додано крапотоксин.
+  id: 1541
+  time: '2025-08-30T03:36:17.0000000+00:00'
+- author: gusxyz
+  changes:
+    - type: Tweak
+      message: >-
+        Маски служби безпеки тепер постачаються у вашій коробці для виживання, а не у вашому
+        рюкзаку.
+  id: 1542
+  time: '2025-08-30T03:46:50.0000000+00:00'
+- author: Ilya246
+  changes:
+    - type: Add
+      message: Єретики тепер завжди можуть жертвувати іншими єретиками за 3 очки знань.
+  id: 1543
+  time: '2025-08-30T03:49:19.0000000+00:00'
+- author: mikusssssss
+  changes:
+    - type: Tweak
+      message: Мінімальний розмір усіх видів було збільшено.
+    - type: Tweak
+      message: Такі види, як гноми та люди, тепер можуть бути ширшими, радійте.
+  id: 1544
+  time: '2025-08-30T03:50:19.0000000+00:00'
+- author: DeusMaldPr
+  changes:
+    - type: Tweak
+      message: 'Повернуто старий розмір усім бойовим автоінжекторам!'
+    - type: Tweak
+      message: >-
+        Замінено тірімол з епіпенів на дексалін, БІЛЬШЕ НІЯКИХ БОЙОВИХ ІН'ЄКЦІЙ ЕПІПЕНУ,
+        РАДІЙТЕ!
+    - type: Tweak
+      message: >-
+        Зменшено лікування від картриджа для автоінжектора від грубої сили з 98 максимального зціленого пошкодження до
+        ~60-70 та з ~28 зцілення/тип пошкодження до ~21 зцілення/тип пошкодження, а також зменшено
+        ефективність картриджа від опіків на аналогічну величину.
+  id: 1545
+  time: '2025-08-30T03:51:52.0000000+00:00'
+- author: ImWeax
+  changes:
+    - type: Add
+      message: >-
+        Картопляні батареї тепер можна використовувати для генерації невеликої кількості енергії,
+        прикрутивши їх до кабелю низької напруги! Час для ботанічної інженерії!
+  id: 1546
+  time: '2025-08-30T03:53:06.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Tweak
+      message: >-
+        Лазер передачі енергії тепер вистрілює максимум 5 МДж, що становить (592 спесо
+        за постріл).
+    - type: Fix
+      message: >-
+        Лазер передачі енергії тепер буде споживати заряд батареї при пострілі, і
+        перестане стріляти, коли заряду буде недостатньо.
+  id: 1547
+  time: '2025-08-30T03:56:30.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Fix
+      message: Виправлено, що Biomass Reclaimer не приймав перетягнуті або кинуті тіла.
+  id: 1548
+  time: '2025-08-30T03:56:37.0000000+00:00'
+- author: TurboTrackerss14
+  changes:
+    - type: Tweak
+      message: Комплект бойових інжекторів BSO тепер постачається з вибухостійким нагрудником.
+  id: 1549
+  time: '2025-08-30T04:03:01.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Tweak
+      message: Фліпо запальничку знову можна вставляти в пачки сигарет.
+    - type: Tweak
+      message: Преміальні гаванські сигари також знову можна вставляти в пачки сигарет.
+    - type: Tweak
+      message: Сигарети тепер горять на 20% повільніше.
+  id: 1550
+  time: '2025-08-30T04:14:22.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Tweak
+      message: Слимаки не мають кісток, вони не отримують пошкодження кісток.
+  id: 1551
+  time: '2025-08-30T04:16:46.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Tweak
+      message: Видалено затримку розіграшу ролі бінгла, інста БІНГЛ.
+    - type: Fix
+      message: Виправлено, що викрадачі нічого не могли зробити.
+  id: 1552
+  time: '2025-08-30T07:25:49.0000000+00:00'
+- author: Local schizophrenic
+  changes:
+    - type: Fix
+      message: Виправлено, що шоломи викрадачів захищали їхню іншу голову, а не основну.
+    - type: Fix
+      message: >-
+        Виправлено консоль викрадачів, тепер вона правильно повідомляє, якщо ви не в
+        діапазоні FTL, і дозволяє вам фактично телепортуватися або вийти.
+    - type: Fix
+      message: Виправлено відсутність у зрадників їхнього описового тексту та коду в аплінку.
+  id: 1553
+  time: '2025-08-30T07:30:29.0000000+00:00'
+- author: Tim-Liam-Hill
+  changes:
+    - type: Fix
+      message: Виправлено статус контрабанди для селектора інженерного скафандра для інженерів.
+  id: 1554
+  time: '2025-08-30T08:43:35.0000000+00:00'
+- author: Aineias
+  changes:
+    - type: Add
+      message: Додано кілька нових руїн у лаваленді!
+    - type: Add
+      message: Додано оновлену базу синдикату Pre-Armork.
+    - type: Add
+      message: Лаваленд тепер на 100% без лагів.
+    - type: Tweak
+      message: >-
+        Деякі руїни тепер невидимі на GPS, це включає базу синдикату, що руйнує
+        весь сенс гри за шахтера для ДЕЯКИХ КОНКРЕТНИХ ЛЮДЕЙ, які залишають
+        видобуток і мчать на базу синдикату на початку раунду, не займаючись видобутком після цього.
+        Очікуйте, що буде видобуто більше руди.
+    - type: Fix
+      message: Виправлено збій сервера, спричинений тим, що Снайпер намагався з'їсти свою зброю.
+  id: 1555
+  time: '2025-08-30T15:52:09.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Fix
+      message: Картриджі для автоінжектора знову правильно утилізуються після використання.
+  id: 1556
+  time: '2025-08-30T16:16:21.0000000+00:00'
+- author: NotActuallyMarty
+  changes:
+    - type: Add
+      message: Мова Schechi, Resomi.
+    - type: Add
+      message: Мова Ka'rakk, Vox.
+  id: 1557
+  time: '2025-08-30T16:47:50.0000000+00:00'
+- author: Rouden
+  changes:
+    - type: Tweak
+      message: Лаваленд тепер на 10000% без лагів.
+    - type: Remove
+      message: Тимчасово видалено прірви з Лаваленду.
+  id: 1558
+  time: '2025-08-30T16:51:53.0000000+00:00'
+- author: loltart
+  changes:
+    - type: Add
+      message: Тревор тепер у формі і готовий до нової роботи.
+  id: 1559
+  time: '2025-08-30T16:55:24.0000000+00:00'
+- author: NotActuallyMarty
+  changes:
+    - type: Add
+      message: Звичайні шоломи мають опцію показувати волосся.
+    - type: Tweak
+      message: Через зміну шоломів Брізбі став на 5% менш лисим.
+  id: 1560
+  time: '2025-08-30T16:56:27.0000000+00:00'
+- author: loltart
+  changes:
+    - type: Add
+      message: Клоунопси тепер можуть купувати клоунські автомобілі та незграбні імпланти, щоб керувати ними!
+    - type: Add
+      message: Клоунські автомобілі тепер мають нову музичну тему.
+    - type: Fix
+      message: Дії клоунського автомобіля тепер мають час відновлення.
+  id: 1561
+  time: '2025-08-30T21:39:54.0000000+00:00'
+- author: JohnJohn
+  changes:
+    - type: Add
+      message: '"виглядає здивованим" емоція'
+  id: 1562
+  time: '2025-08-30T21:45:58.0000000+00:00'
+- author: Slopstice, The Voices
+  changes:
+    - type: Add
+      message: >-
+        У дияволів тепер є нова мета, а саме отримати певну кількість
+        ваги контракту.
+    - type: Fix
+      message: Дияволи більше не можуть мати своїх парадоксальних клонів.
+    - type: Fix
+      message: Дияволи тепер можуть телепортуватися, будучи зв'язаними, це їх розв'яже.
+    - type: Fix
+      message: >-
+        Дияволи більше не можуть укладати угоди з силіконами, а також не можуть потискати
+        руку майже нічому. (Це було весело, але довелося прибрати.)
+    - type: Fix
+      message: Самих дияволів та контракти тепер значно важче знищити.
+    - type: Fix
+      message: Кілька інших помилок з дияволом.
+    - type: Tweak
+      message: Дияволи тепер отримують новий вигляд після повернення з вигнання.
+    - type: Tweak
+      message: >-
+        Дияволи та інші сутності, здатні обманювати смерть, більше не можуть воскреснути, якщо
+        святе пошкодження перевищує їхній критичний поріг.
+    - type: Tweak
+      message: >-
+        Усі предмети диявола більше не можна кремувати, а костюм більше не є
+        контрабандою.
+    - type: Tweak
+      message: Свята вода завдає менше шкоди (2 -> 0.7)
+  id: 1563
+  time: '2025-08-30T23:12:11.0000000+00:00'
+- author: CerberusWolfie
+  changes:
+    - type: Fix
+      message: Виправлено відсутність жирного шрифту в мовах, відмінних від Сол.
+  id: 1564
+  time: '2025-08-30T23:22:55.0000000+00:00'
+- author: SolsticeOfTheWinter
+  changes:
+    - type: Fix
+      message: Виправлено помилку з відкладеною смертю, яка не працювала належним чином.
+  id: 1565
+  time: '2025-08-31T00:16:44.0000000+00:00'
+- author: GNUtopia
+  changes:
+    - type: Add
+      message: >-
+        Наука тепер може досліджувати пробірки для центрифуги синього простору, що розблоковуються разом з
+        колбами та шприцами синього простору.
+  id: 1566
+  time: '2025-08-31T03:12:53.0000000+00:00'
+- author: Ilya246
+  changes:
+    - type: Add
+      message: >-
+        Додано кликун коропів до аплінку синдикату - пристрій, який приваблює диких коропів
+        з космосу.
+  id: 1567
+  time: '2025-08-31T03:16:11.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Fix
+      message: Ліві ноги тіньовиків знову видимі.
+  id: 1568
+  time: '2025-08-31T04:47:00.0000000+00:00'
+- author: Spatison, PuroSlavKing, Kai5
+  changes:
+    - type: Add
+      message: >-
+        На борту станції виявлено непізнані ознаки життя. Ксеноморфи
+        тут, щоб захопити станцію.
+    - type: Add
+      message: Додано новий дизайн інтерфейсу в стилі ксеноморфів.
+  id: 1569
+  time: '2025-08-31T07:33:49.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Fix
+      message: Виправлено можливість миттєво прибирати стіни та вікна космічного культу за допомогою RCD.
+  id: 1570
+  time: '2025-08-31T10:11:40.0000000+00:00'
+- author: Luminal, Bokser
+  changes:
+    - type: Add
+      message: >-
+        ТАТУСЬ ВДОМА, ДУРНИЙ ЕКІПАЖ. СПОЧАТКУ Я ВБИВАЮ ТОГО, ХТО МЕНЕ ВИКЛИКАВ.
+        ПОТІМ Я ПРИЙДУ ЗА ВАМИ.
+  id: 1571
+  time: '2025-08-31T14:14:48.0000000+00:00'
+- author: sowelipililimute, deltanedas
+  changes:
+    - type: Add
+      message: >-
+        Тепер існують різні аугментації панелі інструментів, які ви можете імплантувати
+        собі, щоб мати доступ до інструментів постійно.
+    - type: Add
+      message: >-
+        Тепер ви можете отримати аугментації сили, щоб збільшити шкоду в ближньому бою,
+        коли вони активовані.
+  id: 1572
+  time: '2025-08-31T14:58:21.0000000+00:00'
+- author: sanabi
+  changes:
+    - type: Add
+      message: рейдери
+  id: 1573
+  time: '2025-09-01T13:44:46.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Add
+      message: Додано смажених воксів по-кентукськи в меню.
+  id: 1574
+  time: '2025-09-01T13:54:09.0000000+00:00'
+- author: '1984'
+  changes:
+    - type: Remove
+      message: Миші більше не можуть вдихати реагенти з диму чи піни.
+  id: 1575
+  time: '2025-09-01T15:18:57.0000000+00:00'
+- author: Luminal
+  changes:
+    - type: Fix
+      message: Демони-різники тепер отримують святу шкоду.
+  id: 1576
+  time: '2025-09-01T15:20:36.0000000+00:00'
+- author: TaserTheFox
+  changes:
+    - type: Add
+      message: Додано мови Schechi та Ka'rakk до мовного імпланту бібліотекаря.
+  id: 1577
+  time: '2025-09-01T15:25:35.0000000+00:00'
+- author: OnsenCapy
+  changes:
+    - type: Add
+      message: >-
+        Нова подія на станції, що створює злоякісні розломи, імітуючи 2-й рівень космічного
+        культу. Ми трохи тролимо.
+    - type: Tweak
+      message: >-
+        Тепер ви можете переміщати монумент навіть на 1-му рівні, і його можна переміщати
+        кілька разів з 10-хвилинною перезарядкою. Більше ніякого кемпінгу на спавні для
+        служби безпеки.
+    - type: Tweak
+      message: >-
+        Витягування ентропії тепер займає лише 1 секунду замість 5. Якщо ви все ще не можете
+        досягти 2-го рівня після цієї зміни, я не знаю, що вам сказати. Чесно.
+    - type: Tweak
+      message: >-
+        Порожній шпиль тепер приймає газові балони замість портативних очищувачів повітря,
+        тому що буквально ніхто не використовував цей гліф.
+    - type: Tweak
+      message: >-
+        Для більшості ритуалів потрібен лише один культист, за винятком навернення людей
+        із захистом розуму, що залишається без змін. Тепер ви можете йти збирати ентропію
+        замість того, щоб залишатися біля монумента для допомоги.
+    - type: Tweak
+      message: Трохи збільшено швидкість снаряда космічної коси.
+    - type: Tweak
+      message: >-
+        Зменшено шкоду від списа космічного культу, оскільки хтось посилив його, зробивши
+        бумерангом, але не послабив.
+    - type: Tweak
+      message: >-
+        Порожня життєва сила, навичка, що пасивно лікує вас біля монумента, тепер
+        є навичкою 2-го рівня замість 3-го, і більше не лікує лише 0.1 здоров'я
+        на секунду.
+    - type: Remove
+      message: >-
+        Центральне командування більше не оголошує, що ви відчуваєте тривожне оніміння,
+        що поколює вас.
+  id: 1578
+  time: '2025-09-01T15:37:59.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Fix
+      message: Лампи в мод-костюмах тепер працюють.
+    - type: Fix
+      message: Космічні дракони тепер можуть поглинати їжу.
+    - type: Fix
+      message: Близнюки тепер імунні до задухи та температури.
+    - type: Fix
+      message: Близнюки більше не можуть викликати падіння сервера.
+    - type: Fix
+      message: Плазмолюди тепер можуть використовувати мод-костюми.
+  id: 1579
+  time: '2025-09-01T15:38:39.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Tweak
+      message: Дияволи з'являються рідше.
+  id: 1580
+  time: '2025-09-01T15:39:39.0000000+00:00'
+- author: GNUtopia
+  changes:
+    - type: Add
+      message: >-
+        IPC тепер з'являються з кремнієвою коробкою виживання з фаєром, аварійним
+        зварювальним апаратом, проводами та одноразовим поповненням батареї.
+  id: 1581
+  time: '2025-09-01T15:43:36.0000000+00:00'
+- author: FloatingFeeling
+  changes:
+    - type: Add
+      message: Куд-кудах!
+  id: 1582
+  time: '2025-09-01T19:45:05.0000000+00:00'
+- author: JohnJohn
+  changes:
+    - type: Add
+      message: >-
+        Звіти станції, в кінці раунду на станції тепер буде вкладка, що відображатиме
+        звіт станції, написаний NTR. Якщо NTR немає, замість цього буде написано
+        "Звіт станції не подано". Звіт станції з'являється в шафці NTR, також
+        є інтеграція з Discord.
+  id: 1583
+  time: '2025-09-01T19:48:52.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Fix
+      message: >-
+        Перехід у критичний стан у вигляді миші/карпа більше не "блокує" вас,
+        постійно перетворюючись.
+  id: 1584
+  time: '2025-09-01T19:50:08.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Fix
+      message: Ви знову можете носити берети ботаніка.
+  id: 1585
+  time: '2025-09-01T19:52:13.0000000+00:00'
+- author: Krispy-Lime, x5tink
+  changes:
+    - type: Add
+      message: Додано манго.
+  id: 1586
+  time: '2025-09-02T01:57:33.0000000+00:00'
+- author: Luminal
+  changes:
+    - type: Fix
+      message: Демони-різники тепер не стікають кров'ю вічно.
+    - type: Tweak
+      message: Посібник з демонів-різників оновлено важливою інформацією.
+    - type: Tweak
+      message: Додано підтримку більшої кількості типів крові для демона-різника.
+  id: 1587
+  time: '2025-09-02T09:36:13.0000000+00:00'
+- author: DeusMaldPr
+  changes:
+    - type: Add
+      message: >-
+        Тепер ви можете купувати набагато більше речей у торговому автоматі утилю,
+        включаючи НАБАГАТО більше спорядження для пізньої гри, наприклад, "Кларк". :)
+    - type: Add
+      message: 'Бойові рукавички тепер можна поновлювати.'
+  id: 1588
+  time: '2025-09-03T13:40:58.0000000+00:00'
+- author: TurboTrackerss14
+  changes:
+    - type: Tweak
+      message: >-
+        Шкоду від розмашистого удару електрошоковою палицею було посилено, щоб
+        він не був зовсім марним, але швидкі кліки все ще ефективніші.
+    - type: Tweak
+      message: 'Булава "Великий Щит" отримала незначне посилення шкоди по витривалості.'
+  id: 1589
+  time: '2025-09-03T23:38:04.0000000+00:00'
+- author: TurboTrackerss14
+  changes:
+    - type: Tweak
+      message: Ксеноморфи-покоївки більше не є ходячою приманкою для бану. Хоча все
+        ще досить милі.
+  id: 1590
+  time: '2025-09-03T23:38:49.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Add
+      message: Ксеноморфи тепер можуть оглушувати свою здобич.
+    - type: Fix
+      message: Яйця ксеноморфів та лицехвати тепер функціонують належним чином.
+  id: 1591
+  time: '2025-09-04T13:06:04.0000000+00:00'
+- author: Hell Department
+  changes:
+    - type: Tweak
+      message: Демони-різники більше не будуть генерувати мальдіум.
+    - type: Tweak
+      message: Демон-різник тепер має затримку дії (doafter) при пожиранні.
+  id: 1592
+  time: '2025-09-04T15:55:13.0000000+00:00'
+- author: BombasterDS2
+  changes:
+    - type: Fix
+      message: Заклинання чарівника, що були націлені на мобів, знову працюють.
+  id: 1593
+  time: '2025-09-04T20:06:52.0000000+00:00'
+- author: Thesia000
+  changes:
+    - type: Fix
+      message: Виправлено відсутні простирадла та частини на карті Cog.
+    - type: Fix
+      message: Виправлено колірні схеми труб на карті Barratry.
+  id: 1594
+  time: '2025-09-04T22:41:36.0000000+00:00'
+- author: OnsenCapy
+  changes:
+    - type: Remove
+      message: >-
+        Видалено всі екземпляри Xenonids, потворних Xeno-істот, які досі використовує Wizden.
+    - type: Fix
+      message: Сподіваюся, виправлено частоту появи Стародавніх Ксеносів у подіях з вентиляційними комахами.
+    - type: Tweak
+      message: >-
+        Стародавні Ксеноси тепер використовують фракцію SimpleHostile, що означає, що вони тепер даватимуть відсіч іншим мобам, таким як Тревор або Рено.
+  id: 1595
+  time: '2025-09-05T22:54:31.0000000+00:00'
+- author: RichardBlonski
+  changes:
+    - type: Add
+      message: >-
+        Викрадачі :alien: тепер мають оксид азоту на своїх кораблях, щоб приспати своїх експериментів.
+  id: 1596
+  time: '2025-09-06T06:27:41.0000000+00:00'
+- author: SolsticeOfTheWinter
+  changes:
+    - type: Add
+      message: Додано брелок для ключів прибиральника.
+    - type: Add
+      message: Швабри та мило тепер можуть мати новий метод очищення слідів.
+    - type: Add
+      message: Замінники ламп тепер будуть переробляти зламані трубки.
+    - type: Add
+      message: >-
+        Тепер ви можете відтирати плями, декалі та сліди з плитки за допомогою швабри/мила.
+    - type: Add
+      message: Тепер у прибиральників є новий старший предмет.
+    - type: Tweak
+      message: Носіння галош тепер зупиняє вас від залишення слідів.
+    - type: Tweak
+      message: Викидання сміття в утилізатор більше не вибухає вам барабанні перетинки.
+  id: 1597
+  time: '2025-09-06T06:44:18.0000000+00:00'
+- author: SolsticeOfTheWinter
+  changes:
+    - type: Fix
+      message: Виправлено некоректну роботу умови "Time".
+  id: 1598
+  time: '2025-09-06T09:00:40.0000000+00:00'
+- author: SolsticeOfTheWinter
+  changes:
+    - type: Fix
+      message: Набір ключів прибиральника тепер працює належним чином.
+  id: 1599
+  time: '2025-09-06T13:09:44.0000000+00:00'
+- author: 10kee
+  changes:
+    - type: Tweak
+      message: Перемальовано пальто Vox HoS
+  id: 1600
+  time: '2025-09-07T00:37:48.0000000+00:00'
+- author: TurboTrackerss14
+  changes:
+    - type: Tweak
+      message: Зменшено кількість доступного спорядження автоінжектора на початку зміни.
+    - type: Tweak
+      message: Більшість картриджів автоінжектора тепер вимагають плазми для виготовлення.
+  id: 1601
+  time: '2025-09-07T00:38:31.0000000+00:00'
+- author: TurboTrackerss14
+  changes:
+    - type: Add
+      message: >-
+        Чарівники тепер можуть придбати ящик із ядрами аномалій для зачарування
+        свого спорядження.
+  id: 1602
+  time: '2025-09-07T00:41:54.0000000+00:00'
+- author: TurboTrackerss14
+  changes:
+    - type: Tweak
+      message: SpaceLube більше не випаровується.
+  id: 1603
+  time: '2025-09-07T00:44:05.0000000+00:00'
+- author: mocho is a chud
+  changes:
+    - type: Fix
+      message: Виправлено, що операція не передбачалася.
+  id: 1604
+  time: '2025-09-07T10:10:08.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Fix
+      message: Звіт станції NTR тепер за замовчуванням включає науковий відділ.
+  id: 1605
+  time: '2025-09-07T13:19:12.0000000+00:00'
+- author: loltart
+  changes:
+  - type: Tweak
+    message: Оновлено бур'яни / стіни / вікна ксеноморфів до спрайтів RMC.
+  id: 1606
+  time: '2025-09-07T18:54:28.0000000+00:00'
+- author: Richard Blonski
+  changes:
+  - type: Tweak
+    message: Плазмени тепер мають імунітет до перетворення на зомбі.
+  id: 1607
+  time: '2025-09-07T19:20:51.0000000+00:00'
+- author: 10kee
+  changes:
+  - type: Tweak
+    message: Спрайти магнітних черевиків Воксів приведено у відповідність до їхніх
+      людських аналогів.
+  id: 1608
+  time: '2025-09-07T19:23:46.0000000+00:00'
+- author: RatherUncreativeName
+  changes:
+  - type: Fix
+    message: Виправлено неможливість створення певних аугментацій.
+  id: 1609
+  time: '2025-09-08T01:52:58.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Add
+    message: Додано барикади, схожі на барикади з RMC, але без можливості покращення.
+  - type: Remove
+    message: Ксеноси розучилися користуватися комп'ютерами.
+  id: 1610
+  time: '2025-09-08T19:23:47.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Tweak
+    message: Низьковольтний кабель тепер можна використовувати як витратний матеріал,
+      кустарні шви для хірургії.
+  - type: Tweak
+    message: >-
+      Медичні шви тепер можна використовувати як витратний матеріал, кращі шви
+      для хірургії.
+  id: 1611
+  time: '2025-09-08T19:26:06.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Tweak
+    message: >-
+      Режим сну від Вандерпрода тепер проходить швидше, вдарте їх ще раз, щоб
+      оновити час сну.
+  id: 1612
+  time: '2025-09-08T19:26:35.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Add
+    message: >-
+      Додано блюспейс-покращення для автодока до дослідження блюспейс-хірургічних
+      рукавичок, воно працює як рукавички, але для автодоків.
+  id: 1613
+  time: '2025-09-08T19:26:54.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Add
+    message: >-
+      Миші, хірургічно імплантовані в людей, тепер можуть вириватися назовні,
+      як чужий з фільму 'Чужий' (1979).
+  id: 1614
+  time: '2025-09-08T19:31:14.0000000+00:00'
+- author: Richard Blonski
+  changes:
+  - type: Fix
+    message: Види з імунітетом до зомбі більше не повинні отримувати початкове зараження.
+  id: 1615
+  time: '2025-09-09T02:28:43.0000000+00:00'
+- author: EVIL BURGER HATER
+  changes:
+  - type: Tweak
+    message: 'Максимальна кількість бавовняних бургерів тепер 15, замість попередніх 50.'
+  id: 1616
+  time: '2025-09-09T02:29:02.0000000+00:00'
+- author: clinux
+  changes:
+  - type: Fix
+    message: >-
+      IPC тепер можуть обирати зачіски в меню створення персонажа без використання
+      чорної магії!
+  id: 1617
+  time: '2025-09-09T13:47:33.0000000+00:00'
+- author: Richard Blonski
+  changes:
+  - type: Remove
+    message: Вимкнено можливість появи Ревенанта як антагоніста в середині раунду.
+  id: 1618
+  time: '2025-09-09T13:49:27.0000000+00:00'
+- author: Lumminal
+  changes:
+  - type: Add
+    message: Додано гайдбук по Ксеноморфам.
+  id: 1619
+  time: '2025-09-09T14:29:01.0000000+00:00'
+- author: Hagvan
+  changes:
+  - type: Fix
+    message: >-
+      Ваші ноги більше не утримують невелику кількість реагенту після того,
+      як перестають залишати сліди.
+  - type: Add
+    message: >-
+      Судмедекспертний сканер тепер показує, наскільки свіжа кожна ДНК у калюжах,
+      а також на зброї ближнього бою. Детектив повинен мати змогу краще розкривати
+      місця злочинів.
+  - type: Tweak
+    message: >-
+      Тривалість відстеження Bloodtrak залежить від свіжості крові. Дуже свіжа
+      кров, відстежена детективом, буде відстежувати тіло протягом значного
+      часу.
+  id: 1620
+  time: '2025-09-09T14:55:59.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Tweak
+    message: >-
+      Інтеркоми та радіо більше не спамлять усім, що говорять торгові автомати
+      чи боти.
+  id: 1621
+  time: '2025-09-09T19:59:53.0000000+00:00'
+- author: ReiderJack
+  changes:
+  - type: Add
+    message: Додано пісню 'Asgore brainrot' до музичного автомата.
+  - type: Tweak
+    message: Дія 'Клоунський автомобіль, що їде зі стилем' змінена на музичний
+      автомат.
+  id: 1622
+  time: '2025-09-09T20:02:50.0000000+00:00'
+- author: Richard Blonski
+  changes:
+  - type: Add
+    message: Балони із закисом азоту тепер є в медичному торговому автоматі.
+  - type: Add
+    message: Шафка Головного лікаря тепер оснащена додатковою хірургічною сумкою.
+  - type: Add
+    message: Хірургічні ящики тепер містять балон із закисом азоту та дихальну маску.
+  id: 1623
+  time: '2025-09-09T20:12:53.0000000+00:00'
+- author: OnsenCapy
+  changes:
+  - type: Add
+    message: >-
+      Вживання кількох чашок кави тепер викликатиме сильне тремтіння, а також
+      трохи збільшить вашу швидкість руху.
+  - type: Add
+    message: >-
+      Вживання занадто великої кількості кави матиме несприятливі наслідки.
+      Все добре в міру!
+  - type: Tweak
+    message: Змінено швидкість метаболізму кави, щоб вона довше залишалася у вашому
+      організмі.
+  id: 1624
+  time: '2025-09-09T20:17:25.0000000+00:00'
+- author: Richard Blonski
+  changes:
+  - type: Fix
+    message: >-
+      Виправлено рендеринг стільців, щоб сутності з'являлися за ними лише при
+      повороті на північ.
+  id: 1625
+  time: '2025-09-09T20:24:39.0000000+00:00'
+- author: Creatorbot01
+  changes:
+  - type: Fix
+    message: Карту поїзда оновлено!
+  id: 1626
+  time: '2025-09-09T20:30:01.0000000+00:00'
+- author: loltart
+  changes:
+  - type: Tweak
+    message: Оголошення ксеноморфів тепер більш зловісні.
+  - type: Add
+    message: Додано 'black swarm' від Bobik-music до музичного автомата.
+  id: 1627
+  time: '2025-09-10T04:17:22.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Add
+    message: Дуети викрадачів тепер можуть бути обрані на старті раунду в режимі
+      Secret+. 👽👽
+  id: 1628
+  time: '2025-09-10T15:00:50.0000000+00:00'
+- author: Aineias1
+  changes:
+  - type: Tweak
+    message: >-
+      Ворота Лаваленду тепер нерухомі, але їх можна розібрати за допомогою зварювання,
+      щоб повернути плаский пакунок.
+  id: 1629
+  time: '2025-09-10T20:17:03.0000000+00:00'
+- author: loltart
+  changes:
+  - type: Add
+    message: >-
+      Додано двері ксеноморфів. Вони надзвичайно слабкі до нагрівання, тому рекомендую
+      використовувати їх лише для приватності.
+  - type: Remove
+    message: >-
+      Видалено вікна ксеноморфів (Не було причин їх використовувати, і це лише
+      шкодило вашому вулику).
+  - type: Tweak
+    message: Послаблено лікування Ксеноморфів.
+  - type: Tweak
+    message: Послаблено оглушення від Ксеноморфів.
+  - type: Tweak
+    message: Послаблено здоров'я структур Ксеноморфів.
+  - type: Tweak
+    message: >-
+      Значно скорочено стан спокою для Лицехватів. Тепер вони повинні чіплятися
+      до людей набагато частіше.
+  - type: Tweak
+    message: >-
+      Кислотний плювок тепер сильніший і повинен руйнувати стіни зі смоли набагато
+      швидше.
+  - type: Tweak
+    message: Ксеноморфи тепер зустрічаються трохи частіше.
+  - type: Tweak
+    message: Удар хвостом тепер вводить снодійні хімікати та завдає менше грубої
+      шкоди.
+  - type: Tweak
+    message: >-
+      Колективний розум (Hivemind) тепер використовує 'колективний розум' (+Z)
+      замість того, щоб бути окремою мовою.
+  id: 1630
+  time: '2025-09-10T22:04:07.0000000+00:00'
+- author: CerberusWolfie
+  changes:
+  - type: Remove
+    message: >-
+      Спрей від комах було застосовано до всіх моніторів. Вам більше не потрібно
+      боятися павуків на екрані.
+  id: 1631
+  time: '2025-09-10T22:05:51.0000000+00:00'
+- author: Thesia000
+  changes:
+  - type: Tweak
+    message: Мапінг на Дельті.
+  id: 1632
+  time: '2025-09-10T22:31:46.0000000+00:00'
+- author: Thesia000
+  changes:
+  - type: Tweak
+    message: Мапінг на ЦК.
+  id: 1633
+  time: '2025-09-10T22:42:39.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: Виправлено відсутність у моль-тарганів ніг та ступнів у паховій області.
+  id: 1634
+  time: '2025-09-11T11:20:16.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: Виправлено можливість прикріплювати голови людей до буквально будь-якої
+      тварини.
+  id: 1635
+  time: '2025-09-11T11:22:21.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: Виправлено викриття зрадників зі сплячим карпом через огляд відображення.
+  id: 1636
+  time: '2025-09-11T12:51:43.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: Виправлено краш гри через боргів та ШІ станції.
+  id: 1637
+  time: '2025-09-11T13:04:20.0000000+00:00'
+- author: Androidonator
+  changes:
+  - type: Add
+    message: Додано ліхтар 'Seclite' до шафки BSO.
+  - type: Add
+    message: >-
+      Додано ніж у рюкзак BSO при спавні та прибрано його з черевиків.
+  id: 1638
+  time: '2025-09-11T18:51:33.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: Видалено горщики виміру 9/11.
+  id: 1639
+  time: '2025-09-12T07:05:23.0000000+00:00'
+- author: Luminal
+  changes:
+  - type: Add
+    message: Кров демона запобігає вашому пожиранню Демоном-різником.
+  - type: Add
+    message: >-
+      Поцілунок диявола запобігає вашому пожиранню Демоном-різником і завдає
+      йому 50 шкоди.
+  - type: Add
+    message: Демона-різника додано до списку загроз на комунікаційній консолі ніндзя.
+  - type: Add
+    message: >-
+      Демон-різник отримав аудіо-оновлення. Ви можете сміятися та кричати. Додано
+      нові звуки мови. Кривава повідь може випадково викликати чутні голоси.
+  - type: Fix
+    message: Чарівник більше не може творити заклинання всередині Кривавої повіді.
+  - type: Fix
+    message: Демони-різники більше не вмирають у космосі.
+  - type: Fix
+    message: Демони-різники більше не можуть підбирати предмети за допомогою дії
+      'підібрати'.
+  - type: Tweak
+    message: Кривава повідь має спрайт 'прогулянки', щоб ви могли бачити, де знаходитесь.
+  - type: Tweak
+    message: Демонічне серце є магічною контрабандою.
+  - type: Tweak
+    message: Кривава повідь тепер підтримує нові типи крові.
+  - type: Tweak
+    message: Гра за Демона-різника тепер буде відчуватися більш плавною та чутливою.
+  id: 1640
+  time: '2025-09-12T07:27:55.0000000+00:00'
+- author: EvaisaDev
+  changes:
+  - type: Add
+    message: Додано роль привида Підлоговий Гоблін. Остерігайтеся викрадача взуття!
+  id: 1641
+  time: '2025-09-12T09:31:13.0000000+00:00'
+- author: Baptr0b0t
+  changes:
+  - type: Fix
+    message: >-
+      Виправлено розмноження ксеносів (ви більше не можете померти, маючи ембріон
+      лицехвата).
+  - type: Tweak
+    message: >-
+      Дорослі ксеноси отримали можливість бачити стан здоров'я (живий, критичний
+      стан, мертвий).
+  - type: Tweak
+    message: Гніздо ксеносів забезпечує функції життєзабезпечення.
+  id: 1642
+  time: '2025-09-12T17:25:38.0000000+00:00'
+- author: Armok
+  changes:
+  - type: Add
+    message: Креслення вибухового заряду до аплінку синдикату.
+  - type: Tweak
+    message: >-
+      Вибуховий заряд слабший, ніж раніше, не може розгерметизувати кімнати
+      і завдає лише 75 шкоди неброньованій цілі.
+  - type: Tweak
+    message: >-
+      Знято послаблення з сигнальних зарядів, яке додавало затримку вибуху,
+      що робило їх майже марними.
+  id: 1643
+  time: '2025-09-12T18:49:11.0000000+00:00'
+- author: Clinux
+  changes:
+  - type: Fix
+    message: Виправлено неправильне відображення комбінезонів на гуманоїдних видах.
+  id: 1644
+  time: '2025-09-13T05:00:51.0000000+00:00'
+- author: EvaisaDev
+  changes:
+  - type: Tweak
+    message: Здоров'я Підлогового Гобліна зменшено зі 100 до 60.
+  - type: Tweak
+    message: >-
+      Підлогові Гобліни тепер з'являються під підлогою, щоб уникнути їх негайного
+      вбивства.
+  - type: Tweak
+    message: Додано розіграш ролі для привида Підлогового Гобліна.
+  - type: Fix
+    message: >-
+      Інтерфейси HUD більше не бачать Підлогових Гоблінів крізь підлогу. (Тепловізор
+      все ще можна використовувати.)
+  - type: Fix
+    message: >-
+      Дія крадіжки Підлогового Гобліна тепер скасовується, якщо над ним покласти
+      плитку, коли він знаходиться під підлогою.
+  - type: Fix
+    message: >-
+      Коли Підлоговий Гоблін заповзає під підлогу на плитку нижнього рівня,
+      більше не з'являється неправильне спливаюче вікно.
+  - type: Fix
+    message: Підлогових Гоблінів більше не видно, коли вони знаходяться у вентиляції.
+  - type: Fix
+    message: Підлогові Гобліни більше не можуть використовувати свої здібності,
+      перебуваючи у вентиляції.
+  id: 1645
+  time: '2025-09-13T08:05:02.0000000+00:00'
+- author: Sarahon
+  changes:
+    - type: Tweak
+      message: >-
+        Доповнення до правил рольової гри за антагоністів, що чіткіше пояснює
+        позначення та наміри антагоністів, наприклад, Єретики є виключно соло-антагоністами.
+        Зрадники та Лінги можуть об'єднуватися, але це не означає, що вони вірні
+        один одному. Єдина мета Бінглза — нагодувати діру, нічого більше. Викрадачі
+        можуть красти, але ви виглядаєте як ідіот, роблячи це.
+  id: 1646
+  time: '2025-09-13T18:21:10.0000000+00:00'
+- author: RatherUncreativeName
+  changes:
+    - type: Fix
+      message: Виправлено Вандерпрод, що не присипляв. Викрадачі знову можуть викрадати.
+  id: 1647
+  time: '2025-09-13T18:23:57.0000000+00:00'
+- author: GNUtopia
+  changes:
+    - type: Tweak
+      message: Скафандри захищають слаймів від шкоди водою.
+    - type: Tweak
+      message: Слаймолюди отримують більше шкоди від води.
+  id: 1648
+  time: '2025-09-13T18:25:58.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Fix
+      message: Виправлено спавн IPC-клонів "Парадокс" без належних ключів шифрування.
+  id: 1649
+  time: '2025-09-13T18:27:26.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Fix
+      message: Елітний шолом космічного скафандра Синдикату знову можна надягати.
+    - type: Tweak
+      message: Бананієвий енергомеч тепер має спеціальний тег контрабанди для клоунів.
+  id: 1650
+  time: '2025-09-13T18:39:01.0000000+00:00'
+- author: Armok
+  changes:
+    - type: Tweak
+      message: Конвеєри не можна обертати, коли вони закріплені гайковим ключем.
+    - type: Tweak
+      message: Сигналізатори наближення спрацьовують, якщо ви не рухаєтеся дуже повільно
+        (зі швидкістю повзання).
+  id: 1651
+  time: '2025-09-13T18:42:21.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Fix
+      message: Виправлено видалення аугментацій при їх повторному встановленні.
+  id: 1652
+  time: '2025-09-13T18:45:54.0000000+00:00'
+- author: GNUtopia
+  changes:
+    - type: Tweak
+      message: >-
+        Схема іменування скафандрів більше не відрізняється довільно від усього
+        іншого.
+  id: 1653
+  time: '2025-09-13T18:47:36.0000000+00:00'
+- author: Armok
+  changes:
+    - type: Tweak
+      message: Іржавих ходунів (Rust walkers) стало трохи складніше масово виробляти.
+  id: 1654
+  time: '2025-09-13T18:50:33.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Fix
+      message: Виправлено можливість ШІ станції перемикати герметизацію мод-костюмів.
+  id: 1655
+  time: '2025-09-13T18:51:21.0000000+00:00'
+- author: Creatorbot01
+  changes:
+    - type: Tweak
+      message: Тепер існують виходи для загального населення (genpop) на картах Amber
+        та Packed.
+    - type: Fix
+      message: >-
+        Виправлено відсутність сміттєпроводу в Омега Сек'юріті, а також видалено
+        додатковий ящик з імплантерами на карті Packed.
+  id: 1656
+  time: '2025-09-13T18:53:18.0000000+00:00'
+- author: thebiggestbruh
+  changes:
+    - type: Add
+      message: Плюшеві іграшки Боггл та Лемін вже тут.
+  id: 1657
+  time: '2025-09-13T18:53:58.0000000+00:00'
+- author: Timfa2112
+  changes:
+    - type: Fix
+      message: >-
+        Глави революціонерів тепер повинні говорити мовою, яку їхня ціль справді
+        розуміє, щоб навернути її.
+  id: 1658
+  time: '2025-09-13T23:24:56.0000000+00:00'
+- author: Androidonator
+  changes:
+    - type: Add
+      message: Додано "Синді-шафу" (Syndiedrobe) в аплінк.
+  id: 1659
+  time: '2025-09-14T03:50:51.0000000+00:00'
+- author: Armok
+  changes:
+    - type: Add
+      message: Ящик з біомасою для відділу постачання.
+  id: 1660
+  time: '2025-09-14T10:33:04.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Fix
+      message: >-
+        Виправлено можливість дияволів пропонувати рукостискання мобам без рук,
+        або робити це, коли у них самих немає рук.
+  id: 1661
+  time: '2025-09-14T10:33:30.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Fix
+      message: >-
+        Секретні двері тепер показують свій стан при огляді (як і звичайні стіни).
+  id: 1662
+  time: '2025-09-14T10:39:30.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Fix
+      message: Тревор знову може отримати доступ до відділу безпеки, карцеру та технічних
+        тунелів.
+  id: 1663
+  time: '2025-09-14T10:39:49.0000000+00:00'
+- author: TaserTheFox
+  changes:
+    - type: Fix
+      message: Дробові патрони з транквілізатором більше не є контрабандою для Зооглядачів.
+  id: 1664
+  time: '2025-09-14T10:46:41.0000000+00:00'
+- author: FloatingFeeling
+  changes:
+    - type: Tweak
+      message: >-
+        Екстрені Медіпени тепер містять по 5 одиниць атропіну, епінефрину та
+        транексамової кислоти.
+  id: 1665
+  time: '2025-09-14T10:49:01.0000000+00:00'
+- author: troytroy400
+  changes:
+    - type: Add
+      message: Гравець може обрати новий нью-йоркський акцент у грі!
+  id: 1666
+  time: '2025-09-14T11:06:52.0000000+00:00'
+- author: LFMoth
+  changes:
+    - type: Add
+      message: >-
+        Сьогодні день "принеси свій повсякденний одяг на роботу"! Більшість членів
+        командування тепер мають можливість носити власний, виготовлений на замовлення
+        літній одяг.
+  id: 1667
+  time: '2025-09-14T15:21:49.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Add
+      message: Біль тепер буде повільно згасати з часом.
+    - type: Tweak
+      message: >-
+        Знеболюючі препарати, такі як **ібупрофен** або **епінефрин**, працюватимуть
+        з новою системою як зазвичай.
+  id: 1668
+  time: '2025-09-15T00:32:49.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Fix
+      message: Спрайт пінопластового дротика в руці більше не є цілим арбалетом.
+  id: 1669
+  time: '2025-09-16T04:50:34.0000000+00:00'
+- author: cheetah1984
+  changes:
+    - type: Tweak
+      message: >-
+        Оні втратили свій бонус до шкоди від задухи в обмін на підвищену шкоду
+        по структурах.
+  id: 1670
+  time: '2025-09-16T11:30:09.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Add
+      message: Додано комп'ютери для запитів відділів на карту "Марафон".
+    - type: Add
+      message: Додано Тревора на карту "Марафон".
+    - type: Fix
+      message: Вантажний шатл тепер може стикуватися з "Марафоном".
+    - type: Fix
+      message: Шахтарський шатл тепер може стикуватися з "Марафоном".
+  id: 1671
+  time: '2025-09-16T11:38:04.0000000+00:00'
+- author: Thesia000
+  changes:
+    - type: Tweak
+      message: Мапінг на карті "Бейгл".
+  id: 1672
+  time: '2025-09-16T16:57:34.0000000+00:00'
+- author: Richard Blonski
+  changes:
+    - type: Fix
+      message: Королеву Ксеноморфів знову можна вбити.
+  id: 1673
+  time: '2025-09-16T18:15:33.0000000+00:00'
+- author: Androidonator
+  changes:
+    - type: Tweak
+      message: Кросівки "Джордани" тепер є великою контрабандою. Підроблені "Джордани"
+        — дрібною контрабандою.
+  id: 1674
+  time: '2025-09-17T03:05:22.0000000+00:00'
+- author: Timfa2112
+  changes:
+    - type: Add
+      message: >-
+        Додано таємну мову Революціонерів для таємного спілкування з товаришами.
+  id: 1675
+  time: '2025-09-17T08:28:15.0000000+00:00'

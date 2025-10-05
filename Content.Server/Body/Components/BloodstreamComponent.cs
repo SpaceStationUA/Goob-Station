@@ -225,6 +225,12 @@ namespace Content.Server.Body.Components
         [DataField]
         public ProtoId<AlertPrototype> BleedingAlert = "Bleed";
 
+        /// <summary>
+        /// Goobstation - Prevents this entity from absorbing reagents from smoke/foam.
+        /// </summary>
+        [DataField]
+        public bool SmokeImmune;
+
         //Pirate
         /// <summary>
         ///     How much hunger/thirst is used to regenerate one unit of blood. Set to zero to disable.

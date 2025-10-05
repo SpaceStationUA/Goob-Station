@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
 # SPDX-FileCopyrightText: 2025 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Marty <martynashagriefer@gmail.com>
 # SPDX-FileCopyrightText: 2025 Orion-416 <cliveocelot@gmail.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
@@ -8,13 +9,13 @@
   id: BaseTranslatorImplanter
   abstract: true
   parent: BaseImplantOnlyImplanter
-  name: "базовий перекладач-імплантатор"
+  name: basic translator implanter
 
 # Gives ability to understand TauCetiBasic.
 - type: entity
   id: BasicGalaticCommonTranslatorImplanter
   parent: BaseTranslatorImplanter
-  name: "базовий загальний перекладач-імплантатор"
+  name: basic common translator implanter
   components:
   - type: Implanter
     implant: BasicTauCetiBasicTranslatorImplant
@@ -23,7 +24,7 @@
 - type: entity
   id: AdvancedGalaticCommonTranslatorImplanter
   parent: BaseTranslatorImplanter
-  name: "просунутий загальний перекладач-імплантатор"
+  name: advanced common translator implanter
   components:
   - type: Implanter
     implant: TauCetiBasicTranslatorImplant
@@ -31,7 +32,7 @@
 - type: entity
   id: BubblishTranslatorImplanter
   parent: BaseTranslatorImplanter
-  name: "імплантат перекладача bubblish"
+  name: bubblish translator implant
   components:
   - type: Implanter
     implant: BubblishTranslatorImplant
@@ -39,7 +40,7 @@
 - type: entity
   id: NekomimeticTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "некоміметичний перекладацький імплантат"
+  name: nekomimetic translator implant
   components:
   - type: Implanter
     implant: NekomimeticTranslatorImplant
@@ -47,7 +48,7 @@
 - type: entity
   id: DraconicTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплантат перекладача унаті"
+  name: unathi translator implant
   components:
   - type: Implanter
     implant: DraconicTranslatorImplant
@@ -55,7 +56,7 @@
 - type: entity
   id: CanilunztTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплантат перекладача canilunzt"
+  name: canilunzt translator implant
   components:
   - type: Implanter
     implant: CanilunztTranslatorImplant
@@ -63,7 +64,7 @@
 - type: entity
   id: SolCommonTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплантат перекладача sol-common"
+  name: sol-common translator implant
   components:
   - type: Implanter
     implant: SolCommonTranslatorImplant
@@ -71,7 +72,7 @@
 - type: entity
   id: NovuNedericTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплант-перекладач нову-недерік"
+  name: novu-nederic translator implant
   components:
   - type: Implanter
     implant: NovuNedericTranslatorImplant
@@ -79,7 +80,7 @@
 - type: entity
   id: RootSpeakTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплантат перекладача кореневої мови"
+  name: root-speak translator implant
   components:
   - type: Implanter
     implant: RootSpeakTranslatorImplant
@@ -87,7 +88,7 @@
 - type: entity
   id: MofficTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплантат перекладача moffic"
+  name: moffic translator implant
   components:
   - type: Implanter
     implant: MofficTranslatorImplant
@@ -95,7 +96,7 @@
 - type: entity
   id: ValyrianStandardTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "валірійський стандартний перекладацький імплантат"
+  name: valyrian standard translator implant
   components:
   - type: Implanter
     implant: ValyrianStandardTranslatorImplant
@@ -103,7 +104,7 @@
 - type: entity
   id: AzazibaTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплантат перекладача азазіба"
+  name: azaziba translator implant
   components:
   - type: Implanter
     implant: AzazibaTranslatorImplant
@@ -111,7 +112,7 @@
 - type: entity
   id: ChittinTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплантат хітинового перекладача"
+  name: chittin translator implant
   components:
   - type: Implanter
     implant: ChittinTranslatorImplant
@@ -119,7 +120,7 @@
 - type: entity
   id: SiikMaasTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплантат перекладача siik'maas"
+  name: siik'maas translator implant
   components:
   - type: Implanter
     implant: SiikMaasTranslatorImplant
@@ -127,7 +128,23 @@
 - type: entity
   id: MarishTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплант-перекладач з маріш"
+  name: marish translator implant
   components:
   - type: Implanter
     implant: MarishTranslatorImplant
+
+- type: entity
+  id: SchechiTranslatorImplanter
+  parent: [ BaseTranslatorImplanter ]
+  name: schechi translator implant
+  components:
+  - type: Implanter
+    implant: SchechiTranslatorImplant
+
+- type: entity
+  id: NewKinPidginTranslatorImplanter
+  parent: [ BaseTranslatorImplanter ]
+  name: ka'rakk translator implant
+  components:
+  - type: Implanter
+    implant: NewKinPidginTranslatorImplant

@@ -102,3 +102,6 @@ blob-carrier-role-name-token = Носій Блоба (Жетон)
 abductor-lone-ghost-role-name-token = Самотній Викрадач (Жетон)
 roles-wizard-name-token = Чарівник (Жетон)
 ghost-role-information-ancient-rogue-king-name-token = Древній Король-Вигнанець (Жетон)
+
+roles-slaughter-demon-name-token = Демон Різанини (Токен)
+roles-laughter-demon-name-token = Демон Сміху (Токен)

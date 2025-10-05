@@ -101,7 +101,7 @@
   playTimeTracker: JobSecurityCadet
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 9000 #2.5 hrs
+      time: 36000 #10 hrs
     # - !type:DepartmentTimeRequirement # Pirate
     #   department: Security # Pirate
     #   time: 18000 #5 hrs # Pirate
@@ -139,7 +139,7 @@
   storage:
     back:
     - Flash
-    - MagazinePistol
+#    - MagazinePistol # Pirate
 
 - type: chameleonOutfit
   id: SecurityCadetChameleonOutfit

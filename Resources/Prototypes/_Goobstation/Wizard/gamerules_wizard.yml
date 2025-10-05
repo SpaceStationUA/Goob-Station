@@ -188,3 +188,4 @@
     - BasicRoundstartVariation
     - SubGamemodesRule
     - LavalandStormScheduler # Lavaland Change
+    - PsionicEventsScheduler # Pirate

@@ -38,3 +38,8 @@ emote-fart-inhale-disarm-notice = Ви розряджаєте свій супе�
 
 chat-emote-name-boop = Буп
 chat-emote-name-whirr = Дзижчання
+
+chat-emote-msg-bagawk = кудкудак!
+
+
+# Misc

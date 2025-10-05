@@ -73,8 +73,8 @@
       collection: VulpkaninBarks
     Whine:
       collection: VulpkaninWhines
-    Howl:
-      collection: VulpkaninHowls
+#    Howl: # REMOVED BY PIRATE
+#      collection: VulpkaninHowls
     Awoo:
       collection: VulpkaninHowls
     Honk:
@@ -99,6 +99,8 @@
       collection: Warble
     Wurble:
       collection: Wurble
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds
   id: SoundsHarpyMale
@@ -155,8 +157,8 @@
       collection: VulpkaninBarks
     Whine:
       collection: VulpkaninWhines
-    Howl:
-      collection: VulpkaninHowls
+#    Howl: # REMOVED BY PIRATE
+#      collection: VulpkaninHowls
     Awoo:
       collection: VulpkaninHowls
     Honk:
@@ -183,6 +185,8 @@
       collection: Wurble
     Mars:
       collection: Mars
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds
   id: FemaleVulpkanin
@@ -192,11 +196,11 @@
     Scream:
       collection: VulpkaninScreams # EE
     Laugh:
-      collection: FemaleLaugh
+      collection: VulpkaninGekkers # Pirate
     Sneeze:
-      collection: FemaleSneezes
+      collection: VulpkaninSneeze # Pirate
     Cough:
-      collection: FemaleCoughs
+      collection: VulpkaninSneeze # Pirate
     Yawn:
       collection: FemaleYawn
     Snore:
@@ -206,7 +210,7 @@
     Sigh:
       collection: FemaleSigh
     Crying:
-      collection: FemaleCry
+      collection: VulpkaninCry # Pirate
     Whistle:
       collection: Whistles
     Weh:
@@ -219,8 +223,8 @@
       collection: VulpkaninBarks
     Whine:
       collection: VulpkaninWhines
-    Howl:
-      collection: VulpkaninHowls
+#    Howl: # REMOVED BY PIRATE
+#      collection: VulpkaninHowls
     Awoo:
       collection: VulpkaninHowls
     CatMeow:
@@ -231,6 +235,8 @@
       collection: FemaleDeathGasp
     Gulp: # Goob
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds
   id: MaleVulpkanin
@@ -240,11 +246,11 @@
     Scream:
       collection: VulpkaninScreams # EE
     Laugh:
-      collection: MaleLaugh
+      collection: VulpkaninGekkers # Pirate
     Sneeze:
-      collection: MaleSneezes
+      collection: VulpkaninSneeze # Pirate
     Cough:
-      collection: MaleCoughs
+      collection: VulpkaninSneeze # Pirate
     Yawn:
       collection: MaleYawn
     Snore:
@@ -254,7 +260,7 @@
     Sigh:
       collection: MaleSigh
     Crying:
-      collection: MaleCry
+      collection: VulpkaninCry # Pirate
     Whistle:
       collection: Whistles
     Weh:
@@ -267,8 +273,8 @@
       collection: VulpkaninBarks
     Whine:
       collection: VulpkaninWhines
-    Howl:
-      collection: VulpkaninHowls
+#    Howl: # REMOVED BY PIRATE
+#      collection: VulpkaninHowls
     Awoo:
       collection: VulpkaninHowls
     CatMeow:
@@ -279,6 +285,8 @@
       collection: MaleDeathGasp
     Gulp: # Goob
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds
   id: MobDog
@@ -293,8 +301,8 @@
       collection: VulpkaninBarks
     Whine:
       collection: VulpkaninWhines
-    Howl:
-      collection: VulpkaninHowls
+#    Howl: # REMOVED BY PIRATE
+#      collection: VulpkaninHowls
     Awoo:
       collection: VulpkaninHowls
 
@@ -413,3 +421,5 @@
       collection: Whistles
     Gulp: # Goob
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg

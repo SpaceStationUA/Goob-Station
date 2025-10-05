@@ -111,6 +111,7 @@
 # SPDX-FileCopyrightText: 2025 NotActuallyMarty <martynashagriefer@gmail.com>
 # SPDX-FileCopyrightText: 2025 Pgriha <133212269+Pgriha@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Polter <62557990+PolterTzi@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Rouden <149893554+Roudenn@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 SX-7 <92227810+SX-7@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
 # SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
@@ -139,10 +140,10 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: HideLayerClothing
-    layers:
-      HeadTop : HEAD
-      HeadSide : HEAD
+  #- type: HideLayerClothing #Goobstation
+  #  layers:
+  #    HeadTop : HEAD
+  #    HeadSide : HEAD
 
 - type: entity
   parent: ClothingHeadHelmetBase
@@ -167,17 +168,17 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - HeadTop
-    - HeadSide
+  #- type: HideLayerClothing #Goobstation
+  #  slots:
+  #  - HeadTop
+  #  - HeadSide
 
 #Basic Helmet (Security Helmet)
 - type: entity
-  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband, ClothingHeadHelmetBaseFoldable] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetBasic
-  name: "шолом"
-  description: "Стандартне захисне спорядження. Захищає голову від ударів."
+  name: helmet
+  description: Standard security gear. Protects the head from impacts.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/security.rsi
@@ -187,31 +188,31 @@
     tags:
     - WhitelistChameleon
     - SecurityHelmet
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 #Mercenary Helmet
 - type: entity
   parent: [ ClothingHeadHelmetArmoredBase, BaseMajorContraband ]
   id: ClothingHeadHelmetMerc
-  name: "шолом найманця"
-  description: "Бойовий шолом, який зазвичай використовують найманці, міцний, легкий і пахне порохом та джунглями."
+  name: mercenary helmet
+  description: The combat helmet is commonly used by mercenaries, is strong, light and smells like gunpowder and the jungle.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/merc_helmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/merc_helmet.rsi
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 #SWAT Helmet
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband, ClothingHeadHelmetBaseFoldable] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetSwat
-  name: "шолом спецназу"
-  description: "Надзвичайно міцний шолом, який зазвичай використовується воєнізованими силами. Цей шолом має логотип Nanotrasen на верхній частині."
+  name: SWAT helmet
+  description: An extremely robust helmet, commonly used by paramilitary forces. This one has the Nanotrasen logo emblazoned on the top.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/swat.rsi
@@ -237,32 +238,32 @@
   - type: ExplosionResistance
     damageCoefficient: 0.75
   - type: FlashSoundSuppression # Goobstation
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing    #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 #Syndicate SWAT Helmet
 - type: entity
   parent: [BaseSyndicateContraband, ClothingHeadHelmetSwat] # Goob edit
   id: ClothingHeadHelmetSwatSyndicate
-  name: "шолом спецназу"
+  name: SWAT helmet
   suffix: Syndicate
-  description: "Надзвичайно міцний шолом, який зазвичай використовується воєнізованими силами. Його прикрашає мерзенний візерунок у вигляді червоно-чорних смуг."
+  description: An extremely robust helmet, commonly used by paramilitary forces. It is adorned in a nefarious red and black stripe pattern.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/swat_syndicate.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/swat_syndicate.rsi
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 #Light Riot Helmet
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband, ClothingHeadHelmetBaseFoldable] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetRiot
-  name: "легкий шолом для придушення бунтів"
-  description: "Це шолом, спеціально розроблений для захисту від атак з близької відстані."
+  name: light riot helmet
+  description: It's a helmet specifically designed to protect against close range attacks.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/light_riot.rsi
@@ -277,16 +278,16 @@
         Blunt: 0.35
         Slash: 0.35
         Piercing: 0.8
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing  #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 #Bombsuit Helmet
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetBombSuit
-  name: "вибухозахисний шолом"
-  description: "Важкий шолом, призначений для того, щоб витримувати тиск бомби та осколків, які вона може спричинити."
+  name: bombsuit helmet
+  description: A heavy helmet designed to withstand the pressure generated by a bomb and any fragments the bomb may produce.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/bombsuit.rsi
@@ -313,8 +314,8 @@
 - type: entity
   parent: ClothingHeadHelmetBombSuit
   id: ClothingHeadHelmetJanitorBombSuit
-  name: "вибухозахисний шолом прибиральника"
-  description: "Важкий шолом, призначений для протистояння вибухам, що утворюються в результаті реакцій між хімічними речовинами."
+  name: janitorial bombsuit helmet
+  description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
   categories: [ DoNotMap ]
   components:
   - type: Sprite
@@ -327,10 +328,10 @@
 
 #Cult Helmet
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseMajorContraband]
+  parent: [ClothingHeadHelmetBase, BaseMajorContraband, ClothingHeadHelmetBaseFoldable] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetCult
-  name: "шолом культиста"
-  description: "Міцний, зловісний на вигляд культовий шолом."
+  name: cult helmet
+  description: A robust, evil-looking cult helmet.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/cult.rsi
@@ -346,16 +347,16 @@
         Slash: 0.45
         Piercing: 0.45
         Heat: 0.45
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing  #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 #Space Ninja Helmet
 - type: entity
-  parent: [ClothingHeadEVAHelmetBase, BaseMajorContraband]
+  parent: [ClothingHeadEVAHelmetBase, BaseMajorContraband] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetSpaceNinja
-  name: "шолом космічного ніндзя"
-  description: "Те, що може здатися простим чорним одягом, насправді є дуже складним шоломом з наноплетіння. Стандартне спорядження ніндзя."
+  name: space ninja helmet
+  description: What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/spaceninja.rsi
@@ -366,7 +367,7 @@
     - WhitelistChameleon
   - type: IngestionBlocker
   - type: IdentityBlocker
-  - type: HideLayerClothing
+  - type: HideLayerClothing  # Goobstation Start
     layers:
       Hair: HEAD
       Snout: HEAD
@@ -382,10 +383,10 @@
 
 #Knight Helmet
 - type: entity
-  parent: ClothingHeadHelmetBase
+  parent: [ClothingHeadHelmetBase, ClothingHeadHelmetBaseFoldable] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetTemplar
-  name: "лицарський шолом"
-  description: "Декоративний шолом, створений за зразком давніх лицарів."
+  name: knight helmet
+  description: Decorative helmet fashioned to resemble the knights of old.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/templar.rsi
@@ -393,34 +394,34 @@
     sprite: Clothing/Head/Helmets/templar.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing  #Goobstation
+  #  layers:
+  #    Hair: HEAD
   - type: Tag
     tags:
     - TemplarHelmet
 
 #Thunderdome Helmet
 - type: entity
-  parent: ClothingHeadHelmetBase
+  parent: [ClothingHeadHelmetBase, ClothingHeadHelmetBaseFoldable] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetThunderdome
-  name: "шолом громового купола"
-  description: "Нехай битва почнеться!"
+  name: thunderdome helmet
+  description: Let the battle commence!
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/thunderdome.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/thunderdome.rsi
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing  #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 #Wizard Helmet
 - type: entity
-  parent: [ClothingHeadHelmetBase, ClothingHeadHatWizardBaseArmor, BaseMagicalContraband] # Goob edit
+  parent: [ClothingHeadHelmetBase, ClothingHeadHatWizardBaseArmor, BaseMagicalContraband, ClothingHeadHelmetBaseFoldable] # Goob edit
   id: ClothingHeadHelmetWizardHelm
-  name: "шолом чарівника"
-  description: "Дивний на вигляд шолом, який напевно належить справжньому магічному користувачеві." # Goob edit
+  name: wizard helm
+  description: Strange-looking helmet that most certainly belongs to a real magic user. Doesn't count as wizard hat. # Goob edit
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
@@ -437,16 +438,16 @@
         Slash: 0.45
         Piercing: 0.45
         Heat: 0.45
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing  #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 #Fire Helmet
 - type: entity
   parent: ClothingHeadLightBase
   id: ClothingHeadHelmetFire
-  name: "пожежна каска"
-  description: "Найкращий друг атмосферного техніка. Забезпечує певну термостійкість і виглядає круто."
+  name: fire helmet
+  description: An atmos tech's best friend. Provides some heat resistance and looks cool.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/firehelmet.rsi
@@ -487,8 +488,8 @@
 - type: entity
   parent: [ClothingHeadLightBase, BaseEngineeringContraband]
   id: ClothingHeadHelmetAtmosFire
-  name: "пожежна каска атмосферного техніка"
-  description: "Пожежний шолом атмосу, здатний зберігати прохолоду в будь-якій ситуації."
+  name: atmos fire helmet
+  description: An atmos fire helmet, able to keep the user cool in any situation.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
@@ -509,7 +510,8 @@
     tags:
     - WhitelistChameleon
     - FireHelmet
-  - type: HideLayerClothing
+    - CorgiWearable
+  - type: HideLayerClothing # Goobstation Start
     layers:
       Hair: HEAD
       Snout: HEAD
@@ -532,10 +534,10 @@
 
 #Chitinous Helmet
 - type: entity
-  parent: [ ClothingHeadHelmetBase, BaseMajorContraband]
+  parent: [ ClothingHeadHelmetBase, BaseMajorContraband, ClothingHeadHelmetBaseFoldable] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetLing
-  name: "хітиновий шолом"
-  description: "Всепоглинаюча хітинова маса броні."
+  name: chitinous helmet
+  description: An all-consuming chitinous mass of armor.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/linghelmet.rsi
@@ -557,92 +559,92 @@
         Piercing: 0.5
         Heat: 0.5
         Caustic: 0.5
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing  #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 #ERT HELMETS
 #ERT Leader Helmet
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingHeadHelmetArmoredBase ]
+  parent: [ BaseCentcommContraband, ClothingHeadHelmetArmoredBase, ClothingHeadHelmetBaseFoldable] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetERTLeader
-  name: "шолом лідера ГШР"
-  description: "Шолом для атмосфери, який носить лідер групи швидкого реагування \"НаноТрейзен\". Має сині відблиски."
+  name: ERT leader helmet
+  description: An in-atmosphere helmet worn by the leader of a Nanotrasen Emergency Response Team. Has blue highlights.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/ert_leader.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_leader.rsi
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+ # - type: HideLayerClothing  #Goobstation
+ #   layers:
+ #     Hair: HEAD
 
 #ERT Security Helmet
 - type: entity
-  parent: ClothingHeadHelmetERTLeader
+  parent: [ClothingHeadHelmetERTLeader, ClothingHeadHelmetBaseFoldable] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetERTSecurity
-  name: "шолом охоронця ГШР"
-  description: "Шолом для атмосфери, який носять співробітники служби безпеки команди реагування на надзвичайні ситуації \"НаноТрейзен\". Має червоні підсвічування."
+  name: ERT security helmet
+  description: An in-atmosphere helmet worn by security members of the Nanotrasen Emergency Response Team. Has red highlights.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/ert_security.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_security.rsi
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+ # - type: HideLayerClothing  #Goobstation
+ #   layers:
+ #     Hair: HEAD
 
 #ERT Medic Helmet
 - type: entity
   parent: ClothingHeadHelmetERTLeader
   id: ClothingHeadHelmetERTMedic
-  name: "шолом медика ГШР"
-  description: "Шолом для атмосфери, який носять медики команди швидкого реагування \"НаноТрейзен\". Має білі відблиски."
+  name: ERT medic helmet
+  description: An in-atmosphere helmet worn by medical members of the Nanotrasen Emergency Response Team. Has white highlights.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/ert_medic.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_medic.rsi
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing  #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 #ERT Engineer Helmet
 - type: entity
   parent: ClothingHeadHelmetERTLeader
   id: ClothingHeadHelmetERTEngineer
-  name: "шолом інженера КШР"
-  description: "Атмосферний шолом, який носять інженери Команди Швидкого Реагування Nanotrasen. Має помаранчеві вставки та захищає ваші очі."
+  name: ERT engineer helmet
+  description: An in-atmosphere helmet worn by engineering members of the Nanotrasen Emergency Response Team. Has orange highlights and keeps your eyes safe.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/ert_engineer.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_engineer.rsi
   - type: EyeProtection # goob - it literally has them in the sprite.
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+ # - type: HideLayerClothing  #Goobstation
+ #   layers:
+ #     Hair: HEAD
 
 #ERT Janitor Helmet
 - type: entity
   parent: ClothingHeadHelmetERTLeader
   id: ClothingHeadHelmetERTJanitor
-  name: "шолом прибиральника ГШР"
-  description: "Шолом для атмосфери, який носять прибиральники з команди швидкого реагування \"НаноТрейзен\". Має темно-фіолетові відблиски."
+  name: ERT janitor helmet
+  description: An in-atmosphere helmet worn by janitorial members of the Nanotrasen Emergency Response Team. Has dark purple highlights.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+  #- type: HideLayerClothing  #Goobstation
+  #  layers:
+  #    Hair: HEAD
 
 - type: entity
-  parent: [ BaseSyndicateContraband, ClothingHeadHelmetBase ]
+  parent: [ BaseSyndicateContraband, ClothingHeadHelmetBase, ClothingHeadHelmetBaseFoldable ] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetRaid
-  name: "рейдерський шолом синдикату"
-  description: "Броньований шолом для використання з рейдерським костюмом синдикату. Дуже стильний."
+  name: syndicate raid helmet
+  description: An armored helmet for use with the syndicate raid suit. Very stylish.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/syndie-raid.rsi
@@ -664,17 +666,17 @@
         Piercing: 0.35
         Heat: 0.35
         Caustic: 0.35
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+ # - type: HideLayerClothing  #Goobstation
+ #   layers:
+ #     Hair: HEAD
 
 #Bone Helmet
 #No need to hide the hair on this one
 - type: entity
   parent: [ ClothingHeadHelmetArmoredBase, BaseMinorContraband ]
   id: ClothingHeadHelmetBone
-  name: "кістяний шолом"
-  description: "Крутий шолом, зроблений з черепа ваших ворогів."
+  name: bone helmet
+  description: Cool-looking helmet made of skull of your enemies.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/bone_helmet.rsi
@@ -686,25 +688,25 @@
 
 #Ironclad II Helmet
 - type: entity
-  parent: [ ClothingHeadHelmetArmoredBase, BaseMinorContraband ]
+  parent: [ ClothingHeadHelmetArmoredBase, BaseMinorContraband, ClothingHeadHelmetBaseFoldable ] # Goob - ClothingHeadHelmetBaseFoldable
   id: ClothingHeadHelmetPodWars
-  name: "шолом ironclad II"
-  description: "Шолом Ironclad II, реліквія часів капсульних війн."
+  name: ironclad II helmet
+  description: An ironclad II helmet, a relic of the pod wars.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
+ # - type: HideLayerClothing  #Goobstation
+ #   layers:
+ #     Hair: HEAD
 
 #Justice Helmet
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband] # Goob edit
   id: ClothingHeadHelmetJustice
-  name: "шолом правосуддя"
-  description: "Передове спорядження служби безпеки. Захищає станцію від лиходіїв."
+  name: justice helm
+  description: Advanced security gear. Protects the station from ne'er-do-wells.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/justice.rsi
@@ -789,8 +791,8 @@
 - type: entity
   parent: BaseAction
   id: ActionToggleJusticeHelm
-  name: "Перемкнути шолом правосуддя"
-  description: "Вмикає та вимикає шолом правосуддя."
+  name: Toggle Justice Helm
+  description: Toggles the justice helm on and off.
   components:
   - type: Action
     useDelay: 1

@@ -21,17 +21,6 @@ public sealed class GlimmerEventSystem : StationEventSystem<GlimmerEventComponen
 
         // Check if current glimmer level allows this event to run
         var currentGlimmer = _glimmerSystem.GlimmerOutput;
-
-        if (currentGlimmer < component.MinimumGlimmer || currentGlimmer > component.MaximumGlimmer)
-        {
-            // Cancel the event if glimmer requirements are not met
-            Log.Warning($"Glimmer event {ToPrettyString(uid)} cancelled due to glimmer requirements. " +
-                       $"Current: {currentGlimmer}, Required: {component.MinimumGlimmer}-{component.MaximumGlimmer}");
-
-            // End the game rule immediately
-            _gameTicker.EndGameRule(uid);
-            return;
-        }
     }
 
     protected override void Ended(EntityUid uid, GlimmerEventComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)

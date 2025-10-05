@@ -76,6 +76,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Kitchen",
         "Lawyer",
         "Maintenance",
+        "Mantis",
         "Medical",
         "Quartermaster",
         "Research",

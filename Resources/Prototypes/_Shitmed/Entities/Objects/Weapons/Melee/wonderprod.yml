@@ -10,10 +10,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "чудо-прод"
+  name: wonderprod
   parent: [BaseItem, BaseMajorContraband]
   id: Wonderprod
-  description: "Універсальний інструмент агента-викрадача."
+  description: Universal tool of the abductor agent.
   components:
   - type: Item
     sprite: _Shitmed/Objects/Weapons/Melee/wonderprod.rsi
@@ -114,7 +114,7 @@
           animation: WeaponArcThrust
         - type: InjectOnHit
           reagents:
-          - ReagentId: Nocturine
+          - ReagentId: NocturineWonderprod
             Quantity: 5
           limit: 20
           needsRestrain: true

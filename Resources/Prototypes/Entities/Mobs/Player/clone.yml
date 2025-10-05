@@ -14,10 +14,11 @@
   - Dna
   - Fingerprint
   - NpcFactionMember
+  - EncryptionKeyHolder # Goobstation
   # traits
   # - LegsParalyzed (you get healed)
+  - BlackAndWhiteOverlay
   - LightweightDrunk
-  - Monochromacy
   - Muted
   - Narcolepsy
   - Pacified
@@ -96,7 +97,7 @@
 
 - type: entity
   id: RandomCloneSpawner
-  name: "Спавнер випадкового клона"
+  name: Random Clone
   suffix: Non-Antag
   components:
   - type: Sprite

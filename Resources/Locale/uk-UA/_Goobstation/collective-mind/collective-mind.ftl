@@ -15,3 +15,4 @@ collective-mind-dronemind = Розум дрона
 collective-mind-empathy = Емпатія
 
 collective-mind-bingle = Бінглрозум
+collective-mind-xeno = Розум рою

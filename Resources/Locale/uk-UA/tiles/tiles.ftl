@@ -134,3 +134,6 @@ tiles-astro-asteroid-sand = астероїдний астро-пісок
 tiles-asteroid-sand-borderless = безмежний астероїдний пісок
 tiles-asteroid-ironsand-borderless = безмежний астероїдний залізний пісок
 tiles-astro-asteroid-sand-borderless = безмежний астероїдний астро-пісок
+
+tiles-techmaint-floor-dark = темна підлога техобслуговування
+tiles-dirt-planet-floor = брудна підлога планети

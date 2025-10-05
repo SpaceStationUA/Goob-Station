@@ -6,10 +6,8 @@
   reactants:
     Ash:
       amount: 5 # DeltaV - Change from 10 to 5 to fit the guidebook recipe
-    Water:
-      amount: 5 # DeltaV - Change from 10 to 5 to fit the guidebook recipe
-    Blood:
-      amount: 5 # DeltaV - Change from 10 to 5 to fit the guidebook recipe
+    Potash:
+      amount: 10
     Ectoplasm:
       amount: 5 # DeltaV - Make Normality Crystals need only 5 Ectoplasm, was 10.
     Plasma:

@@ -174,27 +174,34 @@
     - id: VentClog
     - id: TidemindDevelop # Goobstation - Tidemind
     - id: MothroachSpawn # DeltaV
-    - id: XenoVents # DeltaV
     - id: DerelictCyborgSyndicateSpawn # Goobstation - usually calm
+    - id: AncientXenoVentsEasy # Goobstation
+    - id: AncientXenoVentsMedium # Goobstation
+    - id: AncientXenoVentsHard # Goobstation
+    - id: MalignRiftSpawn # DeltaV
+    - id: FloorGoblinSpawn # Goobstation
 
 - type: entityTable
   id: BasicAntagEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: ClosetSkeleton
+#    - id: ClosetSkeleton # REMOVED BY PIRATES
     - id: DragonSpawn
     - id: KingRatMigration
     - id: NinjaSpawn
     - id: ParadoxCloneSpawn
-    - id: RevenantSpawn
+    #- id: RevenantSpawn  # GoobStation - removed till rework
     - id: SleeperAgents
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
     - id: BlobSpawn # Goobstation - Blob
-    #- id: LoneAbductorSpawn Pirate abductor remove
-    #- id: DuoAbductorSpawn Pirate abductor remove
+    - id: LoneAbductorSpawn # Shitmed - Starlight Abductors
+    - id: DuoAbductorSpawn # Shitmed - Starlight Abductors
     - id: BingleSpawn #Goobstation - Bingle
+    - id: SlaughterDemonMidround # Goobstation - Slaughter Demon
+    - id: XenomorphsInfestation # WD EDIT
+    - id: AncientXenoVentsRogue # Goobstation
 
 - type: entity
   id: BaseStationEvent
@@ -329,20 +336,20 @@
     chaosScore: 30
   - type: ClericalErrorRule
 
-- type: entity
-  parent: BaseGameRule
-  id: ClosetSkeleton
-  components:
-  - type: StationEvent
-    weight: 5
-    duration: 1
-    minimumPlayers: 10
-    eventType: Chaotic # Goobstation
-  # Goobstation
-  - type: GameRule
-    chaosScore: 60
-  - type: RandomEntityStorageSpawnRule
-    prototype: MobSkeletonCloset
+#- type: entity # REMOVED BY PIRATES
+#  parent: BaseGameRule
+#  id: ClosetSkeleton
+#  components:
+#  - type: StationEvent
+#    weight: 5
+#    duration: 1
+#    minimumPlayers: 10
+#    eventType: Chaotic # Goobstation
+#  # Goobstation
+#  - type: GameRule
+#    chaosScore: 60
+#  - type: RandomEntityStorageSpawnRule
+#    prototype: MobSkeletonCloset
 
 - type: entity
   parent: BaseGameRule
@@ -498,27 +505,27 @@
       mindRoles:
       - MindRoleParadoxClone
 
-- type: entity
-  parent: BaseGameRule
-  id: RevenantSpawn
-  components:
-  - type: StationEvent
-    weight: 3.5
-    duration: 1
-    earliestStart: 30
-    minimumPlayers: 20
-    chaos: # Goobstation
-      Hostile: 20
-      Friend: 20
-      Combat: 40
-      Death: 100
-      Medical: 100
-    eventType: HostilesSpawn # Goobstation
-  # Goobstation
-  - type: GameRule
-    chaosScore: 450
-  - type: RandomSpawnRule
-    prototype: MobRevenant
+#- type: entity   Goobstaion start - disabled until rework
+#  parent: BaseGameRule
+#  id: RevenantSpawn
+#  components:
+#  - type: StationEvent
+#    weight: 3.5
+#    duration: 1
+#    earliestStart: 30
+#    minimumPlayers: 20
+#    chaos: # Goobstation
+#      Hostile: 20
+#      Friend: 20
+#      Combat: 40
+#      Death: 100
+#      Medical: 100
+#    eventType: HostilesSpawn # Goobstation
+#  # Goobstation
+#  - type: GameRule
+#    chaosScore: 450
+#  - type: RandomSpawnRule
+#    prototype: MobRevenant      goobstation end
 
 # Goob - wiz of our own
 #- type: entity
@@ -1034,24 +1041,3 @@
       min: 1
       max: 1
       pickPlayer: false
-
-- type: entity
-  id: AncientRogueKingSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    weight: 8
-    duration: 10
-    minimumPlayers: 45
-    chaos: # Goobstation
-      Hostile: 100
-      Friend: 20
-      Combat: 100
-      Death: 100
-      Medical: 100
-    eventType: HostilesSpawn
-  - type: GameRule
-    chaosScore: 400
-  - type: RandomSpawnRule
-    prototype: CMMobXenoRogueKingSentient

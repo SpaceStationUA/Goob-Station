@@ -22,7 +22,7 @@ chat-manager-server-wrap-message = [bold]{$message}[/bold]
 chat-manager-sender-announcement-wrap-message = [font size=14][bold]Оголошення {$sender}:[/font][font size=12]
                                                 {$message}[/bold][/font]
 chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][font="{$fontType}" size={$fontSize}][color={$color}]{$message}[/color][/font][/BubbleContent]"[/font]
-chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][bold][font="{$boldFontType}" size={$fontSize}][color={$color}]{$message}[/color][/font][/bold][/BubbleContent]"[/font]
+chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][font="{$fontType}" size={$fontSize}][bold][color={$color}]{$message}[/color][/bold][/font][/BubbleContent]"[/font]
 
 chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader][Name]{$entityName}[/Name][/BubbleHeader] шепоче, "[BubbleContent][color={$color}][font="{$fontType}"]{$message}[/font][/color][/BubbleContent][font size=11]"[/italic][/font]
 chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][BubbleHeader]Хтось[/BubbleHeader] шепоче, "[BubbleContent][color={$color}][font="{$fontType}"]{$message}[/font][/color][/BubbleContent][font size=11]"[/italic][/font]
@@ -171,3 +171,9 @@ chat-speech-verb-name-goat = Коза
 chat-speech-verb-goat-1 = мекає
 chat-speech-verb-goat-2 = хрюкає
 chat-speech-verb-goat-3 = кричить
+
+chat-speech-verb-name-wawa = Вава
+chat-speech-verb-wawa-1 = інтонує
+chat-speech-verb-wawa-2 = стверджує
+chat-speech-verb-wawa-3 = заявляє
+chat-speech-verb-wawa-4 = розмірковує

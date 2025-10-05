@@ -1,0 +1,208 @@
+# Потрібний награний час для отримання зброї
+- type: loadoutEffectGroup
+  id: Inspector
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobDetective
+      time: 36000 # 10 годин
+
+- type: loadoutEffectGroup
+  id: Constable
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 36000 # 10 годин
+
+- type: loadoutEffectGroup
+  id: Senior Constable
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 72000 # 20 годин
+
+- type: loadoutEffectGroup
+  id: Corporal
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 108000 # 30 годин
+
+- type: loadoutEffectGroup
+  id: Sergeant
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 216000 # 60 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 108000 # 30 годин
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobWarden
+      time: 21600 # 6 годин
+
+- type: loadoutEffectGroup
+  id: Staff Sergeant
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 216000 # 80 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 108000 # 30 годин
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobWarden
+      time: 36000 # 10 годин
+
+- type: loadoutEffectGroup
+  id: Warrant Officer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 360000 # 100 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 108000 # 30 годин
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobWarden
+      time: 36000 # 10 годин
+
+
+# Зброя
+- type: loadout
+  id: LoadoutSecurityWeaponMk58
+  storage:
+    back:
+    - WeaponPistolMk58
+
+- type: loadout
+  id: LoadoutSecurityRevolverInspector
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Inspector
+  storage:
+    back:
+    - WeaponRevolverInspector
+
+- type: loadout
+  id: LoadoutSecurityPistolN1984
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Senior Constable
+  storage:
+    back:
+    - WeaponPistolN1984
+
+- type: loadout
+  id: LoadoutSecurityPistolUniversal
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Sergeant
+  storage:
+    back:
+    - WeaponPistolUniversalSecurity
+
+- type: loadout
+  id: LoadoutSecurityPistolUniversalNonLethal
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Sergeant
+  storage:
+    back:
+    - WeaponPistolUniversalSecurityNonLethal
+
+# Боєприпаси
+- type: loadout
+  id: MagazinePistol
+  storage:
+    back:
+    - MagazinePistol
+
+- type: loadout
+  id: SpeedLoaderMagnum
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Inspector
+  storage:
+    back:
+    - SpeedLoaderMagnum
+
+- type: loadout
+  id: MagazineMagnum
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Senior Constable
+  storage:
+    back:
+    - MagazineMagnum
+
+- type: loadout
+  id: MagazineUniversalMagnum
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Sergeant
+  storage:
+    back:
+    - MagazineUniversalMagnum
+
+- type: loadout
+  id: MagazineUniversalMagnumRubber
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Sergeant
+  storage:
+    back:
+    - MagazineUniversalMagnumRubber
+
+# Другорядна зброя
+- type: loadout
+  id: LoadoutSecurityEnergyGunMini
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Constable
+  storage:
+    back:
+    - WeaponEnergyGunMini
+
+- type: loadout
+  id: LoadoutSecurityEnergyGun
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Sergeant
+  storage:
+    back:
+    - WeaponEnergyGun
+
+- type: loadout
+  id: LoadoutSecurityDisablerSMG
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Sergeant
+  storage:
+    back:
+    - WeaponDisablerSMG

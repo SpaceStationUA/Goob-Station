@@ -27,6 +27,24 @@ namespace Content.Shared.Humanoid.Markings
             _prototypeManager.PrototypesReloaded += OnPrototypeReload;
             CachePrototypes();
         }
+        
+        // Pirate changes start
+        /// <summary>
+        /// Filters a list of markings, returning only those that are valid for the given player.
+        /// </summary>
+        public List<Marking> FilterValidMarkings(List<Marking> markings, string species, Sex sex, string ckey)
+        {
+            var validMarkings = new List<Marking>();
+            foreach (var marking in markings)
+            {
+                if (CanBeApplied(species, sex, marking, _prototypeManager, ckey))
+                {
+                    validMarkings.Add(marking);
+                }
+            }
+            return validMarkings;
+        }
+        // Pirate changes end
 
         private void CachePrototypes()
         {
@@ -95,6 +113,8 @@ namespace Content.Shared.Humanoid.Markings
 
                 res.Add(key, marking);
             }
+
+
 
             return res;
         }

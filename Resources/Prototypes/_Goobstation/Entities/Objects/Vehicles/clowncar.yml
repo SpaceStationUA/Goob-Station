@@ -7,7 +7,7 @@
 - type: entity
   parent: BaseVehicle
   id: VehicleClowncarBase
-  name: "машина клоуна"
+  name: clown car
   abstract: true
   components:
   - type: Sprite
@@ -29,7 +29,7 @@
     acceleration: 1
     friction: 1
     baseWalkSpeed: 4.5
-    baseSprintSpeed: 7
+    baseSprintSpeed: 10
   - type: ItemSlots
     slots:
       key_slot:
@@ -122,11 +122,18 @@
   - type: Damageable
     damageContainer: ClowncarDamageContainer
     damageModifierSet: Metallic
+  - type: Jukebox
+  - type: ActivatableUI
+    key: enum.JukeboxUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.JukeboxUiKey.Key:
+        type: JukeboxBoundUserInterface
 
 - type: entity
   parent: VehicleClowncarBase
   id: VehicleClowncarAntag
-  description: "Як хтось взагалі може туди поміститися - незрозуміло."
+  description: How someone could even fit in there is byond me.
   components:
   - type: InsertToContainerOnCollide
     container: clowncar_container
@@ -149,8 +156,8 @@
 - type: entity
   parent: VehicleClowncarBase
   id: VehicleClowncarTrainee
-  name: "машина клоуна-стажера"
-  description: "Перевозьте переважно охочих пасажирів! Будьте обережні при зіткненнях!."
+  name: trainee clown car
+  description: Carry mostly willing passengers around! Be careful with collisions!.
   components:
   - type: ExtendedContainer
     containerName: clowncar_container

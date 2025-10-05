@@ -141,20 +141,20 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 3600 #1 hr
+      time: 36000 #10 hr
     - !type:RoleTimeRequirement
       role: JobDetective
-      time: 3600 #1 hr, knowing how to use the tools is important
+      time: 10800 #3 hr, knowing how to use the tools is important
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 18000 #5 hrs
+      time: 72000 #20 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hrs
-    - !type:SpeciesRequirement # Goob - None Felinid
-      inverted: true
-      species:
-      - Felinid
+      time: 144000 #40 hrs
+    #- !type:SpeciesRequirement # Pirate remove requirement
+    #  inverted: true
+    #  species:
+    #  - Felinid
   #  - !type:StyleRequirement
   #    styles:
   #    - HumanHairFloorlengthBedhead
@@ -192,11 +192,11 @@
     id: HoSPDA
     #gloves: ClothingHandsGlovesCombat - Goobstation, moved to loadouts
     ears: ClothingHeadsetAltSecurity
-    pocket1: WeaponPistolMk58
+#    pocket1: WeaponPistolMk58 # PIRATE, moved to loadouts
   storage:
     back:
     - Flash
-    - MagazinePistol
+#    - MagazinePistol # PIRATE, moved to loadouts
 
 - type: chameleonOutfit
   id: HeadOfSecurityChameleonOutfit

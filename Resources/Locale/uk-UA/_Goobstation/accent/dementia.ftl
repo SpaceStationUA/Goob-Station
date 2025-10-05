@@ -88,3 +88,12 @@ accent-dementia-words-33 = чарівник
 accent-dementia-words-replace-33 = якийсь поганець, забув, який
 accent-dementia-words-34 = віз
 accent-dementia-words-replace-34 = якийсь поганець, забув, який
+
+accent-dementia-words-35 = південь
+accent-dementia-words-replace-35 = десь
+accent-dementia-words-36 = північ
+accent-dementia-words-replace-36 = десь
+accent-dementia-words-37 = схід
+accent-dementia-words-replace-37 = десь
+accent-dementia-words-38 = захід
+accent-dementia-words-replace-38 = десь

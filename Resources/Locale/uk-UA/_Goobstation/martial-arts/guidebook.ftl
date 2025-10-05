@@ -7,3 +7,5 @@ guide-entry-corporate-judo = Корпоративне Дзюдо
 guide-entry-capoeira = Капоейра
 guide-entry-ninjutsu = Ніндзюцу
 guide-entry-dragon-kung-fu = Кунг-фу Дракона
+
+guide-entry-hell-rip = Пекельний Розрив

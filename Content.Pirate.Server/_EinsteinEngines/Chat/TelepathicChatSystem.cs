@@ -1,4 +1,3 @@
-using Content.Pirate.Common._EinsteinEngines.Chat;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -29,6 +28,7 @@ using Robust.Shared.Random;
 using Robust.Shared.GameObjects.Components.Localization;
 using System.Linq;
 using System.Text;
+using Content.Pirate.Common._EinsteinEngines.Chat;
 using Robust.Shared.Player;
 using Robust.Shared.Enums;
 using Content.Pirate.Common.Chat;
@@ -109,7 +109,7 @@ public sealed partial class TelepathicChatSystem : EntitySystem, ITelepathicChat
             .AddWhereAttachedEntity(entity =>
                 HasComp<PsionicComponent>(entity) && !HasComp<TelepathyComponent>(entity)
                 || HasComp<SleepingComponent>(entity)
-                || HasComp<SeeingRainbowsComponent>(entity) && !HasComp<PsionicsDisabledComponent>(entity) && !HasComp<PsionicInsulationComponent>(entity))
+                || HasComp<SeeingRainbowsStatusEffectComponent>(entity) && !HasComp<PsionicsDisabledComponent>(entity) && !HasComp<PsionicInsulationComponent>(entity))
             .Recipients
             .Select(p => p.Channel);
         if (filtered.ToList() != null)
@@ -136,13 +136,17 @@ public sealed partial class TelepathicChatSystem : EntitySystem, ITelepathicChat
     private void DescribeHumanoid(EntityUid uid, HumanoidAppearanceComponent component, GetPsychognomicDescriptorEvent ev)
     {
         if (component.Sex != Sex.Unsexed)
+        {
             ev.Descriptors.Add(component.Sex == Sex.Male ? Loc.GetString("p-descriptor-male") : Loc.GetString("p-descriptor-female"));
+        }
         ev.Descriptors.Add(component.Age >= 100 ? Loc.GetString("p-descriptor-old") : Loc.GetString("p-descriptor-young"));
     }
     private void DescribeGrammar(EntityUid uid, GrammarComponent component, GetPsychognomicDescriptorEvent ev)
     {
         if (component.Gender == Gender.Male || component.Gender == Gender.Female)
+        {
             ev.Descriptors.Add(component.Gender == Gender.Male ? Loc.GetString("p-descriptor-masculine") : Loc.GetString("p-descriptor-feminine"));
+        }
     }
     private void DescribeDamage(EntityUid uid, DamageableComponent component, GetPsychognomicDescriptorEvent ev)
     {
@@ -150,7 +154,9 @@ public sealed partial class TelepathicChatSystem : EntitySystem, ITelepathicChat
         {
             ev.Descriptors.Add(Loc.GetString("p-descriptor-liminal"));
             if (!HasComp<HumanoidAppearanceComponent>(uid))
+            {
                 ev.Descriptors.Add(Loc.GetString("p-descriptor-old"));
+            }
             return;
         }
         ev.Descriptors.Add(Loc.GetString("p-descriptor-hylic"));
@@ -170,11 +176,13 @@ public sealed partial class TelepathicChatSystem : EntitySystem, ITelepathicChat
     private void DescribeFixtures(EntityUid uid, FixturesComponent component, GetPsychognomicDescriptorEvent ev)
     {
         foreach (var fixture in component.Fixtures.Values)
+        {
             if (fixture.CollisionMask == (int) CollisionGroup.GhostImpassable)
             {
                 ev.Descriptors.Add(Loc.GetString("p-descriptor-pneumatic"));
                 return;
             }
+        }
     }
     private void DescribePhysics(EntityUid uid, PhysicsComponent component, GetPsychognomicDescriptorEvent ev)
     {
@@ -198,12 +206,18 @@ public sealed partial class TelepathicChatSystem : EntitySystem, ITelepathicChat
         if (component.PsychognomicDescriptors.Count > 0)
         {
             foreach (var descriptor in component.PsychognomicDescriptors)
+            {
                 ev.Descriptors.Add(Loc.GetString(descriptor));
+            }
         }
         if (!HasComp<SpeechComponent>(uid) || HasComp<MutedComponent>(uid))
+        {
             ev.Descriptors.Add(Loc.GetString("p-descriptor-dumb"));
+        }
         if (!HasComp<CombatModeComponent>(uid) || HasComp<PacifiedComponent>(uid))
+        {
             ev.Descriptors.Add(Loc.GetString("p-descriptor-passive"));
+        }
         foreach (var power in component.ActivePowers)
         {
             if (power.ID != "PyrokinesisPower" && power.ID != "NoosphericZapPower")

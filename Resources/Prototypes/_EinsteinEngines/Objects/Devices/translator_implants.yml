@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
 # SPDX-FileCopyrightText: 2025 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Marty <martynashagriefer@gmail.com
 # SPDX-FileCopyrightText: 2025 Orion-416 <cliveocelot@gmail.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
@@ -7,8 +8,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: BasicTauCetiBasicTranslatorImplant
-  name: "базовий загальний перекладацький імплантат"
-  description: "Надає вашим неписьменним друзям можливість зрозуміти спільну галактичну мову."
+  name: basic common translator implant
+  description: Provides your illiterate friends the ability to understand the common galactic tongue.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -18,8 +19,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: TauCetiBasicTranslatorImplant
-  name: "вдосконалений імплантат загального перекладача"
-  description: "Більш просунута версія імплантату-перекладача навчить ваших неписьменних друзів не тільки говорити, але й розуміти галактичну мову!"
+  name: advanced common translator implant
+  description: A more advanced version of the translator implant, teaches your illiterate friends the ability to both speak and understand the galactic tongue!
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -31,8 +32,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: BubblishTranslatorImplant
-  name: "імплантат перекладача bubblish"
-  description: "Імплантат, який допоможе вам говорити і розуміти мову слизунів! Спеціальні голосові зв'язки не входять до комплекту."
+  name: bubblish translator implant
+  description: An implant that helps you speak and understand the language of slimes! Special vocal chords not included.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -46,8 +47,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: NekomimeticTranslatorImplant
-  name: "некоміметичний перекладацький імплантат"
-  description: "Імплантат-перекладач, створений для того, щоб допомогти власникам домашніх котів розуміти своїх улюбленців, тепер дає можливість розуміти і розмовляти з фелінідами!"
+  name: nekomimetic translator implant
+  description: A translator implant intially designed to help domestic cat owners understand their pets, now granting the ability to understand and speak to Felinids!
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -61,8 +62,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: DraconicTranslatorImplant
-  name: "драконівський імплантат перекладача"
-  description: "Імплантат-перекладач, що дає можливість розмовляти з драконами! Згодом також дозволяє спілкуватися з унатами."
+  name: draconic translator implant
+  description: A translator implant giving the ability to speak to dragons! Subsequently, also allows to communicate with the Unathi.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -76,8 +77,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: CanilunztTranslatorImplant
-  name: "імплантат перекладача canilunzt"
-  description: "Імплантат-перекладач, який допоможе вам спілкуватися з місцевими йіперами. Ух ти!"
+  name: canilunzt translator implant
+  description: A translator implant that helps you communicate with your local yeepers. Yeep!
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -91,8 +92,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: SolCommonTranslatorImplant
-  name: "імплантат перекладача солкомови"
-  description: "Імплантат, що дає можливість розуміти та розмовляти солкомовною. Аааа!"
+  name: sol-common translator implant
+  description: An implant giving the ability to understand and speak SolCommon. Raaagh!
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -106,8 +107,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: NovuNedericTranslatorImplant
-  name: "імплант-перекладач нову-недерік"
-  description: "Імплант, що дає можливість розуміти і розмовляти нову-недерік. Хозі!"
+  name: novu-nederic translator implant
+  description: An implant giving the ability to understand and speak Novu-Nederic. Hoezee!
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -121,8 +122,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: RootSpeakTranslatorImplant
-  name: "імплантат перекладача кореневої мови"
-  description: "Імплантат, який дозволяє говорити від імені дерев. Або з деревами."
+  name: root-speak translator implant
+  description: An implant that lets you speak for the trees. Or to the trees.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -136,8 +137,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: MofficTranslatorImplant
-  name: "Імплантат перекладача з мофської"
-  description: "Імплантат, покликаний допомогти одомашнити тарганів. Згодом дозволяє спілкуватися з молью людям."
+  name: Moffic translator implant
+  description: An implant designed to help domesticate mothroaches. Subsequently, allows you to communicate with the moth people.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -151,8 +152,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: ValyrianStandardTranslatorImplant
-  name: "валірійський стандартний перекладацький імплантат"
-  description: "Імплант, що дає можливість розуміти та розмовляти валірійською мовою. Цвірінькай!"
+  name: valyrian standard translator implant
+  description: An implant giving the ability to understand and speak Valyrian Standard. Chirp!
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -166,8 +167,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: AzazibaTranslatorImplant
-  name: "імплант перекладача азазіба"
-  description: "Імплант, що дає можливість розуміти та розмовляти мовою азазіба." # Intended for Admins Only, this item is for lore reasons not obtainable.
+  name: azaziba translator implant
+  description: An implant giving the ability to understand and speak Azaziba. # Intended for Admins Only, this item is for lore reasons not obtainable.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -181,8 +182,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: ChittinTranslatorImplant
-  name: "імплантат хітинового перекладача"
-  description: "Імплантат, що дає можливість розуміти та розмовляти мовою читтин."
+  name: chittin translator implant
+  description: An implant giving the ability to understand and speak Chittin.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -196,8 +197,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: SiikMaasTranslatorImplant
-  name: "імплантат перекладача siik'maas"
-  description: "Імплантат, що дає можливість розуміти та розмовляти мовою сіік'маас."
+  name: siik'maas translator implant
+  description: An implant giving the ability to understand and speak Siik'maas.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -211,8 +212,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: MarishTranslatorImplant
-  name: "імплант-перекладач з маріш"
-  description: "Імплант, що дає можливість розуміти маріш та розмовляти нею."
+  name: marish translator implant
+  description: An implant giving the ability to understand and speak Marish.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -220,5 +221,35 @@
     - Marish
     spoken:
     - Marish
+    requires:
+    - TauCetiBasic
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: SchechiTranslatorImplant
+  name: schechi translator implant
+  description: An implant giving the ability to understand and speak Schechi.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TranslatorImplant
+    understood:
+    - Schechi
+    spoken:
+    - Schechi
+    requires:
+    - TauCetiBasic
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: NewKinPidginTranslatorImplant
+  name: ka'rakk translator implant
+  description: An implant giving the ability to understand and speak Ka'rakk.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TranslatorImplant
+    understood:
+    - NewKinPidgin
+    spoken:
+    - NewKinPidgin
     requires:
     - TauCetiBasic
