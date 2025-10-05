@@ -99458,6 +99458,24 @@ entities:
     - type: Transform
       pos: 52.01165,-19.293865
       parent: 2
+- proto: Shower
+  entities:
+  - uid: 18129
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -23.5,27.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 18130
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -23.5,25.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: ShuttersNormal
   entities:
   - uid: 14900
