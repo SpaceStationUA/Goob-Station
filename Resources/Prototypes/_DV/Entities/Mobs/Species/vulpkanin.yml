@@ -147,6 +147,7 @@
       Male: MaleVulpkanin
       Female: FemaleVulpkanin
       Unsexed: MaleVulpkanin
+  - type: NoShoesSilentFootsteps # PIRATE
   - type: Tag
     tags:
     - CanPilot
