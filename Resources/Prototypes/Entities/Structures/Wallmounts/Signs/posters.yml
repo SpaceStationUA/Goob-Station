@@ -317,14 +317,16 @@
   - type: Sprite
     state: poster17_contraband
 
+# PIRATE DECOMMUNISATION START VVVV
 - type: entity
   parent: PosterBase
-  id: PosterContrabandCommunistState
-  name: "Fun Police"
-  description: "A poster condemning the station's security forces."
+  id: PosterContrabandSolAlliance
+  name: "Солоріанський Альянс"
+  description: "Альянс непохитний, як світло зорі!"
   components:
   - type: Sprite
-    state: poster3_contraband
+    state: poster18_contraband
+# PIRATE DECOMMUNISATION END ^^^^
 
 - type: entity
   parent: PosterBase
