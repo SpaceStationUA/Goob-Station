@@ -19,3 +19,5 @@ stamp-component-stamped-name-syndicate = Синдикат
 stamp-component-stamped-name-ce = Головний Інженер
 stamp-component-stamped-name-greytide = Грейтайд
 stamp-component-stamped-name-psychologist = Психолог
+
+stamp-component-stamped-name-wizard = Чарівник
