@@ -25,6 +25,70 @@
     runningState: building
     staticPacks:
     - RickPack
+    - Reports
+    - Statements
+    - InquiriesAndAppeals
+    - Complaints
+    - Permissions
+    - OrdersAndInstructions
+    - Orders
+    - Evidence
+    - ConclusionsAndDecisions
+    - ErrorDocument
+    - SecurityBoardsStaticGoob
+    - MedicalBoardsStaticGoob
+    - MedicalBoardsGoob
+    - EngineeringBoardsGoob
+    - MiningToolsStatic
+    - SalvageExplosivesStatic
+    - MiningWeapons
+    - MiningBoards
+    - MiningUpgrades
+    - HumanoidCubesStatic
+    - EmagCubesStatic
+    - BiofabPartsStatic
+    - BiofabPartsEmagStatic
+    - ClothingCasualJumpsuits
+    - ClothingDurathreadArmoured
+    - ClothingCasualContrabandJumpsuits
+    - SecurityAmmoStaticGoob
+    - SecurityEquipmentStaticGoob
+    - SecurityHypoStatic
+    - SecurityWeaponsStaticGoob
+    - SecurityWeaponsNonEmaggableStaticGoob
+    - SecurityWeaponsGoob
+    - SecurityAmmoGoob
+    - SecurityEquipmentDynamicGoob
+    - SecurityCybernetics
+    - RestraintTechnology
+    - BluespaceTheory
+    - ExperimentalScienceGoob
+    - IPCPartsStatic
+    - BorgModulesStaticGoob
+    - PowerCagesStatic
+    - Modsuits
+    - BorgModulesGoob
+    - PowerCages
+    - BasicCybernetics
+    - AdvancedCybernetics
+    - SyndicateAmmoLightStatic
+    - SyndicateAmmoHeavyStatic
+    - LatheMiscStatic
+    - SyndicateCatridgesStatic
+    - ProtoLatheMiscStatic
+    - SpecOpsGoogles
+    - Pinpointers
+    - MechPartsStatic
+    - MechWeaponsSecurityStatic
+    - MechWeaponsSecurityLight
+    - MechWeaponsSecurityHeavy
+    - MechPartsGoob
+    - MechWeaponsSalvage
+    - MechWeaponsCivilian
+    - MechBoardsSecurity
+    - MechBoardsCargo
+    - MechBoardsCivilian
+    - MechBoardsScience
   - type: MaterialStorage
     whitelist:
       tags:
@@ -32,6 +96,11 @@
       - RawMaterial
       - Ingot
       - BSCrystal
+      - Document
+    connectToSilo: false
+    storage:
+      SheetPrinter: 0
+
 
 - type: latheRecipePack
   id: RickPack
