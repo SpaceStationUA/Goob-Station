@@ -316,6 +316,7 @@
   loadouts:
   - CaptainHead
   - CaptainCap
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: CaptainJumpsuit
@@ -353,6 +354,16 @@
   - CaptainOuterClothing
   - CaptainWintercoat
   - CaptainJacket # Goobstation
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: HoPHead
@@ -360,6 +371,8 @@
   minLimit: 0
   loadouts:
   - HoPHead
+  - ClothingHeadHatHetmanHat #Pirate_boat
+  - ClothingHeadHatRichard #Pirate_boat
 
 - type: loadoutGroup
   id: HoPJumpsuit
@@ -395,17 +408,16 @@
   loadouts:
   - HoPWintercoat
 
-# COMMAND - PIRATE START VVVV
-- type: loadoutGroup
-  id: CommandSelfDefense
-  name: loadout-group-command-self-defense
-  minLimit: 0
-  loadouts:
-  - CSDFlash
-  - CSDWeaponDisabler
-  - CSDTelescopicBaton
-# COMMAND - PIRATE END ^^^^
-
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 # Civilian
 - type: loadoutGroup
   id: PassengerJumpsuit
@@ -433,6 +445,55 @@
   - BrownMJ
   - MaroonMJ
  # goob changes end
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: PassengerFace
@@ -464,6 +525,15 @@
   loadouts:
   - Mantle
   - OldNeckWrap # EE
+  - ClothingNeckPonchoBlack #Pirate_boat
+  - ClothingNeckPonchoArctic #Pirate_boat
+  - ClothingNeckPonchoSyndicate #Pirate_boat
+  - ClothingNeckPonchoSmallPink #Pirate_boat
+  - ClothingNeckPonchoSmallRed #Pirate_boat
+  - ClothingNeckPonchoSmallPurple #Pirate_boat
+  - ClothingNeckPonchoSmallBlack #Pirate_boat
+  - ClothingNeckPonchoSmallWhite #Pirate_boat
+  - ClothingNeckCloakSanabi #Pirate_boat
 
 - type: loadoutGroup
   id: PassengerOuterClothing
@@ -471,6 +541,16 @@
   minLimit: 0
   loadouts:
   - PassengerWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: PassengerShoes
@@ -478,6 +558,24 @@
   loadouts:
   - BlackShoes
   - WinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: BartenderHead
@@ -486,6 +584,45 @@
   loadouts:
   - BartenderHead
   - BartenderBowler
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
+  - ClothingHeadHatRichard #Pirate_boat
 
 - type: loadoutGroup
   id: BartenderJumpsuit
@@ -495,6 +632,55 @@
   - BartenderJumpskirt
   - BartenderJumpsuitPurple
   - ServiceMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: BartenderOuterClothing
@@ -504,6 +690,16 @@
   - BartenderVest
   - BartenderApron
   - BartenderWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: ChefHead
@@ -511,6 +707,45 @@
   minLimit: 0
   loadouts:
   - ChefHead
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
+  - ClothingHeadHatRichard #Pirate_boat
 
 - type: loadoutGroup
   id: ChefMask
@@ -526,6 +761,55 @@
   - ChefJumpsuit
   - ChefJumpskirt
   - ServiceMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: ChefOuterClothing
@@ -535,6 +819,16 @@
   - ChefApron
   - ChefJacket
   - ChefWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: LibrarianJumpsuit
@@ -545,6 +839,55 @@
   - CuratorJumpsuit
   - CuratorJumpskirt
   - ServiceMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: LawyerJumpsuit
@@ -561,6 +904,55 @@
   - LawyerJumpsuitGood
   - LawyerJumpskirtGood
   - ServiceMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: LawyerNeck
@@ -568,6 +960,15 @@
   minLimit: 0
   loadouts:
   - LawyerNeck
+  - ClothingNeckPonchoBlack #Pirate_boat
+  - ClothingNeckPonchoArctic #Pirate_boat
+  - ClothingNeckPonchoSyndicate #Pirate_boat
+  - ClothingNeckPonchoSmallPink #Pirate_boat
+  - ClothingNeckPonchoSmallRed #Pirate_boat
+  - ClothingNeckPonchoSmallPurple #Pirate_boat
+  - ClothingNeckPonchoSmallBlack #Pirate_boat
+  - ClothingNeckPonchoSmallWhite #Pirate_boat
+  - ClothingNeckCloakSanabi #Pirate_boat
 
 - type: loadoutGroup
   id: ChaplainHead
@@ -579,6 +980,45 @@
   - ChaplainPlagueHat
   - ChaplainWitchHat
   - ChaplainWitchHatAlt
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
+  - ClothingHeadHatRichard #Pirate_boat
 
 - type: loadoutGroup
   id: ChaplainMask
@@ -596,6 +1036,55 @@
   - ChaplainRobesLight
   - ChaplainRobesDark
   - ServiceMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: ChaplainOuterClothing
@@ -606,6 +1095,16 @@
   - ChaplainNunRobe
   - ChaplainBlackHoodie
   - ChaplainHoodie
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: ChaplainNeck
@@ -613,6 +1112,15 @@
   minLimit: 0
   loadouts:
   - ChaplainNeck
+  - ClothingNeckPonchoBlack #Pirate_boat
+  - ClothingNeckPonchoArctic #Pirate_boat
+  - ClothingNeckPonchoSyndicate #Pirate_boat
+  - ClothingNeckPonchoSmallPink #Pirate_boat
+  - ClothingNeckPonchoSmallRed #Pirate_boat
+  - ClothingNeckPonchoSmallPurple #Pirate_boat
+  - ClothingNeckPonchoSmallBlack #Pirate_boat
+  - ClothingNeckPonchoSmallWhite #Pirate_boat
+  - ClothingNeckCloakSanabi #Pirate_boat
 
 - type: loadoutGroup
   id: JanitorHead
@@ -621,6 +1129,45 @@
   loadouts:
   - JanitorHead
   - JanitorHeadSenior # Goobstation
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
+  - ClothingHeadHatRichard #Pirate_boat
 
 - type: loadoutGroup
   id: JanitorJumpsuit
@@ -629,6 +1176,55 @@
   - JanitorJumpsuit
   - JanitorJumpskirt
   - ServiceMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: JanitorGloves
@@ -645,6 +1241,16 @@
   minLimit: 0
   loadouts:
   - JanitorWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: JanitorPlunger
@@ -661,6 +1267,45 @@
   - BotanistHead
   - BotanistBandana
   - BotanistBeret # Goobstation
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
+  - ClothingHeadHatRichard #Pirate_boat
 
 - type: loadoutGroup
   id: BotanistJumpsuit
@@ -671,6 +1316,55 @@
   - BotanistOveralls
   - ServiceMJ # goob
   - HydroMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: BotanistBackpack
@@ -688,6 +1382,16 @@
   loadouts:
   - BotanistApron
   - BotanistWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: ClownHead
@@ -696,6 +1400,45 @@
   loadouts:
   - JesterHat
   - JesterAltHat
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
+  - ClothingHeadHatRichard #Pirate_boat
 
 - type: loadoutGroup
   id: ClownJumpsuit
@@ -705,6 +1448,55 @@
   - ClownSkirt
   - JesterSuit
   - JesterAltSuit
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: ClownBackpack
@@ -722,6 +1514,16 @@
   loadouts:
   - ClownRobes
   - ClownWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: ClownShoes
@@ -729,6 +1531,24 @@
   loadouts:
   - ClownShoes
   - JesterShoes
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: SurvivalClown
@@ -751,6 +1571,45 @@
   - MimeHead
   - MimeFrenchBeret
   - MimeCap
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
+  - ClothingHeadHatRichard #Pirate_boat
 
 - type: loadoutGroup
   id: MimeMask
@@ -766,6 +1625,55 @@
   loadouts:
   - MimeJumpsuit
   - MimeJumpskirt
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: MimeBackpack
@@ -782,6 +1690,16 @@
   minLimit: 0
   loadouts:
   - MimeWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: MimeBelt
@@ -811,6 +1729,55 @@
   - MusicianJumpsuit
   - MusicianJumpskirt
   - ServiceMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: MusicianOuterClothing
@@ -818,6 +1785,16 @@
   minLimit: 0
   loadouts:
   - MusicianWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: Instruments
@@ -862,6 +1839,8 @@
   loadouts:
   - QuartermasterHead
   - QuartermasterBeret
+  - ClothingHeadHatHetmanHat #Pirate_boat
+  - ClothingHeadHatRichard #Pirate_boat
 
 - type: loadoutGroup
   id: QuartermasterJumpsuit
@@ -889,6 +1868,16 @@
   minLimit: 0
   loadouts:
   - QuartermasterWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: QuartermasterShoes
@@ -896,6 +1885,24 @@
   loadouts:
   - BrownShoes
   - CargoWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: CargoTechnicianHead
@@ -904,6 +1911,45 @@
   loadouts:
   - CargoTechnicianHead
   - CargoTechnicianHeadMail # Goob/DeltaV - Mail
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
+  - ClothingHeadHatRichard #Pirate_boat
 
 - type: loadoutGroup
   id: CargoTechnicianJumpsuit
@@ -914,6 +1960,55 @@
   - CargoTechnicianJumpsuitMail # Goob/DeltaV - Mail
   - CargoTechnicianJumpskirtMail # Goob/DeltaV - Mail
   - CargoTechMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: CargoTechnicianBackpack
@@ -931,6 +2026,16 @@
   loadouts:
   - CargoTechnicianWintercoat
   - CargoTechnicianWintercoatMail # Goob/DeltaV - Mail
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: CargoTechnicianShoes
@@ -938,6 +2043,24 @@
   loadouts:
   - BlackShoes
   - CargoWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
@@ -954,6 +2077,16 @@
   minLimit: 0
   loadouts:
   - SalvageSpecialistWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: SalvageSpecialistShoes
@@ -962,6 +2095,24 @@
   - SalvageBoots
   - CargoWinterBoots
 
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 # Engineering
 - type: loadoutGroup
   id: ChiefEngineerHead
@@ -970,6 +2121,7 @@
   loadouts:
   - ChiefEngineerHead
   - ChiefEngineerBeret
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: ChiefEngineerJumpsuit
@@ -996,6 +2148,16 @@
   minLimit: 0
   loadouts:
   - ChiefEngineerWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: ChiefEngineerShoes
@@ -1003,6 +2165,24 @@
   loadouts:
   - BrownShoes
   - EngineeringWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: TechnicalAssistantJumpsuit
@@ -1011,6 +2191,55 @@
   - YellowJumpsuit
   - YellowJumpskirt
   - EngiMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: StationEngineerHead
@@ -1021,6 +2250,44 @@
   - StationEngineerHardhatOrange
   - StationEngineerHardhatRed
   - SeniorEngineerBeret
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: StationEngineerJumpsuit
@@ -1032,6 +2299,55 @@
   - SeniorEngineerJumpsuit
   - SeniorEngineerJumpskirt
   - EngiMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: StationEngineerBackpack
@@ -1049,6 +2365,16 @@
   loadouts:
   - StationEngineerOuterVest
   - StationEngineerWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: StationEngineerShoes
@@ -1056,6 +2382,24 @@
   loadouts:
   - WorkBoots
   - EngineeringWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: StationEngineerID
@@ -1070,6 +2414,44 @@
   minLimit: 0
   loadouts:
   - SeniorEngineerBeret   # Goobstation
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: AtmosphericTechnicianJumpsuit
@@ -1081,6 +2463,55 @@
   - SeniorEngineerJumpskirt  # Goobstation
   - SeniorEngineerJumpsuit   # Goobstation
   - AtmosMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: AtmosphericTechnicianOuterClothing
@@ -1088,6 +2519,16 @@
   minLimit: 0
   loadouts:
   - AtmosphericTechnicianWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: AtmosphericTechnicianBackpack
@@ -1104,6 +2545,24 @@
   loadouts:
   - WhiteShoes
   - EngineeringWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: SurvivalExtended
@@ -1125,6 +2584,7 @@
   minLimit: 0
   loadouts:
   - ResearchDirectorBeret
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: ResearchDirectorNeck
@@ -1150,6 +2610,16 @@
   loadouts:
   - ResearchDirectorLabCoat
   - ResearchDirectorWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: ResearchDirectorShoes
@@ -1157,6 +2627,24 @@
   loadouts:
   - BrownShoes
   - ScienceWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: ScientistHead
@@ -1166,6 +2654,44 @@
   - RoboticistCap
   - SkullBandana
   - ScientificBeret
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: ScientistNeck
@@ -1173,6 +2699,15 @@
   minLimit: 0
   loadouts:
   - ScientistTie
+  - ClothingNeckPonchoBlack #Pirate_boat
+  - ClothingNeckPonchoArctic #Pirate_boat
+  - ClothingNeckPonchoSyndicate #Pirate_boat
+  - ClothingNeckPonchoSmallPink #Pirate_boat
+  - ClothingNeckPonchoSmallRed #Pirate_boat
+  - ClothingNeckPonchoSmallPurple #Pirate_boat
+  - ClothingNeckPonchoSmallBlack #Pirate_boat
+  - ClothingNeckPonchoSmallWhite #Pirate_boat
+  - ClothingNeckCloakSanabi #Pirate_boat
 
 - type: loadoutGroup
   id: ScientistJumpsuit
@@ -1185,6 +2720,55 @@
   - SeniorResearcherJumpsuit
   - SeniorResearcherJumpskirt
   - ResearchMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: ScientistBackpack
@@ -1206,6 +2790,16 @@
   - RoboticistLabCoat
   - RoboticistWintercoat
   - SeniorResearcherLabCoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: ScientistShoes
@@ -1214,6 +2808,24 @@
   - WhiteShoes
   - BlackShoes
   - ScienceWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: ScientistGloves
@@ -1239,6 +2851,55 @@
   - WhiteJumpskirt
   - ResearchMJ # goob
 
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 # Security
 - type: loadoutGroup
   id: HeadofSecurityHead
@@ -1248,6 +2909,7 @@
   - HeadofSecurityHead
   - HeadofSecurityBeret
   - HeadofSecuritySpecialBeret # Goobstation
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit
@@ -1279,6 +2941,16 @@
   - HeadofSecurityWinterCoat
   - HeadofSecurityGreatCoat # Goobstation
   - HeadofSecurityVestWeb # Goobstation
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: WardenHead
@@ -1287,6 +2959,7 @@
   loadouts:
   - WardenHead
   - WardenBeret
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: WardenJumpsuit
@@ -1301,6 +2974,16 @@
   loadouts:
   - WardenCoat
   - WardenArmoredWinterCoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: SecurityHead
@@ -1312,6 +2995,7 @@
   - SecurityBeret
   - SecurityHat
   - TrooperHat
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: SecurityJumpsuit
@@ -1350,6 +3034,16 @@
   - ArmorVestSlim
   - SecurityOfficerWintercoat
   - WinterCoatSeniorSecArmored # Goobstation
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: SecurityShoes
@@ -1358,6 +3052,24 @@
   - JackBoots
   - CombatBoots # Goobstation
   - SecurityWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: SecurityPDA
@@ -1373,6 +3085,7 @@
   loadouts:
   - DetectiveFedora
   - DetectiveFedoraGrey
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: DetectiveNeck
@@ -1399,6 +3112,16 @@
   - DetectiveArmorVest
   - DetectiveCoat
   - DetectiveCoatGrey
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit
@@ -1433,6 +3156,16 @@
   name: loadout-group-cadet-outerclothing
   loadouts:
   - ArmorCadet
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: SecurityWeapon
@@ -1466,6 +3199,7 @@
   - ChiefMedicalOfficerBeret
   - CMOMedicalHeadMirror
   - ChemistUshanka # Goobstation
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerJumpsuit
@@ -1484,6 +3218,16 @@
   loadouts:
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerNeck
@@ -1499,6 +3243,24 @@
   loadouts:
   - BrownShoes
   - MedicalWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: MedicalDoctorHead
@@ -1512,6 +3274,44 @@
   - GreenSurgeryCap
   - PurpleSurgeryCap
   - NurseHat
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: MedicalDoctorJumpsuit
@@ -1525,6 +3325,55 @@
   - MedicalGreenScrubs
   - MedicalPurpleScrubs
   - MedicMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: MedicalDoctorOuterClothing
@@ -1534,6 +3383,16 @@
   - RegularLabCoat
   - MedicalDoctorWintercoat
   - SeniorPhysicianLabCoat
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: MedicalBackpack
@@ -1550,6 +3409,24 @@
   loadouts:
   - WhiteShoes
   - MedicalWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: MedicalDoctorPDA
@@ -1580,6 +3457,55 @@
   - WhiteJumpsuit
   - WhiteJumpskirt
   - MedicMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: ChemistJumpsuit
@@ -1590,6 +3516,55 @@
   - SeniorPhysicianJumpsuit # Goobstation
   - SeniorPhysicianJumpskirt # Goobstation
   - ChemistMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: ChemistOuterClothing
@@ -1600,6 +3575,16 @@
   - ChemistLabCoat
   - ChemistWintercoat
   - SeniorPhysicianLabCoat # Goobstation
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: ChemistBackpack
@@ -1617,6 +3602,44 @@
   loadouts:
   - ParamedicHead
   - SeniorPhysicianBeret # Goobstation
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatBunny #Pirate_boat
+  - ClothingHeadHatAnimalCatBlack #Pirate_boat
+  - ClothingHeadHatCake #Pirate_boat
+  - ClothingHeadHatFez #Pirate_boat
+  - ClothingHeadHatMagician #Pirate_boat
+  - ClothingHeadHatSolidHeadband #Pirate_boat
+  - ClothingHeadHatShrineMaidenWig #Pirate_boat
+  - ClothingHeadHatSantahat #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: ParamedicJumpsuit
@@ -1627,6 +3650,55 @@
   - SeniorPhysicianJumpsuit # Goobstation
   - SeniorPhysicianJumpskirt # Goobstation
   - ParamedMJ # goob
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: ParamedicOuterClothing
@@ -1637,6 +3709,16 @@
   - ParamedicWintercoat
   - ParamedicDavidsJacket # Goobstation
   - SeniorPhysicianLabCoat # Goobstation
+  - ClothingOuterCoatBomberPunkRed #Pirate_boat
+  - ClothingOuterCoatJacketLeather #Pirate_boat
+  - ClothingOuterCoatJacketBiker #Pirate_boat
+  - ClothingOuterCoatJacketJamrock #Pirate_boat
+  - ClothingOuterCoatBomberAerostatic #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBlue #Pirate_boat
+  - ClothingOuterCoatJacketLettermanBrown #Pirate_boat
+  - ClothingOuterCoatJacketLettermanRed #Pirate_boat
+  - ClothingOuterCoatJacketLettermanMagenta #Pirate_boat
+  - ClothingOuterCoatBomberPinkSleeves #Pirate_boat
 
 - type: loadoutGroup
   id: ParamedicShoes
@@ -1645,6 +3727,24 @@
   - BlueShoes
   - WhiteShoes
   - MedicalWinterBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
 
 - type: loadoutGroup
   id: MedicalEyewear
@@ -1678,6 +3778,55 @@
   - ReporterJumpsuit
   - JournalistJumpsuit
   - ReporterDress
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: PsychologistJumpsuit
@@ -1685,6 +3834,55 @@
   loadouts:
   - PsychologistJumpsuit
   - PsychologistJumpskirt
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: BoxerJumpsuit
@@ -1692,6 +3890,55 @@
   loadouts:
   - BoxerShorts
   - BoxerShortsWithTop
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitCasualBlue #Pirate_boat
+  - ClothingUniformJumpskirtCasualBlue #Pirate_boat
+  - ClothingUniformJumpsuitCasualPurple #Pirate_boat
+  - ClothingUniformJumpskirtCasualPurple #Pirate_boat
+  - ClothingUniformJumpsuitCasualRed #Pirate_boat
+  - ClothingUniformJumpskirtCasualRed #Pirate_boat
+  - ClothingUniformJumpsuitCasualGreen #Pirate_boat
+  - ClothingUniformJumpskirtCasualGreen #Pirate_boat
 
 - type: loadoutGroup
   id: BoxerGloves
