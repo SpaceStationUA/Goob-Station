@@ -408,6 +408,17 @@
   loadouts:
   - HoPWintercoat
 
+# COMMAND - PIRATE START VVVV
+- type: loadoutGroup
+  id: CommandSelfDefense
+  name: loadout-group-command-self-defense
+  minLimit: 0
+  loadouts:
+  - CSDFlash
+  - CSDWeaponDisabler
+  - CSDTelescopicBaton
+# COMMAND - PIRATE END ^^^^
+
   - ClothingOuterCoatBomberPunkRed #Pirate_boat
   - ClothingOuterCoatJacketLeather #Pirate_boat
   - ClothingOuterCoatJacketBiker #Pirate_boat
