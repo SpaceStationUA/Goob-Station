@@ -6,6 +6,77 @@
   - AdminAssistantJumpsuit
   - AdminAssistantJumpskirt
   - AdminAssistantHeadMaid
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: AdminAssistantHeadset
@@ -13,6 +84,36 @@
   loadouts:
   - AdminAssistantHeadset
   - AdminAssistantHeadsetAlt
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
+  - ClothingHeadHatHetmanHat #Pirate_boat
 
 - type: loadoutGroup
   id: AdminAssistantShoes
@@ -22,6 +123,24 @@
   - BlackShoes
   - WinterBoots
 
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
 # Sience
 - type: loadoutGroup
   id: MantisHead
@@ -31,6 +150,35 @@
   - MantisHelmet
   - MantisFez
   - MantisBeret
+  - ClothingHeadHatBeret #Pirate_boat
+  - ClothingHeadBandBlack #Pirate_boat
+  - ClothingHeadBandBlue #Pirate_boat
+  - ClothingHeadBandGreen #Pirate_boat
+  - ClothingHeadBandRed #Pirate_boat
+  - ClothingHeadBandSkull #Pirate_boat
+  - ClothingHeadHatGreysoft #Pirate_boat
+  - ClothingHeadHatMimesoft #Pirate_boat
+  - ClothingHeadHatBluesoft #Pirate_boat
+  - ClothingHeadHatYellowsoft #Pirate_boat
+  - ClothingHeadHatGreensoft #Pirate_boat
+  - ClothingHeadHatOrangesoft #Pirate_boat
+  - ClothingHeadHatRedsoft #Pirate_boat
+  - ClothingHeadHatBlacksoft #Pirate_boat
+  - ClothingHeadHatPurplesoft #Pirate_boat
+  - ClothingHeadHatCorpsoft #Pirate_boat
+  - ClothingHeadFishCap #Pirate_boat
+  - ClothingHeadHatCowboyBrown #Pirate_boat
+  - ClothingHeadHatCowboyWhite #Pirate_boat
+  - ClothingHeadHatCowboyGrey #Pirate_boat
+  - ClothingHeadHatCowboyBlack #Pirate_boat
+  - ClothingHeadHatTophat #Pirate_boat
+  - ClothingHeadSanabi #Pirate_boat
+  - ClothingHeadHatCasa #Pirate_boat
+  - ClothingHeadHatSombrero #Pirate_boat
+  - FoodPoppy #Pirate_boat
+  - ClothingHeadHatPwig #Pirate_boat
+  - ClothingHeadPaperSack #Pirate_boat
+  - ClothingHeadPaperSackSmile #Pirate_boat
 
 - type: loadoutGroup
   id: MantisJumpsuit
@@ -38,6 +186,47 @@
   loadouts:
   - MantisSuit
   - MantisSkirt
+  - ClothingUniformJumpsuitColorGrey #Pirate_boat
+  - ClothingUniformJumpskirtColorGrey #Pirate_boat
+  - ClothingUniformJumpsuitColorWhite #Pirate_boat
+  - ClothingUniformJumpskirtColorWhite #Pirate_boat
+  - ClothingUniformJumpsuitColorBlack #Pirate_boat
+  - ClothingUniformJumpskirtColorBlack #Pirate_boat
+  - ClothingUniformJumpsuitColorBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorYellow #Pirate_boat
+  - ClothingUniformJumpskirtColorYellow #Pirate_boat
+  - ClothingUniformJumpsuitColorGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorOrange #Pirate_boat
+  - ClothingUniformJumpskirtColorOrange #Pirate_boat
+  - ClothingUniformJumpsuitColorRed #Pirate_boat
+  - ClothingUniformJumpskirtColorRed #Pirate_boat
+  - ClothingUniformJumpsuitColorPurple #Pirate_boat
+  - ClothingUniformJumpskirtColorPurple #Pirate_boat
+  - ClothingUniformJumpsuitColorPink #Pirate_boat
+  - ClothingUniformJumpskirtColorPink #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkBlue #Pirate_boat
+  - ClothingUniformJumpsuitColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpskirtColorDarkGreen #Pirate_boat
+  - ClothingUniformJumpsuitColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtColorTeal #Pirate_boat
+  - ClothingUniformJumpskirtBlueTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtPurpleTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtRedTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtYellowTurtleneckDress #Pirate_boat
+  - ClothingUniformJumpskirtOrangeStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtRedStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtPinkStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtCyanStripedDress #Pirate_boat
+  - ClothingUniformJumpskirtGreenStripedDress #Pirate_boat
+  - ClothingUniformJumpsuitHawaiRed #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlack #Pirate_boat
+  - ClothingUniformJumpsuitHawaiBlue #Pirate_boat
+  - ClothingUniformJumpsuitHawaiYellow #Pirate_boat
+  - ClothingUniformJumpsuitFlannel #Pirate_boat
 
 - type: loadoutGroup
   id: MantisBack
@@ -59,6 +248,24 @@
   name: loadout-group-mantis-Shoes
   loadouts:
   - MantisBoots
+  - ClothingShoesColorBlack #Pirate_boat
+  - ClothingShoesColorBrown #Pirate_boat
+  - ClothingShoesColorWhite #Pirate_boat
+  - ClothingShoesColorBlue #Pirate_boat
+  - ClothingShoesColorYellow #Pirate_boat
+  - ClothingShoesColorGreen #Pirate_boat
+  - ClothingShoesColorOrange #Pirate_boat
+  - ClothingShoesColorRed #Pirate_boat
+  - ClothingShoesColorPurple #Pirate_boat
+  - ClothingShoesSandals #Pirate_boat
+  - ClothingShoesTourist #Pirate_boat
+  - ClothingShoesSlippers #Pirate_boat
+  - ClothingShoeSlippersLizard #Pirate_boat
+  - ClothingShoeSlippersDuck #Pirate_boat
+  - ClothingShoesFlippers #Pirate_boat
+  - ClothingShoesClothwrap #Pirate_boat
+  - ClothingUnderSocksCoder #Pirate_boat
+  - ClothingShoesBootsPerformer #Pirate_boat
 
 - type: loadoutGroup
   id: MantisEyes
