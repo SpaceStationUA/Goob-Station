@@ -1416,36 +1416,6 @@
   loadouts:
   - SecStar
 
-# SECURITY - PIRATE START
-- type: loadoutGroup
-  id: SecurityCadetOuterClothing
-  name: loadout-group-cadet-outerclothing
-  loadouts:
-  - ArmorCadet
-
-- type: loadoutGroup
-  id: SecurityWeapon
-  name: loadout-group-security-weapon
-  loadouts:
-  - LoadoutSecurityWeaponMk58
-  - LoadoutSecurityRevolverInspector
-  - LoadoutSecurityPistolN1984
-  - LoadoutSecurityPistolUniversal
-  - LoadoutSecurityPistolUniversalNonLethal
-
-- type: loadoutGroup
-  id: SecuritySecondaryWeapon
-  name: loadout-group-secondary-weapon
-  maxLimit: 1
-  minLimit: 0
-  loadouts:
-  - LoadoutSecurityEnergyGunMini
-  - LoadoutSecurityEnergyGun
-  - LoadoutSecurityDisablerSMG
-  - LoadoutSecurityEnergyGunPistol
-  - LoadoutSecurityGunLaserCarbineAutomatic
-# SECURITY - PIRATE END
-
 # Medical
 - type: loadoutGroup
   id: ChiefMedicalOfficerHead

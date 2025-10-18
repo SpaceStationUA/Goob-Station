@@ -156,6 +156,7 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.RotateObjectCounterclockwise);
             human.AddFunction(ContentKeyFunctions.FlipObject);
             human.AddFunction(ContentKeyFunctions.OfferItem); // Pirate - port EE item offesr
+            human.AddFunction(ContentKeyFunctions.ToggleCrawlingUnder); // Pirate - port EE togglable under-table crawling
             human.AddFunction(ContentKeyFunctions.ArcadeUp);
             human.AddFunction(ContentKeyFunctions.ArcadeDown);
             human.AddFunction(ContentKeyFunctions.ArcadeLeft);

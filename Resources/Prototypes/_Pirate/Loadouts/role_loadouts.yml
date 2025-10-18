@@ -1,3 +1,27 @@
+# Miscellaneous
+
+# Command
+- type: roleLoadout
+  id: JobAdministrativeAssistant
+  groups:
+  - GroupTankHarness
+  - AdminAssistantHeadset
+  - AdminAssistantJumpsuit
+  - AdminAssistantShoes
+  - CommonBackpack
+  - Glasses
+  - Survival
+  - Trinkets
+  - Animals
+  - GroupSpeciesBreathTool
+
+# Civilian
+
+# Cargo
+
+# Engineering
+
+# Science
 - type: roleLoadout
   id: JobForensicMantis
   groups:
@@ -15,16 +39,10 @@
   - Trinkets
   - GroupSpeciesBreathTool
 
-- type: roleLoadout
-  id: JobAdministrativeAssistant
-  groups:
-  - GroupTankHarness
-  - AdminAssistantHeadset
-  - AdminAssistantJumpsuit
-  - AdminAssistantShoes
-  - CommonBackpack
-  - Glasses
-  - Survival
-  - Trinkets
-  - Animals
-  - GroupSpeciesBreathTool
+# Security
+
+# Medical
+
+# Wildcards
+
+# Other

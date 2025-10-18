@@ -1,3 +1,55 @@
+## Зброя
+# Пістолети
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: WeaponPistolMk58
+  result: WeaponPistolMk58
+  completetime: 5
+  materials:
+    Steel: 2000
+    Plastic: 500
+
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: WeaponPistolUniversal
+  result: WeaponPistolUniversal
+  completetime: 10
+  materials:
+    Steel: 2500
+    Plastic: 1000
+    Plasma: 1000
+
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: WeaponSubMachineGunFPA90
+  result: WeaponSubMachineGunFPA90
+  completetime: 10
+  materials:
+    Steel: 3000
+    Plastic: 500
+
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: WeaponSubMachineGunBRDIR25
+  result: WeaponSubMachineGunBRDIR25
+  completetime: 10
+  materials:
+    Steel: 3000
+    Plastic: 1000
+    Plasma: 1000
+
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: WeaponRifleVulcanM
+  result: WeaponRifleVulcanM
+  completetime: 10
+  materials:
+    Steel: 3500
+    Plastic: 1500
+    Plasma: 1500
+
+
+
 ## Амуніція - Набої
 # MK 32
 - type: latheRecipe
@@ -55,8 +107,40 @@
     Plastic: 75
     Uranium: 150
 
+# 9.5mm
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineCaselessRifleStandardShort
+  result: MagazineCaselessRifleStandardShort
+  completetime: 5
+  materials:
+    Steel: 270
 
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineCaselessRifleStandard
+  result: MagazineCaselessRifleStandard
+  completetime: 5
+  materials:
+    Steel: 400
 
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxCaselessRifleStandard
+  result: MagazineBoxCaselessRifleStandard
+  completetime: 5
+  materials:
+    Steel: 720
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineCaselessRifleShort
+  result: MagazineCaselessRifleShort
+  completetime: 5
+  materials:
+    Steel: 270
+    Plastic: 60
+    Glass: 60
 
 ## Різне
 - type: latheRecipe

@@ -109,3 +109,7 @@
         - MobLayer
   - type: RandomMetadata
     nameSegments: [NamesGolem]
+    # Pirate VVV
+  - type: PsionicFamiliar
+    inheritMasterFactions: false
+    # Pirate ^^^

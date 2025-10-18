@@ -1,0 +1,199 @@
+## Coats
+- type: loadout
+  id: WardrobeCoatTrench
+  equipment:
+    outerClothing: ClothingOuterCoatTrench
+  groupBy: "OuterCoat"
+
+
+- type: loadout
+  id: WardrobeCoatJensen
+  equipment:
+    outerClothing: ClothingOuterCoatJensen
+  groupBy: "OuterCoat"
+
+
+- type: loadout
+  id: WardrobeCoatGentle
+  equipment:
+    outerClothing: ClothingOuterCoatGentle
+  groupBy: "OuterCoat"
+
+
+
+## Winter Color
+- type: loadout
+  id: WardrobeWinterColorWhite
+  equipment:
+    outerClothing: ClothingOuterWinterColorWhite
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterColorGray
+  equipment:
+    outerClothing: ClothingOuterWinterColorGray
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterColorBlack
+  equipment:
+    outerClothing: ClothingOuterWinterColorBlack
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterColorBrown
+  equipment:
+    outerClothing: ClothingOuterWinterColorBrown
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterColorLightBrown
+  equipment:
+    outerClothing: ClothingOuterWinterColorLightBrown
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterColorPurple
+  equipment:
+    outerClothing: ClothingOuterWinterColorPurple
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterColorBlue
+  equipment:
+    outerClothing: ClothingOuterWinterColorBlue
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterColorGreen
+  equipment:
+    outerClothing: ClothingOuterWinterColorGreen
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterColorYellow
+  equipment:
+    outerClothing: ClothingOuterWinterColorYellow
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterColorOrange
+  equipment:
+    outerClothing: ClothingOuterWinterColorOrange
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterColorRed
+  equipment:
+    outerClothing: ClothingOuterWinterColorRed
+  groupBy: "ClothingOuterWinterColor"
+
+
+- type: loadout
+  id: WardrobeWinterCoat
+  equipment:
+    outerClothing: ClothingOuterWinterCoat
+  groupBy: "ClothingOuterWinterColor"
+
+
+
+## Jackets
+- type: loadout
+  id: WardrobeBomberPunkRed
+  equipment:
+    outerClothing: ClothingOuterCoatBomberPunkRed
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeBomberPinkSleeves
+  equipment:
+    outerClothing: ClothingOuterCoatBomberPinkSleeves
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeBomberAerostatic
+  equipment:
+    outerClothing: ClothingOuterCoatBomberAerostatic
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeJacketLettermanMagenta
+  equipment:
+    outerClothing: ClothingOuterCoatJacketLettermanMagenta
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeJacketLettermanRed
+  equipment:
+    outerClothing: ClothingOuterCoatJacketLettermanRed
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeJacketLettermanBrown
+  equipment:
+    outerClothing: ClothingOuterCoatJacketLettermanBrown
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeJacketLettermanBlue
+  equipment:
+    outerClothing: ClothingOuterCoatJacketLettermanBlue
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeJacketJamrock
+  equipment:
+    outerClothing: ClothingOuterCoatJacketJamrock
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeJacketBiker
+  equipment:
+    outerClothing: ClothingOuterCoatJacketBiker
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeJacketLeather
+  equipment:
+    outerClothing: ClothingOuterCoatJacketLeather
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeFlannelBlue
+  equipment:
+    outerClothing: ClothingOuterFlannelBlue
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeFlannelGreen
+  equipment:
+    outerClothing: ClothingOuterFlannelGreen
+  groupBy: "CoatJacket"
+
+
+- type: loadout
+  id: WardrobeFlannelRed
+  equipment:
+    outerClothing: ClothingOuterFlannelRed
+  groupBy: "CoatJacket"

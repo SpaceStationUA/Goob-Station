@@ -121,6 +121,8 @@
   - type: InnatePsionicPowers
     powersToAdd:
       - TelepathyPower
+  - type: PsionicFamiliar
+    inheritMasterFactions: false
 #Pirate psionics ^^^
 
 - type: entity

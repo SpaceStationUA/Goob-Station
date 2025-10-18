@@ -546,6 +546,10 @@
   result: MagazineBoxCaselessRifle
   materials:
     Steel: 720
+    # Pirate Edit VVV
+    Plastic: 180
+    Glass: 180
+    # Pirate Edit ^^^
 
 - type: latheRecipe
   parent: BaseEmptyAmmoRecipe
@@ -676,6 +680,10 @@
   result: MagazineCaselessRifle
   materials:
     Steel: 400
+    # Pirate Edit VVV
+    Plastic: 90
+    Glass: 90
+    # Pirate Edit ^^^
 
 - type: latheRecipe
   parent: BaseAmmoRecipe

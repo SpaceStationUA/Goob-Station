@@ -1,0 +1,55 @@
+- type: entity
+  name: Вулкан-М
+  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  id: WeaponRifleVulcanM
+  description: Компактна гвинтівка компонування "буллпап", втілення надійності класичної платформи у ергономічному корпусі. Менша віддача, вища точність. Використовує гвинтівкові магазини .30 калібру.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/vulcan.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/vulcan.rsi
+  - type: Gun
+    minAngle: 21
+    maxAngle: 32
+    fireRate: 6
+    selectedMode: FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+    availableModes:
+    - FullAuto
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLightRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance

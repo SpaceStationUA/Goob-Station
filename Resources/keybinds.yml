@@ -183,6 +183,12 @@ binds:
 - function: ToggleStanding
   type: State
   key: R
+# Pirate start - port EE togglable under-table crawling
+- function: ToggleCrawlingUnder
+  type: State
+  mod1: Shift
+  key: R
+# Pirate end - port EE togglable under-table crawling
 - function: ResistGrab
   type: State
   key: B

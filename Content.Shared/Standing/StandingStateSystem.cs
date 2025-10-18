@@ -27,6 +27,7 @@
 // if wizden ever does something to this system we're FUCKED
 // regards.
 
+using Content.Goobstation.Common.Standing; // Pirate - port EE allow crawling entities to go under tables
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.Components;

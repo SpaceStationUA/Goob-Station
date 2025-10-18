@@ -117,12 +117,14 @@
   id: GreyJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
+  groupBy: "JumpsuitColor" # Pirate
 
 
 - type: loadout
   id: GreyJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
+  groupBy: "JumpsuitColor" # Pirate
 
 
 # Rainbow
@@ -133,6 +135,7 @@
     proto: GreyTider
   equipment:
     jumpsuit: ClothingUniformColorRainbow
+  groupBy: "JumpsuitColor" # Pirate
 
 # Rainbow Jumpskirt
 - type: loadout
@@ -142,6 +145,7 @@
     proto: GreyTider
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorRainbow
+  groupBy: "JumpsuitColor" # Pirate
 
 # Ancient
 - type: loadout
@@ -151,6 +155,7 @@
     proto: GreyTider
   equipment:
     jumpsuit: ClothingUniformJumpsuitAncient
+  groupBy: "JumpsuitOther" # Pirate
 
 # Neck
 - type: loadout
@@ -202,11 +207,13 @@
   id: BlackShoes
   equipment:
     shoes: ClothingShoesColorBlack
+  groupBy: "ShoesColor"
 
 - type: loadout
   id: WinterBoots
   equipment:
     shoes: ClothingShoesBootsWinter
+  groupBy: "ShoesOther"
 
 # goob - colored military jumpsuits
 
@@ -214,90 +221,105 @@
   id: GreyMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorGrey
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: BlackMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorBlack
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: BlueMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorBlue
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: DarkBlueMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorDarkBlue
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: TealMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorTeal
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: GreenMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorGreen
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: DarkGreenMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorDarkGreen
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: OrangeMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorOrange
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: PinkMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorPink
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: RedMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorRed
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: YellowMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorYellow
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: PurpleMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorPurple
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: LightBrownMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorLightBrown
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: BrownMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorBrown
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 - type: loadout
   id: MaroonMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryColorMaroon
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 
 
 
@@ -307,4 +329,5 @@
   id: ServiceMJ
   equipment:
     jumpsuit: ClothingUniformJumpsuitMilitaryService
+  groupBy: "JumpsuitMilitaryColor" # Pirate
 

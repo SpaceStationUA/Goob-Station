@@ -47,7 +47,7 @@
     impactEffect: BulletImpactEffectRedDisabler
     damage:
       types:
-        Heat: 15 # Slightly more damage than the 17heat from the Captain's Hitscan lasgun - Goobstation: Nerfed to 15 damage, to keep it less powerful than caps Lasgun
+        Heat: 20 # Pirate edit
     soundHit:
       collection: MeatLaserImpact
 

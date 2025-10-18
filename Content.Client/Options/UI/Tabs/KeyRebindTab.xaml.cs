@@ -237,6 +237,7 @@ namespace Content.Client.Options.UI.Tabs
             AddCheckBox("ui-options-hotkey-default-walk", _cfg.GetCVar(CCVars.DefaultWalk), HandleDefaultWalk);
             AddButton(ContentKeyFunctions.Sprint);
             AddButton(ContentKeyFunctions.ToggleStanding);
+            AddButton(ContentKeyFunctions.ToggleCrawlingUnder); // Pirate - port EE togglable under-table crawling
             AddCheckBox("ui-options-function-auto-get-up", _cfg.GetCVar(GoobCVars.AutoGetUp), HandleToggleAutoGetUp); // WD EDIT
             InitToggleWalk();
 

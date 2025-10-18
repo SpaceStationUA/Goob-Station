@@ -1,0 +1,127 @@
+## Інженер
+# Інструменти
+- type: loadout
+  id: LoadoutEngineerMedkitOxygenFilled
+  storage:
+    back:
+    - MedkitOxygenFilled
+
+- type: loadout
+  id: LoadoutEngineerPowerDrill
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorEngineering
+  storage:
+    back:
+    - PowerDrill
+
+- type: loadout
+  id: LoadoutEngineerWelderIndustrial
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorEngineering
+  storage:
+    back:
+    - WelderIndustrial
+
+# Матеріали
+- type: loadout
+  id: LoadoutEngineerMaterialWoodPlank
+  storage:
+    back:
+    - MaterialWoodPlank
+  groupBy: "MaterialSheet"
+
+- type: loadout
+  id: LoadoutEngineerSheetGlass
+  storage:
+    back:
+    - SheetGlass
+  groupBy: "MaterialSheet"
+
+- type: loadout
+  id: LoadoutEngineerSheetPGlass
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorEngineering
+  storage:
+    back:
+    - SheetPGlass
+  groupBy: "MaterialSheet"
+
+- type: loadout
+  id: LoadoutEngineerSheetUGlass
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorEngineering
+  storage:
+    back:
+    - SheetUGlass
+  groupBy: "MaterialSheet"
+
+- type: loadout
+  id: LoadoutEngineerSheetPlasteel
+  storage:
+    back:
+    - SheetPlasteel
+  groupBy: "MaterialSheet"
+
+- type: loadout
+  id: LoadoutEngineerSheetPlastic
+  storage:
+    back:
+    - SheetPlastic
+  groupBy: "MaterialSheet"
+
+- type: loadout
+  id: LoadoutEngineerSheetSteel
+  storage:
+    back:
+    - SheetSteel
+  groupBy: "MaterialSheet"
+
+
+
+## Тех.Асистент
+# Інструменти
+- type: loadout
+  id: LoadoutEngineerBoxInflatable
+  storage:
+    back:
+    - BoxInflatable
+
+# Матеріали
+- type: loadout
+  id: LoadoutEngineerMaterialWoodPlank10
+  storage:
+    back:
+    - MaterialWoodPlank10
+  groupBy: "MaterialSheet10"
+
+- type: loadout
+  id: LoadoutEngineerSheetGlass10
+  storage:
+    back:
+    - SheetGlass10
+  groupBy: "MaterialSheet10"
+
+- type: loadout
+  id: LoadoutEngineerSheetPlasteel10
+  storage:
+    back:
+    - SheetPlasteel10
+  groupBy: "MaterialSheet10"
+
+- type: loadout
+  id: LoadoutEngineerSheetPlastic10
+  storage:
+    back:
+    - SheetPlastic10
+  groupBy: "MaterialSheet10"
+
+- type: loadout
+  id: LoadoutEngineerSheetSteel10
+  storage:
+    back:
+    - SheetSteel10
+  groupBy: "MaterialSheet10"

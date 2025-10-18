@@ -122,10 +122,6 @@
     convertTo: FloorCosmicDecay
     # PIRATE START
   - type: Drain
-  - type: SolutionContainerVisuals
-    maxFillLevels: 1
-    fillBaseName: fill-
-    solutionName: drainBuffer
   - type: SolutionContainerManager
     solutions:
       drainBuffer:

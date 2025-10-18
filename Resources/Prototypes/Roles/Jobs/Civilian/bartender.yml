@@ -90,7 +90,7 @@
 - type: startingGear
   id: BartenderGear
   equipment:
-    shoes: ClothingShoesColorBlack
+    #shoes: ClothingShoesColorBlack # Pirate moved to wardrobe
     id: BartenderPDA
     ears: ClothingHeadsetService
   #storage:

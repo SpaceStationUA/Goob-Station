@@ -190,7 +190,7 @@
   storage:
     back:
     - Flash
-    - TelescopicBaton # Goobstation
+    #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
     # - StationCharter
 
 - type: chameleonOutfit

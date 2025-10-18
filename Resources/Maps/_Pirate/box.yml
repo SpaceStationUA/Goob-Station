@@ -4,7 +4,7 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 10/03/2025 18:43:44
+  time: 10/13/2025 16:42:35
   entityCount: 29090
 maps:
 - 1
@@ -8572,7 +8572,7 @@ entities:
             0: 45298
           3,-13:
             0: 61713
-            3: 204
+            2: 204
           4,-12:
             0: 65535
           4,-11:
@@ -8581,7 +8581,7 @@ entities:
             0: 53744
           4,-13:
             0: 64716
-            3: 17
+            2: 17
           5,-12:
             0: 30583
           5,-11:
@@ -8592,31 +8592,31 @@ entities:
             0: 30583
           6,-12:
             1: 4369
-            2: 204
-            3: 49152
+            3: 204
+            2: 49152
           6,-11:
             1: 61713
-            3: 204
+            2: 204
           6,-10:
             0: 29424
           6,-13:
             1: 4369
-            2: 49152
-            3: 204
+            3: 49152
+            2: 204
           7,-12:
-            2: 17
-            3: 4096
+            3: 17
+            2: 4096
             0: 136
           7,-11:
-            3: 17
+            2: 17
             1: 4096
             0: 57344
           7,-10:
             0: 61680
           7,-13:
-            2: 4096
+            3: 4096
             0: 34952
-            3: 17
+            2: 17
           8,-12:
             0: 7644
           8,-11:
@@ -9616,7 +9616,7 @@ entities:
           3,-14:
             0: 4415
             1: 192
-            3: 49152
+            2: 49152
           3,-17:
             6: 30576
           4,-16:
@@ -9627,7 +9627,7 @@ entities:
           4,-14:
             0: 52463
             1: 16
-            3: 4096
+            2: 4096
           8,-13:
             0: 56718
           9,-12:
@@ -9700,12 +9700,12 @@ entities:
           7,-15:
             0: 34952
             1: 50
-            3: 4096
+            2: 4096
           8,-14:
             0: 61166
           7,-14:
             0: 34952
-            3: 4113
+            2: 4113
           9,-16:
             0: 45296
           9,-15:
@@ -10257,10 +10257,10 @@ entities:
             0: 30583
           6,-15:
             1: 4592
-            3: 49152
+            2: 49152
           6,-14:
             1: 4369
-            3: 49356
+            2: 49356
           -4,-20:
             0: 61440
           -4,-19:
@@ -10802,7 +10802,7 @@ entities:
           - 0
           - 0
           - 0
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -10821,7 +10821,7 @@ entities:
           - 0
           - 0
           - 0
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -12795,7 +12795,7 @@ entities:
       pos: -13.5,18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -32359.37
+      secondsUntilStateChange: -32401.74
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14691,7 +14691,7 @@ entities:
       pos: 41.5,11.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -132967.6
+      secondsUntilStateChange: -133009.97
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -76101,7 +76101,7 @@ entities:
       pos: 28.5,-5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -71531.54
+      secondsUntilStateChange: -71573.914
       state: Opening
   - uid: 11643
     components:
@@ -90140,7 +90140,7 @@ entities:
       pos: -34.5,-14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -206702.16
+      secondsUntilStateChange: -206744.53
       state: Closing
   - uid: 13875
     components:
@@ -90586,7 +90586,7 @@ entities:
       pos: -4.5,-71.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -198449.89
+      secondsUntilStateChange: -198492.27
       state: Closing
   - uid: 13961
     components:
@@ -153203,6 +153203,18 @@ entities:
     - type: Transform
       pos: 12.5,-57.5
       parent: 2
+- proto: SpawnMobDrone
+  entities:
+  - uid: 13830
+    components:
+    - type: Transform
+      pos: 62.5,-22.5
+      parent: 2
+  - uid: 20070
+    components:
+    - type: Transform
+      pos: 62.5,-20.5
+      parent: 2
 - proto: SpawnMobFoxRenault
   entities:
   - uid: 23300
@@ -161374,20 +161386,10 @@ entities:
       parent: 2
 - proto: TurnstileGenpopEnter
   entities:
-  - uid: 13830
-    components:
-    - type: Transform
-      pos: 2.5,22.5
-      parent: 2
   - uid: 18899
     components:
     - type: Transform
       pos: -2.5,25.5
-      parent: 2
-  - uid: 20070
-    components:
-    - type: Transform
-      pos: 2.5,25.5
       parent: 2
   - uid: 22114
     components:
@@ -161401,6 +161403,16 @@ entities:
       parent: 2
 - proto: TurnstileGenpopLeave
   entities:
+  - uid: 9432
+    components:
+    - type: Transform
+      pos: 2.5,25.5
+      parent: 2
+  - uid: 9433
+    components:
+    - type: Transform
+      pos: 2.5,22.5
+      parent: 2
   - uid: 18898
     components:
     - type: Transform

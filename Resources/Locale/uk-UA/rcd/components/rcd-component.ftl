@@ -56,3 +56,7 @@ rcd-component-piping = Трубопровід
 rcd-component-atmosphericutility = Атмосферні утиліти
 rcd-component-pumps = Насоси та клапани
 rcd-component-vents = Вентиляційні отвори
+rcd-component-deconstruct-target-no-access = У вас немає доступу, щоб деконструювати це!
+rcd-component-deconstruct-target-is-bolted = Болти механізму перешкоджають деконструкції!
+
+# Construction

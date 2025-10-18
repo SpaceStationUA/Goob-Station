@@ -16,6 +16,8 @@
 
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Common.Standing;
+using Content.Shared.ActionBlocker; // Pirate - port EE togglable under-table crawling
+using Content.Shared.CCVar; // Pirate - port EE togglable under-table crawling
 using Content.Shared._Goobstation.Wizard.TimeStop;
 using Content.Shared._Goobstation.Wizard.Traps;
 using Content.Shared._Shitmed.Body.Organ;
@@ -26,6 +28,7 @@ using Content.Shared.Input;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
+using Content.Shared.Popups; // Pirate - port EE togglable under-table crawling
 using Content.Shared.Stunnable;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
@@ -40,11 +43,18 @@ public abstract class SharedLayingDownSystem : EntitySystem
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly INetConfigurationManager _cfg = default!;
+    // Pirate start - port EE togglable under-table crawling
+    [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _speed = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    // Pirate end - port EE togglable under-table crawling
 
     public override void Initialize()
     {
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ToggleStanding, InputCmdHandler.FromDelegate(ToggleStanding))
+            .Bind(ContentKeyFunctions.ToggleCrawlingUnder, InputCmdHandler.FromDelegate(HandleCrawlUnderRequest, handle: false)) // Pirate - port EE togglable under-table crawling
             .Register<SharedLayingDownSystem>();
 
         SubscribeNetworkEvent<ChangeLayingDownEvent>(OnChangeState);
@@ -71,6 +81,33 @@ public abstract class SharedLayingDownSystem : EntitySystem
 
         RaiseNetworkEvent(new ChangeLayingDownEvent());
     }
+
+    // Pirate start- port EE togglable under-table crawling
+    private void HandleCrawlUnderRequest(ICommonSession? session)
+    {
+        if (session == null
+            || session.AttachedEntity is not { } uid
+            || !TryComp<StandingStateComponent>(uid, out var standingState)
+            || !TryComp<LayingDownComponent>(uid, out var layingDown)
+            || !_actionBlocker.CanInteract(uid, null))
+            return;
+
+        var newState = !layingDown.IsCrawlingUnder;
+        if (standingState.CurrentState is StandingState.Standing)
+            newState = false; // If the entity is already standing, this function only serves a fallback method to fix its draw depth
+
+        // Do not allow to begin crawling under if it's disabled in config. We still, however, allow to stop it, as a failsafe.
+        if (newState && !_config.GetCVar(CCVars.CrawlUnderTables))
+        {
+            _popups.PopupEntity(Loc.GetString("crawling-under-tables-disabled-popup"), uid, session);
+            return;
+        }
+
+        layingDown.IsCrawlingUnder = newState;
+        _speed.RefreshMovementSpeedModifiers(uid);
+        Dirty(uid, layingDown);
+    }
+    // Pirate end - port EE togglable under-table crawling
 
     private void OnChangeState(ChangeLayingDownEvent ev, EntitySessionEventArgs args)
     {
@@ -114,12 +151,15 @@ public abstract class SharedLayingDownSystem : EntitySystem
     }
 
     private void OnRefreshMovementSpeed(EntityUid uid, LayingDownComponent component, RefreshMovementSpeedModifiersEvent args)
+    // Pirate - port EE togglable under-table crawling
     {
-        if (_standing.IsDown(uid))
-            args.ModifySpeed(component.SpeedModify, component.SpeedModify, bypassImmunity: true);
-        else
-            args.ModifySpeed(1f, 1f);
+        if (!_standing.IsDown(uid))
+            return;
+
+        var modifier = component.LyingSpeedModifier * (component.IsCrawlingUnder ? component.CrawlingUnderSpeedModifier : 1);
+        args.ModifySpeed(modifier, modifier);
     }
+    // Pirate end - port EE togglable under-table crawling
 
     public bool TryStandUp(EntityUid uid, LayingDownComponent? layingDown = null, StandingStateComponent? standingState = null)
     {
@@ -153,6 +193,7 @@ public abstract class SharedLayingDownSystem : EntitySystem
             return false;
 
         standingState.CurrentState = StandingState.GettingUp;
+        layingDown.IsCrawlingUnder = false; // Pirate - port EE togglable under-table crawling
         return true;
     }
 

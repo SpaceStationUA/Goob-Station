@@ -99,7 +99,7 @@
 - type: startingGear
   id: ChaplainGear
   equipment:
-    shoes: ClothingShoesColorBlack
+    #shoes: ClothingShoesColorBlack # Pirate moved to wardrobe
     id: ChaplainPDA
     ears: ClothingHeadsetService
   storage:
