@@ -3,8 +3,7 @@
   id: TrinketsClothingHeadPaperSack
   storage:
     back:
-    - PlushieEntony
-  groupBy: "ClothingHeadPaperSack"
+    - ClothingHeadPaperSack
 
 # Toys / Іграшки
 - type: loadout
