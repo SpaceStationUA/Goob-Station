@@ -1,5 +1,17 @@
+# Additional accessories / Додаткові аксесуари
+- type: loadout
+  id: ClothingHeadPaperSack
+  storage:
+    back:
+    - ClothingHeadPaperSack
+
 # Toys / Іграшки
 - type: loadout
+  id: PlushieEntony
+  storage:
+    back:
+    - PlushieEntony
+
   id: PlushieEntony
   storage:
     back:
