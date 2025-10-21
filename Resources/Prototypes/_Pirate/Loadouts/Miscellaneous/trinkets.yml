@@ -1,17 +1,13 @@
-# Additional accessories / Додаткові аксесуари
+# Additional accessories / Додаткові аксесуари 
 - type: loadout
-  id: ClothingHeadPaperSack
-  storage:
-    back:
-    - ClothingHeadPaperSack
-
-# Toys / Іграшки
-- type: loadout
-  id: PlushieEntony
+  id: TrinketsClothingHeadPaperSack
   storage:
     back:
     - PlushieEntony
+  groupBy: "ClothingHeadPaperSack"
 
+# Toys / Іграшки
+- type: loadout
   id: PlushieEntony
   storage:
     back:
