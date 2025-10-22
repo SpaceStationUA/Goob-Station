@@ -32,7 +32,7 @@ public sealed class ColorTintOverlay : Overlay
     public ColorTintOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _shader = _prototype.Index<ShaderPrototype>("ColorTint").InstanceUnique();
+        _shader = _prototype.Index<ShaderPrototype>("PirateColorTint").InstanceUnique();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)

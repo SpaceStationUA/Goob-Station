@@ -57,7 +57,7 @@ heretic-ritual-side-shark = Палюча Акула
 heretic-ritual-side-cloak = Плащ Порожнечі
 heretic-ritual-side-ghoul = Розколотий Ритуал
 heretic-ritual-side-armor = Ритуал Зброяра
-heretic-ritual-side-water = Ритуал Священника
+heretic-ritual-side-water = Ритуал священика
 heretic-ritual-side-knife = Різьбярський Ніж
 heretic-ritual-side-crucible = Пащекуватий Тигель
 heretic-ritual-side-coin = Потойбічна Монета
@@ -73,8 +73,10 @@ heretic-ritual-flesh-blade = Принцип Голоду
 heretic-ritual-flesh-ghoul = Недосконалий Ритуал
 heretic-ritual-flesh-prophet = Сирий Ритуал
 heretic-ritual-flesh-stalker = Самотній Ритуал
-heretic-ritual-flesh-ascend = Останній Гімн Священника
+heretic-ritual-flesh-ascend = Останній гімн священика
 
 ## шлях порожнечі
 heretic-ritual-void-blade = Проблиск Зими
 heretic-ritual-void-ascend = Вальс наприкінці Часу
+
+heretic-ritual-fail-sacrifice-cosmos = Недостатньо трупів із зоряною міткою.

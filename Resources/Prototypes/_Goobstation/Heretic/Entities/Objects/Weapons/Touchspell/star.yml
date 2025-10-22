@@ -1,0 +1,17 @@
+- type: entity
+  id: TouchSpellStar
+  name: "зірковий дотик"
+  description: "Зловісна аура, що спотворює потік реальності навколо себе. З'єднує людей із зірковою міткою з вами космічним променем і змушує їх заснути на 8 секунд після достатньо довгого з'єднання. Змушує людей без зіркової мітки отримати її."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Unremoveable
+  - type: Item
+  - type: UnholyItem
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Entities/star_touch.rsi
+    state: icon
+  - type: PointLight
+    enabled: true
+    radius: 2
+    energy: 1
+    color: "#4E2952"

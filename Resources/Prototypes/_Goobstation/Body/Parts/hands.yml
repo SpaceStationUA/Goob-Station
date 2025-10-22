@@ -8,7 +8,7 @@
 
 - type: entity
   id: LeftHandDwarf
-  name: "left dwarf hand"
+  name: "ліва рука дварфа"
   parent: [PartHuman, BaseLeftHand]
   components:
   - type: Sprite
@@ -17,7 +17,7 @@
 
 - type: entity
   id: RightHandDwarf
-  name: "right dwarf hand"
+  name: "права рука дварфа"
   parent: [PartHuman, BaseRightHand]
   components:
   - type: Sprite
@@ -26,7 +26,7 @@
 
 - type: entity
   id: LeftHandBananamen
-  name: "left bananamen hand"
+  name: "ліва рука бананолюдини"
   parent: [PartHuman, BaseLeftHand]
   components:
   - type: Sprite
@@ -35,9 +35,73 @@
 
 - type: entity
   id: RightHandBananamen
-  name: "right bananamen hand"
+  name: "права рука бананолюдини"
   parent: [PartHuman, BaseRightHand]
   components:
   - type: Sprite
     sprite: Mobs/Species/Human/parts.rsi
     state: "r_hand"
+
+- type: entity
+  id: SmartlinkLeftHand
+  parent: LeftHandCybernetic
+  name: "ліва рука зі SmartLink"
+  description: "Кібернетична ліва рука, що дозволяє власнику стріляти \"розумними\" кулями з будь-якої зброї."
+  components:
+  - type: Sprite
+    sprite: _EinsteinEngines/Mobs/Species/Cybernetics/morpheus/morpheus_main.rsi
+  - type: Icon
+    sprite: _EinsteinEngines/Mobs/Species/Cybernetics/morpheus/morpheus_main.rsi
+  - type: BodyPartAppearance
+    color: White
+    iD: MobCyberneticBishopLHand
+    visLayers: LHand
+  - type: SmartLinkArm
+
+- type: entity
+  id: SmartlinkRightHand
+  parent: RightHandCybernetic
+  name: "права рука зі SmartLink"
+  description: "Кібернетична права рука, що дозволяє власнику стріляти \"розумними\" кулями з будь-якої зброї."
+  components:
+  - type: Sprite
+    sprite: _EinsteinEngines/Mobs/Species/Cybernetics/morpheus/morpheus_main.rsi
+  - type: Icon
+    sprite: _EinsteinEngines/Mobs/Species/Cybernetics/morpheus/morpheus_main.rsi
+  - type: BodyPartAppearance
+    color: White
+    iD: MobCyberneticBishopRHand
+    visLayers: RHand
+  - type: SmartLinkArm
+
+- type: entity
+  id: RecoilAbsorberLeftHand
+  parent: LeftHandCybernetic
+  name: "ліва рука з поглиначем віддачі"
+  description: "Кібернетична ліва рука, яка поглинає більшу частину віддачі від стрілецької зброї."
+  components:
+  - type: Sprite
+    sprite: _EinsteinEngines/Mobs/Species/Cybernetics/wardtakahashi/wardtakahashi_main.rsi
+  - type: Icon
+    sprite: _EinsteinEngines/Mobs/Species/Cybernetics/wardtakahashi/wardtakahashi_main.rsi
+  - type: BodyPartAppearance
+    color: White
+    iD: MobCyberneticBishopLHand
+    visLayers: LHand
+  - type: RecoilAbsorberArm
+
+- type: entity
+  id: RecoilAbsorberRightHand
+  parent: RightHandCybernetic
+  name: "права рука з поглиначем віддачі"
+  description: "Кібернетична права рука, яка поглинає більшу частину віддачі від стрілецької зброї."
+  components:
+  - type: Sprite
+    sprite: _EinsteinEngines/Mobs/Species/Cybernetics/wardtakahashi/wardtakahashi_main.rsi
+  - type: Icon
+    sprite: _EinsteinEngines/Mobs/Species/Cybernetics/wardtakahashi/wardtakahashi_main.rsi
+  - type: BodyPartAppearance
+    color: White
+    iD: MobCyberneticBishopRHand
+    visLayers: RHand
+  - type: RecoilAbsorberArm

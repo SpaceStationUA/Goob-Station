@@ -6,7 +6,7 @@
 - type: entity
   parent: BaseStructure
   id: BaseAutosurgeon
-  description: A single-use autosurgeon for replacing or upgrading your parts with cybernetic implants. Rip that station apart and make it a part of you.
+  description: "Одноразовий автохірург для заміни або модернізації ваших частин кібернетичними імплантами. Розберіть цю станцію і зробіть її частиною себе."
   abstract: true
   components:
   - type: Sprite
@@ -15,7 +15,6 @@
     noRot: true
   - type: Item
     size: Huge
-  - type: AutoSurgeon
   - type: ItemToggle
     onUse: false
   - type: DoAfter
@@ -41,8 +40,32 @@
   - type: Pullable
 
 - type: entity
-  parent: [BaseAutosurgeon, BaseSyndicateContraband]
-  id: BaseAutosurgeonSyndicate
+  parent: BaseAutosurgeon
+  id: BaseAutosurgeonSingle
+  description: "Одноразовий автохірург для заміни або модернізації ваших частин кібернетичними імплантами. Розберіть цю станцію і зробіть її частиною себе."
+  abstract: true
+  components:
+  - type: AutoSurgeon
+
+- type: entity
+  parent: BaseAutosurgeon
+  id: BaseAutosurgeonMultiple
+  description: "Одноразовий автохірург для заміни або модернізації ваших частин кібернетичними імплантами. Розберіть цю станцію і зробіть її частиною себе."
+  abstract: true
+  components:
+  - type: AutoSurgeonMultiple
+
+- type: entity
+  parent: [BaseAutosurgeonSingle, BaseSyndicateContraband]
+  id: BaseAutosurgeonSyndicateSingle
+  abstract: true
+  components:
+  - type: Sprite
+    state: icon-syndie
+
+- type: entity
+  parent: [BaseAutosurgeonMultiple, BaseSyndicateContraband]
+  id: BaseAutosurgeonSyndicateMultiple
   abstract: true
   components:
   - type: Sprite
@@ -51,18 +74,18 @@
 # CREW (currently not used, use for testing purposes admeme etc.)
 
 - type: entity
-  parent: BaseAutosurgeon
+  parent: BaseAutosurgeonSingle
   id: AutosurgeonRightSpeedLeg
-  name: autosurgeon (right S.P.E.E.D leg)
+  name: "автохірург (права нога S.P.E.E.D)"
   components:
   - type: AutoSurgeon
     targetBodyPart: Groin
     newPartProto: SpeedRightLeg
 
 - type: entity
-  parent: BaseAutosurgeon
+  parent: BaseAutosurgeonSingle
   id: AutosurgeonLeftSpeedLeg
-  name: autosurgeon (left S.P.E.E.D leg)
+  name: "автохірург (ліва нога S.P.E.E.D)"
   components:
   - type: AutoSurgeon
     targetBodyPart: Groin
@@ -71,9 +94,9 @@
 # SYNDICATE
 
 - type: entity
-  parent: BaseAutosurgeonSyndicate
+  parent: BaseAutosurgeonSyndicateSingle
   id: AutosurgeonRightMantisBlade
-  name: syndicate autosurgeon (right mantis blade)
+  name: "автохірург синдикату (праве лезо-богомол)"
   components:
   - type: AutoSurgeon
     targetBodyPart: Arm
@@ -83,9 +106,9 @@
       actionProto: ActionToggleRightMantisBlade
 
 - type: entity
-  parent: BaseAutosurgeonSyndicate
+  parent: BaseAutosurgeonSyndicateSingle
   id: AutosurgeonLeftMantisBlade
-  name: syndicate autosurgeon (left mantis blade)
+  name: "автохірург синдикату (ліве лезо-богомол)"
   components:
   - type: AutoSurgeon
     targetBodyPart: Arm
@@ -95,11 +118,77 @@
       actionProto: ActionToggleLeftMantisBlade
 
 - type: entity
-  parent: BaseAutosurgeonSyndicate
+  parent: BaseAutosurgeonSyndicateSingle
   id: AutosurgeonSandevistan
-  name: syndicate autosurgeon (sandevistan)
+  name: "автохірург синдикату (сандевістан)"
   components:
   - type: AutoSurgeon
     targetBodyPart: Chest
     targetOrgan: Skibidi
     newPartProto: OrganHeartSandevistan
+
+- type: entity
+  parent: BaseAutosurgeonSyndicateMultiple
+  id: AutosurgeonSmartLink
+  name: "автохірург синдикату (руки зі smartlink)"
+  components:
+  - type: AutoSurgeonMultiple
+    entries:
+    - targetBodyPart: Arm
+      targetBodyPartSymmetry: Right
+      newPartProto: SmartlinkRightHand
+    - targetBodyPart: Arm
+      targetBodyPartSymmetry: Left
+      newPartProto: SmartlinkLeftHand
+
+    - targetBodyPart: Arm
+      targetBodyPartSymmetry: Right
+      componentsToPart:
+      - type: SmartLinkArm
+    - targetBodyPart: Arm
+      targetBodyPartSymmetry: Left
+      componentsToPart:
+      - type: SmartLinkArm
+
+- type: entity
+  parent: BaseAutosurgeonSyndicateMultiple
+  id: AutosurgeonRecoilAbsorber
+  name: "автохірург синдикату (руки з поглиначем віддачі)"
+  components:
+  - type: AutoSurgeonMultiple
+    entries:
+    - targetBodyPart: Arm
+      targetBodyPartSymmetry: Right
+      newPartProto: RecoilAbsorberRightHand
+    - targetBodyPart: Arm
+      targetBodyPartSymmetry: Left
+      newPartProto: RecoilAbsorberLeftHand
+
+    - targetBodyPart: Arm
+      targetBodyPartSymmetry: Right
+      componentsToPart:
+      - type: RecoilAbsorberArm
+    - targetBodyPart: Arm
+      targetBodyPartSymmetry: Left
+      componentsToPart:
+      - type: RecoilAbsorberArm
+
+- type: entity
+  parent: BaseAutosurgeonSyndicateSingle
+  id: AutosurgeonBerserker
+  name: "автохірург синдикату (серце берсерка)"
+  components:
+  - type: AutoSurgeon
+    targetBodyPart: Chest
+    targetOrgan: heart
+    newPartProto: SyndicateBerserkerHeart
+
+- type: entity
+  parent: BaseAutosurgeonSyndicateSingle
+  id: AutosurgeonJumpstarter
+  name: "автохірург синдикату (серце-дефібрилятор)"
+  components:
+  - type: AutoSurgeon
+    targetBodyPart: Chest
+    targetOrgan: heart
+    newPartProto: SyndicateJumpstarterHeart

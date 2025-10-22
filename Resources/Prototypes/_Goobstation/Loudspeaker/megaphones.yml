@@ -1,0 +1,66 @@
+- type: entity
+  parent: BaseItem
+  id: Megaphone
+  name: "мегафон"
+  description: "Тестування!"
+  components:
+  - type: Loudspeaker
+    isActive: true
+    worksInHand: true
+    affectChat: true
+    speechSounds: Loudspeaker
+  - type: Sprite
+    sprite: _Goobstation/Objects/Tools/megaphones/generic.rsi
+    state: icon
+  - type: Item
+    sprite: _Goobstation/Objects/Tools/megaphones/generic.rsi
+
+- type: entity
+  parent: Megaphone
+  id: CargoMegaphone
+  name: "вантажний мегафон"
+  description: "Заробляй гроші в тиші, а шум нехай створює метушня. Або щось типу того."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Tools/megaphones/cargo.rsi
+    state: icon
+  - type: Item
+    sprite: _Goobstation/Objects/Tools/megaphones/cargo.rsi
+
+- type: entity
+  parent: Megaphone
+  id: CommandMegaphone
+  name: "командний мегафон"
+  description: "Перетворіть поверховий авторитет на гучний поверховий авторитет."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Tools/megaphones/command.rsi
+    state: icon
+  - type: Item
+    sprite: _Goobstation/Objects/Tools/megaphones/command.rsi
+
+- type: entity
+  parent: Megaphone
+  id: SecurityMegaphone
+  name: "мегафон служби безпеки"
+  description: "Використовуйте, щоб повідомити підозрюваним, що ви за ними полюєте. Або щоб кричати на в'язнів, які вам не подобаються."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Tools/megaphones/security.rsi
+    state: icon
+  - type: Item
+    sprite: _Goobstation/Objects/Tools/megaphones/security.rsi
+
+- type: entity
+  parent: Megaphone
+  id: ClownMegaphone
+  name: "мегафон клоуна"
+  description: "Комік повинен зробити так, щоб його голос почули."
+  components:
+  - type: Loudspeaker
+    affectRadio: true # :trollface:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Tools/megaphones/clown.rsi
+    state: icon
+  - type: Item
+    sprite: _Goobstation/Objects/Tools/megaphones/clown.rsi

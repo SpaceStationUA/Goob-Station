@@ -48,7 +48,7 @@ heretic-livingheart-onstation = Воно {$state}, {$direction}!
 heretic-livingheart-unknown = Воно... не в цій площині реальності.
 heretic-livingheart-faraway = Воно {$state}, надзвичайно далеко!
 
-## мова
+## зорегляд
 heretic-speech-mansusgrasp = Р'Ч Т'Х ТР'ТХ!
 
 heretic-speech-ash-jaunt = ЕШ'Н П'ССГ'
@@ -76,3 +76,20 @@ heretic-speech-mansuslink = ПР'Н'З'ТЬ Р'З'М!
 heretic-speech-realignment = П'ВСТ'НЬ!
 heretic-speech-fuckoff = ЙД'ТЬ Г'ТЬ!!
 heretic-speech-ice-spear = ВН'З З КР'Г!
+
+heretic-cosmic-rune-fail-star-mark = Заблоковано зоряною міткою!
+heretic-cosmic-rune-fail-unlinked = Немає пов'язаної руни!
+heretic-cosmic-rune-fail-range = Недостатньо близько!
+heretic-stargaze-obliterate-other = Ви бачите, як {$uid} охоплює пекучий гнів космосу. На мить ви бачите, як їхній силует корчиться в агонії, перш ніж розпастися на атоми.
+heretic-stargaze-obliterate-user = СИЛА САМОГО КОСМОСУ ВИЛИВАЄТЬСЯ НА ВАС. ХВИЛІ СПЕКИ ВПИВАЮТЬСЯ У ВАШЕ ТІЛО, РОЗРИВАЮЧИ ЙОГО НА ШМАТКИ. ВАШЕ ПОВНЕ ЗНИЩЕННЯ ЗАЙМАЄ ЛИШЕ МИТЬ, ПЕРШ НІЖ ВИ ПОВЕРНЕТЕСЯ ДО ТОГО, ЧИМ ЗАВЖДИ БУЛИ. ЛИШЕ ЧАСТИНКИ ПИЛУ...
+heretic-stargazer-reset-consciousness = ЦЯ ДІЯ НЕЗВОРОТНО ЗМІНИТЬ РОЗУМ ВАШОГО ЗОРЕГЛЯДА! Використайте ще раз для підтвердження.
+heretic-stargazer-consciousness-reset-fail = Ваш запит на зміну особистості зорегляда, схоже, було відхилено... Здається, поки що доведеться змиритися.
+heretic-stargazer-consciousness-reset-target = Ваш прикликач перезавантажив вас, і ваше тіло захопив привид. Схоже, вони були незадоволені вашою роботою.
+heretic-stargazer-consciousness-reset-user = Розум зорегляда змінився, щоб краще вам підходити.
+
+## мова
+heretic-speech-cosmic-rune = З'Р'Н' Р'Н'!
+heretic-speech-star-touch = З'Р'Н' 'Н'РГ'Я!!
+heretic-speech-star-blast = ГН'ВН' З'Р'!!
+heretic-speech-cosmic-expansion = К'СМ'С Р'ЗШ'Р'С'!
+heretic-speech-stargaze = Ф'РМ'Й Б'Т'Г

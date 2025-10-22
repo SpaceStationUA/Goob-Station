@@ -1,0 +1,136 @@
+- type: entity
+  id: ActionHereticCosmicRune
+  name: "Космічна руна"
+  description: "Створює космічну руну на вашій позиції, одночасно може існувати лише дві. Активація однієї руни переносить вас до іншої. Будь-хто з зірковою міткою переноситься разом з вами."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    checkCanInteract: false
+    useDelay: 15
+    itemIconStyle: NoItem
+    sound:
+      path: /Audio/Magic/forcewall.ogg
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: cosmic_rune
+  - type: InstantAction
+    event: !type:EventHereticCosmicRune
+  - type: HereticAction
+    requireMagicItem: true
+    messageLoc: heretic-speech-cosmic-rune
+  - type: HereticCosmicRuneAction
+
+- type: entity
+  id: ActionHereticStarTouch
+  name: "Зірковий дотик"
+  description: "Можна використовувати для накладання зіркової мітки на ціль. Якщо ваша жертва вже позначена зіркою, ви прив'язуєтеся до неї космічним променем. Якщо зв'язок не розривається протягом 8 секунд, вона засне і буде телепортована до вас. Зірковий дотик також може видаляти Космічні Руни або телепортувати вас до вашого Зорегляда, якщо використовувати його в руці."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 1
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: star_touch
+  - type: InstantAction
+    event: !type:EventHereticStarTouch
+  - type: HereticAction
+    requireMagicItem: true
+
+- type: entity
+  id: ActionHereticStarBlast
+  name: "Зоряний вибух"
+  description: "Це заклинання випускає нестримний диск з космічною енергією в ціль, поширюючи зіркову мітку. При повторному застосуванні ви телепортуєтеся до диска, а з диска та від чаклуна генеруватимуться космічні поля, затягуючи в них найближчих язичників."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    checkCanInteract: false
+    useDelay: 1
+    itemIconStyle: NoItem
+    sound:
+      path: /Audio/_Goobstation/Heretic/cosmic_energy.ogg
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: star_blast
+  - type: TargetAction
+    range: 0
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:EventHereticStarBlast
+  - type: HereticAction
+    requireMagicItem: true
+    messageLoc: heretic-speech-star-blast
+  - type: StarBlastAction
+
+- type: entity
+  id: ActionHereticCosmicExpansion
+  name: "Космічне розширення"
+  description: "Це заклинання створює домен космічних полів розміром 5x5. Істоти на відстані до 7 клітинок також отримають зіркову мітку."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    checkCanInteract: false
+    useDelay: 15
+    itemIconStyle: NoItem
+    sound:
+      path: /Audio/_Goobstation/Heretic/cosmic_expansion.ogg
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: cosmic_domain
+  - type: InstantAction
+    event: !type:EventHereticCosmicExpansion
+  - type: HereticAction
+    requireMagicItem: true
+    messageLoc: heretic-speech-cosmic-expansion
+
+- type: entity
+  id: ActionStarGaze
+  name: "Погляд зірок"
+  description: "Створює потужний смертоносний промінь, що знищує все на своєму шляху. Має власне гравітаційне тяжіння, засмоктуючи нових жертв."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    checkCanInteract: false
+    useDelay: 30
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: gazer_beam_charge
+  - type: InstantAction
+    event: !type:StarGazeEvent
+  - type: HereticAction
+    messageLoc: heretic-speech-stargaze
+
+- type: entity
+  id: ActionResetStarGazerConsciousness
+  name: "Скинути свідомість Зорегляда"
+  description: "Замінює розум вашого прислужника розумом іншого привида."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    checkCanInteract: false
+    useDelay: 30
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: stargazer
+  - type: InstantAction
+    event: !type:ResetStarGazerConsciousnessEvent
+  - type: ConfirmableAction
+    popup: heretic-stargazer-reset-consciousness
+
+- type: entity
+  id: ActionStarGazerSeekMaster
+  name: "Шукати господаря"
+  description: "Телепортує вас до вашого господаря."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    checkCanInteract: false
+    useDelay: 5
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: stargazer
+  - type: InstantAction
+    event: !type:StarGazerSeekMasterEvent

@@ -6,8 +6,8 @@
 - type: entity
   parent: [ OrganHumanHeart, BaseSyndicateContraband ]
   id: OrganHeartSandevistan
-  name: Sandevistan
-  description: Illegal cyberware that replaces the user's heart and allows them to greatly increase their speed for the cost of the endurance.
+  name: "Сандевістан"
+  description: "Незаконне кібернетичне програмне забезпечення, яке замінює серце користувача і дозволяє йому значно збільшити свою швидкість ціною витривалості."
   components:
   - type: Cybernetics
   - type: Sprite
@@ -17,3 +17,35 @@
   - type: Organ
     onAdd:
     - type: SandevistanUser
+
+- type: entity
+  parent: [OrganHumanHeart, BaseSyndicateContraband]
+  id: SyndicateBerserkerHeart
+  name: "серце берсерка"
+  description: "Бойове серцево-судинне ядро нового покоління, що дозволяє користувачеві входити в стан берсерка, значно збільшуючи швидкість і рефлекси на короткий час за рахунок витривалості та деякої больової стійкості. Суворо заборонено."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/berserker_heart.rsi
+    state: icon
+    scale: 0.5, 0.5
+  - type: OrganActions
+    actions:
+    - ActionActivateBerserkerImplant
+
+- type: entity
+  parent: [OrganHumanHeart, BaseSyndicateContraband]
+  id: SyndicateJumpstarterHeart
+  name: "серце-дефібрилятор"
+  description: "Бойове серцево-судинне ядро нового покоління, що впорскує велику кількість омнізину в кров користувача при критичному пораненні, рятуючи його від смерті. Суворо заборонено."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/jumpstarter_heart.rsi
+    state: icon
+    scale: 0.5, 0.5
+  - type: Organ
+    onAdd:
+    - type: InjectOnMobState
+      reagents:
+        Omnizine: 75
+        TranexamicAcid: 5
+        DexalinPlus: 15

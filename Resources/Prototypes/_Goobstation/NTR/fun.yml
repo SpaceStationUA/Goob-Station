@@ -1,7 +1,7 @@
 - type: entity
   id: WaterCoolerGold
-  name: executive water cooler
-  description: Your taxes were spent on this...
+  name: "керівницький кулер з водою"
+  description: "На це пішли ваші податки..."
   parent: WaterCooler
   suffix: full
   components:

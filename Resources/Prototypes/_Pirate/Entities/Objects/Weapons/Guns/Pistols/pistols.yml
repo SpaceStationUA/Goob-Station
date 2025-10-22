@@ -1,8 +1,8 @@
 - type: entity
-  name: mk 32 "Universal"
+  name: "мк 32 \"\"Універсальний\"\"\""
   parent: BaseWeaponPistol
   id: WeaponPistolUniversal
-  description: An expensive and robust pistol with decent offensive capabilities. Uses .45 magnum ammo.
+  description: "Дорогий і надійний пістолет з пристойними наступальними можливостями. Використовує набої калібру .45 магнум."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Pistols/universal.rsi
@@ -47,7 +47,7 @@
       gun_chamber: !type:ContainerSlot
 
 - type: entity
-  name: mk 32 "Universal"
+  name: "мк 32 \"\"Універсальний\"\"\""
   parent: WeaponPistolUniversal
   id: WeaponPistolUniversalEmpty
   suffix: Empty
@@ -72,15 +72,14 @@
           - CartridgeMagnum
 
 - type: entity
-  name: mk 32 "Universal"
+  name: "мк 32 \"\"Універсальний\"\"\""
   parent: WeaponPistolUniversal
   id: WeaponPistolUniversalSecurity
-  description: An expensive and robust pistol with decent offensive capabilities. Uses .45 magnum ammo.
-    The serial number on the handguard marks this gun as belonging to an NT Security Officer.
+  description: "Дорогий і надійний пістолет з пристойними бойовими можливостями. Використовує патрони .45 магнум. Серійний номер на цівці вказує, що ця зброя належить офіцеру служби безпеки NT."
   suffix: Security Loadouts
 
 - type: entity
-  name: mk 32 "Universal"
+  name: "мк 32 \"\"Універсальний\"\"\""
   parent: WeaponPistolUniversal
   id: WeaponPistolUniversalNonLethal
   suffix: Non-lethal
@@ -107,9 +106,8 @@
           - CartridgeMagnum
 
 - type: entity
-  name: mk 32 "Universal"
+  name: "мк 32 \"\"Універсальний\"\"\""
   parent: WeaponPistolUniversalNonLethal
   id: WeaponPistolUniversalSecurityNonLethal
-  description: An expensive and robust pistol with decent offensive capabilities. Uses .45 magnum ammo.
-    The serial number on the handguard marks this gun as belonging to an NT Security Officer.
+  description: "Дорогий і надійний пістолет з пристойними бойовими можливостями. Використовує патрони .45 магнум. Серійний номер на цівці вказує, що ця зброя належить офіцеру служби безпеки NT."
   suffix: Non-lethal, Security Loadouts

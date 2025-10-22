@@ -20,7 +20,7 @@ loadouts-points-limit = Очки: {$count} / {$max}
 
 loadouts-points-restriction = Недостатньо очок
 
-loadouts-count-items-in-group = {$item} та {$count} {$count ->
-[1] інший предмет
-*[other] інших предметів
+loadouts-count-items-in-group = {$item} та ще {$count} {$count ->
+[1] предмет
+*[other] предметів
 }

@@ -9,17 +9,19 @@
 # SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
 # SPDX-FileCopyrightText: 2025 Ilya246 <57039557+Ilya246@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Piras314 <p1r4s@proton.me>
+# SPDX-FileCopyrightText: 2025 Rouden <149893554+Roudenn@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 SX-7 <92227810+SX-7@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
 # SPDX-FileCopyrightText: 2025 SX_7 <sn1.test.preria.2002@gmail.com>
 # SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
+# SPDX-FileCopyrightText: 2025 ThunderBear2006 <bearthunder06@gmail.com>
 # SPDX-FileCopyrightText: 2025 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: lost frontier salvager spawner
+  name: "спавнер сальважера загубленого фронтиру"
   id: LostFrontierSalvagerSpawner
   parent: MarkerBase
   components:
@@ -35,7 +37,7 @@
 
 - type: entity
   id: RandomHumanoidLostFrontierSalvager
-  name: lost salvager ghost role
+  name: "роль привида загубленого сальважера"
   components:
     - type: Sprite
       sprite: Objects/Tools/appraisal-tool.rsi
@@ -60,7 +62,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanRandom
-  name: Urist McHuman
+  name: "Уріст МакЛюдина"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -73,7 +75,7 @@
 - type: entity
   parent: MobDiona
   id: MobDionaRandom
-  name: Urist McPlants
+  name: "Уріст МакРослина"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -86,7 +88,7 @@
 - type: entity
   parent: MobFelinid
   id: MobFelinidRandom
-  name: Urist McFelinid
+  name: "Уріст МакФелінід"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -99,7 +101,7 @@
 - type: entity
   parent: MobTajaran
   id: MobTajaranRandom
-  name: Urist McTajaran
+  name: "Уріст МакТаяран"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -113,7 +115,7 @@
 - type: entity
   parent: MobGingerbread
   id: MobGingerbreadRandom
-  name: Urist McCookie
+  name: "Уріст МакПечиво"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -126,7 +128,7 @@
 - type: entity
   parent: MobMoth
   id: MobMothRandom
-  name: Urist McFluff
+  name: "Уріст МакПухнастик"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -139,7 +141,7 @@
 - type: entity
   parent: MobDwarf
   id: MobDwarfRandom
-  name: Urist McDwarf
+  name: "Уріст МакДварф"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -152,7 +154,7 @@
 - type: entity
   parent: MobHarpy
   id: MobHarpyRandom
-  name: Urist McHarpy
+  name: "Уріст МакГарпія"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -165,7 +167,7 @@
 - type: entity
   parent: MobRodentia
   id: MobRodentiaRandom
-  name: Urist McRat
+  name: "Уріст МакЩур"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -178,7 +180,7 @@
 - type: entity
   parent: MobReptilian
   id: MobReptilianRandom
-  name: Urist McScales
+  name: "Уріст МакЛускатий"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -189,7 +191,7 @@
 - type: entity
   parent: MobVulpkanin
   id: MobVulpkaninRandom
-  name: Urist McVulp
+  name: "Уріст МакВулп"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -202,7 +204,7 @@
 - type: entity
   parent: MobSlimePerson
   id: MobSlimePersonRandom
-  name: Urist McSlime
+  name: "Уріст МакСлайм"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -215,7 +217,7 @@
 - type: entity
   parent: MobYowie
   id: MobYowieRandom
-  name: Urist McYow
+  name: "Уріст МакЙов"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -226,7 +228,7 @@
 - type: entity
   parent: MobVox
   id: MobVoxRandom
-  name: Uristiti McVox
+  name: "Урістіті МакВокс"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -237,7 +239,7 @@
 - type: entity
   parent: MobShadowkin
   id: MobShadowkinRandom
-  name: Urist McShadowkin
+  name: "Уріст МакТінелюд"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
@@ -249,10 +251,325 @@
 - type: entity
   parent: MobChitinid
   id: MobChitinidRandom
-  name: Urist McAnt
+  name: "Уріст МакМураха"
   suffix: Random Appearance
   components:
   - type: RandomHumanoidAppearance
   - type: RandomMetadata
     nameSegments:
     - NamesChitinidFirstMale
+
+### No hour requirement ERT roles.
+
+## Death Squad
+
+- type: entity
+  id: RandomHumanoidSpawnerDeathSquadNoReq
+  parent: RandomHumanoidSpawnerDeathSquad
+  name: "Лакей Смертного Загону"
+  suffix: ERTRole, Death Squad, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: DeathSquadNoReq
+
+- type: randomHumanoidSettings
+  id: DeathSquadNoReq
+  parent: DeathSquad # Goobstation
+  components:
+    - type: GhostRole
+      name: ghost-role-information-Death-Squad-name
+      description: ghost-role-information-Death-Squad-description
+      rules: ghost-role-information-Death-Squad-rules
+      raffle:
+        settings: short
+      requirements:
+
+## ERT Leader
+
+- type: entity
+  id: RandomHumanoidSpawnerERTLeaderNoReq
+  parent: RandomHumanoidSpawnerERTLeader
+  name: "Заступник лідера ЗШР"
+  suffix: ERTRole, Basic, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTLeaderNoReq
+
+- type: randomHumanoidSettings
+  id: ERTLeaderNoReq
+  parent: ERTLeader # Goobstation
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-leader-name
+      description: ghost-role-information-ert-leader-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+
+- type: entity
+  id: RandomHumanoidSpawnerERTLeaderEVANoReq
+  parent: RandomHumanoidSpawnerERTLeaderNoReq
+  name: "Заступник лідера ЗШР"
+  suffix: ERTRole, Armored EVA, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTLeaderEVANoReq
+
+- type: randomHumanoidSettings
+  id: ERTLeaderEVANoReq
+  parent: ERTLeaderEVA
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-leader-name
+      description: ghost-role-information-ert-leader-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+
+## ERT Chaplain
+
+- type: entity
+  id: RandomHumanoidSpawnerERTChaplainNoReq
+  parent: RandomHumanoidSpawnerERTLeader
+  name: "Диякон ЗШР"
+  suffix: ERTRole, Basic, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTChaplainNoReq
+
+- type: randomHumanoidSettings
+  id: ERTChaplainNoReq
+  parent: ERTLeader
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-chaplain-name
+      description: ghost-role-information-ert-chaplain-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+
+- type: entity
+  id: RandomHumanoidSpawnerERTChaplainEVANoReq
+  parent: RandomHumanoidSpawnerERTChaplainNoReq
+  name: "Диякон ЗШР"
+  suffix: ERTRole, Enviro EVA
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTChaplainEVANoReq
+
+- type: randomHumanoidSettings
+  id: ERTChaplainEVANoReq
+  parent: ERTChaplainEVA
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-chaplain-name
+      description: ghost-role-information-ert-chaplain-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+
+## ERT Janitor
+
+- type: entity
+  id: RandomHumanoidSpawnerERTJanitorNoReq
+  parent: RandomHumanoidSpawnerERTLeaderNoReq
+  name: "Прибиральник-стажер ЗШР"
+  suffix: ERTRole, Basic, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTJanitorNoReq
+
+- type: randomHumanoidSettings
+  id: ERTJanitorNoReq
+  parent: ERTLeaderNoReq
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-janitor-name
+      description: ghost-role-information-ert-janitor-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+
+- type: entity
+  id: RandomHumanoidSpawnerERTJanitorEVANoReq
+  parent: RandomHumanoidSpawnerERTJanitorNoReq
+  name: "Прибиральник-стажер ЗШР"
+  suffix: ERTRole, Enviro EVA, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTJanitorEVANoReq
+
+- type: randomHumanoidSettings
+  id: ERTJanitorEVANoReq
+  parent: ERTJanitorEVA
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-janitor-name
+      description: ghost-role-information-ert-janitor-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+
+## ERT Engineer
+
+- type: entity
+  id: RandomHumanoidSpawnerERTEngineerNoReq
+  parent: RandomHumanoidSpawnerERTLeaderNoReq
+  name: "Інженер-стажер ЗШР"
+  suffix: ERTRole, Basic, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTEngineerNoReq
+
+- type: randomHumanoidSettings
+  id: ERTEngineerNoReq
+  parent: ERTLeader
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-engineer-name
+      description: ghost-role-information-ert-engineer-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+
+- type: entity
+  id: RandomHumanoidSpawnerERTEngineerEVANoReq
+  parent: RandomHumanoidSpawnerERTEngineerNoReq
+  name: "Інженер-стажер ЗШР"
+  suffix: ERTRole, Enviro EVA, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTEngineerEVANoReq
+
+- type: randomHumanoidSettings
+  id: ERTEngineerEVANoReq
+  parent: ERTEngineerEVA
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-engineer-name
+      description: ghost-role-information-ert-engineer-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+
+## ERT Security
+
+- type: entity
+  id: RandomHumanoidSpawnerERTSecurityNoReq
+  parent: RandomHumanoidSpawnerERTLeaderNoReq
+  name: "Кадет служби безпеки ЗШР"
+  suffix: ERTRole, Basic, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTSecurityNoReq
+
+- type: randomHumanoidSettings
+  id: ERTSecurityNoReq
+  parent: ERTLeader
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-security-name
+      description: ghost-role-information-ert-security-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+      job: ERTSecurity
+
+- type: entity
+  id: RandomHumanoidSpawnerERTSecurityEVANoReq
+  parent: RandomHumanoidSpawnerERTSecurity
+  name: "Кадет служби безпеки ЗШР"
+  suffix: ERTRole, Armored EVA, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTSecurityEVANoReq
+
+- type: randomHumanoidSettings
+  id: ERTSecurityEVANoReq
+  parent: ERTSecurityEVA
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-security-name
+      description: ghost-role-information-ert-security-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+      job: ERTSecurity
+
+## ERT Medic
+
+- type: entity
+  id: RandomHumanoidSpawnerERTMedicalNoReq
+  parent: RandomHumanoidSpawnerERTLeaderNoReq
+  name: "Медик-стажер ЗШР"
+  suffix: ERTRole, Basic, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTMedicalNoReq
+
+- type: randomHumanoidSettings
+  id: ERTMedicalNoReq
+  parent: ERTLeader
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-medical-name
+      description: ghost-role-information-ert-medical-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+      job: ERTMedical
+
+- type: entity
+  id: RandomHumanoidSpawnerERTMedicalEVANoReq
+  parent: RandomHumanoidSpawnerERTMedical
+  name: "Медик-стажер ЗШР"
+  suffix: ERTRole, Armored EVA, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTMedicalEVANoReq
+
+- type: randomHumanoidSettings
+  id: ERTMedicalEVANoReq
+  parent: ERTMedicalEVA
+  components:
+    - type: GhostRole
+      name: ghost-role-information-ert-medical-name
+      description: ghost-role-information-ert-medical-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:
+      job: ERTMedical
+
+## CBURN
+
+- type: entity
+  id: RandomHumanoidSpawnerCBURNUnitNoReq
+  name: "Агент-кадет CBURN"
+  suffix: ERTRole, No Requirements
+  components:
+    - type: RandomHumanoidSpawner
+      settings: CBURNAgentNoReq
+
+- type: randomHumanoidSettings
+  id: CBURNAgentNoReq
+  parent: EventHumanoidCentcomm
+  components:
+    - type: GhostRole
+      name: ghost-role-information-cburn-agent-name
+      description: ghost-role-information-cburn-agent-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+      requirements:

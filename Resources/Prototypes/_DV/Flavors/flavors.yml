@@ -1,0 +1,9 @@
+- type: flavor
+  id: UnholyWater
+  flavorType: Complex
+  description: "смак нечестивої води"
+
+- type: flavor
+  id: BeastBlood
+  flavorType: Complex
+  description: flavor-complex-beast-blood

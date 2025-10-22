@@ -1,0 +1,45 @@
+- type: entity
+  parent: FlaskBase
+  id: DrinkOniGourd
+  name: "гарбуз для саке"
+  description: "Традиційна посудина для пиття, яку використовують оні. Кажуть, що вона наповнена найкращим саке."
+  components:
+  - type: Sprite
+    state: icon
+    sprite: _DV/Objects/Specific/Species/Oni/gourd.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Sake
+          Quantity: 50
+  - type: SolutionRegeneration
+    solution: drink
+    generated:
+      reagents:
+      - ReagentId: Sake
+        Quantity: 2
+    duration: 10
+
+- type: entity
+  parent: DrinkOniGourd
+  id: BeastBloodGourd
+  name: "гарбуз із кров'ю звіра"
+  description: "Модифікований питний гарбуз від Cybersun, цей виробляє потужну суміш стимуляторів та алкоголю, відому як кров звіра."
+  components:
+  - type: Sprite
+    state: icon
+    sprite: _DV/Objects/Specific/Species/Oni/cybergourd.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: BeastBlood
+          Quantity: 50
+  - type: SolutionRegeneration
+    solution: drink
+    generated:
+      reagents:
+      - ReagentId: BeastBlood
+        Quantity: 2
+    duration: 10
