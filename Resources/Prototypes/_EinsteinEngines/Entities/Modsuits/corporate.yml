@@ -62,52 +62,7 @@
         - state: equipped-HAND-sealed-unshaded
           shader: unshaded
 
-- type: entity
-  parent: [ClothingModsuitHelmetStandard, ShowSecurityIcons]
-  id: ClothingModsuitHelmetCorporate
-  name: Corporate modsuit helmet
-  description: A state-of-the-art helmet designed by NanoTrasen for the Corporate modsuit. It includes a built-in HUD.
-  categories: [HideSpawnMenu]
-  components:
-    - type: Sprite
-      sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/corporate.rsi
-    - type: PressureProtection
-      highPressureMultiplier: 0.08
-      lowPressureMultiplier: 1000
-    - type: Armor
-      traumaDeductions: # prevents traumas at all (kinda)
-        Dismemberment: 1
-        OrganDamage: 1
-        BoneDamage: 1
-        VeinsDamage: 1
-        NerveDamage: 1
-      modifiers:
-        coefficients:
-          Blunt: 0.1 # Best armor in the game - Yeah no shit.
-          Slash: 0.1
-          Piercing: 0.1
-          Heat: 0.1
-          Cold: 0.1
-          Cellular: 0.1
-          Radiation: 0.1
-          Caustic: 0.1
-    - type: ThermalVision
-      isEquipment: true
-      color: "#98EEFB"
-      lightRadius: 15
-    - type: FlashImmunity # Goobstation
-    - type: FlashSoundSuppression # Goobstation
-      protectionRange: 0
-    - type: ShowHealthBars
-      damageContainers:
-        - Biological
-    - type: PointLight
-      color: "#FFDF00"
-    - type: SealableClothingVisuals
-      spriteLayer: sealed
-      clothingVisuals:
-        head:
-        - state: equipped-HEAD-sealed
+
 
 - type: entity
   parent: ClothingModsuitChestplateStandard

@@ -63,47 +63,7 @@
         - state: equipped-HAND-sealed-unshaded
           shader: unshaded
 
-- type: entity
-  parent: [ClothingModsuitHelmetStandard, ShowSecurityIcons]
-  id: ClothingModsuitHelmetResponsoryEngineering
-  name: Engineering Responsory modsuit helmet
-  description: A state-of-the-art helmet designed by NanoTrasen for the Engineering Responsory modsuit. It includes a built-in HUD.
-  categories: [HideSpawnMenu]
-  components:
-    - type: Sprite
-      sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/engineering-responsory.rsi
-    - type: PressureProtection
-      highPressureMultiplier: 0.08
-      lowPressureMultiplier: 1000
-    - type: Armor
-      modifiers:
-        coefficients:
-          Blunt: 0.75
-          Slash: 0.4 # Goobstation - Solstice: CBURN should protect against zombie attacks # pheenty: why tf is ert engineer inherited from cburn
-          Piercing: 0.65
-          Heat: 0.15
-          Cold: 0.10
-          Shock: 0.15
-          Radiation: 0.1
-          Caustic: 0.1
-    - type: FlashImmunity # Goobstation
-    - type: FlashSoundSuppression # Goobstation
-      protectionRange: 0
-    - type: EyeProtection
-    - type: ShowHealthBars
-      damageContainers:
-        - Biological
-        - Inorganic
-        - Silicon
-    - type: PointLight
-      color: "#FFDF00"
-    - type: SealableClothingVisuals
-      spriteLayer: sealed
-      clothingVisuals:
-        head:
-        - state: equipped-HEAD-sealed
-        - state: equipped-HEAD-sealed-unshaded
-          shader: unshaded
+
 
 - type: entity
   parent: ClothingModsuitChestplateStandard

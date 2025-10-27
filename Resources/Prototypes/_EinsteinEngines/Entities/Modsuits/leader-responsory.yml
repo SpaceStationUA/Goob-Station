@@ -62,51 +62,7 @@
         - state: equipped-HAND-sealed-unshaded
           shader: unshaded
 
-- type: entity
-  parent: [ClothingModsuitHelmetStandard, ShowSecurityIcons]
-  id: ClothingModsuitHelmetResponsoryLeader
-  name: Leader Responsory modsuit helmet
-  description: A state-of-the-art helmet designed by NanoTrasen for the Leader Responsory modsuit. It includes a built-in HUD.
-  categories: [HideSpawnMenu]
-  components:
-    - type: Sprite
-      sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/leader-responsory.rsi
-    - type: PressureProtection
-      highPressureMultiplier: 0.08
-      lowPressureMultiplier: 1000
-    - type: Armor
-      traumaDeductions:
-        Dismemberment: 0.6
-        OrganDamage: 0.6
-        BoneDamage: 0.6
-        VeinsDamage: 0
-        NerveDamage: 0
-      modifiers:
-        coefficients:
-          Blunt: 0.4
-          Slash: 0.4
-          Piercing: 0.35
-          Heat: 0.5
-          Radiation: 0.2
-          Caustic: 0.4
-    - type: FlashImmunity # Goobstation
-    - type: FlashSoundSuppression # Goobstation
-      protectionRange: 0
-    - type: EyeProtection
-    - type: ShowHealthBars
-      damageContainers:
-        - Biological
-        - Inorganic
-        - Silicon
-    - type: PointLight
-      color: "#FFDF00"
-    - type: SealableClothingVisuals
-      spriteLayer: sealed
-      clothingVisuals:
-        head:
-        - state: equipped-HEAD-sealed
-        - state: equipped-HEAD-sealed-unshaded
-          shader: unshaded
+
 
 - type: entity
   parent: ClothingModsuitChestplateStandard
