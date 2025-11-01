@@ -1,0 +1,29 @@
+- type: entity
+  parent: BaseGameRule
+  id: Vampire
+  components:
+  - type: GameRule
+    minPlayers: 10
+    chaosScore: 20
+  - type: VampireRule
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    agentName: vampire-roundend-name
+    definitions:
+    - prefRoles: [ Vampire ]
+      max: 1
+      playerRatio: 5
+      chaosScore: 100
+      jobBlacklist: [ Chaplain ] # GOOBSTATION
+      blacklist:
+        components:
+        - CommandStaff
+        - AntagImmune
+        - Changeling
+        - BibleUser
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleVampire
+  - type: Tag
+    tags:
+      - RoundstartAntag

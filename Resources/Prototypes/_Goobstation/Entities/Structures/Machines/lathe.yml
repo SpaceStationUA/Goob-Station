@@ -43,7 +43,7 @@
     idleState: icon
     runningState: icon
     staticPacks:
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - EngineeringBoardsStatic
     - CircuitFloorsStatic
     - ToolsStatic
@@ -113,7 +113,7 @@
     runningState: icon
     staticPacks:
     - ToolsStatic
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - CargoBoardsStatic
     - CablesStatic
     - PowerCellsStatic
@@ -176,7 +176,7 @@
     idleState: icon
     runningState: icon
     staticPacks:
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - EngineeringBoardsStatic
     - CircuitFloorsStatic
     - MedicalBoardsStatic

@@ -23,7 +23,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Access(typeof(StomachSystem), typeof(FoodSystem))]
+    [RegisterComponent]
     public sealed partial class StomachComponent : Component
     {
         /// <summary>

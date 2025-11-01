@@ -116,6 +116,9 @@ public sealed partial class AdminVerbSystem
 
     private static readonly EntProtoId ParadoxCloneRuleId = "ParadoxCloneSpawn";
 
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string DefaultVampireRule = "Vampire"; //Pirate
+
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
     {

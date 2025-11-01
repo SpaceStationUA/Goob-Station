@@ -135,15 +135,7 @@ admin-smite-ghostkick-name = Примарний копняк
 admin-smite-nyanify-name = Котячі вушка
 admin-smite-kill-sign-name = Знак вбивства
 admin-smite-omni-accent-name = Омні-акцент
-
-## Описи покарань
 admin-smite-super-slip-description = Змушує їх дуже, дуже сильно послизнутися.
-admin-smite-omni-accent-description = Змушує ціль говорити майже з усіма доступними акцентами.
-
-## Описи трюків
-admin-smite-hell-teleport-name = відправитись до пекла
-
-## Описи покарань
-admin-smite-hell-teleport-description = Телепортує ціль до пекла.
-
-## Описи трюків
+admin-smite-omni-accent-description = Змушує ціль говорити майже з кожним доступним акцентом
+admin-smite-hell-teleport-name = Відправити до пекла
+admin-smite-hell-teleport-description = Телепортує ціль до пекла

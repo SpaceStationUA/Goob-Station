@@ -41,8 +41,7 @@ namespace Content.Goobstation.Server.NTR.Documents
                 || !_proto.TryIndex(docType, out var docProto))
                 return string.Empty;
 
-            var curDate = DateTime.Now.AddYears(1000);
-            var dateString = curDate.ToString("dd.MM.yyyy");
+            var dateString = DateTime.Now.ToString("2467 MMMM dd"); // Pirate new date
 
             var args = new List<(string, object)>
             {

@@ -76,6 +76,12 @@
   - LanguageKnowledge
   - ForeignerTrait
   # Einstein Engines - Language end
+  # Pirate start
+  - Lightweight
+  - LightStep
+  - Vampirism
+  - BloodDeficiency
+  # Pirate end
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit

@@ -18,4 +18,13 @@ alerts-modsuit-power-name = [color=yellow]Живлення Modsuit[/color]
 alerts-modsuit-power-desc = Відображає поточний рівень заряду вашого Modsuit. Низький рівень заряду може вплинути на функціональність костюма.
 
 alerts-centered-name = Центрований
-alerts-centered-desc = Ви відчуваєте зв'язок зі своїм корінням. Особливо з тим, що утримує вас в центрі плиток.
+alerts-centered-desc = Ви відчуваєте зв’язок із корінням. Зокрема з тим, що тримає вас у центрі тайлів
+
+alerts-minor-pain-name = Легкий біль
+alerts-minor-pain-desc = Ви відчуваєте легкий біль.
+alerts-moderate-pain-name = [color=yellow]Помірний біль[/color]
+alerts-moderate-pain-desc = [color=yellow]Біль відчутний і відволікає.[/color]
+alerts-severe-pain-name = [color=red]Сильний біль[/color]
+alerts-severe-pain-desc = [color=red]Біль дуже сильний і його важко ігнорувати.[/color]
+alerts-excruciating-pain-name = [color=red]Нестерпний біль[/color]
+alerts-excruciating-pain-desc = [color=red]Біль нестерпний, важко зосередитися на чомусь іншому.[/color]

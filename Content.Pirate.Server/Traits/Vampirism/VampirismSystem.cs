@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Body.Components;
 using Content.Pirate.Server.Traits.Vampirism.Components;
+using Content.Pirate.Server.Vampirism.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 

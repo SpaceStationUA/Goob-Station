@@ -35,7 +35,7 @@ verb-common-open = Відчинити
 verb-common-close-ui = Закрити UI
 verb-common-open-ui = Відкрити UI
 
-verb-categories-interaction = Взаємодіяти
+verb-categories-interaction = Взаємодія
 verb-categories-power-level = Рівень потужності
 verb-categories-blood-cult = Культ крові
 verb-categories-select-faction = Обрати фракцію

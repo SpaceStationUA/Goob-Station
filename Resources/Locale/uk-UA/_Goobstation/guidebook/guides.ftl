@@ -13,9 +13,6 @@ guide-entry-medpatches = Медичні пластирі
 guide-entry-rules-nrp = Правила NRP
 guide-entry-sm = Двигун на Суперматерії
 guide-entry-automation = Автоматизація
-
-# СОП Goob
-# - Головні Директорії
 guide-entry-sop = СОП
 guide-entry-sop-alert-levels = Рівні тривоги
 guide-entry-sop-emergencies = Надзвичайні ситуації
@@ -96,3 +93,5 @@ guide-entry-sop-janitor = Прибиральник
 guide-entry-sop-librarian = Бібліотекар
 guide-entry-sop-mime = Мім
 guide-entry-sop-reporter = Репортер
+
+guide-entry-plumbing = Трубопровід

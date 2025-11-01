@@ -16,6 +16,9 @@
       groups:
         Brute: 15
         Airloss: 15
+    damageOnUnholyUse: ## What an unholy creature takes when picking up the bible
+      groups:
+        Burn: 20
     damageOnUntrainedUse:
       groups:
         Burn: 10

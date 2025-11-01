@@ -39,6 +39,13 @@
     snapCardinals: true
   - type: Climbable
   - type: Clickable
+  - type: SacrificialAltar # Pirate start
+  - type: Strap
+    position: Down
+    rotation: -90
+  - type: GuideHelp
+    guides:
+    - AltarsGolemancy # Pirate end
   - type: EnchantingTable # Goobstation
 
 - type: entity

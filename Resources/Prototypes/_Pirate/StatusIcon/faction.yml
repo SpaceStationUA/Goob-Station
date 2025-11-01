@@ -1,0 +1,11 @@
+- type: factionIcon
+  id: VampireFaction
+  priority: 11
+  locationPreference: Left
+  showTo:
+    components:
+      - ShowAntagIcons
+      - VampireIcon
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: vampire

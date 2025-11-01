@@ -13,11 +13,9 @@ emergency-shuttle-command-launch-desc = Ранній запуск аварійн
 # Emergency shuttle
 emergency-shuttle-left = Аварійний Шатл покинув станцію. Приблизний час до прибуття на ЦК: {$transitTime} секунд.
 emergency-shuttle-launch-time = Аварійний Шатл стартує через {$consoleAccumulator} секунд.
-emergency-shuttle-docked = Аварійний Шатл пристикувався {$direction} від станції, {$location}. Він відчалює через {$time} секунд{$extended}
+emergency-shuttle-docked = Аварійний шатл пришвартувався {$direction} від станції, {$location}. Він відлетить через {$time} секунд.{$extended}
 emergency-shuttle-good-luck = Аварійний Шатл не може знайти станцію. Хай щастить.
-emergency-shuttle-nearby = Аварійний Шатл не може знайти вільний стикувальний порт. Він був переміщений {$direction} від станції, {$location}. Він відчалює через {$time} секунд{$extended}
-
-# Emergency shuttle console popup / announcement
+emergency-shuttle-nearby = Аварійний шатл не зміг знайти придатний док. Він виринув {$direction} від станції, {$location}. Він відлетить через {$time} секунд.{$extended}
 emergency-shuttle-console-no-early-launches = Достроковий запуск вимкнено
 emergency-shuttle-console-auth-left = Необхідно {$remaining} авторизацій, для дострокового запуску шатлу.
 emergency-shuttle-console-auth-revoked = Авторизацію для дострокового запуску скасовано, необхідно авторизацій: {$remaining}.
@@ -34,9 +32,7 @@ emergency-shuttle-ui-repeal = СКАСУВАТИ
 emergency-shuttle-ui-authorizations = Авторизацій
 emergency-shuttle-ui-remaining = Залишилося: {$remaining}
 
-emergency-shuttle-extended = {" "}Час запуску було подовжено через незручні обставини.
-
-# Спливаюче вікно/оголошення консолі аварійного шатла
+emergency-shuttle-extended = {" "}Час запуску подовжено через несприятливі обставини
 map-name-centcomm = Центральне Командування
 map-name-terminal = Термінал прибуття
 cmd-delayroundend-desc = Зупиняє таймер, який завершує раунд, коли аварійний шатл виходить з гіперпростору.

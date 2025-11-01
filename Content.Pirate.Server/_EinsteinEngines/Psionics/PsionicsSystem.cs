@@ -194,6 +194,7 @@ public sealed class PsionicsSystem : EntitySystem
                 || !_body.TryGetBodyOrganEntityComps<StomachComponent>((uid, bodyCheck), out var stomachComps)
                 || stomachComps.Count == 0)
             {
+                RemComp<PsionicComponent>(uid);
                 return;
             }
         }

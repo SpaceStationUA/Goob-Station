@@ -8,3 +8,5 @@ bloodstream-component-wounds-cauterized = Ти відчуваєш як твої 
 bloodstream-component-selfaware-looks-pale = [color=bisque]Ви відчуваєте запаморочення від втрати крові.[/color]
 bloodstream-component-selfaware-bleeding = [color=red]У тебе кров.[/color]
 bloodstream-component-selfaware-profusely-bleeding = [color=crimson]У вас сильна кровотеча![/color]
+
+bloodstream-component-massive-bleeding = [color=#420000]{CAPITALIZE(SUBJECT($target))} {CONJUGATE-BE($target)} у стані масивної кровотечі.[/color]

@@ -48,7 +48,7 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
 
         // Low chance to completely change up the late-join landscape by closing all positions except infinite slots.
         // Lower chance than the /tg/ equivalent of this event.
-        if (RobustRandom.Prob(0.25f))
+        if (RobustRandom.Prob(0.125f)) // Pirate - was 0.25
         {
             var chosenJob = RobustRandom.PickAndTake(jobList);
             _stationJobs.MakeJobUnlimited(chosenStation.Value, chosenJob); // INFINITE chaos.
@@ -61,9 +61,9 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
         }
         else
         {
-            var lower = (int) (jobList.Count * 0.20);
-            var upper = (int) (jobList.Count * 0.30);
-            // Changing every role is maybe a bit too chaotic so instead change 20-30% of them.
+            var lower = (int) (jobList.Count * 0.30); // Pirate - was 0.20
+            var upper = (int) (jobList.Count * 0.40); // Pirate - was 0.30
+            // Changing every role is maybe a bit too chaotic so instead change 30-40% of them.
             var num = RobustRandom.Next(lower, upper);
             for (var i = 0; i < num; i++)
             {

@@ -338,6 +338,10 @@
     - !type:AutomatedMaterialStorage
       input: AutomationSlotMaterials
       output: null
+    - !type:AutomatedPorts
+      sinks:
+      - LathePrint
+  - type: LatheAutomation # Goobstation
   - type: SpamEmitSound # Goobstation - random lathe sounds
     minInterval: 300
     maxInterval: 900
@@ -441,7 +445,6 @@
     - SecurityWeaponsStatic
     - SecurityAmmoStatic
     # Goobstation
-    - SecurityWeaponsStaticGoob
     - SecurityAmmoStaticGoob
     - SyndicateAmmoLightStatic
     - ScienceExplosives
@@ -582,7 +585,7 @@
     #- EngineeringBoardsStatic - Goobstation - Moved to Scifab and Engifab
     - CircuitFloorsStatic
     # Goobstation Packs
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - MedicalBoardsStaticGoob
     - SecurityBoardsStaticGoob
     dynamicPacks:
@@ -762,7 +765,6 @@
     - PowerCellsStatic
     - ScienceExplosives
     - GrenadeTriggersStatic
-    - SecurityWeaponsStaticGoob
     - SecurityWeaponsNonEmaggableStaticGoob
     # Pirate Packs
     - SecurityAmmoStaticPirate

@@ -49,6 +49,9 @@
   - DeviceQuantumSpinInverter
   - DeviceDesynchronizer
   - ClothingBackpackHarmpack
+  - ClothingHeadHelmetInsulated # Pirate VVV
+  - ClothingHeadCage
+  - AntiMindControlDevice # Pirate ^^^
 
 - type: latheRecipePack
   id: ScienceClothing

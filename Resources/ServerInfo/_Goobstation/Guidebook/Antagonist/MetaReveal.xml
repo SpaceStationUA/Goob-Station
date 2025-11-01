@@ -9,76 +9,76 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-  # Revealing conditions for antags
+  # Умови розкриття для антагоністів
 
-  The following list provides revealing conditions for different antags you may see on the station
+  Нижче наведено умови розкриття для різних антагоністів, яких ви можете зустріти на станції.
 
-  ## Heretics
-  The revealing condition for this shield is any of the following:
-  - Finding a rune
-  - The chaplain sees a reality fracture and notifies security
-  - Witnessing a crewmember using their powers
+  ## Єретики
+  Умовою розкриття для цього щита є будь-що з наведеного:
+  - Знайдена руна
+  - Виявлений розрив реальності
+  - Свідчення застосування сил екіпажником
 
-  ## Cosmic Cult
+  ## Космічний культ
 
-  The revealing condition for this shield is any of the following:
-  - witnessing a crewmember with the telltale facemask
-  - Seeing a glyph
-  - witnessing a crewmember absorb a malign shift
-  - witnessing a crewmember use a cult-specific ability
-  - witnessing cult gear like entropic swords and armor
+  Умовою розкриття для цього щита є будь-що з наведеного:
+  - Бачили екіпажника з впізнаваною маскою на обличчі
+  - Побачили гліф
+  - Свідчення поглинання зловісного зсуву екіпажником
+  - Свідчення використання культистської здібності екіпажником
+  - Виявили культове спорядження, як-от ентропійні мечі чи обладунки
 
-  ## Devils
+  ## Біси
 
-  The revealing condition for this shield is any of the following:
-  - You are a Devil.
-  - You are the Chaplain, a lawyer, or a member of Central Command. (Including BSO and NTR)
-  - You have made a deal with the Devil.
-  - You have witnessed someone make a deal.
+  Умовою розкриття для цього щита є будь-що з наведеного:
+  - Ви — біс.
+  - Ви — капелан, юрист або співробітник Центрального Командування (включно з BSO та NTR).
+  - Ви уклали угоду з біслом.
+  - Ви стали свідком укладання угоди.
 
-  ## Zombies
+  ## Зомбі
 
-  Revealing conditions to the "Zombie" Shield:
-  - You are a Nuclear Operative
-  - You are a Syndicate Agent
-  - You are a Zombie
-  - You have seen Zombies on the station
+  Умови розкриття для щита «Zombie»:
+  - Ви — ядерний оперативник
+  - Ви — агент Синдикату
+  - Ви — зомбі
+  - Ви бачили зомбі на станції
 
-  ## Infections(Once the zombie virus is proven)
+  ## Інфекції (після підтвердження вірусу зомбі)
 
-  Revealing conditions to the "Infections" Shield:
-  - You are a Chemist
-  - You are a Chief Medical Officer
-  - Zombies are announced to be real and station-wide
+  Умови розкриття для щита «Infections»:
+  - Ви — хімік
+  - Ви — головний лікар
+  - Оголошено про реальність зомбі та загрозу по всій станції
 
-  ## Deathsquad
+  ## Загін смерті
 
-  Revealing conditions to the "Deathsquad" Shield:
-  - You'll know.
+  Умови розкриття для щита «Deathsquad»:
+  - Ви зрозумієте.
 
-  ## Implanted implants
+  ## Імпланти
 
-  The revealing condition for this shield is any of the following:
-  - discovering a non-NT implanter, used or unused
-  - discovering a non-NT implant box
-  - discovering use of a non-NT implant by anyone
-  - experiencing a situation where absolutely no other explanation is possible
-  - discovering an unlocked uplink
+  Умовою розкриття для цього щита є будь-що з наведеного:
+  - Виявлено не-NT імплантер, використаний чи ні
+  - Виявлено коробку з не-NT імплантами
+  - Виявлено використання не-NT імпланта ким-небудь
+  - Ситуація, якій неможливо дати інше пояснення
+  - Знайдено розблокований аплінк
 
-  ## Chameleon Items
+  ## Хамелеон-обладнання
 
-  The revealing condition for this shield is any of the following:
-  - seeing someone else cause any chameleon item to change
-  - finding holographic nanomachine fibers
-  - experiencing a situation where absolutely no other explanation is possible
-  - discovering an unlocked uplink
+  Умовою розкриття для цього щита є будь-що з наведеного:
+  - Бачили, як хтось змусив хамелеон-предмет змінитися
+  - Знайдено волокна голографічних наномашин
+  - Ситуація, якій неможливо дати інше пояснення
+  - Знайдено розблокований аплінк
 
-  ## Stealth Items
+  ## Приховані предмети
 
-  The revealing condition for this shield is any of the following:
-  - seeing the item behave differently than the expected behavior for the item
-  - seeing the item used for its hidden purpose
-  - experiencing a situation where absolutely no other explanation is possible
-  - discovering an unlocked uplink
+  Умовою розкриття для цього щита є будь-що з наведеного:
+  - Предмет поводиться не так, як очікується
+  - Предмет використано за його прихованим призначенням
+  - Ситуація, якій неможливо дати інше пояснення
+  - Знайдено розблокований аплінк
 
 </Document>

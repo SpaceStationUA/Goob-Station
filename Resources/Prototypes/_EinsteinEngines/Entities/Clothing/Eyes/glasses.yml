@@ -12,6 +12,10 @@
   - type: Construction
     graph: EtherealGoggles
     node: goggles
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - ForensicBeltEquip
 
 - type: entity
   parent: [ClothingEyesGlassesSunglasses, ShowPsionicsIcons]

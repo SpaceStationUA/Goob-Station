@@ -35,8 +35,9 @@
         hand1: MantisBlackBlade
       force: false
   #- type: BaseCultSpell PIRATE
-  #- type: SpeakOnAction Return this when SpeakOnAction has emote
-  #  sentence: "thrusts their open hand to the side. A black blade forms from nothingness into their waiting hand. Whispering demonic voices echo around the sword..."
+  - type: SpeakOnAction
+    sentence: mantis-summon-black-sword
+    isEmote: true
 
 - type: entity
   name: black sword
@@ -54,7 +55,7 @@
     range: 1.65
     damage:
       types:
-        Slash: 10
+        Slash: 25
         Holy: 15
     angle: 90
     soundHit:

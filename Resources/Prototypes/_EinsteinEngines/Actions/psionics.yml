@@ -201,6 +201,9 @@
         glimmerSoundThreshold: 100
         glimmerPopupThreshold: 200
         glimmerDoAfterVisibilityThreshold: 70
+    - type: SpeakOnAction
+      sentence: healing-word-begin
+      isEmote: true
 
 - type: entity
   id: ActionRevivify
@@ -242,6 +245,9 @@
         glimmerSoundThreshold: 50
         glimmerPopupThreshold: 100
         glimmerDoAfterVisibilityThreshold: 35
+    - type: SpeakOnAction
+      sentence: revivify-begin
+      isEmote: true
 
 - type: entity
   id: ActionShadeskip
