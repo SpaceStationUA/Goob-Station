@@ -788,6 +788,7 @@
     - PowerCells
     # Pirate Packs
     - SecurityAmmoPirate
+    - SecurityWeaponsPirate
   - type: EmagLatheRecipes # Goobstation
     emagStaticPacks:
     - SyndicateAmmoLightStatic
@@ -827,6 +828,11 @@
       - SecurityAmmoStatic
       # Goobstation Packs
       - SecurityAmmoStaticGoob
+      # Pirate Packs
+      - SecurityAmmoStaticPirate
+      dynamicPacks:
+      # Pirate Packs
+      - SecurityAmmoPirate
     - type: EmagLatheRecipes # Goobstation Packs
       emagStaticPacks:
       - SyndicateAmmoLightStatic
@@ -1032,6 +1038,7 @@
       idleState: icon
       runningState: building
       defaultProductionAmount: 10
+      outputToStorage: true # Goob edit
       staticPacks:
       - OreSmelting
       - RGlassSmelting

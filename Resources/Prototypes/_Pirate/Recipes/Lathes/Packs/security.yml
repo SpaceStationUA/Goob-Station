@@ -7,14 +7,37 @@
   - MagazineUniversalMagnumRubber
   - MagazineMagnumEmpty
   - MagazineMagnum
-  - MagazineCaselessRifleEmpty
-  - MagazineCaselessRifle
 
 
 ## Dynamic
 - type: latheRecipePack
+  id: SecurityWeaponsPirate
+  recipes:
+  - WeaponPistolMk58
+  - WeaponPistolUniversal
+  - WeaponSubMachineGunFPA90
+  - WeaponSubMachineGunBRDIR25
+  - WeaponRifleVulcanM
+
+- type: latheRecipePack
   id: SecurityAmmoPirate
   recipes:
+  # 45. Mk 32
   - MagazineUniversalMagnumUranium
   - MagazineUniversalMagnumIncendiary
   - MagazineMagnumUranium
+  # 9.5mm
+  - MagazineCaselessRifleEmpty
+  - MagazineCaselessRifle
+  - MagazineCaselessRifleShort
+  - MagazineCaselessRifleStandard
+  - MagazineCaselessRifleStandardShort
+  - MagazineBoxCaselessRifleStandard
+  - MagazineBoxCaselessRifle
+  # .30
+  - MagazineLightRifle
+  - MagazineLightRifleIncendiary
+  - MagazineLightRifleUranium
+  - MagazineBoxLightRifleIncendiary
+  - MagazineBoxLightRifleUranium
+  - MagazineBoxLightRifle

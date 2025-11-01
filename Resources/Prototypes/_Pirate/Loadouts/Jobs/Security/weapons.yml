@@ -96,88 +96,57 @@
 # Зброя
 - type: loadout
   id: LoadoutSecurityWeaponMk58
+  dummyEntity: WeaponPistolMk58
   storage:
     back:
     - WeaponPistolMk58
+    - MagazinePistol
 
 - type: loadout
   id: LoadoutSecurityRevolverInspector
   effects:
   - !type:GroupLoadoutEffect
     proto: Inspector
+  dummyEntity: WeaponRevolverInspector
   storage:
     back:
     - WeaponRevolverInspector
+    - SpeedLoaderMagnum
 
 - type: loadout
   id: LoadoutSecurityPistolN1984
   effects:
   - !type:GroupLoadoutEffect
     proto: Senior Constable
+  dummyEntity: WeaponPistolN1984
   storage:
     back:
     - WeaponPistolN1984
-
-- type: loadout
-  id: LoadoutSecurityPistolUniversal
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Sergeant
-  storage:
-    back:
-    - WeaponPistolUniversalSecurity
+    - MagazineMagnum
 
 - type: loadout
   id: LoadoutSecurityPistolUniversalNonLethal
   effects:
   - !type:GroupLoadoutEffect
     proto: Sergeant
+  dummyEntity: WeaponPistolUniversalSecurityNonLethal
   storage:
     back:
     - WeaponPistolUniversalSecurityNonLethal
-
-# Боєприпаси
-- type: loadout
-  id: MagazinePistol
-  storage:
-    back:
-    - MagazinePistol
-
-- type: loadout
-  id: SpeedLoaderMagnum
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Inspector
-  storage:
-    back:
-    - SpeedLoaderMagnum
-
-- type: loadout
-  id: MagazineMagnum
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Senior Constable
-  storage:
-    back:
-    - MagazineMagnum
-
-- type: loadout
-  id: MagazineUniversalMagnum
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Sergeant
-  storage:
-    back:
-    - MagazineUniversalMagnum
-
-- type: loadout
-  id: MagazineUniversalMagnumRubber
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Sergeant
-  storage:
-    back:
     - MagazineUniversalMagnumRubber
+  groupBy: "PistolUniversal"
+
+- type: loadout
+  id: LoadoutSecurityPistolUniversal
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Sergeant
+  dummyEntity: WeaponPistolUniversalSecurity
+  storage:
+    back:
+    - WeaponPistolUniversalSecurity
+    - MagazineUniversalMagnum
+  groupBy: "PistolUniversal"
 
 # Другорядна зброя
 - type: loadout

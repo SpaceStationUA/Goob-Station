@@ -22,6 +22,6 @@ crawl-under-floor-toggle-off-self = Ви виповзаєте з-під підл
 
 steal-shoes-event = Ви вкрали {$shoes} у {$target}!
 steal-shoes-no-shoes = У них немає взуття, яке можна вкрасти!
-steal-shoes-covered = Ви не можете дістатися до їхнього взуття звідси!
+steal-shoes-covered = Ви не можете дістати їхнє взуття звідси!
 
 shoes-stolen-target-event = Ваше взуття вкрали!

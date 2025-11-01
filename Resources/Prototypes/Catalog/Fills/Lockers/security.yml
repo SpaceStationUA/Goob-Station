@@ -130,6 +130,7 @@
     - id: Multitool # Goobstation
     - id: Wrench # Goobstation
     - id: ContrabandDetectorFlatpack # Goobstation
+    - id: SecurityMegaphone # goob - loudspeakers
 
 - type: entityTable
   id: FillLockerWardenHarduit

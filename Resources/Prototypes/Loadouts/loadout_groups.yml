@@ -124,6 +124,7 @@
 # SPDX-FileCopyrightText: 2024 Арт <123451459+JustArt1m@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
+# SPDX-FileCopyrightText: 2025 Avalon <jfbentley1@gmail.com>
 # SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Aviu00 <aviu00@protonmail.com>
 # SPDX-FileCopyrightText: 2025 BloodfiendishOperator <141253729+Diggy0@users.noreply.github.com>
@@ -171,16 +172,20 @@
   - FlowerWreath
   - Hairflower
   - Headphones
+# PIRATE PLUSHIES START VVVV
+  - PlushieVulpSusie
+  - PlushieEntony
+  - PlushieIpcCat
+  - PlushieTK
+  - PlushieKateryna
+  - PlushieNicholasGray
+  - PlushieOlia
+  - PlushieSkeleton
+  - PlushieTayler
+  - PlushiePocketAssistant
+# PIRATE PLUSHIES END ^^^^
   - PlushieLizard
   - PlushieSpaceLizard
-  - PlushieEntony # PIRATE
-  - PlushieIpcCat # PIRATE
-  - PlushieTK # PIRATE
-  - PlushieKateryna # PIRATE
-  - PlushieNicholasGray # PIRATE
-  - PlushieOlia # PIRATE
-  - PlushieSkeleton # PIRATE
-  - PlushieVulpSusie # PIRATE
   - PersonalAI # Goobstation
   - GoldenPersonalAI # Goobstation
   - ThreeCandles
@@ -235,6 +240,7 @@
   - Cane
   - WhiteCane
   - TapeRecorder
+  - DrinkOniGourd
   # End DeltaV Additions
 
 - type: loadoutGroup
@@ -390,6 +396,7 @@
   minLimit: 0
   loadouts:
   - HoPWintercoat
+  - HoPLongcoat #goob
 
 # Civilian
 - type: loadoutGroup
@@ -1135,6 +1142,7 @@
   loadouts:
   - ResearchDirectorLabCoat
   - ResearchDirectorWintercoat
+  - ResearchDirectorLabCoatPurple #goob
 
 - type: loadoutGroup
   id: ResearchDirectorShoes
@@ -1254,6 +1262,7 @@
   - HeadofSecurityCloak
   - HeadofSecurityMantle
   - Bodycam # Goobstation - Body cameras
+  - CameraCollar # Pirate
 
 - type: loadoutGroup
   id: HeadofSecurityOuterClothing
@@ -1285,6 +1294,7 @@
   loadouts:
   - WardenCoat
   - WardenArmoredWinterCoat
+  - WardenCoatBlue #goob
 
 - type: loadoutGroup
   id: SecurityHead
@@ -1365,6 +1375,7 @@
   loadouts:
   - DetectiveTie
   - Bodycam # Goobstation - Body cameras
+  - CameraCollar # Pirate
 
 - type: loadoutGroup
   id: DetectiveJumpsuit
@@ -1409,46 +1420,6 @@
   minLimit: 0
   loadouts:
   - SecStar
-
-# SECURITY - PIRATE START
-- type: loadoutGroup
-  id: SecurityCadetOuterClothing
-  name: loadout-group-cadet-outerclothing
-  loadouts:
-  - ArmorCadet
-
-- type: loadoutGroup
-  id: SecurityWeapon
-  name: loadout-group-security-weapon
-  loadouts:
-  - LoadoutSecurityWeaponMk58
-  - LoadoutSecurityRevolverInspector
-  - LoadoutSecurityPistolN1984
-  - LoadoutSecurityPistolUniversal
-  - LoadoutSecurityPistolUniversalNonLethal
-
-- type: loadoutGroup
-  id: SecurityWeaponAmmo
-  name: loadout-group-security-weapon-ammo
-  loadouts:
-  - MagazinePistol
-  - SpeedLoaderMagnum
-  - MagazineMagnum
-  - MagazineUniversalMagnum
-  - MagazineUniversalMagnumRubber
-
-- type: loadoutGroup
-  id: SecuritySecondaryWeapon
-  name: loadout-group-secondary-weapon
-  maxLimit: 1
-  minLimit: 0
-  loadouts:
-  - LoadoutSecurityEnergyGunMini
-  - LoadoutSecurityEnergyGun
-  - LoadoutSecurityDisablerSMG
-  - LoadoutSecurityEnergyGunPistol
-  - LoadoutSecurityGunLaserCarbineAutomatic
-# SECURITY - PIRATE END
 
 # Medical
 - type: loadoutGroup

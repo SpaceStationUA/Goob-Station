@@ -1,6 +1,6 @@
 ## UI
 
-crew-monitoring-user-interface-title = Консоль Моніторингу Екіпажу
+crew-monitoring-user-interface-title = Консоль Монiторингу Екiпажу
 
 crew-monitoring-user-interface-name = Ім'я
 crew-monitoring-user-interface-job = Посада

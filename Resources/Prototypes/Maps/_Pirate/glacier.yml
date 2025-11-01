@@ -1,0 +1,71 @@
+- type: gameMap
+  id: GlacierTP
+  mapName: 'Льодовик ТП'
+  mapPath: /Maps/_Pirate/glacier.yml
+  minPlayers: 0
+  maxPlayers: 50
+  stations:
+    Glacier:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Станція Льодовик {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'NY'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml
+        - type: StationJobs
+          availableJobs:
+          # Command
+            Captain: [ 1, 1 ]
+            BlueshieldOfficer: [ 1, 1]
+            NanotrasenRepresentative: [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            ChiefEngineer: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+          #service
+            Bartender: [ 1, 2 ]
+            Botanist: [ 2, 3 ]
+            Chef: [ 1, 2 ]
+            Reporter: [ 2, 2 ]
+            ServiceWorker: [ 2, 3 ]
+            Janitor: [ 2, 2 ]
+            Chaplain: [ 2, 2 ]
+            Librarian: [ 1, 1 ]
+          #engineering
+            AtmosphericTechnician: [ 1, 2 ]
+            StationEngineer: [ 2, 3 ]
+            TechnicalAssistant: [ 2, 2 ]
+          #medical
+            Chemist: [ 1, 2 ]
+            Paramedic: [ 1, 2 ]
+            Psychologist: [ 1, 1 ]
+            MedicalDoctor: [ 3, 3 ]
+            MedicalIntern: [ 2, 2 ]
+          #science
+            ForensicMantis: [ 1, 1 ]
+            Scientist: [ 4, 4 ]
+            ResearchAssistant: [ 3, 3 ]
+          #security
+            Warden: [ 1, 1 ]
+            Detective: [ 1, 1 ]
+            SecurityOfficer: [ 4, 4 ]
+            SecurityCadet: [ 3, 3 ]
+            Lawyer: [ 2, 2 ]
+            Brigmedic: [ 1, 1 ]
+          #logistics
+            SalvageSpecialist: [ 4, 4 ]
+            CargoTechnician: [ 3, 3 ]
+          #civilian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 2 ]
+          # Silicon
+            StationAi: [ 1, 1 ]
+            Borg: [ 2, 3 ]

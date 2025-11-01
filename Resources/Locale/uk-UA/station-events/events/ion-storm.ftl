@@ -23,7 +23,7 @@ ion-storm-law-crew-are = ЕКІПАЖ {$who} ТЕПЕР {$joined} {$subjects}
 ion-storm-law-subjects-harmful = {$adjective} {$subjects} ШКІДЛИВІ ДЛЯ ЕКІПАЖУ
 ion-storm-law-must-harmful = ТІ, ХТО {$must} ШКІДЛИВІ ДЛЯ ЕКІПАЖУ
 # thing is a concept or action
-ion-storm-law-thing-harmful = {$thing} ШКІДЛИВО ДЛЯ ЕКІПАЖУ
+ion-storm-law-thing-harmful = {$thing} Є ШКІДЛИВИМ ДЛЯ ЕКІПАЖУ
 ion-storm-law-job-harmful = {$adjective} {$job} ШКІДЛИВІ ДЛЯ ЕКІПАЖУ
 # thing is objects or concept, adjective applies in both cases
 # this means you can get a law like "NOT HAVING CHRISTMAS-STEALING COMMUNISM IS HARMFUL TO THE CREW" :)

@@ -1,0 +1,62 @@
+- type: stationGoal
+  id: CapitalPreparation
+
+- type: stationGoal
+  id: MedicalResearchProgram
+
+- type: stationGoal
+  id: GasSynthesisProject
+
+- type: stationGoal
+  id: MiceBiteProduction
+
+- type: stationGoal
+  id: CelebrationHall
+
+- type: stationGoal
+  id: CrewMarriageInitiative
+
+- type: stationGoal
+  id: CulturalLibraryRebuild
+
+
+- type: weightedRandom
+  id: StationGoalsSpecial
+  weights:
+    StationGoalCorporate: 1
+    StationGoalMedical: 1
+    StationGoalAtmos: 1
+    StationGoalSocial: 1
+    StationGoalCultural: 1
+
+
+- type: weightedRandom
+  id: StationGoalCorporate
+  weights:
+    CapitalPreparation: 1
+
+
+- type: weightedRandom
+  id: StationGoalMedical
+  weights:
+    MedicalResearchProgram: 1
+    MiceBiteProduction: 1
+
+
+- type: weightedRandom
+  id: StationGoalAtmos
+  weights:
+    GasSynthesisProject: 1
+
+
+- type: weightedRandom
+  id: StationGoalSocial
+  weights:
+    CelebrationHall: 1
+    CrewMarriageInitiative: 1
+
+
+- type: weightedRandom
+  id: StationGoalCultural
+  weights:
+    CulturalLibraryRebuild: 1

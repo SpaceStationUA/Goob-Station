@@ -35,19 +35,21 @@
       - state: shoreline_water
   - type: SolutionContainerManager
     solutions:
-      pool:
+      drainBuffer: # PIRATE EDIT
         maxVol: 9999999 #.inf seems to break the whole yaml file, but would definitely be preferable.
         reagents:
         - ReagentId: Water
-          Quantity: 9999999
+          Quantity: 999999
   #- type: SolutionRegeneration Goobstation - laggy as shit
   #  solution: tank
   #  generated:
   #    reagents:
   #    - ReagentId: Water
   #      Quantity: 100
+  # PIRATE EDIT VVVV
   - type: DrainableSolution
-    solution: pool
+    solution: drainBuffer
+  # PIRATE EDIT ^^^^
   - type: SpeedModifierContacts
     walkSpeedModifier: 0.5
     sprintSpeedModifier: 0.5
@@ -100,3 +102,4 @@
   # Goobstation - fishing
   - type: CosmicCorruptible # DeltaV - Cosmic Cult
     convertTo: FloorCosmicDecay
+  - type: Drain # PIRATE EDIT

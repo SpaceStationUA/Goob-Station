@@ -1,4 +1,4 @@
-robotics-console-window-title = Консоль робототехніки
+robotics-console-window-title = Консоль управлiння силiконами
 robotics-console-no-cyborgs = Ніяких кіборгів!
 
 robotics-console-select-cyborg = Виберіть кіборга вище.

@@ -36,3 +36,4 @@ admin-verb-text-make-shadowling = Зробити тіньовиком
 species-name-shadow = Тінь
 
 # Examine Texts
+shadowling-thrall-other-examined = {CAPITALIZE(POSS-ADJ($target))} очі, здається, вдивляються в іншу реальність...

@@ -24,3 +24,38 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 1
+
+- type: entity
+  parent: ClothingNeckBase
+  id: SurveillanceWirelessCameraCollar
+  name: Нашийна камера
+  description: Камера прикріплена на нашийник, виглядає стильно й... покорно. Вона слідкує за тобою.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Misc/camera_collar.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Misc/camera_collar.rsi
+    quickEquip: true
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+    nameSet: True
+    id: Bodycam
+  - type: Eye
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: SurveillanceCameraMicrophone
+    blacklist:
+      components:
+      - SurveillanceCamera
+      - SurveillanceCameraMonitor
+      - RadioSpeaker
+  - type: ActiveListener
+    range: 10
+  - type: ClothingGrantComponent
+    component:
+    - type: StationAiVision
+      range: 4

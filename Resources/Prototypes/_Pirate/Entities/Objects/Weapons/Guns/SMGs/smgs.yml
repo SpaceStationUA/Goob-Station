@@ -2,7 +2,7 @@
   name: FPA-90
   parent: [BaseWeaponPistol, BaseSecurityContraband]
   id: WeaponSubMachineGunFPA90
-  description: Це дешевий мотлох від компанії, відомої своїми дешевими гарматами, але принаймні під час використання не потрібен захист слуху. Стріляє набоями .25 безгільзовими.
+  description: Це дешевий мотлох від компанії, відомої своїми дешевими гарматами, але принаймні під час використання не потрібен захист слуху. Стріляє набоями 9.5мм.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/SMGs/FPA90.rsi
@@ -35,7 +35,7 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineCaselessRifle
+        startingItem: MagazineCaselessRifleStandardShort
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
         priority: 2
@@ -44,7 +44,7 @@
             - MagazineCaselessRifle
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeCaselessRifle
+        startingItem: CartridgeCaselessRifleStandard
         priority: 1
         whitelist:
           tags:
@@ -60,7 +60,7 @@
   name: BRDI R-25
   parent: [BaseWeaponSubMachineGun, BaseSecurityContraband, BaseGunWieldable]
   id: WeaponSubMachineGunBRDIR25
-  description: Іконічна зброя, яку використовують члени Іноземного легіону Республіки Бізель. Як гордість Республіки, вона символізує свободу від тиранії Солоріанського Альянсу. Оснащена патронами .25 безгільзовими для гвинтівки.
+  description: Іконічна зброя, яку використовують члени Іноземного легіону Республіки Бізель. Як гордість Республіки, вона символізує свободу від тиранії Солоріанського Альянсу. Стріляє набоями 9.5мм.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/SMGs/BRDI_R25.rsi
@@ -69,6 +69,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/BRDI_R25.rsi
   - type: Wieldable
   - type: GunWieldBonus
     minAngle: -19
@@ -105,7 +107,7 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineCaselessRifle
+        startingItem: MagazineCaselessRifleStandard
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
         priority: 2
@@ -114,7 +116,7 @@
             - MagazineCaselessRifle
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeCaselessRifle
+        startingItem: CartridgeCaselessRifleStandard
         priority: 1
         whitelist:
           tags:

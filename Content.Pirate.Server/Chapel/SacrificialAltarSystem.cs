@@ -1,4 +1,5 @@
 using Content.Goobstation.Shared.Bible;
+using Content.Goobstation.Common.Religion;
 using Content.Shared.Abilities.Psionics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;

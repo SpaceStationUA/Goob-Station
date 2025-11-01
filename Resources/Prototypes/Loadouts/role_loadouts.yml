@@ -125,6 +125,7 @@
   - CaptainMask # Goobstation - Lollypops!
   - CaptainBackpack
   - CaptainOuterClothing
+  - CommandSelfDefense # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -145,6 +146,7 @@
   - HoPBackpack
   - HoPOuterClothing
   - Glasses
+  - CommandSelfDefense # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -170,13 +172,20 @@
   id: JobPassenger
   groups:
   - GroupTankHarness
-  - PassengerJumpsuit
+  #- PassengerJumpsuit # Pirate wardrobe
   - CommonBackpack
-  - PassengerNeck
-  - PassengerFace
+ # Pirate wardrobe start VVV
+  - PiratePassengerJumpsuit
+  - PiratePassengerHead
+  - PiratePassengerOuterClothing
+  - PiratePassengerShoes
+  - PiratePassengerNeck
+ # Pirate wardrobe end ^^^
+  #- PassengerNeck # Pirate wardrobe
+  - PassengerFace 
   - PassengerGloves
-  - PassengerOuterClothing
-  - PassengerShoes
+  #- PassengerOuterClothing # Pirate wardrobe
+  #- PassengerShoes # Pirate wardrobe
   - Glasses
   - Survival
   - Trinkets
@@ -191,10 +200,17 @@
   id: JobBartender
   groups:
   - GroupTankHarness
-  - BartenderHead
-  - BartenderJumpsuit
+  #- BartenderHead # Pirate wardrobe
+  #- BartenderJumpsuit # Pirate wardrobe
   - CommonBackpack
-  - BartenderOuterClothing
+  # Pirate wardrobe start VVV
+  - PirateBartenderHead
+  - PiratePassengerNeck
+  - PirateBartenderJumpsuit
+  - PirateBartenderOuterClothing
+  - PiratePassengerShoes
+  # Pirate wardrobe end ^^^
+  #- BartenderOuterClothing # Pirate wardrobe
   - Glasses
   - Survival
   - Trinkets
@@ -209,8 +225,15 @@
   id: JobServiceWorker
   groups:
   - GroupTankHarness
-  - BartenderJumpsuit
+  #- BartenderJumpsuit # Pirate wardrobe
   - CommonBackpack
+  # Pirate wardrobe start VVV
+  - PirateBartenderJumpsuit
+  - PiratePassengerHead
+  - PiratePassengerOuterClothing
+  - PiratePassengerShoes
+  - PiratePassengerNeck
+  # Pirate wardrobe end ^^^
   - Glasses
   - Survival
   - Trinkets
@@ -225,11 +248,18 @@
   id: JobChef
   groups:
   - GroupTankHarness
-  - ChefHead
+  #- ChefHead
   - ChefMask
-  - ChefJumpsuit
+  #- ChefJumpsuit
   - CommonBackpack
-  - ChefOuterClothing
+  # Pirate wardrobe start VVV
+  - PirateChefHead
+  - PirateChefJumpsuit
+  - PirateChefOuterClothing
+  - PiratePassengerShoes
+  - PiratePassengerNeck
+  # Pirate wardrobe end ^^^
+  #- ChefOuterClothing
   - Glasses
   - Survival
   - Trinkets
@@ -244,7 +274,14 @@
   id: JobLibrarian
   groups:
   - GroupTankHarness
-  - LibrarianJumpsuit
+  #- LibrarianJumpsuit
+  # Pirate wardrobe start VVV
+  - PirateLibrarianJumpsuit
+  - PiratePassengerHead
+  - PiratePassengerOuterClothing
+  - PiratePassengerShoes
+  - PiratePassengerNeck
+  # Pirate wardrobe end ^^^
   - CommonBackpack
   - Glasses
   - Survival
@@ -277,12 +314,19 @@
   id: JobChaplain
   groups:
   - GroupTankHarness
-  - ChaplainHead
+  #- ChaplainHead
   - ChaplainMask
-  - ChaplainNeck
-  - ChaplainJumpsuit
+  #- ChaplainNeck
+  #- ChaplainJumpsuit
   - CommonBackpack
-  - ChaplainOuterClothing
+  # Pirate wardrobe start VVV
+  - PirateChaplainHead
+  - PirateChaplainNeck
+  - PirateChaplainJumpsuit
+  - PirateChaplainOuterClothing
+  - PiratePassengerShoes
+  # Pirate wardrobe end ^^^
+  #- ChaplainOuterClothing
   - Glasses
   - Survival
   - Trinkets
@@ -317,10 +361,17 @@
   id: JobBotanist
   groups:
   - GroupTankHarness
-  - BotanistHead
-  - BotanistJumpsuit
+  #- BotanistHead
+  #- BotanistJumpsuit
   - BotanistBackpack
-  - BotanistOuterClothing
+  # Pirate wardrobe start VVV
+  - PirateBotanistHead
+  - PirateBotanistJumpsuit
+  - PirateBotanistOuterClothing
+  - PiratePassengerShoes
+  - PiratePassengerNeck
+  # Pirate wardrobe end ^^^
+  #- BotanistOuterClothing
   - Glasses
   - Survival
   - Trinkets
@@ -377,7 +428,13 @@
   - GroupTankHarness
   - MusicianJumpsuit
   - CommonBackpack
-  - MusicianOuterClothing
+  # Pirate wardrobe start VVV
+  - PiratePassengerHead
+  - PiratePassengerOuterClothing
+  - PiratePassengerShoes
+  - PiratePassengerNeck
+  # Pirate wardrobe end ^^^
+  #- MusicianOuterClothing
   - Glasses
   - Survival
   - Trinkets
@@ -401,6 +458,7 @@
   - QuartermasterOuterClothing
   - QuartermasterShoes
   - Glasses
+  - CommandSelfDefense # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -458,6 +516,7 @@
   - ChiefEngineerNeck
   - ChiefEngineerOuterClothing
   - ChiefEngineerShoes
+  - CommandSelfDefense # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -473,6 +532,7 @@
   - GroupTankHarness
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
+  - TechnicalAssistantEquipment # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -492,6 +552,7 @@
   - StationEngineerOuterClothing
   - StationEngineerShoes
   - StationEngineerID
+  - StationEngineerEquipment # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -510,6 +571,7 @@
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
+  - StationEngineerEquipment # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -532,6 +594,7 @@
   - ScientistGloves
   - ResearchDirectorShoes
   - MantisEyes
+  - CommandSelfDefense # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -589,11 +652,11 @@
   - SecurityBackpack
   - SecurityMelee # Goobstation
   - SecurityWeapon # Pirate
-  - SecurityWeaponAmmo # Pirate
   - SecurityBelt
   - HeadofSecurityOuterClothing
   - HeadofSecurityShoes # Goobstation edit
   - SurvivalSecurity
+  - CommandSelfDefense # Pirate
   - Trinkets
   - SecurityStar
   - Animals
@@ -612,7 +675,6 @@
   - SecurityBackpack
   - SecurityMelee # Goobstation
   - SecurityWeapon # Pirate
-  - SecurityWeaponAmmo # Pirate
   - SecurityNeck
   - SecurityBelt
   - WardenOuterClothing
@@ -635,7 +697,6 @@
   - SecurityBackpack
   - SecurityMelee # Goobstation
   - SecurityWeapon # Pirate
-  - SecurityWeaponAmmo # Pirate
   - SecuritySecondaryWeapon # Pirate
   - SecurityOuterClothing
   - SecurityShoes
@@ -703,6 +764,7 @@
   - ChiefMedicalOfficerNeck
   - ChiefMedicalOfficerShoes
   - MedicalEyewear
+  - CommandSelfDefense # Pirate
   - SurvivalMedical
   - Trinkets
   - Animals

@@ -45,7 +45,6 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -62,7 +61,6 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -80,7 +78,6 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -97,7 +94,6 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -114,7 +110,6 @@
     - CalmTraitor
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -132,7 +127,6 @@
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
     - BasicRoundstartVariation
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -148,7 +142,6 @@
   - AntagStationEventScheduler
   - BasicRoundstartVariation
   - SubGamemodesRule
-  - LavalandStormScheduler # Lavaland Change
   - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -165,7 +158,6 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - LavalandStormScheduler
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -179,7 +171,6 @@
   minPlayers: 5
   rules:
     - CalmDynamic
-    - LavalandStormScheduler
     - PsionicEventsScheduler # Pirate
     - SubGamemodesRule
     - RareIonStormScheduler
@@ -196,7 +187,6 @@
   minPlayers: 25
   rules:
     - CombatDynamic
-    - LavalandStormScheduler
     - PsionicEventsScheduler # Pirate
     - SubGamemodesRule
     - IonStormScheduler
@@ -213,7 +203,6 @@
   showInVote: true
   rules:
     - SecretPlusLow
-    - LavalandStormScheduler
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -227,7 +216,6 @@
   showInVote: true
   rules:
     - SecretPlusMid
-    - LavalandStormScheduler
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -242,7 +230,6 @@
   showInVote: false # 1984
   rules:
     - SecretPlusAdmeme
-    - LavalandStormScheduler
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -257,7 +244,6 @@
   minPlayers: 100 # Pirate
   rules:
     - SecretPlusRampingMid
-    - LavalandStormScheduler
     - PsionicEventsScheduler # Pirate
 
 # survival+ but it has roundstart abductors and maybe thieves
@@ -273,4 +259,3 @@
   - DuoAbductorRoundstart
   - SubGamemodesRule
   - SecretPlusRampingMid
-  - LavalandStormScheduler

@@ -66,7 +66,16 @@ public sealed partial class PendingPirateRuleSystem : GameRuleSystem<PendingPira
 
     protected override void Started(EntityUid uid, PendingPirateRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
+        // Pirate edit start VVVV
+        if (!TryComp<TransformComponent>(uid, out var xform))
+        return;
+
+        var owningStation = _station.GetOwningStation(uid, xform);
+        if (owningStation == null)
+        return;
+
         base.Started(uid, component, gameRule, args);
+        // Pirate edit end ^^^^
 
         // get station
         AllEntityQuery<BecomesStationComponent, StationMemberComponent>().MoveNext(out var eqData, out _, out _);

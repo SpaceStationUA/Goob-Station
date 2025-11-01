@@ -1,0 +1,116 @@
+# Tier 1
+- type: technology
+  id: WeaponOneHandedFirearm
+  name: research-technology-one-handed-firearm
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - WeaponPistolMk58
+  position: 7,-2
+
+- type: technology
+  id: WeaponAdvancedOneHandedFirearm
+  name: research-technology-advanced-one-handed-firearm
+  icon:
+    sprite: _Pirate/Objects/Weapons/Guns/Pistols/universal.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 15000
+  recipeUnlocks:
+  - WeaponPistolUniversal
+  position: 7,-1
+  technologyPrerequisites:
+  - WeaponOneHandedFirearm
+
+# Tier 2
+- type: technology
+  id: WeaponAutomaticOneHandedFirearm
+  name: research-technology-automatic-one-handed-firearm
+  icon:
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/FPA90.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - WeaponSubMachineGunFPA90
+  - MagazineCaselessRifleStandardShort
+  - MagazineBoxCaselessRifleStandard
+  position: 7,0
+  technologyPrerequisites:
+  - WeaponAdvancedOneHandedFirearm
+
+# Tier 3
+- type: technology
+  id: WeaponBRDI
+  name: research-technology-brdi
+  icon:
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/BRDI_R25.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - WeaponSubMachineGunBRDIR25
+  - MagazineCaselessRifleStandard
+  - MagazineCaselessRifleEmpty
+  position: 8,1
+  technologyPrerequisites:
+  - WeaponAutomaticOneHandedFirearm
+
+- type: technology
+  id: WeaponHollowPointAmmo
+  name: research-technology-hollow-point-ammo
+  icon:
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Boxes/caseless_rifle.rsi
+    state: hollowpointdisplay
+  discipline: Arsenal
+  tier: 3
+  cost: 20000
+  recipeUnlocks:
+  - MagazineBoxCaselessRifle
+  - MagazineCaselessRifleShort
+  - MagazineCaselessRifle
+  position: 9,1
+  technologyPrerequisites:
+  - WeaponBRDI
+
+- type: technology
+  id: WeaponAutomaticTwoHandedFirearm
+  name: research-technology-automatic-two-handed-firearm
+  icon:
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/vulcan.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - WeaponRifleVulcanM
+  - MagazineLightRifle
+  - MagazineBoxLightRifle
+  position: 8,0
+  technologyPrerequisites:
+  - WeaponAutomaticOneHandedFirearm
+
+- type: technology
+  id: Weapon30CaliberAdvancedAmmo
+  name: research-technology-30-caliber-advanced-ammo
+  icon:
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Boxes/light_rifle.rsi
+    state: advancedammodisplay
+  discipline: Arsenal
+  tier: 3
+  cost: 20000
+  recipeUnlocks:
+  - MagazineLightRifleIncendiary
+  - MagazineLightRifleUranium
+  - MagazineBoxLightRifleIncendiary
+  - MagazineBoxLightRifleUranium
+  position: 9,0
+  technologyPrerequisites:
+  - WeaponAutomaticTwoHandedFirearm

@@ -207,6 +207,7 @@
       - id: RCD
       - id: RCDAmmo
       - id: MetalFoamGrenade
+      - id: AccessConfigurator # Pirate edit
 
 - type: entity
   id: LockerEngineerFilled
@@ -221,6 +222,7 @@
       - id: RCD
       - id: RCDAmmo
       - id: MetalFoamGrenade
+      - id: AccessConfigurator # Pirate edit
 
 - type: entity
   id: ClosetRadiationSuitFilled

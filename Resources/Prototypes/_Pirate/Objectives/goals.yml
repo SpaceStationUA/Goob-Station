@@ -47,7 +47,7 @@
     StationGoalDepartment: 1
     StationGoalPower: 1
     StationGoalStation: 1
-
+    StationGoalsSpecial: 3 # Custom Station Goals
 
 - type: weightedRandom
   id: StationGoalDepartment

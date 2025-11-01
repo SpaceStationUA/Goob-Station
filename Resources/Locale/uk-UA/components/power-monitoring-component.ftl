@@ -1,4 +1,4 @@
-power-monitoring-window-title = Консоль Моніторингу Живлення
+power-monitoring-window-title = Консоль Монiторингу Живлення
 
 power-monitoring-window-label-sources = Джерела
 power-monitoring-window-label-smes = СМЕС

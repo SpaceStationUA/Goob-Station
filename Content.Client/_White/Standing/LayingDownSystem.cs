@@ -16,6 +16,7 @@ using Content.Shared.Rotation;
 using Content.Shared.Standing;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration; // Pirate - port EE togglable under-table crawling
 using Robust.Shared.Timing;
 
 namespace Content.Client._White.Standing;
@@ -34,6 +35,26 @@ public sealed class LayingDownSystem : SharedLayingDownSystem
 
         SubscribeLocalEvent<LayingDownComponent, MoveEvent>(OnMovementInput);
     }
+
+    // Pirate start - port EE togglable under-table crawling
+    public override void Update(float frameTime)
+    {
+        // Update draw depth of laying down entities as necessary
+        var query = EntityQueryEnumerator<LayingDownComponent, StandingStateComponent, SpriteComponent>();
+        while (query.MoveNext(out var uid, out var layingDown, out var standing, out var sprite))
+        {
+            // Do not modify the entities draw depth if it's modified externally
+            if (sprite.DrawDepth != layingDown.NormalDrawDepth && sprite.DrawDepth != layingDown.CrawlingUnderDrawDepth)
+                continue;
+
+            sprite.DrawDepth = standing.CurrentState is StandingState.Lying && layingDown.IsCrawlingUnder
+                ? layingDown.CrawlingUnderDrawDepth
+                : layingDown.NormalDrawDepth;
+        }
+
+        query.Dispose();
+    }
+    // Pirate end - port EE togglable under-table crawling
 
     private void OnMovementInput(EntityUid uid, LayingDownComponent component, MoveEvent args)
     {
@@ -67,6 +88,7 @@ public sealed class LayingDownSystem : SharedLayingDownSystem
 
         rotationVisuals.HorizontalRotation = Angle.FromDegrees(90);
         sprite.Rotation = Angle.FromDegrees(90);
+
     }
 
     public override void UpdateSpriteRotation(EntityUid uid)

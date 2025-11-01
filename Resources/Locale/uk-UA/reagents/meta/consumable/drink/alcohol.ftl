@@ -312,7 +312,7 @@ reagent-name-vodka-martini = горілчаний мартіні
 reagent-desc-vodka-martini = Горілка замість джина. Не зовсім так, як любив 007, але все одно смачно.
 
 reagent-name-vodka-tonic = горілка-тонік
-reagent-desc-vodka-tonic = Коли джин-тонік недостатньо російський.
+reagent-desc-vodka-tonic = Коли джин-тонік витягли з індії та засунули в село.
 
 reagent-name-whiskey-cola = віскі-кола
 reagent-desc-whiskey-cola = Віскі, змішане з колою. Напрочуд освіжає.

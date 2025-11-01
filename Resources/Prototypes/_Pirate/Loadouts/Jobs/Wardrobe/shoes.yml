@@ -1,0 +1,131 @@
+## Other
+- type: loadout
+  id: WardrobeBootsPerformer
+  equipment:
+    shoes: ClothingShoesBootsPerformer
+  groupBy: "ShoesOther"
+
+
+- type: loadout
+  id: WardrobeUnderSocksCoder
+  equipment:
+    shoes: ClothingUnderSocksCoder
+  groupBy: "ShoesOther"
+
+
+- type: loadout
+  id: WardrobeClothwrap
+  equipment:
+    shoes: ClothingShoesClothwrap
+  groupBy: "ShoesOther"
+
+
+- type: loadout
+  id: WardrobeFlippers
+  equipment:
+    shoes: ClothingShoesFlippers
+  groupBy: "ShoesOther"
+
+
+
+## Slippers
+- type: loadout
+  id: WardrobeSlippersDuck
+  equipment:
+    shoes: ClothingShoeSlippersDuck
+  groupBy: "ShoesSlippers"
+
+
+- type: loadout
+  id: WardrobeSlippersLizard
+  equipment:
+    shoes: ClothingShoeSlippersLizard
+  groupBy: "ShoesSlippers"
+
+
+- type: loadout
+  id: WardrobeSlippers
+  equipment:
+    shoes: ClothingShoesSlippers
+  groupBy: "ShoesSlippers"
+
+
+
+## Sandals
+- type: loadout
+  id: WardrobeShoesTourist
+  equipment:
+    shoes: ClothingShoesTourist
+  groupBy: "ShoesSandals"
+
+
+- type: loadout
+  id: WardrobeSandals
+  equipment:
+    shoes: ClothingShoesSandals
+  groupBy: "ShoesSandals"
+
+
+
+## Color
+- type: loadout
+  id: WardrobeShoesColorPurple
+  equipment:
+    shoes: ClothingShoesColorPurple
+  groupBy: "ShoesColor"
+
+
+- type: loadout
+  id: WardrobeShoesColorRed
+  equipment:
+    shoes: ClothingShoesColorRed
+  groupBy: "ShoesColor"
+
+
+- type: loadout
+  id: WardrobeShoesColorOrange
+  equipment:
+    shoes: ClothingShoesColorOrange
+  groupBy: "ShoesColor"
+
+
+- type: loadout
+  id: WardrobeShoesColorGreen
+  equipment:
+    shoes: ClothingShoesColorGreen
+  groupBy: "ShoesColor"
+
+
+- type: loadout
+  id: WardrobeShoesColorYellow
+  equipment:
+    shoes: ClothingShoesColorYellow
+  groupBy: "ShoesColor"
+
+
+- type: loadout
+  id: WardrobeShoesColorBlue
+  equipment:
+    shoes: ClothingShoesColorBlue
+  groupBy: "ShoesColor"
+
+
+- type: loadout
+  id: WardrobeShoesColorWhite
+  equipment:
+    shoes: ClothingShoesColorWhite
+  groupBy: "ShoesColor"
+
+
+- type: loadout
+  id: WardrobeShoesColorBrown
+  equipment:
+    shoes: ClothingShoesColorBrown
+  groupBy: "ShoesColor"
+
+
+- type: loadout
+  id: WardrobeShoesColorBlack
+  equipment:
+    shoes: ClothingShoesColorBlack
+  groupBy: "ShoesColor"

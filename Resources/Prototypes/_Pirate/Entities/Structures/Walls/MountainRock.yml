@@ -35,3 +35,70 @@
   - type: IconSmooth
     key: walls
     base: rock_
+
+- type: entity
+  id: AsteroidAltRock
+  parent: BaseStructure
+  name: asteroid rock
+  suffix: Low Ore Yield
+  description: A rocky asteroid.
+  components:
+  - type: Gatherable
+    toolWhitelist:
+      tags:
+        - Pickaxe
+  - type: Sprite
+    sprite: _Pirate/Structures/Walls/asteroid_rock.rsi
+    state: full
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Occluder
+  - type: Airtight
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: IconSmooth
+    key: walls
+    base: rock_
+  - type: OreVein
+    oreChance: 0.2
+    oreRarityPrototypeId: RandomOreDistributionStandard
+
+- type: entity
+  id: MountainRockMining
+  parent: AsteroidAltRock
+  name: mountain rock
+  suffix: Low Yield/Higher Value Ore
+  description: A craggy mountain wall.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Walls/mountain_rock_ore.rsi
+    state: full
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: OreVein
+    oreChance: 0.20
+    oreRarityPrototypeId: RandomOreDistributionStandard

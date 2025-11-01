@@ -26,7 +26,7 @@
   path: "/Textures/_EinsteinEngines/Shaders/ethereal.swsl"
 
 - type: shader
-  id: ColorTint
+  id: PirateColorTint
   kind: source
   path: "/Textures/_EinsteinEngines/Shaders/color_tint.swsl"
 # PIRATE ^^^

@@ -106,8 +106,6 @@ public sealed class SpecialForcesSystem : EntitySystem
             }
 #endif
 
-            LastUsedTime = currentTime;
-
             CalledEvents.Add(new SpecialForcesHistory { Event = ev, RoundTime = currentTime, WhoCalled = source });
 
             var shuttle = SpawnShuttle(ev);
@@ -116,9 +114,14 @@ public sealed class SpecialForcesSystem : EntitySystem
                 return false;
             }
 
-            SpawnGhostRole(ev, shuttle.Value);
+            // For ERT and CBURN, the loaded Kokomo maps contain their own role spawners,
+            // so we do not spawn additional entities here. DeathSquad still uses manual spawning.
+            if (ev == SpecialForcesType.DeathSquad)
+                SpawnGhostRole(ev, shuttle.Value);
 
             PlaySound(ev);
+
+            LastUsedTime = currentTime;
 
             return true;
         }
@@ -264,15 +267,35 @@ public sealed class SpecialForcesSystem : EntitySystem
             _ => EtrShuttlePath
         };
 
-        var mapId = _mapManager.CreateMap();
-
-        if (!_mapLoader.TryLoadGrid(mapId, new ResPath(shuttlePath), out var gridUid))
+        // Kokomo ERT/CBURN files are full maps (category: Map), not single-grid saves.
+        // Load them as maps and pick the first grid as the shuttle grid.
+        if (ev == SpecialForcesType.ERT || ev == SpecialForcesType.CBURN)
         {
-            _mapManager.DeleteMap(mapId);
-            return null;
-        }
+            var mapOpts = DeserializationOptions.Default with { InitializeMaps = true };
+            if (!_mapLoader.TryLoadMap(new ResPath(shuttlePath), out var map, out var grids, mapOpts))
+                return null;
 
-        return gridUid;
+            // Ensure the map isn't paused (Kokomo files may serialize with mapPaused: true)
+            _mapSystem.SetPaused(map.Value.Comp.MapId, false);
+
+            var gridEnt = grids.FirstOrDefault();
+            if (gridEnt == default)
+                return null;
+
+            return gridEnt.Owner;
+        }
+        else
+        {
+            var mapId = _mapManager.CreateMap();
+            var gridOpts = DeserializationOptions.Default with { InitializeMaps = true };
+            if (!_mapLoader.TryLoadGrid(mapId, new ResPath(shuttlePath), out var gridUid, gridOpts))
+            {
+                _mapManager.DeleteMap(mapId);
+                return null;
+            }
+
+            return gridUid;
+        }
     }
 
     private void PlaySound(SpecialForcesType ev)
@@ -335,14 +358,14 @@ public sealed class SpecialForcesSystem : EntitySystem
     }
 
     [ValidatePrototypeId<EntityPrototype>] private const string SpawnMarker = "MarkerSpecialforce";
-    private const string EtrShuttlePath = "Maps/Shuttles/dart.yml";
+    private const string EtrShuttlePath = "Maps/_Pirate/Shuttles/Kokomo/ERT.yml";
     [ValidatePrototypeId<EntityPrototype>] private const string ErtLeader = "RandomHumanoidSpawnerERTLeaderEVA";
     [ValidatePrototypeId<EntityPrototype>] private const string ErtSecurity = "RandomHumanoidSpawnerERTSecurity";
     [ValidatePrototypeId<EntityPrototype>] private const string ErtEngineer = "RandomHumanoidSpawnerERTEngineer";
     [ValidatePrototypeId<EntityPrototype>] private const string ErtJanitor = "RandomHumanoidSpawnerERTJanitor";
     [ValidatePrototypeId<EntityPrototype>] private const string ErtMedical = "RandomHumanoidSpawnerERTMedical";
 
-    private const string CburnShuttlePath = "Maps/Shuttles/dart.yml";
+    private const string CburnShuttlePath = "Maps/_Pirate/Shuttles/Kokomo/CBURN.yml";
     [ValidatePrototypeId<EntityPrototype>] private const string CburnLeader = "RandomHumanoidSpawnerCBURNUnit";
     [ValidatePrototypeId<EntityPrototype>] private const string Cburn = "RandomHumanoidSpawnerCBURNUnit";
     [ValidatePrototypeId<EntityPrototype>] private const string CburnFlamer = "RandomHumanoidSpawnerCBURNUnit";
@@ -363,4 +386,5 @@ public sealed class SpecialForcesSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
 }

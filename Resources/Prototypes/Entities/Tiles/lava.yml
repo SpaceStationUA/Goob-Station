@@ -120,3 +120,12 @@
       - HideContextMenu
   - type: CosmicCorruptible # DeltaV - Cosmic Cult
     convertTo: FloorCosmicDecay
+    # PIRATE START
+  - type: Drain
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 1000
+  - type: DrainableSolution
+    solution: drainBuffer
+    # PIRATE END

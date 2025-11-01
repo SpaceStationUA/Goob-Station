@@ -108,7 +108,7 @@
 - type: startingGear
   id: ChefGear
   equipment:
-    shoes: ClothingShoesColorBlack
+    #shoes: ClothingShoesColorBlack # Pirate moved to wardrobe
     id: ChefPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltChefFilled

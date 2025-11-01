@@ -22,4 +22,4 @@ accent-words-scurret-18 = Ваааааа!
 accent-words-scurret-19 = Ваааааа?
 accent-words-scurret-20 = Ваааааа...
 
-station-event-random-sentience-flavor-scurret = скурет
+station-event-random-sentience-flavor-scurret = скуррет

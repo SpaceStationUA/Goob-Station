@@ -4,45 +4,67 @@
   storage:
     back:
     - PlushieEntony
+  groupBy: "Plushie"
 
 - type: loadout
   id: PlushieIpcCat
   storage:
     back:
     - PlushieIpcCat
+  groupBy: "Plushie"
 
 - type: loadout
   id: PlushieTK
   storage:
     back:
     - PlushieTK
+  groupBy: "Plushie"
 
 - type: loadout
   id: PlushieKateryna
   storage:
     back:
     - PlushieKateryna
+  groupBy: "Plushie"
 
 - type: loadout
   id: PlushieNicholasGray
   storage:
     back:
     - PlushieNicholasGray
+  groupBy: "Plushie"
 
 - type: loadout
   id: PlushieOlia
   storage:
     back:
     - PlushieOlia
+  groupBy: "Plushie"
 
 - type: loadout
   id: PlushieSkeleton
   storage:
     back:
     - PlushieSkeleton
+  groupBy: "Plushie"
 
 - type: loadout
   id: PlushieVulpSusie
   storage:
     back:
     - PlushieVulpSusie
+  groupBy: "Plushie"
+
+- type: loadout
+  id: PlushieTayler
+  storage:
+    back:
+    - PlushieTayler
+  groupBy: "Plushie"
+
+- type: loadout
+  id: PlushiePocketAssistant
+  storage:
+    back:
+    - PlushiePocketAssistant
+  groupBy: "Plushie"

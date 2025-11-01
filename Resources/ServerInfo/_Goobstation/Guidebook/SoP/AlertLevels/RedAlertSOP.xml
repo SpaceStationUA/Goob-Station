@@ -12,11 +12,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     [italic]Викликається: будь-ким з доступом на рівні командування на робочій консолі зв'язку.[/italic]
   </Box>
 
-  [bold]Умови:[/bold]
+  [bold]Conditions:[/bold]
 
-  На борту станції або поблизу в космосі є підтверджена ворожа загроза. Ця загроза повинна становити впізнавану небезпеку для станції та/або екіпажу в цілому.
+  There is a confirmed, hostile threat on-board the station or nearby in space. This threat should pose recognizable danger to the station and/or crew at large.
 
-  [bold]Безпека:[/bold]
+  [italic]Weak threats such as Shadowlings are not credible enough threats to elevate alert level to red, unless they have caused visible chaos.[/italic]
+
+  [bold]Security:[/bold]
 
   Персонал служби безпеки повинен ознайомитися з СОП служби безпеки щодо озброєння, збройової та процедур безпеки;
 

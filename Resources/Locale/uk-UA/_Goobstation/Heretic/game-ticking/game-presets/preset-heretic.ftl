@@ -44,3 +44,8 @@ ghostrole-prophet-desc = Допоможіть своєму призивачу д
 ghostrole-stalker-desc = Допоможіть своєму призивачу досягти вознесіння. Телепортуйтеся та саботуйте освітлення екіпажу.
 ghostrole-rustwalker-desc = Допоможіть своєму прикликачу досягти вознесіння. Поширюйте іржу всюди.
 ghostrole-ghoul-rules = Ви - [color=red][bold]Командний Антагоніст[/bold][/color] разом із тим, хто вас викликав, та іншими потойбічними істотами.
+
+ghostrole-fire-shark-name = Вогняна акула
+ghostrole-fire-shark-desc = Допоможіть своєму призивачу досягти вознесіння. Спалюйте своїх жертв.
+ghostrole-stargazer-name = Зорегляд
+ghostrole-stargazer-desc = Допоможіть своєму прикликачу сіяти хаос всюди.

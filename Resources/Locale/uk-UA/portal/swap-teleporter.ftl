@@ -5,6 +5,7 @@ swap-teleporter-popup-link-destroyed = Квантовий зв'язок знищ
 swap-teleporter-popup-teleport-cancel-time = Він все ще заряджається!
 swap-teleporter-popup-teleport-cancel-link = Він не пов'язаний з іншим пристроєм!
 swap-teleporter-popup-teleport-other = {CAPITALIZE(THE($entity))} активується, і ви опиняєтеся в іншому місці.
+# Goobstation - QSI не телепортують між картами
 
 swap-teleporter-verb-destroy-link = Знищити Квантовий Зв'язок
 
@@ -15,3 +16,5 @@ swap-teleporter-examine-time-remaining = Залишився час для під
     *[other].
 }[/color]
 
+
+swap-teleporter-popup-teleport-fail = {CAPITALIZE(THE($entity))}, здається, нічого не робить...

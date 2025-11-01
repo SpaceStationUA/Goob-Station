@@ -74,7 +74,6 @@
     - SpaceTrafficControlEventScheduler
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -91,7 +90,6 @@
     - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -116,7 +114,6 @@
     - Changeling # Goobstation - changeling playtest
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -148,7 +145,6 @@
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
     - Changeling # Goobstation - changeling playtest
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
     - Shadowling # Einstein Engines - Shadowlings
 
@@ -165,7 +161,6 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - LavalandStormScheduler # Lavaland Change
   - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -179,7 +174,6 @@
   rules:
   - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
-  - LavalandStormScheduler # Lavaland Change
   - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -193,7 +187,6 @@
   rules:
     - Secret
     - BasicStationEventScheduler
-    # - LavalandStormScheduler # Lavaland Change # All possible secret choices already contain this
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -208,7 +201,6 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - LavalandStormScheduler # Lavaland Change
     - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -221,7 +213,6 @@
   rules:
   - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
-  - LavalandStormScheduler # Lavaland Change
   - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -251,7 +242,6 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - LavalandStormScheduler # Lavaland Change
   - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -282,7 +272,6 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - LavalandStormScheduler # Lavaland Change
   - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -302,7 +291,6 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - LavalandStormScheduler # Lavaland Change
   - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -322,7 +310,6 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - LavalandStormScheduler # Lavaland Change
   - PsionicEventsScheduler # Pirate
 
 - type: gamePreset
@@ -340,5 +327,4 @@
   - KesslerSyndromeScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - LavalandStormScheduler # Lavaland Change
   - PsionicEventsScheduler # Pirate

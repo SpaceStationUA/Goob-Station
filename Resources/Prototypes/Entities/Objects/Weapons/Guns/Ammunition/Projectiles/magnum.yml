@@ -72,7 +72,7 @@
       types:
         Blunt: 3
   - type: StaminaDamageOnCollide
-    damage: 35
+    damage: 40
 # PIRATE END
 
 - type: entity

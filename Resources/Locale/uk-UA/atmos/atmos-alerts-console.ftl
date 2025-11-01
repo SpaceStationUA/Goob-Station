@@ -1,4 +1,4 @@
-atmos-alerts-window-title = Комп'ютер атмосферних попереджень
+atmos-alerts-window-title = Комп'ютер атмосферних сповiщень
 atmos-alerts-window-station-name = [color=white][font size=14]{$stationName}[/font][/color]
 atmos-alerts-window-unknown-location = Невідоме місцезнаходження
 

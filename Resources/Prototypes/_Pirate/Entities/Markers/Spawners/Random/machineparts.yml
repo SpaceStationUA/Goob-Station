@@ -1,0 +1,18 @@
+- type: entity
+  name: Salvage Parts Spawner
+  id: SalvagePartsSpawnerMid
+  suffix: High
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Misc/stock_parts.rsi
+          state: advanced_matter_bin
+    - type: RandomSpawner
+      prototypes:
+        - MicroManipulatorStockPart
+        - CrateMaterialSteel
+        - CrateMaterialGlass
+      chance: 0.50
+      offset: 0.0

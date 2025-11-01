@@ -21,4 +21,4 @@ admin-logs-search-logs-placeholder = Пошук у Логах
 admin-logs-refresh = Оновити
 admin-logs-next = Далі
 
-admin-logs-export = Експорт
+admin-logs-export = Експортувати
