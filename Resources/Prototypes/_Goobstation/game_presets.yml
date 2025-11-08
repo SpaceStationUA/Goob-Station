@@ -133,8 +133,8 @@
   id: Blob
   alias:
   - blab
-  name: "крапля"
-  description: "опис краплі"
+  name: blob-title
+  description: blob-description
   showInVote: false
   rules:
   - BlobGameMode

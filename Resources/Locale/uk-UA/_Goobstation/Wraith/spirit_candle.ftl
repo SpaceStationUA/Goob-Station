@@ -1,0 +1,1 @@
+construction-graph-candle = свічка

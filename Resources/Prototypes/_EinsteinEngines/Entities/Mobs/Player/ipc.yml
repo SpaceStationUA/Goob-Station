@@ -26,8 +26,8 @@
 - type: entity
   id: MobIPC
   parent: PlayerSiliconHumanoidBase
-  name: "Уріст МакПозитронік"
-  description: "Позитронний мозок у металевому тілі."
+  name: Urist McPositronic
+  description: A positronic brain in a metal body.
   components:
   - type: LanguageKnowledge # Einstein Engines - Languages
     speaks:
@@ -182,6 +182,8 @@
         Slash: -15
   - type: DamagedSiliconAccent
   - type: Uncloneable
+  - type: OwnInteractionVerbs
+    allowedVerbs: []
   - type: Sprinter # Goob Change: slight nerf to speed because heavy robot, mass contest when
     sprintSpeedMultiplier: 1.2
   - type: Tag
@@ -195,11 +197,11 @@
     - IPCDrinkBlacklist # Goobstation - Energycrit: Don't let self antagging IPCs steal power from other ipcs.
 - type: entity
   save: false
-  name: "Уріст МакПозитронік"
+  name: Urist McPositronic
   parent: MobHumanDummy
   id: MobIPCDummy
   categories: [ HideSpawnMenu ] # Goobstation
-  description: "Манекен ІПШ, призначений для використання в налаштуванні персонажа."
+  description: A dummy IPC meant to be used in character setup.
   components:
   - type: HumanoidAppearance
     species: IPC

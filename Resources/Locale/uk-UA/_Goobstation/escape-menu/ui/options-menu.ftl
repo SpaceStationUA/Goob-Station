@@ -8,3 +8,6 @@ ui-options-coalesce-identical-messages = Об'єднувати однакові 
 ui-options-detailed-examine = Показувати детальний текст огляду
 
 ui-options-hud-theme-coscult = Космічний Культ
+
+ui-options-preferences = Налаштування
+ui-options-auto-focus-search-on-build-menu = Автоматично фокусувати поле пошуку при відкритті меню будівництва

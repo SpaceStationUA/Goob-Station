@@ -172,8 +172,8 @@
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
   id: BaseBorgChassisNotIonStormable
-  name: "кіборг"
-  description: "Гібрид людини та машини, що допомагає в діяльності станції. Вони люблять, коли їх просять повторювати свої закони знову і знову."
+  name: cyborg
+  description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
   save: false
   abstract: true
   components:
@@ -452,6 +452,7 @@
   - type: Penetratable # Goobstation - Better snipers
     penetrateDamage: 75 # It's harder to kill iron golem
     damagePenalty: 0.25
+  - type: MiningPoints # goobstation borgs can claim mining points
 
 - type: entity
   abstract: true
@@ -500,6 +501,7 @@
   - type: SurveillanceCamera # they act like cameras for the mothership
     networkSet: true
     nameSet: True
+    mobile: True # Goobstation - mobile cameras fix, borg camera not really relevant since monitor doesn't see it anyways but eh
     id: Xenoborg
   - type: Explosive
     explosionType: Minibomb
@@ -609,8 +611,8 @@
 - type: entity
   parent: BaseBorgChassisNotIonStormable
   id: BaseXenoborgChassis
-  name: "ксеноборг"
-  description: "Гібрид людини та машини, що прагне до самовідтворення. Вони люблять витягувати мізки, щоб вставляти їх у свіжі шасі ксеноборгів для розширення своєї армії."
+  name: xenoborg
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army.
   save: false
   abstract: true
   components:

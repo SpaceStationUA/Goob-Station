@@ -160,6 +160,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Content.Client._White.ItemSlotRenderer;
+using Content.Client._Pirate.Changelog;
 
 namespace Content.Client.Entry
 {
@@ -202,6 +203,8 @@ namespace Content.Client.Entry
         public override void Init()
         {
             ClientContentIoC.Register();
+
+            IoCManager.Register<PirateChangelogManager, PirateChangelogManager>(true); //TODO: make own EntryPoints
 
             foreach (var callback in TestingCallbacks)
             {

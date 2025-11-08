@@ -200,3 +200,4 @@ marking-HumanHairShaped = У формі
 
 marking-HumanHairBAlt = Зачіска Джинкс
 marking-HumanHairLongWithBangs = Довге з чубчиком
+marking-HumanHairNiko = Ніко

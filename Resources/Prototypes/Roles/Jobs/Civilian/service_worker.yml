@@ -100,7 +100,7 @@
 - type: startingGear
   id: ServiceWorkerGear
   equipment:
-    #shoes: ClothingShoesColorBlack # Pirate moved to wardrobe
+    shoes: ClothingShoesColorBlack
     id: ServiceWorkerPDA
     ears: ClothingHeadsetService
   #storage:

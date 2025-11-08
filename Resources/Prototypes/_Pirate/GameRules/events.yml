@@ -9,3 +9,83 @@
   - type: Tag
     tags:
     - MidroundAntag
+
+- type: entity
+  parent: BaseGameRule
+  id: VampireEvent
+  components:
+  - type: StationEvent
+    weight: 3
+    earliestStart: 25
+    reoccurrenceDelay: 60
+    minimumPlayers: 15
+    maxOccurrences: 2
+    duration: 1
+    chaos:
+      Hostile: 75
+      Medical: 50
+      Death: 50
+    eventType: HostilesSpawn
+  - type: GameRule
+    chaosScore: 200
+  - type: VampireRule
+  - type: AntagSelection
+    selectionTime: PostPlayerSpawn
+    agentName: vampire-roundend-name
+    definitions:
+    - prefRoles: [ Vampire ]
+      min: 1
+      max: 1
+      playerRatio: 20
+      chaosScore: 200
+      jobBlacklist: [ Chaplain ]
+      blacklist:
+        components:
+        - CommandStaff
+        - AntagImmune
+        - Changeling
+        - BibleUser
+      briefing:
+        text: vampire-role-greeting
+        color: Red
+        sound: /Audio/_Pirate/Ambience/Antag/vampire_start.ogg
+      mindRoles:
+      - MindRoleVampire
+
+- type: entity
+  parent: Vampire
+  id: VampireMidround
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    weight: 2
+    minimumPlayers: 5
+    duration: null
+    occursDuringRoundEnd: false
+    chaos:
+      Hostile: 100
+      Medical: 50
+      Death: 50
+    eventType: HostilesSpawn
+  - type: GameRule
+    chaosScore: 100
+  - type: AntagSelection
+    selectionTime: PostPlayerSpawn
+    agentName: vampire-roundend-name
+    definitions:
+    - prefRoles: [ Vampire ]
+      max: 1
+      playerRatio: 15
+      blacklist:
+        components:
+        - CommandStaff
+        - AntagImmune
+        - BibleUser
+        - Changeling
+      lateJoinAdditional: true
+      jobBlacklist: [ Chaplain ]
+      mindRoles:
+      - MindRoleVampire
+  - type: Tag
+    tags:
+      - MidroundAntag

@@ -1,4 +1,4 @@
-# Потрібний награний час для отримання зброї
+## Потрібний награний час для отримання зброї
 - type: loadoutEffectGroup
   id: Inspector
   effects:
@@ -13,26 +13,17 @@
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:RoleTimeRequirement
-      role: JobSecurityOfficer
+      !type:DepartmentTimeRequirement
+      department: Security
       time: 36000 # 10 годин
-
-- type: loadoutEffectGroup
-  id: Senior Constable
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobSecurityOfficer
-      time: 72000 # 20 годин
 
 - type: loadoutEffectGroup
   id: Corporal
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:RoleTimeRequirement
-      role: JobSecurityOfficer
+      !type:DepartmentTimeRequirement
+      department: Security
       time: 108000 # 30 годин
 
 - type: loadoutEffectGroup
@@ -46,35 +37,11 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobSecurityOfficer
-      time: 108000 # 30 годин
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
       role: JobWarden
       time: 21600 # 6 годин
 
 - type: loadoutEffectGroup
-  id: Staff Sergeant
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Security
-      time: 288000 # 80 годин
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobSecurityOfficer
-      time: 108000 # 30 годин
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobWarden
-      time: 36000 # 10 годин
-
-- type: loadoutEffectGroup
-  id: Warrant Officer
+  id: WarrantOfficer
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
@@ -84,16 +51,11 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobSecurityOfficer
-      time: 108000 # 30 годин
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
       role: JobWarden
       time: 36000 # 10 годин
 
 
-# Зброя
+## Зброя
 - type: loadout
   id: LoadoutSecurityWeaponMk58
   dummyEntity: WeaponPistolMk58
@@ -114,10 +76,20 @@
     - SpeedLoaderMagnum
 
 - type: loadout
+  id: LoadoutSecurityEnergyGunPistol
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Sergeant
+  storage:
+    back:
+    - WeaponEnergyGunPistol
+
+# Зброя старшого офіцера
+- type: loadout
   id: LoadoutSecurityPistolN1984
   effects:
   - !type:GroupLoadoutEffect
-    proto: Senior Constable
+    proto: Sergeant
   dummyEntity: WeaponPistolN1984
   storage:
     back:
@@ -128,7 +100,7 @@
   id: LoadoutSecurityPistolUniversalNonLethal
   effects:
   - !type:GroupLoadoutEffect
-    proto: Sergeant
+    proto: WarrantOfficer
   dummyEntity: WeaponPistolUniversalSecurityNonLethal
   storage:
     back:
@@ -140,56 +112,10 @@
   id: LoadoutSecurityPistolUniversal
   effects:
   - !type:GroupLoadoutEffect
-    proto: Sergeant
+    proto: WarrantOfficer
   dummyEntity: WeaponPistolUniversalSecurity
   storage:
     back:
     - WeaponPistolUniversalSecurity
     - MagazineUniversalMagnum
   groupBy: "PistolUniversal"
-
-# Другорядна зброя
-- type: loadout
-  id: LoadoutSecurityEnergyGunMini
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Constable
-  storage:
-    back:
-    - WeaponEnergyGunMini
-
-- type: loadout
-  id: LoadoutSecurityEnergyGun
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Sergeant
-  storage:
-    back:
-    - WeaponEnergyGun
-
-- type: loadout
-  id: LoadoutSecurityDisablerSMG
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Sergeant
-  storage:
-    back:
-    - WeaponDisablerSMG
-
-- type: loadout
-  id: LoadoutSecurityEnergyGunPistol
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Staff Sergeant
-  storage:
-    back:
-    - WeaponEnergyGunPistol
-
-- type: loadout
-  id: LoadoutSecurityGunLaserCarbineAutomatic
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Warrant Officer
-  storage:
-    back:
-    - WeaponGunLaserCarbineAutomatic

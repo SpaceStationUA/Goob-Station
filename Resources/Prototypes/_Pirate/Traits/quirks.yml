@@ -115,6 +115,8 @@
       - Pill
       - Crayon
       - Paper
+  - type: WeakToHoly
+    alwaysTakeHoly: true
 
 - type: trait
   id: BloodDeficiency

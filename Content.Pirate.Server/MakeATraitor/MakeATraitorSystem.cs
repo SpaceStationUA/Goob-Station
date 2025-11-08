@@ -17,6 +17,9 @@ namespace Content.Pirate.Server.MakeATraitor
             Heretic = 4,
             Blob = 5,
             Wizard = 6,
+            // Pirate start
+            Vampire = 7,
+            // Pirate end
         }
 
         [ValidatePrototypeId<EntityPrototype>]
@@ -33,6 +36,11 @@ namespace Content.Pirate.Server.MakeATraitor
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string DefaultHereticRule = "Heretic";
+
+        // Pirate start
+        [ValidatePrototypeId<EntityPrototype>]
+        private const string DefaultVampireRule = "Vampire";
+        // Pirate end
 
         [Dependency] private readonly AntagSelectionSystem _antag = default!;
 
@@ -66,6 +74,11 @@ namespace Content.Pirate.Server.MakeATraitor
                 case TraitorType.Wizard:
                     MakeWizard(player);
                     break;
+                // Pirate start
+                case TraitorType.Vampire:
+                    MakeVampire(player);
+                    break;
+                // Pirate end
                 default:
                     return;
             }
@@ -103,6 +116,15 @@ namespace Content.Pirate.Server.MakeATraitor
                 target,
                 DefaultChangelingRule);
         }
+
+        // Pirate start
+        private void MakeVampire(ICommonSession? target)
+        {
+            _antag.ForceMakeAntag<Content.Server._Pirate.GameTicking.Rules.Components.VampireRuleComponent>(
+                target,
+                DefaultVampireRule);
+        }
+        // Pirate end
 
         private void MakeHeretic(ICommonSession? target)
         {

@@ -3,6 +3,7 @@ using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared._Shitmed.Damage;
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas.Components;
+using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Alert;
 using Content.Shared.Body.Components;
@@ -78,11 +79,13 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
             if (!SolutionContainer.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 continue;
 
+            // Pirate change: Moved blood regeneration to its own system. See Content.Server/_Pirate/Blood/BloodRegenerationPirateSystem.cs
             // Adds blood to their blood level if it is below the maximum; Blood regeneration. Must be alive.
-            if (bloodSolution.Volume < bloodSolution.MaxVolume && !_mobStateSystem.IsDead(uid))
-            {
-                TryModifyBloodLevel((uid, bloodstream), bloodstream.BloodRefreshAmount);
-            }
+            //if (bloodSolution.Volume < bloodSolution.MaxVolume && !_mobStateSystem.IsDead(uid))
+            //{
+            //    TryModifyBloodLevel((uid, bloodstream), bloodstream.BloodRefreshAmount);
+            //}
+            // Pirate ^^^
 
             // Removes blood from the bloodstream based on bleed amount (bleed rate)
             // as well as stop their bleeding to a certain extent.
@@ -150,12 +153,19 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
             var total = FixedPoint2.Zero;
             foreach (var (bodyPart, _) in _body.GetBodyChildren(uid))
             {
+                var totalPartBleeds = FixedPoint2.Zero; // Goobstation
                 foreach (var (wound, _) in _wound.GetWoundableWounds(bodyPart))
                 {
                     if (!TryComp<BleedInflicterComponent>(wound, out var bleeds))
                         continue;
 
                     total += bleeds.BleedingAmount;
+                    totalPartBleeds = bleeds.BleedingAmount; // Goobstation
+                }
+
+                if (TryComp<WoundableComponent>(bodyPart, out var woundable)) // Goobstation
+                {
+                    woundable.Bleeds = totalPartBleeds; // Goobstation
                 }
             }
 

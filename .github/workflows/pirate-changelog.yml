@@ -1,0 +1,52 @@
+# SPDX-FileCopyrightText: 2025 CrateTheDragon <dragon.felcon@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: Pirate Changelog
+
+on:
+  pull_request_target:
+    types: [closed]
+
+jobs:
+  pirate_changelog:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install Dependencies
+        run: |
+          cd Tools/changelog
+          npm install
+        shell: bash
+        continue-on-error: true
+
+      - name: Install js-yaml
+        run: |
+          npm install js-yaml
+        shell: bash
+        continue-on-error: true
+
+      - name: Generate Pirate Changelog
+        run: |
+          node Tools/pirate_changelog/generate_pirate_changelog.js
+        shell: bash
+
+      - name: Commit Pirate Changelog
+        run: |
+          git config --global user.name "Pirate Changelog Bot"
+          git config --global user.email "pirate-bot@example.com"
+          git add Resources/Changelog/pirate.yml
+          git commit -m "Update pirate.yml from PR #${{ github.event.number }}" || echo "No changes to commit"
+          git push
+        shell: bash

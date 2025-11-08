@@ -76,6 +76,12 @@
   - LanguageKnowledge
   - ForeignerTrait
   # Einstein Engines - Language end
+  # Pirate start
+  - Lightweight
+  - LightStep
+  - Vampirism
+  - BloodDeficiency
+  # Pirate end
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit
@@ -106,7 +112,7 @@
 
 - type: entity
   id: RandomCloneSpawner
-  name: "Спавнер випадкового клона"
+  name: Random Clone
   suffix: Non-Antag
   components:
   - type: Sprite

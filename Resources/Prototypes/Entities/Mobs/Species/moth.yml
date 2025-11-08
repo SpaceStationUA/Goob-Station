@@ -119,7 +119,7 @@
 
 - type: entity
   save: false
-  name: "Уріст МакФлафф"
+  name: Urist McFluff
   parent: BaseMobSpeciesOrganic
   id: BaseMobMoth
   abstract: true
@@ -202,8 +202,8 @@
     noRot: true
     drawdepth: Mobs
     layers:
-      - map: [ "enum.HumanoidVisualLayers.Chest" ]
       - map: [ "enum.HumanoidVisualLayers.Groin" ]
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
       - map: [ "enum.HumanoidVisualLayers.Head" ]
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]

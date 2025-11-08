@@ -33,3 +33,4 @@ nukeops-role-agent = Агент
 nukeops-role-operator = Оперативник
 
 nukeops-briefing = Ваші цілі прості. Доставте вантаж і переконайтеся, що він детонує. Почати місію.
+nukeops-roundend-name = ядерний оперативник

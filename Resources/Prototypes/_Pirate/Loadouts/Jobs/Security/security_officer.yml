@@ -1,0 +1,5 @@
+# Mask - Маски
+- type: loadout
+  id: BlackBalaclava
+  equipment:
+    mask: Balaclava

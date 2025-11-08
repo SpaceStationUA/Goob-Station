@@ -38,7 +38,7 @@
 
 - type: entity
   save: false
-  name: "Уріст МакВульп"
+  name: Urist McVulp
   parent: BaseMobSpeciesOrganic
   id: BaseMobVulpkanin
   abstract: true
@@ -70,8 +70,8 @@
     noRot: true
     drawdepth: Mobs
     layers:
-      - map: [ "enum.HumanoidVisualLayers.Chest" ]
       - map: [ "enum.HumanoidVisualLayers.Groin" ]
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
       - map: [ "enum.HumanoidVisualLayers.Head" ]
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
@@ -158,11 +158,11 @@
 
 - type: entity
   save: false
-  name: "Манекен Вульпи"
+  name: Vulpkanin Dummy
   parent: MobHumanDummy
   id: MobVulpkaninDummy
   categories: [ HideSpawnMenu ]
-  description: "Фіктивна вульпа, призначена для використання в налаштуванні персонажа."
+  description: A dummy vulpkanin meant to be used in character setup.
   components:
   - type: HumanoidAppearance
     species: Vulpkanin

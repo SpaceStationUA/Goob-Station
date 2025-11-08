@@ -29,10 +29,10 @@
 
 # Surplus Voidsuits
 
-uplink-hardsuit-syndiemedic-name = Агентський скафандр «Gorlex»
+uplink-hardsuit-syndiemedic-name = Скафандр агента Горлекс
 uplink-hardsuit-syndiemedic-desc = Набір із залишків бойового медичного скафандра від Мародерів Gorlex.
 
-uplink-hardsuit-syndiecommander-name = Командирський скафандр «Gorlex»
+uplink-hardsuit-syndiecommander-name = Скафандр командира Горлекс
 uplink-hardsuit-syndiecommander-desc = Залишки командирського скафандра від Мародерів Gorlex. Занадто громіздкий для набору, тому балони не включені!
 
 # Стелс Cybersun
@@ -89,7 +89,7 @@ uplink-contractor-baton-name = Кийок підрядника
 uplink-contractor-baton-desc = Компактний, спеціалізований кийок, що видається підрядникам Синдикату. Завдає легких електричних ударів по цілях. Ці удари здатні впливати на внутрішні схеми більшості роботів, викликаючи короткочасне оглушення.
 
 uplink-weapon-burner-name = Важка гвинтівка «Burner»
-uplink-weapon-burner-desc = Важка гвинтівка «Burner» — чудова зброя для прориву та придушення.
+uplink-weapon-burner-desc = Важка гвинтівка Burner — чудова зброя для прориву та подавлення.
 
 uplink-weapon-heavy-shotgun-name = Важкий дробовик NZ CSG-242
 uplink-weapon-heavy-shotgun-desc = Безжальна важка вибухова зброя. Віддача при пострілі настільки сильна, що може збити вас з ніг.
@@ -118,7 +118,7 @@ uplink-anaconda-desc = Гордість збройового концерну Cy
 uplink-bulk-mosin-name = Ящик з гвинтівками Синдикату
 uplink-bulk-mosin-desc = 10 гвинтівок часів ЧС4 для озброєння вас, ваших друзів та вашого кота. Економія 40% на доставці при купівлі оптом.
 
-uplink-whimsy-bundle-name = Набір «Радість і химерність» Синдикату
+uplink-whimsy-bundle-name = Набір Синдикату «Радість і витівки»
 uplink-whimsy-bundle-desc = ВИ любите поширювати радість та химерність? Що ж, Donk Co. має рішення для вас! Містить ЛІМІТОВАНУ сокиру та достатньо цукерок, щоб убити людину.
 
 uplink-m7s-name = M7S "Вентилятор"
@@ -128,9 +128,7 @@ uplink-combat-shotgun-name = Бойовий дробовик «Боєвич»
 uplink-combat-shotgun-desc = Потужний помповий дробовик під 8-й калібр, з магазином на 5 патронів.
 
 uplink-he1sg8-bundle-name = Набір HE1S-G8
-uplink-he1sg8-bundle-desc = Набір високоенергетичної однозарядної гвинтівки. Поставляється з 10 руйнівними та 9 гіперзарядженими патронами Гаус-8 для додаткових веселощів.
-
-# Боєприпаси
+uplink-he1sg8-bundle-desc = Набір гвинтівки High Energy One-Shell. Містить 10 руйнівних і 9 гіперзаряджених набоїв Gauss-8 для ще більшого фану
 
 uplink-blast-grenade-name = Фугасна граната (40мм)
 uplink-blast-grenade-desc = Більша шкода, менший радіус. Сумісна з China-Lake.
@@ -160,10 +158,10 @@ uplink-shotgun-magazine-slug-name = Барабан для дробовика (12
 uplink-shotgun-magazine-slug-desc = Барабан для дробовика на 8 кульових набоїв. Сумісний з Bulldog.
 
 uplink-high-caliber-magazine-name = Магазин для гвинтівки (.50 бронебійний)
-uplink-high-caliber-magazine-desc = Магазин для важкої гвинтівки на 15 набоїв. Сумісний з «Burner».
+uplink-high-caliber-magazine-desc = Магазин для важкої гвинтівки на 15 набоїв. Сумісний із Burner.
 
 uplink-high-caliber-explosive-magazine-name = Магазин для гвинтівки (.50 БЗП)
-uplink-high-caliber-explosive-magazine-desc = Магазин для важкої гвинтівки на 15 бронебійно-запалювальних набоїв. Сумісний з «Burner».
+uplink-high-caliber-explosive-magazine-desc = Магазин для важкої гвинтівки з 15 фугасно-запальними набоями. Сумісний із Burner.
 
 uplink-high-caliber-box-name = Ящик з набоями .50
 uplink-high-caliber-box-desc = Ящик з 30 бронебійними набоями калібру .50.
@@ -177,8 +175,8 @@ uplink-heavy-shotgun-magazine-desc = Магазин для дробовика з
 uplink-heavy-shotgun-magazine-slug-name = Барабан для важкого дробовика (2 калібр, фугасна куля)
 uplink-heavy-shotgun-magazine-slug-desc = Магазин для дробовика з 15 фугасними шрапнельними кулями. Сумісний з NZ CSG-242.
 
-uplink-m7s-mag-name = Бічний магазин для ПП (5×23 мм)
-uplink-m7s-mag-desc = Магазин на 48 патронів 5×23 мм. Сумісний з M7S.
+uplink-m7s-mag-name = Боковий магазин для ПП (5×23 мм)
+uplink-m7s-mag-desc = Магазин на 48 набоїв 5×23 мм. Сумісний із M7S.
 
 uplink-cartridge-G8-demolishing-name = Руйнівний патрон G8
 uplink-cartridge-G8-demolishing-desc = Цей патрон стріляє кулею "Спис Ареса", руйнуючи цілі ряди стін, завдаючи величезної шкоди витривалості людям і перевантажуючи енергетичні вихори. Використовується HE1S-G8.

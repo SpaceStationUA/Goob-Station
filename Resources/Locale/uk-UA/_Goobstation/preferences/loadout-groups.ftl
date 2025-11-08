@@ -53,3 +53,10 @@ loadout-group-brigmedic-backpack = Рюкзак бригмедика
 loadout-group-security-melee = Холодна зброя служби безпеки
 
 loadout-group-animals = Тварини
+loadout-group-roboticist-head = Головний убір робототехніка
+loadout-group-roboticist-jumpsuit = Комбінезон робототехніка
+loadout-group-roboticist-backpack = Рюкзак робототехніка
+loadout-group-roboticist-outerclothing = Верхній одяг робототехніка
+loadout-group-roboticist-gloves = Рукавички робототехніка
+loadout-group-roboticist-shoes = Взуття робототехніка
+loadout-group-roboticist-id = ID робототехніка

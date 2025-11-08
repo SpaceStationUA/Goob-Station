@@ -8,3 +8,8 @@
   cash :
     1: SpaceCash
   displayName: store-currency-display-space-cash
+
+- type: currency
+  id: BloodEssence
+  displayName: store-currency-display-blood-essence
+  canWithdraw: false

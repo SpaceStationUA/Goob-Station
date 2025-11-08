@@ -50,8 +50,8 @@
 - type: entity
   id: Window
   parent: BaseStructure
-  name: "вікно"
-  description: "Чисто."
+  name: window
+  description: Don't smudge up the glass down there.
   placement:
     mode: SnapgridCenter
     snap:
@@ -141,14 +141,11 @@
   - type: StaticPrice
     price: 100
   - type: BlockWeather
-  - type: InteractionVerbs #Pirate
-    allowedVerbs:
-    - KnockOn
 
 - type: entity
   parent: Window
   id: TintedWindow
-  name: "тоноване вікно"
+  name: tinted window
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -177,8 +174,8 @@
 - type: entity
   id: WindowDirectional
   parent: BaseStructure
-  name: "спрямоване вікно"
-  description: "Чисто."
+  name: directional window
+  description: Don't smudge up the glass down there.
   placement:
     mode: SnapgridCenter
     snap:
@@ -266,7 +263,7 @@
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
   - type: StaticPrice
-    price: 15
+    price: 10
 
 - type: entity
   id: WindowDirectionalRCDResistant
@@ -279,8 +276,8 @@
 - type: entity
   id: WindowFrostedDirectional
   parent: WindowDirectional
-  name: "спрямоване матове вікно"
-  description: "Чисто."
+  name: directional frosted window
+  description: Don't smudge up the glass down there.
   placement:
     mode: SnapgridCenter
     snap:

@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "базова кулька"
+  name: base balloon
   parent: BaseStructureDynamic
   id: BaseBalloon       # Base balloon
   abstract: true # Make sure it doesn't appear
@@ -41,19 +41,13 @@
 
 # Red Balloon
 - type: entity
-  name: "червона кулька"
+  name: red balloon
   parent: BaseBalloon
-  description: "Найслабша кулька."
-  id: redBalloon
+  description: The weakest balloon.
+  id: RedBalloon
   components:
   - type: Sprite
     state: red
-  - type: MobState # To get mobs to attack:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: Destructible
     thresholds:
     - trigger:
@@ -70,25 +64,19 @@
         spawn:
           SpaceCash:
             min: 10
-            max: 15
+            max: 20
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
 # Blue Balloon
 - type: entity
-  name: "синя кулька"
+  name: blue balloon
   parent: BaseBalloon
-  description: "Досить спокійна кулька."
-  id: blueBalloon
+  description: A pretty chill balloon.
+  id: BlueBalloon
   components:
   - type: Sprite
     state: blue
-  - type: MobState # To get mobs to attack:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: Destructible
     thresholds:
     - trigger:
@@ -104,9 +92,9 @@
       - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
          spawn:
           SpaceCash:
-            min: 10
-            max: 15
-          redBalloon:
+            min: 5
+            max: 10
+          RedBalloon:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -114,19 +102,13 @@
 
 # Green Balloon
 - type: entity
-  name: "зелена кулька"
+  name: green balloon
   parent: BaseBalloon
-  description: "Найбільш стратегічно мисляча кулька з усіх. Здатна планувати просунуті хвилі, якби тільки мала шлях для проходження."
-  id: greenBalloon
+  description: The most strategically minded balloon of the bunch. Capable of planning advanced waves, if only it had a track to follow.
+  id: GreenBalloon
   components:
   - type: Sprite
     state: green
-  - type: MobState # To get mobs to attack:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: Destructible
     thresholds:
     - trigger:
@@ -142,9 +124,9 @@
       - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
          spawn:
           SpaceCash:
-            min: 10
-            max: 15
-          blueBalloon:
+            min: 5
+            max: 10
+          BlueBalloon:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -152,19 +134,13 @@
 
 # Yellow Balloon
 - type: entity
-  name: "жовта кулька"
+  name: yellow balloon
   parent: BaseBalloon
-  description: "Найжадібніша кулька, завжди хизується своїм багатством перед іншими кульками."
-  id: yellowBalloon
+  description: The greediest balloon, always flaunting its wealth to the other balloons.
+  id: YellowBalloon
   components:
   - type: Sprite
     state: yellow
-  - type: MobState # To get mobs to attack:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: Destructible
     thresholds:
     - trigger:
@@ -180,9 +156,9 @@
       - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
          spawn:
           SpaceCash:
-            min: 10
-            max: 15
-          greenBalloon:
+            min: 5
+            max: 10
+          GreenBalloon:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -190,19 +166,13 @@
 
 # Pink Balloon
 - type: entity
-  name: "рожева кулька"
+  name: pink balloon
   parent: BaseBalloon
-  description: "Найбільш надокучлива і нестерпна кулька."
-  id: pinkBalloon
+  description: The most annoying and insufferable balloon.
+  id: PinkBalloon
   components:
   - type: Sprite
     state: pink
-  - type: MobState # To get mobs to attack:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: Destructible
     thresholds:
     - trigger:
@@ -218,9 +188,9 @@
       - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
          spawn:
           SpaceCash:
-            min: 10
-            max: 15
-          yellowBalloon:
+            min: 5
+            max: 10
+          YellowBalloon:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -228,19 +198,13 @@
 
 # Black Balloon
 - type: entity
-  name: "чорна кулька"
+  name: black balloon
   parent: BaseBalloon
-  description: "Найгостріша кулька, так і не вийшла зі своєї емо-фази. Імунітет до теплової та шокової шкоди!"
-  id: blackBalloon
+  description: The edgiest balloon, never grew out of its emo phase. Immune to heat and shock damage!
+  id: BlackBalloon
   components:
   - type: Sprite
     state: black
-  - type: MobState # To get mobs to attack:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: Damageable
     damageContainer: BlackBalloon
   - type: Destructible
@@ -258,28 +222,22 @@
       - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
          spawn:
           SpaceCash:
-            min: 10
-            max: 15
-          pinkBalloon:
+            min: 1
+            max: 3
+          PinkBalloon:
             min: 2
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 # White Balloon
 - type: entity
-  name: "біла кулька"
+  name: white balloon
   parent: BaseBalloon
-  description: "Найбільш беземоційна кулька. Їй навіть не дали власного імені, лише мету. Імунітет до холодової шкоди!"
-  id: whiteBalloon
+  description: The most emotionless balloon. Isn't even given a proper name, only a purpose. Immune to cold damage!
+  id: WhiteBalloon
   components:
   - type: Sprite
     state: white
-  - type: MobState # To get mobs to attack:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: Damageable
     damageContainer: WhiteBalloon
   - type: Destructible
@@ -297,9 +255,9 @@
       - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
          spawn:
           SpaceCash:
-            min: 10
-            max: 15
-          pinkBalloon:
+            min: 1
+            max: 3
+          PinkBalloon:
             min: 2
             max: 2
       - !type:DoActsBehavior
@@ -307,19 +265,13 @@
 
 # Zebra Balloon
 - type: entity
-  name: "кулька-зебра"
+  name: zebra balloon
   parent: BaseBalloon
-  description: "Їй місце в зоопарку. Імунітет до будь-якої шкоди від опіків!"
-  id: zebraBalloon
+  description: Belongs in a zoo. Immune to all burn damage!
+  id: ZebraBalloon
   components:
   - type: Sprite
     state: zebra
-  - type: MobState # To get mobs to attack:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: Damageable
     damageContainer: ZebraBalloon
   - type: Destructible
@@ -337,12 +289,12 @@
       - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
          spawn:
           SpaceCash:
-            min: 10
-            max: 15
-          whiteBalloon:
+            min: 1
+            max: 3
+          WhiteBalloon:
             min: 1
             max: 1
-          blackBalloon:
+          BlackBalloon:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -350,10 +302,10 @@
 
 # steel balloon
 - type: entity
-  name: "сталева кулька"
+  name: steel balloon
   parent: BaseBalloon
-  description: "Найбільш броньована кулька. Настільки страшна, що навіть тварини на неї не нападають. Імунітет до грубої шкоди!"
-  id: steelBalloon
+  description: The most armored balloon. So feared that even animals don't attack it. Immune to brute damage!
+  id: SteelBalloon
   components:
   - type: Sprite
     state: steel
@@ -377,9 +329,9 @@
       - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
          spawn:
           SpaceCash:
-            min: 10
-            max: 15
-          blackBalloon:
+            min: 1
+            max: 3
+          BlackBalloon:
             min: 2
             max: 2
       - !type:DoActsBehavior
@@ -387,19 +339,13 @@
 
 # rainbow balloon
 - type: entity
-  name: "райдужна кулька"
+  name: rainbow balloon
   parent: BaseBalloon
-  description: "Найзліша кулька з усіх. Не дозволяйте гарним кольорам обдурити вас."
-  id: rainbowBalloon
+  description: The most evil balloon of them all. Don't let the pretty colors fool you.
+  id: RainbowBalloon
   components:
   - type: Sprite
     state: rainbow
-  - type: MobState # To get mobs to attack:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
   - type: Destructible
     thresholds:
     - trigger:
@@ -415,10 +361,144 @@
       - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
          spawn:
           SpaceCash:
-            min: 10
-            max: 15
-          zebraBalloon:
+            min: 1
+            max: 3
+          ZebraBalloon:
             min: 2
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+        # Bloons 2
+- type: entity
+  name: carp balloon
+  parent: BaseBalloon
+  description: Is it a combination of balloon and carp DNA? Or a balloon in a carp suit? Nobody knows.
+  id: CeramicBalloon
+  components:
+  - type: Sprite
+    state: carp
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10        # balloon health
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/_Goobstation/BalloonEffect/balloon_pop.ogg
+          params:
+            variation: 0.125
+            volume: -4
+      - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
+         spawn:
+          SpaceCash:
+            min: 1
+            max: 3
+          RainbowBalloon:
+            min: 2
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+# This fucking kills server performance
+#- type: entity
+#  name: dragon zepplin
+#  parent: BaseBalloon
+#  description: Tier 1 Moab Class Balloon. Summons four carp balloons on death.
+#  id: MoabBalloon
+#  components:
+#  - type: Sprite
+#    sprite: _Goobstation/Objects/Fun/moabs.rsi # Had to change RSI due to different pixel dimensions
+#    state: dragon
+#    noRot: false
+#  - type: Transform
+#  - type: Rotatable
+#  - type: Destructible
+#    thresholds:
+#    - trigger:
+#        !type:DamageTrigger
+#        damage: 50     # balloon health, Nerfed asf
+#      behaviors:
+#      - !type:PlaySoundBehavior
+#        sound:
+#          path: /Audio/_Goobstation/BalloonEffect/balloon_pop.ogg
+#          params:
+#            variation: 0.125
+#            volume: -4
+#      - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
+#         spawn:
+#          SpaceCash:
+#            min: 1
+#            max: 3
+#          CeramicBalloon:
+#            min: 4
+#            max: 4
+#      - !type:DoActsBehavior
+#        acts: [ "Destruction" ]
+#
+#- type: entity
+#  name: B.R.B.
+#  parent: BaseBalloon
+#  description: Tier 2 Moab Class Balloon. Stands for Blood Red Balloon.
+#  id: BfbBalloon
+#  components:
+#  - type: Sprite
+#    sprite: _Goobstation/Objects/Fun/moabs.rsi # Had to change RSI due to different pixel dimensions
+#    state: brb
+#    noRot: false
+#  - type: Destructible
+#    thresholds:
+#    - trigger:
+#        !type:DamageTrigger
+#        damage: 75       # balloon health
+#      behaviors:
+#      - !type:PlaySoundBehavior
+#        sound:
+#          path: /Audio/_Goobstation/BalloonEffect/balloon_pop.ogg
+#          params:
+#            variation: 0.125
+#            volume: -4
+#      - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
+#         spawn:
+#          SpaceCash:
+#            min: 1
+#            max: 3
+#          MoabBalloon:
+#            min: 4
+#            max: 4
+#      - !type:DoActsBehavior
+#        acts: [ "Destruction" ]
+#
+#- type: entity
+#  name: Z.O.M.B.
+#  parent: BaseBalloon
+#  description: Tier 3 Moab Class Balloon. Stands for Zoh Oh Mbee Balloon. The Acronym department was underfunded.
+#  id: ZomgBalloon
+#  components:
+#  - type: Sprite
+#    sprite: _Goobstation/Objects/Fun/moabs.rsi # Had to change RSI due to different pixel dimensions
+#    state: zomb
+#    noRot: false
+#  - type: Destructible
+#    thresholds:
+#    - trigger:
+#        !type:DamageTrigger
+#        damage: 100       # balloon health
+#      behaviors:
+#      - !type:PlaySoundBehavior
+#        sound:
+#          path: /Audio/_Goobstation/BalloonEffect/balloon_pop.ogg
+#          params:
+#            variation: 0.125
+#            volume: -4
+#      - !type:SpawnEntitiesBehavior # Balloon Loot and spawn
+#         spawn:
+#          SpaceCash:
+#            min: 1
+#            max: 3
+#          BfbBalloon:
+#            min: 4
+#            max: 4
+#      - !type:DoActsBehavior
+#        acts: [ "Destruction" ]
+#

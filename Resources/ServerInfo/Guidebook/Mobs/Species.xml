@@ -15,31 +15,32 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <Document>
   # Види
 
-  Nanotrasen наймає різноманітні розумні види.
+  Nanotrasen працевлаштовує різноманітні розумні види.
 
   <Box>
-  <GuideEntityEmbed Entity="MobArachnid" Caption="Арахнід"/>
-  <GuideEntityEmbed Entity="MobDiona" Caption="Діона"/>
-  <GuideEntityEmbed Entity="MobDwarf" Caption="Гном"/>
-  <GuideEntityEmbed Entity="MobGingerbread" Caption="Пряник"/>
+    <GuideEntityEmbed Entity="MobArachnid" Caption="Арахнід"/>
+    <GuideEntityEmbed Entity="MobDiona" Caption="Діона"/>
+    <GuideEntityEmbed Entity="MobDwarf" Caption="Дворф"/>
+    <GuideEntityEmbed Entity="MobGingerbread" Caption="Імбирний пряник"/>
     <GuideEntityEmbed Entity="MobHarpy" Caption="Гарпія"/>
   </Box>
   <Box>
-  <GuideEntityEmbed Entity="MobHuman" Caption="Людина"/>
-  <GuideEntityEmbed Entity="MobIPCDummy" Caption="ІПШ"/>
-  <GuideEntityEmbed Entity="MobMoth" Caption="Людина-міль"/>
-  <GuideEntityEmbed Entity="MobOni" Caption="Оні"/>
-  <GuideEntityEmbed Entity="MobReptilian" Caption="Рептилоїд"/>
-  <GuideEntityEmbed Entity="MobResomi" Caption="Ресомі"/>
-  <GuideEntityEmbed Entity="MobRodentia" Caption="Родентія"/>
+    <GuideEntityEmbed Entity="MobHuman" Caption="Людина"/>
+    <GuideEntityEmbed Entity="MobIPCDummy" Caption="IPC"/>
+    <GuideEntityEmbed Entity="MobMoth" Caption="Людина-міль"/>
+    <GuideEntityEmbed Entity="MobOni" Caption="Оні"/>
+    <GuideEntityEmbed Entity="MobReptilian" Caption="Рептилоїд"/>
+    <GuideEntityEmbed Entity="MobResomi" Caption="Резомі"/>
+    <GuideEntityEmbed Entity="MobRodentia" Caption="Родентія"/>
   </Box>
   <Box>
-  <GuideEntityEmbed Entity="MobSlimePerson" Caption="Слизовик"/>
-  <GuideEntityEmbed Entity="MobTajaran" Caption="Таджаран"/>
-  <GuideEntityEmbed Entity="MobVox" Caption="Вокс"/>
-  <GuideEntityEmbed Entity="MobVulpkanin" Caption="Вулпканін"/>
-  <GuideEntityEmbed Entity="MobYowie" Caption="Йові"/>
-  <GuideEntityEmbed Entity="MobChitinid" Caption="Хітинид"/>
+    <GuideEntityEmbed Entity="MobSlimePerson" Caption="Людина-слизень"/>
+    <GuideEntityEmbed Entity="MobTajaran" Caption="Таджаран"/>
+    <GuideEntityEmbed Entity="MobVox" Caption="Вокс"/>
+    <GuideEntityEmbed Entity="MobVulpkanin" Caption="Вулпканін"/>
+    <GuideEntityEmbed Entity="MobYowie" Caption="Яуї"/>
+    <GuideEntityEmbed Entity="MobChitinid" Caption="Хітинід"/>
+    <GuideEntityEmbed Entity="MobFeroxi" Caption="Фероксі"/>
   </Box>
 
 </Document>

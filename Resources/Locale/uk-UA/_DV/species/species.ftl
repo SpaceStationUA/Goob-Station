@@ -15,3 +15,4 @@ species-name-harpy = Гарпія
 species-name-rodentia = Родентія
 
 species-name-chitinid = Хітиноїд
+species-name-feroxi = Фероксі

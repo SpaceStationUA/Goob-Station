@@ -6,8 +6,8 @@
 
 - type: entity
   id: ChronoPortal
-  name: "тахіонний портал"
-  description: "Виглядає футуристично."
+  name: tachyon portal
+  description: Looks futuristic.
   parent: [ BasePortal, BaseShadow ]
   components:
   - type: Portal
@@ -27,40 +27,3 @@
     volume: -3
     sound:
       path: /Audio/Ambience/ambitech2.ogg
-
-- type: entity
-  id: HellPortal
-  name: "пекельний портал"
-  description: "Куди б це не вело, добром це не скінчиться, виглядає дуже нестабільно, ніби може закритися будь-якої секунди."
-  parent: [ BasePortal, BaseShadow ]
-  components:
-  - type: Portal
-    canTeleportToOtherMaps: true
-    randomTeleport: false
-    arrivalSound: /Audio/Items/hiss.ogg
-    departureSound: /Audio/Items/hiss.ogg
-  - type: Sprite
-    sprite: /Textures/_Goobstation/Effects/portal.rsi
-    state: portal-hell
-    color: "#a00404"
-  - type: PointLight
-    color: "#a00404"
-    radius: 5
-    energy: 5
-    netsync: false
-  - type: AmbientSound
-    range: 6
-    volume: -3
-    sound:
-      path: /Audio/Ambience/anomaly_scary.ogg
-  - type: HellPortal
-  - type: TimedDespawn
-    lifetime: 50
-
-- type: entity
-  id: PortalHellExit
-  name: "Вихід з пекельного порталу"
-  suffix: DO NOT MAP
-  description: "Мабуть, це була подорож в один кінець..."
-  components:
-  - type: HellPortalExit

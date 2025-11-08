@@ -48,7 +48,8 @@
   - Atmospherics
   - GenpopEnter
   - GenpopLeave
-  - Mantis
+  - Robotics #Goob
+  - Mantis # Pirate
 
 - type: accessGroup
   id: General

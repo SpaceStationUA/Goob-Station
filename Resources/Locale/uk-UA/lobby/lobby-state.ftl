@@ -9,8 +9,7 @@ lobby-state-player-status-not-ready = Не готовий
 lobby-state-player-status-ready = Готовий
 lobby-state-player-status-observer = Спостерігач
 lobby-state-player-status-round-not-started = Раунд ще не почався
-lobby-state-player-status-round-time =
-    Час раунду: {$hours} {$hours ->
+lobby-state-player-status-round-time = Час раунду: {$hours} {$hours ->
     [1]година
     *[other]годин
     } та {$minutes} {$minutes ->
@@ -22,8 +21,7 @@ lobby-state-song-no-song-text = У лобі не грає пісня.
 lobby-state-song-unknown-title = [color=dimgray]Невідома Пісня[/color]
 lobby-state-song-unknown-artist = [color=dimgray]Невідомого Автору[/color]
 
-lobby-state-playtime-comment-normal =
-    Ви сьогодні провели в грі {$hours} {$hours ->
+lobby-state-playtime-comment-normal = Сьогодні ви провели у грі {$hours} {$hours ->
     [1]годину
     *[other]годин
     }. Не забувайте робити перерви!

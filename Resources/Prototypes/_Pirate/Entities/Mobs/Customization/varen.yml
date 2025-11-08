@@ -4,7 +4,7 @@
   bodyPart: Hair
   markingCategory: Hair
   speciesRestriction: [Vulpkanin]
-#  playerRestriction: [Vareniko]
+  playerRestriction: [Vareniko]
   sprites:
   - sprite: _Pirate/Mobs/Customization/varen/hair.rsi
     state: susieHair
@@ -15,7 +15,7 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Vulpkanin]
-#  playerRestriction: [Vareniko, v0id_]
+  playerRestriction: [Vareniko, v0id_]
   sprites:
   - sprite: _Pirate/Mobs/Customization/varen/tail_fan.rsi
     state: tail_fan_wag

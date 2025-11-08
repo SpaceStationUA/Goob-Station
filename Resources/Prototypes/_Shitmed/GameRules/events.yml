@@ -23,9 +23,9 @@
   - type: StationEvent
     earliestStart: 15
     reoccurrenceDelay: 45
-    weight: 5 # Goobstation - 7.5 -> 5
-    minimumPlayers: 9999
-    duration: 1
+    weight: 0 # Pirate no abductor
+    minimumPlayers: 10
+    duration: null # Goobstation - chud
     chaos:
       Hostile: 75
       Medical: 75
@@ -123,9 +123,9 @@
   - type: StationEvent
     earliestStart: 15
     reoccurrenceDelay: 45
-    weight: 4.5 # Goobstation - 7.5 -> 4.5
-    minimumPlayers: 9999
-    duration: 1
+    weight: 0 # Pirate no abductor
+    minimumPlayers: 20
+    duration: null # Goobstation - chud
     chaos:
       Hostile: 150
       Medical: 150

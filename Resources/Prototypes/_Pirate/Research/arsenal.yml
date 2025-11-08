@@ -71,7 +71,7 @@
     state: hollowpointdisplay
   discipline: Arsenal
   tier: 3
-  cost: 20000
+  cost: 15000
   recipeUnlocks:
   - MagazineBoxCaselessRifle
   - MagazineCaselessRifleShort
@@ -88,7 +88,7 @@
     state: icon
   discipline: Arsenal
   tier: 3
-  cost: 15000
+  cost: 30000
   recipeUnlocks:
   - WeaponRifleVulcanM
   - MagazineLightRifle
@@ -105,7 +105,7 @@
     state: advancedammodisplay
   discipline: Arsenal
   tier: 3
-  cost: 20000
+  cost: 10000
   recipeUnlocks:
   - MagazineLightRifleIncendiary
   - MagazineLightRifleUranium

@@ -1,4 +1,41 @@
 - type: entity
+  id: PsionicEventsScheduler
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+  - type: PsionicEventsScheduler
+    delayMin: 900  # 15 minutes
+    delayMax: 1200  # 20 minutes
+    psionicEvents:
+    - AnomalySpawnGlimmer
+    - BaseGlimmerSignature
+    - GlimmerMiteSpawn
+    - GlimmerRandomSentience
+    - GlimmerRevenantSpawn
+    - GlimmerWispSpawn
+    - MassMindSwap
+    - MassMindSwapTemporal
+    - NoosphericFry
+    - NoosphericStorm
+    - NoosphericZap
+    - PsionicCatGotYourTongue
+
+- type: entity
+  id: AnomalySpawnGlimmer
+  parent: BaseGlimmerSignature
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: GlimmerEvent
+      minimumGlimmer: 500
+      glimmerBurnLower: 50
+      glimmerBurnUpper: 150
+    - type: AnomalySpawnRule
+    - type: StationEvent
+      startAnnouncementColor: "#18abf5"
+      startAudio:
+        path: /Audio/Announcements/announce.ogg
+
+- type: entity
   id: BaseGlimmerSignature
   parent: BaseGameRule
   components:
@@ -8,91 +45,15 @@
   - type: GlimmerEvent
 
 - type: entity
-  id: NoosphericStorm
-  parent: BaseGlimmerSignature
-  components:
-  - type: NoosphericStormRule
-    maxAwaken: 3
-    baseGlimmerAddMin: 65
-    baseGlimmerAddMax: 85
-  - type: GlimmerEvent
-    minimumGlimmer: 300
-    glimmerBurnLower: 25
-    glimmerBurnUpper: 70
-
-- type: entity
-  id: NoosphericZap
-  parent: BaseGlimmerSignature
-  components:
-  - type: NoosphericZapRule
-    stunDuration: 5.0
-    stutterDuration: 10.0
-    powerRerollMultiplier: 0.25
-  - type: GlimmerEvent
-    minimumGlimmer: 200
-    glimmerBurnLower: 15
-    glimmerBurnUpper: 40
-
-- type: entity
-  id: NoosphericFry
-  parent: BaseGlimmerSignature
-  components:
-  - type: NoosphericFryRule
-    fryHeadgearMinorThreshold: 750.0
-    fryHeadgearMajorThreshold: 900.0
-  - type: GlimmerEvent
-    minimumGlimmer: 500
-    glimmerBurnLower: 30
-    glimmerBurnUpper: 60
-
-- type: entity
   id: GlimmerMiteSpawn
   parent: BaseGlimmerSignature
   components:
   - type: GlimmerMobRule
     mobPrototype: MobGlimmerMite
   - type: GlimmerEvent
-    minimumGlimmer: 400
+    minimumGlimmer: 300
     glimmerBurnLower: 20
     glimmerBurnUpper: 50
-
-- type: entity
-  id: GlimmerWispSpawn
-  parent: BaseGlimmerSignature
-  components:
-  - type: StationEvent
-    eventType: Neutral
-  - type: GameRule
-  - type: GlimmerMobRule
-    mobPrototype: MobGlimmerWisp
-  - type: GlimmerEvent
-    minimumGlimmer: 600
-    glimmerBurnLower: 30
-    glimmerBurnUpper: 70
-
-- type: entity
-  id: GlimmerRevenantSpawn
-  parent: BaseGlimmerSignature
-  components:
-    - type: GlimmerRevenantRule
-    - type: GlimmerEvent
-      minimumGlimmer: 900
-      glimmerBurnLower: 750
-      glimmerBurnUpper: 950
-
-- type: entity
-  id: PsionicCatGotYourTongue
-  parent: BaseGlimmerSignature
-  components:
-  - type: PsionicCatGotYourTongueRule
-    minDuration: 20
-    maxDuration: 80
-    sound:
-      path: /Audio/Nyanotrasen/Voice/Felinid/cat_scream1.ogg
-  - type: GlimmerEvent
-    minimumGlimmer: 100
-    glimmerBurnLower: 10
-    glimmerBurnUpper: 30
 
 - type: entity
   id: GlimmerRandomSentience
@@ -107,14 +68,38 @@
     glimmerBurnUpper: 55
 
 - type: entity
+  id: GlimmerRevenantSpawn
+  parent: BaseGlimmerSignature
+  components:
+    - type: GlimmerRevenantRule
+    - type: GlimmerEvent
+      minimumGlimmer: 900
+      glimmerBurnLower: 750
+      glimmerBurnUpper: 950
+
+- type: entity
+  id: GlimmerWispSpawn
+  parent: BaseGlimmerSignature
+  components:
+  - type: StationEvent
+    eventType: Neutral
+  - type: GameRule
+  - type: GlimmerMobRule
+    mobPrototype: MobGlimmerWisp
+  - type: GlimmerEvent
+    minimumGlimmer: 600
+    glimmerBurnLower: 100
+    glimmerBurnUpper: 150
+
+- type: entity
   id: MassMindSwap
   parent: BaseGlimmerSignature
   categories: [ HideSpawnMenu ]
   components:
     - type: GlimmerEvent
       minimumGlimmer: 700
-      glimmerBurnLower: 200
-      glimmerBurnUpper: 400 # Unless epistemics badly f-d up, this will restore the glimmer balance for a while.
+      glimmerBurnLower: 100
+      glimmerBurnUpper: 200
     - type: MassMindSwapRule
       isTemporary: false
 
@@ -126,43 +111,58 @@
     - type: GlimmerEvent
       minimumGlimmer: 900
       glimmerBurnLower: 750
-      glimmerBurnUpper: 950 # Unless epistemics badly f-d up, this will restore the glimmer balance for a while.
+      glimmerBurnUpper: 950
     - type: MassMindSwapRule
       isTemporary: true
 
 - type: entity
-  id: AnomalySpawnGlimmer
+  id: NoosphericFry
   parent: BaseGlimmerSignature
-  categories: [ HideSpawnMenu ]
   components:
-    - type: GlimmerEvent
-      minimumGlimmer: 400
-      glimmerBurnLower: 50
-      glimmerBurnUpper: 150
-    - type: AnomalySpawnRule
-    - type: StationEvent
-      startAnnouncementColor: "#18abf5"
-      startAudio:
-        path: /Audio/Announcements/announce.ogg
+  - type: NoosphericFryRule
+    fryHeadgearMinorThreshold: 750.0
+    fryHeadgearMajorThreshold: 900.0
+  - type: GlimmerEvent
+    minimumGlimmer: 500
+    glimmerBurnLower: 30
+    glimmerBurnUpper: 60
 
 - type: entity
-  id: PsionicEventsScheduler
-  parent: BaseGameRule
+  id: NoosphericStorm
+  parent: BaseGlimmerSignature
   components:
-  - type: GameRule
-  - type: PsionicEventsScheduler # This is also changing by glimmer
-    delayMin: 600  # 10 minutes
-    delayMax: 900  # 15 minutes
-    psionicEvents:
-    - NoosphericStorm
-    - NoosphericZap
-    - NoosphericFry
-    - GlimmerMiteSpawn
-    - GlimmerWispSpawn
-    - GlimmerRevenantSpawn
-    - PsionicCatGotYourTongue
-    - GlimmerRandomSentience
-    - MassMindSwap
-    - MassMindSwapTemporal
-    - BaseGlimmerSignature
-    - AnomalySpawnGlimmer
+  - type: NoosphericStormRule
+    maxAwaken: 3
+    baseGlimmerAddMin: 65
+    baseGlimmerAddMax: 85
+  - type: GlimmerEvent
+    minimumGlimmer: 200
+    glimmerBurnLower: 25
+    glimmerBurnUpper: 70
+
+- type: entity
+  id: NoosphericZap
+  parent: BaseGlimmerSignature
+  components:
+  - type: NoosphericZapRule
+    stunDuration: 5.0
+    stutterDuration: 10.0
+    powerRerollMultiplier: 0.25
+  - type: GlimmerEvent
+    minimumGlimmer: 100
+    glimmerBurnLower: 15
+    glimmerBurnUpper: 40
+
+- type: entity
+  id: PsionicCatGotYourTongue
+  parent: BaseGlimmerSignature
+  components:
+  - type: PsionicCatGotYourTongueRule
+    minDuration: 20
+    maxDuration: 80
+    sound:
+      path: /Audio/Nyanotrasen/Voice/Felinid/cat_scream1.ogg
+  - type: GlimmerEvent
+    minimumGlimmer: 200
+    glimmerBurnLower: 10
+    glimmerBurnUpper: 30

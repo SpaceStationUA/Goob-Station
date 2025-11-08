@@ -96,7 +96,7 @@
 - type: startingGear
   id: LibrarianGear
   equipment:
-    #shoes: ClothingShoesBootsLaceup # Pirate moved to wardrobe
+    shoes: ClothingShoesBootsLaceup
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d20Dice

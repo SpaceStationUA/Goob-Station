@@ -6,7 +6,7 @@
 
 - type: entity
   id: WizardMirror
-  name: "чарівне дзеркало"
+  name: magic mirror
   description: 'Mirror mirror on the wall , who''s the most robust of them all?'
   suffix: Wizard
   components:
@@ -43,6 +43,7 @@
     - Tajaran
     - Shadowkin
     - Chitinid
+    - Feroxi
   - type: ActivatableUI
     key: enum.WizardMirrorUiKey.Key
     singleUser: true
