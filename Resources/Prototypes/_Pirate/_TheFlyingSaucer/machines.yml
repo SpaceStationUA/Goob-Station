@@ -35,61 +35,185 @@
     - Evidence
     - ConclusionsAndDecisions
     - ErrorDocument
-    - SecurityBoardsStaticGoob
-    - MedicalBoardsStaticGoob
-    - MedicalBoardsGoob
-    - EngineeringBoardsGoob
-    - MiningToolsStatic
-    - SalvageExplosivesStatic
-    - MiningWeapons
-    - MiningBoards
-    - MiningUpgrades
-    - HumanoidCubesStatic
-    - EmagCubesStatic
-    - BiofabPartsStatic
-    - BiofabPartsEmagStatic
-    - ClothingCasualJumpsuits
-    - ClothingDurathreadArmoured
-    - ClothingCasualContrabandJumpsuits
+
+    - SecurityAmmo
+    - SecurityExplosives
+    - SecurityEquipment
+    - SecurityWeapons
+    - SecurityDisablers
+    - SecurityBoards
+    - SecurityPracticeStatic
+    - SecurityEquipmentStatic
+    - SecurityAmmoStatic
+    - SecurityWeaponsStatic
+    - SecurityHypoStatic
+    - SecurityWeaponsNonEmaggableStaticGoob
     - SecurityAmmoStaticGoob
     - SecurityEquipmentStaticGoob
-    - SecurityHypoStatic
-    - SecurityWeaponsStaticGoob
-    - SecurityWeaponsNonEmaggableStaticGoob
     - SecurityWeaponsGoob
     - SecurityAmmoGoob
     - SecurityEquipmentDynamicGoob
     - SecurityCybernetics
+    - SecurityBoardsStaticGoob
+    - SecurityAmmoStaticPirate
+    - SecurityAmmoPirate
+    - SecurityWeaponsPirate
+    - SalvageSecurityBoards
+    - SalvageSecurityWeapons
     - RestraintTechnology
-    - BluespaceTheory
-    - ExperimentalScienceGoob
-    - IPCPartsStatic
-    - BorgModulesStaticGoob
+
+    - TopicalsStatic
+    - ChemistryStatic
+    - Chemistry
+    - MedicalStatic
+    - RollerBedsStatic
+    - MedicalClothingStatic
+    - EmptyMedkitsStatic
+    - SurgeryStatic
+    - ParamedHypoStatic
+    - MedicalPatchesStatic
+    - SurgeryStaticGoob
+    - MedicalVehiclesStatic
+    - MedicalBoardsStatic
+    - MedicalBoardsStaticGoob
+    - MedicalCybernetics
+    - EnvirosuitExtinguisherRefill
+    - MedicalMisc
+    - MedicalMiscRestricted
+    - MedicalVehiclesAdvanced
+    - MedicalBoards
+    - Genetics
+
+    - ToolsStatic
+    - AdvancedTools
+    - PartsStatic
+    - CablesStatic
+    - PowerCellsStatic
+    - PowerCells
     - PowerCagesStatic
-    - Modsuits
-    - BorgModulesGoob
     - PowerCages
-    - BasicCybernetics
-    - AdvancedCybernetics
-    - SyndicateAmmoLightStatic
-    - SyndicateAmmoHeavyStatic
-    - LatheMiscStatic
-    - SyndicateCatridgesStatic
-    - ProtoLatheMiscStatic
-    - SpecOpsGoogles
-    - Pinpointers
+    - EngineeringBoardsStatic
+    - EngineeringBoards
+    - AtmosStatic
+    - AtmosTools
+    - ConstructionBagOfHolding
+    - NailsStatic
+    - FauxTiles
+    - CircuitFloorsStatic
+
+    - RoboticsStatic
+    - Robotics
+    - BorgLimbsStatic
+    - BorgModulesStatic
+    - BorgModules
+    - BorgModulesStaticGoob
+    - BorgModulesGoob
+    - IPCPartsStatic
+    - Modsuits
     - MechPartsStatic
+    - MechParts
+    - MechPartsGoob
+    - MechEquipment
     - MechWeaponsSecurityStatic
     - MechWeaponsSecurityLight
     - MechWeaponsSecurityHeavy
-    - MechPartsGoob
     - MechWeaponsSalvage
     - MechWeaponsCivilian
     - MechBoardsSecurity
     - MechBoardsCargo
     - MechBoardsCivilian
     - MechBoardsScience
+    - MechBoards
+    - PowerAugments
+    - ToolAugments
+    - BasicCybernetics
+    - AdvancedCybernetics
+    - MedicalCybernetics
+
+    - BluespaceTheory
+    - ExperimentalScienceGoob
+    - ScienceBoardsStatic
+    - ScienceBoards
+    - ScienceExplosives
+    - ScienceClothing
+    - ScienceWeapons
+    - ScienceEquipment
+    - Translators
+    - TranslatorImplanters
+
+    - MiningToolsStatic
+    - SalvageExplosivesStatic
+    - MiningWeapons
+    - MiningBoards
+    - MiningUpgrades
+    - OreSmelting
+    - RGlassSmelting
+    - AdvancedSmelting
+
+    - CargoStatic
+    - CargoBoardsStatic
+    - CargoBoards
+    - ServiceStatic
+    - ServiceBoardsStatic
+    - ServiceBoards
+    - Janitor
+    - Equipment
+    - Instruments
+    - Carpets
+    - Bedsheets
+    - RollerBedsStatic
+    - LightsStatic
+
+    - ClothingCivilian
+    - ClothingCargo
+    - ClothingCommand
+    - ClothingEngineering
+    - ClothingMedical
+    - ClothingScience
+    - ClothingSecurity
+    - ClothingService
+    - WinterCoats
+    - Ties
+    - Scarves
+    - ClothingCasualJumpsuits
+    - ClothingCommandSummer
+    - ClothingCentComm
+    - ClothingSyndie
+    - ClothingDurathreadArmoured
+    - ClothingCasualContrabandJumpsuits
+
+    - FriendlyCubesStatic
+    - HumanoidCubesStatic
+    - HostileCubesStatic
+    - EmagCubesStatic
+    - BiofabPartsStatic
+    - BiofabPartsEmagStatic
+    - BioGenIngredientsStatic
+    - BioGenMaterialsStatic
+
+    - ShuttleBoards
+    - ShuttleBoardsGoob
+    - SharedBoards
+    - SharedBoardsStatic
+    - CameraBoards
+
+    - SpecOpsGoogles
+    - SyndicateAmmoLightStatic
+    - SyndicateAmmoHeavyStatic
+    - SyndicateCatridgesStatic
+
+    - GrenadeTriggersStatic
+    - TapeRecorderStatic
+    - MiscSignallersStatic
+    - LatheMiscStatic
+    - ProtoLatheMiscStatic
+    - LatheMiscStatic
+    - PowerCellsStatic
+    - BiofabPartsStatic
   - type: MaterialStorage
+    dropOnDeconstruct: true
+    ignoreColor: true
+    canEjectStoredMaterials: true
     whitelist:
       tags:
       - Sheet
@@ -97,10 +221,14 @@
       - Ingot
       - BSCrystal
       - Document
+      - Raw
+      - Wooden
+      - Boll
+      - Metal
+      - Plastic
     connectToSilo: false
     storage:
       SheetPrinter: 0
-
 
 - type: latheRecipePack
   id: RickPack
