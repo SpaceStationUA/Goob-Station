@@ -178,10 +178,10 @@
   - type: ApcVisuals
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 2500
+    autoRechargeRate: 55000
   - type: Battery
     maxCharge: 500000
-    startingCharge: 0
+    startingCharge: 50000
   - type: ExaminableBattery
   - type: NodeContainer
     examinable: true
@@ -214,10 +214,10 @@
     inHandsOnly: false
     key: enum.ApcUiKey.Key
   - type: PowerNetworkBattery
-    maxSupply: 200000
-    maxChargeRate: 200000
-    supplyRampTolerance: 30000
-    supplyRampRate: 1000
+    maxSupply: 750000
+    maxChargeRate: 25000
+    supplyRampTolerance: 25000
+    supplyRampRate: 5000
   - type: WallMount
   - type: WiresPanel
   - type: WiresVisuals
@@ -237,10 +237,11 @@
     guides:
     - VoltageNetworks
     - Power
+  - type: Battery
+    maxCharge: 250000
+    startingCharge: 250000
   - type: BatteryDrinkerSource # EE IPCs
-    maxAmount: 100000
-  - type: PowerSupplier
-    supplyRate: 6000
+    maxAmount: 40000
 
 - type: entity
   parent: DoorElectronics
