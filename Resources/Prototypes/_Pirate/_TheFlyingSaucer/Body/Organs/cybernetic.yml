@@ -1,0 +1,109 @@
+- type: entity
+  parent: BaseCyberneticOrgan
+  id: RickUpgradedCyberneticEyes
+  name: покращенні кібернетичні очі
+  description: Пара кібернетичних очей, які покращують зір і захищають від пошкодження очей, з інтегрованими SecHUD, MedHUD і діагностичним HUD.
+  components:
+  - type: Cybernetics
+  - type: Sprite
+    sprite: _Shitmed/Mobs/Species/Misc/Cybernetics/organs.rsi
+    state: eyes
+  - type: Organ
+    intCap: 23
+    integrity: 23
+    integrityThresholds:
+      Normal: 23
+      Damaged: 12
+      Destroyed: 0
+    slotId: eyes
+    onAdd:
+    - type: ShowJobIcons
+    - type: ShowMindShieldIcons
+    - type: ShowCriminalRecordIcons
+    - type: FlashImmunity
+    - type: EyeProtection
+      damageContainers:
+      - Inorganic
+      - Silicon
+      - SiliconRadiation
+      - Biological
+    - type: ShowHealthIcons
+      damageContainers:
+      - Inorganic
+      - Silicon
+      - SiliconRadiation
+      - Biological
+  - type: Tag
+    tags:
+    - Eyes
+  - type: Eyes
+
+- type: entity
+  parent: SyndicateJumpstarterHeart
+  id: RickUpgradedHeart
+  components:
+  - type: Organ
+    onAdd:
+    - type: PassiveDamage
+      allowedStates:
+      - Alive
+      - Critical
+      damageCap: 150
+      damage:
+        groups:
+          Brute: -0.14
+          Burn: -0.14
+          Airloss: -0.14
+          Toxin: -0.14
+          Genetic: -0.14
+    - type: PressureImmunity
+    - type: BreathingImmunity
+    - type: StepTriggerImmune
+      whitelist:
+        types:
+        - Shard
+        - Landmine
+        - Mousetrap
+        - Lava
+        - Chasm
+        - SlipTile
+        - SlipEntity
+        - ContrabandDetector
+    - type: VentCrawler
+      allowInventory: true
+    - type: Repairable
+      fuelCost: 5
+      doAfterDelay: 3
+      damage:
+        types:
+          Blunt: -10
+          Piercing: -10
+          Slash: -10
+
+
+    onRemove: # Pirate
+    - type: PassiveDamage
+    - type: PressureImmunity
+    - type: BreathingImmunity
+    - type: StepTriggerImmune
+    - type: VentCrawler
+    - type: Repairable
+
+
+
+- type: entity
+  id: RickUpgradedBrain
+  parent: OrganHumanBrain
+  name: Покращенний мозок
+  description: "Знання цієї та ближайших галактик заховані глибоко в цьому мозгу."
+  components:
+  - type: Organ
+    slotId: brain # Shitmed Change
+    onAdd:
+    - type: Tag
+      tags:
+      - CyberManMechanics
+    - type: ActionGrant
+      actions:
+      - ActionRickCyber
+    onRemove:
