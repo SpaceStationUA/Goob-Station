@@ -45,7 +45,7 @@
 
 - type: entity
   save: false
-  name: Urist McSkelly
+  name: "Уріст МакСкеллі"
   parent:
   - MobFlammable
   - BaseMobSpecies
@@ -179,6 +179,7 @@
     - Undead
   - type: TypingIndicator
     proto: skeleton
+  - type: FacehuggerImmune # Goobstation - Xenomorphs
 
 - type: entity
   parent: BaseSpeciesDummy

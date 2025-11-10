@@ -32,7 +32,7 @@ emergency-shuttle-ui-repeal = СКАСУВАТИ
 emergency-shuttle-ui-authorizations = Авторизацій
 emergency-shuttle-ui-remaining = Залишилося: {$remaining}
 
-emergency-shuttle-extended = {" "}Час запуску подовжено через несприятливі обставини
+emergency-shuttle-extended = {" "}Час запуску було подовжено через несприятливі обставини
 map-name-centcomm = Центральне Командування
 map-name-terminal = Термінал прибуття
 cmd-delayroundend-desc = Зупиняє таймер, який завершує раунд, коли аварійний шатл виходить з гіперпростору.

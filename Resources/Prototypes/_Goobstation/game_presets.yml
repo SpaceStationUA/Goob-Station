@@ -133,8 +133,8 @@
   id: Blob
   alias:
   - blab
-  name: blob-title
-  description: blob-description
+  name: "крапля"
+  description: "опис краплі"
   showInVote: false
   rules:
   - BlobGameMode
@@ -259,3 +259,20 @@
   - DuoAbductorRoundstart
   - SubGamemodesRule
   - SecretPlusRampingMid
+
+- type: gamePreset
+  id: OopsAllThieves
+  alias:
+  - oopsallthieves
+  - allthieves
+  - thieves
+  name: oops-all-thieves-title
+  description: oops-all-thieves-description
+  showInVote: false
+  rules:
+    - OopsAllThieves
+    - TraitorSubGamemodesRule
+    - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation

@@ -9,18 +9,16 @@
 - type: entity
   parent: BaseAction
   id: ActionHereticFleshSurgery
-  name: flesh surgery
-  description: Remove a random organ from someone, or heal your teammates.
+  name: "Зшити плоть"
+  description: "Закляття дотику, що дозволяє швидко провести операцію або відновити плоть цілі."
   components:
   - type: Action
-    useDelay: 30
+    useDelay: 1
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: flesh_surgery
     checkCanInteract: true
-  - type: TargetAction
-  - type: EntityTargetAction
+  - type: InstantAction
     event: !type:EventHereticFleshSurgery
   - type: HereticAction
-    messageLoc: heretic-speech-flesh-surgery

@@ -136,6 +136,6 @@ admin-smite-nyanify-name = Котячі вушка
 admin-smite-kill-sign-name = Знак вбивства
 admin-smite-omni-accent-name = Омні-акцент
 admin-smite-super-slip-description = Змушує їх дуже, дуже сильно послизнутися.
-admin-smite-omni-accent-description = Змушує ціль говорити майже з кожним доступним акцентом
+admin-smite-omni-accent-description = Змушує ціль говорити майже з усіма доступними акцентами
 admin-smite-hell-teleport-name = Відправити до пекла
 admin-smite-hell-teleport-description = Телепортує ціль до пекла

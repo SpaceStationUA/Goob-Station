@@ -1,7 +1,7 @@
 # Lava
 - type: tile
   id: FloorBasaltLavaland
-  name: basalt floor [Planetmap]
+  name: "базальтова підлога [КартаПланети]"
   sprite: /Textures/Tiles/Planet/basalt.png
   isSubfloor: true
   footstepSounds:

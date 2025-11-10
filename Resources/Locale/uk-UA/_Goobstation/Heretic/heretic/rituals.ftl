@@ -50,8 +50,6 @@ heretic-ritual-fail-limit = Ви досягли ліміту предметів,
 heretic-ritual-fail-no-lost-blades = Не знайдено втрачених клинків.
 heretic-ritual-fail-already-ascended = Ви вже вознеслися.
 heretic-ritual-fail-cannot-ascend = Ви не можете вознестися.
-
-    ## Побічні квести
 heretic-ritual-side-knowledge = Ритуал Знання
 heretic-ritual-side-shark = Палюча Акула
 heretic-ritual-side-cloak = Плащ Порожнечі
@@ -78,3 +76,4 @@ heretic-ritual-void-blade = Проблиск Зими
 heretic-ritual-void-ascend = Вальс наприкінці Часу
 
 heretic-ritual-fail-sacrifice-cosmos = Недостатньо трупів із зоряною міткою.
+heretic-ritual-fail-cannot-ascend-objectives = Ви маєте виконати свої завдання, щоб вознестися.

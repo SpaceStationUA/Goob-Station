@@ -10,4 +10,4 @@ loadout-group-station-engineer-equipment = Оснащення інженера
 loadout-group-technical-assistant-equipment = Оснащення технічного асистента
 
 
-loadout-group-passenger-head = Головний убір асистента
+loadout-group-passenger-head = Головний убір пасажира

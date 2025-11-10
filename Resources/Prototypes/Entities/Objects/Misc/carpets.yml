@@ -12,7 +12,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # TODO once tiles can be smoothed and carpets ported over to that, add them to the FloorTile outputs
 - type: entity
-  name: carpet
+  name: "килим"
   parent: FloorTileItemBase
   id: FloorCarpetItemRed
   suffix: Red
@@ -26,11 +26,6 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetRed
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: SpawnAfterInteract #Nuke after convert to FloorTile
     prototype: Carpet
     doAfter: 0.5
