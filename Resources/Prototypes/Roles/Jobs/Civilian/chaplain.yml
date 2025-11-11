@@ -71,6 +71,12 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 18000 # 15 hours
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+    # Pirate contractor end
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
   supervisors: job-supervisors-hop

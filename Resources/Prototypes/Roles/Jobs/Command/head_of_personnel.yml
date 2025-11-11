@@ -156,6 +156,11 @@
     #  inverted: true
     #  species:
     #  - Felinid
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+    # Pirate contractor end
   goobcoins: 40 #Goob content
   weight: 20
   startingGear: HoPGear

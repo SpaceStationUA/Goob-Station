@@ -164,6 +164,7 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
+using Content.Shared._Pirate.Contractors.Prototypes; // Pirate - port EE contractors
 using Content.Pirate.UIKit.UserInterface.Lobby; // Pirate - Alternative Jobs
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
@@ -209,6 +210,8 @@ namespace Content.Client.Lobby.UI
         private readonly JobRequirementsManager _requirements;
         private readonly LobbyUIController _controller;
 
+        private bool _suppressSelectors; // Pirate - port EE contractors
+
         private readonly SpriteSystem _sprite;
 
         // CCvar.
@@ -250,6 +253,11 @@ namespace Content.Client.Lobby.UI
         public HumanoidCharacterProfile? Profile;
 
         private List<SpeciesPrototype> _species = new();
+        // Pirate edit start - port EE contractors
+        private List<NationalityPrototype> _nationalies = new();
+        private List<EmployerPrototype> _employers = new();
+        private List<LifepathPrototype> _lifepaths = new();
+        // Pirate edit end - port EE contractors
 
         private List<(string, RequirementsSelector)> _jobPriorities = new();
 
@@ -391,6 +399,40 @@ namespace Content.Client.Lobby.UI
                 OnSkinColorOnValueChanged();
                 UpdateHeightWidthSliders(); // Goobstation: port EE height/width sliders
             };
+
+            // Pirate edit start - port EE contractors
+            #region Contractors
+
+            RefreshNationalities();
+            RefreshEmployers();
+            RefreshLifepaths();
+
+            NationalityButton.OnItemSelected += args =>
+            {
+                if (_suppressSelectors)
+                    return;
+                NationalityButton.SelectId(args.Id);
+                SetNationality(_nationalies[args.Id].ID);
+            };
+
+            EmployerButton.OnItemSelected += args =>
+            {
+                if (_suppressSelectors)
+                    return;
+                EmployerButton.SelectId(args.Id);
+                SetEmployer(_employers[args.Id].ID);
+            };
+
+            LifepathButton.OnItemSelected += args =>
+            {
+                if (_suppressSelectors)
+                    return;
+                LifepathButton.SelectId(args.Id);
+                SetLifepath(_lifepaths[args.Id].ID);
+            };
+
+            #endregion Contractors
+            // Pirate edit end - port EE contractors
 
             // begin Goobstation: port EE height/width sliders
             #region Height and Width
@@ -827,6 +869,195 @@ namespace Content.Client.Lobby.UI
                 }
             }
         }
+        // Pirate edit start - port EE contractors
+        public void RefreshNationalities()
+        {
+            NationalityButton.Clear();
+            _nationalies.Clear();
+
+            var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
+
+            if (Profile != null && _prototypeManager.TryIndex(Profile.Nationality, out NationalityPrototype? currentNat))
+            {
+                if (!CheckRequirementsValid(currentNat.Requirements, prof))
+                {
+                    Profile = Profile.WithNationality(SharedHumanoidAppearanceSystem.DefaultNationality);
+                    prof = Profile;
+                    SetDirty();
+                }
+            }
+
+            _nationalies.AddRange(_prototypeManager.EnumeratePrototypes<NationalityPrototype>()
+                .Where(o =>
+                {
+                    var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
+                    return CheckRequirementsValid(o.Requirements, prof);
+                }));
+
+            _suppressSelectors = true;
+            try
+            {
+                // Ensure the currently saved nationality is present even if filtered out (avoid UI resetting to default).
+                if (Profile != null && !_nationalies.Any(n => n.ID == Profile.Nationality)
+                    && _prototypeManager.TryIndex(Profile.Nationality, out NationalityPrototype? savedNat))
+                {
+                    _nationalies.Insert(0, savedNat);
+                }
+
+                var selectedIndex = -1;
+                for (var i = 0; i < _nationalies.Count; i++)
+                {
+                    NationalityButton.AddItem(Loc.GetString(_nationalies[i].NameKey), i);
+                    if (selectedIndex < 0 && Profile?.Nationality == _nationalies[i].ID)
+                        selectedIndex = i;
+                }
+                if (selectedIndex >= 0)
+                    NationalityButton.SelectId(selectedIndex);
+            }
+            finally
+            {
+                _suppressSelectors = false;
+            }
+        }
+
+        public void RefreshEmployers()
+        {
+            EmployerButton.Clear();
+            _employers.Clear();
+
+            var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
+
+            if (Profile != null && _prototypeManager.TryIndex(Profile.Employer, out EmployerPrototype? currentEmp))
+            {
+                if (!CheckRequirementsValid(currentEmp.Requirements, prof))
+                {
+                    Profile = Profile.WithEmployer(SharedHumanoidAppearanceSystem.DefaultEmployer);
+                    prof = Profile;
+                    SetDirty();
+                }
+            }
+
+            _employers.AddRange(_prototypeManager.EnumeratePrototypes<EmployerPrototype>()
+                .Where(o =>
+                {
+                    var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
+                    return CheckRequirementsValid(o.Requirements, prof);
+                }));
+
+            _suppressSelectors = true;
+            try
+            {
+                // Preserve saved employer if filtered out.
+                if (Profile != null && !_employers.Any(e => e.ID == Profile.Employer)
+                    && _prototypeManager.TryIndex(Profile.Employer, out EmployerPrototype? savedEmp))
+                {
+                    _employers.Insert(0, savedEmp);
+                }
+
+                var selectedEmployer = -1;
+                for (var i = 0; i < _employers.Count; i++)
+                {
+                    EmployerButton.AddItem(Loc.GetString(_employers[i].NameKey), i);
+                    if (selectedEmployer < 0 && Profile?.Employer == _employers[i].ID)
+                        selectedEmployer = i;
+                }
+                if (selectedEmployer >= 0)
+                    EmployerButton.SelectId(selectedEmployer);
+            }
+            finally
+            {
+                _suppressSelectors = false;
+            }
+        }
+
+        public void RefreshLifepaths()
+        {
+            LifepathButton.Clear();
+            _lifepaths.Clear();
+
+            var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
+
+            if (Profile != null && _prototypeManager.TryIndex(Profile.Lifepath, out LifepathPrototype? currentLife))
+            {
+                if (!CheckRequirementsValid(currentLife.Requirements, prof))
+                {
+                    Profile = Profile.WithLifepath(SharedHumanoidAppearanceSystem.DefaultLifepath);
+                    prof = Profile;
+                    SetDirty();
+                }
+            }
+
+            _lifepaths.AddRange(_prototypeManager.EnumeratePrototypes<LifepathPrototype>()
+                .Where(o =>
+                {
+                    var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
+                    return CheckRequirementsValid(o.Requirements, prof);
+                }));
+
+            _suppressSelectors = true;
+            try
+            {
+                // Preserve saved lifepath if filtered out.
+                if (Profile != null && !_lifepaths.Any(l => l.ID == Profile.Lifepath)
+                    && _prototypeManager.TryIndex(Profile.Lifepath, out LifepathPrototype? savedLife))
+                {
+                    _lifepaths.Insert(0, savedLife);
+                }
+
+                var selectedLifepath = -1;
+                for (var i = 0; i < _lifepaths.Count; i++)
+                {
+                    LifepathButton.AddItem(Loc.GetString(_lifepaths[i].NameKey), i);
+                    if (selectedLifepath < 0 && Profile?.Lifepath == _lifepaths[i].ID)
+                        selectedLifepath = i;
+                }
+                if (selectedLifepath >= 0)
+                    LifepathButton.SelectId(selectedLifepath);
+            }
+            finally
+            {
+                _suppressSelectors = false;
+            }
+        }
+
+        private void UpdateLifepathDescription()
+        {
+            if (Profile == null)
+            {
+                LifepathDescriptionLabel.SetMessage("");
+                return;
+            }
+
+            var lifepathId = Profile.Lifepath;
+
+            if (string.IsNullOrEmpty(lifepathId))
+            {
+                LifepathDescriptionLabel.SetMessage("");
+                return;
+            }
+
+            var descriptionKey = $"lifepath_description_{lifepathId}";
+
+            LifepathDescriptionLabel.SetMessage(Loc.GetString(descriptionKey));
+        }
+
+        private bool CheckRequirementsValid(IReadOnlyCollection<JobRequirement>? requirements, HumanoidCharacterProfile profile)
+        {
+            if (requirements == null || requirements.Count == 0)
+                return true;
+
+            var session = _playerManager.LocalSession;
+            var playTimes = session != null ? _requirements.GetPlayTimes(session) : new Dictionary<string, TimeSpan>();
+
+            foreach (var requirement in requirements)
+            {
+                if (!requirement.Check(_entManager, _prototypeManager, profile, playTimes, out _))
+                    return false;
+            }
+
+            return true;
+        }
+        // Pirate edit end - port EE contractors
 
         public void RefreshAntags()
         {
@@ -993,6 +1224,10 @@ namespace Content.Client.Lobby.UI
             RefreshJobs();
             RefreshLoadouts();
             RefreshSpecies();
+            RefreshNationalities(); // Pirate - port EE contractors
+            RefreshEmployers(); // Pirate - port EE contractors
+            RefreshLifepaths(); // Pirate - port EE contractors
+            UpdateLifepathDescription(); // Pirate - port EE contractors
             RefreshTraits();
             RefreshFlavorText();
             ReloadPreview();
@@ -1489,6 +1724,10 @@ namespace Content.Client.Lobby.UI
             RefreshLoadouts();
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
+            RefreshNationalities(); // Pirate - port EE contractors
+            RefreshEmployers(); // Pirate - port EE contractors
+            RefreshLifepaths(); // Pirate - port EE contractors
+            UpdateLifepathDescription();
             ReloadPreview();
             // begin Goobstation: port EE height/width sliders
             // Changing species provides inaccurate sliders without these
@@ -1497,6 +1736,51 @@ namespace Content.Client.Lobby.UI
             // end Goobstation: port EE height/width sliders
             RefreshTraits(); // Goobstation: ported from DeltaV - Species trait exclusion
         }
+
+        // Pirate edit start - port EE contractors
+        private void SetNationality(string newNationality)
+        {
+            Profile = Profile?.WithNationality(newNationality);
+            UpdateCharacterRequired();
+            IsDirty = true;
+            ReloadProfilePreview();
+            ReloadClothes();
+        }
+
+        private void SetEmployer(string newEmployer)
+        {
+            Profile = Profile?.WithEmployer(newEmployer);
+            UpdateCharacterRequired();
+            IsDirty = true;
+            ReloadProfilePreview();
+            ReloadClothes();
+        }
+
+        private void SetLifepath(string newLifepath)
+        {
+            Profile = Profile?.WithLifepath(newLifepath);
+            UpdateCharacterRequired();
+            IsDirty = true;
+            ReloadProfilePreview();
+            ReloadClothes();
+            UpdateLifepathDescription();
+        }
+
+        private void UpdateCharacterRequired()
+        {
+            // Refresh requirement-gated UI after profile changes that may affect availability.
+            RefreshNationalities();
+            RefreshEmployers();
+            RefreshLifepaths();
+            RefreshJobs();
+        }
+
+        private void ReloadClothes()
+        {
+            // Minimal implementation: rebuild the preview entity respecting the ShowClothes toggle.
+            ReloadPreview();
+        }
+        // Pirate edit end - port EE contractors
 
         private void SetName(string newName)
         {

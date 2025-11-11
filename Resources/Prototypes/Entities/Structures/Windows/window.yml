@@ -311,7 +311,7 @@
     - Window
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls # Pirate
     base: state
   - type: Icon
     sprite: Structures/Windows/window_diagonal.rsi

@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/03/2025 19:10:35
-  entityCount: 29083
+  time: 11/09/2025 18:00:28
+  entityCount: 29087
 maps:
 - 1
 grids:
@@ -8521,7 +8521,7 @@ entities:
             0: 45298
           3,-13:
             0: 61713
-            3: 204
+            2: 204
           4,-12:
             0: 65535
           4,-11:
@@ -8530,7 +8530,7 @@ entities:
             0: 53744
           4,-13:
             0: 64716
-            3: 17
+            2: 17
           5,-12:
             0: 30583
           5,-11:
@@ -8541,31 +8541,31 @@ entities:
             0: 30583
           6,-12:
             1: 4369
-            2: 204
-            3: 49152
+            3: 204
+            2: 49152
           6,-11:
             1: 61713
-            3: 204
+            2: 204
           6,-10:
             0: 29424
           6,-13:
             1: 4369
-            2: 49152
-            3: 204
+            3: 49152
+            2: 204
           7,-12:
-            2: 17
-            3: 4096
+            3: 17
+            2: 4096
             0: 136
           7,-11:
-            3: 17
+            2: 17
             1: 4096
             0: 57344
           7,-10:
             0: 61680
           7,-13:
-            2: 4096
+            3: 4096
             0: 34952
-            3: 17
+            2: 17
           8,-12:
             0: 7644
           8,-11:
@@ -9565,7 +9565,7 @@ entities:
           3,-14:
             0: 4415
             1: 192
-            3: 49152
+            2: 49152
           3,-17:
             6: 30576
           4,-16:
@@ -9576,7 +9576,7 @@ entities:
           4,-14:
             0: 52463
             1: 16
-            3: 4096
+            2: 4096
           8,-13:
             0: 56718
           9,-12:
@@ -9649,12 +9649,12 @@ entities:
           7,-15:
             0: 34952
             1: 50
-            3: 4096
+            2: 4096
           8,-14:
             0: 61166
           7,-14:
             0: 34952
-            3: 4113
+            2: 4113
           9,-16:
             0: 45296
           9,-15:
@@ -10206,10 +10206,10 @@ entities:
             0: 30583
           6,-15:
             1: 4592
-            3: 49152
+            2: 49152
           6,-14:
             1: 4369
-            3: 49356
+            2: 49356
           -4,-20:
             0: 61440
           -4,-19:
@@ -10751,7 +10751,7 @@ entities:
           - 0
           - 0
           - 0
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -10770,7 +10770,7 @@ entities:
           - 0
           - 0
           - 0
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -12765,7 +12765,7 @@ entities:
       pos: -13.5,18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -47405.84
+      secondsUntilStateChange: -47436.707
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14662,7 +14662,7 @@ entities:
       pos: 41.5,11.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -148014.08
+      secondsUntilStateChange: -148044.95
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -75897,7 +75897,7 @@ entities:
       pos: 28.5,-5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -86578.01
+      secondsUntilStateChange: -86608.875
       state: Opening
   - uid: 11643
     components:
@@ -89874,7 +89874,7 @@ entities:
       pos: -34.5,-14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -221748.64
+      secondsUntilStateChange: -221779.52
       state: Closing
   - uid: 13875
     components:
@@ -90320,7 +90320,7 @@ entities:
       pos: -4.5,-71.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -213496.38
+      secondsUntilStateChange: -213527.25
       state: Closing
   - uid: 13961
     components:
@@ -119373,8 +119373,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,-27.5
       parent: 2
-      deviceLists:
-      - 12134
     - type: AtmosPipeLayers
       pipeLayer: Tertiary
     - type: AtmosPipeColor
@@ -121209,8 +121207,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,-27.5
       parent: 2
-      deviceLists:
-      - 12134
     - type: AtmosPipeLayers
       pipeLayer: Secondary
     - type: AtmosPipeColor
@@ -153971,6 +153967,28 @@ entities:
     - type: Transform
       pos: 70.5,-34.5
       parent: 2
+- proto: SpawnPointRoboticist
+  entities:
+  - uid: 17794
+    components:
+    - type: Transform
+      pos: 62.5,-17.5
+      parent: 2
+  - uid: 17796
+    components:
+    - type: Transform
+      pos: 59.5,-17.5
+      parent: 2
+  - uid: 17897
+    components:
+    - type: Transform
+      pos: 59.5,-21.5
+      parent: 2
+  - uid: 20432
+    components:
+    - type: Transform
+      pos: 73.5,-28.5
+      parent: 2
 - proto: SpawnPointSalvageSpecialist
   entities:
   - uid: 23388
@@ -182612,15 +182630,11 @@ entities:
     - type: Transform
       pos: 0.5,-21.5
       parent: 2
-      deviceLists:
-      - 15911
   - uid: 15856
     components:
     - type: Transform
       pos: -1.5,-21.5
       parent: 2
-      deviceLists:
-      - 15911
 - proto: WeaponEnergyTurretCommandControlPanel
   entities:
   - uid: 15911

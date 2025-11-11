@@ -1,0 +1,65 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Base open/close sprites taken from https://github.com/Aurorastation/Aurora.3/commit/c803da2644812ea9e175d2e84c5bbaf55fab6c3d, then edited by Vareniko, Kokomo (zeorior_d_masuri - discord) and mosterdamus",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "passport_adhomai_closed"
+        },
+        {
+            "name": "passport_adhomai_open"
+        },
+        {
+            "name": "passport_biesel_closed"
+        },
+        {
+            "name": "passport_biesel_open"
+        },
+        {
+            "name": "passport_eridan_closed"
+        },
+        {
+            "name": "passport_eridan_open"
+        },
+        {
+            "name": "passport_goldendeep_closed"
+        },
+        {
+            "name": "passport_goldendeep_open"
+        },
+        {
+            "name": "passport_izweski_closed"
+        },
+        {
+            "name": "passport_izweski_open"
+        },
+        {
+            "name": "passport_nralakk_closed"
+        },
+        {
+            "name": "passport_nralakk_open"
+        },
+        {
+            "name": "passport_sol_closed"
+        },
+        {
+            "name": "passport_sol_open"
+        },
+        {
+            "name": "passport_species_human"
+        },
+        {
+            "name": "vox_wallet_closed"
+        },
+        {
+            "name": "vox_wallet_open"
+        },
+        {
+            "name": "vox_wallet_text"
+        }
+    ]
+}

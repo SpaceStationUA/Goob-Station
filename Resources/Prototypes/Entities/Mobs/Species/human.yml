@@ -134,10 +134,10 @@
   - type: LanguageKnowledge # Einstein Engines - Languages
     speaks:
     - TauCetiBasic
-    - SolCommon
+#    - SolCommon # Pirate
     understands:
     - TauCetiBasic
-    - SolCommon
+#    - SolCommon # Pirate
   - type: HumanoidAppearance
     species: Human
     hideLayersOnEquip:

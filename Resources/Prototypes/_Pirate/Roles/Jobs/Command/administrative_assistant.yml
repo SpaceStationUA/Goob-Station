@@ -27,10 +27,9 @@
 #      traits:
 #        - Foreigner
 #        - ForeignerLight
-#    - !type:CharacterEmployerRequirement
-#      employers:
-#      - IdrisIncorporated
-#      - NanoTrasen
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
   goobcoins: 30 #Goob content
   startingGear: AdminAssistantGear
   icon: "JobIconAdminAssitant"

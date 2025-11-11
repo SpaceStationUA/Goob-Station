@@ -75,6 +75,12 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 1800 # 30 Minutes
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+    # Pirate contractor end
   startingGear: BartenderGear
   icon: "JobIconBartender"
   supervisors: job-supervisors-hop

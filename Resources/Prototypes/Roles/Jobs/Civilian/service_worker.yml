@@ -82,6 +82,12 @@
   - !type:DepartmentTimeRequirement
     department: Civilian
     time: 1800 #0.5 hr
+  # Pirate contractor start
+  - !type:CharacterEmployerRequirement
+    inverted: true
+    employers:
+    - Unemployed
+  # Pirate contractor end
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
   supervisors: job-supervisors-service

@@ -31,6 +31,7 @@
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using Content.Shared._Pirate.Contractors.Prototypes; // Pirate - port EE contractors
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Content.Shared.Examine;
@@ -75,6 +76,12 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     [Dependency] private readonly SharedIdentitySystem _identity = default!;
 
     public static readonly ProtoId<SpeciesPrototype> DefaultSpecies = "Human";
+
+    public static readonly ProtoId<EmployerPrototype> DefaultEmployer = "NanoTrasen"; // Pirate - port EE contractors
+
+    public static readonly ProtoId<NationalityPrototype> DefaultNationality = "Bieselite"; // Pirate - port EE contractors
+
+    public static readonly ProtoId<LifepathPrototype> DefaultLifepath = "Spacer"; // Pirate - port EE contractors
 
     public override void Initialize()
     {

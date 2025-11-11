@@ -48,6 +48,11 @@
     #  inverted: true
     #  species:
     #  - Felinid
+  # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+  # Pirate contractor end
   goobcoins: 45
   weight: 20
   startingGear: BlueshieldOfficerGear

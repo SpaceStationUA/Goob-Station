@@ -4,7 +4,7 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/03/2025 19:13:15
+  time: 11/09/2025 18:00:45
   entityCount: 18109
 maps:
 - 1
@@ -56684,7 +56684,7 @@ entities:
       pos: 21.5,26.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -11681.604
+      secondsUntilStateChange: -11764.201
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -103845,6 +103845,23 @@ entities:
     - type: Transform
       pos: 31.5,42.5
       parent: 2
+- proto: SpawnPointRoboticist
+  entities:
+  - uid: 15217
+    components:
+    - type: Transform
+      pos: 49.5,-26.5
+      parent: 2
+  - uid: 15218
+    components:
+    - type: Transform
+      pos: 46.5,-24.5
+      parent: 2
+  - uid: 15219
+    components:
+    - type: Transform
+      pos: 51.5,-26.5
+      parent: 2
 - proto: SpawnPointSalvageSpecialist
   entities:
   - uid: 15214
@@ -103864,21 +103881,6 @@ entities:
       parent: 2
 - proto: SpawnPointScientist
   entities:
-  - uid: 15217
-    components:
-    - type: Transform
-      pos: 49.5,-26.5
-      parent: 2
-  - uid: 15218
-    components:
-    - type: Transform
-      pos: 51.5,-26.5
-      parent: 2
-  - uid: 15219
-    components:
-    - type: Transform
-      pos: 46.5,-24.5
-      parent: 2
   - uid: 15220
     components:
     - type: Transform
@@ -118773,7 +118775,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -12013.604
+      secondsUntilStateChange: -12096.201
       state: Opening
     - type: Airlock
       autoClose: False

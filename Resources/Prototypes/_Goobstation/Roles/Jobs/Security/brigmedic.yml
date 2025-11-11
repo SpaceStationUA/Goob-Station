@@ -15,6 +15,12 @@
   - !type:DepartmentTimeRequirement
     department: Security
     time: 36000 # 10 hrs
+  # Pirate contractor start
+  - !type:CharacterEmployerRequirement
+    inverted: true
+    employers:
+    - Unemployed
+  # Pirate contractor end
   startingGear: BrigmedicGear
   icon: "JobIconBrigmedic"
   supervisors: job-supervisors-hos

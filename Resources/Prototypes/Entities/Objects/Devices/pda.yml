@@ -202,6 +202,13 @@
     sprite: Objects/Devices/pda.rsi
     state: pda
   - type: Pda
+    # Pirate edit start
+    passportSlot:
+      priority: -3
+      whitelist:
+        components:
+          - Passport
+    # Pirate edit end
     paiSlot:
       priority: -2
       whitelist:
@@ -228,6 +235,7 @@
       PDA-id: !type:ContainerSlot {}
       PDA-pen: !type:ContainerSlot {}
       PDA-pai: !type:ContainerSlot {}
+      PDA-passport: !type:ContainerSlot {} # Pirate edit start - port EE contractors
       Cartridge-Slot: !type:ContainerSlot {}
       program-container: !type:Container
   - type: ItemSlots

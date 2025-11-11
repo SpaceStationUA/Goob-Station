@@ -78,6 +78,13 @@
   name: job-name-janitor
   description: job-description-janitor
   playTimeTracker: JobJanitor
+  # Pirate contractor start
+  requirements: 
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+  # Pirate contractor end
   startingGear: JanitorGear
   icon: "JobIconJanitor"
   supervisors: job-supervisors-hop

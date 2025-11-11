@@ -77,6 +77,13 @@
   extendedAccess:
   - Kitchen
   - Bar
+  # Pirate contractor start
+  requirements: 
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+  # Pirate contractor end
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: FourTwenty

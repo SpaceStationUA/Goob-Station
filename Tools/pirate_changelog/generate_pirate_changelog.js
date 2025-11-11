@@ -32,7 +32,7 @@ function main() {
 
     data.Entries = data.Entries || [];
     const newId = data.Entries.length > 0 ? Math.max(...data.Entries.map(e => e.id)) + 1 : 1;
-    const time = new Date().toISOString().replace("Z", ".0000000+00:00");
+    const time = new Date().toISOString().replace(/\.\d{3}Z$/, ".0000000+00:00");
     const entry = { id: newId, author, time, changes };
 
     data.Entries.push(entry);
