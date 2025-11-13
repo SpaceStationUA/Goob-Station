@@ -18,7 +18,7 @@ rcd-component-cannot-build-wall-tile-not-empty-message = Ви не можете 
 rcd-component-cannot-build-airlock-tile-not-empty-message = Ви не можете побудувати шлюз в космосі!
 
 rcd-component-examine-mode-details = Наразі встановлено режим '{$mode}'.
-rcd-component-examine-build-details = Зараз налаштовано на будівництво {MAKEPLURAL($name)}
+rcd-component-examine-build-details = Наразі налаштовано будувати {MAKEPLURAL($name)}
 rcd-component-change-build-mode = Тепер УЗК налаштовано на збірку {$name}.
 
 # Кількість набоїв

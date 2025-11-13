@@ -41,10 +41,10 @@ public sealed partial class CharacterNationalityRequirement : JobRequirement
             reason = FormattedMessage.FromUnformatted(Loc.GetString("requirement-character-profile-not-found"));
             return Inverted; 
         }
-        
+
         var localeString = "character-nationality-requirement";
         const string color = "green";
-        
+
         var reasonString = Loc.GetString(
             localeString,
             ("inverted", Inverted),
@@ -54,42 +54,6 @@ public sealed partial class CharacterNationalityRequirement : JobRequirement
         reason = FormattedMessage.FromMarkup(reasonString);
 
         var isValid = profile.Nationality != null && Nationalities.Any(o => o == profile.Nationality);
-        return Inverted ? !isValid : isValid;
-    }
-}
-
-/// <summary>
-///     Requires the profile species to be one of a list of species
-/// </summary>
-[UsedImplicitly, Serializable, NetSerializable]
-public sealed partial class CharacterSpeciesRequirement : JobRequirement
-{
-    [DataField(required: true)]
-    public HashSet<ProtoId<SpeciesPrototype>> Species;
-
-    public override bool Check(
-        IEntityManager entMan,
-        IPrototypeManager protMan,
-        HumanoidCharacterProfile? profile,
-        IReadOnlyDictionary<string, TimeSpan> playTimes,
-        [NotNullWhen(false)] out FormattedMessage? reason)
-    {
-        if (profile == null)
-        {
-            reason = FormattedMessage.FromUnformatted(Loc.GetString("requirement-character-profile-not-found"));
-            return Inverted;
-        }
-
-        const string color = "green";
-        var reasonString = Loc.GetString(
-            "character-species-requirement",
-            ("inverted", Inverted),
-            ("species", $"[color={color}]{string.Join($"[/color], [color={color}]",
-                Species.Select(s => Loc.GetString(protMan.Index(s).Name)))}[/color]"));
-
-        reason = FormattedMessage.FromMarkup(reasonString);
-
-        var isValid = Species.Any(s => s == profile.Species);
         return Inverted ? !isValid : isValid;
     }
 }
@@ -123,7 +87,7 @@ public sealed partial class CharacterEmployerRequirement : JobRequirement
             ("inverted", Inverted),
             ("employers", $"[color={color}]{string.Join($"[/color], [color={color}]",
                 Employers.Select(s => Loc.GetString(protMan.Index(s).NameKey)))}[/color]"));
-        
+
         reason = FormattedMessage.FromMarkup(reasonString);
 
         var isValid = profile.Employer != null && Employers.Any(o => o == profile.Employer);

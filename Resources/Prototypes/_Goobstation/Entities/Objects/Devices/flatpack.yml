@@ -180,3 +180,20 @@
   - type: StaticPrice
     price: 500
 
+- type: entity
+  parent: BaseFlatpack
+  id: SlotMachineFlatpack
+  name: "флетпак ігрового автомата"
+  description: "Флетпак, що використовується для збирання ігрового автомата"
+  components:
+  - type: Flatpack
+    entity: SlotMachine
+
+- type: entity
+  parent: BaseFlatpack
+  id: SlotMachineHighRollerFlatPack
+  name: "флетпак ігрового автомата для хайролерів"
+  description: "Флетпак, що використовується для збирання ігрового автомата для хайролерів"
+  components:
+  - type: Flatpack
+    entity: SlotMachineHighRoller

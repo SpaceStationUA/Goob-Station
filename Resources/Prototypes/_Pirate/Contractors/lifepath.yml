@@ -14,7 +14,7 @@
   id: SolRefugee
   nameKey: lifepath_name_solrefugee
   requirements:
-    - !type:CharacterSpeciesRequirement
+    - !type:SpeciesRequirement
       inverted: true
       species:
         - Human

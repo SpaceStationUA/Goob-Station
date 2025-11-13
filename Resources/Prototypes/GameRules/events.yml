@@ -182,13 +182,16 @@
   id: BasicAntagEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-#    - id: ClosetSkeleton # REMOVED BY PIRATES
+    - id: ClosetSkeleton
     - id: DragonSpawn
     - id: KingRatMigration
     - id: NinjaSpawn
     - id: ParadoxCloneSpawn
     #- id: RevenantSpawn  # GoobStation - removed till rework
     - id: SleeperAgents
+    - id: ChangelingMidround
+    - id: HereticMidround
+    - id: Devilmidround
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
@@ -333,20 +336,20 @@
     chaosScore: 30
   - type: ClericalErrorRule
 
-#- type: entity # REMOVED BY PIRATES
-#  parent: BaseGameRule
-#  id: ClosetSkeleton
-#  components:
-#  - type: StationEvent
-#    weight: 5
-#    duration: 1
-#    minimumPlayers: 10
-#    eventType: Chaotic # Goobstation
-#  # Goobstation
-#  - type: GameRule
-#    chaosScore: 60
-#  - type: RandomEntityStorageSpawnRule
-#    prototype: MobSkeletonCloset
+- type: entity
+  parent: BaseGameRule
+  id: ClosetSkeleton
+  components:
+  - type: StationEvent
+    weight: 5
+    duration: 1
+    minimumPlayers: 10
+    eventType: Chaotic # Goobstation
+  # Goobstation
+  - type: GameRule
+    chaosScore: 60
+  - type: RandomEntityStorageSpawnRule
+    prototype: MobSkeletonCloset
 
 - type: entity
   parent: BaseGameRule

@@ -11,7 +11,7 @@
   hostile:
   - Bieselite
   requirements:
-    - !type:CharacterSpeciesRequirement
+    - !type:SpeciesRequirement
       species:
         - Human
   passportPrototype: SolPassport
@@ -27,7 +27,7 @@
       - ZavodskoiInterstellar
       - IdrisIncorporated
       - ZengHuPharmaceuticals
-    - !type:CharacterSpeciesRequirement
+    - !type:SpeciesRequirement
       inverted: true
       species:
         - Vox
@@ -38,7 +38,7 @@
   id: Adhomai
   nameKey: nationality_name_adhomai
   requirements:
-    - !type:CharacterSpeciesRequirement
+    - !type:SpeciesRequirement
       inverted: true
       species:
         - Vox
@@ -48,7 +48,7 @@
   id: Izweski
   nameKey: nationality_name_izweski
   requirements:
-    - !type:CharacterSpeciesRequirement
+    - !type:SpeciesRequirement
       inverted: true
       species:
         - Vox
@@ -58,7 +58,7 @@
   id: GoldenDeep
   nameKey: nationality_name_goldendeep
   requirements:
-    - !type:CharacterSpeciesRequirement
+    - !type:SpeciesRequirement
       species:
         - IPC
   passportPrototype: GoldenDeepPassport
@@ -67,7 +67,7 @@
   id: Flock
   nameKey: nationality_name_flock
   requirements:
-    - !type:CharacterSpeciesRequirement
+    - !type:SpeciesRequirement
       species:
         - Vox
   passportPrototype: VoxWallet

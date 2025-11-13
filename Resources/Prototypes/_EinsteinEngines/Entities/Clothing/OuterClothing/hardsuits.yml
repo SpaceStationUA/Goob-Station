@@ -53,7 +53,7 @@
     knockdownTimeDelta: -3
 
 - type: entity
-  parent: [ClothingOuterHardsuitCombatStandard,BaseCommandContraband]
+  parent: [ClothingOuterHardsuitCombatStandard,BaseSecurityContraband]
   id: ClothingOuterHardsuitCombatOfficer
   name: "бойовий скафандр служби безпеки"
   description: "Спеціально створений бойовий скафандр, призначений для захисту користувача від усіляких ворожих комбатантів у середовищах з низьким тиском. Цей має маркування служби безпеки станції."
@@ -68,7 +68,7 @@
 
 # Medical Combat Hardsuits
 - type: entity
-  parent: [ClothingOuterHardsuitBase,BaseCommandContraband]
+  parent: [ClothingOuterHardsuitBase,BaseSecurityContraband]
   id: ClothingOuterHardsuitCombatMedical
   name: "медичний бойовий скафандр"
   description: "Спеціально створений бойовий скафандр, призначений для забезпечення більшої мобільності користувача для кращої підтримки дружніх підрозділів у зонах активних бойових дій."
@@ -113,7 +113,7 @@
 
 # Riot Combat Hardsuits
 - type: entity
-  parent: [ClothingOuterHardsuitBase,BaseCommandContraband]
+  parent: [ClothingOuterHardsuitBase,BaseSecurityContraband]
   id: ClothingOuterHardsuitCombatRiot
   name: "бойовий скафандр для придушення заворушень"
   description: "Спеціально створений бойовий скафандр, призначений для контролю натовпу проти озброєних комбатантів у середовищах з низьким тиском."

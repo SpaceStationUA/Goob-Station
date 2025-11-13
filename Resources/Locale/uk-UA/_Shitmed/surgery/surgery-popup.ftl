@@ -95,3 +95,5 @@ surgery-popup-step-SurgeryStepInsertPlasmaVessel = {$user} вставляє пл
 surgery-popup-step-SurgeryStepInsertEggSack = {$user} вставляє мішок з яйцями в {$part} {$target}!
 surgery-popup-step-SurgeryStepXenoTakeSample = {$user} обережно видаляє шматок {$part} {$target}.
 surgery-popup-step-SurgeryStepGraftXenoSample = {$user} прищеплює ксенотканину на {$part} {$target}!
+surgery-popup-procedure-SurgeryRemovePump-step-SurgeryStepRemoveOrgan = {$user} видаляє насос із {$part} {$target}!
+surgery-popup-step-SurgeryStepInsertPump = {$user} вставляє насос у {$part} {$target}!

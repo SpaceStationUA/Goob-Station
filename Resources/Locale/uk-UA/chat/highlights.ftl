@@ -5,7 +5,7 @@ highlights-chief-engineer = Старший Інженер, "СІ", Інжене�
 highlights-chief-medical-officer = Головний Лікар, "ГЛ", Медбей, "Мед", Місток, "Команда"
 highlights-head-of-security = Глава Служби Безпеки, "ГСБ", Безпека, "СБ", Місток, "Команда"
 highlights-quartermaster = Квартирмейстер, "КМ", Карго, Місток, "Команда"
-highlights-research-director = Науковий Директор, "НД", Наука, "Сай", Місток, "Команда
+highlights-research-director = Директор з досліджень, "РД", Наука, "Сай", Міст, "Командування
 highlights-detective = Детектив, "Дек", Безпека, "СБ"
 highlights-security-cadet = Кадет служби безпеки, Офіцер, Кадет, Безпека, "СБ"
 highlights-security-officer = Офіцер служби безпеки, Офіцер, Безпека, "СБ"
@@ -55,4 +55,4 @@ highlights-cyborg = Кіборг, Силікон, Борг
 highlights-station-ai = Станційний ШІ, Силікон, "ШІ", "сШІ"
 
 highlights-nanotrasen-representative = Представник Нанотрейзен, "Центральне Командування", "ПНТ", "НТ", "ЦК", Місток, "Команда"
-highlights-blueshield-officer = Офіцер Блюшилд, "Центральне Командування", "БСО", "ЦК", Місток, "Команда
+highlights-blueshield-officer = Офіцер Блакитного Щита, "Центральне Командування", "БЩО", "ЦК", Міст, "Командування
