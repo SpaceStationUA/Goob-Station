@@ -59,6 +59,12 @@
     #   department: Science # Pirate
     #   time: 18000 #5 hrs # Pirate
     #   inverted: true # stop playing intern if you're good at science! # Pirate
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+    # Pirate contractor end
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"
   supervisors: job-supervisors-science

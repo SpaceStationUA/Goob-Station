@@ -106,6 +106,12 @@
     #   department: Security # Pirate
     #   time: 18000 #5 hrs # Pirate
     #   inverted: true # stop playing intern if you're good at security! # Pirate
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+    # Pirate contractor end
   startingGear: SecurityCadetGear
   icon: "JobIconSecurityCadet"
   supervisors: job-supervisors-security

@@ -112,6 +112,7 @@
 // SPDX-FileCopyrightText: 2025 SX-7 <92227810+SX-7@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
 // SPDX-FileCopyrightText: 2025 Whisper <121047731+QuietlyWhisper@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Zekins <zekins3366@gmail.com>
 // SPDX-FileCopyrightText: 2025 beck-thompson <107373427+beck-thompson@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 blobadoodle <me@bloba.dev>
 // SPDX-FileCopyrightText: 2025 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
@@ -390,10 +391,15 @@ namespace Content.Server.Database
                 loadouts[role.RoleName] = loadout;
             }
 
+            var barkVoice = profile.BarkVoice ?? SharedHumanoidAppearanceSystem.DefaultBarkVoice; // Goob Station - Barks
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.FlavorText,
                 profile.Species,
+                profile.Nationality, // Pirate - port EE contractors
+                profile.Employer, // Pirate - port EE contractors
+                profile.Lifepath, // Pirate - port EE contractors
                 profile.Height, // Goobstation: port EE height/width sliders
                 profile.Width, // Goobstation: port EE height/width sliders
                 profile.Age,
@@ -415,7 +421,8 @@ namespace Content.Server.Database
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToHashSet(),
                 traits.ToHashSet(),
-                loadouts
+                loadouts,
+                barkVoice // Goob Station - Barks
             );
         }
 
@@ -435,6 +442,9 @@ namespace Content.Server.Database
             profile.Species = humanoid.Species;
             profile.Height = humanoid.Height; // Goobstation: port EE height/width sliders
             profile.Width = humanoid.Width; // Goobstation: port EE height/width sliders
+            profile.Nationality = humanoid.Nationality; // Pirate - port EE contractors
+            profile.Employer = humanoid.Employer; // Pirate - port EE contractors
+            profile.Lifepath = humanoid.Lifepath; // Pirate - port EE contractors
             profile.Age = humanoid.Age;
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
@@ -467,6 +477,8 @@ namespace Content.Server.Database
                 humanoid.TraitPreferences
                         .Select(t => new Trait { TraitName = t })
             );
+
+            profile.BarkVoice = humanoid.BarkVoice; // Goob Station - Barks
 
             profile.Loadouts.Clear();
 

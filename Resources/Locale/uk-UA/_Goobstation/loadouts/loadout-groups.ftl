@@ -137,9 +137,9 @@ loadout-group-mime-envirogloves = Еко-рукавиці міма
 loadout-group-mime-gloves = Рукавиці міма
 
 # Асистент
-loadout-group-assistant-envirohelm = Еко-шолом асистента
-loadout-group-assistant-envirosuit = Еко-костюм асистента
-loadout-group-assistant-envirogloves = Еко-рукавиці асистента
+loadout-group-assistant-envirohelm = Еко-шолом пасажира
+loadout-group-assistant-envirosuit = Еко-костюм пасажира
+loadout-group-assistant-envirogloves = Еко-рукавиці пасажира
 
 # Музикант
 loadout-group-musician-envirohelm = Еко-шолом музиканта

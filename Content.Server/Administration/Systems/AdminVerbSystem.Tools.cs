@@ -97,12 +97,14 @@ using Content.Server.Atmos.Components;
 using Content.Server.Cargo.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
+using Content.Server.Mind; // Pirate - Allow Admins to Spawn a Passport for Players
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Weapons.Ranged.Systems;
+using Content.Shared._Pirate.Contractors.Systems; // Pirate - Allow Admins to Spawn a Passport for Players
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -116,7 +118,9 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Mind; // Pirate - Allow Admins to Spawn a Passport for Players
 using Content.Shared.PDA;
+using Content.Shared.Roles.Jobs; // Pirate - Allow Admins to Spawn a Passport for Players
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -145,6 +149,11 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly BatterySystem _batterySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly GunSystem _gun = default!;
+
+    // Pirate start - Allow Admins to Spawn a Passport for Players vvv
+    [Dependency] private readonly SharedPassportSystem _passportSystem = default!;
+    [Dependency] private readonly SharedJobSystem _jobSystem = default!;
+    // Pirate end
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -216,6 +225,28 @@ public sealed partial class AdminVerbSystem
             args.Verbs.Add(rejuvenate);
         }
 
+        // Pirate start - Allow Admins to Spawn a Passport for Players
+        if (TryComp<ActorComponent>(args.Target, out var targetActor) && _mindSystem.TryGetMind(args.Target, out var mindId, out _) && _jobSystem.MindTryGetJob(mindId, out var job))
+        {
+            Verb spawnPassport = new()
+            {
+                Text = "Spawn Passport",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/_Pirate/Interface/AdminActions/spawnpassport.png")),
+                Act = () =>
+                {
+                    var profile = _gameTicker.GetPlayerProfile(targetActor.PlayerSession);
+
+                    _passportSystem.SpawnPassportForPlayer(args.Target, profile, job.ID);
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString("command-description-spawnpassport"),
+                Priority = (int) TricksVerbPriorities.SpawnPassport,
+            };
+            args.Verbs.Add(spawnPassport);
+        }
+        // Pirate end - Allow Admins to Spawn a Passport for Players
+
         if (!HasComp<GodmodeComponent>(args.Target))
         {
             Verb makeIndestructible = new()
@@ -229,7 +260,7 @@ public sealed partial class AdminVerbSystem
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-trick-make-indestructible-description"),
-                Priority = (int)TricksVerbPriorities.MakeIndestructible,
+                Priority = (int) TricksVerbPriorities.MakeIndestructible,
             };
             args.Verbs.Add(makeIndestructible);
         }
@@ -246,7 +277,7 @@ public sealed partial class AdminVerbSystem
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-trick-make-vulnerable-description"),
-                Priority = (int)TricksVerbPriorities.MakeVulnerable,
+                Priority = (int) TricksVerbPriorities.MakeVulnerable,
             };
             args.Verbs.Add(makeVulnerable);
         }
@@ -968,5 +999,6 @@ public sealed partial class AdminVerbSystem
         SnapJoints = -27,
         MakeMinigun = -28,
         SetBulletAmount = -29,
+        SpawnPassport = -30, // Pirate - Allow Admins to Spawn a Passport for Players
     }
 }

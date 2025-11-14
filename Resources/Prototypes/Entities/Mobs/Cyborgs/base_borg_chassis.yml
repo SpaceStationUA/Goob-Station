@@ -156,6 +156,7 @@
 # SPDX-FileCopyrightText: 2025 Scruq445 <storchdamien@gmail.com>
 # SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Theodore Lukin <66275205+pheenty@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Zekins <zekins3366@gmail.com>
 # SPDX-FileCopyrightText: 2025 Timfa <timfalken@hotmail.com>
 # SPDX-FileCopyrightText: 2025 chromiumboy <50505512+chromiumboy@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 crasg <109207982+Scruq445@users.noreply.github.com>
@@ -172,8 +173,8 @@
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
   id: BaseBorgChassisNotIonStormable
-  name: cyborg
-  description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
+  name: "кіборг"
+  description: "Гібрид людини та машини, що допомагає в діяльності станції. Вони люблять, коли їх просять повторювати свої закони знову і знову."
   save: false
   abstract: true
   components:
@@ -286,6 +287,7 @@
     defaultChannel: Binary
     channels:
     - Binary
+    canUseInCrit: true # Goobstation
   - type: ZombieImmune
   - type: Repairable
     doAfterDelay: 10
@@ -453,6 +455,8 @@
     penetrateDamage: 75 # It's harder to kill iron golem
     damagePenalty: 0.25
   - type: MiningPoints # goobstation borgs can claim mining points
+  - type: SpeechSynthesis # Corvax-Frontier-Barks
+    voice: Borg
 
 - type: entity
   abstract: true
@@ -587,6 +591,8 @@
   - type: ExplosionResistance #Goobstation - Ion Damage
     damageCoefficient: 0.5
   - type: FlashImmunity
+  - type: SpeechSynthesis # Corvax-Frontier-Barks
+    voice: BorgSyndie
 
 - type: entity
   id: BaseBorgChassisDerelict
@@ -611,8 +617,8 @@
 - type: entity
   parent: BaseBorgChassisNotIonStormable
   id: BaseXenoborgChassis
-  name: xenoborg
-  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army.
+  name: "ксеноборг"
+  description: "Гібрид людини та машини, що прагне до самовідтворення. Вони люблять витягувати мізки, щоб вставляти їх у свіжі шасі ксеноборгів для розширення своєї армії."
   save: false
   abstract: true
   components:

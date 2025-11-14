@@ -58,3 +58,4 @@ alerts-sneak-attack-name = Прихована Атака
 alerts-sneak-attack-desc = Для справжнього шинобі, перший удар і останній удар — одне й те саме.
 alerts-loss-of-surprise-name = Втрата Несподіванки
 alerts-loss-of-surprise-desc = Ваші наміри розкрито! Вам знадобиться кілька миттєвостей, щоб знову атакувати приховано.
+hellrip-success-learned = Ви опанували «Розрив Пекла». Сувій згорає у ваших руках...

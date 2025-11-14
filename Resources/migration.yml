@@ -225,7 +225,7 @@ FoodPSB: null
 GunSafeAdjutantShotgun: null
 GunSafeEnergyGunMini: null
 GunSafeVulcanRifle: null
-HatSpawner: null
+#HatSpawner: null # Pirate
 KitchenDeepFryer: null
 KvassTankFull: null
 #LockerForensicMantisFilled: null Pirate
@@ -264,11 +264,11 @@ PlushieMothRandom: null
 #PoweredLightColoredRed: null
 PoweredSmallLightMaintenance: null
 PoweredSmallLightMaintenanceRed: null
-RandomAmmoBox: null
-RandomAnimalSpawner: null
-RandomBoards: null
-RandomBook: null
-RandomCrystalSpawner: null
+#RandomAmmoBox: null # Pirate
+#RandomAnimalSpawner: null # Pirate
+#RandomBoards: null # Pirate
+#RandomBook: null # Pirate
+#RandomCrystalSpawner: null # Pirate
 ReverseEngineeringMachine: null
 Roboisseur: null
 SalvagePartsSpawnerLow: null

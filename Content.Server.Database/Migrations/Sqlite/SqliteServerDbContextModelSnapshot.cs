@@ -794,10 +794,20 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("age");
 
+                    b.Property<string>("BarkVoice")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("bark_voice");
+
                     b.Property<string>("CharacterName")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("char_name");
+
+                    b.Property<string>("Employer")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("employer");
 
                     b.Property<string>("EyeColor")
                         .IsRequired()
@@ -838,9 +848,19 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("REAL")
                         .HasColumnName("height");
 
+                    b.Property<string>("Lifepath")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("lifepath");
+
                     b.Property<byte[]>("Markings")
                         .HasColumnType("jsonb")
                         .HasColumnName("markings");
+
+                    b.Property<string>("Nationality")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("nationality");
 
                     b.Property<int>("PreferenceId")
                         .HasColumnType("INTEGER")

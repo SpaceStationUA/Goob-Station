@@ -85,7 +85,7 @@ accent-newyork-words-replace-28 = тачка
 accent-newyork-words-29 = гроші
 accent-newyork-words-replace-29 = бабки
 
-accent-newyork-words-30 = асистент
+accent-newyork-words-30 = пасажир
 accent-newyork-words-replace-30 = помічник
 
 accent-newyork-words-31 = телефон

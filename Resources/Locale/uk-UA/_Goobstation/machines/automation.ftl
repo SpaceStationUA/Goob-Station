@@ -86,7 +86,11 @@ signal-port-name-automation-slot-autodoc-hand = Предмет: Рука Авт�
 signal-port-description-automation-slot-autodoc-hand = Слот автоматизації для органу/частини/тощо, що утримуються АвтоДоком; використовується інструкціями STORE ITEM / GRAB ITEM.
 
 signal-port-name-automation-slot-gas-tank = Предмет: Газовий балон
-signal-port-description-automation-slot-gas-tank = Слот автоматизації для газового балона
+signal-port-description-automation-slot-gas-tank = Слот автоматизації для газового балона.
+
+# Радіаційний колектор.
+
+# Радіаційний колектор
 
 signal-port-name-rad-empty = Порожній
 signal-port-description-rad-empty = Сигнальний порт встановлюється на ВИСОКИЙ, якщо бак відсутній або тиск нижче 33%, в іншому випадку - НИЗЬКИЙ.
@@ -95,7 +99,7 @@ signal-port-name-rad-low = Низький
 signal-port-description-rad-low = Сигнальний порт встановлюється на ВИСОКИЙ, якщо тиск у баку нижче 66%, в іншому випадку - НИЗЬКИЙ.
 
 signal-port-name-rad-full = Повний
-signal-port-description-rad-full = Сигнальний порт встановлює HIGH, якщо тиск у балоні перевищує 66%, інакше LOW
+signal-port-description-rad-full = Сигнальний порт встановлюється у стан ВИСОКИЙ, якщо тиск у баку понад 66%, інакше — НИЗЬКИЙ
 
 signal-port-name-alt-interact = Режим альтернативної взаємодії
 signal-port-description-alt-interact = Сигнальний порт для перемикання режиму альтернативної взаємодії або встановлення його на значення HIGH/LOW

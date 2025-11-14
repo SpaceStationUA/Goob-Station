@@ -43,7 +43,7 @@ spellbook-wand-locker-description = Стріляйте у ворогів про�
 spellbook-upgrade-jaunt-name = Оновлення Ethereal Jaunt
 spellbook-upgrade-jaunt-description = Підвищує рівень Jaunt до максимального 3-го рівня!
 spellbook-tile-toggle-name = Переміщення Плиток
-spellbook-tile-toggle-description = Асистентам це не сподобається.
+spellbook-tile-toggle-description = Пасажирам це не сподобається.
 spellbook-curse-of-byond-name = Прокляття Byond
 spellbook-curse-of-byond-description = Засудіть свою ціль на вічні страждання.
 

@@ -13,7 +13,7 @@
 
 - type: entity
   id: MiningWindow
-  name: mining window
+  name: "шахтерське вікно"
   parent: WindowRCDResistant
   components:
   - type: Sprite
@@ -84,7 +84,7 @@
     - Diagonal
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls # Pirate
     base: state
   - type: Icon
     sprite: Structures/Windows/mining_diagonal.rsi

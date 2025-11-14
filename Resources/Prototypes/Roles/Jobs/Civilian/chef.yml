@@ -85,6 +85,12 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 1800 # 30 Minutes
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+    # Pirate contractor end
   startingGear: ChefGear
   icon: "JobIconChef"
   supervisors: job-supervisors-hop
@@ -108,7 +114,7 @@
 - type: startingGear
   id: ChefGear
   equipment:
-    #shoes: ClothingShoesColorBlack # Pirate moved to wardrobe
+    shoes: ClothingShoesColorBlack
     id: ChefPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltChefFilled

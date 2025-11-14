@@ -1,0 +1,19 @@
+- type: entity
+  parent: [ BaseItem, BaseMagicalContraband ]
+  id: HellRipScroll
+  name: "сувій «Розрив Пекла»"
+  description: "Темний сувій, написаний кров'ю. Його текст короткий, але здається безкінечним. Лише дивлячись на нього, ти відчуваєш потяг дерти плоть і відривати голови."
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: contract-written
+  - type: Item
+    sprite: _Goobstation/Objects/Misc/devil_contract.rsi
+    size: Small
+  - type: StaticPrice
+    price: 50000
+  - type: GrantHellRip
+  - type: GuideHelp
+    guides:
+    - HellRip

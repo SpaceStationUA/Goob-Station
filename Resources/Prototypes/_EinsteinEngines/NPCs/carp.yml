@@ -4,10 +4,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: space goldfish
+  name: "космічна золота рибка"
   parent: BaseMobCarp
   id: MobCarpGoldfish
-  description: A domesticated variety of space carp, much smaller but no less aggressive.
+  description: "Одомашнений різновид космічного коропа, значно менший, але не менш агресивний."
   components:
     - type: HTN
       rootTask:
@@ -21,6 +21,12 @@
       rules: ghost-role-information-freeagent-rules
       mindRoles:
       - MindRoleGhostRoleFreeAgent
+    - type: Tag #Goob edit start
+      tags:
+      - VimPilot
+      - Carp
+      - DoorBumpOpener
+      - CannotSuicide #Goob edit end
     - type: GhostTakeoverAvailable
     - type: Sprite
       drawdepth: Mobs

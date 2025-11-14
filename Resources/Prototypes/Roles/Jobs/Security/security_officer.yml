@@ -92,6 +92,12 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 36000 #10 hrs
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+    # Pirate contractor end
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos

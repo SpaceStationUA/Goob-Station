@@ -197,3 +197,22 @@
   equipment:
     outerClothing: ClothingOuterFlannelRed
   groupBy: "CoatJacket"
+
+## MNK
+- type: loadout
+  id: WardrobeMNKBlackTopCoat
+  equipment:
+    outerClothing: ClothingOuterCoatMNKBlackTopCoat
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: WardrobeMNKWhiteHoodie
+  equipment:
+    outerClothing: ClothingOuterCoatMNKWhiteHoodie
+  groupBy: "CoatJacket"
+
+- type: loadout
+  id: WardrobeMNKBlackJacket
+  equipment:
+    outerClothing: ClothingOuterCoatMNKBlackJacket
+  groupBy: "CoatJacket"

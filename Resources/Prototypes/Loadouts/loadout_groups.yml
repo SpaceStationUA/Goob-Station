@@ -343,6 +343,7 @@
   - CaptainCloak
   - CaptainCloakFormal
   - CaptainMantle
+  - VeteranCaptainCloak # goob
 
 - type: loadoutGroup
   id: CaptainBackpack

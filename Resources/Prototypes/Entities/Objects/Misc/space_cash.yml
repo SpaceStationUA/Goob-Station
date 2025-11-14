@@ -25,8 +25,8 @@
 - type: entity
   parent: BaseItem
   id: SpaceCash
-  name: spesos
-  description: You gotta have money.
+  name: "спесо"
+  description: "Треба мати гроші."
   components:
   - type: Cash
   - type: Item
@@ -58,11 +58,6 @@
     layerFunction: Threshold
   - type: StackLayerThreshold
     thresholds: [10, 100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 1000000]
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     sprite: Objects/Economy/cash.rsi
     state: cash
@@ -126,7 +121,7 @@
 
 - type: material
   id: Credit
-  name: speso
+  name: "спесо"
   unit: materials-unit-bill
   stackEntity: SpaceCash
   icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }

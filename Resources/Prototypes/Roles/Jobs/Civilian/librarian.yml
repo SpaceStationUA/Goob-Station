@@ -68,6 +68,13 @@
   name: job-name-librarian
   description: job-description-librarian
   playTimeTracker: JobLibrarian
+  # Pirate contractor start
+  requirements: 
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+  # Pirate contractor end
   startingGear: LibrarianGear
   icon: "JobIconLibrarian"
   supervisors: job-supervisors-hop
@@ -96,7 +103,7 @@
 - type: startingGear
   id: LibrarianGear
   equipment:
-    #shoes: ClothingShoesBootsLaceup # Pirate moved to wardrobe
+    shoes: ClothingShoesBootsLaceup
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d20Dice

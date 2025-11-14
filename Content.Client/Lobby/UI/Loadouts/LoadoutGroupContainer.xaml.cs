@@ -82,8 +82,15 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
         LoadoutsContainer.DisposeAllChildren();
 
+        // Pirate edit start - port frontier subgroups
         // Get all loadout prototypes for this group.
-        var validProtos = _groupProto.Loadouts.Select(id => protoMan.Index(id));
+        //var validProtos = _groupProto.Loadouts.Select(id => protoMan.Index(id));
+        var allLoadoutIds = _groupProto.GetAllLoadouts(protoMan).Distinct();
+        var validProtos = allLoadoutIds
+            .Select(id => protoMan.TryIndex(id, out var proto) ? proto : null)
+            .Where(proto => proto is not null)
+            .Select(proto => proto!);
+        // Pirate edit end - port frontier subgroups
 
         /*
          * Group the prototypes based on their GroupBy field.

@@ -1,0 +1,43 @@
+## mnk
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatMNKWhiteHoodie
+  name: "Біла худі МНК"
+  description: "Класична біла худі, вироблена МНК."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Misc/hoodie_white.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Misc/hoodie_white.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 0.2
+    coolingCoefficient: 0.2
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatMNKBlackTopCoat
+  name: "Чорне пальто МНК"
+  description: "Міцне чорне пальто МНК."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Misc/black_top_coat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Misc/black_top_coat.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 0.2
+    coolingCoefficient: 0.2
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatMNKBlackJacket
+  name: "Чорна куртка МНК"
+  description: "Легка чорна куртка МНК."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Misc/black_jacket.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Misc/black_jacket.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 0.2
+    coolingCoefficient: 0.2

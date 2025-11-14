@@ -43,11 +43,11 @@
 // SPDX-FileCopyrightText: 2025 MarkerWicker <markerWicker@proton.me>
 // SPDX-FileCopyrightText: 2025 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
 // SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
-// SPDX-FileCopyrightText: 2025 SX_7 <sn1.test.preria.2002@gmail.com>
 // SPDX-FileCopyrightText: 2025 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 āda <ss.adasts@gmail.com>
+// SPDX-FileCopyrightText: 2025 Zekins <zekins3366@gmail.com>
+// SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
 //
-// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -60,6 +60,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
+using Content.Goobstation.Common.Barks; // Goob Station - Barks
 using Content.Shared.Traits;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -129,6 +130,9 @@ namespace Content.Shared.Preferences
         [DataField]
         public ProtoId<SpeciesPrototype> Species { get; set; } = SharedHumanoidAppearanceSystem.DefaultSpecies;
 
+        [DataField] // Goob Station - Barks
+        public ProtoId<BarkPrototype> BarkVoice { get; set; } = SharedHumanoidAppearanceSystem.DefaultBarkVoice; // Goob Station - Barks
+
         [DataField]
         public int Age { get; set; } = 18;
 
@@ -137,6 +141,18 @@ namespace Content.Shared.Preferences
 
         [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
+
+        // Pirate edit start - port EE contractors
+        [DataField]
+        public string Nationality { get; set; } = SharedHumanoidAppearanceSystem.DefaultNationality;
+
+        [DataField]
+        public string Employer { get; set; } = SharedHumanoidAppearanceSystem.DefaultEmployer;
+
+        [DataField]
+        public string Lifepath { get; set; } = SharedHumanoidAppearanceSystem.DefaultLifepath;
+        // Pirate edit end - port EE contractors
+
 
         // begin Goobstation: port EE height/width sliders
         [DataField]
@@ -193,6 +209,9 @@ namespace Content.Shared.Preferences
             string name,
             string flavortext,
             string species,
+            string nationality, // Pirate - port EE contractors
+            string employer, // Pirate - port EE contractors
+            string lifepath, // Pirate - port EE contractors
             float height, // Goobstation: port EE height/width sliders
             float width, // Goobstation: port EE height/width sliders
             int age,
@@ -205,12 +224,15 @@ namespace Content.Shared.Preferences
             PreferenceUnavailableMode preferenceUnavailable,
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
             HashSet<ProtoId<TraitPrototype>> traitPreferences,
-            Dictionary<string, RoleLoadout> loadouts)
-
+            Dictionary<string, RoleLoadout> loadouts,
+            ProtoId<BarkPrototype> barkVoice) // Goob Station - Barks
         {
             Name = name;
             FlavorText = flavortext;
             Species = species;
+            Nationality = nationality; // Pirate - port EE contractors
+            Employer = employer; // Pirate - port EE contractors
+            Lifepath = lifepath; // Pirate - port EE contractors
             Height = height; // Goobstation: port EE height/width sliders
             Width = width; // Goobstation: port EE height/width sliders
             Age = age;
@@ -224,6 +246,7 @@ namespace Content.Shared.Preferences
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
             _loadouts = loadouts;
+            BarkVoice = barkVoice; // Goob Station - Barks
 
             var hasHighPrority = false;
             foreach (var (key, value) in _jobPriorities)
@@ -245,6 +268,9 @@ namespace Content.Shared.Preferences
             : this(other.Name,
                 other.FlavorText,
                 other.Species,
+                other.Nationality, // Pirate - port EE contractors
+                other.Employer, // Pirate - port EE contractors
+                other.Lifepath, // Pirate - port EE contractors
                 other.Height, // Goobstation: port EE height/width sliders
                 other.Width, // Goobstation: port EE height/width sliders
                 other.Age,
@@ -257,7 +283,8 @@ namespace Content.Shared.Preferences
                 other.PreferenceUnavailable,
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
-                new Dictionary<string, RoleLoadout>(other.Loadouts))
+                new Dictionary<string, RoleLoadout>(other.Loadouts),
+                other.BarkVoice) // Goob Station - Barks
         {
         }
 
@@ -282,6 +309,9 @@ namespace Content.Shared.Preferences
             return new()
             {
                 Species = species,
+                Nationality = SharedHumanoidAppearanceSystem.DefaultNationality, // Pirate - port EE contractors
+                Employer = SharedHumanoidAppearanceSystem.DefaultEmployer, // Pirate - port EE contractors
+                Lifepath = SharedHumanoidAppearanceSystem.DefaultLifepath, // Pirate - port EE contractors
             };
         }
 
@@ -319,6 +349,14 @@ namespace Content.Shared.Preferences
                 width = random.NextFloat(speciesPrototype.MinWidth, speciesPrototype.MaxWidth); // Goobstation: port EE height/width sliders
             }
 
+            // Goob Station - Barks Start
+            var barkvoiceId = random.Pick(prototypeManager
+                .EnumeratePrototypes<BarkPrototype>()
+                .Where(o => o.RoundStart && (o.SpeciesWhitelist is null || o.SpeciesWhitelist.Contains(species)))
+                .ToArray()
+            );
+            //  Goob Station - Barks End
+
             var gender = Gender.Epicene;
 
             switch (sex)
@@ -344,6 +382,10 @@ namespace Content.Shared.Preferences
                 Width = width, // Goobstation: port EE height/width sliders
                 Height = height, // Goobstation: port EE height/width sliders
                 Appearance = HumanoidCharacterAppearance.Random(species, sex),
+                BarkVoice = barkvoiceId, // Goob Station - Barks
+                Nationality = SharedHumanoidAppearanceSystem.DefaultNationality, // Pirate - port EE contractors
+                Employer = SharedHumanoidAppearanceSystem.DefaultEmployer, // Pirate - port EE contractors
+                Lifepath = SharedHumanoidAppearanceSystem.DefaultLifepath, // Pirate - port EE contractors
             };
         }
 
@@ -361,6 +403,21 @@ namespace Content.Shared.Preferences
         {
             return new(this) { Age = age };
         }
+
+        // Pirate edit start - port EE contractors
+        public HumanoidCharacterProfile WithNationality(string nationality)
+        {
+            return new(this) { Nationality = nationality };
+        }
+        public HumanoidCharacterProfile WithEmployer(string employer)
+        {
+            return new(this) { Employer = employer };
+        }
+        public HumanoidCharacterProfile WithLifepath(string lifepath)
+        {
+            return new(this) { Lifepath = lifepath };
+        }
+        // Pirate edit end - port EE contractors
 
         public HumanoidCharacterProfile WithSex(Sex sex)
         {
@@ -397,6 +454,13 @@ namespace Content.Shared.Preferences
         {
             return new(this) { SpawnPriority = spawnPriority };
         }
+
+        // Goob Station - Barks Start
+        public HumanoidCharacterProfile WithBarkVoice(BarkPrototype barkVoice)
+        {
+            return new(this) { BarkVoice = barkVoice };
+        }
+        // Goob Station - Barks End
 
         public HumanoidCharacterProfile WithJobPriorities(IEnumerable<KeyValuePair<ProtoId<JobPrototype>, JobPriority>> jobPriorities)
         {
@@ -577,6 +641,10 @@ namespace Content.Shared.Preferences
             if (Species != other.Species) return false;
             if (Height != other.Height) return false; // Goobstation: port EE height/width sliders
             if (Width != other.Width) return false; // Goobstation: port EE height/width sliders
+            if (BarkVoice != other.BarkVoice) return false; // Goob Station - Barks
+            if (Nationality != other.Nationality) return false; // Pirate - port EE contractors
+            if (Employer != other.Employer) return false; // Pirate - port EE contractors
+            if (Lifepath != other.Lifepath) return false; // Pirate - port EE contractors
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
@@ -667,6 +735,38 @@ namespace Content.Shared.Preferences
                 flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText);
             }
 
+            // Pirate edit start - port EE contractors
+            string nationality;
+            if (Nationality.Length > maxFlavorTextLength)
+            {
+                nationality = FormattedMessage.RemoveMarkupOrThrow(Nationality)[..maxFlavorTextLength];
+            }
+            else
+            {
+                nationality = FormattedMessage.RemoveMarkupOrThrow(Nationality);
+            }
+
+            string employer;
+            if (Employer.Length > maxFlavorTextLength)
+            {
+                employer = FormattedMessage.RemoveMarkupOrThrow(Employer)[..maxFlavorTextLength];
+            }
+            else
+            {
+                employer = FormattedMessage.RemoveMarkupOrThrow(Employer);
+            }
+
+            string lifepath;
+            if (Lifepath.Length > maxFlavorTextLength)
+            {
+                lifepath = FormattedMessage.RemoveMarkupOrThrow(Lifepath)[..maxFlavorTextLength];
+            }
+            else
+            {
+                lifepath = FormattedMessage.RemoveMarkupOrThrow(Lifepath);
+            }
+            // Pirate edit end - port EE contractors
+
             // begin Goobstation: port EE height/width sliders
             var height = Height;
             if (speciesPrototype != null)
@@ -726,6 +826,9 @@ namespace Content.Shared.Preferences
             Name = name;
             FlavorText = flavortext;
             Age = age;
+            Nationality = nationality; // Pirate - port EE contractors
+            Employer = employer; // Pirate - port EE contractors
+            Lifepath = lifepath; // Pirate - port EE contractors
             Height = height; // Goobstation: port EE height/width sliders
             Width = width; // Goobstation: port EE height/width sliders
             Sex = sex;
@@ -839,10 +942,14 @@ namespace Content.Shared.Preferences
             hashCode.Add(Species);
             hashCode.Add(Height); // Goobstation: port EE height/width sliders
             hashCode.Add(Width); // Goobstation: port EE height/width sliders
+            hashCode.Add(Employer); // Pirate - port EE contractors
+            hashCode.Add(Nationality); // Pirate - port EE contractors
+            hashCode.Add(Lifepath); // Pirate - port EE contractors
             hashCode.Add(Age);
             hashCode.Add((int) Sex);
             hashCode.Add((int) Gender);
             hashCode.Add(Appearance);
+            hashCode.Add(BarkVoice); // Goob Station - Barks
             hashCode.Add((int) SpawnPriority);
             hashCode.Add((int) PreferenceUnavailable);
             return hashCode.ToHashCode();

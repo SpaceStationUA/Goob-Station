@@ -76,7 +76,7 @@
   id: MusicianGear
   equipment:
     eyes: ClothingEyesGlassesSunglasses
-    #shoes: ClothingShoesBootsLaceup # Pirate moved to wardrobe
+    shoes: ClothingShoesBootsLaceup
     id: MusicianPDA
     ears: ClothingHeadsetService
   #storage:

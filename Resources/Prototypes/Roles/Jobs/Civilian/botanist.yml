@@ -77,6 +77,13 @@
   extendedAccess:
   - Kitchen
   - Bar
+  # Pirate contractor start
+  requirements: 
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+  # Pirate contractor end
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: FourTwenty
@@ -85,7 +92,7 @@
 - type: startingGear
   id: BotanistGear
   equipment:
-    #shoes: ClothingShoesColorBrown # Pirate moved to wardrobe
+    shoes: ClothingShoesColorBrown
     id: BotanistPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltPlantFilled

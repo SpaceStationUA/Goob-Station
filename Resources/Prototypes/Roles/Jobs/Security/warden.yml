@@ -145,6 +145,12 @@
     #  inverted: true
     #  species:
     #  - Felinid
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+    # Pirate contractor end
   weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"

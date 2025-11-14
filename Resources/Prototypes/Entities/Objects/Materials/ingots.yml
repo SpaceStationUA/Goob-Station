@@ -25,7 +25,7 @@
   abstract: true
   parent: BaseItem
   id: IngotBase
-  description: A heavy metal ingot stamped with the Nanotrasen logo.
+  description: "Злиток важкого металу з логотипом Нанотрейзен."
   components:
   - type: Sprite
     sprite: Objects/Materials/ingots.rsi
@@ -52,7 +52,7 @@
 - type: entity
   parent: IngotBase
   id: IngotGold
-  name: gold bar
+  name: "золотий злиток"
   suffix: Full
   components:
   - type: Material
@@ -66,11 +66,6 @@
     - gold
     - gold_2
     - gold_3
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: gold_3
     layers:
@@ -91,7 +86,7 @@
 - type: entity
   parent: IngotGold
   id: IngotGold1
-  name: gold bar
+  name: "золотий злиток"
   suffix: Single
   components:
   - type: Sprite
@@ -102,7 +97,7 @@
 - type: entity
   parent: IngotBase
   id: IngotSilver
-  name: silver bar
+  name: "срібний злиток"
   suffix: Full
   components:
   - type: Material
@@ -116,11 +111,6 @@
     - silver
     - silver_2
     - silver_3
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: silver_3
     layers:
@@ -141,7 +131,7 @@
 - type: entity
   parent: IngotSilver
   id: IngotSilver1
-  name: silver bar
+  name: "срібний злиток"
   suffix: Single
   components:
   - type: Sprite

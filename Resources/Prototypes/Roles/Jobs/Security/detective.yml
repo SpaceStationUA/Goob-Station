@@ -72,6 +72,12 @@
   - !type:RoleTimeRequirement
     role: JobSecurityOfficer
     time: 18000 #5 hrs
+  # Pirate contractor start
+  - !type:CharacterEmployerRequirement
+    inverted: true
+    employers:
+    - Unemployed
+  # Pirate contractor end
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   supervisors: job-supervisors-hos

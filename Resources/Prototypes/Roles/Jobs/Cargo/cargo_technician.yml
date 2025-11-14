@@ -76,6 +76,13 @@
   name: job-name-cargotech
   description: job-description-cargotech
   playTimeTracker: JobCargoTechnician
+  # Pirate contractor start
+  requirements: 
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+  # Pirate contractor end
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"
   supervisors: job-supervisors-qm

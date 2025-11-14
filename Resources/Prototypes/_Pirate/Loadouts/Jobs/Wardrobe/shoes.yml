@@ -101,31 +101,3 @@
   equipment:
     shoes: ClothingShoesColorYellow
   groupBy: "ShoesColor"
-
-
-- type: loadout
-  id: WardrobeShoesColorBlue
-  equipment:
-    shoes: ClothingShoesColorBlue
-  groupBy: "ShoesColor"
-
-
-- type: loadout
-  id: WardrobeShoesColorWhite
-  equipment:
-    shoes: ClothingShoesColorWhite
-  groupBy: "ShoesColor"
-
-
-- type: loadout
-  id: WardrobeShoesColorBrown
-  equipment:
-    shoes: ClothingShoesColorBrown
-  groupBy: "ShoesColor"
-
-
-- type: loadout
-  id: WardrobeShoesColorBlack
-  equipment:
-    shoes: ClothingShoesColorBlack
-  groupBy: "ShoesColor"

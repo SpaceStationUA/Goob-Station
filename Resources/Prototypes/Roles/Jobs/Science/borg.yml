@@ -46,6 +46,7 @@
   jobEntity: StationAiBrain
   jobPreviewEntity: PlayerStationAiPreview
   applyTraits: false
+  canHavePassport: false
 
 - type: job
   id: Borg
@@ -61,3 +62,4 @@
   supervisors: job-supervisors-rd
   jobEntity: PlayerBorgBattery
   applyTraits: true
+  canHavePassport: false

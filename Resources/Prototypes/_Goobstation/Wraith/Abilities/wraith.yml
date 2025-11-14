@@ -18,45 +18,45 @@
 
 - type: entity
   id: WraithAbilities
-  name: Wraith Abilities
+  name: "Здібності Примари"
   categories: [ HideSpawnMenu ]
   components:
   - type: Haunt
   - type: BloodWriting
   - type: Decay
   - type: AbsorbCorpse
-    damage:
+    damage: # damage they take when they eat a corpse with forma
       types:
         Slash: 25
         Blunt: 25
   - type: DemonicWhisper
   - type: PossessObject
   - type: SpookMark
-  - type: WraithCommand
-    blacklist:
-      components:
-      - MobState
-      - Body
-      - Food
-      - EntityStorage
-      - Solution
-      - ReagentDispenser
-      tags:
-      - ChemDispensable
-    searchRange: 7
-    stunDuration: 5
+  #- type: WraithCommand
+  #  blacklist:
+  #    components:
+  #    - MobState
+  #    - Body
+  #    - Food
+  #    - EntityStorage
+  #    - Solution
+  #    - ReagentDispenser
+  #    tags:
+  #    - ChemDispensable
+  #  searchRange: 7
+  #  stunDuration: 5
   - type: Evolve
     availableEvolutions:
     - prototype: MobWraithHarbinger
     - prototype: MobWraithPlague
-    #- prototype: MobWraithTrickster
+  # - prototype: MobWraithTrickster
   - type: ActionGrant
     actions:
     - ActionAbsorbCorpse
     - ActionPossessObject
     - ActionDecay
-    - ActionCommand
-    - ActionAnimateObject
+   # - ActionCommand
+   # - ActionAnimateObject
     - ActionWhisper
     - ActionBloodWriting
     - ActionSpook
@@ -65,7 +65,7 @@
 
 - type: entity
   id: HarbingerAbilities
-  name: Harbinger Abilities
+  name: "Здібності Провісника"
   parent: WraithAbilities
   categories: [ HideSpawnMenu ]
   components:
@@ -84,7 +84,7 @@
 
 - type: entity
   id: PlaguebingerAbilities
-  name: Plaguebinger Abilities
+  name: "Здібності Чумоносця"
   parent: WraithAbilities
   categories: [ HideSpawnMenu ]
   components:

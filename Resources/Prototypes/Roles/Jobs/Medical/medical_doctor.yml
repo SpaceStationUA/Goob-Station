@@ -81,6 +81,12 @@
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 9000 #2.5 hrs
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+    # Pirate contractor end
   startingGear: DoctorGear
   icon: "JobIconMedicalDoctor"
   supervisors: job-supervisors-cmo

@@ -193,6 +193,8 @@
       - id: ClothingHeadHatBeret
       - id: ClothingHeadHatBowlerHat
       - id: ClothingHeadHatFedoraBrown
+      - id: Balaclava # Pirate
+      - id: GreenBalaclava # Pirate
         weight: 0.5
       - id: ClothingHeadHatFedoraGrey
         weight: 0.5
@@ -321,9 +323,10 @@
       - id: FoodSnackLollypopWrappedMysteryEvil # Goobstation - Lollypops!
       - id: MysteryLighterBox
       - id: GoldenPersonalAI
+      - id: SkullBalaclava # Pirate
 
 - type: entity
-  name: Maint Loot Spawner
+  name: "спавнер луту із техів"
   suffix: Fluff+Clothes
   id: MaintenanceFluffSpawner
   parent: MarkerBase
@@ -459,7 +462,7 @@
         weight: 0.05
 
 - type: entity
-  name: Maint Loot Spawner
+  name: "спавнер луту із техів"
   suffix: Tools+Cells+Mats
   id: MaintenanceToolSpawner
   parent: MarkerBase
@@ -517,7 +520,7 @@
       - id: ClothingHandsKnuckleDusters
 
 - type: entity
-  name: Maint Loot Spawner
+  name: "спавнер луту із техів"
   suffix: Scrap+Weapons
   id: MaintenanceWeaponSpawner
   parent: MarkerBase
@@ -533,7 +536,7 @@
       prob: 0.6
 
 - type: entity
-  name: Maint Loot Spawner
+  name: "спавнер луту із техів"
   suffix: Plants
   id: MaintenancePlantSpawner
   parent: MarkerBase
@@ -564,7 +567,7 @@
       weight: 1
 
 - type: entity
-  name: Maint Loot Spawner
+  name: "спавнер луту із техів"
   id: MaintenanceInsulsSpawner
   suffix: Insuls, safe
   parent: MarkerBase

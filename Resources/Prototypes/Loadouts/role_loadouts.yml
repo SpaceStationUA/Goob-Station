@@ -200,17 +200,10 @@
   id: JobBartender
   groups:
   - GroupTankHarness
-  #- BartenderHead # Pirate wardrobe
-  #- BartenderJumpsuit # Pirate wardrobe
+  - BartenderHead
+  - BartenderJumpsuit
   - CommonBackpack
-  # Pirate wardrobe start VVV
-  - PirateBartenderHead
-  - PiratePassengerNeck
-  - PirateBartenderJumpsuit
-  - PirateBartenderOuterClothing
-  - PiratePassengerShoes
-  # Pirate wardrobe end ^^^
-  #- BartenderOuterClothing # Pirate wardrobe
+  - BartenderOuterClothing
   - Glasses
   - Survival
   - Trinkets
@@ -225,15 +218,8 @@
   id: JobServiceWorker
   groups:
   - GroupTankHarness
-  #- BartenderJumpsuit # Pirate wardrobe
+  - BartenderJumpsuit
   - CommonBackpack
-  # Pirate wardrobe start VVV
-  - PirateBartenderJumpsuit
-  - PiratePassengerHead
-  - PiratePassengerOuterClothing
-  - PiratePassengerShoes
-  - PiratePassengerNeck
-  # Pirate wardrobe end ^^^
   - Glasses
   - Survival
   - Trinkets
@@ -248,18 +234,11 @@
   id: JobChef
   groups:
   - GroupTankHarness
-  #- ChefHead
+  - ChefHead
   - ChefMask
-  #- ChefJumpsuit
+  - ChefJumpsuit
   - CommonBackpack
-  # Pirate wardrobe start VVV
-  - PirateChefHead
-  - PirateChefJumpsuit
-  - PirateChefOuterClothing
-  - PiratePassengerShoes
-  - PiratePassengerNeck
-  # Pirate wardrobe end ^^^
-  #- ChefOuterClothing
+  - ChefOuterClothing
   - Glasses
   - Survival
   - Trinkets
@@ -274,14 +253,7 @@
   id: JobLibrarian
   groups:
   - GroupTankHarness
-  #- LibrarianJumpsuit
-  # Pirate wardrobe start VVV
-  - PirateLibrarianJumpsuit
-  - PiratePassengerHead
-  - PiratePassengerOuterClothing
-  - PiratePassengerShoes
-  - PiratePassengerNeck
-  # Pirate wardrobe end ^^^
+  - LibrarianJumpsuit
   - CommonBackpack
   - Glasses
   - Survival
@@ -314,19 +286,12 @@
   id: JobChaplain
   groups:
   - GroupTankHarness
-  #- ChaplainHead
+  - ChaplainHead
   - ChaplainMask
-  #- ChaplainNeck
-  #- ChaplainJumpsuit
+  - ChaplainNeck
+  - ChaplainJumpsuit
   - CommonBackpack
-  # Pirate wardrobe start VVV
-  - PirateChaplainHead
-  - PirateChaplainNeck
-  - PirateChaplainJumpsuit
-  - PirateChaplainOuterClothing
-  - PiratePassengerShoes
-  # Pirate wardrobe end ^^^
-  #- ChaplainOuterClothing
+  - ChaplainOuterClothing
   - Glasses
   - Survival
   - Trinkets
@@ -361,17 +326,10 @@
   id: JobBotanist
   groups:
   - GroupTankHarness
-  #- BotanistHead
-  #- BotanistJumpsuit
+  - BotanistHead
+  - BotanistJumpsuit
   - BotanistBackpack
-  # Pirate wardrobe start VVV
-  - PirateBotanistHead
-  - PirateBotanistJumpsuit
-  - PirateBotanistOuterClothing
-  - PiratePassengerShoes
-  - PiratePassengerNeck
-  # Pirate wardrobe end ^^^
-  #- BotanistOuterClothing
+  - BotanistOuterClothing
   - Glasses
   - Survival
   - Trinkets
@@ -428,13 +386,7 @@
   - GroupTankHarness
   - MusicianJumpsuit
   - CommonBackpack
-  # Pirate wardrobe start VVV
-  - PiratePassengerHead
-  - PiratePassengerOuterClothing
-  - PiratePassengerShoes
-  - PiratePassengerNeck
-  # Pirate wardrobe end ^^^
-  #- MusicianOuterClothing
+  - MusicianOuterClothing
   - Glasses
   - Survival
   - Trinkets
@@ -651,12 +603,11 @@
   - HeadofSecurityJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
-  - SecurityWeapon # Pirate
+  - SeniorSecurityWeapon # Pirate
   - SecurityBelt
   - HeadofSecurityOuterClothing
   - HeadofSecurityShoes # Goobstation edit
   - SurvivalSecurity
-  - CommandSelfDefense # Pirate
   - Trinkets
   - SecurityStar
   - Animals
@@ -674,7 +625,7 @@
   - WardenJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
-  - SecurityWeapon # Pirate
+  - SeniorSecurityWeapon # Pirate
   - SecurityNeck
   - SecurityBelt
   - WardenOuterClothing
@@ -697,7 +648,7 @@
   - SecurityBackpack
   - SecurityMelee # Goobstation
   - SecurityWeapon # Pirate
-  - SecuritySecondaryWeapon # Pirate
+  - SecurityOfficerMask # Pirate
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityNeck
@@ -742,6 +693,7 @@
   - SurvivalSecurity
   - SecurityNeck
   - SecurityCadetOuterClothing # Pirate
+  - SecurityOfficerMask # Pirate
   - Trinkets
   - Animals
   - GroupSpeciesBreathToolSecurity

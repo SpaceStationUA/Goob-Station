@@ -721,10 +721,10 @@ accent-medieval-words-replace-225 = чорногвардієць
 accent-medieval-words-226 = тайдери
 accent-medieval-words-replace-226 = чорногвардійці
 
-accent-medieval-words-227 = асистент
+accent-medieval-words-227 = пасажир
 accent-medieval-words-replace-227 = чорногвардієць
 
-accent-medieval-words-228 = асистенти
+accent-medieval-words-228 = пасажири
 accent-medieval-words-replace-228 = чорногвардійці
 
 accent-medieval-words-229 = бот

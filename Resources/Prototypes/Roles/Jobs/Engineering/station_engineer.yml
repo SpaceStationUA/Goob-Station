@@ -77,6 +77,12 @@
     - !type:DepartmentTimeRequirement
       department: Engineering
       time: 9000 #2.5 hrs
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+    # Pirate contractor end
   startingGear: StationEngineerGear
   icon: "JobIconStationEngineer"
   supervisors: job-supervisors-ce

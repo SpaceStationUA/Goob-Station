@@ -138,9 +138,9 @@
   # If item is not in list it will go at the bottom (ties broken by alert type enum value)
   id: BaseAlertOrder
   order:
-  - alertType: ChangelingBiomass # goobstation - changelings
   - category: Health
   - category: Stamina
+  - alertType: ChangelingBiomass # goobstation - changelings
   - alertType: ChangelingChemicals # goobstation - changelings
   - alertType: SuitPower
   - alertType: ModsuitPower # Goobstation - Modsuits
@@ -633,45 +633,45 @@
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health0
-  name: Debug1
-  description: Debug
+  name: "Debug1"
+  description: "Налагодження"
 
 - type: alert
   id: Debug2
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health1
-  name: Debug2
-  description: Debug
+  name: "Налагодження2"
+  description: "Налагодження"
 
 - type: alert
   id: Debug3
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health2
-  name: Debug3
-  description: Debug
+  name: "Debug3"
+  description: "Налагодження"
 
 - type: alert
   id: Debug4
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health3
-  name: Debug4
-  description: Debug
+  name: "Debug4"
+  description: "Налагодження"
 
 - type: alert
   id: Debug5
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health4
-  name: Debug5
-  description: Debug
+  name: "Debug5"
+  description: "Налагодження"
 
 - type: alert
   id: Debug6
   icons:
   - sprite: /Textures/Interface/Alerts/human_critical.rsi
     state: critical
-  name: Debug6
-  description: Debug
+  name: "Debug6"
+  description: "Налагодження"

@@ -77,6 +77,12 @@
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 9000 # 2.5 hrs
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+      - Unemployed
+    # Pirate contractor end
   icon: "JobIconShaftMiner"
   startingGear: SalvageSpecialistGear
   goobcoins: 20 #Goob content

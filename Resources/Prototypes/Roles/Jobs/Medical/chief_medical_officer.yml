@@ -149,6 +149,11 @@
     #  inverted: true
     #  species:
     #  - Felinid
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+    # Pirate contractor end
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
   supervisors: job-supervisors-captain

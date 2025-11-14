@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseMobSpeciesOrganic
   id: BaseMobFeroxi
-  name: Urist McFin
+  name: "Юріст МакПлавець"
   save: false
   abstract: true
   components:
@@ -32,6 +32,7 @@
     noRot: true
     drawdepth: Mobs
     layers:
+      - map: [ "enum.HumanoidVisualLayers.TailBehind" ] # Pirate - port Floofstation custom layers
       - map: [ "enum.HumanoidVisualLayers.Groin" ]
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
       - map: [ "enum.HumanoidVisualLayers.Head" ]
@@ -74,6 +75,7 @@
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ]
+      - map: [ "enum.HumanoidVisualLayers.TailOversuit" ] # Pirate - port Floofstation custom layers
       - map: [ "mask" ]
       - map: [ "head" ]
       - map: [ "pocket1" ]
@@ -111,10 +113,10 @@
 - type: entity
   parent: MobHumanDummy
   id: MobFeroxiDummy
-  name: Feroxi Dummy
+  name: "манекен ферокса"
   save: false
   categories: [ HideSpawnMenu ]
-  description: A dummy feroxi meant to be used in character setup.
+  description: "Манекен ферокса, призначений для використання в налаштуваннях персонажа."
   components:
   - type: HumanoidAppearance
     species: Feroxi

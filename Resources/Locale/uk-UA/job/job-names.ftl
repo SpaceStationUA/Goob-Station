@@ -66,7 +66,7 @@ job-name-chaplain = Капелан
 job-name-botanist = Ботанік
 job-name-bartender = Бармен
 ## goob edit - epic passengers
-job-name-passenger = Асистент
+job-name-passenger = Пасажир
 job-name-salvagespec = Утилізатор
 job-name-station-ai = ШІ станції
 job-name-qm = Квартирмейстер
@@ -129,7 +129,7 @@ JobMedicalIntern = Медичний інтерн
 JobMime = Мім
 JobMusician = Музикант
 JobParamedic = Парамедик
-JobPassenger = Асистент
+JobPassenger = Пасажир
 JobPsychologist = Психолог
 JobQuartermaster = Квартирмейстер
 JobReporter = Репортер

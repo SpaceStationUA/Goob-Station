@@ -7,64 +7,6 @@
 
 
 
-## Casual
-- type: loadout
-  id: WardrobeJumpskirtCasualGreen
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtCasualGreen
-  groupBy: "JumpsuitCasual"
-
-
-- type: loadout
-  id: WardrobeJumpsuitCasualGreen
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitCasualGreen
-  groupBy: "JumpsuitCasual"
-
-
-- type: loadout
-  id: WardrobeJumpskirtCasualRed
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtCasualRed
-  groupBy: "JumpsuitCasual"
-
-
-- type: loadout
-  id: WardrobeJumpsuitCasualRed
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitCasualRed
-  groupBy: "JumpsuitCasual"
-
-
-- type: loadout
-  id: WardrobeJumpskirtCasualPurple
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtCasualPurple
-  groupBy: "JumpsuitCasual"
-
-
-- type: loadout
-  id: WardrobeJumpsuitCasualPurple
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitCasualPurple
-  groupBy: "JumpsuitCasual"
-
-
-- type: loadout
-  id: WardrobeJumpskirtCasualBlue
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtCasualBlue
-  groupBy: "JumpsuitCasual"
-
-
-- type: loadout
-  id: WardrobeJumpsuitCasualBlue
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitCasualBlue
-  groupBy: "JumpsuitCasual"
-
-
-
 ## Hawai
 - type: loadout
   id: WardrobeJumpsuitHawaiYellow
@@ -277,74 +219,45 @@
     jumpsuit: ClothingUniformJumpsuitColorGrey
   groupBy: "JumpsuitColor"
 
-
-
-## Jumpskirt Color
+## MNK
 - type: loadout
-  id: WardrobeJumpskirtGreenStripedDress
+  id: WardrobeMNKBlackOveralls
   equipment:
-    jumpsuit: ClothingUniformJumpskirtGreenStripedDress
-  groupBy: "JumpskirtColor"
-
+    jumpsuit: ClothingUniformMNKBlackOveralls
+  groupBy: "UniformMNK"
 
 - type: loadout
-  id: WardrobeJumpskirtCyanStripedDress
+  id: WardrobeMNKTracksuitBlack
   equipment:
-    jumpsuit: ClothingUniformJumpskirtCyanStripedDress
-  groupBy: "JumpskirtColor"
-
+    jumpsuit: ClothingUniformMNKTracksuitBlack
+  groupBy: "UniformMNK"
 
 - type: loadout
-  id: WardrobeJumpskirtPinkStripedDress
+  id: WardrobeMNKBlackShoulder
   equipment:
-    jumpsuit: ClothingUniformJumpskirtPinkStripedDress
-  groupBy: "JumpskirtColor"
-
+    jumpsuit: ClothingUniformMNKBlackShoulder
+  groupBy: "UniformMNK"
 
 - type: loadout
-  id: WardrobeJumpskirtRedStripedDress
+  id: WardrobeMNKDressBlack
   equipment:
-    jumpsuit: ClothingUniformJumpskirtRedStripedDress
-  groupBy: "JumpskirtColor"
-
+    jumpsuit: ClothingUniformMNKDressBlack
+  groupBy: "UniformMNK"
 
 - type: loadout
-  id: WardrobeJumpskirtOrangeStripedDress
+  id: WardrobeMNKGymBra
   equipment:
-    jumpsuit: ClothingUniformJumpskirtOrangeStripedDress
-  groupBy: "JumpskirtColor"
-
+    jumpsuit: ClothingUniformMNKGymBra
+  groupBy: "UniformMNK"
 
 - type: loadout
-  id: WardrobeJumpskirtYellowTurtleneckDress
+  id: WardrobeMNKUnderGarment
   equipment:
-    jumpsuit: ClothingUniformJumpskirtYellowTurtleneckDress
-  groupBy: "JumpskirtColor"
-
+    jumpsuit: ClothingUniformMNKUnderGarment
+  groupBy: "UniformMNK"
 
 - type: loadout
-  id: WardrobeJumpskirtRedTurtleneckDress
+  id: WardrobeMNKOfficeSkirt
   equipment:
-    jumpsuit: ClothingUniformJumpskirtRedTurtleneckDress
-  groupBy: "JumpskirtColor"
-
-
-- type: loadout
-  id: WardrobeJumpskirtPurpleTurtleneckDress
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtPurpleTurtleneckDress
-  groupBy: "JumpskirtColor"
-
-
-- type: loadout
-  id: WardrobeJumpskirtGreenTurtleneckDress
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtGreenTurtleneckDress
-  groupBy: "JumpskirtColor"
-
-
-- type: loadout
-  id: WardrobeJumpskirtBlueTurtleneckDress
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtBlueTurtleneckDress
-  groupBy: "JumpskirtColor"
+    jumpsuit: ClothingUniformMNKOfficeSkirt
+  groupBy: "UniformMNK"

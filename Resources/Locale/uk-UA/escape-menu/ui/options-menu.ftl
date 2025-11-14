@@ -408,3 +408,5 @@ ui-options-highlights-color = Колір підсвічування:
 ui-options-highlights-color-example = Це підсвічений текст!
 
 ui-options-ambient-occlusion = Показувати Ambient Occlusion
+ui-options-highlight-volume = Гучність сигналу підсвічування чату:
+ui-options-highlight-sound = Відтворювати звук під час підсвічування

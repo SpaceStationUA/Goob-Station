@@ -30,3 +30,5 @@ objective-spread-blood = Розлити кров по {$area}.
 objective-show-power-title = Показати {$targetName} справжню силу крові.
 
 objective-drive-insane-title = Звести {$targetName} з розуму своїми демонічними шепотами.
+
+objective-condition-kill-everyone-title = ВБИТИ ВСІХ

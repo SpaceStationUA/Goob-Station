@@ -2,8 +2,8 @@
 - type: entity
   id: MobSkeletonCommander
   parent: [ BaseMob, MobCombat ]
-  name: skeleton commander
-  description: A bulky skeleton here to encourage his friends.
+  name: "командир скелетів"
+  description: "Кремезний скелет, що прийшов підбадьорити своїх друзів."
   components:
   - type: CollectiveMind
     defaultChannel: Wraithmind
@@ -30,6 +30,13 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
     baseSprintSpeed: 4
+  - type: Vocal
+    wilhelm: "/Audio/_Goobstation/Voice/badtothebone.ogg"
+    wilhelmProbability: 0.1
+    sounds:
+      Male: Skeleton
+      Female: Skeleton
+      Unsexed: Skeleton
   - type: Sprite
     drawdepth: Mobs
     sprite: _Goobstation/Wraith/Mobs/skeletoncommander.rsi
@@ -73,7 +80,10 @@
     - ActionRally
     - ActionSummonLesserSkeleton
   - type: Speech
-    speechVerb: Ghost
+    speechVerb: Skeleton
+  - type: SkeletonAccent
+  - type: TypingIndicator
+    proto: skeleton
   - type: Destructible
     thresholds:
       - trigger:
@@ -100,11 +110,13 @@
     speedModifier: 2.5
 
 - type: entity
-  name: Tentacle fiend
+  name: "щупальцевий демон"
   parent: MobCorgiNarsi
   id: MobVoidSpiker
-  description: Standing still is probably not a good idea.
+  description: "Стояти на місці — мабуть, не найкраща ідея."
   components:
+  - type: MindContainer
+    showExamineInfo: true
   - type: CollectiveMind
     defaultChannel: Wraithmind
     channels:
@@ -197,11 +209,13 @@
     speedModifier: 2.5
 
 - type: entity
-  name: Voidhound
+  name: "Гончак Порожнечі"
   parent: MobCorgiNarsi
   id: MobVoidHound
-  description: You probably shouldn't be staring at this thing.
+  description: "Ймовірно, не варто втуплюватися на цю штуку."
   components:
+  - type: MindContainer
+    showExamineInfo: true
   - type: CollectiveMind
     defaultChannel: Wraithmind
     channels:
