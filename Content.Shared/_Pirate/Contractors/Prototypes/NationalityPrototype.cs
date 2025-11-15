@@ -33,4 +33,7 @@ public sealed partial class NationalityPrototype : IPrototype
     
     [DataField]
     public ProtoId<EntityPrototype> PassportPrototype { get; } = new();
+
+    [DataField("languages")]
+    public List<string> Languages { get; private set; } = new();
 }

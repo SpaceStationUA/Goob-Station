@@ -107,7 +107,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
                                     <OptionButton Name="LifepathButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
-                                <BoxContainer HorizontalExpand="True" Margin="0 5 0 0"> <RichTextLabel Name="LifepathDescriptionLabel" MinHeight="35" /> </BoxContainer>
+                                <BoxContainer HorizontalExpand="True" Margin="0 5 0 0">
+                                    <RichTextLabel Name="LifepathDescriptionLabel" MinHeight="35" MaxWidth="600" />
+                                </BoxContainer>
                                 <!-- end Pirate: port EE contractors -->
                                 <!-- Age -->
                                 <BoxContainer HorizontalExpand="True">

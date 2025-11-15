@@ -76,4 +76,4 @@ heretic-ritual-void-blade = Проблиск Зими
 heretic-ritual-void-ascend = Вальс наприкінці Часу
 
 heretic-ritual-fail-sacrifice-cosmos = Недостатньо трупів із зоряною міткою.
-heretic-ritual-fail-cannot-ascend-objectives = Щоб вознестися, ти маєш виконати свої цілі
+heretic-ritual-fail-cannot-ascend-objectives = Ви повинні виконати свої завдання, щоб піднятися

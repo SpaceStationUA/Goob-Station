@@ -111,7 +111,7 @@ ghost-role-intern-desc = Ви — інтерн ЦентКом, вам недоп
 ghost-role-intern-rules = Виконуйте накази, дані вам [color=yellow][bold]Представником NanoTrasen[/bold][/color] та ЦентКомом, захищайте командування, слухайте головного інтерна.
 ghost-role-lead-intern-rules = Виконуйте накази, отримані від [color=yellow][bold]Представника NanoTrasen[/bold][/color] та ЦентКому, захищайте командування, давайте накази іншим стажерам
 ghost-role-cargo-bingle-name = Вантажний бінгл
-ghost-role-cargo-bingle-desc = Слугуй представнику Нанотрейзен та їхнім інтересам, не завдавай шкоди членам екіпажу, допомагай карго та станції
+ghost-role-cargo-bingle-desc = Служіть представнику Нанотрейсен та його інтересам, не травмуйте членів екіпажу, допомагайте вантажному відділу та станції
 ghost-role-information-rules-default-xeno = Ви - [color={role-type-team-antagonist-color}][bold]Ксеноморф[/bold][/color].
                                             Ваша мета - захистити свою Королеву та розширити свій Вулик.
                                             Досягніть цього, приводячи своїй Королеві членів екіпажу для зараження

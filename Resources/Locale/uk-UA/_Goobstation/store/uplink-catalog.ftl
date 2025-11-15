@@ -128,7 +128,7 @@ uplink-combat-shotgun-name = Бойовий дробовик «Боєвич»
 uplink-combat-shotgun-desc = Потужний помповий дробовик під 8-й калібр, з магазином на 5 патронів.
 
 uplink-he1sg8-bundle-name = Набір HE1S-G8
-uplink-he1sg8-bundle-desc = Набір гвинтівки «High Energy One-Shell». Містить 10 руйнівних і 9 гіперзаряджених набоїв «Гаусс-8» для додаткових веселощів
+uplink-he1sg8-bundle-desc = Набір високоенергетичної однозарядної гармати. Містить 10 руйнівних та 9 гіперзаряджених патронів Гаусс-8 для додаткового веселощів
 
 uplink-blast-grenade-name = Фугасна граната (40мм)
 uplink-blast-grenade-desc = Більша шкода, менший радіус. Сумісна з China-Lake.

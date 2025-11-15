@@ -7,7 +7,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: DevilMindRole
-  name: "Роль Диявола"
+  name: Devil Role
   components:
   - type: MindRole
     antagPrototype: Devil
@@ -19,7 +19,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleChangeling
-  name: "Роль Перевертня"
+  name: Changeling Role
   components:
   - type: MindRole
     antagPrototype: Changeling
@@ -31,7 +31,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleHeretic
-  name: "Роль Єретика"
+  name: Heretic Role
   components:
   - type: MindRole
     antagPrototype: Heretic
@@ -43,7 +43,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleBrainwashed
-  name: "Роль з промитими мізками"
+  name: Brainwashed Role
   components:
   - type: MindRole
     antagPrototype: Mindcontrolled
@@ -55,7 +55,7 @@
 - type: entity
   parent: MindRoleChangeling
   id: MindRoleChangelingmidround
-  name: "роль сплячого генокрада"
+  name: Sleeper Changeling Role
   components:
   - type: MindRole
     exclusiveAntag: false           #  bastard experiment
@@ -63,7 +63,7 @@
 - type: entity
   parent: MindRoleHeretic
   id: MindRoleHereticmidround
-  name: "роль сплячого єретика"
+  name: Sleeper Heretic Role
   components:
   - type: MindRole
     exclusiveAntag: false   # bastard experiment
@@ -71,4 +71,4 @@
 - type: entity
   parent: DevilMindRole
   id: DevilMindRolemidround
-  name: "роль сплячого диявола"
+  name: Sleeper Devil Role
