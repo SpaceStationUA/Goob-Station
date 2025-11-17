@@ -1,2 +1,4 @@
 roles-antag-devil-name = Диявол
 roles-antag-devil-description = Використовуйте свою кмітливість та підвішений язик, щоб обманом укладати з членами екіпажу диявольські угоди.
+
+roles-antag-devilmidround-name = Диявол незапланований

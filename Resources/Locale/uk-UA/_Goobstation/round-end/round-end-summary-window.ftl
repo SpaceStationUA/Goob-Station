@@ -5,7 +5,7 @@ round-end-summary-window-player-name-role = у ролі {$role}, гравець 
 round-end-summary-window-player-name = гравець — {$player}.
 round-end-summary-window-last-words = [italic][color=gray]"{$lastWords}"[/color][/italic]
 round-end-summary-window-death = Вони загинули {$severity} {$type} смертю.
-round-end-summary-window-death-unknown = Їхнє тіло не вдалося знайти
+round-end-summary-window-death-unknown = Їхнє тіло не знайдено
 round-end-summary-window-death-severity-catastrophic = катастрофічною
 round-end-summary-window-death-severity-devastating = руйнівною
 round-end-summary-window-death-severity-agonizing = мучительною

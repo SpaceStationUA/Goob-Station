@@ -447,7 +447,6 @@ public sealed partial class MarkingPicker : Control
             };
 
             // Pirate start - port Floofstation custom layers
-            // CMarkingColors.AddChild(colorContainer);
             if (!skipDraw) 
             {
                 CMarkingColors.AddChild(colorContainer);

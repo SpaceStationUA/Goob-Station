@@ -2,7 +2,7 @@
 # Although based on MobBaseAncestor, this species does not have a "developed" playable species it is an ancestor to.
 
 - type: entity
-  name: "скаррет"
+  name: scurret
   id: MobBaseScurret
   parent: MobBaseAncestor
   abstract: true
@@ -17,6 +17,7 @@
     prototype: Scurret
     bodyType: Complex
     requiredLegs: 2
+  - type: AntagImmune # Goob, no evil wawa
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -169,7 +170,7 @@
     - VimPilot
     - AnomalyHost
 #goobstation edit - clumsy addition
-  - type: Clumsy 
+  - type: Clumsy
     gunShootFailDamage:
       types:
         Blunt: 5
@@ -181,13 +182,13 @@
         Blunt: 1
     clumsySound:
       path: /Audio/Animals/wawa_protest.ogg
- 
+
 
 # Spawnable scurrets have a random name and colour.
 
 - type: entity
-  name: "скаррет"
-  description: "Загальновідомі як \"Вава\", ці істоти з боліт планети Вава складають основну частину \"\"лояльної робочої сили\"\" піцерії \"У Арнольда\"."
+  name: scurret
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce".
   id: MobScurret
   parent: MobBaseScurret
   components:
@@ -219,7 +220,7 @@
 # feel free to hook them into random content.
 
 - type: entity
-  name: "Скуррет емоційної підтримки"
+  name: Emotional Support Scurret
   id: MobBaseEmotionalSupportScurret
   parent: MobBaseScurret
   abstract: true
@@ -241,7 +242,7 @@
 # Spawnable ESS have a ghost role, equipment, a random name and a random colour.
 
 - type: entity
-  name: "Скуррет емоційної підтримки"
+  name: Emotional Support Scurret
   id: MobEmotionalSupportScurret
   parent: [MobScurret, MobBaseEmotionalSupportScurret]
-  description: "Широко відомі як Вава, з водно-болотних угідь планети Вава, ці тваринки складають основну частину \"лояльної робочої сили\" Arnold's Pizza. Цей тут як тимчасовий."
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnold's Pizza's "loyal workforce". This one is here as a temp.

@@ -9,8 +9,8 @@
 - type: entity
   parent: BaseAction
   id: ActionHereticFleshSurgery
-  name: "Зшити плоть"
-  description: "Закляття дотику, що дозволяє швидко провести операцію або відновити плоть цілі."
+  name: Knit Flesh
+  description: A touch spell that allows you to either perform quick surgery or restore flesh of target.
   components:
   - type: Action
     useDelay: 1
