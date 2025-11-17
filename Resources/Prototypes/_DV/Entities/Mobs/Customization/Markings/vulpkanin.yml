@@ -317,7 +317,7 @@
     vulp_BACK: TailBehind
     tip_BACK: TailBehind
     vulp: TailOversuit
-    tip: TailOversuit
+    vulp-tip: TailOversuit
   colorLinks:
     vulp_BACK: vulp
     vulp-tip_BACK: vulp-tip
