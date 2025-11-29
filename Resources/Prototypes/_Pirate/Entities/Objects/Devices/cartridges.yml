@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseItem
+  id: CrimeAssistCartridge
+  name: картридж кримінального помічника
+  description: Картридж, який допомагає призначати відповідне покарання.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/cartridge.rsi
+    state: cart-cri
+  - type: Icon
+    sprite: _Pirate/Objects/Devices/cartridge.rsi
+    state: cart-cri
+  - type: UIFragment
+    ui: !type:CrimeAssistUi
+  - type: Cartridge
+    programName: crime-assist-program-name
+    icon:
+      sprite: _Pirate/Icons/cri.rsi
+      state: cri

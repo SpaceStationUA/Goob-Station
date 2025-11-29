@@ -26,11 +26,12 @@
   - ValyrianStandardTranslator
   - ChittinTranslator
   - SiikMaasTranslator
-  - MarishTranslator
+  #- MarishTranslator Pirate removed
   - ChevalTranslatorImplanter
   - NewKinPidginTranslator
   - SchechiTranslator
   - GruntishTranslator
+  - YowKriolTranslator # goob edit - yowie language
   position: -4, 4
   technologyPrerequisites:
   - AdvancedEntertainment
@@ -57,12 +58,13 @@
   - ValyrianStandardTranslatorImplanter
   - ChittinTranslatorImplanter
   - SiikMaasTranslatorImplanter
-  - MarishTranslatorImplanter
+  #- MarishTranslatorImplanter Pirate removed
   - SchechiTranslatorImplanter
   - NewKinPidginTranslatorImplanter
   - AnimalTranslator
   - XenoTranslator
   - GruntishTranslatorImplanter
+  - YowKriolTranslatorImplanter # goob edit - yowie language
   position: -4, 5
   technologyPrerequisites:
   - BasicTranslation

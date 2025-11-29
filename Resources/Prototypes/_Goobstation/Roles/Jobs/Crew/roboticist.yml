@@ -9,9 +9,9 @@
       time: 14400 #4 hrs
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - Interdyne
     # Pirate contractor end
   startingGear: RoboticistGear
   icon: "JobIconRoboticist"

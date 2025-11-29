@@ -148,3 +148,9 @@ JobWarden = Наглядач
 JobZookeeper = Доглядач зоопарку
 
 job-name-cluwne = Клууня
+job-name-security-clown = Клоун безпеки
+job-name-command-maid = Покоївка командування
+job-name-party-maker = Організатор вечірок
+JobCommandMaid = Покоївка командування
+JobPartyMaker = Організатор вечірок
+JobSecurityClown = Клоун безпеки

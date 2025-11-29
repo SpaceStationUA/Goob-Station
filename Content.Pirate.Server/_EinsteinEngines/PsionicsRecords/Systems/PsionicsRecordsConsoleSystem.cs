@@ -3,6 +3,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.PsionicsRecords;
 using Content.Shared.PsionicsRecords.Components;
@@ -21,9 +22,9 @@ using Content.Shared.Psionics.Components;
 namespace Content.Server.PsionicsRecords.Systems;
 
 /// <summary>
-/// Handles all UI for Psionics records console
+/// Handles all UI for Psionics records console.
 /// </summary>
-public sealed class PsionicsRecordsConsoleSystem : SharedPsionicsRecordsConsoleSystem
+public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecordsConsoleSystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly PsionicsRecordsSystem _psionicsRecords = default!;
@@ -34,18 +35,29 @@ public sealed class PsionicsRecordsConsoleSystem : SharedPsionicsRecordsConsoleS
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
-    public override void Initialize()
-    {
+	    public override void Initialize()
+	    {
         SubscribeLocalEvent<PsionicsRecordsConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<PsionicsRecordsConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
 
-        Subs.BuiEvents<PsionicsRecordsConsoleComponent>(PsionicsRecordsConsoleKey.Key, subs =>
-        {
-            subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
-            subs.Event<SelectStationRecord>(OnKeySelected);
-            subs.Event<SetStationRecordFilter>(OnFiltersChanged);
-            subs.Event<PsionicsRecordChangeStatus>(OnChangeStatus);
-        });
+	        Subs.BuiEvents<PsionicsRecordsConsoleComponent>(PsionicsRecordsConsoleKey.Key, subs =>
+	        {
+	            subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
+	            subs.Event<SelectStationRecord>(OnKeySelected);
+	            subs.Event<SetStationRecordFilter>(OnFiltersChanged);
+	            subs.Event<PsionicsRecordChangeStatus>(OnChangeStatus);
+	        });
+
+	        // Pirate-PsionicsMenu-Start
+	        // Do not subscribe another BoundUIOpenedEvent handler for IdExaminableComponent,
+	        // the criminal wanted menu already uses that. Instead the client sends a
+	        // PsionicsMenuRequestState when the psionics menu opens.
+	        Subs.BuiEvents<IdExaminableComponent>(SetPsionicsVerbMenu.Key, subs =>
+	        {
+	            subs.Event<PsionicsMenuRequestState>(UpdateUserInterface);
+	            subs.Event<PsionicsRecordChangeStatus>(OnChangeStatus);
+	        });
+	        // Pirate-PsionicsMenu-End
     }
 
     private void UpdateUserInterface<T>(Entity<PsionicsRecordsConsoleComponent> ent, ref T args)

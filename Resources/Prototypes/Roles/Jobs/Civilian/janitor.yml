@@ -81,9 +81,10 @@
   # Pirate contractor start
   requirements: 
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
   # Pirate contractor end
   startingGear: JanitorGear
   icon: "JobIconJanitor"

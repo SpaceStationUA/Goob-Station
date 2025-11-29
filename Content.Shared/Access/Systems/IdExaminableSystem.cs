@@ -68,37 +68,71 @@ public sealed class IdExaminableSystem : EntitySystem
         args.Verbs.Add(verb);
 
         // Goobstation-WantedMenu-Start
-        if (!CanAccessWantedMenu(args.User, uid))
-            return;
-
-        var wantedVerb = new ExamineVerb()
+        if (CanAccessWantedMenu(args.User, uid))
         {
-            Act = () => OpenWantedUI(args.User, uid),
-            Text = Loc.GetString("criminal-verb-name"),
-            Category = VerbCategory.Examine,
-            Disabled = !detailsRange,
-            Message = detailsRange ? null : Loc.GetString("id-examinable-component-verb-disabled"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/_Goobstation/Interface/VerbIcons/wanted.png")),
-            Priority = 1,
-        };
-        args.Verbs.Add(wantedVerb);
+            var wantedVerb = new ExamineVerb()
+            {
+                Act = () => OpenWantedUI(args.User, uid),
+                Text = Loc.GetString("criminal-verb-name"),
+                Category = VerbCategory.Examine,
+                Disabled = !detailsRange,
+                Message = detailsRange ? null : Loc.GetString("id-examinable-component-verb-disabled"),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/_Goobstation/Interface/VerbIcons/wanted.png")),
+                Priority = 1,
+            };
+            args.Verbs.Add(wantedVerb);
+        }
         // Goobstation-WantedMenu-End
+
+	        // Pirate-PsionicsMenu-Start
+	        if (CanAccessPsionicsMenu(args.User, uid))
+	        {
+	            var psionicsVerb = new ExamineVerb()
+	            {
+	                Act = () => OpenPsionicsUI(args.User, uid),
+	                Text = Loc.GetString("psionics-verb-name"),
+	                Category = VerbCategory.Examine,
+	                Disabled = !detailsRange,
+	                Message = detailsRange ? null : Loc.GetString("id-examinable-component-verb-disabled"),
+	                Icon = new SpriteSpecifier.Rsi(new("_EinsteinEngines/Icons/psi.rsi"), "psi"),
+	                Priority = 2,
+	            };
+	            args.Verbs.Add(psionicsVerb);
+	        }
+	        // Pirate-PsionicsMenu-End
     }
 
     private void OnWantedMenuOpen(EntityUid uid,
             IdExaminableComponent comp,
             GetVerbsEvent<AlternativeVerb> args) // Goobstation-WantedMenu; Alternate activate in world hotkey
     {
-        if (!args.CanInteract || !args.CanAccess || !CanAccessWantedMenu(args.User, uid))
+        if (!args.CanInteract || !args.CanAccess)
             return;
 
-        args.Verbs.Add(new AlternativeVerb()
+        // Goobstation-WantedMenu-Start
+        if (CanAccessWantedMenu(args.User, uid))
         {
-            Act = () => OpenWantedUI(args.User, uid),
-            Text = Loc.GetString("criminal-verb-name"),
-            Icon = new SpriteSpecifier.Texture(new("/Textures/_Goobstation/Interface/VerbIcons/wanted.png")),
-            Priority = 3
-        });
+            args.Verbs.Add(new AlternativeVerb()
+            {
+                Act = () => OpenWantedUI(args.User, uid),
+                Text = Loc.GetString("criminal-verb-name"),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/_Goobstation/Interface/VerbIcons/wanted.png")),
+                Priority = 3
+            });
+        }
+
+	        // Pirate-PsionicsMenu-Start
+	        if (CanAccessPsionicsMenu(args.User, uid))
+	        {
+	            args.Verbs.Add(new AlternativeVerb()
+	            {
+	                Act = () => OpenPsionicsUI(args.User, uid),
+	                Text = Loc.GetString("psionics-verb-name"),
+	                Icon = new SpriteSpecifier.Rsi(new("_EinsteinEngines/Icons/psi.rsi"), "psi"),
+	                Priority = 4
+	            });
+	        }
+	        // Pirate-PsionicsMenu-End
     }
 
     private bool CanAccessWantedMenu(EntityUid user, EntityUid target) // Goobstation-WantedMenu
@@ -120,6 +154,28 @@ public sealed class IdExaminableSystem : EntitySystem
     {
         _ui.TryToggleUi(target, SetWantedVerbMenu.Key, uid);
     }
+
+    // Pirate-PsionicsMenu-Start
+    private bool CanAccessPsionicsMenu(EntityUid user, EntityUid target)
+    {
+        if (!_inventorySystem.TryGetSlotEntity(user, "eyes", out var eyes)
+            || !TryComp<ShowPsionicsRecordIconsComponent>(eyes, out _))
+            return false;
+
+        if (TryComp<AccessReaderComponent>(target, out var accessReader))
+        {
+            if (!_accessReader.IsAllowed(user, target, accessReader))
+                return false;
+        }
+
+        return true;
+    }
+
+    private void OpenPsionicsUI(EntityUid uid, EntityUid target)
+    {
+        _ui.TryToggleUi(target, SetPsionicsVerbMenu.Key, uid);
+    }
+    // Pirate-PsionicsMenu-End
 
     public string GetMessage(EntityUid uid)
     {

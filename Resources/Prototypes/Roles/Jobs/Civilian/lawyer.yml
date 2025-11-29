@@ -75,9 +75,10 @@
       time: 9000 # 2.5 hrs
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
     # Pirate contractor end
   startingGear: LawyerGear
   icon: "JobIconLawyer"

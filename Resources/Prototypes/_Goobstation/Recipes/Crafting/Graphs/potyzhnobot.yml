@@ -1,6 +1,5 @@
 - type: constructionGraph
   id: Potyzhnobot
-  start: start
   graph:
   - node: start
     edges:

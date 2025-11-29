@@ -147,6 +147,16 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - OrionExpress
+    - !type:CharacterLifepathRequirement
+      inverted: true
+      lifepaths:
+      - Cultist
+      - Smuggler
+      - ExCriminal
+      - Enforcer
+      - Hacker
+      - ConArtist
   # Pirate contractor end
   weight: 10
   startingGear: QuartermasterGear

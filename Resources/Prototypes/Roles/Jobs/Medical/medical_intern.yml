@@ -70,9 +70,20 @@
     #   inverted: true # stop playing intern if you're good at med! # Pirate
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - ZengHuPharmaceuticals
+      - Interdyne
+      - PMCG
+    - !type:CharacterLifepathRequirement
+      inverted: true
+      lifepaths:
+      - Cultist
+      - Smuggler
+      - ExCriminal
+      - Enforcer
+      - Hacker
+      - ConArtist
     # Pirate contractor end
   startingGear: MedicalInternGear
   icon: "JobIconMedicalIntern"

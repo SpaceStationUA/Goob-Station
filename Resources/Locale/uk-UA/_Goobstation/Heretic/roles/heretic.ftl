@@ -10,3 +10,5 @@ roles-antag-heretic-name = Єретик
 roles-antag-heretic-description = Знайдіть впливи, усвідомте, що їх усіх забрали. Жертвуйте людьми і станьте всемогутнім або помріть у спробі.
 
 roles-antag-hereticmidround-name = Єретик незапланований
+roles-antag-ghoul-name = Вурдалак
+roles-antag-ghoul-description = Допоможіть своєму господарю досягти вознесіння.

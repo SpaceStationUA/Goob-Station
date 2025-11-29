@@ -7,7 +7,27 @@
   playerRestriction: [Vareniko]
   sprites:
   - sprite: _Pirate/Mobs/Customization/varen/hair.rsi
-    state: susieHair
+    state: susie
+
+- type: marking
+  id: VarenHairSusieTwo
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vulpkanin]
+  playerRestriction: [Vareniko]
+  sprites:
+  - sprite: _Pirate/Mobs/Customization/varen/hair.rsi
+    state: susie_two
+
+- type: marking
+  id: VarenHairSusieTwoLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Vulpkanin]
+  playerRestriction: [Vareniko]
+  sprites:
+  - sprite: _Pirate/Mobs/Customization/varen/hair.rsi
+    state: susie_two_long
 
 # Хвостики
 - type: marking
@@ -33,3 +53,52 @@
       state: tail_fan_wag_BACK
     - sprite: _Pirate/Mobs/Customization/varen/tail_fan.rsi
       state: tail_fan_wag_BACK-tip
+
+- type: marking
+  id: VulpQueenTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vulpkanin]
+  playerRestriction: [Vareniko, v0id_]
+  layering:
+    queen_BACK: TailBehind
+    queen_BACK-tip: TailBehind
+    queen: TailOversuit
+    queen-tip: TailOversuit
+  colorLinks:
+    queen_BACK: queen
+    queen_BACK-tip: queen-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
+      state: queen_BACK
+    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
+      state: queen_BACK-tip
+    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
+      state: queen
+    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
+      state: queen-tip
+
+# Анімація
+- type: marking
+  id: VulpQueenTailAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  playerRestriction: [Vareniko, v0id_]
+  layering:
+    queen_wag_BACK: TailBehind
+    queen_wag_BACK-tip: TailBehind
+    queen_wag: TailOversuit
+    queen_wag-tip: TailOversuit
+  colorLinks:
+    queen_wag_BACK: queen_wag
+    queen_wag_BACK-tip: queen_wag-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
+      state: queen_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
+      state: queen_wag_BACK-tip
+    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
+      state: queen_wag
+    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
+      state: queen_wag-tip

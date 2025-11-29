@@ -1,0 +1,63 @@
+- type: entity
+  id: GuidebookAdhomai
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Contractors/Passport.rsi
+    state: passport_adhomai_closed
+
+- type: entity
+  id: GuidebookBiesel
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Contractors/Passport.rsi
+    state: passport_biesel_closed
+
+- type: entity
+  id: GuidebookEridan
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Contractors/Passport.rsi
+    state: passport_eridan_closed
+
+- type: entity
+  id: GuidebookGoldenDeep
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Contractors/Passport.rsi
+    state: passport_goldendeep_closed
+
+- type: entity
+  id: GuidebookIzweski
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Contractors/Passport.rsi
+    state: passport_izweski_closed
+
+- type: entity
+  id: GuidebookNralakk
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Contractors/Passport.rsi
+    state: passport_nralakk_closed
+
+- type: entity
+  id: GuidebookVoxflock
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Contractors/Passport.rsi
+    state: vox_wallet_closed
+
+- type: entity
+  id: GuidebookSol
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Contractors/Passport.rsi
+    state: passport_sol_closed

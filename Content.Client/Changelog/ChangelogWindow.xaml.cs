@@ -84,19 +84,6 @@ namespace Content.Client.Changelog
             Tabs.DisposeAllChildren();
 
             var i = 0;
-
-            //CrazeTheDragon START
-            var pirateIndexTab = changelogs.FindIndex(c => c.Name.Equals("pirate", StringComparison.OrdinalIgnoreCase));
-
-            if (pirateIndexTab > 0)
-            {
-                var pirateTab = changelogs[pirateIndexTab];
-
-                changelogs.RemoveAt(pirateIndexTab);
-                changelogs.Insert(0, pirateTab);
-            }
-            //CrazeTheDragon END
-
             foreach (var changelog in changelogs)
             {
                 var tab = new ChangelogTab { AdminOnly = changelog.AdminOnly };

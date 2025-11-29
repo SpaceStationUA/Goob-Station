@@ -131,6 +131,8 @@
   - type: TargetObjective
     title: objective-condition-kill-person-title
   - type: PickRandomPerson
+  - type: KillPersonCondition
+    requireDead: true
 
 # Drain
 

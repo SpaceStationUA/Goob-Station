@@ -241,6 +241,7 @@
     - Kobold
     - Hissing
     - Deer
+    - Carptongue # goob edit - carp language
     requires:
     - TauCetiBasic
     setLanguageOnInteract: false
@@ -313,22 +314,22 @@
     - TauCetiBasic
     - SiikMaas
 
-- type: entity
-  id: MarishTranslator
-  parent: [ TranslatorPoweredBase ]
-  name: Marish translator
-  description: Translates speech between Marish and Tau-Ceti Basic. For talking to Shadowkin!
-  components:
-  - type: HandheldTranslator
-    spoken:
-    - TauCetiBasic
-    - Marish
-    understood:
-    - TauCetiBasic
-    - Marish
-    requires:
-    - TauCetiBasic
-    - Marish
+#- type: entity Pirate start
+#  id: MarishTranslator
+#  parent: [ TranslatorPoweredBase ]
+#  name: Marish translator
+#  description: Translates speech between Marish and Tau-Ceti Basic. For talking to Shadowkin!
+#  components:
+#  - type: HandheldTranslator
+#    spoken:
+#    - TauCetiBasic
+#    - Marish
+#    understood:
+#    - TauCetiBasic
+#    - Marish
+#    requires:
+#    - TauCetiBasic
+#    - Marish Pirate end
 
 - type: entity                      # taken from Floofstation
   id: NewKinPidginTranslator
@@ -368,7 +369,7 @@
   id: GruntishTranslator
   parent: [ TranslatorPoweredBase ]
   name: Gruntish translator
-  description: Interprets the mess known as Gruntish and translates it to Galactic Common. Primarily spoken by Onis and Yowie.
+  description: Interprets the mess known as Gruntish and translates it to Galactic Common. Primarily spoken by oni.
   components:
   - type: HandheldTranslator
     spoken:

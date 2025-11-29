@@ -9,4 +9,8 @@ carving-knife-comp-close-to-another-carving = Занадто близько до
 carving-knife-comp-runes-count = [color=yellow][bold]{$count} / 3[/bold] загалом різьблень було намальовано.[/color]
 carving-knife-comp-runes-deleted = Знищено всі різьблення!
 
-alert-carving-trigger-message = {$victim} наступив на руну тривоги поблизу {$location}!
+alert-carving-trigger-message =
+    "{$victim}" ступив на руну тривоги поблизу "{$location}"!
+    {" "}[button label="Телепортуватися" timer={$timer} id="{$id}" uid={$uid} coords ="{$coords}"]
+    {" "}
+alert-carving-trigger-message-coords = {$uid}, {$x}, {$y}

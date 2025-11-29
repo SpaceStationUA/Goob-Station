@@ -14,9 +14,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 </Box>
 
 У цій папці перелічено такі папки:
-<!-- CrazeTheDragon START -->
-- [textlink="Центральне Командування" link="CentralCommand SOP"]
-<!-- CrazeTheDragon END -->
 - [textlink="Вантажний відділ" link="Cargo SOP"]
 - [textlink="Командний відділ" link="Command SOP"]
 - [textlink="Інженерний відділ" link="Engineering SOP"]

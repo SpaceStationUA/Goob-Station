@@ -15,9 +15,9 @@
         - IPC
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - Interdyne
     # Pirate contractor end
   startingGear: ForensicMantisGear
   icon: "JobIconForensicMantis"

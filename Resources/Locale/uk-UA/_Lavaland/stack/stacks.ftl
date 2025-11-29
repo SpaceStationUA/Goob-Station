@@ -7,3 +7,6 @@ stack-unprocessed-quartz-ore = необроблена кварцова руда
 stack-unprocessed-uranium-ore = необроблена уранова руда
 stack-unprocessed-bananium-ore = необроблена бананієва руда
 stack-unprocessed-coal = необроблене вугілля
+
+stack-artifact-fragment-ore = руда фрагментів артефактів
+stack-unprocessed-artifact-fragment-ore = необроблена руда фрагментів артефактів

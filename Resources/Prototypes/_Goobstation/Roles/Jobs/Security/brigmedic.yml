@@ -17,9 +17,18 @@
     time: 36000 # 10 hrs
   # Pirate contractor start
   - !type:CharacterEmployerRequirement
-    inverted: true
     employers:
-    - Unemployed
+    - NanoTrasen
+    - PMCG
+  - !type:CharacterLifepathRequirement
+    inverted: true
+    lifepaths:
+    - Cultist
+    - Smuggler
+    - ExCriminal
+    - Enforcer
+    - Hacker
+    - ConArtist
   # Pirate contractor end
   startingGear: BrigmedicGear
   icon: "JobIconBrigmedic"

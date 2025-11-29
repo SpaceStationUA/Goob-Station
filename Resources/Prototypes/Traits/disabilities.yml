@@ -54,7 +54,7 @@
       - Blindable
   components:
     - type: PermanentBlindness
-      blindness: 4
+      blindness: 3 # Pirate
 
 - type: trait
   id: Narcolepsy

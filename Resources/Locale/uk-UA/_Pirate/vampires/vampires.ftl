@@ -5,6 +5,7 @@ vampire-blooddrink-rotted = Їхнє тіло гниє, а кров зіпсов
 vampire-blooddrink-zombie = Їхня кров зіпсована смертю
 
 vampire-startlight-burning = Ти відчуваєш, як твоя шкіра горить у світлі тисячі сонць
+vampire-component-examined = [color=crimson]Очі {CAPITALIZE(POSS-ADJ($target))} зловісно світяться червоним у темряві.[/color]
 
 vampire-not-enough-blood = У тебе недостатньо крові
 vampire-cuffed = Тобі потрібні вільні руки!

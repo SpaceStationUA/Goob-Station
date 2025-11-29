@@ -3,7 +3,7 @@ using Content.Shared.StationRecords;
 using Robust.Shared.Serialization;
 
 /// <summary>
-/// EVERYTHING HERE IS A MODIFIED VERSION OF CRIMINAL RECORDS
+/// Everything here is a modified version of criminal records.
 /// </summary>
 
 namespace Content.Shared.PsionicsRecords;
@@ -75,4 +75,12 @@ public sealed class PsionicsRecordChangeStatus : BoundUserInterfaceMessage
         Status = status;
         Reason = reason;
     }
+}
+
+/// <summary>
+/// Request from the client to populate the psionics ID-examine menu state.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PsionicsMenuRequestState : BoundUserInterfaceMessage
+{
 }

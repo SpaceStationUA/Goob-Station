@@ -46,6 +46,7 @@
       - MindRoleHeretic
       components:
       - type: WeakToHoly
+        alwaysTakeHoly: true # Pirate
       - type: CanEnchant
   - type: Tag
     tags:

@@ -84,6 +84,13 @@ public sealed partial class VampireComponent : Component
     public float MouthVolume = 5;
 
     /// <summary>
+    /// Whether this entity already had pressure immunity before becoming a vampire.
+    /// Used to restore its previous state when curing vampirism.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool HadPressureImmunityComponent;
+
+    /// <summary>
     /// All unlocked abilities
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
@@ -214,6 +221,7 @@ public sealed partial class VampireDeathsEmbraceComponent : Component
     [DataField]
     public DamageSpecifier CoffinHealing = default!;
 }
+
 [RegisterComponent]
 public sealed partial class VampireSealthComponent : Component
 {
@@ -223,6 +231,7 @@ public sealed partial class VampireSealthComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float Upkeep = 0;
 }
+
 [RegisterComponent]
 public sealed partial class VampireStrengthComponent : Component
 {
@@ -236,17 +245,26 @@ public sealed partial class VampireStrengthComponent : Component
     public float Upkeep = 0;
 }
 
+/// <summary>
+/// Marker component applied by holy water to trigger de-vampirization
+/// logic on the server.
+/// </summary>
+[RegisterComponent]
+public sealed partial class VampireCureComponent : Component
+{
+}
+
 [Serializable, NetSerializable]
-    public enum VampireMutationsType : byte
-    {
-        None,
-        Hemomancer,
-        Umbrae,
-        Gargantua,
-        Dantalion,
-        Bestia,
-        Sire
-    }
+public enum VampireMutationsType : byte
+{
+    None,
+    Hemomancer,
+    Umbrae,
+    Gargantua,
+    Dantalion,
+    Bestia,
+    Sire
+}
 
 [Serializable, NetSerializable]
 public sealed class VampireMutationComponentState : ComponentState

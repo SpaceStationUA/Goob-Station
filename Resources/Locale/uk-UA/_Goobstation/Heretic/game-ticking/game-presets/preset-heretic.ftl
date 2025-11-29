@@ -51,3 +51,8 @@ ghostrole-stargazer-name = Зорегляд
 ghostrole-stargazer-desc = Допоможіть своєму прикликачу сіяти хаос всюди.
 ghostrole-flesh-mimic-name = М'ясний Імітатор
 ghostrole-flesh-mimic-desc = Допоможіть вашому закликателю досягти вознесіння. Майте на увазі, що ви вмираєте з часом.
+heretic-ghoul-briefing-start = Вас призвав у цей світ {CAPITALIZE(THE($ent))}!
+heretic-ghoul-briefing-start-noname = Вас призвали у цей світ надприродні сили.
+heretic-ghoul-briefing-end = Виконуйте накази своїх господарів незважаючи ні на що.
+
+    використовуйте +m в чаті для доступу до зв'язку мансусу.

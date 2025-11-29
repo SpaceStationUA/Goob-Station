@@ -39,3 +39,4 @@ research-technology-advanced-power-generation = Просунута генера�
 research-technology-xeno-biology = Ксенобіологія
 research-technology-bluespace-construction-storage = Будівельне Блюспейс-Сховище
 research-technology-plumbing = Технології трубопроводу
+research-technology-extended-communication = Розширені комунікації
