@@ -231,6 +231,7 @@ namespace Content.IntegrationTests.Tests
             //  "Oasis",
             //  "OasisHighPop",
             //  "Omega",
+              "OmegaTP", // Pirate
             //  "Origin",
             //  "OriginHighPop",  //Not in pool
             //  "TestTeg",        //Dev map
@@ -285,6 +286,7 @@ namespace Content.IntegrationTests.Tests
             //  "Submarine",
               "BoxTP", // Pirate
               "GlacierTP", // Pirate
+              "OmegaTP", // Pirate
         };
         // Goobstation edit end
 

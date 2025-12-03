@@ -43,7 +43,7 @@
     solution: food
   - type: SpaceGarbage
   - type: StaticPrice
-    price: 0
+    price: 25 # Pirate
 
 # Packets
 
@@ -95,6 +95,10 @@
   - type: Tag
     tags:
       - Packet
+  # Pirate banking start
+  - type: StaticPrice
+    price: 10
+  # Pirate banking end
 
 - type: entity
   parent: BaseFoodCondimentPacket

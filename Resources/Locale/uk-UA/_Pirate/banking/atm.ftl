@@ -4,4 +4,4 @@ atm-not-enough-cash = Недостатньо коштів.
 atm-ui-enter-pin = Введіть PIN
 atm-ui-select-withdraw-amount = Визначте суму для виведення.
 atm-ui-insert-card = Вставте картку.
-atm-ui-balance = Баланс: { $balance }$
+atm-ui-balance = Баланс: { $balance }¥

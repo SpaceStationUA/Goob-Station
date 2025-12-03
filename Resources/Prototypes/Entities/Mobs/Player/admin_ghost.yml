@@ -157,6 +157,7 @@
     - SilentStorageUser
     - PreventAccessLogging
     - AllowBiomeLoading
+    - IgnoreBalanceChecks # Pirate banking
   - type: Input
     context: "aghost"
   - type: Ghost

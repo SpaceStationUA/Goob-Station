@@ -9,3 +9,9 @@
 
 - type: Tag
   id: MagazineUniversalMagnum
+
+- type: Tag
+  id: IgnoreBalanceChecks
+
+- type: Tag
+  id: SpaceCash

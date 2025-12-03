@@ -175,6 +175,7 @@
     - id: SalvageJobBoardComputerCircuitboard # Goobstation - This doesn't really have a use right now but it's there incase it ever gets use again
     - id: CargoMegaphone # goob - loudspeaker
     - id: SlotMachineHighRollerFlatPack # Goob - gambling
+    - id: Eftpos #Pirate banking
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -302,6 +303,8 @@
     - id: ServiceTechFabCircuitboard # Goobstation - Service Techfab
     - id: CommandMegaphone # goob - loudspeakers
     - id: PrinterDocFlatpack  # Pirate document printer
+    - id: Eftpos #Pirate banking
+    - id: WalletCartridge #Pirate banking
 
 - type: entity
   id: LockerHeadOfPersonnelFilled

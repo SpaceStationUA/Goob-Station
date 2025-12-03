@@ -347,3 +347,5 @@ uplink-autosurgeon-jumpstarter-heart-desc = Замінює серце корис
 # Носимі предмети
 uplink-bloodred-cassette-name = Криваво-червоний касетний плеєр
 uplink-bloodred-cassette-desc = Надано найегоїстичнішими модними дизайнерами Cybersun, портативний музичний плеєр!
+uplink-customboard-name = Кастомна Плата Законів Синдикату
+uplink-customboard-desc = Модифікована плата законів, яка дозволяє користувачу змінювати закони на будь-які. Поставляється з попередньо встановленим Антімовим.

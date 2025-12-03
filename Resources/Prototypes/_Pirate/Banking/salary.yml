@@ -1,0 +1,50 @@
+- type: salary
+  id: Salaries
+  salaries:
+    # ЦК
+    CentralCommandOfficial: 1440
+    NanotrasenRepresentative: 1080
+    BlueshieldOfficer: 810
+    # Командування
+    Captain: 1080
+    HeadOfSecurity: 810
+    HeadOfPersonnel: 720
+    ChiefMedicalOfficer: 720
+    ChiefEngineer: 680
+    Quartermaster: 680
+    ResearchDirector: 680
+    # Служба Безпеки
+    Warden: 580
+    SecurityOfficer: 540
+    Brigmedic: 500
+    Detective: 470
+    SecurityCadet: 290
+    # Карго
+    SalvageSpecialist: 490
+    CargoTechnician: 360
+    # Інженерний відділ
+    AtmosphericTechnician: 500
+    StationEngineer: 430
+    TechnicalAssistant: 270
+    # Мед відділ
+    MedicalDoctor: 470
+    Paramedic: 470
+    Chemist: 450
+    MedicalIntern: 270
+    Psychologist: 270
+    # Науковий Відділ
+    Roboticist: 470
+    Scientist: 470
+    ForensicMantis: 450
+    ResearchAssistant: 270
+    # Сервісний відділ
+    Chef: 400
+    Botanist: 330
+    Bartender: 320
+    Janitor: 270
+    Reporter: 270
+    Zookeeper: 270
+    ServiceWorker: 270
+    Librarian: 180
+    Clown: 180
+    Mime: 180

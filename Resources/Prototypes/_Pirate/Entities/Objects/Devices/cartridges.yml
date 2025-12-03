@@ -17,3 +17,21 @@
     icon:
       sprite: _Pirate/Icons/cri.rsi
       state: cri
+
+- type: entity
+  parent: BaseItem
+  id: WalletCartridge
+  name: virtual wallet cartridge
+  description: A program for managing bank account
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+  - type: UIFragment
+    ui: !type:BankUi
+  - type: Cartridge
+    programName: bank-program-name
+    icon:
+      sprite: _Pirate/Structures/Machines/atm.rsi
+      state: icon
+  - type: BankCartridge

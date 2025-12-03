@@ -170,6 +170,10 @@
     - cig5
     - cig6
   - type: Appearance
+  # Pirate banking start
+  - type: StaticPrice
+    price: 60
+  # Pirate banking end
 
 - type: entity
   id: CigPackMixedBase

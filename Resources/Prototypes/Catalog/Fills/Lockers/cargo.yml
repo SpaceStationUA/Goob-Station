@@ -75,6 +75,7 @@
       - id: MineralScanner
       - id: FlashlightSeclite
       - id: ClothingEyesGlassesMeson
+      - id: Eftpos #Pirate banking
       # Lavaland Change End
 
 - type: entity
@@ -109,3 +110,4 @@
       - id: FlashlightSeclite
       # TODO: bluespace shelter capsule
       # Lavaland Change End
+      - id: Eftpos #Pirate banking

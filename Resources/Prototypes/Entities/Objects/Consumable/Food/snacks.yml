@@ -182,6 +182,10 @@
   - type: Food
     trash:
     - FoodPacketCnDsTrash
+  # Pirate banking start
+  - type: StaticPrice
+    price: 2
+  # Pirate banking end
 
 - type: entity
   name: cheesie honkers
@@ -326,6 +330,10 @@
     tags:
     - Fruit # Seed of a fruit, you can yell at me
     - Pistachios # Added tag due to CrateFoodGetMore interaction with BountyFruit.
+  # Pirate banking start
+  - type: StaticPrice
+    price: 6
+  # Pirate banking end
 
 - type: entity
   name: popcorn
@@ -365,6 +373,10 @@
   - type: Tag
     tags:
     - Fruit
+  # Pirate banking start
+  - type: StaticPrice
+    price: 6
+  # Pirate banking end
 
 - type: entity
   name: bob's semki sunflower seeds
@@ -402,6 +414,10 @@
   - type: Tag
     tags:
     - Meat
+  # Pirate banking start
+  - type: StaticPrice
+    price: 14
+  # Pirate banking end
 
 - type: entity
   name: syndi-cakes

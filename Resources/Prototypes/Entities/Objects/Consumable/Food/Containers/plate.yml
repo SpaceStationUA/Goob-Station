@@ -183,6 +183,10 @@
   - type: Tag
     tags:
     - Trash
+  # Pirate banking start
+  - type: StaticPrice
+    price: 10
+  # Pirate banking end
 
 - type: entity
   name: plastic plate
@@ -205,6 +209,10 @@
   - type: Tag
     tags:
     - Trash
+  # Pirate banking start
+  - type: StaticPrice
+    price: 6
+  # Pirate banking end
 
 # Pie Tin
 

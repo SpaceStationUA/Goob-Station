@@ -108,7 +108,7 @@
     - type: Item
       size: Tiny
     - type: StaticPrice
-      price: 20
+      price: 1 # Pirate banking edit
     - type: ItemSlots
     - type: ContainerContainer
       containers:

@@ -98,6 +98,10 @@
       Steel: 300
   - type: FitsInDispenser
     solution: drink
+  # Pirate banking start
+  - type: StaticPrice
+    price: 45
+  # Pirate banking end
 
 - type: entity
   id: DrinkFlaskVisualsOpenable

@@ -60,7 +60,7 @@
   - type: Utensil
     breakChance: 0.20
   - type: StaticPrice
-    price: 0
+    price: 2 # Pirate banking edit
   - type: Tag
     tags:
     - Plastic
@@ -211,3 +211,7 @@
         Blunt: 2
   - type: Shovel
     speedModifier: 0.05 # nah
+  # Pirate banking start
+  - type: StaticPrice
+    price: 8
+  # Pirate banking end

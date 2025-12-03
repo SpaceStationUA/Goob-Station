@@ -124,6 +124,10 @@
     - cigar7
     - cigar8
   - type: Appearance
+  # Pirate banking start
+  - type: StaticPrice
+    price: 180
+  # Pirate banking end
 
 - type: entity
   id: CigarGoldCase

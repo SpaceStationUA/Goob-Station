@@ -41,6 +41,12 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+// Pirate banking start
+using Content.Server._Pirate.Banking;
+using Content.Shared._Pirate.Banking;
+using Content.Server.Roles.Jobs;
+using Content.Server.Roles;
+// Pirate banking end
 
 namespace Content.Server.Access.Systems;
 
@@ -58,6 +64,12 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    
+    // Pirate banking start
+    [Dependency] private readonly RoleSystem _roles = default!;
+    [Dependency] private readonly JobSystem _job = default!;
+    [Dependency] private readonly BankCardSystem _bankCard = default!;
+    // Pirate banking end
 
     public override void Initialize()
     {
@@ -209,6 +221,26 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
         var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
         _access.TrySetTags(targetId, newAccessList);
+
+        // Pirate banking start
+        if (newJobProto.Id != string.Empty &&
+            TryComp<BankCardComponent>(targetId, out var bankCard) &&
+            bankCard.AccountId.HasValue &&
+            _bankCard.TryGetAccount(bankCard.AccountId.Value, out var account) &&
+            account.Mind != null)
+        {
+            var mindId = GetEntity(account.Mind.Value);
+
+            if (_prototype.TryIndex<JobPrototype>(newJobProto, out var jobPrototype))
+            {
+                if (_job.MindTryGetJob(mindId, out var oldJob))
+                {
+                    _roles.MindRemoveRole(mindId, oldJob.ID);
+                }
+                 _job.MindAddJob(mindId, jobPrototype.ID);
+            }
+        }
+        // Pirate banking end
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/

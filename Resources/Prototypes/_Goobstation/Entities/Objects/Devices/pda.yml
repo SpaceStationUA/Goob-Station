@@ -207,6 +207,7 @@
     - MedTekCartridge
     - AstroNavCartridge
     - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: NavyCaptainPDA
@@ -281,6 +282,7 @@
     - NotekeeperCartridge
     - NanoTaskCartridge
     - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 # event-resctricted jobs
 - type: entity

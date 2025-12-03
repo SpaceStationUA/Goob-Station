@@ -37,8 +37,8 @@
 - type: weightedRandom
   id: CorporateObjectiveGroupKill
   weights:
-    CorporateKillRandomPersonObjective: 0.3
-    CorporatePermaKillRandomPersonObjective: 0.3 # Goobstation specific straight up kill someone with no maroons
+    #CorporateKillRandomPersonObjective: 0.3 # Pirate disable
+    #CorporatePermaKillRandomPersonObjective: 0.3 # Goobstation specific straight up kill someone with no maroons # Pirate disable
     CorporatePermaKillRandomTraitorObjective: 0.8 # Goobstation Specific target traitor
     CorporateKillRandomHeadObjective: 0.8
     CorporateHijackShuttleObjective: 0.1 # Basically their DAGD (Goodluck rolling it lmao)

@@ -134,8 +134,8 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
   weights:
-    KillRandomPersonObjective: 1
-    PermaKillRandomPersonObjective: 0.5 # Goobstation - straight up kill someone with no maroons
+    #KillRandomPersonObjective: 1 # Pirate disable
+    #PermaKillRandomPersonObjective: 0.5 # Goobstation - straight up kill someone with no maroons # Pirate disable
     PermaKillRandomTraitorObjective: 0.3 # Goobstation - target traitor
     KillRandomHeadObjective: 0.2
     TeachRandomPersonObjective: 1 #Goobstation  Teach them a lesson

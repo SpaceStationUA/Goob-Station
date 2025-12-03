@@ -79,6 +79,8 @@ public sealed partial class MindComponent : Component
     [DataField, AutoNetworkedField]
     public List<EntityUid> Objectives = new();
 
+    internal readonly HashSet<Memory> Memories = new(); //Pirate banking
+
     /// <summary>
     ///     The session ID of the player owning this mind.
     /// </summary>
@@ -116,6 +118,21 @@ public sealed partial class MindComponent : Component
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public string? CharacterName { get; set; }
+
+    //Pirate banking Start
+    [ViewVariables]
+    public IEnumerable<Memory> AllMemories => Memories;
+
+    public void AddMemory(Memory memory)
+    {
+        if (Memories.Contains(memory))
+        {
+            return;
+        }
+
+        Memories.Add(memory);
+    }
+    //Pirate banking end
 
     /// <summary>
     ///     The time of death for this Mind.
