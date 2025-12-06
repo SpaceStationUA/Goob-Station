@@ -1,7 +1,7 @@
 slasher-role-greeting = Ви відчуваєте непереборне прагнення до помсти... і синтхвейву. Ніч ще молода, туман густий, а ваша мачете блищить у неоновому сяйві зірок. Час показати цим космонавтам, чому ви — легенда опівнічної різанини!
 
 ghost-role-information-slasher-name = Різник
-ghost-role-information-slasher-description = Ріж і тероризуй живих у ролі Різника!
+ghost-role-information-slasher-description = Ріжте та тероризуйте живих як Різник!
 
 slasher-round-end-agent-name = Різник
 
@@ -36,7 +36,11 @@ slasher-objective-absorb-souls-desc = Екіпажу такі речі не по
                                       А от вам — так.
 
 roles-antag-slasher-name = Різник
-roles-antag-slasher-objectives = Ріж і тероризуй живих у ролі Різника!
+roles-antag-slasher-objectives = Ріжте та тероризуйте живих як Різник!
 
 slasher-corporealize-fail-camera = Ви не можете матеріалізуватися, коли за вами спостерігає камера!
 slasher-cannot-use-guns = Ваша потойбічна форма відкидає вогнепальну зброю.
+slasher-soulsteal-ascendance = КРИТИЧНЕ ПОПЕРЕДЖЕННЯ: Виявлено масове психічне збурення. Сутність безпрецедентної злобної сили досягла критичної маси. Усьому персоналу рекомендовано озброїтися та пересуватися групами.
+slasher-incorporealize-fail-seen = Ви не можете втратити тілесну форму, поки за вами спостерігають!
+slasher-corporealize-fail-nearby = Ви не можете набути тілесної форми, поки хтось поблизу!
+slasher-corporealize-fail-inside-wall = Ви не можете набути тілесної форми, перебуваючи всередині твердого об'єкта!

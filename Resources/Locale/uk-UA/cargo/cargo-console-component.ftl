@@ -57,7 +57,7 @@ cargo-console-cooldown-active = Замовлення на {$product} немож�
 cargo-console-menu-account-name-format = [bold][color={$color}]{$name}[/color][/bold] [font="Monospace"]\[{$code}\][/font]
 cargo-console-menu-tab-title-orders = Замовлення
 cargo-console-menu-tab-title-funds = Перекази
-cargo-console-menu-account-action-transfer-limit = [bold]Ліміт переказу:[/bold] ${$limit}
+cargo-console-menu-account-action-transfer-limit = Ліміт переказу:
 cargo-console-menu-account-action-transfer-limit-unlimited-notifier = [color=gold](Необмежено)[/color]
 cargo-console-menu-account-action-select = [bold]Дія з рахунком:[/bold]
 cargo-console-menu-account-action-amount = [bold]Сума:[/bold] $

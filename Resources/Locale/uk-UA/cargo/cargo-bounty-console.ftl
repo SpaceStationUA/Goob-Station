@@ -2,7 +2,7 @@ bounty-console-menu-title = Консоль нагороди за вантаж
 bounty-console-label-button-text = Друкувати етикетку
 bounty-console-time-label = Час: [color=orange]{$time}[/color]
 bounty-console-reward-label = Нагорода: [color=limegreen]${$reward}[/color]
-bounty-console-manifest-label = Маніфест: [color=gray]{$item}[/color]
+bounty-console-manifest-label = Маніфест: [color=orange]{$item}[/color]
 bounty-console-manifest-entry = { $amount ->
         [1] {$item}
         *[other] {$item} x{$amount}

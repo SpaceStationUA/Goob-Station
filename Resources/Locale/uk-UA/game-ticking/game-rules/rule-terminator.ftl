@@ -2,10 +2,10 @@ terminator-round-end-agent-name = nt-800
 
 objective-issuer-susnet = [color=#d64119]Суснет[/color]
 
-terminator-role-greeting = You are the exterminator, a relentless assassin sent into the past to secure our future.
-    We need you to eliminate {$target}, {$job}.
-    Use any means at your disposal to complete the mission.
-    Glory to Cybersun.
+terminator-role-greeting = Ви - термінатор, невблаганний вбивця, надісланий у минуле, щоб забезпечити наше майбутнє.
+    Нам потрібно, щоб ви усунули {$target}, {$job}.
+    Використовуйте будь-які засоби для виконання місії.
+    Слава Кіберсан.
 
 # DeltaV - paradox anomaly
 terminator-role-briefing = Ви - блюспейс-аномалія, яка виглядає і звучить ідентично з кимось із цієї реальності.

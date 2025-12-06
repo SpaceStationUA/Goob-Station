@@ -14,3 +14,6 @@ possession-popup-self = Вашу душу виштовхують з тіла!
 possession-end-popup = {$target} завмирає і безсило падає на землю.
 
 possessed-component-examined = У вас залишилося {$timeremaining} секунд у цьому тілі.
+
+possession-fail-target-immune = Незвичайний бар'єр блокує вашу спробу оволодіння!
+possession-fail-target-polymorphed = Ця форма занадто нестабільна для оволодіння!

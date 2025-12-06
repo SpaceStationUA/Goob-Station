@@ -131,6 +131,7 @@
     - id: Wrench # Goobstation
     - id: ContrabandDetectorFlatpack # Goobstation
     - id: SecurityMegaphone # goob - loudspeakers
+    - id: SecondSkinSecurity # Goobstation
 
 - type: entityTable
   id: FillLockerWardenHarduit
@@ -177,6 +178,7 @@
     - id: ClothingHeadsetAltSecurityRegular # Goobstation
     - id: PanicButton # Goobstation
     - id: PepperSpray # Goobstation
+    - id: SecondSkinSecurity # Goobstation
     # Goobstation - Martial Arts - start
     - !type:GroupSelector
       children:
@@ -215,6 +217,7 @@
     - id: MedkitRadiationFilled # Pirate
     - id: MedkitToxinFilled # Pirate
     - id: ClothingHandsGlovesCombatNitrile # Pirate
+    - id: SecondSkinSecurity # Goobstation
 
 - type: entity
   id: LockerDetectiveFilled
@@ -249,6 +252,7 @@
     - id: BloodTrak # Goobstation
     - id: Betty # Goobstation
     - id: BoxTapeRecorder # DeltaV
+    - id: SecondSkinSecurity # Goobstation
 
 - type: entity
   id: ClosetBombFilled

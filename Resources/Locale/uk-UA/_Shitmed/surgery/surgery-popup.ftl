@@ -97,3 +97,6 @@ surgery-popup-step-SurgeryStepXenoTakeSample = {$user} обережно вида
 surgery-popup-step-SurgeryStepGraftXenoSample = {$user} прищеплює ксенотканину на {$part} {$target}!
 surgery-popup-procedure-SurgeryRemovePump-step-SurgeryStepRemoveOrgan = {$user} видаляє насос із {$part} {$target}!
 surgery-popup-step-SurgeryStepInsertPump = {$user} вставляє насос у {$part} {$target}!
+surgery-popup-step-SurgeryStepSealBones = {$user} запечатує кістки на {$part} у {$target}.
+surgery-popup-step-SurgeryStepSealSkull = {$user} запечатує череп на {$part} у {$target}.
+surgery-popup-step-SurgeryStepSealRibcage = {$user} запечатує грудну клітку на {$part} у {$target}.

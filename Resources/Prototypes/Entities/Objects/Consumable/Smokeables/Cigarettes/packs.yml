@@ -154,6 +154,7 @@
       tags:
       - Cigarette
       - Lighter
+      - MedicalPatch
   - type: StorageFill
     contents:
     - id: Cigarette
@@ -231,6 +232,7 @@
       tags:
       - Cigarette
       - Lighter
+      - MedicalPatch
   - type: ItemCounter
     count:
       tags: [Cigarette]

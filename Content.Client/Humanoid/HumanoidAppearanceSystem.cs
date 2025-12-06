@@ -62,7 +62,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         }
     }
 
-    private void UpdateSprite(Entity<HumanoidAppearanceComponent, SpriteComponent> entity)
+    public void UpdateSprite(Entity<HumanoidAppearanceComponent, SpriteComponent> entity) // Goob edit - made public
     {
         UpdateLayers(entity);
         ApplyMarkingSet(entity);
@@ -76,10 +76,10 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         // Pirate start - port Floofstation custom layers
         //var height = Math.Clamp(humanoidAppearance.Height, speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
         //var width = Math.Clamp(humanoidAppearance.Width, speciesPrototype.MinWidth, speciesPrototype.MaxWidth);
-        var height = humanoidAppearance.Height != 0 
+        var height = humanoidAppearance.Height != 0
             ? Math.Clamp(humanoidAppearance.Height, speciesPrototype.MinHeight, speciesPrototype.MaxHeight)
             : speciesPrototype.MinHeight;
-        var width = humanoidAppearance.Width != 0 
+        var width = humanoidAppearance.Width != 0
             ? Math.Clamp(humanoidAppearance.Width, speciesPrototype.MinWidth, speciesPrototype.MaxWidth)
             : speciesPrototype.MinWidth;
         // Pirate end - port Floofstation custom layers
@@ -117,7 +117,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         foreach (var (key, info) in component.CustomBaseLayers)
         {
             oldLayers.Remove(key);
-            SetLayerData(entity, key, info.Id, sexMorph: false, color: info.Color, overrideSkin: true);
+            SetLayerData(entity, key, info.Id, sexMorph: false, color: info.Color, overrideSkin: true, shader: info.Shader);
         }
 
         // hide old layers
@@ -135,7 +135,8 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         string? protoId,
         bool sexMorph = false,
         Color? color = null,
-        bool overrideSkin = false) // Shitmed Change
+        bool overrideSkin = false,
+        string? shader = null) // Shitmed Change // Goob edit
     {
         var component = entity.Comp1;
         var sprite = entity.Comp2;
@@ -146,6 +147,11 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
         if (color != null)
             layer.Color = color.Value;
+
+        if (shader != null) // Goobstation
+            sprite.LayerSetShader(layerIndex, shader);
+        else
+            sprite.LayerSetShader(layerIndex, null, null);
 
         if (protoId == null)
             return;
@@ -375,14 +381,14 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             {
                 if (child == null || parent == null)
                     continue;
-                
+
                 if (colorDict.TryGetValue(parent, out var color))
                 {
                     colorDict[child] = color;
                 }
             }
         }
-        
+
         var layerDict = new Dictionary<string, int>();
 
         if (!_sprite.LayerMapTryGet((entity.Owner, sprite), markingPrototype.BodyPart, out var targetLayer, false))
@@ -402,12 +408,13 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             {
                 continue;
             }
-            
+
             var layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
-            
+
             var layerSlot = markingPrototype.BodyPart;
             var currentTargetIndex = 0;
 
+            // Pirate - Floofstation layering support
             if (markingPrototype.Layering != null &&
                 markingPrototype.Layering.TryGetValue(rsi.RsiState, out var layerValue))
             {
@@ -437,10 +444,9 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             {
                 layerDict.Add(layerSlot.ToString(), 0);
             }
-            
+
             var targLayerAdj = currentTargetIndex + layerDict[layerSlot.ToString()] + 1;
 
-            
             if (!_sprite.LayerMapTryGet((entity.Owner, sprite), layerId, out _, false))
             {
                 var layer = _sprite.AddLayer((entity.Owner, sprite), markingSprite, targLayerAdj);
@@ -448,19 +454,35 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                 _sprite.LayerSetSprite((entity.Owner, sprite), layerId, rsi);
             }
 
-            _sprite.LayerSetVisible((entity.Owner, sprite), layerId, visible);
+            // Goobstation - get CustomBaseLayers info for shader/color fallback
+            var hasInfo = humanoid.CustomBaseLayers.TryGetValue(markingPrototype.BodyPart, out var info);
 
+            // impstation/Goobstation - shader handling with CustomBaseLayers fallback
             if (markingPrototype.Shader != null)
             {
-				sprite.LayerSetShader(layerId, markingPrototype.Shader);
-			}
+                sprite.LayerSetShader(layerId, markingPrototype.Shader);
+            }
+            else if (hasInfo && info.Shader != null)
+            {
+                sprite.LayerSetShader(layerId, info.Shader);
+            }
+            else
+            {
+                if (_sprite.LayerMapTryGet((entity.Owner, sprite), layerId, out var shaderLayerIndex, false)) // Pirate - Floof Station layering
+                    sprite.LayerSetShader(shaderLayerIndex, null, null); // Pirate - Floof Station layering
+            }
+
+            _sprite.LayerSetVisible((entity.Owner, sprite), layerId, visible);
 
             if (!visible || setting == null) // this is kinda implied
             {
                 continue;
             }
 
-            var spriteColor = colorDict.TryGetValue(rsi.RsiState, out var color) ? color : Color.White;
+            // Pirate - use colorDict (respects ColorLinks), then Goobstation interpolation with info.Color
+            var spriteColor = colorDict.TryGetValue(rsi.RsiState, out var dictColor) ? dictColor : Color.White;
+            if (hasInfo && info.Color != null)
+                spriteColor = Color.InterpolateBetween(spriteColor, info.Color.Value, 0.5f);
             _sprite.LayerSetColor((entity.Owner, sprite), layerId, spriteColor);
 
             if (humanoid.MarkingsDisplacement.TryGetValue(markingPrototype.BodyPart, out var displacementData) && markingPrototype.CanBeDisplaced)

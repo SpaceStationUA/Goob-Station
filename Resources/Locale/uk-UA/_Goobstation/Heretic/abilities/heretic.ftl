@@ -95,3 +95,5 @@ heretic-speech-cosmic-expansion = К'СМ'С Р'ЗШ'Р'С'!
 heretic-speech-stargaze = Ф'РМ'Й Б'Т'Г
 heretic-speech-shapeshft = ЗМ'ІН'Ю
 heretic-blade-break-fail-acended-message = Ви не можете ламати леза після вознесіння!
+heretic-speech-void-prison = ТЮР'МА П'СТКТ!
+heretic-speech-void-conduit = ПР'ЙМ' П'СТК'!
