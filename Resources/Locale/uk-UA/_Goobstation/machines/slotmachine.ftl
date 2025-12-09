@@ -15,3 +15,7 @@ advertisement-slotmachine-3 = ЩЕ ОДИН ОБЕРТ!!
 advertisement-slotmachine-4 = Ігноруйте реабілітацію, вони просто не хочуть бачити ваш успіх!
 advertisement-slotmachine-5 = Ще одна гра — і можеш зупинитися
 advertisement-slotmachine-6 = Підходь і дай мені оберт!
+coinflipper-win = Переможець! Ви виграли {$amount} спесо!
+clawmachine-fail-self = Ви помилилися і впустили іграшку!
+clawmachine-fail-other = {$user} помилився і впустив іграшку!
+clawmachine-fail-generic = Іграшка випадає з клешні, яке розчарування...

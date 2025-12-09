@@ -74,9 +74,19 @@
     time: 18000 #5 hrs
   # Pirate contractor start
   - !type:CharacterEmployerRequirement
-    inverted: true
     employers:
-    - Unemployed
+    - NanoTrasen
+    - ZavodskoiInterstellar
+    - PMCG
+  - !type:CharacterLifepathRequirement
+    inverted: true
+    lifepaths:
+    - Cultist
+    - Smuggler
+    - ExCriminal
+    - Enforcer
+    - Hacker
+    - ConArtist
   # Pirate contractor end
   startingGear: DetectiveGear
   icon: "JobIconDetective"

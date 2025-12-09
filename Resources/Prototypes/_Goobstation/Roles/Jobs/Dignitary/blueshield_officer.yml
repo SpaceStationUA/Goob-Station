@@ -52,6 +52,16 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - PMCG
+    - !type:CharacterLifepathRequirement
+      inverted: true
+      lifepaths:
+      - Cultist
+      - Smuggler
+      - ExCriminal
+      - Enforcer
+      - Hacker
+      - ConArtist
   # Pirate contractor end
   goobcoins: 45
   weight: 20

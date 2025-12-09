@@ -259,6 +259,10 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 100
+  # Pirate banking start
+  - type: StaticPrice
+    price: 54
+  # Pirate banking end
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -308,6 +312,10 @@
     tags:
     - MolotovConstruction #Goobstation
     - DrinkBottle
+  # Pirate banking start
+  - type: StaticPrice
+    price: 90
+  # Pirate banking end
 
 - type: entity
   id: DrinkBottleVisualsOpenable
@@ -622,6 +630,10 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
   - type: Sealable
+  # Pirate banking start
+  - type: StaticPrice
+    price: 160
+  # Pirate banking end
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -658,6 +670,10 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
   - type: Sealable
+  # Pirate banking start
+  - type: StaticPrice
+    price: 40
+  # Pirate banking end
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -676,6 +692,10 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
   - type: Sealable
+  # Pirate banking start
+  - type: StaticPrice
+    price: 110
+  # Pirate banking end
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
@@ -698,6 +718,10 @@
     tags:
     - Wine
     - DrinkBottle
+  # Pirate banking start
+  - type: StaticPrice
+    price: 120
+  # Pirate banking end
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]

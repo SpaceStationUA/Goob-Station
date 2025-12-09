@@ -84,9 +84,10 @@
     time: 1800 #0.5 hr
   # Pirate contractor start
   - !type:CharacterEmployerRequirement
-    inverted: true
     employers:
-    - Unemployed
+    - NanoTrasen
+    - IdrisIncorporated
+    - OrionExpress
   # Pirate contractor end
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"

@@ -77,9 +77,10 @@
       time: 1800 # 30 Minutes
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
     # Pirate contractor end
   startingGear: BartenderGear
   icon: "JobIconBartender"

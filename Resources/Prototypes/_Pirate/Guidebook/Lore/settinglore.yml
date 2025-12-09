@@ -1,0 +1,11 @@
+- type: guideEntry
+  id: SettingLore
+  name: guide-entry-setting-lore
+  text: "/ServerInfo/_Pirate/Guidebook/Lore/SettingLore.xml"
+  children:
+    - Corporations
+
+- type: guideEntry
+  id: Corporations
+  name: guide-entry-corporations
+  text: "/ServerInfo/_Pirate/Guidebook/Lore/Corporations/Corporations.xml"

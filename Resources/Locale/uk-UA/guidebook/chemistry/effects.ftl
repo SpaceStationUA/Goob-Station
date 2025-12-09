@@ -230,9 +230,9 @@ reagent-effect-guidebook-make-sentient = { $chance ->
     } метаболізатор розумним
 
 reagent-effect-guidebook-make-polymorph = { $chance ->
-        [1] Polymorphs
-        *[other] polymorph
-    } the metabolizer into a { $entityname }
+        [1] Перетворює
+        *[other] перетворення
+    } метаболізатор на { $entityname }
 
 reagent-effect-guidebook-modify-bleed-amount = { $chance ->
         [1] { $deltasign ->

@@ -160,6 +160,16 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - IdrisIncorporated
+    - !type:CharacterLifepathRequirement
+      inverted: true
+      lifepaths:
+      - Cultist
+      - Smuggler
+      - ExCriminal
+      - Enforcer
+      - Hacker
+      - ConArtist
     # Pirate contractor end
   goobcoins: 40 #Goob content
   weight: 20

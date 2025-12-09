@@ -118,6 +118,11 @@
     - Ore
     - Paper         # Moth food
   # </Goobstation>
+  # Pirate banking
+  - type: Currency
+    price:
+      SpaceCash: 1
+  # Pirate banking end
 
 - type: material
   id: Credit

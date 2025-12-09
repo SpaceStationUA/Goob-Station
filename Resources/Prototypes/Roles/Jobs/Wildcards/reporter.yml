@@ -58,6 +58,14 @@
   name: job-name-reporter
   description: job-description-reporter
   playTimeTracker: JobReporter
+  # Pirate contractor start
+  requirements: 
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
+  # Pirate contractor end
   startingGear: ReporterGear
   icon: "JobIconReporter"
   goobcoins: 15 #Goob content

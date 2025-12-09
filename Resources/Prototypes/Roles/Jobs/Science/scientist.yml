@@ -79,9 +79,9 @@
       time: 9000 #2.5 hrs
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - Interdyne
     # Pirate contractor end
   startingGear: ScientistGear
   icon: "JobIconScientist"

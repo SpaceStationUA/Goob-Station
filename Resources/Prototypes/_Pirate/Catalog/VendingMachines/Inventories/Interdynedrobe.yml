@@ -1,0 +1,28 @@
+- type: vendingMachineInventory
+  id: InterdyneInventory
+  startingInventory:
+    ClothingUniformJumpskirtOperative: 4
+    ClothingUniformJumpsuitOperative: 4
+    CigPackSyndicate: 12 # ЦІ ЦИГАРКИ ВИРОБНИЦВА ІНТЕРДАЙНУ ТА НАЛЕЖАТЬ ЙОМУ!!!
+    FlippoLighter: 2
+    Lighter: 2
+    ClothingOuterCoatInterdyneWhite: 8
+    ClothingOuterCoatInterdyneBlack: 8
+    ClothingOuterCoatInterdyneJacket: 8
+    ClothingShoesBootsJackFilled: 4
+    PanicButtonInterdyne: 6
+    ClothingBackpackInterdyne: 5
+    ClothingBackpackSatchelInterdyne: 5
+    ClothingBackpackDuffelInterdyne: 5
+    ClothingBackpackMessengerBaseInterdyne: 5
+#   ClothingHeadHatBeretInterdyneBlack (Спрайтом потім займусь)
+    ClothingHeadHatBeretInterdyneWhite: 8
+#   ClothingHeadHatInterdyneOfficer
+#   ClothingHeadHatBeretInterdyneDeputy (Над цим працює Крафт)
+    CombatKnife: 3
+    ClothingUniformJumpskirtBrigmedic: 4
+    ClothingUniformJumpsuitBrigmedic: 4
+    ClothingUniformJumpskirtDetective: 4
+    ClothingUniformJumpsuitDetective: 4
+    ClothingUniformJumpskirtDetectiveGrey: 4
+    ClothingUniformJumpsuitDetectiveGrey: 4

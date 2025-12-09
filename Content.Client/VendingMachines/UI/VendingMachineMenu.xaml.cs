@@ -134,6 +134,8 @@ namespace Content.Client.VendingMachines.UI
         /// </summary>
         private bool _enabled;
 
+        public event Action<VendingMachineWithdrawMessage>? OnWithdraw; // Pirate banking
+
         public event Action<GUIBoundKeyEventArgs, ListData>? OnItemSelected;
 
         public VendingMachineMenu()
@@ -146,7 +148,16 @@ namespace Content.Client.VendingMachines.UI
             VendingContents.DataFilterCondition += DataFilterCondition;
             VendingContents.GenerateItem += GenerateButton;
             VendingContents.ItemKeyBindDown += (args, data) => OnItemSelected?.Invoke(args, data);
+
+            WithdrawButton.OnPressed += OnWithdrawPressed; // Pirate banking
         }
+
+        // Pirate banking start
+        private void OnWithdrawPressed(BaseButton.ButtonEventArgs args)
+        {
+            OnWithdraw?.Invoke(new VendingMachineWithdrawMessage());
+        }
+         // Pirate banking end
 
         protected override void Dispose(bool disposing)
         {
@@ -162,6 +173,8 @@ namespace Content.Client.VendingMachines.UI
                 _entityManager.QueueDeleteEntity(entity);
             }
             _dummies.Clear();
+
+            WithdrawButton.OnPressed -= OnWithdrawPressed; // Pirate banking
         }
 
         private bool DataFilterCondition(string filter, ListData data)
@@ -191,11 +204,16 @@ namespace Content.Client.VendingMachines.UI
         /// Populates the list of available items on the vending machine interface
         /// and sets icons based on their prototypes
         /// </summary>
-        public void Populate(List<VendingMachineInventoryEntry> inventory, bool enabled)
+        public void Populate(List<VendingMachineInventoryEntry> inventory, bool enabled, double priceMultiplier, int credits) // Pirate banking
         {
             _enabled = enabled;
             _listItems.Clear();
             _amounts.Clear();
+
+            // Pirate banking start
+            CreditsLabel.Text = Loc.GetString("vending-ui-credits-amount", ("credits", credits));
+            WithdrawButton.Disabled = credits == 0;
+            // Pirate banking end
 
             if (inventory.Count == 0 && VendingContents.Visible)
             {
@@ -237,8 +255,9 @@ namespace Content.Client.VendingMachines.UI
                     _dummies.Add(entry.ID, dummy);
                 }
 
+                var price = (int)(entry.Price * priceMultiplier); // Pirate banking
                 var itemName = Identity.Name(dummy, _entityManager);
-                var itemText = $"{itemName} [{entry.Amount}]";
+                var itemText = $"[{price}¥] {itemName} [{entry.Amount}]"; // Pirate banking
                 _amounts[entry.ID] = entry.Amount;
 
                 if (itemText.Length > longestEntry.Length)
@@ -258,9 +277,14 @@ namespace Content.Client.VendingMachines.UI
         /// <summary>
         /// Updates text entries for vending data in place without modifying the list controls.
         /// </summary>
-        public void UpdateAmounts(List<VendingMachineInventoryEntry> cachedInventory, bool enabled)
+        public void UpdateAmounts(List<VendingMachineInventoryEntry> cachedInventory, bool enabled, double priceMultiplier, int credits) // Pirate banking
         {
             _enabled = enabled;
+
+            // Pirate banking start
+            CreditsLabel.Text = Loc.GetString("vending-ui-credits-amount", ("credits", credits));
+            WithdrawButton.Disabled = credits == 0;
+            // Pirate banking end
 
             foreach (var proto in _dummies.Keys)
             {
@@ -272,17 +296,20 @@ namespace Content.Client.VendingMachines.UI
                     continue;
                 var amount = entry.Amount;
                 // Could be better? Problem is all inventory entries get squashed.
-                var text = GetItemText(dummy, amount);
+                // Pirate banking start
+                var price = (int)(entry.Price * priceMultiplier);
+                var text = GetItemText(dummy, amount, price);
+                // Pirate banking end
 
                 button.Item.SetText(text);
                 button.Button.Disabled = !enabled || amount == 0;
             }
         }
 
-        private string GetItemText(EntityUid dummy, uint amount)
+        private string GetItemText(EntityUid dummy, uint amount, int price) // Pirate banking
         {
             var itemName = Identity.Name(dummy, _entityManager);
-            return $"{itemName} [{amount}]";
+            return $"[{price}¥] {itemName} [{amount}]"; // Pirate banking
         }
 
         private void SetSizeAfterUpdate(int longestEntryLength, int contentCount)

@@ -1,7 +1,6 @@
 - type: employer
   id: NanoTrasen
   nameKey: employer_name_nanotrasen
-  descriptionKey: employer_description_nanotrasen
 
 - type: employer
   id: Unemployed
@@ -10,29 +9,31 @@
 - type: employer
   id: IdrisIncorporated
   nameKey: employer_name_idrisincorporated
-  descriptionKey: employer_description_idrisincorporated
 
 - type: employer
   id: OrionExpress
   nameKey: employer_name_orionexpress
-  descriptionKey: employer_description_orionexpress
 
 - type: employer
   id: ZengHuPharmaceuticals
   nameKey: employer_name_zenghupharmaceuticals
-  descriptionKey: employer_description_zenghupharmaceuticals
 
 - type: employer
   id: HephaestusIndustries
   nameKey: employer_name_hephaestusindustries
-  descriptionKey: employer_description_hephaestusindustries
 
 - type: employer
   id: ZavodskoiInterstellar
   nameKey: employer_name_zavodskoiinterstellar
-  descriptionKey: employer_description_zavodskoiinterstellar
 
 - type: employer
   id: PMCG
   nameKey: employer_name_pmcg
-  descriptionKey: employer_description_pmcg
+
+- type: employer
+  id: EinsteinEngines
+  nameKey: employer_name_einsteinengines
+
+- type: employer
+  id: Interdyne
+  nameKey: employer_name_interdyne

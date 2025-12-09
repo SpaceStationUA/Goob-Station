@@ -1,12 +1,6 @@
-- type: entity
-  id: ShowPsionicsIcons
-  abstract: true
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: ShowPsionicsRecordIcons
 
 - type: entity
-  parent: [ClothingEyesBase, ShowPsionicsIcons]
+  parent: [ClothingEyesBase, BaseMantisContraband]
   id: ClothingEyesHudEpistemics
   name: epi psionics hud
   description: A heads-up display that scans the humanoids in view and provides accurate data about their psionics records.
@@ -15,3 +9,4 @@
     sprite: _EinsteinEngines/Clothing/Eyes/Hud/epi.rsi
   - type: Clothing
     sprite: _EinsteinEngines/Clothing/Eyes/Hud/epi.rsi
+  - type: ShowPsionicsRecordIcons

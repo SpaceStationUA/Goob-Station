@@ -45,7 +45,7 @@ ghost-role-information-punpun-description = Почесний член мавпя
 
 ghost-role-information-xeno-name = Ксенос
 ghost-role-information-xeno-description = Ви - ксенос, співпрацюйте зі своїм роєм, щоб вбити всіх членів екіпажу!
-ghost-role-information-xeno-rules = Ви - антагоніст, вбивати, вбивати, вбивати!
+ghost-role-information-xeno-rules = Ви — [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] разом з усіма іншими ксено.
 
 ghost-role-information-revenant-name = Ревенант
 ghost-role-information-revenant-description = Ви - Ревенант. Використовуйте свої здібності, щоб збирати душі та сіяти хаос серед екіпажу. Розблокуйте нові здібності за допомогою зібраних душ.
@@ -190,11 +190,11 @@ ghost-role-information-cburn-agent-description = Висококваліфіко�
 ghost-role-information-centcom-official-name = Представник ЦК
 ghost-role-information-centcom-official-description = Огляньте станцію, запишіть відгуки про роботу керівників, поставте прослушку капітану.
 
-ghost-role-information-nukeop-rules = Ви — оперативник синдикату, якому доручено знищити станцію. Як антагоніст, зробіть усе необхідне для виконання цього завдання.
+ghost-role-information-nukeop-rules = Ви — [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] разом з усіма іншими ядерними оперативниками. Таємні агенти Синдикату не зобов'язані вам допомагати.
 
 ghost-role-information-loneop-name = Самотній Оперативник
 ghost-role-information-loneop-description = Ви самотній ядерний оперативник. Знищити станцію!
-ghost-role-information-loneop-rules = Ви — оперативник синдикату, якому доручено знищити станцію. Як антагоніст, зробіть усе необхідне для виконання цього завдання.
+ghost-role-information-loneop-rules = Ви — [color={role-type-team-antagonist-color}][bold]{role-type-solo-antagonist-name}[/bold][/color]. Таємні агенти Синдикату не зобов'язані вам допомагати.
 
 ghost-role-information-behonker-name = Бехонкер
 ghost-role-information-behonker-description = Ти - антагоніст, ти несеш смерть і хонк тим, хто не слідує за хонк-матір'ю.
@@ -207,7 +207,7 @@ ghost-role-information-Death-Squad-description = Готуйтеся до пов�
 
 ghost-role-information-SyndiCat-name = СиндіКіт
 ghost-role-information-SyndiCat-description = Ви вірний навчений вихованець ядерників з мікробомбою. Служіть своєму панові до смерті!
-ghost-role-information-SyndiCat-rules = Ви вірний навчений вихованець ядерників з мікробомбою. Служіть своєму панові до смерті!
+ghost-role-information-SyndiCat-rules = Ви — [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] разом з агентом, який вас викликав.
 
 ghost-role-information-Cak-name = Кірт
 ghost-role-information-Cak-description = Ви - улюблена дитина шеф-кухаря, живий тортовий кіт.
@@ -228,7 +228,7 @@ ghost-role-information-space-ninja-rules = Ви елітний найманец�
 
 ghost-role-information-syndicate-reinforcement-name = Агент Синдикату
 ghost-role-information-syndicate-reinforcement-description = Комусь потрібне підкріплення. Ви, перший, кого знайшов синдикат, допоможете їм.
-ghost-role-information-syndicate-reinforcement-rules = Застосовуються звичайні правила антагоністів синдикату. Працюйте з тими, хто вас викликав, і не завдавайте їм шкоди.
+ghost-role-information-syndicate-reinforcement-rules = Ви — [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] разом з агентом, який вас викликав.
 
 ghost-role-information-syndicate-monkey-reinforcement-name = Агент Мавпа Синдикату
 ghost-role-information-syndicate-monkey-reinforcement-description = Комусь потрібне підкріплення. Ви, дресирована мавпочка, будете їм допомагати.
@@ -267,15 +267,18 @@ ghost-role-information-snoth-description = Маленький слимачок, 
 ghost-role-information-ifrit-rules = Дух вогню, що походить з Геєни, тебе покликав містифікатор. Слідуй за ними і не створюй жодних проблем, поки вони не скажуть тобі про це.
 ghost-role-information-ifrit-wizard-name = Іфріт (Виклик чарівника)
 ghost-role-information-ifrit-wizard-description = Слухай свого господаря. Не відволікайся на пошкодження. Бий людей сильно.
-ghost-role-information-freeagent-rules = Ти - [color=yellow][bold]Вільний Агент[/bold][/color]. Ти вільний діяти як антагоніст або не-антагоніст.
-                                         Ти не пам'ятаєш нічого зі свого попереднього життя і нічого, що дізнався як привид.
-                                         Тобі дозволено пам'ятати загальні знання про гру, наприклад, як готувати, як використовувати предмети тощо.
-                                         Тобі абсолютно [color=red]заборонено[/color] пам'ятати, скажімо, ім'я, зовнішність тощо свого попереднього персонажа.
+ghost-role-information-freeagent-rules = Ви — [color={role-type-free-agent-color}][bold]{role-type-free-agent-name}[/bold][/color]. Ви вільні діяти як антагоніст або як не-антагоніст.
+                                         Ви не пам'ятаєте нічого зі свого попереднього життя, і ви не пам'ятаєте нічого, що дізналися як привид.
+                                         Вам дозволено пам'ятати загальні знання про гру, наприклад, як готувати, як користуватися предметами тощо.
+                                         Вам категорично [color=red]ЗАБОРОНЕНО[/color] пам'ятати, скажімо, ім'я, зовнішність тощо вашого попереднього персонажа.
 ghost-role-information-squackroach-name = Сквакроуч
 ghost-role-information-squackroach-description = Диявольський, але майже нешкідливий сквакроуч.
 ghost-role-information-space-goldfish-name = Космічна Золота Рибка
 ghost-role-information-space-goldfish-description = Плавай безцільно в повітрі та кусай кожного, хто досить дурний, щоб викликати твій гнів.
-ghost-role-information-familiar-rules = Слухайся того, хто тебе покликав. Не дійте проти інтересів свого Вчителя. Ти помреш за свого Вчителя, якщо це буде потрібно
+ghost-role-information-familiar-rules = Ви — [color={role-type-familiar-color}][bold]{role-type-familiar-name}[/bold][/color]. Служіть інтересам свого господаря, якими б вони не були.
+                                        Ви не пам'ятаєте нічого зі свого попереднього життя, і ви не пам'ятаєте нічого, що дізналися як привид.
+                                        Вам дозволено пам'ятати загальні знання про гру, наприклад, як готувати, як користуватися предметами тощо.
+                                        Вам категорично [color=red]ЗАБОРОНЕНО[/color] пам'ятати, скажімо, ім'я, зовнішність тощо вашого попереднього персонажа.
 ghost-role-information-nonantagonist-rules = Ви [color={role-type-crew-aligned-alternate-color}][bold]{role-type-crew-aligned-name}[/bold][/color]. Зазвичай ви не повинні намагатися завдати шкоди станції та її екіпажу.
                                              Ви не пам'ятаєте нічого зі свого попереднього життя, і нічого, що вивчили, будучи привидом.
                                              Вам дозволено пам'ятати загальні знання про гру, наприклад, як готувати, як використовувати предмети тощо.

@@ -443,6 +443,8 @@
   - type: Stripping
   - type: AccessReader # Goobstation-WantedMenu
     access: [["Security"]]
+  - type: IdExaminablePsionics # Pirate-PsionicsMenu
+    radioChannel: Science
   - type: UserInterface
     interfaces:
       enum.HumanoidMarkingModifierKey.Key:
@@ -451,6 +453,8 @@
         type: StrippableBoundUserInterface
       enum.SetWantedVerbMenu.Key: # Goobstation-WantedMenu
         type: WantedMenuBoundUserInterface
+      enum.SetPsionicsVerbMenu.Key: # Pirate-PsionicsMenu
+        type: PsionicsMenuBoundUserInterface
       # Goobstation - changelings
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface
@@ -503,8 +507,8 @@
   - type: AlternativeJob # Pirate - Alternative Jobs
   - type: OfferItem # Pirate - port EE item offesrs
   - type: Sprinter # Goobstation
-  - type: SprintingAffectedByScale # Goobstation: port EE height/width sliders
   - type: MindControllable # Goobstation
+  - type: VisibleContraband # Goobstation
 
 - type: entity
   save: false
@@ -514,6 +518,7 @@
   - MobAtmosStandard
   - MobFlammable
   - BaseMobSpecies
+  - BaseMobDisgust
   id: BaseMobSpeciesOrganic
   abstract: true
   components:
@@ -546,7 +551,7 @@
         Cold: 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat: 1.5 #per second, scales with temperature & other constants
+        Heat: 1.0 # Goob edit #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
       293: 0.8

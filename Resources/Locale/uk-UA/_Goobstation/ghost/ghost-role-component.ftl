@@ -116,3 +116,4 @@ ghost-role-information-rules-default-xeno = Ви - [color={role-type-team-antago
                                             Ваша мета - захистити свою Королеву та розширити свій Вулик.
                                             Досягніть цього, приводячи своїй Королеві членів екіпажу для зараження
 ghost-role-information-wraith-name-token = Примара (Токен)
+ghost-role-information-slasher-token = Різник (Жетон)

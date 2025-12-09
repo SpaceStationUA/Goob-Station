@@ -84,9 +84,6 @@
   text: "/ServerInfo/_Goobstation/Guidebook/SoP/Jobs/JobsSOP.xml"
   priority: 2
   children:
-  # CrazeTheDragon START
-  - CentralCommand SOP
-  # CrazeTheDragon END
   - Cargo SOP
   - Command SOP
   - Engineering SOP
@@ -116,65 +113,7 @@
   - ResearchDirector SOP
   - ChiefMedicalOfficer SOP
   - ChiefEngineer SOP
-  - Quartermaster SOP 
-
-# CrazeTheDragon START
-#Central Command SOP
-- type : guideEntry
-  id: CentralCommand SOP
-  name: guide-entry-sop-centralcommand
-  text: "/ServerInfo/_CrazeTheDragon/Guidebook/SoP/Jobs/CentralCommand/CentralCommandSOP.xml"
-  children:
-    - ERT SOP
-    - CBURN SOP
-    - DeathSquad SOP
-
-- type: guideEntry
-  id: CBURN SOP
-  name: guide-entry-sop-centralcommand-cburn
-  text: "/ServerInfo/_CrazeTheDragon/Guidebook/SoP/Jobs/CentralCommand/CBURNSOP.xml"
-
-- type: guideEntry
-  id: DeathSquad SOP
-  name: guide-entry-sop-centralcommand-deathsquad
-  text: "/ServerInfo/_CrazeTheDragon/Guidebook/SoP/Jobs/CentralCommand/DeathSquadSOP.xml"
-
-- type: guideEntry
-  id: ERT SOP
-  name: guide-entry-sop-centralcommand-ert
-  text: "/ServerInfo/_CrazeTheDragon/Guidebook/SoP/Jobs/CentralCommand/ERTSOP.xml"
-  children:
-    - ERT Delta SOP
-    - ERT Epsilon SOP
-    - ERT Gamma SOP
-    - ERT Omicron SOP
-    - ERT Octarine SOP
-
-- type: guideEntry
-  id: ERT Delta SOP
-  name: guide-entry-sop-centralcommand-ertdelta
-  text: "/ServerInfo/_CrazeTheDragon/Guidebook/SoP/Jobs/CentralCommand/ERT/ERTdelta.xml"
-
-- type: guideEntry
-  id: ERT Epsilon SOP
-  name: guide-entry-sop-centralcommand-ertepsilon
-  text: "/ServerInfo/_CrazeTheDragon/Guidebook/SoP/Jobs/CentralCommand/ERT/ERTepsilon.xml"
-
-- type: guideEntry
-  id: ERT Gamma SOP
-  name: guide-entry-sop-centralcommand-ertgamma
-  text: "/ServerInfo/_CrazeTheDragon/Guidebook/SoP/Jobs/CentralCommand/ERT/ERTgamma.xml"
-
-- type: guideEntry
-  id: ERT Omicron SOP
-  name: guide-entry-sop-centralcommand-ertomicron
-  text: "/ServerInfo/_CrazeTheDragon/Guidebook/SoP/Jobs/CentralCommand/ERT/ERTomicron.xml"
-
-- type: guideEntry
-  id: ERT Octarine SOP
-  name: guide-entry-sop-centralcommand-ertoctarine
-  text: "/ServerInfo/_CrazeTheDragon/Guidebook/SoP/Jobs/CentralCommand/ERT/ERToctarine.xml"
-# CrazeTheDragon END
+  - Quartermaster SOP
 
 - type: guideEntry
   id: Engineering SOP

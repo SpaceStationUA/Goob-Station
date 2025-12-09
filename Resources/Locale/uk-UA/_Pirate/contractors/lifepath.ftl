@@ -92,8 +92,5 @@ lifepath_description_Hacker = Ви зламували фаєрволи, крал
 lifepath_name_conartist = Шахрай
 lifepath_description_ConArtist = Брехня була вашою валютою. Ви обманювали людей на статки, особистості та навіть життя. Тепер ви завжди озираєтеся.
 
-lifepath_name_hitman = Найманий Вбивця
-lifepath_description_Hitman = Ви вбивали за гроші — чисто, ефективно, професійно. Робота добре оплачувалася, але одного дня ваше ім'я опинилося в списку цілей.
-
 lifepath_name_laboratory_rat = Лабораторний щур
 lifepath_description_LaboratoryRat = Ви не пам'ятаєте ким були, але ви пам'ятаєте ті бездушні експерименти що над вами проводилися "во ім'я науки"

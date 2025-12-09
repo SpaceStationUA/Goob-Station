@@ -15,10 +15,12 @@ employer_name_einsteinengines = Двигуни Ейнштейна
 
 employer_name_zenghupharmaceuticals = Зенг-Ху Фармасьютікалз
 
-employer_name_idrisincorporated = Idris Incorporated
+employer_name_idrisincorporated = Ідріс Інкорпорейтед
 
 employer_name_zavodskoiinterstellar = Заводской Інтерстеллар
 
 employer_name_orionexpress = Оріон Експрес
 
 employer_name_pmcg = ПВКГ
+
+employer_name_interdyne = Інтердайн

@@ -219,3 +219,12 @@
   alpha: 1
   ghostName: luciusGG
   ghostDescription: "Чи немає в тобі жаги до справедливості?"
+
+- type: customGhost
+  id: hattratt-ghost
+  ckey: hatt_ratt
+  sprite:
+    - _Pirate/Ghosts/hatt_ratt.rsi
+  alpha: 1
+  ghostName: щурик в капелюсі
+  ghostDescription: "пік! пік-пік!"

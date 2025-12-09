@@ -10,6 +10,7 @@ using Content.Pirate.Server.Roles;
 using Content.Server.Roles;
 using Content.Pirate.Server.Vampire;
 using Content.Goobstation.Shared.Religion;
+using Content.Goobstation.Shared.Overlays;
 using Content.Shared.Alert;
 using Content.Shared.Body.Components;
 using Content.Pirate.Shared.Vampire.Components;
@@ -24,8 +25,10 @@ using Content.Shared.Mind;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Chemistry.Reaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Text;
 
@@ -65,6 +68,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
 
         SubscribeLocalEvent<VampireRuleComponent, AfterAntagEntitySelectedEvent>(OnSelectAntag);
         SubscribeLocalEvent<VampireRuleComponent, ObjectivesTextPrependEvent>(OnTextPrepend);
+        SubscribeLocalEvent<VampireComponent, ComponentShutdown>(OnVampireRemoved);
     }
 
     private void OnSelectAntag(EntityUid mindId, VampireRuleComponent comp, ref AfterAntagEntitySelectedEvent args)
@@ -96,6 +100,9 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         _npcFaction.RemoveFaction(target, NanotrasenFactionId, false);
         _npcFaction.AddFaction(target, ChangelingFactionId);
 
+        // Remove any existing cure marker so the cure can be triggered again later if needed.
+        RemComp<VampireCureComponent>(target);
+
         // make sure it's initial chems are set to max
         var vampireComponent = EnsureComp<VampireComponent>(target);
         EnsureComp<VampireIconComponent>(target);
@@ -106,10 +113,14 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         if (HasComp<UserInterfaceComponent>(target))
             _uiSystem.SetUiState(target, VampireMutationUiKey.Key, new VampireMutationBoundUserInterfaceState(vampireComponent.VampireMutations, vampireComponent.CurrentMutation));
 
+        // Track whether this entity already had pressure immunity before becoming a vampire,
+        // so we can restore its prior state when curing vampirism.
+        vampireComponent.HadPressureImmunityComponent = HasComp<PressureImmunityComponent>(target);
+        EnsureComp<PressureImmunityComponent>(target);
+
         var vampire = new Entity<VampireComponent>(target, vampireComponent);
 
         RemComp<PerishableComponent>(vampire);
-        RemComp<BarotraumaComponent>(vampire);
         RemComp<ThirstComponent>(vampire);
 
         vampireComponent.Balance = new() { { VampireComponent.CurrencyProto, 0 } };
@@ -166,6 +177,80 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         }
 
         return "";
+    }
+
+    /// <summary>
+    /// Handles cleanup when an entity stops being an antag vampire
+    /// (e.g. cured by holy water).
+    /// </summary>
+    private void OnVampireRemoved(Entity<VampireComponent> ent, ref ComponentShutdown args)
+    {
+        var uid = ent.Owner;
+
+        if (!TryComp<MetaDataComponent>(uid, out var meta) ||
+            meta.EntityLifeStage >= EntityLifeStage.Terminating)
+        {
+            return;
+        }
+
+        // Clean up any vampire actions so they don't persist or duplicate on re-vamp.
+        _vampire.CleanupVampireActions(uid, ent.Comp);
+
+        // Restore factions back to NanoTrasen default.
+        _npcFaction.RemoveFaction(uid, ChangelingFactionId, false);
+        _npcFaction.AddFaction(uid, NanotrasenFactionId);
+
+        // Clear vampire-specific alerts.
+        if (TryComp<VampireAlertComponent>(uid, out var alertComp))
+        {
+            _alerts.ClearAlert(uid, alertComp.BloodAlert);
+            _alerts.ClearAlert(uid, alertComp.StellarWeaknessAlert);
+        }
+
+        // Remove vampire-only components.
+        RemComp<VampireIconComponent>(uid);
+        RemComp<VampireSpaceDamageComponent>(uid);
+        RemComp<VampireFangsExtendedComponent>(uid);
+        RemComp<VampireHealingComponent>(uid);
+        RemComp<VampireDeathsEmbraceComponent>(uid);
+        RemComp<VampireSealthComponent>(uid);
+        RemComp<VampireStrengthComponent>(uid);
+        RemComp<BloodSuckerComponent>(uid);
+        RemComp<VampireAlertComponent>(uid);
+
+        // Remove unholy/holy-weakness markers added when becoming a vampire.
+        RemComp<WeakToHolyComponent>(uid);
+        if (TryComp<ReactiveComponent>(uid, out var reactive) && reactive.ReactiveGroups != null)
+            reactive.ReactiveGroups.Remove("WeakToHoly");
+
+        // Remove vision overlays granted to antag vampires.
+        RemComp<NightVisionComponent>(uid);
+        RemComp<ThermalVisionComponent>(uid);
+
+        // Restore basic biological limitations; if the entity previously lacked these
+        // (e.g. synthetic species), EnsureComp will be harmless.
+        EnsureComp<PerishableComponent>(uid);
+        EnsureComp<ThirstComponent>(uid);
+
+        // Remove pressure immunity only if it was granted by the vampire role.
+        if (!ent.Comp.HadPressureImmunityComponent)
+            RemComp<PressureImmunityComponent>(uid);
+
+        // NOTE: Vampire actions are tied to the removed component and will no longer
+        // function without it. We intentionally leave any orphaned action entities
+        // to avoid hard-coding their removal here.
+
+        // Remove antag roles and objectives from the mind.
+        if (_mind.TryGetMind(uid, out var mindId, out var mind))
+        {
+            _role.MindRemoveRole<VampireRoleComponent>(mindId);
+            _mind.ClearObjectives(mindId, mind);
+
+            // Best-effort: if a vampire game rule is active, forget this mind.
+            var ruleEnt = _antag.ForceGetGameRuleEnt<VampireRuleComponent>("Vampire");
+            if (TryComp(ruleEnt, out VampireRuleComponent? rule))
+                rule.VampireMinds.Remove(mindId);
+        }
     }
 
     private void OnTextPrepend(EntityUid uid, VampireRuleComponent comp, ref ObjectivesTextPrependEvent args)

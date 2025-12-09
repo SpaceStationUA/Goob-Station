@@ -1,7 +1,6 @@
 - type: construction
   id: Potyzhnobot
   graph: Potyzhnobot
-  startNode: start
   targetNode: bot
   category: construction-category-utilities
   objectType: Item

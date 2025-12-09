@@ -1,0 +1,26 @@
+- type: vendingMachineInventory
+  id: InterdynePtechCardInventory
+  startingInventory:
+    ClothingHeadsetInterdyneCommand: 2
+    ClothingHeadsetInterdyneCommandAlt: 2
+    ClothingHeadsetAltInterdyne: 5
+    ClothingHeadsetInterdyne: 5
+    ClothingHeadsetGrey: 8
+    InterdyneIDCard: 5
+    EncryptionKeyInterdynePrivat: 2
+    EncryptionKeyInterdyne: 8
+    RubberStampApproved: 1
+    RubberStampDenied: 1
+    ClothingOuterCoatInterdyneWhite: 4
+    ClothingOuterCoatInterdyneBlack: 4
+    ClothingOuterCoatInterdyneJacket: 4
+    ClothingBackpackInterdyne: 4
+    ClothingBackpackSatchelInterdyne: 4
+    ClothingBackpackDuffelInterdyne: 4
+    ClothingBackpackMessengerBaseInterdyne: 4
+    PanicButtonInterdyne: 2
+    ClothingUniformJumpskirtOperative: 4
+    ClothingUniformJumpsuitOperative: 4
+    CigPackSyndicate: 6
+    FlippoEngravedLighter: 1
+    FlippoLighter: 2

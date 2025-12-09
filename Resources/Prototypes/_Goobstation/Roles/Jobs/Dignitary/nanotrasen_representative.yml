@@ -112,6 +112,15 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+    - !type:CharacterLifepathRequirement
+      inverted: true
+      lifepaths:
+      - Cultist
+      - Smuggler
+      - ExCriminal
+      - Enforcer
+      - Hacker
+      - ConArtist
     # Pirate contractor end
   weight: 20
   startingGear: NanotrasenRepresentativeGear

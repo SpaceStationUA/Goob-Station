@@ -79,9 +79,9 @@
   # Pirate contractor start
   requirements: 
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - OrionExpress
   # Pirate contractor end
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"

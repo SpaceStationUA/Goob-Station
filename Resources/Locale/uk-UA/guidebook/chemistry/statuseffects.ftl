@@ -16,3 +16,4 @@ reagent-effect-status-effect-RadiationProtection = радіаційний зах
 reagent-effect-status-effect-Drowsiness = сонливість
 reagent-effect-status-effect-NoScream = імунітет до болю
 reagent-effect-status-effect-Adrenaline = імунітет до сповільнення через пошкодження
+reagent-effect-status-effect-Vulgarity = вульгарність

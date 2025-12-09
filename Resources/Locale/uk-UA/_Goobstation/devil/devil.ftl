@@ -1,8 +1,8 @@
 devil-roundend-name = Диявол
 objective-issuer-devil = Диявол
 
-roundend-prepend-devil-contracts = Хтось уклав {$number} успішних контрактів.
-roundend-prepend-devil-contracts-named = {$name} уклав(ла) {$number} успішних контрактів.
+roundend-prepend-devil-contracts = Хтось уклав [color=red]{$number}[/color] успішних контрактів.
+roundend-prepend-devil-contracts-named = [color=white]{$name}[/color] уклав [color=red]{$number}[/color] успішних контрактів.
 
 devil-component-examined = [color=darkred]Очі {CAPITALIZE(POSS-ADJ($target))} ледь світяться червоним.[/color]
 condemned-component-examined = [color=chartreuse]Очі {CAPITALIZE($target)} порожні та бездушні.[/color]

@@ -8,7 +8,15 @@
     "license": "CC-BY-SA-3.0",
     "states": [
       {
-      "name": "susieHair",
+      "name": "susie",
+      "directions": 4
+      },
+      {
+      "name": "susie_two",
+      "directions": 4
+      },
+      {
+      "name": "susie_two_long",
       "directions": 4
       }
     ]

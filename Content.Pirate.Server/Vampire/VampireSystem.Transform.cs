@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Nutrition.Components;
 using Content.Pirate.Shared.Vampire;
 using Content.Pirate.Shared.Vampire.Components;
+using Content.Goobstation.Shared.Overlays;
 using Robust.Shared.Prototypes;
 using Content.Shared.Chemistry;
 
@@ -95,7 +96,36 @@ public sealed partial class VampireSystem
             }
         }
 
+        EnsureVisionOverlays(vampire);
         UpdateBloodDisplay(vampire);
     }
 
+    /// <summary>
+    /// Grants antag vampires innate night- and thermal-vision toggle actions,
+    /// using the same systems as goggles but attached directly to the mob.
+    /// </summary>
+    private void EnsureVisionOverlays(EntityUid vampire)
+    {
+        // Night vision
+        if (!HasComp<NightVisionComponent>(vampire))
+        {
+            var night = AddComp<NightVisionComponent>(vampire);
+            night.IsEquipment = false;
+            night.DrawOverlay = true;
+
+            if (night.ToggleAction != null)
+                _action.AddAction(vampire, ref night.ToggleActionEntity, night.ToggleAction);
+        }
+
+        // Thermal vision
+        if (!HasComp<ThermalVisionComponent>(vampire))
+        {
+            var thermal = AddComp<ThermalVisionComponent>(vampire);
+            thermal.IsEquipment = false;
+            thermal.DrawOverlay = true;
+
+            if (thermal.ToggleAction != null)
+                _action.AddAction(vampire, ref thermal.ToggleActionEntity, thermal.ToggleAction);
+        }
+    }
 }

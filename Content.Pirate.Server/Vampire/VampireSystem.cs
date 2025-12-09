@@ -101,6 +101,7 @@ public sealed partial class VampireSystem : EntitySystem
         SubscribeLocalEvent<VampireComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<VampireComponent, VampireBloodChangedEvent>(OnVampireBloodChangedEvent);
         SubscribeLocalEvent<VampireComponent, VampireAddBloodEssenceEvent>(OnVampireAddBloodEssence);
+        SubscribeLocalEvent<VampireCureComponent, ComponentInit>(OnVampireCureInit);
 
         SubscribeLocalEvent<VampireComponent, AfterAutoHandleStateEvent>(GetState);
         SubscribeLocalEvent<VampireComponent, VampireMutationPrototypeSelectedMessage>(OnMutationSelected);
@@ -204,8 +205,21 @@ public sealed partial class VampireSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, VampireComponent component, ExaminedEvent args)
     {
-        if (HasComp<VampireFangsExtendedComponent>(uid) && args.IsInDetailsRange && !_food.IsMouthBlocked(uid))
+        if (!args.IsInDetailsRange)
+            return;
+
+        // Show extended fangs if the mouth is visible.
+        if (HasComp<VampireFangsExtendedComponent>(uid) && !_food.IsMouthBlocked(uid))
             args.AddMarkup($"{Loc.GetString("vampire-fangs-extended-examine")}{Environment.NewLine}");
+
+        // Show glowing red eyes when they are not covered.
+        var eyesEvent = new Content.Goobstation.Shared.Devil.IsEyesCoveredCheckEvent();
+        RaiseLocalEvent(uid, eyesEvent);
+
+        if (eyesEvent.IsEyesProtected)
+            return;
+
+        args.PushMarkup(Loc.GetString("vampire-component-examined", ("target", Content.Shared.IdentityManagement.Identity.Entity(uid, EntityManager))));
     }
 
     private void OnVampireAddBloodEssence(EntityUid uid, VampireComponent component, VampireAddBloodEssenceEvent args)
@@ -316,6 +330,49 @@ public sealed partial class VampireSystem : EntitySystem
         UpdateAbilities(uid, component , "ActionVampireDarkGift", "DarkGift" , bloodEssence >= FixedPoint2.New(200) && component.CurrentMutation == VampireMutationsType.Sire);
     }
 
+    /// <summary>
+    /// Removes all action entities granted by the vampire system from the given entity
+    /// (including base powers like Hypnotise) and clears internal tracking dictionaries.
+    /// </summary>
+    public void CleanupVampireActions(EntityUid uid, VampireComponent component)
+    {
+        // If they don't even have an actions component, just clear tracking state.
+        if (!TryComp<ActionsComponent>(uid, out var actionsComp))
+        {
+            component.UnlockedPowers.Clear();
+            component.actionEntities.Clear();
+            return;
+        }
+
+        var toRemove = new HashSet<EntityUid>();
+
+        // Remove actions associated with unlocked powers (e.g. Hypnotise, Glare, Screech, etc.).
+        foreach (var (_, netAction) in component.UnlockedPowers)
+        {
+            if (netAction == null)
+                continue;
+
+            var actionEntity = GetEntity(netAction.Value);
+            if (!toRemove.Add(actionEntity))
+                continue;
+
+            _action.RemoveAction(uid, actionEntity);
+        }
+
+        // Remove any additional tracked actions (e.g. mutations menu, cloak, etc.).
+        foreach (var info in component.actionEntities.Values)
+        {
+            var actionEntity = GetEntity(info.Action);
+            if (!toRemove.Add(actionEntity))
+                continue;
+
+            _action.RemoveAction(uid, actionEntity);
+        }
+
+        component.UnlockedPowers.Clear();
+        component.actionEntities.Clear();
+    }
+
     private void UpdateAbilities(EntityUid uid, VampireComponent component, string actionId, string? powerId, bool addAction)
     {
         EntityUid? actionEntity = null;
@@ -416,6 +473,23 @@ public sealed partial class VampireSystem : EntitySystem
     {
         SelectedMutation = component.CurrentMutation
     };
+
+    /// <summary>
+    /// Triggered when holy water applies <see cref="VampireCureComponent"/> via the CureVampire effect.
+    /// Simply removes the main vampire component; the rest is cleaned up in the
+    /// vampire rule system on component shutdown.
+    ///
+    /// NOTE: Do NOT remove <see cref="VampireCureComponent"/> here.
+    /// Deferring its removal during <see cref="ComponentInit"/> causes a
+    /// lifecycle assertion when the engine later attempts to start it up.
+    /// The marker component is harmless and can be cleaned up when the
+    /// main <see cref="VampireComponent"/> shuts down.
+    /// </summary>
+    private void OnVampireCureInit(EntityUid uid, VampireCureComponent component, ComponentInit args)
+    {
+        if (HasComp<VampireComponent>(uid))
+            RemCompDeferred<VampireComponent>(uid);
+    }
 
     private void TryOpenUi(EntityUid uid, EntityUid user, VampireComponent? component = null)
     {

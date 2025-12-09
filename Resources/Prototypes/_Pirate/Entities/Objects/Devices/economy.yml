@@ -1,0 +1,119 @@
+- type: entity
+  parent: BaseItem
+  id: BaseDepartmentBudgetCard
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: BankCard
+      startingBalance: 5000
+    - type: Sprite
+      sprite: _Pirate/Objects/Misc/cards.rsi
+      scale: 0.8, 0.8
+      state: budgetcard
+    - type: Item
+      storedRotation: 90
+
+- type: entity
+  parent: BaseDepartmentBudgetCard
+  id: CommandBudgetCard
+  name: картка бюджету командування
+  components:
+    - type: Sprite
+      state: budgetcard
+    - type: BankCard
+      commandBudgetCard: true
+
+- type: entity
+  parent: Paper
+  id: CommandBudgetPinPaper
+  name: command budget pin
+  components:
+  - type: CommandBudgetPinPaper
+  - type: Paper
+
+- type: entity
+  parent: BaseDepartmentBudgetCard
+  id: CargoBudgetCard
+  name: картка бюджету карго
+  components:
+    - type: Sprite
+      state: car_budget
+    - type: BankCard
+      accountId: 1315
+
+- type: entity
+  parent: BaseDepartmentBudgetCard
+  id: CivilianBudgetCard
+  name: картка бюджету сервісного відділу
+  components:
+    - type: Sprite
+      state: srv_budget
+    - type: BankCard
+      accountId: 1316
+
+- type: entity
+  parent: BaseDepartmentBudgetCard
+  id: EngineeringBudgetCard
+  name: картка бюджету інженерного відділу
+  components:
+    - type: Sprite
+      state: eng_budget
+    - type: BankCard
+      accountId: 1318
+
+- type: entity
+  parent: BaseDepartmentBudgetCard
+  id: MedicalBudgetCard
+  name: картка бюджету медичного відділу
+  components:
+    - type: Sprite
+      state: med_budget
+    - type: BankCard
+      accountId: 1319
+
+- type: entity
+  parent: BaseDepartmentBudgetCard
+  id: ScienceBudgetCard
+  name: картка бюджету наукого відділу
+  components:
+    - type: Sprite
+      state: sci_budget
+    - type: BankCard
+      accountId: 1321
+
+- type: entity
+  parent: BaseDepartmentBudgetCard
+  id: SecurityBudgetCard
+  name: картка бюджету служби безпеки
+  components:
+    - type: Sprite
+      state: sec_budget
+    - type: BankCard
+      accountId: 1320
+
+- type: entity
+  parent: BaseItem
+  id: Eftpos
+  name: Платіжний термінал
+  description: Проведіть ID-карткою, щоб перевести ваші гроші.
+  components:
+    - type: Sprite
+      sprite: _Pirate/Objects/Devices/eftpos.rsi
+      state:
+      layers:
+        - state: eftpos
+        - state: eftpos-screen
+          shader: unshaded
+      netsync: false
+    - type: Eftpos
+    - type: ActivatableUI
+      key: enum.EftposKey.Key
+      singleUser: true
+    - type: UserInterface
+      interfaces:
+        enum.EftposKey.Key:
+          type: EftposBui
+    - type: Clothing
+      quickEquip: false
+      slots:
+      - Belt
+

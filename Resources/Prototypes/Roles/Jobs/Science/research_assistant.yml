@@ -61,9 +61,9 @@
     #   inverted: true # stop playing intern if you're good at science! # Pirate
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - Interdyne
     # Pirate contractor end
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"

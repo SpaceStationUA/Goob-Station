@@ -58,7 +58,7 @@ namespace Content.Client.Changelog
             NewChangelogEntries = false;
             NewChangelogEntriesChanged?.Invoke();
 
-            using var sw = _resource.UserData.OpenWriteText(new ResPath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
+            using var sw = _resource.UserData.OpenWriteText(new ($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
 
             sw.Write(MaxId.ToString());
         }
@@ -117,9 +117,6 @@ namespace Content.Client.Changelog
                 foreach (var file in _resource.ContentFindFiles(new ResPath("/Changelog/")))
                 {
                     if (file.Directory != directory || file.Extension != "yml")
-                        continue;
-
-                    if (file.FilenameWithoutExtension == "pirate")
                         continue;
 
                     var yamlData = _resource.ContentFileReadYaml(file);

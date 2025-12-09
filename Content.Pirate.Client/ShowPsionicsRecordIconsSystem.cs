@@ -1,12 +1,11 @@
+/// <summary>
+/// Pirate psionics HUD icons, adapted from the criminal records HUD system.
+/// </summary>
+
 using Content.Shared.Overlays;
 using Content.Shared.Psionics.Components;
-using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
-
-/// <summary>
-/// EVERYTHING HERE IS A MODIFIED VERSION OF CRIMINAL RECORDS
-/// </summary>
 
 namespace Content.Client.Overlays;
 

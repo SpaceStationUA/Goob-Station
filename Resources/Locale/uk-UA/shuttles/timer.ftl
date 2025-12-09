@@ -1,3 +1,4 @@
+# Залишаємо англійською - екрани шатлів не підтримують кирилицю
 shuttle-timer-eta = ETA
 shuttle-timer-etd = ETD
 shuttle-timer-shuttle-time = ShuttleTime

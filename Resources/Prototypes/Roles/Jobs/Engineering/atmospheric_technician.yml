@@ -70,9 +70,11 @@
     time: 9000 #2.5 hrs
   # Pirate contractor start
   - !type:CharacterEmployerRequirement
-    inverted: true
     employers:
-    - Unemployed
+    - NanoTrasen
+    - EinsteinEngines
+    - ZavodskoiInterstellar
+    - HephaestusIndustries
   # Pirate contractor end
   startingGear: AtmosphericTechnicianGear
   icon: "JobIconAtmosphericTechnician"

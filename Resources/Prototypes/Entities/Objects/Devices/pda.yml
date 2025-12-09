@@ -267,6 +267,7 @@
       - NanoTaskCartridge
       - NewsReaderCartridge
       - NanoChatCartridge # DeltaV
+      - WalletCartridge # Pirate banking
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -347,6 +348,8 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - NanoChatCartridge # DeltaV
+    - CrimeAssistCartridge # Pirate
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA
@@ -362,6 +365,7 @@
       - NewsReaderCartridge
       - MedTekCartridge
       - NanoChatCartridge # DeltaV
+      - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA
@@ -679,6 +683,7 @@
     - AstroNavCartridge
     - MailMetricsCartridge
     - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA
@@ -725,6 +730,7 @@
       - NewsReaderCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA
@@ -1076,6 +1082,7 @@
     - WantedListCartridge
     - LogProbeCartridge
     - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1139,6 +1146,7 @@
     state: pda-centcom
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
+    diskSpace: 12 # DeltaV
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -1151,6 +1159,7 @@
       - NanoChatCartridge # DeltaV
       - GlimmerMonitorCartridge # Einstein Engines
       - PsiWatchCartridge # Einstein Engines
+      - WalletCartridge # Pirate banking
 
 - type: entity
   parent: CentcomPDA
@@ -1168,7 +1177,7 @@
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     notificationsEnabled: false
-    diskSpace: 10 # DeltaV
+    diskSpace: 12 # DeltaV
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -1181,6 +1190,7 @@
       - NanoChatCartridge # DeltaV
       - GlimmerMonitorCartridge # Einstein Engines
       - PsiWatchCartridge # Einstein Engines
+      - WalletCartridge # Pirate banking
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
@@ -1303,6 +1313,7 @@
       - NotekeeperCartridge
       - NanoTaskCartridge
       - NanoChatCartridge # DeltaV
+      - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1326,6 +1337,7 @@
     state: pda-ert
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
+    diskSpace: 12 # Pirate - banking
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -1338,6 +1350,7 @@
       - NanoChatCartridge # DeltaV
       - GlimmerMonitorCartridge # Einstein Engines
       - PsiWatchCartridge # Einstein Engines
+      - WalletCartridge # Pirate banking
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1508,6 +1521,7 @@
     - WantedListCartridge
     - LogProbeCartridge
     - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1537,6 +1551,8 @@
     - WantedListCartridge
     - MedTekCartridge
     - NanoChatCartridge # DeltaV
+    - CrimeAssistCartridge # Pirate
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: ClownPDA

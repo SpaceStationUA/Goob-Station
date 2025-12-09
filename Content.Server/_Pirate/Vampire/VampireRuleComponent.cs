@@ -13,7 +13,7 @@ public sealed partial class VampireRuleComponent : Component
 
     public readonly List<ProtoId<EntityPrototype>> BaseObjectives = new()
     {
-        "VampireKillRandomPersonObjective",
+        //"VampireKillRandomPersonObjective",
         "VampireDrainObjective"
     };
 

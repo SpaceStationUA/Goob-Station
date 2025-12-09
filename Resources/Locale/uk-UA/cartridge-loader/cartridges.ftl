@@ -62,13 +62,11 @@ nano-task-ui-description-placeholder = Зробити щось важливе
 nano-task-ui-requester-label = Замовник:
 nano-task-ui-requester-placeholder = Іван Нанотрейзен
 nano-task-ui-item-title = Редагувати завдання
-nano-task-printed-description = Опис: {$description}
-nano-task-printed-requester = Замовник: {$requester}
-nano-task-printed-high-priority = Пріоритет: Високий
-nano-task-printed-medium-priority = Пріоритет: Середній
-nano-task-printed-low-priority = Пріоритет: Низький
-
-# Картридж зі списком розшукуваних
+nano-task-printed-description = [bold]Опис[/bold]: {$description}
+nano-task-printed-requester = [bold]Замовник[/bold]: {$requester}
+nano-task-printed-high-priority = [bold]Пріоритет[/bold]: [color=red]Високий[/color]
+nano-task-printed-medium-priority = [bold]Пріоритет[/bold]: Середній
+nano-task-printed-low-priority = [bold]Пріоритет[/bold]: Низький
 wanted-list-program-name = Список розшукуваних
 wanted-list-label-no-records = Все гаразд, ковбою
 wanted-list-search-placeholder = Пошук за іменем та статусом

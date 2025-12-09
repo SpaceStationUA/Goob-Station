@@ -16,3 +16,5 @@ lathe-recipe-MarishTranslatorImplanter-subname = імплант-переклад
 lathe-recipe-SchechiTranslatorImplanter-subname = імплант-перекладач мови Schechi
 lathe-recipe-NewKinPidginTranslatorImplanter-subname = імплант-перекладач мови Ka'rakk
 lathe-recipe-ChevalTranslatorImplanter-subname = імплант-перекладач мови Cheval
+
+lathe-recipe-YowKriolTranslatorImplanter-subname = імплант-перекладач мови Yow Kriol

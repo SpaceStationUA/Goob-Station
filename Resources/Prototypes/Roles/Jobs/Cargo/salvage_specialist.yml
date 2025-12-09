@@ -79,9 +79,10 @@
       time: 9000 # 2.5 hrs
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - OrionExpress
+      - HephaestusIndustries
     # Pirate contractor end
   icon: "JobIconShaftMiner"
   startingGear: SalvageSpecialistGear

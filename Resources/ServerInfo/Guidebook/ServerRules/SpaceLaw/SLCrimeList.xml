@@ -6,29 +6,29 @@
         Код
       </Box>
     </ColorBox>
-    <ColorBox Color="#008000">
+    <ColorBox Color="#006400">
       <Box HorizontalAlignment="Center" VerticalAlignment="Stretch">
-        1XX Легкі (штраф до 5 хвилин)
+        1XX Легкі (до 5 хв.)
       </Box>
     </ColorBox>
-    <ColorBox Color="#b5a642">
+    <ColorBox Color="#d67210">
       <Box HorizontalAlignment="Center" VerticalAlignment="Stretch">
-        2XX Середні (штраф до 10 хвилин)
+        2XX Середні (до 10 хв.)
       </Box>
     </ColorBox>
-    <ColorBox Color="#ffa500">
+    <ColorBox Color="#B22222">
       <Box HorizontalAlignment="Center" VerticalAlignment="Stretch">
-        3XX Тяжкі (штраф до 15 хвилин)
+        3XX Тяжкі (до 15 хв.)
       </Box>
     </ColorBox>
-    <ColorBox Color="#ff0000">
+    <ColorBox Color="#6E1A1A">
       <Box HorizontalAlignment="Center" VerticalAlignment="Stretch">
-        4XX Особливо тяжкі (штраф до 20 хвилин)
+        4XX Особливо тяжкі (до 20 хв.)
       </Box>
     </ColorBox>
-    <ColorBox Color="#000000">
+    <ColorBox Color="#242424">
       <Box HorizontalAlignment="Center" VerticalAlignment="Stretch">
-        5XX Критичні (від 30 хвилин до страти)
+        5XX Критичні (від 30 хв. до страти)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -128,27 +128,27 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Незаконне зберігання наркотичних речовин
+        Зберігання наркотиків
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Незаконне розповсюдження наркотичних речовин
+        Розповсюдження наркотиків
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Незаконне зберігання піротехніки токсинів
+        Контрабанда (A)
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Незаконний обіг піротехніки токсинів
+        Обіг небезпечних речовин
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Н/Д
+        Контрабанда (S)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -158,27 +158,27 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Незаконне володіння засобами самооборони
+        Зловживання обладнанням
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Незаконне володіння холодною зброєю
+        Володіння бойовими засобами
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Незаконне володіння бойовою зброєю боєприпасами
+        Володіння бойовою зброєю
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Незаконний обіг зброї
+        Обіг зброї
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Незаконний обіг зброї
+        Н/Д
       </Box>
     </ColorBox>
     <ColorBox>
@@ -218,36 +218,6 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Зловживання обладнанням
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Зловживання конфіскованими предметами
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Володіння контрабандними предметами класу C
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Володіння контрабандними предметами класу A
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Володіння контрабандними предметами класу S
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        7
-      </Box>
-    </ColorBox>
-    <ColorBox>
-      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Мала крадіжка
       </Box>
     </ColorBox>
@@ -268,12 +238,12 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Викрадення секретної документації або ядерного устаткування
+        Викрад. секр. док./яд. обл.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        8
+        7
       </Box>
     </ColorBox>
     <ColorBox>
@@ -283,39 +253,39 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Проникнення зі зломом
+        Проникнення зі зламом
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Проникнення на територію, що охороняється
+        Проникнення на охоронну територію
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Викрадення космічного транспортного засобу
+        Викрадення шатлу
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Викрадення стратегічного космічного транспортного засобу
+        Викрадення стратегічного шатлу
       </Box>
     </ColorBox>
   </Table>
 ## МОДИФІКАТОРИ ВИРОКУ
   Модифікатори застосовуються до основного терміну ув'язнення для його корекції залежно від обставин справи.
 
-  - [color=#ffffff]Пособництво та підбурювання:[/color] Свідома допомога злочинцю (перешкоджання арешту, викрадення в'язня, визволення з бригу, переховування, несанкціонована мед. допомога). [color=#ffaaaa]Наслідок: Покарання як у основного злочинця, але min +10 хвилин.[/color]
-  - [color=#ffffff]Повторний злочин (Рецидив):[/color] Засудження за ОДНЕ Й ТЕ Ж правопорушення >2 разів (окремі епізоди). [color=#ffaaaa]Наслідок: +10 хв за 3-й та 4-й раз. Довічне на 5-й раз.[/color]
-  - [color=#ffffff]Спротив арешту / обшуку:[/color] Активний опір законному арешту або обшуку (фізичний опір, втеча). [color=#ffaaaa]Наслідок: +5 хвилин.[/color]
-  - [color=#000000]Директива ЦК:[/color] Наказ від Центрального Командування. [color=#333333]Наслідок: Негайне звільнення / зміна вироку.[/color]
-  - [color=#cccccc]Медична допомога:[/color] Хворий/поранений ув'язнений. Право на мед. допомогу. Таймер [color=#f0e68c]не зупиняється[/color]. При самоушкодженні - на розсуд СБ. [color=#aaaaaa]Наслідок: Без змін терміну.[/color]
-  - [color=#ffffff]Співпраця зі слідством:[/color] Надання корисної та правдивої інформації під час допиту (інформація має бути [color=#ccffcc]перевірено правдивою[/color]). [color=#ccffcc]Наслідок: -50% терміну.[/color]
-  - [color=#ffffff]Явка з повинною:[/color] Добровільне зізнання у відділку СБ ДО арешту ("Бути заарештованим без опору" [color=#ffccaa]НЕ є[/color] явкою з повинною). [color=#ccffcc]Наслідок: -50% терміну.[/color]
-  - [color=#ffffff]Вороже промивання мізків:[/color] Контроль свідомості (культ, революціонери, вампіри тощо). Затримання [color=#ffccaa]без смертної кари[/color]. Потрібна деконверсія/відкликання. Контрабанда конфіскується без покарання. [color=#ccffcc]Наслідок: Деконверсія + Звільнення.[/color]
-  - [color=#ffffff]Безпосередня загроза ув'язненому:[/color] Серйозна загроза життю в'язня в камері (вибух, розгерметизація, сингулярність). Офіцер [color=#ccffcc]зобов'язаний[/color] перемістити в'язня в безпечне місце або негайно звільнити. [color=#ccffcc]Наслідок: Негайне звільнення / Евакуація.[/color]
-  - [color=#ffffff]Умовно-дострокове звільнення (УДЗ):[/color] Звільнення до закінчення терміну за певних умов. [color=#ccffcc]Наслідок: Умовно-дострокове звільнення.[/color]
-  - [color=#ffffff]Самооборона:[/color] Захист себе, колег, робочого місця від нападу (зазвичай включає спроби роззброїти/знешкодити). Напад на особу, що не становить загрози, [color=#ffccaa]НЕ є[/color] самообороною. Пильність (vigilantism) [color=#ffccaa]НЕ є[/color] самообороною. [color=#ccffcc]Наслідок: Негайне звільнення (якщо дії були виправдані).[/color]
+  - [color=#800000]Пособництво та підбурювання:[/color] Свідома допомога злочинцю (перешкоджання арешту, викрадення в'язня, визволення з бригу, переховування, несанкціонована мед. допомога). [color=#ffaaaa]Наслідок: Покарання як у основного злочинця, але min +10 хвилин.[/color]
+  - [color=#800000]Повторний злочин (Рецидив):[/color] Засудження за ОДНЕ Й ТЕ Ж правопорушення >2 разів (окремі епізоди). [color=#ffaaaa]Наслідок: +10 хв за 3-й та 4-й раз. Довічне на 5-й раз.[/color]
+  - [color=#800000]Спротив арешту / обшуку:[/color] Активний опір законному арешту або обшуку (фізичний опір, втеча). [color=#ffaaaa]Наслідок: +5 хвилин.[/color]
+  - [color=#e86100]Директива ЦК:[/color] Наказ від Центрального Командування. [color=#ffaaaa]Наслідок: Негайне звільнення / зміна вироку.[/color]
+  - [color=#444444]Медична допомога:[/color] Хворий/поранений ув'язнений. Право на мед. допомогу. Таймер [color=#f0e68c]не зупиняється[/color]. При самоушкодженні - на розсуд СБ. [color=#aaaaaa]Наслідок: Без змін терміну.[/color]
+  - [color=#006400]Співпраця зі слідством:[/color] Надання корисної та правдивої інформації під час допиту (інформація має бути [color=#ccffcc]перевірено правдивою[/color]). [color=#ccffcc]Наслідок: -50% терміну.[/color]
+  - [color=#006400]Явка з повинною:[/color] Добровільне зізнання у відділку СБ ДО арешту ("Бути заарештованим без опору" [color=#ffccaa]НЕ є[/color] явкою з повинною). [color=#ccffcc]Наслідок: -50% терміну.[/color]
+  - [color=#006400]Вороже промивання мізків:[/color] Контроль свідомості (культ, революціонери, вампіри тощо). Затримання [color=#ffccaa]без смертної кари[/color]. Потрібна деконверсія/відкликання. Контрабанда конфіскується без покарання. [color=#ccffcc]Наслідок: Деконверсія + Звільнення.[/color]
+  - [color=#006400]Безпосередня загроза ув'язненому:[/color] Серйозна загроза життю в'язня в камері (вибух, розгерметизація, сингулярність). Офіцер [color=#ccffcc]зобов'язаний[/color] перемістити в'язня в безпечне місце або негайно звільнити. [color=#ccffcc]Наслідок: Негайне звільнення / Евакуація.[/color]
+  - [color=#006400]Умовно-дострокове звільнення (УДЗ):[/color] Звільнення до закінчення терміну за певних умов. [color=#ccffcc]Наслідок: Умовно-дострокове звільнення.[/color]
+  - [color=#006400]Самооборона:[/color] Захист себе, колег, робочого місця від нападу (зазвичай включає спроби роззброїти/знешкодити). Напад на особу, що не становить загрози, [color=#ffccaa]НЕ є[/color] самообороною. Пильність (vigilantism) [color=#ffccaa]НЕ є[/color] самообороною. [color=#ccffcc]Наслідок: Негайне звільнення (якщо дії були виправдані).[/color]
 
   ## ВТЕЧА ТА ВАНДАЛІЗМ У КАМЕРІ
   Дії ув'язнених, спрямовані на пошкодження майна бригу або втечу, караються додатково.

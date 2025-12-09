@@ -5,15 +5,8 @@ psionics-records-console-no-records = Ніяких записів не знай�
 psionics-records-console-no-record-found = Записів на дану особу немає
 
 psionics-records-console-status = Статус
-psionics-records-status-none = Ні
-psionics-records-status-registered = Зареєстрований псионік
-psionics-records-status-suspected = Підозра на псіоніку
-psionics-records-status-abusing = Зловживання псионікою
 
 psionics-records-console-wanted-reason = [color=gray]Список Псіоників[/color]
-psionics-records-console-suspected-reason = [color=gray]Підозрювана причина[/color]
-psionics-records-console-reason = Псіоніка/Причина
-psionics-records-console-reason-placeholder = Наприклад: {$placeholder}
 
 psionics-records-permission-denied = У дозволі відмовлено
 

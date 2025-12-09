@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingBackpackMessengerBase
+  id: ClothingBackpackMessengerBaseInterdyne
+  name: Рюкзак-мессенджер інтердайна
+  description: Маленька сумочка, яка вміщує все необхідне.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Back/Messenger/interdyne.rsi
+    
+- type: entity
+  parent: ClothingBackpackMessengerBase
+  id: ClothingBackpackMessengerBaseHOP
+  name: Рюкзак-мессенджер ГП
+  description: Вмістить у себе все саме важливе, менш помітна чим інші сумки.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Back/Messenger/hop.rsi

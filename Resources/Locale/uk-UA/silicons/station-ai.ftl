@@ -37,7 +37,8 @@ station-ai-icon-smiley = Суцільні посмішки
 station-ai-hologram-female = Жіноча зовнішність
 station-ai-hologram-male = Чоловіча зовнішність
 station-ai-hologram-face = Безтілесна голова
-station-ai-hologram-cat = Форма кота
-station-ai-hologram-dog = Форма коргі
-station-ai-hologram-kobold = Форма кобольда
-station-ai-hologram-monkey = Форма мавпи
+# Goob, послідовність, форма -> вигляд
+station-ai-hologram-cat = Вигляд кота
+station-ai-hologram-dog = Вигляд коргі
+station-ai-hologram-kobold = Вигляд кобольда
+station-ai-hologram-monkey = Вигляд мавпи

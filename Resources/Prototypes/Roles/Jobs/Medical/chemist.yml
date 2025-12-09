@@ -71,9 +71,11 @@
       time: 18000 #5 hrs
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
-      inverted: true
       employers:
-      - Unemployed
+      - NanoTrasen
+      - ZengHuPharmaceuticals
+      - Interdyne
+      - PMCG
     # Pirate contractor end
   startingGear: ChemistGear
   icon: "JobIconChemist"
