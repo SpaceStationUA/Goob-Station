@@ -211,7 +211,6 @@
     - id: ClothingEyesGlassesCommand
     - id: PrinterDocFlatpack  # Pirate document printer
     - id: HeadSkeleton # A skull to accompany your skeleton crew
-    - id: SecondSkinSecurity # Goobstation
       conditions:
       - !type:PlayerCountCondition
         max: 15
@@ -549,7 +548,6 @@
     - id: WantedListCartridge
     - id: DrinkHosFlask
     - id: ClothingBeltSheathHeadOfSecurityFilled # Goobstation - security revamp
-    - id: SecondSkinSecurity # Goobstation
     - id: PrinterDocFlatpack  # Pirate document printer
 
 # Hardsuit table, used for suit storage as well

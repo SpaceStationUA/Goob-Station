@@ -14,8 +14,8 @@
 - type: entity
   parent: [ ClothingHeadBase, BaseMagicalContraband ]
   id: ClothingHeadHatHoodHeretic
-  name: ominous hood
-  description: A torn, dust-caked hood. Strange eyes line the inside.
+  name: "зловісний капюшон"
+  description: "Подертий, вкритий пилом капюшон. Зсередини дивляться дивні очі."
   components:
   - type: HereticMagicItem
   - type: Sprite
@@ -50,7 +50,8 @@
       NerveDamage: 0.0
   - type: FireProtection
     reduction: 0.1
-
+  - type: FaceHuggerBlocker
+    
 - type: entity
   parent: ClothingHeadHatHoodHeretic
   id: ClothingHeadHatHoodHereticVoid
@@ -104,8 +105,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodVoidCloakHeretic
-  name: void hood
-  description: Black like tar, reflecting no light. Runic symbols line the outside. With each flash you lose comprehension of what you are seeing.
+  name: "порожній каптур"
+  description: "Чорний, як смола, не відбиває світла. Рунічні символи вишикувані зовні. З кожним спалахом ви втрачаєте розуміння того, що бачите."
   components:
   - type: Sprite
     sprite: _Goobstation/Heretic/Clothing/Head/void_cloak_hood.rsi
@@ -133,3 +134,4 @@
       BoneDamage: 0.3
       VeinsDamage: 0.0
       NerveDamage: 0.0
+  - type: FaceHuggerBlocker

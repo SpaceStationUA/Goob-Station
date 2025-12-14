@@ -22,8 +22,8 @@
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ChangelingClothingOuterArmor
-  name: chitinous armor
-  description: An all-consuming chitinous mass of armor.
+  name: "хітинова броня"
+  description: "Всепоглинаюча хітинова маса броні."
   suffix: Unremoveable
   components:
   - type: Sprite
@@ -38,7 +38,7 @@
   - type: Armor
     traumaDeductions:
       Dismemberment: 1
-      OrganDamage: 0.5
+      OrganDamage: 0.3
       BoneDamage: 0.5
       VeinsDamage: 0
       NerveDamage: 0

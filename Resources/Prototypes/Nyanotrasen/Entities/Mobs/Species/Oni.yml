@@ -17,7 +17,7 @@
 
 - type: entity
   parent: BaseMobHuman
-  name: Urist McOni
+  name: "Уріст Маконі"
   id: MobOniBase
   abstract: true
   components:
@@ -51,11 +51,11 @@
   - type: BonusMeleeDamage
     damageModifierSet:
       coefficients:
-        Blunt: 1.1
-        Slash: 1.1
-        Piercing: 1.1
-        Asphyxiation: 1.1
-        Structural: 1.1
+        Blunt: 1.25
+        Slash: 1.25
+        Piercing: 1.25
+        Asphyxiation: 1.25
+        Structural: 1.25
   - type: Body
     prototype: Oni
   - type: LightweightDrunk
@@ -66,7 +66,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.35 # Goobstation: port EE height/width sliders
-        density: 240
+        density: 220
         restitution: 0.0
         mask:
         - MobMask
@@ -84,8 +84,8 @@
 
 - type: entity
   save: false
-  name: Urist McOni
+  name: "Уріст Маконі"
   parent: MobHumanDummy
   id: MobOniDummy
   categories: [ HideSpawnMenu ]
-  description: A dummy oni meant to be used in character setup.
+  description: "Фіктивний оні, призначений для використання у налаштуванні символів."

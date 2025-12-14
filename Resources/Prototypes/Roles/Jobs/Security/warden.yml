@@ -166,6 +166,12 @@
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  guides: # goobstation
+  - SpaceLaw
+  - Legal SOP
+  - Security
+  - Warden SOP
+  - KravMaga
   goobcoins: 35 #Goob content
   access:
   - Security

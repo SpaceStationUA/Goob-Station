@@ -9,5 +9,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 # Напої
 Знати, як приготувати замовлений напій, дуже важливо. Ось різні напої в грі, включаючи їхні рецепти:
 
-<GuideReagentGroupEmbed Group="Drinks"/>
+## Алкогольні напої
+<GuideReagentGroupEmbed Group="AlcoholicDrinks"/>
+
+## Безалкогольні напої
+<GuideReagentGroupEmbed Group="NonAlcoholicDrinks"/>
+<!-- Goobstation - Split the drinks page into separte 'Alcoholic' and 'Non-alcoholic' categories-->
 </Document>

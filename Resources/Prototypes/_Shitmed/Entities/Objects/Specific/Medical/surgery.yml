@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseToolSurgery
   id: Bonesetter
-  name: bone setter
-  description: Used for setting bones back into place.
+  name: "кісткоутворювач"
+  description: "Використовується для вправлення кісток на місце."
   components:
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/bonesetter.rsi
@@ -16,8 +16,8 @@
 - type: entity
   parent: BaseToolSurgery
   id: BoneGel
-  name: bottle of bone gel
-  description: A container for bone gel that often needs to be refilled from a specialized machine.
+  name: "пляшка гелю для кісток"
+  description: "Контейнер для кісткового гелю, який часто потрібно поповнювати зі спеціалізованої машини."
   components:
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/bone-gel.rsi
@@ -27,8 +27,8 @@
 - type: entity
   parent: BaseToolSurgery
   id: MedicalStitches
-  name: medical stitches
-  description: A fine, curved needle with a length of absorbable polyglycolide suture thread.
+  name: "медичні шви"
+  description: "Тонка вигнута голка з відрізком розсмоктуючої полігліколідної шовної нитки."
   components:
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/stitches.rsi
@@ -39,10 +39,10 @@
   - type: Stitches
 
 - type: entity
-  name: tissue cutter
+  name: "різак для тканин"
   id: EnergyScalpel
   parent: Scalpel
-  description: A scalpel which uses an energy blade, also serves as a drill in its powered state.
+  description: "Скальпель, який використовує енергетичне лезо, також служить як дриль в увімкненому стані."
   components:
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/e-scalpel.rsi
@@ -65,9 +65,9 @@
       Glass: 37
       Gold: 37
   - type: Scalpel
-    speed: 2
+    speed: 3
   - type: BoneSaw
-    speed: 2
+    speed: 3
   - type: ItemSwitch
     showLabel: true
     state: scalpel
@@ -80,9 +80,9 @@
           state: e-scalpel
         components:
           - type: Scalpel
-            speed: 2
+            speed: 3
           - type: BoneSaw
-            speed: 2
+            speed: 3
         soundStateActivate:
           collection: sparks
           params:
@@ -96,7 +96,7 @@
           state: e-scalpel-on
         components:
         - type: Drill
-          speed: 2
+          speed: 3
         soundStateActivate:
           collection: sparks
           params:
@@ -104,10 +104,10 @@
             volume: -5
 
 - type: entity
-  name: power pinches
+  name: "силові затискачі"
   id: AdvancedRetractor
   parent: Retractor
-  description: A retractor with mechanical pinches, also serves as a hemostat in its powered state.
+  description: "Ретрактор з механічними затискачами, також служить як гемостат в увімкненому стані."
   components:
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/adv-retractor.rsi
@@ -130,7 +130,7 @@
       Glass: 37
       Silver: 37
   - type: Retractor
-    speed: 2
+    speed: 3
   - type: ItemSwitch
     showLabel: true
     state: retractor
@@ -142,7 +142,7 @@
           state: adv-retractor
         components:
           - type: Retractor
-            speed: 2
+            speed: 3
         soundStateActivate:
           collection: sparks
           params:
@@ -156,11 +156,11 @@
           state: adv-retractor-on
         components:
           - type: Hemostat
-            speed: 2
+            speed: 3
           - type: Tweezers
-            speed: 2
+            speed: 3
           - type: Tending
-            speed: 2
+            speed: 3
         soundStateActivate:
           collection: sparks
           params:
@@ -168,10 +168,10 @@
             volume: -5
 
 - type: entity
-  name: energy stapler
+  name: "енергетичний степлер"
   id: EnergyCautery
   parent: Cautery
-  description: A cautery with an energy tip, also serves as stitches in its powered state.
+  description: "Каутер з енергетичним наконечником, також служить як шви в увімкненому стані."
   components:
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/e-cautery.rsi
@@ -194,7 +194,7 @@
       Glass: 37
       Plasma: 37
   - type: Cautery
-    speed: 2
+    speed: 3
   - type: ItemSwitch
     showLabel: true
     state: cautery
@@ -206,7 +206,7 @@
           state: e-cautery
         components:
         - type: Cautery
-          speed: 2
+          speed: 3
         soundStateActivate:
           collection: WelderOn
           params:
@@ -220,7 +220,7 @@
           state: e-cautery-on
         components:
         - type: Stitches # should be unlimited when the actual stitches become limited
-          speed: 2
+          speed: 3
         soundStateActivate:
           collection: sparks
           params:
@@ -228,10 +228,10 @@
             volume: -5
 
 - type: entity
-  name: bone multitool
+  name: "кістковий мультитул"
   id: AdvancedBoneGel
   parent: BoneGel
-  description: A mechanized bone healer, also serves as bone setter in its powered state.
+  description: "Механізований загоювач кісток, також слугує як кісткоправ у включеному стані."
   components:
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/e-bone-gel.rsi
@@ -253,7 +253,7 @@
       Glass: 37
       Plasma: 37
   - type: BoneGel # should be unlimited when the actual bone gel becomes limited
-    speed: 2
+    speed: 3
   - type: ItemSwitch
     showLabel: true
     state: bonegel
@@ -265,7 +265,7 @@
           state: e-bone-gel
         components:
         - type: BoneGel # should be unlimited when the actual bone gel becomes limited
-          speed: 2
+          speed: 3
         soundStateActivate:
           collection: sparks
           params:
@@ -279,7 +279,7 @@
           state: e-bone-gel-on
         components:
         - type: BoneSetter
-          speed: 2
+          speed: 3
         soundStateActivate:
           collection: sparks
           params:
@@ -287,10 +287,10 @@
             volume: -5
 
 - type: entity
-  name: surgical omnitool
+  name: "хірургічний омнітул"
   id: OmnimedTool
   parent: BaseToolSurgery
-  description: A compact surgical omnitool conveniently packed like a Swiss Army knife.
+  description: "Компактний хірургічний омнітул, зручно упакований, як швейцарський армійський ніж."
   components:
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/omnimed.rsi
@@ -316,8 +316,8 @@
 - type: entity
   parent: [ OmnimedTool, BaseSyndicateContraband ]
   id: OmnimedToolSyndie
-  name: gorlex surgical omnitool
-  description: A compact surgical omnitool conveniently packed like a Swiss Army knife, except that its user has probably violated a couple of Swiss conventions. Can perform surgery through clothing.
+  name: "хірургічний омнітул Gorlex"
+  description: "Компактний хірургічний омнітул, зручно упакований, як швейцарський армійський ніж, за винятком того, що його користувач, ймовірно, порушив кілька швейцарських конвенцій. Може проводити операції через одяг."
   components:
   - type: Sprite
     state: evil
@@ -330,7 +330,7 @@
   id: OmnimedToolDebug
   parent: OmnimedToolSyndie
   suffix: Admeme
-  name: experimental surgical omnitool
+  name: "експериментальний хірургічний омнітул"
   components:
   - type: Hemostat
     speed: 10

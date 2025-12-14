@@ -101,5 +101,5 @@ marking-CyberLimbsMarkingZenghuRFoot = Права роботизована ст�
 marking-CyberLimbsMarkingZenghuLLeg = Ліва роботизована нога від Zenghu Pharmaceuticals
 marking-CyberLimbsMarkingZenghuLFoot = Ліва роботизована стопа від Zenghu Pharmaceuticals
 
-marking-MobIPCChestDefault = Стандартне роботизоване шасі
-marking-MobIPCChestFemaleDefault = Стандартне роботизоване шасі
+marking-MobIPCChestDefault = Стандартне роботизоване шасі (Маскулінне)
+marking-MobIPCChestFemaleDefault = Стандартне роботизоване шасі (Фемінне)

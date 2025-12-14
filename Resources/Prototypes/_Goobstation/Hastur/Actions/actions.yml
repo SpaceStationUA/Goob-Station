@@ -1,0 +1,116 @@
+- type: entity
+  id: ActionHasturDevour
+  name: "Поглинути"
+  description: "Миттєво поглинути людину..."
+  components:
+  - type: Action
+    useDelay: 150
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Goobstation/Hastur/actions.rsi
+      state: devour
+  - type: TargetAction
+    range: 2
+    deselectOnMiss: true
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - HumanoidAppearance
+      - Body
+    event: !type:HasturDevourEvent
+
+- type: entity
+  id: ActionHasturLash
+  name: "Удар"
+  description: "Вдарити ціль здалеку, кинувши її на коліна."
+  components:
+  - type: Action
+    useDelay: 25
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Goobstation/Hastur/actions.rsi
+      state: ranged_tentacle
+  - type: TargetAction
+    range: 10
+    deselectOnMiss: true
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - HumanoidAppearance
+    event: !type:HasturLashEvent
+
+- type: entity
+  id: ActionInsanityAura
+  name: "Аура божевілля"
+  description: "Змушує всіх навколо вас трохи збожеволіти..."
+  components:
+  - type: Action
+    sound: !type:SoundPathSpecifier
+      path: /Audio/_Goobstation/Misc/Hastur/Void_Song.ogg
+    useDelay: 60
+    icon:
+      sprite: _Goobstation/Hastur/actions.rsi
+      state: insanity_aura
+  - type: InstantAction
+    event: !type:InsanityAuraEvent
+
+- type: entity
+  id: ActionMassWhisper
+  name: "Масовий шепіт"
+  description: "Проникніть у свідомість усіх істот і прошепотіть їм божевілля..."
+  components:
+  - type: Action
+    useDelay: 360
+    icon:
+      sprite: _Goobstation/Hastur/actions.rsi
+      state: mass_whisper
+  - type: InstantAction
+    event: !type:MassWhisperEvent
+
+- type: entity
+  id: ActionVeilOfTheVoid
+  name: "Завіса порожнечі"
+  description: "Зникніть/Матеріалізуйтесь з порожнечі, щоб полювати на здобич..."
+  components:
+  - type: Action
+    useDelay: 25
+    icon:
+      sprite: _Goobstation/Hastur/actions.rsi
+      state: veil_void
+  - type: InstantAction
+    event: !type:VeilOfTheVoidEvent
+
+- type: entity
+  id: ActionOmnipresence
+  name: "Всюдисущість"
+  description: "Оберіть бути всюди."
+  components:
+  - type: Action
+    useDelay: 60
+    icon:
+      sprite: _Goobstation/Hastur/actions.rsi
+      state: omnipresence
+  - type: InstantAction
+    event: !type:OmnipresenceEvent
+
+- type: entity
+  id: ActionHasturClone
+  name: "Клон"
+  description: "Розділіться надвоє, залишивши тимчасову тінь своєї присутності."
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 30
+    icon:
+      sprite: _Goobstation/Hastur/actions.rsi
+      state: clone
+  - type: TargetAction
+    range: 5
+  - type: WorldTargetAction
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: MobHasturClone
+        amount: 1
+      offset: 0, 1

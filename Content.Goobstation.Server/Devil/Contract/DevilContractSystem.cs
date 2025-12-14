@@ -17,7 +17,7 @@ using Content.Goobstation.Server.Possession;
 using Content.Goobstation.Shared.Devil;
 using Content.Goobstation.Shared.Devil.Condemned;
 using Content.Goobstation.Shared.Devil.Contract;
-using Content.Server._Imp.Drone;
+using Content.Shared._Imp.Drone; // Goob - Moved to shared
 using Content.Server.Body.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
@@ -574,7 +574,7 @@ public sealed partial class DevilContractSystem : EntitySystem
         _ukrainianClauseToIdMap["ноги"] = "legs";
         _ukrainianClauseToIdMap["зір"] = "sight";
         _ukrainianClauseToIdMap["волядоборотьби"] = "willtofight";
-        _ukrainianClauseToIdMap["людство"] = "humanity";
+        _ukrainianClauseToIdMap["людяність"] = "humanity";
         _ukrainianClauseToIdMap["час"] = "time";
     }
     // Pirate ^
