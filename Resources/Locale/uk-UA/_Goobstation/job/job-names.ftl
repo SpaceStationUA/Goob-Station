@@ -55,3 +55,4 @@ job-name-navy-officer = Офіцер флоту
 job-name-navy-captain = Капітан флоту
 JobRoboticist = Робототехнік
 job-name-tider = Тайдер
+JobVirologist = Вірусолог

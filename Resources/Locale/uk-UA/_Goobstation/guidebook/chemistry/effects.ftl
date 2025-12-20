@@ -18,3 +18,13 @@ reagent-effect-guidebook-deal-stamina-damage = { $chance ->
                     [true] миттєвої
                     *[false] поступової
                   } шкоди витривалості
+
+reagent-effect-guidebook-immunity-modifier = { $chance ->
+        [1] Змінює
+        *[other] змінюють
+    } швидкість приросту імунітету на {NATURALFIXED($gainrate, 5)}, силу на {NATURALFIXED($strength, 5)} щонайменше на {NATURALFIXED($time, 3)} {MANY("second", $time)}
+reagent-effect-guidebook-disease-progress-change = { $chance ->
+        [1] Змінює
+        *[other] змінюють
+    } прогрес захворювань типу {$type} на {NATURALFIXED($amount, 5)}
+reagent-effect-guidebook-disease-mutate = Мутує захворювання на {NATURALFIXED($amount, 4)}

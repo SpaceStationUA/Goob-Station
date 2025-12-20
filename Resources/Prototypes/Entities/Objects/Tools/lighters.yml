@@ -421,6 +421,10 @@
   - type: UseDelay
   - type: IgnitionSource
     ignited: false
+  # Goobstation
+  - type: Tag
+    tags:
+    - Lighter
 
 - type: entity
   parent: [BaseBrandedLighter, BaseSyndicateContraband]
@@ -720,6 +724,7 @@
     tags:
     - DonkPocket
     - Meat
+    - Lighter # Goobstation
   - type: SolutionContainerManager
     solutions:
       Welder:
