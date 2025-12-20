@@ -34,9 +34,7 @@ job-name-governmentman = G-мен
 # Різне
 
 job-name-conquest = Завойовник
-job-name-mercenarycaptain = Капітан Найманців
-
-# Role timers - Make these alphabetical or I cut you (dont listen to upstream, i copied and pasted this, make it very un-alphabetical :godo:)
+job-name-mercenarycaptain = Капітан найманців
 
 JobBlueshieldOfficer = Офіцер Синього Щита
 JobNanotrasenRepresentative = Представник NT
@@ -56,3 +54,5 @@ job-name-navy-captain = Капітан флоту
 JobRoboticist = Робототехнік
 job-name-tider = Тайдер
 JobVirologist = Вірусолог
+job-name-radiohost = Радіоведучий
+JobRadioHost = Радіоведучий

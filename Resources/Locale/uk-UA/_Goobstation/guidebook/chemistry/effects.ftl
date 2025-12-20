@@ -28,3 +28,9 @@ reagent-effect-guidebook-disease-progress-change = { $chance ->
         *[other] змінюють
     } прогрес захворювань типу {$type} на {NATURALFIXED($amount, 5)}
 reagent-effect-guidebook-disease-mutate = Мутує захворювання на {NATURALFIXED($amount, 4)}
+reagent-effect-guidebook-stealth-entities = Маскує живих істот поблизу.
+reagent-effect-guidebook-change-faction = Змінює фракцію істоти на {$faction}.
+reagent-effect-guidebook-mutate-plants-nearby = Випадково мутує рослини поблизу.
+reagent-effect-guidebook-dnascramble = Заплутує ДНК людини.
+reagent-effect-guidebook-change-species = Перетворює ціль на {$species}
+reagent-effect-guidebook-sex-change = Змінює гендер людини

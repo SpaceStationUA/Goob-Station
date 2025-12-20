@@ -184,8 +184,8 @@
   - ResearchDirector
   - Brig
   - Cryogenics
-  - External # goobstation
-  - Mantis
+  - External # Goobstation
+  - Mantis # Pirate
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

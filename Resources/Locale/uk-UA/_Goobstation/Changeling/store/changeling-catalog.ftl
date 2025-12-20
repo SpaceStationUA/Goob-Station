@@ -153,7 +153,7 @@ evolutionmenu-utility-spacesuit-desc = Позбудьтеся непотрібн
 
 evolutionmenu-utility-hivemindaccess-name = Доступ до розуму рою
 evolutionmenu-utility-hivemindaccess-desc = Налаштовує наші хімічні рецептори для спілкування з розумом рою, дозволяючи нам розпізнавати та спілкуватися з іншими ченджлінгами, які також розвинули цю здатність.
-    Клавіша за замовчуванням: +h
+    Клавіша за замовчуванням: +г
 
 evolutionmenu-utility-absorbbiomatter-name = Поглинати біоматерію
 evolutionmenu-utility-absorbbiomatter-desc = Поглинає органічну їжу, дозволяючи відновлювати хімікати залежно від її вмісту.

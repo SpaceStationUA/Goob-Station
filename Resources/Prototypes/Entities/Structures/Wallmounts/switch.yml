@@ -100,8 +100,8 @@
 
 - type: entity
   id: SignalSwitch
-  name: signal switch
-  description: It's a switch for toggling power to things.
+  name: "сигнальний перемикач"
+  description: "Це вимикач для перемикання живлення речей."
   placement:
     mode: SnapgridCenter
     snap:
@@ -162,8 +162,8 @@
 
 - type: entity
   id: SignalButton
-  name: signal button
-  description: It's a button for activating something.
+  name: "сигнальна кнопка"
+  description: "Це кнопка для активації чогось."
   placement:
     mode: SnapgridCenter
     snap:
@@ -226,8 +226,8 @@
 
 - type: entity
   id: ApcNetSwitch
-  name: apc net switch
-  description: It's a switch for toggling lights that are connected to the same apc.
+  name: "мережевий перемикач apc"
+  description: "Це перемикач для перемикання ліхтарів, які підключені до одного акумулятора."
   placement:
     mode: SnapgridCenter
     snap:
@@ -266,8 +266,8 @@
 
 - type: entity
   id: TwoWayLever
-  name: two way lever
-  description: A two way lever.
+  name: "двосторонній важіль"
+  description: "Двосторонній важіль."
   placement:
     mode: SnapgridCenter
   components:
@@ -323,7 +323,7 @@
 
 - type: entity
   id: SignalSwitchDirectional
-  name: signal switch
+  name: "сигнальний перемикач"
   suffix: directional
   parent: SignalSwitch
   components:
@@ -335,7 +335,7 @@
 
 - type: entity
   id: SignalButtonDirectional
-  name: signal button
+  name: "сигнальна кнопка"
   suffix: directional
   parent: SignalButton
   components:
@@ -347,7 +347,7 @@
 
 - type: entity
   id: ApcNetSwitchDirectional
-  name: apc net switch
+  name: "мережевий перемикач apc"
   suffix: directional
   parent: ApcNetSwitch
   components:
@@ -361,7 +361,7 @@
 
 - type: entity
   id: LockableButton
-  name: lockable button
+  name: "кнопка з фіксацією"
   parent: SignalButtonDirectional
   categories: [ HideSpawnMenu ]
   components:
@@ -630,9 +630,9 @@
 
 - type: entity
   id: ButtonFrame
-  name: button frame
+  name: "рамка для кнопок"
   categories: [ HideSpawnMenu ]
-  description: It's a frame to help distinguish switches visually.
+  description: "Це рамка, яка допомагає візуально розрізняти перемикачі."
   placement:
     mode: SnapgridCenter
     snap:

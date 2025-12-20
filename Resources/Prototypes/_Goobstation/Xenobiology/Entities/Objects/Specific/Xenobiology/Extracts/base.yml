@@ -1,0 +1,34 @@
+- type: entity
+  id: BaseSlimeExtract
+  parent: BaseItem
+  name: "екстракт слайма"
+  description: "Слиз, видобутий зі слайма. Легенди кажуть, що він має «магічні сили»."
+  abstract: true
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    layers:
+    - sprite: _Goobstation/Xenobiology/Specific/Xenobiology/extract.rsi
+      state: core
+      color: "#828282"
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      extract:
+        maxVol: 100
+  - type: InjectableSolution
+    solution: extract
+  - type: DrawableSolution
+    solution: extract
+  - type: ExaminableSolution
+    solution: extract
+  - type: SlimeExtract
+  - type: Reactive
+    oneUnitReaction: true
+  - type: StatusEffects # used for jittering and stuff
+    allowed:
+    - Jitter
+  - type: GuideHelp
+    guides:
+    - Xenobiology

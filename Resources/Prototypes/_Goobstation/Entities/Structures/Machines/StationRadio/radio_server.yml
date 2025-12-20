@@ -1,0 +1,45 @@
+- type: entity
+  id: StationRadioServer
+  name: "сервер станційного радіо"
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  description: "Стійка серверів, що керує тим, чи транслюється ваш голос"
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Structures/Machines/StationRadio/stationradioserver.rsi
+    layers:
+    - state: icon
+  - type: StationRadioServer
+  - type: DeviceLinkSource
+    ports:
+    - StationRadioServerPort
+    # TODO: unlit & maints panel sprite
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+  - type: Machine
+    board: StationRadioServerCircuitboard
+  - type: TelecomExempt
+  - type: RadioMicrophone
+    powerRequired: true
+    broadcastChannel: RadioShow
+
+- type: entity
+  id: StationRadioRig
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: "станційний радіо-ріґ"
+  description: "Набір усього, що потрібно, щоб транслювати музику по станції."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Structures/Machines/StationRadio/radiostationrig.rsi
+    layers:
+    - state: icon
+    # TODO: unlit & maints panel sprite
+  - type: DeviceLinkSink
+    ports:
+    - StationRadioRigPort
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+  - type: Machine
+    board: StationRadioRigCircuitboard
+  - type: RadioRig

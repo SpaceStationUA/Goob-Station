@@ -1,0 +1,749 @@
+- type: entity
+  abstract: true
+  id: BaseVinylDisk
+  name: "вінілова платівка"
+  description: "Вінілова платівка з музикою."
+  parent: BaseItem
+  components:
+  - type: Vinyl
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/RadioStation/vinyls.rsi
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 12
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          VinylDiskBroken:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 5
+  - type: Tag
+    tags:
+    - VinylSleeveFit
+
+- type: entity
+  abstract: true
+  id: BaseVinylSleeve
+  name: "конверт для платівки"
+  description: "Конверт для вінілової платівки, ідеальний для зберігання ваших платівок."
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/RadioStation/vinylsleeves.rsi
+  - type: EntityTableContainerFill
+    containers:
+      vinyl: !type:NestedSelector
+        tableId: RandomVinylDisk
+  - type: ContainerContainer
+    containers:
+      vinyl: !type:ContainerSlot
+        showEnts: false
+        occludes: true
+        ent: null
+  - type: ItemSlots
+    slots:
+      vinyl:
+        name: vinyl
+        insertSound: /Audio/_Goobstation/RadioStation/vinyl/vinylEject.ogg
+        ejectSound: /Audio/_Goobstation/RadioStation/vinyl/vinylInsert.ogg
+        whitelist:
+          tags:
+          - VinylSleeveFit
+
+# Vinyls
+
+- type: entity
+  name: "вінілова платівка: космічний джаз"
+  id: VinylDiskAI
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: ai-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/SpaceJazz.ogg
+
+- type: entity
+  name: "вінілова платівка: лаундж аеропорту"
+  description: "Вінілова платівка з ПЕКЕЛЬНОЮ музикою."
+  id: VinylDiskDevil
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: devil-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/AirportLounge.ogg
+
+- type: entity
+  name: "вінілова платівка: бугі-вечірка"
+  description: "Вінілова платівка з музикою, пахне помідорами."
+  id: VinylDiskPizza
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: pizza-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/BoogieParty.ogg
+
+- type: entity
+  name: "вінілова платівка: кукурудзяний качан"
+  description: "Вінілова платівка з музикою, має матове глянцеве покриття."
+  id: VinylDiskGlossy
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: glossy-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/Corncob.ogg
+
+- type: entity
+  name: "вінілова платівка: ніч у Венеції"
+  id: VinylDiskRed
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: red-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/NightInVenice.ogg
+
+- type: entity
+  name: "вінілова платівка: далека зоря"
+  id: VinylDiskLightBlue
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: lightblue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/goonstation/distant_star.ogg
+
+- type: entity
+  name: "вінілова платівка: банан"
+  description: "Ця платівка містить улюблену музику клоуна!"
+  id: VinylDiskBanana
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: banana-vinyl-disk
+  - type: Slippery
+  - type: StepTrigger
+    triggerGroups:
+      types:
+      - SlipEntity
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        hard: false
+        layer:
+        - SlipLayer
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/goonstation/honkmas.ogg
+
+- type: entity
+  name: "вінілова платівка: атлас"
+  description: "Вінілова платівка з музикою, збоку має попередження, що платівка неїстівна."
+  id: VinylDiskCarrot
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: carrot-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/goonstation/atlas.ogg
+
+- type: entity
+  name: "вінілова платівка: пляжі"
+  id: VinylDiskCyan
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: cyan-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/goonstation/beaches.ogg
+
+- type: entity
+  name: "вінілова платівка: вайбимо над Венерою"
+  id: VinylDiskBlue
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: blue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/VibingOverVenus.ogg
+
+- type: entity
+  name: "вінілова платівка: смертельна рулетка"
+  id: VinylDiskYellow
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: yellow-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/DeadlyRoulette.ogg
+
+- type: entity
+  name: "вінілова платівка: радіо пізньої ночі"
+  id: VinylDiskGreen
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/LateNightRadio.ogg
+
+- type: entity
+  name: "вінілова платівка: пригоди 3"
+  id: VinylDiskPurple
+  description: "подивимось, як воно виглядає фіолетовим!"
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: purple-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/goonstation/adventure_3.ogg
+
+- type: entity
+  name: "вінілова платівка: усі такі живі"
+  id: VinylDiskOrange
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: orange-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/goonstation/everyone_is_so_alive.ogg
+
+- type: entity
+  name: "вінілова платівка: ґрувово"
+  id: VinylDiskWhite
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: white-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/goonstation/groovy.ogg
+
+- type: entity
+  name: "вінілова платівка: пук-Еліза"
+  id: VinylDiskLightRed
+  description: "це не рожевий, це світлувато-червоний."
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: lightishred-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/goonstation/fart_elise.ogg
+
+- type: entity
+  name: "вінілова платівка: танець на космічному вулкані"
+  id: VinylDiskDarkBlue
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: darkblue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/goonstation/dance_on_a_space_volcano.ogg
+
+- type: entity
+  name: "вінілова платівка: різдвяна пісня"
+  id: VinylDiskPink
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: pink-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/goonstation/christmassong.ogg
+
+- type: entity
+  name: "вінілова платівка: вальс «Спалити світ»"
+  id: VinylDiskBurnTheWorld
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: red-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/BurnTheWorldWaltz.ogg
+
+- type: entity
+  name: "вінілова платівка: вальс «Дикий янгол»"
+  id: VinylDiskFeralAngel
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: darkblue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/FeralAngelWaltz.ogg
+
+- type: entity
+  name: "вінілова платівка: Так казав Заратустра"
+  id: VinylDiskAlsoSprach
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: white-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/PMMUSIC/Also-Sprach-Zarathustra-PM-Music.ogg
+
+- type: entity
+  name: "вінілова платівка: Політ валькірій"
+  id: VinylDiskValkyries
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: white-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/PMMUSIC/Ride-of-the-Valkyries-PM-Music.ogg
+
+- type: entity
+  name: "вінілова платівка: Ромео і Джульєтта"
+  id: VinylDiskRomeoJuliet
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: white-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/PMMUSIC/Romeo-and-Juliet-PM-Music.ogg
+
+- type: entity
+  name: "вінілова платівка: російський танець"
+  id: VinylDiskRussian
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: white-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/PMMUSIC/Russian-Dance-PM-Music.ogg
+
+- type: entity
+  name: "вінілова платівка: Дует квітів"
+  id: VinylDiskFlowerDuet
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: white-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/PMMUSIC/The-Flower-Duet-PM-Music.ogg
+
+- type: entity
+  name: "вінілова платівка: Зима (Вівальді)"
+  id: VinylDiskWinterVivaldi
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: white-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/PMMUSIC/Winter-Vivaldi-PM-Music.ogg
+
+- type: entity
+  name: "вінілова платівка: Бах — віолончель"
+  id: VinylDiskBachCello
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: white-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/PMMUSIC/Bach-Cello-Suite-PM-Music.ogg
+
+- type: entity
+  name: "забута вінілова платівка"
+  id: VinylDiskForgotten
+  parent: BaseVinylDisk
+  description: "деяких шматків бракує, але щось підказує, що її все ще можна відтворити. Але чи варто?"
+  components:
+  - type: Sprite
+    state: forgotten-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_Goobstation/RadioStation/music/peakasshole.ogg
+
+- type: entity
+  name: "зламана вінілова платівка"
+  id: VinylDiskBroken
+  parent: BaseItem
+  description: "Як і більшість платівок, ця теж зрештою зламалась."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/RadioStation/vinyls.rsi
+    state: broken-vinyl-disk
+
+# Sleeves
+
+- type: entity
+  name: "конверт для платівки ШІ"
+  id: VinylSleeveAI
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: ai-vinyl-sleeve
+
+- type: entity
+  name: "диявольський конверт для платівки"
+  id: VinylSleeveDevil
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: devil-vinyl-sleeve
+
+- type: entity
+  name: "піца-конверт для платівки"
+  id: VinylSleevePizza
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: pizza-vinyl-sleeve
+
+- type: entity
+  name: "пук-конверт для платівки"
+  id: VinylSleeveFart
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: fart-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: сонячний бік Лаваленду"
+  id: VinylSleeveLavaLand
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: sunnysideoflavaland-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: хокей"
+  id: VinylSleeveHockey
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: hockey-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: щур"
+  id: VinylSleeveRat
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: rat-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: нишком"
+  description: "Змусив чекати, еге ж?"
+  id: VinylSleeveMgs
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: mgs-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: сумнівний"
+  description: "Абстрактне мистецтво — улюблене для всіх."
+  id: VinylSleeveQuestionable
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: questional-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: прибиральник"
+  description: "Неоспіваний герой — тепер оспіваний!"
+  id: VinylSleeveJanitor
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: janitor-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: дивний"
+  id: VinylSleeveWeird
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: weird-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: ДіДжей-клоун"
+  description: "ДіДжей-клоун — галактична сенсація; у його турі зазначено Сол як єдину зоряну систему."
+  id: VinylSleeveDJClown
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: djclown-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: вампір"
+  id: VinylSleeveVampire
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: vampire-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: шалкер"
+  id: VinylSleeveShulker
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: shulker-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: червоне сонце"
+  id: VinylSleeveRedSun
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: redsun-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: череп"
+  description: "Рок-н-рол!!"
+  id: VinylSleeveSkull
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: skull-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: рибалка"
+  id: VinylSleeveFisherman
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: fisherman-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: Гайзенбі"
+  description: "Відомий талісман Ґунстейшен повертається — цього разу у вигляді картону."
+  id: VinylSleeveHeisenbee
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: heisenbee-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: Космічна станція 13"
+  description: "Відома космічна станція — нещаслива 13"
+  id: VinylSleeveStation13
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: station13-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: Космічна станція 14"
+  description: "Відома космічна станція — щаслива 14"
+  id: VinylSleeveStation14
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: station14-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: реактор"
+  id: VinylSleeveReactor
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: reactor-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: КПК"
+  id: VinylSleevePda
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: pda-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: ядерний диск"
+  description: "Хоча він може виглядати як ядерний диск, насправді це не працює як ядерний диск."
+  id: VinylSleeveNukeDisk
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: nukedisk-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: Блокі Крафт"
+  description: "Саундтрек хітової відеогри 2457 року «Блокі Крафт» виходить на вінілі!"
+  id: VinylSleeveBlockyCraft
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: blockycraft-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: око"
+  id: VinylSleeveEye
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: eye-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: тх"
+  description: "Якось так сталося, що цей інді-гурт вирішив: назватися «тх» — хороша ідея"
+  id: VinylSleeveTh
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: th-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: клоун"
+  description: "Клоун завжди перемагає."
+  id: VinylSleeveClown
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: clown-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: Новий Нано-Йорк"
+  description: "На обкладинці зображено Новий Нано-Йорк після корпоративного захоплення 2333 року."
+  id: VinylSleeveNanoYork
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: newnanoyork-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: ДіДжей Тайдер"
+  description: "ДіДжей Тайдер — галактична сенсація; у його турі зазначено Сол і Альфу Центавра як зупинки."
+  id: VinylSleeveDJTider
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: djtider-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: кава"
+  id: VinylSleeveCoffee
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: coffee-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: ласкаво просимо на КС13"
+  description: "Шкода, що вони ядерно знищили те місце."
+  id: VinylSleeveWelcomeSS13
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: welcometoss13-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: мир"
+  description: "На зображенні показано події на Космічній станції 12, де капітан і синдикатівський повстанець погодилися на перемир’я в різдвяний день."
+  id: VinylSleevePeace
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: peace-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: Японія"
+  id: VinylSleeveJapan
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: japan-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: Різдво"
+  id: VinylSleeveChristmas
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: christmas-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: огірок"
+  description: "Багато митців намагалися зрозуміти, що саме зображує ця обкладинка. Найвидатніші уми погодилися: найімовірніше, це три огірки на дорозі."
+  id: VinylSleevePickle
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: pickle-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: спалах"
+  id: VinylSleeveFlash
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: flash-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: бежевий"
+  id: VinylSleeveBeige
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: plainbeige-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: чорний"
+  id: VinylSleeveBlack
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: plainblack-vinyl-sleeve
+
+- type: entity
+  name: "конверт для платівки: білий"
+  id: VinylSleeveWhite
+  parent: BaseVinylSleeve
+  components:
+  - type: Sprite
+    state: plainwhite-vinyl-sleeve

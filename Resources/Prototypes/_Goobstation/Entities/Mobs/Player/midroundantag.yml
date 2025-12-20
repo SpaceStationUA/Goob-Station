@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseMobHuman
   id: MobHumanGreyTide
-  name: The Greytide
+  name: "Грей тайд"
   components:
   - type: Loadout
     prototypes: [ GreyTideAntagGear ]
@@ -9,7 +9,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanTunnelClown
-  name: Tunnel clown
+  name: "Тунельний клоун"
   components:
   - type: RandomHumanoidAppearance
     randomizeName: true
@@ -20,7 +20,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanSingulothKnight
-  name: Singuloth Knight
+  name: "Лицар Синґулота"
   components:
   - type: RandomHumanoidAppearance
     randomizeName: true
@@ -30,7 +30,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanDarkLord
-  name: The Dark Lord
+  name: "Темний лорд"
   components:
   - type: ActionGrant
     actions:
@@ -44,7 +44,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanChosenOne
-  name: The chosen one
+  name: "Обраний"
   components:
   - type: ActionGrant
     actions:
@@ -58,7 +58,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanMimeAssassin
-  name: Mime assassin
+  name: "Мім-убивця"
   components:
   - type: MimePowers
   - type: RandomHumanoidAppearance
@@ -69,7 +69,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanDarkPriest
-  name: Dark Priest
+  name: "Темний жрець"
   components:
   - type: RandomHumanoidAppearance
     randomizeName: true
@@ -79,9 +79,29 @@
 - type: entity
   parent: MobVox
   id: MobVoxRaider
-  name: Vox Raider
+  name: "Вокс-рейдер"
   components:
   - type: RandomHumanoidAppearance
     randomizeName: true
   - type: Loadout
     prototypes: [ VoxRaiderAntagGear ]
+
+- type: entity
+  parent: BaseMobHuman
+  id: SantaClaus
+  name: "Санта-Клаус"
+  components:
+  - type: Loadout
+    prototypes: [ SantaGear ]
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-santa-name
+    description: ghost-role-information-santa-description
+    rules: ghost-role-information-nonantagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    raffle:
+      settings: default

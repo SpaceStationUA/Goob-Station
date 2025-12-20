@@ -1,0 +1,167 @@
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyGrey
+  name: "сірий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: GreyMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyOrange
+  name: "помаранчевий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: OrangeMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyPurple
+  name: "фіолетовий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: PurpleMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyBlue
+  name: "синій слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: BlueMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyMetal
+  name: "металевий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: MetalMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyYellow
+  name: "жовтий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: YellowMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyDarkPurple
+  name: "темно-фіолетовий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: DarkPurpleMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyDarkBlue
+  name: "темно-синій слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: DarkBlueMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabySilver
+  name: "срібний слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: SilverMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyBluespace
+  name: "блюспейсовий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: BluespaceMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabySepia
+  name: "сепієвий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: SepiaMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyCerulean
+  name: "церулеановий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: CeruleanMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyPyrite
+  name: "піритовий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: PyriteMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyRed
+  name: "червоний слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: RedMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyGreen
+  name: "зелений слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: GreenMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyPink
+  name: "рожевий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: PinkMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyGold
+  name: "золотий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: GoldMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyOil
+  name: "нафтовий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: OilMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyLightPink
+  name: "світло-рожевий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: LightPinkMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyBlack
+  name: "чорний слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: BlackMutation
+
+- type: entity
+  parent: MobSlimeXenobioBabyPending
+  id: MobSlimeXenobioBabyAdamantine
+  name: "адамантиновий слайм"
+  components:
+  - type: PendingSlimeSpawn
+    breed: AdamantineMutation

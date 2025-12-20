@@ -20,8 +20,8 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterSuitHEV
-  name: H.E.V suit
-  description: Full-body hazardous suit designed to protect wearer from radiation, energy discarges, blunt-force trauma during the handling of hazardous material.
+  name: "костюм H.E.V"
+  description: "Повнотілий костюм для небезпечних умов, розроблений для захисту власника від радіації, енергетичних розрядів, тупих травм під час роботи з небезпечними матеріалами."
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Suits/hev.rsi
@@ -58,8 +58,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: SurveillanceWirelessCameraBodyEntertainment
-  name: nopro camera
-  description: A body mounted camera. It's watching you.
+  name: "камера nopro"
+  description: "Натільна камера. Вона стежить за вами."
   components:
     - type: DeviceNetwork
       deviceNetId: Wireless
@@ -94,8 +94,8 @@
 - type: entity
   parent: ClothingOuterWizardCentCommReal
   id: WhiteRobes
-  name: robes of the chosen one
-  description: theses white robes are worn by only the finest of Nanotrasen's special operations department.
+  name: "шати Обраного"
+  description: "ці білі шати носять лише найкращі з відділу спецоперацій Нанотрасен."
   suffix: chosen one
   components:
   - type: Sprite
@@ -106,8 +106,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitHotDog
-  name: hotdog costume
-  description: Hot-diggity-dog!
+  name: "костюм хот-дога"
+  description: "Гаряча сосиска!"
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Misc/hotdog.rsi
@@ -123,8 +123,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterSuitPickle
-  name: pickle suit
-  description: Smells horribly of vinegar.
+  name: "костюм огірка"
+  description: "Жахливо пахне оцтом."
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Misc/pickle.rsi
@@ -136,3 +136,80 @@
     - Hair
     - HeadTop
     - HeadSide
+
+- type: entity
+  parent: ClothingOuterBaseToggleable
+  id: ClothingOuterArmorHereticCostume
+  name: "окультні шати"
+  description: "Потертий, запилений комплект шат. Усередині вздовж швів тягнуться дивні розмиті очі."
+  components:
+  - type: Construction
+    graph: HereticCostume
+    node: start
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/eldritch_armor.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/eldritch_armor.rsi
+  - type: ToggleableClothing # Goobstation - Modsuits change
+    clothingPrototypes:
+      head: ClothingHeadHatHoodHereticCostume
+  - type: Tag
+    tags:
+      - HereticCostume
+
+- type: entity
+  parent: ClothingOuterArmorHereticCostume
+  id: ClothingOuterArmorHereticVoidCostume
+  suffix: Void
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/void_armor.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/void_armor.rsi
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingHeadHatHoodHereticVoidCostume
+
+- type: entity
+  parent: ClothingOuterArmorHereticCostume
+  id: ClothingOuterArmorHereticAshCostume
+  suffix: Ash
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/ashen_armor.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/ashen_armor.rsi
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingHeadHatHoodHereticAshCostume
+
+- type: entity
+  parent: ClothingOuterArmorHereticCostume
+  id: ClothingOuterArmorHereticFleshCostume
+  suffix: Flesh
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/flesh_armor.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/flesh_armor.rsi
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingHeadHatHoodHereticFleshCostume
+
+- type: entity
+  parent: ClothingOuterArmorHereticCostume
+  id: ClothingOuterArmorHereticBladeCostume
+  suffix: Blade
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/blade_armor.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/blade_armor.rsi
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingHeadHatHoodHereticBladeCostume

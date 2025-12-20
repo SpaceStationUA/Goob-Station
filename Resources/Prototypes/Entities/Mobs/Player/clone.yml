@@ -31,7 +31,7 @@
   - BibleUser
   - CommandStaff
   - Clumsy
-  - MindShield
+  # - MindShield # goob edit - it's an implant. why?
   - MimePowers
   - SpaceNinja
   - Thieving
@@ -112,7 +112,7 @@
 
 - type: entity
   id: RandomCloneSpawner
-  name: Random Clone
+  name: "Спавнер випадкового клона"
   suffix: Non-Antag
   components:
   - type: Sprite
