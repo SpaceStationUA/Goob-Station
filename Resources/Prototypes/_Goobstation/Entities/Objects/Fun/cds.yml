@@ -1,6 +1,6 @@
 - type: entity
-  name: "cD-диск"
-  description: "CD-диск, зазвичай містить рекламу."
+  name: cd disk
+  description: A cd disk, usually contains ads.
   id: BaseCdDisk
   parent: BaseItem
   abstract: true
@@ -26,7 +26,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (Данітос Бурітос)"
+  name: cd disk (Danitos Burritos)
   id: CdDiskDanitosBurritos
   components:
   - type: Vinyl
@@ -35,7 +35,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (фільм Білла)"
+  name: cd disk (bill movie)
   id: CdDiskBillMovie
   components:
   - type: Vinyl
@@ -44,7 +44,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (соцреклама: тренування капітана)"
+  name: cd disk (captain training PSA)
   id: CdDiskCapTraining
   components:
   - type: Vinyl
@@ -53,7 +53,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (Каргонія)"
+  name: cd disk (Cargonia)
   id: CdDiskCargonia
   components:
   - type: Vinyl
@@ -62,7 +62,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (Хімія)"
+  name: cd disk (Chemistry)
   id: CdDiskChemistry
   components:
   - type: Vinyl
@@ -71,7 +71,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (соцреклама: клонування)"
+  name: cd disk (cloning PSA)
   id: CdDiskCloningPsa
   components:
   - type: Vinyl
@@ -80,7 +80,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (квитки Дена)"
+  name: cd disk (Dans Tickets)
   id: CdDiskDansTickets
   components:
   - type: Vinyl
@@ -89,7 +89,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (ґронес)"
+  name: cd disk (grones)
   id: CdDiskGrones
   components:
   - type: Vinyl
@@ -98,7 +98,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (Поуп Кранч: пластівці)"
+  name: cd disk (Pope Crunch Cereal)
   id: CdDiskPopeCrunchCereal
   components:
   - type: Vinyl
@@ -107,7 +107,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (Квік локшина)"
+  name: cd disk (Quik Noodles)
   id: CdDiskQuikNoodles
   components:
   - type: Vinyl
@@ -116,7 +116,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (робототехніка)"
+  name: cd disk (robotics)
   id: CdDiskRobotics
   components:
   - type: Vinyl
@@ -125,7 +125,7 @@
 
 - type: entity
   parent: BaseCdDisk
-  name: "cD-диск (соцреклама служби безпеки)"
+  name: cd disk (security psa)
   id: CdDiskSecurityPsa
   components:
   - type: Vinyl
@@ -138,12 +138,12 @@
   parent: BaseCdDisk
   id: CdDiskWeird
   abstract: true
-  name: "дивний CD-диск"
-  description: "Дивний CD-диск, щось підказує, що в ньому немає реклами."
+  name: weird cd disk
+  description: A weird cd disk, something tells you that this one doesn't contain ads.
 
 - type: entity
   parent: CdDiskWeird
-  name: "cD-диск (оголошення командира)"
+  name: cd disk (commander announcement)
   id: CdDiskCommanderAnnouncement
   components:
   - type: Vinyl
@@ -152,7 +152,7 @@
 
 - type: entity
   parent: CdDiskWeird
-  name: "cD-диск (фігурки командира)"
+  name: cd disk (commander figurines)
   id: CdDiskCommanderFigurines
   components:
   - type: Vinyl
@@ -161,7 +161,7 @@
 
 - type: entity
   parent: CdDiskWeird
-  name: "cD-диск (відставка командира)"
+  name: cd disk (commander resignation)
   id: CdDiskCommanderResignation
   components:
   - type: Vinyl
@@ -170,7 +170,7 @@
 
 - type: entity
   parent: CdDiskWeird
-  name: "cD-диск (підтримка командира)"
+  name: cd disk (commander support)
   id: CdDiskCommanderSupport
   components:
   - type: Vinyl
@@ -179,7 +179,7 @@
 
 - type: entity
   parent: CdDiskWeird
-  name: "cD-диск (суд над Гайзенбі)"
+  name: cd disk (trial of Heisenbee)
   id: CdDiskHeisenbeeTrial
   components:
   - type: Vinyl
@@ -188,7 +188,7 @@
 
 - type: entity
   parent: CdDiskWeird
-  name: "cD-диск (онбординг ЕксДжі 1)"
+  name: cd disk (xg onboarding 1)
   id: CdDiskXgOnboarding1
   components:
   - type: Vinyl
@@ -197,7 +197,7 @@
 
 - type: entity
   parent: CdDiskWeird
-  name: "cD-диск (онбординг ЕксДжі 2)"
+  name: cd disk (xg onboarding 2)
   id: CdDiskXgOnboarding2
   components:
   - type: Vinyl
@@ -206,7 +206,7 @@
 
 - type: entity
   parent: CdDiskWeird
-  name: "cD-диск (онбординг ЕксДжі 3)"
+  name: cd disk (xg onboarding 3)
   id: CdDiskXgOnboarding3
   components:
   - type: Vinyl
@@ -216,7 +216,7 @@
 
 - type: entity
   parent: CdDiskWeird
-  name: "cD-диск (онбординг ЕксДжі 4)"
+  name: cd disk (xg onboarding 4)
   id: CdDiskXgOnboarding4
   components:
   - type: Vinyl
