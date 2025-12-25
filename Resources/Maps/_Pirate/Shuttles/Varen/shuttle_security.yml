@@ -1,16 +1,16 @@
 meta:
   format: 7
-  category: Map
+  category: Grid
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/25/2025 11:52:39
-  entityCount: 315
-maps:
-- 285
+  time: 12/25/2025 12:46:18
+  entityCount: 314
+maps: []
 grids:
 - 2
-orphans: []
+orphans:
+- 2
 nullspace: []
 tilemap:
   2: Space
@@ -40,7 +40,7 @@ entities:
       name: SCCC-145-SS "Сіріус"
     - type: Transform
       pos: -0.5185185,-0.4830132
-      parent: 285
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -296,16 +296,6 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: NavMap
-  - uid: 285
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: GridTree
-    - type: Broadphase
-    - type: OccluderTree
   - uid: 293
     components:
     - type: MetaData

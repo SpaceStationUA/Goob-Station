@@ -15756,11 +15756,7 @@ entities:
       pos: 7.5,48.5
       parent: 2
     - type: GridFill
-      addComponents: []
       path: /Maps/_Pirate/Shuttles/Varen/shuttle_security.yml
-    - type: AccessReader
-      access:
-      - - Armory
   - uid: 16853
     components:
     - type: Transform
