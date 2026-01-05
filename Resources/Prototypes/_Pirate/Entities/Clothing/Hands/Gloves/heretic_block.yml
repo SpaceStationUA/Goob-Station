@@ -1,0 +1,17 @@
+#- type: entity
+#  parent: [ClothingHandsBase, BaseSecurityContraband]
+#  id: ClothingHandsGloves
+#  name: %%
+#  description: %%
+#  components:
+#  - type: Sprite
+#    sprite: Clothing/Hands/Gloves/Color/black.rsi # sprite should be changed to the proper sprite when available
+#  - type: Clothing
+#    sprite: Clothing/Hands/Gloves/Color/black.rsi
+#    equipDelay: 10
+#    unequipDelay: 120
+#  - type: Fiber
+#    fiberMaterial: fibers-synthetic
+#  - type: MansusBlock
+#  - type: SelfUnremovableClothing
+# i didnt get name and description from players so i commented it out for now
