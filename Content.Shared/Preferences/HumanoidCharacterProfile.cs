@@ -152,7 +152,15 @@ namespace Content.Shared.Preferences
         [DataField]
         public string Lifepath { get; set; } = SharedHumanoidAppearanceSystem.DefaultLifepath;
         // Pirate edit end - port EE contractors
-
+        // Pirate - traits
+        public HumanoidCharacterProfile WithoutAllTraitPreferences()
+        {
+            return new(this)
+            {
+                _traitPreferences = new HashSet<ProtoId<TraitPrototype>>(),
+            };
+        }
+        // Pirate end - traits
 
         // begin Goobstation: port EE height/width sliders
         [DataField]

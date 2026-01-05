@@ -5,6 +5,8 @@
   description: trait-heat-resistant-desc
   category: Quirks
   cost: 1
+  mutuallyExclusiveTraits:
+    - TraitHeatWeakness
   components:
     - type: TempResistant
       heatModifier: 1.05
@@ -15,6 +17,8 @@
   description: trait-heat-weakness-desc
   category: Quirks
   cost: -1
+  mutuallyExclusiveTraits:
+    - TraitHeatResistant
   components:
     - type: TempResistant
       heatModifier: 0.95
@@ -25,6 +29,8 @@
   description: trait-cold-resistant-desc
   category: Quirks
   cost: 1
+  mutuallyExclusiveTraits:
+    - TraitColdWeakness
   components:
     - type: TempResistant
       coldModifier: 0.95
@@ -35,6 +41,8 @@
   description: trait-cold-weakness-desc
   category: Quirks
   cost: -1
+  mutuallyExclusiveTraits:
+    - TraitColdResistant
   components:
     - type: TempResistant
       coldModifier: 1.05
@@ -47,6 +55,8 @@
   description: trait-night-vision-desc
   category: Quirks
   cost: 8
+  speciesBlacklist:
+    - Shadowkin
   components:
     - type: NightVision
       color: "#2b2d2d"
@@ -107,6 +117,9 @@
   description: trait-vampirism-desc
   category: Quirks
   cost: 3
+  speciesBlacklist:
+    - IPC
+    - Plasmaman
   components:
   - type: Vampirism
     succDelay: 3
@@ -124,19 +137,25 @@
   description: trait-vampiric-blood-deficiency-desc
   category: Quirks
   cost: -4
+  speciesBlacklist:
+    - IPC
+    - Plasmaman
   components:
     - type: BloodDeficiency # By default, start taking bloodloss damage at around ~21.4 minutes,
       bloodLossPercentage: 0.0002333333  # then become crit ~10 minutes
 
 - type: trait
-  id: psionic
+  id: Psionic
   name: trait-psionic-name
   description: trait-psionic-desc
   category: Quirks
   cost: 2
+  speciesBlacklist:
+    - IPC
+    - Plasmaman
+    - Shadowkin
   components:
     - type: Psionic
-      ignoreStomachRequirement: false # crutch, instead of trait requirements
     - type: InnatePsionicPowers
       powersToAdd:
         - TelepathyPower

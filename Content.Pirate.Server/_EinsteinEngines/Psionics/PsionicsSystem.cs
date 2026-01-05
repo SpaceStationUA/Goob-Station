@@ -187,18 +187,6 @@ public sealed class PsionicsSystem : EntitySystem
         component.AmplificationSources.Add(BaselineAmplification, _random.NextFloat(component.BaselineAmplification.Item1, component.BaselineAmplification.Item2));
         component.DampeningSources.Add(BaselineDampening, _random.NextFloat(component.BaselineDampening.Item1, component.BaselineDampening.Item2));
 
-        // Check if entity has a stomach, unless requirement is ignored. Timely, Instead of trait requirements
-        if (!component.IgnoreStomachRequirement)
-        {
-            if (!TryComp<BodyComponent>(uid, out var bodyCheck)
-                || !_body.TryGetBodyOrganEntityComps<StomachComponent>((uid, bodyCheck), out var stomachComps)
-                || stomachComps.Count == 0)
-            {
-                RemComp<PsionicComponent>(uid);
-                return;
-            }
-        }
-
         if (!component.Removable
             || !TryComp<NpcFactionMemberComponent>(uid, out var factions)
             || _npcFactonSystem.IsMember((uid, factions), "GlimmerMonster"))
