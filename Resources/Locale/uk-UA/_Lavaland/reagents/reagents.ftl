@@ -1,5 +1,9 @@
-reagent-name-minerssalve = Шахтарславін
+reagent-name-minerssalve = шахтарська мазь
 reagent-desc-minerssalve = Потужна суміш стимуляторів, призначена для використання шахтарями на Лаваленді.
 
-reagent-name-luxurium = Луксуріум
+reagent-name-luxurium = люксуріум
 reagent-desc-luxurium = Зла суміш, розроблена найкращими вченими Nanotrasen, яка стає шкідливою поза низьким тиском, зменшуючи ефективність розкішної шахтарської ручки при використанні поза призначеним середовищем.
+reagent-name-vitrium-froth = вітрієва піна
+reagent-desc-vitrium-froth = Бульбашкова паста, що загоює рани на шкірі.
+reagent-name-seraka-extract = екстракт сераки
+reagent-desc-seraka-extract = Глибоко забарвлена олія, що міститься в невеликих кількостях у грибах Серака. Діє як ефективний засіб для згортання крові, але має низький поріг передозування.

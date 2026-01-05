@@ -18,3 +18,19 @@ reagent-effect-guidebook-deal-stamina-damage = { $chance ->
                     [true] миттєвої
                     *[false] поступової
                   } шкоди витривалості
+
+reagent-effect-guidebook-immunity-modifier = { $chance ->
+        [1] Змінює
+        *[other] змінюють
+    } швидкість приросту імунітету на {NATURALFIXED($gainrate, 5)}, силу на {NATURALFIXED($strength, 5)} щонайменше на {NATURALFIXED($time, 3)} {MANY("second", $time)}
+reagent-effect-guidebook-disease-progress-change = { $chance ->
+        [1] Змінює
+        *[other] змінюють
+    } прогрес захворювань типу {$type} на {NATURALFIXED($amount, 5)}
+reagent-effect-guidebook-disease-mutate = Мутує захворювання на {NATURALFIXED($amount, 4)}
+reagent-effect-guidebook-stealth-entities = Маскує живих істот поблизу.
+reagent-effect-guidebook-change-faction = Змінює фракцію істоти на {$faction}.
+reagent-effect-guidebook-mutate-plants-nearby = Випадково мутує рослини поблизу.
+reagent-effect-guidebook-dnascramble = Заплутує ДНК людини.
+reagent-effect-guidebook-change-species = Перетворює ціль на {$species}
+reagent-effect-guidebook-sex-change = Змінює гендер людини

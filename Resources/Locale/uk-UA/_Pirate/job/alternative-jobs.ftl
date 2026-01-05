@@ -103,7 +103,7 @@ job-alternative-name-smo = Старший медичний офіцер
 
 # Science
 job-alternative-name-anomalist = Аномаліст
-job-alternative-name-robotics = Робототехнік
+job-alternative-name-xenobiologist = Ксенобіолог
 job-alternative-name-xenoarcheologist = Ксеноархеолог
 job-alternative-name-phoron-researcher = Дослідник форону
 job-alternative-name-aspirant = Аспірант

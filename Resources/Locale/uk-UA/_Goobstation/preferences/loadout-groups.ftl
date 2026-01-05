@@ -60,3 +60,7 @@ loadout-group-roboticist-outerclothing = Верхній одяг роботот�
 loadout-group-roboticist-gloves = Рукавички робототехніка
 loadout-group-roboticist-shoes = Взуття робототехніка
 loadout-group-roboticist-id = ID робототехніка
+loadout-group-virologist-jumpsuit = Комбінезон вірусолога
+loadout-group-virologist-backpack = Рюкзак вірусолога
+loadout-group-virologist-outerclothing = Верхній одяг вірусолога
+loadout-group-virologist-id = ID-картка вірусолога

@@ -64,7 +64,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    
+
     // Pirate banking start
     [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly JobSystem _job = default!;
@@ -182,6 +182,12 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
             _idCard.TryChangeJobDepartment(targetId, job);
+            // Pirate START - Fix alt jobs screwing allowed jobs check
+            if (TryComp<IdCardComponent>(targetId, out var idCardComp))
+            {
+                idCardComp.JobPrototype = job.ID;
+            }
+            // Pirate END - Fix alt jobs screwing allowed jobs check
         }
 
         UpdateStationRecord(uid, targetId, newFullName, newJobTitle, job);
@@ -237,7 +243,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 {
                     _roles.MindRemoveRole(mindId, oldJob.ID);
                 }
-                 _job.MindAddJob(mindId, jobPrototype.ID);
+                _job.MindAddJob(mindId, jobPrototype.ID);
             }
         }
         // Pirate banking end

@@ -31,8 +31,8 @@
     - Moth
     - Reptilian
     - SlimePerson
-    # Goobstation
-    # - Felinid
+     # Goobstation
+    - Felinid
     - Gingerbread
     - Harpy
     - Vox
@@ -46,6 +46,7 @@
     - Chitinid
     - Plasmaman
     - Feroxi
+    - Shadowkin
 
 - type: guideEntry
   id: Arachnid
@@ -83,10 +84,10 @@
   text: "/ServerInfo/Guidebook/Mobs/SlimePerson.xml"
 
 # Goobstation
-#- type: guideEntry
-#  id: Felinid
-#  name: species-name-felinid
-#  text: "/ServerInfo/Guidebook/Mobs/Felinid.xml"
+- type: guideEntry
+  id: Felinid
+  name: species-name-felinid
+  text: "/ServerInfo/Guidebook/Mobs/Felinid.xml"
 
 - type: guideEntry
   id: Gingerbread
@@ -132,3 +133,8 @@
   id: Plasmaman
   name: species-name-plasmaman
   text: "/ServerInfo/Guidebook/Mobs/Plasmaman.xml"
+
+- type: guideEntry
+  id: Shadowkin
+  name: species-name-shadowkin
+  text: "/ServerInfo/Guidebook/Mobs/Shadowkin.xml"

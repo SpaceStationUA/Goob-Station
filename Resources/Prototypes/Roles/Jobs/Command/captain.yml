@@ -175,6 +175,11 @@
       - Hacker
       - ConArtist
     # Pirate contractor end
+  guides: # goobstation
+  - Command
+  - Succession
+  - StandardProcedures SOP
+  - Captain SOP
   goobcoins: 50 #Goob content
   weight: 20
   startingGear: CaptainGear

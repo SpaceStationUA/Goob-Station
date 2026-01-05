@@ -188,7 +188,7 @@ evolutionmenu-utility-spacesuit-desc =
 evolutionmenu-utility-hivemindaccess-name = Hivemind Access
 evolutionmenu-utility-hivemindaccess-desc =
     Tunes our chemical receptors for hivemind communication, allowing us to recognize and communicate with other changelings who have also evolved this ability.
-    Default key is +h
+    Default key is +г
 
 evolutionmenu-utility-absorbbiomatter-name = Absorb Biomatter
 evolutionmenu-utility-absorbbiomatter-desc =

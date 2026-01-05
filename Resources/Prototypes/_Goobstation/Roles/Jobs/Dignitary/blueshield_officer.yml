@@ -63,6 +63,10 @@
       - Hacker
       - ConArtist
   # Pirate contractor end
+  guides:
+  - BlueshieldOfficer SOP
+  - Command
+  - Succession
   goobcoins: 45
   weight: 20
   startingGear: BlueshieldOfficerGear

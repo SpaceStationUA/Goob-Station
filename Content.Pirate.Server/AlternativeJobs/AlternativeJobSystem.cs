@@ -41,6 +41,7 @@ public sealed class AlternativeJobSystem : EntitySystem, IAlternativeJobSystem
         idCardSystem.TryChangeJobTitle(idCard, alternativeJobPrototype.LocalizedJobName, idCardComp);
         idCardComp.JobIcon = newIcon.ID;
         idCardComp.LocalizedJobTitle = alternativeJobPrototype.LocalizedJobName;
+        idCardComp.JobPrototype = alternativeJobPrototype.ParentJobId;
         // Change job title on id card
         Dirty(idCard, idCardComp);
     }

@@ -18,7 +18,7 @@ alerts-modsuit-power-name = [color=yellow]Живлення Modsuit[/color]
 alerts-modsuit-power-desc = Відображає поточний рівень заряду вашого Modsuit. Низький рівень заряду може вплинути на функціональність костюма.
 
 alerts-centered-name = Центрований
-alerts-centered-desc = Ви відчуваєте зв'язок зі своїм корінням. Особливо з тим, що утримує вас в центрі плиток
+alerts-centered-desc = Ви відчуваєте зв'язок зі своїм корінням. Зокрема з тим, що тримає вас по центру тайлів.
 
 alerts-minor-pain-name = Легкий біль
 alerts-minor-pain-desc = Ви відчуваєте легкий біль.

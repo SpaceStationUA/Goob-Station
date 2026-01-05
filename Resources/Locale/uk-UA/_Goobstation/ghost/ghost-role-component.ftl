@@ -115,5 +115,44 @@ ghost-role-cargo-bingle-desc = Служіть представнику Нано�
 ghost-role-information-rules-default-xeno = Ви - [color={role-type-team-antagonist-color}][bold]Ксеноморф[/bold][/color].
                                             Ваша мета - захистити свою Королеву та розширити свій Вулик.
                                             Досягніть цього, приводячи своїй Королеві членів екіпажу для зараження
-ghost-role-information-wraith-name-token = Примара (Токен)
+ghost-role-information-wraith-name-token = Рейф (жетон)
 ghost-role-information-slasher-token = Різник (Жетон)
+ghost-role-information-plague-mouse-name = Чумна миша
+ghost-role-information-plague-mouse-description = Голодна й бешкетна миша. Ця переносить захворювання та поширює його укусом.
+ghost-role-information-grey-tide-name = Грейтайд
+ghost-role-information-grey-tide-description = Проти всього зла, яке може накоїти говнобезпека, і всієї підлості, яку здатна породити наука, ми пошлемо їм лише тебе. Робаст і лайно, доки справу не буде доведено до кінця.
+grey-tide-role-greeting = Давно забутий у глибинах техтунелів, ти — [color=#880808]ГРЕЙТАЙД [/color]; одяг, який ти носиш, злився з твоїм тілом від нескінченного робасту. Ця станція не для них...
+tide-objective-kill-everyone-desc = Ця станція скривдила тебе востаннє — робаст і накочуйся хвилею, доки всі не помруть.
+tide-objective-condition-kill-everyone-else-title = Заробастити всіх.
+ghost-role-information-tunnel-clown-name = Тунельний клоун
+ghost-role-information-tunnel-clown-description = Член клоунської банди, який зробив техтунелі своїм домом.
+tunnel-clown-role-greeting = Ви — [color=#880808]тунельний клоун[/color], член клоунської банди, який зробив техтунелі своїм домом. Перегляньте лист персонажа, щоб дізнатися свої цілі.
+tunnel-clown-objective-maints-slasher-desc = Техтунелі цієї станції були вашим домом, скільки ви себе пам'ятаєте; ховатися від екіпажу в шафках — усе, що ви знали донині. Ці станційні щури востаннє вторглися до вашого дому — вбийте кожного, хто посміє його потривожити.
+tunnel-clown-objective-condition-maints-slasher-title = Захистити техтунелі.
+tunnel-clown-business-card = Тунельний клоун, з ліцензією на вбивства.
+ghost-role-information-Singuloth-Knight-name = Лицар Сінгулота
+ghost-role-information-Singuloth-Knight-description = Колись майстерні інженери, тепер — послідовники Лорда Сінгулота. Озброєні молотом сингулярності, вони — сила, з якою доведеться рахуватися!
+Singuloth-Knight-role-greeting = Ти — [color=#880808]Лицар Сінгулота[/color], відданий послідовник Лорда Сінгулота. Перевір свій лист персонажа щодо своїх цілей.
+objective-issuer-lord-singuloth = [color=#320022]Лорд Сінгулот[/color]
+ghost-role-information-dark-lord-name = Темний лорд
+ghost-role-information-dark-lord-description = Агент Синдикату, що наслідує сітх-лорда. Використовуйте свої блискавичні здібності та енергомеч, щоб виконати свої цілі!
+dark-lord-role-greeting = Ви — [color=#880808]Темний лорд[/color], надісланий Синдикатом на цю станцію виконувати їхню брудну роботу. Перегляньте лист персонажа щодо своїх цілей.
+ghost-role-information-chosen-one-name = Обраний
+ghost-role-information-chosen-one-description = Спеціальний агент, надісланий на станцію Нанотрейзеном, щоб здолати Темного лорда.
+chosen-one-role-greeting = Ви — [color=#0087FF]Обраний[/color]. Вас надіслали на цю станцію, щоб здолати Темного лорда, присланого Синдикатом. Перегляньте лист персонажа щодо своїх цілей.
+objective-condition-dark-lord-kill-title = Переконайтеся, що Темний лорд {$targetName} помре.
+ghost-role-information-mime-Assassin-name = Мім-асасин
+ghost-role-information-mime-Assassin-description = Асасин у вбранні міма, який віддає перевагу тихим убивствам. Його ім'я? Ну, він навряд чи вам його скаже — але саме тому він такий вправний!
+mime-Assassin-role-greeting = Ви — [color=#880808]Мім-асасин[/color]. Синдикат надіслав вас на цю станцію, щоб прибрати з рівняння кількох членів командування. Вам видали інструменти, аби виконати роботу — тихо... Перегляньте лист персонажа щодо своїх цілей і не попадайтеся.
+ghost-role-information-dark-priest-name = Темний жрець
+ghost-role-information-dark-priest-description = Агент темних богів, надісланий убити когось, захистити когось і завербувати того, хто привернув ваш інтерес, як учня. Носить із собою "благословення Жнеця".
+dark-priest-role-greeting = Ви — [color=#880808]Темний жрець[/color]. Вас надіслали на цю станцію, щоб обрати когось у свої учні, вбити когось і захистити когось. Перегляньте лист персонажа щодо своїх цілей.
+objective-condition-other-alive-title = Переконайтеся, що член екіпажу {$targetName}, {CAPITALIZE($job)}, залишиться живим.
+objective-issuer-self = [color=#7851A9]У власних інтересах[/color]
+ghost-role-information-vox-raider-name = Вокс-рейдер
+ghost-role-information-vox-raider-description = Вокси, що присягнули на вірність Шоалу. Незрозуміло, які в них наміри і чи збираються вони торгувати зі станцією, чи красти з неї. Коли вони з'являються, краще бути обережними.
+vox-raider-role-greeting = Ви — [color=#7851A9]Вокс-рейдер[/color], вокс, що присягнув на вірність Шоалу. Ваше завдання — викрасти зі станції потрібні речі або виміняти їх; неважливо, що ви оберете, головне — здобути все необхідне, виконати свої цілі та завершити "Пограбування". Перегляньте лист персонажа щодо своїх цілей.
+ghost-role-information-clown-goblin-name = Клоун-гоблін
+ghost-role-information-clown-goblin-description = Жахлива істота, народжена в пеклі.
+ghost-role-information-santa-name = Санта-Клаус
+ghost-role-information-santa-description = Поширюйте різдвяний настрій по станції!

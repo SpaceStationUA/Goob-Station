@@ -589,6 +589,7 @@
     #- SharedBoardsStatic Pirate removed
     - MedicalBoardsStaticGoob
     - SecurityBoardsStaticGoob
+    - ServiceBoardsStaticGoob
     dynamicPacks:
     - EngineeringBoards
     - CargoBoards

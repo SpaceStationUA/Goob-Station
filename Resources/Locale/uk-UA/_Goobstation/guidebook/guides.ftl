@@ -100,4 +100,11 @@ guide-entry-sop-librarian = Бібліотекар
 guide-entry-sop-mime = Мім
 guide-entry-sop-reporter = Репортер
 
-guide-entry-plumbing = Трубопровід
+guide-entry-plumbing = Сантехніка
+guide-entry-alcoholic-drinks = Алкогольні напої
+guide-entry-non-alcoholic-drinks = Безалкогольні напої
+guide-entry-virology = Вірусологія
+guide-entry-enchanting = Зачарування
+
+# Ґуб СОП
+# - Основні директорії
