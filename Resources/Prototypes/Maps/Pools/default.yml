@@ -54,7 +54,8 @@
   maps:
   - Atlas
   - Amber
-  - Bagel
+  #- Bagel # Pirate
+  - BahelTP # Pirate
   - BoxTP # Pirate
   #- Box # Pirate
   - Cluster
