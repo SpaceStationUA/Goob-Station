@@ -139,19 +139,19 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 14400 # 4 hours
+      time: 9000 # 2.5 hours
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 14400 # 4 hours
+      time: 9000 # 2.5 hours
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 14400 # 4 hours
+      time: 9000 # 2.5 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 14400 # 4 hours
+      time: 9000 # 2.5 hrs
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 14400 # 4 hours
+      time: 9000 # 2.5 hours
     #- !type:SpeciesRequirement Pirate remove requirement
     #  inverted: true
     #  species:
@@ -210,8 +210,6 @@
   - Cargo
   - Atmospherics
   - Medical
-  - Journalism # Goob
-  - Robotics # Goob
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

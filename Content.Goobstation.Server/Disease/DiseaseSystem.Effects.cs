@@ -7,7 +7,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Numerics;
 
@@ -142,11 +141,14 @@ public sealed partial class DiseaseSystem
     /// </summary>
     public override bool TryRemoveEffect(Entity<DiseaseComponent?> ent, EntityUid effect)
     {
-        if (!Resolve(ent, ref ent.Comp) || !ent.Comp.Effects.Contains(effect))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        CleanupEffect(ent, effect);
-        QueueDel(effect);
+        if (ent.Comp.Effects.Remove(effect))
+            QueueDel(effect);
+        else
+            return false;
+
         Dirty(ent);
         return true;
     }

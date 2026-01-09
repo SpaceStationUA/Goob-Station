@@ -207,7 +207,6 @@
   - TelescopicShield
   - HoloprojectorSecurity
   - WeaponDisablerSMG
-  - Terminus #Goobstation
   # Goobstation R&D Console rework start
   position: 3,3
   technologyPrerequisites:

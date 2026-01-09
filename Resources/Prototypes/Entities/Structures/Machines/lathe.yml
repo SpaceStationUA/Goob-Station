@@ -768,6 +768,7 @@
     - ScienceExplosives
     - GrenadeTriggersStatic
     - SecurityWeaponsStaticGoob
+    - SecurityWeaponsNonEmaggableStaticGoob
     # Pirate Packs
     - SecurityAmmoStaticPirate
     dynamicPacks:

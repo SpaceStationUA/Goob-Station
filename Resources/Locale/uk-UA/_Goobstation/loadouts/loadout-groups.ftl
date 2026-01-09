@@ -36,7 +36,9 @@ loadout-group-paramedic-envirogloves = Еко-рукавиці парамеди�
 # Психолог
 loadout-group-psychologist-envirohelm = Еко-шолом психолога
 loadout-group-psychologist-envirosuit = Еко-костюм психолога
-loadout-group-psychologist-envirogloves = Рукавиці ізолювального костюма психолога
+loadout-group-psychologist-envirogloves = Еко-рукавиці психолога
+
+# Вантажник
 loadout-group-cargo-technician-envirohelm = Еко-шолом вантажника
 loadout-group-cargo-technician-envirosuit = Еко-костюм вантажника
 loadout-group-cargo-technician-envirogloves = Еко-рукавиці вантажника
@@ -216,7 +218,3 @@ loadout-group-boxer-envirosuit = Еко-костюм боксера
 
 # Різне
 loadout-group-plasma-tank = Плазмовий балон
-
-loadout-group-virology-envirohelm = Шолом ізолювального костюма вірусолога
-loadout-group-virology-envirosuit = Ізолювальний костюм вірусолога
-loadout-group-virology-envirogloves = Рукавиці ізолювального костюма вірусолога

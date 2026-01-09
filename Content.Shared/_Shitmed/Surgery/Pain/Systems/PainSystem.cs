@@ -28,6 +28,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Random;
 using System.Linq;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared._Shitmed.Medical.Surgery.Pain.Components;
 
 namespace Content.Shared._Shitmed.Medical.Surgery.Pain.Systems;
 
@@ -107,16 +108,13 @@ public sealed partial class PainSystem : EntitySystem
         if (args.Current is not NerveComponentState state)
             return;
 
-        var parentEntity = GetEntity(state.ParentedNerveSystem);
-        component.ParentedNerveSystem = !TerminatingOrDeleted(parentEntity) ? parentEntity : EntityUid.Invalid;
+        component.ParentedNerveSystem = GetEntity(state.ParentedNerveSystem);
         component.PainMultiplier = state.PainMultiplier;
 
         component.PainFeelingModifiers.Clear();
         foreach (var ((modEntity, id), modifier) in state.PainFeelingModifiers)
         {
-            var entity = GetEntity(modEntity);
-            if (!TerminatingOrDeleted(entity) && !component.PainFeelingModifiers.ContainsKey((entity, id)))
-                component.PainFeelingModifiers.Add((entity, id), modifier);
+            component.PainFeelingModifiers.Add((GetEntity(modEntity), id), modifier);
         }
     }
 

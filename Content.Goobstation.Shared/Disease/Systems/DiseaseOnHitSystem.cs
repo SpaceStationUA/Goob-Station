@@ -30,8 +30,10 @@ public sealed partial class DiseaseOnHitSystem : EntitySystem
                 if (!TryComp<DiseaseCarrierComponent>(ent, out var carrier))
                     return;
 
-                foreach (var disease in carrier.Diseases.ContainedEntities)
+                foreach (var disease in carrier.Diseases)
+                {
                     _disease.DoInfectionAttempt(target, disease, ent.Comp.SpreadParams);
+                }
             }
         }
     }

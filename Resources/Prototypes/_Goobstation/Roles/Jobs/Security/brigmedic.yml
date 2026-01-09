@@ -11,10 +11,10 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Medical
-    time: 18000 # 5 hrs
+    time: 36000 # 10 hrs
   - !type:DepartmentTimeRequirement
     department: Security
-    time: 18000 # 5 hrs
+    time: 36000 # 10 hrs
   # Pirate contractor start
   - !type:CharacterEmployerRequirement
     employers:

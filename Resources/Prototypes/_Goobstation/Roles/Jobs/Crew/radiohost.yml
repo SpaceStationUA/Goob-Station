@@ -18,6 +18,7 @@
     eyes: ClothingEyesGlassesSunglasses
     jumpsuit: ClothingUniformJumpsuitHawaiBlack
     shoes: ClothingShoesColorBlack
+    back: ClothingBackpackSatchel
     id: RadioHostPDA
 
 - type: chameleonOutfit

@@ -8,7 +8,6 @@
 
 using Content.Shared.Damage;
 using Robust.Shared.GameStates;
-
 namespace Content.Shared._Shitmed.Medical.Surgery.Effects.Step;
 
 [RegisterComponent, NetworkedComponent]

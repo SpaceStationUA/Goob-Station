@@ -1,5 +1,6 @@
 using Content.Shared._Shitmed.CCVar;
 using Content.Shared._Shitmed.Medical.Surgery.Tools;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Utility;

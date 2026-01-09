@@ -1,5 +1,4 @@
 using Content.Goobstation.Shared.Disease.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -9,14 +8,11 @@ namespace Content.Goobstation.Shared.Disease.Components;
 [Access(typeof(SharedDiseaseSystem))] // add/remove diseases using the system's methods
 public sealed partial class DiseaseCarrierComponent : Component
 {
-    [ViewVariables]
-    public const string DiseaseContainerId = "diseaseContainer";
-
     /// <summary>
     /// Currently contained diseases
     /// </summary>
-    [ViewVariables]
-    public Container Diseases = default!;
+    [ViewVariables, AutoNetworkedField]
+    public List<EntityUid> Diseases = new();
 
     /// <summary>
     /// Diseases to add on component startup

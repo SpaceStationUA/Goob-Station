@@ -15,6 +15,7 @@ using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Standing;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using Robust.Shared.Random;
