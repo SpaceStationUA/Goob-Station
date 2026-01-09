@@ -257,8 +257,8 @@
   parentJobId: Scientist
 
 - type: alternativeJob
-  id: AlternativeJobRobotics
-  jobName: job-alternative-name-robotics
+  id: AlternativeJobXenobiologist
+  jobName: job-alternative-name-xenobiologist
   jobDescription: job-description-scientist
   parentJobId: Scientist
 

@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/25/2025 07:36:03
-  entityCount: 1224
+  time: 12/28/2025 20:09:11
+  entityCount: 1221
 maps:
 - 1
 grids:
@@ -1030,9 +1030,7 @@ entities:
           -4,0:
             0: 2039
           -5,0:
-            0: 3067
-            1: 4
-            2: 1024
+            0: 4095
           -4,1:
             0: 30583
           -5,1:
@@ -1040,18 +1038,13 @@ entities:
           -4,2:
             0: 15
           -3,0:
-            0: 61311
-            2: 4224
+            0: 65535
           -3,1:
-            0: 3951
-            2: 16
-            1: 128
+            0: 4095
           -2,0:
-            2: 17
-            0: 64780
+            0: 64797
           -2,1:
-            0: 49613
-            1: 16
+            0: 49629
           -2,2:
             0: 239
           -2,-1:
@@ -1083,8 +1076,7 @@ entities:
           -2,-4:
             0: 28928
           -2,-2:
-            0: 52432
-            1: 256
+            0: 52688
           -2,-3:
             0: 61166
           -6,0:
@@ -1103,44 +1095,6 @@ entities:
           moles:
           - 21.824879
           - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 21.6852
-          - 81.57766
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.14975
-          moles:
-          - 20.078888
-          - 75.53487
           - 0
           - 0
           - 0
@@ -1787,7 +1741,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -13822.536
+      secondsUntilStateChange: -13927.616
       state: Opening
   - uid: 933
     components:
@@ -3884,14 +3838,6 @@ entities:
     - type: Transform
       pos: 3.5,14.5
       parent: 823
-- proto: ComputerGunneryConsole
-  entities:
-  - uid: 1167
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -0.5,13.5
-      parent: 823
 - proto: ComputerIFFSyndicate
   entities:
   - uid: 458
@@ -5659,13 +5605,6 @@ entities:
     - type: Transform
       pos: -1.5,16.5
       parent: 823
-- proto: GunneryServerLow
-  entities:
-  - uid: 1098
-    components:
-    - type: Transform
-      pos: -3.5,11.5
-      parent: 823
 - proto: GunSafe
   entities:
   - uid: 569
@@ -5673,17 +5612,39 @@ entities:
     - type: Transform
       pos: -18.5,2.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 570
           - 571
-          - 572
-          - 573
           - 574
+          - 573
+          - 572
+          - 570
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -5693,6 +5654,28 @@ entities:
     - type: Transform
       pos: -19.5,2.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -5776,11 +5759,11 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 1134
           - 1137
-          - 1136
-          - 1135
           - 1133
+          - 1135
+          - 1136
+          - 1134
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -5790,6 +5773,28 @@ entities:
     - type: Transform
       pos: -18.5,0.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -8025,6 +8030,28 @@ entities:
     - type: Transform
       pos: -19.5,0.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -8233,6 +8260,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,15.5
+      parent: 823
+  - uid: 1098
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -0.5,13.5
       parent: 823
   - uid: 1177
     components:
@@ -9651,6 +9684,8 @@ entities:
     components:
     - type: Transform
       parent: 580
+    - type: Gun
+      burstCooldownModified: 0.25
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
@@ -9682,20 +9717,6 @@ entities:
     components:
     - type: Transform
       pos: 3.4718106,13.559535
-      parent: 823
-- proto: WeaponShuttleKineticDravon
-  entities:
-  - uid: 1168
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -3.5,14.5
-      parent: 823
-  - uid: 1224
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 4.5,14.5
       parent: 823
 - proto: WeldingFuelTankFull
   entities:

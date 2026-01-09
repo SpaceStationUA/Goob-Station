@@ -40,4 +40,4 @@ roles-antag-generic-free-agent-name = Вільний Агент
 roles-antag-generic-team-antagonist-name = Командний Антагоніст
 roles-antag-generic-silicon-antagonist-name = Кремнієвий Антагоніст
 roles-antag-paradox-clone-name = Парадоксальний Клон
-roles-antag-paradox-clone-objective = Дивна просторово-часова аномалія телепортувала вас в іншу реальність! Тепер ви повинні знайти свого двійника, вбити та замінити його.
+roles-antag-paradox-clone-objective = Дивна просторово-часова аномалія телепортувала вас в іншу реальність! Тепер ви повинні знайти свого двійника, й переконатися, що він виживе до кінця зміни, щоб повернутися в свій всесвіт!

@@ -1,0 +1,27 @@
+- type: gamePreset
+  id: PirateOmakSecret
+  alias:
+    - secret
+    - sekrit
+  name: "Секерет"
+  showInVote: true # Goob - Game Director
+  description: Більш спокійна, частково експериментальна версія секрету, без антагоністів середині гри.
+  rules:
+    - Secret
+    - PsionicEventsScheduler # Pirate
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: PirateGreenshift
+  alias:
+  - greenshift
+  - shittersafarideluxeedition
+  name: greenshift-title
+  showInVote: true #4boring4vote
+  description: greenshift-description
+  rules:
+  - SpaceTrafficControlFriendlyEventScheduler
+  - BasicRoundstartVariation
+  - PsionicEventsScheduler # Pirate
+  

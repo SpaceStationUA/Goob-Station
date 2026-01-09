@@ -141,16 +141,16 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 36000 #10 hr
-    - !type:RoleTimeRequirement
-      role: JobDetective
-      time: 10800 #3 hr, knowing how to use the tools is important
+      time: 18000 #5 hr
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 72000 #20 hrs
+      time: 36000 #10 hrs
+    - !type:RoleTimeRequirement
+      role: JobDetective
+      time: 3600 #1 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 144000 #40 hrs
+      time: 36000 # 10 hrs
     #- !type:SpeciesRequirement # Pirate remove requirement
     #  inverted: true
     #  species:

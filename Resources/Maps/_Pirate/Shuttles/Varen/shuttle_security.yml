@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/25/2025 12:46:18
-  entityCount: 314
+  time: 12/28/2025 15:16:18
+  entityCount: 312
 maps: []
 grids:
 - 2
@@ -225,9 +225,9 @@ entities:
           -1,0:
             0: 49072
           0,1:
-            0: 21043
+            0: 21171
           -1,1:
-            0: 18584
+            0: 18616
           0,2:
             0: 55
           -1,2:
@@ -2389,27 +2389,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,1.5
       parent: 2
-- proto: WeaponShuttleKineticBofors
+- proto: WeaponShuttleKineticTarnyx
   entities:
   - uid: 246
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,8.5
-      parent: 2
-- proto: WeaponShuttleKineticL85
-  entities:
-  - uid: 270
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 3.5,5.5
-      parent: 2
-  - uid: 278
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -2.5,5.5
       parent: 2
 - proto: WindoorSecureSecurityLocked
   entities:
