@@ -104,6 +104,12 @@
       time: 180000  #50 hours
     - !type:AgeRequirement
       requiredAge: 21
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Blindness
+      - Narcolepsy
+      - Muted # Pirate end
     #- !type:SpeciesRequirement # Pirate remove requirement
     #  inverted: true
     #  species:
