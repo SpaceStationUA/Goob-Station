@@ -94,6 +94,7 @@
   - ClothingHeadHelmetInsulated # PIRATE psionic
   - ClothingHeadCage # PIRATE psionic
   - ClothingNeckBaseShockCollar # PIRATE
+  - ClothingHandsGlovesMansusBlock # PIRATE
 
 - type: latheRecipePack
   id: SecurityBoards

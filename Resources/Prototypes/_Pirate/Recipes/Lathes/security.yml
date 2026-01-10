@@ -154,3 +154,18 @@
     Steel: 300
     Glass: 100
     Plastic: 100
+
+- type: latheRecipe
+  id: ClothingHandsGlovesMansusBlock
+  icon:
+    sprite: _Pirate/Clothing/Hands/Gloves/marsulbloskgloves.rsi
+    state: icon
+  result: ClothingHandsGlovesMansusBlock
+  completetime: 2
+  materials:
+    Plasma: 100
+    BSCrystal: 20
+    Steel: 250
+    Plastic: 50
+    Uranium: 100
+    Gold: 50

@@ -1,17 +1,16 @@
-#- type: entity
-#  parent: [ClothingHandsBase, BaseSecurityContraband]
-#  id: ClothingHandsGloves
-#  name: %%
-#  description: %%
-#  components:
-#  - type: Sprite
-#    sprite: Clothing/Hands/Gloves/Color/black.rsi # sprite should be changed to the proper sprite when available
-#  - type: Clothing
-#    sprite: Clothing/Hands/Gloves/Color/black.rsi
-#    equipDelay: 10
-#    unequipDelay: 120
-#  - type: Fiber
-#    fiberMaterial: fibers-synthetic
-#  - type: MansusBlock
-#  - type: SelfUnremovableClothing
-# i didnt get name and description from players so i commented it out for now
+- type: entity
+  parent: [ClothingHandsBase, BaseSecurityContraband]
+  id: ClothingHandsGlovesMansusBlock
+  name: Telekinetic gloves
+  description: This strange pair of gloves blocks their owner's ability to use Mansul's powers. The team of priests made sure that they could not be removed without someone's help.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Hands/Gloves/marsulbloskgloves.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Hands/Gloves/marsulbloskgloves.rsi
+    stripDelay: 10
+    equipDelay: 5
+  - type: Fiber
+    fiberMaterial: fibers-black
+  - type: MansusBlock
+  - type: SelfUnremovableClothing

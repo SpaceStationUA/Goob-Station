@@ -120,6 +120,7 @@
     - id: ClothingBackpackElectropack
       amount: 2
     - id: ClothingNeckBaseShockCollar # Pirate
+    - id: ClothingHandsGlovesMansusBlock # Pirate
     - id: RemoteSignaller
       amount: 2
     - id: Binoculars
