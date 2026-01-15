@@ -1,0 +1,68 @@
+- type: entity
+  name: "Мобільна Турель НТ"
+  suffix: NT, Turret
+  parent: ToolboxElectrical
+  id: ToolboxNTTurret
+  description: "Розумно сконструйована зброя, прямо у вашому ящику для інструментів. Просто вдарьте!"
+  components:
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 1
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              WeaponTurretNTDisposable:
+                min: 1
+                max: 1
+  - type: StaticPrice
+    price: 1350
+
+- type: entity
+  parent: BaseWeaponBallisticTurret
+  id: WeaponTurretNTDisposable
+  name: "одноразова балістична турель НТ"
+  suffix: NT, Disposable
+  components:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 250 # Goobstation
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:TriggerBehavior
+  - type: Gun
+    fireRate: 2
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
+    capacity: 100
+  - type: Repairable
+    qualityNeeded: "Anchoring"
+    doAfterDelay: 3
+  - type: TriggerWhenEmpty

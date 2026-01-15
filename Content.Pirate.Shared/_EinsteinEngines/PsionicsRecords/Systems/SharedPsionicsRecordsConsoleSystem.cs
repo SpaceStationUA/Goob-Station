@@ -1,5 +1,7 @@
+using Content.Shared.Access.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
+using Content.Shared.PDA;
 using Content.Shared.Psionics;
 using Content.Shared.Psionics.Components;
 
@@ -12,16 +14,17 @@ namespace Content.Shared.PsionicsRecords.Systems;
 public abstract class SharedPsionicsRecordsConsoleSystem : EntitySystem
 {
     /// <summary>
-    /// Any entity that has the name of the record that was just changed as their visible name will get their icon
-    /// updated with the new status, if the record got removed their icon will be removed too.
+    /// Updates psionics record icons on ID cards that match the given name.
+    /// If the status is None, removes the component; otherwise, sets the appropriate icon.
     /// </summary>
     public void UpdatePsionicsIdentity(string name, PsionicsStatus status)
     {
-        var query = EntityQueryEnumerator<IdentityComponent>();
+        // Find all ID cards with matching name
+        var query = EntityQueryEnumerator<IdCardComponent>();
 
-        while (query.MoveNext(out var uid, out var identity))
+        while (query.MoveNext(out var uid, out var idCard))
         {
-            if (!Identity.Name(uid, EntityManager).Equals(name))
+            if (!name.Equals(idCard.FullName))
                 continue;
 
             if (status == PsionicsStatus.None)
@@ -32,11 +35,11 @@ public abstract class SharedPsionicsRecordsConsoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Decides the icon that should be displayed on the entity based on the psionics status
+    /// Decides the icon that should be displayed on the ID card based on the psionics status
     /// </summary>
-    public void SetPsionicsIcon(string name, PsionicsStatus status, EntityUid characterUid)
+    public void SetPsionicsIcon(string name, PsionicsStatus status, EntityUid idCardUid)
     {
-        EnsureComp<PsionicsRecordComponent>(characterUid, out var record);
+        EnsureComp<PsionicsRecordComponent>(idCardUid, out var record);
 
         var previousIcon = record.StatusIcon;
 
@@ -49,6 +52,6 @@ public abstract class SharedPsionicsRecordsConsoleSystem : EntitySystem
         };
 
         if (previousIcon != record.StatusIcon)
-            Dirty(characterUid, record);
+            Dirty(idCardUid, record);
     }
 }

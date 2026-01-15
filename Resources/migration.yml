@@ -523,7 +523,7 @@ VehicleSecwayStealObjective: null
 #VehicleKeyJanicart: null Goobstation - Re-add vehicles
 #VehicleKeySecway: null Goobstation - Re-add vehicles
 #VehicleKeyATV: null Goobstation - Re-add vehicles
-VehicleKeySkeleton: null 
+VehicleKeySkeleton: null
 #VehicleKeySyndicateSegway: null Goobstation - Re-add vehicles
 #VehicleKeySkeletonMotorcycle: null Corvax Goobstation - Re-add vehicles
 #VehicleSecway: null Goobstation - Re-add vehicles
@@ -833,39 +833,41 @@ FloraGreyStalagmite3: FloraGreyStalagmite
 FloraGreyStalagmite4: FloraGreyStalagmite
 FloraGreyStalagmite5: FloraGreyStalagmite
 FloraGreyStalagmite6: FloraGreyStalagmite
-FloraTree01: FloraTree
-FloraTree02: FloraTree
-FloraTree03: FloraTree
-FloraTree04: FloraTree
-FloraTree05: FloraTree
-FloraTree06: FloraTree
-FloraTreeSnow01: FloraTreeSnow
-FloraTreeSnow02: FloraTreeSnow
-FloraTreeSnow03: FloraTreeSnow
-FloraTreeSnow04: FloraTreeSnow
-FloraTreeSnow05: FloraTreeSnow
-FloraTreeSnow06: FloraTreeSnow
-FloraTreeLarge01: FloraTreeLarge
-FloraTreeLarge02: FloraTreeLarge
-FloraTreeLarge03: FloraTreeLarge
-FloraTreeLarge04: FloraTreeLarge
-FloraTreeLarge05: FloraTreeLarge
-FloraTreeLarge06: FloraTreeLarge
-FloraTreeConifer01: FloraTreeConifer
-FloraTreeConifer02: FloraTreeConifer
-FloraTreeConifer03: FloraTreeConifer
-ShadowTree01: ShadowTree
-ShadowTree02: ShadowTree
-ShadowTree03: ShadowTree
-ShadowTree04: ShadowTree
-ShadowTree05: ShadowTree
-ShadowTree06: ShadowTree
-LightTree01: LightTree
-LightTree02: LightTree
-LightTree03: LightTree
-LightTree04: LightTree
-LightTree05: LightTree
-LightTree06: LightTree
+### Pirate edit start VVV
+#FloraTree01: FloraTree
+#FloraTree02: FloraTree
+#FloraTree03: FloraTree
+#FloraTree04: FloraTree
+#FloraTree05: FloraTree
+#FloraTree06: FloraTree
+#FloraTreeSnow01: FloraTreeSnow
+#FloraTreeSnow02: FloraTreeSnow
+#FloraTreeSnow03: FloraTreeSnow
+#FloraTreeSnow04: FloraTreeSnow
+#FloraTreeSnow05: FloraTreeSnow
+#FloraTreeSnow06: FloraTreeSnow
+#FloraTreeLarge01: FloraTreeLarge
+#FloraTreeLarge02: FloraTreeLarge
+#FloraTreeLarge03: FloraTreeLarge
+#FloraTreeLarge04: FloraTreeLarge
+#FloraTreeLarge05: FloraTreeLarge
+#FloraTreeLarge06: FloraTreeLarge
+#FloraTreeConifer01: FloraTreeConifer
+#FloraTreeConifer02: FloraTreeConifer
+#FloraTreeConifer03: FloraTreeConifer
+#ShadowTree01: ShadowTree
+#ShadowTree02: ShadowTree
+#ShadowTree03: ShadowTree
+#ShadowTree04: ShadowTree
+#ShadowTree05: ShadowTree
+#ShadowTree06: ShadowTree
+#LightTree01: LightTree
+#LightTree02: LightTree
+#LightTree03: LightTree
+#LightTree04: LightTree
+#LightTree05: LightTree
+#LightTree06: LightTree
+### Pirate edit end ^^^
 
 # 2024-12-22 # Lavaland Change: Migrations
 VendingMachineRestockSalvageEquipment: null
@@ -1057,6 +1059,9 @@ ClothingNeckHeadphones: ClothingMultipleHeadphones
 
 # 2025-10-09
 FoodDonutJellySlugcat: FoodDonutJellyScurret
+
+# 2026-01-04
+GhostBarSpawner: null
 
 # PIRATE START
 PosterContrabandCommunistState: PosterContrabandSolAlliance

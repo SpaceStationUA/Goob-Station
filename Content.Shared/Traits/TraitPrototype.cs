@@ -78,16 +78,28 @@ public sealed partial class TraitPrototype : IPrototype
     public ProtoId<TraitCategoryPrototype>? Category;
 
     /// <summary>
-    /// Goob: Ported from DeltaV - Hides traits from specific species
+    /// Pirate: port - List of traits that ca't be taken together with this one.
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<SpeciesPrototype>> ExcludedSpecies = new();
+    public HashSet<ProtoId<TraitPrototype>> MutuallyExclusiveTraits { get; private set; } = new();
+
+    /// <summary>
+    /// Pirate: port - List of species that can't have this trait.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<SpeciesPrototype>> SpeciesBlacklist { get; private set; } = new();
+
+    /// <summary>
+    /// Goob: Ported from DeltaV - Hides traits from specific species
+    /// </summary>
+    //[DataField]
+    //public HashSet<ProtoId<SpeciesPrototype>> ExcludedSpecies = new(); Pirate removal
 
     /// <summary>
     /// Goob: Only shows traits to specific species
     /// </summary>
-    [DataField]
-    public HashSet<ProtoId<SpeciesPrototype>> IncludedSpecies = new();
+    //[DataField]
+    //public HashSet<ProtoId<SpeciesPrototype>> IncludedSpecies = new(); Pirate removal
 
     // Einstein Engines - Language begin (remove this if trait system refactor)
     /// <summary>

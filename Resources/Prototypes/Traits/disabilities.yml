@@ -72,7 +72,10 @@
   name: trait-unrevivable-name
   description: trait-unrevivable-desc
   category: Quirks #Pirate - Traits Rework
-  cost: -6 #Pirate - Traits Rework
+  cost: -6
+  speciesBlacklist:
+    - IPC
+    - Plasmaman # Pirate end- Traits Rework
   components:
     - type: Unrevivable
       cloneable: true

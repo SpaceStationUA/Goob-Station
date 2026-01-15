@@ -142,10 +142,17 @@
     time: 18000 # 5 hours
   - !type:RoleTimeRequirement
     role: JobScientist
-    time: 18000 #5 hrs
+    time: 21600 #6 hrs
   - !type:DepartmentTimeRequirement
     department: Science
     time: 36000 #10 hrs
+  - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
   #- !type:SpeciesRequirement # Pirate remove requirement
   #  inverted: true
   #  species:

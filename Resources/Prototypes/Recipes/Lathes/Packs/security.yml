@@ -94,6 +94,7 @@
   - ClothingHeadHelmetInsulated # PIRATE psionic
   - ClothingHeadCage # PIRATE psionic
   - ClothingNeckBaseShockCollar # PIRATE
+  - ClothingHandsGlovesMansusBlock # PIRATE
 
 - type: latheRecipePack
   id: SecurityBoards
@@ -153,6 +154,7 @@
   - WeaponLaserCarbine
   - WeaponXrayCannon
   - WeaponTemperatureGun # Goobstation
+  - Terminus # Goobstation
 
 - type: latheRecipePack
   id: SecurityDisablers

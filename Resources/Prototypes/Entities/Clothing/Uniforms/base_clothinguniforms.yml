@@ -104,6 +104,11 @@
   - type: StaticPrice
     price: 50
   # Pirate banking end
+  # Pirate clothingDelay start
+  - type: Clothing
+    equipDelay: 1.5
+    unequipDelay: 1.2
+  # Pirate clothingDelay end
 
 - type: entity
   abstract: true

@@ -327,3 +327,40 @@
   - ClothingBeltChemBagSyndiFilled
   - CQCManual
   - ClothingOuterArmourInvisibleSyndie
+
+# ГШР КШР
+
+- type: selectableSet
+  id: ERTBreacherSet
+  name: набір «Руйнівник»
+  description: selectable-set-ert-Breacher-description
+  sprite:
+    sprite: _Goobstation/Objects/Weapons/Guns/Lever/combatshotgun.rsi
+    state: base
+  content:
+    - ClothingEyesThermalVisionGoggles
+    - WeaponShotgunCombat
+    - MagazineBoxShotgunHighCaliber
+    - MagazineBoxShotgunHighCaliber
+    - SeismicCharge
+    - SeismicCharge
+    - MagazineBoxShotgunIncendiaryHighCaliber
+
+- type: selectableSet
+  id: ERTGuardianSet
+  name: набір «Вартовий»
+  description: selectable-set-ert-Guardian-description
+  sprite:
+    sprite: _Goobstation/Objects/Shields/blueshieldshield.rsi
+    state: icon-on
+  content:
+    - BlueShieldShieldFilled
+    - WeaponPistolUniversal
+    - MagazineUniversalMagnum
+    - MagazineUniversalMagnum
+    - MagazineBoxMagnum
+    - MagazineUniversalMagnumUranium
+    - GrenadeIncendiary
+    - GrenadeIncendiary
+    - GrenadeShrapnel
+    - GrenadeShrapnel

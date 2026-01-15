@@ -9,6 +9,7 @@ using Content.Server.Objectives;
 using Content.Pirate.Server.Roles;
 using Content.Server.Roles;
 using Content.Pirate.Server.Vampire;
+using Content.Pirate.Server.Traits.Vampirism.Components;
 using Content.Goobstation.Shared.Religion;
 using Content.Goobstation.Shared.Overlays;
 using Content.Shared.Alert;
@@ -215,13 +216,16 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         RemComp<VampireDeathsEmbraceComponent>(uid);
         RemComp<VampireSealthComponent>(uid);
         RemComp<VampireStrengthComponent>(uid);
-        RemComp<BloodSuckerComponent>(uid);
         RemComp<VampireAlertComponent>(uid);
 
-        // Remove unholy/holy-weakness markers added when becoming a vampire.
-        RemComp<WeakToHolyComponent>(uid);
-        if (TryComp<ReactiveComponent>(uid, out var reactive) && reactive.ReactiveGroups != null)
-            reactive.ReactiveGroups.Remove("WeakToHoly");
+        // Only remove BloodSuckerComponent and WeakToHolyComponent if the entity doesn't have the vampirism trait
+        if (!HasComp<VampirismComponent>(uid))
+        {
+            RemComp<BloodSuckerComponent>(uid);
+            RemComp<WeakToHolyComponent>(uid);
+            if (TryComp<ReactiveComponent>(uid, out var reactive) && reactive.ReactiveGroups != null)
+                reactive.ReactiveGroups.Remove("WeakToHoly");
+        }
 
         // Remove vision overlays granted to antag vampires.
         RemComp<NightVisionComponent>(uid);
@@ -235,6 +239,30 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         // Remove pressure immunity only if it was granted by the vampire role.
         if (!ent.Comp.HadPressureImmunityComponent)
             RemComp<PressureImmunityComponent>(uid);
+
+        // Restore diet restrictions - either trait-specific or species-specific
+        if (TryComp<BodyComponent>(uid, out var body))
+        {
+            foreach (var organ in _body.GetBodyOrgans(uid, body))
+            {
+                if (TryComp<StomachComponent>(organ.Id, out var stomach))
+                {
+                    // If the entity has the vampirism trait, restore the trait's diet instead of species diet
+                    if (TryComp<VampirismComponent>(uid, out var vampirismComp))
+                    {
+                        // Restore the vampirism trait's special diet (Pills, Crayons, Paper)
+                        if (vampirismComp.SpecialDigestible is {} traitWhitelist)
+                            stomach.SpecialDigestible = traitWhitelist;
+                    }
+                    else
+                    {
+                        // Restore the original species-specific diet settings that were saved when becoming a vampire
+                        stomach.SpecialDigestible = ent.Comp.OriginalSpecialDigestible;
+                        stomach.IsSpecialDigestibleExclusive = ent.Comp.OriginalIsSpecialDigestibleExclusive;
+                    }
+                }
+            }
+        }
 
         // NOTE: Vampire actions are tied to the removed component and will no longer
         // function without it. We intentionally leave any orphaned action entities

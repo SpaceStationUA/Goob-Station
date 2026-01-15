@@ -261,8 +261,39 @@
   artist: thebiggestbruh
 
 # Pirate
+
+- type: lobbyBackground
+  id: bloody-clown
+  background: /Textures/LobbyScreens/bloodyclown.jpg
+  name: Bloody Clown
+  artist: Redmon
+
 - type: lobbyBackground
   id: Cyberpsychosis
   background: /Textures/LobbyScreens/Cyberpsychosis.webp
   name: Cyberpsychosis
+  artist: Redmon
+
+- type: lobbyBackground
+  id: engiborg-recharge
+  background: /Textures/LobbyScreens/engiborgrecharge.jpg
+  name: Engi borg
+  artist: Redmon
+
+- type: lobbyBackground
+  id: katana
+  background: /Textures/LobbyScreens/katana.jpg
+  name: Katana
+  artist: Redmon
+
+- type: lobbyBackground
+  id: nuclear-operative
+  background: /Textures/LobbyScreens/nuclearoperative.jpg
+  name: Nuclear Operative
+  artist: Redmon
+
+- type: lobbyBackground
+  id: nuclear-plan
+  background: /Textures/LobbyScreens/nuclearplan.jpg
+  name: Ideal Nuclear Plan
   artist: Redmon

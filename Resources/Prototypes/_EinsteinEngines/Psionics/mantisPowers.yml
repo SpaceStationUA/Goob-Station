@@ -55,7 +55,7 @@
     range: 1.65
     damage:
       types:
-        Slash: 25
+        Slash: 15
         Holy: 15
     angle: 90
     soundHit:

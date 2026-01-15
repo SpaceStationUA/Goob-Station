@@ -22,17 +22,14 @@ public sealed class VampirismSystem : EntitySystem
 
     private void OnInitVampire(Entity<VampirismComponent> ent, ref MapInitEvent args)
     {
-        // Check if entity has a stomach, unless requirement is ignored. Timely, instead of trait requirements
-        if (!ent.Comp.IgnoreStomachRequirement)
+        if (!TryComp<BodyComponent>(ent, out var bodyCheck)
+            || !_body.TryGetBodyOrganEntityComps<StomachComponent>((ent, bodyCheck), out var stomachComps)
+            || stomachComps.Count == 0)
         {
-            if (!TryComp<BodyComponent>(ent, out var bodyCheck)
-                || !_body.TryGetBodyOrganEntityComps<StomachComponent>((ent, bodyCheck), out var stomachComps)
-                || stomachComps.Count == 0)
-            {
-                // No stomach found and requirement not ignored - don't initialize vampirism
-                return;
-            }
+            // No stomach found and requirement not ignored - don't initialize vampirism
+            return;
         }
+
 
         EnsureBloodSucker(ent);
 

@@ -443,8 +443,6 @@
   - type: Stripping
   - type: AccessReader # Goobstation-WantedMenu
     access: [["Security"]]
-  - type: IdExaminablePsionics # Pirate-PsionicsMenu
-    radioChannel: Science
   - type: UserInterface
     interfaces:
       enum.HumanoidMarkingModifierKey.Key:

@@ -335,6 +335,8 @@ namespace Content.Server.Voting.Managers
                 }
 
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Map vote finished: {picked.MapName}");
+                _gameMapManager.ProcessPirateMapRotationUnavailablePool(); // Pirate - map rotation
+                _gameMapManager.GetPirateMapRotationUnavailablePool().Add(picked, 0); // Pirate - map rotation
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
                 if (ticker.CanUpdateMap())
                 {

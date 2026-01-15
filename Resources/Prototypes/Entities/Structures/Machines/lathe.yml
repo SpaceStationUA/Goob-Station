@@ -768,7 +768,6 @@
     - ScienceExplosives
     - GrenadeTriggersStatic
     - SecurityWeaponsStaticGoob
-    - SecurityWeaponsNonEmaggableStaticGoob
     # Pirate Packs
     - SecurityAmmoStaticPirate
     dynamicPacks:
@@ -905,6 +904,10 @@
     # Einstein Engines Packs
     - Translators # Language
     - TranslatorImplanters # Language
+    # Pirate start - add cybernetic limbs and organs to medfab
+    - BasicCybernetics
+    - AdvancedCybernetics
+    # Pirate end - add cybernetic limbs and organs to medfab
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: EmagLatheRecipes # Goobstation Packs

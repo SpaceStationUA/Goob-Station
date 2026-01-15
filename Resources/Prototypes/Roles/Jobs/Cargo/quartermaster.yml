@@ -139,6 +139,13 @@
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 36000 #10 hours
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
     #- !type:SpeciesRequirement # Goob - None Felinid
     #  inverted: true
     #  species:

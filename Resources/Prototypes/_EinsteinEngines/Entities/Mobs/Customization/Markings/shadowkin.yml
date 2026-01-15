@@ -38,6 +38,8 @@
   markingCategory: Tail
   speciesRestriction: [Shadowkin]
   forcedColoring: true
+  layering: # Pirate, Floof tail layering from Vareniko
+    shadowkin: TailBehind
   sprites:
     - sprite: _EinsteinEngines/Mobs/Customization/Shadowkin/tails64x32.rsi
       state: shadowkin
@@ -48,6 +50,8 @@
   markingCategory: Tail
   speciesRestriction: [Shadowkin]
   forcedColoring: true
+  layering: # Pirate, Floof tail layering from Vareniko
+    shadowkin_big: TailBehind
   sprites:
     - sprite: _EinsteinEngines/Mobs/Customization/Shadowkin/tails64x32.rsi
       state: shadowkin_big
@@ -58,6 +62,8 @@
   markingCategory: Tail
   speciesRestriction: [Shadowkin]
   forcedColoring: true
+  layering: # Pirate, Floof tail layering from Vareniko
+    shadowkin_big_fluff: TailBehind
   sprites:
     - sprite: _EinsteinEngines/Mobs/Customization/Shadowkin/tails64x32.rsi
       state: shadowkin_big_fluff
@@ -67,6 +73,8 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Shadowkin]
+  layering: # Pirate, Floof tail layering from Vareniko
+    shadowkin_shorter: TailBehind
   forcedColoring: true
   sprites:
     - sprite: _EinsteinEngines/Mobs/Customization/Shadowkin/tails32x32.rsi
@@ -77,6 +85,8 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Shadowkin]
+  layering: # Pirate, Floof tail layering from Vareniko
+    shadowkin_medium: TailBehind
   forcedColoring: true
   sprites:
     - sprite: _EinsteinEngines/Mobs/Customization/Shadowkin/tails32x32.rsi
@@ -678,6 +688,8 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Shadowkin]
+  layering: # Pirate, Floof tail layering from Vareniko
+    shadekin_shorter: TailBehind
   sprites:
     - sprite: _ADT/Mobs/Customization/Shadekin/shadekin_tails_32x32.rsi
       state: shadekin_shorter
@@ -687,6 +699,8 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Shadowkin]
+  layering: # Pirate, Floof tail layering from Vareniko
+    shadekin_shorter: TailBehind
   sprites:
     - sprite: _ADT/Mobs/Customization/Shadekin/shadekin_tails_32x32.rsi
       state: shadekin_shorter
@@ -698,6 +712,8 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Shadowkin]
+  layering: # Pirate, Floof tail layering from Vareniko
+    shadekin_medium: TailBehind
   sprites:
     - sprite: _ADT/Mobs/Customization/Shadekin/shadekin_tails_32x32.rsi
       state: shadekin_medium
@@ -707,6 +723,8 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Shadowkin]
+  layering: # Pirate, Floof tail layering from Vareniko
+    shadekin_medium: TailBehind
   sprites:
     - sprite: _ADT/Mobs/Customization/Shadekin/shadekin_tails_32x32.rsi
       state: shadekin_medium

@@ -16,6 +16,8 @@ namespace Content.Server.Maps;
 public interface IGameMapManager
 {
     void Initialize();
+    Dictionary<GameMapPrototype, int> GetPirateMapRotationUnavailablePool(); // Pirate - map rotation
+    void ProcessPirateMapRotationUnavailablePool(); // Pirate - map rotation
 
     /// <summary>
     /// Returns all maps eligible to be played right now.

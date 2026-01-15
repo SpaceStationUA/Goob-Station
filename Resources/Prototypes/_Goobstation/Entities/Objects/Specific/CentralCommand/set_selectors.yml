@@ -64,5 +64,7 @@
     possibleSets:
     - ERTBallisticsSet
     - ERTPulseSet
+    - ERTGuardianSet # Pirate Changes
+    - ERTBreacherSet # Pirate Changes
     maxSelectedSets: 1
 

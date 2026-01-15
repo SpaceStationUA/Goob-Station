@@ -683,7 +683,7 @@
     - WeaponGrapplingGun
     - BorgFireExtinguisher
     - BorgHandheldGPSBasic
-    # - HandHeldMassScannerBorg # goob - no mass scanners
+    - HandHeldMassScannerBorg
     - LavalandJaunterRecharging # Goobstation
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }

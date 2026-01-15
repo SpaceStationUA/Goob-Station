@@ -21,3 +21,6 @@
   - type: Construction
     graph: OusianaDustBowl
     node: ousianadustbowl
+  - type: Tag
+    tags:
+    - Pill # so everyone can eat this soup

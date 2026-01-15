@@ -92,6 +92,13 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 36000 #10 hrs
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
       employers:

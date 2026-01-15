@@ -40,6 +40,23 @@ public sealed class GameMapManager : IGameMapManager
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IResourceManager _resMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    // Pirate start - map rotation
+    public Dictionary<GameMapPrototype, int> PirateMapRotationUnavailablePool = new(CCVars.PirateMapRotationDontRepeatCount.DefaultValue + 1);
+
+    Dictionary<GameMapPrototype, int> IGameMapManager.GetPirateMapRotationUnavailablePool() => PirateMapRotationUnavailablePool;
+    void IGameMapManager.ProcessPirateMapRotationUnavailablePool()
+    {
+        _log.Debug($"Processing pirate map rotation pool:");
+        foreach (var (map, roundsInPool) in PirateMapRotationUnavailablePool.ToDictionary())
+        {
+            PirateMapRotationUnavailablePool[map]++; // Increase round in pool
+            _log.Debug($"Map: '{map.ID}' rounds in pool: {roundsInPool}");
+            if (PirateMapRotationUnavailablePool[map] >= _configurationManager.GetCVar(CCVars.PirateMapRotationDontRepeatCount))
+                PirateMapRotationUnavailablePool.Remove(map);
+
+        }
+    }
+    // Pirate end - map rotation (more fragments later)
 
     [ViewVariables(VVAccess.ReadOnly)]
     private readonly Queue<string> _previousMaps = new();
@@ -102,6 +119,7 @@ public sealed class GameMapManager : IGameMapManager
                 _previousMaps.Dequeue();
             }
         }, true);
+        _configurationManager.OnValueChanged(CCVars.PirateMapRotationDontRepeatCount, value => PirateMapRotationUnavailablePool = new(value)); // Pirate - map rotation
 
         var maps = AllVotableMaps().ToArray();
         _random.Shuffle(maps);
@@ -213,7 +231,8 @@ public sealed class GameMapManager : IGameMapManager
         return map.MaxPlayers >= _playerManager.PlayerCount &&
                map.MinPlayers <= _playerManager.PlayerCount &&
                map.Conditions.All(x => x.Check(map)) &&
-               _entityManager.System<GameTicker>().IsMapEligible(map);
+               _entityManager.System<GameTicker>().IsMapEligible(map) && // Pirate - map rotation
+               !PirateMapRotationUnavailablePool.ContainsKey(map); // Pirate - map rotation
     }
 
     private bool TryLookupMap(string gameMap, [NotNullWhen(true)] out GameMapPrototype? map)

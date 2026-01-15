@@ -129,6 +129,11 @@
   id: ClothingHeadHelmetBase
   abstract: true
   components:
+  # Pirate clothingDelay start
+  - type: Clothing
+    equipDelay: 0.8
+    unequipDelay: 0.5
+  # Pirate clothingDelay end
   # Goobstation edit start
   - type: EmitSoundOnPickup
     sound:

@@ -102,6 +102,13 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 36000 #10 hrs
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
     # - !type:DepartmentTimeRequirement # Pirate
     #   department: Security # Pirate
     #   time: 18000 #5 hrs # Pirate

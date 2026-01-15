@@ -38,6 +38,8 @@ public sealed class IdExaminableSystem : EntitySystem
 
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!; // Goobstation-WantedMenu
     [Dependency] private readonly AccessReaderSystem _accessReader = default!; // Goobstation-WantedMenu
+    [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!; // Pirate-PsionicsMenu
+    private const string MantisAccess = "Mantis"; // Pirate-PsionicsMenu
     public override void Initialize()
     {
         base.Initialize();
@@ -158,15 +160,25 @@ public sealed class IdExaminableSystem : EntitySystem
     // Pirate-PsionicsMenu-Start
     private bool CanAccessPsionicsMenu(EntityUid user, EntityUid target)
     {
+        // Check if user has psionics HUD glasses
         if (!_inventorySystem.TryGetSlotEntity(user, "eyes", out var eyes)
             || !TryComp<ShowPsionicsRecordIconsComponent>(eyes, out _))
             return false;
 
-        if (TryComp<AccessReaderComponent>(target, out var accessReader))
-        {
-            if (!_accessReader.IsAllowed(user, target, accessReader))
-                return false;
-        }
+        // Check if target has an ID card (in inventory, hands, or is itself an ID card)
+        if (!_idCardSystem.TryFindIdCard(target, out var _))
+            return false;
+
+        // Check if user has an ID card with Mantis access
+        if (!_idCardSystem.TryFindIdCard(user, out var userIdCard))
+            return false;
+
+        if (!TryComp<AccessComponent>(userIdCard, out var userAccess))
+            return false;
+
+        // Check if user has Mantis access
+        if (!userAccess.Tags.Contains(MantisAccess))
+            return false;
 
         return true;
     }

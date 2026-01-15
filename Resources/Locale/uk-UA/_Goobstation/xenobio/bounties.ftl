@@ -20,3 +20,8 @@ bounty-item-oil-extract = Нафтовий екстракт слайма
 bounty-item-light-pink-extract = Світло-рожевий екстракт слайма
 bounty-item-black-extract = Чорний екстракт слайма
 bounty-item-adamantine-extract = Адамантиновий екстракт слайма
+
+bounty-item-extract-any-three-tier1 = Будь-які три екстракти слизу рівня 1
+bounty-item-extract-any-three-tier2 = Будь-які три екстракти слизу рівня 2
+bounty-item-extract-any-three-tier3 = Будь-які три екстракти слизу рівня 3
+bounty-item-extract-any-three-tier4 = Будь-які три екстракти слизу рівня 4

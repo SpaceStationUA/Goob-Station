@@ -19202,3 +19202,440 @@ Entries:
       message: Максимальне здоров'я слешерів знижено.
   id: 2241
   time: '2025-12-26T09:06:58.0000000+00:00'
+- author: SPCR
+  changes:
+    - type: Tweak
+      message: Виправлено поширення кудзу в 3 рази швидше, ніж задумано
+  id: 2242
+  time: '2025-12-29T17:12:41.0000000+00:00'
+- author: DeusMaldPr
+  changes:
+    - type: Tweak
+      message: Розмір зберігання футляра для шприців змінено з 2x5 на 2x3
+  id: 2243
+  time: '2025-12-30T14:07:04.0000000+00:00'
+- author: Doppiofrog
+  changes:
+    - type: Add
+      message: >-
+        Додано безшумний дробовик Hushpup, набір за 30 ТК, який включає Hushpup
+        та монету.
+  id: 2244
+  time: '2026-01-01T10:02:24.0000000+00:00'
+- author: wachte1
+  changes:
+    - type: Tweak
+      message: DT-8 Terminus тепер заблоковано за дослідженнями
+  id: 2245
+  time: '2026-01-01T15:12:30.0000000+00:00'
+- author: gusxyz
+  changes:
+    - type: Add
+      message: Хвороби тепер можуть давати вам веселі акценти.
+  id: 2246
+  time: '2026-01-01T22:50:43.0000000+00:00'
+- author: gusxyz
+  changes:
+    - type: Fix
+      message: >-
+        Лоботомії тепер знову увімкнені, і тепер їх може виправити будь-яка інша
+        людина.
+  id: 2247
+  time: '2026-01-02T08:09:23.0000000+00:00'
+- author: router
+  changes:
+    - type: Add
+      message: Борги тепер можуть посилатися на вірусологів.
+  id: 2248
+  time: '2026-01-02T08:10:04.0000000+00:00'
+- author: misandrie
+  changes:
+    - type: Remove
+      message: >-
+        Ви знали, що могли зробити себе капітаном, будучи асистентом?
+  id: 2249
+  time: '2026-01-02T18:50:05.0000000+00:00'
+- author: misandrie
+  changes:
+    - type: Remove
+      message: Бар привидів
+  id: 2250
+  time: '2026-01-03T22:48:20.0000000+00:00'
+- author: mikusssssss
+  changes:
+    - type: Tweak
+      message: Режим 'Ой, всі злодії' тепер має нижчий шанс випадання.
+  id: 2251
+  time: '2026-01-04T08:01:18.0000000+00:00'
+- author: squishy97
+  changes:
+    - type: Tweak
+      message: подарункові аномалії тепер рідкісніші );
+  id: 2252
+  time: '2026-01-05T02:13:24.0000000+00:00'
+- author: SPCR
+  changes:
+    - type: Fix
+      message: >-
+        Виправлено обертання сутностей, що несуть яйця, всередині сумок або рук
+        навколо гравців/сумок
+  id: 2253
+  time: '2026-01-05T02:13:44.0000000+00:00'
+- author: Sarahon
+  changes:
+    - type: Fix
+      message: Друкарські помилки у списку злочинів
+  id: 2254
+  time: '2026-01-05T02:14:15.0000000+00:00'
+- author: LuciferEOS
+  changes:
+    - type: Fix
+      message: Посилені галоші тепер справді посилені.
+  id: 2255
+  time: '2026-01-05T02:17:27.0000000+00:00'
+- author: Added a lot of new helmet sprites for vulps,
+  changes: []
+  id: 2256
+  time: '2026-01-05T02:18:34.0000000+00:00'
+- author: mikusssssss
+  changes:
+    - type: Tweak
+      message: Яйце вознесіння тіньовиків більше не має більше здоров'я, ніж Ієрофант.
+  id: 2257
+  time: '2026-01-05T02:18:41.0000000+00:00'
+- author: ZOXELON
+  changes:
+    - type: Add
+      message: Додано карту зміщення верхнього одягу для воксів!
+    - type: Fix
+      message: >-
+        Wizden#39219 Виправлено кілька дивних проблем зі спрайтами воксів,
+        найпомітніше — комбінезони та багато шийних предметів перекривали
+        обличчя, а також проблему з шарами, де їхній балон з'являвся поверх
+        волосся!
+  id: 2258
+  time: '2026-01-05T02:20:47.0000000+00:00'
+- author: oldschool_otaku
+  changes:
+    - type: Fix
+      message: Вірусолог тепер може спавнитися у своєму захисному костюмі.
+  id: 2259
+  time: '2026-01-05T02:22:16.0000000+00:00'
+- author: shoebill
+  changes:
+    - type: Add
+      message: Тепер можна друкувати одяг репортера на принтері уніформи.
+  id: 2260
+  time: '2026-01-05T02:24:48.0000000+00:00'
+- author: SPCR
+  changes:
+    - type: Add
+      message: Хватка Мансуса тепер доступна в бойовому режимі
+  id: 2261
+  time: '2026-01-05T02:28:13.0000000+00:00'
+- author: charcuteriesampler
+  changes:
+    - type: Tweak
+      message: >-
+        Мертві лицехвати ксеноморфів більше не змушують вас спати.
+  id: 2262
+  time: '2026-01-05T02:31:25.0000000+00:00'
+- author: LuciferEOS
+  changes:
+    - type: Tweak
+      message: Партизанські рукавички тепер коштують 60 ТК для ядерних оперативників.
+  id: 2263
+  time: '2026-01-05T07:26:02.0000000+00:00'
+- author: TytosB
+  changes:
+    - type: Add
+      message: додано кімнату ксенобіології на serpentcrest
+  id: 2264
+  time: '2026-01-05T07:26:32.0000000+00:00'
+- author: Durk
+  changes:
+    - type: Fix
+      message: Сервер не ламається
+  id: 2265
+  time: '2026-01-06T03:33:28.0000000+00:00'
+- author: LuciferEOS
+  changes:
+    - type: Tweak
+      message: Перемальовано EMAG та зламувач доступу.
+    - type: Add
+      message: Додано багато нових предметів до торгових автоматів.
+  id: 2266
+  time: '2026-01-06T04:03:46.0000000+00:00'
+- author: loltart
+  changes:
+    - type: Tweak
+      message: >-
+        Час відновлення дії самоактивації розумних артефактів значно зменшено.
+  id: 2267
+  time: '2026-01-06T04:04:54.0000000+00:00'
+- author: OnsenCapy
+  changes:
+    - type: Add
+      message: >-
+        Додано нову станцію для середньої та високої кількості гравців "Prison",
+        присвячену темі великої в'язниці на астероїді, оточеному лавою. Вона
+        також містить великий район міста навколо прибуття, ізольований від
+        самої станції.
+    - type: Add
+      message: Додано нові спрайти з RMC для цілей маппінгу.
+    - type: Add
+      message: >-
+        Нові рослини, що з часом виробляють придатну для дихання атмосферу.
+        Тільки для цілей маппінгу. Плачте.
+  id: 2268
+  time: '2026-01-07T03:20:20.0000000+00:00'
+- author: router
+  changes:
+    - type: Tweak
+      message: Secret+ тепер набагато рідше обирає події взагалі
+  id: 2269
+  time: '2026-01-07T06:02:59.0000000+00:00'
+- author: zagreastyas
+  changes:
+    - type: Tweak
+      message: Підвищено необхідний час гри для кількох командних ролей
+    - type: Tweak
+      message: Підвищено дозволений час для гри ролями стажерів.
+  id: 2270
+  time: '2026-01-08T13:01:55.0000000+00:00'
+- author: JohnJJohn
+  changes:
+    - type: Add
+      message: >-
+        Нові вінілові диски: Get that antag!, Want you gone, Law2 open armory,
+        RunningOut (Cover), Ephedrine Overdose, Journey, Traitorous Intent,
+        Violet
+    - type: Add
+      message: Вантажний шатл тепер отримує станційне радіо
+    - type: Add
+      message: Додано радіоведучого на Meta
+    - type: Tweak
+      message: 'Зроблено новий маппінг для радіоведучого на: Amber, Delta, cog, marathon'
+    - type: Tweak
+      message: Розміщено більше радіо на деяких станціях
+    - type: Fix
+      message: Виправлено відсутність доступу радіоведучого у ГОПа
+    - type: Fix
+      message: Виправлено відсутність спавну радіоведучого на oasis
+    - type: Fix
+      message: Виправлено зайву сумку у радіоведучого при спавні
+    - type: Fix
+      message: Виправлено вмикання радіо при початку нової пісні
+  id: 2271
+  time: '2026-01-08T21:07:35.0000000+00:00'
+- author: loltart
+  changes: []
+  id: 2272
+  time: '2026-01-08T23:57:33.0000000+00:00'
+- author: Aidenkrz
+  changes:
+    - type: Fix
+      message: Виправлено зависання сервера через радіацію.
+  id: 2273
+  time: '2026-01-09T18:36:30.0000000+00:00'
+- author: H2Owe
+  changes:
+    - type: Add
+      message: >-
+        Можливість обрати будь-яку гавайську сорочку в спорядженні Радіоведучого
+        та автоматичний старт зі шкіряною поясною сумкою
+    - type: Add
+      message: CD з шитпостами
+    - type: Add
+      message: Текстури для деяких CD
+    - type: Add
+      message: CD з рекламою Синдикату за 1tc
+    - type: Add
+      message: >-
+        CD Радіоведучого за 30tc, який після завершення викликає загрозу подібно
+        до зламу зв'язку ніндзя.
+    - type: Add
+      message: Додано стійку для CD, яку можна крафтити та розміщувати на мапах!
+    - type: Fix
+      message: Сумка спавнилась на підлозі у Радіоведучого
+    - type: Add
+      message: >-
+        Можливість обрати будь-яку гавайську сорочку в спорядженні Радіоведучого
+        та автоматичний старт зі шкіряною поясною сумкою
+    - type: Add
+      message: CD з шитпостами
+    - type: Add
+      message: Текстури для деяких CD
+    - type: Add
+      message: CD з рекламою Синдикату за 1tc
+    - type: Add
+      message: >-
+        CD Радіоведучого за 30tc, який після завершення викликає загрозу подібно
+        до зламу зв'язку ніндзя.
+    - type: Add
+      message: Додано стійку для CD, яку можна крафтити та розміщувати на мапах!
+    - type: Fix
+      message: Сумка спавнилась на підлозі у Радіоведучого
+  id: 2274
+  time: '2026-01-09T19:59:20.0000000+00:00'
+- author: H2Owe
+  changes:
+    - type: Tweak
+      message: Оновлення Центкому
+  id: 2275
+  time: '2026-01-09T20:00:11.0000000+00:00'
+- author: H2Owe
+  changes:
+    - type: Tweak
+      message: Ліхтарики модкостюма інженера-електрика
+    - type: Tweak
+      message: Спрайт корпоративного модкостюма
+    - type: Tweak
+      message: Іконка посади/захисту розуму Nanotrasen
+    - type: Add
+      message: Модкостюм кар'єрного тренера
+  id: 2276
+  time: '2026-01-09T20:01:15.0000000+00:00'
+- author: Sarahon
+  changes:
+    - type: Remove
+      message: 'Рипост CQC '
+  id: 2277
+  time: '2026-01-09T22:30:50.0000000+00:00'
+- author: Durk, Rouden
+  changes:
+    - type: Tweak
+      message: >-
+        GPS тепер круті й корисні! Вони можуть відстежувати маячки та інші GPS
+        трекери на візуальній мапі у своєму новому інтерфейсі.
+    - type: Tweak
+      message: Ручні мас-сканери повернули до гри.
+  id: 2278
+  time: '2026-01-10T19:21:35.0000000+00:00'
+- author: LuciferEOS
+  changes:
+    - type: Tweak
+      message: >-
+        Емагнутий ксеновак більше не може засмоктувати живих. (Але все ще може
+        засмоктувати тих, хто у криті або мертвий)
+    - type: Tweak
+      message: Ксеновак тепер може засмоктувати мавп.
+  id: 2279
+  time: '2026-01-12T13:22:04.0000000+00:00'
+- author: H2Owe
+  changes:
+    - type: Fix
+      message: Виправлено деякі проблеми мапінгу CC.
+    - type: Fix
+      message: Виправлено захист від температури та додано компонент дихальної маски до модкостюмів CC.
+  id: 2280
+  time: '2026-01-12T19:48:19.0000000+00:00'
+- author: JohnJJohn
+  changes:
+    - type: Add
+      message: Додано «Ephedrine Overdose» від mrjajkes до музики нукерів.
+  id: 2281
+  time: '2026-01-12T19:50:28.0000000+00:00'
+- author: OnsenCapy
+  changes:
+    - type: Remove
+      message: Видалено станцію Prison та повітряні рослини.
+  id: 2282
+  time: '2026-01-12T19:50:55.0000000+00:00'
+- author: gusxyz
+  changes:
+    - type: Tweak
+      message: Візуальні ефекти поранень повернулися, радійте!
+  id: 2283
+  time: '2026-01-12T19:51:52.0000000+00:00'
+- author: doktor-gonz0
+  changes:
+    - type: Fix
+      message: >-
+        Експериментальний лабораторний халат RD тепер має такі самі стійкості, як і
+        звичайний.
+  id: 2284
+  time: '2026-01-12T19:53:13.0000000+00:00'
+- author: Kenkaitos
+  changes:
+    - type: Fix
+      message: >-
+        Виправлено взаємодію Bluespace Extract Slime з кров'ю, через яку як IPC також
+        телепортувався ваш позитронний мозок.
+  id: 2285
+  time: '2026-01-13T02:37:18.0000000+00:00'
+- author: doktor-gonz0
+  changes:
+    - type: Add
+      message: На Cluster тепер є повноцінна ксенобіо-лабораторія.
+  id: 2286
+  time: '2026-01-13T07:29:11.0000000+00:00'
+- author: doktor-gonz0
+  changes:
+    - type: Add
+      message: На станції Loop тепер є повноцінна ксенобіо-лабораторія.
+  id: 2287
+  time: '2026-01-13T07:29:59.0000000+00:00'
+- author: FloatingFeeling
+  changes:
+    - type: Add
+      message: Коробку з кубами синдикатських мавп повернули на планету нукерів.
+  id: 2288
+  time: '2026-01-13T07:30:53.0000000+00:00'
+- author: doktor-gonz0
+  changes:
+    - type: Add
+      message: На Submarine тепер є ксенобіо-лабораторія.
+  id: 2289
+  time: '2026-01-13T07:33:12.0000000+00:00'
+- author: doktor-gonz0
+  changes:
+    - type: Add
+      message: >-
+        Omega, Packed і Saltern тепер справді мають належне ксенобіо-обладнання та
+        слизнів на старті раунду.
+  id: 2290
+  time: '2026-01-13T07:33:40.0000000+00:00'
+- author: Stupid fuck
+  changes:
+    - type: Fix
+      message: Виправлено, що ксеновак не працював.
+    - type: Remove
+      message: Взаємодію емага з ксеноваком.
+  id: 2291
+  time: '2026-01-13T17:47:26.0000000+00:00'
+- author: clinux
+  changes:
+    - type: Fix
+      message: ERT, DS і CBURN знову лише для людей
+  id: 2292
+  time: '2026-01-13T22:59:14.0000000+00:00'
+- author: TheNumberRus
+  changes:
+    - type: Tweak
+      message: Молі тепер кажуть «манго», коли зомбіфіковані.
+  id: 2293
+  time: '2026-01-13T23:07:12.0000000+00:00'
+- author: Androidonator
+  changes:
+    - type: Tweak
+      message: >-
+        Блоб більше не затягуватиме раунд, якщо шатл уже прибув на станцію.
+  id: 2294
+  time: '2026-01-13T23:11:44.0000000+00:00'
+- author: Beanyboi69
+  changes:
+    - type: Add
+      message: Більше винагород для ксенобіології
+    - type: Add
+      message: Сумка без дна для ксенобіології
+    - type: Tweak
+      message: Збільшено кількість очок за деякі винагороди ксенобіології
+  id: 2295
+  time: '2026-01-14T02:59:22.0000000+00:00'
+- author: LuciferEOS
+  changes:
+    - type: Tweak
+      message: Бойовий шприц BSO тепер завдає 1 шкоди замість 5 при ін'єкції.
+  id: 2296
+  time: '2026-01-15T07:04:53.0000000+00:00'

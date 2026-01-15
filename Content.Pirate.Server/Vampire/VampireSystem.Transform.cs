@@ -47,6 +47,14 @@ public sealed partial class VampireSystem
             {
                 if (TryComp<StomachComponent>(organ.Id, out var stomachComponent))
                 {
+                    // Store original stomach settings before overriding them
+                    // This allows us to restore species-specific diets when curing vampirism
+                    if (vampire.Comp.OriginalSpecialDigestible == null)
+                    {
+                        vampire.Comp.OriginalSpecialDigestible = stomachComponent.SpecialDigestible;
+                        vampire.Comp.OriginalIsSpecialDigestibleExclusive = stomachComponent.IsSpecialDigestibleExclusive;
+                    }
+
                     //Override the stomach, prevents humans getting sick when ingesting blood
                     stomachComponent.SpecialDigestible = VampireComponent.AcceptableFoods;
                     stomachComponent.IsSpecialDigestibleExclusive = true;

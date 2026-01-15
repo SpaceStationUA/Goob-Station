@@ -21,7 +21,7 @@ namespace Content.Shared._Pirate.Contractors.Systems;
 
 public class SharedPassportSystem : EntitySystem
 {
-    public const int CurrentYear = 2467;
+    public const int CurrentYear = 2468;
     const string PIDChars = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789";
 
     [Dependency] private readonly IGameTiming _timing = default!;

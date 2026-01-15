@@ -80,6 +80,8 @@ using Content.Shared.Body.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Heretic.Prototypes;
 using Content.Shared.Tag;
+using Content.Shared.Inventory; // Pirate
+using Content.Shared._Pirate.Heretic.Components; // Pirate
 using Robust.Server.Containers;
 
 namespace Content.Server.Heretic.Abilities;
@@ -126,6 +128,7 @@ public sealed partial class HereticAbilitySystem : SharedHereticAbilitySystem
     [Dependency] private readonly PvsOverrideSystem _pvs = default!;
     [Dependency] private readonly CloningSystem _cloning = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _modifier = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!; // Pirate
 
     private static readonly ProtoId<HereticRitualPrototype> BladeBladeRitual = "BladeBlade";
 
@@ -183,6 +186,15 @@ public sealed partial class HereticAbilitySystem : SharedHereticAbilitySystem
 
         if (!TryComp<HandsComponent>(ent, out var handsComp))
             return;
+
+        // Pirate start
+        // Check if the entity is wearing gloves with MansusBlockComponent
+        if (_inventory.TryGetSlotEntity(ent, "gloves", out var gloves) && HasComp<MansusBlockComponent>(gloves))
+        {
+            Popup.PopupEntity(Loc.GetString("heretic-mansusgrasp-blocked"), ent, ent);
+            return;
+        }
+        // Pirate end
 
         if (ent.Comp.MansusGrasp != EntityUid.Invalid)
         {

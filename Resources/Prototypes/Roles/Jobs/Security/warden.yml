@@ -137,10 +137,20 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 36000 #10 hrs
+      time: 18000 #5 hrs
+    - !type:RoleTimeRequirement
+      role: JobBrigmedic
+      time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 90000 #25 hrs
+      time: 36000 # 10 hrs
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
     #- !type:SpeciesRequirement # Pirate remove requirement
     #  inverted: true
     #  species:

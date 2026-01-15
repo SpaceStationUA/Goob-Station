@@ -159,6 +159,7 @@
     - CrowbarRed
     - ERTSecurityUndeterminedWeapon
     # - MagazineMagnum - No need
+    - PinpointerNuclear # Pirate Changes
 
 - type: startingGear
   id: ERTLeaderGearEVA
@@ -184,6 +185,7 @@
     - CrowbarRed
     - ERTSecurityUndeterminedWeapon
     # Goobstation - MagazineMagnum
+    - PinpointerNuclear # Pirate Changes
 
 - type: chameleonOutfit
   id: ERTLeaderChameleonOutfit
@@ -345,6 +347,8 @@
     - SheetPlasteel
     - SheetSteel
     - SheetGlass
+  inhand:
+    - ToolboxNTTurret
 
 - type: startingGear
   id: ERTEngineerGearEVA
@@ -374,6 +378,8 @@
     - SheetPlasteel
     - SheetSteel
     - SheetGlass
+  inhand:
+    - ToolboxNTTurret
 
 - type: chameleonOutfit
   id: ERTEngineerChameleonOutfit

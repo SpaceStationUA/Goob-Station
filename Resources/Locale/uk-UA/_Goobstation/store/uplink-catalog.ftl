@@ -357,3 +357,7 @@ uplink-guerrilla-gloves-name = Партизанські Рукавиці
 uplink-guerrilla-gloves-desc = Спеціальні ударостійкі рукавиці, які за замовчуванням роблять ваш захват міцним, зменшують ваше уповільнення при активному захваті та ускладнюють жертвам вирватися з вашого захвату.
 
 # Омана
+uplink-cddisksyndicate-name = Рекламний CD Синдикату
+uplink-cddisksyndicate-desc = Радіо Синдикату 102.9
+uplink-cddisknumber-name = CD Числової Станції
+uplink-cddisknumber-desc = Викличте загрозу, щоб відволікти станцію... удачі прослухати все до кінця.
