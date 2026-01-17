@@ -2,58 +2,50 @@
 - type: loadoutEffectGroup
   id: Inspector
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobDetective
-      time: 36000 # 10 годин
+    - !type:JobRequirementLoadoutEffect
+      requirement: !type:RoleTimeRequirement
+        role: JobDetective
+        time: 36000 # 10 годин
 
 - type: loadoutEffectGroup
   id: Constable
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Security
-      time: 36000 # 10 годин
+    - !type:JobRequirementLoadoutEffect
+      requirement: !type:DepartmentTimeRequirement
+        department: Security
+        time: 36000 # 10 годин
 
 - type: loadoutEffectGroup
   id: Corporal
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Security
-      time: 108000 # 30 годин
+    - !type:JobRequirementLoadoutEffect
+      requirement: !type:DepartmentTimeRequirement
+        department: Security
+        time: 108000 # 30 годин
 
 - type: loadoutEffectGroup
   id: Sergeant
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Security
-      time: 216000 # 60 годин
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobWarden
-      time: 21600 # 6 годин
+    - !type:JobRequirementLoadoutEffect
+      requirement: !type:DepartmentTimeRequirement
+        department: Security
+        time: 216000 # 60 годин
+    - !type:JobRequirementLoadoutEffect
+      requirement: !type:RoleTimeRequirement
+        role: JobWarden
+        time: 21600 # 6 годин
 
 - type: loadoutEffectGroup
   id: WarrantOfficer
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Security
-      time: 360000 # 100 hrs
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobWarden
-      time: 36000 # 10 годин
-
+    - !type:JobRequirementLoadoutEffect
+      requirement: !type:DepartmentTimeRequirement
+        department: Security
+        time: 360000 # 100 hrs
+    - !type:JobRequirementLoadoutEffect
+      requirement: !type:RoleTimeRequirement
+        role: JobWarden
+        time: 36000 # 10 годин
 
 ## Зброя
 - type: loadout
@@ -61,61 +53,61 @@
   dummyEntity: WeaponPistolMk58
   storage:
     back:
-    - WeaponPistolMk58
-    - MagazinePistol
+      - WeaponPistolMk58
+      - MagazinePistol
 
-- type: loadout
-  id: LoadoutSecurityRevolverInspector
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Inspector
-  dummyEntity: WeaponRevolverInspector
-  storage:
-    back:
-    - WeaponRevolverInspector
-    - SpeedLoaderMagnum
+# - type: loadout # Remove inspector from loadout. It's detective's unique gun.
+#   id: LoadoutSecurityRevolverInspector
+#   effects:
+#   - !type:GroupLoadoutEffect
+#     proto: Inspector
+#   dummyEntity: WeaponRevolverInspector
+#   storage:
+#     back:
+#     - WeaponRevolverInspector
+#     - SpeedLoaderMagnum
 
 - type: loadout
   id: LoadoutSecurityEnergyGunPistol
   effects:
-  - !type:GroupLoadoutEffect
-    proto: Sergeant
+    - !type:GroupLoadoutEffect
+      proto: Sergeant
   storage:
     back:
-    - WeaponEnergyGunPistol
+      - WeaponEnergyGunPistol
 
 # Зброя старшого офіцера
 - type: loadout
   id: LoadoutSecurityPistolN1984
   effects:
-  - !type:GroupLoadoutEffect
-    proto: Sergeant
+    - !type:GroupLoadoutEffect
+      proto: Sergeant
   dummyEntity: WeaponPistolN1984
   storage:
     back:
-    - WeaponPistolN1984
-    - MagazineMagnum
+      - WeaponPistolN1984
+      - MagazineMagnum
 
 - type: loadout
   id: LoadoutSecurityPistolUniversalNonLethal
   effects:
-  - !type:GroupLoadoutEffect
-    proto: WarrantOfficer
+    - !type:GroupLoadoutEffect
+      proto: WarrantOfficer
   dummyEntity: WeaponPistolUniversalSecurityNonLethal
   storage:
     back:
-    - WeaponPistolUniversalSecurityNonLethal
-    - MagazineUniversalMagnumRubber
+      - WeaponPistolUniversalSecurityNonLethal
+      - MagazineUniversalMagnumRubber
   groupBy: "PistolUniversal"
 
 - type: loadout
   id: LoadoutSecurityPistolUniversal
   effects:
-  - !type:GroupLoadoutEffect
-    proto: WarrantOfficer
+    - !type:GroupLoadoutEffect
+      proto: WarrantOfficer
   dummyEntity: WeaponPistolUniversalSecurity
   storage:
     back:
-    - WeaponPistolUniversalSecurity
-    - MagazineUniversalMagnum
+      - WeaponPistolUniversalSecurity
+      - MagazineUniversalMagnum
   groupBy: "PistolUniversal"

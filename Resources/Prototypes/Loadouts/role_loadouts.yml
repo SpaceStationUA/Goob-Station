@@ -625,7 +625,6 @@
   - WardenJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
-  - SeniorSecurityWeapon # Pirate
   - SecurityNeck
   - SecurityBelt
   - WardenOuterClothing
@@ -647,7 +646,6 @@
   - SecurityJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
-  - SecurityWeapon # Pirate
   - SecurityOfficerMask # Pirate
   - SecurityOuterClothing
   - SecurityShoes

@@ -343,7 +343,7 @@
   name: loadout-group-security-weapon
   loadouts:
   - LoadoutSecurityWeaponMk58
-  - LoadoutSecurityRevolverInspector
+  # - LoadoutSecurityRevolverInspector # Remove inspector from loadout. It's detective's unique gun.
   - LoadoutSecurityEnergyGunPistol
 
 - type: loadoutGroup
@@ -351,7 +351,7 @@
   name: loadout-group-senior-security-weapon
   loadouts:
   - LoadoutSecurityWeaponMk58
-  - LoadoutSecurityRevolverInspector
+  # - LoadoutSecurityRevolverInspector # Remove inspector from loadout. It's detective's unique gun.
   - LoadoutSecurityPistolN1984
   - LoadoutSecurityEnergyGunPistol
   - LoadoutSecurityPistolUniversalNonLethal
