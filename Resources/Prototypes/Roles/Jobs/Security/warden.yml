@@ -205,11 +205,11 @@
     eyes: ClothingEyesGlassesSecurityContraDetect # Goobstation
     id: WardenPDA
     ears: ClothingHeadsetAltWarden # Goobstation
-#    pocket1: WeaponPistolMk58 # PIRATE, moved to loadouts
+    pocket1: WeaponPistolMk58
   storage:
     back:
     - Flash
-#    - MagazinePistol # PIRATE, moved to loadouts
+    - MagazinePistol
     - ClothingMaskGasSecurity # Goobstation
 
 - type: chameleonOutfit
