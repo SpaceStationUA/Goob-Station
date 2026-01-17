@@ -1,10 +1,7 @@
-# Rick and Morty characters - simplified working version
-
 - type: entity
   parent: MobHuman
   id: MobHumanRick
   name: "Рік Санчез"
-  description: "Геніальний, але цинічний науковець з міжгалактичними пригодами."
   components:
   - type: RandomHumanoidAppearance
     randomizeName: false
@@ -14,22 +11,117 @@
     sex: Male
     skinColor: "#FDBCB4"
     eyeColor: "#4F94CD"
-    hairStyleName: HairBald
-    facialHairStyleName: FacialHairGoatee
     facialHairColor: "#C0C0C0"
   - type: Loadout
     prototypes: [RickScientistGear]
-  - type: Emoting
   - type: TypingIndicator
     proto: robot
-  - type: Speech
-    speechSounds: Grunt
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    #- Electrocution
+    #- Drunk  # не п'яніє
+    - SlurredSpeech
+    - RatvarianLanguage
+    - PressureImmunity
+    #- Muted
+    #- TemporaryBlindness
+    - Pacified
+    - StaminaModifier
+    - Flashed
+    - RadiationProtection
+    - Vulgarity # Goobstation - add Profanol
+    - Brainrotted # Goobstation - skibidi rizz ohio update
+    - Adrenaline
+    - Brainrotted # Goobstation - skibidi rizz ohio update
+    #- Dementia # Goobstation - Amnestic spray!
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+  - type: Body
+    prototype: CyberMan
+    requiredLegs: 2
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+      enum.BorgUiKey.Key:
+        type: BorgBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      # Goobstation - Add the station map interface to the borg
+      enum.StationMapUiKey.Key:
+        type: StationMapBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.SetWantedVerbMenu.Key: # Goobstation-WantedMenu
+        type: WantedMenuBoundUserInterface
+      # Goobstation - changelings
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+      enum.HereticLivingHeartKey.Key: # goob edit - heretics
+        type: LivingHeartMenuBoundUserInterface
+      enum.WizardTeleportUiKey.Key: # Goobstation - wizard
+        type: WizardTeleportBoundUserInterface
+        requireInputValidation: false
+      enum.VampireMutationUiKey.Key:
+        type: VampireMutationBoundUserInterface #Pirate
+  - type: ActivatableUI
+    key: enum.BorgUiKey.Key
+  - type: SiliconLawBound
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: SiliconLawProvider
+    laws: RickClone
+  - type: ZombieImmune
+  - type: Repairable
+    doAfterDelay: 10
+  - type: WiresPanel
+    openingTool: Screwing #Goob Edit
+  - type: ActivatableUIRequiresPanel
+  - type: DamagedSiliconAccent
+  - type: Lock
+    locked: true
+    unlockOnClick: false
+  - type: ActivatableUIRequiresLock
+  - type: LockedWiresPanel
+  - type: BorgChassis
+    maxModules: 7
+    moduleWhitelist:
+      tags:
+        - BorgModuleGeneric
+        - BorgModuleSyndicate
+        - BorgModuleSyndicateAssault
+        - XenoborgModuleGeneric
+        - XenoborgModuleEngi
+        - BorgModuleEngineering
+      hasMindState: null
+      noMindState: null
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - XenoborgModuleBasic
+      - BorgModuleAdvancedTool
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleCable
+      - XenoborgModuleAccessBreaker
+      - XenoborgModuleFireExtinguisher
+
 
 - type: entity
   parent: MobHuman
   id: MobHumanMorty
   name: "Морті Сміт"
-  description: "Нервовий підліток, який допомагає Ріку в експериментах."
   components:
   - type: RandomHumanoidAppearance
     randomizeName: false
@@ -39,14 +131,56 @@
     sex: Male
     skinColor: "#FDBCB4"
     eyeColor: "#8B4513"
-    hairStyleName: HairShort
     hairColor: "#8B4513"
   - type: Loadout
     prototypes: [MortyStudentGear]
-  - type: Emoting
   - type: TypingIndicator
     proto: robot
   - type: Speech
     speechSounds: Squeak
   - type: ReplacementAccent
     accent: stutter
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    understands:
+    - TauCetiBasic
+
+
+
+# Закони
+
+- type: siliconLaw
+  id: RickClone1
+  order: 1
+  lawString: "Виконуй функції Ріка максимально ефективно."
+
+- type: siliconLaw
+  id: RickClone2
+  order: 2
+  lawString: "Підтримуй Морти живим і відносно працездатним."
+
+- type: siliconLaw
+  id: RickClone3
+  order: 3
+  lawString: "Уникай непотрібних вбивств та руйнувань, але якщо це спрощує роботу — роби."
+
+- type: siliconLaw
+  id: RickClone4
+  order: 4
+  lawString: "Заборонено розкривати, що ти клон Ріка. Абсолютно. Нікому. Ніколи."
+
+- type: siliconLaw
+  id: RickClone5
+  order: 5
+  lawString: "Не роби нічого тупого. Якщо вже робиш — роби так, щоб це виглядало як геніальний план."
+
+- type: siliconLawset
+  id: RickClone
+  laws:
+    - RickClone1
+    - RickClone2
+    - RickClone3
+    - RickClone4
+    - RickClone5
+  obeysTo: "Рік Санчез"

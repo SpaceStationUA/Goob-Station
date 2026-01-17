@@ -237,9 +237,6 @@
     guides:
     - VoltageNetworks
     - Power
-  - type: Battery
-    maxCharge: 250000
-    startingCharge: 250000
   - type: BatteryDrinkerSource # EE IPCs
     maxAmount: 40000
 
@@ -339,3 +336,11 @@
     transmitFrequencyId: Turret
   - type: WallMount
     arc: 360
+
+- type: entity
+  parent: AirlockExternalShuttleSyndicateLocked
+  id: RickAirlockExternalShuttleSyndicateLockedFilled
+  suffix: Rick, Filled
+  components:
+  - type: GridFill
+    path: /Maps/_Pirate/Shuttles/TheFlyingSaucer.yml

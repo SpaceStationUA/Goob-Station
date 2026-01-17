@@ -1,0 +1,24 @@
+- type: Tag
+  id: CyberManMechanics
+
+- type: entity
+  parent: BaseAction
+  id: ActionRickCyber
+  name: Cyber Tool
+  description: A simple placeholder cyber action granted by the upgraded brain organ.
+  components:
+  - type: Action
+    useDelay: 1
+    icon: Interface/Actions/scream.png
+
+- type: entity
+  parent: BaseAction
+  id: ActionRickCreateTool
+  name: "Викликати інструмент"
+  description: "Викликає базовий інструмент (ключ) у ваші руки, якщо є живлячий елемент у халаті. Використовує заряд, якщо відсутня зарядка покаже повідомлення."
+  components:
+  - type: Action
+    useDelay: 2
+    icon: Interface/Actions/use_item.png
+  - type: InstantAction
+    event: !type:CreateItemEvent {}

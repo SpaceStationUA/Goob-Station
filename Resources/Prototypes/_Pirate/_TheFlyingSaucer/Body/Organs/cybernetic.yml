@@ -2,6 +2,7 @@
   parent: BaseCyberneticOrgan
   id: RickUpgradedCyberneticEyes
   name: покращенні кібернетичні очі
+  suffix: Rick
   description: Пара кібернетичних очей, які покращують зір і захищають від пошкодження очей, з інтегрованими SecHUD, MedHUD і діагностичним HUD.
   components:
   - type: Cybernetics
@@ -41,6 +42,7 @@
 - type: entity
   parent: SyndicateJumpstarterHeart
   id: RickUpgradedHeart
+  suffix: Rick
   components:
   - type: Organ
     onAdd:
@@ -94,6 +96,7 @@
 - type: entity
   id: RickUpgradedBrain
   parent: OrganHumanBrain
+  suffix: Rick
   name: Покращенний мозок
   description: "Знання цієї та ближайших галактик заховані глибоко в цьому мозгу."
   components:
@@ -106,4 +109,3 @@
     - type: ActionGrant
       actions:
       - ActionRickCyber
-    onRemove:

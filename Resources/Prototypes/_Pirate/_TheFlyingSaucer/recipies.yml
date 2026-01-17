@@ -10,14 +10,6 @@
   materials:
     BSCrystal: 3
 
-# Rick's Glasses
-- type: latheRecipe
-  id: ClothingEyesGlassesRick
-  result: ClothingEyesGlassesRick
-  completetime: 4
-  materials:
-    BSCrystal: 2
-
 # WEAPONS - All made with Bluespace Crystals
 
 # Pistols

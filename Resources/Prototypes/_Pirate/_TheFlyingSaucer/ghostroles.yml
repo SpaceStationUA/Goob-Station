@@ -1,5 +1,5 @@
 - type: entity
-  name: "спавнер Ріка"
+  name: "Спавнер Ріка-клона"
   id: SpawnMobHumanRickScientist
   parent: MarkerBase
   components:
@@ -10,12 +10,15 @@
       state: full
     - sprite: Clothing/OuterClothing/Coats/labcoat.rsi
       state: equipped-OUTERCLOTHING
-  - type: ConditionalSpawner
-    prototypes:
-    - MobHumanRick
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanRick
+  - type: GhostRole
+    name: "Рік-клон"
+    description: "Ти резервна копія Ріка Санчеза. Виконуй його функції та не розкривай, що ти клон."
+    rules: "Дій розумно, цинічно та ефективно. Пріоритет — виконувати роль Ріка і не палити свою справжню природу."
 
 - type: entity
-  name: "спавнер Морті"
+  name: "Спавнер Морті"
   id: SpawnMobHumanMorty
   parent: MarkerBase
   components:
@@ -26,6 +29,9 @@
       state: full
     - sprite: Clothing/Uniforms/Jumpsuit/color.rsi
       state: equipped-INNERCLOTHING
-  - type: ConditionalSpawner
-    prototypes:
-    - MobHumanMorty
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanMorty
+  - type: GhostRole
+    name: "Морті Сміт"
+    description: "Ти — Морті. Так, саме той Морті, який постійно влітає в проблеми."
+    rules: "Старайся вижити, слідуй за Ріком і не роби дурниць. Занадто великих."

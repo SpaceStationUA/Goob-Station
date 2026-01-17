@@ -1,0 +1,28 @@
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: SpawnRick
+  components:
+  - type: LoadMapRule
+    MapPath: /Maps/_Pirate/Rick.yml
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 4 #Common, but not every round
+    reoccurrenceDelay: 30
+    earliestStart: 20 # Goobstation
+    duration: 1
+    maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
+    chaos: # Goobstation
+      Friend: -20
+      Power: -10
+    eventType: FriendlySpawn # Goobstation
+  # Goobstation
+  - type: GameRule
+    chaosScore: -140
+  - type: RuleGrids
+
+- type: preloadedGrid
+  id: TheFlyingSaucer
+  path: /Maps/_Pirate/Shuttles/TheFlyingSaucer.yml
+  copies: 1
