@@ -147,7 +147,7 @@
   description: "Дивний CD-диск, щось підказує, що в ньому немає реклами."
 
 - type: entity
-  parent: CdDiskWeird
+  parent: [CdDiskWeird, BaseMinorContraband] # Pirate - add Minor contraband
   name: "cD-диск (оголошення командира)"
   id: CdDiskCommanderAnnouncement
   components:
@@ -158,7 +158,7 @@
       path: /Audio/_Goobstation/RadioStation/misc/commander_announcement.ogg
 
 - type: entity
-  parent: CdDiskWeird
+  parent: [CdDiskWeird, BaseMinorContraband] # Pirate - add Minor contraband
   name: "cD-диск (фігурки командира)"
   id: CdDiskCommanderFigurines
   components:
@@ -169,7 +169,7 @@
       path: /Audio/_Goobstation/RadioStation/misc/commander_figurines.ogg
 
 - type: entity
-  parent: CdDiskWeird
+  parent: [CdDiskWeird, BaseMinorContraband] # Pirate - add Minor contraband
   name: "cD-диск (відставка командира)"
   id: CdDiskCommanderResignation
   components:
@@ -180,7 +180,7 @@
       path: /Audio/_Goobstation/RadioStation/misc/commander_resignation.ogg
 
 - type: entity
-  parent: CdDiskWeird
+  parent: [CdDiskWeird, BaseMinorContraband] # Pirate - add Minor contraband
   name: "cD-диск (підтримка командира)"
   id: CdDiskCommanderSupport
   components:

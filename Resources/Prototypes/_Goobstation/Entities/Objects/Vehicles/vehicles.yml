@@ -136,7 +136,7 @@
 
 - type: entity
   id: VehicleSyndicateSegway
-  parent: [ BaseSyndicateContraband, VehicleSecway ]
+  parent: [ BaseMinorContraband, VehicleSecway ] # Pirate - Downgraded contraband from Syndicate to Minor
   name: "синдикатський сегвей"
   description: "Будьте ворогом корпорації, але стильно."
   components:

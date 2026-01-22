@@ -35,7 +35,7 @@
     - SecwayKeys
 
 - type: entity
-  parent: [ BaseKey, BaseSyndicateContraband ]
+  parent: [ BaseKey, BaseMinorContraband ] # Pirate - Downgraded contraband from Syndicate to Minor
   id: VehicleKeySyndicateSegway
   name: "синдикат ключів від сегвея"
   description: "За зразком культового дизайну EMAG."

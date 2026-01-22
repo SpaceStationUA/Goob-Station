@@ -401,7 +401,7 @@
 
 - type: entity
   id: BedsheetSyndie
-  parent: [ BedsheetBase, BaseSyndicateContraband ]
+  parent: [ BedsheetBase, BaseMinorContraband ] # Pirate - Downgraded contraband from Syndicate to Minor
   name: "синдикатське простирадло"
   description: "Він має емблему синдикату і має ауру зла."
   components:

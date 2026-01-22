@@ -512,7 +512,7 @@
 
 # ANTAGONISTS
 - type: entity
-  parent: [ BaseSyndicateContraband , ClothingBackpackMessengerBase ]
+  parent: [ ClothingBackpackMessengerBase ] # Pirate - removed BaseSyndicateContraband
   id: ClothingBackpackMessengerSyndicate
   name: "сумка-месенджер синдикату"
   description: "Міцна сумка для зберігання додаткових патронів та вибухівки."

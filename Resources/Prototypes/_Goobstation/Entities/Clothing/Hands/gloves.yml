@@ -247,7 +247,7 @@
   - type: Unremoveable
 
 - type: entity
-  parent: [ClothingHandsGlovesColorYellow, BaseEngineeringContraband]
+  parent: [ClothingHandsGlovesColorYellow] # Pirate - removed BaseEngineeringContraband
   id: ClothingHandsGlovesAtmosInsulated
   name: "ізольовані рукавиці атмос-техніка"
   description: "Як звичайні ізольовані рукавиці, але просто кращі завдяки тому, що вони з відділу атмосферики."
@@ -385,7 +385,7 @@
     node: icon
 
 - type: entity
-  parent: [ClothingHandsKnuckleDustersBase, BaseSyndicateContraband]
+  parent: [ClothingHandsKnuckleDustersBase, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: ClothingHandsKnuckleDustersSyndicate
   name: "кастет синдикату"
   description: "Пластитанові кастети з логотипом синдикату. Ними справжній чоловік забиває когось на смерть."

@@ -7,7 +7,7 @@
 
 - type: entity
   id: CameraBug
-  parent: [ BaseItem, BaseSyndicateContraband ]
+  parent: [ BaseItem, BaseMajorContraband ] # Pirate - Downgraded contraband from Syndicate to Major
   name: "камерний жучок"
   description: "Нелегальний пристрій синдикату, що дозволяє зламувати мережу камер станції."
   components:

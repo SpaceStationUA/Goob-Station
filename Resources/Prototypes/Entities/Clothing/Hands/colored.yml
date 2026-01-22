@@ -448,7 +448,7 @@
 # Insulated Gloves (Yellow Gloves)
 # Currently can not be greyscaled without looking like shit.
 - type: entity
-  parent: [ClothingHandsGlovesColorYellowBase, BaseEngineeringContraband] # Goob
+  parent: [ClothingHandsGlovesColorYellowBase] # Goob # Pirate - removed BaseEngineeringContraband
   id: ClothingHandsGlovesColorYellow
   name: "ізольовані рукавички"
   description: "Ці рукавички захистять користувача від ураження електричним струмом."

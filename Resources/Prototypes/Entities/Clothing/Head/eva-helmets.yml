@@ -119,7 +119,7 @@
 
 #Syndicate EVA Helmet
 - type: entity
-  parent: [ ClothingHeadEVAHelmetBase, BaseSyndicateContraband ]
+  parent: [ ClothingHeadEVAHelmetBase ] # Pirate - removed BaseSyndicateContraband
   id: ClothingHeadHelmetSyndicate
   name: "синдикатний шолом EVA"
   description: "Простий, стильний шолом з EVA. Створений для максимально скромного космічного нахабства."

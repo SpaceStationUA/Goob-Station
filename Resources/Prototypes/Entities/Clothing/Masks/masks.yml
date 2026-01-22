@@ -229,7 +229,7 @@
     blockSmokeIngestion: true
 
 - type: entity
-  parent: [ClothingMaskGas, BaseSyndicateContraband]
+  parent: [ClothingMaskGas, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: ClothingMaskGasSyndicate
   name: "синдикатський протигаз"
   description: "Тактична маска, що щільно прилягає до обличчя, яку можна під'єднати до системи подачі повітря."

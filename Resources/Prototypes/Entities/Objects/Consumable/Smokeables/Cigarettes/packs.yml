@@ -292,7 +292,8 @@
 
 - type: entity
   id: CigPackSyndicate
-  parent: [CigPackBase, BaseSyndicateContraband]
+  parent: [CigPackBase, BaseMinorContraband] # Pirate - Downgraded contraband from Syndicate to Minor
+
   name: "пачка трав Interdyne"
   description: "Елітні сигарети для елітних агентів синдикату. Насичені ліками, коли вам потрібно більше, ніж просто заспокоїти нерви."
   components:

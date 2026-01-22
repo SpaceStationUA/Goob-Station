@@ -94,7 +94,7 @@
       path: /Audio/_Goobstation/Misc/phone_ring.ogg
 
 - type: entity
-  parent: PhoneInstrument
+  parent: [PhoneInstrument, BaseMajorContraband] # Pirate - add Major Contraband
   id: PhoneInstrumentSyndicate
   name: "криваво-червоний телефон"
   description: "Щоб злі люди дзвонили своїм друзям."

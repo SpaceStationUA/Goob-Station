@@ -901,7 +901,7 @@
       sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
+  parent: [UnsensoredClothingUniformBase] # Pirate - removed BaseSyndicateContraband
   id: ClothingUniformJumpsuitPyjamaSyndicateBlack
   name: "чорна піжама Синдикату"
   description: "Для довгих ночей у пермі."
@@ -914,7 +914,7 @@
     points: 1
 
 - type: entity
-  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
+  parent: [UnsensoredClothingUniformBase] # Pirate - removed BaseSyndicateContraband
   id: ClothingUniformJumpsuitPyjamaSyndicatePink
   name: "рожева піжама Синдикату"
   description: "Для довгих ночей у пермі."
@@ -927,7 +927,7 @@
     points: 1
 
 - type: entity
-  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
+  parent: [UnsensoredClothingUniformBase] # Pirate - removed BaseSyndicateContraband
   id: ClothingUniformJumpsuitPyjamaSyndicateRed
   name: "червона піжама Синдикату"
   description: "Для довгих ночей у пермі."
@@ -984,7 +984,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
+  parent: [UnsensoredClothingUniformBase] # Pirate - removed BaseSyndicateContraband
   id: ClothingUniformJumpsuitOperative
   name: "оперативницький комбінезон"
   description: "Уніформа для елітних оперативників Синдикату, які виконують тактичні операції у відкритому космосі."
@@ -1287,7 +1287,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseSyndicateContraband]
+  parent: [ClothingUniformBase] # Pirate - removed BaseSyndicateContraband
   id: ClothingUniformJumpsuitSyndieFormal
   name: "урочиста уніформа Синдикату"
   description: "Уніформа синдикату виконана в елегантному стилі, в ній навіть шкода робити брудні трюки."

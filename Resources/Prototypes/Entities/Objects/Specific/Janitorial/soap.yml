@@ -165,7 +165,7 @@
 - type: entity
   name: "мило"
   id: SoapSyndie
-  parent: [Soap, BaseSyndicateContraband]
+  parent: [Soap, BaseMinorContraband] # Pirate - Downgraded contraband from Syndicate to Minor
   description: "Ненадійний шматок мила. Пахне страхом."
   components:
   - type: Sprite

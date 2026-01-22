@@ -139,7 +139,7 @@
     price: 3000
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase, BaseJetpack, BaseSyndicateContraband]
+  parent: [ClothingShoesBootsMagBase, BaseJetpack] # Pirate - removed BaseSyndicateContraband
   id: ClothingShoesBootsMagSyndie
   name: "криваво-червоні маг-черевики"
   description: "Модифіковані магнітні черевики, що мають сильне магнітне тяжіння та вбудовані двигуни. Можуть вмістити 0.75 л газу."

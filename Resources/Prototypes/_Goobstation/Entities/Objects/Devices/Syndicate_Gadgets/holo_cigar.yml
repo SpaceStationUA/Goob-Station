@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: [ BaseItem, BaseSyndicateContraband ]
+  parent: [ BaseItem, BaseMajorContraband ] # Pirate - Downgraded contraband from Syndicate to Major
   id: HoloCigar
   name: "голо-сигара"
   description: "Витончена електронна сигара, імпортована прямісінько з Солу. Відчуваєш себе неймовірно крутим, лише мигцем глянувши на неї..."

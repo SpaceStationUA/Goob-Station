@@ -139,7 +139,7 @@
 
 - type: entity
   name: "синдикат \"Щелепи життя"
-  parent: [JawsOfLifeBase, BaseSyndicateContraband]
+  parent: [JawsOfLifeBase, BaseMajorContraband ] # Pirate - Downgraded contraband from Syndicate to Major
   id: SyndicateJawsOfLife
   description: "Корисний для входу на вокзал або до його відділів."
   components:

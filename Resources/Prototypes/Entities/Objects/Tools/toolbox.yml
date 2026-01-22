@@ -181,7 +181,7 @@
 
 - type: entity
   name: "підозрілий набір інструментів"
-  parent: [ToolboxBase, BaseSyndicateContraband]
+  parent: [ToolboxBase] # Pirate - removed BaseSyndicateContraband
   id: ToolboxSyndicate
   description: "Зловісний на вигляд ящик, наповнений інструментами елітних синдикатів."
   components:

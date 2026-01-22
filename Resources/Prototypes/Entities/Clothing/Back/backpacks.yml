@@ -360,7 +360,7 @@
 
 #Syndicate
 - type: entity
-  parent: [ClothingBackpack, BaseSyndicateContraband]
+  parent: [ClothingBackpack] # Pirate - removed BaseSyndicateContraband
   id: ClothingBackpackSyndicate
   name: "синдикатський рюкзак"
   description:

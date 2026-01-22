@@ -204,7 +204,7 @@
   - type: Appearance
 
 - type: entity
-  parent: [ ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSyndicateContraband ]
+  parent: [ ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseMajorContraband ] # Pirate - Downgraded contraband from Syndicate to Major
   id: ClothingBeltMilitaryRigGrenadier # Rig instead of webbing to distinguish it from the upstream counterpart
   name: "пояс гранатометника"
   description: "Спеціалізований поясний ремінь для носіння такої кількості гранат, що ваша рука втомиться їх кидати. Також може зберігати пістолет і магазини до нього."

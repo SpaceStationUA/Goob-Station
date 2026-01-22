@@ -267,7 +267,7 @@
     - SiliconEmotes
 
 - type: entity
-  parent: [ PersonalAI, BaseSyndicateContraband]
+  parent: [ PersonalAI ] # Pirate - removed BaseSyndicateContraband
   id: SyndicatePersonalAI
   name: "синдикат персональний ШІ-помічник"
   description: "Твій друг із Синдикату, з яким весело проводити час!"

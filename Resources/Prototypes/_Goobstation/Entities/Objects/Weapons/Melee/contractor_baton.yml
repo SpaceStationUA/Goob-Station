@@ -10,7 +10,7 @@
 
 - type: entity
   id: ContractorBaton
-  parent: [BaseSyndicateContraband, TelescopicBaton]
+  parent: [BaseMajorContraband, TelescopicBaton] # Pirate - Downgraded contraband from Syndicate to Major
   name: "кийок підрядника"
   description: "Компактний, спеціалізований кийок, що видається підрядникам Синдикату. Завдає легких електричних ударів цілям."
   components:

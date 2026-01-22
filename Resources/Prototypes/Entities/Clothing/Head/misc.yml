@@ -299,7 +299,7 @@
     accent: MobsterAccent
 
 - type: entity
-  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
+  parent: [ ClothingHeadBase ] # Pirate - removed BaseSyndicateContraband
   id: ClothingHeadHatCatEars
   name: "котячі вуха"
   description: "НЯВ!"

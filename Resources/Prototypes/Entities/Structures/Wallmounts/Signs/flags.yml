@@ -106,7 +106,7 @@
     state: NT_flag
 
 - type: entity
-  parent: BaseFlag
+  parent: [BaseFlag, BaseMinorContraband] # Pirate - add Minor contraband
   id: SyndieFlag
   name: "прапор синдикату"
   description: "Пахне кров'ю. Смерть НТ!"

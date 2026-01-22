@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: CardBase
+  parent: [CardBase, BaseMinorContraband] # Pirate - Downgraded contraband from Syndicate to Minor
   id: CardBaseSyndicate
   name: "картка"
   components:
@@ -16,7 +16,7 @@
         state: singlecard_down_syndicate
 
 - type: entity
-  parent: CardBoxBase
+  parent: [CardBoxBase, BaseMinorContraband] # Pirate - add Minor contraband
   id: CardBoxSyndicate
   name: "колода синдикату"
   components:
@@ -35,7 +35,7 @@
       amount: 1
 
 - type: entity
-  parent: CardDeckBase
+  parent: [CardDeckBase, BaseMinorContraband] # Pirate - add Minor contraband
   id: CardDeckSyndicate
   name: "колода карт"
   components:

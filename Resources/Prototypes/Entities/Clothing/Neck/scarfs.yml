@@ -171,7 +171,7 @@
       sprite: Clothing/Neck/Scarfs/purple.rsi
 
 - type: entity
-  parent: [ ClothingScarfBase, BaseSyndicateContraband ]
+  parent: [ ClothingScarfBase ] # Pirate - removed BaseSyndicateContraband
   id: ClothingNeckScarfStripedSyndieGreen
   name: "смугастий синдикатний зелений шарф"
   description: "Стильний смугастий шарф синдикатного зеленого кольору. Ідеальний зимовий аксесуар для тих, хто має гостре відчуття моди, і тих, хто має настрій щось поцупити."
@@ -186,7 +186,7 @@
       points: 1
 
 - type: entity
-  parent: [ ClothingScarfBase, BaseSyndicateContraband ]
+  parent: [ ClothingScarfBase ] # Pirate - removed BaseSyndicateContraband
   id: ClothingNeckScarfStripedSyndieRed
   name: "смугастий синдикатний червоний шарф"
   description: "Стильний смугастий синдиковий червоний шарф. Ідеальний зимовий аксесуар для тих, хто має гостре відчуття моди, і тих, хто має настрій щось поцупити."

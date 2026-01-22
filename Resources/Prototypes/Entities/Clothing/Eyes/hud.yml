@@ -317,7 +317,7 @@
   - type: ShowSyndicateIcons
 
 - type: entity
-  parent: [ClothingEyesBase, BaseSyndicateContraband] # Goob edit
+  parent: [ClothingEyesBase, BaseMajorContraband] # Goob edit  # Pirate - Downgraded contraband from Syndicate to Major
   id: ClothingEyesHudSyndicate
   name: "синдикатський hud"
   description: "Професійний дисплей синдикату, призначений для кращого виявлення гуманоїдів та їх подальшої ліквідації."

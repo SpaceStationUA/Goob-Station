@@ -225,7 +225,7 @@
     sprite: Clothing/Ears/Headsets/science.rsi
 
 - type: entity
-  parent: [ClothingHeadsetAlt, BaseSyndicateContraband]
+  parent: [ClothingHeadsetAlt, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: ClothingHeadsetAltSyndicate
   name: "криваво-червона накладна гарнітура"
   description: "Оновлений модульний синдикатний інтерком, який одягається на голову і приймає ключі шифрування (є 5 слотів для ключів)."

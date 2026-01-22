@@ -459,7 +459,7 @@
 
 - type: entity
   name: "метальний ніж"
-  parent: [BaseKnife, BaseSyndicateContraband]
+  parent: [BaseKnife, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: ThrowingKnife
   description: "Цей криваво-червоний ніж дуже аеродинамічний і його легко кидати, але удачі в рукопашному бою."
   components:

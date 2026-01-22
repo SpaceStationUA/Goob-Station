@@ -133,7 +133,7 @@
 
 - type: entity
   id: DefibrillatorSyndicate
-  parent: [ DefibrillatorCompact, BaseSyndicateContraband ]
+  parent: [ DefibrillatorCompact, BaseMajorContraband ] # Pirate - Downgraded contraband from Syndicate to Major
   name: "дефібрилятор interdyne"
   description: "Подвоюється як зброя самозахисту від схильних до воєнних злочинів."
   components:

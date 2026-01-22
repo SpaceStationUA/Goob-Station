@@ -226,7 +226,7 @@
 # It inherits FoodComponent from PlushieCarp, but is de-facto inedible
 # PlushieCarp has requiresSpecialDigestion:true, and this one is not whitelisted anywhere, so it behaves like it's not edible
 - type: entity
-  parent: [PlushieCarp, RehydratableItem, BaseSyndicateContraband]
+  parent: [PlushieCarp, RehydratableItem]
   id: DehydratedSpaceCarp
   name: "зневоднений космічний короп"
   description: "Виглядає як плюшевий іграшковий короп, але просто додайте води, і він стане справжнім космічним коропом!"

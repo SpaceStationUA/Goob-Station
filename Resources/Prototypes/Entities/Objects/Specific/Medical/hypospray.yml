@@ -664,7 +664,7 @@
 
 - type: entity
   name: "ін'єктор гіперзину"
-  parent: [ChemicalMedipen, BaseSyndicateContraband]
+  parent: [ChemicalMedipen, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: Stimpack
   description: "Містить достатньо гіперзину, щоб ви відчували ефект хімікату протягом 30 секунд. Використовуйте його, коли ви впевнені, що готові до бою."
   components:
@@ -708,7 +708,7 @@
 
 - type: entity
   name: "мікроін'єктор гіперзину"
-  parent: [ChemicalMedipen, BaseSyndicateContraband]
+  parent: [ChemicalMedipen, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: StimpackMini
   description: "Мікроін'єктор гіперзину, який дає вам близько 15 секунд ефекту хімікату."
   components:

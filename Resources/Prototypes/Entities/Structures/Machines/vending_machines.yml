@@ -2372,7 +2372,7 @@
     access: [["Research"]]
 
 - type: entity
-  parent: VendingMachine
+  parent: [VendingMachine, BaseMinorContraband] # Pirate - add Minor contraband
   id: VendingMachineSyndieDrobe
   name: "SyndieDrobe"
   description: "Гардеробна машина, закодована синдикатом, містить елітне вбрання для різних операцій."

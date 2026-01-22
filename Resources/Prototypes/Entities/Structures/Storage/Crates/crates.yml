@@ -894,7 +894,7 @@
     state: base
 
 - type: entity
-  parent: CrateGenericSteel
+  parent: [CrateGenericSteel, BaseMinorContraband] # Pirate - add Minor contraband
   id: CrateSyndicate
   name: "Синдикатський ящик"
   description: "Темний сталевий ящик з червоними смугами та вибитою літерою S спереду."

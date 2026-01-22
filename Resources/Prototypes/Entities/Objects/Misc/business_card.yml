@@ -9,7 +9,7 @@
 - type: entity
   id: SyndicateBusinessCard
   name: "візитна картка синдикату"
-  parent: [ Paper, BaseSyndicateContraband ]
+  parent: [ Paper, BaseMinorContraband ] # Pirate - Downgraded contraband from Syndicate to Minor
   description: "Чорна картка з логотипом синдикату. На звороті щось написано."
   components:
     - type: Sprite

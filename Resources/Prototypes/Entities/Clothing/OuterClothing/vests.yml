@@ -40,7 +40,7 @@
 
 #Web vest
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: ClothingOuterVestWeb
   name: "розвантажувальний жилет"
   description: "Синтетичний бронежилет. На цей додали розгрузку та балістичні пластини."
@@ -75,7 +75,7 @@
 
 #Elite web vest
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: ClothingOuterVestWebElite
   name: "елітний розвантажувальний жилет"
   description: "Синтетичний бронежилет. Цей має додаткові стропи та термостійкі волокна."

@@ -765,7 +765,7 @@
           - Sidearm
 
 - type: entity
-  parent: [ClothingBeltHolster, BaseSyndicateContraband] # Goobstation
+  parent: [ClothingBeltHolster] # Goobstation # Pirate - removed BaseSyndicateContraband
   id: ClothingBeltSyndieHolster
   name: "синдикатна наплічна кобура"
   description: "Глибока наплічна кобура, здатна вмістити багато видів балістики."
@@ -863,7 +863,7 @@
     sprite: Clothing/Belt/salvagewebbing.rsi
 
 - type: entity
-  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSyndicateContraband]
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase] # Pirate - removed BaseSyndicateContraband
   id: ClothingBeltMilitaryWebbing
   name: "військовий розвантажувальний жилет"
   description: "Набір тактичних ременів, які носять абордажні групи Синдикату."

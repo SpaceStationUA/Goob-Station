@@ -141,7 +141,7 @@
       path: "/Audio/Items/bikehorn.ogg"
 
 - type: entity
-  parent: [SoapSyndie, ScatteringGrenadeBase, BaseSyndicateContraband]
+  parent: [SoapSyndie, ScatteringGrenadeBase, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: SlipocalypseClusterSoap
   name: "slipocalypse clustersoap"
   description: "Приземлившись на підлогу, розкидає невеликі шматочки синдикативного мила по площі."

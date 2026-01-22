@@ -190,7 +190,7 @@
 
 - type: entity
   name: "Ручка Cybersun"
-  parent: [BaseAdvancedPen, BaseSyndicateContraband]
+  parent: [BaseAdvancedPen, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: CyberPen
   description: "Високотехнологічна ручка від юридичного відділу Cybersun, здатна заломлювати тверде світло під неможливими кутами через алмазний наконечник, щоб писати. Настільки потужна, що навіть здатна переписувати офіційні документи з печаткою, якщо виникне така потреба."
   components:

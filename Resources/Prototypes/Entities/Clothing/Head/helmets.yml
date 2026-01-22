@@ -245,7 +245,7 @@
 
 #Syndicate SWAT Helmet
 - type: entity
-  parent: [BaseSyndicateContraband, ClothingHeadHelmetSwat] # Goob edit
+  parent: [BaseMajorContraband, ClothingHeadHelmetSwat] # Goob edit # Pirate - Downgraded contraband from Syndicate to Major
   id: ClothingHeadHelmetSwatSyndicate
   name: "шолом спецназу"
   suffix: Syndicate

@@ -113,7 +113,7 @@
 
 #Syndicate EVA
 - type: entity
-  parent: [ ClothingOuterEVASuitBase, BaseSyndicateContraband ]
+  parent: [ ClothingOuterEVASuitBase ] # Pirate - removed BaseSyndicateContraband
   id: ClothingOuterEVASuitSyndicate
   name: "скафандр ЄВА синдикату"
   description: "На спині є бирка з написом: 'Абсолютно точно не власність ворожої корпорації, чесно!'"

@@ -147,7 +147,7 @@
 #Empty black
 - type: entity
   id: JetpackBlack
-  parent: [BaseJetpack, BaseSyndicateContraband]
+  parent: [BaseJetpack] # Pirate - removed BaseSyndicateContraband
   name: "реактивний ранець"
   suffix: Empty
   components:
@@ -330,7 +330,7 @@
 
 # Infinite jetpack
 - type: entity
-  parent: [ JetpackBlack, BaseXenoborgContraband ]
+  parent: [ JetpackBlack ] # Pirate - removed BaseXenoborgContraband
   id: JetpackXenoborg
   name: "реактивний ранець ксеноборга"
   suffix: Infinite

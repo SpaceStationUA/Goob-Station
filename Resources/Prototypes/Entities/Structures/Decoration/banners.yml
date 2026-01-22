@@ -120,7 +120,7 @@
 
 - type: entity
   id: BannerSyndicate
-  parent: BannerBase
+  parent: [BannerBase, BaseMinorContraband] # Pirate - add Minor contraband
   name: "банер синдикату"
   description: "Прапор, від якого, на думку синдикату, ви повинні відчувати ненависть до НТ."
   components:

@@ -35,7 +35,7 @@
     bodyType: Static
 
 - type: entity
-  parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackSatchel, BaseMinorContraband ]
+  parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackSatchel, BaseMajorContraband ] # Pirate - Upgraded contraband from Minor to Major
   id: ClothingBackpackSatchelSmuggler
   name: "сумка контрабандиста"
   suffix: Empty
@@ -46,7 +46,7 @@
     state: icon
 
 - type: entity
-  parent: [ BaseSubfloorAnchorStorage, ClothingBackpackSatchel, BaseMinorContraband ]
+  parent: [ BaseSubfloorAnchorStorage, ClothingBackpackSatchel, BaseMajorContraband ] # Pirate - Upgraded contraband from Minor to Major
   id: ClothingBackpackSatchelSmugglerUnanchored
   name: "сумка контрабандиста"
   suffix: Empty, Unanchored

@@ -1181,7 +1181,7 @@
     sprite: Clothing/Head/Hats/truckershat.rsi
 
 - type: entity
-  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
+  parent: [ ClothingHeadBase ] # Pirate - removed BaseSyndicateContraband
   id: ClothingHeadPyjamaSyndicateBlack
   name: "синдикатська чорна піжамна шапка"
   description: "Для того, щоб зігріти твою зрадницьку голову."
@@ -1199,7 +1199,7 @@
     points: 1
 
 - type: entity
-  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
+  parent: [ ClothingHeadBase ] # Pirate - removed BaseSyndicateContraband
   id: ClothingHeadPyjamaSyndicatePink
   name: "синдикатська рожева піжамна шапка"
   description: "Для того, щоб зігріти твою зрадницьку голову."
@@ -1217,7 +1217,7 @@
     points: 1
 
 - type: entity
-  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
+  parent: [ ClothingHeadBase ] # Pirate - removed BaseSyndicateContraband
   id: ClothingHeadPyjamaSyndicateRed
   name: "синдикатська червона піжамна шапка"
   description: "Для того, щоб зігріти твою зрадницьку голову."

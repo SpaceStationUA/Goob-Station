@@ -631,7 +631,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformSkirtBase, BaseSyndicateContraband]
+  parent: [UnsensoredClothingUniformSkirtBase] # Pirate - removed BaseSyndicateContraband
   id: ClothingUniformJumpskirtOperative
   name: "комбінезон-спідниця оперативника"
   description: "Уніформа для елітних оперативників синдикату, які виконують тактичні операції у відкритому космосі."

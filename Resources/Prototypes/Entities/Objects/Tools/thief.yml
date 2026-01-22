@@ -48,7 +48,8 @@
   id: ToolboxThief
   name: "невизначений злодійський ящик з інструментами"
   description: "Саме тут лежить приладдя вашого улюбленого злодія. Спробуйте згадати, яке саме."
-  parent: [ BaseItem, BaseSetSelector, BaseMinorContraband ] # Goobstation edit
+  parent: [ BaseItem, BaseSetSelector, BaseMajorContraband ] # Goobstation edit  # Pirate - Upgraded contraband from Major to Syndicate
+
   components:
     - type: Sprite
       sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi

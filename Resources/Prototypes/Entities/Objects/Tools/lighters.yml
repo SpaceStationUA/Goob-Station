@@ -622,7 +622,7 @@
     access: [["CentralCommand"]]
 
 - type: entity
-  parent: [BaseBrandedLighter, BaseMajorContraband]
+  parent: [BaseBrandedLighter, BaseMinorContraband] # Pirate - Downgraded contraband from Major to Minor
   id: SpiderclanFlippo
   name: "запальничка клану Павуків"
   description: "Високотехнологічна реактивна запальничка, розроблена для роботи навіть у глибокому космосі. Працює на крихітній мікрофузійній комірці."

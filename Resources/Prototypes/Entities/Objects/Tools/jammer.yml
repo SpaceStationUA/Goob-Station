@@ -13,7 +13,7 @@
 
 - type: entity
   name: "радіоперешкода"
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [BaseItem, BaseMajorContraband] # Pirate - Downgraded contraband from Syndicate to Major
   id: RadioJammer
   description: "Цей пристрій при активації виводить з ладу будь-який вихідний радіозв'язок поблизу, а також датчики костюма."
   components:
