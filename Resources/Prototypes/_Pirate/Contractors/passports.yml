@@ -98,6 +98,17 @@
       - state: passport_species_human # Todo: make variable via a custom component
 
 - type: entity
+  name: "паспорт Федерації Нралакк"
+  parent: BasePassport
+  id: NralakkPassport
+  components:
+    - type: Sprite
+      sprite: _Pirate/Contractors/Passport.rsi
+      layers:
+      - state: passport_nralakk_open
+      - state: passport_species_human # Todo: make variable via a custom component
+
+- type: entity
   name: "паспорт Адхомаі"
   parent: BasePassport
   id: AdhomaiPassport

@@ -4,15 +4,20 @@
   passportPrototype: BieselPassport
 
 - type: nationality
-  id: Solarian
-  nameKey: nationality_name_solarian
-  requirements:
-    - !type:SpeciesRequirement
-      species:
-        - Human
-  languages:
-    - SolCommon
-  passportPrototype: SolPassport
+  id: Nralakk
+  nameKey: nationality_name_nralakk
+  passportPrototype: NralakkPassport
+
+#- type: nationality
+#  id: Solarian
+#  nameKey: nationality_name_solarian
+#  requirements:
+#    - !type:SpeciesRequirement
+#      species:
+#        - Human
+#  languages:
+#    - SolCommon
+#  passportPrototype: SolPassport
 
 - type: nationality
   id: Eridanian
