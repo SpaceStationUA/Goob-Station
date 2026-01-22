@@ -6,6 +6,12 @@
 - type: nationality
   id: Nralakk
   nameKey: nationality_name_nralakk
+  requirements:
+    - !type:SpeciesRequirement
+      inverted: true
+      species:
+        - Vox
+        - IPC
   passportPrototype: NralakkPassport
 
 #- type: nationality
@@ -44,9 +50,9 @@
   nameKey: nationality_name_adhomai
   requirements:
     - !type:SpeciesRequirement
-      inverted: true
       species:
-        - Vox
+        - Tajaran
+        - Resomi
   passportPrototype: AdhomaiPassport
 
 - type: nationality
@@ -57,6 +63,7 @@
       inverted: true
       species:
         - Vox
+        - IPC
   passportPrototype: IzweskiPassport
 
 - type: nationality
