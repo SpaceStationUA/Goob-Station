@@ -36,11 +36,21 @@
 - type: customGhost
   id: v0id-ghost
   ckey: v0id_
+  
   sprite:
     - _Pirate/Ghosts/v0id_.rsi
   alpha: 1
   ghostName: vØid
   ghostDescription: тут може бути ваша реклама
+
+- type: customGhost
+  id: VCS-ghost
+  ckey: VCS
+  sprite: 
+    - _Pirate/Ghosts/VCS.rsi
+  alpha: 1
+  ghostName: НВех!
+  ghostDescription: Командування мовчить. Звіти це паливо. АХелп переповнений. Оновлення мап 3автра.  
 
 - type: customGhost
   id: kraftorset-ghost
@@ -194,7 +204,7 @@
   ghostDescription: Вибухова ляля
 
 - type: customGhost
-  id: JustDecor-ghost
+  id: JustDecorghost
   ckey: JustDecor
   sprite:
     - Structures/Decoration/banner.rsi
@@ -219,68 +229,3 @@
   alpha: 1
   ghostName: luciusGG
   ghostDescription: "Чи немає в тобі жаги до справедливості?"
-
-- type: customGhost
-  id: hattratt-ghost
-  ckey: hatt_ratt
-  sprite:
-    - _Pirate/Ghosts/hatt_ratt.rsi
-  alpha: 1
-  ghostName: щурик в капелюсі
-  ghostDescription: "пік! пік-пік!"
-
-- type: customGhost
-  id: Redsten-ghost
-  ckey: NEO404
-  sprite:
-    # Вибач боже, за те, що я зроблю далі...
-    - Mobs/Animals/bat.rsi
-    - Mobs/Animals/bear.rsi
-    - Mobs/Animals/bee.rsi
-    - Mobs/Animals/buffrat.rsi
-    - Mobs/Animals/butterfly.rsi
-    - Mobs/Animals/chick.rsi
-    - Mobs/Animals/chicken.rsi
-    - Mobs/Animals/clownspider.rsi
-    - Mobs/Animals/cockroach.rsi
-    - Mobs/Animals/cow.rsi
-    - Mobs/Animals/crab.rsi
-    - Mobs/Animals/duck.rsi
-    - Mobs/Animals/fox.rsi
-    - Mobs/Animals/frog.rsi
-    - Mobs/Animals/goat.rsi
-    - Mobs/Animals/goose.rsi
-    - Mobs/Animals/gorilla.rsi
-    - Mobs/Animals/grenadepenguin.rsi
-    - Mobs/Animals/hamster.rsi
-    - Mobs/Animals/kangaroo.rsi
-    - Mobs/Animals/kobold.rsi
-    - Mobs/Animals/lizard.rsi
-    - Mobs/Animals/monkey.rsi
-    - Mobs/Animals/mothroach/displacement.rsi
-    - Mobs/Animals/mothroach/moproach.rsi
-    - Mobs/Animals/mothroach/mothroach.rsi
-    - Mobs/Animals/mouse.rsi
-    - Mobs/Animals/nymph.rsi
-    - Mobs/Animals/parrot/displacement.rsi
-    - Mobs/Animals/parrot/parrot.rsi
-    - Mobs/Animals/penguin.rsi
-    - Mobs/Animals/pig.rsi
-    - Mobs/Animals/possum.rsi
-    - Mobs/Animals/possum_old.rsi
-    - Mobs/Animals/raccoon.rsi
-    - Mobs/Animals/rat.rsi
-    - Mobs/Animals/regalrat.rsi
-    - Mobs/Animals/reindeer_buck.rsi
-    - Mobs/Animals/reindeer_doe.rsi
-    - Mobs/Animals/scurret/displacement.rsi
-    - Mobs/Animals/scurret/scurret.rsi
-    - Mobs/Animals/slug.rsi
-    - Mobs/Animals/snail.rsi
-    - Mobs/Animals/snake.rsi
-    - Mobs/Animals/spacecobra.rsi
-    - Mobs/Animals/spacespider.rsi
-    - Mobs/Animals/spider.rsi
-  alpha: 1
-  ghostName: "Редстен"
-  ghostDescription: "Найбільший боржник і ручна тваринка декора."
