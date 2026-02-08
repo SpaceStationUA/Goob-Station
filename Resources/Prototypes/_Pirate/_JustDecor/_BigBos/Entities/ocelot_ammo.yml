@@ -1,0 +1,45 @@
+- type: entity
+  id: CartridgeSmartMagnum
+  name: ".45 магнум розумний картридж"
+  parent: BaseCartridgeMagnum
+  suffix: JustDecor
+  components:
+  - type: CartridgeAmmo
+    proto: BulletSmartMagnum
+  - type: Sprite
+    layers:
+    - state: base
+      map: [ "enum.AmmoVisualLayers.Base" ]
+    - state: tip
+      map: [ "enum.AmmoVisualLayers.Tip" ]
+      color: "#FFD700"
+
+- type: entity
+  id: BulletSmartMagnum
+  name: ".45 розумний магнум патрон"
+  suffix: JustDecor
+  parent: BulletMagnum
+  components:
+  - type: RicochetProjectile
+    steeringStrength: 3.0
+    homingDistance: 5.0
+    speedBonusPerBounce: 8.0
+    rotationSyncSpeed: 0.0
+  - type: TimedDespawn
+    lifetime: 10.0
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 35
+        Structural: 15
+    deleteOnCollide: false # We handle it in the system
+
+- type: entity
+  id: SpeedLoaderMagnumSmart
+  name: "speed loader (.45 магнум розумний)"
+  parent: SpeedLoaderMagnum
+  suffix: JustDecor
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeSmartMagnum
+    capacity: 8

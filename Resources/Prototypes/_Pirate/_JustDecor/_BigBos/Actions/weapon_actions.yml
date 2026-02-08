@@ -1,0 +1,12 @@
+- type: entity
+  parent: BaseAction
+  id: ActionCycleSmartRevolverTarget
+  name: Прокрутка цілей
+  description: Нехай доля обирає наступну жертву.
+  components:
+  - type: Action
+    icon: Interface/VerbIcons/refresh.svg.192dpi.png
+    useDelay: 0.5
+    itemIconStyle: BigItem
+  - type: InstantAction
+    event: !type:CycleSmartRevolverTargetEvent
