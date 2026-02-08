@@ -1,15 +1,13 @@
-using System.Linq;
 using System.Numerics;
-using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
+using Content.Shared.Damage;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Spawners;
-using Robust.Shared.Utility;
 
 namespace Content.Pirate.Shared._JustDecor.Weapons.Ranged;
 
@@ -25,6 +23,9 @@ public sealed class RicochetProjectileSystem : EntitySystem
     private const float MaxSearchRadius = 50f;
     private const float MinWallDistance = 0.45f;
     private const float AngleSearchStep = 10f;
+    private const int MaxRaycasts = 256;
+    private const float SteeringResponsiveness = 50f;
+    private const float MinHomingDelay = 0.05f;
 
     public override void Initialize()
     {
@@ -60,14 +61,17 @@ public sealed class RicochetProjectileSystem : EntitySystem
             // If we have LoS and at least one bounce, we SHOULD collide
             if (component.CurrentBounces >= 1)
             {
-                if (!TryComp(component.Target.Value, out TransformComponent? targetXform))
-                    return;
-
-                var currentPos = _transform.GetWorldPosition(uid);
-                var targetPos = _transform.GetWorldPosition(targetXform);
-                if (HasDirectLineOfSight(currentPos, targetPos, Transform(uid).MapID, component.Target.Value))
+                if (!component.FollowPlannedPath || component.CurrentBounces >= maxBounces)
                 {
-                    return; // Allow collision
+                    if (!TryComp(component.Target.Value, out TransformComponent? targetXform))
+                        return;
+
+                    var currentPos = _transform.GetWorldPosition(uid);
+                    var targetPos = _transform.GetWorldPosition(targetXform);
+                    if (HasDirectLineOfSight(currentPos, targetPos, Transform(uid).MapID, component.Target.Value))
+                    {
+                        return; // Allow collision
+                    }
                 }
             }
 
@@ -126,28 +130,29 @@ public sealed class RicochetProjectileSystem : EntitySystem
                 if (currentSpeed < 1f) continue;
 
                 // Very aggressive steering
-                var factor = component.SteeringStrength * frameTime * 50f;
-                var newDir = Vector2.Normalize(Vector2.Lerp(currentDir, towardsTarget, Math.Min(factor, 1.0f)));
+                var responsiveness = component.SteeringStrength * SteeringResponsiveness;
+                var alpha = 1f - MathF.Exp(-responsiveness * frameTime);
+                var newDir = Vector2.Normalize(Vector2.Lerp(currentDir, towardsTarget, MathF.Min(alpha, 1.0f)));
                 _physics.SetLinearVelocity(uid, newDir * currentSpeed, body: physics);
 
-                // Ensure it can hit
-                if (TryComp<ProjectileComponent>(uid, out var proj) && !proj.DeleteOnCollide)
-                {
-                    proj.DeleteOnCollide = true;
-                    Dirty(uid, proj);
-                }
+            // Keep projectile alive for ricochet handling.
             }
         }
     }
 
     private void HandleTargetHit(EntityUid uid, RicochetProjectileComponent component)
     {
-        if (Deleted(uid) || component.Target == null) return;
+        if (Deleted(uid) || component.Target == null)
+            return;
+
+        if (Deleted(component.Target.Value))
+            return;
 
         if (TryComp<ProjectileComponent>(uid, out var proj))
         {
-            // Apply damage from the projectile component
-            _damageable.TryChangeDamage(component.Target.Value, proj.Damage, proj.IgnoreResistances, origin: proj.Shooter);
+            var hitEvent = new ProjectileHitEvent(proj.Damage, component.Target.Value, proj.Shooter);
+            RaiseLocalEvent(uid, ref hitEvent);
+            _damageable.TryChangeDamage(component.Target.Value, hitEvent.Damage, proj.IgnoreResistances, origin: proj.Shooter);
 
             proj.DeleteOnCollide = true;
             proj.ProjectileSpent = true;
@@ -175,7 +180,7 @@ public sealed class RicochetProjectileSystem : EntitySystem
             return;
         }
 
-        if (!IsBouncable(args.Target, component.Target))
+        if (HasComp<ProjectileComponent>(args.Target))
             return;
 
         if (!TryComp<PhysicsComponent>(uid, out var physics))
@@ -192,16 +197,18 @@ public sealed class RicochetProjectileSystem : EntitySystem
         }
 
         if (TryComp<TimedDespawnComponent>(uid, out var timed))
-            timed.Lifetime += 3f;
+            timed.Lifetime += component.BounceLifetimeBonus;
 
         component.CurrentBounces++;
-        component.HomingAccumulator = MathF.Min(component.HomingDelay, 0.05f);
+        component.HomingAccumulator = MathF.Max(component.HomingDelay, MinHomingDelay);
 
         var currentPos = _transform.GetWorldPosition(uid);
         var mapId = Transform(uid).MapID;
 
         // Find normal to push out of wall
-        var normal = (currentPos - _transform.GetWorldPosition(args.Target)).Normalized();
+        var normal = TryGetContactNormal(uid, args.Target, out var contactNormal)
+            ? contactNormal
+            : (currentPos - _transform.GetWorldPosition(args.Target)).Normalized();
         _transform.SetWorldPosition(uid, currentPos + normal * 0.15f);
 
         // Check for LoS shortcut
@@ -244,18 +251,6 @@ public sealed class RicochetProjectileSystem : EntitySystem
         }
     }
 
-    private bool IsBouncable(EntityUid entity, EntityUid? target)
-    {
-        if (entity == target) return false;
-        if (HasComp<ProjectileComponent>(entity)) return false;
-
-        if (!TryComp<FixturesComponent>(entity, out var fixtures))
-            return false;
-
-        return fixtures.Fixtures.Values.Any(f =>
-            (f.CollisionMask & (int) (CollisionGroup.Impassable | CollisionGroup.MidImpassable | CollisionGroup.BulletImpassable | CollisionGroup.GlassAirlockLayer)) != 0);
-    }
-
     private void CalculateRicochetPath(EntityUid projectile, RicochetProjectileComponent component)
     {
         if (component.Target == null || !component.Target.Value.IsValid())
@@ -278,7 +273,8 @@ public sealed class RicochetProjectileSystem : EntitySystem
 
         var visited = new HashSet<EntityUid>();
         var depth = component.MaxBounces <= 0 ? component.TargetBounces : Math.Min(component.TargetBounces, component.MaxBounces);
-        var path = TryRecursiveSolve(startPos, targetPos, mapId, depth, component.Target.Value, visited, 0);
+        var raycastBudget = MaxRaycasts;
+        var path = TryRecursiveSolve(startPos, targetPos, mapId, depth, component.Target.Value, visited, 0, ref raycastBudget);
 
         if (path != null)
         {
@@ -296,21 +292,19 @@ public sealed class RicochetProjectileSystem : EntitySystem
         }
     }
 
-    private List<Vector2>? TryRecursiveSolve(Vector2 current, Vector2 target, MapId mapId, int depth, EntityUid targetEnt, HashSet<EntityUid> visited, int currentDepth)
+    private List<Vector2>? TryRecursiveSolve(Vector2 current, Vector2 target, MapId mapId, int depth, EntityUid targetEnt, HashSet<EntityUid> visited, int currentDepth, ref int raycastBudget)
     {
         if (depth == 0)
-            return HasDirectLineOfSight(current, target, mapId, targetEnt) ? new List<Vector2>() : null;
+            return HasDirectLineOfSight(current, target, mapId, targetEnt, ref raycastBudget) ? new List<Vector2>() : null;
 
-        if (currentDepth > 8) return null;
+        if (currentDepth > 8 || raycastBudget <= 0) return null;
 
         for (float angle = 0; angle < 360; angle += AngleSearchStep)
         {
             var dir = Angle.FromDegrees(angle).ToWorldVec();
             var ray = new CollisionRay(current, dir, (int) (CollisionGroup.Impassable | CollisionGroup.MidImpassable | CollisionGroup.BulletImpassable));
-            var hits = _physics.IntersectRay(mapId, ray, MaxSearchRadius, returnOnFirstHit: true).ToList();
-
-            if (hits.Count == 0) continue;
-            var hit = hits[0];
+            if (!TryGetFirstRayHit(mapId, ray, MaxSearchRadius, out var hit, ref raycastBudget))
+                continue;
 
             if (visited.Contains(hit.HitEntity)) continue;
 
@@ -318,7 +312,7 @@ public sealed class RicochetProjectileSystem : EntitySystem
             var nextPos = hit.HitPos + normal * MinWallDistance;
 
             visited.Add(hit.HitEntity);
-            var subPath = TryRecursiveSolve(nextPos, target, mapId, depth - 1, targetEnt, visited, currentDepth + 1);
+            var subPath = TryRecursiveSolve(nextPos, target, mapId, depth - 1, targetEnt, visited, currentDepth + 1, ref raycastBudget);
             visited.Remove(hit.HitEntity);
 
             if (subPath != null)
@@ -337,9 +331,99 @@ public sealed class RicochetProjectileSystem : EntitySystem
         if (distance < 0.2f) return true;
 
         var ray = new CollisionRay(from, direction, (int) (CollisionGroup.Impassable | CollisionGroup.MidImpassable | CollisionGroup.BulletImpassable));
-        var hits = _physics.IntersectRay(mapId, ray, distance, returnOnFirstHit: true).ToList();
+        if (!TryGetFirstRayHit(mapId, ray, distance, out var hit))
+            return true;
 
-        return hits.Count == 0 || hits.Any(h => h.HitEntity == targetEntity);
+        return hit.HitEntity == targetEntity;
+    }
+
+    private bool HasDirectLineOfSight(Vector2 from, Vector2 to, MapId mapId, EntityUid targetEntity, ref int raycastBudget)
+    {
+        var direction = (to - from).Normalized();
+        var distance = (to - from).Length();
+        if (distance < 0.2f) return true;
+
+        if (raycastBudget <= 0)
+            return false;
+
+        var ray = new CollisionRay(from, direction, (int) (CollisionGroup.Impassable | CollisionGroup.MidImpassable | CollisionGroup.BulletImpassable));
+        if (!TryGetFirstRayHit(mapId, ray, distance, out var hit, ref raycastBudget))
+            return true;
+
+        return hit.HitEntity == targetEntity;
+    }
+
+    private bool TryGetFirstRayHit(MapId mapId, CollisionRay ray, float distance, out RayCastResults hit)
+    {
+        foreach (var result in _physics.IntersectRay(mapId, ray, distance, returnOnFirstHit: true))
+        {
+            hit = result;
+            return true;
+        }
+
+        hit = default;
+        return false;
+    }
+
+    private bool TryGetFirstRayHit(MapId mapId, CollisionRay ray, float distance, out RayCastResults hit, ref int raycastBudget)
+    {
+        if (raycastBudget <= 0)
+        {
+            hit = default;
+            return false;
+        }
+
+        raycastBudget--;
+
+        foreach (var result in _physics.IntersectRay(mapId, ray, distance, returnOnFirstHit: true))
+        {
+            hit = result;
+            return true;
+        }
+
+        hit = default;
+        return false;
+    }
+
+    private bool TryGetContactNormal(EntityUid uid, EntityUid target, out Vector2 normal)
+    {
+        normal = Vector2.Zero;
+
+        if (!TryComp(uid, out FixturesComponent? fixtures))
+            return false;
+
+        var contacts = _physics.GetContacts((uid, fixtures));
+        while (contacts.MoveNext(out var contact))
+        {
+            if (contact == null)
+                continue;
+
+            var bodyA = contact.BodyA;
+            var bodyB = contact.BodyB;
+            if (bodyA == null || bodyB == null)
+                continue;
+
+            if (bodyA.Owner != uid && bodyB.Owner != uid)
+                continue;
+
+            var other = bodyA.Owner == uid ? bodyB.Owner : bodyA.Owner;
+            if (other != target)
+                continue;
+
+            var (posA, rotA) = _transform.GetWorldPositionRotation(bodyA.Owner);
+            var (posB, rotB) = _transform.GetWorldPositionRotation(bodyB.Owner);
+            var transformA = new Robust.Shared.Physics.Transform(posA, rotA);
+            var transformB = new Robust.Shared.Physics.Transform(posB, rotB);
+            contact.GetWorldManifold(transformA, transformB, out var contactNormal);
+
+            if (bodyA.Owner == uid)
+                contactNormal = -contactNormal;
+
+            normal = contactNormal.Normalized();
+            return true;
+        }
+
+        return false;
     }
 
     private Vector2 CalculateDynamicBounce(EntityUid projectile, PhysicsComponent physics, EntityUid target, float speed, Vector2 normal)

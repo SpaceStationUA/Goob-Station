@@ -3,7 +3,7 @@
   parent: [WeaponRevolverMateba, BaseCentcommContraband]
   id: WeaponRevolverSingleActionArmy
   suffix: JustDecor
-  description: "Найкращий пістолет, який коли-небудь виготовляли. Single Action Army. Шість куль... Більш ніж достатньо, щоб вбити все, що рухається. Цей легендарний револьвер оснащений вдосконаленою системою наведення, яка дозволяє кулям відскакувати від стін і влучати у вибрані цілі. На стволі надпис \"Ocelot\"."
+  description: "Найкращий пістолет, який коли-небудь виготовляли. Single Action Army. Вісім куль... Більш ніж достатньо, щоб вбити все, що рухається. Цей легендарний револьвер оснащений вдосконаленою системою наведення, яка дозволяє кулям відскакувати від стін і влучати у вибрані цілі. На стволі надпис \"Ocelot\"."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi

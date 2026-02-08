@@ -5,6 +5,7 @@ using Content.Shared.Hands.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Enums;
 using Robust.Shared.Maths;
 
@@ -18,7 +19,6 @@ public sealed class SmartRevolverOverlay : Overlay
     private readonly IEntityManager _entityManager;
     private readonly IPlayerManager _playerManager;
     private readonly IEyeManager _eyeManager;
-    private readonly SharedTransformSystem _transform;
     private readonly SharedHandsSystem _hands;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -28,13 +28,12 @@ public sealed class SmartRevolverOverlay : Overlay
         _entityManager = entityManager;
         _playerManager = playerManager;
         _eyeManager = eyeManager;
-        _transform = _entityManager.System<SharedTransformSystem>();
         _hands = _entityManager.System<SharedHandsSystem>();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var player = _playerManager.LocalPlayer?.ControlledEntity;
+        var player = _playerManager.LocalSession?.AttachedEntity;
         if (player == null)
             return;
 
@@ -55,13 +54,14 @@ public sealed class SmartRevolverOverlay : Overlay
 
         var screenPos = _eyeManager.CoordinatesToScreen(targetXform.Coordinates);
         var handle = args.ScreenHandle;
+        var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
 
         // Прицільний індикатор
         var color = Color.Gold;
-        var boxSize = new Vector2(60, 60);
+        var boxSize = new Vector2(60f, 60f) * uiScale;
         var halfSize = boxSize / 2;
         var topLeft = screenPos.Position - halfSize;
-        var borderThickness = 2.5f;
+        var borderThickness = 2.5f * uiScale;
 
         // Зовнішня рамка
         handle.DrawRect(UIBox2.FromDimensions(topLeft, new Vector2(boxSize.X, borderThickness)), color);
@@ -70,27 +70,28 @@ public sealed class SmartRevolverOverlay : Overlay
         handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(boxSize.X - borderThickness, 0), new Vector2(borderThickness, boxSize.Y)), color);
 
         // Кути для "lock-on" ефекту
-        var cornerLength = 12f;
-        var cornerThickness = 3f;
+        var cornerLength = 12f * uiScale;
+        var cornerThickness = 3f * uiScale;
+        var cornerOffset = 5f * uiScale;
 
         // Верхній лівий кут
-        handle.DrawRect(UIBox2.FromDimensions(topLeft - new Vector2(5, 5), new Vector2(cornerLength, cornerThickness)), color);
-        handle.DrawRect(UIBox2.FromDimensions(topLeft - new Vector2(5, 5), new Vector2(cornerThickness, cornerLength)), color);
+        handle.DrawRect(UIBox2.FromDimensions(topLeft - new Vector2(cornerOffset, cornerOffset), new Vector2(cornerLength, cornerThickness)), color);
+        handle.DrawRect(UIBox2.FromDimensions(topLeft - new Vector2(cornerOffset, cornerOffset), new Vector2(cornerThickness, cornerLength)), color);
 
         // Верхній правий кут
-        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(boxSize.X - cornerLength + 5, -5), new Vector2(cornerLength, cornerThickness)), color);
-        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(boxSize.X - cornerThickness + 5, -5), new Vector2(cornerThickness, cornerLength)), color);
+        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(boxSize.X - cornerLength + cornerOffset, -cornerOffset), new Vector2(cornerLength, cornerThickness)), color);
+        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(boxSize.X - cornerThickness + cornerOffset, -cornerOffset), new Vector2(cornerThickness, cornerLength)), color);
 
         // Нижній лівий кут
-        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(-5, boxSize.Y - cornerThickness + 5), new Vector2(cornerLength, cornerThickness)), color);
-        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(-5, boxSize.Y - cornerLength + 5), new Vector2(cornerThickness, cornerLength)), color);
+        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(-cornerOffset, boxSize.Y - cornerThickness + cornerOffset), new Vector2(cornerLength, cornerThickness)), color);
+        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(-cornerOffset, boxSize.Y - cornerLength + cornerOffset), new Vector2(cornerThickness, cornerLength)), color);
 
         // Нижній правий кут
-        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(boxSize.X - cornerLength + 5, boxSize.Y - cornerThickness + 5), new Vector2(cornerLength, cornerThickness)), color);
-        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(boxSize.X - cornerThickness + 5, boxSize.Y - cornerLength + 5), new Vector2(cornerThickness, cornerLength)), color);
+        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(boxSize.X - cornerLength + cornerOffset, boxSize.Y - cornerThickness + cornerOffset), new Vector2(cornerLength, cornerThickness)), color);
+        handle.DrawRect(UIBox2.FromDimensions(topLeft + new Vector2(boxSize.X - cornerThickness + cornerOffset, boxSize.Y - cornerLength + cornerOffset), new Vector2(cornerThickness, cornerLength)), color);
 
         // Центральна частинка
-        var diamondSize = 5f;
+        var diamondSize = 5f * uiScale;
         handle.DrawRect(UIBox2.FromDimensions(screenPos.Position - new Vector2(diamondSize / 2, diamondSize / 2), new Vector2(diamondSize, diamondSize)), color);
     }
 }

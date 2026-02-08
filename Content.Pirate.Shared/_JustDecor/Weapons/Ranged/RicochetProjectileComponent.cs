@@ -30,7 +30,7 @@ public sealed partial class RicochetProjectileComponent : Component
     /// <summary>
     /// Planned waypoints for the ricochet path (wall hit positions).
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public List<Vector2> PlannedPath = new();
 
     /// <summary>
@@ -39,12 +39,6 @@ public sealed partial class RicochetProjectileComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool FollowPlannedPath = true;
-
-    /// <summary>
-    /// Current waypoint index in the planned path.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int CurrentWaypointIndex = 0;
 
     /// <summary>
     /// Minimum speed required for ricochet to occur. Below this speed, projectile will stop.
@@ -66,12 +60,6 @@ public sealed partial class RicochetProjectileComponent : Component
     public float SteeringStrength = 1.0f; // High default for 100% hits
 
     /// <summary>
-    /// Distance from target at which homing starts being very aggressive.
-    /// </summary>
-    [DataField]
-    public float HomingDistance = 15f;
-
-    /// <summary>
     /// Delay before homing starts (seconds).
     /// </summary>
     [DataField]
@@ -84,16 +72,16 @@ public sealed partial class RicochetProjectileComponent : Component
     public float HomingAccumulator = 0f;
 
     /// <summary>
-    /// Additional speed added after each bounce.
-    /// </summary>
-    [DataField]
-    public float SpeedAccumulator = 0f;
-
-    /// <summary>
     /// How much speed to add per bounce.
     /// </summary>
     [DataField]
     public float SpeedBonusPerBounce = 5f;
+
+    /// <summary>
+    /// Lifetime bonus applied after each bounce.
+    /// </summary>
+    [DataField]
+    public float BounceLifetimeBonus = 3f;
 
     /// <summary>
     /// Target number of bounces before hitting the final target.

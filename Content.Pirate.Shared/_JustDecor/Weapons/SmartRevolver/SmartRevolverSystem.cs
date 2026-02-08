@@ -1,10 +1,8 @@
 using Content.Pirate.Shared._JustDecor.Weapons.Ranged;
 using Content.Shared.Actions;
 using Content.Shared.CombatMode;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Components;
@@ -13,11 +11,11 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Projectiles;
 using Content.Shared.Verbs;
 using Content.Shared.Examine;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using Content.Shared.Damage;
 
 namespace Content.Pirate.Shared._JustDecor.Weapons.SmartRevolver;
 
@@ -35,6 +33,7 @@ public sealed class SmartRevolverSystem : EntitySystem
     [Dependency] private readonly Content.Shared.Hands.EntitySystems.SharedHandsSystem _hands = default!;
     [Dependency] private readonly Robust.Shared.Random.IRobustRandom _random = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     public override void Initialize()
     {
@@ -42,7 +41,6 @@ public sealed class SmartRevolverSystem : EntitySystem
 
         SubscribeLocalEvent<SmartRevolverComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SmartRevolverComponent, AmmoShotEvent>(OnAmmoShot);
-        SubscribeLocalEvent<SmartRevolverComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<SmartRevolverComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<SmartRevolverComponent, CycleSmartRevolverTargetEvent>(OnCycleTarget);
         SubscribeLocalEvent<SmartRevolverComponent, GetItemActionsEvent>(OnGetItemActions);
@@ -100,12 +98,23 @@ public sealed class SmartRevolverSystem : EntitySystem
             return;
         }
 
+        var userPos = _transform.GetMapCoordinates(user.Value);
+        var targetPos = _transform.GetMapCoordinates(target);
+
+        if (targetPos.MapId != userPos.MapId)
+        {
+            ClearTarget(heldEntity.Value, component, user.Value);
+            return;
+        }
+
+        var distance = (targetPos.Position - userPos.Position).Length();
+        if (distance > component.MaxTargetDistance || !_examine.InRangeUnOccluded(user.Value, target, component.MaxTargetDistance))
+        {
+            ClearTarget(heldEntity.Value, component, user.Value);
+            return;
+        }
+
         SetTarget(heldEntity.Value, component, target, user.Value);
-    }
-
-    private void OnAfterInteract(EntityUid uid, SmartRevolverComponent component, AfterInteractEvent args)
-    {
-
     }
 
     private void OnAmmoShot(EntityUid uid, SmartRevolverComponent component, ref AmmoShotEvent args)
@@ -118,8 +127,16 @@ public sealed class SmartRevolverSystem : EntitySystem
         if (target == null)
             return;
 
-        // Очищення, якщо ціль втрачається
-        if (!Exists(target.Value) || Deleted(target.Value))
+        if (!IsValidTarget(target.Value))
+        {
+            ClearTarget(uid, component, null);
+            return;
+        }
+
+        var revolverPos = _transform.GetMapCoordinates(uid);
+        var targetPos = _transform.GetMapCoordinates(target.Value);
+        if (targetPos.MapId != revolverPos.MapId ||
+            (targetPos.Position - revolverPos.Position).Length() > component.MaxTargetDistance)
         {
             ClearTarget(uid, component, null);
             return;
@@ -149,6 +166,9 @@ public sealed class SmartRevolverSystem : EntitySystem
         if (args.Handled)
             return;
 
+        if (!_net.IsServer)
+            return;
+
         if (!args.Performer.IsValid())
             return;
 
@@ -156,7 +176,7 @@ public sealed class SmartRevolverSystem : EntitySystem
 
         if (component.AvailableTargets.Count == 0)
         {
-            _popup.PopupEntity("No valid targets in view!", uid, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("smart-revolver-no-valid-targets"), uid, PopupType.Medium);
             args.Handled = true;
             return;
         }
@@ -176,7 +196,7 @@ public sealed class SmartRevolverSystem : EntitySystem
         if (_net.IsServer)
         {
             var targetName = MetaData(target).EntityName;
-            var message = $"Ціль встановлена: {targetName}";
+            var message = Loc.GetString("smart-revolver-target-set", ("target", targetName));
 
             if (user != null && Exists(user.Value))
             {
@@ -201,7 +221,7 @@ public sealed class SmartRevolverSystem : EntitySystem
 
         if (_net.IsServer)
         {
-            var message = "Ціль очищена";
+            var message = Loc.GetString("smart-revolver-target-cleared");
 
             if (user != null && Exists(user.Value))
             {
@@ -219,9 +239,7 @@ public sealed class SmartRevolverSystem : EntitySystem
         component.AvailableTargets.Clear();
 
         var revolverPos = _transform.GetMapCoordinates(revolverUid);
-        var query = EntityQueryEnumerator<TransformComponent>();
-
-        while (query.MoveNext(out var uid, out var xform))
+        foreach (var uid in _lookup.GetEntitiesInRange(revolverPos, component.MaxTargetDistance))
         {
             if (uid == revolverUid || uid == user)
                 continue;
@@ -230,6 +248,9 @@ public sealed class SmartRevolverSystem : EntitySystem
                 continue;
 
             if (!_examine.InRangeUnOccluded(user, uid, component.MaxTargetDistance))
+                continue;
+
+            if (!TryComp(uid, out TransformComponent? xform))
                 continue;
 
             var targetPos = _transform.GetMapCoordinates(uid, xform);
@@ -252,7 +273,7 @@ public sealed class SmartRevolverSystem : EntitySystem
 
         // Перевіряємо наявність MobStateComponent або DamageableComponent
         return HasComp<MobStateComponent>(target) ||
-               HasComp<Content.Shared.Damage.DamageableComponent>(target);
+               HasComp<DamageableComponent>(target);
     }
 
     private bool IsValidCycleTarget(EntityUid target)
@@ -260,6 +281,6 @@ public sealed class SmartRevolverSystem : EntitySystem
         if (!Exists(target) || Deleted(target))
             return false;
 
-        return HasComp<MobStateComponent>(target) && HasComp<DamageableComponent>(target);
+        return HasComp<MobStateComponent>(target) || HasComp<DamageableComponent>(target);
     }
 }
