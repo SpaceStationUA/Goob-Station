@@ -24,7 +24,6 @@
     steeringStrength: 3.0
     homingDistance: 5.0
     speedBonusPerBounce: 8.0
-    rotationSyncSpeed: 0.0
   - type: TimedDespawn
     lifetime: 10.0
   - type: Projectile
