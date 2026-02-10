@@ -1,0 +1,127 @@
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorBasicPoor
+  suffix: JustDecor, Missions
+  name: Дешевий Бронежилет
+  description: Має менші показники, ніж реальний бронежилет. Виконаний з дешевих матеріалів
+  components:
+  - type: Tag
+  - type: Armor
+    coverage:
+    - Chest
+    - Groin
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0.2
+      NerveDamage: 0.2
+    modifiers:
+      coefficients:
+        Blunt: 0.775
+        Slash: 0.775
+        Piercing: 0.775
+        Heat: 0.85
+
+- type: entity
+  suffix: JustDecor, Unremoveable
+  parent: WeaponMakeshiftLaser
+  id: WeaponMakeshiftLaserAutoRecharge
+  components:
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 25
+  - type: Battery
+    startingCharge: 100
+    maxCharge: 100
+  - type: Unremoveable
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 50
+
+- type: entity
+  suffix: JustDecor, Unremoveable
+  parent: [WeaponPistolViper, BaseSyndicateContraband]
+  id: WeaponPistolViperAutoRecharge
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+  - type: ItemSlots
+    slots:
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: BasicEntityAmmoProvider
+    proto: CartridgePistol
+    capacity: 1
+    count: 1
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 2.5
+    rechargeSound:
+      path: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
+  - type: Unremoveable
+
+
+# Офіцери
+
+- type: entity
+  parent: [ WeaponPistolAnaconda, BaseSyndicateContraband ]
+  id: WeaponPistolAnacondaUnremoveable
+  suffix: JustDecor, Unremoveable
+  name: Anaconda
+  components:
+  - type: Unremoveable
+
+# Вчені
+
+- type: entity
+  suffix: JustDecor, Unremoveable
+  parent: WeaponSubMachineGunC20r
+  id: WeaponSubMachineGunC20rAutoRecharge
+  components:
+  - type: BasicEntityAmmoProvider
+    proto: CartridgePistol
+    capacity: 45
+    count: 45
+  - type: Unremoveable
+  - type: Gun
+    minAngle: 2
+    maxAngle: 16
+    fireRate: 2
+    burstFireRate: 2
+    angleIncrease: 3
+    angleDecay: 16
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/smg.ogg
+    defaultDirection: 1, 0
+  - type: ItemSlots
+    slots:
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun_chamber: !type:ContainerSlot
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 2
+    rechargeSound:
+      path: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
+
+
+# Документи

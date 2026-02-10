@@ -1,0 +1,270 @@
+﻿- type: entity
+  name: Спавнер Синдикату
+  id: SpawnMobSyndicateSoldierMissions
+  suffix: JustDecor, Missions
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - MobSyndicateSoldierMissions
+
+- type: entity
+  abstract: true
+  id: SpawnMobSyndicateMissionsBase
+  name: Спавнер Синдикату
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - sprite: Clothing/Shoes/Boots/combatboots.rsi
+      state: equipped-FEET
+    - sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+      state: equipped-INNERCLOTHING
+    - sprite: Clothing/OuterClothing/Armor/security.rsi
+      state: equipped-OUTERCLOTHING
+    - sprite: Clothing/Hands/Gloves/Color/black.rsi
+      state: equipped-HAND
+    - sprite: Clothing/Mask/gas.rsi
+      state: equipped-MASK
+    - sprite: Clothing/Head/Helmets/swat_syndicate.rsi
+      state: equipped-HELMET
+
+- type: entity
+  abstract: true
+  id: SpawnMobSyndicateScientistMissionsBase
+  name: Спавнер Вченого Синдикату
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - sprite: Clothing/Shoes/Boots/combatboots.rsi
+      state: equipped-FEET
+    - sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+      state: equipped-INNERCLOTHING
+    - sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
+      state: equipped-OUTERCLOTHING
+    - sprite: Clothing/Hands/Gloves/Color/black.rsi
+      state: equipped-HAND
+    - sprite: Clothing/Mask/gas.rsi
+      state: equipped-MASK
+    - sprite: Clothing/Head/Helmets/swat_syndicate.rsi
+      state: equipped-HELMET
+
+- type: entity
+  name: Спавнер Офіцера 1 Синдикату
+  id: SpawnMobSyndicateOfficer1Missions
+  suffix: JustDecor, Officer 1, Missions
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - MobSyndicateOfficer1Missions
+
+- type: entity
+  name: Спавнер Офіцера 2 Синдикату
+  id: SpawnMobSyndicateOfficer2Missions
+  suffix: JustDecor, Officer 2, Missions
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - MobSyndicateOfficer2Missions
+
+- type: entity
+  name: Спавнер Вченого Синдикату
+  id: SpawnMobSyndicateScientistMissions
+  suffix: JustDecor, Missions
+  parent: SpawnMobSyndicateScientistMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - MobSyndicateScientistMissions
+
+- type: entity
+  name: Спавнер Ніколая Штайнера
+  id: SpawnMobScientistPrisonerMissions
+  suffix: JustDecor, Missions
+  parent: SpawnMobSyndicateScientistMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - MobScientistPrisonerMissions
+
+- type: entity
+  name: Спавнер Мертвого В'язня
+  id: SpawnMobPrisonerMissions
+  suffix: JustDecor, Missions
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - MobRandomPrisonerMission
+
+- type: entity
+  name: Спавнер Елітного Синдикату
+  id: SpawnMobSyndicateEliteSoldierMissionsввв
+  suffix: JustDecor, Missions
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - MobSyndicateEliteSoldierMissions
+
+- type: entity
+  name: Спавнер гравця-привида (Солдат Синдикату)
+  id: SpawnGhostMobSyndicateSoldierMission1
+  suffix: JustDecor, Mission 1, Ghost
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - MobSyndicateSoldierMissionsGhost
+
+- type: entity
+  name: Спавнер гравця-привида (Елітний Солдат Синдикату)
+  id: SpawnGhostMobSyndicateEliteMission1
+  suffix: JustDecor, Mission 1, Ghost
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - MobSyndicateEliteSoldierMissionsGhost
+
+- type: entity
+  name: Спавнер підкріплення (доктор захоплений)
+  id: SpawnMission1DrCapturedReinforcement
+  suffix: JustDecor, Mission 1, DrCaptured
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1DrCaptured
+    prototypes:
+    - MobSyndicateSoldierMissions
+    - MobSyndicateOfficer1Missions
+
+- type: entity
+  name: Спавнер еліти (доктор захоплений)
+  id: SpawnMission1DrCapturedElite
+  suffix: JustDecor, Mission 1, DrCaptured
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission1DrCaptured
+    prototypes:
+    - MobSyndicateEliteSoldierMissions
+
+- type: entity
+  name: Спавнер турелі (доктор захоплений)
+  id: SpawnMission1DrCapturedTurret
+  suffix: JustDecor, Mission 1, DrCaptured
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
+    state: base
+  - type: MissionSpawner
+    gameRules:
+    - Mission1DrCaptured
+    prototypes:
+    - WeaponTurretSyndicate
+
+- type: entity
+  name: Спавнер документа NanoTrasen
+  id: SpawnMission1DocumentNanotrasen
+  suffix: JustDecor, Mission 1
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - NanotrasenSecretOperationDocumentMission1
+
+- type: entity
+  name: Спавнер документа (внутрішнє повідомлення)
+  id: SpawnMission1DocumentInternalMemo
+  suffix: JustDecor, Mission 1
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - SyndicateInternalMemo
+
+- type: entity
+  name: Спавнер документа (звіт випробувань)
+  id: SpawnMission1DocumentWeaponTest
+  suffix: JustDecor, Mission 1
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - SyndicateWeaponTestReport
+
+- type: entity
+  name: Спавнер документа (журнал утримання)
+  id: SpawnMission1DocumentDetentionLog
+  suffix: JustDecor, Mission 1
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - SyndicateDetentionLog
+
+- type: entity
+  name: Спавнер документа (особиста нотатка)
+  id: SpawnMission1DocumentPersonalNote
+  suffix: JustDecor, Mission 1
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission1
+    prototypes:
+    - SteinerPersonalNote

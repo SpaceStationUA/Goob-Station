@@ -1,0 +1,151 @@
+- type: startingGear
+  id: SyndicateSoldierMissionsViperGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetSwatSyndicate
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterArmorBasicPoor
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponPistolViperAutoRecharge
+
+- type: startingGear
+  id: SyndicateSoldierMissionsLaserGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetSwatSyndicate
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterArmorBasicPoor
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponMakeshiftLaserAutoRecharge
+
+- type: startingGear
+  id: SyndicateSoldierMissionsKnifeGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetSwatSyndicate
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterArmorBasic
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - CombatKnife
+
+- type: startingGear
+  id: SyndicateOfficer1MissionsGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSyndieFormal
+    head: ClothingHeadHatSyndieMAA
+    outerClothing: ClothingOuterVestWebElite
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponPistolAnacondaUnremoveable
+  storage:
+    back:
+    - SyndicateWeaponTestReport
+
+- type: startingGear
+  id: SyndicateOfficer2MissionsGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSyndieFormal
+    head: ClothingHeadHatOutlawHat
+    outerClothing: ClothingOuterVestWebElite
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponPistolAnacondaUnremoveable
+  storage:
+    back:
+    - SyndicateDetentionLog
+
+- type: startingGear
+  id: SyndicateScientistMissionsGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadBandSkull
+    neck: ClothingNeckScarfStripedSyndieRed
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterCoatRnd
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpackSatchelScience
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - CombatKnife
+
+- type: startingGear
+  id: ScientistPrisonerMissionsGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPrisoner
+    outerClothing: ClothingOuterCoatRnd
+    shoes: ClothingShoesBootsLaceup
+
+
+- type: startingGear
+  id: MissionPrisonerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPrisoner
+
+# Елітний Солдат
+- type: startingGear
+  id: SyndicateEliteSoldierMissionsGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetHardsuitSyndieElite
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponSubMachineGunC20rAutoRecharge
+
+# Ghost-role enemies (better gear + knife)
+- type: startingGear
+  id: SyndicateSoldierMissionsGhostGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetSwatSyndicate
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterArmorBasic
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponPistolViperAutoRecharge
+  storage:
+    back:
+    - CombatKnife
+
+- type: startingGear
+  id: SyndicateEliteSoldierMissionsGhostGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetHardsuitSyndieCommander
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterHardsuitSyndieCommander
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponSubMachineGunC20rAutoRecharge
+  storage:
+    back:
+    - CombatKnife

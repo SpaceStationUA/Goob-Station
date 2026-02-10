@@ -1,0 +1,161 @@
+- type: entity
+  name: Солдат Синдикату
+  parent: BaseMobHuman
+  id: MobSyndicateSoldierMissions
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SyndicateSoldierMissionsViperGear
+        - SyndicateSoldierMissionsLaserGear
+        - SyndicateSoldierMissionsKnifeGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+    - type: PartialAbsorbable
+    - type: SSDIndicator
+      isSSD: false
+    - type: NpcInterrogatable
+      prototype: SyndicateSoldierInterrogation
+
+- type: entity
+  name: Офіцер Синдикату
+  parent: MobSyndicateSoldierMissions
+  id: MobSyndicateOfficer1Missions
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SyndicateOfficer1MissionsGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+    - type: PartialAbsorbable 
+
+- type: entity
+  name: Офіцер Синдикату
+  parent: MobSyndicateSoldierMissions
+  id: MobSyndicateOfficer2Missions
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SyndicateOfficer2MissionsGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+    - type: PartialAbsorbable 
+
+- type: entity
+  name: Вчений Синдикату
+  parent: MobSyndicateSoldierMissions
+  id: MobSyndicateScientistMissions
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SyndicateScientistMissionsGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+    - type: PartialAbsorbable
+    - type: NpcInterrogatable
+      prototype: SyndicateScientistInterrogation
+
+- type: entity
+  name: Ніколай Штайнер
+  parent: BaseMobHuman
+  id: MobScientistPrisonerMissionsNikolaySteiner
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - ScientistPrisonerMissionsGear
+    - type: InputMover
+    - type: MobMover
+    - type: PartialAbsorbable
+    - type: SSDIndicator
+      isSSD: false
+
+- type: entity
+  parent: SalvageHumanCorpse
+  id: MobRandomPrisonerMission
+  suffix: JustDecor, Dead
+  components:
+  - type: Loadout
+    prototypes:
+      - MissionPrisonerGear
+
+- type: entity
+  name: Солдат Синдикату
+  parent: MobSyndicateSoldierMissions
+  id: MobSyndicateEliteSoldierMissions
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SyndicateEliteSoldierMissionsGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+    - type: PartialAbsorbable
+
+- type: entity
+  name: Солдат Синдикату (гравець)
+  parent: MobSyndicateSoldierMissions
+  id: MobSyndicateSoldierMissionsGhost
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateSoldierMissionsGhostGear
+    - type: GhostRole
+      name: Солдат Синдикату
+      description: Гравець-привид як боєць Синдикату для місії.
+      rules: ghost-role-information-rules-team-antagonist
+      mindRoles:
+        - MindRoleGhostRoleTeamAntagonist
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+    - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Елітний Солдат Синдикату (гравець)
+  parent: MobSyndicateEliteSoldierMissions
+  id: MobSyndicateEliteSoldierMissionsGhost
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateEliteSoldierMissionsGhostGear
+    - type: GhostRole
+      name: Елітний Солдат Синдикату
+      description: Елітний боєць Синдикату для гравця-привида.
+      rules: ghost-role-information-rules-team-antagonist
+      mindRoles:
+        - MindRoleGhostRoleTeamAntagonist
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+    - type: GhostTakeoverAvailable
