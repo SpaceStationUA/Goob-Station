@@ -3,6 +3,7 @@
   name: department-Interdyne
   description: department-Interdyne-description
   color: "#2d650e"
+  editorHidden: true
   roles:
   - CaptainInterdyne
   - InterdyneSecure
@@ -13,3 +14,14 @@
   - InterdyneMed
   - InterdynePilot
   - InterdyneShaftMiners
+
+- type: department
+  id: Dday
+  name: department-dday
+  description: department-dday-description
+  editorHidden: false
+  color: "#2d650e"
+  roles:
+  - USAEfreitor
+  - USALeutenant
+  - GEREfreitor

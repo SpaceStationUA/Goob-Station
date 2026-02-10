@@ -1,0 +1,166 @@
+# Лоадаути
+
+# США
+# Ефрейтор
+- type: startingGear
+  id: USAEfreitorGear
+  equipment:
+    jumpsuit: USAClothingUniformJumpsuitMercenary
+    back: USAWeaponSniperMosin
+    shoes: USAClothingShoesBootsMerc
+    head: USAClothingHeadHelmetMerc
+    gloves: USAClothingHandsGlovesMercFingerless
+    outerClothing: USAClothingOuterVestWebMerc
+    pocket1: USASpeedLoaderLightRifle
+    pocket2: USASpeedLoaderLightRifle
+  storage:
+    outerClothing:
+     - USASpeedLoaderLightRifle
+     - USASpeedLoaderLightRifle
+     - USASpeedLoaderLightRifle
+
+# Лейтенант
+- type: startingGear
+  id: USALeutenantGear
+  equipment:
+    jumpsuit: USAClothingUniformJumpsuitMilitaryTurtleneckMercenaryCaptain
+    back: USAWeaponSniperMosin
+    shoes: USAClothingShoesBootsMerc
+    head: USAClothingHeadHatBeretMerc
+    gloves: USAClothingHandsGlovesMercFingerless
+    outerClothing: USAClothingOuterVestWebMerc
+    pocket1: USASpeedLoaderLightRifle
+    pocket2: USASpeedLoaderLightRifle
+  storage:
+    outerClothing:
+     - USASpeedLoaderLightRifle
+
+# Німці
+
+- type: startingGear
+  id: GEREfreitorGear
+  equipment:
+    jumpsuit: GERClothingUniformJumpsuitMilitaryTurtleneckBlueMercenary
+    back: GERWeaponSniperMosin
+    shoes: GERClothingShoesBootsJack
+    belt: GERClothingBeltMilitaryWebbing
+    head: GERClothingHeadHelmetMerc
+    gloves: USAClothingHandsGlovesMercFingerless
+    outerClothing: GERClothingOuterArmorBasic
+    pocket1: GERSpeedLoaderLightRifle
+    pocket2: GERSpeedLoaderLightRifle
+  storage:
+    belt:
+     - GERSpeedLoaderLightRifle
+     - GERSpeedLoaderLightRifle
+     - GERSpeedLoaderLightRifle
+
+
+# Речі
+# США
+# Ефрейтор
+- type: entity
+  parent: ClothingUniformJumpsuitMercenary
+  id: USAClothingUniformJumpsuitMercenary
+  categories: [HideSpawnMenu]
+  name: "Військова уніформа США"
+
+- type: entity
+  parent: ClothingOuterVestWebMerc
+  id: USAClothingOuterVestWebMerc
+  categories: [HideSpawnMenu]
+  name: "Бронежилет США"
+
+- type: entity
+  parent: ClothingHandsGlovesMercFingerless
+  id: USAClothingHandsGlovesMercFingerless
+  categories: [HideSpawnMenu]
+  name: "Зелені рукавиці"
+
+- type: entity
+  parent: ClothingShoesBootsMerc
+  id: USAClothingShoesBootsMerc
+  categories: [HideSpawnMenu]
+  name: "Зелені Боти"
+
+- type: entity
+  parent: WeaponSniperMosin
+  id: USAWeaponSniperMosin
+  categories: [HideSpawnMenu]
+  name: "Springfield M1903"
+
+- type: entity
+  parent: ClothingHeadHelmetMerc
+  id: USAClothingHeadHelmetMerc
+  categories: [HideSpawnMenu]
+  name: "Військовий шолом"
+
+- type: entity
+  parent: SpeedLoaderLightRifle
+  id: USASpeedLoaderLightRifle
+  categories: [HideSpawnMenu]
+  name: "обойма"
+
+# Лейтенант:
+- type: entity
+  parent: ClothingUniformJumpsuitMilitaryTurtleneckMercenaryCaptain
+  id: USAClothingUniformJumpsuitMilitaryTurtleneckMercenaryCaptain
+  categories: [HideSpawnMenu]
+  name: "Військова лейтенантська уніформа США"
+
+- type: entity
+  parent: ClothingHeadHatBeretMerc
+  name: "Військовий берет"
+  id: USAClothingHeadHatBeretMerc
+  categories: [HideSpawnMenu]
+
+
+# НІМЦІ
+# Ефрейтор(13-16ролей):
+- type: entity
+  parent: ClothingOuterArmorBasic
+  name: "Німецька бронепластинна куртка"
+  id: GERClothingOuterArmorBasic
+  categories: [HideSpawnMenu]
+
+- type: entity
+  parent: ClothingOuterCoatJacketLeather
+  name: "Темна німецька куртка"
+  id: GERClothingOuterCoatJacketLeather
+  categories: [HideSpawnMenu]
+
+- type: entity
+  parent: ClothingHeadHelmetMerc
+  name: "Військовий шолом"
+  id: GERClothingHeadHelmetMerc
+  categories: [HideSpawnMenu]
+
+- type: entity
+  parent: WeaponSniperMosin
+  name: "Kar98k"
+  id: GERWeaponSniperMosin
+  categories: [HideSpawnMenu]
+
+- type: entity
+  parent: ClothingUniformJumpsuitMilitaryTurtleneckBlueMercenary
+  name: "Sumpftarn"
+  id: GERClothingUniformJumpsuitMilitaryTurtleneckBlueMercenary
+  categories: [HideSpawnMenu]
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbing
+  name: "Військовий ремінь"
+  id: GERClothingBeltMilitaryWebbing
+  categories: [HideSpawnMenu]
+
+- type: entity
+  parent: ClothingShoesBootsJack
+  name: "Німецькі Чоботи"
+  id: GERClothingShoesBootsJack
+  categories: [HideSpawnMenu]
+
+- type: entity
+  parent: SpeedLoaderLightRifle
+  name: "обойма"
+  id: GERSpeedLoaderLightRifle
+  categories: [HideSpawnMenu]

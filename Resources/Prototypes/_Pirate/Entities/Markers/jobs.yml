@@ -11,3 +11,48 @@
       - state: green
       - sprite: _Pirate/Markers/jobs.rsi
         state: adminassistant
+
+
+# DDay Нормандія
+
+- type: entity
+  id: SpawnPointUSAEfreitor
+  parent: SpawnPointJobBase
+  name: "Ефрейтор США"
+  suffix: Dday, Job
+  components:
+  - type: SpawnPoint
+    job_id: USAEfreitor
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Interface/Misc/job_icons.rsi
+        state: Unknown
+
+- type: entity
+  id: SpawnPointUSALeutenant
+  parent: SpawnPointJobBase
+  name: "Лейтенант США"
+  suffix: Dday, Job
+  components:
+  - type: SpawnPoint
+    job_id: USALeutenant
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Interface/Misc/job_icons.rsi
+        state: Unknown
+
+- type: entity
+  id: SpawnPointGEREfreitor
+  parent: SpawnPointJobBase
+  name: "Ефрейтор Німці"
+  suffix: Dday, Job
+  components:
+  - type: SpawnPoint
+    job_id: USAEfreitor
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Interface/Misc/job_icons.rsi
+        state: Unknown

@@ -27,3 +27,12 @@
 
 - type: playTimeTracker
   id: JobAdministrativeAssistant
+
+- type: playTimeTracker
+  id: JobUSAEfreitor
+
+- type: playTimeTracker
+  id: JobUSALeutenant
+
+- type: playTimeTracker
+  id: JobGEREfreitor

@@ -1,0 +1,47 @@
+# США
+# Ефрейтор
+
+- type: job
+  id: USAEfreitor
+  name: "Ефрейтор США"
+  icon: JobIconUnknown
+  canBeAntag: false
+  playTimeTracker: JobUSAEfreitor
+  goobcoins: 30 #Goob content
+  startingGear: USAEfreitorGear
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+      - Human
+
+# Лейтенант
+
+- type: job
+  id: USALeutenant
+  name: "Лейтенант США"
+  icon: JobIconUnknown
+  canBeAntag: false
+  playTimeTracker: JobUSALeutenant
+  goobcoins: 30 #Goob content
+  startingGear: USALeutenantGear
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+      - Human
+
+    
+# Німці
+# Ефрейтор
+
+- type: job
+  id: GEREfreitor
+  name: "Ефрейтор Німці"
+  icon: JobIconUnknown
+  canBeAntag: false
+  playTimeTracker: JobGEREfreitor
+  goobcoins: 30 #Goob content
+  startingGear: GEREfreitorGear
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+      - Human

@@ -3,6 +3,7 @@
   name: department-name-squidgame
   description: department-desc-squidgame
   color: "#FF1744"
+  editorHidden: true
   roles:
   - SquidGamePlayer
   - SquidGameGuardCircle
