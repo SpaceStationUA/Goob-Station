@@ -138,6 +138,7 @@
         - id: ElectricGuitarInstrument
         - id: BassGuitarInstrument
         - id: RockGuitarInstrument
+        - id: Rickenbacker4003Instrument # starcup
         - id: BanjoInstrument
         - id: ViolinInstrument
         - id: CelloInstrument
