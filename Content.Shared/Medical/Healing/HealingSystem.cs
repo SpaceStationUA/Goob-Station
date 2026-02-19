@@ -171,16 +171,16 @@ public sealed class HealingSystem : EntitySystem
         }
 
         // Restores missing blood
-        if (!IsDead(target.Owner) && healing.ModifyBloodLevel != 0 && bloodstream != null) // DOWNSTREAM-TPirates: stop dead healing
+        if (!IsDeadAndHealBlocked(target.Owner) && healing.ModifyBloodLevel != 0 && bloodstream != null) // DOWNSTREAM-TPirates: stop dead healing
             _bloodstreamSystem.TryModifyBloodLevel((target.Owner, bloodstream), -healing.ModifyBloodLevel); // Goobedit
 
         #region DOWNSTREAM-TPirates: stop dead healing
         DamageSpecifier? healed = null;
-        if (!IsDead(target.Owner))
+        if (!IsDeadAndHealBlocked(target.Owner))
             healed = _damageable.TryChangeDamage(target.Owner, healing.Damage * _damageable.UniversalTopicalsHealModifier, true, origin: args.Args.User);
         #endregion
 
-        if (!IsDead(target.Owner) && healed == null && healing.BloodlossModifier != 0) // DOWNSTREAM-TPirates: stop dead healing
+        if (!IsDeadAndHealBlocked(target.Owner) && healed == null && healing.BloodlossModifier != 0) // DOWNSTREAM-TPirates: stop dead healing
             return;
 
         var total = healed?.GetTotal() ?? FixedPoint2.Zero;
@@ -217,7 +217,7 @@ public sealed class HealingSystem : EntitySystem
 
         // Logic to determine the whether or not to repeat the healing action
         #region DOWNSTREAM-TPirates: stop dead healing
-        args.Repeat = IsDead(target.Owner)
+        args.Repeat = IsDeadAndHealBlocked(target.Owner)
             ? CanTreatDeadTargetForBleeding(target.Owner, healing) && !dontRepeat
             : HasDamage((args.Used.Value, healing), target) && !dontRepeat;
         #endregion
@@ -414,7 +414,7 @@ public sealed class HealingSystem : EntitySystem
             // Goobstation end
         }
 
-        if (!IsDead(ent) && healing.ModifyBloodLevel != 0) // DOWNSTREAM-TPirates: stop dead healing
+        if (!IsDeadAndHealBlocked(ent) && healing.ModifyBloodLevel != 0) // DOWNSTREAM-TPirates: stop dead healing
             healedBleedLevel = _bloodstreamSystem.TryModifyBloodLevel(ent, -healing.ModifyBloodLevel);
 
         //healedBleed = healedBleedWound || healedBleedLevel;
@@ -423,7 +423,7 @@ public sealed class HealingSystem : EntitySystem
         var leftoverHealAndTrauma = false;
         var leftoverHealAndBleed = false;
         var healingLeft = new DamageSpecifier(); // DOWNSTREAM-TPirates: initialize empty because dead targets skip damage-heal consumption
-        if (!IsDead(ent) && TryComp<BodyComponent>(ent, out var bodyComp) && bodyComp.BodyType == _Shitmed.Body.BodyType.Complex) // DOWNSTREAM-TPirates: stop dead healing
+        if (!IsDeadAndHealBlocked(ent) && TryComp<BodyComponent>(ent, out var bodyComp) && bodyComp.BodyType == _Shitmed.Body.BodyType.Complex) // DOWNSTREAM-TPirates: stop dead healing
         {
             healingLeft = healing.Damage * _damageable.UniversalTopicalsHealModifier; // DOWNSTREAM-TPirates: stop dead healing
             // Create parts to go over queue: targetted part -> head -> torso -> groin -> everything else
@@ -474,7 +474,7 @@ public sealed class HealingSystem : EntitySystem
             }
 
         }
-        else if (!IsDead(ent)) // DOWNSTREAM-TPirates: stop dead healing
+        else if (!IsDeadAndHealBlocked(ent)) // DOWNSTREAM-TPirates: stop dead healing
         {
             healingLeft = healing.Damage * _damageable.UniversalTopicalsHealModifier; // DOWNSTREAM-TPirates: stop dead healing
             var healed = _damageable.TryChangeDamage(ent, healing.Damage * _damageable.UniversalTopicalsHealModifier, true, origin: args.User);
@@ -482,9 +482,9 @@ public sealed class HealingSystem : EntitySystem
                 healingLeft -= healed;
         }
 
-        var isAnyTypeFullyConsumed = !IsDead(ent) && healingLeft.DamageDict.Any(d => d.Value == 0); // DOWNSTREAM-TPirates: stop dead healing
+        var isAnyTypeFullyConsumed = !IsDeadAndHealBlocked(ent) && healingLeft.DamageDict.Any(d => d.Value == 0); // DOWNSTREAM-TPirates: stop dead healing
 
-        if (!IsDead(ent) && !healedBleed && !isAnyTypeFullyConsumed && (leftoverHealAndTrauma || leftoverHealAndBleed)) // DOWNSTREAM-TPirates: stop dead healing
+        if (!IsDeadAndHealBlocked(ent) && !healedBleed && !isAnyTypeFullyConsumed && (leftoverHealAndTrauma || leftoverHealAndBleed)) // DOWNSTREAM-TPirates: stop dead healing
         {
             if (leftoverHealAndTrauma)
                 _popupSystem.PopupClient(Loc.GetString("medical-item-requires-surgery-rebell", ("target", ent)), ent, args.User, PopupType.MediumCaution);
@@ -521,8 +521,8 @@ public sealed class HealingSystem : EntitySystem
 
         // Logic to determine whether or not to repeat the healing action
         #region DOWNSTREAM-TPirates: stop dead healing
-        args.Repeat = IsDead(ent)
-            ? CanTreatDeadTargetForBleeding(ent, healing)
+        args.Repeat = IsDeadAndHealBlocked(ent)
+            ? CanTreatDeadTargetForBleeding(ent, healing) && !dontRepeat
             : IsAnythingToHeal(args.User, ent, (args.Used.Value, healing)); // GOOBEDIT
         #endregion
         args.Handled = true;
@@ -589,7 +589,7 @@ public sealed class HealingSystem : EntitySystem
             return false;
 
         // Shitmed Change Start
-        var anythingToDo = IsDead(target.Owner) // DOWNSTREAM-TPirates: stop dead healing
+        var anythingToDo = IsDeadAndHealBlocked(target.Owner) // DOWNSTREAM-TPirates: stop dead healing
             ? CanTreatDeadTargetForBleeding(target.Owner, healing.Comp) // DOWNSTREAM-TPirates: stop dead healing
             : // DOWNSTREAM-TPirates: stop dead healing
             HasDamage(healing, (target.Owner, target.Comp)) ||
@@ -603,7 +603,7 @@ public sealed class HealingSystem : EntitySystem
         if (!anythingToDo)
         {
             #region DOWNSTREAM-TPirates: stop dead healing
-            if (IsDead(target.Owner))
+            if (IsDeadAndHealBlocked(target.Owner))
             {
                 PopupCantHealDead(target.Owner, user, healing.Owner);
             }
@@ -673,11 +673,13 @@ public sealed class HealingSystem : EntitySystem
         return Math.Max(output, 1);
     }
     #region DOWNSTREAM-TPirates: stop dead healing
-    private bool IsDead(EntityUid target) 
+    private const string IpcSpeciesId = "IPC";
+
+    private bool IsDeadAndHealBlocked(EntityUid target) 
         => TryComp<MobStateComponent>(target, out var mobState)
             && mobState.CurrentState == MobState.Dead
             && TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
-            && humanoid.Species != "IPC";
+            && humanoid.Species != IpcSpeciesId;
 
     private void PopupCantHealDead(EntityUid target, EntityUid user, EntityUid tool)
     {
@@ -704,3 +706,4 @@ public sealed class HealingSystem : EntitySystem
     }
     #endregion
 }
+
