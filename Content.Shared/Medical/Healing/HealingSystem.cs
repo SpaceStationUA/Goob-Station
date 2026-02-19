@@ -59,6 +59,7 @@ using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Humanoid; // DOWNSTREAM-TPirates: stop dead healing
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -673,7 +674,10 @@ public sealed class HealingSystem : EntitySystem
     }
     #region DOWNSTREAM-TPirates: stop dead healing
     private bool IsDead(EntityUid target) 
-        => TryComp<MobStateComponent>(target, out var mobState) && mobState.CurrentState == MobState.Dead;
+        => TryComp<MobStateComponent>(target, out var mobState)
+            && mobState.CurrentState == MobState.Dead
+            && TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
+            && humanoid.Species != "IPC";
 
     private void PopupCantHealDead(EntityUid target, EntityUid user, EntityUid tool)
     {
