@@ -13,11 +13,11 @@
       "Slap": {36: 0}
       "Slap (XTra Funky)": {37: 0}
   - type: Sprite
-    sprite: _DV/Objects/Fun/Instruments/rickenbacker.rsi
+    sprite: _starcup/Objects/Fun/Instruments/rickenbacker.rsi # starcup
     state: icon
   - type: Item
     size: Normal
-    sprite: _DV/Objects/Fun/Instruments/rickenbacker.rsi
+    sprite: _starcup/Objects/Fun/Instruments/rickenbacker.rsi # starcup
   # - type: MeleeStaminaCost
   #   swing: 10
   #   wieldCoefficient: 0.40
@@ -28,6 +28,13 @@
       types:
         Blunt: 7
     bluntStaminaDamageFactor: 1.50 #13.5 stamina damage
+  # begin starcup
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
+  # end starcup
   - type: Tag
     tags:
     - StringInstrument

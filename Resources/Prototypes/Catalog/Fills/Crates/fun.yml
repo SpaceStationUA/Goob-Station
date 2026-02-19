@@ -138,7 +138,13 @@
         - id: ElectricGuitarInstrument
         - id: BassGuitarInstrument
         - id: RockGuitarInstrument
-        - id: Rickenbacker4003Instrument # starcup
+        - !type:GroupSelector # starcup start
+          children:
+          - id: Rickenbacker4003Instrument
+          - id: Rickenbacker4003InstrumentBlack
+          - id: Rickenbacker4003InstrumentRed
+          - id: Rickenbacker4003InstrumentPink
+          - id: Rickenbacker4003InstrumentSlime # starcup end
         - id: BanjoInstrument
         - id: ViolinInstrument
         - id: CelloInstrument
