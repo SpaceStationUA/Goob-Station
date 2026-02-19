@@ -521,7 +521,7 @@ public sealed class HealingSystem : EntitySystem
 
         // Logic to determine whether or not to repeat the healing action
         #region DOWNSTREAM-TPirates: stop dead healing
-        args.Repeat = IsDead(ent) // DOWNSTREAM-TPirates: stop dead healing
+        args.Repeat = IsDead(ent)
             ? CanTreatDeadTargetForBleeding(ent, healing)
             : IsAnythingToHeal(args.User, ent, (args.Used.Value, healing)); // GOOBEDIT
         #endregion
