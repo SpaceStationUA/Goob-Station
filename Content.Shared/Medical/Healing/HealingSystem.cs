@@ -684,7 +684,9 @@ public sealed class HealingSystem : EntitySystem
     private void PopupCantHealDead(EntityUid target, EntityUid user, EntityUid tool)
     {
         _popupSystem.PopupClient(
-            Loc.GetString("pirates-medical-item-cant-heal-dead", ("target", target), ("tool", tool)),
+            Loc.GetString("pirates-medical-item-cant-heal-dead",
+                ("target", Identity.Entity(target, EntityManager)),
+                ("tool", tool)),
             target,
             user,
             PopupType.MediumCaution);
