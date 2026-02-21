@@ -169,10 +169,12 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
-  - type: Multishot # Goobstation V
-    missChance: 0.4
-    spreadMultiplier: 2
-    spreadAddition: 40
+  # Pirate remove start - Pistols shouldn`t fire like automatic weapons
+  #- type: Multishot # Goobstation V
+  #  missChance: 0.4
+  #  spreadMultiplier: 2
+  #  spreadAddition: 40
+  # Pirate remove end
   - type: RestrictGunshotsByUserTag # Goobstation
     doesntContain:
     - Oni
