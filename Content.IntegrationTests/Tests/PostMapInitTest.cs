@@ -218,6 +218,7 @@ namespace Content.IntegrationTests.Tests
             //  "Fland",
             //  "FlandHighPop",
             //  "Gate",           // Not in pool
+              "GateTP",         // Pirate
               "GlacierTP",      // Pirate
             //  "Kettle",
             //  "Lambda",         // Not in pool
@@ -286,6 +287,7 @@ namespace Content.IntegrationTests.Tests
               "BoxTP", // Pirate
               "GlacierTP", // Pirate
               "OmegaTP", // Pirate
+              "GateTP", // Pirate
         };
         // Goobstation edit end
 
