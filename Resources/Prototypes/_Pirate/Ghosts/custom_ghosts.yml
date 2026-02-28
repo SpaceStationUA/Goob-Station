@@ -212,6 +212,15 @@
   ghostDescription: "Усі люди наділені талантами, а я просто декорація"
 
 - type: customGhost
+  id: VCS-ghost
+  ckey: VCS
+  sprite:
+    - _Pirate/Ghosts/VCS.rsi
+  alpha: 1
+  ghostName: VCS
+  ghostDescription: Той самий НВех який все поламав.
+
+- type: customGhost
   id: luciusGG-ghost
   ckey: luciusGG
   sprite:

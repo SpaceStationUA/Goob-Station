@@ -72,6 +72,7 @@
   - type: GunWieldBonus
     minAngle: -20
     maxAngle: -20
+  - type: GunRequiresWield # Pirate
   - type: Gun
     minAngle: 24
     maxAngle: 45

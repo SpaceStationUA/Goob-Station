@@ -1803,6 +1803,13 @@
   - !type:BuyerSpeciesCondition
     whitelist:
     - Human
+  # Pirate start
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - ContractorUplink
+      - NukeOpsUplink
+  # Pirate end
 
 - type: listing
   id: UplinkUndeterminedBundle

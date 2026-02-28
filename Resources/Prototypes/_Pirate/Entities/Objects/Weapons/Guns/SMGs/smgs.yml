@@ -1,62 +1,4 @@
 - type: entity
-  name: FPA-90
-  parent: [BaseWeaponPistol, BaseSecurityContraband]
-  id: WeaponSubMachineGunFPA90
-  description: Це дешевий мотлох від компанії, відомої своїми дешевими гарматами, але принаймні під час використання не потрібен захист слуху. Стріляє набоями 9.5мм.
-  components:
-  - type: Sprite
-    sprite: _Pirate/Objects/Weapons/Guns/SMGs/FPA90.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: Gun
-    minAngle: 10
-    maxAngle: 15
-    fireRate: 20
-    burstFireRate: 20
-    shotsPerBurst: 3
-    burstCooldown: 1.1
-    selectedMode: Burst
-    soundGunshot:
-      path: /Audio/_Pirate/Weapons/Guns/Gunshots/fpa-90-suppressed-gunshot.ogg
-      params:
-        volume: -3
-        maxDistance: 8
-        rolloffFactor: 1.2
-    availableModes:
-      - Burst
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineCaselessRifleStandardShort
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineCaselessRifle
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeCaselessRifleStandard
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeCaselessRifle
-  - type: Appearance
-  - type: StaticPrice
-    price: 200
-  - type: Item
-    size: Large
-    shape: null
-
-- type: entity
   name: BRDI R-25
   parent: [BaseWeaponSubMachineGun, BaseSecurityContraband, BaseGunWieldable]
   id: WeaponSubMachineGunBRDIR25
@@ -85,7 +27,7 @@
     cameraRecoilScalar: 0.5
     selectedMode: Burst
     soundGunshot:
-      path: /Audio/_Pirate/Weapons/Guns/Gunshots/fpa-90-suppressed-gunshot.ogg
+      path: /Audio/_Pirate/Weapons/Guns/Gunshots/brdi-r25-suppressed-gunshot.ogg
       params:
         volume: -3
         maxDistance: 8
@@ -125,7 +67,7 @@
 - type: entity
   name: антикварний BRDI R-25
   parent: WeaponSubMachineGunBRDIR25
-  id: WeaponSubMachineGunBRDIR25HoS
+  id: WeaponSubMachineGunBRDIR25Antique
   description: Колись цю улюблену гвинтівку тримав невідомий член Іноземного легіону Республіки Бізеля; вона брала участь у боях з Солом в кожних боях Республіки.
   components:
     - type: Sprite

@@ -795,7 +795,6 @@
     - PowerCells
     # Pirate Packs
     - SecurityAmmoPirate
-    - SecurityWeaponsPirate
   - type: EmagLatheRecipes # Goobstation
     emagStaticPacks:
     - SyndicateAmmoLightStatic
