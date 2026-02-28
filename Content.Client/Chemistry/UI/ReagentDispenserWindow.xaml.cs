@@ -43,6 +43,16 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
+#region Pirate: chem recipes
+using Content.Shared.Administration;
+using Content.Goobstation.Maths.FixedPoint;
+using Robust.Client.Audio;
+using Robust.Client.Graphics;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using System.Linq;
+using System.Numerics;
+#endregion
 namespace Content.Client.Chemistry.UI
 {
     /// <summary>
@@ -56,6 +66,30 @@ namespace Content.Client.Chemistry.UI
         public event Action<ItemStorageLocation>? OnDispenseReagentButtonPressed;
         public event Action<ItemStorageLocation>? OnEjectJugButtonPressed;
 
+        #region Pirate: chem recipes
+        private AudioSystem _audioSystem = default!;
+        private const float RecipeActionButtonSize = 28f;
+        private const float RecipeChipHeight = 28f;
+        private const float RecipeChipActionButtonSize = 20f; // Pirate: chem recipes
+        private const float RecipeChipColorLineWidth = 7f;
+        private const int RecipeChipColumns = 3;
+        private const float RecipeChipWidthCompensation = 1f; // Pirate: chem recipes
+        private static readonly SoundSpecifier InterfaceClickSound = new SoundPathSpecifier("/Audio/UserInterface/click.ogg");
+        private DialogWindow? _saveRecipeDialog;
+        private bool _isRecordingRecipe;
+        private bool? _recordButtonIsCancel;
+        public event Action? OnStartRecipeRecordingPressed;
+        public event Action? OnCancelRecipeRecordingPressed;
+        public event Action<string>? OnSaveRecipePressed;
+        public event Action? OnClearRecipesPressed;
+        public event Action<string>? OnDispenseRecipePressed;
+        public event Action<string>? OnDeleteRecipePressed;
+        public event Action<string>? OnSaveRecipeToDiskPressed;
+        public event Action<string>? OnCopyDiskRecipePressed;
+        public event Action<string>? OnDispenseDiskRecipePressed;
+        public event Action<string>? OnDeleteDiskRecipePressed;
+        public event Action? OnEjectRecipeDiskPressed;
+        #endregion
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
         /// actual data isn't filled in until the server sends data about the dispenser.
@@ -64,6 +98,41 @@ namespace Content.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+            #region Pirate: chem recipes
+            _audioSystem = _entityManager.System<AudioSystem>();
+
+            RecordRecipeButton.OnPressed += _ =>
+            {
+                PlayRecipeUiClickSound();
+                if (_isRecordingRecipe)
+                    OnCancelRecipeRecordingPressed?.Invoke();
+                else
+                    OnStartRecipeRecordingPressed?.Invoke();
+            };
+            SaveRecipeButton.OnPressed += _ =>
+            {
+                PlayRecipeUiClickSound();
+                OpenSaveRecipeDialog();
+            };
+            ClearRecipesButton.OnPressed += _ =>
+            {
+                PlayRecipeUiClickSound();
+                OnClearRecipesPressed?.Invoke();
+            };
+            EjectRecipeDiskButton.OnPressed += _ =>
+            {
+                PlayRecipeUiClickSound();
+                OnEjectRecipeDiskPressed?.Invoke();
+            };
+
+            ConfigureRecipeActionButton(RecordRecipeButton, "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-record.svg.192dpi.png");
+            ConfigureRecipeActionButton(SaveRecipeButton, "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-save.svg.192dpi.png");
+            ConfigureRecipeActionButton(ClearRecipesButton, "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-delete-all.svg.192dpi.png");
+            ConfigureRecipeActionButton(EjectRecipeDiskButton, "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-eject.svg.192dpi.png");
+            RecipeList.OnResized += () => ApplyRecipeChipWidths(RecipeList);
+            RecipeDiskList.OnResized += () => ApplyRecipeChipWidths(RecipeDiskList);
+            OnClose += () => _saveRecipeDialog?.Close();
+            #endregion
         }
 
         /// <summary>
@@ -97,6 +166,7 @@ namespace Content.Client.Chemistry.UI
             var castState = (ReagentDispenserBoundUserInterfaceState) state;
             UpdateContainerInfo(castState);
             UpdateReagentsList(castState.Inventory);
+            UpdateRecipes(castState); // Pirate: chem recipes
 
             _entityManager.TryGetEntity(castState.OutputContainerEntity, out var outputContainerEnt);
             View.SetEntity(outputContainerEnt);
@@ -117,6 +187,17 @@ namespace Content.Client.Chemistry.UI
         public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state)
         {
             ContainerInfo.Children.Clear();
+
+            #region Pirate: chem recipes
+            if (state.IsRecordingRecipe)
+            {
+                ContainerInfoName.Text = Loc.GetString("reagent-dispenser-window-recipes-virtual-container-name");
+                var total = state.RecordingRecipeReagents.Aggregate(FixedPoint2.Zero, (current, reagent) => current + reagent.Quantity);
+                ContainerInfoFill.Text = $"{total}u";
+                UpdateVirtualRecordingContents(state.RecordingRecipeReagents);
+                return;
+            }
+            #endregion
 
             if (state.OutputContainer is null)
             {
@@ -155,5 +236,295 @@ namespace Content.Client.Chemistry.UI
                 });
             }
         }
+
+        #region Pirate: chem recipes
+        private void UpdateVirtualRecordingContents(IReadOnlyCollection<ReagentQuantity> reagents)
+        {
+            if (reagents.Count == 0)
+            {
+                ContainerInfo.Children.Add(new Label
+                {
+                    Text = Loc.GetString("reagent-dispenser-window-recipes-virtual-container-empty"),
+                    StyleClasses = { StyleNano.StyleClassLabelSecondaryColor },
+                });
+                return;
+            }
+
+            foreach (var reagent in reagents.OrderBy(r => r.Reagent.Prototype))
+            {
+                var localizedName = _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? p)
+                    ? p.LocalizedName
+                    : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
+
+                var nameLabel = new Label { Text = $"{localizedName}: " };
+                var quantityLabel = new Label
+                {
+                    Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
+                    StyleClasses = { StyleNano.StyleClassLabelSecondaryColor },
+                };
+
+                ContainerInfo.Children.Add(new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Horizontal,
+                    Children =
+                    {
+                        nameLabel,
+                        quantityLabel,
+                    }
+                });
+            }
+        }
+        private void UpdateRecipes(ReagentDispenserBoundUserInterfaceState state)
+        {
+            _isRecordingRecipe = state.IsRecordingRecipe;
+            ConfigureRecordingButton(state.IsRecordingRecipe);
+            SaveRecipeButton.Disabled = !state.IsRecordingRecipe || state.RecordingRecipeReagents.Count == 0;
+            ClearRecipesButton.Disabled = state.SavedRecipes.Count == 0;
+            RecipeDiskSection.Visible = state.HasRecipeDisk;
+            EjectRecipeDiskButton.Disabled = !state.HasRecipeDisk;
+
+            RecipeList.Children.Clear();
+            foreach (var recipe in state.SavedRecipes)
+            {
+                var chip = CreateRecipeChip(
+                    recipe,
+                    !state.HasRecipeDisk,
+                    OnDispenseRecipePressed,
+                    OnSaveRecipeToDiskPressed,
+                    OnDeleteRecipePressed,
+                    Loc.GetString("reagent-dispenser-window-recipes-save-to-disk-tooltip"),
+                    Loc.GetString("reagent-dispenser-window-recipes-delete-tooltip"),
+                    "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-download-from-disk.svg.192dpi.png");
+                RecipeList.AddChild(chip);
+            }
+            ApplyRecipeChipWidths(RecipeList);
+
+            if (state.SavedRecipes.Count == 0)
+            {
+                RecipeList.AddChild(new Label
+                {
+                    Text = Loc.GetString("reagent-dispenser-window-recipes-none"),
+                    StyleClasses = { StyleNano.StyleClassLabelSecondaryColor },
+                });
+            }
+
+            RecipeDiskList.Children.Clear();
+            if (!state.HasRecipeDisk)
+                return;
+
+            foreach (var recipe in state.DiskRecipes)
+            {
+                var chip = CreateRecipeChip(
+                    recipe,
+                    false,
+                    OnDispenseDiskRecipePressed,
+                    OnCopyDiskRecipePressed,
+                    OnDeleteDiskRecipePressed,
+                    Loc.GetString("reagent-dispenser-window-recipes-copy-from-disk-tooltip"),
+                    Loc.GetString("reagent-dispenser-window-recipes-delete-disk-tooltip"),
+                    "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-save-to-disk.svg.192dpi.png",
+                    Loc.GetString("reagent-dispenser-window-recipes-copy-from-disk-tooltip"));
+                RecipeDiskList.AddChild(chip);
+            }
+            ApplyRecipeChipWidths(RecipeDiskList);
+
+            if (state.DiskRecipes.Count == 0)
+            {
+                RecipeDiskList.AddChild(new Label
+                {
+                    Text = Loc.GetString("reagent-dispenser-window-recipes-disk-none"),
+                    StyleClasses = { StyleNano.StyleClassLabelSecondaryColor },
+                });
+            }
+        }
+
+        private BoxContainer CreateRecipeChip(
+            ReagentDispenserRecipeItem recipe,
+            bool secondaryDisabled,
+            Action<string>? onPrimaryPressed,
+            Action<string>? onSecondaryPressed,
+            Action<string>? onDeletePressed,
+            string secondaryTooltip,
+            string deleteTooltip,
+            string secondaryIconPath,
+            string? primaryTooltip = null)
+        {
+            var chip = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalExpand = false,
+            };
+
+            chip.AddChild(CreateRecipeColorSwatch(recipe.Color));
+
+            var nameButton = new Button
+            {
+                Text = recipe.Name,
+                StyleClasses = { StyleBase.ButtonSquare },
+                HorizontalExpand = true,
+                MinHeight = RecipeChipHeight,
+                SetHeight = RecipeChipHeight,
+                ClipText = true,
+                Margin = new Thickness(-1f, 0f, 0f, 0f),
+            };
+
+            if (primaryTooltip != null)
+                nameButton.ToolTip = primaryTooltip;
+
+            nameButton.OnPressed += _ => onPrimaryPressed?.Invoke(recipe.Name);
+
+            var secondaryButton = new Button
+            {
+                HorizontalExpand = false,
+                StyleClasses = { StyleBase.ButtonSquare },
+                MinWidth = RecipeChipActionButtonSize,
+                SetWidth = RecipeChipActionButtonSize,
+                Disabled = secondaryDisabled,
+                ToolTip = secondaryTooltip,
+                Margin = new Thickness(-1f, 0f, 0f, 0f),
+            };
+            ConfigureCompactIconButton(secondaryButton, secondaryIconPath);
+            secondaryButton.OnPressed += _ => onSecondaryPressed?.Invoke(recipe.Name);
+
+            var deleteButton = new Button
+            {
+                HorizontalExpand = false,
+                StyleClasses = { StyleBase.ButtonSquare },
+                MinWidth = RecipeChipActionButtonSize,
+                SetWidth = RecipeChipActionButtonSize,
+                ToolTip = deleteTooltip,
+                Margin = new Thickness(-1f, 0f, 0f, 0f),
+            };
+            ConfigureCompactIconButton(deleteButton, "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-delete.svg.192dpi.png");
+            deleteButton.OnPressed += _ => onDeletePressed?.Invoke(recipe.Name);
+
+            chip.AddChild(nameButton);
+            chip.AddChild(secondaryButton);
+            chip.AddChild(deleteButton);
+            return chip;
+        }
+        private void ConfigureRecipeActionButton(Button button, string texturePath)
+        {
+            button.Text = string.Empty;
+            button.HorizontalExpand = false;
+            button.MinWidth = RecipeActionButtonSize;
+            button.SetWidth = RecipeActionButtonSize;
+            button.MinHeight = RecipeActionButtonSize;
+            button.SetHeight = RecipeActionButtonSize;
+            button.RemoveAllChildren();
+            button.AddChild(new TextureRect
+            {
+                TexturePath = texturePath,
+                MinSize = new Vector2(16f, 16f),
+                MaxSize = new Vector2(16f, 16f),
+                Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center
+            });
+        }
+
+        private void PlayRecipeUiClickSound()
+        {
+            _audioSystem.PlayGlobal(InterfaceClickSound, Filter.Local(), false, AudioParams.Default.WithVolume(-2f));
+        }
+
+        private void ConfigureCompactIconButton(Button button, string texturePath)
+        {
+            button.Text = string.Empty;
+            button.MinHeight = RecipeChipHeight; // Pirate: chem recipes
+            button.SetHeight = RecipeChipHeight; // Pirate: chem recipes
+            button.RemoveAllChildren();
+            button.AddChild(new TextureRect
+            {
+                TexturePath = texturePath,
+                MinSize = new Vector2(16f, 16f),
+                MaxSize = new Vector2(16f, 16f),
+                Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center
+            });
+        }
+
+        private void ConfigureRecordingButton(bool isRecordingRecipe)
+        {
+            if (_recordButtonIsCancel == isRecordingRecipe)
+                return;
+
+            _recordButtonIsCancel = isRecordingRecipe;
+            ConfigureRecipeActionButton(
+                RecordRecipeButton,
+                isRecordingRecipe
+                    ? "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-cancel.svg.192dpi.png"
+                    : "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-record.svg.192dpi.png");
+            RecordRecipeButton.ToolTip = Loc.GetString(
+                isRecordingRecipe
+                    ? "reagent-dispenser-window-recipes-cancel-tooltip"
+                    : "reagent-dispenser-window-recipes-record-tooltip");
+        }
+
+        private PanelContainer CreateRecipeColorSwatch(Color color)
+        {
+            return new PanelContainer
+            {
+                VerticalExpand = true,
+                SetWidth = RecipeChipColorLineWidth,
+                Margin = new Thickness(0f, 1f, 0f, 0f),
+                PanelOverride = new StyleBoxFlat { BackgroundColor = color },
+            };
+        }
+
+        private void OpenSaveRecipeDialog()
+        {
+            if (_saveRecipeDialog != null)
+            {
+                _saveRecipeDialog.MoveToFront();
+                return;
+            }
+
+            const string field = "name";
+            var entry = new QuickDialogEntry(
+                field,
+                QuickDialogEntryType.ShortText,
+                Loc.GetString("reagent-dispenser-window-recipes-save-dialog-prompt"),
+                Loc.GetString("reagent-dispenser-window-recipes-save-dialog-placeholder"));
+
+            _saveRecipeDialog = new DialogWindow(
+                Loc.GetString("reagent-dispenser-window-recipes-save-dialog-title"),
+                new List<QuickDialogEntry> { entry });
+            _saveRecipeDialog.MinHeight = 0f;
+            _saveRecipeDialog.SetHeight = float.NaN;
+
+            _saveRecipeDialog.OnConfirmed += responses =>
+            {
+                var name = responses[field].Trim();
+                if (name.Length > SharedReagentDispenser.RecipeNameMaxLength)
+                    name = name[..SharedReagentDispenser.RecipeNameMaxLength];
+
+                if (!string.IsNullOrEmpty(name))
+                    OnSaveRecipePressed?.Invoke(name);
+            };
+
+            _saveRecipeDialog.OnClose += () => _saveRecipeDialog = null;
+        }
+
+        private void ApplyRecipeChipWidths(GridContainer container)
+        {
+            if (container.PixelWidth <= 0)
+                return;
+
+            var hSeparation = container.HSeparationOverride ?? 4;
+            var totalSeparation = hSeparation * (RecipeChipColumns - 1);
+            var chipWidth = MathF.Max(0f, (container.PixelWidth - totalSeparation) / (float)RecipeChipColumns) + RecipeChipWidthCompensation; // Pirate: chem recipes
+            foreach (var child in container.Children)
+            {
+                if (child is not BoxContainer chip)
+                    continue;
+
+                chip.MinWidth = chipWidth;
+                chip.MaxWidth = chipWidth;
+                chip.SetWidth = chipWidth;
+            }
+        }
+        #endregion
     }
 }

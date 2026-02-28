@@ -30,6 +30,7 @@ namespace Content.Goobstation.Shared.Chemistry
     public static class SharedEnergyReagentDispenser
     {
         public const string OutputSlotName = "energyBeakerSlot";
+        public const string RecipeDiskSlotName = "recipeDiskSlot"; // Pirate: chem recipes
     }
 
     [Serializable, NetSerializable]

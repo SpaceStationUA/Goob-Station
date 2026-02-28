@@ -34,6 +34,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using System.Diagnostics.CodeAnalysis; // Pirate: chem recipes
+using Content.Shared.Chemistry.Reagent; // Pirate: chem recipes
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.EntitySystems;
@@ -83,6 +85,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserDispenseReagentMessage>(OnDispenseReagentMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserEjectContainerMessage>(OnEjectReagentMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserClearContainerSolutionMessage>(OnClearContainerSolutionMessage);
+            RegisterPirateRecipeEvents(); // Pirate: chem recipes
 
             SubscribeLocalEvent<ReagentDispenserComponent, MapInitEvent>(OnMapInit, before: new[] { typeof(ItemSlotsSystem) });
         }
@@ -90,6 +93,11 @@ namespace Content.Server.Chemistry.EntitySystems
         private void SubscribeUpdateUiState<T>(Entity<ReagentDispenserComponent> ent, ref T ev)
         {
             UpdateUiState(ent);
+            #region Pirate: chem recipes
+            if (ev is EntRemovedFromContainerMessage removed &&
+                removed.Container.ID == SharedReagentDispenser.RecipeDiskSlotName)
+                ClickSound(ent);
+            #endregion
         }
 
         private void UpdateUiState(Entity<ReagentDispenserComponent> reagentDispenser)
@@ -98,8 +106,29 @@ namespace Content.Server.Chemistry.EntitySystems
             var outputContainerInfo = BuildOutputContainerInfo(outputContainer);
 
             var inventory = GetInventory(reagentDispenser);
+            #region Pirate: chem recipes
+            var savedRecipes = reagentDispenser.Comp.SavedRecipes
+                .OrderBy(x => x.Key)
+                .Select(x => new ReagentDispenserRecipeItem(x.Key, GetRecipeColor(x.Value)))
+                .ToList();
+            var hasRecipeDisk = TryGetRecipeDisk(reagentDispenser, out _, out var recipeDisk);
+            var diskRecipes = recipeDisk?.SavedRecipes
+                .OrderBy(x => x.Key)
+                .Select(x => new ReagentDispenserRecipeItem(x.Key, GetRecipeColor(x.Value)))
+                .ToList() ?? [];
+            var recordingReagents = BuildRecordingRecipeReagents(reagentDispenser.Comp.RecordingRecipe);
 
-            var state = new ReagentDispenserBoundUserInterfaceState(outputContainerInfo, GetNetEntity(outputContainer), inventory, reagentDispenser.Comp.DispenseAmount);
+            var state = new ReagentDispenserBoundUserInterfaceState(
+                outputContainerInfo,
+                GetNetEntity(outputContainer),
+                inventory,
+                reagentDispenser.Comp.DispenseAmount,
+                savedRecipes,
+                hasRecipeDisk,
+                diskRecipes,
+                reagentDispenser.Comp.RecordingRecipe != null,
+                recordingReagents);
+            #endregion
             _userInterfaceSystem.SetUiState(reagentDispenser.Owner, ReagentDispenserUiKey.Key, state);
         }
 
@@ -171,6 +200,20 @@ namespace Content.Server.Chemistry.EntitySystems
             if (storedContainer == EntityUid.Invalid)
                 return;
 
+            #region Pirate: chem recipes
+            if (reagentDispenser.Comp.RecordingRecipe != null)
+            {
+                var amount = FixedPoint2.New((int)reagentDispenser.Comp.DispenseAmount);
+                if (TryRecordDispensedMixture(storedContainer, amount, reagentDispenser.Comp.RecordingRecipe))
+                {
+                    UpdateUiState(reagentDispenser);
+                    ClickSound(reagentDispenser);
+                }
+
+                return;
+            }
+            #endregion
+
             var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
             if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
@@ -227,6 +270,441 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnMapInit(Entity<ReagentDispenserComponent> ent, ref MapInitEvent args)
         {
             _itemSlotsSystem.AddItemSlot(ent.Owner, SharedReagentDispenser.OutputSlotName, ent.Comp.BeakerSlot);
+            _itemSlotsSystem.AddItemSlot(ent.Owner, SharedReagentDispenser.RecipeDiskSlotName, ent.Comp.RecipeDiskSlot); // Pirate: chem recipes
         }
+
+        #region Pirate: chem recipes
+        private void RegisterPirateRecipeEvents()
+        {
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserStartRecipeRecordingMessage>(OnStartRecipeRecordingMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserCancelRecipeRecordingMessage>(OnCancelRecipeRecordingMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserSaveRecipeMessage>(OnSaveRecipeMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserDispenseRecipeMessage>(OnDispenseRecipeMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserDeleteRecipeMessage>(OnDeleteRecipeMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserClearRecipesMessage>(OnClearRecipesMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserSaveRecipeToDiskMessage>(OnSaveRecipeToDiskMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserCopyDiskRecipeMessage>(OnCopyDiskRecipeMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserDispenseDiskRecipeMessage>(OnDispenseDiskRecipeMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserDeleteDiskRecipeMessage>(OnDeleteDiskRecipeMessage);
+        }
+        private Color GetRecipeColor(Dictionary<string, FixedPoint2> recipe)
+        {
+            if (recipe.Count == 0)
+                return Color.Transparent;
+
+            var runningTotalQuantity = FixedPoint2.Zero;
+            var first = true;
+            Color mixColor = default;
+
+            foreach (var (reagentId, quantity) in recipe.OrderBy(x => x.Key))
+            {
+                runningTotalQuantity += quantity;
+
+                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype? proto))
+                    continue;
+
+                if (first)
+                {
+                    first = false;
+                    mixColor = proto.SubstanceColor;
+                    continue;
+                }
+
+                var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
+                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+            }
+
+            return mixColor;
+        }
+
+        private void OnStartRecipeRecordingMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserStartRecipeRecordingMessage message)
+        {
+            reagentDispenser.Comp.RecordingRecipe = new Dictionary<string, FixedPoint2>();
+            UpdateUiState(reagentDispenser);
+            ClickSound(reagentDispenser);
+        }
+
+        private void OnCancelRecipeRecordingMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserCancelRecipeRecordingMessage message)
+        {
+            reagentDispenser.Comp.RecordingRecipe = null;
+            UpdateUiState(reagentDispenser);
+            ClickSound(reagentDispenser);
+        }
+
+        private void OnSaveRecipeMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserSaveRecipeMessage message)
+        {
+            if (!TryGetValidatedRecipeName(message.Name, out var name) ||
+                reagentDispenser.Comp.RecordingRecipe == null ||
+                reagentDispenser.Comp.RecordingRecipe.Count == 0)
+            {
+                ErrorSound(reagentDispenser); // Pirate: chem recipes
+                return;
+            }
+
+            // Validate that each reagent is currently dispensable by this machine.
+            foreach (var reagent in reagentDispenser.Comp.RecordingRecipe.Keys)
+            {
+                if (!TryGetStoredContainerForReagentId(reagentDispenser.Owner, reagent, out _))
+                {
+                    ErrorSound(reagentDispenser); // Pirate: chem recipes
+                    return;
+                }
+            }
+
+            reagentDispenser.Comp.SavedRecipes[name] = new Dictionary<string, FixedPoint2>(reagentDispenser.Comp.RecordingRecipe);
+            reagentDispenser.Comp.RecordingRecipe = null;
+            UpdateUiState(reagentDispenser);
+            ClickSound(reagentDispenser);
+        }
+
+        private void OnDispenseRecipeMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserDispenseRecipeMessage message)
+        {
+            if (!TryGetValidatedRecipeName(message.Name, out var name))
+                return;
+
+            if (!reagentDispenser.Comp.SavedRecipes.TryGetValue(name, out var recipe))
+            {
+                ErrorSound(reagentDispenser);
+                return;
+            }
+
+            if (!TryDispenseRecipe(reagentDispenser, recipe, out var reason, out var failedReagentId))
+            {
+                ErrorSound(reagentDispenser);
+                return;
+            }
+
+            UpdateUiState(reagentDispenser);
+            ClickSound(reagentDispenser);
+        }
+
+        private void OnDispenseDiskRecipeMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserDispenseDiskRecipeMessage message)
+        {
+            if (!TryGetValidatedRecipeName(message.Name, out var name))
+                return;
+
+            if (!TryGetRecipeDisk(reagentDispenser, out _, out var recipeDisk))
+            {
+                ErrorSound(reagentDispenser);
+                return;
+            }
+
+            if (!recipeDisk.SavedRecipes.TryGetValue(name, out var recipe))
+            {
+                ErrorSound(reagentDispenser);
+                return;
+            }
+
+            if (!TryDispenseRecipe(reagentDispenser, recipe, out var reason, out var failedReagentId))
+            {
+                ErrorSound(reagentDispenser);
+                return;
+            }
+
+            UpdateUiState(reagentDispenser);
+            ClickSound(reagentDispenser);
+        }
+
+        private bool TryDispenseRecipe(
+            Entity<ReagentDispenserComponent> reagentDispenser,
+            Dictionary<string, FixedPoint2> recipe,
+            out RecipeDispenseFailureReason reason,
+            out string? failedReagentId)
+        {
+            reason = RecipeDispenseFailureReason.None;
+            failedReagentId = null;
+
+            if (reagentDispenser.Comp.RecordingRecipe != null)
+            {
+                foreach (var (reagentId, quantity) in recipe)
+                {
+                    if (reagentDispenser.Comp.RecordingRecipe.TryGetValue(reagentId, out var existing))
+                        reagentDispenser.Comp.RecordingRecipe[reagentId] = existing + quantity;
+                    else
+                        reagentDispenser.Comp.RecordingRecipe.Add(reagentId, quantity);
+                }
+
+                return true;
+            }
+
+            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
+            if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out _, out _))
+            {
+                reason = RecipeDispenseFailureReason.MissingOutputContainer;
+                return false;
+            }
+
+            if (!_solutionContainerSystem.TryGetRefillableSolution(outputContainer.Value, out var dstRefillable, out var dstSolution))
+            {
+                reason = RecipeDispenseFailureReason.MissingOutputContainer;
+                return false;
+            }
+
+            var totalRequiredQuantity = recipe.Values.Aggregate(FixedPoint2.Zero, (current, quantity) => current + quantity);
+            if (totalRequiredQuantity > dstSolution.AvailableVolume)
+            {
+                reason = RecipeDispenseFailureReason.TransferFailed;
+                return false;
+            }
+
+            var cachedSources = new Dictionary<string, (EntityUid Container, Entity<Content.Shared.Chemistry.Components.SolutionComponent>? Drainable)>(recipe.Count);
+
+            // Pre-check recipe contents so recipe usage either succeeds as a whole or aborts with a precise error.
+            foreach (var (reagentId, quantity) in recipe)
+            {
+                if (!TryGetStoredContainerForReagentId(reagentDispenser.Owner, reagentId, out var srcContainer))
+                {
+                    reason = RecipeDispenseFailureReason.ReagentNotFound;
+                    failedReagentId = reagentId;
+                    return false;
+                }
+
+                if (!_solutionContainerSystem.TryGetDrainableSolution(srcContainer, out var srcDrainable, out var srcSoln))
+                {
+                    reason = RecipeDispenseFailureReason.ReagentNotFound;
+                    failedReagentId = reagentId;
+                    return false;
+                }
+
+                var available = srcSoln.GetReagentQuantity(new ReagentId(reagentId, null));
+                if (available < quantity)
+                {
+                    reason = RecipeDispenseFailureReason.NotEnoughReagent;
+                    failedReagentId = reagentId;
+                    return false;
+                }
+
+                // Pirate: chem recipes - recipe quantities are per reagent, so mixed sources are invalid.
+                if (srcSoln.Volume - available > FixedPoint2.Zero)
+                {
+                    reason = RecipeDispenseFailureReason.TransferFailed;
+                    failedReagentId = reagentId;
+                    return false;
+                }
+
+                cachedSources[reagentId] = (srcContainer, srcDrainable);
+            }
+
+            foreach (var (reagentId, quantity) in recipe)
+            {
+                if (!cachedSources.TryGetValue(reagentId, out var source))
+                {
+                    reason = RecipeDispenseFailureReason.ReagentNotFound;
+                    failedReagentId = reagentId;
+                    return false;
+                }
+
+                if (source.Drainable is not { } srcDrainable)
+                {
+                    reason = RecipeDispenseFailureReason.ReagentNotFound;
+                    failedReagentId = reagentId;
+                    return false;
+                }
+
+                _openable.SetOpen(source.Container, true);
+                var transferred = _solutionTransferSystem.Transfer(
+                    reagentDispenser,
+                    source.Container,
+                    srcDrainable,
+                    outputContainer.Value,
+                    dstRefillable.Value,
+                    quantity);
+
+                if (transferred < quantity)
+                {
+                    reason = RecipeDispenseFailureReason.TransferFailed;
+                    failedReagentId = reagentId;
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void OnDeleteRecipeMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserDeleteRecipeMessage message)
+        {
+            if (!TryGetValidatedRecipeName(message.Name, out var name))
+                return;
+
+            if (reagentDispenser.Comp.SavedRecipes.Remove(name))
+            {
+                UpdateUiState(reagentDispenser);
+                ClickSound(reagentDispenser);
+            }
+        }
+
+        private void OnClearRecipesMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserClearRecipesMessage message)
+        {
+            if (reagentDispenser.Comp.SavedRecipes.Count == 0)
+                return;
+
+            reagentDispenser.Comp.SavedRecipes.Clear();
+            UpdateUiState(reagentDispenser);
+            ClickSound(reagentDispenser);
+        }
+
+        private void OnSaveRecipeToDiskMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserSaveRecipeToDiskMessage message)
+        {
+            if (!TryGetValidatedRecipeName(message.Name, out var name))
+                return;
+
+            if (!TryGetRecipeDisk(reagentDispenser, out _, out var recipeDisk))
+                return;
+
+            if (!reagentDispenser.Comp.SavedRecipes.TryGetValue(name, out var recipe))
+                return;
+
+            recipeDisk.SavedRecipes[name] = new Dictionary<string, FixedPoint2>(recipe);
+            UpdateUiState(reagentDispenser);
+            ClickSound(reagentDispenser);
+        }
+
+        private void OnCopyDiskRecipeMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserCopyDiskRecipeMessage message)
+        {
+            if (!TryGetValidatedRecipeName(message.Name, out var name))
+                return;
+
+            if (!TryGetRecipeDisk(reagentDispenser, out _, out var recipeDisk))
+                return;
+
+            if (!recipeDisk.SavedRecipes.TryGetValue(name, out var recipe))
+                return;
+
+            reagentDispenser.Comp.SavedRecipes[name] = new Dictionary<string, FixedPoint2>(recipe);
+            UpdateUiState(reagentDispenser);
+            ClickSound(reagentDispenser);
+        }
+
+        private void OnDeleteDiskRecipeMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserDeleteDiskRecipeMessage message)
+        {
+            if (!TryGetValidatedRecipeName(message.Name, out var name))
+                return;
+
+            if (!TryGetRecipeDisk(reagentDispenser, out _, out var recipeDisk))
+                return;
+
+            if (!recipeDisk.SavedRecipes.Remove(name))
+                return;
+
+            UpdateUiState(reagentDispenser);
+            ClickSound(reagentDispenser);
+        }
+
+        private bool TryGetValidatedRecipeName(string? rawName, [NotNullWhen(true)] out string? validatedName)
+        {
+            validatedName = rawName?.Trim();
+            return !string.IsNullOrWhiteSpace(validatedName) &&
+                   validatedName.Length <= SharedReagentDispenser.RecipeNameMaxLength;
+        }
+
+
+        private bool TryRecordDispensedMixture(EntityUid container, FixedPoint2 requestedAmount, Dictionary<string, FixedPoint2> recordingRecipe)
+        {
+            if (!_solutionContainerSystem.TryGetDrainableSolution(container, out _, out var sol) ||
+                sol.Volume <= FixedPoint2.Zero)
+            {
+                return false;
+            }
+
+            var transferredAmount = FixedPoint2.Min(requestedAmount, sol.Volume);
+            if (transferredAmount <= FixedPoint2.Zero)
+                return false;
+
+            // Pirate: chem recipes - preserve exact dispense amount for pure sources (avoid 10 -> 9 rounding).
+            if (sol.Contents.Count == 1 && sol.Contents[0].Reagent.Prototype is { } onlyReagentId)
+            {
+                if (recordingRecipe.TryGetValue(onlyReagentId, out var existing))
+                    recordingRecipe[onlyReagentId] = existing + transferredAmount;
+                else
+                    recordingRecipe.Add(onlyReagentId, transferredAmount);
+
+                return true;
+            }
+
+            var transferRatio = transferredAmount / sol.Volume;
+            var recordedAny = false;
+
+            foreach (var reagent in sol.Contents)
+            {
+                if (reagent.Reagent.Prototype is not { } reagentId)
+                    continue;
+
+                var recordedAmount = reagent.Quantity * transferRatio;
+                if (recordedAmount <= FixedPoint2.Zero)
+                    continue;
+
+                if (recordingRecipe.TryGetValue(reagentId, out var existing))
+                    recordingRecipe[reagentId] = existing + recordedAmount;
+                else
+                    recordingRecipe.Add(reagentId, recordedAmount);
+
+                recordedAny = true;
+            }
+
+            return recordedAny;
+        }
+
+
+        private bool TryGetStoredContainerForReagentId(EntityUid dispenser, string reagentId, [NotNullWhen(true)] out EntityUid container)
+        {
+            container = EntityUid.Invalid;
+            if (!TryComp<StorageComponent>(dispenser, out var storage))
+                return false;
+
+            foreach (var (stored, _) in storage.StoredItems)
+            {
+                if (!_solutionContainerSystem.TryGetDrainableSolution(stored, out _, out var sol))
+                    continue;
+
+                if (sol.GetReagentQuantity(new ReagentId(reagentId, null)) <= FixedPoint2.Zero)
+                    continue;
+
+                container = stored;
+                return true;
+            }
+
+            return false;
+        }
+
+        private List<ReagentQuantity> BuildRecordingRecipeReagents(Dictionary<string, FixedPoint2>? recordingRecipe)
+        {
+            if (recordingRecipe == null || recordingRecipe.Count == 0)
+                return [];
+
+            var list = new List<ReagentQuantity>();
+            foreach (var (reagentId, quantity) in recordingRecipe.OrderBy(x => x.Key))
+            {
+                list.Add(new ReagentQuantity(reagentId, quantity));
+            }
+
+            return list;
+        }
+
+        private bool TryGetRecipeDisk(Entity<ReagentDispenserComponent> dispenser, [NotNullWhen(true)] out EntityUid? diskUid, [NotNullWhen(true)] out ChemRecipeDiskComponent? diskComp)
+        {
+            diskUid = _itemSlotsSystem.GetItemOrNull(dispenser, SharedReagentDispenser.RecipeDiskSlotName);
+            if (diskUid is not { Valid: true } || !TryComp(diskUid.Value, out diskComp))
+            {
+                diskUid = null;
+                diskComp = null;
+                return false;
+            }
+
+            return true;
+        }
+
+        private enum RecipeDispenseFailureReason
+        {
+            None,
+            MissingOutputContainer,
+            ReagentNotFound,
+            NotEnoughReagent,
+            TransferFailed,
+        }
+                private void ErrorSound(Entity<ReagentDispenserComponent> reagentDispenser) // Pirate: chem recipes
+        {
+            _audioSystem.PlayPvs(reagentDispenser.Comp.ErrorSound, reagentDispenser, AudioParams.Default.WithVolume(-2f));
+        }
+
+        #endregion
     }
 }

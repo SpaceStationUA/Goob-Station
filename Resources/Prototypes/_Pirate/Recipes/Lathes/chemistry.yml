@@ -1,0 +1,8 @@
+- type: latheRecipe
+  id: ChemRecipeDiskPirate
+  result: ChemRecipeDisk
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+    Plastic: 50

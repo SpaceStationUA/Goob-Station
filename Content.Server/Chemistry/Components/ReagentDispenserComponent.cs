@@ -58,6 +58,7 @@ using Content.Shared.Whitelist;
 using Content.Shared.Containers.ItemSlots;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
+using Content.Goobstation.Maths.FixedPoint; // Pirate: chem recipes
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -78,5 +79,17 @@ namespace Content.Server.Chemistry.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentDispenserDispenseAmount DispenseAmount = ReagentDispenserDispenseAmount.U10;
+
+        #region Pirate: chem recipes
+        [DataField]
+        public ItemSlot RecipeDiskSlot = new();
+        [ViewVariables]
+        public Dictionary<string, Dictionary<string, FixedPoint2>> SavedRecipes = new();
+        [ViewVariables]
+        public Dictionary<string, FixedPoint2>? RecordingRecipe;
+
+        [DataField("errorSound"), ViewVariables(VVAccess.ReadWrite)]
+        public SoundSpecifier ErrorSound = new SoundPathSpecifier("/Audio/_Pirate/Machines/terminal_error.ogg");
+        #endregion
     }
 }

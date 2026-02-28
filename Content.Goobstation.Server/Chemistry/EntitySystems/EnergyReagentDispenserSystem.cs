@@ -240,7 +240,10 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
                 ? cost * amount
                 : float.MaxValue;
         }
-        private void OnMapInit(Entity<EnergyReagentDispenserComponent> entity, ref MapInitEvent args) =>
+        private void OnMapInit(Entity<EnergyReagentDispenserComponent> entity, ref MapInitEvent args)
+        {
             _itemSlotsSystem.AddItemSlot(entity.Owner, SharedEnergyReagentDispenser.OutputSlotName, entity.Comp.EnergyBeakerSlot);
+            _itemSlotsSystem.AddItemSlot(entity.Owner, SharedEnergyReagentDispenser.RecipeDiskSlotName, entity.Comp.RecipeDiskSlot); // Pirate: chem recipes
+        }
     }
 }
