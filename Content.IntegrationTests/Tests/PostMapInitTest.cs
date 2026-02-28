@@ -286,6 +286,7 @@ namespace Content.IntegrationTests.Tests
             //  "Submarine",
               "BoxTP", // Pirate
               "GlacierTP", // Pirate
+              "GateTP",   // Pirate
               "OmegaTP", // Pirate
               "KettleTP", // Pirate
         };
