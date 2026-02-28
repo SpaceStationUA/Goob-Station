@@ -7,6 +7,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Common.Standing;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared._EinsteinEngines.TelescopicBaton;
@@ -18,7 +19,7 @@ public sealed partial class KnockdownOnHitComponent : Component
     public TimeSpan Duration = TimeSpan.FromSeconds(1);
 
     [DataField]
-    public bool DropItems = false;
+    public DropHeldItemsBehavior DropHeldItemsBehavior = DropHeldItemsBehavior.NoDrop;
 
     [DataField]
     public bool RefreshDuration = true;

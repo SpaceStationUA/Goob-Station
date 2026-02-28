@@ -96,7 +96,7 @@
   - type: HomingProjectile
     homingSpeed: 1080
   - type: KnockdownOnCollide
-    dropItems: true
+    behavior: DropIfStanding
   - type: Ammo
     muzzleFlash: null
 

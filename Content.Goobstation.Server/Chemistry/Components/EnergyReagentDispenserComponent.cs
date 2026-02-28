@@ -78,9 +78,6 @@ namespace Content.Goobstation.Server.Chemistry.Components
         public ItemSlot EnergyBeakerSlot = new();
 
         [DataField]
-        public ItemSlot RecipeDiskSlot = new(); // Pirate: chem recipes
-
-        [DataField]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
         [ViewVariables(VVAccess.ReadWrite)]

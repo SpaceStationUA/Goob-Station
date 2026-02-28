@@ -48,7 +48,6 @@
   - Jug
   - ChemistryEmptyBottle01
   - ClothingEyesGlassesChemical
-  - ChemRecipeDiskPirate # Pirate: chem recipes
 
 - type: latheRecipePack
   id: SurgeryStatic

@@ -8,6 +8,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Goobstation.Common.Standing;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Robust.Shared.Map;
@@ -24,7 +25,7 @@ public sealed class TelefragSystem : EntitySystem
         EntityCoordinates coords,
         TimeSpan knockdownTime,
         float range = 0.3f,
-        bool behavior = false,
+        DropHeldItemsBehavior behavior = DropHeldItemsBehavior.NoDrop,
         bool autoStandUp = false)
     {
         if (range <= 0f)

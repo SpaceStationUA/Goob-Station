@@ -56,4 +56,3 @@ job-name-tider = Тайдер
 JobVirologist = Вірусолог
 job-name-radiohost = Радіоведучий
 JobRadioHost = Радіоведучий
-job-name-outercommander = Зовнішній командир

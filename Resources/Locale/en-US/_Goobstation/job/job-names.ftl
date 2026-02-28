@@ -24,7 +24,6 @@ job-name-navy-captain = Navy Captain
 job-name-diplomat = Diplomat
 job-name-inspector = Central Command Auditor
 job-name-nct = Nanotrasen Career Trainer
-job-name-outercommander = Outer Commander
 
 # Syndicate
 

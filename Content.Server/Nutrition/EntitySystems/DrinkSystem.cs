@@ -63,7 +63,6 @@
 
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Shared.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.Inventory;

@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Common.Standing;
 using Content.Shared._EinsteinEngines.TelescopicBaton;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
@@ -72,6 +73,6 @@ public sealed class TelescopicBatonSystem : EntitySystem
         if (!_toggle.IsActivated(baton.Owner))
             args.Cancelled = true;
         else if (!baton.Comp.CanDropItems)
-            args.DropItems = false;
+            args.Behavior = DropHeldItemsBehavior.NoDrop;
     }
 }

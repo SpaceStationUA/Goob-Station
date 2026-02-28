@@ -5,7 +5,6 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Trigger.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Payload.Components;
@@ -21,12 +20,6 @@ public sealed partial class ChemicalPayloadComponent : Component
 
     [DataField("beakerSlotB", required: true)]
     public ItemSlot BeakerSlotB = new();
-
-    /// <summary>
-    /// The keys that will activate the chemical payload.
-    /// </summary>
-    [DataField]
-    public List<string> KeysIn = new() { TriggerSystem.DefaultTriggerKey };
 }
 
 [Serializable, NetSerializable]

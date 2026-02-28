@@ -35,5 +35,6 @@ station-ai-icon-smiley = Суцільні посмішки
 station-ai-hologram-female = Жіноча зовнішність
 station-ai-hologram-male = Чоловіча зовнішність
 station-ai-hologram-face = Безтілесна голова
+# Goob, послідовність, форма -> вигляд
 
 station-ai-eye-name = Око ШІ - {$name}
