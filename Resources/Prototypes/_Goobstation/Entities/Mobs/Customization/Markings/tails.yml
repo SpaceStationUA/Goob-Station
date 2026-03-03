@@ -1,8 +1,9 @@
+
 - type: marking
   id: dogTail
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Human, Dwarf]
+  speciesRestriction: Felinid #[Human, Dwarf] # Pirate - Don't turn humans and dwarves into felenids
   sprites:
     - sprite: _Goobstation/Mobs/Customization/dog_markings.rsi
       state: dog_tail_standard
@@ -11,7 +12,7 @@
   id: dogTailWag
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Human, Dwarf]
+  speciesRestriction: Felinid #[Human, Dwarf] # Pirate - Don't turn humans and dwarves into felenids
   sprites:
     - sprite: _Goobstation/Mobs/Customization/dog_markings.rsi
       state: dog_tail_animated
