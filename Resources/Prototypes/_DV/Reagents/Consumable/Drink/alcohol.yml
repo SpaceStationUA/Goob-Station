@@ -33,8 +33,8 @@
           min: 1
         reagent: ChloralHydrate
         amount: -10
-      - !type:ModifyStatusEffect 
-        effectProto: StatusEffectStunned
+      - !type:GenericStatusEffect
+        key: Stun
         time: 3
         type: Remove
       - !type:GenericStatusEffect

@@ -1449,8 +1449,8 @@
             Toxin: -3
             Airloss: -3
             Genetic: -3
-      - !type:ModifyStatusEffect 
-        effectProto: StatusEffectStunned
+      - !type:GenericStatusEffect
+        key: Stun
         time: 3
         type: Remove
     Narcotic:

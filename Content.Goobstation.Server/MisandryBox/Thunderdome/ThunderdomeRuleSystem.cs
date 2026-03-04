@@ -29,7 +29,6 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
-using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Containers;
@@ -107,10 +106,7 @@ public sealed class ThunderdomeRuleSystem : EntitySystem
     private void OnRoundEnding(RoundRestartCleanupEvent ev)
     {
         foreach (var eui in _activeEuis.Values)
-        {
-            if (eui.Player.Status != SessionStatus.Disconnected)
-                eui.Close();
-        }
+            eui.Close();
         _activeEuis.Clear();
 
         if (_ruleEntity == null)
@@ -164,11 +160,7 @@ public sealed class ThunderdomeRuleSystem : EntitySystem
             || HasComp<ThunderdomePlayerComponent>(ghostEntity))
             return;
 
-        if (_activeEuis.TryGetValue(session, out var existingEui))
-        {
-            existingEui.Close();
-            _activeEuis.Remove(session);
-        }
+        _activeEuis.Remove(session);
 
         var eui = new ThunderdomeLoadoutEui(this, _ruleEntity.Value, session);
         _euiManager.OpenEui(eui, session);
@@ -288,8 +280,8 @@ public sealed class ThunderdomeRuleSystem : EntitySystem
             if (TryComp<GhostComponent>(ghost, out var ghostComp))
                 _ghost.SetCanReturnToBody((ghost, ghostComp), true);
 
-            if (_playerManager.TryGetSessionById(mindComp.UserId, out var session))
-                _playerManager.SetAttachedEntity(session, ghost);
+            _playerManager.TryGetSessionById(mindComp.UserId, out var session);
+            _playerManager.SetAttachedEntity(session, ghost);
 
             if (!string.IsNullOrWhiteSpace(mindComp.CharacterName))
                 _meta.SetEntityName(ghost, FormattedMessage.EscapeText(mindComp.CharacterName));
