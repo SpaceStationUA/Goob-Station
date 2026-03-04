@@ -48,6 +48,7 @@
             Paramedic: [ 2, 2 ]
             MedicalIntern: [ 4, 4 ]
             Psychologist: [ 1, 1 ]
+            Virologist: [ 3, 3 ]
             #science
             ForensicMantis: [ 1, 1 ]
             Scientist: [ 4, 4 ]

@@ -16,6 +16,6 @@
   description: Уніформа, яка використовується кадетами Служби Безпеки. Немає ніяких знаків розрізнення чи шевронів, окрім букви К з тильної сторони.
   components:
   - type: Sprite
-    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/security_cadet.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/security_cadet.rsi
   - type: Clothing
-    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/security_cadet.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/security_cadet.rsi

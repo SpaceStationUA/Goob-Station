@@ -489,19 +489,19 @@
   description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/hos.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/hos.rsi # Pirate bluesec
   - type: Clothing
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/hos.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/hos.rsi # Pirate bluesec
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#C12D30"
+        color: "#263E5D" # Pirate bluesec
         sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/color/color.rsi # Goob
       - state: overlay-inhand-left
       right:
       - state: inhand-right
-        color: "#C12D30"
+        color: "#263E5D" # Pirate bluesec
         sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/color/color.rsi # Goob
       - state: overlay-inhand-right
 
@@ -512,9 +512,9 @@
   description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security.
   components:
   - type: Sprite
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/hos_alt.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/hos_alt.rsi # Pirate bluesec
   - type: Clothing
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/hos_alt.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/hos_alt.rsi # Pirate bluesec
 
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase, BaseCommandContraband] # Goob
@@ -534,9 +534,9 @@
   description: A grey jumpsuit of Head of Security, which make him look somewhat like a passenger.
   components:
   - type: Sprite
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/hos_grey.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/hos_grey.rsi # Pirate bluesec
   - type: Clothing
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/hos_grey.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/hos_grey.rsi # Pirate bluesec
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
@@ -770,19 +770,19 @@
   description: A jumpsuit made of strong material, providing robust protection.
   components:
   - type: Sprite
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/security.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/security.rsi # Pirate bluesec
   - type: Clothing
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/security.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/security.rsi # Pirate bluesec
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#C12D30"
+        color: "#263E5D" # Pirate bluesec
         sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/color/color.rsi # Goob
       - state: overlay-inhand-left
       right:
       - state: inhand-right
-        color: "#C12D30"
+        color: "#263E5D" # Pirate bluesec
         sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/color/color.rsi # Goob
       - state: overlay-inhand-right
 
@@ -804,9 +804,9 @@
   description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
   components:
   - type: Sprite
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/security_grey.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/security_grey.rsi # Pirate bluesec
   - type: Clothing
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/security_grey.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/security_grey.rsi # Pirate bluesec
 
 - type: entity
   parent: [ClothingUniformBase, BaseSecurityContraband]
@@ -826,19 +826,19 @@
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
   - type: Sprite
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/warden.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/warden.rsi # Pirate bluesec
   - type: Clothing
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/warden.rsi # Goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/warden.rsi # Pirate bluesec
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#C12D30"
+        color: "#2D3644" # Pirate bluesec
         sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/color/color.rsi # Goob
       - state: overlay-inhand-left
       right:
       - state: inhand-right
-        color: "#C12D30"
+        color: "#2D3644" # Pirate bluesec
         sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/color/color.rsi # Goob
       - state: overlay-inhand-right
 
@@ -1378,9 +1378,9 @@
   description: A sign of skill and prestige within the security department.
   components:
   - type: Sprite
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/senior_officer.rsi # goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/senior_officer.rsi # Pirate bluesec
   - type: Clothing
-    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/senior_officer.rsi # goob
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/senior_officer.rsi # Pirate bluesec
 
 - type: entity
   parent: ClothingUniformBase
