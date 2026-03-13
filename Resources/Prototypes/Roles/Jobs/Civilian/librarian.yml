@@ -69,13 +69,17 @@
   description: job-description-librarian
   playTimeTracker: JobLibrarian
   # Pirate contractor start
-  requirements: 
+  requirements:
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
       - IdrisIncorporated
       - OrionExpress
   # Pirate contractor end
+    - !type:SpeciesRequirement # Pirate no ipc psionics
+      inverted: true
+      species:
+        - IPC # Pirate end
   startingGear: LibrarianGear
   icon: "JobIconLibrarian"
   supervisors: job-supervisors-hop

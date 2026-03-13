@@ -57,6 +57,7 @@
   cost: 8
   speciesBlacklist:
     - Shadowkin
+    - Tajaran
   components:
     - type: NightVision
       color: "#2b2d2d"

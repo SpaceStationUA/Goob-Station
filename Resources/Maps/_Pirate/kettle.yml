@@ -124810,7 +124810,7 @@ entities:
     - type: Transform
       pos: 52.24633,-11.908365
       parent: 2
-- proto: MagazinePistolMindbreaker
+- proto: MagazinePistolCryptobiolin
   entities:
   - uid: 18473
     components:

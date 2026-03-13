@@ -1,0 +1,6 @@
+file_public.svg source:
+https://publicicons.org/file-icon
+
+License:
+The Unlicense (public domain dedication)
+https://publicicons.org/license

@@ -82,11 +82,11 @@
           min: 20
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
-        time: 5
+        time: 20
         type: Add
       - !type:ModifyStatusEffect
         effectProto: StatusEffectLotophagoiOil
-        time: 5
+        time: 20
         type: Add
       #- !type:ChemAddMoodlet PIRATE START
       #  moodPrototype: LotoTranscendence

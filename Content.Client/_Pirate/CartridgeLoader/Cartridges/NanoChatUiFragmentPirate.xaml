@@ -8,11 +8,9 @@
     VerticalExpand="True"
     Margin="4">
 
-    <!-- Main container that fills the entire PDA screen -->
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">
-        <!-- Header with app title and new chat button -->
         <controls:StripeBack MinSize="48 44"
                              VerticalExpand="False">
             <BoxContainer Orientation="Horizontal"
@@ -84,6 +82,12 @@
                                  Stretch="KeepAspectCentered"
                                  MinSize="18 18" />
                 </Button>
+                <Button Name="GalleryButton"
+                        Text="{Loc nano-chat-go-to-gallery}"
+                        MinSize="92 30"
+                        MaxSize="92 30"
+                        Margin="0 0 4 0"
+                        StyleClasses="OpenBoth" />
                 <Button Name="ListNumberButton"
                         MinSize="30 30"
                         MaxSize="30 30"
@@ -99,13 +103,11 @@
             </BoxContainer>
         </controls:StripeBack>
 
-        <!-- Main content split -->
         <BoxContainer Name="ChatView"
                       Orientation="Horizontal"
                       VerticalExpand="True"
                       HorizontalExpand="True"
                       Margin="0 7 0 0">
-            <!-- Left panel: Chat list -->
             <PanelContainer StyleClasses="PanelBackgroundBaseDark"
                             VerticalExpand="True"
                             MinWidth="164"
@@ -121,7 +123,6 @@
                                   HorizontalExpand="True"
                                   SeparationOverride="4"
                                   Margin="0">
-                        <!-- Chat entries will be added here dynamically -->
                         <Label Name="NoChatsLabel"
                                Text="{Loc nano-chat-no-chats}"
                                HorizontalAlignment="Left"
@@ -134,7 +135,6 @@
 
             <Control MinSize="8 0" MaxSize="8 0" />
 
-            <!-- Right panel: Current chat -->
             <PanelContainer StyleClasses="PanelBackgroundBaseLight"
                             VerticalExpand="True"
                             HorizontalExpand="True">
@@ -142,7 +142,6 @@
                               VerticalExpand="True"
                               HorizontalExpand="True"
                               Margin="6">
-                    <!-- Messages area with centered "select chat" label -->
                     <BoxContainer Name="MessageArea"
                                   Orientation="Vertical"
                                   VerticalExpand="True"
@@ -167,19 +166,38 @@
                         </ScrollContainer>
                     </BoxContainer>
 
-                    <!-- Message input -->
                     <BoxContainer Name="MessageInputContainer"
                                   Orientation="Vertical"
                                   HorizontalExpand="True"
                                   Margin="0 4 0 0"
                                   Visible="False">
-                        <!-- Character count -->
                         <Label Name="CharacterCount"
                                HorizontalAlignment="Right"
                                StyleClasses="LabelSubText"
                                Margin="0 0 2 2"
                                Visible="False" />
-                        <!-- Input row -->
+                        <PanelContainer Name="AttachmentBanner"
+                                        Visible="False"
+                                        Margin="0 0 0 6"
+                                        StyleClasses="PanelBackgroundBaseDark">
+                            <BoxContainer Orientation="Horizontal"
+                                          HorizontalExpand="True"
+                                          Margin="6 4">
+                                <Label Name="AttachmentLabel"
+                                       HorizontalExpand="True"
+                                       ClipText="True" />
+                                <Button Name="RemoveAttachmentButton"
+                                        ToolTip="{Loc nano-chat-delete}"
+                                        MinSize="24 24"
+                                        MaxSize="24 24"
+                                        StyleClasses="OpenBoth">
+                                    <TextureRect StyleClasses="ButtonSquare"
+                                                 TexturePath="/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"
+                                                 Stretch="KeepAspectCentered"
+                                                 MinSize="14 14" />
+                                </Button>
+                            </BoxContainer>
+                        </PanelContainer>
                         <BoxContainer Orientation="Horizontal"
                                       HorizontalExpand="True">
                             <LineEdit Name="MessageInput"
@@ -187,6 +205,14 @@
                                       HorizontalExpand="True"
                                       MinSize="0 30"
                                       StyleClasses="OpenRight" />
+                            <Button Name="AttachmentButton"
+                                    Text="+"
+                                    MinSize="30 30"
+                                    MaxSize="30 30"
+                                    Disabled="True"
+                                    StyleClasses="OpenBoth"
+                                    Margin="6 0 0 0"
+                                    ToolTip="{Loc nano-chat-attach-photo}" />
                             <Button Name="SendButton"
                                     MinSize="30 30"
                                     MaxSize="30 30"
@@ -202,10 +228,109 @@
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
+
+        <BoxContainer Name="GalleryView"
+                      Orientation="Horizontal"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Margin="0 7 0 0"
+                      Visible="False">
+            <PanelContainer StyleClasses="PanelBackgroundBaseDark"
+                            VerticalExpand="True"
+                            MinWidth="164"
+                            MaxWidth="164">
+                <ScrollContainer VerticalExpand="True"
+                                 MinWidth="158"
+                                 HorizontalExpand="True"
+                                 Margin="0"
+                                 HScrollEnabled="False">
+                    <BoxContainer Name="GalleryList"
+                                  Orientation="Vertical"
+                                  VerticalExpand="True"
+                                  HorizontalExpand="True"
+                                  SeparationOverride="4"
+                                  Margin="0">
+                        <Label Name="NoGalleryPhotosLabel"
+                               Text="{Loc nano-chat-gallery-no-photos}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Margin="2 2 0 0"
+                               StyleClasses="LabelSubText" />
+                    </BoxContainer>
+                </ScrollContainer>
+            </PanelContainer>
+
+            <Control MinSize="8 0" MaxSize="8 0" />
+
+            <PanelContainer StyleClasses="PanelBackgroundBaseLight"
+                            VerticalExpand="True"
+                            HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical"
+                              VerticalExpand="True"
+                              HorizontalExpand="True"
+                              Margin="6">
+                    <BoxContainer Name="GalleryPreviewHeader"
+                                  Orientation="Horizontal"
+                                  HorizontalExpand="True"
+                                  MinSize="0 30"
+                                  Margin="0 0 0 6">
+                        <Label Name="GalleryPreviewName"
+                               StyleClasses="LabelBig"
+                               HorizontalExpand="True"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Center"
+                               ClipText="True"
+                               Margin="0 0 2 0" />
+                        <BoxContainer Orientation="Horizontal"
+                                      VerticalAlignment="Center"
+                                      SeparationOverride="4">
+                            <Button Name="GalleryActionButton"
+                                    Text="+"
+                                    Visible="False"
+                                    MinSize="30 30"
+                                    MaxSize="30 30"
+                                    StyleClasses="OpenBoth"
+                                    ToolTip="{Loc nano-chat-attach-selected-photo}" />
+                            <Button Name="GalleryDeleteButton"
+                                    Visible="False"
+                                    MinSize="30 30"
+                                    MaxSize="30 30"
+                                    StyleClasses="OpenBoth"
+                                    ToolTip="{Loc nano-chat-delete-photo}">
+                                <TextureRect StyleClasses="ButtonSquare"
+                                             TexturePath="/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"
+                                             Stretch="KeepAspectCentered"
+                                             MinSize="18 18" />
+                            </Button>
+                        </BoxContainer>
+                    </BoxContainer>
+                    <Label Name="GalleryEmptyLabel"
+                           Text="{Loc nano-chat-gallery-empty}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           StyleClasses="LabelSubText"
+                           ModulateSelfOverride="#9aa2b8"
+                           Margin="0 0 0 8"
+                           VerticalExpand="True" />
+                    <ScrollContainer Name="GalleryPreviewScroll"
+                                     VerticalExpand="True"
+                                     HorizontalExpand="True"
+                                     Visible="False"
+                                     HScrollEnabled="False">
+                        <TextureRect Name="GalleryPreviewImage"
+                                     HorizontalExpand="True"
+                                     VerticalExpand="False"
+                                     HorizontalAlignment="Center"
+                                     Stretch="Scale"
+                                     MaxSize="640 768"
+                                     Visible="False"
+                                     Margin="0 0 0 6" />
+                    </ScrollContainer>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+
         <dv:NanoChatLookupView Name="LookupView"
                                Visible="False" />
     </BoxContainer>
 </cartridges:NanoChatUiFragmentPirate>
-
-
-

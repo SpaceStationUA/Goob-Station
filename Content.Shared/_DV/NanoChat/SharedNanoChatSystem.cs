@@ -22,6 +22,7 @@ namespace Content.Shared._DV.NanoChat;
 public abstract class SharedNanoChatSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    public const int MaxPhotos = 50; // Pirate: camera (nanochat gallery)
 
     public override void Initialize()
     {
@@ -245,6 +246,97 @@ public abstract class SharedNanoChatSystem : EntitySystem
         return recipient.HasUnread;
     }
 
+    #region Pirate: camera (nanochat gallery)
+    /// <summary>
+    ///     Allocates the next local message id for this card.
+    /// </summary>
+    public uint AllocateMessageId(Entity<NanoChatCardComponent?> card)
+    {
+        if (!Resolve(card, ref card.Comp))
+            return 0;
+
+        var id = card.Comp.NextMessageId++;
+        Dirty(card);
+        return id;
+    }
+    /// <summary>
+    ///     Gets the stored PDA gallery photos for a card.
+    /// </summary>
+    public IReadOnlyDictionary<string, NanoChatPhotoData> GetStoredPhotos(Entity<NanoChatCardComponent?> card)
+    {
+        if (!Resolve(card, ref card.Comp))
+            return new Dictionary<string, NanoChatPhotoData>();
+
+        return card.Comp.Photos;
+    }
+    /// <summary>
+    ///     Gets the currently selected gallery photo file name for external actions.
+    /// </summary>
+    public string? GetSelectedGalleryPhoto(Entity<NanoChatCardComponent?> card)
+    {
+        if (!Resolve(card, ref card.Comp))
+            return null;
+
+        return card.Comp.SelectedGalleryPhotoFileName;
+    }
+
+    /// <summary>
+    ///     Sets the currently selected gallery photo file name for external actions.
+    /// </summary>
+    public void SetSelectedGalleryPhoto(Entity<NanoChatCardComponent?> card, string? fileName)
+    {
+        if (!Resolve(card, ref card.Comp) || card.Comp.SelectedGalleryPhotoFileName == fileName)
+            return;
+
+        card.Comp.SelectedGalleryPhotoFileName = fileName;
+        Dirty(card);
+    }
+
+    /// <summary>
+    ///     Tries to store or overwrite a gallery photo by file name.
+    /// </summary>
+    public bool TryStorePhoto(Entity<NanoChatCardComponent?> card, NanoChatPhotoData photo)
+    {
+        if (!Resolve(card, ref card.Comp) || string.IsNullOrWhiteSpace(photo.FileName))
+            return false;
+
+        if (!card.Comp.Photos.ContainsKey(photo.FileName) && card.Comp.Photos.Count >= MaxPhotos)
+            return false;
+
+        card.Comp.Photos[photo.FileName] = photo;
+        Dirty(card);
+        return true;
+    }
+
+    /// <summary>
+    ///     Tries to get a stored gallery photo by file name.
+    /// </summary>
+    public bool TryGetStoredPhoto(Entity<NanoChatCardComponent?> card, string fileName, out NanoChatPhotoData photo)
+    {
+        photo = default;
+        return Resolve(card, ref card.Comp) && card.Comp.Photos.TryGetValue(fileName, out photo);
+    }
+
+    /// <summary>
+    ///     Deletes a stored gallery photo by file name.
+    /// </summary>
+    public bool TryDeleteStoredPhoto(Entity<NanoChatCardComponent?> card, string fileName)
+    {
+        if (!Resolve(card, ref card.Comp))
+            return false;
+
+        var deleted = card.Comp.Photos.Remove(fileName);
+        if (deleted)
+        {
+            if (card.Comp.SelectedGalleryPhotoFileName == fileName)
+                card.Comp.SelectedGalleryPhotoFileName = null;
+            Dirty(card);
+        }
+
+        return deleted;
+    }
+    #endregion
+
     /// <summary>
     ///     Clears all messages and recipients from the card.
     /// </summary>
@@ -255,7 +347,9 @@ public abstract class SharedNanoChatSystem : EntitySystem
 
         card.Comp.Messages.Clear();
         card.Comp.Recipients.Clear();
+        card.Comp.Photos.Clear(); // Pirate: camera (nanochat gallery)
         card.Comp.CurrentChat = null;
+        card.Comp.SelectedGalleryPhotoFileName = null; // Pirate: camera (nanochat gallery)
         Dirty(card);
     }
 

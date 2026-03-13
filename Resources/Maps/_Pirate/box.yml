@@ -136269,7 +136269,7 @@ entities:
     - type: Transform
       pos: -52.5,5.5
       parent: 2
-- proto: MagazinePistolMindbreaker
+- proto: MagazinePistolCryptobiolin
   entities:
   - uid: 19839
     components:

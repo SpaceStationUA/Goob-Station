@@ -116,7 +116,7 @@ public sealed class PaperSystem : EntitySystem
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
     [Dependency] private readonly SharedStationSystem _station = default!;
     [Dependency] private readonly SharedGameTicker _ticker = default!;
-    private const int StationBaseYear = 2468;
+    private const int StationBaseYear = Content.Shared._Pirate.PirateStationCalendar.CurrentYear; // Pirate: camera (nanochat gallery)
     private static readonly Regex StationCodeRegex = new(@"\b[A-Z]{2,5}-\d{1,4}\b", RegexOptions.Compiled);
     private static readonly Regex StationLabelRegex = new(
         @"(?:^|\s)(?:Station|Станція|Станция)\s*:\s*(?<value>[^\s,.;:]+)",

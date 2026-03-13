@@ -30,8 +30,32 @@
                         <!-- Colors set in code based on message sender -->
                     </graphics:StyleBoxFlat>
                 </PanelContainer.PanelOverride>
-                <RichTextLabel Name="MessageText"
-                               HorizontalExpand="True" />
+                <BoxContainer Orientation="Vertical"
+                              HorizontalExpand="True">
+                    <Label Name="PhotoNameLabel"
+                           StyleClasses="LabelSubText"
+                           Visible="False"
+                           ClipText="True"
+                           Margin="0 0 0 4" />
+                    <TextureRect Name="PhotoPreview"
+                                 HorizontalExpand="True"
+                                 MinSize="258 96"
+                                 MaxSize="258 258"
+                                 Stretch="Scale"
+                                 Visible="False"
+                                 Margin="0 0 0 6" />
+                    <RichTextLabel Name="MessageText"
+                                   HorizontalExpand="True"
+                                   Visible="False" />
+                    <Button Name="StorePhotoButton"
+                            Text="{Loc nano-chat-store-photo}"
+                            Visible="False"
+                            HorizontalExpand="True"
+                            HorizontalAlignment="Stretch"
+                            MinSize="0 28"
+                            Margin="0 6 0 0"
+                            StyleClasses="OpenBoth" />
+                </BoxContainer>
             </PanelContainer>
 
             <!-- Delivery failed text -->

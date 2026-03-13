@@ -1,6 +1,6 @@
 using System.Numerics;
 using Content.Shared.Shadowkin;
-using Content.Shared.CCVar;
+using Content.Shared._DV.CCVars;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -27,7 +27,7 @@ public sealed partial class ShadowkinSystem : EntitySystem
         SubscribeLocalEvent<ShadowkinComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ShadowkinComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
-        Subs.CVar(_cfg, CCVars.NoVisionFilters, OnNoVisionFiltersChanged);
+        Subs.CVar(_cfg, DCCVars.NoVisionFilters, OnNoVisionFiltersChanged);
 
         _overlay = new();
     }
@@ -35,7 +35,7 @@ public sealed partial class ShadowkinSystem : EntitySystem
     private void OnInit(EntityUid uid, ShadowkinComponent component, ComponentInit args)
     {
         if (uid != _playerMan.LocalEntity
-            || _cfg.GetCVar(CCVars.NoVisionFilters))
+            || _cfg.GetCVar(DCCVars.NoVisionFilters))
             return;
 
         _overlayMan.AddOverlay(_overlay);
@@ -51,9 +51,9 @@ public sealed partial class ShadowkinSystem : EntitySystem
 
     private void OnPlayerAttached(EntityUid uid, ShadowkinComponent component, LocalPlayerAttachedEvent args)
     {
-        if (_cfg.GetCVar(CCVars.NoVisionFilters))
+        if (_cfg.GetCVar(DCCVars.NoVisionFilters))
             return;
-            
+
         _overlayMan.AddOverlay(_overlay);
     }
 
@@ -74,7 +74,7 @@ public sealed partial class ShadowkinSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (_cfg.GetCVar(CCVars.NoVisionFilters))
+        if (_cfg.GetCVar(DCCVars.NoVisionFilters))
             return;
 
         var uid = _playerMan.LocalEntity;
@@ -102,7 +102,7 @@ public sealed partial class ShadowkinSystem : EntitySystem
         if (intensity != null)
             _overlay.TintAmount = intensity;
 
-        if (!_cfg.GetCVar(CCVars.NoVisionFilters))
+        if (!_cfg.GetCVar(DCCVars.NoVisionFilters))
             _overlayMan.AddOverlay(_overlay);
     }
 }

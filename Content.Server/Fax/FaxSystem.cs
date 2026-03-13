@@ -126,6 +126,10 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Emag.Systems;
+using Content.Shared._DV.CartridgeLoader.Cartridges; // Pirate: camera (nanochat gallery)
+using System.IO; // Pirate: camera (nanochat gallery)
+using Content.Shared._Pirate.Photo; // Pirate: camera
+using Content.Server._Pirate.Photo; // Pirate: camera
 using Content.Shared.Fax;
 using Content.Shared.Fax.Components;
 using Content.Shared.Fax.Systems;
@@ -144,8 +148,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Shared._Pirate.Photo; // Pirate: camera
-using Content.Server._Pirate.Photo; // Pirate: camera
 
 namespace Content.Server.Fax;
 
@@ -629,6 +631,68 @@ public sealed class FaxSystem : EntitySystem
             $"of {nameWithLabel}: {args.Content}");
     }
 
+    #region Pirate: camera (nanochat gallery)
+    public bool CanQueueNanoChatPhotoPrint(EntityUid uid, FaxMachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (TryComp<PhotoCardComponent>(component.PaperSlot.Item, out _))
+            return false;
+
+        if (component.SendTimeoutRemaining > 0 || component.InsertingTimeRemaining > 0)
+            return false;
+
+        return !TryComp<ApcPowerReceiverComponent>(uid, out var receiver) || receiver.Powered;
+    }
+
+    public bool TryQueueNanoChatPhotoPrint(
+        EntityUid uid,
+        EntityUid actor,
+        NanoChatPhotoData photo,
+        FaxMachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component) ||
+            !CanQueueNanoChatPhotoPrint(uid, component) ||
+            photo.ImageData is not { Length: > 0 } imageData)
+        {
+            return false;
+        }
+
+        var photoName = string.IsNullOrWhiteSpace(photo.FileName)
+            ? "PhotoCard"
+            : Path.GetFileNameWithoutExtension(photo.FileName);
+        var photoDescription = string.IsNullOrWhiteSpace(photo.Description) ? null : photo.Description;
+        var photoContent = photoDescription ?? photo.Caption ?? string.Empty;
+        var printout = new FaxPrintout(
+            photoContent,
+            photoName,
+            null,
+            "PhotoCard",
+            photoImageData: imageData,
+            photoPreviewData: photo.PreviewData is { Length: > 0 } ? photo.PreviewData : imageData,
+            photoCustomName: photoName,
+            photoCustomDescription: photoDescription,
+            photoCaption: photo.Caption,
+            photoEntityDescription: photoDescription);
+
+        component.PrintingQueue.Enqueue(printout);
+        component.SendTimeoutRemaining += component.SendTimeout;
+        UpdateUserInterface(uid, component);
+
+        if (actor.IsValid())
+        {
+            _adminLogger.Add(LogType.Action,
+                LogImpact.Low,
+                $"{ToPrettyString(actor):actor} " +
+                $"added NanoChat photo print job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
+                $"of {photoName}: {photoContent}");
+        }
+
+        return true;
+    }
+    #endregion
+
     /// <summary>
     ///     Copies the paper in the fax. A timeout is set after copying,
     ///     which is shared by the send button.
@@ -777,13 +841,13 @@ public sealed class FaxSystem : EntitySystem
 
                 _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, photoPayload);
 
-                if (!args.Actor.IsValid()) // Goobstation - no log for automation
-                _adminLogger.Add(LogType.Action,
-                    LogImpact.Low,
-                    $"{ToPrettyString(args.Actor):actor} " +
-                    $"sent fax from \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
-                    $"to \"{faxName}\" ({component.DestinationFaxAddress}) " +
-                    $"of {ToPrettyString(sendEntity):subject}: {photo.CustomName ?? string.Empty}");
+                if (args.Actor.IsValid()) // // Pirate: camera(nanochat gallery)
+                    _adminLogger.Add(LogType.Action,
+                        LogImpact.Low,
+                        $"{ToPrettyString(args.Actor):actor} " +
+                        $"sent fax from \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
+                        $"to \"{faxName}\" ({component.DestinationFaxAddress}) " +
+                        $"of {ToPrettyString(sendEntity):subject}: {photo.CustomName ?? string.Empty}");
 
                 component.SendTimeoutRemaining += component.SendTimeout;
 
@@ -823,13 +887,13 @@ public sealed class FaxSystem : EntitySystem
 
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
-        if (!args.Actor.IsValid()) // Goobstation - no log for automation
-        _adminLogger.Add(LogType.Action,
-            LogImpact.Low,
-            $"{ToPrettyString(args.Actor):actor} " +
-            $"sent fax from \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
-            $"to \"{faxName}\" ({component.DestinationFaxAddress}) " +
-            $"of {ToPrettyString(sendEntity):subject}: {paper.Content}");
+        if (args.Actor.IsValid()) // Pirate: audit player-triggered fax sends
+            _adminLogger.Add(LogType.Action,
+                LogImpact.Low,
+                $"{ToPrettyString(args.Actor):actor} " +
+                $"sent fax from \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
+                $"to \"{faxName}\" ({component.DestinationFaxAddress}) " +
+                $"of {ToPrettyString(sendEntity):subject}: {paper.Content}");
 
         component.SendTimeoutRemaining += component.SendTimeout;
 

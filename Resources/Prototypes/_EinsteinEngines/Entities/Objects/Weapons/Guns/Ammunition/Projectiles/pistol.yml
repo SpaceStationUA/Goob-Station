@@ -1,6 +1,6 @@
 - type: entity
-  id: BulletPistolMindbreaker
-  name: "куля (.38 special mindbreaker)"
+  id: BulletPistolCryptobiolin
+  name: bullet (.38 special Cryptobiolin)
   parent: BulletPistolPractice
   categories: [ HideSpawnMenu ]
   components:
@@ -12,7 +12,7 @@
     solutions:
       ammo:
         reagents:
-        - ReagentId: MindbreakerToxin
+        - ReagentId: Cryptobiolin
           Quantity: 5
   - type: RefillableSolution
     solution: ammo
