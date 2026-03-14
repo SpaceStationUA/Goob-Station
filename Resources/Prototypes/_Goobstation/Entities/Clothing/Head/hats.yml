@@ -35,6 +35,20 @@
     tags:
     - ClothMade
     - WhitelistChameleon # We do a little bit of trolling.
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
 
 - type: entity
   parent: [ClothingHeadBase, BaseCentcommContraband]
@@ -50,6 +64,20 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.45
+        Heat: 0.45
+        Radiation: 0.45
 
 - type: entity
   parent: [ClothingHeadBase, BaseCentcommContraband]
@@ -65,6 +93,20 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.45
+        Heat: 0.45
+        Radiation: 0.45
 
 - type: entity
   parent: [ClothingHeadBase, BaseCentcommContraband]
@@ -80,6 +122,20 @@
     tags:
     - ClothMade
     - WhitelistChameleon # We do a little bit of trolling.
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Heat: 0.3
+        Radiation: 0.3
 
 - type: entity
   parent: [ClothingHeadBase, BaseCentcommContraband]
@@ -95,6 +151,20 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.29
+        Slash: 0.29
+        Piercing: 0.29
+        Heat: 0.34
+        Radiation: 0.29
 
 - type: entity
   parent: [ClothingHeadBase, BaseFoldable, BaseCentcommContraband]
@@ -120,6 +190,20 @@
     - state: icon-up
       map: ["foldedLayer"]
       visible: false
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.32
+        Slash: 0.32
+        Piercing: 0.32
+        Heat: 0.25
+        Radiation: 0.32
 
 - type: entity
   parent: ClothingHeadBase
@@ -131,6 +215,14 @@
     sprite: _Goobstation/Clothing/Head/Hats/mailman.rsi
   - type: Clothing
     sprite: _Goobstation/Clothing/Head/Hats/mailman.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.99
+        Slash: 0.99
+        Piercing: 0.99
+        Heat: 0.99
+        Radiation: 0.99
 
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
@@ -146,6 +238,14 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.99
+        Slash: 0.99
+        Piercing: 0.99
+        Heat: 0.99
+        Radiation: 0.99
 
 - type: entity
   parent: [ClothingHeadHatPropeller, ClothingHeadHeadHatBaseFlipped]
@@ -210,6 +310,20 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Heat: 0.3
+        Radiation: 0.3
 
 - type: entity
   parent: ClothingHeadBase
@@ -277,6 +391,20 @@
     sprite: _Goobstation/Clothing/Head/Hats/cap_senior.rsi
   - type: Item
     sprite: _Goobstation/Clothing/Head/Hats/cap_senior.rsi
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Heat: 0.3
+        Radiation: 0.3
     
 - type: entity
   parent: ClothingHeadBase
@@ -306,3 +434,17 @@
     sprite: _Goobstation/Clothing/Head/Hats/outcommcap.rsi
   - type: Clothing
     sprite: _Goobstation/Clothing/Head/Hats/outcommcap.rsi
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
