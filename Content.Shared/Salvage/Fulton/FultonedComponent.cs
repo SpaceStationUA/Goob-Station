@@ -42,6 +42,6 @@ public sealed partial class FultonedComponent : Component
     /// <summary>
     /// Can the fulton be removed.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("removeable")]
-    public bool Removeable = true;
+    [ViewVariables(VVAccess.ReadWrite), DataField("removable")]
+    public bool Removable = true;
 }

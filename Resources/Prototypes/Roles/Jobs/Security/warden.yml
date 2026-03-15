@@ -137,13 +137,13 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 18000 #5 hrs
-    - !type:RoleTimeRequirement
-      role: JobBrigmedic
-      time: 18000 #5 hrs
+      time: 36000 #10 hrs # Pirate
+    #- !type:RoleTimeRequirement # Pirate remove - Warden doesn't have to know medicine
+    #  role: JobBrigmedic
+    #  time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hrs
+      time: 90000 #25 hrs # Pirate
     - !type:TraitsRequirement # Pirate
       inverted: true
       traits:
@@ -173,9 +173,9 @@
   canBeAntag: false
   guides: # goobstation
   - SpaceLaw
-  - Legal SOP
+  - LegalSOP
   - Security
-  - Warden SOP
+  - WardenSOP
   - KravMaga
   goobcoins: 35 #Goob content
   access:

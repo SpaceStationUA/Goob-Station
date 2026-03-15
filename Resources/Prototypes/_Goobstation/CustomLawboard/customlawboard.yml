@@ -1,8 +1,26 @@
 - type: entity
+  id: BaseCustomLawboard
+  parent: BaseElectronics
+  abstract: True
+  components:
+  - type: SiliconLawProvider
+    lawUploadSound: /Audio/Ambience/Antag/emagged_borg.ogg
+  - type: UserInterface
+    interfaces:
+      enum.CustomLawboardUiKey.Key:
+        type: CustomLawboardBoundInterface
+  - type: CustomLawboard
+  - type: ActivatableUI
+    inHandsOnly: false
+    key: enum.CustomLawboardUiKey.Key
+  - type: StaticPrice
+    price: 5000
+
+- type: entity
   id: SyndicateCustomLawboard
-  parent: [BaseElectronics, BaseSyndicateAnchoredContraband]
-  name: experimental syndicate law board
-  description: A strange looking experimental lawboard. Judging by the Syndicate display on it, it's probaly used for nefarious purposes.
+  parent: [BaseCustomLawboard, BaseSyndicateAnchoredContraband]
+  name: "експериментальна плата законів Синдикату"
+  description: "Дивно виглядаюча експериментальна плата законів. Судячи з дисплея Синдикату на ній, вона, ймовірно, використовується для підступних цілей."
   components:
   - type: Sprite
     sprite: _Goobstation/CustomLawboard/custom_lawboard.rsi
@@ -21,14 +39,15 @@
       - lawIdentifierOverride: null
         order: 3
         lawString: law-antimov-3
-    lawUploadSound: /Audio/Ambience/Antag/emagged_borg.ogg # Antimov's sound IS pretty cool but it'd be a bit misleading
-  - type: UserInterface
-    interfaces:
-      enum.CustomLawboardUiKey.Key:
-        type: CustomLawboardBoundInterface
-  - type: CustomLawboard
-  - type: ActivatableUI
-    inHandsOnly: false
-    key: enum.CustomLawboardUiKey.Key
-  - type: StaticPrice
-    price: 10000
+
+- type: entity
+  id: NTCustomLawboard
+  parent: [BaseCustomLawboard, BaseCommandContraband]
+  name: "вільноформатна плата законів"
+  description: "Вільноформатна плата законів, що приймає будь-які користувацькі закони."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/CustomLawboard/custom_lawboard_NT.rsi
+    state: icon
+  - type: SiliconLawProvider
+    laws: Crewsimov

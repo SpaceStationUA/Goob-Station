@@ -212,6 +212,15 @@
   ghostDescription: "Усі люди наділені талантами, а я просто декорація"
 
 - type: customGhost
+  id: VCS-ghost
+  ckey: VCS
+  sprite:
+    - _Pirate/Ghosts/VCS.rsi
+  alpha: 1
+  ghostName: VCS
+  ghostDescription: Той самий НВех який все поламав.
+
+- type: customGhost
   id: luciusGG-ghost
   ckey: luciusGG
   sprite:
@@ -284,3 +293,48 @@
   alpha: 1
   ghostName: "Редстен"
   ghostDescription: "Найбільший боржник і ручна тваринка декора."
+
+- type: customGhost
+  id: crazydraggy-ghost
+  ckey: crazydraggy
+  sprite:
+    - _Pirate/Ghosts/CrazyDraggy.rsi
+  alpha: 0.8
+  ghostName: "Блюспейс дракон"
+  ghostDescription: "Він дивится тобі прямо у очі, чи хоче він тебе з'їсти?"
+
+- type: customGhost
+  id: Vareniko-ghost
+  ckey: Vareniko
+  sprite:
+    - _Pirate/Ghosts/Vareniko.rsi
+  alpha: 1
+  ghostName: Vareniko
+  ghostDescription: Уєєє... Ненавиджу генокрадів і єретиків... а ще різників... а ще...
+
+- type: customGhost
+  id: BlackTank-ghost
+  ckey: BlackTank
+  sprite:
+    - _Pirate/Ghosts/BlackTank.rsi
+  alpha: 1
+  ghostName: BlackTank
+  ghostDescription: Wawa!
+
+- type: customGhost
+  id: narinder-ghost
+  ckey: narinder
+  sprite:
+    - _Pirate/Ghosts/Narinder.rsi
+  alpha: 0.8
+  ghostName: "Narinder"
+  ghostDescription: "неко-інженер якого не зупинила смерть від продовження роботи , чомусь ви відчуваєте тепло та запах металу з кавою поруч з ним. RIG на спині показує незький рівень здоровя"
+
+- type: customGhost
+  id: hhhhhhhhruo-ghost
+  ckey: hhhhhhhhruo
+  sprite:
+    - _Pirate/Ghosts/hhhhhhhhruo.rsi
+  alpha: 1
+  ghostName: hhhhhhhhruo
+  ghostDescription: лютий хард РПешер

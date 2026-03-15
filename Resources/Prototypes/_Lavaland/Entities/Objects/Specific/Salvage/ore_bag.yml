@@ -1,0 +1,37 @@
+- type: entity
+  name: "магнітний мішок для руди великої місткості"
+  description: "Міцний мішок, у якому фахівці з утилізації та шахтарі можуть носити великі обсяги руди. Притягує будь-яку руду поблизу, коли закріплений на поясі."
+  id: OreBagMagnetic
+  parent: OreBag
+  components:
+  - type: Sprite
+    sprite: _Lavaland/Objects/Specific/Mining/ore_bag.rsi
+    layers:
+    - state: orebag_off
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Clothing
+    sprite: _Lavaland/Objects/Specific/Mining/ore_bag.rsi
+    quickEquip: false
+    slots:
+    - belt
+  - type: MagnetPickup # Lavaland TODO: rewrite this component's logic when porting to Reforged
+    range: 1.5
+  - type: ItemToggle
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { state: orebag_on }
+          False: { state: orebag_off }
+  - type: Storage
+    grid:
+    - 0,0,9,7

@@ -124,3 +124,5 @@ alerts-rooted-desc = Ви прикріплені до землі. Ви не мо
 
 alerts-stealthy-name = Кишенькова крадіжка
 alerts-stealthy-desc = Показує, чи ви зараз здійснюєте кишенькову крадіжку. Натисніть, щоб перемкнути.
+alerts-knockdown-name = [color=yellow]Повалений[/color]
+alerts-knockdown-desc = Ви [color=yellow]повалені[/color]! Щось змусило вас посковзнутися або штовхнуло, обмеживши ваш рух.

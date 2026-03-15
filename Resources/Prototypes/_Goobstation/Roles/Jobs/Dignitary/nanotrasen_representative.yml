@@ -95,8 +95,8 @@
 
 - type: job
   id: NanotrasenRepresentative
-  name: Nanotrasen Representative
-  description: "Represent NT, Send reports back to them on the station's situation, Inform the heads of anything CentCom orders them to do."
+  name: job-name-ntr
+  description: "Представляйте NT, надсилайте їм звіти про ситуацію на станції та повідомляйте голів про накази Центкому."
   playTimeTracker: JobNanotrasenRepresentative
   requirements:
     - !type:DepartmentTimeRequirement
@@ -130,8 +130,9 @@
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  whitelisted: true # Pirate
   guides:
-  - NanotrasenRep SOP
+  - NanotrasenRepSOP
   - SOP
   - SpaceLaw
   - Writing

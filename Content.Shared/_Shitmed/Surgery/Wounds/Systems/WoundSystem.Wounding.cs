@@ -1332,30 +1332,40 @@ public sealed partial class WoundSystem
         if (!Resolve(woundable, ref component, false))
             return;
 
-        var nearestSeverity = component.WoundableSeverity;
-        foreach (var (severity, value) in component.Thresholds.OrderByDescending(kv => kv.Value))
+        var oldSeverity = component.WoundableSeverity;
+        var integrity = component.WoundableIntegrity;
+
+        var nearestSeverity = oldSeverity;
+        if (integrity >= component.IntegrityCap)
         {
-            if (component.WoundableIntegrity >= component.IntegrityCap)
+            nearestSeverity = WoundableSeverity.Healthy;
+        }
+        else
+        {
+            var found = false;
+            var nearestThreshold = FixedPoint2.Zero;
+
+            foreach (var (severity, value) in component.Thresholds)
             {
-                nearestSeverity = WoundableSeverity.Healthy;
-                break;
+                if (integrity < value)
+                    continue;
+
+                if (!found || value > nearestThreshold)
+                {
+                    found = true;
+                    nearestThreshold = value;
+                    nearestSeverity = severity;
+                }
             }
-
-            if (component.WoundableIntegrity < value)
-                continue;
-
-            nearestSeverity = severity;
-            break;
         }
 
-        if (nearestSeverity != component.WoundableSeverity)
+        if (nearestSeverity != oldSeverity)
         {
-            var ev = new WoundableSeverityChangedEvent(component.WoundableSeverity, nearestSeverity);
+            var ev = new WoundableSeverityChangedEvent(oldSeverity, nearestSeverity);
             RaiseLocalEvent(woundable, ref ev);
+            component.WoundableSeverity = nearestSeverity;
+            Dirty(woundable, component);
         }
-        component.WoundableSeverity = nearestSeverity;
-
-        Dirty(woundable, component);
 
         var bodyPart = Comp<BodyPartComponent>(woundable);
         if (bodyPart.Body == null)

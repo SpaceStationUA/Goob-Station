@@ -3,8 +3,8 @@
 - type: entity
   parent: FoodBreadSliceBase
   id: FoodCottonBun
-  name: cotton bun
-  description: A cotton hamburger bun. Soft, round and convenient to hold.
+  name: "бавовняна булочка"
+  description: "Бавовняна булочка для гамбургера. М'яка, кругла та зручна для тримання."
   components:
   - type: Food
     requiresSpecialDigestion: true
@@ -38,8 +38,8 @@
 - type: entity
   parent: FoodBreadSliceBase
   id: FoodCottonBunBottom
-  name: cotton bottom bun
-  description: It's time for moths to experience the burger tower.
+  name: "нижня бавовняна булочка"
+  description: "Настав час для молі спробувати вежу з бургерів."
   components:
   - type: Item
     size: Normal #patch until there is an adequate resizing system in place
@@ -53,15 +53,16 @@
     - state: cottonbun_bottom
     - map: ["foodSequenceLayers"]
   - type: FoodSequenceStartPoint
-    key: cotton_burger
+    key: CottonBurger
     acceptAll: true
-    maxLayers: 15 #fixed aineias crashing admins
+    maxLayers: 12 #fixed aineias crashing admins # Upstreamer edit i lowered this cause new burger is ass
     startPosition: 0, 0
     offset: 0, 0.07
     minLayerOffset: -0.05, 0
     maxLayerOffset: 0.05, 0
     nameGeneration: food-sequence-cotton-burger-gen
   - type: Appearance
+  - type: FoodMetamorphableByAdding
   - type: SolutionContainerManager
     solutions:
       food:
@@ -81,8 +82,8 @@
 - type: entity
   parent: FoodBreadSliceBase
   id: FoodCottonBunTop
-  name: cotton top bun
-  description: The perfect finish for your fibrous burger tower.
+  name: "верхня бавовняна булочка"
+  description: "Ідеальне завершення вашої волокнистої вежі з бургерів."
   components:
   - type: Food
     requiresSpecialDigestion: true
@@ -100,12 +101,8 @@
         - ReagentId: Fiber
           Quantity: 1.665
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/cottonburger.rsi
-      state: cottonbun_top
     entries:
-      cotton_burger:
-        final: true
+      CottonBurger: CottonBunTopBurger
   - type: Tag
     tags:
     - ClothMade

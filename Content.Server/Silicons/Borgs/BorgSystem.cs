@@ -71,7 +71,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Body.Events;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
 using Content.Shared._CorvaxNext.Silicons.Borgs.Components;
@@ -96,6 +95,7 @@ using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
 using Content.Shared.Throwing;
+using Content.Shared.Trigger.Systems;
 using Content.Shared.Whitelist;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
@@ -105,6 +105,11 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+#region DOWNSTREAM-TPirates: IPC screens
+using Content.Shared.Audio;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+#endregion
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -132,6 +137,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!; // DOWNSTREAM-TPirates: IPC screens
+
 
     public static readonly ProtoId<JobPrototype> BorgJobId = "Borg";
 
@@ -434,6 +441,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
             Toggle.TryActivate(uid);
             _powerCell.SetDrawEnabled(uid, _mobState.IsAlive(uid));
         }
+        _audio.PlayPvs(new SoundPathSpecifier("/Audio/_EinsteinEngines/Effects/Silicon/startup.ogg"), uid); // DOWNSTREAM-TPirates: IPC screens
         _appearance.SetData(uid, BorgVisuals.HasPlayer, true);
     }
 

@@ -1,0 +1,78 @@
+# Капітанські піхви
+- type: entity
+  parent: ClothingBeltSheath
+  id: ClothingBeltSheatCaptainHeavy
+  name: ножни для важкої шаблі
+  description: Вишукані ножни зроблені щоб зберігати важку шаблю капітана.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/Captain_sheaths/heavy.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/Captain_sheaths/heavy.rsi
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - CaptainSabreHeavy
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - CaptainSabreHeavy
+
+- type: entity
+  id: ClothingBeltSheathHeavyFilled
+  parent: ClothingBeltSheatCaptainHeavy
+  suffix: Filled, Captain
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - CaptainSabreHeavy
+
+- type: entity
+  parent: ClothingBeltSheath
+  id: ClothingBeltSheatCaptainShashka
+  name: ножни до шашки
+  description: Вишукані ножни зроблені щоб зберігати шашку капітана.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/Captain_sheaths/shashka.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/Captain_sheaths/shashka.rsi
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - CaptainSabreShashka
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - CaptainSabreShashka
+
+- type: entity
+  id: ClothingBeltSheathShashkaFilled
+  parent: ClothingBeltSheatCaptainShashka
+  suffix: Filled, Captain
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - CaptainSabreShashka

@@ -17,8 +17,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: hot potato
-  description: Once activated, you can't drop this time bomb - hit someone else with it to save yourself! Don't burn your hands!
+  name: "гаряча картопля"
+  description: "Після активації ви не зможете скинути цю бомбу уповільненої дії - вдарте нею когось іншого, щоб врятуватися! Не обпечіть руки!"
   parent: [BaseItem, BaseSyndicateContraband]
   id: HotPotato
   components:
@@ -41,13 +41,16 @@
       damage:
         types:
           Blunt: 5
-    - type: OnUseTimerTrigger
+    - type: TriggerOnUse
+    - type: TimerTrigger
       delay: 120
       beepSound:
         path: /Audio/Machines/Nuke/general_beep.ogg
         params:
           volume: -2
     - type: ExplodeOnTrigger
+      keysIn:
+      - timer
     - type: Explosive
       explosionType: Default
       maxIntensity: 50
@@ -55,6 +58,8 @@
       totalIntensity: 100
       canCreateVacuum: false
     - type: DeleteOnTrigger
+      keysIn:
+      - timer
     - type: HotPotato
     - type: DamageOnHolding
       enabled: false
@@ -67,7 +72,7 @@
         enum.Trigger.TriggerVisuals.VisualState:
           base:
             Primed: { state: activated }
-            Unprimed: { state: complete }
+            Unprimed: { state: icon }
 
 - type: entity
   id: HotPotatoEffect
@@ -88,7 +93,7 @@
   - type: AnimationPlayer
 
 - type: entity
-  name: banana peel
+  name: "бананова шкірка"
   suffix: Explosive
   parent: TrashBananaPeel
   id: TrashBananaPeelExplosive
@@ -129,9 +134,9 @@
 - type: entity
   parent: BaseItem
   id: TrashBananaPeelExplosiveUnarmed
-  name: banana
+  name: "банан"
   suffix: Unarmed
-  description: There's something unusual about this banana.
+  description: "У цьому банані є щось незвичайне."
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi

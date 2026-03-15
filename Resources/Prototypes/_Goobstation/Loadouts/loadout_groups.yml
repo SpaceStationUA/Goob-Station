@@ -1157,7 +1157,7 @@
   loadouts:
   - Bodycam # Goobstation - Body cameras
   - CameraCollar # Pirate
-  - ClothingNeckCWPSec
+  #- ClothingNeckCWPSec # Pirate disable
 
 #honkops
 
@@ -1405,6 +1405,7 @@
   name: loadout-group-brigmedic-outer
   loadouts:
   - BrigmedicAMG
+  - BrigmedicCoat # Pirate
   - ArmorVest
   - ArmorVestSlim
   - SecurityOfficerWintercoat
@@ -1588,3 +1589,21 @@
   - JumpsuitHawaiBlue
   - JumpsuitHawaiRed
   - JumpsuitHawaiYellow
+
+# Salvage/Shaft Miner
+
+- type: loadoutGroup
+  id: SalvageSpecialistJumpsuit
+  name: loadout-group-salvage-specialist-jumpsuit
+  loadouts:
+  - SalvageSpecialistJumpsuit
+  - SalvageSpecialistJumpskirt
+  - SalvageSpecialistOveralls
+
+- type: loadoutGroup
+  id: ShaftMinerJumpsuit
+  name: loadout-group-shaft-miner-jumpsuit
+  loadouts:
+  - ShaftMinerJumpsuit
+  - ShaftMinerJumpskirt
+  - ShaftMinerOveralls

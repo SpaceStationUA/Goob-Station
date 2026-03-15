@@ -140,7 +140,8 @@
     quickEquip: false
     slots:
     - Belt
-  - type: OnUseTimerTrigger
+  - type: TriggerOnUse
+  - type: TimerTrigger
     delay: 3
   - type: Damageable
     damageContainer: Inorganic
@@ -151,6 +152,7 @@
         damage: 10
       behaviors:
       - !type:TriggerBehavior
+        keyOut: timer # explode immediately
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
@@ -177,19 +179,21 @@
         friction: 0.2
 
 - type: entity
-  name: explosive grenade
-  description: Grenade that creates a small but devastating explosion.
+  name: "розривна граната"
+  description: "Граната, що створює невеликий, але руйнівний вибух."
   parent: [GrenadeBase, BaseSyndicateContraband]
   id: ExGrenade
   components:
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -198,21 +202,30 @@
     beepInterval: 2 # 2 beeps total (at 0 and 2)
 
 - type: entity
-  name: flashbang
-  description: Eeeeeeeeeeeeeeeeeeeeee.
+  name: "світлошумова граната"
+  description: "Ііііііііііііііііііііііііі."
   parent: [ GrenadeBase, BaseSecurityContraband ]
   id: GrenadeFlashBang
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/flashbang.rsi
   - type: FlashOnTrigger
+    keysIn:
+    - timer
     range: 7
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: SpawnOnTrigger
+    keysIn:
+    - timer
     proto: GrenadeFlashEffect
+    predicted: true
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
@@ -244,8 +257,8 @@
 #The explosive values for these are pretty god damn mediocre, but SS14's explosion system is hard to understand - this is a good enough approximation of how it was in SS13.
 #Ideally, there should be a weak radius around the bomb outside of its gibbing / spacing range capable of dealing fair damage to players / structures.
 - type: entity
-  name: syndicate minibomb
-  description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
+  name: "синдикатська міні-бомба"
+  description: "Вироблена синдикатом вибухівка, що використовується для руйнування та створення хаосу."
   parent: [GrenadeBase, BaseSyndicateContraband]
   id: SyndieMiniBomb
   components:
@@ -265,11 +278,14 @@
         damage: 45
       behaviors:
       - !type:TriggerBehavior
+        keyOut: timer # immediately explode
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Minibomb
     totalIntensity: 200
@@ -285,20 +301,22 @@
     price: 2000
 
 - type: entity
-  name: self destruct
-  description: Go out on your own terms!
+  name: "самознищення"
+  description: "Ідіть на своїх умовах!"
   parent: GrenadeBase
   id: SelfDestructSeq
   categories: [ HideSpawnMenu ]
   components:
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Minibomb
     totalIntensity: 400
     intensitySlope: 30
     maxIntensity: 125
     canCreateVacuum: true
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 4.5
     beepSound:
       path: /Audio/Effects/Grenades/SelfDestruct/SDS_Charge2.ogg
@@ -309,14 +327,14 @@
 
 
 - type: entity
-  name: supermatter grenade
-  description: Grenade that simulates delamination of the supermatter engine, pulling things in a heap and exploding after some time.
+  name: "граната з надматерії"
+  description: "Граната, яка імітує розшарування двигуна надматерії, стягуючи речі в купу і вибухаючи через деякий час."
   parent: [GrenadeBase, BaseSyndicateContraband]
   id: SupermatterGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/supermattergrenade.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3
     beepInterval: 0.46
     beepSound:
@@ -328,19 +346,20 @@
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5
-  - type: Explosive
-    explosionType: Default
-    totalIntensity: 200
-    intensitySlope: 30
-    maxIntensity: 120
-  - type: SoundOnTrigger
-    removeOnTrigger: true
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
-      volume: 5
+      params:
+        volume: 5
   - type: AnchorOnTrigger
+    keysIn:
+    - timer
     removeOnTrigger: true
   - type: TwoStageTrigger
+    keysIn:
+    - timer
     triggerDelay: 10.45
     components:
       - type: AmbientSound
@@ -364,31 +383,41 @@
         radius: 6
         softness: 1
         offset: "0, 0"
-      - type: SoundOnTrigger
+      - type: EmitSoundOnTrigger
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
             volume: 5
+        keysIn:
+        - stageTwo
       - type: DeleteOnTrigger
+        keysIn:
+        - stageTwo
   - type: StaticPrice
     price: 1000
 
 - type: entity
-  name: whitehole grenade
-  description: Grenade that repulses everything around for some time.
+  name: "світлодірова граната"
+  description: "Граната, яка на деякий час відбиває все навколо."
   parent: SupermatterGrenade
   id: WhiteholeGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3
     beepInterval: 0.69
-  - type: SoundOnTrigger
-    removeOnTrigger: true
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
-      volume: 5
+      params:
+        volume: 5
+  - type: AnchorOnTrigger
+    keysIn:
+    - timer
+    removeOnTrigger: true
   - type: TwoStageTrigger
     triggerDelay: 11.14
     components:
@@ -413,26 +442,33 @@
         radius: 6
         softness: 1
         offset: "0, 0"
-      - type: SoundOnTrigger
+      - type: EmitSoundOnTrigger
+        keysIn:
+        - stageTwo
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
             volume: 15
+        positional: true
       - type: DeleteOnTrigger
+        keysIn:
+        - stageTwo
   - type: StaticPrice
     price: 1000
 
 - type: entity
-  name: the nuclear option
-  description: Please don't throw it, think of the children.
+  name: "ядерний варіант"
+  description: "Будь ласка, не кидайте його, подумайте про дітей."
   parent: GrenadeBase
   id: NuclearGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/nukenade.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Default
     totalIntensity: 20000 # ~15 tile radius.
@@ -445,6 +481,7 @@
         damage: 50
       behaviors:
       - !type:TriggerBehavior
+        keyOut: timer # immediately explode
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
@@ -453,8 +490,8 @@
       path: /Audio/Effects/countdown.ogg
 
 - type: entity
-  name: modular grenade
-  description: A grenade casing. Requires a trigger and a payload.
+  name: "модульна граната"
+  description: "Корпус від гранати. Потрібен спусковий гачок і заряд."
   parent: BaseItem
   id: ModularGrenade
   components:
@@ -501,17 +538,21 @@
     price: 75
 
 - type: entity
-  name: EMP grenade
-  description: A grenade designed to wreak havoc on electronic systems.
+  name: "ЕМР-граната"
+  description: "Граната, призначена для виведення з ладу електронних систем."
   parent: [GrenadeBase, BaseSyndicateContraband]
   id: EmpGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/empgrenade.rsi
   - type: EmpOnTrigger
+    keysIn:
+    - timer
     range: 5.5
     energyConsumption: 50000
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
@@ -520,21 +561,23 @@
     price: 666 # 2000 for 3, I love fractions
 
 - type: entity
-  name: holy hand grenade
-  description: O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
+  name: "свята ручна граната"
+  description: "Господи, благослови цю ручну гранату Твою, щоб нею Ти міг рознести ворогів Твоїх на дрібні шматочки, по милості Твоїй."
   parent: [GrenadeBase, BaseSyndicateContraband]
   id: HolyHandGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/holyhandgrenade.rsi
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Explosive
     explosionType: Holy # Shitchap
     totalIntensity: 3500
     intensitySlope: 15
     maxIntensity: 70
     canCreateVacuum: true
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3 # by canon
   - type: PointLight
     radius: 7
@@ -549,17 +592,23 @@
 - type: entity
   parent: [ GrenadeBase, BaseSecurityContraband ]
   id: SmokeGrenade
-  name: smoke grenade
-  description: A tactical grenade that releases a large, long-lasting cloud of smoke when used.
+  name: "димова шашка"
+  description: "Тактична граната, яка при використанні випускає велику, довготривалу хмару диму."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/smoke.rsi
   - type: SmokeOnTrigger
+    keysIn:
+    - timer
     duration: 15 # goob edit - faster foam
     spreadAmount: 50
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Items/smoke_grenade_prime.ogg
@@ -567,12 +616,14 @@
 - type: entity
   parent: [ BaseCivilianContraband, SmokeGrenade ]
   id: CleanerGrenade
-  name: cleanade
-  description: Special grenade for janitors, releasing large cloud of space cleaner foam.
+  name: "чистяча граната"
+  description: "Спеціальна граната для прибиральників, що випускає велику хмару піни космічного очищувача."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/janitor.rsi
   - type: SmokeOnTrigger
+    keysIn:
+    - timer
     duration: 5 # goob edit - faster foam
     spreadAmount: 50
     smokePrototype: Foam
@@ -584,12 +635,14 @@
 - type: entity
   parent: SmokeGrenade
   id: TearGasGrenade
-  name: tear gas grenade
-  description: A riot control tear gas grenade. Causes irritation, pain and makes you cry your eyes out.
+  name: "граната зі сльозогінним газом"
+  description: "Граната зі сльозогінним газом для боротьби з масовими заворушеннями. Викликає роздратування, біль і викликає сльози на очах."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/tear_gas.rsi
   - type: SmokeOnTrigger
+    keysIn:
+    - timer
     duration: 5 # goob edit - faster smoke
     spreadAmount: 30
     smokePrototype: TearGasSmokeWhite
@@ -601,14 +654,16 @@
 - type: entity
   parent: [ BaseEngineeringContraband, SmokeGrenade ]
   id: MetalFoamGrenade
-  name: metal foam grenade
-  description: An emergency tool used for patching hull breaches with special quick-set metal foam. Almost as good as real floors!
+  name: "граната з металевою піною"
+  description: "Аварійний інструмент, що використовується для латання пробоїн в корпусі за допомогою спеціальної швидкотвердіючої металевої піни. Майже так само добре, як справжня підлога!"
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 5
   - type: SmokeOnTrigger
+    keysIn:
+    - timer
     duration: 5 # goob edit - faster smoke
     spreadAmount: 20
     smokePrototype: AluminiumMetalFoam
@@ -618,19 +673,23 @@
 - type: entity
   parent: [ BaseEngineeringContraband, GrenadeBase ] # Prevent inheriting DeleteOnTrigger from SmokeGrenade
   id: AirGrenade
-  name: air grenade
-  description: A special solid state chemical grenade used for quickly releasing standard air into a spaced area. Fills up to 30 tiles!
+  name: "повітряна граната"
+  description: "Спеціальна твердотільна хімічна граната, що використовується для швидкого випуску стандартного повітря в розгерметизовану зону. Заповнює до 30 клітинок!"
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/airboom.rsi
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Items/smoke_grenade_prime.ogg
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 3
   - type: ReleaseGasOnTrigger
+    keysIn:
+    - timer
     removeFraction: 0.25
     air:
       volume: 1000
@@ -650,17 +709,24 @@
 # Non-explosive "dummy" grenades to use as a distraction.
 
 - type: entity
-  name: trick grenade
-  description: All the grenade without any of the boom.
+  name: "граната-обманка"
+  description: "Гранате без бабаху."
   parent: GrenadeBase
   id: GrenadeDummy
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/grenade.rsi
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: SpawnOnTrigger
+    keysIn:
+    - timer
     proto: GrenadeFlashEffect
-  - type: SoundOnTrigger
+    predicted: true
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
   - type: Appearance
@@ -669,16 +735,18 @@
       path: /Audio/Effects/countdown.ogg
 
 - type: entity
-  name: syndicate trickybomb
-  description: A syndicate-manufactured explosive used to make an excellent distraction.
+  name: "відволікаюча бомба синдикату"
+  description: "Вибухівка, виготовлена синдикатом, стала чудовим відволікаючим маневром."
   parent: [GrenadeDummy, BaseSyndicateContraband]
   id: SyndieTrickyBomb
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     delay: 5
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
   - type: Appearance

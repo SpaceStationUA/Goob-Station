@@ -173,19 +173,6 @@
   - FlowerWreath
   - Hairflower
   - Headphones
-# Pirate VVV
-  - TrinketsClothingHeadPaperSack
-  - PlushieVulpSusie
-  - PlushieEntony
-  - PlushieIpcCat
-  - PlushieTK
-  - PlushieKateryna
-  - PlushieNicholasGray
-  - PlushieOlia
-  - PlushieSkeleton
-  - PlushieTayler
-  - PlushiePocketAssistant
-# Pirate ^^^
   - PlushieLizard
   - PlushieSpaceLizard
   - PersonalAI # Goobstation
@@ -216,11 +203,20 @@
   - ClothingNeckGenderfluidPin
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
-  - CardBoxBlack # GoobStation
-  - CardBoxNanotrasen # GoobStation
-  - FoodSnackLollypopWrapped # Goobstation
-  - FoodSnackLollypopWrappedRainbow # Goobstation
-  - FoodSnackLollypopWrappedCarp # Goobstation
+  - ClothingNeckGoldAutismPin
+  - OffsetCane
+  - OffsetCaneWood
+  - OffsetCaneClown
+  - OffsetCaneMime
+  - OffsetCaneNT
+  - Cane
+  # GoobStation Start
+  - CardBoxBlack
+  - CardBoxNanotrasen
+  - FoodSnackLollypopWrapped
+  - FoodSnackLollypopWrappedRainbow
+  - FoodSnackLollypopWrappedCarp
+  # Goobstation End
   - TowelColorBlack
   - TowelColorDarkBlue
   - TowelColorDarkGreen
@@ -245,6 +241,8 @@
   - TapeRecorder
   - DrinkOniGourd
   # End DeltaV Additions
+  subgroups: # Pirate
+  - PirateTrinkets
 
 - type: loadoutGroup
   id: Glasses
@@ -917,6 +915,7 @@
   loadouts:
   - CargoTechnicianJumpsuit
   - CargoTechnicianJumpskirt
+  - CargoTechnicianOveralls #Goob
   - CargoTechnicianJumpsuitMail # Goob/DeltaV - Mail
   - CargoTechnicianJumpskirtMail # Goob/DeltaV - Mail
   - CargoTechMJ # goob
@@ -1145,9 +1144,8 @@
   minLimit: 0
   loadouts:
   - ResearchDirectorBeret
-  - MantisTinfoil # Pirate
-  - MantisHelmet # Pirate
-  - MantisFez # Pirate
+  subgroups: # Pirate
+  - MantisHead
 
 - type: loadoutGroup
   id: ResearchDirectorNeck
@@ -1163,7 +1161,9 @@
   name: loadout-group-research-director-jumpsuit
   loadouts:
   - ResearchDirectorJumpsuit
+  - ResearchDirectorJumpsuitAlt # goob
   - ResearchDirectorJumpskirt
+  - ResearchDirectorJumpskirtAlt # goob
   - ResearchDirectorMJ # goob
   - RDSummerShirt # goob
 
@@ -1334,11 +1334,11 @@
   name: loadout-group-security-head
   minLimit: 0
   loadouts:
-  - SecurityHelmet
+  # - SecurityHelmet # Pirate
   - SecurityHelmetAlt # Goobstation
   - SecurityBeret
   - SecurityHat
-  - TrooperHat
+  # - TrooperHat # Pirate
 
 - type: loadoutGroup
   id: SecurityJumpsuit
@@ -1348,9 +1348,9 @@
   - SecurityJumpskirt
   - SecurityJumpsuitGrey
   - SecurityJumpskirtGrey
-  - SeniorOfficerJumpsuit
-  - SeniorOfficerJumpskirt
-  - TrooperUniform
+  #- SeniorOfficerJumpsuit # Pirate
+  #- SeniorOfficerJumpskirt # Pirate
+  #- TrooperUniform # Pirate
 
 - type: loadoutGroup
   id: SecurityBackpack
@@ -1376,7 +1376,7 @@
   - ArmorVest
   - ArmorVestSlim
   - SecurityOfficerWintercoat
-  - WinterCoatSeniorSecArmored # Goobstation
+  #- WinterCoatSeniorSecArmored # Goobstation # Pirate disable
 
 - type: loadoutGroup
   id: SecurityShoes
@@ -1391,7 +1391,7 @@
   name: loadout-group-security-id
   loadouts:
   - SecurityPDA
-  - SeniorOfficerPDA
+  #- SeniorOfficerPDA # Pirate disable
 
 - type: loadoutGroup
   id: DetectiveHead

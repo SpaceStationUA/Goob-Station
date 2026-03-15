@@ -1,0 +1,190 @@
+# SPDX-FileCopyrightText: 2026 Corvax Team Contributors
+# SPDX-FileCopyrightText: 2026 CyberLanos <cyber.lanos00@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+- type: entity
+  id: PhotoAlbum
+  parent: BaseItem
+  name: photo album
+  description: A book with a bunch of memories. Put the photos in it and they will end up in the round end summary window. Use a pen to customize photo titles, descriptions, and captions.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    layers:
+      - state: album-empty
+      - state: filled-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Item
+    size: Large
+    storedOffset: 0,2
+    shape:
+    - 0,0,1,0
+  - type: StorageFillVisualizer
+    maxFillLevels: 5
+    fillBaseName: filled
+  - type: Appearance
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Icon
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    state: icon
+  - type: PhotoAlbum
+  - type: Storage
+    grid:
+    - 0,0,3,1
+    maxItemSize: Small
+    whitelist:
+      tags:
+        - Photo
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+
+- type: entity
+  id: PhotoAlbumLoadoutSigned
+  parent: PhotoAlbum
+  suffix: loadout
+  components:
+  - type: AutoSignPhotoAlbum
+
+- type: entity
+  id: PhotoAlbumGreen
+  parent: PhotoAlbum
+  name: green photo album
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    layers:
+      - state: album_green
+      - state: filled-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Icon
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    state: album_green
+
+- type: entity
+  id: PhotoAlbumRed
+  parent: PhotoAlbum
+  name: red photo album
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    layers:
+      - state: album_red
+      - state: filled-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Icon
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    state: album_red
+
+- type: entity
+  id: PhotoAlbumBlue
+  parent: PhotoAlbum
+  name: blue photo album
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    layers:
+      - state: album_blue
+      - state: filled-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Icon
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    state: album_blue
+
+- type: entity
+  id: PhotoAlbumHeadCaptain
+  parent: PhotoAlbumBlue
+  name: captain's photo album
+  components:
+  - type: PhotoAlbum
+    isSigned: true
+    signerName: Captain
+    usePossessiveSignerName: false
+
+- type: entity
+  id: PhotoAlbumHeadHop
+  parent: PhotoAlbumBlue
+  name: head of personnel's photo album
+  components:
+  - type: PhotoAlbum
+    isSigned: true
+    signerName: Head of Personnel
+    usePossessiveSignerName: false
+
+- type: entity
+  id: PhotoAlbumHeadHos
+  parent: PhotoAlbumBlue
+  name: head of security's photo album
+  components:
+  - type: PhotoAlbum
+    isSigned: true
+    signerName: Head of Security
+    usePossessiveSignerName: false
+
+- type: entity
+  id: PhotoAlbumHeadRd
+  parent: PhotoAlbumBlue
+  name: research director's photo album
+  components:
+  - type: PhotoAlbum
+    isSigned: true
+    signerName: Research Director
+    usePossessiveSignerName: false
+
+- type: entity
+  id: PhotoAlbumHeadCmo
+  parent: PhotoAlbumBlue
+  name: chief medical officer's photo album
+  components:
+  - type: PhotoAlbum
+    isSigned: true
+    signerName: Chief Medical Officer
+    usePossessiveSignerName: false
+
+- type: entity
+  id: PhotoAlbumHeadQm
+  parent: PhotoAlbumBlue
+  name: quartermaster's photo album
+  components:
+  - type: PhotoAlbum
+    isSigned: true
+    signerName: Quartermaster
+    usePossessiveSignerName: false
+
+- type: entity
+  id: PhotoAlbumHeadCe
+  parent: PhotoAlbumBlue
+  name: chief engineer's photo album
+  components:
+  - type: PhotoAlbum
+    isSigned: true
+    signerName: Chief Engineer
+    usePossessiveSignerName: false
+
+- type: entity
+  id: PhotoAlbumMakeshift
+  parent: PhotoAlbum
+  name: makeshift photo album
+  description: A makeshift book containing a bunch of memories. Put the photos in it and they will end up in the round end summary window. Use a pen to customize photo titles, descriptions, and captions.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Photo/photo_album_makeshift.rsi
+    layers:
+      - state: album-empty
+      - state: filled-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Icon
+    sprite: _Pirate/Objects/Misc/Photo/photo_album_makeshift.rsi
+    state: icon
+  - type: Storage
+    grid:
+    - 0,0,1,1
+  - type: Construction
+    graph: PhotoAlbum
+    node: album

@@ -68,7 +68,7 @@
     cost: 650
   - id: DeathRattleLavalandImplanter
     cost: 700
-    overrideName: shop-listing-deathrattle-implant-lavaland # stupid implanter structure raagh
+    overrideName: shop-listing-deathrattle-implant-lavaland-pirate # Pirates: death rattle update
   - id: ClothingMaskWeldingGas
     cost: 750
   - id: LavalandJaunter
@@ -91,8 +91,12 @@
     cost: 1050
   - id: WeaponCrusherDagger
     cost: 1050
-  - id: AdvancedMineralScanner
+  - id: MiningDrill
     cost: 1100
+  - id: AdvancedMineralScanner
+    cost: 1150
+  - id: OreBagMagnetic
+    cost: 1200
   - id: PKAUpgradeDamage
     cost: 1200
   - id: ClothingBackpackDuffelSalvageConscription
@@ -128,3 +132,4 @@
     cost: 12500 #TODO: Make modules real
   # TODO: luxury elite bar capsule for 10k
   # TODO: mining drone stuff
+

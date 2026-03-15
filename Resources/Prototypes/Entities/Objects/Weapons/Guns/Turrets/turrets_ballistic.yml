@@ -17,7 +17,7 @@
 - type: entity
   parent: BaseWeaponBallisticTurret
   id: WeaponTurretSyndicateDisposable
-  name: disposable ballistic turret
+  name: "одноразова балістична турель"
   suffix: Syndicate, Disposable
   components:
   - type: NpcFactionMember
@@ -54,15 +54,15 @@
   - type: Repairable
     qualityNeeded: "Anchoring"
     doAfterDelay: 3
-  - type: TriggerWhenEmpty
- # Goobstation - no
- #- type: ExplodeOnTrigger
- #- type: Explosive
- #  explosionType: Default
- #  maxIntensity: 10
- #  intensitySlope: 1.5
- #  totalIntensity: 30
- #  canCreateVacuum: false
+  - type: TriggerOnEmptyGunshot
+# Goobstation - no
+#  - type: ExplodeOnTrigger
+#  - type: Explosive
+#    explosionType: Default
+#    maxIntensity: 10
+#    intensitySlope: 1.5
+#    totalIntensity: 30
+#    canCreateVacuum: false
 
 - type: entity
   parent: BaseWeaponBallisticTurret
@@ -94,9 +94,9 @@
 - type: entity
   parent: BaseWeaponBallisticTurret
   id: WeaponTurretXeno
-  name: xeno turret
+  name: "ксено-турель"
   suffix: Xeno
-  description: Shoots 9mm acid projectiles.
+  description: "Стріляє кислотними снарядами 9мм."
   components:
   - type: NpcFactionMember
     factions:

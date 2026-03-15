@@ -14,7 +14,7 @@ interaction-Kiss-success-target-popup = {THE($user)} цілує вас в щіч
 interaction-Kiss-success-others-popup = {THE($user)} цілує {THE($target)} в щічку.
 
 interaction-Lick-name = Лизати
-interaction-Lick-description = Лизніть свого колегу в носик. Потрібно, щоб ваш рот був вільним.
-interaction-Lick-success-self-popup = Ви лижете {THE($target)} в носик.
-interaction-Lick-success-target-popup = {THE($user)} лиже вас в носик.
-interaction-Lick-success-others-popup = {THE($user)} лиже {THE($target)} в носик.
+interaction-Lick-description = Лизніть свого колегу. Потрібно, щоб ваш рот був вільним.
+interaction-Lick-success-self-popup = Ви лижете {THE($target)}.
+interaction-Lick-success-target-popup = {THE($user)} лиже вас.
+interaction-Lick-success-others-popup = {THE($user)} лиже {THE($target)}.

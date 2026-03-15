@@ -116,7 +116,7 @@
   abstract: true
   parent: BaseItem
   id: MaterialBase
-  description: A raw material.
+  description: "Сировина."
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
@@ -141,7 +141,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialCardboard
-  name: cardboard
+  name: "картон"
   suffix: Full
   components:
   - type: Material
@@ -155,6 +155,11 @@
     - cardboard
     - cardboard_2
     - cardboard_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: cardboard_3
     layers:
@@ -171,6 +176,13 @@
           Quantity: 6
   - type: Item
     heldPrefix: cardboard
+  - type: FloorTile
+    outputs:
+    - Plating
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetCard
+    doAfter: 0.5
+    removeOnInteract: true
 
 - type: entity
   parent: MaterialCardboard
@@ -195,7 +207,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialCloth
-  name: cloth
+  name: "тканина"
   suffix: Full
   components:
   - type: Healing
@@ -223,6 +235,11 @@
     - cloth
     - cloth_2
     - cloth_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -238,7 +255,7 @@
     - state: cloth_3
       map: ["base"]
   - type: Appearance
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: FlavorProfile
     flavors:
@@ -285,7 +302,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialDurathread
-  name: durathread
+  name: "фазова тканина"
   suffix: Full
   components:
   - type: Stack
@@ -295,6 +312,11 @@
     - durathread
     - durathread_2
     - durathread_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -308,7 +330,7 @@
   - type: Construction
     graph: Durathread
     node: MaterialDurathread
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
@@ -345,7 +367,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialWoodPlank
-  name: wood
+  name: "деревина"
   suffix: Full
   components:
   - type: Material
@@ -359,6 +381,11 @@
     - wood
     - wood_2
     - wood_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: wood
     layers:
@@ -400,7 +427,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialBiomass
-  name: biomass
+  name: "біомаса"
   suffix: Full
   components:
   - type: Material
@@ -410,6 +437,11 @@
   - type: Stack
     stackType: Biomass
     count: 100
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
@@ -430,7 +462,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialHideBear
-  name: bear hide
+  name: "ведмежа шкура"
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
@@ -457,8 +489,8 @@
 - type: entity
   parent: MaterialBase
   id: MaterialHideCorgi
-  name: corgi hide
-  description: Luxury pelt used in only the most elite fashion. Rumors say this is found when a corgi is sent to the nice farm.
+  name: "шкура коргі"
+  description: "Розкішна шкурка, яку використовують лише в найелітніших видах одягу. Подейкують, що її знаходять, коли коргі відправляють на хорошу ферму."
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
@@ -477,7 +509,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialDiamond
-  name: refined diamond
+  name: "очищений діамант"
   suffix: Full
   components:
   - type: Stack
@@ -487,6 +519,11 @@
     - diamond
     - diamond_2
     - diamond_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: diamond
     layers:
@@ -527,7 +564,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialCotton
-  name: cotton
+  name: "бавовна"
   suffix: Full
   components:
   - type: Stack
@@ -537,13 +574,18 @@
     - cotton
     - cotton_2
     - cotton_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: cotton_3
     layers:
     - state: cotton_3
       map: ["base"]
   - type: Appearance
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: FlavorProfile
     flavors:
@@ -587,7 +629,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialPyrotton
-  name: pyrotton
+  name: "піротон"
   suffix: Full
   components:
   - type: Stack
@@ -597,13 +639,18 @@
     - pyrotton
     - pyrotton_2
     - pyrotton_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: pyrotton_3
     layers:
     - state: pyrotton_3
       map: ["base"]
   - type: Appearance
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
@@ -641,7 +688,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialBananium
-  name: bananium
+  name: "бананіум"
   suffix: Full
   components:
   - type: Material
@@ -660,10 +707,15 @@
     layerStates:
       - bananium
       - bananium_1
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: FlavorProfile
     flavors:
       - banana
-  - type: Food
+  - type: Edible
     trash:
     - TrashBananiumPeel
   - type: BadFood
@@ -704,8 +756,8 @@
 - type: entity
   parent: MaterialBase
   id: MaterialWebSilk
-  name: silk
-  description: A webby material.
+  name: "шовк"
+  description: "павутинний матеріал."
   suffix: Full
   components:
   - type: PhysicalComposition
@@ -717,6 +769,12 @@
   - type: Stack
     count: 50
     stackType: WebSilk
+  - type: Edible
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Food
     requiresSpecialDigestion: true
   - type: FlavorProfile
@@ -763,8 +821,8 @@
 - type: entity
   parent: MaterialBase
   id: MaterialToothSpaceCarp
-  name: space carp tooth
-  description: Pretty small but plenty nasty. You like them best when they're not sinking into you.
+  name: "зуб космічного карпа"
+  description: "Досить маленький, але дуже неприємний. Вам вони подобаються найбільше, коли вони не впиваються у вас."
   suffix: Full
   components:
   - type: Sprite
@@ -784,6 +842,11 @@
     - tooth
     - tooth_2
     - tooth_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: StackPrice
     price: 50
   - type: Tag
@@ -801,8 +864,8 @@
 - type: entity
   parent: [ MaterialBase, BaseKnife ]
   id: MaterialToothSharkminnow
-  name: sharkminnow tooth
-  description: Looks sharp. Sharp enough to poke someone's eye out. Holy fuck it's big.
+  name: "зуб акулоголова"
+  description: "Виглядає гострим. Досить гострим, щоб виколоти комусь око. Святе лайно, він великий."
   suffix: Full
   components:
   - type: MeleeWeapon
@@ -826,6 +889,11 @@
     - tooth
     - tooth_2
     - tooth_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: StackPrice
     price: 150
   - type: Tag
@@ -844,7 +912,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialBones
-  name: bones
+  name: "кістки"
   suffix: Full
   components:
   - type: Stack
@@ -854,13 +922,18 @@
     - bones
     - bones_2
     - bones_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: cotton_3
     layers:
     - state: cotton_3
       map: ["base"]
   - type: Appearance
-  - type: Food
+  - type: Edible
   - type: BadFood
   - type: SolutionContainerManager
     solutions:
@@ -883,12 +956,17 @@
 - type: entity
   parent: MaterialBase
   id: MaterialGunpowder
-  name: gunpowder
-  description: An explosive compound.
+  name: "порох"
+  description: "Вибухова суміш."
   components:
   - type: Stack
     stackType: Gunpowder
     count: 1
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     sprite: Objects/Misc/reagent_fillings.rsi
     state: powderpile
@@ -902,8 +980,8 @@
 - type: entity
   parent: MaterialBase
   id: MaterialGoliathHide
-  name: goliath hide plates
-  description: Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna.
+  name: "пластини зі шкури голіафа"
+  description: "Шматочки скелястої шкури Голіафа можуть зробити ваш костюм трохи стійкішим до нападів місцевої фауни."
   suffix: Full
   components:
   - type: Sprite
@@ -923,6 +1001,11 @@
     - goliath_hide
     - goliath_hide_2
     - goliath_hide_3
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Item
     size: Large
     heldPrefix: goliathhide

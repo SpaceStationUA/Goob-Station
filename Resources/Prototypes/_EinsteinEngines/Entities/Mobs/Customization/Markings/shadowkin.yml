@@ -39,8 +39,8 @@
   speciesRestriction: [Shadowkin]
   forcedColoring: true
   layering: # Pirate, Floof tail layering from Vareniko
-    shadowkin: TailOversuit
-    shadowkin_tip: TailBehind
+    shadowkin: TailBehind
+    shadowkin_tip: TailOversuit
   sprites:
     - sprite: _EinsteinEngines/Mobs/Customization/Shadowkin/tails64x32.rsi
       state: shadowkin

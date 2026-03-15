@@ -1,0 +1,33 @@
+<!--
+SPDX-FileCopyrightText: 2026 Corvax Team Contributors
+SPDX-FileCopyrightText: 2026 CyberLanos <cyber.lanos00@gmail.com>
+
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
+<photo:PhotoCardWindow xmlns="https://spacestation14.io"
+    xmlns:photo="clr-namespace:Content.Client._Pirate.Photo.UI"
+    MouseFilter="Stop" Resizable="False" MinSize="150 150"
+    SetSize="430 592">
+
+    <BoxContainer Name="ContentsRoot" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+        <PanelContainer StyleClasses="PhotoCardFramePanel" VerticalExpand="True" HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" SeparationOverride="0">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" MinHeight="22" Margin="4 4 4 2">
+                    <Label Name="PhotoNameLabel" StyleClasses="PhotoCardPrimaryText" HorizontalExpand="True" VerticalAlignment="Center" ClipText="True"/>
+                    <PanelContainer StyleClasses="AngleRect" VerticalAlignment="Top" HorizontalAlignment="Right">
+                        <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"/>
+                    </PanelContainer>
+                </BoxContainer>
+
+                <TextureRect Name="ImageDisplay" VerticalExpand="True" HorizontalExpand="True" Stretch="Scale" Margin="4 0 4 0"/>
+
+                <PanelContainer Name="CaptionContainer" HorizontalExpand="True" MinHeight="132" Margin="4 2 4 4">
+                    <RichTextLabel Name="CaptionLabel" VerticalAlignment="Top" HorizontalExpand="True"/>
+                </PanelContainer>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</photo:PhotoCardWindow>
+
+

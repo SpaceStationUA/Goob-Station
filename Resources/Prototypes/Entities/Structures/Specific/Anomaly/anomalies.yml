@@ -91,8 +91,8 @@
 - type: entity
   abstract: true
   id: BaseAnomaly
-  name: anomaly
-  description: An impossible object. Should you be standing this close to it?
+  name: "аномалія"
+  description: "Неможливий об'єкт. Чи варто стояти так близько до нього?"
   components:
   - type: Anomaly
     offset: 0, 0.15
@@ -918,9 +918,9 @@
 
 - type: entity
   id: AnomalyFloraBulb
-  name: strange glowing berry
+  name: "сяюча дивна ягода"
   parent: BaseStructure
-  description: It's a beautiful strange glowing berry. It seems to have something growing inside it...
+  description: "Це красива дивна ягода, що світиться. Здається, всередині неї щось росте..."
   suffix: Flora Anomaly
   components:
   - type: Transform
@@ -1032,6 +1032,14 @@
     - Triclor 
     - Cyanide
     - Genecide
+    - NitricAcid
+    - Heroin
+    - Microplastics
+    - Bungotoxin
+    - WeldingFuel
+    - ChloralHydrate
+    - Allicin
+    - Phenol
     usefulChemicals:
     - Cryptobiolin
     - Dylovene
@@ -1051,6 +1059,15 @@
     - Probital
     - Tirimol
     - Multiver
+    - Immurin
+    - Devirate
+    - Probital
+    - Mitotrophin
+    - Monover
+    - Ibuprofen
+    - StypticCrystalCatalyst
+    - Formaldehyde
+    - Morphine
     funChemicals:
     - Desoxyephedrine
     - Ephedrine
@@ -1071,6 +1088,10 @@
     - JuiceThatMakesYouWeh
     # Goobstation - Start
     - CatDrugs
+    - MouseBites
+    - Copium
+    - Nostalgia
+    - Profanol
   - type: Drink
     solution: anomaly
   - type: DrainableSolution
@@ -1079,6 +1100,8 @@
     solution: anomaly
   - type: ExaminableSolution
     solution: anomaly
+    exactVolume: true
+    locVolume: "examinable-solution-on-examine-volume-no-max"
   - type: RefillableSolution
     solution: anomaly
   - type: InjectableSolution

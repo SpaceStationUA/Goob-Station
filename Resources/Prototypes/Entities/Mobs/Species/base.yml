@@ -337,6 +337,7 @@
     horizontalRotation: 90
   - type: HumanoidAppearance
     species: Human
+  - type: TypingIndicator
   - type: SlowOnDamage
     speedModifierThresholds:
       60: 0.7
@@ -375,9 +376,6 @@
       - !type:WashCreamPieReaction
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
     - Stutter
     - Electrocution
     - Drunk
@@ -425,6 +423,7 @@
   - type: SleepEmitSound
   - type: SSDIndicator
   - type: StandingState
+  - type: Crawler
   - type: Dna
   - type: Scent # Einstein Engines
   - type: MindContainer
@@ -451,8 +450,6 @@
         type: StrippableBoundUserInterface
       enum.SetWantedVerbMenu.Key: # Goobstation-WantedMenu
         type: WantedMenuBoundUserInterface
-      enum.SetPsionicsVerbMenu.Key: # Pirate-PsionicsMenu
-        type: PsionicsMenuBoundUserInterface
       # Goobstation - changelings
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface
@@ -461,8 +458,12 @@
       enum.WizardTeleportUiKey.Key: # Goobstation - wizard
         type: WizardTeleportBoundUserInterface
         requireInputValidation: false
+      enum.RadarConsoleUiKey.Key: #goob - contractor
+        type: RadarConsoleBoundUserInterface
       enum.VampireMutationUiKey.Key:
         type: VampireMutationBoundUserInterface #Pirate
+      enum.SetPsionicsVerbMenu.Key: # Pirate-PsionicsMenu
+        type: PsionicsMenuBoundUserInterface
   - type: Puller
   - type: Speech
     speechSounds: Alto
@@ -492,7 +493,6 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
-  - type: LayingDown # WD EDIT
   - type: Targeting # Shitmed Change
   - type: CanEscapeInventory # GoobStation - Escape being picked up by players
   - type: Consciousness
@@ -507,6 +507,7 @@
   - type: Sprinter # Goobstation
   - type: MindControllable # Goobstation
   - type: VisibleContraband # Goobstation
+  - type: MomentumSteering # Goobstation - No steer
 
 - type: entity
   save: false
@@ -552,9 +553,9 @@
         Heat: 1.0 # Goob edit #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
-      293: 0.8
-      280: 0.6
-      260: 0.4
+      293: 0.9
+      280: 0.8
+      260: 0.7
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100

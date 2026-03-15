@@ -427,7 +427,7 @@ accent-medieval-words-replace-127 = Блазень
 accent-medieval-words-128 = ОСЩ
 accent-medieval-words-replace-128 = Королівська Гвардія
 
-accent-medieval-words-129 = Офіцер Синього Щита
+accent-medieval-words-129 = Офіцер Блакитного Щита
 accent-medieval-words-replace-129 = Королівська Гвардія
 
 accent-medieval-words-130 = вибачте

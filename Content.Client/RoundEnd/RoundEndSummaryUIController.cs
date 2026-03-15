@@ -13,16 +13,22 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
+using Content.Client._Pirate.RoundEnd.PhotoAlbum; // Pirate: camera
+using Robust.Client.UserInterface; // Pirate: camera
 
 namespace Content.Client.RoundEnd;
 
 [UsedImplicitly]
 public sealed class RoundEndSummaryUIController : UIController,
-    IOnSystemLoaded<ClientGameTicker>
+    IOnSystemLoaded<ClientGameTicker>,
+    IOnSystemChanged<PhotoAlbumSystem>
 {
     [Dependency] private readonly IInputManager _input = default!;
+    [Dependency] private readonly IFileDialogManager _fileDialogManager = default!; // Pirate: camera
+    [Dependency] private readonly IUserInterfaceManager _uiManager = default!; // Pirate: camera
 
     private RoundEndSummaryWindow? _window;
+    private PhotoAlbumSystem? _photoAlbum; // Pirate: camera
 
     private void ToggleScoreboardWindow(ICommonSession? session = null)
     {
@@ -47,7 +53,7 @@ public sealed class RoundEndSummaryUIController : UIController,
             return;
 
         _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
-            message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
+            message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager, _fileDialogManager); // Pirate: camera
     }
 
     public void OnSystemLoaded(ClientGameTicker system)
@@ -55,4 +61,30 @@ public sealed class RoundEndSummaryUIController : UIController,
         _input.SetInputCommand(ContentKeyFunctions.ToggleRoundEndSummaryWindow,
             InputCmdHandler.FromDelegate(ToggleScoreboardWindow));
     }
+
+    #region Pirate: camera
+    public void OnSystemLoaded(PhotoAlbumSystem system)
+    {
+        _photoAlbum = system;
+        _photoAlbum.AlbumsUpdated += OnPhotoAlbumsUpdated;
+    }
+
+    public void OnSystemUnloaded(PhotoAlbumSystem system)
+    {
+        if (_photoAlbum is null)
+            return;
+
+        _photoAlbum.AlbumsUpdated -= OnPhotoAlbumsUpdated;
+        _photoAlbum = null;
+    }
+
+    private void OnPhotoAlbumsUpdated()
+    {
+        _uiManager.DeferAction(() =>
+        {
+            if (_window is { Disposed: false })
+                _window.AddOrUpdatePhotoReportTab();
+        });
+    }
+    #endregion
 }

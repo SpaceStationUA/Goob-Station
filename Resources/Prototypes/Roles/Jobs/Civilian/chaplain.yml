@@ -71,6 +71,14 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 18000 # 15 hours
+    - !type:SpeciesRequirement # Pirate no ipc-psionics
+      inverted: true
+      species:
+        - IPC
+    - !type:TraitsRequirement
+      inverted: true
+      traits:
+      - Vampirism # Pirate end
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
   supervisors: job-supervisors-hop

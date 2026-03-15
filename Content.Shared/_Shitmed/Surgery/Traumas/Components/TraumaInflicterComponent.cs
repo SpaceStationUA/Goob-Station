@@ -43,6 +43,7 @@ public sealed partial class TraumaInflicterComponent : Component
         { TraumaType.BoneDamage, "BoneDamage" },
         { TraumaType.NerveDamage, "NerveDamage" },
         { TraumaType.VeinsDamage, "VeinsDamage" },
+        { TraumaType.FaceMutilation, "FaceMutilation" }, // DOWNSTREAM-TPirates: face mutilation
     };
 
     /// <summary>
@@ -56,6 +57,7 @@ public sealed partial class TraumaInflicterComponent : Component
         { TraumaType.BoneDamage, 0 },
         { TraumaType.NerveDamage, 0 },
         { TraumaType.VeinsDamage, 0 },
+        { TraumaType.FaceMutilation, 0 }, // DOWNSTREAM-TPirates: face mutilation
     };
 
     /// <summary>
@@ -63,4 +65,16 @@ public sealed partial class TraumaInflicterComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<TraumaType, FixedPoint2>? MangledMultipliers;
+
+    #region DOWNSTREAM-TPirates: face mutilation
+    /// <summary>
+    /// Markings applied when face mutilation trauma is induced.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public List<string> FaceMutilationMarkings = new()
+    {
+        "HeadTwisting",
+        "HeadTwistingFlipped",
+    };
+    #endregion
 }

@@ -36,6 +36,7 @@
   - Beaker
   - LargeBeaker
   - Syringe
+  - Dropper #Goobstation
   - PillCanister
   - HandLabeler
   - ChemicalPayload
@@ -48,6 +49,7 @@
   - Jug
   - ChemistryEmptyBottle01
   - ClothingEyesGlassesChemical
+  - ChemRecipeDiskPirate # Pirate: chem recipes
 
 - type: latheRecipePack
   id: SurgeryStatic
@@ -68,6 +70,8 @@
   - DiseaseSwab
   - BodyBag
   - WhiteCane
+  - OffsetCane
+  - OffsetCaneWood
 
 - type: latheRecipePack
   id: RollerBedsStatic

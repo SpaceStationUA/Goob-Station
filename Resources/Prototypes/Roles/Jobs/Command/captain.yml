@@ -180,8 +180,8 @@
   guides: # goobstation
   - Command
   - Succession
-  - StandardProcedures SOP
-  - Captain SOP
+  - StandardProceduresSOP
+  - CaptainSOP
   goobcoins: 50 #Goob content
   weight: 20
   startingGear: CaptainGear
@@ -189,6 +189,7 @@
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  whitelisted: true # Pirate
   accessGroups:
   - AllAccess
   special:
@@ -204,7 +205,7 @@
   id: CaptainGear
   equipment:
     shoes: ClothingShoesBootsLaceup
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesCommand
     #gloves: ClothingHandsGlovesCaptain - Goobstation, moved to loadouts
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand

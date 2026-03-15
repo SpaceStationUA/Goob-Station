@@ -1,3 +1,4 @@
+using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
@@ -16,6 +17,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
 using Content.Server.Body.Systems;
+using Content.Shared.Body.Systems;
 using Content.Server.Popups;
 using Content.Server.DoAfter;
 using Content.Server.Nutrition.Components;
@@ -54,7 +56,6 @@ namespace Content.Pirate.Server.Vampirism.Systems
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
-        [Dependency] private readonly FoodSystem _food = default!;
         [Dependency] private readonly RottingSystem _rotting = default!;
 
         [Dependency] private readonly VampireSystem _vampireSystem = default!;
@@ -127,7 +128,11 @@ namespace Content.Pirate.Server.Vampirism.Systems
             {
                 if (!_interactionSystem.InRangeUnobstructed(bloodsucker, victim))
                     return;
-                if (_food.IsMouthBlocked(victim))
+
+                // FoodSystem mouth checks were moved to IngestionSystem.
+                var ingestAttempt = new IngestionAttemptEvent(IngestionSystem.DefaultFlags);
+                RaiseLocalEvent(victim, ref ingestAttempt);
+                if (ingestAttempt.Cancelled)
                 {
                     _popups.PopupEntity(Loc.GetString("bloodsucker-fail-mouth-blocked", ("target", victim)), victim, bloodsucker, PopupType.Medium);
                     return;

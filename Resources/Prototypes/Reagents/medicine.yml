@@ -1450,7 +1450,14 @@
             Heat: -0.2
             Shock: -0.2
             Cold: -0.2
-            Holy: 1 # Pirate
+      - !type:HealthChange # Pirate - Holy damage without friendly fire :D
+        damage:
+          types:
+            Holy: 1
+        conditions:
+        - !type:HasComponentCondition
+          components:
+          - WeakToHoly
 
   reactiveEffects:
     Extinguish:

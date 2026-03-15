@@ -20,12 +20,14 @@ namespace Content.Shared.InteractionVerbs.Requirements;
 [Serializable, NetSerializable]
 public sealed partial class EntityWhitelistRequirement : InteractionRequirement
 {
-    [DataField] public EntityWhitelist Whitelist = new(), Blacklist = new();
+    // [DataField] public EntityWhitelist Whitelist = new(), Blacklist = new();
+    [DataField] public EntityWhitelist? Whitelist, Blacklist; // Pirate Changes verbs fix
 
     public override bool IsMet(InteractionArgs args, InteractionVerbPrototype proto, InteractionAction.VerbDependencies deps)
     {
-        return deps.WhitelistSystem.IsValid(Whitelist, args.Target) &&
-               !deps.WhitelistSystem.IsValid(Blacklist, args.Target);
+        // return deps.WhitelistSystem.IsValid(Whitelist, args.Target) &&
+        //        !deps.WhitelistSystem.IsValid(Blacklist, args.Target);
+        return deps.WhitelistSystem.CheckBoth(args.Target, blacklist: Blacklist, whitelist: Whitelist); // Pirate Changes verbs fix
     }
 }
 
@@ -64,8 +66,8 @@ public sealed partial class StandingStateRequirement : InteractionRequirement
         if (!deps.EntMan.TryGetComponent<StandingStateComponent>(args.Target, out var state))
             return false;
 
-        return state.CurrentState == StandingState.Standing && AllowStanding
-            || state.CurrentState == StandingState.Lying && AllowLaying;
+        return state.Standing && AllowStanding
+               || !state.Standing && AllowLaying;
     }
 }
 

@@ -15,8 +15,8 @@
 - type: entity
   parent: [ ClothingModsuitStandard, BaseCentcommContraband ]
   id: ClothingModsuitPraetorian
-  name: Praetorian modsuit control unit
-  description: The main controller for a Praetorian modsuit.
+  name: "Блок керування мод-костюмом \"Преторіанець"
+  description: "Основний контролер для мод-костюма \"Преторіанець\"."
   components:
     - type: Sprite
       sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/praetorian.rsi
@@ -56,8 +56,8 @@
 - type: entity
   parent: ClothingModsuitGauntletsStandard
   id: ClothingModsuitGauntletsPraetorian
-  name: Praetorian modsuit gauntlets
-  description: A pair of gauntlets made for the Praetorian modsuit.
+  name: "Рукавиці мод-костюма \"Преторіанець"
+  description: "Пара рукавиць, створених для мод-костюма \"Преторіанець\"."
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -78,8 +78,8 @@
 - type: entity
   parent: ClothingModsuitHelmetStandard
   id: ClothingModsuitHelmetPraetorian
-  name: Praetorian modsuit helmet
-  description: A state-of-the-art helmet designed by NanoTrasen for the Praetorian modsuit.
+  name: "Шолом мод-костюма \"Преторіанець"
+  description: "Найсучасніший шолом, розроблений NanoTrasen для мод-костюма \"Преторіанець\"."
   categories: [HideSpawnMenu]
   components:
     - type: Clothing
@@ -92,6 +92,8 @@
         - state: equipped-HEAD-vox
         head-vulpkanin:
         - state: equipped-HEAD-vulpkanin
+        head-reptilian:
+        - state: equipped-HEAD-reptilian
     - type: Sprite
       sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/praetorian.rsi
     - type: PressureProtection
@@ -133,11 +135,15 @@
         - state: equipped-HEAD-sealed-vulpkanin
         - state: equipped-HEAD-sealed-unshaded-vulpkanin
           shader: unshaded
+        head-reptilian:
+        - state: equipped-HEAD-sealed-reptilian
+        - state: equipped-HEAD-sealed-unshaded-reptilian
+          shader: unshaded
 - type: entity
   parent: ClothingModsuitChestplateStandard
   id: ClothingModsuitChestplatePraetorian
-  name: Praetorian modsuit chestplate
-  description: A state of the art chestplate designed by NanoTrasen for the Praetorian modsuit. It incorporates powered servos to reduce the equipment load.
+  name: "Нагрудник мод-костюма \"Преторіанець"
+  description: "Найсучасніший нагрудник, розроблений NanoTrasen для мод-костюма \"Преторіанець\". Він містить силові сервоприводи для зменшення навантаження від обладнання."
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -169,6 +175,8 @@
         - state: equipped-OUTERCLOTHING-sealed-resomi
         outerClothing-vox:
         - state: equipped-OUTERCLOTHING-sealed-vox
+        outerClothing-reptilian:
+        - state: equipped-OUTERCLOTHING-sealed-reptilian
     - type: ModifyDelayedKnockdown
       delayDelta: 2
       knockdownTimeDelta: -2
@@ -181,8 +189,8 @@
 - type: entity
   parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsPraetorian
-  name: Praetorian modsuit boots
-  description: A state-of-the-art pair of magboots for the Praetorian modsuit.
+  name: "Чоботи мод-костюма \"Преторіанець"
+  description: "Найсучасніша пара магнітних черевиків для мод-костюма \"Преторіанець\"."
   categories: [HideSpawnMenu]
   components:
     - type: Appearance
@@ -198,6 +206,8 @@
         - state: equipped-FEET-sealed
         shoes-vox:
         - state: equipped-FEET-sealed-vox
+        shoes-reptilian:
+        - state: equipped-FEET-sealed-reptilian
     - type: ItemToggle
     - type: ToggleClothing
       action: ActionToggleMagboots

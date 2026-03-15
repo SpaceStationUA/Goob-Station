@@ -1,0 +1,5 @@
+- type: ore
+  id: OreTitanium
+  oreEntity: TitaniumOre1Unprocessed
+  minOreYield: 1
+  maxOreYield: 2

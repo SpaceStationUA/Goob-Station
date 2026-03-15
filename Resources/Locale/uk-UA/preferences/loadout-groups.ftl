@@ -54,6 +54,7 @@ loadout-group-hop-backpack = Рюкзак голови персоналу
 loadout-group-hop-outerclothing = Верхній одяг голови персоналу
 
 # Цивільні
+loadout-group-wardrobe = Гардероб
 loadout-group-passenger-jumpsuit = Комбінезон пасажира
 loadout-group-passenger-mask = Маска пасажира
 loadout-group-passenger-gloves = Рукавиці пасажира
@@ -175,6 +176,7 @@ loadout-group-warden-head = Головний убір наглядача
 loadout-group-warden-jumpsuit = Комбінезон наглядача
 loadout-group-warden-outerclothing = Верхній одяг наглядача
 
+loadout-group-security-officer-head = Головний убір Офіцера СБ
 loadout-group-security-head = Головний убір офіцера СБ
 loadout-group-security-jumpsuit = Комбінезон офіцера СБ
 loadout-group-security-backpack = Рюкзак офіцера СБ
@@ -191,6 +193,10 @@ loadout-group-detective-outerclothing = Верхній одяг детектив
 loadout-group-security-cadet-jumpsuit = Комбінезон кадета служби безпеки
 loadout-group-cadet-outerclothing = Верхній одяг кадетів
 loadout-group-security-star = Зірка безпеки
+
+# Медицина
+
+loadout-group-brigmedic-gloves = Рукавиці бригмедика
 
 # Медицина
 loadout-group-medical-gloves = Медичні рукавиці

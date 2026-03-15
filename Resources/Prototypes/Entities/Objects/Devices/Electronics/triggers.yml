@@ -93,8 +93,8 @@
 - type: entity
   parent: BaseItem
   id: TimerTrigger
-  name: timer trigger
-  description: A configurable timer.
+  name: "таймер-тригер"
+  description: "Таймер, який можна налаштувати."
   components:
   - type: Sprite
     sprite: Objects/Devices/timer.rsi
@@ -105,7 +105,13 @@
     price: 40
   - type: PayloadTrigger
     components:
-    - type: OnUseTimerTrigger
+    - type: TriggerOnUse
+      keyOut: startTimer
+    - type: TimerTrigger
+      keysIn:
+      - startTimer
+      # use the default trigger key so it can activate any inserted payload
+      keyOut: trigger
       delay: 5
       delayOptions: [3, 5, 10, 15, 30]
       initialBeepDelay: 0
@@ -121,8 +127,8 @@
 - type: entity
   parent: TimerTrigger
   id: SignalTrigger
-  name: signal trigger
-  description: Adds a machine link that is triggered by signals.
+  name: "тригер сигналу"
+  description: "Додає машинний зв'язок, який спрацьовує за сигналами."
   components:
   - type: Sprite
     sprite: Objects/Devices/signaltrigger.rsi
@@ -134,15 +140,20 @@
     - SignalTrigger
   - type: PayloadTrigger
     components:
-    - type: TimerStartOnSignal
     - type: DeviceNetwork
       deviceNetId: Wireless
       receiveFrequencyId: BasicDevice
     - type: WirelessNetworkConnection
       range: 200
     - type: DeviceLinkSink
-    - type: OnUseTimerTrigger
-      delay: 0
+    - type: TriggerOnSignal
+      keyOut: startTimer
+    - type: TimerTrigger
+      keysIn:
+      - startTimer
+      # use the default trigger key so it can activate any inserted payload
+      keyOut: trigger
+      delay: 0 # Goob - signal payloads trigger instantly
       initialBeepDelay: 0
       beepSound:
         path: /Audio/Machines/Nuke/general_beep.ogg
@@ -152,8 +163,8 @@
 - type: entity
   parent: BaseItem
   id: VoiceTrigger
-  name: voice trigger
-  description: Adds a machine link that is triggered by vocal keywords.
+  name: "голосовий тригер"
+  description: "Додає машинне посилання, яке спрацьовує за ключовими словами."
   components:
   - type: Sprite
     sprite: Objects/Devices/voice.rsi

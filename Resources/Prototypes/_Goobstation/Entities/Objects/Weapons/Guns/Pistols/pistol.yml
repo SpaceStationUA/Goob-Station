@@ -13,10 +13,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: Dualetta
+  name: "Дуалетта"
   parent: [BaseWeaponPistol, BaseSyndicateContraband]
   id: WeaponPistolDualetta
-  description: The coolest pistol in the sector. It is said that nobody is strong enough of will to tarnish this weapon's reputation by daring to fire it without its paired pistol. Feeds from .35 Auto pistol magazines.
+  description: "Найкрутіший пістолет у секторі. Кажуть, ніхто не має достатньої сили волі, щоб заплямувати репутацію цієї зброї, наважившись стріляти з неї без парного пістолета. Живиться з пістолетних магазинів .35 Auto."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Pistols/Dualetta.rsi
@@ -25,6 +25,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "-0.03125, 0.1875"
   - type: Clothing
     sprite: _Goobstation/Objects/Weapons/Guns/Pistols/Dualetta.rsi
   - type: Gun
@@ -38,8 +40,16 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
-  - type: ItemSlots
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
     slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
       gun_magazine:
         name: Magazine
         startingItem: MagazinePistolHighCapacity
@@ -58,6 +68,12 @@
         whitelist:
           tags:
             - CartridgePistol
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
+    containers:
+      flashlight: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: Tag
     tags:
     - WeaponPistolDualetta
@@ -73,8 +89,8 @@
 - type: entity
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: WeaponPistolAnaconda
-  name: Anaconda
-  description: A bulky hand cannon with a built in fabricator in its grip. Slowly prints ammo for itself, though don't count on it being fast enough for sustained firefights.
+  name: "Анаконда"
+  description: "Громіздка ручна гармата з вбудованим у руків’я фабрикатором. Повільно друкує набої для себе, але не розраховуйте, що цього вистачить для тривалих перестрілок."
   components:
   - type: Item
     size: Small
@@ -89,6 +105,9 @@
     layers:
     - state: icon
       map: ["enum.GunVisualLayers.Base"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0.09375, 0.125"
+  - type: Appearance
   - type: Clothing
     sprite: _Goobstation/Objects/Weapons/Guns/Pistols/anaconda.rsi
     quickEquip: false
@@ -117,15 +136,27 @@
     - oni-cannot-shoot-guns-2
     - oni-cannot-shoot-guns-3
   - type: AmmoCounter
-  - type: ContainerContainer
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
     containers:
+      flashlight: !type:ContainerSlot
       ballistic-ammo: !type:Container
 
 - type: entity
-  name: Contract Terminator
+  name: "Контрактний термінатор"
   parent: [BaseWeaponPistol, BaseCentcommContraband]
   id: WeaponPistolCentcommAgent
-  description: Necessity is the mother of deception.
+  description: "Необхідність — мати обману."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Pistols/agentpistol.rsi

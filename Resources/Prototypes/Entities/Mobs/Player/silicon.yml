@@ -117,7 +117,7 @@
 # Be careful with these as they get removed on shutdown too!
 - type: entity
   id: AiHeld
-  description: Components added / removed from an entity that gets inserted into an AI core.
+  description: "Компоненти, що додаються/видаляються з сутності, яка вставляється в ядро ШІ."
   categories: [ HideSpawnMenu ]
   components:
   - type: IntrinsicRadioReceiver
@@ -159,6 +159,7 @@
     - ActionAIViewLaws
     - ActionOpenRemoteDevicesMenu # Corvax-Next-AiRemoteControl
     - ActionOpenCameraWarpMenu # Goobstation-Ai-Camera-Jumping
+    - ActionAIRedPhone # Pirate-AI-RedPhone
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
@@ -208,7 +209,7 @@
 
 - type: entity
   id: AiHeldIntellicard
-  description: Components added / removed from an entity that gets inserted into an Intellicard.
+  description: "Компоненти, додані/вилучені з сутності, яка вставляється в Intellicard."
   categories: [ HideSpawnMenu ]
   components:
   - type: IntrinsicRadioReceiver
@@ -238,7 +239,7 @@
 - type: entity
   id: AiHolder
   abstract: true
-  description: Handles AI interactions across holocards + AI cores
+  description: "Керує взаємодією ШІ між голографічними картками + ядрами ШІ"
   components:
   - type: ItemSlots
   - type: StationAiHolder
@@ -261,8 +262,8 @@
 # Items
 - type: entity
   id: Intellicard
-  name: intellicard
-  description: A storage device for AIs.
+  name: "інтелекткарт"
+  description: "Пристрій для зберігання даних для ШІ."
   parent:
   - BaseItem
   - AiHolder
@@ -300,8 +301,8 @@
 
 - type: entity
   id: PlayerStationAiEmpty
-  name: AI Core
-  description: The latest in Artificial Intelligences.
+  name: "Ядро штучного інтелекту"
+  description: "Останнє в галузі штучного інтелекту."
   parent:
   - BaseStructure
   - AiHolder
@@ -429,8 +430,51 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - Canilunzt
+    - Bubblish
+    - Nekomimetic
+    - Draconic
+    - SolCommon
+    - RootSpeak
+    - Moffic
+    - ValyrianStandard
+    - Chittin
+    - SiikMaas
+    - RobotTalk
+    - DroneTalk
+    - Marish
+    - Elyran
+    - Freespeak
+    - Tradeband
+    - Schechi
+    - NewKinPidgin
+    understands:
+    - TauCetiBasic
+    - Canilunzt
+    - Bubblish
+    - Nekomimetic
+    - Draconic
+    - SolCommon
+    - RootSpeak
+    - Moffic
+    - ValyrianStandard
+    - Chittin
+    - SiikMaas
+    - RobotTalk
+    - DroneTalk
+    - Marish
+    - Elyran
+    - Freespeak
+    - Tradeband
+    - Sign
+    - Schechi
+    - NewKinPidgin
   - type: SpeechSynthesis # Corvax-Frontier-Barks
     voice: Borg
+
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
@@ -438,8 +482,8 @@
   - Incorporeal
   - BaseMob
   id: StationAiHolo
-  name: AI eye
-  description: The AI's viewer.
+  name: "Око штучного інтелекту"
+  description: "Глядач ШІ."
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: MovementSpeedModifier # Goobstation
@@ -448,6 +492,7 @@
   - type: NoFTL
   - type: WarpPoint
     follow: true
+  - type: StationAiHolo # DOWNSTREAM-TPirates: ghost follow menu update
   - type: Eye
     pvsScale: 1.5
   - type: Visibility
@@ -462,14 +507,15 @@
 # The holographic representation of the AI that is projected from a holopad.
 - type: entity
   id: StationAiHoloLocal
-  name: AI hologram
-  description: A holographic representation of an AI.
+  name: "Голограма зі штучним інтелектом"
+  description: "Голографічне зображення штучного інтелекту."
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Transform
     anchored: true
   - type: WarpPoint
     follow: true
+  - type: StationAiHolo # DOWNSTREAM-TPirates: ghost follow menu update
   - type: Eye
   - type: ContentEye
   - type: Examiner
@@ -566,7 +612,7 @@
     - type: GhostTakeoverAvailable
 
 - type: entity
-  name: syndicate invasion borg spawner
+  name: "спавнер боргів для вторгнення синдикату"
   id: PlayerBorgSyndicateInvasionGhostRoleSpawner
   parent: MarkerBase
   components:

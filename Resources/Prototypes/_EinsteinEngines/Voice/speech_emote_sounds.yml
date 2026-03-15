@@ -79,6 +79,8 @@
       path: /Audio/_Goobstation/Voice/surprised.ogg
       params:
         variation: 0
+    SiliconDeathgasp: # DOWNSTREAM-TPirates: IPC screens
+      collection: BorgDeathGasp # DOWNSTREAM-TPirates: IPC screens
 
 - type: emoteSounds
   id: MaleShadowkin

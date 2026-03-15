@@ -14,8 +14,8 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackStasisBattery
-  name: stasis storage
-  description: Stores energy to freeze time flow, warping the space inside for more capacity.
+  name: "стазисне зберігання"
+  description: "Накопичує енергію, щоб зупинити плин часу, деформуючи простір всередині для більшої місткості."
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Back/Backpacks/stasis_back.rsi
@@ -87,8 +87,8 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelGman
-  name: strange duffelbag
-  description: A strange, unremovable, bag capable of containing an absurd amount of items. Seemingly invisible to the naked eye.
+  name: "дивна спортивна сумка"
+  description: "Дивна, незнімна сумка, здатна вмістити абсурдну кількість предметів. Здається невидимою для неозброєного ока."
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
@@ -104,8 +104,8 @@
 - type: entity
   parent: [Clothing, ClothingSlotBase]
   id: ClothingBackpackLMGBattery
-  name: EL-20 storage
-  description: Accepts specialized car batteries to power the EL-20 HAMRR LMG.
+  name: "сховище EL-20"
+  description: "Приймає спеціалізовані автомобільні акумулятори для живлення кулемета EL-20 HAMRR."
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Back/Backpacks/lmg_backpack.rsi
@@ -161,3 +161,52 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
+
+# Assmos - Extinguisher Nozzle
+- type: entity
+  parent: Clothing
+  id: ClothingBackpackFirefighterTank
+  name: "рюкзак з водяним баком пожежника"
+  description: "Рюкзак з охолоджуваним водяним баком, який може перемикати режими для запуску смоли ATMOS або працювати як вогнегасник високого тиску."
+  components:
+  - type: Tag
+    tags:
+    - AtmosBackTank
+    - WhitelistChameleon
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/atmosbackpacktank.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    slots: BACK
+    sprite: Clothing/Back/Backpacks/atmosbackpacktank.rsi
+  - type: SolutionAmmoProvider
+    solutionId: tank
+    proto: AtmosResin
+    fireCost: 25
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 1200
+        reagents:
+        - ReagentId: Water
+          Quantity: 1200
+  - type: DrawableSolution
+    solution: tank
+  - type: DrainableSolution
+    solution: tank
+  - type: ExaminableSolution
+    solution: tank
+  - type: ItemSlots
+    slots:
+      nozzle_slot:
+        name: FirefighterNozzle
+        startingItem: FirefighterNozzle
+        whitelist:
+          tags:
+          - Nozzle
+  - type: FirefighterTankRefillable
+  - type: ContainerContainer
+    containers:
+      nozzle_slot: !type:ContainerSlot

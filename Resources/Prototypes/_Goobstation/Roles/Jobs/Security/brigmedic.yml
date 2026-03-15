@@ -25,9 +25,10 @@
   icon: "JobIconBrigmedic"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  whitelisted: true # Pirate
   guides:
   - MedicalDoctor
-  - Brigmedic SOP
+  - BrigmedicSOP
   - Medicine
   goobcoins: 35
   access: # EE parity, make corpsman able function.

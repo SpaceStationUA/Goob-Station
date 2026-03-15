@@ -27,9 +27,16 @@
     # Major Nations
     - SolAlliance
     #- BieselRepublic
+    - IzweskiHegemony
     # Minor Nations
 
 - type: guideEntry
   id: SolAlliance
   name: guide-entry-sol-alliance
   text: "/ServerInfo/_Pirate/Guidebook/Lore/Nations/SolAlliance.xml"
+
+
+- type: guideEntry
+  id: IzweskiHegemony
+  name: guide-entry-izweski-hegemony
+  text: "/ServerInfo/_Pirate/Guidebook/Lore/Nations/IzweskiHegemony.xml"

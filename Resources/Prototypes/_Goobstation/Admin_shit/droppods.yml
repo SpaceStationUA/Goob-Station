@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: DropPodspawner
-  name: drop pod
-  description: Place items you want players to recieve in the bag, activate it over where you want the pod to drop. Players cannot see the pod. To drop living beings, drag them into the pod (like strapping someone onto a chair).
+  name: "дроп-капсула"
+  description: "Покладіть у сумку предмети, які мають отримати гравці, активуйте над місцем, куди має впасти капсула. Гравці не бачать капсулу. Щоб скинути живих істот, перетягніть їх у капсулу (як пристібання когось до крісла)."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Specific/DropPod/item.rsi
@@ -36,7 +36,8 @@
     damageCoefficient: 0
   - type: Damageable
     damageContainer: Inorganic
-  - type: OnUseTimerTrigger
+  - type: TriggerOnUse
+  - type: TimerTrigger
     delay: 0.9
   - type: Destructible
     thresholds:
@@ -56,14 +57,15 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: AnchorOnTrigger
   - type: TwoStageTrigger
+    keysIn:
+    - timer
     triggerDelay: 1
     components:
-      - type: DamageOverTime
-        damage:
-          types:
-            Slash: 50
-        interval: 0.5
-        ignoreResistances: true
-      - type: AnchorOnTrigger
-
+    - type: DamageOverTime
+      damage:
+        types:
+          Slash: 50
+      interval: 0.5
+      ignoreResistances: true

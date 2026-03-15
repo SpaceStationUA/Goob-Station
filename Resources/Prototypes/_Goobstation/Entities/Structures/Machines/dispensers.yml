@@ -7,9 +7,9 @@
 - type: entity
   id: EnergyChemDispenser
   parent: SmallConstructibleMachine
-  name: energy chemical dispenser
+  name: "енергетичний хімічний диспенсер"
   suffix: energy
-  description: A bluespace Chemical Dispenser that uses station energy to synthesize Reagents. The future is here and now.
+  description: "Блюспейс-хімічний диспенсер, що використовує енергію станції для синтезу реагентів. Майбутнє вже тут."
   placement:
     mode: SnapgridCenter
   components:
@@ -68,6 +68,7 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       energyBeakerSlot: !type:ContainerSlot
+      recipeDiskSlot: !type:ContainerSlot # Pirate: chem recipes
       storagebase: !type:Container
   - type: StaticPrice
     price: 1000
@@ -94,6 +95,16 @@
       whitelist:
         components:
         - FitsInDispenser
+    recipeDiskSlot: # Pirate: chem recipes
+      name: reagent-dispenser-component-slot-name-disk
+      insertSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      ejectSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
+      whitelist:
+        tags:
+        - ChemRecipeDisk
     reagents:
       Aluminium: 8
       Carbon: 3

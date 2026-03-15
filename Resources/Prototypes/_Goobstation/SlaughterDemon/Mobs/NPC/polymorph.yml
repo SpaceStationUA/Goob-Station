@@ -5,8 +5,8 @@
 
 - type: entity
   id: PolymorphBloodCrawlJaunt
-  name: Unknown
-  description: You can't figure out what that is.
+  name: "Невідомо"
+  description: "Ви не можете зрозуміти, що це таке."
   parent: [ Incorporeal, BaseMob ]
   components:
   - type: Sprite
@@ -31,7 +31,7 @@
     - BloodChangeling
   - type: DemonicWhisper
   - type: Visibility
-    layer: 2
+    layer: 2 # Ghost visflag
   - type: Spectral
   - type: Eye
     drawFov: false

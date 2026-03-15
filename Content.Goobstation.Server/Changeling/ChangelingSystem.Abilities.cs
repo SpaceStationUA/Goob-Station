@@ -76,6 +76,7 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Goobstation.Shared.Devour.Events;
+using Content.Shared.Nutrition.Components;
 using Content.Goobstation.Shared.InternalResources.Components;
 
 namespace Content.Goobstation.Server.Changeling;
@@ -205,7 +206,7 @@ public sealed partial class ChangelingSystem
         _blood.SpillAllSolutions(target);
 
         EnsureComp<AbsorbedComponent>(target);
-        EnsureComp<UnrevivableComponent>(target);
+        //EnsureComp<UnrevivableComponent>(target); Pirate living
 
         TryComp<ChangelingChemicalComponent>(uid, out var chemComp); // user's chemical component
         var popup = string.Empty;

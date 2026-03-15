@@ -1,8 +1,8 @@
 - type: entity
   parent: [ BaseItem, BaseXenoborgContraband ]
   id: CloakingDevice
-  name: cloaking device
-  description: A device that allows xenoborgs to go invisible.
+  name: "пристрій маскування"
+  description: "Пристрій, що дозволяє ксеноборгам ставати невидимими."
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalyscanner.rsi
@@ -30,3 +30,18 @@
         startingItem: PowerCellSmallNuclear
         disableEject: true
         swap: false
+
+- type: entity
+  parent: CloakingDevice
+  id: SuperCloakingDevice
+  name: "суперпристрій маскування"
+  description: "Пристрій, що дозволяє ксеноборгам ставати по-справжньому невидимими."
+  components:
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: Stealth
+      minVisibility: -1
+      lastVisibility: -1
+  - type: PowerCellDraw
+    drawRate: 12 # 30 seconds

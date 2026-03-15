@@ -15,14 +15,7 @@ implanter-label = Імплант: [color=green]{$implantName}[/color] Режим
 
 implanter-contained-implant-text = [color=green]{$desc}[/color]
 
-## Спливаючі вікна імплантатів
-
 scramble-implant-activated-popup = Ваша зовнішність змінюється!
-
-## Повідомлення про імплантацію
-
-deathrattle-implant-dead-message = {$user} загинув у {$position}.
-deathrattle-implant-critical-message = Життєві показники {$user} критичні, необхідна негайна допомога у {$position}.
 
 implanter-component-implant-already = {$target} вже має імплант {$implant}!
 

@@ -101,7 +101,6 @@ using Content.Server.Mind; // Pirate - Allow Admins to Spawn a Passport for Play
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared._Pirate.Contractors.Systems; // Pirate - Allow Admins to Spawn a Passport for Players
@@ -122,6 +121,7 @@ using Content.Shared.Mind; // Pirate - Allow Admins to Spawn a Passport for Play
 using Content.Shared.PDA;
 using Content.Shared.Roles.Jobs; // Pirate - Allow Admins to Spawn a Passport for Players
 using Content.Shared.Stacks;
+using Content.Shared.Station.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Server.Physics;

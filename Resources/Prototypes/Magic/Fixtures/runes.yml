@@ -9,7 +9,7 @@
 
 - type: entity
   id: BaseRune
-  name: "rune"
+  name: "руна"
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -24,7 +24,7 @@
 - type: entity
   parent: BaseRune
   id: CollideRune
-  name: "collision rune"
+  name: "руна зіткнення"
   abstract: true
   components:
     - type: Fixtures
@@ -43,7 +43,7 @@
 - type: entity
   parent: CollideRune
   id: ActivateRune
-  name: "activation rune"
+  name: "руна активації"
   abstract: true
   components:
     - type: TriggerOnActivate
@@ -51,7 +51,7 @@
 - type: entity
   parent: CollideRune
   id: CollideTimerRune
-  name: "collision timed rune"
+  name: "руна часового зіткнення"
   abstract: true
   components:
     - type: TriggerOnTimedCollide
@@ -60,10 +60,11 @@
 - type: entity
   parent: CollideRune
   id: ExplosionRune
-  name: "explosion rune"
+  name: "руна вибуху"
   components:
     - type: TriggerOnCollide
       fixtureID: rune
+      maxTriggers: 1
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Cryo
@@ -79,10 +80,11 @@
 - type: entity
   parent: CollideRune
   id: StunRune
-  name: "stun rune"
+  name: "руна оглушення"
   components:
     - type: TriggerOnCollide
       fixtureID: rune
+      maxTriggers: 1
     - type: DeleteOnTrigger
     - type: StunOnCollide
       stunAmount: 5
@@ -96,10 +98,11 @@
 - type: entity
   parent: CollideRune
   id: IgniteRune
-  name: "ignite rune"
+  name: "руна запалення"
   components:
     - type: TriggerOnCollide
       fixtureID: ignition
+      maxTriggers: 1
     - type: Fixtures
       fixtures:
         ignition:
@@ -123,7 +126,7 @@
 - type: entity
   parent: CollideTimerRune
   id: ExplosionTimedRune
-  name: "explosion timed rune"
+  name: "руна часового вибуху"
   components:
     - type: ExplodeOnTrigger
     - type: Explosive
@@ -135,7 +138,7 @@
 - type: entity
   parent: ActivateRune
   id: ExplosionActivateRune
-  name: "explosion activated rune"
+  name: "руна активованого вибуху"
   components:
     - type: ExplodeOnTrigger
     - type: Explosive
@@ -147,7 +150,7 @@
 - type: entity
   parent: ActivateRune
   id: FlashRune
-  name: "flash rune"
+  name: "руна спалаху"
   components:
     - type: FlashOnTrigger
     - type: DeleteOnTrigger
@@ -155,6 +158,6 @@
 - type: entity
   parent: CollideTimerRune
   id: FlashRuneTimer
-  name: "flash timed rune"
+  name: "руна часового спалаху"
   components:
     - type: FlashOnTrigger

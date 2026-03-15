@@ -1,5 +1,5 @@
 - type: entity
-  name: "Мобільна Турель НТ"
+  name: "Мобільна турель НТ"
   suffix: NT, Turret
   parent: ToolboxElectrical
   id: ToolboxNTTurret
@@ -65,4 +65,4 @@
   - type: Repairable
     qualityNeeded: "Anchoring"
     doAfterDelay: 3
-  - type: TriggerWhenEmpty
+  - type: TriggerOnEmptyGunshot

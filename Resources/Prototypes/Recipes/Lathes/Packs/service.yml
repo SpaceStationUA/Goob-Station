@@ -44,6 +44,8 @@
   - Holoprojector
   - WetFloorSign
   - WireBrush
+  - PhotoCamera # Pirate: camera
+  - CameraFilm # Pirate: camera
 
 - type: latheRecipePack
   id: ServiceBoardsStatic

@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2026 Corvax Team Contributors
+# SPDX-FileCopyrightText: 2026 CyberLanos <cyber.lanos00@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+- type: latheRecipe
+  id: PhotoCamera
+  result: PhotoCamera
+  materials:
+    Plastic: 500
+    Steel: 500
+    Glass: 1000
+
+- type: latheRecipe
+  id: CameraFilm
+  result: CameraFilm
+  materials:
+    Steel: 100
+    Glass: 100

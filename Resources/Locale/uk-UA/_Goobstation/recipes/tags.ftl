@@ -51,3 +51,4 @@ construction-graph-tag-shiv = заточка
 construction-graph-tag-ash = попіл
 construction-graph-tag-ice-bucket = відерце для льоду
 construction-graph-tag-water-bottle = пляшка з водою
+construction-graph-tag-plushie-carp = плюшевий короп

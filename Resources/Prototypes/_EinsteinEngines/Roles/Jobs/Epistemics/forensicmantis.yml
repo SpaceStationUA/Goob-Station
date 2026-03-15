@@ -1,7 +1,7 @@
 - type: job
   id: ForensicMantis
   name: job-name-mantis
-  description: job-description-mantis
+  description: "опис роботи богомола"
   playTimeTracker: JobForensicMantis
   requirements:
     - !type:OverallPlaytimeRequirement
@@ -22,6 +22,7 @@
   startingGear: ForensicMantisGear
   icon: "JobIconForensicMantis"
   supervisors: job-supervisors-rd
+  whitelisted: true # Pirate
   goobcoins: 25 #Goob content
   access:
   - Research

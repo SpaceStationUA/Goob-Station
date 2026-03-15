@@ -1,10 +1,10 @@
 - type: entity
   id: BulletCaselessRifleStandard
-  name: bullet (9.5mm)
+  name: "куля (9.5мм)"
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
       types:
-        Piercing: 15
+        Piercing: 18

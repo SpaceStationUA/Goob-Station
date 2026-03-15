@@ -29,8 +29,8 @@
 
 - type: job
   id: BlueshieldOfficer
-  name: Blueshield Officer
-  description: "Act as a bodyguard and advisor for Command and CentCom VIPs."
+  name: job-name-bso
+  description: "Виконуйте роль охоронця та радника для Командування й VIP із Центкому."
   playTimeTracker: JobBlueshieldOfficer
   requirements:
     - !type:DepartmentTimeRequirement
@@ -66,7 +66,7 @@
       - PMCG
   # Pirate contractor end
   guides:
-  - BlueshieldOfficer SOP
+  - BlueshieldOfficerSOP
   - Command
   - Succession
   goobcoins: 45
@@ -76,6 +76,7 @@
   joinNotifyCrew: true
   supervisors: job-supervisors-ntr-centcom
   canBeAntag: false
+  whitelisted: true # Pirate
   access:
   - Security
   - Brig

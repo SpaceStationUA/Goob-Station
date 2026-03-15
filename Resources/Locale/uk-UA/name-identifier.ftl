@@ -7,3 +7,5 @@ name-identifier-format-silicon = Сі-{$number}
 name-identifier-format-station-ai = ШІ-{$number}
 name-identifier-format-telepad = ТЕЛЕ-{$number}
 name-identifier-format-drone = ДР-{$number}
+
+name-identifier-format-xenoborg = Ксі-{$number}

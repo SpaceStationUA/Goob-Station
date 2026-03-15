@@ -187,8 +187,8 @@
 - type: entity
   id: OrganHumanBrain
   parent: BaseHumanOrganUnGibbable
-  name: brain
-  description: "The source of incredible, unending intelligence. Honk."
+  name: "мозок"
+  description: "Джерело неймовірного, нескінченного інтелекту. Хонк."
   components:
   - type: MindContainer
     showExamineInfo: true
@@ -233,14 +233,9 @@
     flavors:
       - people
   - type: FoodSequenceElement
-    sprite:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: brain
     entries:
-      burger:
-        name: food-sequence-content-brain
-      taco:
-        name: food-sequence-content-brain
+      Burger: Brain
+      Taco: Brain
   - type: Item
     size: Small
     heldPrefix: brain
@@ -251,8 +246,8 @@
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan
-  name: eyes
-  description: "I see you!"
+  name: "очі"
+  description: "Я тебе бачу!"
   components:
   - type: Organ # Shitmed Change
     intCap: 12
@@ -279,20 +274,11 @@
 - type: entity
   id: OrganHumanTongue
   parent: BaseHumanOrgan
-  name: tongue
-  description: "A fleshy muscle mostly used for lying."
+  name: "язик"
+  description: "М'яз із плоті, який здебільшого використовується для брехні."
   components:
   - type: Sprite
     state: tongue
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: tongue
-    entries:
-      burger:
-        name: food-sequence-content-tongue
-      taco:
-        name: food-sequence-content-tongue
   - type: Tag # goob edit
     tags:
     - Meat
@@ -302,7 +288,7 @@
 - type: entity
   id: OrganHumanAppendix
   parent: BaseHumanOrgan
-  name: appendix
+  name: "аппендикс"
   components:
   - type: Sprite
     layers:
@@ -313,27 +299,18 @@
 - type: entity
   id: OrganHumanEars
   parent: BaseHumanOrgan
-  name: ears
-  description: "There are three parts to the ear. Inner, middle and outer. Only one of these parts should normally be visible."
+  name: "вуха"
+  description: "Вухо складається з трьох частин. Внутрішнє, середнє і зовнішнє. Зазвичай тільки одне з цих частин повинне бути видимою."
   components:
   - type: Sprite
     state: ears
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: ears
-    entries:
-      burger:
-        name: food-sequence-content-ears
-      taco:
-        name: food-sequence-content-ears
   - type: Ears # Shitmed Change
 
 - type: entity
   id: OrganHumanLungs
   parent: BaseHumanOrgan
-  name: lungs
-  description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
+  name: "легені"
+  description: "Фільтрують кисень з атмосфери, який потім потрапляє в кровотік і використовується як переносник електронів."
   components:
   - type: Organ # Shitmed Change
     intCap: 17
@@ -382,8 +359,8 @@
 - type: entity
   id: OrganHumanHeart
   parent: BaseHumanOrgan
-  name: heart
-  description: "I feel bad for the heartless bastard who lost this."
+  name: "серце"
+  description: "Мені шкода безсердечного виродка, який його втратив."
   components:
   - type: Heart # Shitmed Change
   - type: Organ # Shitmed Change
@@ -418,8 +395,8 @@
 - type: entity
   id: OrganHumanStomach
   parent: BaseHumanOrgan
-  name: stomach
-  description: "Gross. This is hard to stomach."
+  name: "шлунок"
+  description: "Гидота. Це складно переварити."
   components:
   - type: Organ # Shitmed Change
     intCap: 44 # consists of a lot of pieces, thus is incredibly hard to easily destroy
@@ -454,15 +431,6 @@
     groups:
     - id: Food
     - id: Drink
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: stomach
-    entries:
-      burger:
-        name: food-sequence-content-stomach
-      taco:
-        name: food-sequence-content-stomach
   - type: Tag # goob edit
     tags:
     - Meat
@@ -472,8 +440,8 @@
 - type: entity
   id: OrganHumanLiver
   parent: BaseHumanOrgan
-  name: liver
-  description: "Pairing suggestion: chianti and fava beans."
+  name: "печінка"
+  description: "Поєднання: к'янті та квасоля фава."
   components:
   - type: Liver # Shitmed Change
   - type: Organ # Shitmed Change
@@ -495,15 +463,6 @@
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: liver
-    entries:
-      burger:
-        name: food-sequence-content-liver
-      taco:
-        name: food-sequence-content-liver
   - type: Tag # goob edit
     tags:
     - Meat
@@ -513,8 +472,8 @@
 - type: entity
   id: OrganHumanKidneys
   parent: BaseHumanOrgan
-  name: kidneys
-  description: "Filters toxins from the bloodstream."
+  name: "нирки"
+  description: "Фільтрує токсини з кровотоку."
   components:
   - type: Organ # Shitmed
     intCap: 21

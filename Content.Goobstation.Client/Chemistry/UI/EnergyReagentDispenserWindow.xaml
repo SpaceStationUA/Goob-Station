@@ -21,7 +21,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                       xmlns:ui="clr-namespace:Content.Client.Chemistry.UI;assembly=Content.Client"
                       Title="{Loc 'reagent-dispenser-bound-user-interface-title'}"
                       MinSize="600 300"
-                      SetSize="800 500">
+                      SetSize="800 740">
     <BoxContainer Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" MinWidth="200" Margin="10 10 15 10">
             <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 5">
@@ -70,11 +70,68 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                              VerticalExpand="True"
                              MinHeight="50"
                              SizeFlagsStretchRatio="2.5">
-                <GridContainer Name="ReagentList"
-                               HorizontalExpand="True"
-                               VerticalExpand="True"
-                               Access="Public"
-                               Columns="3" />
+                <BoxContainer Orientation="Vertical"
+                              HorizontalExpand="True"
+                              VerticalExpand="True">
+                    <!-- Pirate: chem recipes (start) -->
+                    <PanelContainer Margin="0 0 0 4">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f232a" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical">
+                            <BoxContainer Orientation="Horizontal"
+                                          Margin="0 4 0 0">
+                                <Label Text="{Loc 'reagent-dispenser-window-recipes-title'}"
+                                       VerticalAlignment="Center" />
+                                <Control HorizontalExpand="True" />
+                                <Button Name="RecordRecipeButton"
+                                        Access="Public"
+                                        Margin="2 0 0 0"
+                                        ToolTip="{Loc 'reagent-dispenser-window-recipes-record-tooltip'}" />
+                                <Button Name="SaveRecipeButton"
+                                        Access="Public"
+                                        Margin="2 0 0 0"
+                                        ToolTip="{Loc 'reagent-dispenser-window-recipes-save-tooltip'}" />
+                                <Button Name="ClearRecipesButton"
+                                        Access="Public"
+                                        Margin="2 0 0 0"
+                                        ToolTip="{Loc 'reagent-dispenser-window-recipes-clear-tooltip'}" />
+                            </BoxContainer>
+                            <GridContainer Name="RecipeList"
+                                           Access="Public"
+                                           Margin="0 4 0 0"
+                                           HorizontalExpand="True"
+                                           Columns="3" />
+                            <BoxContainer Name="RecipeDiskSection"
+                                          Access="Public"
+                                          Orientation="Vertical"
+                                          Margin="0 6 0 0">
+                                <BoxContainer Orientation="Horizontal">
+                                    <Label Text="{Loc 'reagent-dispenser-window-disk-recipes-title'}"
+                                           VerticalAlignment="Center" />
+                                    <Control HorizontalExpand="True" />
+                                    <Button Name="EjectRecipeDiskButton"
+                                            Access="Public"
+                                            Margin="2 0 0 0"
+                                            ToolTip="{Loc 'reagent-dispenser-window-recipes-disk-eject-tooltip'}" />
+                                </BoxContainer>
+                                <GridContainer Name="RecipeDiskList"
+                                               Access="Public"
+                                               Margin="0 4 0 0"
+                                               HorizontalExpand="True"
+                                               Columns="3" />
+                            </BoxContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+                    <Label Text="{Loc 'reagent-dispenser-window-reagents-title'}"
+                           Margin="0 2 0 2" />
+                    <!-- Pirate: chem recipes (end) -->
+                    <GridContainer Name="ReagentList"
+                                   HorizontalExpand="True"
+                                   VerticalExpand="True"
+                                   Access="Public"
+                                   Columns="3" />
+                </BoxContainer>
             </ScrollContainer>
             <ScrollContainer HScrollEnabled="False"
                              HorizontalExpand="True"
@@ -96,4 +153,3 @@ SPDX-License-Identifier: AGPL-3.0-or-later
         </SplitContainer>
     </BoxContainer>
 </controls:FancyWindow>
-

@@ -19,6 +19,7 @@ public sealed class NanoChatUiState : BoundUserInterfaceState
 {
     public readonly Dictionary<uint, NanoChatRecipient> Recipients = new();
     public readonly Dictionary<uint, List<NanoChatMessage>> Messages = new();
+    public readonly Dictionary<string, NanoChatPhotoData> Photos = new(); // Pirate: camera (nanochat gallery)
     public readonly List<NanoChatRecipient>? Contacts;
     public readonly uint? CurrentChat;
     public readonly uint OwnNumber;
@@ -29,6 +30,7 @@ public sealed class NanoChatUiState : BoundUserInterfaceState
     public NanoChatUiState(
         Dictionary<uint, NanoChatRecipient> recipients,
         Dictionary<uint, List<NanoChatMessage>> messages,
+        Dictionary<string, NanoChatPhotoData> photos, // Pirate: camera (nanochat gallery)
         List<NanoChatRecipient>? contacts,
         uint? currentChat,
         uint ownNumber,
@@ -38,6 +40,7 @@ public sealed class NanoChatUiState : BoundUserInterfaceState
     {
         Recipients = recipients;
         Messages = messages;
+        Photos = photos; // Pirate: camera (nanochat gallery)
         Contacts = contacts;
         CurrentChat = currentChat;
         OwnNumber = ownNumber;

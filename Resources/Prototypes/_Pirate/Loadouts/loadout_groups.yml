@@ -1,3 +1,31 @@
+## Різне
+- type: loadoutGroup
+  id: PirateTrinkets
+  name: loadout-group-trinkets
+  loadouts:
+  - TrinketsClothingHeadPaperSack
+  - TrinketsPhotoAlbum
+  - TrinketsPhotoCameraFilled
+  subgroups:
+  - PiratePlushies
+
+- type: loadoutGroup
+  id: PiratePlushies
+  name: loadout-group-trinkets
+  loadouts:
+  - PlushieVulpSusie
+  - PlushieEntony
+  - PlushieIpcCat
+  - PlushieTK
+  - PlushieKateryna
+  - PlushieNicholasGray
+  - PlushieOlia
+  - PlushieSkeleton
+  - PlushieTayler
+  - PlushiePocketAssistant
+
+
+
 ## Command - Командування
 # Адміністративний асистент
 - type: loadoutGroup
@@ -329,7 +357,7 @@
 
 
 
-## Security - Охорона
+## Security - Служба Безпеки
 # Кадет
 - type: loadoutGroup
   id: SecurityCadetOuterClothing
@@ -337,25 +365,38 @@
   loadouts:
   - ArmorCadet
 
+# Офіцер
+- type: loadoutGroup
+  id: SecurityOfficerHead
+  name: loadout-group-security-officer-head
+  loadouts:
+  - SecurityHelmetAlt
+  - SecurityHelmetLight
+  - SecurityOfficerBeret
+  - SecurityOfficerSoft
+
+# Бригмедик
+- type: loadoutGroup
+  id: BrigmedicGloves
+  name: loadout-group-brigmedic-gloves
+  loadouts:
+  - CombatNitrileGloves
+
 # Зброя
 - type: loadoutGroup
   id: SecurityWeapon
   name: loadout-group-security-weapon
   loadouts:
   - LoadoutSecurityWeaponMk58
-  - LoadoutSecurityRevolverInspector
   - LoadoutSecurityEnergyGunPistol
 
 - type: loadoutGroup
   id: SeniorSecurityWeapon
   name: loadout-group-senior-security-weapon
   loadouts:
-  - LoadoutSecurityWeaponMk58
-  - LoadoutSecurityRevolverInspector
-  - LoadoutSecurityPistolN1984
-  - LoadoutSecurityEnergyGunPistol
-  - LoadoutSecurityPistolUniversalNonLethal
   - LoadoutSecurityPistolUniversal
+  subgroups:
+  - SecurityWeapon
 
 # Інше
 - type: loadoutGroup

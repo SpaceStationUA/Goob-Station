@@ -10,13 +10,6 @@ ghost-gui-toggle-hearing-popup-off = Тепер ви можете чути ли�
 
 ghost-target-window-title = Телепорт Привида
 ghost-target-window-current-button = Переміститися: {$name}
-ghost-target-window-filter-places = Місця
-ghost-target-window-filter-players = Гравці
-ghost-target-window-filter-dead = Мертві
-ghost-target-window-filter-ghosts = Привиди
-ghost-target-window-filter-mobs = Моби
-ghost-target-window-filter-description = Опис
-ghost-target-window-observers-count = ({$count})
 
 ghost-roles-window-title = Ролі Привидів
 ghost-roles-window-request-role-button = Подати Заявку
@@ -29,13 +22,7 @@ ghost-return-to-body-title = Повернутися у тіло
 ghost-return-to-body-text = Вас реанімують! Повернутися у тіло?
 
 ghost-gui-return-to-round-button = Респавн
-ghost-target-window-warp-to-most-followed = Телепорт до Найбільш Відслідковуваного
-ghost-target-window-refresh-tooltip = Оновити список
-ghost-target-window-search-placeholder = Пошук
-ghost-target-window-color-mode-label = Колір:
-ghost-target-window-color-mode-health = Здоров'я
-ghost-target-window-color-mode-department = Відділ
-ghost-target-window-color-mode-tooltip = Колір чіпа: стан здоров'я (зелений/помаранчевий/червоний) або відділ (посада)
+ghost-target-window-warp-to-most-followed = Телепортуватися до найвідстежуванішого
 ghost-roles-window-join-raffle-button = Приєднатися до розіграшу ролі
 ghost-roles-window-raffle-in-progress-button = Розіграш ({$time}, між { $players ->
          [one] {$players} гравцем

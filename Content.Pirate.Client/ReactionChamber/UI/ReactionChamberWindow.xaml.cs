@@ -23,6 +23,7 @@ namespace Content.Pirate.Client.ReactionChamber.UI;
 public sealed partial class ReactionChamberWindow : DefaultWindow
 {
     // [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
     public bool Active;
     public float Temp;
     private const float TempTransitionDuration = 1f;
@@ -118,14 +119,8 @@ public sealed partial class ReactionChamberWindow : DefaultWindow
     public void UpdateActiveButtonUI(bool active)
     {
         Active = active;
-        if (Active)
-        {
-            ActiveButton.TexturePath = "/Textures/_Pirate/UserInterface/Buttons/switch.rsi/switch_on.png";
-        }
-        else
-        {
-            ActiveButton.TexturePath = "/Textures/_Pirate/UserInterface/Buttons/switch.rsi/switch_off.png";
-        }
+        var rsi = _resourceCache.GetResource<RSIResource>("/Textures/_Pirate/UserInterface/Buttons/switch.rsi").RSI;
+        ActiveButton.TextureNormal = Active ? rsi["switch_on"].Frame0 : rsi["switch_off"].Frame0;
         ActiveButton.Pressed = !Active;
     }
 }

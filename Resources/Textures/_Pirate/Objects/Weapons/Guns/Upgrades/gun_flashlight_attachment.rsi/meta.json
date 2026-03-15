@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "flashlight sprites copied from Resources/Textures/Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi (Monkestation-derived, see source RSI metadata)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "flight"
+    },
+    {
+      "name": "flight-on"
+    }
+  ]
+}

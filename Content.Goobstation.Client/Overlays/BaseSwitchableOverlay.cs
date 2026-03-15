@@ -11,17 +11,20 @@ using Content.Goobstation.Shared.Overlays;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using Content.Client._Pirate.Photo; // Pirate: camera
 
 namespace Content.Goobstation.Client.Overlays;
 
 public sealed class BaseSwitchableOverlay<TComp> : Overlay where TComp : SwitchableVisionOverlayComponent
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!; // Pirate: camera
 
     public override bool RequestScreenTexture => true;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private readonly ShaderInstance _shader;
+    private readonly PhotoCaptureFilterSystem _photoCaptureFilter; // Pirate: camera
 
     public TComp? Comp = null;
 
@@ -30,11 +33,15 @@ public sealed class BaseSwitchableOverlay<TComp> : Overlay where TComp : Switcha
     public BaseSwitchableOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _photoCaptureFilter = _entityManager.System<PhotoCaptureFilterSystem>(); // Pirate: camera
         _shader = _prototype.Index<ShaderPrototype>("NightVision").InstanceUnique();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (_photoCaptureFilter.IsSuppressedForEye(args.Viewport.Eye, PhotoCaptureSuppressionMask.VisionEffects)) // Pirate: camera
+            return;
+
         if (ScreenTexture is null || Comp is null || !IsActive)
             return;
 
