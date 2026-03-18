@@ -1,0 +1,27 @@
+- type: entity
+  parent: MarkerBase
+  id: RMCTriggerTeleporter
+  name: teleporter
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: RMCTeleporter
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: _Pirate/Markers/jobs.rsi
+        state: adminassistant
+
+- type: entity
+  parent: MarkerBase
+  id: RMCTriggerTeleporterViewer
+  name: teleporter viewer
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: RMCTeleporterViewer
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: _Pirate/Markers/jobs.rsi
+        state: adminassistant
