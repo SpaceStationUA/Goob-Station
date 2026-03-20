@@ -83,6 +83,10 @@
   - type: Carriable
   - type: HumanoidAppearance
     species: Shadowkin
+    customBaseLayers: # Pirate: glowing eyes patch
+      Eyes: # Pirate: glowing eyes patch
+        id: MobShadowkinEyes # Pirate: glowing eyes patch
+        shader: unshaded # Pirate: glowing eyes patch
   - type: Icon
     sprite: _EinsteinEngines/Mobs/Species/Shadowkin/parts.rsi
     state: full
@@ -248,6 +252,10 @@
   components:
     - type: HumanoidAppearance
       species: Shadowkin
+      customBaseLayers: # Pirate: glowing eyes patch
+        Eyes: # Pirate: glowing eyes patch
+          id: MobShadowkinEyes # Pirate: glowing eyes patch
+          shader: unshaded # Pirate: glowing eyes patch
     - type: Sprite
       netsync: false
       noRot: true

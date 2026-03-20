@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2026 CrazeTheDragon crazedragon@duck.com
+// SPDX-License-Identifier: AGPL-3.0-or-later
 using Robust.Shared.Audio;
 
 namespace Content.Shared._Pirate.AI;

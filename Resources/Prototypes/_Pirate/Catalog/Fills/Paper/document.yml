@@ -1,138 +1,35 @@
-- type: entity
-  parent: Paper
-  id: PrintedDocument
-  abstract: true
-  description: "Бюрократичний підрозділ. Документ, надрукований на принтері."
-  components:
-    - type: Paper
-
+# Зовнішня бюрократія
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentReportStation
-  name: "Звіт про ситуацію на станції"
+  name: "Звіт виконання цілі та стану станції"
   components:
     - type: Paper
       content: doc-text-printer-report-station
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentReportOnEliminationOfViolations
-  name: "Звіт про усунення порушень"
+  id: PrintedDocumentAppealToCentCom
+  name: "Лист для Центрального Командування"
   components:
     - type: Paper
-      content: doc-text-printer-report-on-elimination-of-violations
+      content: doc-text-printer-appeal-to-centcom
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentReportDepartment
-  name: "Звіт про роботу відділу"
+  id: PrintedDocumentRequestCallMembersCentralCommittee
+  name: "Запит на виклик членів Центрального Комітету"
   components:
     - type: Paper
-      content: doc-text-printer-report-department
+      content: doc-text-printer-request-call-members-central-committee
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentReportEmployeePerformance
-  name: "Звіт про роботу співробітника"
+  id: PrintedDocumentRequestRequestToEstablishThreatLevel
+  name: "Запит на встановлення рівня загрози"
   components:
     - type: Paper
-      content: doc-text-printer-report-employee-performance
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentReportOnTheChaptersMeeting
-  name: "Звіт про засідання розділу"
-  components:
-    - type: Paper
-      content: doc-text-printer-report-on-the-chapters-meeting
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentInternalAffairsAgentsReport
-  name: "Звіт агента внутрішніх розслідувань"
-  components:
-    - type: Paper
-      content: doc-text-printer-internal-affairs-agents-report
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentConditionReport
-  name: "Звіт про технічний стан"
-  components:
-    - type: Paper
-      content: doc-text-printer-condition-report
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentReportStudyObject
-  name: "Звіт про дослідження об'єкта"
-  components:
-    - type: Paper
-      content: doc-text-printer-report-study-object
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentExperimentReport
-  name: "Звіт про експеримент"
-  components:
-    - type: Paper
-      content: doc-text-printer-experiment-report
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentDisposalReport
-  name: "Звіт про утилізацію"
-  components:
-    - type: Paper
-      content: doc-text-printer-disposal-report
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentApplicationAppointmentInterim
-  name: "Заява про призначення на посаду тимчасово виконуючого обов'язки"
-  components:
-    - type: Paper
-      content: doc-text-printer-application-appointment-interim
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentApplicationEmployment
-  name: "Заява про прийняття на роботу"
-  components:
-    - type: Paper
-      content: doc-text-printer-application-employment
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentLetterResignation
-  name: "Заява про звільнення"
-  components:
-    - type: Paper
-      content: doc-text-printer-letter-resignation
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentApplicationAccess
-  name: "Заява про доступ"
-  components:
-    - type: Paper
-      content: doc-text-printer-application-access
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentApplicationEquipment
-  name: "Заява на обладнання"
-  components:
-    - type: Paper
-      content: doc-text-printer-application-equipment
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentAppeal
-  name: "Апеляція"
-  components:
-    - type: Paper
-      content: doc-text-printer-appeal
+      content: doc-text-printer-request-to-establish-threat-level
 
 - type: entity
   parent: PrintedDocument
@@ -152,20 +49,136 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentRequestCallMembersCentralCommitteeDSO
-  name: "Запит на виклик членів ЦК, ДСО"
+  id: PrintedDocumentERTRequest
+  name: "Запит на виклик ГШР"
   components:
     - type: Paper
-      content: doc-text-printer-request-call-members-central-committee-dso
+      content: doc-text-printer-ert-request
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentRequestRequestToEstablishThreatLevel
-  name: "Запит на встановлення рівня загрози"
+  id: PrintedDocumentCBURNRequest
+  name: "Запит на виклик РХБЗ"
   components:
     - type: Paper
-      content: doc-text-printer-request-to-establish-threat-level
+      content: doc-text-printer-cburn-request
+# Кінець Зовнішня бюрократія
 
+# Медична бюрократія
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestEuthanasia
+  name: "Запит на евтаназію"
+  components:
+    - type: Paper
+      content: doc-text-printer-request-euthanasia
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentOrderMedicalIntervention
+  name: "Наказ про медичне втручання"
+  components:
+    - type: Paper
+      content: doc-text-printer-order-medical-intervention
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportDepartmentMed
+  name: "Звіт про роботу Медичного відділу"
+  components:
+    - type: Paper
+      content: doc-text-printer-report-department-med
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentDeathCertificate
+  name: "Свідоцтво про смерть"
+  components:
+    - type: Paper
+      content: doc-text-printer-death-certificate
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPermissionDisposeBody
+  name: "Дозвіл на утилізацію тіла"
+  components:
+    - type: Paper
+      content: doc-text-printer-permission-dispose-body
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPrescriptionDrugAuthorization
+  name: "Дозвіл на рецептурні ліки"
+  components:
+    - type: Paper
+      content: doc-text-printer-prescription-drug-authorization
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentStatementHealth
+  name: "Висновок про стан здоров'я"
+  components:
+    - type: Paper
+      content: doc-text-printer-statement-health
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentMedRequest
+  name: "Замовлення на поповнення медикаментів"
+  components:
+    - type: Paper
+      content: doc-text-printer-med-request
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentMedChemicalRequest
+  name: "Замовлення хімічних речовин"
+  components:
+    - type: Paper
+      content: doc-text-printer-med-chemical-request
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentCloningReport
+  name: "Звіт клонування"
+  components:
+    - type: Paper
+      content: doc-text-printer-cloning-report
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestMentalHealth
+  name: "Запит на примусове психічне лікування"
+  components:
+    - type: Paper
+      content: doc-text-printer-request-mental-health
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRecomendMentalHealth
+  name: "Рекомендація до проходження психологічного лікування"
+  components:
+    - type: Paper
+      content: doc-text-printer-recomend-mental-health
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPsychologist
+  name: "Документ від психолога"
+  components:
+    - type: Paper
+      content: doc-text-printer-psychologist
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentNotes
+  name: "Довідка"
+  components:
+    - type: Paper
+      content: doc-text-printer-notes
+# Кінець Медична бюрократія
+
+#Загальна бюрократія
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentRequestChangeSalary
@@ -177,7 +190,7 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentRequestForNonlistedEmployment
-  name: "Запит на нештатне працевлаштування"
+  name: "Запит на нестандартне працевлаштування"
   components:
     - type: Paper
       content: doc-text-printer-request-for-non-listed-employment
@@ -192,20 +205,134 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentRequestDocuments
-  name: "Запит на надання документів"
+  id: PrintedDocumentOrderDeprivationAccess
+  name: "Наказ про позбавлення доступу"
   components:
     - type: Paper
-      content: doc-text-printer-request-documents
+      content: doc-text-printer-order-deprivation-access
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentRequestEuthanasia
-  name: "Запит на евтаназію"
+  id: PrintedDocumentOrderEncouragement
+  name: "Наказ про нагородження"
   components:
     - type: Paper
-      content: doc-text-printer-request-euthanasia
+      content: doc-text-printer-order-encouragement
 
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentOrderDismissal
+  name: "Наказ про звільнення працівника"
+  components:
+    - type: Paper
+      content: doc-text-printer-order-dismissal
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportEmployeePerformance
+  name: "Звіт про виконання роботи співробітником"
+  components:
+    - type: Paper
+      content: doc-text-printer-report-employee-performance
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentApplicationAccess
+  name: "Запит на розширення доступу"
+  components:
+    - type: Paper
+      content: doc-text-printer-application-access
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentApplicationEquipment
+  name: "Запит на отримання обладнання"
+  components:
+    - type: Paper
+      content: doc-text-printer-application-equipment
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentLetterResignation
+  name: "Заява на звільнення"
+  components:
+    - type: Paper
+      content: doc-text-printer-letter-resignation
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentApplicationEmployment
+  name: "Заява на роботу"
+  components:
+    - type: Paper
+      content: doc-text-printer-application-employment
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentCertificateAdvancedTraining
+  name: "Свідоцтво про підвищення кваліфікації"
+  components:
+    - type: Paper
+      content: doc-text-printer-certificate-advanced-training
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentDivorceCertificate
+  name: "Свідоцтво про розлучення"
+  components:
+    - type: Paper
+      content: doc-text-printer-divorce-certificate
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentMarriageCertificate
+  name: "Свідоцтво про шлюб"
+  components:
+    - type: Paper
+      content: doc-text-printer-marriage-certificate
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentCertificate
+  name: "Почесна Грамота"
+  components:
+    - type: Paper
+      content: doc-text-printer-certificate
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPermissionToTravelInCaseOfThreat
+  name: "Дозвіл на пересування в умовах загрози"
+  components:
+    - type: Paper
+      content: doc-text-printer-permission-to-travel-in-case-of-threat
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPermissionEquipment
+  name: "Дозвіл на використання обладнання"
+  components:
+    - type: Paper
+      content: doc-text-printer-permission-equipment
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPromotionOrder
+  name: "Наказ про підвищення"
+  components:
+    - type: Paper
+      content: doc-text-printer-promotion-order
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentTemporaryPermit
+  name: "Дозвіл на тимчасове перебування на станції"
+  components:
+    - type: Paper
+      content: doc-text-printer-temporary-permit
+# Кінець Загальна бюрократія
+
+# Інженерна бюрократія
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentRequestConstructionWork
@@ -224,8 +351,50 @@
 
 - type: entity
   parent: PrintedDocument
+  id: PrintedDocumentConditionReport
+  name: "Звіт про технічний стан"
+  components:
+    - type: Paper
+      content: doc-text-printer-condition-report
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportDepartmentEng
+  name: "Звіт про роботу Інженерного відділу"
+  components:
+    - type: Paper
+      content: doc-text-printer-report-department-eng
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentConstructionPermit
+  name: "Дозвіл на перебудову станції"
+  components:
+    - type: Paper
+      content: doc-text-printer-construction-permit
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentShipBuild
+  name: "Дозвіл на будівництво шатлу"
+  components:
+    - type: Paper
+      content: doc-text-printer-ship-build
+# Кінець Інженерна бюрократія
+
+# Юридична бюрократія
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestDocuments
+  name: "Запит на надання документів"
+  components:
+    - type: Paper
+      content: doc-text-printer-request-documents
+
+- type: entity
+  parent: PrintedDocument
   id: PrintedDocumentComplaintViolationLaborRules
-  name: "Скарга на порушення трудового розпорядку"
+  name: "Скарга на порушення трудового порядку"
   components:
     - type: Paper
       content: doc-text-printer-complaint-violation-labor-rules
@@ -233,31 +402,89 @@
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentComplaintOffense
-  name: "Скарга на правопорушення"
+  name: "Скарга на порушення закону"
   components:
     - type: Paper
       content: doc-text-printer-complaint-offense
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPermissionEquipment
-  name: "Дозвіл на використання обладнання"
+  id: PrintedDocumentJudgment
+  name: "Судове рішення"
   components:
     - type: Paper
-      content: doc-text-printer-permission-equipment
+      content: doc-text-printer-judgment
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPermissionToTravelInCaseOfThreat
-  name: "Дозвіл на пересування у разі загрози"
+  id: PrintedDocumentSentence
+  name: "Вирок"
   components:
     - type: Paper
-      content: doc-text-printer-permission-to-travel-in-case-of-threat
+      content: doc-text-printer-sentence
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentDecisionToStartTrial
+  name: "Рішення про початок судового провадження"
+  components:
+    - type: Paper
+      content: doc-text-printer-decision-to-start-trial
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentComplaintDirector
+  name: "Скарга на керівника"
+  components:
+    - type: Paper
+      content: doc-text-printer-complaint-director
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentComplaintEmploye
+  name: "Скарга на працівника"
+  components:
+    - type: Paper
+      content: doc-text-printer-complaint-employe
+# Кінець Юридична бюрократія
+
+# Охоронна бюрократія
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentOrderParolePrisoner
+  name: "Наказ про умовно-дострокове звільнення"
+  components:
+    - type: Paper
+      content: doc-text-printer-order-parole-prisoner
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentInternalAffairsAgentsReport
+  name: "Звіт внутрішнього розслідування"
+  components:
+    - type: Paper
+      content: doc-text-printer-internal-affairs-agents-report
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportDepartmentSec
+  name: "Звіт про роботу відділу Служби Безпеки"
+  components:
+    - type: Paper
+      content: doc-text-printer-report-department-sec
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentCertificateOffense
+  name: "Довідка про правопорушення"
+  components:
+    - type: Paper
+      content: doc-text-printer-certificate-offense
 
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentSearchPermission
-  name: "Дозвіл на обшук"
+  name: "Ордер на обшук"
   components:
     - type: Paper
       content: doc-text-printer-search-permission
@@ -272,91 +499,94 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPrescriptionDrugAuthorization
-  name: "Дозвіл на відпуск ліків за рецептом"
+  id: PrintedDocumentClosingIndictment
+  name: "Обвинувальний висновок"
   components:
     - type: Paper
-      content: doc-text-printer-prescription-drug-authorization
+      content: doc-text-printer-closing-indictment
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPermissionDisposeBody
-  name: "Дозвіл на утилізацію тіла"
+  id: PrintedDocumentRequestHearing
+  name: "Заява на проведення суду"
   components:
     - type: Paper
-      content: doc-text-printer-permission-dispose-body
+      content: doc-text-printer-request-hearing
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentConstructionPermit
-  name: "Дозвіл на будівництво"
+  id: PrintedDocumentRequestExecution
+  name: "Запит на страту"
   components:
     - type: Paper
-      content: doc-text-printer-construction-permit
+      content: doc-text-printer-request-execution
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPermissionToExtendMarriage
-  name: "Дозвіл на продовження шлюбу"
+  id: PrintedDocumentRequestSecurity
+  name: "Наказ на охорону"
   components:
     - type: Paper
-      content: doc-text-printer-permission-to-extend-marriage
+      content: doc-text-printer-request-security
+# Кінець Охоронна бюрократія
 
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentOrderDismissal
-  name: "Наказ про звільнення"
-  components:
-    - type: Paper
-      content: doc-text-printer-order-dismissal
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentOrderDeprivationAccess
-  name: "Наказ про позбавлення доступу"
-  components:
-    - type: Paper
-      content: doc-text-printer-order-deprivation-access
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentOrderEncouragement
-  name: "Наказ про заохочення"
-  components:
-    - type: Paper
-      content: doc-text-printer-order-encouragement
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentOrderParolePrisoner
-  name: "Наказ про умовно-дострокове звільнення ув'язненого"
-  components:
-    - type: Paper
-      content: doc-text-printer-order-parole-prisoner
-
+# Дослідницька бюрократія
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentOrderRecognizingSentienceCreature
-  name: "Наказ про визнання розумності субстанції"
+  name: "Наказ про визнання розумності істоти"
   components:
     - type: Paper
       content: doc-text-printer-order-recognizing-sentience-creature
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentExperimentReport
+  name: "Звіт про експеримент"
+  components:
+    - type: Paper
+      content: doc-text-printer-experiment-report
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentOrderMedicalIntervention
-  name: "Наказ про медичне втручання"
+  id: PrintedDocumentReportDepartmentRes
+  name: "Звіт про роботу Дослідницького відділу"
   components:
     - type: Paper
-      content: doc-text-printer-order-medical-intervention
+      content: doc-text-printer-report-department-res
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentProductManufacturingOrder
-  name: "Наказ на виробництво продукції"
+  id: PrintedDocumentRequestCyborgization
+  name: "Запит на кіборгізацію"
   components:
     - type: Paper
-      content: doc-text-printer-product-manufacturing-order
+      content: doc-text-printer-request-cyborgization
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentProductionOrder
+  name: "Замовлення на виробництво"
+  components:
+    - type: Paper
+      content: doc-text-printer-production-order
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentArtifactReport
+  name: "Звіт про артефакт"
+  components:
+    - type: Paper
+      content: doc-text-printer-artifact-report
+# Кінець Дослідницька бюрократія
+
+# Логістична бюрократія
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentOrderingSpecialEquipment
+  name: "Замовлення спеціального обладнання"
+  components:
+    - type: Paper
+      content: doc-text-printer-ordering-special-equipment
 
 - type: entity
   parent: PrintedDocument
@@ -368,107 +598,104 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentOrderingSpecialEquipment
-  name: "Замовлення спеціального обладнання"
+  id: PrintedDocumentProductManufacturingOrder
+  name: "Запит на виготовлення продукції"
   components:
     - type: Paper
-      content: doc-text-printer-ordering-special-equipment
+      content: doc-text-printer-product-manufacturing-order
 
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentOrderPurchaseWeapons
-  name: "Наказ на закупівлю озброєння"
+  name: "Запит на закупівлю зброї"
   components:
     - type: Paper
       content: doc-text-printer-order-purchase-weapons
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentCertificate
-  name: "Сертифікат"
+  id: PrintedDocumentReportDepartmentLog
+  name: "Звіт про роботу Логістичного відділу"
   components:
     - type: Paper
-      content: doc-text-printer-certificate
+      content: doc-text-printer-report-department-log
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentCertificateAdvancedTraining
-  name: "Сертифікат про підвищення кваліфікації"
+  id: PrintedDocumentDisposalReport
+  name: "Звіт про утилізацію"
   components:
     - type: Paper
-      content: doc-text-printer-certificate-advanced-training
+      content: doc-text-printer-disposal-report
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentCertificateOffense
-  name: "Довідка про правопорушення"
+  id: PrintedDocumentRequestShipping
+  name: "Заява на доставлення вантажу"
   components:
     - type: Paper
-      content: doc-text-printer-certificate-offense
+      content: doc-text-printer-request-shipping
+# Кінець Логістична бюрократія
+
+# Вища бюрократія
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportOnTheChaptersMeeting
+  name: "Протокол зборів командування"
+  components:
+    - type: Paper
+      content: doc-text-printer-report-on-the-chapters-meeting
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentDeathCertificate
-  name: "Свідоцтво про смерть"
+  id: PrintedDocumentApplicationAppointmentInterim
+  name: "Заява на В.О."
   components:
     - type: Paper
-      content: doc-text-printer-death-certificate
+      content: doc-text-printer-application-appointment-interim
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentMarriageCertificate
-  name: "Свідоцтво про шлюб"
+  id: PrintedDocumentOrderToDismissDirector
+  name: "Наказ про звільнення керівника"
   components:
     - type: Paper
-      content: doc-text-printer-marriage-certificate
+      content: doc-text-printer-order-to-dismiss-director
+# Кінець Вища бюрократія
+
+- type: entity
+  parent: Paper
+  id: PrintedDocument
+  abstract: true
+  description: "Бюрократичний підрозділ. Документ, надрукований на принтері."
+  components:
+    - type: Paper
+
+# ???
+# - type: entity
+#   parent: PrintedDocument
+#   id: PrintedDocumentReportOnEliminationOfViolations
+#   name: "Звіт про усунення порушень"
+#   components:
+#     - type: Paper
+#       content: doc-text-printer-report-on-elimination-of-violations
+
+# - type: entity
+#   parent: PrintedDocument
+#   id: PrintedDocumentPermissionToExtendMarriage
+#   name: "Дозвіл на продовження шлюбу"
+#   components:
+#     - type: Paper
+#       content: doc-text-printer-permission-to-extend-marriage
+#
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentDivorceCertificate
-  name: "Свідоцтво про розлучення"
+  id: PrintedDocumentReportStudyObject
+  name: "Звіт про дослідження об'єкта"
   components:
     - type: Paper
-      content: doc-text-printer-divorce-certificate
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentClosingIndictment
-  name: "Обвинувальний висновок"
-  components:
-    - type: Paper
-      content: doc-text-printer-closing-indictment
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentSentence
-  name: "Вирок"
-  components:
-    - type: Paper
-      content: doc-text-printer-sentence
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentJudgment
-  name: "Рішення суду"
-  components:
-    - type: Paper
-      content: doc-text-printer-judgment
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentStatementHealth
-  name: "Звіт про стан здоров'я"
-  components:
-    - type: Paper
-      content: doc-text-printer-statement-health
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentDecisionToStartTrial
-  name: "Рішення про початок судового розгляду"
-  components:
-    - type: Paper
-      content: doc-text-printer-decision-to-start-trial
+      content: doc-text-printer-report-study-object
 
 - type: entity
   parent: PrintedDocument

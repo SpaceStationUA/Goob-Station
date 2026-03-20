@@ -1,102 +1,127 @@
+# Нове
 - type: latheRecipePack
-  id: Reports
+  id: ExternalBureaucracy
   recipes:
-  - PrintedDocumentReportStationRecipe
-  - PrintedDocumentReportOnEliminationOfViolationsRecipe
-  - PrintedDocumentReportDepartmentRecipe
-  - PrintedDocumentReportEmployeePerformanceRecipe
-  - PrintedDocumentReportOnTheChaptersMeetingRecipe
-  - PrintedDocumentInternalAffairsAgentsReportRecipe
-  - PrintedDocumentConditionReportRecipe
-  - PrintedDocumentReportStudyObjectRecipe
-  - PrintedDocumentExperimentReportRecipe
-  - PrintedDocumentDisposalReportRecipe
+    - PrintedDocumentReportStationRecipe
+    - PrintedDocumentAppealToCentComRecipe
+    - PrintedDocumentRequestCallMembersCentralCommitteeRecipe
+    - PrintedDocumentRequestRequestToEstablishThreatLevelRecipe
+    - PrintedDocumentEvacuationShuttleRequestRecipe
+    - PrintedDocumentShuttleRegistrationRequestRecipe
+    - PrintedDocumentERTRequestRecipe
+    - PrintedDocumentCBURNRequestRecipe
 
 - type: latheRecipePack
-  id: Statements
+  id: MedicalBureaucracy
   recipes:
-  - PrintedDocumentApplicationAppointmentInterimRecipe
-  - PrintedDocumentApplicationEmploymentRecipe
-  - PrintedDocumentLetterResignationRecipe
-  - PrintedDocumentApplicationAccessRecipe
-  - PrintedDocumentApplicationEquipmentRecipe
+    - PrintedDocumentRequestEuthanasiaRecipe
+    - PrintedDocumentOrderMedicalInterventionRecipe
+    - PrintedDocumentReportDepartmentMedRecipe
+    - PrintedDocumentDeathCertificateRecipe
+    - PrintedDocumentPermissionDisposeBodyRecipe
+    - PrintedDocumentPrescriptionDrugAuthorizationRecipe
+    - PrintedDocumentStatementHealtheRecipe
+    - PrintedDocumentMedRequestRecipe
+    - PrintedDocumentCloningReportRecipe
+    - PrintedDocumentRequestMentalHealthRecipe
+    - PrintedDocumentRecomendMentalHealthRecipe
+    - PrintedDocumentPsychologistRecipe
+    - PrintedDocumentNotesRecipe
+    - PrintedDocumentMedChemicalRequestRecipe
 
 - type: latheRecipePack
-  id: InquiriesAndAppeals
+  id: GeneralBureaucracy
   recipes:
-  - PrintedDocumentAppealRecipe
-  - PrintedDocumentEvacuationShuttleRequestRecipe
-  - PrintedDocumentShuttleRegistrationRequestRecipe
-  - PrintedDocumentRequestCallMembersCentralCommitteeDSORecipe
-  - PrintedDocumentRequestRequestToEstablishThreatLevelRecipe
-  - PrintedDocumentRequestChangeSalaryRecipe
-  - PrintedDocumentRequestForNonlistedEmploymentRecipe
-  - PrintedDocumentRequestForPromotionRecipe
-  - PrintedDocumentRequestDocumentsRecipe
-  - PrintedDocumentRequestEuthanasiaRecipe
-  - PrintedDocumentRequestConstructionWorkRecipe
-  - PrintedDocumentRequestModernizationRecipe
+    - PrintedDocumentRequestChangeSalaryRecipe
+    - PrintedDocumentRequestForNonlistedEmploymentRecipe
+    - PrintedDocumentRequestForPromotionRecipe
+    - PrintedDocumentOrderDeprivationAccessRecipe
+    - PrintedDocumentOrderEncouragementRecipe
+    - PrintedDocumentOrderDismissalRecipe
+    - PrintedDocumentReportEmployeePerformanceRecipe
+    - PrintedDocumentApplicationAccessRecipe
+    - PrintedDocumentApplicationEquipmentRecipe
+    - PrintedDocumentLetterResignationRecipe
+    - PrintedDocumentApplicationEmploymentRecipe
+    - PrintedDocumentCertificateAdvancedTrainingRecipe
+    - PrintedDocumentDivorceCertificateRecipe
+    - PrintedDocumentMarriageCertificateRecipe
+    - PrintedDocumentCertificateRecipe
+    - PrintedDocumentPermissionToTravelInCaseOfThreatRecipe
+    - PrintedDocumentPermissionEquipmentRecipe
+    - PrintedDocumentPromotionOrderRecipe
+    - PrintedDocumentTemporaryPermitRecipe
 
 - type: latheRecipePack
-  id: Complaints
+  id: EngineeringBureaucracy
   recipes:
-  - PrintedDocumentComplaintViolationLaborRulesRecipe
-  - PrintedDocumentComplaintOffenseRecipe
+    - PrintedDocumentRequestConstructionWorkRecipe
+    - PrintedDocumentRequestModernizationRecipe
+    - PrintedDocumentConditionReportRecipe
+    - PrintedDocumentReportDepartmentEngRecipe
+    - PrintedDocumentConstructionPermitRecipe
+    - PrintedDocumentShipBuildRecipe
 
 - type: latheRecipePack
-  id: Permissions
+  id: LegalBureaucracy
   recipes:
-  - PrintedDocumentPermissionEquipmentRecipe
-  - PrintedDocumentPermissionToTravelInCaseOfThreatRecipe
-  - PrintedDocumentSearchPermissionRecipe
-  - PrintedDocumentPermissionToCarryWeaponsRecipe
-  - PrintedDocumentPrescriptionDrugAuthorizationRecipe
-  - PrintedDocumentPermissionDisposeBodyRecipe
-  - PrintedDocumentConstructionPermitRecipe
-  - PrintedDocumentPermissionToExtendMarriageRecipe
+    - PrintedDocumentRequestDocumentsRecipe
+    - PrintedDocumentComplaintViolationLaborRulesRecipe
+    - PrintedDocumentComplaintOffenseRecipe
+    - PrintedDocumentJudgmentRecipe
+    - PrintedDocumentSentenceRecipe
+    - PrintedDocumentDecisionToStartTrialRecipe
+    - PrintedDocumentComplaintDirectorRecipe
+    - PrintedDocumentComplaintEmployeRecipe
 
 - type: latheRecipePack
-  id: OrdersAndInstructions
+  id: SecurityBureaucracy
   recipes:
-  - PrintedDocumentOrderDismissalRecipe
-  - PrintedDocumentOrderDeprivationAccessRecipe
-  - PrintedDocumentOrderEncouragementRecipe
-  - PrintedDocumentOrderParolePrisonerRecipe
-  - PrintedDocumentOrderRecognizingSentienceCreatureRecipe
-  - PrintedDocumentOrderMedicalInterventionRecipe
+    - PrintedDocumentOrderParolePrisonerRecipe
+    - PrintedDocumentInternalAffairsAgentsReportRecipe
+    - PrintedDocumentCertificateOffenseRecipe
+    - PrintedDocumentSearchPermissionRecipe
+    - PrintedDocumentPermissionToCarryWeaponsRecipe
+    - PrintedDocumentClosingIndictmentRecipe
+    - PrintedDocumentRequestHearingRecipe
+    - PrintedDocumentRequestExecutionRecipe
+    - PrintedDocumentRequestSecurityRecipe
 
 - type: latheRecipePack
-  id: Orders
+  id: ResearchBureaucracy
   recipes:
-  - PrintedDocumentProductManufacturingOrderRecipe
-  - PrintedDocumentOrderPurchaseResourcesEquipmentRecipe
-  - PrintedDocumentOrderingSpecialEquipmentRecipe
-  - PrintedDocumentOrderPurchaseWeaponsRecipe
+    - PrintedDocumentOrderRecognizingSentienceCreatureRecipe
+    - PrintedDocumentReportStudyObjectRecipe
+    - PrintedDocumentExperimentReportRecipe
+    - PrintedDocumentReportDepartmentResRecipe
+    - PrintedDocumentRequestCyborgizationRecipe
+    - PrintedDocumentProductionOrderRecipe
+    - PrintedDocumentArtifactReportRecipe
 
 - type: latheRecipePack
-  id: Evidence
+  id: LogisticsBureaucracy
   recipes:
-  - PrintedDocumentCertificateRecipe
-  - PrintedDocumentCertificateAdvancedTrainingRecipe
-  - PrintedDocumentCertificateOffenseRecipe
-  - PrintedDocumentDeathCertificateRecipe
-  - PrintedDocumentMarriageCertificateRecipe
-  - PrintedDocumentDivorceCertificateRecipe
+    - PrintedDocumentOrderPurchaseResourcesEquipmentRecipe
+    - PrintedDocumentProductManufacturingOrderRecipe
+    - PrintedDocumentOrderPurchaseWeaponsRecipe
+    - PrintedDocumentReportDepartmentLogRecipe
+    - PrintedDocumentDisposalReportRecipe
+    - PrintedDocumentRequestShippingRecipe
+    - PrintedDocumentOrderingSpecialEquipmentRecipe
 
 - type: latheRecipePack
-  id: ConclusionsAndDecisions
+  id: TopBureaucracy
   recipes:
-  - PrintedDocumentClosingIndictmentRecipe
-  - PrintedDocumentSentenceRecipe
-  - PrintedDocumentJudgmentRecipe
-  - PrintedDocumentStatementHealtheRecipe
-  - PrintedDocumentDecisionToStartTrialRecipe
+    - PrintedDocumentReportOnTheChaptersMeetingRecipe
+    - PrintedDocumentApplicationAppointmentInterimRecipe
+    - PrintedDocumentOrderToDismissDirectorRecipe
+#
 
 - type: latheRecipePack
   id: ErrorDocument
   recipes:
-  - PrintedDocumentErrorLoadingFormHeaderRecipe
-  - PrintedDocumentNoticeOfLiquidationRecipe
-  - PrintedDocumentBusinessDealRecipe
-  - PrintedDocumentNoteBeginningMilitaryActionsRecipe
-  - PrintedDocumentReportAccomplishmentGoalsRecipe
+    - PrintedDocumentErrorLoadingFormHeaderRecipe
+    - PrintedDocumentNoticeOfLiquidationRecipe
+    - PrintedDocumentBusinessDealRecipe
+    - PrintedDocumentNoteBeginningMilitaryActionsRecipe
+    - PrintedDocumentReportAccomplishmentGoalsRecipe
