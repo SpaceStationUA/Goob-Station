@@ -338,3 +338,12 @@
   alpha: 1
   ghostName: hhhhhhhhruo
   ghostDescription: лютий хард РПешер
+  
+- type: customGhost
+  id: drt-ghost
+  ckey: drt
+  sprite:
+    - _Pirate/Ghosts/drt.rsi
+  alpha: 1
+  ghostName: drt
+  ghostDescription: мммм львівське пиво
