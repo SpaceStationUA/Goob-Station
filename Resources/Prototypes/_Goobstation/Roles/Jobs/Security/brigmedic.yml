@@ -25,7 +25,6 @@
   icon: "JobIconBrigmedic"
   supervisors: job-supervisors-hos
   canBeAntag: false
-  whitelisted: true # Pirate
   guides:
   - MedicalDoctor
   - BrigmedicSOP

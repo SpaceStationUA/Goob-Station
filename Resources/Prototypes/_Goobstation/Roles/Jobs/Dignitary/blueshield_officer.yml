@@ -76,7 +76,6 @@
   joinNotifyCrew: true
   supervisors: job-supervisors-ntr-centcom
   canBeAntag: false
-  whitelisted: true # Pirate
   access:
   - Security
   - Brig
