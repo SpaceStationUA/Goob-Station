@@ -15,6 +15,13 @@
     sprite: _Pirate/Clothing/Ears/Headsets/interdyne.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Ears/Headsets/interdyne.rsi
+  - type: RadioSoundProfile
+    transmitSound: /Audio/_Pirate/Radio/radio_talk_alter.ogg
+    receiveSound: /Audio/_Pirate/Radio/radio_receive_alter.ogg
+    allowedChannels:
+      - Syndicate
+      - Interdyne
+      - InterdynePrivat
     
 # Усі інші гарнітури які використовують нові компоненти 
 - type: entity

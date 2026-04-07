@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseFlatpack
+  id: CoffeemakerFlatpackPirate
+  name: coffeemaker flatpack
+  description: A flatpack for assembling a Modello 3 coffeemaker.
+  components:
+  - type: Flatpack
+    entity: CoffeemakerMachinePirate
+    checkObstruction: false
+
+- type: entity
+  parent: BaseFlatpack
+  id: CoffeemakerImpressaFlatpackPirate
+  name: impressa coffeemaker flatpack
+  description: A flatpack for assembling an Impressa coffeemaker.
+  components:
+  - type: Flatpack
+    entity: CoffeemakerImpressaMachinePirate
+    checkObstruction: false

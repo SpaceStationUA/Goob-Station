@@ -1,0 +1,25 @@
+<Document>
+# Магічні речовини
+
+Перед тобою не книга ремесла, а довідник тих, хто вже знає, чого шукає. Тут зібрано картки наших реагентів: властивості, склади, групи й короткі описи дії.
+
+Користуйся фільтром сторінки, щоб швидко відсіяти потрібну гілку: емоційні настої, відьомські засоби, алхімічні суміші, еліксири, окультні речовини або осади. Якщо ж шукаєш повну настанову до ремесла, повертайся до книг `Відьма` й `Алхімік`.
+
+## Емоційні настої
+<GuideReagentGroupEmbed Group="PirateEmotions"/>
+
+## Відьомські засоби
+<GuideReagentGroupEmbed Group="PirateWitchcraft"/>
+
+## Алхімічні суміші
+<GuideReagentGroupEmbed Group="PirateAlchemy"/>
+
+## Еліксири
+<GuideReagentGroupEmbed Group="PirateElixirs"/>
+
+## Окультні речовини
+<GuideReagentGroupEmbed Group="PirateOccult"/>
+
+## Осади й сліди
+<GuideReagentGroupEmbed Group="PirateAlchemyResidues"/>
+</Document>

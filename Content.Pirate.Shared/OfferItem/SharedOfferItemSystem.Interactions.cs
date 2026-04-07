@@ -36,19 +36,15 @@ public abstract partial class SharedOfferItemSystem
         if (!TryComp<OfferItemComponent>(uid, out var offerItem))
             return;
 
-        if (!TryComp<HandsComponent>(uid, out var hands) || hands.ActiveHandId == null || _hands.GetHeldItem((uid, hands), hands.ActiveHandId) == null)
+        if (!TryComp<HandsComponent>(uid, out var hands) ||
+            hands.ActiveHandId == null ||
+            !_hands.TryGetHeldItem((uid, hands), hands.ActiveHandId, out var heldItem))
             return;
 
-        offerItem.Item = _hands.GetHeldItem((uid, hands), hands.ActiveHandId);
+        offerItem.Item = heldItem.Value;
 
-        if (offerItem.IsInOfferMode == false)
+        if (!offerItem.IsInOfferMode)
         {
-            if (offerItem.Item == null)
-            {
-                _popup.PopupEntity(Loc.GetString("offer-item-empty-hand"), uid, uid);
-                return;
-            }
-
             if (offerItem.Hand == null || offerItem.Target == null)
             {
                 offerItem.IsInOfferMode = true;
@@ -61,9 +57,7 @@ public abstract partial class SharedOfferItemSystem
 
         if (offerItem.Target != null)
         {
-            UnReceive(offerItem.Target.Value, offerItem: offerItem);
-            offerItem.IsInOfferMode = false;
-            Dirty(uid, offerItem);
+            UnOffer(uid, offerItem);
             return;
         }
 

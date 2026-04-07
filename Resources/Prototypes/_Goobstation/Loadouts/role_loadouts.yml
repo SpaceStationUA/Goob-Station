@@ -161,14 +161,14 @@
   id: JobRoboticist
   groups:
   - GroupTankHarness
-  - ScientistHead
+  - RoboticistHead
   - ScientistNeck
-  - ScientistJumpsuit
-  - ScientistBackpack
-  - ScientistOuterClothing
-  - ScientistGloves
-  - ScientistShoes
-  - ScientistPDA
+  - RoboticistJumpsuit
+  - RoboticistBackpack
+  - RoboticistOuterClothing
+  - RoboticistGloves
+  - RoboticistShoes
+  - RoboticistPDA
   - Glasses
   - Survival
   - Trinkets
@@ -185,7 +185,7 @@
   - MedicalMask
   - BrigmedicJumpsuit
   - BrigmedicOuterClothing
-  - MedicalGloves
+  - BrigmedicGloves
   - BrigmedicBackpack
   - SecurityMelee # EE parity, make corpsman able to carry weapons like the rest of security
   - SecurityShoes

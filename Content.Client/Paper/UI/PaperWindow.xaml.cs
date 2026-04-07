@@ -96,6 +96,8 @@ using Robust.Shared.Utility;
 using Robust.Client.UserInterface.RichText;
 using Content.Client.UserInterface.RichText;
 using Robust.Shared.Input;
+using Robust.Client.UserInterface; // Pirate: paperwork tags
+using Robust.Shared.Maths; // Pirate: paperwork tags
 
 namespace Content.Client.Paper.UI
 {
@@ -132,6 +134,21 @@ namespace Content.Client.Paper.UI
             typeof(ItalicTag),
             typeof(MonoTag)
         };
+        #region Pirate: paperwork tags
+        private readonly (string Label, string Token)[] _macroOptions = new[]
+        {
+            ("[author]", "[author]"),
+            ("[job]", "[job]"),
+            ("[datetime]", "[datetime]"),
+            ("[date]", "[date]"),
+            ("[time]", "[time]"),
+            ("[stn]", "[stn]"),
+            ("[code]", "[code]")
+        };
+        private readonly Popup _macroPopup;
+        private readonly BoxContainer _macroPopupList;
+        public event Action? OnMacroMenuUsed;
+        #endregion
 
         public event Action<string>? OnSaved;
 
@@ -154,11 +171,33 @@ namespace Content.Client.Paper.UI
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
+            #region Pirate: paperwork tags
+            _macroPopupList = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical
+            };
+            _macroPopup = new Popup
+            {
+                Children =
+                {
+                    new PanelContainer
+                    {
+                        StyleClasses = { "WindowPanel" }
+                    },
+                    _macroPopupList
+                }
+            };
+            _macroPopup.OnPopupHide += OnMacroPopupHide;
+            InitializeMacroPopup();
+            #endregion
+
             // We can't configure the RichTextLabel contents from xaml, so do it here:
             BlankPaperIndicator.SetMessage(Loc.GetString("paper-ui-blank-page-message"), null, DefaultTextColor);
+            MacroHint.Text = Loc.GetString("paper-ui-macro-hint"); // Pirate: paperwork tags
 
             // Hook up the close button:
             CloseButton.OnPressed += _ => Close();
+            OnClose += () => _macroPopup.Close(); // Pirate: paperwork tags
 
             Input.OnKeyBindDown += args => // Solution while TextEdit don't have events
             {
@@ -172,6 +211,13 @@ namespace Content.Client.Paper.UI
                         args.Handle();
                     }
                 }
+                #region Pirate: paperwork tags
+                else if (args.Function == EngineKeyFunctions.UIRightClick)
+                {
+                    OpenMacroPopup(args);
+                    args.Handle();
+                }
+                #endregion
             };
 
             Input.OnTextChanged += args =>
@@ -187,6 +233,50 @@ namespace Content.Client.Paper.UI
             SaveButton.Text = Loc.GetString("paper-ui-save-button",
                 ("keybind", _inputManager.GetKeyFunctionButtonString(EngineKeyFunctions.MultilineTextSubmit)));
         }
+
+        #region Pirate: paperwork tags
+        private void InitializeMacroPopup()
+        {
+            foreach (var (label, token) in _macroOptions)
+            {
+                var button = new Button
+                {
+                    Text = label,
+                    HorizontalExpand = true
+                };
+
+                button.OnPressed += _ =>
+                {
+                    _macroPopup.Close();
+                    OnMacroMenuUsed?.Invoke();
+                    Input.InsertAtCursor(token);
+                    Input.GrabKeyboardFocus();
+                    UpdateFillState();
+                };
+
+                _macroPopupList.AddChild(button);
+            }
+        }
+
+        private void OpenMacroPopup(GUIBoundKeyEventArgs args)
+        {
+            if (!InputContainer.Visible)
+                return;
+
+            var box = UIBox2.FromDimensions(args.PointerLocation.Position, Vector2.One);
+
+            if (_macroPopup.Parent != UserInterfaceManager.ModalRoot)
+                UserInterfaceManager.ModalRoot.AddChild(_macroPopup);
+
+            _macroPopup.Open(box);
+        }
+
+        private void OnMacroPopupHide()
+        {
+            if (_macroPopup.Parent == UserInterfaceManager.ModalRoot)
+                UserInterfaceManager.ModalRoot.RemoveChild(_macroPopup);
+        }
+        #endregion
 
         /// <summary>
         ///     Initialize this UI according to <code>visuals</code> Initializes
@@ -248,6 +338,7 @@ namespace Content.Client.Paper.UI
             PaperContent.ModulateSelfOverride = visuals.ContentImageModulate;
             WrittenTextLabel.ModulateSelfOverride = visuals.FontAccentColor;
             FillStatus.ModulateSelfOverride = visuals.FontAccentColor;
+            MacroHint.ModulateSelfOverride = visuals.FontAccentColor; // Pirate: paperwork tags
 
             var contentImage = visuals.ContentImagePath != null ? _resCache.GetResource<TextureResource>(visuals.ContentImagePath) : null;
             if (contentImage != null)

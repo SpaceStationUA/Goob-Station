@@ -269,6 +269,8 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0.03125, 0.0625"
   - type: Clothing
     sprite: _EinsteinEngines/Objects/Weapons/Guns/Battery/ccdisabler.rsi
     quickEquip: false
@@ -282,7 +284,20 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 40
-
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
+    containers:
+      flashlight: !type:ContainerSlot
 - type: entity
   name: syndicate disabler
   parent: [ WeaponDisablerPractice, BaseSyndicateContraband ]

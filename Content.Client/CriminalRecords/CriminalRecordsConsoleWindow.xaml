@@ -7,10 +7,13 @@ SPDX-FileCopyrightText: 2025 Kyle Tyo <36606155+VerinSenpai@users.noreply.github
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
+<!-- Pirate: records photos (start) -->
 <controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      Title="{Loc 'criminal-records-console-window-title'}"
-                      MinSize="695 440">
+                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                       Title="{Loc 'criminal-records-console-window-title'}"
+                       MinSize="890 600"
+                       SetSize="890 600">
+<!-- Pirate: records photos (end) -->
     <BoxContainer Orientation="Vertical">
         <BoxContainer Name="AllList"
                       Orientation="Vertical"
@@ -25,9 +28,32 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                               MinWidth="250"
                               Margin="0 0 10 0" />
                 <!-- Populated in constructor -->
+                <!-- Pirate: records photos (start) -->
                 <LineEdit Name="FilterText"
-                          PlaceHolder="{Loc 'criminal-records-filter-placeholder'}"
-                          HorizontalExpand="True" />
+                           PlaceHolder="{Loc 'criminal-records-filter-placeholder'}"
+                           HorizontalExpand="True"
+                           Margin="0 0 10 0" />
+                <Button Name="DeleteRecordButton"
+                        MaxSize="32 32"
+                        StyleClasses="OpenBoth"
+                        Margin="0 0 4 0"
+                        ToolTip="{Loc 'criminal-records-console-delete-record'}">
+                    <TextureRect StyleClasses="ButtonSquare"
+                                 TexturePath="/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"
+                                 Stretch="KeepAspectCentered"
+                                 MinSize="18 18" />
+                </Button>
+                <Button Name="AddRecordButton"
+                        MaxSize="32 32"
+                        StyleClasses="OpenBoth"
+                        Margin="0 0 10 0"
+                        ToolTip="{Loc 'criminal-records-console-add-record'}">
+                    <TextureRect StyleClasses="ButtonSquare"
+                                 TexturePath="/Textures/Interface/VerbIcons/plus.svg.192dpi.png"
+                                 Stretch="KeepAspectCentered"
+                                 MinSize="18 18" />
+                </Button>
+                <!-- Pirate: records photos (end) -->
             </BoxContainer>
             <BoxContainer Orientation="Horizontal"
                           VerticalExpand="True">
@@ -62,37 +88,142 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         HorizontalExpand="True"
                         Margin="5"
                         Visible="False">
-                    <Label Name="PersonName"
-                           Margin="0 0 0 5"
-                           StyleClasses="LabelBig" />
+                    <!-- Pirate: records photos (start) -->
                     <BoxContainer Orientation="Horizontal"
-                                  Margin="0 0 0 5">
-                        <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
-                               FontColorOverride="DarkGray" />
-                        <TextureRect Name="PersonJobIcon"
-                                     TextureScale="2 2"
-                                     Margin="6 0"
-                                     VerticalAlignment="Center" />
-                        <Label Name="PersonJob" />
+                                  Margin="0 0 0 5"
+                                  HorizontalExpand="True"
+                                  SeparationOverride="10">
+                        <BoxContainer Orientation="Vertical"
+                                      HorizontalExpand="True"
+                                      MaxWidth="250"
+                                      SizeFlagsStretchRatio="1"
+                                      SeparationOverride="5">
+                            <LayoutContainer Name="PersonPortraitFrame"
+                                             HorizontalExpand="True"
+                                             MaxHeight="240"
+                                             MinSize="240 240"
+                                             RectClipContent="True">
+                                <TextureRect Name="PersonPortraitBackground"
+                                             LayoutContainer.AnchorRight="1"
+                                             LayoutContainer.AnchorBottom="1"
+                                             HorizontalExpand="True"
+                                             VerticalExpand="True"
+                                             CanShrink="True"
+                                             Stretch="KeepAspectCovered"
+                                             Visible="False" />
+                                <TextureRect Name="PersonPortraitTexture"
+                                             LayoutContainer.AnchorRight="1"
+                                             LayoutContainer.AnchorBottom="1"
+                                             HorizontalExpand="True"
+                                             VerticalExpand="True"
+                                             Stretch="KeepAspectCentered"
+                                             Visible="False" />
+                                <SpriteView Name="PersonPortrait"
+                                            LayoutContainer.AnchorRight="1"
+                                            LayoutContainer.AnchorBottom="1"
+                                            HorizontalExpand="True"
+                                            VerticalExpand="True"
+                                            Stretch="Fill"
+                                            Scale="5 5"
+                                            OverrideDirection="South" />
+                            </LayoutContainer>
+                            <BoxContainer Orientation="Horizontal"
+                                          HorizontalExpand="True">
+                                <Button Name="PrintPortraitButton"
+                                        Text="{Loc 'criminal-records-console-print'}"
+                                        HorizontalExpand="True"
+                                        SizeFlagsStretchRatio="1" />
+                                <Button Name="UploadPortraitButton"
+                                        Text="{Loc 'criminal-records-console-upload'}"
+                                        HorizontalExpand="True"
+                                        SizeFlagsStretchRatio="1" />
+                            </BoxContainer>
+                        </BoxContainer>
+                        <BoxContainer Orientation="Vertical"
+                                      HorizontalExpand="True"
+                                      SizeFlagsStretchRatio="1"
+                                      SeparationOverride="6">
+                            <Label Name="PersonName"
+                                   StyleClasses="LabelBig" />
+                            <BoxContainer Orientation="Horizontal"
+                                          SeparationOverride="8">
+                                <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
+                                       FontColorOverride="DarkGray" />
+                                <TextureRect Name="PersonJobIcon"
+                                             TextureScale="2 2"
+                                             VerticalAlignment="Center" />
+                                <Label Name="PersonJob" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal"
+                                          HorizontalExpand="True"
+                                          SeparationOverride="8">
+                                <Label Text="{Loc 'humanoid-profile-editor-species-label'}"
+                                       FontColorOverride="DarkGray" />
+                                <Control HorizontalExpand="True" />
+                                <OptionButton Name="SpeciesButton"
+                                              MinWidth="180"
+                                              HorizontalAlignment="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal"
+                                          HorizontalExpand="True"
+                                          SeparationOverride="8">
+                                <Label Text="{Loc 'humanoid-profile-editor-nationality-label'}"
+                                       FontColorOverride="DarkGray" />
+                                <Control HorizontalExpand="True" />
+                                <OptionButton Name="NationalityButton"
+                                              MinWidth="180"
+                                              HorizontalAlignment="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal"
+                                          HorizontalExpand="True"
+                                          SeparationOverride="8">
+                                <Label Text="{Loc 'humanoid-profile-editor-employer-label'}"
+                                       FontColorOverride="DarkGray" />
+                                <Control HorizontalExpand="True" />
+                                <OptionButton Name="EmployerButton"
+                                               MinWidth="180"
+                                               MaxWidth="180"
+                                               HorizontalAlignment="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal"
+                                          HorizontalExpand="True"
+                                          SeparationOverride="8">
+                                <Label Text="{Loc 'humanoid-profile-editor-age-label'}"
+                                       FontColorOverride="DarkGray" />
+                                <Control HorizontalExpand="True" />
+                                <LineEdit Name="AgeEdit"
+                                          MinWidth="180"
+                                          HorizontalAlignment="Right" />
+                            </BoxContainer>
+                            <BoxContainer Orientation="Horizontal"
+                                          HorizontalExpand="True"
+                                          SeparationOverride="8">
+                                <Label Text="{Loc 'humanoid-profile-editor-sex-label'}"
+                                       FontColorOverride="DarkGray" />
+                                <Control HorizontalExpand="True" />
+                                <OptionButton Name="GenderButton"
+                                              MinWidth="180"
+                                              HorizontalAlignment="Right" />
+                            </BoxContainer>
+                        </BoxContainer>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal"
-                                  Margin="0 0 0 5">
-                        <Label Text="{Loc 'general-station-record-prints-filter'}"
+                                  Margin="0 0 0 5"
+                                  SeparationOverride="8">
+                        <Label Text="{Loc 'criminal-records-prints-filter'}"
                                FontColorOverride="DarkGray" />
-                        <Label Text=":"
-                               Margin="0 0 6 0"
-                               FontColorOverride="DarkGray" />
-                        <Label Name="PersonPrints" />
+                        <LineEdit Name="PersonPrintsEdit"
+                                  HorizontalExpand="True" />
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal"
-                                  Margin="0 0 0 5">
-                        <Label Text="{Loc 'general-station-record-dna-filter'}"
+                                  Margin="0 0 0 5"
+                                  SeparationOverride="8">
+                        <Label Text="{Loc 'criminal-records-dna-filter'}"
                                FontColorOverride="DarkGray" />
-                        <Label Text=":"
-                               Margin="0 0 6 0"
-                               FontColorOverride="DarkGray" />
-                        <Label Name="PersonDna" />
+                        <LineEdit Name="PersonDnaEdit"
+                                  HorizontalExpand="True" />
                     </BoxContainer>
+                    <!-- Pirate: records photos (end) -->
                     <PanelContainer StyleClasses="LowDivider"
                                     Margin="0 5 0 5" />
                     <BoxContainer Orientation="Horizontal"

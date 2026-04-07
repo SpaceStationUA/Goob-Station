@@ -235,14 +235,16 @@ namespace Content.Shared.VendingMachines
         // Pirate banking end
     }
 
-    [Serializable, NetSerializable]
-    public sealed class VendingMachineInventoryEntry
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class VendingMachineInventoryEntry
     {
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public InventoryType Type;
-        [ViewVariables(VVAccess.ReadWrite)]
+
+        [DataField]
         public string ID;
-        [ViewVariables(VVAccess.ReadWrite)]
+
+        [DataField]
         public uint Amount;
 
         // Pirate banking start
@@ -255,6 +257,11 @@ namespace Content.Shared.VendingMachines
             ID = id;
             Amount = amount;
             Price = price; // Pirate banking
+        }
+
+        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
+            : this(type, id, amount, 0)
+        {
         }
 
         public VendingMachineInventoryEntry(VendingMachineInventoryEntry entry)

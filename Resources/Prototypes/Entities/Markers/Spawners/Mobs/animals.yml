@@ -216,10 +216,12 @@
     - MobMouse
     - MobMouse1
     - MobMouse2
-    rareChance: 0.12
+    # Pirate remove start - plague mice now come from a dedicated virus event instead.
+    # rareChance: 0.12
     offset: 0
-    rarePrototypes:
-    - MobMousePlague
+    # rarePrototypes:
+    # - MobMousePlague
+    # Pirate remove end
 
 - type: entity
   parent: MarkerBase

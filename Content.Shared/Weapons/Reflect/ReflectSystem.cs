@@ -101,6 +101,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Timing; // Pirate: gunplay
 using Content.Shared.Examine;
 using Content.Shared.Localizations;
 
@@ -112,7 +113,7 @@ namespace Content.Shared.Weapons.Reflect;
 public sealed class ReflectSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _timing = default!; // Pirate: gunplay
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -146,7 +147,7 @@ public sealed class ReflectSystem : EntitySystem
         if (!ent.Comp.InRightPlace)
             return; // only reflect when equipped correctly
 
-        if (TryReflectProjectile(ent, ent.Owner, args.ProjUid))
+        if (TryReflectProjectile(ent, args.Target, args.ProjUid)) // Pirate: gunplay
             args.Cancelled = true;
     }
 
@@ -158,7 +159,7 @@ public sealed class ReflectSystem : EntitySystem
         if (!ent.Comp.InRightPlace)
             return; // only reflect when equipped correctly
 
-        if (TryReflectHitscan(ent, ent.Owner, args.Shooter, args.SourceItem, args.Direction, args.Reflective, args.Damage, out var dir)) // Goob edit
+        if (TryReflectHitscan(ent, args.Target, args.Shooter, args.SourceItem, args.Direction, args.Reflective, args.Damage, out var dir)) // Pirate: gunplay
         {
             args.Direction = dir.Value;
             args.Reflected = true;
@@ -188,16 +189,17 @@ public sealed class ReflectSystem : EntitySystem
 
     public bool TryReflectProjectile(Entity<ReflectComponent> reflector, EntityUid user, Entity<ProjectileComponent?> projectile)
     {
+        var rand = PredictedRandom(reflector.Owner);
         if (!TryComp<ReflectiveComponent>(projectile, out var reflective) ||
             (reflector.Comp.Reflects & reflective.Reflective) == 0x0 ||
             !_toggle.IsActivated(reflector.Owner) ||
-            !_random.Prob(reflector.Comp.ReflectProb) ||
+            !rand.Prob(reflector.Comp.ReflectProb) || // Pirate: gunplay
             !TryComp<PhysicsComponent>(projectile, out var physics))
         {
             return false;
         }
 
-        var rotation = _random.NextAngle(-reflector.Comp.Spread / 2, reflector.Comp.Spread / 2).Opposite();
+        var rotation = rand.NextAngle(-reflector.Comp.Spread / 2, reflector.Comp.Spread / 2).Opposite(); // Pirate: gunplay
         var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
         var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(user);
         var newVelocity = rotation.RotateVec(relativeVelocity);
@@ -211,7 +213,7 @@ public sealed class ReflectSystem : EntitySystem
         var newRot = rotation.RotateVec(locRot.ToVec());
         _transform.SetLocalRotation(projectile, newRot.ToAngle());
 
-        if (TryComp(projectile, out HomingProjectileComponent? homing)) // Goobstation
+        if (TryComp(projectile, out HomingProjectileComponent? homing)) // Pirate: gunplay
             RemCompDeferred(projectile, homing);
 
         PlayAudioAndPopup(reflector.Comp, user);
@@ -252,9 +254,7 @@ public sealed class ReflectSystem : EntitySystem
     {
         if ((reflector.Comp.Reflects & hitscanReflectType) == 0x0 ||
             !_toggle.IsActivated(reflector.Owner) ||
-            // Goob edit start
-            !((reflector.Comp.Reflects & hitscanReflectType) != 0x0 && _random.Prob(reflector.Comp.ReflectProb)))
-            // Goob edit end
+            !((reflector.Comp.Reflects & hitscanReflectType) != 0x0 && PredictedRandom(reflector.Owner).Prob(reflector.Comp.ReflectProb))) // Pirate: gunplay
         {
             newDirection = null;
             return false;
@@ -267,7 +267,8 @@ public sealed class ReflectSystem : EntitySystem
             _damageable.TryChangeDamage(reflector, damage * reflector.Comp.DamageOnReflectModifier, origin: shooter);
         // WD EDIT END
 
-        var spread = _random.NextAngle(-reflector.Comp.Spread / 2, reflector.Comp.Spread / 2);
+        var rand = PredictedRandom(reflector.Owner); // Pirate: gunplay
+        var spread = rand.NextAngle(-reflector.Comp.Spread / 2, reflector.Comp.Spread / 2); // Pirate: gunplay
         newDirection = -spread.RotateVec(direction);
 
         if (shooter != null)
@@ -280,12 +281,19 @@ public sealed class ReflectSystem : EntitySystem
 
     private void PlayAudioAndPopup(ReflectComponent reflect, EntityUid user)
     {
-        // Can probably be changed for prediction
-        if (_netManager.IsServer)
-        {
-            _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user);
-        }
+        // Pirate: gunplay
+        if (_netManager.IsServer || !_timing.IsFirstTimePredicted)
+            return;
+
+        _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
+        _audio.PlayLocal(reflect.SoundOnReflect, user, null);
+    }
+
+    private System.Random PredictedRandom(EntityUid uid) // Pirate: gunplay
+    {
+        var netEntity = GetNetEntity(uid);
+        var seed = HashCode.Combine((int) _timing.CurTick.Value, netEntity.Id, 0x50495241);
+        return new System.Random(seed);
     }
 
     private void OnReflectEquipped(Entity<ReflectComponent> ent, ref GotEquippedEvent args)

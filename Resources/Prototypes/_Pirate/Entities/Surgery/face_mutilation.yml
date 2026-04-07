@@ -1,0 +1,62 @@
+- type: entity
+  id: FaceMutilation
+  components:
+  - type: Trauma
+    traumaType: FaceMutilation
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepPrepareFaceReconstruction
+  name: Prepare facial tissue
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Scalpel
+    add:
+    - type: BonesOpen
+    duration: 9
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepPainInflicter
+    amount: 18
+    painType: TraumaticPain
+    sleepModifier: 0
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepTreatFaceMutilation
+  name: Reconstruct facial tissue
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Tending
+    duration: 21
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryStepPainInflicter
+    amount: 24
+    painType: TraumaticPain
+    sleepModifier: 0
+  - type: SurgeryTraumaTreatmentStep
+    traumaType: FaceMutilation
+
+- type: entity
+  parent: BasePartSurgery
+  id: SurgeryReconstructFace
+  name: Reconstruct Face
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepSawBones
+    - SurgeryStepClampInternalBleeders
+    - SurgeryStepPrepareFaceReconstruction
+    - SurgeryStepTreatFaceMutilation
+  - type: SurgeryBleedsPresentCondition
+    inverted: true
+  - type: SurgeryPartCondition
+    parts: [ Head ]
+  - type: SurgeryTraumaPresentCondition
+    trauma: FaceMutilation

@@ -1,0 +1,139 @@
+- type: entity
+  id: CoffeeCondimentDisplayPirate
+  parent: BaseStorageItem
+  name: coffee condiments display
+  description: A small display box holding coffee condiments.
+  components:
+    - type: Sprite
+      sprite: _Pirate/Objects/Storage/coffee_containers.rsi
+      state: coffee_condi_display
+    - type: Appearance
+    - type: ItemMapper
+      containerWhitelist:
+        - storagebase
+      mapLayers:
+        condi_display_sugar:
+          whitelist:
+            tags:
+              - CoffeeCondimentSugarPirate
+        condi_display_sweetener:
+          whitelist:
+            tags:
+              - CoffeeCondimentSweetenerPirate
+        condi_display_creamer:
+          whitelist:
+            tags:
+              - CoffeeCondimentCreamerPirate
+        condi_display_chocolate:
+          whitelist:
+            tags:
+              - CoffeeCondimentChocolatePirate
+    - type: Icon
+      sprite: _Pirate/Objects/Storage/coffee_containers.rsi
+      state: coffee_condi_display
+    - type: Item
+      sprite: _Pirate/Objects/Storage/coffee_containers.rsi
+      size: Small
+    - type: Storage
+      maxItemSize: Tiny
+      grid:
+        - 0,0,3,3
+      whitelist:
+        tags:
+          - CoffeeCondimentSugarPirate
+          - CoffeeCondimentSweetenerPirate
+          - CoffeeCondimentCreamerPirate
+          - CoffeeCondimentChocolatePirate
+    - type: ContainerFill
+      containers:
+        storagebase:
+          - FoodCondimentPacketSugarPirate
+          - FoodCondimentPacketSugarPirate
+          - FoodCondimentPacketSugarPirate
+          - FoodCondimentPacketSugarPirate
+          - FoodCondimentPacketAstrotamePirate
+          - FoodCondimentPacketAstrotamePirate
+          - FoodCondimentPacketAstrotamePirate
+          - FoodCondimentPacketCreamerPirate
+          - FoodCondimentPacketCreamerPirate
+          - FoodCondimentPacketCreamerPirate
+          - FoodCondimentPacketCreamerPirate
+          - FoodCondimentPacketChocolatePirate
+          - FoodCondimentPacketChocolatePirate
+          - FoodCondimentPacketChocolatePirate
+
+- type: entity
+  id: CoffeePackPirate
+  parent: BoxCardboard
+  name: arabica beans pack
+  description: A pack containing dry coffee arabica beans.
+  components:
+    - type: Sprite
+      sprite: _Pirate/Objects/Storage/coffee_containers.rsi
+      state: arabica_beans
+    - type: Icon
+      sprite: _Pirate/Objects/Storage/coffee_containers.rsi
+      state: arabica_beans
+    - type: Item
+      shape:
+        - 0,0,1,1
+    - type: Storage
+      maxItemSize: Tiny
+      grid:
+        - 0,0,4,0
+      whitelist:
+        components:
+          - CoffeeBean
+    - type: StorageFill
+      contents:
+        - id: FoodCoffeeBeansPirate
+          amount: 5
+    - type: PhysicalComposition
+      materialComposition: {}
+    - type: StaticPrice
+      price: 0.01
+
+- type: entity
+  id: CoffeePackRobustaPirate
+  parent: CoffeePackPirate
+  name: robusta beans pack
+  description: A pack containing dry coffee robusta beans.
+  components:
+    - type: Sprite
+      state: robusta_beans
+    - type: Icon
+      state: robusta_beans
+    - type: StorageFill
+      contents:
+        - id: FoodCoffeeBeansRobustaPirate
+          amount: 5
+
+- type: entity
+  id: CoffeePackSyntheticPirate
+  parent: CoffeePackPirate
+  name: synthetic beans pack
+  description: A pack containing dry synthetic coffee beans.
+  components:
+    - type: Sprite
+      state: synthetic_beans
+    - type: Icon
+      state: synthetic_beans
+    - type: StorageFill
+      contents:
+        - id: FoodCoffeeBeansSynthetic
+          amount: 5
+
+- type: entity
+  id: CoffeePackStenophyllaPirate
+  parent: CoffeePackPirate
+  name: stenophylla beans pack
+  description: A pack containing dry stenophylla coffee beans.
+  components:
+    - type: Sprite
+      state: stenophylla_beans
+    - type: Icon
+      state: stenophylla_beans
+    - type: StorageFill
+      contents:
+        - id: FoodCoffeeBeansStenophylla
+          amount: 5

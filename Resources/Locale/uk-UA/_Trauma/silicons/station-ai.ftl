@@ -1,0 +1,22 @@
+# Customizations
+station-ai-icon-not-malf = Справний
+station-ai-icon-firewall = Брандмауер
+station-ai-icon-monochrome = Монохром
+station-ai-icon-murica = Муріка
+station-ai-icon-nanotrasen = НаноТрейзен
+station-ai-icon-president = Пане Президенте
+station-ai-icon-red-dot = Червона точка
+station-ai-icon-red = Червоний
+station-ai-icon-too-deep = Надто глибоко
+station-ai-icon-triumvirate = Тріумвірат
+station-ai-icon-matrix = Матриця
+station-ai-icon-house = 2984
+station-ai-icon-database = База даних
+station-ai-icon-glitchman = Збійний
+station-ai-icon-helios = Геліос
+station-ai-icon-hades = Гадес
+station-ai-icon-rainbow = Веселка
+station-ai-icon-alien = Чужий
+station-ai-icon-goon = Стародавній
+station-ai-icon-weird = Дивний
+station-ai-icon-inverted = Догори дном

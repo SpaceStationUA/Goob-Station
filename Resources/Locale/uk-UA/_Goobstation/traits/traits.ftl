@@ -22,8 +22,8 @@ poor-vision-trait-examined = [color=lightblue]{CAPITALIZE(POSS-ADJ($target))} о
 
 trait-medieval-accent-name = Середньовічний акцент
 trait-medieval-accent-desc = Слухай-но! Твоя манера мови, вона вельми незвичайна!
-trait-tile-movement-name = Внутрішній спокій
-trait-tile-movement-desc = Ви завжди на зв'язку зі своїм корінням. І під корінням я маю на увазі центр плитки, на якій ви стоїте.
+trait-tile-movement-name = Ходьба по-тайлово
+trait-tile-movement-desc = Ходьба як в Space Station 13
 
 trait-movement-impaired-name = Порушення рухливості
 trait-movement-impaired-desc = Здається, ви не можете добре ходити без сторонньої допомоги. Палиця в комплекті.

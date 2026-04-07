@@ -2,25 +2,32 @@
   parent: BaseSubdermalImplant
   id: DeathRattleLavalandImplant
   name: lavaland death rattle implant
-  description: This implant will inform the Supply radio channel should the user die. Works only on lavaland surface and tells exact coordinates of death.
+  description: This implant informs the local Supply channel and relays to station Medical and Supply channels when the user is critical or dead. Works off-station; on death, exact coordinates are transmitted. # Pirates: death rattle update
+  categories: [ HideSpawnMenu ]
   components:
-  # TODO turn it into a tracker implant too
-  - type: SubdermalImplant
-    permanent: true
-    whitelist:
-      components:
-      - MobState
-  - type: MansusGraspBlockTrigger
-  - type: TriggerBlocker
-    mapWhitelist:
-      components:
-      - LavalandMap
-  - type: TriggerOnMobstateChange
-    mobState:
-    - Dead
-  - type: Rattle
-    radioChannel: Supply
-    reportCoordinates: true
+    - type: SubdermalImplant
+      permanent: true
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with rattle implant needs to give the chair mobstate so it can die first
+    - type: MansusGraspBlockTrigger
+    - type: TriggerBlocker
+      requireOffStation: true # Pirates: death rattle update
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Critical # Pirates: death rattle update
+      - Dead
+    - type: RattleOnTrigger
+      radioChannel: Supply
+      targetUser: true # Pirates: death rattle update
+      messages: # Pirates: death rattle update
+        Dead: lavaland-deathrattle-implant-dead-message # Pirates: death rattle update
+        Critical: lavaland-deathrattle-implant-critical-message # Pirates: death rattle update
+      reportCoordinates: true
+      relayToStationWhenOffStation: true # Pirates: death rattle update
+      offStationRelayChannels: # Pirates: death rattle update
+      - Medical
+      - Supply
 
 - type: entity
   id: DeathRattleLavalandImplanter

@@ -12,6 +12,7 @@
       species:
         - Vox
         - IPC
+        - Hydrakin
   passportPrototype: NralakkPassport
 
 - type: nationality
@@ -41,6 +42,7 @@
       species:
         - Vox
         - IPC
+        - Hydrakin
   languages:
     - Tradeband
   passportPrototype: EridanPassport
@@ -64,6 +66,7 @@
       species:
         - Vox
         - IPC
+        - Hydrakin
   passportPrototype: IzweskiPassport
 
 - type: nationality

@@ -1,0 +1,56 @@
+- type: entity
+  parent: DefaultStationBeaconCommand
+  id: DefaultStationBeaconInterdyneOfficer
+  suffix: Interdyne Officer
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-interdyne-officer
+    
+- type: entity
+  parent: DefaultStationBeaconCommand
+  id: DefaultStationBeaconInterdyneDeputy
+  suffix: Interdyne Deputy
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-interdyne-deputy
+
+- type: entity
+  parent: DefaultStationBeaconScience
+  id: DefaultStationBeaconInterdyneRnD
+  suffix: Interdyne R&D
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-interdyne-rnd
+    
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconInterdyneSecurity
+  suffix: Interdyne SEC
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-interdyne-sec
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconInterdyneEngineering
+  suffix: Interdyne Engineering
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-interdyne-engineering
+    
+- type: entity
+  parent: DefaultStationBeaconService
+  id: DefaultStationBeaconInterdyneService
+  suffix: Interdyne Service
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-interdyne-service
+    
+- type: entity
+  parent: DefaultStationBeaconSecurity
+  id: DefaultStationBeaconSecurityInterdyneLegal
+  suffix: Interdyne Legal Dept
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-interdyne-legal
+    

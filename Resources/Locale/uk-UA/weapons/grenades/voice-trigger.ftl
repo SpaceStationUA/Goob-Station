@@ -1,7 +1,7 @@
 examine-trigger-voice = На дисплеї написано: "{$keyphrase}"
 trigger-voice-uninitialized = На дисплеї написано: Неініціалізовано...
 
-verb-trigger-voice-record = Запис
+verb-trigger-voice-record = Записати
 verb-trigger-voice-stop = Зупинити
 verb-trigger-voice-clear = Стерти запис
 

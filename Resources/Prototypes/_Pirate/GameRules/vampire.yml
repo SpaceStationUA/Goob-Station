@@ -4,7 +4,7 @@
   components:
   - type: GameRule
     minPlayers: 10
-    chaosScore: 20
+    chaosScore: 100 # Pirate - was 20
   - type: VampireRule
   - type: AntagSelection
     selectionTime: IntraPlayerSpawn

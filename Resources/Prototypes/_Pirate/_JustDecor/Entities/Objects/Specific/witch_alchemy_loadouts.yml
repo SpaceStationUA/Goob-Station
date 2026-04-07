@@ -1,0 +1,303 @@
+- type: entity
+  id: PirateEventReagentVialEmpty
+  parent: PirateEventReagentVialBase
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "порожня магічна фляжка"
+
+- type: entity
+  id: PirateBrewingBeakerWater
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "вода"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: Water
+          Quantity: 100
+
+- type: entity
+  id: PirateBrewingBeakerBlood
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "кров"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: Blood
+          Quantity: 100
+
+- type: entity
+  id: PirateBrewingBeakerAsh
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "попіл"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: Ash
+          Quantity: 100
+
+- type: entity
+  id: PirateBrewingBeakerPlasma
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "плазма"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: Plasma
+          Quantity: 100
+
+- type: entity
+  id: PirateBrewingBeakerSulfuricAcid
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "сірчана кислота"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: SulfuricAcid
+          Quantity: 100
+
+- type: entity
+  id: PirateBrewingBeakerHolyWater
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "свята вода"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: Holywater
+          Quantity: 100
+
+- type: entity
+  id: PirateBrewingBeakerGreyMatter
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "сіра матерія"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 100
+
+- type: entity
+  id: PirateBrewingBeakerNutriment
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "нутрієнт"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 100
+
+- type: entity
+  id: PirateBrewingBeakerCharcoal
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "вугілля"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: Charcoal
+          Quantity: 100
+
+- type: entity
+  id: PirateBrewingBeakerIchor
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "іхор"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 100
+
+- type: entity
+  id: PirateBrewingBeakerOil
+  parent: LargeBeaker
+  suffix: JustDecor
+  components:
+  - type: Label
+    currentLabel: "олія"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+        reagents:
+        - ReagentId: Oil
+          Quantity: 100
+
+- type: entity
+  id: ClothingBackpackSatchelLeatherImproved
+  parent: ClothingBackpackSatchelLeather
+  name: покращена шкіряна сумка
+  description: Містка шкіряна сумка для ритуального начиння, настоїв і запасів для варіння. 
+  suffix: JustDecor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/leather.rsi
+  - type: Storage
+    grid:
+    - 0,0,9,9
+
+- type: entity
+  id: ClothingBackpackSatchelLeatherWitchImprovedFilled
+  parent: ClothingBackpackSatchelLeatherImproved
+  suffix: Відьма, Filled, JustDecor
+  components:
+  - type: StorageFill
+    contents:
+      - id: BookWitchBrewing
+      - id: LargeBeaker
+      - id: HandLabeler
+      - id: PirateEventReagentVialEmpty
+        amount: 2
+      - id: BookWitchCauldronCaller
+      - id: PirateBrewingBeakerWater
+      - id: PirateBrewingBeakerBlood
+      - id: PirateBrewingBeakerHolyWater
+      - id: PirateBrewingBeakerAsh
+      - id: PirateBrewingBeakerPlasma
+      - id: PirateBrewingBeakerGreyMatter
+      - id: PirateBrewingBeakerNutriment
+      - id: ChemistryBottleSugar
+      - id: ChemistryBottleIron
+      - id: ChemistryBottleSaline
+      - id: ChemistryBottleEphedrine
+      - id: ChemistryBottleCognizine
+      - id: ChemistryBottleNocturine
+      - id: ChemistryBottleMercury
+      - id: ChemistryBottleSynaptizine
+      - id: ChemistryBottleCryptobiolin
+      - id: ChemistryBottleMindbreakerToxin
+      - id: ChemistryBottleIpecac
+      - id: ChemistryBottleHappiness
+      - id: ChemistryBottleSpaceDrugs
+      - id: PirateVialWitchLove
+      - id: PirateVialWitchParanoia
+      - id: PirateVialWitchRage
+      - id: PirateVialWitchInvisibility
+      - id: PirateVialWitchMindFog
+      - id: PirateVialWitchMirrorCurse
+      - id: PirateVialWitchBloodBond
+      - id: PirateVialWitchSoulShadow
+      - id: PirateVialWitchSubstitution
+      - id: PirateVialWitchBlackBile
+      - id: PirateVialWitchEcho
+      - id: PirateVialWitchNameCurse
+      - id: PirateVialWitchHungerPotion
+      - id: PirateVialWitchSerenity
+      - id: PirateVialWitchInspiration
+      - id: PirateVialWitchWisdom
+      - id: PirateVialWitchStarlightPotion
+      - id: PirateVialWitchHope
+      - id: PirateVialWitchCompassion
+      - id: PirateVialWitchClarity
+
+- type: entity
+  id: ClothingBackpackSatchelLeatherAlchemistImprovedFilled
+  parent: ClothingBackpackSatchelLeatherImproved
+  suffix: Алхім., Filled, JustDecor
+  components:
+  - type: StorageFill
+    contents:
+      - id: BookAlchemistCompendium
+      - id: LargeBeaker
+      - id: HandLabeler
+      - id: PirateEventReagentVialEmpty
+        amount: 2
+      - id: BookAlchemistApparatusCaller
+      - id: PirateBrewingBeakerWater
+      - id: PirateBrewingBeakerBlood
+      - id: PirateBrewingBeakerPlasma
+      - id: PirateBrewingBeakerSulfuricAcid
+      - id: PirateBrewingBeakerHolyWater
+      - id: PirateBrewingBeakerCharcoal
+      - id: PirateBrewingBeakerIchor
+      - id: PirateBrewingBeakerOil
+      - id: JugWeldingFuel
+      - id: GoldChemistryVial
+      - id: ChemistryBottleMercury
+      - id: ChemistryBottleIron
+      - id: ChemistryBottleCopper
+      - id: ChemistryBottleOxygen
+      - id: ChemistryBottleFluorine
+      - id: ChemistryBottleNitrogen
+      - id: ChemistryBottlePhosphorus
+      - id: ChemistryBottlePotassium
+      - id: ChemistryBottleRadium
+      - id: ChemistryBottleSaline
+      - id: ChemistryBottleSulfur
+      - id: ChemistryBottleEphedrine
+      - id: ChemistryBottleSynaptizine
+      - id: ChemistryBottleCryptobiolin
+      - id: ChemistryBottleCryoxadone
+      - id: ChemistryBottleCognizine
+      - id: ChemistryBottleDexalinPlus
+      - id: ChemistryBottleBruizine
+      - id: ChemistryBottlePuncturase
+      - id: ChemistryBottleRazorium
+      - id: ChemistryBottlePyrazine
+      - id: SyringeStimulants
+      - id: FoodShakerSalt
+      - id: PirateVialAlchemistAcid
+      - id: PirateVialAlchemistPhilosopherStone
+      - id: PirateVialAlchemistMagicNeutralizer
+      - id: PirateVialAlchemistCatalyst
+      - id: PirateVialAlchemistSoulCopperas
+      - id: PirateVialAlchemistBubbleGas
+      - id: PirateVialAlchemistGravityPotion
+      - id: PirateVialAlchemistClownTrail
+      - id: PirateVialAlchemistChaosSalt
+      - id: PirateVialAlchemistMimicJuice
+      - id: PirateVialAlchemistNitricEssence
+      - id: PirateVialAlchemistMagnusElixir
+      - id: PirateVialAlchemistCourage
+      - id: PirateVialAlchemistDetermination
+      - id: PirateVialAlchemistElixirOfLife
+      - id: PirateVialAlchemistAlchemicalExplosion

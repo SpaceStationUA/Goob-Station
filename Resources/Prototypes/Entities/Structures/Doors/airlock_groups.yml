@@ -81,42 +81,42 @@
   id: Standard
   iconPriority: 100
   stylePaths:
-    atmospherics: Structures/Doors/Airlocks/Standard/atmospherics.rsi
-    basic:       Structures/Doors/Airlocks/Standard/basic.rsi
-    cargo:       Structures/Doors/Airlocks/Standard/cargo.rsi
-    chemistry:   Structures/Doors/Airlocks/Standard/chemistry.rsi
-    command:     Structures/Doors/Airlocks/Standard/command.rsi
-    engineering: Structures/Doors/Airlocks/Standard/engineering.rsi
-    freezer:     Structures/Doors/Airlocks/Standard/freezer.rsi
-    hydroponics: Structures/Doors/Airlocks/Standard/hydroponics.rsi
-    janitor:     _Goobstation/Structures/Doors/Airlocks/Standard/janitor.rsi # Goobstation - Sweet jani door recolour
-    maintenance: Structures/Doors/Airlocks/Standard/maint.rsi
-    medical:     Structures/Doors/Airlocks/Standard/medical.rsi
-    salvage:     Structures/Doors/Airlocks/Standard/salvage.rsi
-    science:     Structures/Doors/Airlocks/Standard/science.rsi
-    security:    Structures/Doors/Airlocks/Standard/security.rsi
-    virology:    Structures/Doors/Airlocks/Standard/virology.rsi
-    roboticist: _Goobstation/Structures/Doors/Airlocks/Glass/robotics.rsi # Goobstation - Roboticist
+    atmospherics: _Pirate/Structures/Doors/Airlocks/Standard/atmospherics.rsi # Pirate Changes
+    basic:       _Pirate/Structures/Doors/Airlocks/Standard/basic.rsi # Pirate Changes
+    cargo:       _Pirate/Structures/Doors/Airlocks/Standard/cargo.rsi # Pirate Changes
+    chemistry:   _Pirate/Structures/Doors/Airlocks/Standard/chemistry.rsi # Pirate Changes
+    command:     _Pirate/Structures/Doors/Airlocks/Standard/command.rsi # Pirate Changes
+    engineering: _Pirate/Structures/Doors/Airlocks/Standard/engineering.rsi # Pirate Changes
+    freezer:     _Pirate/Structures/Doors/Airlocks/Standard/freezer.rsi # Pirate Changes
+    hydroponics: _Pirate/Structures/Doors/Airlocks/Standard/hydroponics.rsi # Pirate Changes
+    janitor:     _Pirate/Structures/Doors/Airlocks/Standard/janitor.rsi # Pirate Changes
+    maintenance: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
+    medical:     _Pirate/Structures/Doors/Airlocks/Standard/medical.rsi # Pirate Changes
+    salvage:     _Pirate/Structures/Doors/Airlocks/Standard/salvage.rsi # Pirate Changes
+    science:     _Pirate/Structures/Doors/Airlocks/Standard/science.rsi # Pirate Changes
+    security:    _Pirate/Structures/Doors/Airlocks/Standard/security.rsi # Pirate Changes
+    virology:    _Pirate/Structures/Doors/Airlocks/Standard/virology.rsi # Pirate Changes
+    roboticist:  _Pirate/Structures/Doors/Airlocks/Glass/robotics.rsi # Pirate Changes
 
 - type: AirlockGroup
   id: Glass
   iconPriority: 90
   stylePaths:
-    atmospherics: Structures/Doors/Airlocks/Glass/atmospherics.rsi
-    basic:       Structures/Doors/Airlocks/Glass/basic.rsi
-    cargo:       Structures/Doors/Airlocks/Glass/cargo.rsi
-    command:     Structures/Doors/Airlocks/Glass/command.rsi
-    chemistry:   Structures/Doors/Airlocks/Glass/chemistry.rsi
-    science:     Structures/Doors/Airlocks/Glass/science.rsi
-    engineering: Structures/Doors/Airlocks/Glass/engineering.rsi
-    glass:       Structures/Doors/Airlocks/Glass/glass.rsi
-    hydroponics: Structures/Doors/Airlocks/Glass/hydroponics.rsi
-    janitor:     _Goobstation/Structures/Doors/Airlocks/Glass/janitor.rsi # Goobstation - Sweet jani door recolour
-    maintenance: Structures/Doors/Airlocks/Glass/maint.rsi
-    medical:     Structures/Doors/Airlocks/Glass/medical.rsi
-    salvage:     Structures/Doors/Airlocks/Glass/salvage.rsi
-    security:    Structures/Doors/Airlocks/Glass/security.rsi
-    virology:    Structures/Doors/Airlocks/Glass/virology.rsi
+    atmospherics: _Pirate/Structures/Doors/Airlocks/Glass/atmospherics.rsi # Pirate Changes
+    basic:       _Pirate/Structures/Doors/Airlocks/Glass/basic.rsi # Pirate Changes
+    cargo:       _Pirate/Structures/Doors/Airlocks/Glass/cargo.rsi # Pirate Changes
+    command:     _Pirate/Structures/Doors/Airlocks/Glass/command.rsi # Pirate Changes
+    chemistry:   _Pirate/Structures/Doors/Airlocks/Glass/chemistry.rsi # Pirate Changes
+    science:     _Pirate/Structures/Doors/Airlocks/Glass/science.rsi # Pirate Changes
+    engineering: _Pirate/Structures/Doors/Airlocks/Glass/engineering.rsi # Pirate Changes
+    glass:       _Pirate/Structures/Doors/Airlocks/Glass/glass.rsi # Pirate Changes
+    hydroponics: _Pirate/Structures/Doors/Airlocks/Glass/hydroponics.rsi # Pirate Changes
+    janitor:     _Pirate/Structures/Doors/Airlocks/Glass/janitor.rsi # Pirate Changes
+    maintenance: _Pirate/Doors/Airlocks/Glass/maint.rsi # Pirate Changes
+    medical:     _Pirate/Doors/Airlocks/Glass/medical.rsi # Pirate Changes
+    salvage:     _Pirate/Doors/Airlocks/Glass/salvage.rsi # Pirate Changes
+    security:    _Pirate/Doors/Airlocks/Glass/security.rsi # Pirate Changes
+    virology:    _Pirate/Doors/Airlocks/Glass/virology.rsi # Pirate Changes
 
 - type: AirlockGroup
   id: Windoor
@@ -128,7 +128,7 @@
   id: External
   iconPriority: 70
   stylePaths:
-    external:    Structures/Doors/Airlocks/Standard/external.rsi
+    external:    _Pirate/Structures/Doors/Airlocks/Standard/external.rsi
 
 - type: AirlockGroup
   id: ExternalGlass

@@ -3,6 +3,9 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.DoAfter;
+using Robust.Shared.Serialization;
+
 namespace Content.Goobstation.Shared.SlaughterDemon;
 
 /// <summary>
@@ -10,6 +13,12 @@ namespace Content.Goobstation.Shared.SlaughterDemon;
 /// </summary>
 [ByRefEvent]
 public record struct BloodCrawlAttemptEvent(bool Cancelled = false);
+
+/// <summary>
+/// Pirate - delays entering blood crawl so the demon does not vanish instantly.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class BloodCrawlEnterDoAfterEvent : SimpleDoAfterEvent;
 
 /// <summary>
 /// Triggers once the slaughter demon exits the Blood Crawl ability.

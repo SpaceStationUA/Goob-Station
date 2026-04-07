@@ -5,6 +5,6 @@
   description: Стандартна фіолетова кепка з пришитою назвою компанії
   components:
   - type: Sprite
-    sprite: _Pirate/Clothing/Head/awacap.rsi
+    sprite: _Pirate/Clothing/Head/Soft/awariasoft.rsi
   - type: Clothing
-    sprite: _Pirate/Clothing/Head/awacap.rsi
+    sprite: _Pirate/Clothing/Head/Soft/awariasoft.rsi

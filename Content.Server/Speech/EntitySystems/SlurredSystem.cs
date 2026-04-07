@@ -74,11 +74,9 @@ public sealed class SlurredSystem : SharedSlurredSystem
                 var lower = char.ToLowerInvariant(character);
                 var newString = lower switch
                 {
-                    'o' => "u",
-                    's' => "ch",
-                    'a' => "ah",
-                    'u' => "oo",
-                    'c' => "k",
+                    'о' => "у-у",
+                    'а' => "а-а",
+                    'и' => "и-и",
                     _ => $"{character}",
                 };
 

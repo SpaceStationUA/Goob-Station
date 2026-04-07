@@ -26,18 +26,19 @@
     idleState: icon
     runningState: building
     staticPacks:
-      - Reports
-      - Statements
-      - InquiriesAndAppeals
-      - Complaints
-      - Permissions
-      - OrdersAndInstructions
-      - Orders
-      - Evidence
-      - ConclusionsAndDecisions
+      - GeneralBureaucracy
+      - MedicalBureaucracy
+      - EngineeringBureaucracy
+      - ResearchBureaucracy
+      - LogisticsBureaucracy
+      - LegalBureaucracy
+      - SecurityBureaucracy
+      - TopBureaucracy
+      - ExternalBureaucracy
   - type: EmagLatheRecipes
     emagStaticPacks:
         - ErrorDocument
+  - type: DocumentPrinterPaperInput
   - type: MaterialStorage
     whitelist:
       tags:

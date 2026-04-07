@@ -49,6 +49,21 @@ public sealed partial class IdCardConsoleComponent : Component
         }
     }
 
+    #region Pirate: id card console fix
+    [Serializable, NetSerializable]
+    public sealed class SetTargetIdAccessMessage : BoundUserInterfaceMessage
+    {
+        public readonly ProtoId<AccessLevelPrototype> Access;
+        public readonly bool Enabled;
+
+        public SetTargetIdAccessMessage(ProtoId<AccessLevelPrototype> access, bool enabled)
+        {
+            Access = access;
+            Enabled = enabled;
+        }
+    }
+    #endregion
+
     // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
 
     [DataField, AutoNetworkedField]

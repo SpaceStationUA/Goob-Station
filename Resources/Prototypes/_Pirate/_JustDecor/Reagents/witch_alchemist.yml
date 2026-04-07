@@ -1,0 +1,1528 @@
+- type: reagent
+  id: WitchLove
+  name: reagent-name-witch-love
+  group: PirateEmotions
+  desc: reagent-desc-witch-love
+  physicalDesc: reagent-physical-desc-witch-love
+  flavor: sweet
+  color: "#FF6FA3"
+  boilingPoint: 100.0
+  meltingPoint: 0.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.08
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchLove
+        time: 12
+        type: Add
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -0.25
+            Slash: -0.25
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-love-effect-heartbeat
+        - witch-love-effect-warmth
+        - witch-love-effect-hug-now
+        - witch-love-effect-romance
+        - witch-love-effect-mending
+        - witch-love-effect-together
+        - witch-love-effect-poem
+        probability: 0.16
+      - !type:Emote
+        emote: Laugh
+        showInChat: true
+        probability: 0.12
+      - !type:Emote
+        emote: Whistle
+        showInChat: true
+        probability: 0.2
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchLove
+        time: 6
+        type: Add
+
+- type: reagent
+  id: WitchParanoia
+  name: reagent-name-witch-paranoia
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-paranoia
+  physicalDesc: reagent-physical-desc-witch-paranoia
+  flavor: bitter
+  color: "#8D6C9F"
+  boilingPoint: 104.0
+  meltingPoint: 2.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.18
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchParanoia
+        time: 12
+        type: Add
+      - !type:Jitter
+        amplitude: 4
+        frequency: 3
+        time: 3
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-paranoia-effect-watching
+        - witch-paranoia-effect-foes
+        probability: 0.18
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchParanoia
+        time: 6
+        type: Add
+
+- type: reagent
+  id: WitchRage
+  name: reagent-name-witch-rage
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-rage
+  physicalDesc: reagent-physical-desc-witch-rage
+  flavor: metallic
+  color: "#B10E0E"
+  boilingPoint: 120.0
+  meltingPoint: 5.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.30
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchRage
+        time: 10
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages:
+        - witch-rage-effect-snap
+        probability: 0.2
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchRage
+        time: 6
+        type: Add
+
+- type: reagent
+  id: WitchInvisibility
+  name: reagent-name-witch-invisibility
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-invisibility
+  physicalDesc: reagent-physical-desc-witch-invisibility
+  flavor: bitter
+  color: "#4B0082"
+  boilingPoint: 110.0
+  meltingPoint: 3.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.24
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchInvisibility
+        time: 6
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-invisibility-effect-fade
+        probability: 0.12
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchInvisibility
+        time: 4
+        type: Add
+
+- type: reagent
+  id: WitchMindFog
+  name: reagent-name-witch-mind-fog
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-mind-fog
+  physicalDesc: reagent-physical-desc-witch-mind-fog
+  flavor: bitter
+  color: "#9AA0A6"
+  boilingPoint: 95.0
+  meltingPoint: 1.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.22
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchMindFog
+        time: 12
+        type: Add
+      - !type:Jitter
+        amplitude: 6
+        frequency: 3
+        time: 4
+      - !type:Drunk
+        boozePower: 2.5
+        slurSpeech: false
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-mind-fog-effect-misted
+        - witch-mind-fog-effect-dizzy
+        probability: 0.2
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchMindFog
+        time: 6
+        type: Add
+
+- type: reagent
+  id: WitchMirrorCurse
+  name: reagent-name-witch-mirror-curse
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-mirror-curse
+  physicalDesc: reagent-physical-desc-witch-mirror-curse
+  flavor: bitter
+  color: "#A7D8FF"
+  boilingPoint: 108.0
+  meltingPoint: 4.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.28
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchMirrorCurse
+        time: 10
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-mirror-curse-effect-shift
+        probability: 0.16
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchMirrorCurse
+        time: 5
+        type: Add
+
+- type: reagent
+  id: WitchBloodBond
+  name: reagent-name-witch-blood-bond
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-blood-bond
+  physicalDesc: reagent-physical-desc-witch-blood-bond
+  flavor: metallic
+  color: "#7D0015"
+  boilingPoint: 112.0
+  meltingPoint: 6.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.26
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchBloodBond
+        time: 16
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-blood-bond-effect-throb
+        probability: 0.14
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchBloodBond
+        time: 8
+        type: Add
+
+- type: reagent
+  id: WitchSoulShadow
+  name: reagent-name-witch-soul-shadow
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-soul-shadow
+  physicalDesc: reagent-physical-desc-witch-soul-shadow
+  flavor: bitter
+  color: "#1C1C1C"
+  boilingPoint: 120.0
+  meltingPoint: 8.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.12
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchSoulShadow
+        time: 12
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-soul-shadow-effect-following
+        probability: 0.12
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchSoulShadow
+        time: 6
+        type: Add
+
+- type: reagent
+  id: WitchSubstitution
+  name: reagent-name-witch-substitution
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-substitution
+  physicalDesc: reagent-physical-desc-witch-substitution
+  flavor: bitter
+  color: "#7FC9FF"
+  boilingPoint: 108.0
+  meltingPoint: 4.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.32
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchSubstitution
+        time: 20
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-substitution-effect-lurch
+        probability: 0.18
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchSubstitution
+        time: 20
+        type: Add
+
+- type: reagent
+  id: WitchBlackBile
+  name: reagent-name-witch-black-bile
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-black-bile
+  physicalDesc: reagent-physical-desc-witch-black-bile
+  flavor: bitter
+  color: "#101010"
+  boilingPoint: 109.0
+  meltingPoint: 7.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.19
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchBlackBile
+        time: 12
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-black-bile-effect-grave
+        - witch-black-bile-effect-dead
+        probability: 0.18
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchBlackBile
+        time: 6
+        type: Add
+
+- type: reagent
+  id: WitchEcho
+  name: reagent-name-witch-echo
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-echo
+  physicalDesc: reagent-physical-desc-witch-echo
+  flavor: sweet
+  color: "#C7F0FF"
+  boilingPoint: 98.0
+  meltingPoint: 2.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.21
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchEcho
+        time: 14
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-echo-effect-ringing
+        probability: 0.12
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchEcho
+        time: 6
+        type: Add
+
+- type: reagent
+  id: WitchNameCurse
+  name: reagent-name-witch-name-curse
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-name-curse
+  physicalDesc: reagent-physical-desc-witch-name-curse
+  flavor: bitter
+  color: "#7A7A7A"
+  boilingPoint: 105.0
+  meltingPoint: 6.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.14
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchNameCurse
+        time: 16
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-name-curse-effect-strange
+        probability: 0.12
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchNameCurse
+        time: 8
+        type: Add
+
+- type: reagent
+  id: WitchHungerPotion
+  name: reagent-name-witch-hunger-potion
+  group: PirateWitchcraft
+  desc: reagent-desc-witch-hunger-potion
+  physicalDesc: reagent-physical-desc-witch-hunger-potion
+  flavor: sour
+  color: "#D2A84A"
+  boilingPoint: 111.0
+  meltingPoint: 4.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.30
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchHungerPotion
+        time: 12
+        type: Add
+      - !type:SatiateHunger
+        factor: -6
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-hunger-potion-effect-hungry
+        - witch-hunger-potion-effect-food
+        probability: 0.18
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWitchHungerPotion
+        time: 6
+        type: Add
+
+- type: reagent
+  id: AlchemistAcid
+  name: reagent-name-alchemist-acid
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-acid
+  physicalDesc: reagent-physical-desc-alchemist-acid
+  flavor: sour
+  color: "#D6E04B"
+  boilingPoint: 120.0
+  meltingPoint: -4.0
+  tileReactions:
+  - !type:SpillTileReaction
+  - !type:ReplaceTileReaction
+    tile: PlatingBurnt
+    requiredVolume: 4
+  metabolisms:
+    Poison:
+      metabolismRate: 0.32
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 3
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - alchemist-acid-effect-burn
+        probability: 0.18
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:PirateAcidCorrode
+        causticDamage: 8
+
+- type: reagent
+  id: AlchemistPhilosopherStone
+  name: reagent-name-alchemist-philosopher-stone
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-philosopher-stone
+  physicalDesc: reagent-physical-desc-alchemist-philosopher-stone
+  flavor: magical
+  color: "#F6C945"
+  boilingPoint: 130.0
+  meltingPoint: 12.0
+  tileReactions:
+  - !type:PhilosopherStoneTileReaction
+    requiredVolume: 4
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.28
+      effects:
+      - !type:PhilosopherStoneEffect
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - alchemist-philosopher-stone-effect-shimmer
+        probability: 0.2
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:PhilosopherStoneEffect
+
+- type: reagent
+  id: AlchemistMagicNeutralizer
+  name: reagent-name-alchemist-magic-neutralizer
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-magic-neutralizer
+  physicalDesc: reagent-physical-desc-alchemist-magic-neutralizer
+  flavor: bitter
+  color: "#DDF8FF"
+  boilingPoint: 90.0
+  meltingPoint: 0.0
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.20
+      effects:
+      - !type:CleanseWitchEffects
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - alchemist-magic-neutralizer-effect-calm
+        probability: 0.18
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:CleanseWitchEffects
+
+- type: reagent
+  id: AlchemistCatalyst
+  name: reagent-name-alchemist-catalyst
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-catalyst
+  physicalDesc: reagent-physical-desc-alchemist-catalyst
+  flavor: bitter
+  color: "#77FF73"
+  boilingPoint: 92.0
+  meltingPoint: 0.0
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.24
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistCatalyst
+        time: 25
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - alchemist-catalyst-effect-surge
+        probability: 0.16
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistCatalyst
+        time: 12
+        type: Add
+
+- type: reagent
+  id: AlchemistSoulCopperas
+  name: reagent-name-alchemist-soul-copperas
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-soul-copperas
+  physicalDesc: reagent-physical-desc-alchemist-soul-copperas
+  flavor: metallic
+  color: "#6FB7C9"
+  boilingPoint: 126.0
+  meltingPoint: 8.0
+  metabolisms:
+    Poison:
+      metabolismRate: 0.24
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistSoulCopperas
+        time: 12
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - alchemist-soul-copperas-effect-creak
+        probability: 0.16
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistSoulCopperas
+        time: 6
+        type: Add
+
+- type: reagent
+  id: AlchemistBubbleGas
+  name: reagent-name-alchemist-bubble-gas
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-bubble-gas
+  physicalDesc: reagent-physical-desc-alchemist-bubble-gas
+  flavor: metallic
+  color: "#C5D1D8"
+  boilingPoint: 80.0
+  meltingPoint: -10.0
+  tileReactions:
+  - !type:BubbleGasTileReaction
+    requiredVolume: 5
+    duration: 10
+    spreadAmount: 3
+  metabolisms:
+    Poison:
+      metabolismRate: 0.55
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistBubbleGas
+        time: 10
+        type: Add
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistBubbleGas
+        time: 6
+        type: Add
+
+- type: reagent
+  id: AlchemistBubbleGasCloud
+  name: reagent-name-alchemist-bubble-gas
+  group: PirateAlchemyResidues
+  desc: reagent-desc-alchemist-bubble-gas
+  physicalDesc: reagent-physical-desc-alchemist-bubble-gas
+  flavor: metallic
+  color: "#C5D1D8"
+  boilingPoint: 80.0
+  meltingPoint: -10.0
+  recognizable: false
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistBubbleGas
+        time: 5
+        type: Add
+
+
+- type: reagent
+  id: AlchemistGravityPotion
+  name: reagent-name-alchemist-gravity-potion
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-gravity-potion
+  physicalDesc: reagent-physical-desc-alchemist-gravity-potion
+  flavor: metallic
+  color: "#6B6F76"
+  boilingPoint: 140.0
+  meltingPoint: 20.0
+  metabolisms:
+    Poison:
+      metabolismRate: 0.42
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistGravityPotion
+        time: 10
+        type: Add
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.85
+        sprintSpeedModifier: 0.85
+        statusLifetime: 6
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - alchemist-gravity-potion-effect-heavy
+        probability: 0.2
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistGravityPotion
+        time: 6
+        type: Add
+
+- type: reagent
+  id: AlchemistClownTrail
+  name: reagent-name-alchemist-clown-trail
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-clown-trail
+  physicalDesc: reagent-physical-desc-alchemist-clown-trail
+  flavor: sour
+  color: "#E6D448"
+  boilingPoint: 118.0
+  meltingPoint: 6.0
+  metabolisms:
+    Poison:
+      metabolismRate: 1.00
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistClownTrail
+        time: 14
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - alchemist-clown-trail-effect-slip
+        probability: 0.16
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistClownTrail
+        time: 8
+        type: Add
+
+- type: reagent
+  id: AlchemistChaosSalt
+  name: reagent-name-alchemist-chaos-salt
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-chaos-salt
+  physicalDesc: reagent-physical-desc-alchemist-chaos-salt
+  flavor: bitter
+  color: "#E3F4FF"
+  boilingPoint: 102.0
+  meltingPoint: 1.0
+  metabolisms:
+    Poison:
+      metabolismRate: 0.14
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: SmallCaution
+        messages:
+        - alchemist-chaos-salt-effect-crackle
+        probability: 0.14
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ExplosionReactionEffect
+        explosionType: Default
+        maxIntensity: 0.75
+        intensityPerUnit: 0.25
+        intensitySlope: 1.2
+        maxTotalIntensity: 0.75
+
+- type: reagent
+  id: AlchemistMimicJuice
+  name: reagent-name-alchemist-mimic-juice
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-mimic-juice
+  physicalDesc: reagent-physical-desc-alchemist-mimic-juice
+  flavor: bitter
+  color: "#F3F3E1"
+  boilingPoint: 126.0
+  meltingPoint: 14.0
+  metabolisms:
+    Poison:
+      metabolismRate: 0.36
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistMimicJuice
+        time: 12
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - alchemist-mimic-juice-effect-smoke
+        probability: 0.16
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistMimicJuice
+        time: 6
+        type: Add
+
+- type: reagent
+  id: AlchemistNitricEssence
+  name: reagent-name-alchemist-nitric-essence
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-nitric-essence
+  physicalDesc: reagent-physical-desc-alchemist-nitric-essence
+  flavor: bitter
+  color: "#A5E9FF"
+  boilingPoint: 70.0
+  meltingPoint: -20.0
+  metabolisms:
+    Poison:
+      metabolismRate: 0.30
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistNitricEssence
+        time: 12
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - alchemist-nitric-essence-effect-cold
+        probability: 0.18
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistNitricEssence
+        time: 6
+        type: Add
+
+- type: reagent
+  id: AlchemistMagnusElixir
+  name: reagent-name-alchemist-magnus-elixir
+  group: PirateElixirs
+  desc: reagent-desc-alchemist-magnus-elixir
+  physicalDesc: reagent-physical-desc-alchemist-magnus-elixir
+  flavor: sweet
+  color: "#F5D974"
+  boilingPoint: 96.0
+  meltingPoint: 1.0
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.36
+      effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.25
+        sprintSpeedModifier: 1.25
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStunned
+        time: 2
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 2
+        type: Remove
+      - !type:GenericStatusEffect
+        key: StaminaModifier
+        component: StaminaModifier
+        time: 3
+        type: Add
+      - !type:GenericStatusEffect
+        key: Adrenaline
+        component: IgnoreSlowOnDamage
+        time: 5
+      - !type:TakeStaminaDamage
+        amount: -12
+        immediate: true
+      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistMagnusElixir
+        time: 10
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - alchemist-magnus-elixir-effect-fury
+        probability: 0.18
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAlchemistMagnusElixir
+        time: 5
+        type: Add
+
+- type: reagent
+  id: WitchSerenity
+  name: reagent-name-witch-serenity
+  group: PirateEmotions
+  desc: reagent-desc-witch-serenity
+  physicalDesc: reagent-physical-desc-witch-serenity
+  flavor: tea
+  color: "#87CEEB"
+  boilingPoint: 95.0
+  meltingPoint: 5.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.10
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - witch-serenity-message-1
+        - witch-serenity-message-2
+        - witch-serenity-message-3
+        - witch-serenity-message-4
+        - witch-serenity-message-5
+        - witch-serenity-message-6
+        - witch-serenity-message-7
+        - witch-serenity-message-8
+        probability: 0.12
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.9
+        sprintSpeedModifier: 0.9
+        statusLifetime: 20
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.3
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        time: 15
+        type: Add
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+
+- type: reagent
+  id: WitchInspiration
+  name: reagent-name-witch-inspiration
+  group: PirateEmotions
+  desc: reagent-desc-witch-inspiration
+  physicalDesc: reagent-physical-desc-witch-inspiration
+  flavor: sweet
+  color: "#FFD700"
+  boilingPoint: 110.0
+  meltingPoint: 2.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.12
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "Ваш розум переповнюється новими ідеями!"
+        - "Ви бачите світ в новому світлі."
+        - "Творчість тече крізь вас як річка."
+        - "Ви знаєте, що можете зробити щось дивовижне!"
+        - "Ваша уява розквітає, як квіти весною."
+        - "Ви відчуваєте, що можете створити шедевр."
+        - "Кожна думка - це нова можливість для творчості."
+        - "Ви натхнені робити щось прекрасне прямо зараз."
+        probability: 0.14
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.05
+        sprintSpeedModifier: 1.05
+        statusLifetime: 12
+      - !type:Emote
+        emote: Clap
+        showInChat: true
+        probability: 0.12
+
+- type: reagent
+  id: WitchWisdom
+  name: reagent-name-witch-wisdom
+  group: PirateEmotions
+  desc: reagent-desc-witch-wisdom
+  physicalDesc: reagent-physical-desc-witch-wisdom
+  flavor: bitter
+  color: "#4B0082"
+  boilingPoint: 105.0
+  meltingPoint: 8.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.11
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "Ви раптово розумієте багато речей."
+        - "Ваш розум стає ясним і проникливим."
+        - "Ви бачите справжню суть речей."
+        - "Мудрість наповнює вашу душу."
+        - "Ви розумієте глибокі істини світу."
+        - "Ваш внутрішній голос стає чутливішим."
+        - "Ви бачите зв'язки між усім навколо."
+        - "Мудрість древніх часів приходить до вас."
+        probability: 0.13
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.2
+            Asphyxiation: -0.1
+      - !type:Emote
+        emote: Salute
+        showInChat: true
+        probability: 0.1
+
+- type: reagent
+  id: WitchStarlightPotion
+  name: reagent-name-witch-starlight-potion
+  group: PirateEmotions
+  desc: reagent-desc-witch-starlight-potion
+  physicalDesc: reagent-physical-desc-witch-starlight-potion
+  flavor: sweet
+  color: "#FFFACD"
+  boilingPoint: 100.0
+  meltingPoint: 0.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.14
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "Ви бачите космічні видіння."
+        - "Зірки шепочуть вам свої таємниці."
+        probability: 0.13
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -0.2
+            Cold: -0.2
+
+- type: reagent
+  id: WitchHope
+  name: reagent-name-witch-hope
+  group: PirateEmotions
+  desc: reagent-desc-witch-hope
+  physicalDesc: reagent-physical-desc-witch-hope
+  flavor: sweet
+  color: "#FFB6C1"
+  boilingPoint: 105.0
+  meltingPoint: 5.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.10
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "Ви відчуваєте, що все буде добре."
+        - "Майбутнє здається яскравим."
+        - "Ви вірите в себе."
+        - "Навіть у темряві ви бачите світло."
+        - "Ваше серце переповнене оптимізмом."
+        - "Ви знаєте, що кращі дні попереду."
+        - "Надія дає вам крила."
+        probability: 0.14
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.2
+            Asphyxiation: -0.1
+      - !type:Emote
+        emote: Laugh
+        showInChat: true
+        probability: 0.15
+
+- type: reagent
+  id: WitchCompassion
+  name: reagent-name-witch-compassion
+  group: PirateEmotions
+  desc: reagent-desc-witch-compassion
+  physicalDesc: reagent-physical-desc-witch-compassion
+  flavor: sweet
+  color: "#FF69B4"
+  boilingPoint: 100.0
+  meltingPoint: 3.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.09
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "Ви відчуваєте біль інших людей."
+        - "Ви хочете допомогти всім."
+        - "Доброта наповнює ваше серце."
+        - "Ви розумієте страждання інших."
+        - "Ваша емпатія безмежна."
+        - "Ви хочете зробити світ кращим місцем."
+        - "Любов до людства переповнює вас."
+        probability: 0.12
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.25
+      - !type:Emote
+        emote: Laugh
+        showInChat: true
+        probability: 0.12
+
+- type: reagent
+  id: WitchClarity
+  name: reagent-name-witch-clarity
+  group: PirateEmotions
+  desc: reagent-desc-witch-clarity
+  physicalDesc: reagent-physical-desc-witch-clarity
+  flavor: bitter
+  color: "#E0FFFF"
+  boilingPoint: 95.0
+  meltingPoint: 2.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.11
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "Ваш розум стає кристально чистим."
+        - "Ви бачите справжню суть проблеми."
+        - "Сумніви розсіюються."
+        - "Ясність приходить до вас як світло."
+        - "Ви розумієте все з першого погляду."
+        - "Ваш розум працює з ідеальною точністю."
+        - "Туман розсіюється, залишаючи тільки істину."
+        probability: 0.13
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.15
+            Asphyxiation: -0.15
+      - !type:Emote
+        emote: Salute
+        showInChat: true
+        probability: 0.1
+
+- type: reagent
+  id: AlchemistCourage
+  name: reagent-name-alchemist-courage
+  group: PirateElixirs
+  desc: reagent-desc-alchemist-courage
+  physicalDesc: reagent-physical-desc-alchemist-courage
+  flavor: metallic
+  color: "#FF0000"
+  boilingPoint: 120.0
+  meltingPoint: -10.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.12
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "Ви відчуваєте прилив сили та впевненості."
+        - "Страх відступає перед вашою рішучістю."
+        - "Ви готові кинути виклик будь-кому!"
+        - "Ваше серце б'ється сильно, але без страху."
+        - "Ви відчуваєте, що можете перемогти будь-яку перешкоду."
+        - "Ваші м'язи напружуються, готові до дії."
+        - "Ви готові захищати тих, кого любите."
+        - "Страх - це лише слово, а ви - воїн!"
+        probability: 0.15
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.1
+        sprintSpeedModifier: 1.1
+        statusLifetime: 15
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -0.5
+      - !type:Emote
+        emote: Laugh
+        showInChat: true
+        probability: 0.1
+
+- type: reagent
+  id: AlchemistDetermination
+  name: reagent-name-alchemist-determination
+  group: PirateElixirs
+  desc: reagent-desc-alchemist-determination
+  physicalDesc: reagent-physical-desc-alchemist-determination
+  flavor: metallic
+  color: "#00008B"
+  boilingPoint: 120.0
+  meltingPoint: 8.0
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.12
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "Ви готові кинути виклик будь-чому."
+        - "Ваша воля стає залізною."
+        - "Ніщо не зможе вас зупинити."
+        - "Ви відчуваєте невиразну силу всередині."
+        - "Ваша рішучість стає непохитною."
+        - "Ви готові йти до кінця, що б не було."
+        - "Ваш дух не можна зламати."
+        probability: 0.13
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -0.3
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.08
+        sprintSpeedModifier: 1.08
+        statusLifetime: 18
+
+- type: reagent
+  id: AlchemistElixirOfLife
+  name: reagent-name-alchemist-elixir-of-life
+  group: PirateElixirs
+  desc: reagent-desc-alchemist-elixir-of-life
+  physicalDesc: reagent-physical-desc-alchemist-elixir-of-life
+  flavor: sweet
+  color: "#FF0000"
+  boilingPoint: 135.0
+  meltingPoint: 10.0
+  worksOnTheDead: true
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.16
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "Ви відчуваєте прилив життєвої енергії."
+        - "Ваші рани заживають миттєво."
+        - "Ви відроджуєтесь заново."
+        probability: 0.16
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -2.5
+            Slash: -2.5
+            Piercing: -2
+            Heat: -2
+            Cold: -1.5
+            Poison: -1.5
+            Asphyxiation: -1.5
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -4
+            Burn: -4
+            Toxin: -2
+            Airloss: -2
+      - !type:ModifyBloodLevel
+        amount: 4
+      - !type:ModifyBleedAmount
+        amount: -0.8
+      - !type:ReduceRotting
+        seconds: 4
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Dead
+      - !type:AdjustReagent
+        reagent: Puncturase
+        amount: 0.25
+      - !type:AdjustReagent
+        reagent: Pyrazine
+        amount: 0.25
+      - !type:AdjustReagent
+        reagent: Lacerinol
+        amount: 0.25
+      - !type:AdjustReagent
+        reagent: Bruizine
+        amount: 0.25
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 263.15
+        amount: -15000
+
+- type: reagent
+  id: AlchemistAlchemicalExplosion
+  name: reagent-name-alchemist-alchemical-explosion
+  group: PirateAlchemy
+  desc: reagent-desc-alchemist-alchemical-explosion
+  physicalDesc: reagent-physical-desc-alchemist-alchemical-explosion
+  flavor: bitter
+  color: "#FF8C00"
+  boilingPoint: 170.0
+  meltingPoint: 30.0
+  metabolisms:
+    Poison:
+      metabolismRate: 0.24
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - "Ви відчуваєте енергію вибуху."
+        - "Все навколо тремтить від потужності."
+        probability: 0.17
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: 1.2
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ExplosionReactionEffect
+        explosionType: Default
+        maxIntensity: 1.25
+        intensityPerUnit: 0.35
+        intensitySlope: 1
+        maxTotalIntensity: 1.25
+
+- type: reagent
+  id: InteractionCursedSalt
+  name: reagent-name-interaction-cursed-salt
+  group: PirateOccult
+  desc: reagent-desc-interaction-cursed-salt
+  physicalDesc: reagent-physical-desc-interaction-cursed-salt
+  flavor: bitter
+  color: "#EDEDED"
+  boilingPoint: 100.0
+  meltingPoint: 0.0
+  tileReactions:
+  - !type:ReplaceTileReaction
+    tile: FloorDark
+    requiredVolume: 3
+  metabolisms:
+    Poison:
+      metabolismRate: 0.10
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: SmallCaution
+        messages:
+        - interaction-cursed-salt-effect-creep
+        probability: 0.1
+
+- type: reagent
+  id: InteractionAntiMagic
+  name: reagent-name-interaction-anti-magic
+  group: PirateOccult
+  desc: reagent-desc-interaction-anti-magic
+  physicalDesc: reagent-physical-desc-interaction-anti-magic
+  flavor: bitter
+  color: "#A7F0FF"
+  boilingPoint: 96.0
+  meltingPoint: 1.0
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.22
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAntiMagicWard
+        time: 60
+        type: Add
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - interaction-anti-magic-effect-ward
+        probability: 0.14
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAntiMagicWard
+        time: 30
+        type: Add
+
+- type: reagent
+  id: InteractionHolyRemedy
+  name: reagent-name-interaction-holy-remedy
+  group: PirateOccult
+  desc: reagent-desc-interaction-holy-remedy
+  physicalDesc: reagent-physical-desc-interaction-holy-remedy
+  flavor: sweet
+  color: "#FFF0B8"
+  boilingPoint: 94.0
+  meltingPoint: 1.0
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.12
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Holy: -4
+            Heat: -1
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - interaction-holy-remedy-effect-soothe
+        probability: 0.16
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Holy: -6
+            Heat: -1
+
+- type: reagent
+  id: InteractionChaosMixture
+  name: reagent-name-interaction-chaos-mixture
+  group: PirateOccult
+  desc: reagent-desc-interaction-chaos-mixture
+  physicalDesc: reagent-physical-desc-interaction-chaos-mixture
+  flavor: sour
+  color: "#D99DFF"
+  boilingPoint: 99.0
+  meltingPoint: 1.0
+  metabolisms:
+    Poison:
+      metabolismRate: 0.34
+      effects:
+      - !type:ChaosMixtureEffect
+        quantity: 6
+        reagents:
+        - WitchLove
+        - WitchParanoia
+        - WitchRage
+        - WitchInvisibility
+        - WitchMindFog
+        - WitchMirrorCurse
+        - WitchBloodBond
+        - WitchSoulShadow
+        - WitchSubstitution
+        - WitchBlackBile
+        - WitchEcho
+        - WitchNameCurse
+        - WitchHungerPotion
+        - AlchemistAcid
+        - AlchemistPhilosopherStone
+        - AlchemistMagicNeutralizer
+        - AlchemistCatalyst
+        - AlchemistSoulCopperas
+        - AlchemistBubbleGas
+        - AlchemistGravityPotion
+        - AlchemistClownTrail
+        - AlchemistChaosSalt
+        - AlchemistMimicJuice
+        - AlchemistNitricEssence
+        - AlchemistMagnusElixir
+        - InteractionCursedSalt
+        - InteractionAntiMagic
+        - InteractionHolyRemedy
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+        - interaction-chaos-mixture-effect-twist
+        probability: 0.2
+
+- type: reagent
+  id: AlchemistClownTrailResidue
+  parent: BasePyrotechnic
+  name: reagent-name-alchemist-clown-trail-residue
+  group: PirateAlchemyResidues
+  desc: reagent-desc-alchemist-clown-trail-residue
+  physicalDesc: reagent-physical-desc-alchemist-clown-trail-residue
+  flavor: bitter
+  color: "#C9B543"
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 2
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:Ignite
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 1
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 1.1
+
+- type: reagent
+  id: AlchemistMimicJuiceResidue
+  parent: BasePyrotechnic
+  name: reagent-name-alchemist-mimic-juice-residue
+  group: PirateAlchemyResidues
+  desc: reagent-desc-alchemist-mimic-juice-residue
+  physicalDesc: reagent-physical-desc-alchemist-mimic-juice-residue
+  flavor: bitter
+  color: "#F7F7F0"
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 5
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:Ignite
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 1
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.6

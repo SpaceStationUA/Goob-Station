@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Ported from tgstation sprites",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "coffeepot"
+    },
+    {
+      "name": "coffeepot_empty"
+    },
+    {
+      "name": "coffeepot_fill_1"
+    },
+    {
+      "name": "coffeepot_fill_2"
+    },
+    {
+      "name": "coffeepot_fill_3"
+    },
+    {
+      "name": "coffeepot_fill_4"
+    },
+    {
+      "name": "coffeepot_fill_5"
+    },
+    {
+      "name": "coffeepot_fill_6"
+    },
+    {
+      "name": "coffeepot_fill_7"
+    }
+  ]
+}

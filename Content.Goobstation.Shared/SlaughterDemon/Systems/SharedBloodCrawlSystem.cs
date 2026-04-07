@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
@@ -19,11 +20,15 @@ namespace Content.Goobstation.Shared.SlaughterDemon.Systems;
 public abstract class SharedBloodCrawlSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+
+    // Pirate - slight windup before the slaughter demon disappears into blood.
+    private static readonly TimeSpan BloodCrawlEnterDelay = TimeSpan.FromSeconds(1);
 
     private EntityQuery<ActionsComponent> _actionQuery;
     private EntityQuery<PuddleComponent> _puddleQuery;
@@ -38,6 +43,7 @@ public abstract class SharedBloodCrawlSystem : EntitySystem
         SubscribeLocalEvent<BloodCrawlComponent, ComponentStartup>(OnStartup);
 
         SubscribeLocalEvent<BloodCrawlComponent, BloodCrawlEvent>(OnBloodCrawl);
+        SubscribeLocalEvent<BloodCrawlComponent, BloodCrawlEnterDoAfterEvent>(OnBloodCrawlEnterDoAfter);
     }
 
     private void OnStartup(EntityUid uid, BloodCrawlComponent component, ComponentStartup args)
@@ -71,9 +77,36 @@ public abstract class SharedBloodCrawlSystem : EntitySystem
 
         _audio.PlayPredicted(component.EnterJauntSound, Transform(uid).Coordinates, uid);
 
-        PolymorphDemon(uid, component.Jaunt);
+        if (!_netManager.IsServer)
+        {
+            args.Handled = true;
+            return;
+        }
+
+        // Pirate - make entering blood crawl a short, interruptible windup.
+        var doAfter = new DoAfterArgs(EntityManager,
+            uid,
+            BloodCrawlEnterDelay,
+            new BloodCrawlEnterDoAfterEvent(),
+            uid,
+            target: uid)
+        {
+            BreakOnMove = true,
+            BreakOnDamage = true,
+        };
+
+        if (!_doAfter.TryStartDoAfter(doAfter))
+            return;
 
         args.Handled = true;
+    }
+
+    private void OnBloodCrawlEnterDoAfter(EntityUid uid, BloodCrawlComponent component, ref BloodCrawlEnterDoAfterEvent args)
+    {
+        if (args.Cancelled || !_netManager.IsServer)
+            return;
+
+        PolymorphDemon(uid, component.Jaunt);
     }
 
     #region Helper Functions

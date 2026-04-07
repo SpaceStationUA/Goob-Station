@@ -5,9 +5,9 @@
   description: Вироблені на замовлення обмеженим тиражем для професіоналів інженерної справи
   components:
   - type: Sprite
-    sprite: _Pirate/Clothing/Hands/awagloves.rsi
+    sprite: _Pirate/Clothing/Hands/Gloves/awaria.rsi
   - type: Clothing
-    sprite: _Pirate/Clothing/Hands/awagloves.rsi
+    sprite: _Pirate/Clothing/Hands/Gloves/awaria.rsi
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-leather

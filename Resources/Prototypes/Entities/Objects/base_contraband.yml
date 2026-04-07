@@ -35,6 +35,7 @@
     severity: Magical
   - type: ScannableForPoints # Goobstation - NTR update
     points: 10
+  - type: MagicDamageSource # Pirate changes
 
 # non-stealth syndicate stuff
 - type: entity

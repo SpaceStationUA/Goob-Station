@@ -13,6 +13,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Content.Shared.Abilities;
 using System.Numerics;
+using Content.Client._Pirate.Photo; // Pirate: camera
 
 namespace Content.Client._DV.Overlays;
 
@@ -21,6 +22,7 @@ public sealed partial class UltraVisionOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] IEntityManager _entityManager = default!;
+    private readonly PhotoCaptureFilterSystem _photoCaptureFilter; // Pirate: camera
 
 
     public override bool RequestScreenTexture => true;
@@ -30,11 +32,15 @@ public sealed partial class UltraVisionOverlay : Overlay
     public UltraVisionOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _photoCaptureFilter = _entityManager.System<PhotoCaptureFilterSystem>(); // Pirate: camera
         _ultraVisionShader = _prototypeManager.Index<ShaderPrototype>("UltraVision").Instance().Duplicate();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
+        if (_photoCaptureFilter.IsSuppressedForEye(args.Viewport.Eye, PhotoCaptureSuppressionMask.VisionEffects)) // Pirate: camera
+            return false;
+
         if (_playerManager.LocalEntity is not { Valid: true } player
             || !_entityManager.HasComponent<UltraVisionComponent>(player))
         {

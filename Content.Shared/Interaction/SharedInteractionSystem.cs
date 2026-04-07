@@ -182,7 +182,6 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 #region DOWNSTREAM-TPirates: borg wireless access
 using Content.Shared._DV.Silicons.Laws;
-using Content.Shared.Silicons.StationAi;
 #endregion
 
 namespace Content.Shared.Interaction
@@ -225,7 +224,11 @@ namespace Content.Shared.Interaction
         private EntityQuery<UseDelayComponent> _delayQuery;
         private EntityQuery<ActivatableUIComponent> _uiQuery;
 
-        private const CollisionGroup InRangeUnobstructedMask = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
+        /// <summary>
+        /// The collision mask used by default for
+        /// <see cref="InRangeUnobstructed(MapCoordinates,MapCoordinates,float,CollisionGroup,Ignored?,bool)" />
+        /// </summary>
+        public const CollisionGroup InRangeUnobstructedMask = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
         public const float InteractionRange = 1.5f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -339,6 +342,9 @@ namespace Content.Shared.Interaction
 
         private bool UiRangeCheck(Entity<TransformComponent?> user, Entity<TransformComponent?> target, float range)
         {
+            if (range < 0) // Goobstation
+                return true;
+
             #region DOWNSTREAM-TPirates: borg wireless access
             if (HasComp<SlavedBorgComponent>(user.Owner))
                 return true; // lets borgs bypass range checks for door radial interaction I.E. bolt/electrify/EA

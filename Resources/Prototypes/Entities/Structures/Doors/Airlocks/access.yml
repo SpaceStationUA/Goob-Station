@@ -373,6 +373,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCaptain ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/captain.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommand
@@ -382,6 +384,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsChiefMedicalOfficer ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/chief_medic.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommand
@@ -391,6 +395,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsChiefEngineer ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/chief_engineer.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommand
@@ -400,6 +406,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsHeadOfSecurity ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/head_of_security.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommand
@@ -409,6 +417,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsResearchDirector ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/research_director.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommand
@@ -418,6 +428,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsHeadOfPersonnel ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/head_of_personel.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommand
@@ -427,6 +439,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsQuartermaster ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/quartermaster.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockSecurity
@@ -777,6 +791,7 @@
     containers:
       board: [ DoorElectronicsCaptain ]
 
+
 - type: entity
   parent: AirlockCommandGlass
   id: AirlockChiefMedicalOfficerGlassLocked
@@ -785,6 +800,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsChiefMedicalOfficer ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/chief_medic.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommandGlass
@@ -794,6 +811,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsChiefEngineer ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/chief_engineer.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommandGlass
@@ -803,6 +822,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsHeadOfSecurity ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/head_of_security.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommandGlass
@@ -812,6 +833,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsResearchDirector ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/research_director.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommandGlass
@@ -830,6 +853,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsQuartermaster ]
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/quartermaster.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockSecurityGlass
@@ -927,217 +952,217 @@
   id: AirlockMaintSalvageLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCargoLocked
   id: AirlockMaintCargoLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCommandLocked
   id: AirlockMaintCommandLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockEngineeringLocked
   id: AirlockMaintEngiLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockAtmosphericsLocked
   id: AirlockMaintAtmoLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockBarLocked
   id: AirlockMaintBarLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockBarKitchenLocked
   id: AirlockMaintBarKitchenLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockChapelLocked
   id: AirlockMaintChapelLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockHydroponicsLocked
   id: AirlockMaintHydroLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockJanitorLocked
   id: AirlockMaintJanitorLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockLawyerLocked
   id: AirlockMaintLawyerLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockServiceLocked
   id: AirlockMaintServiceLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockTheatreLocked
   id: AirlockMaintTheatreLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockServiceTheatreLocked
   id: AirlockMaintServiceTheatreLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockKitchenLocked
   id: AirlockMaintKitchenLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockFreezerKitchenHydroLocked
   id: AirlockMaintKitchenHydroLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockMedicalLocked
   id: AirlockMaintMedLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockMedicalMorgueLocked
   id: AirlockMedicalMorgueMaintLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockChemistryLocked
   id: AirlockMaintChemLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockScienceLocked
   id: AirlockMaintRnDLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockMedicalScienceLocked
   id: AirlockMaintRnDMedLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockSecurityLocked
   id: AirlockMaintSecLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockDetectiveLocked
   id: AirlockMaintDetectiveLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockHeadOfPersonnelLocked
   id: AirlockMaintHOPLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockCaptainLocked
   id: AirlockMaintCaptainLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockChiefEngineerLocked
   id: AirlockMaintChiefEngineerLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockChiefMedicalOfficerLocked
   id: AirlockMaintChiefMedicalOfficerLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockHeadOfSecurityLocked
   id: AirlockMaintHeadOfSecurityLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockResearchDirectorLocked
   id: AirlockMaintResearchDirectorLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockQuartermasterLocked
   id: AirlockMaintQuartermasterLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockArmoryLocked
   id: AirlockMaintArmoryLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockSyndicate

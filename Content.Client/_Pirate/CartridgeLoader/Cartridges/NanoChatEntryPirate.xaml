@@ -1,0 +1,77 @@
+<pirates:NanoChatEntryPirate
+    xmlns="https://spacestation14.io"
+    xmlns:pirates="clr-namespace:Content.Client._Pirate.CartridgeLoader.Cartridges"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    HorizontalExpand="True">
+    <Button Name="ChatButton"
+            StyleClasses="ButtonSquare"
+            HorizontalExpand="True"
+            MinSize="158 44"
+            MaxSize="158 44"
+            Margin="0 0">
+        <Button.StyleBoxOverride>
+            <graphics:StyleBoxFlat
+                BackgroundColor="#00000000"
+                BorderColor="#00000000"
+                BorderThickness="0"
+                ContentMarginLeftOverride="0"
+                ContentMarginRightOverride="0"
+                ContentMarginTopOverride="0"
+                ContentMarginBottomOverride="0" />
+        </Button.StyleBoxOverride>
+        <PanelContainer HorizontalExpand="True"
+                        VerticalExpand="True">
+            <PanelContainer.PanelOverride>
+                <graphics:StyleBoxFlat
+                    BackgroundColor="#2a2f4099"
+                    BorderColor="#00000000"
+                    BorderThickness="0"
+                    ContentMarginLeftOverride="0"
+                    ContentMarginRightOverride="0"
+                    ContentMarginTopOverride="0"
+                    ContentMarginBottomOverride="0" />
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Horizontal"
+                          HorizontalExpand="True"
+                          VerticalExpand="False"
+                          VerticalAlignment="Center">
+                <!-- Text container -->
+                <BoxContainer Orientation="Vertical"
+                              HorizontalExpand="True"
+                              VerticalExpand="False"
+                              VerticalAlignment="Center"
+                              Margin="2 0 0 0">
+                    <RichTextLabel Name="NameLabel"
+                           StyleClasses="LabelHeading"
+                           HorizontalExpand="True"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Margin="0 -2 0 0" />
+                    <RichTextLabel Name="JobLabel"
+                           StyleClasses="LabelSubText"
+                           HorizontalExpand="True"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Margin="0 -1 0 0" />
+                </BoxContainer>
+
+                <!-- Unread indicator line -->
+                <PanelContainer Name="UnreadIndicator"
+                                MinSize="3 34"
+                                MaxSize="3 34"
+                                VerticalExpand="True"
+                                VerticalAlignment="Center"
+                                Margin="4 0 0 0">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat
+                            BackgroundColor="#28d93e"
+                            BorderColor="#28d93e"
+                            BorderThickness="0" />
+                    </PanelContainer.PanelOverride>
+                </PanelContainer>
+            </BoxContainer>
+        </PanelContainer>
+    </Button>
+</pirates:NanoChatEntryPirate>
+
+

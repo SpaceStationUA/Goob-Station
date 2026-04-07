@@ -14,6 +14,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Common.Grab;
 using Robust.Shared.GameStates;
 
 namespace Content.Goobstation.Common.MartialArts;
@@ -26,12 +27,13 @@ public sealed partial class MartialArtBlockedComponent : Component
 }
 public abstract partial class GrabStagesOverrideComponent : Component
 {
-    public GrabStage StartingStage = GrabStage.Soft;
+    public readonly GrabStage StartingStage = GrabStage.Soft;
 }
 
 [RegisterComponent]
 [NetworkedComponent]
-[AutoGenerateComponentState]
+//[AutoGenerateComponentState] //Original
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true)] //Pirate Changes
 public sealed partial class MartialArtsKnowledgeComponent : GrabStagesOverrideComponent
 {
     [DataField]
@@ -61,4 +63,5 @@ public enum MartialArtsForms
     KungFuDragon,
     Ninjutsu,
     HellRip,
+    LegendaryCloseQuartersCombat, //Pirate Changes
 }

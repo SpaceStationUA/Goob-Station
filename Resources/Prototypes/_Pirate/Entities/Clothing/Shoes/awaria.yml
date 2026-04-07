@@ -5,6 +5,6 @@
   description: Черевики що бачили половину відомих станцій. Ви явно не їх перший власник
   components:
   - type: Sprite
-    sprite: _Pirate/Clothing/Shoes/awaboots.rsi
+    sprite: _Pirate/Clothing/Shoes/Boots/awariaboots.rsi
   - type: Clothing
-    sprite: _Pirate/Clothing/Shoes/awaboots.rsi
+    sprite: _Pirate/Clothing/Shoes/Boots/awariaboots.rsi

@@ -30,6 +30,7 @@ materials-raw-quartz = сирий кварц
 materials-raw-gold = сире золото
 materials-raw-silver = сире срібло
 materials-raw-plasma = сира плазма
+materials-raw-titanium = сирий титан
 materials-raw-uranium = сирий уран
 materials-raw-bananium = сирий бананіуміум
 materials-raw-salt = неочищена сіль

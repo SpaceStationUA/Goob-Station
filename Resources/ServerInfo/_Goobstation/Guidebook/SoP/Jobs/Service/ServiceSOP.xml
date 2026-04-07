@@ -6,20 +6,20 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-# СОП Відділу обслуговування
-Це перелік СОП, яких повинен дотримуватися персонал відділу обслуговування. Як вже зазначалося, це [bold]не контрольні списки[/bold] і їх слід розглядати як керівні принципи.
+# СОП Сервісного Відділу
+Нижче наведено перелік СОП, яких має дотримуватися сервісний персонал. Як і зазначено раніше, це [bold]не чеклісти[/bold], а настанови.
 
-Крім того, ці переліки не обов'язково збігаються один з одним і розділені за посадами, якщо не зазначено інше.
+Крім того, ці записи не обов'язково збігаються між собою й поділені за посадами, якщо не зазначено інакше.
 
-Наступні посади мають записи в цьому відділі, з [color=#1b67a5][bold]Керівником персоналу[/bold][/color] на чолі:
-- [textlink="Керівник персоналу" link="HeadOfPersonnel SOP"]
-- [textlink="Бармен" link="Bartender SOP"]
-- [textlink="Ботанік" link="Botanist SOP"]
-- [textlink="Шеф-кухар" link="Chef SOP"]
-- [textlink="Клоун" link="Clown SOP"]
-- [textlink="Прибиральник" link="Janitor SOP"]
-- [textlink="Бібліотекар" link="Librarian SOP"]
-- [textlink="Мім" link="Mime SOP"]
-- [textlink="Репортер" link="Reporter SOP"]
+Для наступних посад є записи в цьому розділі, а [color=#1b67a5][bold]Голова Персоналу[/bold][/color] є керівником відділу:
+- [textlink="Голова Персоналу" link="HeadOfPersonnelSOP"]
+- [textlink="Бармен" link="BartenderSOP"]
+- [textlink="Ботанік" link="BotanistSOP"]
+- [textlink="Кухар" link="ChefSOP"]
+- [textlink="Клоун" link="ClownSOP"]
+- [textlink="Прибиральник" link="JanitorSOP"]
+- [textlink="Бібліотекар" link="LibrarianSOP"]
+- [textlink="Мім" link="MimeSOP"]
+- [textlink="Репортер" link="ReporterSOP"]
 
 </Document>

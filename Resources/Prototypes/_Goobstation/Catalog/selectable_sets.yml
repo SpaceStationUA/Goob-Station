@@ -504,7 +504,7 @@
   name: selectable-set-security-voidsuit-name
   description: selectable-set-security-voidsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/OuterClothing/Voidsuits/security.rsi
+    sprite: _Pirate/Clothing/OuterClothing/Hardsuits/security.rsi # Pirate edit
     state: icon
   content:
   - ClothingOuterVoidsuitSecurity

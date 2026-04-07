@@ -84,6 +84,10 @@ wanted-list-status-label = [color=darkgray]статус:[/color] {$status ->
         [detained] [color=#b18644]затриманий[/color]
         [paroled] [color=green]умовно-достроково звільнений[/color]
         [discharged] [color=green]звільнений[/color]
+        [search] [color=#33cccc]обшук[/color]
+        [perma] [color=#343434]перма[/color]
+        [dangerous] [color=red]небезпечний[/color]
+        [demote] [color=red]пониження[/color]
         *[other] немає
     }
 wanted-list-history-table-time-col = Час

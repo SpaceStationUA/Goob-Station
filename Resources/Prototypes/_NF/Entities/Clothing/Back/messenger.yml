@@ -196,9 +196,9 @@
   - type: Sprite
     layers:
     - state: icon-base
-      color: "#c99840"
+      color: "#b7793d" # Goob
     - state: icon-base-top
-      color: "#aaaaaa"
+      color: "#494b4e" # Goob
     - state: icon-sling
       color: "#776756"
     - state: icon-clasp
@@ -403,9 +403,9 @@
     - state: icon-base-top
       color: "#4c4b4f"
     - state: icon-sling
-      color: "#234787" # Pirate
+      color: "#435E82" # Pirate bluesec
     - state: icon-clasp
-      color: "#2965A5" # Pirate
+      color: "#435E82" # Pirate bluesec
   - type: Clothing
     clothingVisuals:
       back:
@@ -414,9 +414,9 @@
       - state: base-top-equipped-BACKPACK
         color: "#4c4b4f"
       - state: sling-equipped-BACKPACK
-        color: "#234787" # Pirate
+        color: "#435E82" # Pirate bluesec
       - state: clasp-equipped-BACKPACK
-        color: "#2965A5" # Pirate
+        color: "#435E82" # Pirate bluesec
   - type: Item
     inhandVisuals:
       left:
@@ -443,9 +443,9 @@
   - type: Sprite
     layers:
     - state: icon-base
-      color: "#88242d"
+      color: "#435E82" # Pirate bluesec
     - state: icon-base-top
-      color: "#a52f29"
+      color: "#435E82" # Pirate bluesec
     - state: icon-sling
       color: "#ffffff" # 1f2026
     - state: icon-clasp
@@ -454,27 +454,27 @@
     clothingVisuals:
       back:
       - state: base-equipped-BACKPACK
-        color: "#88242d"
+        color: "#435E82" # Pirate bluesec
       - state: base-top-equipped-BACKPACK
-        color: "#a52f29"
+        color: "#435E82" # Pirate bluesec
       - state: sling-equipped-BACKPACK
-        color: "#1f2026" # ffffff
+        color: "#ffffff" # Pirate bluesec
       - state: clasp-equipped-BACKPACK
         color: "#ffffff"
   - type: Item
     inhandVisuals:
       left:
       - state: base-inhand-left
-        color: "#88242d"
+        color: "#435E82" # Pirate bluesec
       - state: base-top-inhand-left
-        color: "#a52f29"
+        color: "#435E82" # Pirate bluesec
       - state: clasp-inhand-left
         color: "#ffffff"
       right:
       - state: base-inhand-right
-        color: "#88242d"
+        color: "#435E82" # Pirate bluesec
       - state: base-top-inhand-right
-        color: "#a52f29"
+        color: "#435E82" # Pirate bluesec
       - state: clasp-inhand-right
         color: "#ffffff"
 

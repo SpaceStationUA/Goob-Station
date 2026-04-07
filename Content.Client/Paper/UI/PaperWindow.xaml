@@ -35,7 +35,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                 VerticalAlignment="Stretch" VerticalExpand="True" HorizontalExpand="True">
                                 <TextEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
                             </PanelContainer>
-                            <Label Name="FillStatus" StyleClasses="LabelSecondaryColor"/>
+                            <!-- Pirate: paperwork tags (start) -->
+                            <BoxContainer Name="BottomStatusRow" Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Name="FillStatus" StyleClasses="LabelSecondaryColor"/>
+                                <Label Name="MacroHint" StyleClasses="LabelSecondaryColor" HorizontalExpand="True" HorizontalAlignment="Right"/>
+                            </BoxContainer>
+                            <!-- Pirate: paperwork tags (end) -->
                         </BoxContainer>
                         <TextureButton Name="FooterImage" HorizontalAlignment="Center" VerticalAlignment="Top" MouseFilter="Ignore"/>
                     </BoxContainer>

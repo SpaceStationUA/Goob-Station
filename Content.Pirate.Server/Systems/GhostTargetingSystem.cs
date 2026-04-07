@@ -26,6 +26,7 @@ using Content.Shared.Popups;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Examine;
 using Content.Shared.Speech;
+using Content.Shared.Speech.Components;
 using Content.Server.Zombies;
 using Content.Server.Atmos.Components;
 using Content.Server.Speech.Components;
@@ -33,7 +34,7 @@ using Content.Server.Actions;
 using Content.Server._EinsteinEngines.Language;
 using Content.Shared._EinsteinEngines.Language.Components;
 using Content.Goobstation.Shared.Religion;
-using Content.Goobstation.Shared.CrematorImmune;
+using Content.Goobstation.Common.CrematorImmune;
 using Content.Pirate.Shared.Components;
 using Content.Pirate.Shared;
 

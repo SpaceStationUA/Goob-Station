@@ -13,6 +13,7 @@
   text: "/ServerInfo/Guidebook/References.xml"
   children:
   - Chemicals
+  - PirateMagicGuide #Pirate - Гайдбук відьми та алхіміка
   - Drinks
   - FoodRecipes
   - Writing

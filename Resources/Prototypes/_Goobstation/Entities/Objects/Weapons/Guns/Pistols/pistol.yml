@@ -25,6 +25,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "-0.03125, 0.1875"
   - type: Clothing
     sprite: _Goobstation/Objects/Weapons/Guns/Pistols/Dualetta.rsi
   - type: Gun
@@ -38,8 +40,16 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
-  - type: ItemSlots
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
     slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
       gun_magazine:
         name: Magazine
         startingItem: MagazinePistolHighCapacity
@@ -58,6 +68,12 @@
         whitelist:
           tags:
             - CartridgePistol
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
+    containers:
+      flashlight: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: Tag
     tags:
     - WeaponPistolDualetta
@@ -89,6 +105,9 @@
     layers:
     - state: icon
       map: ["enum.GunVisualLayers.Base"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0.09375, 0.125"
+  - type: Appearance
   - type: Clothing
     sprite: _Goobstation/Objects/Weapons/Guns/Pistols/anaconda.rsi
     quickEquip: false
@@ -117,8 +136,20 @@
     - oni-cannot-shoot-guns-2
     - oni-cannot-shoot-guns-3
   - type: AmmoCounter
-  - type: ContainerContainer
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
     containers:
+      flashlight: !type:ContainerSlot
       ballistic-ammo: !type:Container
 
 - type: entity

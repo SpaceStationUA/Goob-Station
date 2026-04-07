@@ -106,7 +106,6 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.RotateStoredItem);
             common.AddFunction(ContentKeyFunctions.SaveItemLocation);
             common.AddFunction(ContentKeyFunctions.Point);
-            common.AddFunction(ContentKeyFunctions.ToggleStanding); // WD EDIT
             common.AddFunction(ContentKeyFunctions.ResistGrab); // Goobstation - Grab Intent
             common.AddFunction(ContentKeyFunctions.ZoomOut);
             common.AddFunction(ContentKeyFunctions.ZoomIn);
@@ -129,6 +128,7 @@ namespace Content.Client.Input
             human.AddFunction(EngineKeyFunctions.MoveLeft);
             human.AddFunction(EngineKeyFunctions.MoveRight);
             human.AddFunction(EngineKeyFunctions.Walk);
+            human.AddFunction(ContentKeyFunctions.ToggleKnockdown);
             human.AddFunction(ContentKeyFunctions.Sprint);
             human.AddFunction(ContentKeyFunctions.SwapHands);
             human.AddFunction(ContentKeyFunctions.SwapHandsReverse);
@@ -156,7 +156,7 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.RotateObjectCounterclockwise);
             human.AddFunction(ContentKeyFunctions.FlipObject);
             human.AddFunction(ContentKeyFunctions.OfferItem); // Pirate - port EE item offesr
-            human.AddFunction(ContentKeyFunctions.ToggleCrawlingUnder); // Pirate - port EE togglable under-table crawling
+            human.AddFunction(ContentKeyFunctions.ToggleCrawlingUnder); // Pirate - togglable under-table crawling
             human.AddFunction(ContentKeyFunctions.ArcadeUp);
             human.AddFunction(ContentKeyFunctions.ArcadeDown);
             human.AddFunction(ContentKeyFunctions.ArcadeLeft);

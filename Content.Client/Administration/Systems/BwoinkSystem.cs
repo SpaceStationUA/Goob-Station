@@ -61,5 +61,17 @@ namespace Content.Client.Administration.Systems
             _lastTypingUpdateSent = (_timing.RealTime, typing);
             RaiseNetworkEvent(new BwoinkClientTypingUpdated(channel, typing));
         }
+
+        //Pirate Changes Start
+        public void NotifyAHelpWindowClosed(NetUserId channelId)
+        {
+            RaiseNetworkEvent(new BwoinkAHelpWindowClosed(channelId));
+        }
+
+        public void SubmitTicketRating(byte rating)
+        {
+            RaiseNetworkEvent(new BwoinkTicketRatingMessage(rating));
+        }
+        //Pirate Changes End
     }
 }

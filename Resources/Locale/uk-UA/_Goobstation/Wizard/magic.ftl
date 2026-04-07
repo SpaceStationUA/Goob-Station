@@ -58,3 +58,5 @@ spell-summon-simians-maxed-out-message = Ваша мавпяча сила дос
 ghosts-summoned-message = Привидів було викликано!
 dimension-shift-message = Виміри зміщуються!
 global-tile-movement-message = Починає грати зловісний ритм!
+
+spell-rathen-gut-popup = У вас немає апендикса, але щось таки мусило постраждати!

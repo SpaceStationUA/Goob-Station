@@ -1,0 +1,195 @@
+- type: species
+  id: Hydrakin
+  name: species-name-hydrakin
+  roundStart: true
+  prototype: MobHydrakin
+  sprites: MobHydrakinSprites
+  markingLimits: MobHydrakinMarkingLimits
+  dollPrototype: MobHydrakinDummy
+  skinColoration: Hues
+  defaultSkinTone: "#ffffff"
+  maleFirstNames: NamesHydrakinUnisex
+  femaleFirstNames: NamesHydrakinUnisex
+  naming: First
+  sexes:
+  - Unsexed
+  - Male
+  - Female
+  # begin Goobstation: port EE height/width sliders
+  minHeight: 0.85
+  defaultHeight: 0.90
+  maxHeight: 1.15
+  minWidth: 0.85
+  defaultWidth: 0.90
+  maxWidth: 1.10
+  # end Goobstation: port EE height/width sliders
+
+- type: markingPoints
+  id: MobHydrakinMarkingLimits
+  points:
+    Hair:
+      points: 0
+      required: false
+    FacialHair:
+      points: 0
+      required: false
+    Snout:
+      points: 0
+      required: false
+    HeadSide:
+      points: 1
+      required: false
+    Head:
+      points: 1
+      required: true
+      defaultMarkings: [ HydrakinEyesDefault]
+    Tail:
+      points: 1
+      required: true
+      defaultMarkings: [ HydrakinTailDefault ]
+    HeadTop:
+      points: 1
+      required: true
+      defaultMarkings: [ HydrakinEarsDefault ]
+    Chest:
+      points: 4
+      required: false
+    Legs:
+      points: 8 # imp 2<8
+      required: false
+    Arms:
+      points: 8 # imp 2<8
+      required: false
+    Overlay:
+      points: 2
+      required: false
+
+- type: speciesBaseSprites
+  id: MobHydrakinSprites
+  sprites:
+    Head: MobHydrakinHead
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
+    Chest: MobHydrakinChest
+    Groin: MobHydrakinGroin
+    #Eyes: MobHydrakinEyes
+    LArm: MobHydrakinLArm
+    RArm: MobHydrakinRArm
+    LHand: MobHydrakinLHand
+    RHand: MobHydrakinRHand
+    LLeg: MobHydrakinLLeg
+    RLeg: MobHydrakinRLeg
+    Tail: MobHumanoidAnyMarking
+    LFoot: MobHydrakinLFoot
+    RFoot: MobHydrakinRFoot
+
+- type: humanoidBaseSprite
+  id: MobHydrakinEyes
+  baseSprite:
+    sprite: Mobs/Customization/eyes.rsi
+    state: eyes
+
+- type: humanoidBaseSprite
+  id: MobHydrakinHead
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobHydrakinHeadMale
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobHydrakinHeadFemale
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobHydrakinChest
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: chest_m
+
+- type: humanoidBaseSprite
+  id: MobHydrakinChestMale
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: chest_m
+
+- type: humanoidBaseSprite
+  id: MobHydrakinChestFemale
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: chest_f
+
+- type: humanoidBaseSprite
+  id: MobHydrakinGroin
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: groin_m
+
+- type: humanoidBaseSprite
+  id: MobHydrakinGroinMale
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: groin_m
+
+- type: humanoidBaseSprite
+  id: MobHydrakinGroinFemale
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: groin_f
+
+- type: humanoidBaseSprite
+  id: MobHydrakinLLeg
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobHydrakinLArm
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobHydrakinLHand
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobHydrakinLFoot
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobHydrakinRLeg
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobHydrakinRArm
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobHydrakinRHand
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobHydrakinRFoot
+  baseSprite:
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+    state: r_foot

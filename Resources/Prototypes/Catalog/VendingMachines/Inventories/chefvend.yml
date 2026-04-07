@@ -108,6 +108,16 @@
     FoodGarlic: 2 #Goobstation
     FoodOnion: 2 #Goobstation
     FoodTomato: 3 #Goobstation
+    CoffeemakerDropTeleporterPirate: 1 # Pirate: coffeemaker
+    CoffeemakerDropTeleporterModelloPirate: 1 # Pirate: coffeemaker
+    CoffeePackPirate: 2 # Pirate: coffeemaker
+    CoffeePackRobustaPirate: 2 # Pirate: coffeemaker
+    CoffeePackStenophyllaPirate: 2 # Pirate: coffeemaker
+    CoffeePackSyntheticPirate: 2 # Pirate: coffeemaker
+    CoffeeCartridgePirate: 2 # Pirate: coffeemaker
+    CoffeeCartridgeDecafPirate: 2 # Pirate: coffeemaker
+    CoffeeCartridgeBootlegPirate: 2 # Pirate: coffeemaker
+    CoffeeCartridgeSyntheticPirate: 2 # Pirate: coffeemaker
   contrabandInventory:
     EggBoxBroken: 1
     FoodBoxDonkpocket: 1

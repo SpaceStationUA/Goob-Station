@@ -97,7 +97,7 @@
   guides: # goobstation
   - Forensics
   - Security
-  - Detective SOP
+  - DetectiveSOP
   goobcoins: 30 #Goob content
   access:
   - Security
@@ -128,6 +128,8 @@
     - ForensicPad
     - ForensicScanner
     - ClothingMaskGasSecurity # Goobstation
+    - PhotoCameraFilled # Pirate: camera
+    - CameraFilm # Pirate: camera
 
 - type: chameleonOutfit
   id: DetectiveChameleonOutfit

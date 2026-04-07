@@ -71,7 +71,7 @@
     speaks:
     - Xeno
 #    - XenoHivemind # Goobstation - collective mind
-    - TauCetiBasic
+#    - TauCetiBasic # Pirate edit
     understands:
     - Xeno
 #    - XenoHivemind # Goobstation - collective mind
@@ -81,6 +81,16 @@
   # - type: GuideHelp
   #   guides:
   #   - XenomorphQueen
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    - Critical
+    damage:
+      types:
+        Heat: -0.5
+      groups:
+        Brute: -0.5
+  # Pirate end
 
 - type: entity
   parent: BaseMobXenomorphQueen

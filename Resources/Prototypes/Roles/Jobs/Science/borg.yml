@@ -39,6 +39,7 @@
     role: JobBorg
     time: 18000  # 5 hrs
   canBeAntag: false
+  whitelisted: true # Pirate
   goobcoins: 40 #Goob content
   weight: 10 # Goob Edit
   icon: JobIconStationAi

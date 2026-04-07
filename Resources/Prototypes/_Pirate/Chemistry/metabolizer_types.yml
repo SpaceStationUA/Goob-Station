@@ -1,3 +1,7 @@
 - type: metabolizerType
   id: Vampiric
   name: metabolizer-type-vampiric
+
+- type: metabolizerType
+  id: Goblin
+  name: metabolizer-type-goblin

@@ -4,6 +4,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Robust.Shared.Maths; // Pirate: port and modified DV traits system
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Traits;
@@ -31,4 +32,13 @@ public sealed partial class TraitCategoryPrototype : IPrototype
     /// </summary>
     [DataField]
     public int? MaxTraitPoints;
+
+    // Pirate start: port and modified DV traits system
+    [DataField] public int? MaxTraits;
+    [DataField] public int? MaxPoints;
+    [DataField] public bool DefaultExpanded = true;
+    [DataField] public Color? AccentColor;
+
+    [DataField] public int Priority = 0;
+    // Pirate end: port and modified DV traits system
 }

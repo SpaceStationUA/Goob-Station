@@ -9,6 +9,8 @@ objectives-player-user-named = [color=White]{$name}[/color] ([color=gray]{$user}
 objectives-player-user = [color=gray]{$user}[/color]
 objectives-player-named = [color=White]{$name}[/color]
 
+# goob
+
 objectives-no-objectives = {$custody}{$title} були {$agent}.
 objectives-with-objectives = {$custody}{$title} були {$agent} і мали наступні завдання:
 

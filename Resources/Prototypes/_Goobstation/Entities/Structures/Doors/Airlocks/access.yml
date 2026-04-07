@@ -145,4 +145,4 @@
   id: AirlockMaintJournalismLocked
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes

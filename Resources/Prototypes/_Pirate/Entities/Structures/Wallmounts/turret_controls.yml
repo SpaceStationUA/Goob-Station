@@ -1,0 +1,31 @@
+- type: entity
+  parent: WeaponEnergyTurretStationControlPanelBase
+  id: WeaponEnergyTurretInterdyneControlPanel
+  suffix: Interdyne
+  components:
+  - type: DeployableTurretController
+    accessGroups:
+    - Interdyne
+    - Syndicate
+    - Silicon
+    - General
+    accessLevels:
+    - Interdyne
+    - InterdyneCommand
+    - InterdyneOfficer
+    - NuclearOperative
+    - SyndicateAgent
+    - BasicSilicon
+    - Borg
+    - Maintenance
+  - type: AccessReader
+    access: [["Interdyne"]]
+  #- type: ContainerFill - Will be added in a later PR
+  #  containers:
+  #    board:
+  #    - WeaponEnergyTurretCommandControlPanelElectronics
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - Interdyne
+    - InterdyneCommand
+    - InterdyneOfficer

@@ -1,0 +1,34 @@
+- type: trait
+  id: PhysicalPotential
+  name: "trait-physical-potential-name"
+  description: "trait-physical-potential-desc"
+  blacklist:
+    components:
+      - BorgChassis
+
+  components:
+    - type: PhysicalPotential
+
+      trainingEffectiveness: 1
+
+      # Damage
+      damageRisingSpeed: 0.02
+      maxDamageBonus: 5
+
+      # Defense
+      defenseRisingSpeed: 0.02
+      maxDefenseBonus: 0.3
+
+      # Stamina
+      staminaRisingSpeed: 0.1
+      maxStamina: 200
+      sprintInterval: 1
+
+      pushUpsEfficiency: 0.5
+
+      timeForRest: 180
+
+      # Strain system
+      strainsApplyingDelay: 0.5
+      hungerCost: 1
+      maxStrainsNumber: 150

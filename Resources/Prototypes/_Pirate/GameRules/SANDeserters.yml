@@ -14,6 +14,7 @@
     eventType: HostilesSpawn
   - type: GameRule
     chaosScore: 200
+    minPlayers: 20
   - type: LoadMapRule
     gridPath: /Maps/_Pirate/Shuttles/ShuttleEvent/SANDropship.yml
 

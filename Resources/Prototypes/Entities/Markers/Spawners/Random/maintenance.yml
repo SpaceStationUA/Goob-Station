@@ -313,6 +313,7 @@
       children:
       - id: Skub
       - id: PonderingOrb
+      - id: PhotoCameraFilled # Pirate: camera
       - id: CluwneHorn
       - id: DrinkMugDog
       - id: CigarGold

@@ -9,56 +9,61 @@
 
 # add any future disability components to \Resources\Prototypes\_Goobstation\Medical\disabilities_lists.yml
 
-- type: trait
-  id: WheelchairBound
-  name: trait-wheelchair-bound-name
-  description: trait-wheelchair-bound-desc
-  category: Disabilities
-  blacklist:
-    components:
-      - BorgChassis
-  components:
-    - type: BuckleOnMapInit
-      prototype: VehicleWheelchair
-    - type: LegsStartParalyzed
-    - type: LegsParalyzed
+# Pirate trait rework
+# - type: trait
+#   id: WheelchairBound
+#   name: trait-wheelchair-bound-name
+#   description: trait-wheelchair-bound-desc
+#   category: Disabilities
+#   blacklist:
+#     components:
+#       - BorgChassis
+#   components:
+#     - type: BuckleOnMapInit
+#       prototype: VehicleWheelchair
+#     - type: LegsStartParalyzed
+#     - type: LegsParalyzed
 
-- type: trait
-  id: ByondYourPrime
-  name: trait-tile-movement-name
-  description: trait-tile-movement-desc
-  category: Disabilities
-  components:
-  - type: TileMovement
+# Pirate trait rework
+# - type: trait
+#   id: ByondYourPrime
+#   name: trait-tile-movement-name
+#   description: trait-tile-movement-desc
+#   category: Meta # Pirate trait rework
+#   components:
+#   - type: TileMovement
 
-- type: trait
-  id: MovementImpaired
-  name: trait-movement-impaired-name
-  description: trait-movement-impaired-desc
-  traitGear: Cane
-  category: Disabilities
-  blacklist:
-    components:
-    - BorgChassis
-  components:
-    - type: MovementImpaired
-      impairedSpeedMultiplier: 0.6
+# Pirate trait rework
+# - type: trait
+#   id: MovementImpaired
+#   name: trait-movement-impaired-name
+#   description: trait-movement-impaired-desc
+#   traitGear: Cane
+#   category: Disabilities
+#   blacklist:
+#     components:
+#     - BorgChassis
+#   components:
+#     - type: MovementImpaired
+#       impairedSpeedMultiplier: 0.6
 
-- type: trait
-  id: SocialAnxietyTrait
-  name: trait-social-anxiety-name
-  description: trait-social-anxiety-disc
-  category: Disabilities
-  components:
-    - type: SocialAnxiety
+# Pirate trait rework
+# - type: trait
+#   id: SocialAnxietyTrait
+#   name: trait-social-anxiety-name
+#   description: trait-social-anxiety-disc
+#   category: Disabilities
+#   components:
+#     - type: SocialAnxiety
 
-- type: trait
-  id: DeafTrait
-  name: trait-deaf-name
-  description: trait-deaf-disc
-  category: Disabilities
-  blacklist:
-    components:
-    - BorgChassis
-  components:
-    - type: Deaf
+# Pirate trait rework
+# - type: trait
+#   id: DeafTrait
+#   name: trait-deaf-name
+#   description: trait-deaf-disc
+#   category: Disabilities
+#   blacklist:
+#     components:
+#     - BorgChassis
+#   components:
+#     - type: Deaf

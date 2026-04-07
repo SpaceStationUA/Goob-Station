@@ -22,6 +22,7 @@
   startingGear: ForensicMantisGear
   icon: "JobIconForensicMantis"
   supervisors: job-supervisors-rd
+  whitelisted: true # Pirate
   goobcoins: 25 #Goob content
   access:
   - Research

@@ -1,0 +1,113 @@
+# SPDX-FileCopyrightText: 2025 sneb
+#
+# SPDX-License-Identifier: MPL-2.0
+
+# TODO: Add descriptions (many)
+# TODO BODY: Part damage
+- type: entity
+  abstract: true
+  parent: BasePart
+  id: PartHydrakinBase
+  name: "частина тіла гідракіна"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+  - type: Icon
+    sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+  - type: BodyPart
+    species: Hydrakin
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseChest ]
+  id: ChestHydrakin
+  name: "hydrakin torso"
+  components:
+    - type: Sprite
+      sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+      state: "chest_m"
+    - type: Icon
+      sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+      state: "chest_m"
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Fat
+          Quantity: 3
+        - ReagentId: AmmoniaBlood
+          Quantity: 10
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseGroin ]
+  id: GroinHydrakin
+  name: "hydrakin groin"
+  components:
+    - type: Sprite
+      sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+      state: "groin_m"
+    - type: Icon
+      sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
+      state: "groin_m"
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Fat
+          Quantity: 3
+        - ReagentId: AmmoniaBlood
+          Quantity: 10
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseHead ]
+  id: HeadHydrakin
+  name: "голова гідракіна"
+  components:
+  - type: Sprite
+    state: "head_m"
+  - type: Icon
+    state: "head_m"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: AmmoniaBlood
+        Quantity: 10
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseLeftArm ]
+  id: LeftArmHydrakin
+  name: "ліва рука гідракіна"
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseRightArm ]
+  id: RightArmHydrakin
+  name: "права рука гідракіна"
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseLeftHand ]
+  id: LeftHandHydrakin
+  name: "ліва кість гідракіна"
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseRightHand ]
+  id: RightHandHydrakin
+  name: "права кість гідракіна"
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseLeftLeg ]
+  id: LeftLegHydrakin
+  name: "ліва нога гідракіна"
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseRightLeg ]
+  id: RightLegHydrakin
+  name: "права нога гідракіна"
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseLeftFoot ]
+  id: LeftFootHydrakin
+  name: "ліва стопа гідракіна"
+
+- type: entity
+  parent: [ PartHydrakinBase, BaseRightFoot ]
+  id: RightFootHydrakin
+  name: "права стопа гідракіна"

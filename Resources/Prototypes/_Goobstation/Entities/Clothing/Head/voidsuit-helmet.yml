@@ -183,9 +183,9 @@
   components:
   - type: BreathMask
   - type: Sprite
-    sprite: _Goobstation/Clothing/Head/Voidsuits/security.rsi
+    sprite: _Pirate/Clothing/Head/Hardsuits/security.rsi # Pirate edit
   - type: Clothing
-    sprite: _Goobstation/Clothing/Head/Voidsuits/security.rsi
+    sprite: _Pirate/Clothing/Head/Hardsuits/security.rsi # Pirate edit
   - type: PointLight
     color: "#a4fef4"
     rotation: 30

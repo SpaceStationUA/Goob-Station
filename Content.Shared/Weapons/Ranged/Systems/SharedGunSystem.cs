@@ -65,6 +65,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared._Shitmed.Weapons.Ranged.Events; // Shitmed Change
+using Content.Shared._Lavaland.Weapons.Ranged.Events; // Pirate: gunplay
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -229,6 +230,9 @@ public abstract partial class SharedGunSystem : EntitySystem
             gun.Target = potentialTarget;
         // Goob edit end
         AttemptShoot(user.Value, ent, gun);
+        // Pirate: gunplay
+        if (msg.Continuous)
+            gun.ShotCounter = 0;
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
@@ -317,11 +321,12 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// <summary>
     /// Attempts to shoot at the target coordinates. Resets the shot counter after every shot.
     /// </summary>
-    public void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates)
+    public void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun, EntityCoordinates toCoordinates, EntityUid? target = null)
     {
         gun.ShootCoordinates = toCoordinates;
         AttemptShoot(user, gunUid, gun);
         gun.ShotCounter = 0;
+        gun.Target = target;
         DirtyField(gunUid, gun, nameof(GunComponent.ShotCounter));
     }
 
@@ -464,7 +469,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (ev.Ammo.Count <= 0)
         {
             // triggers effects on the gun if it's empty
-            var emptyGunShotEvent = new OnEmptyGunShotEvent();
+            var emptyGunShotEvent = new OnEmptyGunShotEvent(user);
             RaiseLocalEvent(gunUid, ref emptyGunShotEvent);
 
             // Goobstation
@@ -521,13 +526,15 @@ public abstract partial class SharedGunSystem : EntitySystem
         var shotBodyEv = new GunShotBodyEvent(gunUid, gun); // Shitmed Change
         RaiseLocalEvent(user, shotBodyEv); // Shitmed Change
 
-        if (userImpulse && TryComp<PhysicsComponent>(user, out var userPhysics))
-        {
-            if (_gravity.IsWeightless(user, userPhysics))
-                CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
-        }
+        if (!userImpulse || !TryComp<PhysicsComponent>(user, out var userPhysics))
+            return;
 
-        //Dirty(gunUid, gun);
+        var shooterEv = new ShooterImpulseEvent();
+        RaiseLocalEvent(user, ref shooterEv);
+
+        if (shooterEv.Push || _gravity.IsWeightless(user, userPhysics))
+            CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
+
         UpdateAmmoCount(gunUid); //GoobStation - Multishot
     }
 
@@ -571,9 +578,31 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (shooter != null)
             Projectiles.SetShooter(uid, projectile, shooter.Value);
 
-        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle() + projectile.Angle);
+        // Pirate: gunplay
+        Physics.UpdateIsPredicted(uid, physics);
+
+        // Pirate: gunplay (fix projectile rotation on fire, it had 0 angle(south) regardless of gun target)
+        TransformSystem.SetWorldRotationNoLerp((uid, Transform(uid)), direction.ToWorldAngle() + projectile.Angle);
         if (targetCoordinates.HasValue) // Goobstation
             projectile.TargetCoordinates = targetCoordinates.Value; // Goobstation
+
+        #region Pirate: gunplay
+        if (user is { } userUid)
+        {
+            var ev = new Content.Shared._Pirate.Projectiles.PlayerShotProjectileEvent(uid, userUid);
+            RaiseLocalEvent(ref ev);
+        }
+
+        // Pirate: gunplay
+        if (gunUid is { } gun)
+        {
+            var shotEv = new ProjectileShotEvent
+            {
+                FiredProjectile = uid,
+            };
+            RaiseLocalEvent(gun, shotEv);
+        }
+        #endregion
     }
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
@@ -825,6 +854,16 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 /// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
+
+/// <summary>
+/// Raised on an entity after firing a gun to see if any components or systems would allow this entity to be pushed
+/// by the gun they're firing. If true, GunSystem will create an impulse on our entity.
+/// </summary>
+[ByRefEvent]
+public record struct ShooterImpulseEvent()
+{
+    public bool Push;
+};
 
 public enum EffectLayers : byte
 {

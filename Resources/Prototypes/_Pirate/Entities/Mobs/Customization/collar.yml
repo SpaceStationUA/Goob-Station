@@ -2,7 +2,7 @@
   id: PirateCollarBasic
   bodyPart: Tail #(костиль)
   markingCategory: Face
-  speciesRestriction: [Vulpkanin, Human, Felinid, Tajaran]
+  speciesRestriction: [SlimePerson, Oni, Harpy, Lamia, Vulpkanin, Human, Felinid, Tajaran, Dwarf, Arachnid, Rodentia, Feroxi, Yowie]
   sprites:
   - sprite: _Pirate/Mobs/Customization/collar.rsi
     state: collar
@@ -12,7 +12,7 @@
   id: PirateCollarBasicBell
   bodyPart: Tail
   markingCategory: Face
-  speciesRestriction: [Vulpkanin, Human, Felinid, Tajaran]
+  speciesRestriction: [SlimePerson, Oni, Harpy, Lamia, Vulpkanin, Human, Felinid, Tajaran, Dwarf, Arachnid, Rodentia, Feroxi, Yowie]
   sprites:
   - sprite: _Pirate/Mobs/Customization/collar.rsi
     state: collar
@@ -24,7 +24,7 @@
   id: PirateCollarBasicLittleBell
   bodyPart: Tail
   markingCategory: Face
-  speciesRestriction: [Vulpkanin, Human, Felinid, Tajaran]
+  speciesRestriction: [SlimePerson, Oni, Harpy, Lamia, Vulpkanin, Human, Felinid, Tajaran, Dwarf, Arachnid, Rodentia, Feroxi, Yowie]
   sprites:
   - sprite: _Pirate/Mobs/Customization/collar.rsi
     state: collar

@@ -1,0 +1,4 @@
+- type: damageModifierSet
+  id: AntiMagicWardProtection
+  coefficients:
+    Holy: 0.35

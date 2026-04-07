@@ -11,3 +11,30 @@
   - type: Sprite
     sprite: _Pirate/Objects/Misc/stamps.rsi
     state: stamp-admin-assistant
+
+- type: entity
+  name: Печатка офіцера Інтердайну
+  parent: RubberStampBase
+  id: RubberStampOfficerInterdyne
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-interdyne-officer
+    stampedColor: "#174111"
+    stampState: "paper_stamp-interdyne"
+  - type: Sprite
+    state: stamp-syndicate
+
+- type: entity
+  name: Печатка Замістника Офіцера Інтердайну
+  parent: RubberStampBase
+  id: RubberStampDeputyInterdyne
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-interdyne-deputy
+    stampedColor: "#174111"
+    stampState: "paper_stamp-interdyne"
+  - type: Sprite
+    state: stamp-syndicate
+    

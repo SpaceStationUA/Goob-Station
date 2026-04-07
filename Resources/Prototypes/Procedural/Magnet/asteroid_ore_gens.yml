@@ -16,6 +16,7 @@
     OreGold: 0.25
     OreSilver: 0.25
     OrePlasma: 0.20
+    OreTitanium: 0.20 # Pirate
     OreUranium: 0.20
     OreArtifactFragment: 0.10
     OreBananium: 0.10

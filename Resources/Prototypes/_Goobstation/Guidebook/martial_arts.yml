@@ -4,6 +4,7 @@
   text: "/ServerInfo/_Goobstation/Guidebook/MartialArts/MartialArts.xml"
   children:
   - CQC
+  - LegendaryCQC #Pirate changes
   - SleepingCarp
   - KravMaga
   - CorporateJudo

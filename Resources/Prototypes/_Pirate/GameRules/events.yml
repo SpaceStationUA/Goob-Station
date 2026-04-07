@@ -89,3 +89,23 @@
   - type: Tag
     tags:
       - MidroundAntag
+
+- type: entity
+  id: RandomVirus
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    minimumPlayers: 20
+    weight: 4
+    duration: 1
+    chaos:
+      Medical: 25
+    eventType: Neutral
+  - type: GameRule
+    chaosScore: 40
+  - type: RandomVirusRule
+    targetFraction: 0.15 # Pirate - infect 15% of eligible crew, rounded up
+    diseaseComplexityMin: 20 # Pirate - roll normal virus complexity from 20 to 40
+    diseaseComplexityMax: 40 # Pirate - roll normal virus complexity from 20 to 40
+    pandemicChance: 0.05 # Pirate - rare MobMousePandemic-style roll

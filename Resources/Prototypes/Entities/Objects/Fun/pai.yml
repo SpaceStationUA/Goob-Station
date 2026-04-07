@@ -178,6 +178,7 @@
     defaultChannel: Binary
     channels:
     - Binary
+  - type: IntellicardableMind # Goobstation - intellicard on more AIs
   - type: DoAfter
   - type: Actions
   - type: Store
@@ -231,7 +232,7 @@
     - SiikMaas
     - RobotTalk
     - DroneTalk
-    - Marish
+    #- Marish Pirate
     - Elyran
     - Freespeak
     - Tradeband
@@ -251,7 +252,7 @@
     - SiikMaas
     - RobotTalk
     - DroneTalk
-    - Marish
+    #- Marish Pirate
     - Elyran
     - Freespeak
     - Tradeband

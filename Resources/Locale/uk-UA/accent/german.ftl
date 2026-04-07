@@ -1,6 +1,6 @@
 accent-german-words-1 = так
 accent-german-words-1-2 = ага
-accent-german-words-replace-1 = я
+accent-german-words-replace-1 = йа
 
 accent-german-words-2 = ні
 accent-german-words-replace-2 = найн
@@ -44,7 +44,7 @@ accent-german-words-14 = мій
 accent-german-words-replace-14 = майн
 
 accent-german-words-15 = тут
-accent-german-words-replace-15 = хієр
+accent-german-words-replace-15 = хі-а
 
 accent-german-words-16 = ідіот
 accent-german-words-replace-16 = думкопф
@@ -77,7 +77,7 @@ accent-german-words-25 = миша
 accent-german-words-replace-25 = маус
 
 accent-german-words-26 = що
-accent-german-words-replace-26 = ват
+accent-german-words-replace-26 = вас
 
 accent-german-words-27 = дякую
 accent-german-words-replace-27 = данкешен
@@ -105,7 +105,7 @@ accent-german-words-34 = рюкзак
 accent-german-words-replace-34 = рюкзак
 
 accent-german-words-35 = ліки
-accent-german-words-replace-35 = медицин
+accent-german-words-replace-35 = медіцин
 
 accent-german-words-36 = акцент
 accent-german-words-replace-36 = акцент
@@ -197,3 +197,6 @@ accent-german-words-replace-61 = кугельбліц
 
 accent-german-words-62 = авто
 accent-german-words-replace-62 = ауто
+
+accent-german-words-63 = так точно
+accent-german-words-replace-63 = генау

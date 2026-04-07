@@ -1,0 +1,10 @@
+- type: cargoProduct
+  id: MaterialPlastitanium
+  icon:
+    sprite: Objects/Materials/Sheets/metal.rsi
+    state: plastitanium_3
+  product: CrateMaterialPlastitanium
+  cost: 8000
+  category: cargoproduct-category-name-materials
+  group: market
+  

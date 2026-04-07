@@ -1,3 +1,3 @@
 
-action-name-screen-saver = Change Screen
-action-description-screen-saver = Change screen display
+ent-ActionScreenSaver = Change Screen
+    .desc = Change screen display

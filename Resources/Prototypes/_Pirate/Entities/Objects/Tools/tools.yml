@@ -1,0 +1,15 @@
+- type: entity
+  name: Індустріальний RCD Інтердайну
+  parent: [ RCD, BaseInterdyneContraband ]
+  id: RCDInterdyne
+  description: RCD виготовлений Cybersun, товарний знак поміняний на знак Інтердайну
+  components:
+  - type: LimitedCharges
+    maxCharges: 100
+  - type: AutoRecharge
+    rechargeDuration: 5
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/rcd_dark.rsi
+    state: icon
+  - type: Item
+    sprite: _Pirate/Objects/Tools/rcd_dark.rsi

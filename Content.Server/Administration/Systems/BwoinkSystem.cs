@@ -226,9 +226,18 @@ namespace Content.Server.Administration.Systems
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _activeConversations.Clear());
+            //Pirate Changes Start
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(_ =>
+            {
+                _activeConversations.Clear();
 
-        	_rateLimit.Register(
+                OnPirateRoundRestartCleanup();
+            });
+
+            PirateInitialize();
+            //Pirate Changes End
+
+            _rateLimit.Register(
                 RateLimitKey,
                 new RateLimitRegistration(CCVars.AhelpRateLimitPeriod,
                     CCVars.AhelpRateLimitCount,
@@ -277,6 +286,9 @@ namespace Content.Server.Administration.Systems
 
         private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
+            // #Pirate Changes
+            PirateOnPlayerStatusChanged(e);
+
             if (e.NewStatus == SessionStatus.Disconnected)
             {
                 if (_activeConversations.TryGetValue(e.Session.UserId, out var lastMessageTime))
@@ -806,6 +818,9 @@ namespace Content.Server.Administration.Systems
         private void OnBwoinkInternal(BwoinkParams bwoinkParams)
         {
             _activeConversations[bwoinkParams.Message.UserId] = DateTime.Now;
+
+            // #Pirate Changes
+            PirateOnBwoinkInternal(bwoinkParams);
 
             var escapedText = FormattedMessage.EscapeText(bwoinkParams.Message.Text);
             var adminColor = _config.GetCVar(GoobCVars.AdminBwoinkColor);

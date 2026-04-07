@@ -1,6 +1,6 @@
 using Content.Shared.Mobs.Components;
 using Content.Shared.Timing;
-using Content.Server.Explosion.EntitySystems; // Why is trigger under explosions by the way? Even doors already use it.
+using Content.Shared.Trigger;
 using Content.Server.Electrocution;
 using Robust.Shared.Containers;
 
@@ -36,4 +36,3 @@ public sealed partial class ShockCollarSystem : EntitySystem
         _electrocutionSystem.TryDoElectrocution(containerEnt, null, component.ShockDamage, component.ShockTime, true, ignoreInsulation: true);
     }
 }
-

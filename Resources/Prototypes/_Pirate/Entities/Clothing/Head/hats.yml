@@ -70,3 +70,14 @@
     sprite: _Pirate/Clothing/Head/Hats/officer_interdyne_white.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Head/Hats/officer_interdyne_white.rsi
+
+- type: entity
+  parent: ClothingHeadHatBeretSecurity
+  id: ClothingHeadHatBeretSecurityOfficer
+  name: "берет офіцера служби безпеки"
+  description: "Берет із знаками розрізнення служби безпеки. Для офіцерів, які більше схильні до стилю, ніж до безпеки."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Hats/beret_security_officer.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Hats/beret_security_officer.rsi

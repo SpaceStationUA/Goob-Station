@@ -1,3 +1,16 @@
+## Command - Командування
+# Captain - Капітан
+
+selectable-set-captain-sabre-name = Капітанська шабля
+selectable-set-captain-sabre-description = Стандартна, сучасного дизайну шабля. 
+
+selectable-set-captain-sabre-heavy-name = Важка шабля
+selectable-set-captain-sabre-heavy-description = Важка та товста що не дає їй змоги різати, але має чудову пробивну силу, що пробиває навіть самі товсті скафандри ваших ворогів.
+
+selectable-set-captain-sabre-shashka-name = Шашка
+selectable-set-captain-sabre-shashka-description = Легка швидка та гостра, але має погане пробиття.
+
+
 # Thief
 
 selectable-set-thief-anatomy-name = Набір «Анатомія»

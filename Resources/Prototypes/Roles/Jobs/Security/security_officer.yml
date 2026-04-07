@@ -91,7 +91,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 #10 hrs
+      time: 36000 #10 hrs # Pirate
     - !type:TraitsRequirement # Pirate
       inverted: true
       traits:
@@ -116,10 +116,10 @@
   canBeAntag: false
   guides: # goobstation
   - Security
-  - Legal SOP
-  - OfficerCadet SOP
+  - LegalSOP
+  - OfficerCadetSOP
   - CorporateJudo
-  - Alert Levels
+  - AlertLevels
   goobcoins: 30 #Goob content
   access:
   - Security

@@ -1,0 +1,49 @@
+- type: randomHumanoidSettings
+  id: EventWitchBrewer
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: Відьма-варильниця
+      description: Носійка ритуального казана, настоїв і мороку. Користуйся своїм ремеслом тонко й обережно.
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ WitchEventBrewerGear ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: entity
+  id: RandomHumanoidEventWitchBrewerSpawner
+  name: гостьова роль привида відьми
+  suffix: Pirate
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: chaplain
+    - type: RandomHumanoidSpawner
+      settings: EventWitchBrewer
+
+- type: randomHumanoidSettings
+  id: EventAlchemistBrewer
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: Алхімік-варильник
+      description: Дистилятор нестійких сумішей, еліксирів і трансмутацій. Працюй точно, бо помилки тут дорогі.
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ AlchemistEventBrewerGear ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: entity
+  id: RandomHumanoidEventAlchemistBrewerSpawner
+  name: гостьова роль привида алхіміка
+  suffix: Pirate
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: chemist
+    - type: RandomHumanoidSpawner
+      settings: EventAlchemistBrewer

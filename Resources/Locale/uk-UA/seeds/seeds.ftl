@@ -142,3 +142,6 @@ seeds-blue-pumpkin-name = синій гарбуз
 seeds-blue-pumpkin-display-name = синій гарбуз
 seeds-anomaly-berry-name = аномальна ягода
 seeds-anomaly-berry-display-name = аномальні ягоди
+
+seeds-bloonion-name = блуніон
+seeds-bloonion-display-name = цибулини блуніону

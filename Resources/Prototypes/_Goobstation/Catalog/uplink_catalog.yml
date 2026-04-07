@@ -443,7 +443,7 @@
   icon: { sprite: /Textures/_Goobstation/Objects/Weapons/Guns/Shotguns/magshot.rsi, state: icon }
   productEntity: WeaponShotgunHeavy
   cost:
-    Telecrystal: 200
+    Telecrystal: 175
   categories:
   - UplinkWeaponry
   conditions:
@@ -670,6 +670,23 @@
       tags:
       - ContractorUplink
 
+
+- type: listing
+  id: UplinkClothingHandsGlovesGuerrilla
+  name: uplink-guerrilla-gloves-name
+  description: uplink-guerrilla-gloves-desc
+  icon: { sprite: /Textures/_Goobstation/Clothing/Hands/Gloves/guerrilla.rsi, state: icon }
+  productEntity: ClothingHandsGlovesGuerrilla
+  cost:
+    Telecrystal: 30
+  categories:
+  - UplinkWearables
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+
 - type: listing
   id: UplinkClothingHandsGlovesGuerrillaNukeops
   name: uplink-guerrilla-gloves-name
@@ -677,7 +694,7 @@
   icon: { sprite: /Textures/_Goobstation/Clothing/Hands/Gloves/guerrilla.rsi, state: icon }
   productEntity: ClothingHandsGlovesGuerrilla
   cost:
-    Telecrystal: 60
+    Telecrystal: 60 #double the price
   categories:
   - UplinkWearables
   conditions:
@@ -867,6 +884,7 @@
   - !type:BuyerJobCondition
     whitelist:
     - SalvageSpecialist
+    - ShaftMiner
 
 - type: listing
   id: UplinkGreyTide
@@ -1360,7 +1378,7 @@
   icon: { sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/heavy_shotgun.rsi, state: icon }
   productEntity: MagazineShotgunHeavy
   cost:
-    Telecrystal: 30
+    Telecrystal: 20
   categories:
   - UplinkAmmo
   conditions:
@@ -1376,7 +1394,7 @@
   icon: { sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/heavy_shotgun.rsi, state: icon2 }
   productEntity: MagazineShotgunHeavySlug
   cost:
-    Telecrystal: 40
+    Telecrystal: 25
   categories:
   - UplinkAmmo
   conditions:
@@ -1786,6 +1804,13 @@
   - !type:BuyerSpeciesCondition
     whitelist:
     - Human
+  # Pirate start
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - ContractorUplink
+      - NukeOpsUplink
+  # Pirate end
 
 - type: listing
   id: UplinkUndeterminedBundle

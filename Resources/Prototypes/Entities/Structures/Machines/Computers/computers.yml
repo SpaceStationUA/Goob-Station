@@ -676,6 +676,8 @@
     color: "#1f8c28"
   - type: Computer
     board: StationRecordsComputerCircuitboard
+  - type: AccessReader # Pirate: records photos
+    access: [["Security"]] # Pirate: records photos
   - type: GuideHelp
     guides:
     - Forensics
@@ -920,6 +922,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
   - type: DeviceNetwork
+    deviceNetId: Wireless    
     transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key

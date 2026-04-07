@@ -110,7 +110,7 @@
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - type: Sprite
-      sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
+      sprite: _Pirate/Structures/Doors/Airlocks/Standard/firelock.rsi # Pirate Changes
       snapCardinals: true
       layers:
         - state: closed
@@ -249,7 +249,7 @@
   components:
     - type: StationAiWhitelist
     - type: Sprite
-      sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
+      sprite: _Pirate/Structures/Doors/Airlocks/Glass/firelock.rsi # Pirate Changes
     - type: Occluder
       enabled: false
     - type: Fixtures

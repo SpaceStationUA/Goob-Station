@@ -153,6 +153,8 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Collections.Generic; // Pirate: cameras (photo persistence)
+using Content.Shared._Pirate.Photo; // Pirate: cameras (photo persistence)
 
 namespace Content.Server.Database
 {
@@ -2318,6 +2320,385 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .ToDictionaryAsync(x => x.OptionId, x => x.Count, cancel);
         }
 
+        #endregion
+
+        #region Pirate Admin Ratings
+
+        // #Pirate Changes
+        public async Task<List<PirateAdminHelpRating>> GetPirateAdminHelpRatingsAsync(CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.PirateAdminHelpRatings
+                .AsNoTracking()
+                .ToListAsync(cancel);
+        }
+
+        // #Pirate Changes
+        public async Task UpsertPirateAdminHelpRatingAsync(
+            string adminKey,
+            string adminName,
+            NetUserId playerId,
+            byte rating,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var entity = await db.DbContext.PirateAdminHelpRatings
+                .SingleOrDefaultAsync(
+                    r => r.AdminKey == adminKey && r.PlayerUserId == playerId.UserId,
+                    cancel);
+
+            if (entity == null)
+            {
+                entity = new PirateAdminHelpRating
+                {
+                    AdminKey = adminKey,
+                    AdminName = adminName,
+                    PlayerUserId = playerId.UserId,
+                    Rating = rating,
+                    UpdatedAt = DateTime.UtcNow
+                };
+
+                db.DbContext.PirateAdminHelpRatings.Add(entity);
+            }
+            else
+            {
+                entity.AdminName = adminName;
+                entity.Rating = rating;
+                entity.UpdatedAt = DateTime.UtcNow;
+            }
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        #endregion
+
+        #region Pirate: cameras (photo persistence)
+        public async Task<int?> GetCharacterProfileIdAsync(NetUserId userId, int slot, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.Profile
+                .Where(profile => profile.Preference.UserId == userId.UserId && profile.Slot == slot)
+                .Select(profile => (int?) profile.Id)
+                .SingleOrDefaultAsync(cancel);
+        }
+
+        public async Task<PersistentPhotoAlbumSnapshot?> GetPersistentPhotoAlbumSnapshotAsync(
+            string ownerKind,
+            int? profileId,
+            string? ownerId,
+            string albumKey,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var albums = db.DbContext.PersistentPhotoAlbums
+                .Include(entry => entry.Photos)
+                .Where(entry => entry.OwnerKind == ownerKind &&
+                                entry.AlbumKey == albumKey);
+
+            PersistentPhotoAlbum? album;
+            if (profileId != null)
+            {
+                album = await albums.SingleOrDefaultAsync(entry => entry.ProfileId == profileId, cancel);
+            }
+            else
+            {
+                album = await albums.SingleOrDefaultAsync(
+                    entry => entry.ProfileId == null && entry.OwnerId == ownerId,
+                    cancel);
+            }
+
+            if (album == null)
+                return null;
+
+            var photos = new List<PersistentPhotoData>(album.Photos.Count);
+            foreach (var photo in album.Photos.OrderBy(entry => entry.SortOrder))
+            {
+                photos.Add(new PersistentPhotoData
+                {
+                    ImageData = [.. photo.ImageData],
+                    PreviewData = photo.PreviewData is { Length: > 0 } preview ? [.. preview] : null,
+                    CustomName = photo.CustomName,
+                    CustomDescription = photo.CustomDescription,
+                    Caption = photo.Caption,
+                    BaseDescription = TruncatePersistentPhotoBaseDescription(photo.BaseDescription),
+                    CaptureData = DeserializeCaptureData(photo.CaptureDataJson),
+                    CreatedAt = NormalizeDatabaseTime(photo.CreatedAt),
+                    UpdatedAt = NormalizeDatabaseTime(photo.UpdatedAt)
+                });
+            }
+
+            return new PersistentPhotoAlbumSnapshot
+            {
+                OwnerKind = album.OwnerKind,
+                ProfileId = album.ProfileId,
+                OwnerId = album.OwnerId,
+                AlbumKey = album.AlbumKey,
+                IsPublic = album.IsPublic,
+                SavedAt = NormalizeDatabaseTime(album.SavedAt),
+                Photos = photos
+            };
+        }
+
+        public async Task UpsertPersistentPhotoAlbumSnapshotAsync(
+            string ownerKind,
+            int? profileId,
+            string? ownerId,
+            string albumKey,
+            bool isPublic,
+            IReadOnlyCollection<PersistentPhotoData> photos,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var albums = db.DbContext.PersistentPhotoAlbums
+                .Include(entry => entry.Photos)
+                .Where(entry => entry.OwnerKind == ownerKind &&
+                                entry.AlbumKey == albumKey);
+
+            PersistentPhotoAlbum? album;
+            if (profileId != null)
+            {
+                album = await albums.SingleOrDefaultAsync(entry => entry.ProfileId == profileId, cancel);
+            }
+            else
+            {
+                album = await albums.SingleOrDefaultAsync(
+                    entry => entry.ProfileId == null && entry.OwnerId == ownerId,
+                    cancel);
+            }
+
+            if (album == null)
+            {
+                album = new PersistentPhotoAlbum
+                {
+                    OwnerKind = ownerKind,
+                    ProfileId = profileId,
+                    OwnerId = profileId == null ? ownerId : null,
+                    AlbumKey = albumKey
+                };
+                db.DbContext.PersistentPhotoAlbums.Add(album);
+            }
+            else if (album.Photos.Count > 0)
+            {
+                db.DbContext.PersistentPhotoAlbumPhotos.RemoveRange(album.Photos);
+                album.Photos.Clear();
+            }
+
+            album.SavedAt = DateTime.UtcNow;
+            album.IsPublic = isPublic;
+            album.ProfileId = profileId;
+            album.OwnerId = profileId == null ? ownerId : null;
+
+            var sortOrder = 0;
+            foreach (var photo in photos)
+            {
+                album.Photos.Add(new PersistentPhotoAlbumPhoto
+                {
+                    SortOrder = sortOrder++,
+                    ImageData = [.. photo.ImageData],
+                    PreviewData = photo.PreviewData is { Length: > 0 } preview ? [.. preview] : null,
+                    CustomName = TruncatePersistentPhotoCustomName(photo.CustomName),
+                    CustomDescription = TruncatePersistentPhotoCustomDescription(photo.CustomDescription),
+                    Caption = TruncatePersistentPhotoCaption(photo.Caption),
+                    BaseDescription = TruncatePersistentPhotoBaseDescription(photo.BaseDescription),
+                    CaptureDataJson = SerializeCaptureData(photo.CaptureData),
+                    CreatedAt = photo.CreatedAt,
+                    UpdatedAt = photo.UpdatedAt
+                });
+            }
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        private static string? SerializeCaptureData(PhotoCaptureData? data)
+        {
+            const int captureDataJsonMaxLength = 10000;
+
+            if (data == null)
+                return null;
+
+            var sanitized = SanitizeCaptureData(data);
+            var json = JsonSerializer.Serialize(sanitized);
+            if (json.Length <= captureDataJsonMaxLength)
+                return json;
+
+            return TrimSerializedCaptureDataToFit(sanitized);
+        }
+
+        private static string? TruncatePersistentPhotoBaseDescription(string? value)
+        {
+            const int baseDescriptionMaxLength = 2000;
+            return TruncatePersistentPhotoText(value, baseDescriptionMaxLength);
+        }
+
+        private static string? TruncatePersistentPhotoCustomName(string? value)
+        {
+            const int customNameMaxLength = 32;
+            return TruncatePersistentPhotoText(value, customNameMaxLength);
+        }
+
+        private static string? TruncatePersistentPhotoCustomDescription(string? value)
+        {
+            const int customDescriptionMaxLength = 128;
+            return TruncatePersistentPhotoText(value, customDescriptionMaxLength);
+        }
+
+        private static string? TruncatePersistentPhotoCaption(string? value)
+        {
+            const int captionMaxLength = 256;
+            return TruncatePersistentPhotoText(value, captionMaxLength);
+        }
+
+        private static string? TruncatePersistentPhotoText(string? value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value) || value.Length <= maxLength)
+                return value;
+
+            return value[..maxLength];
+        }
+
+        private static PhotoCaptureData? DeserializeCaptureData(string? json)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+                return null;
+
+            try
+            {
+                return JsonSerializer.Deserialize<PhotoCaptureData>(json);
+            }
+            catch (JsonException)
+            {
+                return null;
+            }
+        }
+
+        private static PhotoCaptureData SanitizeCaptureData(PhotoCaptureData data)
+        {
+            const int captureSubjectsMaxCount = 32;
+            const int captureRecognizedNamesMaxCount = 32;
+            const int captureHeldItemsMaxCount = 8;
+            const int captureDisplayNameMaxLength = 128;
+            const int captureGenderKeyMaxLength = 32;
+            const int captureHeldItemMaxLength = 64;
+            const int captureRecognizedNameMaxLength = 128;
+
+            var subjects = new List<PhotoCapturedSubjectData>(
+                Math.Min(data.Subjects.Count, captureSubjectsMaxCount));
+            for (var i = 0; i < data.Subjects.Count && i < captureSubjectsMaxCount; i++)
+            {
+                var subject = data.Subjects[i];
+                var heldItems = new List<string>(
+                    Math.Min(subject.HeldItems.Count, captureHeldItemsMaxCount));
+
+                for (var j = 0; j < subject.HeldItems.Count && j < captureHeldItemsMaxCount; j++)
+                {
+                    heldItems.Add(
+                        TruncatePersistentPhotoText(
+                            subject.HeldItems[j],
+                            captureHeldItemMaxLength) ?? string.Empty);
+                }
+
+                subjects.Add(new PhotoCapturedSubjectData(
+                    TruncatePersistentPhotoText(
+                        subject.DisplayName,
+                        captureDisplayNameMaxLength) ?? string.Empty,
+                    subject.State,
+                    TruncatePersistentPhotoText(
+                        subject.GenderKey,
+                        captureGenderKeyMaxLength) ?? string.Empty,
+                    heldItems,
+                    subject.IsHumanoid));
+            }
+
+            var recognizedNames = new List<string>(
+                Math.Min(data.RecognizedNames.Count, captureRecognizedNamesMaxCount));
+            for (var i = 0; i < data.RecognizedNames.Count && i < captureRecognizedNamesMaxCount; i++)
+            {
+                recognizedNames.Add(
+                    TruncatePersistentPhotoText(
+                        data.RecognizedNames[i],
+                        captureRecognizedNameMaxLength) ?? string.Empty);
+            }
+
+            return new PhotoCaptureData(
+                data.AreaWidth,
+                data.AreaHeight,
+                subjects,
+                recognizedNames);
+        }
+
+        private static string TrimSerializedCaptureDataToFit(PhotoCaptureData data)
+        {
+            const int captureDataJsonMaxLength = 10000;
+            var subjects = new List<PhotoCapturedSubjectData>(data.Subjects.Count);
+            foreach (var subject in data.Subjects)
+            {
+                subjects.Add(new PhotoCapturedSubjectData(
+                    subject.DisplayName,
+                    subject.State,
+                    subject.GenderKey,
+                    new List<string>(subject.HeldItems),
+                    subject.IsHumanoid));
+            }
+
+            var recognizedNames = new List<string>(data.RecognizedNames);
+
+            while (true)
+            {
+                var candidate = new PhotoCaptureData(
+                    data.AreaWidth,
+                    data.AreaHeight,
+                    subjects,
+                    recognizedNames);
+
+                var json = JsonSerializer.Serialize(candidate);
+                if (json.Length <= captureDataJsonMaxLength)
+                    return json;
+
+                if (recognizedNames.Count > 0)
+                {
+                    recognizedNames.RemoveAt(recognizedNames.Count - 1);
+                    continue;
+                }
+
+                var removedHeldItem = false;
+                for (var i = subjects.Count - 1; i >= 0; i--)
+                {
+                    if (subjects[i].HeldItems.Count == 0)
+                        continue;
+
+                    var heldItems = new List<string>(subjects[i].HeldItems);
+                    heldItems.RemoveAt(heldItems.Count - 1);
+                    subjects[i] = new PhotoCapturedSubjectData(
+                        subjects[i].DisplayName,
+                        subjects[i].State,
+                        subjects[i].GenderKey,
+                        heldItems,
+                        subjects[i].IsHumanoid);
+                    removedHeldItem = true;
+                    break;
+                }
+
+                if (removedHeldItem)
+                    continue;
+
+                if (subjects.Count > 0)
+                {
+                    subjects.RemoveAt(subjects.Count - 1);
+                    continue;
+                }
+
+                return JsonSerializer.Serialize(new PhotoCaptureData(
+                    data.AreaWidth,
+                    data.AreaHeight,
+                    new List<PhotoCapturedSubjectData>(),
+                    new List<string>()));
+            }
+        }
         #endregion
 
         public abstract Task SendNotification(DatabaseNotification notification);

@@ -1,3 +1,31 @@
+## Різне
+- type: loadoutGroup
+  id: PirateTrinkets
+  name: loadout-group-trinkets
+  loadouts:
+  - TrinketsClothingHeadPaperSack
+  - TrinketsPhotoAlbum
+  - TrinketsPhotoCameraFilled
+  subgroups:
+  - PiratePlushies
+
+- type: loadoutGroup
+  id: PiratePlushies
+  name: loadout-group-trinkets
+  loadouts:
+  - PlushieVulpSusie
+  - PlushieEntony
+  - PlushieIpcCat
+  - PlushieTK
+  - PlushieKateryna
+  - PlushieNicholasGray
+  - PlushieOlia
+  - PlushieSkeleton
+  - PlushieTayler
+  - PlushiePocketAssistant
+
+
+
 ## Command - Командування
 # Адміністративний асистент
 - type: loadoutGroup
@@ -329,7 +357,7 @@
 
 
 
-## Security - Охорона
+## Security - Служба Безпеки
 # Кадет
 - type: loadoutGroup
   id: SecurityCadetOuterClothing
@@ -337,25 +365,38 @@
   loadouts:
   - ArmorCadet
 
+# Офіцер
+- type: loadoutGroup
+  id: SecurityOfficerHead
+  name: loadout-group-security-officer-head
+  loadouts:
+  - SecurityHelmetAlt
+  - SecurityHelmetLight
+  - SecurityOfficerBeret
+  - SecurityOfficerSoft
+
+# Бригмедик
+- type: loadoutGroup
+  id: BrigmedicGloves
+  name: loadout-group-brigmedic-gloves
+  loadouts:
+  - CombatNitrileGloves
+
 # Зброя
 - type: loadoutGroup
   id: SecurityWeapon
   name: loadout-group-security-weapon
   loadouts:
   - LoadoutSecurityWeaponMk58
-  - LoadoutSecurityRevolverInspector
   - LoadoutSecurityEnergyGunPistol
 
 - type: loadoutGroup
   id: SeniorSecurityWeapon
   name: loadout-group-senior-security-weapon
   loadouts:
-  - LoadoutSecurityWeaponMk58
-  - LoadoutSecurityRevolverInspector
-  - LoadoutSecurityPistolN1984
-  - LoadoutSecurityEnergyGunPistol
-  - LoadoutSecurityPistolUniversalNonLethal
   - LoadoutSecurityPistolUniversal
+  subgroups:
+  - SecurityWeapon
 
 # Інше
 - type: loadoutGroup
@@ -375,5 +416,106 @@
 ## Wildcards - Різне
 
 
+## Interdyne
+
+#Head
+- type: loadoutGroup
+  id: InterdyneOfficerHead
+  name: loadout-group-interdyne-officer-head
+  loadouts:
+  - LoadoutInterdyneWhiteOfficer
+  - LoadoutInterdyneOfficer
+
+- type: loadoutGroup
+  id: InterdyneHead
+  name: loadout-group-interdyne-head
+  loadouts:
+  - LoadoutInterdyneBeret
+
+#Headset
+- type: loadoutGroup
+  id: InterdyneCommandHeadset
+  name: loadout-group-interdyne-command-headset
+  loadouts:
+  - LoadoutHeadsetInterdyneCommand
+  - LoadoutHeadsetInterdyneCommandAlt
+
+- type: loadoutGroup
+  id: InterdyneHeadset
+  name: loadout-group-interdyne-headset
+  loadouts:
+  - LoadoutHeadsetInterdyne
+  - LoadoutHeadsetAltInterdyne
+
+#Back
+- type: loadoutGroup
+  id: InterdyneBack
+  name: loadout-group-interdyne-back
+  loadouts:
+  - LoadoutBackpackInterdyne
+  - LoadoutBackpackSatchelInterdyne
+  - LoadoutBackpackDuffelInterdyne
+  - LoadoutBackpackMessengerBaseInterdyne
+  
+#Clothing
+- type: loadoutGroup
+  id: InterdyneClothing
+  name: loadout-group-interdyne-clothing
+  loadouts:
+  - LoadoutCoatInterdyneJacket
+  - LoadoutCoatInterdyneBlack
+  - LoadoutCoatInterdyneWhite
+
+#Gloves
+- type: loadoutGroup
+  id: InterdyneOfficerGloves
+  name: loadout-group-interdyne-officer-gloves
+  loadouts:
+  - LoadoutGlovesInterdyneCombat
+  - LoadoutGlovesInterdyneCombatMed
+
+#Shoes
+- type: loadoutGroup
+  id: InterdyneShoes
+  name: loadout-group-interdyne-shoes
+  loadouts:
+  - BlackShoes
+  - CombatBoots
+  - JackBoots
+  - NanotrasenRepresentativeBoots
+
+#Печатки
+- type: loadoutGroup
+  id: InterdyneOfficerStamp
+  name: loadout-group-interdyne-stamp-officer
+  loadouts:  
+  - LoadoutRubberStampOfficerInterdyne
+  
+- type: loadoutGroup
+  id: InterdyneDeputyStamp
+  name: loadout-group-interdyne-stamp-deputy
+  loadouts:  
+  - LoadoutRubberStampDeputyInterdyne
+  
+#Belt
+- type: loadoutGroup
+  id: InterdyneSurgery
+  name: loadout-group-interdyne-surgery
+  loadouts:
+  - LoadoutClothingBeltCombatSurgeryInterdyne
+
+  
+#Інше
+- type: loadoutGroup
+  id: InterdynePublicKey
+  name: loadout-group-interdyne-key
+  loadouts:  
+  - LoadoutEncryptionKeyInterdyne
 
 ## Other - Інше
+- type: loadoutGroup
+  id: SyndicateSuit
+  name: loadout-group-syndicate-suit
+  loadouts:
+  - LoadoutJumpsuitOperative
+  - LoadoutJumpskirtOperative

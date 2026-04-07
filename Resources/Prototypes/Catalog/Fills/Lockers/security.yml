@@ -215,7 +215,6 @@
     - id: BoxBodyBag # Goob Station
     - id: MedkitRadiationFilled # Pirate
     - id: MedkitToxinFilled # Pirate
-    - id: ClothingHandsGlovesCombatNitrile # Pirate
 
 - type: entity
   id: LockerDetectiveFilled
@@ -255,6 +254,7 @@
     - id: BloodTrak # Goobstation
     - id: Betty # Goobstation
     - id: BoxTapeRecorder # DeltaV
+    - id: PhotoCameraFilled # Pirate: camera
     - id: PoliceBaton # Goobstation
 
 - type: entity

@@ -29,7 +29,7 @@
 
 - type: job
   id: BlueshieldOfficer
-  name: Blueshield Officer
+  name: job-name-bso
   description: "Act as a bodyguard and advisor for Command and CentCom VIPs."
   playTimeTracker: JobBlueshieldOfficer
   requirements:
@@ -55,10 +55,11 @@
       - Narcolepsy
       - Muted
       - WheelchairBound # Pirate end
-    #- !type:SpeciesRequirement # Pirate remove requirement
-    #  inverted: true
-    #  species:
-    #  - Felinid
+    - !type:SpeciesRequirement # Pirate edit
+      inverted: true
+      species:
+      #- Felinid
+      - Hydrakin
   # Pirate contractor start
     - !type:CharacterEmployerRequirement
       employers:
@@ -66,7 +67,7 @@
       - PMCG
   # Pirate contractor end
   guides:
-  - BlueshieldOfficer SOP
+  - BlueshieldOfficerSOP
   - Command
   - Succession
   goobcoins: 45
@@ -76,6 +77,7 @@
   joinNotifyCrew: true
   supervisors: job-supervisors-ntr-centcom
   canBeAntag: false
+  whitelisted: true # Pirate
   access:
   - Security
   - Brig

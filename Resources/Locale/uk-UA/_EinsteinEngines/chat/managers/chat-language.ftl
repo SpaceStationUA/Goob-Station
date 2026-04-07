@@ -20,6 +20,7 @@ chat-language-Sign-name = Жестова
 chat-language-Marish-name = Маріш
 chat-language-Chittin-name = Хітинова
 chat-language-Xeeplian-name = Ксіпліан
+chat-language-Hydraspeak-name = Гі'драв'та
 
 # Додаткові мови
 

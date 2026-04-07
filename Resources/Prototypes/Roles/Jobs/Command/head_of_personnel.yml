@@ -162,10 +162,11 @@
       - Narcolepsy
       - Muted
       - WheelchairBound # Pirate end
-    #- !type:SpeciesRequirement Pirate remove requirement
-    #  inverted: true
-    #  species:
-    #  - Felinid
+    - !type:SpeciesRequirement # Pirate edit
+      inverted: true
+      species:
+      #- Felinid
+      - Hydrakin
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
       employers:
@@ -175,8 +176,8 @@
   guides: # goobstation
   - Command
   - Succession
-  - StandardProcedures SOP
-  - HeadOfPersonnel SOP
+  - StandardProceduresSOP
+  - HeadOfPersonnelSOP
   - Writing
   goobcoins: 40 #Goob content
   weight: 20
@@ -184,6 +185,7 @@
   icon: "JobIconHeadOfPersonnel"
   supervisors: job-supervisors-captain
   canBeAntag: false
+  whitelisted: true # Pirate
   access:
   - Command
   - HeadOfPersonnel
@@ -228,6 +230,7 @@
     #gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetAltCommand
     belt: BoxFolderClipboard
+    eyes: ClothingEyesHudCommand
   storage:
     back:
     - Flash

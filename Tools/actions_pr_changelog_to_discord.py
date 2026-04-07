@@ -5,13 +5,14 @@
 
 """Post changelog changes introduced by a merged PR to a Discord webhook.
 
-This script is intended for GitHub Actions (`pull_request_target` + merged) and:
-- Detects whether the PR changed any changelog files under Resources/Changelog/*.yml
-- Computes a structured delta of changelog Entries between:
-  - PR base SHA (pre-merge)
-  - PR merge_commit_sha (post-merge)
-- Sends a formatted summary to a Discord webhook, chunked to 2000 chars and
-  respecting Discord webhook rate limits.
+Designed for GitHub Actions and supports 2 sources of truth, both based on *repo
+files* (not PR text):
+1) PR diff mode (default): compares the merge commit to its first parent and
+   only inspects changelog files touched by the PR.
+2) Changelog-commit diff mode (optional): if `CHANGELOG_BASE_SHA` and
+   `CHANGELOG_HEAD_SHA` are provided, it compares those SHAs and inspects
+   changelog files changed in that range (useful when a post-merge bot commit
+   appends entries to `Resources/Changelog/*.yml`).
 """
 
 from __future__ import annotations
@@ -77,6 +78,9 @@ def main() -> None:
     changelog_dir = os.environ.get("CHANGELOG_DIR", DEFAULT_CHANGELOG_DIR).rstrip("/")
     changelog_ext = os.environ.get("CHANGELOG_EXT", DEFAULT_CHANGELOG_EXT)
 
+    changelog_base_sha = (os.environ.get("CHANGELOG_BASE_SHA") or "").strip() or None
+    changelog_head_sha = (os.environ.get("CHANGELOG_HEAD_SHA") or "").strip() or None
+
     message_delay_seconds = float(
         os.environ.get(
             "DISCORD_MESSAGE_DELAY_SECONDS", str(DEFAULT_DISCORD_MESSAGE_DELAY_SECONDS)
@@ -93,42 +97,85 @@ def main() -> None:
     pr_title = pr.get("title") or ""
     pr_url = pr.get("html_url") or f"https://github.com/{github_repository}/pull/{pr_number}"
 
-    base_sha = pr.get("base", {}).get("sha")
     merge_sha = pr.get("merge_commit_sha")
 
-    if not base_sha or not merge_sha:
-        print("Missing base.sha or merge_commit_sha, skipping")
-        return
+    merge_base_sha = None
+    if merge_sha:
+        try:
+            merge_base_sha = get_first_parent_sha(gh, github_repository, merge_sha)
+        except Exception as e:
+            print(f"Failed to resolve merge base SHA from merge commit: {e}")
+            merge_base_sha = None
 
-    changed_files = list_pr_files(gh, github_repository, pr_number)
-    changelog_files = [
-        f
-        for f in changed_files
-        if is_changelog_file(f, changelog_dir=changelog_dir, changelog_ext=changelog_ext)
-    ]
+        if not merge_base_sha:
+            print("Could not resolve merge base SHA, skipping PR diff mode.")
 
-    if not changelog_files:
-        print("No changelog files changed in PR, skipping")
-        return
-
-    deltas: list[ChangelogFileDelta] = []
-    for path in changelog_files:
-        old_text = get_repo_file_text(gh, github_repository, path, base_sha)
-        new_text = get_repo_file_text(gh, github_repository, path, merge_sha)
-
-        old_entries = extract_entries(parse_yaml(old_text))
-        new_entries = extract_entries(parse_yaml(new_text))
-
-        added, modified, removed = diff_entries(old_entries, new_entries)
-        if added or modified or removed:
-            deltas.append(
-                ChangelogFileDelta(
-                    path=path, added=added, modified=modified, removed=removed
-                )
+    pr_deltas: list[ChangelogFileDelta] = []
+    if merge_sha and merge_base_sha:
+        changed_files = list_pr_files(gh, github_repository, pr_number)
+        changelog_files = [
+            f
+            for f in changed_files
+            if is_changelog_file(
+                f, changelog_dir=changelog_dir, changelog_ext=changelog_ext
             )
+        ]
 
+        for path in changelog_files:
+            delta = diff_changelog_file(
+                gh,
+                github_repository,
+                path,
+                base_sha=merge_base_sha,
+                head_sha=merge_sha,
+            )
+            if delta:
+                pr_deltas.append(delta)
+    else:
+        print("Missing merge_commit_sha or merge base SHA, skipping PR diff mode.")
+
+    changelog_commit_deltas: list[ChangelogFileDelta] = []
+    if (
+        changelog_base_sha
+        and changelog_head_sha
+        and changelog_base_sha != changelog_head_sha
+    ):
+        try:
+            compare_files = list_compare_files(
+                gh,
+                github_repository,
+                base_sha=changelog_base_sha,
+                head_sha=changelog_head_sha,
+            )
+        except Exception as e:
+            print(f"Failed to list compare files for CHANGELOG_BASE_SHA/HEAD_SHA: {e}")
+            compare_files = []
+        changelog_files = [
+            f
+            for f in compare_files
+            if is_changelog_file(
+                f, changelog_dir=changelog_dir, changelog_ext=changelog_ext
+            )
+        ]
+
+        for path in changelog_files:
+            delta = diff_changelog_file(
+                gh,
+                github_repository,
+                path,
+                base_sha=changelog_base_sha,
+                head_sha=changelog_head_sha,
+            )
+            if delta:
+                changelog_commit_deltas.append(delta)
+    else:
+        print(
+            "No CHANGELOG_BASE_SHA/CHANGELOG_HEAD_SHA provided, skipping changelog-commit diff mode."
+        )
+
+    deltas = merge_deltas_by_path(pr_deltas + changelog_commit_deltas)
     if not deltas:
-        print("Changelog files changed but no Entries delta detected, skipping")
+        print("No changelog Entries delta detected, skipping")
         return
 
     lines = build_message_lines(pr_number=pr_number, pr_title=pr_title, pr_url=pr_url, deltas=deltas)
@@ -149,6 +196,58 @@ def github_get_json(session: requests.Session, url: str, *, params: Optional[dic
     resp = session.get(url, params=params, timeout=30)
     resp.raise_for_status()
     return resp.json()
+
+
+def get_first_parent_sha(
+    session: requests.Session, github_repository: str, sha: str
+) -> Optional[str]:
+    """Return the first parent SHA of a commit, or None if unavailable."""
+
+    data = github_get_json(
+        session, f"{GITHUB_API_URL}/repos/{github_repository}/commits/{sha}"
+    )
+    parents = data.get("parents")
+    if not isinstance(parents, list) or not parents:
+        return None
+
+    first = parents[0]
+    if not isinstance(first, dict):
+        return None
+
+    parent_sha = first.get("sha")
+    return str(parent_sha) if parent_sha else None
+
+
+def list_compare_files(
+    session: requests.Session,
+    github_repository: str,
+    *,
+    base_sha: str,
+    head_sha: str,
+) -> list[str]:
+    """List file paths changed between base..head using the Compare API.
+
+    Note: GitHub may truncate file lists for very large comparisons.
+    """
+
+    data = github_get_json(
+        session,
+        f"{GITHUB_API_URL}/repos/{github_repository}/compare/{base_sha}...{head_sha}",
+    )
+    files = data.get("files")
+    if not isinstance(files, list):
+        return []
+
+    out: list[str] = []
+    for item in files:
+        if not isinstance(item, dict):
+            continue
+
+        filename = item.get("filename")
+        if filename:
+            out.append(str(filename))
+
+    return out
 
 
 def list_pr_files(session: requests.Session, github_repository: str, pr_number: int) -> list[str]:
@@ -294,6 +393,45 @@ def diff_entries(
             removed.append(entry)
 
     return added, modified, removed
+
+
+def diff_changelog_file(
+    session: requests.Session,
+    github_repository: str,
+    path: str,
+    *,
+    base_sha: str,
+    head_sha: str,
+) -> Optional[ChangelogFileDelta]:
+    old_text = get_repo_file_text(session, github_repository, path, base_sha)
+    new_text = get_repo_file_text(session, github_repository, path, head_sha)
+
+    old_entries = extract_entries(parse_yaml(old_text))
+    new_entries = extract_entries(parse_yaml(new_text))
+
+    added, modified, removed = diff_entries(old_entries, new_entries)
+    if not (added or modified or removed):
+        return None
+
+    return ChangelogFileDelta(path=path, added=added, modified=modified, removed=removed)
+
+
+def merge_deltas_by_path(deltas: list[ChangelogFileDelta]) -> list[ChangelogFileDelta]:
+    merged: dict[str, ChangelogFileDelta] = {}
+    for delta in deltas:
+        existing = merged.get(delta.path)
+        if existing is None:
+            merged[delta.path] = delta
+            continue
+
+        merged[delta.path] = ChangelogFileDelta(
+            path=delta.path,
+            added=existing.added + delta.added,
+            modified=existing.modified + delta.modified,
+            removed=existing.removed + delta.removed,
+        )
+
+    return list(merged.values())
 
 
 def render_change_type_summary(entries: list[ChangelogEntry]) -> str:

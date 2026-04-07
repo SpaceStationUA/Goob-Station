@@ -5,6 +5,6 @@
   description: Захистить хіба що від легких поривів вітру в лабіринті технічних приміщень
   components:
   - type: Sprite
-    sprite: _Pirate/Clothing/OuterClothing/awajacket.rsi
+    sprite: _Pirate/Clothing/OuterClothing/Misc/awariajacket.rsi
   - type: Clothing
-    sprite: _Pirate/Clothing/OuterClothing/awajacket.rsi
+    sprite: _Pirate/Clothing/OuterClothing/Misc/awariajacket.rsi

@@ -127,7 +127,7 @@ namespace Content.Client.Access.UI
 
             foreach (var (id, button) in _accessButtons.ButtonsList)
             {
-                button.OnPressed += _ => SubmitData();
+                button.OnToggled += args => _owner.SetAccess(id, args.Pressed); // id card console fix
             }
         }
 

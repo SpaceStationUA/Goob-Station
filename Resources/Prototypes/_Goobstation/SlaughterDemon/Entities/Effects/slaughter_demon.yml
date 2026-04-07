@@ -8,7 +8,7 @@
   name: slaughter demon jaunt
   components:
   - type: TimedDespawn
-    lifetime: 0.75
+    lifetime: 1.1 # Pirate - cover the blood crawl windup.
   - type: Transform
     noRot: true
   - type: Sprite
@@ -22,7 +22,7 @@
     radius: 3
     energy: 2
   - type: LightFade
-    duration: 0.67
+    duration: 1.0
 
 - type: entity
   id: SlaughterDemonJauntUpEffect

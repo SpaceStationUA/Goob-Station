@@ -113,13 +113,25 @@
         components:
         - FitsInDispenser
       priority: 9
+    recipeDiskSlot: # Pirate: chem recipes
+      name: reagent-dispenser-component-slot-name-disk
+      priority: 10
+      insertSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      ejectSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
+      whitelist:
+        tags:
+        - ChemRecipeDisk
   - type: ItemSlots
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
       beakerSlot: !type:ContainerSlot
+      recipeDiskSlot: !type:ContainerSlot # Pirate: chem recipes
       storagebase: !type:Container
   - type: StaticPrice
     price: 1000
-  - type: WiresPanel
+  - type: WiresPanel 

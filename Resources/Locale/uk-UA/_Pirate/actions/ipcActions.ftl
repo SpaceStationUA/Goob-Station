@@ -1,3 +1,3 @@
 
-action-name-screen-saver = Змінити екран
-action-description-screen-saver = Змінити зображення на екрані
+ent-ActionScreenSaver = Змінити екран
+    .desc = Змінити зображення на екрані

@@ -16,7 +16,7 @@ public record struct DisarmedEvent(EntityUid Target, EntityUid Source, float Dis
     /// <summary>
     ///     Probability to disarm in addition to shoving.
     /// </summary>
-    public float DisarmProbability { get; init; }
+    public float DisarmProbability { get; init; } = DisarmProb; // DOWNSTREAM-TPirates: fix disarm not working
 
     /// <summary>
     /// Prefix for the popup message that will be displayed on a successful push.

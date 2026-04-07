@@ -79,4 +79,21 @@ public sealed partial class NanoChatCardComponent : Component
     /// </summary>
     [DataField]
     public bool IsClosed;
+    #region Pirate: camera (nanochat gallery)
+    /// <summary>
+    ///     Monotonically increasing local message id source.
+    /// </summary>
+    [DataField]
+    public uint NextMessageId = 1;
+    /// <summary>
+    ///     The currently selected gallery photo file name for external actions.
+    /// </summary>
+    [DataField]
+    public string? SelectedGalleryPhotoFileName; // Pirate: nano chat fax photo printing
+    /// <summary>
+    ///     Photos stored in PDA memory, keyed by file name.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, NanoChatPhotoData> Photos = new();
+    #endregion
 }

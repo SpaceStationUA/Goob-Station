@@ -5,16 +5,95 @@ SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
-<Control xmlns="https://spacestation14.io">
-    <BoxContainer Orientation="Vertical" Margin="5">
-        <Label Name="RecordName" StyleClasses="LabelBig"/>
-        <Label Name="Age"/>
-        <Label Name="Title"/>
-        <Label Name="Job"/>
-        <Label Name="Species"/>
-        <Label Name="Gender"/>
-        <Label Name="Fingerprint"/>
-        <Label Name="Dna"/>
-        <Button Visible="False" Name="DeleteButton" Text="{Loc 'general-station-record-console-delete'}"/>
+<!-- Pirate: records photos (start) -->
+<Control xmlns="https://spacestation14.io"
+         HorizontalExpand="True">
+<!-- Pirate: records photos (end) -->
+    <!-- Pirate: records photos (start) -->
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  Margin="5"
+                  SeparationOverride="6">
+        <Label Name="PersonName"
+               StyleClasses="LabelBig" />
+        <BoxContainer Orientation="Horizontal"
+                      SeparationOverride="8">
+            <Label Text="{Loc 'crew-monitoring-user-interface-job'}"
+                   FontColorOverride="DarkGray" />
+            <TextureRect Name="PersonJobIcon"
+                         TextureScale="2 2"
+                         VerticalAlignment="Center" />
+            <Label Name="PersonJob" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      SeparationOverride="8">
+            <Label Text="{Loc 'humanoid-profile-editor-species-label'}"
+                   FontColorOverride="DarkGray" />
+            <Control HorizontalExpand="True" />
+            <OptionButton Name="SpeciesButton"
+                          MinWidth="180"
+                          HorizontalAlignment="Right" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      SeparationOverride="8">
+            <Label Text="{Loc 'humanoid-profile-editor-nationality-label'}"
+                   FontColorOverride="DarkGray" />
+            <Control HorizontalExpand="True" />
+            <OptionButton Name="NationalityButton"
+                          MinWidth="180"
+                          HorizontalAlignment="Right" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      SeparationOverride="8">
+            <Label Text="{Loc 'humanoid-profile-editor-employer-label'}"
+                   FontColorOverride="DarkGray" />
+            <Control HorizontalExpand="True" />
+            <OptionButton Name="EmployerButton"
+                          MinWidth="180"
+                          MaxWidth="180"
+                          HorizontalAlignment="Right" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      SeparationOverride="8">
+            <Label Text="{Loc 'humanoid-profile-editor-age-label'}"
+                   FontColorOverride="DarkGray" />
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="AgeEdit"
+                      MinWidth="180"
+                      HorizontalAlignment="Right" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      SeparationOverride="8">
+            <Label Text="{Loc 'humanoid-profile-editor-sex-label'}"
+                   FontColorOverride="DarkGray" />
+            <Control HorizontalExpand="True" />
+            <OptionButton Name="GenderButton"
+                          MinWidth="180"
+                          HorizontalAlignment="Right" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      Margin="0 0 0 5"
+                      SeparationOverride="8">
+            <Label Text="{Loc 'general-station-record-prints-filter'}"
+                   FontColorOverride="DarkGray" />
+            <LineEdit Name="PersonPrintsEdit"
+                      HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      Margin="0 0 0 5"
+                      SeparationOverride="8">
+            <Label Text="{Loc 'general-station-record-dna-filter'}"
+                   FontColorOverride="DarkGray" />
+            <LineEdit Name="PersonDnaEdit"
+                      HorizontalExpand="True" />
+        </BoxContainer>
     </BoxContainer>
+    <!-- Pirate: records photos (end) -->
 </Control>

@@ -1,0 +1,29 @@
+- type: cargoProduct
+  id: ServiceCoffeemakerPirate
+  icon:
+    sprite: _Pirate/Structures/Machines/coffeemaker.rsi
+    state: coffeemaker_nopot_nocart
+  product: CrateServiceCoffeemakerPirate
+  cost: 1500
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceCoffeemakerImpressaPirate
+  icon:
+    sprite: _Pirate/Structures/Machines/coffeemaker.rsi
+    state: coffeemaker_impressa
+  product: CrateServiceCoffeemakerImpressaPirate
+  cost: 1700
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceCoffeeSyrupsContrabandPirate
+  icon:
+    sprite: Objects/Consumable/Food/condiments.rsi
+    state: bottle-open
+  product: CrateServiceContrabandSyrupsPirate
+  cost: 3000
+  category: cargoproduct-category-name-service
+  group: market

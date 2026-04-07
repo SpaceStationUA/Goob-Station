@@ -1,0 +1,7 @@
+- type: stack
+  id: TitaniumOre
+  name: stack-titanium-ore
+  icon: { sprite: /Textures/_Pirate/Objects/Materials/ore.rsi, state: titanium }
+  spawn: TitaniumOre1
+  maxCount: 30
+  

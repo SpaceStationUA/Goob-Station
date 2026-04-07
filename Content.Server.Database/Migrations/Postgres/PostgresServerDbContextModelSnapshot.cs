@@ -703,6 +703,179 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("job", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PersistentPhotoAlbum", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("pirate_persistent_photo_albums_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AlbumKey")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("album_key");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_public");
+
+                    b.Property<string>("OwnerId")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("owner_id");
+
+                    b.Property<string>("OwnerKind")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("owner_kind");
+
+                    b.Property<int?>("ProfileId")
+                        .HasColumnType("integer")
+                        .HasColumnName("profile_id");
+
+                    b.Property<DateTime>("SavedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("saved_at");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pirate_persistent_photo_albums");
+
+                    b.HasIndex("ProfileId")
+                        .HasDatabaseName("IX_pirate_persistent_photo_albums_profile_id");
+
+                    b.HasIndex("OwnerKind", "OwnerId", "AlbumKey")
+                        .IsUnique()
+                        .HasDatabaseName("IX_pirate_persistent_photo_albums_owner_kind_owner_id_album_key");
+
+                    b.HasIndex("OwnerKind", "ProfileId", "AlbumKey")
+                        .IsUnique()
+                        .HasDatabaseName("IX_pirate_persistent_photo_albums_owner_kind_profile_id_album_~");
+
+                    b.ToTable("pirate_persistent_photo_albums", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PersistentPhotoAlbumPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("pirate_persistent_photo_album_photos_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("integer")
+                        .HasColumnName("album_id");
+
+                    b.Property<string>("BaseDescription")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
+                        .HasColumnName("base_description");
+
+                    b.Property<string>("Caption")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("caption");
+
+                    b.Property<string>("CaptureDataJson")
+                        .HasMaxLength(10000)
+                        .HasColumnType("character varying(10000)")
+                        .HasColumnName("capture_data_json");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("CustomDescription")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("custom_description");
+
+                    b.Property<string>("CustomName")
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("custom_name");
+
+                    b.Property<byte[]>("ImageData")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("image_data");
+
+                    b.Property<byte[]>("PreviewData")
+                        .HasColumnType("bytea")
+                        .HasColumnName("preview_data");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer")
+                        .HasColumnName("sort_order");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pirate_persistent_photo_album_photos");
+
+                    b.HasIndex("AlbumId", "SortOrder")
+                        .IsUnique()
+                        .HasDatabaseName("IX_pirate_persistent_photo_album_photos_album_id_sort_order");
+
+                    b.ToTable("pirate_persistent_photo_album_photos", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PirateAdminHelpRating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("pirate_admin_help_ratings_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AdminKey")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("admin_key");
+
+                    b.Property<string>("AdminName")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("admin_name");
+
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<byte>("Rating")
+                        .HasColumnType("smallint")
+                        .HasColumnName("rating");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pirate_admin_help_ratings");
+
+                    b.HasIndex("AdminKey")
+                        .HasDatabaseName("IX_pirate_admin_help_ratings_admin_key");
+
+                    b.HasIndex("PlayerUserId")
+                        .HasDatabaseName("IX_pirate_admin_help_ratings_player_user_id");
+
+                    b.HasIndex("AdminKey", "PlayerUserId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_pirate_admin_help_ratings_admin_key_player_user_id");
+
+                    b.ToTable("pirate_admin_help_ratings", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
                 {
                     b.Property<int>("Id")
@@ -2092,6 +2265,42 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PersistentPhotoAlbum", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_pirate_persistent_photo_albums_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PersistentPhotoAlbumPhoto", b =>
+                {
+                    b.HasOne("Content.Server.Database.PersistentPhotoAlbum", "Album")
+                        .WithMany("Photos")
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_pirate_persistent_photo_album_photos_pirate_persistent_phot~");
+
+                    b.Navigation("Album");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PirateAdminHelpRating", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_pirate_admin_help_ratings_player_player_user_id");
+
+                    b.Navigation("Player");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Player", b =>
                 {
                     b.OwnsOne("Content.Server.Database.TypedHwid", "LastSeenHWId", b1 =>
@@ -2560,6 +2769,11 @@ namespace Content.Server.Database.Migrations.Postgres
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
                 {
                     b.Navigation("BanHits");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PersistentPhotoAlbum", b =>
+                {
+                    b.Navigation("Photos");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Player", b =>

@@ -60,6 +60,7 @@
   modes:
   - Heretic
   - CosmicCult
+  - Changeling # Pirate
 
 - type: incompatibleModes
   id: BlobGameMode
@@ -93,3 +94,10 @@
   - BlobGameMode
   - CosmicCult
   - Heretic
+
+# Pirate VVV
+- type: incompatibleModes
+  id: Changeling
+  modes:
+  - Heretic
+  - CosmicCult

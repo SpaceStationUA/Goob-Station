@@ -1,0 +1,1 @@
+brain-cannot-be-borged-message = [color=red]Цей мозок неможливо використати для боргофікації.[/color]

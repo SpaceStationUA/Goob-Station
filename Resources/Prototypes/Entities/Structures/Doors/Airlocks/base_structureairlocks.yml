@@ -105,7 +105,7 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/basic.rsi # Pirate changes
     snapCardinals: true
     layers:
     - state: closed
@@ -276,6 +276,7 @@
     - KnockOn
   - type: WeldingSparksAnimation # Goobstation
     startingOffset: 0, 0.5
+  - type: AirlockIllumination # Pirate changes
   placement:
     mode: SnapgridCenter
 
@@ -302,7 +303,7 @@
   - type: Occluder
     enabled: false
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/glass.rsi # Pirate changes
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:

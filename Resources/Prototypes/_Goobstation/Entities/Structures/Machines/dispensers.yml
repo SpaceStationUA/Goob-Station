@@ -68,6 +68,7 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       energyBeakerSlot: !type:ContainerSlot
+      recipeDiskSlot: !type:ContainerSlot # Pirate: chem recipes
       storagebase: !type:Container
   - type: StaticPrice
     price: 1000
@@ -94,6 +95,16 @@
       whitelist:
         components:
         - FitsInDispenser
+    recipeDiskSlot: # Pirate: chem recipes
+      name: reagent-dispenser-component-slot-name-disk
+      insertSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      ejectSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
+      whitelist:
+        tags:
+        - ChemRecipeDisk
     reagents:
       Aluminium: 8
       Carbon: 3
