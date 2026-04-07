@@ -1,0 +1,12 @@
+- type: entity
+  id: ActionBigBosCQCRoll
+  parent: ActionDashMoth
+  name: CQC Roll
+  description: Виконати швидкий переворот в напрямку руху. Основа тактики CQC Big Boss.
+  components:
+  - type: Action
+    icon: { sprite: _Goobstation/Actions/dash.rsi, state: icon }
+    iconOn: _Goobstation/Actions/dash.rsi/icon
+    keywords: [ "ability", "dash", "cqc", "roll" ]
+    priority: -20
+    itemIconStyle: NoItem

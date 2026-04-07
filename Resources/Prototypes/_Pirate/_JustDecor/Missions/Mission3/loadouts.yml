@@ -1,0 +1,16 @@
+- type: startingGear
+  id: Mission3SpecOpsGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetSwatSyndicate
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterArmorBasic
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponFlamethrower
+  storage:
+    back:
+    - MedkitCombat

@@ -1,0 +1,150 @@
+﻿- type: entity
+  name: Спавнер бункерного охоронця
+  id: SpawnMobMission2BunkerGuard
+  suffix: JustDecor, Mission 2
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - MobMission2BunkerGuard
+
+- type: entity
+  name: Спавнер бункерного офіцера
+  id: SpawnMobMission2BunkerOfficer
+  suffix: JustDecor, Mission 2
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - MobMission2BunkerOfficer
+
+- type: entity
+  name: Спавнер гравця-привида (Солдат Синдикату)
+  id: SpawnGhostMobSyndicateSoldierMission2
+  suffix: JustDecor, Mission 2, Ghost
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - MobSyndicateSoldierMissionsGhost
+
+- type: entity
+  name: Спавнер гравця-привида (Елітний Солдат Синдикату)
+  id: SpawnGhostMobSyndicateEliteMission2
+  suffix: JustDecor, Mission 2, Ghost
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - MobSyndicateEliteSoldierMissionsGhost
+
+- type: entity
+  name: Спавнер викраденого науковця
+  id: SpawnMobMission2ScientistPrisoner
+  suffix: JustDecor, Mission 2
+  parent: SpawnMobSyndicateScientistMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - MobMission2ScientistPrisoner
+
+- type: entity
+  name: Спавнер турелі бункера
+  id: SpawnMission2Turret
+  suffix: JustDecor, Mission 2
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
+    state: base
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - WeaponTurretSyndicate
+    - WeaponTurretHostile
+
+- type: entity
+  name: Спавнер документа NanoTrasen
+  id: SpawnMission2DocumentNanotrasen
+  suffix: JustDecor, Mission 2
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - NanotrasenSecretOperationDocumentMission2
+
+- type: entity
+  name: Спавнер документа (внутрішнє повідомлення)
+  id: SpawnMission2DocumentInternalMemo
+  suffix: JustDecor, Mission 2
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - SyndicateInternalMemoMission2
+
+- type: entity
+  name: Спавнер документа (запис утримання)
+  id: SpawnMission2DocumentDetentionLog
+  suffix: JustDecor, Mission 2
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - BunkerDetentionLogMission2
+
+- type: entity
+  name: Спавнер документа (довідка по турелях)
+  id: SpawnMission2DocumentTurretSafety
+  suffix: JustDecor, Mission 2
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - BunkerTurretSafetyNoteMission2
+
+- type: entity
+  name: Спавнер документа (особиста нотатка)
+  id: SpawnMission2DocumentPersonalNote
+  suffix: JustDecor, Mission 2
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission2
+    prototypes:
+    - ScientistPersonalNoteMission2

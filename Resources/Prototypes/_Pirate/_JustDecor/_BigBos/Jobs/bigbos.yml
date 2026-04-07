@@ -1,0 +1,73 @@
+- type: playTimeTracker
+  id: JobBigBos
+
+- type: job
+  id: BigBos
+  name: job-name-mercenarycaptain
+  description: job-description-mercenarycaptain
+  playTimeTracker: JobBigBos
+  setPreference: false
+  startingGear: BigBosGear
+  icon: "JobIconSyndicate"
+  supervisors: job-supervisors-credits
+  canBeAntag: true
+  requirements:
+  - !type:AgeRequirement
+    requiredAge: 21
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  - NanotrasenRepresentative
+  - BlueshieldOfficer
+  - NuclearOperative
+  - SyndicateAgent
+  special:
+  - !type:AddImplantSpecial
+    implants: [ FreedomImplant, ScramImplant, NutrimentPumpImplant, StypticStimulatorImplant, UplinkImplant, MindShieldImplant, SpaceProofImplant, BluespaceLifelineImplant ] #KravMagaImplant,
+  - !type:AddComponentSpecial
+    components:
+    - type: GrantBigBosCQC
+    - type: NpcFactionMember
+      factions:
+      - Neutral
+    - type: ComboHelper
+      prototype: BigBosCqcHelper
+    - type: ActionGrant
+      actions:
+      - ActionBigBosCQCRoll
+
+- type: startingGear
+  id: BigBosGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMilitaryTurtleneckMercenaryCaptain
+    back: ClothingBackpackMerc
+    mask: HoloCigar
+    head: ClothingHeadHatBeretMerc
+    eyes: ClothingEyesGlassesCentComm
+    ears: ClothingHeadsetAltFreelancer
+    gloves: ClothingHandsMercGlovesCombat
+    outerClothing: BigBosClothingOuterSneakingSuit
+    shoes: ClothingShoesBootsJackAdvancedFilled
+    id: CentcomIDCardSpecialOperationsOfficer
+    neck: ClothingNeckScarfStripedGreen
+    pocket1: JustDecorWeaponPistolCobraTranquilizer
+    pocket2: BigBosWeaponWaterPistolInfinite
+    belt: ClothingBeltMercWebbingHelldiverFilled
+    suitstorage: BigBosWeaponRifleM90Rubber
+  storage:
+    back:
+    - EncryptionKeyFreelance
+    - EncryptionKeyStationMaster # Depends on who yer working for.
+    - EncryptionKeyCentCom
+    - EncryptionKeySyndie
+    - JustDecorMagazineBoxCaselessRifleTranquilizer10x24
+    - JustDecorMagazinePistolCaselessRifleTranquilizer
+    - JustDecorMagazinePistolCaselessRifleTranquilizer
+    - BigBosFulton
+    - FultonBeacon
+    - BigBosMagazineRifleRubber
+    - BigBosMagazineRifleRubber
+    - BigBosTeleportBox
+    - BigBosStealthCamo
+    - BigBosBoxRifleRubberBulk

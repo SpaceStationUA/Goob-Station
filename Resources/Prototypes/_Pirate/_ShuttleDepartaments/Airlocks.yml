@@ -1,0 +1,131 @@
+- type: entity
+  parent: AirlockGlassShuttle
+  id: CargoAirlockGlassShuttleFilled
+  suffix: Filled, Cargo
+  components:
+  - type: GridFill
+    path: Mapping/JustDecor/Shuttles/Cargo_shuttle.yml
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: CentralAirlockGlassShuttleFilled
+  suffix: Filled, Central
+  components:
+  - type: GridFill
+    path: Mapping/JustDecor/Shuttles/Central_station.yml
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: EngiAirlockGlassShuttleFilled
+  suffix: Filled, Engi
+  components:
+  - type: GridFill
+    path: Mapping/JustDecor/Shuttles/Engi_shuttle.yml
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: MedAirlockGlassShuttleFilled
+  suffix: Filled, Med
+  components:
+  - type: GridFill
+    path: Mapping/JustDecor/Shuttles/Med_shuttle.yml
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: ScienceAirlockGlassShuttleFilled
+  suffix: Filled, Science
+  components:
+  - type: GridFill
+    path: Mapping/JustDecor/Shuttles/Science_shuttle.yml
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: SciencePod1AirlockGlassShuttleFilled
+  suffix: Filled, Science Pod 1
+  components:
+  - type: GridFill
+    path: Mapping/JustDecor/Shuttles/Science_shuttle_pod1.yml
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: SciencePod2AirlockGlassShuttleFilled
+  suffix: Filled, Science Pod 2
+  components:
+  - type: GridFill
+    path: Mapping/JustDecor/Shuttles/Science_shuttle_pod2.yml
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: SecAirlockGlassShuttleFilled
+  suffix: Filled, Sec
+  components:
+  - type: GridFill
+    path: Mapping/JustDecor/Shuttles/Sec_Shuttle.yml
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: ServiceAirlockGlassShuttleFilled
+  suffix: Filled, Service
+  components:
+  - type: GridFill
+    path: Mapping/JustDecor/Shuttles/Service_shuttle.yml
+
+- type: gameMap
+  id: ShuttlesTP
+  mapName: 'Модульна станція'
+  mapPath: /Mapping/JustDecor/Shuttles/Central_station_shuttles.yml
+  minPlayers: 85
+  maxPlayers: 85
+  stations:
+    ModuleStation:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Модульна Станція {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'TG'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml
+        - type: StationJobs
+          availableJobs:
+            #service
+            NanotrasenRepresentative: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            Bartender: [ 1, 1 ]
+            Botanist: [ 2, 2 ]
+            Chef: [ 1, 1 ]
+            Janitor: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 2, 2 ]
+            StationEngineer: [ 3, 3 ]
+            TechnicalAssistant: [ 2, 2 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 3, 3 ]
+            Paramedic: [ 1, 1 ]
+            MedicalIntern: [ 2, 2 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 3, 3 ]
+            ForensicMantis: [ 1, 1 ]
+            ResearchAssistant: [ 2, 2 ]
+            Roboticist: [ 2, 2 ]
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            SecurityOfficer: [ 3, 3 ]
+            Detective: [ 1, 1 ]
+            SecurityCadet: [ 2, 2 ]
+            Lawyer: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
+            #supply
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 3 ]
+            CargoTechnician: [ 3, 3 ]
+            #civilian
+            Musician: [ 1, 1 ]

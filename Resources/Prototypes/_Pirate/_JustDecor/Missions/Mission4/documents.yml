@@ -1,0 +1,80 @@
+- type: entity
+  id: NanotrasenSecretOperationDocumentMission4
+  name: Секретний операційний бланк NanoTrasen
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      [color=#096107]█████████████████[/color]
+      [color=#096107]███[head=3]Бланк службового документа[/head]███[/color]
+      [color=#096107]███[head=3]NanoTrasen — Внутрішня безпека[/head]███[/color]
+      [color=#096107]█████████████████[/color]
+      ===================================================
+                     [head=2][bold]СЕКРЕТНО[/bold][/head]
+      ===================================================
+
+      [bold]Кодова назва:[/bold] [head=3]«ОСТАННЯ БИТВА»[/head]
+
+      [bold]Ціль:[/bold] ліквідація Р. Діденка — експериментального бойового кіборга.
+      [bold]Локація:[/bold] командний бункер синдикату.
+
+      [bold]Завдання:[/bold]
+      [bold]1.[/bold] Максимальна підготовка.
+      [bold]2.[/bold] Штурм командного бункера.
+      [bold]3.[/bold] Прорив крізь елітну охорону (20+ ворогів).
+      [bold]4.[/bold] Бос-бій у 3 фазах.
+      [bold]5.[/bold] Евакуація з руйнівної бази.
+
+- type: entity
+  id: SyndicateFinalOrderMission4
+  name: Внутрішній наказ синдикату
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Наказ командира: утримувати бункер будь-якою ціною.
+      У разі прориву — активувати турелі та підкріплення.
+      Діденко не підлягає евакуації. Пріоритет — знищити атакуючих.
+
+- type: entity
+  id: CyborgCombatProtocolMission4
+  name: Бойовий протокол кіборга
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Фаза 1: щитовий контур активний. Максимальні резисти.
+      Фаза 2: виклик підкріплення та дистанційна підтримка турелей.
+      Фаза 3: берсерк-режим. Регенерація та підвищена агресія.
+
+- type: entity
+  id: BunkerReinforcementLogMission4
+  name: Запис про підкріплення
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Канали зв'язку відкриті.
+      Підкріплення прибуде через 2 хв після тригера.
+      Турелі переведені у режим «всім ворожим».
+
+- type: entity
+  id: DidenkoLegendNoteMission4
+  name: Легенда про Діденка
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Кажуть, що він не відчуває болю.
+      Якщо він виходить на поле — шансів майже немає.
+      Але сьогодні це має закінчитись.

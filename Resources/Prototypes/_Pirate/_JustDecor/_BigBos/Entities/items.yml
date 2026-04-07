@@ -1,0 +1,713 @@
+- type: stack
+  id: BigBosFultonStack
+  name: stack-fulton
+  icon:
+    sprite: /Textures/Objects/Tools/fulton.rsi
+    state: extraction_pack
+  spawn: Fulton1
+  maxCount: 48
+
+- type: entity
+  id: BigBosFulton
+  parent: BaseItem
+  suffix: Full, JustDecor
+  name: "фултон"
+  description: "Використовується для вилучення контейнерів, предметів або насильницького вербування людей на вашу базу операцій."
+  components:
+  - type: Fulton
+    whitelist:
+      components:
+      - Anchorable
+      - Item
+      - Respirator
+      - BloodStream
+      - Fauna
+  - type: Item
+    size: Normal
+  - type: Stack
+    stackType: BigBosFultonStack
+    count: 48
+  # Goobstation - Custom stack splitting dialog
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Objects/Tools/fulton.rsi
+    state: extraction_pack
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: PhysicalComposition #Goobstation - Recycle update
+    materialComposition:
+      Steel: 50
+      Cloth: 125
+
+- type: entity
+  id: BigBosFulton1
+  parent: BigBosFulton
+  name: "фултон"
+  suffix: One, JustDecor
+  components:
+  - type: Stack
+    count: 1
+
+- type: Tag
+  id: BigBosMagazineRifleRubber
+
+# Гумовий M90 (JustDecor)
+- type: entity
+  id: BigBosWeaponRifleM90Rubber
+  parent: WeaponRifleM90
+  name: "M-90 (гумовий)"
+  suffix: JustDecor
+  description: "Гвинтівка M-90 з жовтим маркуванням. Використовує гумові кулі."
+  components:
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: BigBosMagazineRifleRubber
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineRifleRubber
+          - MagazineRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: BigBosCartridgeRifleRubber
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeRifleRubber
+          - CartridgeRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+
+# Rubber Magazine (JustDecor, fixed)
+- type: entity
+  id: BigBosMagazineRifleRubber
+  parent: MagazineRifle
+  name: "магазин (гумовий)"
+  suffix: JustDecor
+  description: "Магазин для гумових куль, жовте маркування."
+  components:
+  - type: BallisticAmmoProvider
+    proto: BigBosCartridgeRifleRubber
+    capacity: 20
+    whitelist:
+      tags:
+        - CartridgeRifleRubber
+        - CartridgeRifle
+
+# Rubber Cartridge (JustDecor)
+- type: entity
+  id: BigBosCartridgeRifleRubber
+  parent: CartridgeRifle
+  name: "патрон (гумовий)"
+  suffix: JustDecor
+  description: "Гумова куля для гвинтівки."
+  components:
+  - type: CartridgeAmmo
+    proto: BigBosPelletRifleRubber
+
+# Rubber Box (JustDecor)
+- type: entity
+  id: BigBosBoxRifleRubber
+  parent: BoxMagazineRifle
+  name: "коробка гумових патронів"
+  suffix: JustDecor
+  description: "Картонна коробка з написом 'Non-lethal'. Всередині магазини з гумовими кулями."
+  components:
+  - type: StorageFill
+    contents:
+    - id: BigBosMagazineRifleRubber
+      amount: 2
+
+# Rubber Big Box (JustDecor, MGS style)
+- type: entity
+  id: BigBosBoxRifleRubberBulk
+  parent: BaseMagazineBoxRifle
+  name: "коробка гумових патронів (велика)"
+  suffix: JustDecor
+  description: "Велика коробка з написом 'Non-lethal'. Містить багато гумових патронів."
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 200
+    proto: BigBosCartridgeRifleRubber
+  - type: Sprite
+    layers:
+    - state: base-b
+      map: ["enum.GunVisualLayers.Base"]
+    - state: magb-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: magb
+    steps: 4
+    zeroVisible: false
+  - type: Appearance
+
+# Rubber Bullet (JustDecor)
+- type: entity
+  id: BigBosPelletRifleRubber
+  parent: BaseBullet
+  name: "куля (гумова)"
+  suffix: JustDecor
+  description: "Гумова куля для нелетального ураження."
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: beanbag
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+  - type: StaminaDamageOnCollide
+    damage: 40
+
+# WeaponWaterPistol Infinite (JustDecor)
+- type: entity
+  id: BigBosWeaponWaterPistolInfinite
+  parent: WeaponWaterPistol
+  name: "водяний пістолет (безкінечний)"
+  suffix: JustDecor
+  description: "Яскравий водяний пістолет з написом 'INFINITE'."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      chamber:
+        reagents:
+        - ReagentId: Water
+          Quantity: 999999
+        maxVol: 999999
+  - type: SolutionAmmoProvider
+    solutionId: chamber
+    proto: BulletWaterShot
+  - type: SolutionTransfer
+    transferAmount: 5
+    maxTransferAmount: 50
+    minTransferAmount: 5
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: chamber
+  - type: RefillableSolution
+    solution: chamber
+  - type: DrainableSolution
+    solution: chamber
+  - type: ExaminableSolution
+    solution: chamber
+  - type: StaticPrice
+    price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 150
+
+# Big Boss Teleport Box (JustDecor, MGS style)
+- type: entity
+  id: BigBosTeleportBox
+  name: "просто картонна коробка"
+  suffix: JustDecor
+  description: "Картонна коробка з великим логотипом D-D (Diamond Dogs) збоку. На ній написано: 'Миттєва доставка'."
+  parent: [BigBox, BaseItem]
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/closet.rsi
+    layers:
+    - state: cardboard
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: cardboard_open
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Item
+    size: Tiny
+  - type: UserInterface
+    interfaces:
+      enum.WizardTeleportUiKey.Key:
+        type: WizardTeleportBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: false
+    singleUser: true
+    key: enum.WizardTeleportUiKey.Key
+  - type: TeleportScroll
+    usesLeft: 50
+  - type: StaticPrice
+    price: 1000
+
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseCentcommContraband]
+  id: BigBosClothingOuterSneakingSuit
+  name: "маскувальний костюм"
+  suffix: JustDecor
+  description: "Високотехнологічний костюм для прихованих операцій. Забезпечує чудовий захист і поступово лікує власника завдяки наномашинам."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Armor/covert_armor.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Armor/covert_armor.rsi
+  - type: Armor
+    coverage:
+    - Chest
+    - Groin
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    modifiers:
+      coefficients:
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.35
+        Heat: 0.35
+    traumaDeductions:
+      Dismemberment: 0.9
+      OrganDamage: 0.9
+      BoneDamage: 0.9
+      VeinsDamage: 0.9
+      NerveDamage: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: ModifyDelayedKnockdown
+    delayDelta: 3
+    knockdownTimeDelta: -3
+  - type: StaminaResistance
+    damageCoefficient: 0.5
+  - type: StripMenuInvisible
+  - type: TemperatureProtection
+    heatingCoefficient: 0.8
+    coolingCoefficient: 0.1
+  - type: FireProtection
+    reduction: 0.9
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ClothingGrantComponent
+    component:
+    - type: DamageOverTime
+      damage:
+        types:
+          Slash: -3
+          Blunt: -3
+          Radiation: -3
+          Bloodloss: -3
+          Asphyxiation: -3
+          Cold: -3
+          Heat: -3
+          Poison: -3
+          Cellular: -3
+          Caustic: -3
+          Piercing: -3
+          Shock: -3
+          Structural: -3
+          Holy: -3
+      interval: 1.0
+      ignoreResistances: true
+
+- type: entity
+  id: BigBosStealthCamo
+  name: "маскувальний маячок"
+  parent: BaseItem
+  description: "Непримітний пристрій, який можна носити на шиї. Дозволяє активувати стелс-режим, не видає себе зовнішнім виглядом."
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/signaller.rsi
+    state: signaller
+  - type: Clothing
+    slots:
+    - neck
+    quickEquip: true
+    sprite: Objects/Devices/signaller.rsi
+  - type: StaticPrice
+    price: 500
+  - type: ClothingGrantComponent
+    component:
+    - type: StealthOnMove
+      passiveVisibilityRate: -0.5
+      movementVisibilityRate: 0.6
+    - type: Stealth
+      enabledOnDeath: false
+      enabledOnCrit: false
+
+- type: entity
+  id: JustDecorBaseCartridgeCaselessRifleTranquilizer
+  name: "патрон (9.5мм транквілізатор)"
+  parent: [ BaseCartridge, BaseSecurityContraband ]
+  suffix: JustDecor
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeCaselessRifle
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 15
+
+- type: entity
+  id: JustDecorCartridgeCaselessRifleTranquilizer
+  name: "патрон (9.5мм транквілізатор)"
+  parent: JustDecorBaseCartridgeCaselessRifleTranquilizer
+  suffix: JustDecor
+  description: "Малокаліберний патрон, що використовує безгільзову технологію із спеціальною транквілізаторною сумішшю. Використовується для знесилення цілей без летального ушкодження."
+  components:
+  - type: CartridgeAmmo
+    proto: JustDecorBulletCaselessRifleTranquilizer
+  - type: ChemicalAmmo
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 7
+        - ReagentId: Nocturine
+          Quantity: 5
+  - type: SolutionTransfer
+    maxTransferAmount: 12
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#4a90e2"
+
+- type: entity
+  id: JustDecorBulletCaselessRifleTranquilizer
+  name: "куля (9.5мм транквілізатор)"
+  categories: [ HideSpawnMenu ]
+  parent: BaseBulletPractice
+  suffix: JustDecor
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: practice
+    color: "#4a90e2"
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 15
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
+  - type: SolutionInjectOnProjectileHit
+    transferAmount: 15
+    solution: ammo
+  - type: InjectableSolution
+    solution: ammo
+
+- type: entity
+  id: JustDecorBaseMagazinePistolCaselessRifleTranquilizer
+  name: "пістолетний магазин (9.5мм транквілізатор)" # JustDecor
+  parent: BaseMagazineCaselessRifle
+  suffix: JustDecor
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - MagazinePistolCaselessRifle
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeCaselessRifle
+    proto: JustDecorCartridgeCaselessRifleTranquilizer
+    capacity: 10
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: JustDecorMagazinePistolCaselessRifleTranquilizer
+  name: "пістолетний магазин (9.5мм транквілізатор)"
+  parent: JustDecorBaseMagazinePistolCaselessRifleTranquilizer
+  suffix: JustDecor
+  description: "10-зарядний магазин для пістолета Cobra з транквілізаторними патронами. Призначений для знесилення цілей без летального ушкодження."
+  components:
+  - type: BallisticAmmoProvider
+    proto: JustDecorCartridgeCaselessRifleTranquilizer
+    capacity: 10
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: Appearance
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: JustDecorBaseMagazineBoxCaselessRifleTranquilizer
+  name: "коробка з патронами (9.5мм транквілізатор)"
+  suffix: JustDecor
+  components:
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Goobstation/Items/handling/ammobox_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Goobstation/Items/handling/ammobox_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/ammobox_drop.ogg
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeCaselessRifle
+    proto: JustDecorCartridgeCaselessRifleTranquilizer
+    capacity: 60
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/caseless_rifle.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  parent: JustDecorBaseMagazineBoxCaselessRifleTranquilizer
+  id: JustDecorMagazineBoxCaselessRifleTranquilizer10x24
+  name: "коробка з патронами (9.5мм транквілізатор)" # JustDecor
+  suffix: JustDecor
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 200
+    proto: JustDecorCartridgeCaselessRifleTranquilizer
+  - type: Sprite
+    layers:
+    - state: base-10x24
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag10-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag10
+    steps: 4
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  name: "кобра"
+  parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
+  id: JustDecorWeaponPistolCobraTranquilizer
+  suffix: JustDecor
+  description: "Напівавтоматичний пістолет з інтегрованим глушником, модифікований для стрільби транквілізаторними патронами. Улюблена зброя агентів для безшумного знесилення цілей без летального ушкодження. Живиться з пістолетних магазинів 9.5мм транквілізатор."
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: null
+  - type: Gun
+    fireRate: 4
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+      params:
+        volume: -16
+    projectileSpeed: 30
+    availableModes:
+    - SemiAuto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: JustDecorMagazinePistolCaselessRifleTranquilizer
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolCaselessRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: JustDecorCartridgeCaselessRifleTranquilizer
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: StaticPrice
+    price: 1800
+
+# BigBos Hristov (JustDecor, Tranquilizer)
+- type: entity
+  name: Hristov (транквілізатор)
+  parent: [WeaponSniperHristov, BaseGunWieldable, BaseSyndicateContraband]
+  id: BigBosWeaponSniperHristovTranquilizer
+  suffix: JustDecor
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
+  - type: GunRequiresWield
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+    resetOnHandSelected: false
+  - type: SpeedModifiedOnWield
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 8
+    pvsIncrease: 0.8
+  - type: StaticPrice
+    price: 3500
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: BigBosMagazineAntiMaterielTranquilizer
+        insertSound: /Audio/Weapons/Guns/MagIn/rifle_load.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/sfrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineAntiMateriel
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: BigBosCartridgeAntiMaterielTranquilizer
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeAntiMateriel
+
+# Magazine for Hristov Tranquilizer (JustDecor)
+- type: entity
+  id: BigBosMagazineAntiMaterielTranquilizer
+  name: "магазин (транквілізатор, .60)"
+  parent: MagazineAntiMateriel
+  suffix: JustDecor
+  components:
+  - type: BallisticAmmoProvider
+    proto: BigBosCartridgeAntiMaterielTranquilizer
+    capacity: 5
+
+# Cartridge for Hristov Tranquilizer (JustDecor)
+- type: entity
+  id: BigBosCartridgeAntiMaterielTranquilizer
+  name: "патрон (транквілізатор, .60)"
+  parent: CartridgeAntiMateriel
+  suffix: JustDecor
+  components:
+  - type: CartridgeAmmo
+    proto: BigBosBulletAntiMaterielTranquilizer
+
+# Bullet for Hristov Tranquilizer (JustDecor)
+- type: entity
+  id: BigBosBulletAntiMaterielTranquilizer
+  name: "куля (транквілізатор, .60)"
+  parent: BaseBulletPractice
+  suffix: JustDecor
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: beanbag
+    color: "#4a90e2"
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 2
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        reagents:
+        - ReagentId: Nocturine
+          Quantity: 22
+        maxVol: 22
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
+  - type: SolutionInjectOnProjectileHit
+    transferAmount: 22
+    solution: ammo
+  - type: InjectableSolution
+    solution: ammo
+
+- type: entity
+  id: BigBosCQCManual
+  parent: BaseItem
+  name: bigbos-cqc-manual-name
+  description: bigbos-cqc-manual-desc
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    state: book_icon
+  - type: Item
+    size: Small
+  - type: UseDelay
+    delay: 5.0
+  - type: GrantBigBosCQC
+    learnMessage: bigbos-cqc-manual-learn
+    multiUse: true
+    spawnedProto: null
+    soundOnUse:
+      path: /Audio/Items/book_page_turn.ogg

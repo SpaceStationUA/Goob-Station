@@ -1,0 +1,90 @@
+- type: entity
+  id: NanotrasenSecretOperationDocumentMission2
+  name: Секретний операційний бланк NanoTrasen
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      [color=#096107]█████████████████[/color]
+      [color=#096107]███[head=3]Бланк службового документа[/head]███[/color]
+      [color=#096107]███[head=3]NanoTrasen — Внутрішня безпека[/head]███[/color]
+      [color=#096107]█████████████████[/color]
+      ===================================================
+                     [head=2][bold]СЕКРЕТНО[/bold][/head]
+      ===================================================
+
+      [bold]Кодова назва:[/bold] [head=3]«ГЛИБОКЕ ПРОНИКНЕННЯ»[/head]
+
+      [bold]Ціль:[/bold] звільнити викраденого науковця, що володіє критичною інформацією.
+      [bold]Локація:[/bold] укріплений бункер (права нижня секція).
+
+      [bold]Завдання:[/bold]
+      [bold]1.[/bold] Повна підготовка на базі.
+      [bold]2.[/bold] Проникнути у бункер.
+      [bold]3.[/bold] Подолати 12–15 охоронців.
+      [bold]4.[/bold] Знешкодити турелі або обійти системи безпеки.
+      [bold]5.[/bold] Визволити науковця та евакуюватися.
+
+      ===================================================
+      [bold]Підпис відповідальної особи:[/bold] ___________________________
+
+- type: entity
+  id: SyndicateInternalMemoMission2
+  name: Внутрішнє повідомлення Синдикату
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      [color=#B50F1D]█████████████████[/color]
+      [color=#B50F1D]███[head=3]Службова записка[/head]███[/color]
+      [color=#B50F1D]███[head=3]Синдикат[/head]███[/color]
+      [color=#B50F1D]█████████████████[/color]
+      =============================================
+                      БУНКЕР БЕЗПЕКИ SY-BK
+      =============================================
+
+      Науковець утримується у секторі нижнього рівня.
+      Доступ за карткою офіцера.
+      Турелі переведені у режим «всім ворожим».
+
+- type: entity
+  id: BunkerDetentionLogMission2
+  name: Запис утримання
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Камера: BK-07
+      Ув'язнений: проф. Т.
+      Статус: агресивний, відмовляється співпрацювати.
+
+- type: entity
+  id: BunkerTurretSafetyNoteMission2
+  name: Технічна довідка по турелях
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Система безпеки: автономні турелі.
+      Режим: бойовий, пріоритет — неідентифіковані.
+      Ручне вимкнення: панель управління у правій секції.
+
+- type: entity
+  id: ScientistPersonalNoteMission2
+  name: Особиста нотатка
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Якщо хтось це знайде — виведіть мене звідси.
+      Вони не жартують.

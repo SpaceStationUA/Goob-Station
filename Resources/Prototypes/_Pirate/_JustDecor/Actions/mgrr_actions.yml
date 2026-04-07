@@ -1,0 +1,8 @@
+- type: entity
+  id: ActionBladeModeToggle
+  name: Blade Mode
+  description: Toggles a time-slowing combat focus.
+  parent: BaseToggleAction
+  components:
+  - type: InstantAction
+    event: !type:BladeModeToggleEvent

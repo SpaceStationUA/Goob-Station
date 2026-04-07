@@ -1,0 +1,84 @@
+- type: entity
+  id: NanotrasenSecretOperationDocumentMission3
+  name: Секретний операційний бланк NanoTrasen
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      [color=#096107]█████████████████[/color]
+      [color=#096107]███[head=3]Бланк службового документа[/head]███[/color]
+      [color=#096107]███[head=3]NanoTrasen — Внутрішня безпека[/head]███[/color]
+      [color=#096107]█████████████████[/color]
+      ===================================================
+                     [head=2][bold]СЕКРЕТНО[/bold][/head]
+      ===================================================
+
+      [bold]Кодова назва:[/bold] [head=3]«ЗАЧИСТКА ЛАБОРАТОРІЇ X-7»[/head]
+
+      [bold]Ситуація:[/bold] лабораторія захоплена ксеноморфами після інциденту.
+      [bold]Ціль:[/bold] повне очищення та запуск самознищення.
+
+      [bold]Завдання:[/bold]
+      [bold]1.[/bold] Оснаститися спеціалізованою зброєю проти органіки.
+      [bold]2.[/bold] Зачистити 3 рівні зараження.
+      [bold]3.[/bold] Знищити ксено-королеву та гніздо.
+      [bold]4.[/bold] Активувати протокол самознищення.
+      [bold]5.[/bold] Евакуюватися протягом 5 хв.
+
+- type: entity
+  id: X7LabLogMission3
+  name: Лог лабораторії X-7
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Запис 17: зразки поводяться нестабільно.
+      Запис 18: втрачено контроль у вентиляції.
+      Запис 19: персонал евакуйований частково.
+      Протокол «X-7-Black» підготовлено.
+
+- type: entity
+  id: X7IncidentReportMission3
+  name: Звіт про інцидент
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Інцидент: прорив утримання.
+      Кількість особин: неконтрольована.
+      Небезпека: високий ризик зараження сектору.
+      Рекомендація: повна зачистка з подальшим самознищенням.
+
+- type: entity
+  id: X7SelfDestructInstructionMission3
+  name: Інструкція самознищення
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Для активації:
+      1) Перевести пульт у режим «ARMED».
+      2) Підтвердити код X7-ALFA.
+      3) Час до детонації: 5 хв.
+      Увага: повторна відміна не передбачена.
+
+- type: entity
+  id: X7StaffNoteMission3
+  name: Запис персоналу
+  suffix: JustDecor, Місії
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      Якщо хтось це читає — ми не встигли.
+      Не входьте у вентиляцію без вогнемета.
+      Спаліть гніздо. І не дивіться назад.

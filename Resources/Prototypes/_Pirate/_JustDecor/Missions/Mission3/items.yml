@@ -1,0 +1,41 @@
+- type: entity
+  id: Mission3XenoNest
+  name: Ксеногніздо
+  suffix: JustDecor, Mission 3
+  parent: BaseStructure
+  components:
+  - type: Sprite
+    sprite: _White/Structures/Furniture/resin_nest.rsi
+    state: resin_nest0
+  - type: Flammable
+    fireSpread: true
+    damage:
+      types:
+        Heat: 1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: MissionSelfDestructConsole
+  name: Пульт самознищення X-7
+  suffix: JustDecor, Mission 3
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/door_remote.rsi
+    state: door_remotebase
+  - type: Item
+    size: Small
+  - type: UseDelay
+    delay: 1
+  - type: MissionSelfDestruct
+    countdown: 300
+    explosionTotalIntensity: 400
+    explosionSlope: 30
+    explosionMaxTileIntensity: 125

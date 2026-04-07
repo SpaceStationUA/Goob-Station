@@ -1,0 +1,64 @@
+- type: entity
+  name: Елітний охоронець синдикату
+  parent: MobSyndicateSoldierMissions
+  id: MobMission4EliteGuard
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - Mission4EliteGuardGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+    - type: PartialAbsorbable
+
+- type: entity
+  name: Р. Діденко — експериментальний кіборг
+  parent: BaseMobHuman
+  id: MobMission4BossDidenko
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - Mission4BossDidenkoGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+    - type: PartialAbsorbable
+    - type: MobPhases
+      phaseThresholds:
+        0: 1
+        400: 2
+        800: 3
+    - type: MissionBoss
+      shieldPhase: 1
+      reinforcementPhase: 2
+      berserkPhase: 3
+      berserkSpeedMultiplier: 1.35
+      berserkDamageMultiplier: 1.25
+    - type: BossShield
+      shieldHp: 350
+      maxShieldHp: 350
+      enabled: true
+    - type: BossPhaseActions
+      reinforcementPrototypes:
+        - MobMission4EliteGuard
+      reinforcementCount: 4
+      turretPrototypes:
+        - WeaponTurretSyndicate
+      turretCount: 2
+      berserkReinforcements:
+        - MobMission4EliteGuard
+      berserkReinforcementCount: 2
+      berserkTurrets:
+        - WeaponTurretSyndicate
+      berserkTurretCount: 1
+      spawnRadius: 4

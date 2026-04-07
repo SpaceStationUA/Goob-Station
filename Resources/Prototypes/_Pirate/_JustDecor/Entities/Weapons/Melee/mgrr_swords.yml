@@ -1,0 +1,98 @@
+- type: entity
+  name: меч Райдена
+  parent: Katana
+  id: WeaponMgrrRaidenBlade
+  description: Високочастотний клинок, створений для блискавичних ударів.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+  - type: MeleeWeapon
+    attackRate: 2.2
+    damage:
+      types:
+        Slash: 22
+      armorPenetration: 0.3
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: RaidenBlade
+    staminaHealOnHit: 8
+  - type: BladeMode
+    radius: 5
+    walkSpeedMultiplier: 0.6
+    sprintSpeedMultiplier: 0.6
+    pulseInterval: 1
+    slowdownDuration: 3
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/energykatana_storage_64x.rsi
+    shape:
+    - 0,0,0,3
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+    slots:
+    - Back
+    - Belt
+
+- type: entity
+  name: меч Самурая
+  parent: Katana
+  id: WeaponMgrrSamuraiBlade
+  description: Тонкий, смертельно точний клинок майстра.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/katana.rsi
+  - type: MeleeWeapon
+    attackRate: 1.6
+    damage:
+      types:
+        Slash: 18
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Reflect
+    reflectProb: 0.4
+    spread: 90
+  - type: SamuraiCounter
+    baseReflectProb: 0.4
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/katana_storage_64x.rsi
+    shape:
+    - 0,0,0,3
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/katana.rsi
+    slots:
+    - Back
+    - Belt
+
+- type: entity
+  name: меч миттєвого удару
+  parent: Katana
+  id: WeaponTeleportStrikeBlade
+  description: Клинок, що дозволяє миттєво опинитись за спиною цілі та завдати удару.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+  - type: MeleeWeapon
+    attackRate: 1.3
+    damage:
+      types:
+        Slash: 20
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: TeleportStrike
+    maxRange: 7
+    behindOffset: 0.5
+    returnDelay: 0.25
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/energykatana_storage_64x.rsi
+    shape:
+    - 0,0,0,3
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+    slots:
+    - Back
+    - Belt

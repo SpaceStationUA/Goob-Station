@@ -1,0 +1,30 @@
+- type: startingGear
+  id: Mission4EliteGuardGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetHardsuitSyndieElite
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponLaserCarbineAutoRechargeMission4
+  storage:
+    back:
+    - MedkitCombat
+
+- type: startingGear
+  id: Mission4BossDidenkoGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetHardsuitSyndieElite
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterHardsuitSyndieElite
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponLaserCarbineAutoRechargeMission4

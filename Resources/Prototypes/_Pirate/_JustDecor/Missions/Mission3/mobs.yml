@@ -1,0 +1,36 @@
+- type: entity
+  name: Ксено-дрон
+  parent: MobArgocyteSlurva
+  id: MobMission3XenoDrone
+  components:
+  - type: VentCrawler
+
+- type: entity
+  name: Ксено-скіттер
+  parent: MobArgocyteSkitter
+  id: MobMission3XenoSkitter
+  components:
+  - type: VentCrawler
+
+- type: entity
+  name: Ксено-паунсер
+  parent: MobArgocytePouncer
+  id: MobMission3XenoPouncer
+  components:
+  - type: VentCrawler
+
+- type: entity
+  name: Ксено-енфорсер
+  parent: MobArgocyteEnforcer
+  id: MobMission3XenoEnforcer
+
+- type: entity
+  name: Ксено-гарвестер
+  parent: MobArgocyteHarvester
+  id: MobMission3XenoHarvester
+
+- type: entity
+  name: Ксено-королева
+  parent: MobArgocyteLeviathing
+  id: MobMission3XenoQueen
+  description: Материнський організм гнізда X-7.

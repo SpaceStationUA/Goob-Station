@@ -1,0 +1,12 @@
+- type: entity
+  suffix: JustDecor, Mission 4, Unremoveable
+  parent: WeaponLaserCarbine
+  id: WeaponLaserCarbineAutoRechargeMission4
+  components:
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
+  - type: Battery
+    startingCharge: 250
+    maxCharge: 250
+  - type: Unremoveable

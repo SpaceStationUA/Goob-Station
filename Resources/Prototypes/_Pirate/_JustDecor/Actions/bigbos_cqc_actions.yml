@@ -1,0 +1,8 @@
+- type: entity
+  id: ActionCqcComboHelperToggle
+  name: bigbos-cqc-action-toggle-helper-name
+  description: bigbos-cqc-action-toggle-helper-desc
+  parent: BaseToggleAction
+  components:
+  - type: InstantAction
+    event: !type:CqcComboHelperToggleEvent

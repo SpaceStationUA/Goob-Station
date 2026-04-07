@@ -1,0 +1,52 @@
+- type: entity
+  name: Бункерний охоронець
+  parent: MobSyndicateSoldierMissions
+  id: MobMission2BunkerGuard
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - Mission2BunkerGuardGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+    - type: PartialAbsorbable
+
+- type: entity
+  name: Бункерний офіцер
+  parent: MobSyndicateSoldierMissions
+  id: MobMission2BunkerOfficer
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - Mission2BunkerOfficerGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+    - type: PartialAbsorbable
+
+- type: entity
+  name: Викрадений науковець
+  parent: BaseMobHuman
+  id: MobMission2ScientistPrisoner
+  components:
+    - type: NpcFactionMember
+      factions:
+        - NanoTrasen
+    - type: Loadout
+      prototypes:
+        - Mission2ScientistPrisonerGear
+    - type: InputMover
+    - type: MobMover
+    - type: PartialAbsorbable
+    - type: SSDIndicator
+      isSSD: false

@@ -1,0 +1,137 @@
+﻿- type: entity
+  name: Спавнер елітного охоронця
+  id: SpawnMobMission4EliteGuard
+  suffix: JustDecor, Mission 4
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission4
+    prototypes:
+    - MobMission4EliteGuard
+
+- type: entity
+  name: Спавнер боса Р. Діденка
+  id: SpawnMobMission4BossDidenko
+  suffix: JustDecor, Mission 4
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission4
+    prototypes:
+    - MobMission4BossDidenko
+
+- type: entity
+  name: Спавнер гравця-привида (Солдат Синдикату)
+  id: SpawnGhostMobSyndicateSoldierMission4
+  suffix: JustDecor, Mission 4, Ghost
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission4
+    prototypes:
+    - MobSyndicateSoldierMissionsGhost
+
+- type: entity
+  name: Спавнер гравця-привида (Елітний Солдат Синдикату)
+  id: SpawnGhostMobSyndicateEliteMission4
+  suffix: JustDecor, Mission 4, Ghost
+  parent: SpawnMobSyndicateMissionsBase
+  components:
+  - type: MissionSpawner
+    gameRules:
+    - Mission4
+    prototypes:
+    - MobSyndicateEliteSoldierMissionsGhost
+
+- type: entity
+  name: Спавнер турелі командного бункера
+  id: SpawnMission4Turret
+  suffix: JustDecor, Mission 4
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
+    state: base
+  - type: MissionSpawner
+    gameRules:
+    - Mission4
+    prototypes:
+    - WeaponTurretSyndicate
+
+- type: entity
+  name: Спавнер документа NanoTrasen
+  id: SpawnMission4DocumentNanotrasen
+  suffix: JustDecor, Mission 4
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission4
+    prototypes:
+    - NanotrasenSecretOperationDocumentMission4
+
+- type: entity
+  name: Спавнер документа (наказ синдикату)
+  id: SpawnMission4DocumentFinalOrder
+  suffix: JustDecor, Mission 4
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission4
+    prototypes:
+    - SyndicateFinalOrderMission4
+
+- type: entity
+  name: Спавнер документа (бойовий протокол)
+  id: SpawnMission4DocumentCombatProtocol
+  suffix: JustDecor, Mission 4
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission4
+    prototypes:
+    - CyborgCombatProtocolMission4
+
+- type: entity
+  name: Спавнер документа (запис про підкріплення)
+  id: SpawnMission4DocumentReinforcementLog
+  suffix: JustDecor, Mission 4
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission4
+    prototypes:
+    - BunkerReinforcementLogMission4
+
+- type: entity
+  name: Спавнер документа (легенда про Діденка)
+  id: SpawnMission4DocumentLegend
+  suffix: JustDecor, Mission 4
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission4
+    prototypes:
+    - DidenkoLegendNoteMission4

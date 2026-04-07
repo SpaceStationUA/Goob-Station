@@ -1,0 +1,40 @@
+- type: startingGear
+  id: Mission2BunkerGuardGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    head: ClothingHeadHelmetSwatSyndicate
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterArmorMission2
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponLaserCarbineAutoRechargeMission2
+  storage:
+    back:
+    - MedkitCombat
+
+- type: startingGear
+  id: Mission2BunkerOfficerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSyndieFormal
+    head: ClothingHeadHatSyndieMAA
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterArmorMission2
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpack
+    shoes: ClothingShoesBootsCombat
+    id: SyndiPDA
+  inhand:
+  - WeaponSubMachineGunC20rAutoRecharge
+  storage:
+    back:
+    - MedkitCombat
+
+- type: startingGear
+  id: Mission2ScientistPrisonerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientist
+    outerClothing: ClothingOuterCoatRnd
+    shoes: ClothingShoesBootsLaceup

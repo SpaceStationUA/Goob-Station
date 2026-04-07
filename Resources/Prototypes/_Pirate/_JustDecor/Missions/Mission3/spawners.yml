@@ -1,0 +1,194 @@
+﻿- type: entity
+  name: Спавнер ксено-дрона
+  id: SpawnMission3XenoDrone
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
+    state: slurva
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - MobMission3XenoDrone
+
+- type: entity
+  name: Спавнер ксено-скітерра
+  id: SpawnMission3XenoSkitter
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
+    state: skitter
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - MobMission3XenoSkitter
+
+- type: entity
+  name: Спавнер ксено-паунсера
+  id: SpawnMission3XenoPouncer
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
+    state: pouncer
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - MobMission3XenoPouncer
+
+- type: entity
+  name: Спавнер ксено-енфорсера
+  id: SpawnMission3XenoEnforcer
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Argocyte/argocyte_large.rsi
+    state: enforcer
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - MobMission3XenoEnforcer
+
+- type: entity
+  name: Спавнер ксено-гарвестера
+  id: SpawnMission3XenoHarvester
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Argocyte/argocyte_large.rsi
+    state: harvester
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - MobMission3XenoHarvester
+
+- type: entity
+  name: Спавнер ксено-королеви
+  id: SpawnMission3XenoQueen
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Argocyte/argocyte_large.rsi
+    state: leviathing
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - MobMission3XenoQueen
+
+- type: entity
+  name: Спавнер ксено-гнізда
+  id: SpawnMission3XenoNest
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: _White/Structures/Furniture/resin_nest.rsi
+    state: resin_nest0
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - Mission3XenoNest
+
+- type: entity
+  name: Спавнер пульта самознищення X-7
+  id: SpawnMission3SelfDestructConsole
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/door_remote.rsi
+    state: door_remotebase
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - MissionSelfDestructConsole
+
+- type: entity
+  name: Спавнер документа NanoTrasen
+  id: SpawnMission3DocumentNanotrasen
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - NanotrasenSecretOperationDocumentMission3
+
+- type: entity
+  name: Спавнер документа (лог лабораторії)
+  id: SpawnMission3DocumentLabLog
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - X7LabLogMission3
+
+- type: entity
+  name: Спавнер документа (звіт про інцидент)
+  id: SpawnMission3DocumentIncident
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - X7IncidentReportMission3
+
+- type: entity
+  name: Спавнер документа (інструкція самознищення)
+  id: SpawnMission3DocumentSelfDestruct
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - X7SelfDestructInstructionMission3
+
+- type: entity
+  name: Спавнер документа (запис персоналу)
+  id: SpawnMission3DocumentStaffNote
+  suffix: JustDecor, Mission 3
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: MissionSpawner
+    gameRules:
+    - Mission3
+    prototypes:
+    - X7StaffNoteMission3
