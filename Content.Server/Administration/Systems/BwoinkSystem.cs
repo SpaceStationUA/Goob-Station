@@ -200,14 +200,6 @@ namespace Content.Server.Administration.Systems
         private int _maxAdditionalChars;
         private readonly Dictionary<NetUserId, DateTime> _activeConversations = new();
 
-        // Pirate Changes Start Here - Group chat functionality
-        private readonly Dictionary<Guid, BwoinkGroupInfo> _activeGroups = new();
-        private readonly Dictionary<NetUserId, HashSet<Guid>> _userGroups = new();
-        private readonly Dictionary<NetUserId, DateTime> _mutedUsers = new();
-
-        private bool GroupChatEnabled => _cfg.GetCVar(CCVars.AhelpGroupChatEnabled);
-        // Pirate Changes End Here
-
         public override void Initialize()
         {
             base.Initialize();
@@ -234,17 +226,18 @@ namespace Content.Server.Administration.Systems
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
+            //Pirate Changes Start
             SubscribeLocalEvent<RoundRestartCleanupEvent>(_ =>
             {
                 _activeConversations.Clear();
-                // Pirate Changes Start Here
-                _activeGroups.Clear();
-                _userGroups.Clear();
-                _mutedUsers.Clear();
-                // Pirate Changes End Here
+
+                OnPirateRoundRestartCleanup();
             });
 
-        	_rateLimit.Register(
+            PirateInitialize();
+            //Pirate Changes End
+
+            _rateLimit.Register(
                 RateLimitKey,
                 new RateLimitRegistration(CCVars.AhelpRateLimitPeriod,
                     CCVars.AhelpRateLimitCount,
@@ -293,6 +286,9 @@ namespace Content.Server.Administration.Systems
 
         private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
+            // #Pirate Changes
+            PirateOnPlayerStatusChanged(e);
+
             if (e.NewStatus == SessionStatus.Disconnected)
             {
                 if (_activeConversations.TryGetValue(e.Session.UserId, out var lastMessageTime))
@@ -336,10 +332,6 @@ namespace Content.Server.Administration.Systems
                 return;
 
             RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(!string.IsNullOrWhiteSpace(_webhookUrl)), e.Session);
-
-            // Pirate Changes Start Here - Send group list to player
-            SendGroupListToPlayer(e.Session);
-            // Pirate Changes End Here
         }
 
         private void NotifyAdmins(ICommonSession session, string message, PlayerStatusType statusType)
@@ -827,6 +819,9 @@ namespace Content.Server.Administration.Systems
         {
             _activeConversations[bwoinkParams.Message.UserId] = DateTime.Now;
 
+            // #Pirate Changes
+            PirateOnBwoinkInternal(bwoinkParams);
+
             var escapedText = FormattedMessage.EscapeText(bwoinkParams.Message.Text);
             var adminColor = _config.GetCVar(GoobCVars.AdminBwoinkColor);
             var adminPrefix = "";
@@ -1063,432 +1058,6 @@ namespace Content.Server.Administration.Systems
             /// </summary>
             public bool OnCall;
         }
-
-        // Pirate Changes Start Here - Group Chat Methods
-        protected override void OnBwoinkCreateGroup(BwoinkCreateGroupMessage message, EntitySessionEventArgs eventArgs)
-        {
-            var senderSession = eventArgs.SenderSession;
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-
-            // Check if group chat is enabled
-            if (!GroupChatEnabled)
-                return;
-
-            // Only admins can create groups
-            if (senderAdmin?.HasFlag(AdminFlags.Adminhelp) != true)
-                return;
-
-            var groupInfo = new BwoinkGroupInfo(message.GroupId, message.GroupName, message.InitialMembers, DateTime.Now);
-            _activeGroups[message.GroupId] = groupInfo;
-
-            // Add all members to the user groups mapping
-            foreach (var member in message.InitialMembers)
-            {
-                if (!_userGroups.ContainsKey(member))
-                    _userGroups[member] = new HashSet<Guid>();
-                _userGroups[member].Add(message.GroupId);
-            }
-
-            // Notify all members about the new group
-            var updateMessage = new BwoinkGroupUpdateMessage(message.GroupId, message.GroupName, message.InitialMembers);
-            foreach (var member in message.InitialMembers)
-            {
-                if (_playerManager.TryGetSessionById(member, out var session))
-                {
-                    RaiseNetworkEvent(updateMessage, session.Channel);
-                    // Pirate Changes - Also send updated group list to each member
-                    SendGroupListToPlayer(session);
-                }
-            }
-
-            // Also notify all admins
-            var admins = GetTargetAdmins();
-            foreach (var admin in admins)
-            {
-                RaiseNetworkEvent(updateMessage, admin);
-            }
-        }
-
-        protected override void OnBwoinkAddToGroup(BwoinkAddToGroupMessage message, EntitySessionEventArgs eventArgs)
-        {
-            var senderSession = eventArgs.SenderSession;
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-
-            // Only admins can add to groups
-            if (senderAdmin?.HasFlag(AdminFlags.Adminhelp) != true)
-                return;
-
-            if (!_activeGroups.TryGetValue(message.GroupId, out var groupInfo))
-                return;
-
-            // Add user to group if not already present
-            if (!groupInfo.Members.Contains(message.UserId))
-            {
-                groupInfo.Members.Add(message.UserId);
-
-                if (!_userGroups.ContainsKey(message.UserId))
-                    _userGroups[message.UserId] = new HashSet<Guid>();
-                _userGroups[message.UserId].Add(message.GroupId);
-
-                // Notify all group members about the update
-                var updateMessage = new BwoinkGroupUpdateMessage(message.GroupId, groupInfo.GroupName, groupInfo.Members);
-                foreach (var member in groupInfo.Members)
-                {
-                    if (_playerManager.TryGetSessionById(member, out var session))
-                    {
-                        RaiseNetworkEvent(updateMessage, session.Channel);
-                        // Pirate Changes - Also send updated group list
-                        SendGroupListToPlayer(session);
-                    }
-                }
-
-                // Also notify all admins
-                var admins = GetTargetAdmins();
-                foreach (var admin in admins)
-                {
-                    RaiseNetworkEvent(updateMessage, admin);
-                }
-            }
-        }
-
-        protected override void OnBwoinkRemoveFromGroup(BwoinkRemoveFromGroupMessage message, EntitySessionEventArgs eventArgs)
-        {
-            var senderSession = eventArgs.SenderSession;
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-
-            // Only admins can remove from groups
-            if (senderAdmin?.HasFlag(AdminFlags.Adminhelp) != true)
-                return;
-
-            if (!_activeGroups.TryGetValue(message.GroupId, out var groupInfo))
-                return;
-
-            // Remove user from group
-            if (groupInfo.Members.Remove(message.UserId))
-            {
-                if (_userGroups.TryGetValue(message.UserId, out var userGroupSet))
-                {
-                    userGroupSet.Remove(message.GroupId);
-                    if (userGroupSet.Count == 0)
-                        _userGroups.Remove(message.UserId);
-                }
-
-                // Notify all remaining group members about the update
-                var updateMessage = new BwoinkGroupUpdateMessage(message.GroupId, groupInfo.GroupName, groupInfo.Members);
-                foreach (var member in groupInfo.Members)
-                {
-                    if (_playerManager.TryGetSessionById(member, out var session))
-                    {
-                        RaiseNetworkEvent(updateMessage, session.Channel);
-                    }
-                }
-
-                // Notify the removed user that they were removed
-                if (_playerManager.TryGetSessionById(message.UserId, out var removedSession))
-                {
-                    var deletedMessage = new BwoinkGroupUpdateMessage(message.GroupId, groupInfo.GroupName, new List<NetUserId>(), true);
-                    RaiseNetworkEvent(deletedMessage, removedSession.Channel);
-                }
-
-                // Also notify all admins
-                var admins = GetTargetAdmins();
-                foreach (var admin in admins)
-                {
-                    RaiseNetworkEvent(updateMessage, admin);
-                }
-            }
-        }
-
-        protected override void OnBwoinkDeleteGroup(BwoinkDeleteGroupMessage message, EntitySessionEventArgs eventArgs)
-        {
-            var senderSession = eventArgs.SenderSession;
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-
-            // Only admins can delete groups
-            if (senderAdmin?.HasFlag(AdminFlags.Adminhelp) != true)
-                return;
-
-            if (!_activeGroups.TryGetValue(message.GroupId, out var groupInfo))
-                return;
-
-            // Remove group from all users
-            foreach (var member in groupInfo.Members)
-            {
-                if (_userGroups.TryGetValue(member, out var userGroupSet))
-                {
-                    userGroupSet.Remove(message.GroupId);
-                    if (userGroupSet.Count == 0)
-                        _userGroups.Remove(member);
-                }
-            }
-
-            // Notify all group members that the group was deleted
-            var deletedMessage = new BwoinkGroupUpdateMessage(message.GroupId, groupInfo.GroupName, new List<NetUserId>(), true);
-            foreach (var member in groupInfo.Members)
-            {
-                if (_playerManager.TryGetSessionById(member, out var session))
-                {
-                    RaiseNetworkEvent(deletedMessage, session.Channel);
-                }
-            }
-
-            // Also notify all admins
-            var admins = GetTargetAdmins();
-            foreach (var admin in admins)
-            {
-                RaiseNetworkEvent(deletedMessage, admin);
-            }
-
-            // Remove the group
-            _activeGroups.Remove(message.GroupId);
-        }
-
-        // Pirate Changes Start Here - Group rename implementation
-        protected override void OnBwoinkRenameGroup(BwoinkRenameGroupMessage message, EntitySessionEventArgs eventArgs)
-        {
-            var senderSession = eventArgs.SenderSession;
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-
-            // Only admins can rename groups
-            if (senderAdmin?.HasFlag(AdminFlags.Adminhelp) != true)
-                return;
-
-            if (!_activeGroups.TryGetValue(message.GroupId, out var groupInfo))
-                return;
-
-            // Update group name
-            var newGroupInfo = new BwoinkGroupInfo(groupInfo.GroupId, message.NewName, groupInfo.Members, groupInfo.CreatedAt);
-            _activeGroups[message.GroupId] = newGroupInfo;
-
-            // Notify all group members about the rename
-            var updateMessage = new BwoinkGroupUpdateMessage(message.GroupId, message.NewName, groupInfo.Members);
-            foreach (var member in groupInfo.Members)
-            {
-                if (_playerManager.TryGetSessionById(member, out var session))
-                {
-                    RaiseNetworkEvent(updateMessage, session.Channel);
-                    // Pirate Changes - Also send updated group list
-                    SendGroupListToPlayer(session);
-                }
-            }
-
-            // Also notify all admins
-            var admins = GetTargetAdmins();
-            foreach (var admin in admins)
-            {
-                RaiseNetworkEvent(updateMessage, admin);
-            }
-        }
-        // Pirate Changes End Here
-
-        protected override void OnBwoinkGroupTextMessage(BwoinkGroupTextMessage message, EntitySessionEventArgs eventArgs)
-        {
-            var senderSession = eventArgs.SenderSession;
-
-            // Check if group chat is enabled
-            if (!GroupChatEnabled)
-                return;
-
-            if (!_activeGroups.TryGetValue(message.GroupId, out var groupInfo))
-                return;
-
-            // Check if sender is muted
-            if (_mutedUsers.TryGetValue(message.SenderId, out var muteExpiry))
-            {
-                if (DateTime.Now < muteExpiry)
-                {
-                    // Send group mute message back to sender
-                    var muteMessage = new BwoinkGroupTextMessage(
-                        message.GroupId,
-                        SharedBwoinkSystem.SystemUserId,
-                        Loc.GetString("bwoink-mute-message-group", ("until", muteExpiry.ToString("HH:mm:ss"))),
-                        DateTime.Now,
-                        false
-                    );
-                    RaiseNetworkEvent(muteMessage, senderSession.Channel);
-                    return;
-                }
-                else
-                {
-                    // Mute expired, remove it
-                    _mutedUsers.Remove(message.SenderId);
-                }
-            }
-
-            // Check if sender is a member of the group or an admin
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-            var isAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp) ?? false;
-            var isMember = groupInfo.Members.Contains(message.SenderId);
-
-            if (!isAdmin && !isMember)
-                return;
-
-            // Pirate Changes Start Here - Format message with sender name and admin colors
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-            var senderName = FormatGroupSenderName(senderSession, senderAdmin);
-
-            // Create formatted message
-            var formattedMessage = new BwoinkGroupTextMessage(
-                message.GroupId,
-                message.SenderId,
-                $"{senderName}: {message.Text}",
-                message.SentAt,
-                message.PlaySound
-            );
-
-            // Send formatted message to all group members
-            var sentTo = new HashSet<INetChannel>();
-            foreach (var member in groupInfo.Members)
-            {
-                if (_playerManager.TryGetSessionById(member, out var session))
-                {
-                    RaiseNetworkEvent(formattedMessage, session.Channel);
-                    sentTo.Add(session.Channel);
-                }
-            }
-
-            // Also send to admins who are not already in the group
-            var admins = GetTargetAdmins();
-            foreach (var admin in admins)
-            {
-                if (!sentTo.Contains(admin))
-                {
-                    RaiseNetworkEvent(formattedMessage, admin);
-                }
-            }
-            // Pirate Changes End Here
-        }
-
-        private void SendGroupListToPlayer(ICommonSession session)
-        {
-            var playerGroups = new List<BwoinkGroupInfo>();
-            var senderAdmin = _adminManager.GetAdminData(session);
-            var isAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp) ?? false;
-
-            if (isAdmin)
-            {
-                // Admins can see all groups
-                playerGroups.AddRange(_activeGroups.Values);
-            }
-            else if (_userGroups.TryGetValue(session.UserId, out var userGroupSet))
-            {
-                // Regular users can only see groups they're members of
-                foreach (var groupId in userGroupSet)
-                {
-                    if (_activeGroups.TryGetValue(groupId, out var groupInfo))
-                    {
-                        playerGroups.Add(groupInfo);
-                    }
-                }
-            }
-
-            if (playerGroups.Count > 0)
-            {
-                var groupListMessage = new BwoinkGroupListMessage(playerGroups);
-                RaiseNetworkEvent(groupListMessage, session.Channel);
-            }
-        }
-
-        protected override void OnBwoinkMutePlayer(BwoinkMutePlayerMessage message, EntitySessionEventArgs eventArgs)
-        {
-            var senderSession = eventArgs.SenderSession;
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-
-            // Check if group chat is enabled
-            if (!GroupChatEnabled)
-                return;
-
-            // Only admins can mute players
-            if (senderAdmin?.HasFlag(AdminFlags.Adminhelp) != true)
-                return;
-
-            var muteExpiry = DateTime.Now + message.MuteDuration;
-            _mutedUsers[message.UserId] = muteExpiry;
-
-            // Notify admin about successful mute
-            if (_playerManager.TryGetPlayerData(message.UserId, out var playerData))
-            {
-                var adminNotification = new BwoinkTextMessage(
-                    senderSession.UserId,
-                    SharedBwoinkSystem.SystemUserId,
-                    Loc.GetString("bwoink-mute-admin-notification",
-                        ("player", playerData.UserName),
-                        ("until", muteExpiry.ToString("HH:mm:ss"))),
-                    DateTime.Now,
-                    false
-                );
-                RaiseNetworkEvent(adminNotification, senderSession.Channel);
-            }
-        }
-
-        protected override void OnBwoinkUnmutePlayer(BwoinkUnmutePlayerMessage message, EntitySessionEventArgs eventArgs)
-        {
-            var senderSession = eventArgs.SenderSession;
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-
-            // Check if group chat is enabled
-            if (!GroupChatEnabled)
-                return;
-
-            // Only admins can unmute players
-            if (senderAdmin?.HasFlag(AdminFlags.Adminhelp) != true)
-                return;
-
-            _mutedUsers.Remove(message.UserId);
-
-            // Notify admin about successful unmute
-            if (_playerManager.TryGetPlayerData(message.UserId, out var playerData))
-            {
-                var adminNotification = new BwoinkTextMessage(
-                    senderSession.UserId,
-                    SharedBwoinkSystem.SystemUserId,
-                    Loc.GetString("bwoink-unmute-admin-notification", ("player", playerData.UserName)),
-                    DateTime.Now,
-                    false
-                );
-                RaiseNetworkEvent(adminNotification, senderSession.Channel);
-            }
-        }
-
-        private string FormatGroupSenderName(ICommonSession senderSession, AdminData? senderAdmin)
-        {
-            var senderName = senderSession.Name;
-
-            // If not an admin, return plain name
-            if (senderAdmin == null)
-                return senderName;
-
-            // Get admin color configuration
-            var adminColor = _config.GetCVar(GoobCVars.AdminBwoinkColor);
-            var adminPrefix = "";
-
-            // Get admin prefix if enabled
-            if (_config.GetCVar(CCVars.AhelpAdminPrefix))
-            {
-                adminPrefix = Loc.GetString("bwoink-admin-prefix");
-                adminPrefix = $"[bold]\\[{adminPrefix}\\][/bold] ";
-            }
-
-            // Use admin OOC color if enabled
-            if (_config.GetCVar(GoobCVars.UseAdminOOCColorInBwoinks))
-            {
-                var prefs = _preferencesManager.GetPreferences(senderSession.UserId);
-                adminColor = prefs.AdminOOCColor.ToHex();
-            }
-
-            // Format based on admin level
-            if (senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor
-            {
-                return $"[color=purple]{adminPrefix}{senderName}[/color]";
-            }
-            else if (senderAdmin.HasFlag(AdminFlags.Adminhelp)) // Full admin
-            {
-                return $"[color={adminColor}]{adminPrefix}{senderName}[/color]";
-            }
-
-            return senderName;
-        }
-        // Pirate Changes End Here
     }
 
     public sealed class AHelpMessageParams

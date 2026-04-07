@@ -1,5 +1,4 @@
-﻿using Content.Shared._Shitmed.Medical.Surgery.Pain;
-using Content.Goobstation.Maths.FixedPoint;
+﻿using Content.Goobstation.Maths.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Shitmed.Medical.Surgery.Consciousness;
@@ -20,9 +19,23 @@ public sealed class ConsciousnessComponentState : ComponentState
     public FixedPoint2 Multiplier;
     public FixedPoint2 Cap;
 
-    public readonly Dictionary<(NetEntity, string), ConsciousnessModifier> Modifiers = new();
-    public readonly Dictionary<(NetEntity, string), ConsciousnessMultiplier> Multipliers = new();
-    public readonly Dictionary<string, (NetEntity?, bool, bool)> RequiredConsciousnessParts = new();
+    public readonly Dictionary<(NetEntity, string), ConsciousnessModifier> Modifiers;
+    public readonly Dictionary<(NetEntity, string), ConsciousnessMultiplier> Multipliers;
+    public readonly Dictionary<string, (NetEntity?, bool, bool)> RequiredConsciousnessParts;
+
+    public ConsciousnessComponentState()
+    {
+        Modifiers = new();
+        Multipliers = new();
+        RequiredConsciousnessParts = new();
+    }
+
+    public ConsciousnessComponentState(int modifiersCapacity, int multipliersCapacity, int requiredPartsCapacity)
+    {
+        Modifiers = new(modifiersCapacity);
+        Multipliers = new(multipliersCapacity);
+        RequiredConsciousnessParts = new(requiredPartsCapacity);
+    }
 
     public bool ForceDead;
     public bool ForceUnconscious;

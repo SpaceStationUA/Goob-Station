@@ -386,6 +386,23 @@ public sealed partial class WizardMirrorWindow : DefaultWindow
     /// </summary>
     public void SetProfile(HumanoidCharacterProfile? profile)
     {
+        // Pirate changes start
+        if (profile != null)
+        {
+            var ckey = Robust.Shared.IoC.IoCManager.Resolve<Robust.Client.Player.IPlayerManager>().LocalSession?.Name;
+            if (ckey != null)
+            {
+                var originalMarkings = profile.Appearance.Markings;
+                var validMarkings = _markingManager.FilterValidMarkings(originalMarkings, profile.Species, profile.Sex, ckey);
+
+                if (originalMarkings.Count != validMarkings.Count)
+                {
+                    profile = profile.WithCharacterAppearance(profile.Appearance.WithMarkings(validMarkings));
+                }
+            }
+        }
+        // Pirate changes end
+
         Profile = profile?.Clone();
         IsDirty = false;
 
@@ -610,13 +627,13 @@ public sealed partial class WizardMirrorWindow : DefaultWindow
 
         var hairMarking = Profile.Appearance.HairStyleId switch
         {
-            HairStyles.DefaultHairStyle => new List<Marking>(),
+            "HairBald" => new List<Marking>(),
             _ => new() { new(Profile.Appearance.HairStyleId, new List<Color>() { Profile.Appearance.HairColor }) },
         };
 
         var facialHairMarking = Profile.Appearance.FacialHairStyleId switch
         {
-            HairStyles.DefaultFacialHairStyle => new List<Marking>(),
+            "FacialHairShaved" => new List<Marking>(),
             _ => new()
             {
                 new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor })

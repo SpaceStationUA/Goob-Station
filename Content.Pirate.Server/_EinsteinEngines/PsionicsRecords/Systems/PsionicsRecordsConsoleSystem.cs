@@ -3,6 +3,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.PsionicsRecords;
 using Content.Shared.PsionicsRecords.Components;
@@ -21,9 +22,9 @@ using Content.Shared.Psionics.Components;
 namespace Content.Server.PsionicsRecords.Systems;
 
 /// <summary>
-/// Handles all UI for Psionics records console
+/// Handles all UI for Psionics records console.
 /// </summary>
-public sealed class PsionicsRecordsConsoleSystem : SharedPsionicsRecordsConsoleSystem
+public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecordsConsoleSystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly PsionicsRecordsSystem _psionicsRecords = default!;
@@ -34,18 +35,29 @@ public sealed class PsionicsRecordsConsoleSystem : SharedPsionicsRecordsConsoleS
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
-    public override void Initialize()
-    {
+	    public override void Initialize()
+	    {
         SubscribeLocalEvent<PsionicsRecordsConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<PsionicsRecordsConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
 
-        Subs.BuiEvents<PsionicsRecordsConsoleComponent>(PsionicsRecordsConsoleKey.Key, subs =>
-        {
-            subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
-            subs.Event<SelectStationRecord>(OnKeySelected);
-            subs.Event<SetStationRecordFilter>(OnFiltersChanged);
-            subs.Event<PsionicsRecordChangeStatus>(OnChangeStatus);
-        });
+	        Subs.BuiEvents<PsionicsRecordsConsoleComponent>(PsionicsRecordsConsoleKey.Key, subs =>
+	        {
+	            subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
+	            subs.Event<SelectStationRecord>(OnKeySelected);
+	            subs.Event<SetStationRecordFilter>(OnFiltersChanged);
+	            subs.Event<PsionicsRecordChangeStatus>(OnChangeStatus);
+	        });
+
+	        // Pirate-PsionicsMenu-Start
+	        // Do not subscribe another BoundUIOpenedEvent handler for IdExaminableComponent,
+	        // the criminal wanted menu already uses that. Instead the client sends a
+	        // PsionicsMenuRequestState when the psionics menu opens.
+	        Subs.BuiEvents<IdExaminableComponent>(SetPsionicsVerbMenu.Key, subs =>
+	        {
+	            subs.Event<PsionicsMenuRequestState>(UpdateUserInterface);
+	            subs.Event<PsionicsRecordChangeStatus>(OnChangeStatus);
+	        });
+	        // Pirate-PsionicsMenu-End
     }
 
     private void UpdateUserInterface<T>(Entity<PsionicsRecordsConsoleComponent> ent, ref T args)
@@ -133,8 +145,10 @@ public sealed class PsionicsRecordsConsoleSystem : SharedPsionicsRecordsConsoleS
             // this is impossible
             _ => "not-wanted"
         };
+        // Get radio channel from IdExaminablePsionicsComponent or use default
+        var radioChannel = "Science";
         _radio.SendRadioMessage(ent, Loc.GetString($"psionics-records-console-{statusString}", args),
-            ent.Comp.RadioChannel, ent);
+            radioChannel, ent);
 
         UpdateUserInterface(ent);
         UpdatePsionicsIdentity(name, msg.Status);
@@ -206,12 +220,20 @@ public sealed class PsionicsRecordsConsoleSystem : SharedPsionicsRecordsConsoleS
     }
 
     /// <summary>
-    /// Checks if the new identity's name has a psionics record attached to it, and gives the entity the icon that
+    /// Checks if the entity's ID card name has a psionics record attached to it, and gives the ID card the icon that
     /// belongs to the status if it does.
     /// </summary>
     public void CheckNewIdentity(EntityUid uid)
     {
-        var name = Identity.Name(uid, EntityManager);
+        // Try to find the entity's ID card
+        if (!_idCard.TryFindIdCard(uid, out var idCardEntity))
+            return;
+
+        var idCard = idCardEntity.Comp;
+        if (string.IsNullOrEmpty(idCard.FullName))
+            return;
+
+        var name = idCard.FullName;
         var xform = Transform(uid);
 
         // TODO use the entity's station? Not the station of the map that it happens to currently be on?
@@ -224,11 +246,11 @@ public sealed class PsionicsRecordsConsoleSystem : SharedPsionicsRecordsConsoleS
             {
                 if (record.Status != PsionicsStatus.None)
                 {
-                    SetPsionicsIcon(name, record.Status, uid);
+                    SetPsionicsIcon(name, record.Status, idCardEntity.Owner);
                     return;
                 }
             }
         }
-        RemComp<PsionicsRecordComponent>(uid);
+        RemComp<PsionicsRecordComponent>(idCardEntity.Owner);
     }
 }

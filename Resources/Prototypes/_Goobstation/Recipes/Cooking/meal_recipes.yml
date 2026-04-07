@@ -8,7 +8,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeLollypop
-  name: "рецепт льодяника"
+  name: lollypop recipe
   result: FoodSnackLollypop
   time: 5
   solids:
@@ -18,9 +18,46 @@
 
 - type: microwaveMealRecipe
   id: RecipeFreedomCheeseBlock
-  name: "рецепт сиру свободи"
+  name: freedom cheese recipe
   result: FoodFreedomCheeseBlock
   time: 5
   solids:
     FoodCheese: 1
     FoodBadRecipe: 1 # Ideally would like it to be Plastic, but gets transformed to FoodBadRecipe anyways.
+
+- type: microwaveMealRecipe
+  id: RecipeFriedVoxL
+  name: 'fried "chicken" recipe'
+  result: FoodMeatVoxFried
+  time: 10
+  solids:
+    LeftLegVox: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFriedVoxR
+  name: 'fried "chicken" recipe'
+  result: FoodMeatVoxFried
+  time: 10
+  solids:
+    RightLegVox: 1
+
+- type: microwaveMealRecipe
+  id: RecipeChudBurger
+  name: nothing burger recipe
+  result: FoodBurgerChud
+  time: 10
+  group: Savory
+  solids:
+    FoodBreadBun: 1
+    FoodMeat: 1
+  reagents:
+    Nothing: 5
+
+- type: microwaveMealRecipe
+  id: RecipeMothdog
+  name: mothdog recipe
+  result: FoodSnackMothdog
+  time: 5
+  group: Savory
+  solids:
+    HeadMoth: 1

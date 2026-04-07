@@ -150,17 +150,39 @@
       time: 14400 # 4 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 14400 # 4 hours
+      time: 21600 # 6 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 14400 # 4 hours
-    - !type:SpeciesRequirement # Goob - None Felinid
+      time: 28000 # 8 hours
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - MovementImpaired
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+    - !type:SpeciesRequirement # Pirate edit
       inverted: true
       species:
-      - Felinid
+      #- Felinid
+      - Hydrakin
       #any MRP using our code might eventually want to use it
     # - !type:SaturationRequirement # MisandryBox - no neon hair on captain
     #   hairColorSaturation: 0.30
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+    # Pirate contractor end
+  guides: # goobstation
+  - Command
+  - Succession
+  - StandardProceduresSOP
+  - CaptainSOP
   goobcoins: 50 #Goob content
   weight: 20
   startingGear: CaptainGear
@@ -168,6 +190,7 @@
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  whitelisted: true # Pirate
   accessGroups:
   - AllAccess
   special:
@@ -183,14 +206,14 @@
   id: CaptainGear
   equipment:
     shoes: ClothingShoesBootsLaceup
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesCommand
     #gloves: ClothingHandsGlovesCaptain - Goobstation, moved to loadouts
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
   storage:
     back:
     - Flash
-    - TelescopicBaton # Goobstation
+    #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
     # - StationCharter
 
 - type: chameleonOutfit

@@ -125,6 +125,7 @@
   - CaptainMask # Goobstation - Lollypops!
   - CaptainBackpack
   - CaptainOuterClothing
+  - CommandSelfDefense # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -145,6 +146,7 @@
   - HoPBackpack
   - HoPOuterClothing
   - Glasses
+  - CommandSelfDefense # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -170,13 +172,20 @@
   id: JobPassenger
   groups:
   - GroupTankHarness
-  - PassengerJumpsuit
+  #- PassengerJumpsuit # Pirate wardrobe
   - CommonBackpack
-  - PassengerNeck
-  - PassengerFace
+ # Pirate wardrobe start VVV
+  - PiratePassengerJumpsuit
+  - PiratePassengerHead
+  - PiratePassengerOuterClothing
+  - PiratePassengerShoes
+  - PiratePassengerNeck
+ # Pirate wardrobe end ^^^
+  #- PassengerNeck # Pirate wardrobe
+  - PassengerFace 
   - PassengerGloves
-  - PassengerOuterClothing
-  - PassengerShoes
+  #- PassengerOuterClothing # Pirate wardrobe
+  #- PassengerShoes # Pirate wardrobe
   - Glasses
   - Survival
   - Trinkets
@@ -401,6 +410,7 @@
   - QuartermasterOuterClothing
   - QuartermasterShoes
   - Glasses
+  - CommandSelfDefense # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -435,6 +445,7 @@
   - GroupTankHarness
   - SalvageSpecialistNeck # Goobstation
   - SalvageSpecialistBackpack
+  - SalvageSpecialistJumpsuit # Goobstation
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - Glasses
@@ -458,6 +469,7 @@
   - ChiefEngineerNeck
   - ChiefEngineerOuterClothing
   - ChiefEngineerShoes
+  - CommandSelfDefense # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -473,6 +485,7 @@
   - GroupTankHarness
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
+  - TechnicalAssistantEquipment # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -492,6 +505,7 @@
   - StationEngineerOuterClothing
   - StationEngineerShoes
   - StationEngineerID
+  - StationEngineerEquipment # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -510,6 +524,7 @@
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
+  - StationEngineerEquipment # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -532,6 +547,7 @@
   - ScientistGloves
   - ResearchDirectorShoes
   - MantisEyes
+  - CommandSelfDefense # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -588,6 +604,7 @@
   - HeadofSecurityJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
+  - SecurityWeapon # Pirate
   - SecurityBelt
   - HeadofSecurityOuterClothing
   - HeadofSecurityShoes # Goobstation edit
@@ -609,6 +626,7 @@
   - WardenJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
+  - SecurityWeapon # Pirate
   - SecurityNeck
   - SecurityBelt
   - WardenOuterClothing
@@ -626,10 +644,12 @@
 - type: roleLoadout
   id: JobSecurityOfficer
   groups:
-  - SecurityHead
+  - SecurityOfficerHead # Pirate
   - SecurityJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
+  - SecurityWeapon # Pirate
+  - SecurityOfficerMask # Pirate
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityNeck
@@ -668,12 +688,14 @@
 - type: roleLoadout
   id: JobSecurityCadet
   groups:
+  - SecurityHead # Pirate
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
   - SurvivalSecurity
   - SecurityNeck
   - SecurityCadetOuterClothing # Pirate
+  - SecurityOfficerMask # Pirate
   - Trinkets
   - Animals
   - GroupSpeciesBreathToolSecurity
@@ -696,6 +718,7 @@
   - ChiefMedicalOfficerNeck
   - ChiefMedicalOfficerShoes
   - MedicalEyewear
+  - CommandSelfDefense # Pirate
   - SurvivalMedical
   - Trinkets
   - Animals

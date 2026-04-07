@@ -16,16 +16,12 @@ public sealed class PainTolerantSystem : EntitySystem
     }
     private void OnInit(Entity<PainTolerantComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<MobThresholdsComponent>(ent.Owner, out var thresholds)) return;
-        if (ent.Comp.PainToleranceModifier <= 0f)
-        {
-            Log.Warning($"Invalid PainToleranceModifier {ent.Comp.PainToleranceModifier} for {ent.Owner}. Using default value 1.0f");
-            ent.Comp.PainToleranceModifier = 1.0f;
-        }
-        _mobThresholdSystem.SetMobStateThreshold(ent.Owner,
-        _mobThresholdSystem.GetThresholdForState(ent.Owner, MobState.Critical) * ent.Comp.PainToleranceModifier,
-        MobState.Critical,
-        thresholds);
-    }
+        if (!TryComp<MobThresholdsComponent>(ent, out var thresholds))
+            return;
 
+        _mobThresholdSystem.SetMobStateThreshold(ent,
+            _mobThresholdSystem.GetThresholdForState(ent, MobState.Critical) + ent.Comp.PainToleranceModifier,
+            MobState.Critical,
+            thresholds);
+    }
 }

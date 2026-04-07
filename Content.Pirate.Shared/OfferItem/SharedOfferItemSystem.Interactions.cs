@@ -1,7 +1,6 @@
-using Content.Shared.Popups;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Input;
 using Content.Shared.Hands.Components;
+using Content.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 
@@ -37,23 +36,19 @@ public abstract partial class SharedOfferItemSystem
         if (!TryComp<OfferItemComponent>(uid, out var offerItem))
             return;
 
-        if (!TryComp<HandsComponent>(uid, out var hands) || hands.ActiveHand == null)
+        if (!TryComp<HandsComponent>(uid, out var hands) ||
+            hands.ActiveHandId == null ||
+            !_hands.TryGetHeldItem((uid, hands), hands.ActiveHandId, out var heldItem))
             return;
 
-        offerItem.Item = hands.ActiveHand.HeldEntity;
+        offerItem.Item = heldItem.Value;
 
-        if (offerItem.IsInOfferMode == false)
+        if (!offerItem.IsInOfferMode)
         {
-            if (offerItem.Item == null)
-            {
-                _popup.PopupEntity(Loc.GetString("offer-item-empty-hand"), uid, uid);
-                return;
-            }
-
             if (offerItem.Hand == null || offerItem.Target == null)
             {
                 offerItem.IsInOfferMode = true;
-                offerItem.Hand = hands.ActiveHand.Name;
+                offerItem.Hand = hands.ActiveHandId;
 
                 Dirty(uid, offerItem);
                 return;
@@ -62,9 +57,7 @@ public abstract partial class SharedOfferItemSystem
 
         if (offerItem.Target != null)
         {
-            UnReceive(offerItem.Target.Value, offerItem: offerItem);
-            offerItem.IsInOfferMode = false;
-            Dirty(uid, offerItem);
+            UnOffer(uid, offerItem);
             return;
         }
 

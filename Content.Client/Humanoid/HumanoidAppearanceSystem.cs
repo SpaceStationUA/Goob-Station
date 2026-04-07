@@ -55,14 +55,14 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
     private void OnCvarChanged(bool value)
     {
-        var humanoidQuery = EntityManager.AllEntityQueryEnumerator<HumanoidAppearanceComponent, SpriteComponent>();
+        var humanoidQuery = AllEntityQuery<HumanoidAppearanceComponent, SpriteComponent>();
         while (humanoidQuery.MoveNext(out var uid, out var humanoidComp, out var spriteComp))
         {
             UpdateSprite((uid, humanoidComp, spriteComp));
         }
     }
 
-    private void UpdateSprite(Entity<HumanoidAppearanceComponent, SpriteComponent> entity)
+    public void UpdateSprite(Entity<HumanoidAppearanceComponent, SpriteComponent> entity) // Goob edit - made public
     {
         UpdateLayers(entity);
         ApplyMarkingSet(entity);
@@ -73,8 +73,16 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         // begin Goobstation: port EE height/width sliders
         var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(humanoidAppearance.Species);
 
-        var height = Math.Clamp(humanoidAppearance.Height, speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
-        var width = Math.Clamp(humanoidAppearance.Width, speciesPrototype.MinWidth, speciesPrototype.MaxWidth);
+        // Pirate start - port Floofstation custom layers
+        //var height = Math.Clamp(humanoidAppearance.Height, speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
+        //var width = Math.Clamp(humanoidAppearance.Width, speciesPrototype.MinWidth, speciesPrototype.MaxWidth);
+        var height = humanoidAppearance.Height != 0
+            ? Math.Clamp(humanoidAppearance.Height, speciesPrototype.MinHeight, speciesPrototype.MaxHeight)
+            : speciesPrototype.MinHeight;
+        var width = humanoidAppearance.Width != 0
+            ? Math.Clamp(humanoidAppearance.Width, speciesPrototype.MinWidth, speciesPrototype.MaxWidth)
+            : speciesPrototype.MinWidth;
+        // Pirate end - port Floofstation custom layers
         humanoidAppearance.Height = height;
         humanoidAppearance.Width = width;
 
@@ -109,7 +117,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         foreach (var (key, info) in component.CustomBaseLayers)
         {
             oldLayers.Remove(key);
-            SetLayerData(entity, key, info.Id, sexMorph: false, color: info.Color, overrideSkin: true);
+            SetLayerData(entity, key, info.Id, sexMorph: false, color: info.Color, overrideSkin: true, shader: info.Shader);
         }
 
         // hide old layers
@@ -127,7 +135,8 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         string? protoId,
         bool sexMorph = false,
         Color? color = null,
-        bool overrideSkin = false) // Shitmed Change
+        bool overrideSkin = false,
+        string? shader = null) // Shitmed Change // Goob edit
     {
         var component = entity.Comp1;
         var sprite = entity.Comp2;
@@ -138,6 +147,11 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
         if (color != null)
             layer.Color = color.Value;
+
+        if (shader != null) // Goobstation
+            sprite.LayerSetShader(layerIndex, shader);
+        else
+            sprite.LayerSetShader(layerIndex, null, null);
 
         if (protoId == null)
             return;
@@ -331,6 +345,9 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             _sprite.RemoveLayer(spriteEnt.AsNullable(), index);
         }
     }
+
+    // Pirate start - port Floofstation custom layers
+    // This function is heavily modified to support FloofStation's layering and colorLinks.
     private void ApplyMarking(MarkingPrototype markingPrototype,
         IReadOnlyList<Color>? colors,
         bool visible,
@@ -338,6 +355,41 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     {
         var humanoid = entity.Comp1;
         var sprite = entity.Comp2;
+
+        var colorDict = new Dictionary<string, Color>();
+        for (var i = 0; i < markingPrototype.Sprites.Count; i++)
+        {
+            var spriteName = markingPrototype.Sprites[i] switch
+            {
+                SpriteSpecifier.Rsi rsi => rsi.RsiState,
+                SpriteSpecifier.Texture texture => texture.TexturePath.Filename,
+                _ => null
+            };
+
+            if (spriteName != null)
+            {
+                var color = (colors != null && i < colors.Count)
+                    ? colors[i]
+                    : Color.White;
+                colorDict[spriteName] = color;
+            }
+        }
+
+        if (markingPrototype.ColorLinks != null)
+        {
+            foreach (var (child, parent) in markingPrototype.ColorLinks)
+            {
+                if (child == null || parent == null)
+                    continue;
+
+                if (colorDict.TryGetValue(parent, out var color))
+                {
+                    colorDict[child] = color;
+                }
+            }
+        }
+
+        var layerDict = new Dictionary<string, int>();
 
         if (!_sprite.LayerMapTryGet((entity.Owner, sprite), markingPrototype.BodyPart, out var targetLayer, false))
         {
@@ -359,21 +411,66 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
             var layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
 
+            var layerSlot = markingPrototype.BodyPart;
+            var currentTargetIndex = 0;
+
+            // Pirate - Floofstation layering support
+            if (markingPrototype.Layering != null &&
+                markingPrototype.Layering.TryGetValue(rsi.RsiState, out var layerValue))
+            {
+                var layerKey = layerValue?.ToString();
+
+                if (layerKey != null && Enum.TryParse<HumanoidVisualLayers>(layerKey, true, out var layerEnum))
+                {
+                    layerSlot = layerEnum;
+                }
+            }
+
+            if (!_sprite.LayerMapTryGet((entity.Owner, sprite), layerSlot, out var customLayerIndex, false))
+            {
+                layerSlot = markingPrototype.BodyPart;
+                currentTargetIndex = targetLayer;
+            }
+            else
+            {
+                currentTargetIndex = customLayerIndex;
+            }
+
+            if (layerDict.TryGetValue(layerSlot.ToString(), out var layerIndex))
+            {
+                layerDict[layerSlot.ToString()] = layerIndex + 1;
+            }
+            else
+            {
+                layerDict.Add(layerSlot.ToString(), 0);
+            }
+
+            var targLayerAdj = currentTargetIndex + layerDict[layerSlot.ToString()] + 1;
+
             if (!_sprite.LayerMapTryGet((entity.Owner, sprite), layerId, out _, false))
             {
-                var layer = _sprite.AddLayer((entity.Owner, sprite), markingSprite, targetLayer + j + 1);
+                var layer = _sprite.AddLayer((entity.Owner, sprite), markingSprite, targLayerAdj);
                 _sprite.LayerMapSet((entity.Owner, sprite), layerId, layer);
                 _sprite.LayerSetSprite((entity.Owner, sprite), layerId, rsi);
             }
 
+            // Goobstation - get CustomBaseLayers info for shader/color fallback
+            var hasInfo = humanoid.CustomBaseLayers.TryGetValue(markingPrototype.BodyPart, out var info);
 
-            // impstation edit begin - check if there's a shader defined in the markingPrototype's shader datafield, and if there is...
-			if (markingPrototype.Shader != null)
-			{
-			// use spriteComponent's layersetshader function to set the layer's shader to that which is specified.
-				sprite.LayerSetShader(layerId, markingPrototype.Shader);
-			}
-			// impstation edit end
+            // impstation/Goobstation - shader handling with CustomBaseLayers fallback
+            if (markingPrototype.Shader != null)
+            {
+                sprite.LayerSetShader(layerId, markingPrototype.Shader);
+            }
+            else if (hasInfo && info.Shader != null)
+            {
+                sprite.LayerSetShader(layerId, info.Shader);
+            }
+            else
+            {
+                if (_sprite.LayerMapTryGet((entity.Owner, sprite), layerId, out var shaderLayerIndex, false)) // Pirate - Floof Station layering
+                    sprite.LayerSetShader(shaderLayerIndex, null, null); // Pirate - Floof Station layering
+            }
 
             _sprite.LayerSetVisible((entity.Owner, sprite), layerId, visible);
 
@@ -382,24 +479,19 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                 continue;
             }
 
-            // Okay so if the marking prototype is modified but we load old marking data this may no longer be valid
-            // and we need to check the index is correct.
-            // So if that happens just default to white?
-            if (colors != null && j < colors.Count)
-            {
-                _sprite.LayerSetColor((entity.Owner, sprite), layerId, colors[j]);
-            }
-            else
-            {
-                _sprite.LayerSetColor((entity.Owner, sprite), layerId, Color.White);
-            }
+            // Pirate - use colorDict (respects ColorLinks), then Goobstation interpolation with info.Color
+            var spriteColor = colorDict.TryGetValue(rsi.RsiState, out var dictColor) ? dictColor : Color.White;
+            if (hasInfo && info.Color != null)
+                spriteColor = Color.InterpolateBetween(spriteColor, info.Color.Value, 0.5f);
+            _sprite.LayerSetColor((entity.Owner, sprite), layerId, spriteColor);
 
             if (humanoid.MarkingsDisplacement.TryGetValue(markingPrototype.BodyPart, out var displacementData) && markingPrototype.CanBeDisplaced)
             {
-                _displacement.TryAddDisplacement(displacementData, (entity.Owner, sprite), targetLayer + j + 1, layerId, out _);
+                _displacement.TryAddDisplacement(displacementData, (entity.Owner, sprite), targLayerAdj, layerId, out _);
             }
         }
     }
+    // Pirate end - port Floofstation custom layers
 
     public override void SetSkinColor(EntityUid uid, Color skinColor, bool sync = true, bool verify = true, HumanoidAppearanceComponent? humanoid = null)
     {

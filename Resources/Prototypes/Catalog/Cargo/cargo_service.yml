@@ -201,7 +201,7 @@
     sprite: Objects/Consumable/Drinks/generic_jug.rsi
     state: icon
   product: CrateServiceBoozeDispenser
-  cost: 750
+  cost: 1200 # Pirate
   category: cargoproduct-category-name-service
   group: market
 
@@ -285,12 +285,3 @@
   category: cargoproduct-category-name-service
   group: market
 
-- type: cargoProduct
-  id: ServiceHolySupplies
-  icon:
-    sprite: Objects/Specific/Chapel/bible.rsi
-    state: icon
-  product: CrateHolySupplies
-  cost: 2000
-  category: cargoproduct-category-name-service
-  group: market

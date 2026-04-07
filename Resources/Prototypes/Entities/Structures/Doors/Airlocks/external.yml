@@ -22,7 +22,7 @@
   parent: AirlockRCDResistant
   id: AirlockExternal
   suffix: External
-  description: "Вона відкривається, вона закривається, вона може розчавити вас, а за нею може бути лише простір."
+  description: It opens, it closes, it might crush you, and there might be only space behind it.
   components:
   - type: Door
     crushDamage:
@@ -35,12 +35,13 @@
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/external.rsi
-  - type: PaintableAirlock
-    group: External
-    department: null
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/external.rsi # Pirate changes
   - type: Wires
     layoutId: AirlockExternal
+  - type: Paintable
+    group: null
+  - type: WeldingSparksAnimation # Goobstation
+    startingOffset: -0.5, 0
 
 - type: entity
   parent: AirlockExternal
@@ -52,9 +53,7 @@
   - type: Occluder
     enabled: false
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/external.rsi
-  - type: PaintableAirlock
-    group: ExternalGlass
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/external.rsi # Pirate changes
   - type: Fixtures
     fixtures:
       fix1:

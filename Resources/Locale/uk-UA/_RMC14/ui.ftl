@@ -33,3 +33,5 @@ rmc-ui-shoutout-nt = [bold]Nanotrasen фінансується: [color=green]{$n
 
 rmc-ui-discord = Discord
 rmc-ui-patreon = Patreon
+
+rmc-ui-save = Зберегти

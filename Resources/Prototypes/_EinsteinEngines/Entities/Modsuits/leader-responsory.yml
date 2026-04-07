@@ -14,8 +14,8 @@
 - type: entity
   parent: [ ClothingModsuitStandard, BaseCentcommContraband ]
   id: ClothingModsuitResponsoryLeader
-  name: "блок керування лідерським скафандром швидкого реагування" # Goob edit
-  description: "Основний контролер для лідерського скафандра швидкого реагування." # Goob edit
+  name: Leader Responsory modsuit control unit
+  description: The main controller for a Leader Responsory modsuit.
   components:
     - type: ClothingSpeedModifier
       walkModifier: 1
@@ -48,8 +48,8 @@
 - type: entity
   parent: ClothingModsuitGauntletsStandard
   id: ClothingModsuitGauntletsResponsoryLeader
-  name: "лідерські рукавиці від скафандру швидкого реагування" # Goob edit
-  description: "Пара рукавиць, створених для лідерського скафандра швидкого реагування." # Goob edit
+  name: Leader Responsory modsuit gauntlets
+  description: A pair of gauntlets made for the Leader Responsory modsuit.
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -61,12 +61,15 @@
         - state: equipped-HAND-sealed
         - state: equipped-HAND-sealed-unshaded
           shader: unshaded
-
+        gloves-vox:
+        - state: equipped-HAND-sealed-vox
+        - state: equipped-HAND-sealed-unshaded-vox
+          shader: unshaded
 - type: entity
   parent: [ClothingModsuitHelmetStandard, ShowSecurityIcons]
   id: ClothingModsuitHelmetResponsoryLeader
-  name: "лідерський шолом від скафандру швидкого реагування" # Goob edit
-  description: "Сучасний шолом, розроблений NanoTrasen для лідерського скафандра швидкого реагування. Має вбудований HUD." # Goob edit
+  name: Leader Responsory modsuit helmet
+  description: A state-of-the-art helmet designed by NanoTrasen for the Leader Responsory modsuit. It includes a built-in HUD.
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -107,12 +110,15 @@
         - state: equipped-HEAD-sealed
         - state: equipped-HEAD-sealed-unshaded
           shader: unshaded
-
+        head-vox:
+        - state: equipped-HEAD-sealed-vox
+        - state: equipped-HEAD-sealed-unshaded-vox
+          shader: unshaded
 - type: entity
   parent: ClothingModsuitChestplateStandard
   id: ClothingModsuitChestplateResponsoryLeader
-  name: "лідерський нагрудник від скафандру швидкого реагування" # Goob edit
-  description: "Сучасний нагрудник, розроблений NanoTrasen для лідерського скафандра швидкого реагування. Він включає силові сервоприводи для зменшення навантаження від обладнання." # Goob edit
+  name: Leader Responsory modsuit chestplate
+  description: A state of the art chestplate designed by NanoTrasen for the Leader Responsory modsuit. It incorporates powered servos to reduce the equipment load.
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -142,6 +148,8 @@
       clothingVisuals:
         outerClothing:
         - state: equipped-OUTERCLOTHING-sealed
+        outerClothing-vox:
+        - state: equipped-OUTERCLOTHING-sealed-vox
     - type: StaminaResistance
       damageCoefficient: 0.35
     - type: FireProtection
@@ -153,8 +161,8 @@
 - type: entity
   parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsResponsoryLeader
-  name: "лідерські черевики від скафандру швидкого реагування" # Goob edit
-  description: "Сучасна пара магнітних черевиків для лідерського скафандра швидкого реагування. Поки костюм живиться, вони не сповільнюватимуть власника." # Goob edit
+  name: Leader Responsory modsuit boots
+  description: A state-of-the-art pair of magboots for the Leader Responsory modsuit. So long as the suit is powered, these will not slow the wearer down.
   categories: [HideSpawnMenu]
   components:
     - type: Appearance
@@ -168,6 +176,10 @@
       clothingVisuals:
         shoes:
         - state: equipped-FEET-sealed
+        shoes-vox:
+        - state: equipped-FEET-sealed-vox
+        - state: equipped-FEET-sealed-unshaded-vox
+          shader: unshaded
     - type: ItemToggle
     - type: ToggleClothing
       action: ActionToggleMagboots

@@ -104,10 +104,12 @@
   - type: Riggable
   - type: StealTarget #Goobstation - IPC steal
     stealGroup: Battery
+  - type: BatteryDrinkerSource # Goobstation - Energycrit
+    maxAmount: 360
 
 - type: entity
-  name: "картопляна батарея"
-  description: "Справді геніальне джерело енергії."
+  name: potato battery
+  description: Someone's stuck two nails and some wire in a large potato. Somehow it provides a little charge.
   id: PowerCellPotato
   parent: BasePowerCell
   components:
@@ -124,10 +126,31 @@
   - type: Construction
     graph: PowerCellPotato
     node: potatobattery
+  - type: PowerSupplier # goob start - potato power!
+    supplyRate: 30
+    supplyRampRate: 500
+    supplyRampTolerance: 500
+    voltage: Apc
+    enabled: true
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: output
+    sprite: Structures/Power/power.rsi
+    state: generator
+  - type: Anchorable # goob end
+  - type: HitscanBatteryAmmoProvider # goob edit - svalinn buff fix
+    proto: MediumOverchargedLaser # hot potato
+    fireCost: 70
 
 - type: entity
-  name: "батарейка малої ємності"
-  description: "Елемент живлення, що перезаряджається. Це найдешевший тип, який ви можете знайти."
+  name: small-capacity power cell
+  description: A rechargeable power cell. This is the cheapest kind you can find.
   id: PowerCellSmall
   suffix: Full
   parent: BasePowerCell
@@ -151,6 +174,9 @@
       Steel: 12
     chemicalComposition:
       Zinc: 5
+  - type: HitscanBatteryAmmoProvider # goob edit - svalinn buff fix
+    proto: RedLightLaser
+    fireCost: 45 # 8 shots
 
 - type: entity
   id: PowerCellSmallPrinted
@@ -172,8 +198,8 @@
 - type: entity
   parent: PowerCellSmall
   id: PowerCellSmallNuclear
-  name: "ядерний акумулятор малої ємності"
-  description: "Самозарядний акумулятор, розроблений для швидкої перезарядки за рахунок ємності."
+  name: small-capacity nuclear power cell
+  description: A self rechargeable power cell, designed for fast recharge rate at the expense of capacity.
   components:
   - type: BatterySelfRecharger
     autoRecharge: true
@@ -182,8 +208,8 @@
     autoRechargePauseTime: 30
 
 - type: entity
-  name: "батарейка середньої ємності"
-  description: "Акумуляторна батарея. Це популярний і надійний варіант."
+  name: medium-capacity power cell
+  description: A rechargeable power cell. This is the popular and reliable version.
   id: PowerCellMedium
   suffix: Full
   parent: BasePowerCell
@@ -198,9 +224,9 @@
   - type: Battery
     maxCharge: 720
     startingCharge: 720
-  - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
-    fireCost: 100
+  - type: HitscanBatteryAmmoProvider # goob edit - battery hitscan buff
+    proto: MediumRedLaser
+    fireCost: 90 # 8 shots
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Plastic: 50
@@ -228,8 +254,8 @@
     startingCharge: 0
 
 - type: entity
-  name: "батарейка високої ємності"
-  description: "Перезарядний стандартизований елемент живлення. Цей преміальний бренд зберігає до 50% більше енергії, ніж конкуренти."
+  name: high-capacity power cell
+  description: A rechargeable standardized power cell. This premium brand stores up to 50% more energy than the competition.
   id: PowerCellHigh
   suffix: Full
   parent: BasePowerCell
@@ -244,9 +270,9 @@
   - type: Battery
     maxCharge: 1080
     startingCharge: 1080
-  - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
-    fireCost: 100
+  - type: HitscanBatteryAmmoProvider # goob edit - battery hitscan buff
+    proto: RedLaser
+    fireCost: 135 # 8 shots
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Plastic: 37
@@ -274,8 +300,8 @@
     startingCharge: 0
 
 - type: entity
-  name: "гіпер-ємнісний елемент живлення"
-  description: "Стандартизований елемент живлення, що перезаряджається. Ця ітерація розширює верхні межі портативного зберігання енергії, маючи на 66% більшу ємність, ніж її попередник."
+  name: hyper-capacity power cell
+  description: A rechargeable standardized power cell. This iteration pushes the upper limits of portable power storage, boasting 66% more capacity than its predecessor.
   id: PowerCellHyper
   suffix: Full
   parent: BasePowerCell
@@ -290,9 +316,9 @@
   - type: Battery
     maxCharge: 1800
     startingCharge: 1800
-  - type: HitscanBatteryAmmoProvider
-    proto: RedHeavyLaser
-    fireCost: 150
+  - type: HitscanBatteryAmmoProvider # goob edit - battery hitscan buff
+    proto: HeavyRedLaser
+    fireCost: 225 # 8 shots
 
 - type: entity
   id: PowerCellHyperPrinted
@@ -314,8 +340,8 @@
 - type: entity
   parent: BasePowerCell
   id: PowerCellMicroreactor
-  name: "мікрореакторна батарейка"
-  description: "Перезаряджається стандартизованим мікрореакторним осередком. Має меншу ємність, але повільно перезаряджається самостійно."
+  name: microreactor power cell
+  description: A rechargeable standardized microreactor cell. Has lower capacity but slowly recharges by itself.
   suffix: Full
   components:
   - type: Sprite
@@ -333,9 +359,9 @@
     autoRechargeRate: 12 # takes 1 minute to charge itself back to full
     # Goobstation
     canEmp: true
-  - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
-    fireCost: 100
+  - type: HitscanBatteryAmmoProvider # goob edit - battery hitscan buff
+    proto: MediumRedLaser
+    fireCost: 90 # 8 shots
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Steel: 100
@@ -362,8 +388,8 @@
     startingCharge: 0
 
 - type: entity
-  name: "прототип антикварної батарейки"
-  description: "Невелика батарейка, що самозаряджається. Використовується в дослідженнях старої лазерної зброї."
+  name: antique power cell prototype
+  description: A small cell that self recharges. Used in old laser arms research.
   id: PowerCellAntiqueProto
   parent: BasePowerCell
   components:
@@ -380,6 +406,9 @@
     - type: BatterySelfRecharger
       autoRecharge: true
       autoRechargeRate: 40
+    - type: HitscanBatteryAmmoProvider # goob edit - svalinn buff fix
+      proto: RedLaser
+      fireCost: 75 # 16 shots
 
 # Power cage (big heavy power cell for big devices)
 
@@ -411,8 +440,8 @@
 - type: entity
   id: PowerCageSmall
   parent: BasePowerCage
-  name: "акумулятор малої ємності"
-  description: "Акумуляторна батарея для великих пристроїв. Це найдешевший тип, який ви можете знайти."
+  name: small-capacity power cage
+  description: A rechargeable power cage for big devices. This is the cheapest kind you can find.
   components:
   - type: Sprite
     sprite: Objects/Power/power_cages.rsi
@@ -429,8 +458,8 @@
 - type: entity
   id: PowerCageMedium
   parent: BasePowerCage
-  name: "акумулятор середньої ємності"
-  description: "Акумуляторна батарея для великих пристроїв. Золотий стандарт ємності та вартості."
+  name: medium-capacity power cage
+  description: A rechargeable power cage for big devices. The gold standard of capacity and cost.
   components:
   - type: Sprite
     sprite: Objects/Power/power_cages.rsi
@@ -447,8 +476,8 @@
 - type: entity
   id: PowerCageHigh
   parent: BasePowerCage
-  name: "акумулятор великої ємності"
-  description: "Акумуляторна батарея для великих пристроїв. Збільшена ємність для підвищених рівнів потужності."
+  name: high-capacity power cage
+  description: A rechargeable power cage for big devices. Increased capacity for increased power levels.
   components:
   - type: Sprite
     sprite: Objects/Power/power_cages.rsi

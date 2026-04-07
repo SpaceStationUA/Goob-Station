@@ -149,6 +149,7 @@ public abstract partial class SharedGunSystem
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
         UpdateBallisticAppearance(uid, component);
+        UpdateAmmoCount(args.Target); // Goob - Upstream
         DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
     }
 
@@ -292,7 +293,8 @@ public abstract partial class SharedGunSystem
         Audio.PlayPredicted(component.SoundRack, uid, user);
 
         var shots = GetBallisticShots(component);
-        Cycle(uid, component, coordinates);
+        // Pirate: gunplay
+        CycleBallisticPredicted(uid, component, coordinates, user);
 
         var text = Loc.GetString(shots == 0 ? "gun-ballistic-cycled-empty" : "gun-ballistic-cycled");
 
@@ -351,7 +353,8 @@ public abstract partial class SharedGunSystem
             {
                 component.UnspawnedCount--;
                 DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.UnspawnedCount));
-                entity = Spawn(component.Proto, args.Coordinates);
+                // Pirate: gunplay
+                entity = PredictedSpawnAtPosition(component.Proto, args.Coordinates);
                 args.Ammo.Add((entity, EnsureShootable(entity)));
 
                 // Goobstation - put spent ammo back in the gun if it doesn't autocycle
@@ -389,6 +392,27 @@ public abstract partial class SharedGunSystem
             return;
 
         entity.Comp.UnspawnedCount = count;
+        UpdateBallisticAppearance(entity.Owner, entity.Comp);
+        UpdateAmmoCount(entity.Owner);
+        Dirty(entity);
+    }
+
+    /// <summary>
+    /// Goobstation - Clears all existing ammo and refills to capacity with unspawned rounds.
+    /// </summary>
+    public void RefillBallisticAmmo(Entity<BallisticAmmoProviderComponent> entity)
+    {
+        if (entity.Comp.Proto == null)
+            return;
+
+        foreach (var ent in entity.Comp.Entities)
+        {
+            Containers.Remove(ent, entity.Comp.Container);
+            QueueDel(ent);
+        }
+
+        entity.Comp.Entities.Clear();
+        entity.Comp.UnspawnedCount = entity.Comp.Capacity;
         UpdateBallisticAppearance(entity.Owner, entity.Comp);
         UpdateAmmoCount(entity.Owner);
         Dirty(entity);

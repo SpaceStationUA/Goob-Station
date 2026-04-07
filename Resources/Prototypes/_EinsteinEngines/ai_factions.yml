@@ -1,4 +1,16 @@
 - type: npcFaction
+  id: Shadowling
+  hostile:
+  - NanoTrasen
+  - Syndicate
+  - Zombie
+  - Revolutionary
+  - Heretic
+  - Wizard
+  - Blob
+
+# PIRATE VVV
+- type: npcFaction
   id: GlimmerMonster # Crew hostile psionic
   hostile:
   - PsionicInterloper
@@ -7,3 +19,4 @@
   id: PsionicInterloper # Crew aligned psionic
   hostile:
   - GlimmerMonster
+# PIRATE ^^^

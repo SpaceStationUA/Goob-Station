@@ -166,7 +166,7 @@ public sealed class GlimmerReactiveSystem : EntitySystem
             Act = () =>
             {
                 _sharedAudioSystem.PlayPvs(component.ShockNoises, args.User);
-                _electrocutionSystem.TryDoElectrocution(args.User, null, (int) _glimmerSystem.GlimmerOutput / 200, TimeSpan.FromSeconds(_glimmerSystem.GlimmerOutput / 100), false);
+                _electrocutionSystem.TryDoElectrocution(args.User, null, (int) _glimmerSystem.GlimmerOutput / 200, TimeSpan.FromSeconds(_glimmerSystem.GlimmerOutput / 100), false, ignoreInsulation: true);
             },
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
             Text = Loc.GetString("power-switch-component-toggle-verb"),
@@ -212,7 +212,7 @@ public sealed class GlimmerReactiveSystem : EntitySystem
             return;
 
         _sharedAudioSystem.PlayPvs(component.ShockNoises, args.User);
-        _electrocutionSystem.TryDoElectrocution(args.User, null, (int) _glimmerSystem.GlimmerOutput / 200, TimeSpan.FromSeconds(_glimmerSystem.GlimmerOutput / 100), false);
+        _electrocutionSystem.TryDoElectrocution(args.User, null, (int) _glimmerSystem.GlimmerOutput / 200, TimeSpan.FromSeconds(_glimmerSystem.GlimmerOutput / 100), false, ignoreInsulation: true);
         args.Cancel();
     }
 

@@ -6,11 +6,11 @@
 # accent-italian-prefix-3 = Mamma-mia! That's a spicy meat-ball!
 # accemt-italian-prefix-4 = La la la la la funiculi funicula!
 
-accent-italian-words-1 = асистент
-accent-italian-words-replace-1 = асістенте
+accent-italian-words-1 = пасажир
+accent-italian-words-replace-1 = пасажір
 
-accent-italian-words-2 = асистенти
-accent-italian-words-replace-2 = асістентос
+accent-italian-words-2 = пасажири
+accent-italian-words-replace-2 = пасажірос
 
 accent-italian-words-3 = крихітка
 accent-italian-words-replace-3 = бамбіно

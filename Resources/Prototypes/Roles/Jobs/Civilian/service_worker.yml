@@ -82,9 +82,17 @@
   - !type:DepartmentTimeRequirement
     department: Civilian
     time: 1800 #0.5 hr
+  # Pirate contractor start
+  - !type:CharacterEmployerRequirement
+    employers:
+    - NanoTrasen
+    - IdrisIncorporated
+    - OrionExpress
+  # Pirate contractor end
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
   supervisors: job-supervisors-service
+  guides: [ Service ] # goobstation
   goobcoins: 10 #Goob content
   access:
   - Service

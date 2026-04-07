@@ -2,7 +2,7 @@
   abstract: true
   parent: ClothingHeadBase
   id: ClothingHeadEnvirohelmBase
-  name: "базовий шолом екокостюму"
+  name: base envirosuit helmet
   components:
   - type: Sprite
     layers:
@@ -54,6 +54,7 @@
       head:
       - state: on-equipped-HELMET
         shader: unshaded
+  - type: ItemTogglePointLight
   - type: PointLight
     enabled: false
     color: "#ffa1ff"
@@ -81,8 +82,8 @@
         id: blinking
         interpolate: Nearest
         maxDuration: 1.0
-        minValue: 0.1
-        maxValue: 2.0
+        startValue: 0.1
+        endValue: 2.0
         isLooped: true
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -103,7 +104,7 @@
   abstract: true
   parent: ClothingHeadEnvirohelmBase
   id: ClothingHeadEnvirohelmCustomBase
-  name: "базовий кастомний шолом для екокостюму"
+  name: base custom envirosuit helmet
   components:
   - type: ToggleableVisuals
     spriteLayer: light

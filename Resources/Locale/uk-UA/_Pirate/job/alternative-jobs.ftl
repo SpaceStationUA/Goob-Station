@@ -1,4 +1,5 @@
-# Cargo
+alternative-job-notify = Хоча вашу роль тепер називають '{$newJobName}', це не означає, що ви перестали бути {$parentJobName}. Ваша роль та обов'язки залишаються незмінними.
+# Карго
 job-alternative-name-mailman = Поштар
 
 # Civilian
@@ -7,6 +8,43 @@ job-alternative-name-flora-engineer = Флора-інженер
 job-alternative-name-prankster = Пранкер
 job-alternative-name-waiter = Офіціант
 job-alternative-name-maid = Покоївка
+
+# Юрист
+
+# Прокурор
+
+job-alternative-name-archivist = Архіваріус
+job-description-archivist = Сторож знань і пилу. Зберігайте документи, книги та секрети станції. Іноді здається, що тільки ви ще пам’ятаєте, як читати.
+
+# Кінець lybrarian
+
+# Цивільні chef
+
+# Гриль майстер
+job-alternative-name-bbq-master = Гриль майстер
+job-description-bbq-master = Торти? Фрукти? Ви про що? Справжні чоловіки хочуть справжнього м'яса!
+
+# Пекар
+job-alternative-name-baker = Пекар
+job-description-baker = Хуторок не підведе, моє тісто не вспливе, моє тісто не вспливе.
+
+# Кінець chef
+
+# Юрист
+
+# Прокурор
+job-alternative-name-prosecutor = Прокурор
+job-description-prosecutor = Ведіть судову справу, висуваючи обвинувачення. Зрозумійте, що ваша робота - допомагати службі безпеці правильно висувати звинувачення, бо ніхто не буде влаштовувати суд.
+
+# Адвокат
+job-alternative-name-attorney = Адвокат
+job-description-attorney = Ведіть судову справу, захищаючи обвинуваченого. Посидівши кілька годин у своєму офісі, зрозумійте, що адвокат нікому не треба, і йдіть висувайте обвинувачення як прокурор.
+
+# Клерк
+job-alternative-name-clerk = Клерк
+job-description-clerk = НЕ ведіть судову справу, а лиш допомагайте з її організацією: підписуйте папери, принесіть суддю кави.
+
+# Кінець Юрист
 
 # Священик
 job-alternative-name-holy-father = Святий Отець
@@ -47,12 +85,9 @@ job-description-monolith-preacher = Несамовитий голос Волі �
 # Кінець Священик
 
 # Command
-job-alternative-name-furry-femboy = Фурі-фембой
 job-alternative-name-command-officer = Офіцер командування
 job-alternative-name-station-director = Директор станції
-job-alternative-name-notarius = Нотаріус
 job-alternative-name-sherif = Шериф
-job-alternative-name-command-maid = Покоївка мостика
 job-alternative-name-secretary = Секретар
 
 # Engineering
@@ -62,24 +97,31 @@ job-alternative-name-electrician = Електрик
 
 # Medical
 job-alternative-name-surgeon = Хірург
+job-alternative-name-necrologist = Некролог
 job-alternative-name-cryo-specialist = Спеціаліст з кріогеніки
 job-alternative-name-pharmacist = Фармацеут
 job-alternative-name-smo = Старший медичний офіцер
 
 # Science
 job-alternative-name-anomalist = Аномаліст
+job-alternative-name-xenobiologist = Ксенобіолог
 job-alternative-name-xenoarcheologist = Ксеноархеолог
 job-alternative-name-phoron-researcher = Дослідник форону
 job-alternative-name-aspirant = Аспірант
 job-alternative-name-laborant = Лаборант
 
 # Security
-job-alternative-name-security-maid = Покоївка бригу
 job-alternative-name-peacekeeper = Миротворець
 job-alternative-name-inspector = Інспектор
 job-alternative-name-forensist = Слідчий
 job-alternative-name-corpsman = Санітар
 
 # Other
+job-alternative-name-lawenforcer = Правоохоронець
+job-description-lawenforcer = Охоронець закону і порядку. Затримуйте злочинців, захищайте станцію, але пам’ятайте: надмірна жорстокість — теж злочин.
+
+# Кінець lawenforcer
+
+# Інші
 job-alternative-name-psychotherapist = Психотерапевт
 job-alternative-name-correspondent = Кориспондент

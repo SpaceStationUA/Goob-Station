@@ -14,4 +14,9 @@ public sealed partial class SpeakOnActionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public LocId? Sentence;
+    /// <summary> Pirate
+    /// Whether this message should be sent as an emote.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsEmote = false;
 }

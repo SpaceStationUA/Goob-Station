@@ -16,8 +16,8 @@
 # Pod
 - type: entity
   id: MobBlobPod
-  name: "Блобпод"
-  description: "Звичайна істота, яка бореться з супротивниками, а не річ, прикріплена до підлоги. Зомбіфікує трупи."
+  name: Blob pod
+  description: An ordinary person fighting opponents, not like a thing attached to a tile, zombifies corpses.
   parent: SimpleSpaceMobBase
   categories: [ HideSpawnMenu ]
   components:
@@ -89,7 +89,7 @@
       animation: WeaponArcSmash
       damage:
         types:
-          Piercing: 5
+          Blunt: 8
     - type: DamageStateVisuals
       states:
         Alive:
@@ -131,15 +131,15 @@
 # Blobbernaut
 - type: entity
   id: MobBlobBlobbernaut
-  name: "Блоббернаут"
-  description: "Джаггернаут, але блоб! Коли екіпаж станції демонструє повну ненависть до вас, за допомогою таких сильних мужиків можна організувати бліцкриг, якщо заздалегідь розповісти їм про план."
+  name: Blobbernaut
+  description: Juggernaut, but blob! when the station crew shows full hatred of you, with the help of such strong men you can organize a blitzkriek if you tell them the plan in advance.
   parent: SimpleSpaceMobBase
   categories: [ HideSpawnMenu ]
   components:
     - type: ZombieImmune
     - type: Damageable
       damageContainer: Blob
-      damageModifierSet: BlobMob
+      damageModifierSet: BlobBlobbernaut
     - type: Tag
       tags:
         - Blobbernaut
@@ -235,11 +235,15 @@
     - type: GuideHelp
       guides:
       - Blob
+    - type: Bloodstream
+      bloodMaxVolume: 300
+      bloodReagent: Blood
+      bleedReductionAmount: 5
 
 # Observer
 - type: entity
   id: MobObserverBlob
-  name: "Блоб спостерігач"
+  name: Blob observer
   categories: [ HideSpawnMenu ]
   save: false
   components:
@@ -264,7 +268,7 @@
       showInHands: true
     - type: BlobObserver
     - type: Visibility
-      layer: 2
+      layer: 2 # Ghost visflag
     - type: ContentEye
     - type: MindContainer
     - type: Clickable

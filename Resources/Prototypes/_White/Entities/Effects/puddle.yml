@@ -6,10 +6,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "слід"
+  name: footprint
   id: Footprint
   save: false
-  description: "Слід рідини."
+  description: Trace of liquid.
   placement:
     mode: SnapgridCenter
   components:
@@ -21,6 +21,7 @@
     drawdepth: FloorObjects
   - type: Physics
     bodyType: Static
+  - type: Appearance
   - type: Fixtures
     fixtures:
       slipFixture:
@@ -50,7 +51,6 @@
     delay: 3
     transferAmount: 0.5
     solution: print
-    examinable: false
   - type: Tag
     tags:
     - DNASolutionScannable

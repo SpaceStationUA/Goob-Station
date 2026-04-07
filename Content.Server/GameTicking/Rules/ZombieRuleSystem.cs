@@ -78,7 +78,6 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Zombies;
 using Content.Shared.GameTicking.Components;
@@ -286,19 +285,21 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         {
             foreach (var station in _gameTicker.GetSpawnableStations())  // Einstein Engines - Zombie Improvements Take 2
             {
-                if (TryComp<StationDataComponent>(station, out var data) && _station.GetLargestGrid(data) is { } grid)
+                if (_station.GetLargestGrid(station) is { } grid)
                     stationGrids.Add(grid);
             }
         }
 
         var players = AllEntityQuery<HumanoidAppearanceComponent, ActorComponent, MobStateComponent, TransformComponent>();
         var zombers = GetEntityQuery<ZombieComponent>();
+        var zombieImmune = GetEntityQuery<ZombieImmuneComponent>(); // Goobstation
         while (players.MoveNext(out var uid, out _, out _, out var mob, out var xform))
         {
             // Einstein Engines - Zombie Improvements Take 2
             if (!_mobState.IsAlive(uid, mob)
                 || HasComp<PendingZombieComponent>(uid) // Do not include infected players in the "Healthy players" list.
                 || HasComp<ZombifyOnDeathComponent>(uid)
+                || zombieImmune.HasComponent(uid) // Goobstation
                 || zombers.HasComponent(uid)
                 || !includeOffStation && !stationGrids.Contains(xform.GridUid ?? EntityUid.Invalid))
                 continue;

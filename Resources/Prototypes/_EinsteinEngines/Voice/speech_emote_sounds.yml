@@ -75,6 +75,12 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
       params:
         variation: 0
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
+      params:
+        variation: 0
+    SiliconDeathgasp: # DOWNSTREAM-TPirates: IPC screens
+      collection: BorgDeathGasp # DOWNSTREAM-TPirates: IPC screens
 
 - type: emoteSounds
   id: MaleShadowkin
@@ -119,6 +125,8 @@
       collection: Wurble
     Gulp: # Goob
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds
   id: FemaleShadowkin
@@ -128,7 +136,7 @@
     Scream:
       collection: SlimeFemaleScreams
     Laugh:
-      collection: MaleLaugh
+      collection: FemaleLaugh
     Sneeze:
       collection: FemaleSneezes
     Cough:
@@ -163,3 +171,5 @@
       collection: Wurble
     Gulp: # Goob
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg

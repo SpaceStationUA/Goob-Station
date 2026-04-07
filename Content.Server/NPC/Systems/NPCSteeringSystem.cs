@@ -89,6 +89,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Prying.Systems;
 using Microsoft.Extensions.ObjectPool;
+using Prometheus;
 
 // Tile Movement Change
 using Content.Server.Atmos;
@@ -100,6 +101,10 @@ namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 {
+    private static readonly Gauge ActiveSteeringGauge = Metrics.CreateGauge(
+        "npc_steering_active_count",
+        "Amount of NPCs trying to actively do steering");
+
     /*
      * We use context steering to determine which way to move.
      * This involves creating an array of possible directions and assigning a value for the desireability of each direction.
@@ -112,7 +117,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -124,7 +128,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] protected readonly IGameTiming Timing = default!; // Tile Movement Change
@@ -154,6 +157,8 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     private readonly HashSet<ICommonSession> _subscribedSessions = new();
 
     private object _obstacles = new();
+
+    private int _activeSteeringCount;
 
     public override void Initialize()
     {
@@ -273,7 +278,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        if (EntityManager.TryGetComponent(uid, out InputMoverComponent? controller))
+        if (TryComp(uid, out InputMoverComponent? controller))
         {
             controller.CurTickSprintMovement = Vector2.Zero;
 
@@ -310,7 +315,9 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         {
             MaxDegreeOfParallelism = 1,
         };
-        var curTime = _timing.CurTime;
+        var curTime = Timing.CurTime;
+
+        _activeSteeringCount = 0;
 
         Parallel.For(0, index, options, i =>
         {
@@ -318,6 +325,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             Steer(uid, steering, mover, xform, frameTime, curTime);
         });
 
+        ActiveSteeringGauge.Set(_activeSteeringCount);
 
         if (_subscribedSessions.Count > 0)
         {
@@ -352,7 +360,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         }
 
         component.CurTickSprintMovement = value;
-        component.LastInputTick = _timing.CurTick;
+        component.LastInputTick = Timing.CurTick;
         component.LastInputSubTick = ushort.MaxValue;
 
         var ev = new SpriteMoveEvent(true);
@@ -392,9 +400,11 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             return;
         }
 
+        Interlocked.Increment(ref _activeSteeringCount);
+
         var agentRadius = steering.Radius;
         var worldPos = _transform.GetWorldPosition(xform);
-        var (layer, mask) = _physics.GetHardCollision(uid);
+        var (layer, mask) = PhysicsSystem.GetHardCollision(uid);
         // Use rotation relative to parent to rotate our context vectors by.
         var offsetRot = -_mover.GetParentGridAngle(mover);
 

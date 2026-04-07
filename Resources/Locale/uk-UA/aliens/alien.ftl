@@ -26,7 +26,7 @@ ghost-role-mob-alien-description = Станьте дорослим інопла�
 
 station-event-alien-infestation-anouncement = Виявлено неідентифіковані життєві об'єкти на борту станції. Перекрийте будь-який зовнішній доступ, включаючи повітропроводи та вентиляцію.
 
-hud-chatbox-select-channel-XenoHivemind = Hivemind
+hud-chatbox-select-channel-XenoHivemind = Роєва Свідомість
 
 ghost-role-information-alien-larva-inside-description = Станьте інопланетною личинкою, яка ось-ось вирветься назовні.
 
@@ -37,7 +37,4 @@ alien-sentinel-greeting = Ви - інопланетний вартовий. За
 alien-praetorian-greeting = Ти чужий преторіанцю. Захищай свою королеву. Допомагай будувати нові вулики. Еволюціонуй до королеви, якщо такої ще немає.
 alien-queen-greeting = Ти - королева прибульців. Керуй своїм вуликом, відкладай яйця. ЗАЛИШАЙСЯ, БЛЯХА, ЖИВОЮ.
 alien-maid-greeting = Ти інопланетна служниця. Будь хтивою. Виконуй найважливішу роботу у своєму вулику - спокушай побратимів-космонавтів.
-
-alerts-plasma-name = Плазма
-alerts-plasma-desc = Ваше тіло синтезує плазму, яку ви можете використовувати для своїх здібностей
 

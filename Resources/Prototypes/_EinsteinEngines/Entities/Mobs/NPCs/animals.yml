@@ -8,10 +8,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "сквак-тарган"
+  name: squackroach
   parent: MobCockroach
   id: MobSquackroach
-  description: "Це просто жахлива генетична мішанина, а не екземпляр."
+  description: This is just a horrific genetic stew of a specimen.
   components:
   - type: HarpySinger
     ShutUpDamageThreshold: 5 # Punch does 5 damage
@@ -37,9 +37,9 @@
     allowMovement: true
     name: ghost-role-information-squackroach-name
     description: ghost-role-information-squackroach-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-sentientanimal-rules # Goobstation Sentient Animal PR
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleSentientAnimal # Goobstation Sentient Animal PR
   - type: Fixtures
     fixtures:
       fix1:
@@ -126,13 +126,13 @@
       Male: SoundsHarpyMale
       Female: SoundsHarpyFemale
       Unsexed: SoundsHarpyFemale
+    wilhelmProbability: 0.001
   - type: GenericVisualizer
     visuals:
       enum.HarpyVisualLayers.Singing:
         singingLayer:
           False: {visible: false}
           True: {visible: true}
-    wilhelmProbability: 0.001
   - type: MobPrice
     price: 150
   - type: Tag

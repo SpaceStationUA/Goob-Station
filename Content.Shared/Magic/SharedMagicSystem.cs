@@ -91,7 +91,8 @@
 
 using System.Linq;
 using System.Numerics;
-using Content.Goobstation.Common.Changeling;
+using Content.Goobstation.Common.BlockTeleport;
+using Content.Goobstation.Common.Magic;
 using Content.Goobstation.Common.Religion;
 using Content.Shared._Goobstation.Wizard;
 using Content.Shared._Goobstation.Wizard.BindSoul;
@@ -171,11 +172,11 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!; // Goobstation
     [Dependency] private readonly NpcFactionSystem _faction = default!; // Goobstation
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     public override void Initialize()
     {
@@ -274,6 +275,12 @@ public abstract class SharedMagicSystem : EntitySystem
         var hasReqs = true;
 
         // Goobstation start
+        if (comp.BlockedBySpectral && HasComp<SpectralComponent>(args.Performer))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
         var requiresSpeech = comp.RequiresSpeech;
         var flags = SlotFlags.OUTERCLOTHING | SlotFlags.HEAD;
         var requiredSlots = 2;
@@ -339,7 +346,7 @@ public abstract class SharedMagicSystem : EntitySystem
         return !ev.Cancelled;
     }
 
-    private bool IsTouchSpellDenied(EntityUid target) // Goob edit
+    public bool IsTouchSpellDenied(EntityUid target) // Goob edit
     {
         var ev = new BeforeCastTouchSpellEvent(target);
         RaiseLocalEvent(target, ev, true);
@@ -371,7 +378,7 @@ public abstract class SharedMagicSystem : EntitySystem
     ///     Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    private List<EntityCoordinates> GetInstantSpawnPositions(TransformComponent casterXform, MagicInstantSpawnData data)
+    public List<EntityCoordinates> GetInstantSpawnPositions(TransformComponent casterXform, MagicInstantSpawnData data) // Goob edit - made public
     {
         switch (data)
         {
@@ -383,7 +390,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
                 if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
-                if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
+                if (!_turf.TryGetTileRef(directionPos, out var tileReference))
                     return new List<EntityCoordinates>();
 
                 var tileIndex = tileReference.Value.GridIndices;
@@ -396,7 +403,7 @@ public abstract class SharedMagicSystem : EntitySystem
                 if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
 
-                if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
+                if (!_turf.TryGetTileRef(directionPos, out var tileReference))
                     return new List<EntityCoordinates>();
 
                 var tileIndex = tileReference.Value.GridIndices;
@@ -486,7 +493,7 @@ public abstract class SharedMagicSystem : EntitySystem
     // End World Spawn Spells
     #endregion
     #region Projectile Spells
-    private void OnProjectileSpell(ProjectileSpellEvent ev)
+    public void OnProjectileSpell(ProjectileSpellEvent ev) // Goob edit - made public
     {
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer)) // Goob edit
             return;
@@ -548,6 +555,13 @@ public abstract class SharedMagicSystem : EntitySystem
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
+        // Goobstation start
+        var ev = new TeleportAttemptEvent();
+        RaiseLocalEvent(args.Performer, ref ev);
+        if (ev.Cancelled)
+            return;
+        // Goobstation end
+
         var transform = Transform(args.Performer);
 
         if (transform.MapID != args.Target.GetMapId(EntityManager) || !_interaction.InRangeUnobstructed(args.Performer, args.Target, range: 1000F, collisionMask: CollisionGroup.Opaque, popup: true))
@@ -590,7 +604,7 @@ public abstract class SharedMagicSystem : EntitySystem
             var component = (Component)Factory.GetComponent(name);
             var temp = (object)component;
             _seriMan.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(target, (Component)temp!);
+            AddComp(target, (Component)temp!);
         }
     }
 
@@ -672,7 +686,7 @@ public abstract class SharedMagicSystem : EntitySystem
             return;
 
         EntityUid? wand = null;
-        foreach (var item in _hands.EnumerateHeld(ev.Performer, handsComp))
+        foreach (var item in _hands.EnumerateHeld((ev.Performer, handsComp)))
         {
             if (!_tag.HasTag(item, ev.WandTag))
                 continue;
@@ -739,12 +753,12 @@ public abstract class SharedMagicSystem : EntitySystem
             return;
         }
 
+        // raise blocker event (why the fuck was this done as a list lol)
+        var blockEv = new BeforeMindSwappedEvent();
+        RaiseLocalEvent(ev.Target, ref blockEv);
+
         List<(Type, string)> blockers = new()
         {
-            (typeof(ChangelingComponent), "changeling"),
-            // You should be able to mindswap with heretics,
-            // but all of their data and abilities are not tied to their mind, I'm not making this work.
-            (typeof(HereticComponent), "heretic"),
             (typeof(GhoulComponent), "ghoul"),
             // Mindswapping with aghost real.
             (typeof(GhostComponent), "ghost"),
@@ -752,6 +766,13 @@ public abstract class SharedMagicSystem : EntitySystem
             (typeof(TimedDespawnComponent), "temporary"),
             (typeof(FadingTimedDespawnComponent), "temporary"),
         };
+
+        // someone should nuke the list and make all of the components use the event. that someone is not me.
+        if (blockEv.Cancelled)
+        {
+            _popup.PopupClient(Loc.GetString($"spell-fail-mindswap-{blockEv.Message}"), ev.Performer, ev.Performer);
+            return;
+        }
 
         if (blockers.Any(x => CheckMindswapBlocker(x.Item1, x.Item2)))
             return;
@@ -778,6 +799,8 @@ public abstract class SharedMagicSystem : EntitySystem
             _mind.TransferTo(tarMind, ev.Performer);
         }
 
+        _stun.TryUpdateParalyzeDuration(ev.Target, ev.TargetStunDuration);
+        _stun.TryUpdateParalyzeDuration(ev.Performer, ev.PerformerStunDuration);
         // Goobstation start
         List<Type> components = new()
         {
@@ -836,6 +859,7 @@ public abstract class SharedMagicSystem : EntitySystem
             List<ProtoId<NpcFactionPrototype>> factionsToTransfer = new()
             {
                 "Wizard",
+                "Assistant",
             };
 
             ProtoId<NpcFactionPrototype> fallbackFaction = "NanoTrasen";

@@ -40,7 +40,24 @@ public sealed class JobWhitelistManager : IPostInjectInit
     {
         var whitelists = await _db.GetJobWhitelists(session.UserId, cancel);
         cancel.ThrowIfCancellationRequested();
-        _whitelists[session.UserId] = whitelists.ToHashSet();
+
+        // Pirate whitelist start
+        var set = whitelists.ToHashSet();
+
+        if (await _db.GetWhitelistStatusAsync(session.UserId))
+        {
+            foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
+            {
+                if (job.Whitelisted && set.Add(job.ID))
+                {
+                    var jobProtoId = new ProtoId<JobPrototype>(job.ID);
+                    await _db.AddJobWhitelist(session.UserId, jobProtoId);
+                }
+            }
+        }
+
+        _whitelists[session.UserId] = set;
+        // Pirate whitelist end
     }
 
     private void FinishLoad(ICommonSession session)

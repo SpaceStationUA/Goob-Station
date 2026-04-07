@@ -73,8 +73,8 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
         if (meta.EntityLifeStage >= EntityLifeStage.Terminating)
             return list;
 
-        var ev = new GetStatusIconsEvent(list);
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new GetStatusIconsEvent(uid, list); // Goob edit
+        RaiseLocalEvent(uid, ref ev, true); // Goob - broadcast
         return ev.StatusIcons;
     }
 
@@ -85,8 +85,8 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     {
         var viewer = _playerManager.LocalSession?.AttachedEntity;
 
-        // Always show our icons to our entity
-        if (viewer == ent.Owner)
+
+        if (data.VisibleToOwner && viewer == ent.Owner) // WD EDIT: not always show our icons to our entity
             return true;
 
         if (data.VisibleToGhosts && HasComp<GhostComponent>(viewer))

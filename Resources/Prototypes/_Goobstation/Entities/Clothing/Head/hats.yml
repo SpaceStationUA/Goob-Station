@@ -22,10 +22,56 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: [ClothingHeadBase, BaseCentcommContraband]
+  abstract: true
+  parent: [ClothingHeadBase] 
+  id: ClothingHeadHatArmored
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.8
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadBase
+  id: ClothingHeadHatArmoredCC
+  components:
+  - type: Armor
+    coverage:
+    - Head
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Heat: 0.3
+        Radiation: 0.75
+        Caustic: 0.75
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
+- type: entity
+  parent: [ClothingHeadHatArmoredCC, ClothingHeadBase, BaseCentcommContraband]
   id: ClothingHeadHatBeretEliteNavyOfficer
-  name: "елітний берет морського офіцера"
-  description: "Темно-синій берет зі срібним щитом сил безпеки NanoTrasen."
+  name: elite navy officer's beret
+  description: A navy blue beret with the silver shield of the Nanotrasen security forces.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/navy_officer_beret.rsi
@@ -35,6 +81,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon # We do a little bit of trolling.
+  # Pirate start
   - type: Armor
     coverage:
     - Head
@@ -54,12 +101,13 @@
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.75
+  # Pirate end
 
 - type: entity
-  parent: [ClothingHeadBase, BaseCentcommContraband]
+  parent: [ClothingHeadHatArmoredCC, ClothingHeadBase, BaseCentcommContraband]
   id: ClothingHeadHatBeretNavyOfficer
-  name: "берет морського офіцера"
-  description: "Чорний берет зі срібним щитом сил безпеки NanoTrasen."
+  name: navy officer's beret
+  description: A black beret with the silver shield of the Nanotrasen security forces.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/officer_beret.rsi
@@ -69,6 +117,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  # Pirate start
   - type: Armor
     coverage:
     - Head
@@ -88,12 +137,13 @@
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.75
+  # Pirate end
 
 - type: entity
-  parent: [ClothingHeadBase, BaseCentcommContraband]
+  parent: [ClothingHeadHatArmoredCC, ClothingHeadBase, BaseCentcommContraband]
   id: ClothingHeadHatBeretNavyCaptain
-  name: "берет морського капітана"
-  description: "Крохмально-білий берет."
+  name: navy captain's beret
+  description: A starch white beret.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/navy_captain_beret.rsi
@@ -103,6 +153,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  # Pirate start
   - type: Armor
     coverage:
     - Head
@@ -122,12 +173,13 @@
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.75
+  # Pirate end
 
 - type: entity
-  parent: [ClothingHeadBase, BaseCentcommContraband]
+  parent: [ClothingHeadHatArmoredCC, ClothingHeadBase, BaseCentcommContraband]
   id: ClothingHeadHatBeretBlueshield
-  name: "броньований берет синього щита"
-  description: "Міцний берет, сплетений з дюратканини. Також забезпечує захист."
+  name: blueshield's armored beret
+  description: A durable beret woven out of durathread. Provides protection, too.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/blueshield_beret.rsi
@@ -137,6 +189,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon # We do a little bit of trolling.
+  # Pirate start
   - type: Armor
     coverage:
     - Head
@@ -156,12 +209,13 @@
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.75
+  # Pirate end
 
 - type: entity
-  parent: [ClothingHeadBase, BaseCentcommContraband]
+  parent: [ClothingHeadHatArmoredCC, ClothingHeadBase, BaseCentcommContraband]
   id: ClothingHeadHatCowboyBlueshield
-  name: "броньований ковбойський капелюх синього щита"
-  description: "Шериф повернувся в місто, діти."
+  name: blueshield's armored cowboy hat
+  description: Sheriff's back in town, kids.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/cowboyhatbso.rsi
@@ -171,6 +225,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  # Pirate start
   - type: Armor
     coverage:
     - Head
@@ -190,12 +245,13 @@
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.75
+  # Pirate end
 
 - type: entity
-  parent: [ClothingHeadBase, BaseFoldable, BaseCentcommContraband]
+  parent: [ClothingHeadHatArmoredCC, ClothingHeadBase, BaseFoldable, BaseCentcommContraband]
   id: ClothingHeadHatUshankaBlueshield
-  name: "броньована ушанка синього щита"
-  description: "Ідеально для порятунку голів у Сибіру, так?"
+  name: blueshield's armored ushanka
+  description: Perfect for saving heads in Siberia, da?
   components:
   - type: Clothing
     sprite: _Goobstation/Clothing/Head/Hats/blueshield_ushanka.rsi
@@ -215,6 +271,7 @@
     - state: icon-up
       map: ["foldedLayer"]
       visible: false
+  # Pirate start
   - type: Armor
     coverage:
     - Head
@@ -234,12 +291,13 @@
         Caustic: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.75
+  # Pirate end
 
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadMailCarrier
-  name: "капелюх листоноші"
-  description: "Пахне хорошою пенсією."
+  name: mail carrier's hat
+  description: Smells like a good pension.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/mailman.rsi
@@ -249,8 +307,8 @@
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatPropeller
-  name: "капелюх із пропелером"
-  description: "Ох ти ж лишенько!"
+  name: propeller hat
+  description: Aw gee willickers!
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/propeller.rsi
@@ -273,8 +331,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatImam
-  name: "головний убір імама"
-  description: "Хвала Аллаху."
+  name: imam head wrap
+  description: Praise Allah.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/imam.rsi
@@ -291,8 +349,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatTrainer
-  name: "капелюх NCT"
-  description: "Капелюх, що видається кар'єрним тренерам NanoTrasen. Додає відчуття стилю."
+  name: NCT's hat
+  description: A hat issued to Nanotrasen Career Trainers. Makes you feel stylish.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/trainer.rsi
@@ -302,8 +360,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadBeretTrainer
-  name: "берет NCT"
-  description: "Берет, що видається кар'єрним тренерам NanoTrasen. Додає відчуття стилю."
+  name: NCT's beret
+  description: A beret issued to Nanotrasen Career Trainers. Makes you feel stylish.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/trainer_beret.rsi
@@ -311,10 +369,10 @@
     sprite: _Goobstation/Clothing/Head/Hats/trainer_beret.rsi
 
 - type: entity
-  parent: [ClothingHeadBase, BaseCommandContraband]
+  parent: ClothingHeadHatBeretHoS
   id: ClothingHeadHatBeretHeadOfSecurityAdvanced
-  name: "парадний берет голови служби безпеки"
-  description: "Особливо позолочений берет, розроблений для голови служби безпеки."
+  name: head of security's parade beret
+  description: A particularly gilded beret, designed for the Head of Security.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/hos-expi.rsi
@@ -324,27 +382,12 @@
     tags:
     - ClothMade
     - WhitelistChameleon
-  - type: Armor
-    coverage:
-    - Head
-    traumaDeductions:
-      Dismemberment: 0.2
-      OrganDamage: 0.2
-      BoneDamage: 0.2
-      VeinsDamage: 0
-      NerveDamage: 0
-    modifiers:
-      coefficients:
-        Blunt: 0.7
-        Slash: 0.7
-        Piercing: 0.7
-        Heat: 0.8
 
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretSeniorBotanist
-  name: "ботанічний берет"
-  description: "Зелений берет з маленькою синьою квіткою, що видається досвідченим ботанікам."
+  name: botanical beret
+  description: A green beret featuring a small blue flower given to experienced botanists.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/beret_botany.rsi
@@ -354,10 +397,85 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadSanabi
-  name: "капелюх бригадного генерала"
-  description: "Пахне сталлю."
+  name: brigadier general hat
+  description: Smells like steel.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Head/Hats/sanabi.rsi
   - type: Clothing
     sprite: _Goobstation/Clothing/Head/Hats/sanabi.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadLehmin
+  name: top CMO headgear
+  suffix: ADMIN
+  description: Chemistry. Adminning. Something else.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Head/Hats/lehmin.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Head/Hats/lehmin.rsi
+
+- type: entity
+  parent: [ ClothingHeadBase, BaseJanitorContraband ]
+  id: ClothingHeadHatJanitorCap
+  name: janitorial cap
+  description: An extravagant purple cap for only the BEST of janitorial workers.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Head/Hats/janitor_cap.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Head/Hats/janitor_cap.rsi
+  - type: Item
+    sprite: _Goobstation/Clothing/Head/Hats/janitor_cap.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+    - HamsterWearable
+    - MouseWearable
+
+- type: entity
+  parent: ClothingHeadHatCapcap
+  id: ClothingHeadHatCapcapSenior
+  name: cap cap senior
+  description: A grand, stylish cap worn by the Seniors Captains. Shows the station who's in charge.
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Head/Hats/cap_senior.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Head/Hats/cap_senior.rsi
+  - type: Item
+    sprite: _Goobstation/Clothing/Head/Hats/cap_senior.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTinfoilHat
+  name: tinfoil hat
+  description: A high tech helmet crafted from aluminum foil.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Head/Hats/tinfoil_hat.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Head/Hats/tinfoil_hat.rsi
+  - type: Tag
+    tags:
+    - Recyclable
+    - WhitelistChameleon
+  - type: ClothingGrantComponent
+    component:
+      - type: PossessionImmune
+
+- type: entity
+  parent: ClothingHeadHatCentcomcap
+  id: ClothingHeadHatOuterCommandcap
+  name: outer command cap
+  description: Purple gilded cap with Terra-Gov insignia.
+  components: 
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Head/Hats/outcommcap.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Head/Hats/outcommcap.rsi

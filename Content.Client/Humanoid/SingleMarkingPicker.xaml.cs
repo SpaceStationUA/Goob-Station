@@ -26,7 +26,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     [Dependency] private readonly IPlayerManager _playerManager = default!; // Pirate ckey for restricted players
 
     private readonly SpriteSystem _sprite;
-    
+
     /// <summary>
     ///     What happens if a marking is selected.
     ///     It will send the 'slot' (marking index)
@@ -244,6 +244,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
                 HorizontalExpand = true
             };
             selector.Color = marking.MarkingColors[i];
+            selector.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv; // defaults color selector to HSV
 
             var colorIndex = i;
             selector.OnColorChanged += color =>

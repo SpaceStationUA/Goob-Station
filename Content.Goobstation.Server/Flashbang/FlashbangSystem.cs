@@ -16,6 +16,7 @@ using Content.Goobstation.Shared.Flashbang;
 using Content.Server.Flash;
 using Content.Server.Stunnable;
 using Content.Shared.Examine;
+using Content.Shared.Flash;
 using Content.Shared.Inventory;
 using Content.Shared.Tag;
 
@@ -65,9 +66,12 @@ public sealed class FlashbangSystem : EntitySystem
         if (comp is { KnockdownTime: <= 0, StunTime: <= 0 })
             return;
 
+        var vulnerableEv = new CheckFlashVulnerable();
+        RaiseLocalEvent(args.Target, ref vulnerableEv);
+
         var protectionRange = args.Range;
         if (!_tag.HasTag(ent, FlashSystem.IgnoreResistancesTag)
-            && !HasComp<FlashVulnerableComponent>(args.Target))
+            && !vulnerableEv.Vulnerable)
         {
             var ev = new GetFlashbangedEvent(MathF.Max(args.Range, ent.Comp.MinProtectionRange + 1f));
             RaiseLocalEvent(args.Target, ev);
@@ -91,6 +95,6 @@ public sealed class FlashbangSystem : EntitySystem
 
         var stunTime = float.Lerp(comp.StunTime, 0f, ratio);
         if (stunTime > 0f)
-            _stun.TryStun(args.Target, TimeSpan.FromSeconds(stunTime), true);
+            _stun.TryUpdateStunDuration(args.Target, TimeSpan.FromSeconds(stunTime));
     }
 }

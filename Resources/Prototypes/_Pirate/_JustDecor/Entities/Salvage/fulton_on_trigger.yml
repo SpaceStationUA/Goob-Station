@@ -1,0 +1,53 @@
+- type: entity
+  id: AutoFulton
+  name: Автоматичний Фултон
+  description: Спеціальний пристрій, який автоматично активується та евакуює ціль, коли вона переходить у критичний стан.
+  parent: BaseItem
+  suffix: Full, JustDecor
+  components:
+  - type: FultonOnTrigger
+    targetState: Critical
+    fultonDuration: 5
+    removable: true
+  - type: Stack
+    stackType: AutoFultonStack
+    count: 48
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: _Pirate/_JustDecor/Objects/Tools/fulton.rsi
+    state: extraction_pack
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: PhysicalComposition #Goobstation - Recycle update
+    materialComposition:
+      Steel: 50
+      Cloth: 125
+
+- type: stack
+  id: AutoFultonStack
+  name: stack-fulton
+  icon:
+    sprite: _Pirate/_JustDecor/Objects/Tools/fulton.rsi
+    state: extraction_pack
+  spawn: AutoFulton1
+  maxCount: 48
+
+- type: entity
+  id: AutoFulton1
+  parent: AutoFulton
+  suffix: One, JustDecor
+  components:
+  - type: Stack
+    count: 1

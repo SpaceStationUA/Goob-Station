@@ -20,7 +20,7 @@
   abstract: true
   parent: BaseItem
   id: BasePartInorganic
-  name: "частина тіла"
+  name: "body part"
   components:
   - type: Sprite
     sprite: Mobs/Species/Human/parts.rsi
@@ -51,14 +51,11 @@
   - type: Appearance
   - type: StaticPrice
     price: 100
-  - type: Tag
-    tags:
-    - Trash
 
 - type: entity
   abstract: true
   id: BaseChestInorganic
-  name: "груди"
+  name: "chest"
   components:
   - type: Sprite
     state: "chest_m"
@@ -121,7 +118,7 @@
 - type: entity
   abstract: true
   id: BaseGroinInorganic
-  name: "пах"
+  name: "groin"
   components:
   - type: Sprite
     state: "groin_m"
@@ -155,6 +152,8 @@
       Severe: 55
       Critical: 30
       Mangled: 0
+    traumaDeductions:
+      Dismemberment: 0.5
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: Groin
@@ -179,7 +178,7 @@
 - type: entity
   abstract: true
   id: BaseHead
-  name: "голова"
+  name: "head"
   components:
   - type: Damageable
     damageContainer: Biological
@@ -200,21 +199,24 @@
   - type: Tag
     tags:
       - Head
+      - Unedible # Goobstation
   - type: Woundable
     boneEntity: BoneNeck
-    integrity: 65
-    integrityCap: 65
+    integrity: 125 #Decaps should happen after the person is already dead
+    integrityCap: 125
     thresholds:
-      Minor: 50
-      Moderate: 35
-      Severe: 20
-      Critical: 10
+      Minor: 110
+      Moderate: 70
+      Severe: 50
+      Critical: 20
       Mangled: 0
     damageOnAmputate: # This seemingly arbitrary spread is the result of the default head health (65) subtracted to 200 (death threshold).
       types:
         Bloodloss: 45
         Asphyxiation: 45
         Slash: 45
+    traumaDeductions:
+      Dismemberment: 0.5
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: Head
@@ -239,7 +241,7 @@
 - type: entity
   abstract: true
   id: BaseLeftArm
-  name: "ліва рука"
+  name: "left arm"
   components:
   - type: Sprite
     state: "l_arm"
@@ -264,19 +266,19 @@
         sprite: _Shitmed/Mobs/Effects/burn_damage.rsi
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
   - type: Woundable
-    integrity: 65
-    integrityCap: 65
+    integrity: 80
+    integrityCap: 80
     thresholds:
-      Minor: 50
-      Moderate: 35
-      Severe: 20
+      Minor: 70
+      Moderate: 50
+      Severe: 25
       Critical: 10
       Mangled: 0
 
 - type: entity
   abstract: true
   id: BaseRightArm
-  name: "права рука"
+  name: "right arm"
   components:
   - type: Sprite
     state: "r_arm"
@@ -301,19 +303,19 @@
         sprite: _Shitmed/Mobs/Effects/burn_damage.rsi
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
   - type: Woundable
-    integrity: 65
-    integrityCap: 65
+    integrity: 80
+    integrityCap: 80
     thresholds:
-      Minor: 50
-      Moderate: 35
-      Severe: 20
+      Minor: 70
+      Moderate: 50
+      Severe: 25
       Critical: 10
       Mangled: 0
 
 - type: entity
   abstract: true
   id: BaseLeftHand
-  name: "ліва долоня"
+  name: "left hand"
   components:
   - type: Sprite
     state: "l_hand"
@@ -346,7 +348,7 @@
 - type: entity
   abstract: true
   id: BaseRightHand
-  name: "права долоня"
+  name: "right hand"
   components:
   - type: Sprite
     state: "r_hand"
@@ -357,13 +359,13 @@
     symmetry: Right
     toolName: "a right hand" # Shitmed Change
   - type: Woundable
-    integrity: 50
-    integrityCap: 50
+    integrity: 60
+    integrityCap: 60
     thresholds:
-      Minor: 42
-      Moderate: 36
-      Severe: 26
-      Critical: 15
+      Minor: 50
+      Moderate: 40
+      Severe: 30
+      Critical: 18
       Mangled: 0
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
@@ -379,7 +381,7 @@
 - type: entity
   abstract: true
   id: BaseLeftLeg
-  name: "ліва нога"
+  name: "left leg"
   components:
   - type: Sprite
     state: "l_leg"
@@ -405,19 +407,19 @@
         sprite: _Shitmed/Mobs/Effects/burn_damage.rsi
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
   - type: Woundable
-    integrity: 65
-    integrityCap: 65
+    integrity: 80
+    integrityCap: 80
     thresholds:
-      Minor: 50
-      Moderate: 35
-      Severe: 20
+      Minor: 70
+      Moderate: 50
+      Severe: 25
       Critical: 10
       Mangled: 0
 
 - type: entity
   abstract: true
   id: BaseRightLeg
-  name: "права нога"
+  name: "right leg"
   components:
   - type: Sprite
     state: "r_leg"
@@ -443,19 +445,19 @@
         sprite: _Shitmed/Mobs/Effects/burn_damage.rsi
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
   - type: Woundable
-    integrity: 65
-    integrityCap: 65
+    integrity: 80
+    integrityCap: 80
     thresholds:
-      Minor: 50
-      Moderate: 35
-      Severe: 20
+      Minor: 70
+      Moderate: 50
+      Severe: 25
       Critical: 10
       Mangled: 0
 
 - type: entity
   abstract: true
   id: BaseLeftFoot
-  name: "ліва стопа"
+  name: "left foot"
   components:
   - type: Sprite
     state: "l_foot"
@@ -476,19 +478,19 @@
         sprite: _Shitmed/Mobs/Effects/burn_damage.rsi
     bleedingOverlay: null
   - type: Woundable
-    integrity: 50
-    integrityCap: 50
+    integrity: 60
+    integrityCap: 60
     thresholds:
-      Minor: 42
-      Moderate: 36
-      Severe: 26
-      Critical: 15
+      Minor: 50
+      Moderate: 40
+      Severe: 30
+      Critical: 18
       Mangled: 0
 
 - type: entity
   abstract: true
   id: BaseRightFoot
-  name: "права стопа"
+  name: "right foot"
   components:
   - type: Sprite
     state: "r_foot"
@@ -509,11 +511,11 @@
         sprite: _Shitmed/Mobs/Effects/burn_damage.rsi
     bleedingOverlay: null
   - type: Woundable
-    integrity: 50
-    integrityCap: 50
+    integrity: 60
+    integrityCap: 60
     thresholds:
-      Minor: 42
-      Moderate: 36
-      Severe: 26
-      Critical: 15
+      Minor: 50
+      Moderate: 40
+      Severe: 30
+      Critical: 18
       Mangled: 0

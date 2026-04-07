@@ -286,6 +286,7 @@ namespace Content.Server.Atmos.EntitySystems
                 tile.ArchivedCycle = 0;
                 tile.LastShare = 0f;
                 tile.Hotspot = new Hotspot();
+                NotifyDeviceTileChanged((ent.Owner, ent.Comp1, ent.Comp3), tile.GridIndices);
                 return;
             }
 
@@ -296,6 +297,10 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (data.FixVacuum)
                 GridFixTileVacuum(tile);
+
+            // Since we assigned the tile a new GasMixture we need to tell any devices
+            // on this tile that the reference has changed.
+            NotifyDeviceTileChanged((ent.Owner, ent.Comp1, ent.Comp3), tile.GridIndices);
         }
 
         private void QueueRunTiles(
@@ -411,10 +416,10 @@ namespace Content.Server.Atmos.EntitySystems
             // Note: This is still processed even if space wind is turned off since this handles playing the sounds.
 
             var number = 0;
-            var bodies = EntityManager.GetEntityQuery<PhysicsComponent>();
-            var xforms = EntityManager.GetEntityQuery<TransformComponent>();
-            var metas = EntityManager.GetEntityQuery<MetaDataComponent>();
-            var pressureQuery = EntityManager.GetEntityQuery<MovedByPressureComponent>();
+            var bodies = GetEntityQuery<PhysicsComponent>();
+            var xforms = GetEntityQuery<TransformComponent>();
+            var metas = GetEntityQuery<MetaDataComponent>();
+            var pressureQuery = GetEntityQuery<MovedByPressureComponent>();
 
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {

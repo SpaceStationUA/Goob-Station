@@ -19,6 +19,8 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
+using Content.Shared.Trigger;
+using Content.Shared.Trigger.Systems;
 using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Goobstation.Server.Explosion.EntitySystems;
@@ -48,12 +50,12 @@ public sealed class GoobTriggerSystem : EntitySystem
             return;
 
 
-        foreach (var hand in _hands.EnumerateHands(containingEntity.Value, hands))
+        foreach (var hand in _hands.EnumerateHands((containingEntity.Value, hands)))
         {
-            if (hand.HeldEntity == null)
+            if (_hands.GetHeldItem((containingEntity.Value, hands), hand) == null)
                 continue;
 
-            _hands.TryDrop(containingEntity.Value, hand, handsComp: hands);
+            _hands.TryDrop((containingEntity.Value, hands), hand);
         }
         args.Handled = true;
     }

@@ -21,8 +21,8 @@
 - type: entity
   id: EngineeringTechFab
   parent: [BaseLatheLube, BaseSiloUtilizer]
-  name: "інженерний техфаб"
-  description: "Друкує обладнання та друковані плати для використання інженерним відділом."
+  name: engineering techfab
+  description: Prints equipment and circuitboards for use by engineering department.
   components:
   - type: Sprite
     sprite: Structures/Machines/techfab.rsi
@@ -43,7 +43,7 @@
     idleState: icon
     runningState: icon
     staticPacks:
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - EngineeringBoardsStatic
     - CircuitFloorsStatic
     - ToolsStatic
@@ -52,12 +52,19 @@
     - CablesStatic
     - MaterialsStatic
     - LightsStatic
+    - LatheMiscStatic
     - PowerCellsStatic
     - ElectronicsStatic
     - MiscSignallersStatic
     - NailgunStatic
     - NailsStatic
+    - ServiceBoardsStatic # Pirate start - tweak fab recepies | Add more circuits to engi fab
+    - CargoBoardsStatic
+    - MedicalBoardsStaticGoob
+    - SecurityBoardsStaticGoob
+    - ServiceBoardsStaticGoob # Pirate end
     dynamicPacks:
+    - ConstructionBagOfHolding
     - AdvancedTools
     - AtmosTools
     - EngineeringWeapons
@@ -69,9 +76,13 @@
     - SharedBoards
     - CameraBoards
     - ShuttleBoards
+    - ShuttleBoardsGoob
     - BluespaceTheory
     - ScienceClothing
     - UpgradeKits
+    - CargoBoards # Pirate start - tweak fab recepies | Add more circuits to engi fab
+    - MedicalBoards
+    - ServiceBoards # Pirate end
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NailgunEvilStatic
@@ -88,8 +99,8 @@
 - type: entity
   id: CargoTechFab
   parent: [BaseLatheLube, BaseSiloUtilizer]
-  name: "вантажний техфаб"
-  description: "Друкує обладнання та друковані плати для використання вантажним відділом."
+  name: cargo techfab
+  description: Prints equipment and circuitboards for use by cargo department.
   components:
   - type: Sprite
     sprite: Structures/Machines/techfab.rsi
@@ -111,9 +122,11 @@
     runningState: icon
     staticPacks:
     - ToolsStatic
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - CargoBoardsStatic
     - CablesStatic
+    - PartsStatic
+    - LatheMiscStatic
     - PowerCellsStatic
     - MiningToolsStatic
     - MiscSignallersStatic
@@ -133,8 +146,10 @@
     - CargoBoards
     - SharedBoards
     - ShuttleBoards
+    - ShuttleBoardsGoob
     - BluespaceTheory
     - ScienceClothing
+    - ConstructionBagOfHolding
   - type: EmagLatheRecipes
     emagStaticPacks:
     - SalvageExplosivesStatic # Seismic charges - they're pretty cheap in salvage vendor anyway so why not
@@ -150,8 +165,8 @@
 - type: entity
   id: ScienceTechFab
   parent: [BaseLatheLube, BaseSiloUtilizer]
-  name: "науковий техфаб"
-  description: "Друкує обладнання та друковані плати для використання науковим відділом."
+  name: science techfab
+  description: Prints equipment and circuitboards for use by science department.
   components:
   - type: Sprite
     sprite: Structures/Machines/techfab.rsi
@@ -172,13 +187,14 @@
     idleState: icon
     runningState: icon
     staticPacks:
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - EngineeringBoardsStatic
     - CircuitFloorsStatic
     - MedicalBoardsStatic
     - MedicalBoardsStaticGoob
     - ToolsStatic
     - PartsStatic
+    - LatheMiscStatic
     - AtmosStatic
     - CablesStatic
     - MaterialsStatic
@@ -209,11 +225,15 @@
     - SharedBoards
     - ScienceBoards
     - ShuttleBoards
+    - ShuttleBoardsGoob
     - MedicalBoardsGoob
     - BluespaceTheory
     - ExperimentalScienceGoob
     - MechBoardsScience
     - Pinpointers
+    - Genetics
+    - XenobioPack
+    - XenobagHoldingPack
     # Einstein Engines Packs
     - Translators
     - TranslatorImplanters
@@ -232,8 +252,8 @@
 - type: entity
   id: ServiceTechFab
   parent: [BaseLatheLube, BaseSiloUtilizer]
-  name: "сервісний техфаб"
-  description: "Друкує обладнання та друковані плати для використання сервісним відділом."
+  name: service techfab
+  description: Prints equipment and circuitboards for use by service department.
   components:
   - type: Sprite
     sprite: Structures/Machines/techfab.rsi
@@ -255,13 +275,16 @@
     runningState: icon
     staticPacks:
     - ServiceBoardsStatic
+    - ServiceBoardsStaticGoob
     - MaterialsStatic
     - LightsStatic
     - ServiceStatic
     - PowerCellsStatic
     - LatheMiscStatic
+    - PartsStatic
     - ChemistryStatic
     - TapeRecorderStatic
+    - CondimentStatic
     dynamicPacks:
     - Janitor
     - Instruments
@@ -274,6 +297,7 @@
     - SharedBoards
     - CameraBoards
     - ServiceTools
+    - ServiceBoardsGoob # goob
     # Einstein Engines Packs
     - Translators
   - type: EmagLatheRecipes
@@ -285,3 +309,40 @@
         - Sheet
         - RawMaterial
         - Ingot
+
+- type: entity
+  id: ERTTechFab
+  parent: [BaseLatheLube, BaseSiloUtilizer]
+  name: ERT techfab
+  description: Standard-issue ammunition and gear for Emergency Response Team deployments. Fast, basic, reliable.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/techfab.rsi
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: ert
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: inserting
+          map: ["enum.MaterialStorageVisualLayers.Inserting"]
+        - state: panel
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: Machine
+      board: ERTTechFabCircuitboard
+    - type: Lathe
+      idleState: icon
+      runningState: icon
+      staticPacks:
+      - SecurityAmmoStatic
+      - SecurityAmmoStaticGoob
+      - ERTAmmoStaticGoob
+      - SecurityHypoStatic
+      - SecurityEquipmentStaticGoob
+    - type: MaterialStorage
+      whitelist:
+        tags:
+          - Sheet
+          - RawMaterial
+          - Ingot

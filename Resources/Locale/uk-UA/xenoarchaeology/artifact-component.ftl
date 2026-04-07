@@ -3,11 +3,6 @@
 artifact-verb-make-always-active = Зробити артефакт завжди активним
 artifact-verb-activate = Активувати артефакт
 
-cmd-unlocknode-desc = Розблоковує вузол на заданому артефакті
-cmd-unlocknode-help = unlocknode <uid артефакту> <uid вузла>
-cmd-parse-failure-unlocknode-arg-num = Неправильна кількість аргументів
-cmd-parse-failure-unlocknode-invalid-entity = Наданий netEntity не є дійсним вузлом
-
 ### Verbs
 artifact-unlock-state-begin = Він починає дивно рухатися...
 artifact-unlock-state-end-success = Він сповільнюється, помітно змінившись.

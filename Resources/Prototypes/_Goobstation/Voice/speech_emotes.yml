@@ -9,8 +9,7 @@
 # SPDX-FileCopyrightText: 2025 loltart <lo1tartyt@gmail.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# Pirate Start V
-#- type: emote
+#- type: emote Pirate remove start
 #  id: Fart
 #  name: chat-emote-name-fart
 #  category: Farts
@@ -135,8 +134,8 @@
 #    - ultra fart
 #    - ultra farts
 #    - ultra farted
-#    - ultra farting
-# Pirate end ^
+#    - ultra farting Pirate remove end
+
 - type: emote
   id: Flap
   name: chat-emote-name-flap
@@ -218,6 +217,25 @@
     - wurbling
     - wurbled
 
+- type: emote # Mono
+  id: Bagawk
+  name: chat-emote-name-bagawk
+  category: Vocal
+  available: false
+  icon: _Goobstation/Interface/Emotes/caw.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-bagawk"]
+  chatTriggers:
+  - bagawk
+  - bagawks
+  - bawk
+  - bawks
+
 - type: emote
   id: Gulp
   name: chat-emote-name-gulp
@@ -233,3 +251,18 @@
   chatTriggers:
     - gulps
     - gulp
+
+- type: emote
+  id: Surprised
+  name: chat-emote-name-surprised
+  category: Vocal
+  icon: _Goobstation/Interface/Emotes/surprised.png
+  whitelist:
+    components:
+    - Vocal
+  chatMessages: ["chat-emote-msg-surprised"]
+  chatTriggers:
+    - looks surprised
+    - is surprised
+    - exclamation marks
+    - exclamation mark

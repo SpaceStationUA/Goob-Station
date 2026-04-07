@@ -180,3 +180,6 @@ marking-OniHornDoubleCurvedOutwards3Tone = Подвійні вигнуті на�
 marking-OniHornDoubleCurvedOutwards3Tone-double_curved_outwards_3tone_1 = Нижня третина
 marking-OniHornDoubleCurvedOutwards3Tone-double_curved_outwards_3tone_2 = Середня третина
 marking-OniHornDoubleCurvedOutwards3Tone-double_curved_outwards_3tone_3 = Верхня третина
+
+marking-OniTwoToedFeet-two_toes = Двопалі стопи
+marking-OniTwoToedFeet = Двопалі стопи

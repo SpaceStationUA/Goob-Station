@@ -90,9 +90,17 @@ public sealed class EntityWhitelistSystem : EntitySystem
 
         if (list.Tags != null)
         {
+            // return list.RequireAll
+            //     ? _tag.HasAllTags(uid, list.Tags)
+            //     : _tag.HasAnyTag(uid, list.Tags);
+            if (!TryComp(uid, out TagComponent? tagComp))
+                return false;
+
             return list.RequireAll
-                ? _tag.HasAllTags(uid, list.Tags)
-                : _tag.HasAnyTag(uid, list.Tags);
+                //? _tag.HasAllTags(uid, list.Tags) 
+                //: _tag.HasAnyTag(uid, list.Tags); 
+                ? _tag.HasAllTags(tagComp, list.Tags) // Pirate Changes verbs fix
+                : _tag.HasAnyTag(tagComp, list.Tags); // Pirate Changes verbs fix
         }
 
         return list.RequireAll;

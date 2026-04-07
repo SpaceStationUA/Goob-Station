@@ -69,6 +69,7 @@
   startingGear: BotanistGear
   icon: "JobIconBotanist"
   supervisors: job-supervisors-hop
+  guides: [ Botany ] # goobstation
   goobcoins: 15 #Goob content
   access:
   - Service
@@ -77,6 +78,14 @@
   extendedAccess:
   - Kitchen
   - Bar
+  # Pirate contractor start
+  requirements: 
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
+  # Pirate contractor end
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: FourTwenty

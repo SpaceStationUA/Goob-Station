@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "icon made by bunkeran (discord); equipped-HELMET, inhand-left, inhand-right made by Bukhhalter (beancounter2609 - discord) for Vareniko",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "equipped-HELMET",
+            "directions": 4
+        }
+    ]
+}

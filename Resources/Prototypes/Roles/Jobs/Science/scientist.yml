@@ -77,9 +77,16 @@
     - !type:DepartmentTimeRequirement
       department: Science
       time: 9000 #2.5 hrs
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - Interdyne
+    # Pirate contractor end
   startingGear: ScientistGear
   icon: "JobIconScientist"
   supervisors: job-supervisors-rd
+  guides: [ Science ] # goobstation
   goobcoins: 20 #Goob content
   access:
   - Research

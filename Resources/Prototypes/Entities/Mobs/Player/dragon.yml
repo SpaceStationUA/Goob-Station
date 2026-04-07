@@ -134,8 +134,8 @@
   parent: [ SimpleSpaceMobBase, FlyingMobBase ]
   id: BaseMobDragon
   suffix: ""
-  name: "космічний дракон"
-  description: "Літаючий левіафан, віддалено пов'язаний з космічними коропами."
+  name: space dragon
+  description: A flying leviathan, loosely related to space carps.
   abstract: true
   components:
   - type: Body # Shitmed
@@ -147,6 +147,7 @@
         type: SurgeryBui
   - type: Bloodstream
     bloodMaxVolume: 650
+    bleedReductionAmount: 5 #goob
   - type: GhostRole
     allowMovement: true
     allowSpeech: true
@@ -242,14 +243,11 @@
       types: {}
   - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
     allowed:
-    - SlowedDown
     - Stutter
     - Electrocution
-    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - RadiationProtection
-    - Drowsiness
     - Adrenaline
   - type: Temperature
     heatDamageThreshold: 800
@@ -280,21 +278,27 @@
         Piercing: 15
         Slash: 15
   - type: Devourer
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
+    foodPreferenceWhitelist:
+      components:
+      - HumanoidAppearance
+    stomachStorageWhitelist:
+      components:
+      - MobState
+      - Item
     chemical: Ichor
     healRate: 7.5
     whitelist:
       components:
       - MobState
       - Door
-      - Item # Goobstation
+      - Item
       tags:
       - Wall
   - type: Tag
     tags:
     - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
   # Goobstation - Collective mind
   - type: CollectiveMind
     defaultChannel: Dragonmind
@@ -314,7 +318,6 @@
     color: "#808080"
     activateSound: null
     deactivateSound: null
-  - type: ThermalVision # Goobstation - Thermal vision
   - type: CombatPower # Goobstation
     factor: 4 # times more dangerous than a crew-member
   - type: Fauna # Lavaland Change
@@ -324,6 +327,13 @@
     speedModifier: 2.5 # fast because dragon strong
     useSound:
       path: /Audio/Items/crowbar.ogg
+  - type: LanguageKnowledge # goob edit - carp language (keeping basic as an option because the space monster gloating is funny)
+    speaks:
+    - TauCetiBasic
+    - Carptongue
+    understands:
+    - TauCetiBasic
+    - Carptongue
 
 - type: entity
   parent: BaseMobDragon
@@ -349,8 +359,8 @@
 - type: entity
   categories: [ HideSpawnMenu ]
   id: DragonsBreathGun
-  name: "легені дракона"
-  description: "Для дихання дракона."
+  name: dragon's lung
+  description: For dragon's breathing.
   components:
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 5
@@ -396,8 +406,8 @@
 - type: entity
   parent: BaseAction
   id: ActionSpawnRift
-  name: "Викликати Carp Rift"
-  description: "Викликає короповий розлом, який періодично буде нереститися коропами."
+  name: Summon Carp Rift
+  description: Summons a carp rift that will periodically spawns carps.
   components:
   - type: Action
     icon:
@@ -411,8 +421,8 @@
 - type: entity
   parent: BaseAction
   id: ActionDevour
-  name: "[color=red]Поглинути[/color]"
-  description: "Спробуйте зламати конструкцію щелепами або проковтнути істоту."
+  name: "[color=red]Devour[/color]"
+  description: Attempt to break a structure with your jaws or swallow a creature.
   components:
   - type: Action
     icon: { sprite : Interface/Actions/devour.rsi, state: icon }
@@ -426,6 +436,7 @@
       components:
       - MobState
       - Door
+      - Item # Goobstation
       tags:
       - Wall
     event: !type:DevourActionEvent
@@ -433,8 +444,8 @@
 - type: entity
   parent: BaseAction
   id: ActionDragonsBreath
-  name: "[color=помаранчевий]Подих дракона[/color]"
-  description: "Вивергайте полум'я на всіх, хто наважиться напасти на вас!"
+  name: "[color=orange]Dragon's Breath[/color]"
+  description: Spew out flames at anyone foolish enough to attack you!
   components:
   - type: Action
     # TODO: actual sprite and iconOn
@@ -451,8 +462,8 @@
 - type: entity
   parent: BaseAction
   id: ActionRiseFish
-  name: "Викликати орду коропів"
-  description: "Викликає 3 коропів на місці, щоб захистити вас від небезпеки!"
+  name: Summon Carp Horde
+  description: Summons 3 carps on the spot to protect you from danger!
   components:
   - type: Action
     icon:
@@ -466,8 +477,8 @@
 - type: entity
   parent: BaseAction
   id: ActionDragonRoar
-  name: "Помах крилами"
-  description: "Змахніть крилами, щоб приголомшити всіх ворогів навколо вас!"
+  name: Wing flap
+  description: Flap your wings to stun all enemies around you!
   components:
   - type: Action
     icon:

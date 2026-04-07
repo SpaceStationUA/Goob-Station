@@ -10,7 +10,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "Уріст МакТаяран"
+  name: Urist McTajaran
   parent: BaseMobSpeciesOrganic
   id: BaseMobTajaran
   abstract: true
@@ -24,7 +24,7 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.28
+          radius: 0.35
         density: 140
         restitution: 0.0
         mask:
@@ -106,6 +106,7 @@
         Blunt: 1
   - type: Stamina
     critThreshold: 75 # Goobstation - Siouxcide, felinids take 3 disabler shots to down
+    animationThreshold: 40 # Goob edit
   - type: TypingIndicator
     proto: felinid
   - type: PseudoItem
@@ -128,14 +129,20 @@
     - DoorBumpOpener
     - FelinidEmotes # Since we need to add this, we also need to rewrite all others
     - AnomalyHost
+  # Pirate start
+  - type: NightVision
+    color: "#808080"
+    activateSound: null
+    deactivateSound: null
+  # Pirate end
 
 - type: entity
   save: false
-  name: "Уріст МакХендс"
+  name: Urist McHands
   parent: MobHumanDummy
   id: MobTajaranDummy
   categories: [ HideSpawnMenu ]
-  description: "Фіктивний таджаран, призначений для використання в налаштуванні символів."
+  description: A dummy tajaran meant to be used in character setup.
   components:
   - type: HumanoidAppearance
     species: Tajaran

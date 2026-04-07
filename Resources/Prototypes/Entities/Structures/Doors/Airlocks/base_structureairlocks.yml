@@ -94,8 +94,8 @@
 - type: entity
   id: Airlock
   parent: BaseStructure
-  name: "повітряний шлюз"
-  description: "Він відкривається, закривається і, можливо, розчавить вас."
+  name: airlock
+  description: It opens, it closes, and maybe crushes you.
   components:
   - type: StationAiWhitelist
   - type: MeleeSound
@@ -105,7 +105,7 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/basic.rsi # Pirate changes
     snapCardinals: true
     layers:
     - state: closed
@@ -251,9 +251,8 @@
     - board
   - type: PlacementReplacement
     key: walls
-  - type: PaintableAirlock
-    group: Standard
-    department: Civilian
+  - type: Paintable
+    group: AirlockStandard
   - type: StaticPrice
     price: 150
   - type: LightningTarget
@@ -269,12 +268,15 @@
     - Airlocks
     - WirePanels
     - Networking
-  - type: InteractionVerbs # Pirate
-    allowedVerbs:
-    - KnockOn
   - type: Penetratable # Goobstation - Better snipers
     penetrateDamage: 75
     damagePenalty: 0.2
+  - type: InteractionVerbs
+    allowedVerbs:
+    - KnockOn
+  - type: WeldingSparksAnimation # Goobstation
+    startingOffset: 0, 0.5
+  - type: AirlockIllumination # Pirate changes
   placement:
     mode: SnapgridCenter
 
@@ -290,7 +292,7 @@
 - type: entity
   id: AirlockGlass
   parent: Airlock
-  name: "скляний шлюз"
+  name: glass airlock
   components:
   - type: MeleeSound
     soundGroups:
@@ -301,7 +303,7 @@
   - type: Occluder
     enabled: false
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/glass.rsi # Pirate changes
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:
@@ -320,8 +322,10 @@
   - type: Construction
     graph: Airlock
     node: glassAirlock
-  - type: PaintableAirlock
-    group: Glass
+  - type: Paintable
+    group: AirlockGlass
+  #- type: RadiationBlocker
+  #  resistance: 2
   - type: Tag
     tags:
       - GlassAirlock

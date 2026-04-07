@@ -1,81 +1,114 @@
 # SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
 # SPDX-FileCopyrightText: 2025 Orion-416 <cliveocelot@gmail.com>
 # SPDX-FileCopyrightText: 2025 ImWeax <59857479+ImWeax@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 TaserTheFox <TaserTheFox@gmail.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
   parent: BaseSubdermalImplant
   id: LibrarianTranslatorImplant
-  name: "імплант перекладача бібліотекаря"
-  description: "Імплант, що дає здатність розуміти та розмовляти більшістю мов."
+  name: librarian translator implant
+  description: An implant giving the ability to understand and speak most languages.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
     spoken:
-      - Eldritch
-      - Chittin
-      - RootSpeak
-      - ValyrianStandard
-      - Marish
-      - Moffic
-      - Nekomimetic
-      - Draconic
-      - Azaziba
-      - Calcic
-      - Bubblish
-      - SiikMaas
-      - NalRasan
-      - SiikTajr
-      - YaSsa
-      - Delvahii
-      - Canilunzt
+      - TauCetiBasic # Common Languages -
+      - SolCommon
       - Elyran
       - Freespeak
       - NovuNederic
-      - SolCommon
-      - TauCetiBasic
       - Tradeband
-      - Mouse
       - Sign
+      - SpaceItalian # Job Specific -
+      - Bubblish # Species Languages -
+      - Calcic
+      - Canilunzt
+      - Chittin
+      - Gruntish
+      - NewKinPidgin # = Ka'rakk
+      #- Marish Pirate, no marish implants
+      - Moffic
+      - Nehina
+      - Nekomimetic
+      - RobotTalk
+      - RootSpeak
+      - SiikMaas
+      - Draconic # = Sinta'Unathi
+      - Schechi
+      - ValyrianStandard
+      - YowKriol
+      - Azaziba # Depricated Languages -
+      - Delvahii
+      - Eldritch
+      - NalRasan
+      - SiikTajr
+      - YaSsa
+      - Cheval # Animal Languages -
+      - Mouse
       - Monkey
       - Kobold
-      - SpaceItalian
+
     understood:
-      - Eldritch
-      - Chittin
-      - RootSpeak
-      - ValyrianStandard
-      - Marish
-      - Moffic
-      - Nekomimetic
-      - Draconic
-      - Azaziba
-      - Calcic
-      - Bubblish
-      - SiikMaas
-      - NalRasan
-      - SiikTajr
-      - YaSsa
-      - Delvahii
-      - Canilunzt
+      - TauCetiBasic # Common Languages -
+      - SolCommon
       - Elyran
       - Freespeak
       - NovuNederic
-      - SolCommon
-      - TauCetiBasic
       - Tradeband
-      - Mouse
       - Sign
+      - SpaceItalian # Job Specific -
+      - Bubblish # Species Languages -
+      - Calcic
+      - Canilunzt
+      - Chittin
+      - Gruntish
+      - NewKinPidgin # = Ka'rakk
+      #- Marish Pirate
+      - Moffic
+      - Nehina
+      - Nekomimetic
+      - RobotTalk
+      - RootSpeak
+      - SiikMaas
+      - Draconic # = Sinta'Unathi
+      - Schechi
+      - ValyrianStandard
+      - YowKriol
+      - Azaziba # Depricated Languages -
+      - Delvahii
+      - Eldritch
+      - NalRasan
+      - SiikTajr
+      - YaSsa
+      - Cheval # Animal Languages -
+      - Mouse
       - Monkey
       - Kobold
-      - SpaceItalian
+
+
+
+
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: ChevalTranslatorImplant
+  name: cheval translator implant
+  description: An implant giving the ability to understand and speak Cheval.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TranslatorImplant
+    spoken:
+     - Cheval
+    understood:
+     - Cheval
 
 - type: entity
   parent: BaseSubdermalImplant
   id: BasicSpaceItalianTranslatorImplant
-  name: "базовий імплант космічного італійського перекладача"
-  description: "Надає вам можливість розуміти мешканців кухні."
+  name: basic space italian translator implant
+  description: Provides you the ability to understand the residents of the kitchen.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -85,8 +118,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: SpaceItalianTranslatorImplant
-  name: "просунутий імплант космічного італійського перекладача"
-  description: "Надає вам можливість говорити мовою кухні."
+  name: advanced space italian translator implant
+  description: Provides you the ability to speak the language of the kitchen.
   categories: [ HideSpawnMenu ]
   components:
   - type: TranslatorImplant
@@ -94,3 +127,33 @@
     - SpaceItalian
     spoken:
     - SpaceItalian
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: YowKriolTranslatorImplant
+  name: Yow Kriol translator implant
+  description: An implant giving the ability to understand and speak Yow Kriol.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TranslatorImplant
+    understood:
+    - YowKriol
+    spoken:
+    - YowKriol
+    requires:
+    - TauCetiBasic
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: SignTranslatorImplant
+  name: sign translator implant
+  description: An implant giving the ability to understand and speak Sign Language.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TranslatorImplant
+    understood:
+    - Sign
+    spoken:
+    - Sign
+    requires:
+    - TauCetiBasic

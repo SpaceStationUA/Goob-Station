@@ -19,9 +19,9 @@
 
 - type: entity
   id: MobPathfindDummy
-  name: "манекен для патфайндінгу"
+  name: pathfind dummy
   suffix: NPC
-  parent: MobXenoRouny
+  parent: MobSpiderAngryBase
   components:
   - type: HTN
     rootTask:

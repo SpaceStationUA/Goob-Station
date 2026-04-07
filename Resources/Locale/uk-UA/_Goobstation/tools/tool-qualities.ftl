@@ -9,3 +9,6 @@ tool-quality-axing-tool-name = Пожежна сокира
 
 tool-quality-painting-name = Фарбування
 tool-quality-painting-tool-name = Фарборозпилювач
+
+tool-quality-hammering-name = Забивання
+tool-quality-hammering-tool-name = Молоток

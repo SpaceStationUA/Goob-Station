@@ -133,23 +133,51 @@
   id: Warden
   name: job-name-warden
   description: job-description-warden
+  whitelisted: true # Pirate
   playTimeTracker: JobWarden
   requirements:
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 18000 #5 hrs
+      time: 36000 #10 hrs # Pirate
+    #- !type:RoleTimeRequirement # Pirate remove - Warden doesn't have to know medicine
+    #  role: JobBrigmedic
+    #  time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 #10 hrs
-    - !type:SpeciesRequirement # Goob - None Felinid
+      time: 90000 #25 hrs # Pirate
+    - !type:TraitsRequirement # Pirate
       inverted: true
-      species:
-      - Felinid
+      traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - MovementImpaired
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+    #- !type:SpeciesRequirement # Pirate remove requirement
+    #  inverted: true
+    #  species:
+    #  - Felinid
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - ZavodskoiInterstellar
+      - PMCG
+    # Pirate contractor end
   weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  guides: # goobstation
+  - SpaceLaw
+  - LegalSOP
+  - Security
+  - WardenSOP
+  - KravMaga
   goobcoins: 35 #Goob content
   access:
   - Security
@@ -170,14 +198,14 @@
 - type: startingGear
   id: WardenGear
   equipment:
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesGlassesSecurityContraDetect # Goobstation
     id: WardenPDA
     ears: ClothingHeadsetAltWarden # Goobstation
-    pocket1: WeaponPistolMk58
+#    pocket1: WeaponPistolMk58 # PIRATE, moved to loadouts
   storage:
     back:
     - Flash
-    - MagazinePistol
+#    - MagazinePistol # PIRATE, moved to loadouts
     - ClothingMaskGasSecurity # Goobstation
 
 - type: chameleonOutfit

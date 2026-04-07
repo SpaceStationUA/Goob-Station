@@ -1,0 +1,26 @@
+- type: alert
+  id: PhysicalPotential
+  icons:
+  - sprite: /Textures/_Pirate/Interface/Alerts/physical_potential.rsi
+    state: powerLevel0
+  - sprite: /Textures/_Pirate/Interface/Alerts/physical_potential.rsi
+    state: powerLevel1
+  - sprite: /Textures/_Pirate/Interface/Alerts/physical_potential.rsi
+    state: powerLevel2
+  - sprite: /Textures/_Pirate/Interface/Alerts/physical_potential.rsi
+    state: powerLevel3
+  - sprite: /Textures/_Pirate/Interface/Alerts/physical_potential.rsi
+    state: powerLevel4
+  - sprite: /Textures/_Pirate/Interface/Alerts/physical_potential.rsi
+    state: powerLevel5
+  - sprite: /Textures/_Pirate/Interface/Alerts/physical_potential.rsi
+    state: powerLevel6
+  - sprite: /Textures/_Pirate/Interface/Alerts/physical_potential.rsi
+    state: powerLevel7
+  - sprite: /Textures/_Pirate/Interface/Alerts/physical_potential.rsi
+    state: powerLevel8
+  - sprite: /Textures/_Pirate/Interface/Alerts/physical_potential.rsi
+    state: powerLevel9
+  name: alerts-physical-potential-name
+  minSeverity: 0
+  maxSeverity: 9

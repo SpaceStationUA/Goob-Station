@@ -10,7 +10,8 @@
 job-name-futureagent = Агент Майбутнього
 job-name-salvagediver = Рятувальник-водолаз
 job-name-ntr = Представник NT
-job-name-bs = Синій Щит
+
+job-name-bs = Блакитний Щит
 job-name-overall = Загальний
 
 job-name-exec = Виконавчий Доступ
@@ -34,11 +35,9 @@ job-name-governmentman = G-мен
 # Різне
 
 job-name-conquest = Завойовник
-job-name-mercenarycaptain = Капітан Найманців
+job-name-mercenarycaptain = Капітан найманців
 
-# Role timers - Make these alphabetical or I cut you (dont listen to upstream, i copied and pasted this, make it very un-alphabetical :godo:)
-
-JobBlueshieldOfficer = Офіцер Синього Щита
+JobBlueshieldOfficer = Офіцер Блакитного Щита
 JobNanotrasenRepresentative = Представник NT
 JobNanotrasenCareerTrainer = Кар'єрний тренер Nanotrasen
 JobHecuOperative = Оперативник HECU
@@ -50,3 +49,12 @@ JobGovernmentMan = G-Man
 JobConquest = Завойовник
 JobInspector = Аудитор Центрального Командування
 JobMercenaryCaptain = Капітан Найманців
+
+job-name-navy-officer = Офіцер флоту
+job-name-navy-captain = Капітан флоту
+JobRoboticist = Робототехнік
+job-name-tider = Тайдер
+JobVirologist = Вірусолог
+job-name-radiohost = Радіоведучий
+JobRadioHost = Радіоведучий
+job-name-outercommander = Зовнішній командир

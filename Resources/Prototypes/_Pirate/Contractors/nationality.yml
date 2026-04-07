@@ -1,0 +1,88 @@
+- type: nationality
+  id: Bieselite
+  nameKey: nationality_name_bieselite
+  passportPrototype: BieselPassport
+
+- type: nationality
+  id: Nralakk
+  nameKey: nationality_name_nralakk
+  requirements:
+    - !type:SpeciesRequirement
+      inverted: true
+      species:
+        - Vox
+        - IPC
+        - Hydrakin
+  passportPrototype: NralakkPassport
+
+- type: nationality
+  id: Solarian
+  nameKey: nationality_name_solarian
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+        - Human
+  languages:
+    - SolCommon
+  passportPrototype: SolPassport
+
+- type: nationality
+  id: Eridanian
+  nameKey: nationality_name_eridanian
+  requirements:
+    - !type:CharacterEmployerRequirement
+      employers:
+      - PMCG
+      - HephaestusIndustries
+      - ZavodskoiInterstellar
+      - IdrisIncorporated
+      - ZengHuPharmaceuticals
+    - !type:SpeciesRequirement
+      inverted: true
+      species:
+        - Vox
+        - IPC
+        - Hydrakin
+  languages:
+    - Tradeband
+  passportPrototype: EridanPassport
+
+- type: nationality
+  id: Adhomai
+  nameKey: nationality_name_adhomai
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+        - Tajaran
+        - Resomi
+  passportPrototype: AdhomaiPassport
+
+- type: nationality
+  id: Izweski
+  nameKey: nationality_name_izweski
+  requirements:
+    - !type:SpeciesRequirement
+      inverted: true
+      species:
+        - Vox
+        - IPC
+        - Hydrakin
+  passportPrototype: IzweskiPassport
+
+- type: nationality
+  id: GoldenDeep
+  nameKey: nationality_name_goldendeep
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+        - IPC
+  passportPrototype: GoldenDeepPassport
+
+- type: nationality
+  id: Flock
+  nameKey: nationality_name_flock
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+        - Vox
+  passportPrototype: VoxWallet

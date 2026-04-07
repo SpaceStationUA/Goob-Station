@@ -154,6 +154,7 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, StandAttemptEvent>(OnBuckleStandAttempt);
         SubscribeLocalEvent<BuckleComponent, ThrowPushbackAttemptEvent>(OnBuckleThrowPushbackAttempt);
         SubscribeLocalEvent<BuckleComponent, UpdateCanMoveEvent>(OnBuckleUpdateCanMove);
+        SubscribeLocalEvent<BuckleComponent, UnbuckleDoAfterEvent>(OnUnbuckleDoAfter); // WD EDIT
 
         SubscribeLocalEvent<BuckleComponent, BuckleDoAfterEvent>(OnBuckleDoafter);
         SubscribeLocalEvent<BuckleComponent, DoAfterAttemptEvent<BuckleDoAfterEvent>>((uid, comp, ev) =>
@@ -182,7 +183,26 @@ public abstract partial class SharedBuckleSystem
             return;
 
         if (!CanUnbuckle(ent!, args.Puller, false))
+        {
             args.Cancel();
+            return;
+        }
+
+        // Goobstation - doafter for unbuckle by others
+        if (args.Puller != ent.Owner
+            && TryComp<StrapComponent>(ent.Comp.BuckledTo, out var strap)
+            && strap.UnbuckleDoafterTime > 0)
+        {
+            args.Cancel();
+            var doAfter = new DoAfterArgs(EntityManager, args.Puller, TimeSpan.FromSeconds(strap.UnbuckleDoafterTime), new UnbuckleDoAfterEvent(), ent.Owner, target: ent.Owner)
+            {
+                BreakOnMove = true,
+                BreakOnDamage = true,
+            };
+            _doAfter.TryStartDoAfter(doAfter);
+            return;
+        }
+        // Goobstation
     }
 
     private void OnPullStarted(Entity<BuckleComponent> ent, ref PullStartedMessage args)
@@ -282,6 +302,16 @@ public abstract partial class SharedBuckleSystem
         if (component.Buckled && TryComp<StrapComponent>(component.BuckledTo, out var strap) && strap.BlockMovement)
             args.Cancel();
     }
+
+    // WD EDIT START
+    private void OnUnbuckleDoAfter(EntityUid uid, BuckleComponent component, UnbuckleDoAfterEvent args)
+    {
+        if (args.Cancelled || !CanUnbuckle((uid, component), args.User, true, out var strap)) // Goobstation
+            return;
+
+        Unbuckle((uid, component), strap, args.User); // Goobstation
+    }
+    // WD EDIT END
 
     public bool IsBuckled(EntityUid uid, BuckleComponent? component = null)
     {
@@ -523,6 +553,26 @@ public abstract partial class SharedBuckleSystem
 
         if (!CanUnbuckle(buckle, user, popup, out var strap))
             return false;
+
+        // WD EDIT START
+        if (buckle.Owner == user && strap.Comp.SelfUnBuckleDelay != TimeSpan.Zero)
+        {
+            var doAfter = new DoAfterArgs(EntityManager, buckle.Owner, strap.Comp.SelfUnBuckleDelay, new UnbuckleDoAfterEvent(), buckle.Owner);
+            return _doAfter.TryStartDoAfter(doAfter);
+        }
+        // WD EDIT END
+
+        // Goobstation - doafter for unbuckle by others
+        if (user != null && buckle.Owner != user && strap.Comp.UnbuckleDoafterTime > 0)
+        {
+            var doAfter = new DoAfterArgs(EntityManager, user.Value, TimeSpan.FromSeconds(strap.Comp.UnbuckleDoafterTime), new UnbuckleDoAfterEvent(), buckle.Owner, target: buckle.Owner)
+            {
+                BreakOnMove = true,
+                BreakOnDamage = true,
+            };
+            return _doAfter.TryStartDoAfter(doAfter);
+        }
+        // Goobstation
 
         Unbuckle(buckle!, strap, user);
         return true;

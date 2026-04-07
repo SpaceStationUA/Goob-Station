@@ -14,8 +14,8 @@
 - type: entity
   parent: [ ClothingModsuitStandard, BaseCentcommContraband ]
   id: ClothingModsuitResponsoryMedical
-  name: "блок керування медичним скафандром швидкого реагування" # Goob edit
-  description: "Основний контролер для медичного скафандра швидкого реагування." # Goob edit
+  name: Medical Responsory modsuit control unit
+  description: The main controller for a Medical Responsory modsuit.
   components:
     - type: Sprite
       sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/medical-responsory.rsi
@@ -45,8 +45,8 @@
 - type: entity
   parent: ClothingModsuitGauntletsStandard
   id: ClothingModsuitGauntletsResponsoryMedical
-  name: "медичні рукавиці від скафандру швидкого реагування" # Goob edit
-  description: "Пара рукавиць, створених для медичного скафандра швидкого реагування." # Goob edit
+  name: Medical Responsory modsuit gauntlets
+  description: A pair of gauntlets made for the Medical Responsory hardsuit.
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -58,12 +58,17 @@
         - state: equipped-HAND-sealed
         - state: equipped-HAND-sealed-unshaded
           shader: unshaded
+        gloves-vox:
+        - state: equipped-HAND-sealed-vox
+        - state: equipped-HAND-sealed-unshaded-vox
+          shader: unshaded
+    - type: Insulated # Goob Edit (WHY IS IT NOT INSULATED??)
 
 - type: entity
   parent: [ClothingModsuitHelmetStandard, ShowSecurityIcons]
   id: ClothingModsuitHelmetResponsoryMedical
-  name: "медичний шолом від скафандру швидкого реагування" # Goob edit
-  description: "Сучасний шолом, розроблений NanoTrasen для медичного скафандра швидкого реагування. Має вбудований HUD." # Goob edit
+  name: Medical Responsory modsuit helmet
+  description: A state-of-the-art helmet designed by NanoTrasen for the Medical Responsory modsuit. It includes a built-in HUD.
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -104,12 +109,15 @@
         - state: equipped-HEAD-sealed
         - state: equipped-HEAD-sealed-unshaded
           shader: unshaded
-
+        head-vox:
+        - state: equipped-HEAD-sealed-vox
+        - state: equipped-HEAD-sealed-unshaded-vox
+          shader: unshaded
 - type: entity
   parent: ClothingModsuitChestplateStandard
   id: ClothingModsuitChestplateResponsoryMedical
-  name: "медичний нагрудник від скафандру швидкого реагування" # Goob edit
-  description: "Сучасний нагрудник, розроблений NanoTrasen для медичного скафандра швидкого реагування. Він включає силові сервоприводи для зменшення навантаження від обладнання." # Goob edit
+  name: Medical Responsory modsuit chestplate
+  description: A state of the art chestplate designed by NanoTrasen for the Medical Responsory modsuit. It incorporates powered servos to reduce the equipment load.
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -139,6 +147,8 @@
       clothingVisuals:
         outerClothing:
         - state: equipped-OUTERCLOTHING-sealed
+        outerClothing-vox:
+        - state: equipped-OUTERCLOTHING-sealed-vox
     - type: StaminaResistance
       damageCoefficient: 0.45
 
@@ -146,8 +156,8 @@
 - type: entity
   parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsResponsoryMedical
-  name: "медичні черевики від скафандру швидкого реагування" # Goob edit
-  description: "Сучасна пара магнітних черевиків для медичного скафандра швидкого реагування." # Goob edit
+  name: Medical Responsory modsuit boots
+  description: A state-of-the-art pair of magboots for the Medical Responsory modsuit.
   categories: [HideSpawnMenu]
   components:
     - type: Appearance
@@ -161,6 +171,10 @@
       clothingVisuals:
         shoes:
         - state: equipped-FEET-sealed
+        shoes-vox:
+        - state: equipped-FEET-sealed-vox
+        - state: equipped-FEET-sealed-unshaded-vox
+          shader: unshaded
     - type: ItemToggle
     - type: ToggleClothing
       action: ActionToggleMagboots

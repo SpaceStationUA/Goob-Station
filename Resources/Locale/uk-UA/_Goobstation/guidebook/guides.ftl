@@ -16,6 +16,9 @@ guide-entry-automation = Автоматизація
 
 # СОП Goob
 # - Головні Директорії
+
+# СОП Goob
+# - Головні Директорії
 guide-entry-sop = СОП
 guide-entry-sop-alert-levels = Рівні тривоги
 guide-entry-sop-emergencies = Надзвичайні ситуації
@@ -63,9 +66,8 @@ guide-entry-sop-searches = Обшуки
 # - Карго
 guide-entry-sop-cargotech = Технік карго
 guide-entry-sop-salvage = Спеціаліст з утилізації
-# - Командування
 guide-entry-sop-ntr = Представник NT
-guide-entry-sop-bso = Офіцер Синього Щита
+guide-entry-sop-bso = Офіцер Блакитного Щита
 guide-entry-sop-captain = Капітан
 guide-entry-sop-hop = Голова персоналу
 guide-entry-sop-hos = Голова служби безпеки
@@ -96,3 +98,14 @@ guide-entry-sop-janitor = Прибиральник
 guide-entry-sop-librarian = Бібліотекар
 guide-entry-sop-mime = Мім
 guide-entry-sop-reporter = Репортер
+
+guide-entry-plumbing = Сантехніка
+guide-entry-alcoholic-drinks = Алкогольні напої
+guide-entry-non-alcoholic-drinks = Безалкогольні напої
+guide-entry-virology = Вірусологія
+guide-entry-enchanting = Зачарування
+
+# Ґуб СОП
+# - Основні директорії
+guide-entry-sop-shaft-miner = Шахтар
+# - Командування

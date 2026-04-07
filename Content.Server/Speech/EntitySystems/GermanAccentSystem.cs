@@ -5,9 +5,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Text;
-using Content.Server.Speech.Components;
-using Robust.Shared.Random;
 using System.Text.RegularExpressions;
+using Content.Server.Speech.Components;
+using Content.Shared.Speech;
+using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -64,12 +65,12 @@ public sealed class GermanAccentSystem : EntitySystem
                 {
                     msgBuilder[i] = msgBuilder[i] switch
                     {
-                        'A' => 'Ä',
-                        'a' => 'ä',
-                        'O' => 'Ö',
-                        'o' => 'ö',
-                        'U' => 'Ü',
-                        'u' => 'ü',
+                        'А' => 'Ä',
+                        'а' => 'ä',
+                        'О' => 'Ö',
+                        'о' => 'ö',
+                        'У' => 'Ü',
+                        'у' => 'ü',
                         _ => msgBuilder[i]
                     };
                     umlautCooldown = 4;

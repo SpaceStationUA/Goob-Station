@@ -1,0 +1,17 @@
+- type: loadout
+  id: CSDTelescopicBaton
+  storage:
+    back:
+    - TelescopicBaton
+
+- type: loadout
+  id: CSDWeaponDisabler
+  storage:
+    back:
+    - WeaponDisabler
+
+- type: loadout
+  id: CSDFlash
+  storage:
+    back:
+    - Flash

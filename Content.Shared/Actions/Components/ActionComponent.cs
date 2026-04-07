@@ -18,6 +18,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Utility;
+using System.Numerics; // DOWNSTREAM-TPirates: IPC screens
 
 namespace Content.Shared.Actions.Components;
 
@@ -213,6 +214,19 @@ public sealed partial class ActionComponent : Component
     /// </summary>
     [DataField] 
     public bool Predicted = true;
+    #region DOWNSTREAM-TPirates: IPC screens
+    /// <summary>
+    ///     Custom size for the icon when ItemIconStyle is set to ScaledAction.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Vector2? IconSize;
+
+    /// <summary>
+    ///     Custom offset for the icon when ItemIconStyle is set to ScaledAction.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Vector2? IconOffset;
+    #endregion
 }
 
 [DataRecord, Serializable, NetSerializable]

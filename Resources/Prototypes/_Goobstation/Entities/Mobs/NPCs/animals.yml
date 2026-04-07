@@ -27,7 +27,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "гондола"
+  name: gondola
   parent:
     - MobRespirator
     - MobAtmosStandard
@@ -35,7 +35,7 @@
     - MobBloodstream
     - MobFlammable
   id: MobGondola
-  description: "Не маючи рук, він втілює даоський принцип у-вей (недіяння), а його усміхнений вираз обличчя демонструє його повне і абсолютне прийняття світу таким, яким він є."
+  description: Having no hands he embodies the Taoist principle of wu-wei (non-action) while his smiling facial expression shows his utter and complete acceptance of the world as it is.
   components:
   - type: Hunger
     thresholds:
@@ -151,10 +151,10 @@
   - type: Perishable
 
 - type: entity
-  name: "синді-тарган"
+  name: syndiroach
   id: MobMothSyndy
   parent: MobMothroach
-  description: "Вибуховий мофф."
+  description: Explosive moth.
   components:
   - type: Sprite
     sprite: _Goobstation/Mobs/Animals/syndiroach.rsi
@@ -191,11 +191,11 @@
     - TauCetiBasic # Needs to understand your nukie ops.
 
 - type: entity
-  name: "синді бі"
+  name: syndie bee
   suffix: Angry, syndicate
   parent: [ MobAngryBee ]
   id: MobSyndieAngryBee
-  description: "Яка гарна бджілка. О ні, вона виглядає сердитою і хоче мою піцу."
+  description: How nice a bee. Oh no, it looks angry and wants my pizza.
   components:
   - type: NpcFactionMember
     factions:
@@ -222,10 +222,10 @@
         3
 
 - type: entity
-  name: "лутбаг"
+  name: lootbug
   id: MobLootbug
   parent: SimpleSpaceMobBase
-  description: "Він їсть метал, можливо, він з'їв щось цінне?"
+  description: It eats metal, maybe it's eaten something of value?
   components:
   - type: Sprite
     drawdepth: SmallMobs
@@ -291,8 +291,17 @@
       - Mouse
   - type: VentCrawler # goobstation - Ventcrawl
   - type: Devourer
-    foodPreference: All
-    shouldStoreDevoured: true
+    structureDevourTime: 3
+    foodPreferenceWhitelist:
+      tags:
+      - Ingot
+      - Metal
+      - Steel
+      - Ore
+      - Telecrystal
+    stomachStorageWhitelist:
+      components:
+      - Item
     chemical: Ichor
     healRate: 7.5
     whitelist:
@@ -302,13 +311,14 @@
       - Steel
       - Ore
       - Telecrystal
-
+  - type: MobPrice
+    price: 500
 
 - type: entity
-  name: "космічний короп"
+  name: space carp
   id: MobCarpSentient
   parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
-  description: "Це космічний короп. Раніше був людиною."
+  description: It's a space carp. Used to be a person.
   components:
   - type: InputMover
   - type: MobMover
@@ -406,10 +416,10 @@
 
 
 - type: entity
-  name: "дивна миша"
+  name: strange mouse
   parent: MobMouse
   id: MobMouseSentient
-  description: "Піск! Раніше була людиною!"
+  description: Squeak! Used to be a person!
   components:
   - type: MobThresholds
     thresholds:
@@ -433,10 +443,10 @@
         Piercing: 5
 
 - type: entity
-  name: "гомункул"
+  name: homunculus
   id: MobHomunculus
   parent: SimpleMobBase
-  description: "Яке жалюгідне створіння..."
+  description: What a wretched beast...
   components:
   - type: Sprite
     drawdepth: SmallMobs
@@ -508,7 +518,7 @@
 - type: entity
   parent: MobMouse
   id: MouseMenace
-  name: "загроза"
+  name: menace
   components:
   - type: EnchantFill
     enchants:
@@ -517,10 +527,10 @@
       EnchantSharpness: 5 # hit hard ye
 
 - type: entity
-  name: "Клоун Ієн"
+  name: Clown Ian
   parent: MobCorgiIan
   id: MobCorgiIanClown
-  description: "Улюблений коргі Хонкматері."
+  description: Honkmother's favorite corgi.
   components:
     - type: Sprite
       drawdepth: Mobs
@@ -559,23 +569,26 @@
       - FootstepSound
 
 - type: entity
-  name: "брулбар"
+  name: brullbar
   id: MobBrullbar
   parent: [ SimpleSpaceMobBase, MobCombat ]
-  description: "Схожий на ведмедя, але не такий придатний для обіймів."
+  description: Oh god.
   components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 4
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
   - type: SpamEmitSound
-    minInterval: 15
-    maxInterval: 45
+    minInterval: 5
+    maxInterval: 15
     sound:
-      path: /Audio/_Goobstation/Animals/Meatzone_Howl.ogg
+      path: /Audio/_Goobstation/Wraith/Mobs/brullbar/brullbar_roar.ogg
       params:
-          volume: -5
+          volume: 1
           maxDistance: 20
-          variation: 0.05
+          variation: 0.01
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -607,10 +620,10 @@
   - type: Fauna # Lavaland Change
 
 - type: entity
-  name: "король брулбарів"
+  name: brullbar king
   id: MobBrullbarKing
   parent: MobBrullbar
-  description: "Виглядає злим, і є злим. Тобі краще тікати."
+  description: Looks mean, is mean. You better run.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -640,10 +653,10 @@
       prob: 0.2
 
 - type: entity
-  name: "ведмідь"
+  name: bear
   id: MobBearGoon
   parent: [ SimpleSpaceMobBase, MobCombat ]
-  description: "Чого витріщився? Ніколи не бачив ведмедя?"
+  description: Why are you staring? Never seen a bear before?
   components:
   - type: HTN
     rootTask:
@@ -665,7 +678,7 @@
         Base: beardead
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
-    baseSprintSpeed : 7
+    baseSprintSpeed : 4
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -679,10 +692,10 @@
   - type: Fauna # Lavaland Change
 
 - type: entity
-  name: "білий вовк"
+  name: white wolf
   parent: [ SimpleMobBase, MobCombat ]
   id: MobWhiteWolf
-  description: "Не намагайтеся погладити цього."
+  description: Don't try to pet this one.
   components:
     - type: HTN
       rootTask:
@@ -704,7 +717,7 @@
           Base: wolfdead
     - type: MovementSpeedModifier
       baseWalkSpeed : 3
-      baseSprintSpeed : 6
+      baseSprintSpeed : 5
     - type: MobThresholds
       thresholds:
         0: Alive
@@ -727,16 +740,16 @@
       - Dog
       understands:
       - Dog
-
+      - TauCetiBasic
 
 - type: entity
-  name: "кінь"
+  name: horse
   parent: [SimpleMobBase, StripableInventoryBase]
   id: MobHorse
-  description: "Дуже мерзенне створіння. Для тих, хто любить помахати кулаками."
+  description: Very foul creature. For those that feel like punching.
   components:
   - type: MovementSpeedModifier
-    baseSprintSpeed: 7.5
+    baseSprintSpeed: 5.5
     baseWalkSpeed: 4.5 # default walking speed
   - type: Sprite
     drawdepth: Mobs
@@ -745,13 +758,23 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: horse
   - type: Physics
+  - type: Speech
+    speechVerb: HorseVerb
+    speechSounds: HorseSpeech
+  - type: LanguageSpeaker # Einstein Engines - Language
+  - type: LanguageKnowledge # Einstein Engines - Language
+    speaks:
+    - Cheval
+    understands:
+    - Cheval
+    - TauCetiBasic
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeCircle
           radius: 0.3
-        density: 15
+        density: 185
         mask:
         - MobMask
         layer:
@@ -792,3 +815,172 @@
     attributes:
       proper: true
       gender: male
+  - type: Sprinter
+    staminaDrainRate: 2
+  - type: TemperatureSpeed
+    thresholds:
+      293: 0.8
+      280: 0.6
+      260: 0.4
+
+- type: entity
+  parent: SimpleMobBase
+  id: MobClownGoblin
+  name: clown goblin
+  description: Little walking clown mask and shoes. You want to honk their nose!
+  components:
+  - type: WaddleAnimation
+  - type: Hunger
+    baseDecayRate: 0
+  - type: Thirst
+    baseDecayRate: 0
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-clown-goblin-name
+    description: ghost-role-information-clown-goblin-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
+    raffle:
+      settings: default
+  - type: Speech
+    speechSounds: BikeHorn
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Goobstation/Mobs/Animals/clown_goblin.rsi
+    state: goblin
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Dead
+  - type: Physics
+  - type: HTN
+    rootTask:
+      task: MouseCompound
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ClothingShoesClown:
+            min: 1
+            max: 1
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ClothingMaskClown:
+            min: 1
+            max: 1
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 5
+  - type: Appearance
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - FootstepSound
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.25
+    damageRecovery:
+      types:
+        Asphyxiation: -0.25
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.1
+  - type: Bloodstream
+    bloodMaxVolume: 50
+    bloodReagent: Honk
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+  - type: CombatMode
+  - type: MeleeWeapon
+    attackRate: 2
+    damage:
+      types:
+        Blunt: 0.5
+    soundHit:
+      collection: BikeHorn
+    animation: WeaponArcFist
+  - type: Vocal
+    sounds:
+      Male: ClownGoblin
+      Female: ClownGoblin
+      Unsexed: ClownGoblin
+
+- type: entity
+  name: mustard mothroach
+  parent: MobMothroach
+  id: MobMothroachMustard
+  description: A delightful result of the world's chefs crossing meat with sauce.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Mobs/Animals/mustard_mothroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mothroach
+  - type: FaxableObject
+    insertingState: inserting_mothroach_mustard
+
+- type: entity
+  name: leopard mothroach
+  parent: MobMothroach
+  id: MobMothroachLeopard
+  description: A charming result of numerous attempts to crossbreed insects with predators.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Mobs/Animals/leopard_mothroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mothroach
+  - type: FaxableObject
+    insertingState: inserting_mothroach_leopard
+
+- type: entity
+  name: cecropia mothroach
+  parent: MobMothroach
+  id: MobMothroachCecropia
+  description: A charming result of numerous attempts to cross a genus of the nettle family with cockroaches.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Mobs/Animals/cecropia_mothroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mothroach
+  - type: FaxableObject
+    insertingState: inserting_mothroach_cecropia
+
+- type: entity
+  name: lunar mothroach
+  parent: MobMothroach
+  id: MobMothroachLunar
+  description: Someone left the moth under the moonlight.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Mobs/Animals/lunar_mothroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mothroach
+  - type: FaxableObject
+    insertingState: inserting_mothroach_lunar

@@ -1,6 +1,6 @@
 ## UI
 
-research-console-menu-title = Комп'ютер досліджень
+research-console-menu-title = Комп'ютер дослiджень
 research-console-menu-research-points-text = Балів Досліджень: [color=orchid]{$points}[/color]
 research-console-menu-main-discipline = Основний Напрямок: [color={$color}]{$name}[/color]
 research-console-menu-server-selection-button = Список серверів

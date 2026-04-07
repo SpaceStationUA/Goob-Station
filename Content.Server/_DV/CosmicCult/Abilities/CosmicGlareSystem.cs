@@ -98,7 +98,7 @@ public sealed class CosmicGlareSystem : EntitySystem
             _flash.Flash(targetEnt,
                 uid,
                 args.Action,
-                (float) uid.Comp.CosmicGlareDuration.TotalMilliseconds,
+                uid.Comp.CosmicGlareDuration,
                 uid.Comp.CosmicGlarePenalty,
                 false,
                 false,
@@ -106,7 +106,7 @@ public sealed class CosmicGlareSystem : EntitySystem
 
             if (HasComp<BorgChassisComponent>(targetEnt) // fuck them clankers
                 || HasComp<SiliconComponent>(targetEnt))
-                _stun.TryParalyze(targetEnt, uid.Comp.CosmicGlareDuration / 2, true);
+                _stun.TryUpdateParalyzeDuration(targetEnt, uid.Comp.CosmicGlareDuration / 2);
 
             _color.RaiseEffect(Color.CadetBlue,
                 new List<EntityUid>() { targetEnt },

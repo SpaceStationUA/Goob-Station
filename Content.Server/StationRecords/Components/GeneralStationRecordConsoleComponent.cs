@@ -34,5 +34,13 @@ public sealed partial class GeneralStationRecordConsoleComponent : Component
     /// Whether this Records Console is able to delete entries.
     /// </summary>
     [DataField]
-    public bool CanDeleteEntries;
+    public bool CanDeleteEntries = false;
+
+    #region Pirate: records photos
+    /// <summary>
+    /// Max length of edited string fields.
+    /// </summary>
+    [DataField]
+    public uint MaxStringLength = 256;
+    #endregion
 }

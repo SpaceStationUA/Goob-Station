@@ -89,7 +89,7 @@ namespace Content.Server.Nuke
         ///     How long a user must wait to disarm the bomb.
         /// </summary>
         [DataField("disarmDoafterLength")]
-        public float DisarmDoafterLength = 30.0f;
+        public float DisarmDoAfterLength = 30.0f;
 
         [DataField("alertLevelOnActivate")] public string AlertLevelOnActivate = default!;
         [DataField("alertLevelOnOverride")] public string AlertLevelOnOverride = default!; // Goobstation
@@ -226,6 +226,9 @@ namespace Content.Server.Nuke
         // Goobstation start
         [DataField("honkopsArmMusic")]
         public SoundSpecifier HonkopsArmMusic = new SoundCollectionSpecifier("HonkopsNukeMusic");
+
+        [DataField("loneopArmMusic")]
+        public SoundSpecifier LoneopArmMusic = new SoundCollectionSpecifier("LoneopNukeMusic");
         // Goobstation end
     }
 }

@@ -1,0 +1,34 @@
+- type: entity
+  abstract: true
+  parent: CrateBaseSecure
+  id: CrateMedicalInterdyne
+  name: Crate
+  components:
+  - type: Icon
+    sprite: _Pirate/Structures/Storage/Crates/medicalinterdynecrate_secure.rsi
+  - type: Sprite
+    sprite: _Pirate/Structures/Storage/Crates/medicalinterdynecrate_secure.rsi
+
+- type: entity
+  parent: CrateMedicalInterdyne
+  id: CrateMedicalInterdyneSecure
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  parent: CrateMedicalInterdyne
+  id: CrateInterdyneSecure
+  components:
+  - type: AccessReader
+    access: [["Interdyne"]]
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateSurgeryInterdyne
+  name: Ящик інтердайну
+  components:
+  - type: Icon
+    sprite: _Pirate/Structures/Storage/Crates/surgerygreen.rsi
+  - type: Sprite
+    sprite: _Pirate/Structures/Storage/Crates/surgerygreen.rsi

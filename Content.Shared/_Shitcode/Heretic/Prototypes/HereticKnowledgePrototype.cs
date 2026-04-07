@@ -7,12 +7,11 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Common.Heretic;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Heretic.Prototypes;
 
-[Serializable, NetSerializable, DataDefinition]
 [Prototype("hereticKnowledge")]
 public sealed partial class HereticKnowledgePrototype : IPrototype
 {
@@ -30,7 +29,7 @@ public sealed partial class HereticKnowledgePrototype : IPrototype
     /// <summary>
     ///     What event should be raised
     /// </summary>
-    [DataField] public object? Event;
+    [DataField, NonSerialized] public HereticKnowledgeEvent? Event;
 
     /// <summary>
     ///     What rituals should be given

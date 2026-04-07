@@ -1,10 +1,8 @@
 # Загальне
-ai-wire-snipped = Провід був перерізаний на {$coords}.
+ai-wire-snipped = Один із дротів ваших систем було перерізано у {$source}.
 wire-name-ai-vision-light = АІВ
 wire-name-ai-act-light = АІА
-station-ai-takeover = Захоплення станції ШІ
-
-# Радіальні дії
+station-ai-takeover = Захоплення ШІ
 ai-open = Відкрити дії
 ai-close = Закрити дії
 
@@ -13,12 +11,12 @@ bolt-open = Відкрити болт
 
 toggle-light = Перемкнути світло
 
-
 emergency-access-on = Увімкнути аварійний доступ
 emergency-access-off = Вимкнути аварійний доступ
 electrify-door-on = Увімкнути перезарядку
 electrify-door-off = Вимкнути перезарядку
 ai-device-not-responding = Пристрій не відповідає
+ai-device-too-far = Ви не дотягуєтесь!
 ai-consciousness-download-warning = Ваша свідомість завантажується
 station-ai-customization-menu = Налаштування ШІ
 station-ai-customization-categories = Категорії
@@ -37,5 +35,5 @@ station-ai-icon-smiley = Суцільні посмішки
 station-ai-hologram-female = Жіноча зовнішність
 station-ai-hologram-male = Чоловіча зовнішність
 station-ai-hologram-face = Безтілесна голова
-station-ai-hologram-cat = Форма кота
-station-ai-hologram-dog = Форма коргі
+
+station-ai-eye-name = Око ШІ - {$name}

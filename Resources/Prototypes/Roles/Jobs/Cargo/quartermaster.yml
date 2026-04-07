@@ -139,16 +139,35 @@
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 36000 #10 hours
-    - !type:SpeciesRequirement # Goob - None Felinid
+    - !type:TraitsRequirement # Pirate
       inverted: true
-      species:
-      - Felinid
+      traits:
+      - DeafTrait
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+    #- !type:SpeciesRequirement # Goob - None Felinid
+    #  inverted: true
+    #  species:
+    #  - Felinid
+  # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - OrionExpress
+  # Pirate contractor end
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"
   supervisors: job-supervisors-captain
   #canBeAntag: false
   antagAdvantage: 75 # Goobstation
+  guides: # goobstation
+  - Cargo
+  - QuartermasterSOP
+  - CargoSOP
+  - Command
   goobcoins: 40 #Goob content
   access:
   - Cargo
@@ -166,6 +185,7 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
+      - type: QuartermasterTraining
 
 - type: startingGear
   id: QuartermasterGear
@@ -177,7 +197,7 @@
   storage:
     back:
     - Flash
-    - TelescopicBaton # Goobstation
+    #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit
   id: QuartermasterChameleonOutfit

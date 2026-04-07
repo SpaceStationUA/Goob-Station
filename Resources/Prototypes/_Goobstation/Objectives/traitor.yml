@@ -23,7 +23,7 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: PermaKillRandomTraitorObjective
-  description: "Зробіть це як завгодно, аби вони більше не дихали."
+  description: Do it however you like, as long as they're not breathing anymore.
   components:
   - type: Objective
     difficulty: 2.5 # Most cases tots are armed themselves so have fun
@@ -40,7 +40,7 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: PermaKillRandomPersonObjective
-  description: "Зробіть це як завгодно, аби вони більше не дихали."
+  description: Do it however you like, as long as they're not breathing anymore.
   components:
   - type: Objective
     difficulty: 1.75
@@ -59,7 +59,7 @@
 - type: entity
   parent: [BaseTraitorSocialObjective, BaseKeepAliveObjective]
   id: RandomTraitorTargetAliveObjective
-  description: "Ворожі агенти мають намір вбити цю ціль. Ідентифікуйте себе на свій страх і ризик."
+  description: Rival agents intend to assassinate this target. Identify yourself at your own risk.
   components:
   - type: Objective
     difficulty: 1 # This can be either protect HoS (objective solves itself) or having some tider die in maints silently. Difficulty is set to 1 to have other objectives.
@@ -116,6 +116,17 @@
     stealGroup: RapidSyringeGun
   - type: Objective
     difficulty: 3 # Slightly more than normal as it does not fit into storage implant
+
+- type: entity
+  parent: BaseTraitorStealObjective
+  id: ExecutiveBriefcaseStealObjective
+  components:
+  - type: Objective
+    difficulty: 3 # its an item that you cant store anywhere without being noticed, good luck
+  - type: NotJobRequirement
+    job: NanotrasenRepresentative
+  - type: StealCondition
+    stealGroup: ExecutiveBriefcase
 
 - type: entity
   parent: BaseRDStealObjective

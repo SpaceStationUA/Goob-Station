@@ -27,10 +27,10 @@
 #      traits:
 #        - Foreigner
 #        - ForeignerLight
-#    - !type:CharacterEmployerRequirement
-#      employers:
-#      - IdrisIncorporated
-#      - NanoTrasen
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
   goobcoins: 30 #Goob content
   startingGear: AdminAssistantGear
   icon: "JobIconAdminAssitant"
@@ -50,11 +50,14 @@
   id: AdminAssistantGear
   equipment:
     id: AdminAssistantPDA
+  storage:
+    back:
+    - RubberStampAdminAssistant
 
 - type: chameleonOutfit
   id: AdministrativeAssistantChameleonOutfit
   job: AdministrativeAssistant
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCommandGeneric
+    jumpsuit: ClothingUniformJumpsuitAdminAssistant
     shoes: ClothingShoesColorBlack
     ears: ClothingHeadsetAltCommand

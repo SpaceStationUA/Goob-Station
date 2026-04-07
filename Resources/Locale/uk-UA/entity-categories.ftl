@@ -6,3 +6,4 @@ entity-category-name-roles = Ролі розуму
 entity-category-name-mapping = Мапінг
 entity-category-name-donotmap = Не для мапінгу
 entity-category-suffix-donotmap = НЕ ДЛЯ МАПІНГУ
+entity-category-name-status-effects = Ефекти стану

@@ -101,15 +101,37 @@
   playTimeTracker: JobSecurityCadet
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 9000 #2.5 hrs
+      time: 36000 #10 hrs # Pirate
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - MovementImpaired
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
     # - !type:DepartmentTimeRequirement # Pirate
     #   department: Security # Pirate
     #   time: 18000 #5 hrs # Pirate
     #   inverted: true # stop playing intern if you're good at security! # Pirate
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - ZavodskoiInterstellar
+      - PMCG
+    # Pirate contractor end
   startingGear: SecurityCadetGear
   icon: "JobIconSecurityCadet"
   supervisors: job-supervisors-security
   canBeAntag: false
+  guides: # goobstation
+  - Security
+  - OfficerCadetSOP
+  - SearchesSOP
   goobcoins: 30 #Goob content
   access:
   - Security
@@ -139,7 +161,7 @@
   storage:
     back:
     - Flash
-    - MagazinePistol
+#    - MagazinePistol # Pirate
 
 - type: chameleonOutfit
   id: SecurityCadetChameleonOutfit

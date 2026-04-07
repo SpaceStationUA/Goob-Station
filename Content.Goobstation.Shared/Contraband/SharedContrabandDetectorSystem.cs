@@ -75,7 +75,7 @@ public abstract class SharedContrabandDetectorSystem : EntitySystem
         return false;
     }
 
-    public List<EntityUid> FindContraband(EntityUid uid)
+    public List<EntityUid> FindContraband(EntityUid uid, bool recursive = true, SlotFlags check = SlotFlags.All)
     {
         List<EntityUid> listOfContraband = new();
         List<EntityUid> itemsToCheck = new();
@@ -83,19 +83,24 @@ public abstract class SharedContrabandDetectorSystem : EntitySystem
         itemsToCheck.Add(uid);
 
         // Check items in inner storage
-        itemsToCheck.AddRange(RecursiveFindInStorage(uid));
+        if (recursive)
+            itemsToCheck.AddRange(RecursiveFindInStorage(uid));
 
         // Check items in inventory slots and storages
-        var enumerator = _inventorySystem.GetSlotEnumerator(uid);
-        while (enumerator.MoveNext(out var slot))
+        if (check != SlotFlags.NONE)
         {
-            var item = slot.ContainedEntity;
+            var enumerator = _inventorySystem.GetSlotEnumerator(uid, check);
+            while (enumerator.MoveNext(out var slot))
+            {
+                var item = slot.ContainedEntity;
 
-            if (item == null)
-                continue;
+                if (item == null)
+                    continue;
 
-            itemsToCheck.Add(item.Value);
-            itemsToCheck.AddRange(RecursiveFindInStorage(item.Value));
+                itemsToCheck.Add(item.Value);
+                if (recursive)
+                    itemsToCheck.AddRange(RecursiveFindInStorage(item.Value));
+            }
         }
 
         // Check items in hands
@@ -103,7 +108,8 @@ public abstract class SharedContrabandDetectorSystem : EntitySystem
         foreach (var handItem in handEnumerator)
         {
             itemsToCheck.Add(handItem);
-            itemsToCheck.AddRange(RecursiveFindInStorage(handItem));
+            if (recursive)
+                itemsToCheck.AddRange(RecursiveFindInStorage(handItem));
         }
 
         foreach (var item in itemsToCheck)
@@ -183,14 +189,14 @@ public abstract class SharedContrabandDetectorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks permission for user to have contraband. 
+    /// Checks permission for user to have contraband.
     /// </summary>
     /// <param name="contraband"></param>
     /// <param name="user"></param>
     /// <returns></returns>
     public bool CheckContrabandPermission(EntityUid contraband, EntityUid user, ContrabandComponent? component = null)
     {
-        // No contraband = have permission 
+        // No contraband = have permission
         if (!Resolve(contraband, ref component))
             return true;
 
@@ -204,6 +210,12 @@ public abstract class SharedContrabandDetectorSystem : EntitySystem
             if (id.Comp.LocalizedJobTitle is not null)
             {
                 job = id.Comp.LocalizedJobTitle;
+                // Pirate START - Fix alt jobs screwing allowed jobs check
+                if (id.Comp.JobPrototype is not null)
+                {
+                    job = _prototypeMan.Index<JobPrototype>(id.Comp.JobPrototype).LocalizedName;
+                }
+                // Pirate END - Fix alt jobs screwing allowed jobs check
             }
         }
 

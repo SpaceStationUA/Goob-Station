@@ -141,30 +141,57 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 3600 #1 hr
-    - !type:RoleTimeRequirement
-      role: JobDetective
-      time: 3600 #1 hr, knowing how to use the tools is important
+      time: 36000 #10 hrs # Pirate
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 18000 #5 hrs
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 36000 # 10 hrs
-    - !type:SpeciesRequirement # Goob - None Felinid
+      time: 108000 #30 hrs # Pirate
+    - !type:RoleTimeRequirement
+      role: JobDetective
+      time: 3600 #1 hrs
+    #- !type:DepartmentTimeRequirement # Pirate remove
+    #  department: Security
+    #  time: 36000 # 10 hrs
+    - !type:TraitsRequirement # Pirate
       inverted: true
-      species:
-      - Felinid
+      traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - MovementImpaired
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+    #- !type:SpeciesRequirement # Pirate remove requirement
+    #  inverted: true
+    #  species:
+    #  - Felinid
   #  - !type:StyleRequirement
   #    styles:
   #    - HumanHairFloorlengthBedhead
   #    - HumanHairClassicFloorlengthBedhead
   #    - HumanHairFloorlengthBraid
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - ZavodskoiInterstellar
+      - PMCG
+    # Pirate contractor end
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
   supervisors: job-supervisors-captain
   canBeAntag: false
+  whitelisted: true # Pirate
+  guides: # goobstation
+  - Security
+  - SpaceLaw
+  - LegalSOP
+  - Command
+  - HeadOfSecuritySOP
+  - SecuritySOP
+  - AlertLevels
   goobcoins: 45 #Goob content
   access:
   - HeadOfSecurity
@@ -192,11 +219,11 @@
     id: HoSPDA
     #gloves: ClothingHandsGlovesCombat - Goobstation, moved to loadouts
     ears: ClothingHeadsetAltSecurity
-    pocket1: WeaponPistolMk58
+#    pocket1: WeaponPistolMk58 # PIRATE, moved to loadouts
   storage:
     back:
     - Flash
-    - MagazinePistol
+#    - MagazinePistol # PIRATE, moved to loadouts
 
 - type: chameleonOutfit
   id: HeadOfSecurityChameleonOutfit

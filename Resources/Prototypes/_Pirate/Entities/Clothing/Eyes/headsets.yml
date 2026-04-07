@@ -4,7 +4,7 @@
   parent: ClothingHeadset
   id: ClothingHeadsetInterdyne
   name: "Наушник персоналу Інтердайну"
-  description: "Гарнітура Інтердайну."
+  description: Гарнітура Інтердайну.
   components:
   - type: ContainerFill
     containers:
@@ -15,13 +15,20 @@
     sprite: _Pirate/Clothing/Ears/Headsets/interdyne.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Ears/Headsets/interdyne.rsi
+  - type: RadioSoundProfile
+    transmitSound: /Audio/_Pirate/Radio/radio_talk_alter.ogg
+    receiveSound: /Audio/_Pirate/Radio/radio_receive_alter.ogg
+    allowedChannels:
+      - Syndicate
+      - Interdyne
+      - InterdynePrivat
     
 # Усі інші гарнітури які використовують нові компоненти 
 - type: entity
   parent: ClothingHeadsetInterdyne
   id: ClothingHeadsetInterdyneCommand
   name: "Наушник керівництва Інтердайну"
-  description: "Гарнітура Інтердайну."
+  description: Гарнітура Інтердайну.
   components:
   - type: ContainerFill
     containers:

@@ -144,7 +144,7 @@ figurines-ce-6 = Знову немає енергії.
 figurines-engineer-1 = СИНГУЛУЗ!
 figurines-engineer-2 = ТЕСЛУЗ!
 figurines-engineer-3 = Що таке АМЕ?
-figurines-engineer-4 = Безкоштовна ізоляція в інженерному
+figurines-engineer-4 = Безкоштовні ізоляційні рукавиці в інженерному!
 figurines-engineer-5 = Куди поділася енергія?
 figurines-engineer-6 = Хтось розбомбив медвідсік... знову...
 figurines-engineer-7 = Ну, то чому б тобі не прийти і не полагодити?
@@ -270,9 +270,9 @@ figurines-nukie-commander-5 = Упс.
 
 figurines-footsoldier-1 = Я злий хлопчик. З кожним днем менше хлопчик, з кожним днем більше зло.
 figurines-footsoldier-2 = Кого ти обереш? Їх чи нас? Нас чи їх?
-figurines-footsoldier-3 = Слава синдикату!
-figurines-footsoldier-4 = Геть Нанотразен!
-figurines-footsoldier-5 = Я краще помру, ніж приєднаюся до Нанотразен.
+figurines-footsoldier-3 = Слава Синдикату!
+figurines-footsoldier-4 = Геть NanoTrasen!
+figurines-footsoldier-5 = Я краще помру, ніж приєднаюся до NanoTrasen.
 
 figurines-wizard-1 = Ей Нат!!
 figurines-wizard-2 = Вегардіум Левіоза!

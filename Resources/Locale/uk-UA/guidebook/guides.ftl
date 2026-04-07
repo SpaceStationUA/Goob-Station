@@ -136,7 +136,6 @@ guide-entry-blood-cult = Культ крові
 
 guide-entry-Psionic-Mantis = Псіонічний богомол
 guide-entry-vampires = Вампіри
-guide-entry-shadowlings = Тіньовики
 guide-entry-expandingrepairingstation = Розширення та ремонт станції
 guide-entry-wirepanels = Панелі з проводами
 guide-entry-airlocks = Шлюзи
@@ -163,9 +162,9 @@ guide-entry-atmosphericssystems = Атмосферні системи
 guide-entry-pipenetworks = Трубопровідні мережі
 guide-entry-devicemonitoringandcontrol = Моніторинг та керування пристроями
 guide-entry-airalarms = Повітряні тривоги
-guide-entry-atmosphericalertscomputer = Комп'ютер атмосферних сповіщень
-guide-entry-atmosphericnetworkmonitor = Монітор атмосферної мережі
-guide-entry-fireandgascontrol = Контроль пожежі та газу
+guide-entry-atmosphericalertscomputer = Консоль атмосферних сповiщень
+guide-entry-atmosphericnetworkmonitor = Консоль атмосферної мережi
+guide-entry-fireandgascontrol = Контроль пожежi та газу
 guide-entry-gasminingandstorage = Видобуток та зберігання газу
 guide-entry-atmosphericupsets = Атмосферні порушення
 guide-entry-spacing = Розгерметизація
@@ -215,3 +214,4 @@ guide-entry-rules-mrp-m0 = Правила MRP
 guide-entry-rules-m1 = M1
 
 guide-entry-plastic = Виробництво пластикових листів
+guide-entry-ressureregulator = Регулятор тиску

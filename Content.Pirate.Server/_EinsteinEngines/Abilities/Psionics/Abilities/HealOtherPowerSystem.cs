@@ -11,6 +11,8 @@ using Robust.Shared.Timing;
 using Content.Shared.Actions.Events;
 using Robust.Server.Audio;
 using Content.Server.Atmos.Rotting;
+using Content.Shared._Shitmed.Damage;
+using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -128,7 +130,15 @@ public sealed class RevivifyPowerSystem : EntitySystem
             return;
 
         if (args.HealingAmount is not null)
-            _damageable.TryChangeDamage(args.Target.Value, args.HealingAmount * args.ModifiedAmplification, true, false, damageableComponent, uid);
+            _damageable.TryChangeDamage(
+                args.Target.Value,
+                args.HealingAmount * args.ModifiedAmplification,
+                true,
+                false,
+                damageableComponent,
+                origin: uid,
+                targetPart: TargetBodyPart.All,
+                splitDamage: SplitDamageBehavior.SplitEnsureAll);
 
         if (!args.DoRevive
             || _rotting.IsRotten(args.Target.Value)
@@ -154,7 +164,15 @@ public sealed class RevivifyPowerSystem : EntitySystem
             return;
 
         if (args.HealingAmount is not null)
-            _damageable.TryChangeDamage(args.Target, args.HealingAmount * args.ModifiedAmplification, true, false, damageableComponent, uid);
+            _damageable.TryChangeDamage(
+                args.Target,
+                args.HealingAmount * args.ModifiedAmplification,
+                true,
+                false,
+                damageableComponent,
+                origin: uid,
+                targetPart: TargetBodyPart.All,
+                splitDamage: SplitDamageBehavior.SplitEnsureAll);
 
         if (!args.DoRevive
             || _rotting.IsRotten(args.Target)

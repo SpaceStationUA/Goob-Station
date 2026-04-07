@@ -9,16 +9,24 @@
 - type: entity
   id: LibrarianTranslatorImplanter
   parent: [ BaseTranslatorImplanter ]
-  name: "імплант перекладача бібліотекаря"
+  suffix: Librarian
   components:
   - type: Implanter
     implant: LibrarianTranslatorImplant
+
+- type: entity
+  id: ChevalTranslatorImplanter
+  parent: [ BaseTranslatorImplanter ]
+  suffix: Cheval
+  components:
+  - type: Implanter
+    implant: ChevalTranslatorImplant
 
 # Gives the ability to understand SpaceItalian
 - type: entity
   id: BasicSpaceItalianTranslatorImplanter
   parent: BaseTranslatorImplanter
-  name: "базовий імплантер космічного італійського перекладача"
+  suffix: Basic Space Italian
   components:
   - type: Implanter
     implant: BasicSpaceItalianTranslatorImplant
@@ -27,7 +35,23 @@
 - type: entity
   id: AdvancedSpaceItalianTranslatorImplanter
   parent: BaseTranslatorImplanter
-  name: "просунутий імплантер космічного італійського перекладача"
+  suffix: Advanced Space Italian
   components:
   - type: Implanter
     implant: SpaceItalianTranslatorImplant
+
+- type: entity
+  id: YowKriolTranslatorImplanter
+  parent: [ BaseTranslatorImplanter ]
+  suffix: Yow Kriol
+  components:
+  - type: Implanter
+    implant: YowKriolTranslatorImplant
+
+- type: entity
+  id: SignTranslatorImplanter
+  parent: BaseTranslatorImplanter
+  suffix: Sign
+  components:
+  - type: Implanter
+    implant: SignTranslatorImplant

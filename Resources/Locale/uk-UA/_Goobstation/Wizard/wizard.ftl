@@ -35,5 +35,3 @@ lich-greeting = З огидним відчуттям порожнечі ви і�
     Ви — ліч.
 
 objective-condition-wizard-alive-title = Переконайтеся, що чарівник {$targetName} залишається живим.
-
-stamp-component-stamped-name-wizard = Чарівник

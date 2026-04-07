@@ -83,12 +83,12 @@ signal-port-description-automation-slot-tool = Слот автоматизаці
 # АвтоДок
 
 signal-port-name-automation-slot-autodoc-hand = Предмет: Рука АвтоДока
-signal-port-description-automation-slot-autodoc-hand = Слот автоматизації для органу/частини, що утримується АвтоДоком, для інструкцій ЗБЕРЕГТИ ПРЕДМЕТ / ВЗЯТИ ПРЕДМЕТ.
-
-# Газовий балон
+signal-port-description-automation-slot-autodoc-hand = Слот автоматизації для органу/частини/тощо, що утримуються АвтоДоком; використовується інструкціями STORE ITEM / GRAB ITEM.
 
 signal-port-name-automation-slot-gas-tank = Предмет: Газовий балон
 signal-port-description-automation-slot-gas-tank = Слот автоматизації для газового балона.
+
+# Радіаційний колектор.
 
 # Радіаційний колектор
 
@@ -99,4 +99,19 @@ signal-port-name-rad-low = Низький
 signal-port-description-rad-low = Сигнальний порт встановлюється на ВИСОКИЙ, якщо тиск у баку нижче 66%, в іншому випадку - НИЗЬКИЙ.
 
 signal-port-name-rad-full = Повний
-signal-port-description-rad-full = Сигнальний порт встановлюється на ВИСОКИЙ, якщо тиск у баку вище 66%, в іншому випадку - НИЗЬКИЙ.
+signal-port-description-rad-full = Сигнальний порт встановлюється на HIGH, якщо тиск в баку вище 66%, інакше LOW
+
+signal-port-name-alt-interact = Режим альтернативної взаємодії
+signal-port-description-alt-interact = Сигнальний порт для перемикання режиму альтернативної взаємодії або встановлення його на значення HIGH/LOW
+signal-port-name-lathe-print = Надрукувати останній рецепт
+signal-port-description-lathe-print = Порт сигналу, який при імпульсі друкує останній встановлений рецепт.
+signal-port-name-powered = Живлення
+signal-port-description-powered = Цей порт встановлює HIGH або LOW залежно від того, чи увімкнено живлення машини.
+signal-port-name-plumbing-input = Трубопровід: Вхід
+signal-port-description-plumbing-input = Слот автоматизації трубопроводу для закачування рідин усередину.
+signal-port-name-plumbing-output = Трубопровід: Вихід
+signal-port-description-plumbing-output = Слот автоматизації трубопроводу для відкачування рідин назовні.
+signal-port-name-plumbing-dispenser = Трубопровід: Дозатор
+signal-port-description-plumbing-dispenser = Слот автоматизації трубопроводу для закачування або відкачування рідин із мензурки дозатора
+signal-port-name-automation-slot-bottles = Предмет: Слот для пляшок
+signal-port-description-automation-slot-bottles = Слот автоматизації для пляшечки з пігулками або рідиною ChemMaster

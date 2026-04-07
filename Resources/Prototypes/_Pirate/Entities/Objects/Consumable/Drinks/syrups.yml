@@ -1,0 +1,97 @@
+- type: entity
+  id: BaseFoodCondimentBottleSyrupPirate
+  abstract: true
+  parent: BaseFoodCondimentBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    minTransferAmount: 5
+    maxTransferAmount: 10
+  - type: Sprite
+    layers:
+    - &syrupBottleOpenableLayer
+      state: bottle-empty
+      map: ["enum.OpenableVisuals.Layer"]
+    - &syrupBottleDefaultLabelLayer
+      state: label-b
+    - &syrupBottleFillLayer
+      state: bottle-alpha-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: true
+  - type: Item
+    sprite: Objects/Consumable/Food/condiments.rsi
+  - type: Icon
+    state: bottle-empty
+
+- type: entity
+  id: FoodCondimentBottleCaramelSyrupPirate
+  parent: BaseFoodCondimentBottleSyrupPirate
+  name: caramel syrup bottle
+  description: A pump bottle containing caramelized sugar, also known as caramel. Do not lick.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Syrup
+          Quantity: 50
+
+- type: entity
+  id: FoodCondimentBottleCoffeeLiqueurSyrupPirate
+  parent: BaseFoodCondimentBottleSyrupPirate
+  name: coffee liqueur syrup bottle
+  description: A pump bottle containing coffee-flavored liqueur syrup.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: CoffeeLiqueur
+          Quantity: 50
+  - type: Sprite
+    layers:
+    - *syrupBottleOpenableLayer
+    - state: label-v
+    - *syrupBottleFillLayer
+
+- type: entity
+  id: FoodCondimentBottleKortaSyrupPirate
+  parent: BaseFoodCondimentBottleSyrupPirate
+  name: korta syrup bottle
+  description: A pump bottle containing korta syrup made from crushed sweet korta nuts.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: KortaNectarPirate
+          Quantity: 50
+  - type: Sprite
+    layers:
+    - *syrupBottleOpenableLayer
+    - state: label-e
+    - *syrupBottleFillLayer
+
+- type: entity
+  id: FoodCondimentBottleLaughSyrupPirate
+  parent:
+  - BaseFoodCondimentBottleSyrupPirate
+  - BaseSyndicateContraband
+  name: laugh syrup bottle
+  description: A pump bottle containing laugh syrup. Fizzy and unsettlingly sweet.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: LaughinSyrup
+          Quantity: 50
+  - type: Sprite
+    layers:
+    - *syrupBottleOpenableLayer
+    - state: label-h
+    - *syrupBottleFillLayer

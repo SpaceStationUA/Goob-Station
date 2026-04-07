@@ -7,7 +7,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: DevilMindRole
-  name: "Роль Диявола"
+  name: Devil Role
   components:
   - type: MindRole
     antagPrototype: Devil
@@ -19,7 +19,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleChangeling
-  name: "Роль Перевертня"
+  name: Changeling Role
   components:
   - type: MindRole
     antagPrototype: Changeling
@@ -31,7 +31,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleHeretic
-  name: "Роль Єретика"
+  name: Heretic Role
   components:
   - type: MindRole
     antagPrototype: Heretic
@@ -42,8 +42,20 @@
 
 - type: entity
   parent: BaseMindRoleAntag
+  id: MindRoleGhoul
+  name: Ghoul
+  components:
+  - type: MindRole
+    antagPrototype: Ghoul
+    exclusiveAntag: false
+    roleType: Familiar
+    subtype: role-subtype-ghoul
+  - type: GhoulRole
+
+- type: entity
+  parent: BaseMindRoleAntag
   id: MindRoleBrainwashed
-  name: "Роль з промитими мізками"
+  name: Brainwashed Role
   components:
   - type: MindRole
     antagPrototype: Mindcontrolled
@@ -51,3 +63,37 @@
     roleType: Familiar
     subtype: role-subtype-brainwashed
   - type: MindcontrolledRole
+
+# Slasher
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleSlasher
+  name: Slasher Role
+  components:
+  - type: MindRole
+    antagPrototype: Slasher
+    exclusiveAntag: true
+    roleType: SoloAntagonist
+    subtype: role-subtype-slasher
+
+# Goobstation Sentient Animal PR # This role is intended for all animals who aren't explicitly an antag
+- type: entity
+  parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
+  id: MindRoleGhostRoleSentientAnimal
+  name: Ghost Role (SentientAnimal)
+  components:
+  - type: MindRole
+    roleType: SentientAnimal
+    sortWeight: 30
+    
+#contractor
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleContractor
+  name: Contractor Role
+  components:
+  - type: MindRole
+    antagPrototype: Contractor
+    exclusiveAntag: true
+    roleType: SoloAntagonist
+    subtype: role-subtype-contractor

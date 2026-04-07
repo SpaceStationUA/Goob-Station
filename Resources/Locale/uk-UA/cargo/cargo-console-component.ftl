@@ -17,11 +17,11 @@ cargo-console-menu-requests-label = Заявки
 cargo-console-menu-orders-label = Замовлення
 cargo-console-menu-order-reason-description = Причини: {$reason}
 cargo-console-menu-populate-categories-all-text = Усі
-cargo-console-menu-populate-orders-cargo-order-row-product-name-text = {$productName} (x{$orderAmount}) від {$orderRequester}
+cargo-console-menu-populate-orders-cargo-order-row-product-name-text = Замовив: {$orderRequester} з [color={$accountColor}]{$account}[/color]
 cargo-console-menu-cargo-order-row-approve-button = Затвердити
 cargo-console-menu-cargo-order-row-cancel-button = Відмовити
 
-# Orders
+# Замовлення
 cargo-console-order-not-allowed = Доступ заборонено
 cargo-console-station-not-found = Немає доступної станції
 cargo-console-invalid-product = Невірний ідентифікатор товару
@@ -57,7 +57,7 @@ cargo-console-cooldown-active = Замовлення на {$product} немож�
 cargo-console-menu-account-name-format = [bold][color={$color}]{$name}[/color][/bold] [font="Monospace"]\[{$code}\][/font]
 cargo-console-menu-tab-title-orders = Замовлення
 cargo-console-menu-tab-title-funds = Перекази
-cargo-console-menu-account-action-transfer-limit = [bold]Ліміт переказу:[/bold] ${$limit}
+cargo-console-menu-account-action-transfer-limit = Ліміт переказу:
 cargo-console-menu-account-action-transfer-limit-unlimited-notifier = [color=gold](Необмежено)[/color]
 cargo-console-menu-account-action-select = [bold]Дія з рахунком:[/bold]
 cargo-console-menu-account-action-amount = [bold]Сума:[/bold] $
@@ -99,3 +99,12 @@ cargo-acquisition-slip-body = [head=3]Деталі активу[/head]
     {"[head=3]Деталі покупки[/head]"}
     {"[bold]Замовник:[/bold]"} {$orderer}
     {"[bold]Причина:[/bold]"} {$reason}
+cargo-console-menu-flavor-left = Замовляйте ще більше коробок піци, ніж зазвичай!
+cargo-console-menu-flavor-right = v2.1
+cargo-console-menu-order-row-title = {$productName} (x{$orderAmount} за {$orderPrice}$)
+cargo-console-menu-order-row-product-description = Причина: {$orderReason}
+cargo-console-menu-order-row-button-approve = Затвердити
+cargo-console-menu-order-row-button-cancel = Скасувати
+cargo-console-menu-order-row-alerts-reason-absent = Причина не вказана
+cargo-console-menu-order-row-alerts-requester-unknown = Невідомий
+cargo-console-menu-account-action-transfer-limit-amount = ${$amount}

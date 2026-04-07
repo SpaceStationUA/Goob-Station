@@ -127,6 +127,7 @@
   startingGear: ClownGear
   icon: "JobIconClown"
   supervisors: job-supervisors-hop
+  whitelisted: true # Pirate
   goobcoins: 15 #Goob content
   access:
   - Theatre
@@ -141,6 +142,9 @@
           Piercing: 4
         groups:
           Burn: 3
+      catchingFailDamage:
+        types:
+          Blunt: 1
     - type: SleepEmitSound
       snore: /Audio/Voice/Misc/silly_snore.ogg
       interval: 10

@@ -144,9 +144,8 @@ construction-graph-tag-fire-helmet = пожежний шолом
 construction-graph-tag-spationaut-hardsuit = скафандр спаціонавта
 
 soil-construction-graph-any-mushroom = будь-який гриб
-
-# іграшки
 construction-graph-tag-manipulator = модульна частина машини
 construction-graph-tag-apron = фартух
 construction-graph-tag-utility-belt = пояс для інструментів
 construction-graph-tag-backpack = наплічник
+construction-graph-tag-mop-basic = швабра

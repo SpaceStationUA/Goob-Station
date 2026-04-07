@@ -42,7 +42,7 @@ namespace Content.Shared.Jittering
 
         private void OnRejuvenate(EntityUid uid, JitteringComponent component, RejuvenateEvent args)
         {
-            EntityManager.RemoveComponentDeferred<JitteringComponent>(uid);
+            RemCompDeferred<JitteringComponent>(uid);
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace Content.Shared.Jittering
             amplitude = Math.Clamp(amplitude, MinAmplitude, MaxAmplitude);
             frequency = Math.Clamp(frequency, MinFrequency, MaxFrequency);
 
-            if (StatusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, refresh, status))
+            if (StatusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, refresh, status)) //todo goobstation migrate jitter.
             {
-                var jittering = EntityManager.GetComponent<JitteringComponent>(uid);
+                var jittering = Comp<JitteringComponent>(uid);
 
                 if(forceValueChange || jittering.Amplitude < amplitude)
                     jittering.Amplitude = amplitude;

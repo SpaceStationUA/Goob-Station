@@ -89,8 +89,8 @@
 - type: entity
   parent: BaseHealingItem
   id: BaseMedicalPatch
-  name: "базовий пластир"
-  description: "Пластир для поступового введення ліків пацієнтам."
+  name: base patch
+  description: A patch for applying medicine over time to patients.
   abstract: true
   components:
   - type: Item
@@ -101,7 +101,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
+        maxVol: 20
   - type: ExaminableSolution
     solution: drink
   - type: Sticky
@@ -129,8 +129,8 @@
 - type: entity
   parent: BaseMedicalPatch
   id: MedicalPatchBasic
-  name: "пластир"
-  description: "Базовий пластир для поступового введення ліків пацієнтам."
+  name: patch
+  description: A basic patch for applying medicine over time to patients.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Medical/medical_patch.rsi
@@ -146,18 +146,20 @@
   - type: SolutionContainerManager
     solutions:
       drink:  #drink is the same as Bottle solution, this is to prevent recoding chem master. TODO: recode chem master
-        maxVol: 40
+        maxVol: 20
   - type: Tag
     tags:
     - MedicalPatch
   - type: Spillable # only way empty the patch is wring it out and spill it on the floor
     solution: drink
+  - type: RefillableSolution  # I don't know why this wasn't like this to begin with.
+    solution: drink
 
 - type: entity
   parent: BaseHealingItem
   id: UsedMedicalPatch
-  name: "використаний пластир"
-  description: "...фу."
+  name: used patch
+  description: ...ew.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Medical/medical_patch.rsi
@@ -173,7 +175,7 @@
 - type: entity
   parent: UsedMedicalPatch
   id: UsedMedicalPatchMakeshift
-  name: "використаний пластир"
+  name: used patch
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Medical/medical_patch.rsi
@@ -182,8 +184,8 @@
 - type: entity
   parent: MedicalPatchBasic
   id: MedicalPatchRapid
-  name: "швидкий пластир"
-  description: "Пластир для швидшого введення ліків. На ньому намальовані гоночні машини."
+  name: rapid patch
+  description: A patch used for more rapid application of medicine. It has race cars drawn on it.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Medical/medical_patch.rsi
@@ -200,8 +202,8 @@
 - type: entity
   parent: MedicalPatchBasic
   id: MedicalPatchTherapeutic
-  name: "терапевтичний пластир"
-  description: "Пластир, що вводить дозу протягом довшого періоду часу, ніж інші пластирі."
+  name: therapeutic patch
+  description: A patch that applies a dose over a longer period of time than other patches.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Medical/medical_patch.rsi
@@ -218,8 +220,8 @@
 - type: entity
   parent: MedicalPatchBasic
   id: MedicalPatchLarge
-  name: "великий пластир"
-  description: "Більший пластир підвищеної місткості, що використовується для дійсно великих \"бу-бу\". Не рекомендується з хімікатами, які легко передозувати."
+  name: large patch
+  description: A larger, higher-capacity patch, used for the really big boo-boos. Not recommended with easily-overdosed chemicals.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Medical/medical_patch.rsi
@@ -234,15 +236,18 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 60 # +50% from basic
+        maxVol: 40 # +50% from basic
   - type: MedicalPatch
-    injectPercentageOnAttatch: 15 # 10u when full
+    injectPercentageOnAttatch: 10 # 4u when full
+  - type: Item
+    shape:
+    - 0,0,0,1
 
 - type: entity
   parent: BaseMedicalPatch
   id: MedicalPatchMakeshift
-  name: "саморобний пластир"
-  description: "Це не виглядає гігієнічно. Сподіваюся, він впорається."
+  name: makeshift patch
+  description: This doesn't look hygienic. Hopefully it does the job.
   components:
   - type: Sprite
     state: MakeshiftPatch
@@ -254,43 +259,9 @@
     solutions:
       drink:
         maxVol: 20  # lasts for 40 seconds, effectively half as good as a normal patch
-  - type: RefillableSolution  # So Tiders can fill ther bandages whit hotch and ventcurd
-    solution: drink
   - type: Construction
     graph: MedicalPatchMakeshift
     node: medicalPatchMakeshift
-
-- type: latheRecipe
-  id: MedicalPatchBasic
-  result: MedicalPatchBasic
-  completetime: 2
-  materials:
-    Plastic: 100
-    Cloth: 100
-
-- type: latheRecipe
-  id: MedicalPatchRapid
-  result: MedicalPatchRapid
-  completetime: 2
-  materials:
-    Cloth: 100
-    Plastic: 100
-
-- type: latheRecipe
-  id: MedicalPatchTherapeutic
-  result: MedicalPatchTherapeutic
-  completetime: 2
-  materials:
-    Cloth: 100
-    Plastic: 100
-
-- type: latheRecipe
-  id: MedicalPatchLarge
-  result: MedicalPatchLarge
-  completetime: 2
-  materials:
-    Plastic: 100
-    Cloth: 100
 
 - type: constructionGraph
   id: MedicalPatchMakeshift
@@ -301,8 +272,8 @@
     - to: medicalPatchMakeshift
       steps:
       - material: Cloth
-        amount: 2
-        doAfter: 10
+        amount: 1
+        doAfter: 5
   - node: medicalPatchMakeshift
     entity: MedicalPatchMakeshift
 
@@ -323,8 +294,8 @@
     - to: silkPatchMakeshift
       steps:
       - material: WebSilk
-        amount: 8
-        doAfter: 10
+        amount: 4
+        doAfter: 5
   - node: silkPatchMakeshift
     entity: MedicalPatchMakeshift
 

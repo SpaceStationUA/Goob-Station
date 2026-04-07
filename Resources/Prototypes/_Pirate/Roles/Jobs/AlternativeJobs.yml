@@ -21,6 +21,24 @@
   parentJobId: Librarian
 
 - type: alternativeJob
+  id: AlternativeJobArchivist
+  jobName: job-alternative-name-archivist
+  jobDescription: job-description-archivist
+  parentJobId: Librarian
+
+- type: alternativeJob
+  id: AlternativeJobBBQMaster
+  jobName: job-alternative-name-bbq-master
+  jobDescription: job-description-bbq-master
+  parentJobId: Chef
+
+- type: alternativeJob
+  id: AlternativeJobBaker
+  jobName: job-alternative-name-baker
+  jobDescription: job-description-baker
+  parentJobId: Chef
+
+- type: alternativeJob
   id: AlternativeJobFloraEngineer
   jobName: job-alternative-name-flora-engineer
   jobDescription: job-description-botanist
@@ -45,7 +63,31 @@
   jobDescription: job-description-janitor
   parentJobId: Janitor
 
-# region Chaplain
+#region Lawyer
+- type: alternativeJob
+  id: AlternativeJobProsecutor
+  jobName: job-alternative-name-prosecutor
+  jobDescription: job-description-prosecutor
+  jobIconProtoId: JobIconProsecutor
+  parentJobId: Lawyer
+
+- type: alternativeJob
+  id: AlternativeJobAttorney
+  jobName: job-alternative-name-attorney
+  jobDescription: job-description-attorney
+  jobIconProtoId: JobIconAttorney
+  parentJobId: Lawyer
+
+- type: alternativeJob
+  id: AlternativeJobClerk
+  jobName: job-alternative-name-clerk
+  jobDescription: job-description-clerk
+  jobIconProtoId: JobIconClerk
+  parentJobId: Lawyer
+
+#endregion
+
+#region Chaplain
 - type: alternativeJob
   id: AlternativeJobAtheist
   jobName: job-alternative-name-atheist
@@ -115,18 +157,10 @@
   jobDescription: job-description-monolith-preacher
   jobIconProtoId: JobIconMonolithPreacher
   parentJobId: Chaplain
-#endregion
 
 #endregion
 
 #region Command
-
-- type: alternativeJob
-  id: AlternativeJobFurryFemboy
-  jobName: job-alternative-name-furry-femboy
-  jobDescription: job-description-captain
-  jobIconProtoId: JobIconFurryFemboy
-  parentJobId: Captain
 
 - type: alternativeJob
   id: AlternativeJobCommandOfficer
@@ -141,22 +175,10 @@
   parentJobId: Captain
 
 - type: alternativeJob
-  id: AlternativeJobNotarius
-  jobName: job-alternative-name-notarius
-  jobDescription: job-description-hop
-  parentJobId: HeadOfPersonnel
-
-- type: alternativeJob
   id: AlternativeJobSherif
   jobName: job-alternative-name-sherif
   jobDescription: job-description-hos
   parentJobId: HeadOfSecurity
-
-- type: alternativeJob # this is very MRP please leave it
-  id: AlternativeJobCommandMaid
-  jobName: job-alternative-name-command-maid
-  jobDescription: job-description-admin-assistant
-  parentJobId: AdministrativeAssistant
 
 - type: alternativeJob
   id: AlternativeJobSecretary
@@ -199,6 +221,12 @@
   parentJobId: MedicalDoctor
 
 - type: alternativeJob
+  id: AlternativeJobNecrologist
+  jobName: job-alternative-name-necrologist
+  jobDescription: job-description-medical-doctor
+  parentJobId: MedicalDoctor
+
+- type: alternativeJob
   id: AlternativeJobCryoSpecialist
   jobName: job-alternative-name-cryo-specialist
   jobIconProtoId: JobIconCryoSpecialist
@@ -229,6 +257,12 @@
   parentJobId: Scientist
 
 - type: alternativeJob
+  id: AlternativeJobXenobiologist
+  jobName: job-alternative-name-xenobiologist
+  jobDescription: job-description-scientist
+  parentJobId: Scientist
+
+- type: alternativeJob
   id: AlternativeJobXenoarcheologist
   jobName: job-alternative-name-xenoarcheologist
   jobDescription: job-description-scientist
@@ -256,16 +290,16 @@
 
 #region Security
 
-- type: alternativeJob # GOD(Void) allows this, pls dont kill me
-  id: AlternativeJobSecMaid
-  jobName: job-alternative-name-security-maid
-  jobDescription: job-description-warden
-  parentJobId: Warden
-
 - type: alternativeJob
   id: AlternativeJobPeacekeeper
   jobName: job-alternative-name-peacekeeper
   jobDescription: job-description-security-officer
+  parentJobId: SecurityOfficer
+
+- type: alternativeJob
+  id: AlternativeJobLawenforcer
+  jobName: job-alternative-name-lawenforcer
+  jobDescription: job-description-lawenforcer
   parentJobId: SecurityOfficer
 
 - type: alternativeJob
@@ -369,6 +403,33 @@
   jobName: job-alternative-name-Dungeon-Master
 
 #endregion
+
+# region Law icons definitions
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconAttorney
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: attorney
+  jobName: job-alternative-name-attorney
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconProsecutor
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: prosecutor
+  jobName: job-alternative-name-prosecutor
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconClerk
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: clerk
+  jobName: job-alternative-name-clerk
+
 
 # region Chaplain icons definitions
 - type: jobIcon

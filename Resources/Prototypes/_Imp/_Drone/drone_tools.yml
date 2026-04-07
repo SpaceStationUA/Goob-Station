@@ -59,40 +59,10 @@
 - type: entity
   parent: PinpointerStationGoob
   id: PinpointerStationUnremoveable
-  description: "Ти - станція. Знайди себе. Натисни E, щоб активувати."
+  description: You are the station. Find yourself. Press E to activate.
   suffix: Unremoveable
   components:
   - type: Unremoveable
-
-# PAI actions
-
-- type: entity
-  parent: BaseAction
-  id: ActionDroneOpenMap
-  name: "Відкрити Карту"
-  description: "Поглянь на себе."
-  components:
-  - type: Action
-    checkCanInteract: false
-    checkConsciousness: false
-    icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
-  - type: InstantAction
-    event: !type:OpenUiActionEvent
-      key: enum.StationMapUiKey.Key
-
-- type: entity
-  parent: BaseAction
-  id: ActionDronePlayMidi
-  name: "Грати MIDI"
-  description: "Створіть атмосферу."
-  components:
-  - type: Action
-    checkCanInteract: false
-    checkConsciousness: false
-    icon: Interface/Actions/pai-midi.png
-  - type: InstantAction
-    event: !type:OpenUiActionEvent
-      key: enum.InstrumentUiKey.Key
 
 # StartingGear
 

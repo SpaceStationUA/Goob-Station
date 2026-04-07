@@ -9,14 +9,15 @@
 # SPDX-FileCopyrightText: 2025 TurboTracker <130304754+TurboTrackerss14@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 gluesniffler <linebarrelerenthusiast@gmail.com>
 # SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
+# SPDX-FileCopyrightText: 2025 Evaisa <mail@evaisa.dev>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
   parent: BaseSuicideAction
   id: ActionActivateBluespaceLifeline
-  name: "Активуйте Bluespace Lifeline"
-  description: "Активує ваш імплантат рятувального круга, телепортуючи вас дуже далеко від цієї станції. Ти не зможеш повернутися."
+  name: Activate Bluespace Lifeline
+  description: Activates your bluespace lifeline implant, teleporting you far-far away from this station. You won't be able to come back.
   components:
   - type: Action
     checkCanInteract: false
@@ -32,8 +33,8 @@
 - type: entity
   parent: BaseAction
   id: ActionHorn
-  name: "Посигналь!"
-  description: "Посигнальте тому, кого збираєтесь переїхати."
+  name: Honk!
+  description: Beep the horn at whoever you will run over.
   components:
   - type: Action
     useDelay: 1
@@ -44,8 +45,8 @@
 - type: entity
   parent: BaseAction
   id: ActionSiren
-  name: "Сирена"
-  description: "Сповістіть свою жертву про свою присутність."
+  name: Siren
+  description: Alert your victim to your presence.
   components:
   - type: Action
     useDelay: 1
@@ -56,8 +57,8 @@
 - type: entity
   parent: BaseImplantAction
   id: ActivateSmokeImplant
-  name: "Випустити хмару диму"
-  description: "Випускає хмару диму навколо вас."
+  name: Release a cloud of smoke
+  description: Releases a cloud of smoke around you.
   components:
   - type: Action
     useDelay: 30
@@ -68,8 +69,8 @@
 - type: entity
   parent: BaseAction
   id: ActionDashMoth
-  name: "Ривок крилами"
-  description: "Різко змахніть крилами, щоб зробити ривок убік!"
+  name: Wing dash
+  description: Sharply flap your wings, dashing to the side!
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -90,9 +91,9 @@
 
 - type: entity
   id: ActionDashGeneric
-  name: "Ривок"
+  name: Dash
   parent: ActionDashMoth
-  description: "Ривок уперед."
+  description: Dash forward.
   components:
   - type: Action
     useDelay: 6.5
@@ -106,8 +107,8 @@
 - type: entity
   parent: BaseAction
   id: ActionToggleRightMantisBlade
-  name: "Перемкнути праве лезо-богомол"
-  description: "Висунути або втягнути лезо-богомол у правій руці."
+  name: Toggle Right Mantis Blade
+  description: Extend or retract the mantis blade in your right arm.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -123,8 +124,8 @@
 - type: entity
   parent: ActionToggleRightMantisBlade
   id: ActionToggleLeftMantisBlade
-  name: "Перемкнути ліве лезо-богомол"
-  description: "Висунути або втягнути лезо-богомол у лівій руці."
+  name: Toggle Left Mantis Blade
+  description: Extend or retract the mantis blade in your left arm.
   components:
   - type: Action
     icon: { sprite: _Goobstation/Objects/Weapons/Melee/mantis_blade.rsi, state: icon-mirrored }
@@ -132,8 +133,8 @@
 - type: entity
   parent: BaseAction
   id: ActionToggleSandevistan
-  name: "Перемкнути Сандевістан"
-  description: "Увімкнути або вимкнути покращені рефлекси, що надаються Сандевістаном."
+  name: Toggle Sandevistan
+  description: Enable or disable your improved reflexes provided by the Sandevistan.
   components:
   - type: Action
     checkCanInteract: false
@@ -142,3 +143,156 @@
     itemIconStyle: NoItem
   - type: InstantAction
     event: !type:ToggleSandevistanEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionShowStationMap
+  name: Station Map Interface
+  description: View a Station Map Interface.
+  components:
+  - type: Action
+    # TODO: Make a sprite for the station map interface.
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
+    iconOn: Interface/Actions/actions_ai.rsi/mass_scanner.png
+    keywords: [ "AI", "console", "interface" ]
+    priority: -8
+  - type: InstantAction
+    event: !type:ToggleIntrinsicUIEvent { key: enum.StationMapUiKey.Key }
+
+- type: entity
+  parent: BaseAction
+  id: ActionToggleFloorBoardsMode
+  name: Enter or Exit Floor
+  description: Crawl under the floor boards.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 3
+    icon:
+      sprite: Structures/Piping/Atmospherics/vent.rsi
+      state: vent_off
+  - type: InstantAction
+    event: !type:ToggleCrawlingStateEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionStealShoes
+  name: Steal Shoes
+  description: A tasty snack it will be!
+  components:
+  - type: Action
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: Clothing/Shoes/Boots/jackboots.rsi
+      state: icon
+  - type: TargetAction
+    interactOnMiss: false
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Inventory
+    canTargetSelf: false
+    event: !type:StealShoesEvent {}
+
+- type: entity
+  id: ActionVehicleWallPush
+  name: Wall Launch
+  description: Launch yourself off the nearest surface, tiders count as surfaces.
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: office-dark
+    useDelay: 1
+  - type: TargetAction
+    range: 16
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:VehicleWallPushActionEvent
+
+- type: entity
+  id: ActionRocketChairBoost
+  parent: BaseAction
+  name: Boost
+  description: Spray water to launch forward.
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: Objects/Misc/fire_extinguisher.rsi
+      state: fire_extinguisher_closed
+    useDelay: 1
+  - type: TargetAction
+    range: 16
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:RocketChairBoostActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionActivateBerserkerImplant
+  name: Activate Berserker Implant
+  description: Activate your berserker implant, greatly increasing your melee damage and speed for a short duration. While in berserk mode, you will be unable to use ranged weapons.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    checkCanInteract: false
+    useDelay: 40
+    icon: { sprite: _Goobstation/Objects/Misc/berserker_heart.rsi, state: icon }
+    itemIconStyle: NoItem
+    sound: !type:SoundPathSpecifier
+      path: /Audio/_Goobstation/Misc/berserker-implant-activate.ogg
+  - type: InstantAction
+    event: !type:ActivateBerserkerImplantActionEvent
+
+- type: entity
+  parent: BaseSuicideAction
+  id: ActionActivateRedspaceLifeline
+  name: Activate Redspace Lifeline
+  description: Activates your redspace lifeline implant, teleporting you far-far away from this station. You won't be able to come back.
+  components:
+    - type: Action
+      checkCanInteract: false
+      checkConsciousness: false
+      itemIconStyle: BigAction
+      priority: -20
+      icon:
+        sprite: _Goobstation/Effects/redspace_lifeline.rsi
+        state: redspace_lifeline
+    - type: InstantAction
+      event: !type:ActivateImplantEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionForklift
+  name: Activate Lift
+  description: Lift up crates in front of you.
+  components:
+  - type: Action
+    useDelay: 3
+    icon:
+      sprite: _Goobstation/Objects/Vehicles/forklift.rsi
+      state: forklift
+    itemIconStyle: BigAction
+  - type: TargetAction
+    interactOnMiss: false
+  - type: EntityTargetAction
+    event: !type:ForkliftActionEvent
+    canTargetSelf: false
+    whitelist:
+      tags:
+      - Crate
+
+- type: entity
+  parent: BaseAction
+  id: ActionUnforklift
+  name: Drop Lift
+  description: Put down crates in front of you.
+  components:
+  - type: Action
+    useDelay: 1.5
+    icon: Interface/NavMap/beveled_arrow_south.png
+  - type: InstantAction
+    event: !type:UnforkliftActionEvent

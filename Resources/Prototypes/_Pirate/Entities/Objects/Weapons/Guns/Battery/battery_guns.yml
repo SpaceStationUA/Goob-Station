@@ -1,8 +1,8 @@
 - type: entity
-  name: "x-02 енерго-поліморф"
+  name: x-02 енерго-поліморф
   parent: BaseWeaponBatterySmall
   id: WeaponEnergyGunMultiphasePolymorh
-  description: "Чаклунська модифікація енерго-пістолету, що викликає небачені результати."
+  description: Чаклунська модифікація енерго-пістолету, що викликає небачені результати.
   components:
   - type: Sprite
     sprite: _DV/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
@@ -91,3 +91,283 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 5
+
+- type: entity
+  name: energy gun
+  parent: [BaseWeaponBattery, BaseSecurityContraband]
+  id: WeaponEnergyGun
+  description: "Базова гібридна енергетична зброя з двома режимами: дизейбер і летальний."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Battery/energygun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mode
+      shader: unshaded
+      color: "#00B2FF"
+      map: [ "Firemode" ]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Battery/energygun.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/_DV/Weapons/Guns/Empty/dry_fire.ogg
+  - type: Battery
+    maxCharge: 1200
+    startingCharge: 1200
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 50
+  - type: AmmoSelector
+    prototypes:
+      - BulletDisabler
+      - BulletEnergyGunLaser
+  - type: UserInterface
+    interfaces:
+      enum.AmmoSelectorUiKey.Key:
+        type: AmmoSelectorMenuBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.AmmoSelectorUiKey.Key
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+    onUse: false
+    wieldToggle: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: ItemToggleColor
+  - type: Appearance
+  - type: ToggleableVisuals
+    spriteLayer: Firemode
+    inhandVisuals:
+      left:
+      - state: mode-inhand-left
+        shader: unshaded
+      right:
+      - state: mode-inhand-right
+        shader: unshaded
+  - type: Multishot
+
+- type: entity
+  name: miniature energy gun
+  parent: [BaseWeaponBatterySmall, BaseSecurityContraband]
+  id: WeaponEnergyGunMini
+  description: "Легка версія енергетичної пушки з меншим обсягом заряду."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Battery/mini_energygun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mode
+      shader: unshaded
+      color: "#00B2FF"
+      map: [ "Firemode" ]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Battery/mini_energygun.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/_DV/Weapons/Guns/Empty/dry_fire.ogg
+  - type: Battery
+    maxCharge: 500
+    startingCharge: 500
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 50
+  - type: AmmoSelector
+    prototypes:
+      - BulletDisabler
+      - BulletEnergyGunLaser
+  - type: UserInterface
+    interfaces:
+      enum.AmmoSelectorUiKey.Key:
+        type: AmmoSelectorMenuBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.AmmoSelectorUiKey.Key
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+    onUse: false
+    wieldToggle: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: ItemToggleColor
+  - type: Appearance
+  - type: ToggleableVisuals
+    spriteLayer: Firemode
+    inhandVisuals:
+      left:
+      - state: mode-inhand-left
+        shader: unshaded
+      right:
+      - state: mode-inhand-right
+        shader: unshaded
+  - type: Multishot
+- type: entity
+  name: IK-60 laser carbine
+  parent: [BaseWeaponBattery, BaseSecurityContraband, BaseGunWieldable]
+  id: WeaponGunLaserCarbineAutomatic
+  description: "Напівавтоматичний лазерний карабін, який широко використовується штурмовими загонами поліції Республіки Бізель."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Battery/energygun_carbine.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Battery/energygun_carbine.rsi
+  - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -19
+    maxAngle: -16
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/_DV/Weapons/Guns/Empty/dry_fire.ogg
+    selectedMode: SemiAuto
+    fireRate: 3.5
+    availableModes:
+      - SemiAuto
+  - type: Battery
+    maxCharge: 4000
+    startingCharge: 4000
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletEnergyGunLaser
+    fireCost: 100
+  - type: AmmoSelector
+    prototypes:
+      - BulletDisabler
+      - BulletEnergyGunLaser
+      - BulletEnergyGunIon
+  - type: UserInterface
+    interfaces:
+      enum.AmmoSelectorUiKey.Key:
+        type: AmmoSelectorMenuBoundUserInterface
+  - type: ActivatableUI
+    altVerb: true
+    verbOnly: true
+    verbText: mode-select-verb-text
+    key: enum.AmmoSelectorUiKey.Key
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+    onUse: false
+    wieldToggle: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  name: PDW-9 Energy Pistol
+  parent: [BaseWeaponBatterySmall, BaseSecurityContraband]
+  id: WeaponEnergyGunPistol
+  description: "Військовий пістолет, який широко використовується загонами поліції Республіки Бізель."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Battery/energygun_pistol.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mode
+      shader: unshaded
+      color: "#00B2FF"
+      map: [ "Firemode" ]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: GunFlashlightAttachment
+    offset: "0.09375, 0.0625"
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Battery/energygun_pistol.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/_DV/Weapons/Guns/Empty/dry_fire.ogg
+  - type: Battery
+    maxCharge: 1200
+    startingCharge: 1200
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 50
+  - type: AmmoSelector
+    prototypes:
+      - BulletDisabler
+      - BulletEnergyGunLaser
+      - BulletEnergyGunIon
+  - type: UserInterface
+    interfaces:
+      enum.AmmoSelectorUiKey.Key:
+        type: AmmoSelectorMenuBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.AmmoSelectorUiKey.Key
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+    onUse: false
+    wieldToggle: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: ItemToggleColor
+  - type: Appearance
+  - type: ToggleableVisuals
+    spriteLayer: Firemode
+    inhandVisuals:
+      left:
+      - state: mode-inhand-left
+        shader: unshaded
+      right:
+      - state: mode-inhand-right
+        shader: unshaded
+  - type: UpgradeableWeapon
+  - type: ItemSlots
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: ContainerContainer
+    containers:
+      flashlight: !type:ContainerSlot
+  - type: StaticPrice
+    price: 750
+  - type: Multishot
+
+- type: entity
+  name: PDW-9 Energy Pistol
+  parent: WeaponEnergyGunPistol
+  id: WeaponEnergyGunPistolSecurity
+  description: "Військовий пістолет, який широко використовується загонами поліції Республіки Бізель. Символ на ручці вказує, що ця зброя належить до офіцера безпеки SCC."
+  suffix: Security Loadouts
+  components:
+  - type: AccessReader
+    access: [["Security"]]

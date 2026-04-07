@@ -64,14 +64,26 @@
   playTimeTracker: JobTechnicalAssistant
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 1800 # 30 Minutes
+      time: 7200 # 2 hrs
     # - !type:DepartmentTimeRequirement # Pirate
     #   department: Engineering # Pirate
     #   time: 18000 #5 hrs # Pirate
     #   inverted: true # stop playing intern if you're good at engineering! # Pirate
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - EinsteinEngines
+      - ZavodskoiInterstellar
+      - HephaestusIndustries
+    # Pirate contractor end
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"
   supervisors: job-supervisors-engineering
+  guides: # goobstation
+  - Construction
+  - Power
+  - Networking
   goobcoins: 20 #Goob content
   access:
   - Maintenance

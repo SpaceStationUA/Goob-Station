@@ -20,3 +20,5 @@ flavor-base-old = старий
 flavor-base-robust = міцний
 flavor-complex-unicorntears = наче сльози єдинорога
 
+
+flavor-base-chuddy = чадді

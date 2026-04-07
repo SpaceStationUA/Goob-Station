@@ -41,3 +41,8 @@ chat-speech-verb-holier-than-thou-5 = оголошує
 chat-speech-verb-holier-than-thou-6 = декламує
 chat-speech-verb-holier-than-thou-7 = заявляє
 chat-speech-verb-holier-than-thou-8 = вимовляє
+
+chat-manager-entity-say-bolded-language-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][font="{$boldFontType}" size={$fontSize}][color={$color}]{$message}[/color][/font][/BubbleContent]"[/font]
+chat-speech-verb-name-station-radio = Станційне радіо
+
+chat-speech-verb-station-radio-1 = транслює

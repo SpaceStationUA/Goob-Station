@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: BorgDeathGasp
+  files:
+  - /Audio/_Pirate/Effects/Gasp/borg_deathgasp.ogg
+

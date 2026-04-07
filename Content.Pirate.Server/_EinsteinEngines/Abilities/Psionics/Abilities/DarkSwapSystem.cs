@@ -1,12 +1,11 @@
-using Content.Shared.Abilities.Psionics;
 using Content.Shared.Actions.Events;
-using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Shadowkin;
+using Content.Shared.Abilities.Psionics;
 using Robust.Server.GameObjects;
 
-namespace Content.Server.Abilities.Psionics
+namespace Content.Pirate.Server._EinsteinEngines.Abilities.Psionics.Abilities
 {
     public sealed class DarkSwapSystem : EntitySystem
     {
@@ -24,9 +23,7 @@ namespace Content.Server.Abilities.Psionics
         {
             if (TryComp<EtherealComponent>(args.Performer, out var ethereal))
             {
-                var tileref = Transform(args.Performer).Coordinates.GetTileRef();
-                if (tileref != null
-                && _physics.GetEntitiesIntersectingBody(args.Performer, (int) CollisionGroup.Impassable).Count > 0)
+                if (_physics.GetEntitiesIntersectingBody(args.Performer, (int) CollisionGroup.Impassable).Count > 0)
                 {
                     _popup.PopupEntity(Loc.GetString("revenant-in-solid"), args.Performer, args.Performer);
                     return;

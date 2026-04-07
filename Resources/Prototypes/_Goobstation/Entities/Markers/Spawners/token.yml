@@ -56,7 +56,7 @@
 
 - type: entity
   id: SpawnPointGhostBlobRatToken
-  name: "Точка появи мишачого блобу"
+  name: Mouse Blob Spawn Point
   suffix: Blob Ghostrole, Token
   parent: SpawnPointGhostBlobRat
   components:
@@ -89,8 +89,29 @@
     rules: ghost-role-information-antagonist-rules
 
 - type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: SpawnPointGhostSlaughterDemon
+  id: SpawnPointSlaughterDemonToken
+  components:
+  - type: GhostRole
+    name: roles-slaughter-demon-name-token
+    description: ghost-role-information-description-token-generic
+    rules: ghost-role-information-slaughter-demon-rules
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: SpawnPointGhostLaughterDemon
+  id: SpawnPointLaughterDemonToken
+  components:
+  - type: GhostRole
+    name: roles-laughter-demon-name-token
+    description: ghost-role-information-description-token-generic
+    rules: ghost-role-information-laughter-demon-rules
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: SpawnPointGhostAncientRogueKing
   id: AncientRogueKingToken
-  parent: CMMobXenoRogueKingSentient
   components:
   - type: GhostRole
     name: ghost-role-information-ancient-rogue-king-name-token
@@ -98,3 +119,37 @@
     rules: ghost-role-information-ancient-rogue-king-rules
     raffle:
       settings: short
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: SpawnPointGhostWraith
+  id: WraithToken
+  components:
+  - type: GhostRole
+    name: ghost-role-information-wraith-name-token
+    description: ghost-role-information-description-token-generic
+    rules: ghost-role-information-wraith-rules
+    raffle:
+      settings: short
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: SpawnPointGhostHastur
+  id: HasturToken
+  components:
+  - type: GhostRole
+    name: ghost-role-information-hastur-name-token
+    description: ghost-role-information-description-token-generic
+    rules: ghost-role-information-hastur-rules
+    raffle:
+      settings: short
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: ContractorSpawner
+  id: ContractorTokenSpawner
+  components:
+  - type: GhostRole
+    name: ghost-role-information-contractor-token
+    description: ghost-role-information-description-token-generic
+    rules: ghost-role-information-antagonist-rules

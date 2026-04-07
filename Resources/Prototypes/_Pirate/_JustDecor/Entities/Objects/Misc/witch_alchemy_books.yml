@@ -1,0 +1,120 @@
+- type: entity
+  parent: BaseItem
+  id: PirateGuidebookBase
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+  - type: Tag
+    tags:
+    - Book
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 1
+
+- type: entity
+  id: BookWitchBrewing
+  parent: PirateGuidebookBase
+  name: гримуар відьми
+  description: Збірка відьомських настоїв, ритуалів і способів варіння проклятих сумішей. 
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_old
+      color: "#3b1221"
+    - state: decor_bottom
+      color: "#5b1b33"
+    - state: decor_wingette
+      color: "#1e0810"
+    - state: icon_pentagramm
+      color: "#b64d67"
+    - state: detail_bookmark
+      color: "#d39a30"
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - WitchGuide
+    - PirateMagicChemicalsGuide
+
+- type: entity
+  id: BookAlchemistCompendium
+  parent: PirateGuidebookBase
+  name: алхімічний компендіум
+  description: Книга формул, перегонів і точних рецептів для алхімічного апарата. 
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#24464a"
+    - state: decor_wingette
+      color: "#172f32"
+    - state: icon_text
+      color: "#d8c37a"
+    - state: icon_chemical
+      color: "#9dd7e0"
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - AlchemistGuide
+    - PirateMagicChemicalsGuide
+
+- type: entity
+  id: BookWitchCauldronCaller
+  parent: PirateGuidebookBase
+  name: книга виклику казана
+  description: Тонкий ритуальний том, що відкликає закріплений казан відьми просто до ваших ніг.
+  suffix: Відьма, JustDecor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_old
+      color: "#2d0c16"
+    - state: decor_bottom
+      color: "#5b1b33"
+    - state: decor_wingette
+      color: "#1e0810"
+    - state: icon_pentagramm
+      color: "#b64d67"
+    - state: detail_bookmark
+      color: "#d39a30"
+  - type: UseOnStationOnly
+  - type: SpawnItemsOnUse
+    sound: /Audio/Items/Mining/fultext_launch.ogg
+    items:
+    - id: JustDecorWitchCauldron
+
+- type: entity
+  id: BookAlchemistApparatusCaller
+  parent: PirateGuidebookBase
+  name: книга виклику апарата
+  description: Практичний довідник із печаттю дистиляції. Розгортає алхімічний апарат на місці використання.
+  suffix: Алхім., JustDecor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#24464a"
+    - state: decor_wingette
+      color: "#172f32"
+    - state: icon_text
+      color: "#d8c37a"
+    - state: icon_chemical
+      color: "#9dd7e0"
+  - type: UseOnStationOnly
+  - type: SpawnItemsOnUse
+    sound: /Audio/Items/Mining/fultext_launch.ogg
+    items:
+    - id: JustDecorAlchemistApparatus

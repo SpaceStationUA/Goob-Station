@@ -12,3 +12,12 @@ stack-bingle-tile = {$amount ->
     [1] бінгл-плитка
     *[other] бінгл-плитки
 }
+
+stack-hex-nut = {$amount ->
+    [1] шестигранна гайка
+    *[other] шестигранні гайки
+}
+stack-screw = {$amount ->
+    [1] гвинт
+    *[other] гвинти
+}

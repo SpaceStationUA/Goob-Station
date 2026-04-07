@@ -5,6 +5,7 @@
 # SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Aidenkrz <aiden@djkraz.com>
 # SPDX-FileCopyrightText: 2025 Aineias1 <142914808+Aineias1@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 August Eymann <august.eymann@gmail.com>
 # SPDX-FileCopyrightText: 2025 CerberusWolfie <wb.johnb.willis@gmail.com>
 # SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
 # SPDX-FileCopyrightText: 2025 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
@@ -16,8 +17,8 @@
 - type: entity
   id: BoxSurvivalSlots
   parent: BaseItem
-  name: "коробка для виживання"
-  description: "Це коробка з базовими внутрішніми компонентами."
+  name: survival box
+  description: It's a box with basic internals inside.
   suffix: Standard
   components:
   - type: Sprite
@@ -58,6 +59,7 @@
           tags:
           - FoodSnack
           - BreadEmergency
+          - FoodTinMRE
       flare:
         ejectOnInteract: false
         whitelist:
@@ -74,6 +76,7 @@
           - ExtendedEmergencyNitrogenTank
           - EmergencyPlasmaTank
           - ExtendedEmergencyPlasmaTank
+          - EmergencyWaterVaporTank
       mask:
         ejectOnInteract: false
         whitelist:
@@ -114,6 +117,7 @@
           tags:
           - FoodSnack
           - BreadEmergency
+          - FoodTinMRE
       flare:
         whitelist:
           tags:
@@ -158,6 +162,22 @@
         whitelist:
           tags:
           - EmergencyNitrogenTank
+      vapor:
+        whitelist:
+          tags:
+          - EmergencyWaterVaporTank
+      battery:
+        whitelist:
+          tags:
+          - DisposableBattery
+      welder:
+        whitelist:
+          tags:
+          - WeldingTool
+      cable:
+        whitelist:
+          tags:
+          - CableCoil
 
 
 - type: entity
@@ -187,8 +207,8 @@
 - type: entity
   parent: BoxSurvivalSlots
   id: BoxSurvivalSlotsEngineering
-  name: "коробка для виживання збільшеної місткості"
-  description: "Це коробка з базовими внутрішніми компонентами. На цій зазначено, що вона містить балон збільшеної місткості."
+  name: extended-capacity survival box
+  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
   suffix: Extended
   components:
   - type: ContainerFill
@@ -239,8 +259,8 @@
 - type: entity
   parent: BoxSurvivalSlots
   id: BoxSurvivalSlotsSecurity
-  name: "коробка для виживання"
-  description: "Це коробка з базовими внутрішніми компонентами."
+  name: survival box
+  description: It's a box with basic internals inside.
   suffix: Security
   components:
   - type: ContainerFill
@@ -254,7 +274,7 @@
       tank:
       - ExtendedEmergencyOxygenTankFilled
       mask:
-      - ClothingMaskBreath
+      - ClothingMaskGasSecurity
       emergencypen:
       - EmergencyMedipen
       spacepen:
@@ -278,7 +298,7 @@
       tank:
       - ExtendedEmergencyNitrogenTankFilled
       mask:
-      - ClothingMaskBreath
+      - ClothingMaskGasSecurity
       emergencypen:
       - EmergencyMedipen
       spacepen:
@@ -291,8 +311,8 @@
 - type: entity
   parent: BoxSurvivalSlots
   id: BoxSurvivalSlotsMedical
-  name: "коробка для виживання"
-  description: "Це коробка з базовими внутрішніми компонентами."
+  name: survival box
+  description: It's a box with basic internals inside.
   suffix: Medical
   components:
   - type: ContainerFill
@@ -343,8 +363,8 @@
 - type: entity
   parent: BoxSurvivalSlots
   id: BoxHugSlots
-  name: "коробка обіймів"
-  description: "Спеціальна коробка для чутливих людей."
+  name: box of hugs
+  description: A special box for sensitive people.
   suffix: Emergency
   components:
   - type: ContainerFill
@@ -398,8 +418,8 @@
 - type: entity
   parent: BoxSurvivalSlots
   id: BoxSurvivalSlotsSyndicate
-  name: "коробка для виживання збільшеної місткості"
-  description: "Це коробка з базовими внутрішніми компонентами. На цій зазначено, що вона містить балон збільшеної місткості."
+  name: extended-capacity survival box
+  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
   suffix: Syndicate
   components:
   - type: ContainerFill
@@ -515,6 +535,7 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
+
 ## EE PLASMAMEN
 
 - type: entity
@@ -555,7 +576,7 @@
       flare:
       - Flare
       tank:
-      - ExtendedEmergencyPlasmaTankFilled
+      - EmergencyPlasmaTankFilled
       mask:
       - ClothingMaskBreath
       emergencypen:
@@ -581,9 +602,9 @@
       flare:
       - Flare
       tank:
-      - ExtendedEmergencyPlasmaTankFilled
+      - EmergencyPlasmaTankFilled
       mask:
-      - ClothingMaskBreath
+      - ClothingMaskGasSecurity
       emergencypen:
       - EmergencyMedipen
       spacepen:
@@ -657,7 +678,7 @@
       flare:
       - Flare
       tank:
-      - ExtendedEmergencyPlasmaTankFilled
+      - EmergencyPlasmaTankFilled
       mask:
       - ClothingMaskGasSyndicate
       emergencypen:
@@ -692,3 +713,50 @@
       - SpaceMedipen
   - type: Label
     currentLabel: reagent-name-plasma
+
+- type: entity
+  parent: BoxSurvivalSlots
+  id: BoxSurvivalSlotsSilicon
+  name: silicon survival box
+  description: It's a box with basic tools for self-repair inside.
+  components:
+  - type: ContainerContainer
+    containers:
+      battery: !type:ContainerSlot
+      flare: !type:ContainerSlot
+      welder: !type:ContainerSlot
+      cable: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      battery:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - DisposableBattery
+      flare:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - Flare
+      welder:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - WeldingTool
+      cable:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - CableCoil
+  - type: ContainerFill
+    containers:
+      battery:
+      - BatteryDisposable
+      flare:
+      - Flare
+      welder:
+      - WelderMini
+      cable:
+      - CableApcStack10
+  - type: Sprite
+    state: box_silicon

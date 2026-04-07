@@ -39,3 +39,16 @@ construction-graph-tag-welding-mask = зварювальна маска
 construction-graph-tag-plant-clipper = садові ножиці
 construction-graph-tag-item-pickaxe = кирка
 construction-graph-tag-hardhat = каска
+
+construction-graph-tag-ushanka = вушанка
+construction-graph-tag-baseball-bat = бейсбольна бита
+construction-graph-tag-heart = серце
+construction-graph-tag-blue = саморобний щит
+construction-graph-tag-camera-electronics = електроніка камери спостереження
+construction-graph-tag-green-crayon = зелена крейда
+construction-graph-tag-green-gloves = зелені рукавички
+construction-graph-tag-shiv = заточка
+construction-graph-tag-ash = попіл
+construction-graph-tag-ice-bucket = відерце для льоду
+construction-graph-tag-water-bottle = пляшка з водою
+construction-graph-tag-plushie-carp = плюшевий короп

@@ -24,18 +24,30 @@
         damage: 10
       behaviors:
       - !type:TriggerBehavior
+        keyOut: timer # explode immediately
   - type: ScatteringGrenade
-  - type: OnUseTimerTrigger
+  - type: TriggerOnUse
+  - type: TimerTrigger
     delay: 3
   - type: Tag
     tags:
     - HandGrenade
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 - type: entity
   parent: [ScatteringGrenadeBase, BaseSecurityContraband]
   id: ClusterBang
-  name: "кластерний вибух"
-  description: "Може використовуватися тільки з сигнальними ракетами. Вибухає кілька разів."
+  name: clusterbang
+  description: Can be used only with flashbangs. Explodes several times.
   components:
   - type: ScatteringGrenade
     whitelist:
@@ -52,8 +64,8 @@
 - type: entity
   parent: ClusterBang
   id: ClusterBangFull
-  name: "ClusterBang"
-  description: "Запускає три світлошумові гранати після закінчення таймера."
+  name: ClusterBang
+  description: Launches three flashbangs after the timer runs out.
   suffix: Full
   components:
   - type: Sprite
@@ -78,14 +90,16 @@
           Primed: { state: primed }
           Unprimed: { state: icon }
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Machines/door_lock_off.ogg"
 
 - type: entity
   parent: [ScatteringGrenadeBase, BaseSyndicateContraband]
   id: ClusterGrenade
-  name: "кластерна граната"
-  description: "Навіщо використовувати одну гранату, коли можна використати одразу три!"
+  name: clustergrenade
+  description: Why use one grenade when you can use three at once!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/clusterbomb.rsi
@@ -95,7 +109,7 @@
   - type: ScatteringGrenade
     fillPrototype: ExGrenade
     distance: 4
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -103,6 +117,8 @@
     initialBeepDelay: 0
     beepInterval: 0.5
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Machines/door_lock_off.ogg"
   - type: StaticPrice
@@ -111,8 +127,8 @@
 - type: entity
   parent: [ScatteringGrenadeBase, BaseSyndicateContraband]
   id: ClusterBananaPeel
-  name: "кластерна бананова шкірка"
-  description: "Після кидка розпадається на 6 вибухових бананових шкірок, веселощі гарантовані!"
+  name: cluster banana peel
+  description: Splits into 6 explosive banana peels after throwing, guaranteed fun!
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
@@ -127,14 +143,16 @@
       types:
         Blunt: 10
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Items/bikehorn.ogg"
 
 - type: entity
   parent: [SoapSyndie, ScatteringGrenadeBase, BaseSyndicateContraband]
   id: SlipocalypseClusterSoap
-  name: "slipocalypse clustersoap"
-  description: "Приземлившись на підлогу, розкидає невеликі шматочки синдикативного мила по площі."
+  name: slipocalypse clustersoap
+  description: Spreads small pieces of syndicate soap over an area upon landing on the floor.
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/soap.rsi
@@ -152,6 +170,8 @@
       types:
         Blunt: 10
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: StaticPrice
@@ -160,8 +180,8 @@
 - type: entity
   parent: ScatteringGrenadeBase
   id: GrenadeFoamDart
-  name: "пінопластова світлошумова граната"
-  description: "Випускає неприємний аерозоль з пінопластових дротиків, які викликають сильне роз'їдання."
+  name: foam dart grenade
+  description: Releases a bothersome spray of foam darts that cause severe welching.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/foamdart.rsi
@@ -174,7 +194,7 @@
     fillPrototype: BulletFoam
     capacity: 30
     velocity: 30
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -182,5 +202,7 @@
     initialBeepDelay: 0
     beepInterval: 2
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"

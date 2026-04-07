@@ -100,7 +100,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "ліхтар"
+  name: lantern
   parent: BaseItem
   id: BaseLamp
   abstract: true
@@ -122,8 +122,8 @@
         id: blinking
         interpolate: Nearest
         maxDuration: 1.0
-        minValue: 0.1
-        maxValue: 2.0
+        startValue: 0.1
+        endValue: 2.0
         isLooped: true
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -156,10 +156,10 @@
     stealGroup: LAMP
 
 - type: entity
-  name: "лампа"
+  name: lamp
   id: Lamp
   parent: BaseLamp
-  description: "Пристрій, що випромінює світло."
+  description: A light emitting device.
   components:
   - type: Sprite
     sprite: Objects/Misc/Lights/lamp.rsi
@@ -185,10 +185,10 @@
           festive: { state: christmaslamp-on }
 
 - type: entity
-  name: "бананова лампа"
+  name: banana lamp
   id: LampBanana
   parent: BaseLamp
-  description: "Світловипромінювальний пристрій у формі банана."
+  description: A light emitting device, shaped like a banana.
   components:
   - type: Sprite
     layers:
@@ -199,10 +199,10 @@
         map: [ "light" ]
 
 - type: entity
-  name: "настільна лампа"
+  name: desk lamp
   id: LampGold
   parent: BaseLamp
-  description: "Пристрій, що випромінює світло, ще й чудово виглядатиме на робочому столі."
+  description: A light emitting device that would look great on a desk.
   components:
   - type: Sprite
     sprite: Objects/Misc/Lights/lampgreen.rsi
@@ -232,22 +232,22 @@
             state: christmaslamp-on
 
 - type: entity
-  name: "лампа для допитів"
+  name: interrogator lamp
   id: LampInterrogator
   parent: [ BaseLamp, BaseSecurityContraband ]
-  description: "Надяскрава лампа для поганого поліцейського."
+  description: Ultra-bright lamp for the bad cop.
   components:
   - type: Sprite
     sprite: Objects/Misc/Lights/lampint.rsi
     layers:
       - state: lamp-int
-        map: [ "enum.FlashVisuals.BaseLayer" ]
+        map: [ "enum.FlashVisualLayers.BaseLayer" ]
       - state: lamp-int-on
         shader: unshaded
         visible: false
         map: [ "light" ]
       - state: flashing
-        map: [ "enum.FlashVisuals.LightLayer" ]
+        map: [ "enum.FlashVisualLayers.LightLayer" ]
         visible: false
   - type: Item
     sprite: Objects/Misc/Lights/lampint.rsi
@@ -260,6 +260,10 @@
     energy: 0.5
     color: "#FFFFEE"
   - type: Flash
+    flashOnMelee: false
+    flashOnUse: false
+  - type: UseDelay
+    delay: 1
   - type: LimitedCharges
     maxCharges: 3
   - type: AutoRecharge
@@ -277,18 +281,18 @@
   - type: GenericVisualizer
     visuals:
       enum.FlashVisuals.Burnt:
-        enum.FlashVisuals.BaseLayer:
+        enum.FlashVisualLayers.BaseLayer:
           True: {state: burnt}
       enum.FlashVisuals.Flashing:
-        enum.FlashVisuals.LightLayer:
+        enum.FlashVisualLayers.LightLayer:
           True: {visible: true}
           False: {visible: false}
 
 - type: entity
-  name: "прожектор"
+  name: floodlight
   id: Floodlight
   parent: BaseLamp
-  description: "Стовп, на якому встановлені потужні ліхтарі."
+  description: A pole with powerful mounted lights on it.
   components:
   - type: Item
     size: Normal
@@ -346,10 +350,10 @@
       Glass: 500
       Steel: 200
 - type: entity
-  name: "розбитий прожектор"
+  name: broken floodlight
   id: FloodlightBroken
   parent: BaseItem
-  description: "Стовп з потужними ліхтарями на ньому. Він зламаний."
+  description: A pole with powerful mounted lights on it. It's broken.
   components:
   - type: Item
     size: Normal

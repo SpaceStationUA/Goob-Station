@@ -1,0 +1,193 @@
+# SPDX-FileCopyrightText: 2026 Corvax Team Contributors
+# SPDX-FileCopyrightText: 2026 CyberLanos <cyber.lanos00@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+- type: entity
+  id: PhotoAlbum
+  parent: BaseItem
+  name: "фотоальбом"
+  description: "Книга зі спогадами. Покладіть туди фотографії, щоб вони потрапили у фінальне зведення раунду. Використайте ручку, щоб налаштувати назви, описи та підписи фото."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    layers:
+      - state: album-empty
+      - state: filled-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Item
+    size: Large
+    storedOffset: 0,2
+    shape:
+    - 0,0,1,0
+  - type: StorageFillVisualizer
+    maxFillLevels: 5
+    fillBaseName: filled
+  - type: Appearance
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Icon
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    state: icon
+  - type: PhotoAlbum
+  - type: Storage
+    grid:
+    - 0,0,3,1
+    maxItemSize: Small
+    whitelist:
+      tags:
+        - Photo
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+
+- type: entity
+  id: PhotoAlbumLoadoutSigned
+  parent: PhotoAlbum
+  suffix: loadout
+  components:
+  - type: AutoSignPhotoAlbum
+  - type: PersistentPhotoAlbum
+    ownerKind: profile
+    albumKey: personal
+
+- type: entity
+  id: PhotoAlbumGreen
+  parent: PhotoAlbum
+  name: "зелений фотоальбом"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    layers:
+      - state: album_green
+      - state: filled-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Icon
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    state: album_green
+
+- type: entity
+  id: PhotoAlbumRed
+  parent: PhotoAlbum
+  name: "червоний фотоальбом"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    layers:
+      - state: album_red
+      - state: filled-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Icon
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    state: album_red
+
+- type: entity
+  id: PhotoAlbumBlue
+  parent: PhotoAlbum
+  name: "синій фотоальбом"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    layers:
+      - state: album_blue
+      - state: filled-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Icon
+    sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
+    state: album_blue
+
+- type: entity
+  id: PhotoAlbumDepartmentService
+  parent: PhotoAlbumGreen
+  name: "фотоальбом сервісного відділу"
+  components:
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: service
+    albumKey: default
+
+- type: entity
+  id: PhotoAlbumDepartmentSecurity
+  parent: PhotoAlbumRed
+  name: "фотоальбом охорони"
+  components:
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: security
+    albumKey: default
+
+- type: entity
+  id: PhotoAlbumDepartmentSupply
+  parent: PhotoAlbumBlue
+  name: "фотоальбом постачання"
+  components:
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: supply
+    albumKey: default
+
+- type: entity
+  id: PhotoAlbumDepartmentScience
+  parent: PhotoAlbumBlue
+  name: "фотоальбом наукового відділу"
+  components:
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: science
+    albumKey: default
+
+- type: entity
+  id: PhotoAlbumDepartmentCommand
+  parent: PhotoAlbumBlue
+  name: "фотоальбом командування"
+  components:
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: command
+    albumKey: default
+
+- type: entity
+  id: PhotoAlbumDepartmentEngineering
+  parent: PhotoAlbumBlue
+  name: "фотоальбом інженерного відділу"
+  components:
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: engineering
+    albumKey: default
+
+- type: entity
+  id: PhotoAlbumDepartmentMedical
+  parent: PhotoAlbumBlue
+  name: "фотоальбом медичного відділу"
+  components:
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: medical
+    albumKey: default
+
+- type: entity
+  id: PhotoAlbumMakeshift
+  parent: PhotoAlbum
+  name: "саморобний фотоальбом"
+  description: "Саморобна книжка зі спогадами. Покладіть туди фотографії, щоб вони потрапили у фінальне зведення раунду. Використайте ручку, щоб налаштувати назви, описи та підписи фото."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Photo/photo_album_makeshift.rsi
+    layers:
+      - state: album-empty
+      - state: filled-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Icon
+    sprite: _Pirate/Objects/Misc/Photo/photo_album_makeshift.rsi
+    state: icon
+  - type: Storage
+    grid:
+    - 0,0,1,1
+  - type: Construction
+    graph: PhotoAlbum
+    node: album

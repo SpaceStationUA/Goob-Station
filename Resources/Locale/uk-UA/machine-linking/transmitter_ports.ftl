@@ -22,8 +22,8 @@ signal-port-description-doorstatus = Цей порт викликається з
 signal-port-name-middle = Середина
 signal-port-description-middle = Цей порт викликається щоразу, коли важіль переводиться в нейтральне положення.
 
-signal-port-name-timer-trigger = Часовий Трігер
-signal-port-description-timer-trigger = Цей порт викликається щоразу, коли спрацьовує таймер.
+signal-port-name-timer-trigger = Таймер
+signal-port-description-timer-trigger = Цей порт активується щоразу, коли спрацьовує таймер.
 
 signal-port-name-timer-start = Старт за Таймером
 signal-port-description-timer-start = Цей порт викликається щоразу, коли запускається таймер.
@@ -72,3 +72,5 @@ signal-port-description-dockstatus = Цей порт викликається з
 
 signal-port-name-item-detected = Виявлено
 signal-port-description-item-detected = Цей порт викликається щоразу, коли передавач виявляє предмет.
+signal-port-name-trigger-sender = Тригер
+signal-port-description-trigger-sender = Цей порт активується щоразу, коли пристрій спрацьовує.

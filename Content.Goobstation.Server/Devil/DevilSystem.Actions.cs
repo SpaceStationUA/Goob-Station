@@ -11,6 +11,7 @@ using Content.Goobstation.Shared.Devil;
 using Content.Goobstation.Shared.Devil.Actions;
 using Content.Goobstation.Shared.Devil.Condemned;
 using Content.Goobstation.Shared.Devil.Contract;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.IdentityManagement;
 
 namespace Content.Goobstation.Server.Devil;
@@ -68,6 +69,9 @@ public sealed partial class DevilSystem
         Spawn(devil.Comp.JauntAnimationProto, Transform(devil).Coordinates);
         Spawn(devil.Comp.PentagramEffectProto, Transform(devil).Coordinates);
 
+        if (TryComp<CuffableComponent>(devil, out var cuffableComponent))
+            _container.EmptyContainer(cuffableComponent.Container, true);
+
         _poly.PolymorphEntity(devil, devil.Comp.JauntEntityProto);
     }
 
@@ -78,10 +82,13 @@ public sealed partial class DevilSystem
 
         if (devil.Comp.DevilGrip != null)
         {
-            foreach (var item in _hands.EnumerateHeld(devil))
+            foreach (var item in _hands.EnumerateHeld(devil.Owner))
             {
-                if (HasComp<DevilGripComponent>(item))
-                    QueueDel(item);
+                if (!HasComp<DevilGripComponent>(item))
+                    continue;
+
+                QueueDel(item);
+                return;
             }
         }
 
@@ -107,11 +114,13 @@ public sealed partial class DevilSystem
         if (devil.Comp.PowerLevel != DevilPowerLevel.None)
             devil.Comp.PossessionDuration *= (int)devil.Comp.PowerLevel;
 
-        if (_possession.TryPossessTarget(args.Target, args.Performer, devil.Comp.PossessionDuration, true, polymorphPossessor: true))
-        {
-            Spawn(devil.Comp.JauntAnimationProto, Transform(args.Target).Coordinates);
-            Spawn(devil.Comp.PentagramEffectProto, Transform(args.Target).Coordinates);
-        }
+        // Only mark as handled if possession succeeds to avoid wasting the cooldown.
+        if (!_possession.TryPossessTarget(args.Target, args.Performer, devil.Comp.PossessionDuration, true, polymorphPossessor: true))
+            return;
 
+        Spawn(devil.Comp.JauntAnimationProto, Transform(args.Target).Coordinates);
+        Spawn(devil.Comp.PentagramEffectProto, Transform(args.Target).Coordinates);
+
+        args.Handled = true;
     }
 }

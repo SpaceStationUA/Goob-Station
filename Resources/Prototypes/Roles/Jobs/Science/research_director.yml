@@ -142,20 +142,44 @@
     time: 18000 # 5 hours
   - !type:RoleTimeRequirement
     role: JobScientist
-    time: 18000 #5 hrs
+    time: 21600 #6 hrs
   - !type:DepartmentTimeRequirement
     department: Science
     time: 36000 #10 hrs
-  - !type:SpeciesRequirement # Goob - None Felinid
-    inverted: true
-    species:
-    - Felinid
+  - !type:SpeciesRequirement # Pirate no ipc psionics
+      inverted: true
+      species:
+        - IPC
+  - !type:TraitsRequirement
+      inverted: true
+      traits:
+      - DeafTrait
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+  #- !type:SpeciesRequirement # Pirate remove requirement
+  #  inverted: true
+  #  species:
+  #  - Felinid
+  # Pirate contractor start
+  - !type:CharacterEmployerRequirement
+    employers:
+    - NanoTrasen
+    - Interdyne
+  # Pirate contractor end
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
   supervisors: job-supervisors-captain
   #canBeAntag: false
+  whitelisted: true # Pirate
   antagAdvantage: 75 # Goobstation
+  guides: # goobstation
+  - Science
+  - Command
+  - ResearchDirectorSOP
+  - ScienceSOP
   goobcoins: 40 #Goob content
   access:
   - Research
@@ -164,8 +188,8 @@
   - ResearchDirector
   - Brig
   - Cryogenics
-  - External # goobstation
-  - Mantis
+  - External # Goobstation
+  - Mantis # Pirate
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -191,7 +215,7 @@
   storage:
     back:
     - Flash
-    - TelescopicBaton # Goobstation
+    #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit
   id: ResearchDirectorChameleonOutfit

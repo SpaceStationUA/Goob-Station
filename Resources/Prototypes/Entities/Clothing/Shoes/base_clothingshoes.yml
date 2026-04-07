@@ -55,6 +55,8 @@
       params:
         volume: -5
   # Goobstation edit end
+    equipDelay: 0.5 # Pirate clothingDelay
+    unequipDelay: 0.3 # Pirate clothingDelay
   - type: Sprite
     state: icon
   - type: Item
@@ -144,7 +146,7 @@
   abstract: true
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBaseWinterBoots
-  description: "Пухнасті чоботи допоможуть пережити навіть найхолоднішу зиму."
+  description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: TemperatureProtection
     heatingCoefficient: 1.025

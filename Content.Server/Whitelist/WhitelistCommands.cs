@@ -83,14 +83,21 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Content.Server.Players.JobWhitelist; // Pirate whitelist
+using Content.Shared.Roles; // Pirate whitelist
 using Robust.Shared.Console;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes; // Pirate whitelist
 
 namespace Content.Server.Whitelist;
 
 [AdminCommand(AdminFlags.Ban)]
 public sealed class AddWhitelistCommand : LocalizedCommands
 {
+    [Dependency] private readonly IPlayerLocator _locator = default!;
+    [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Pirate whitelist
+    [Dependency] private readonly JobWhitelistManager _jobWhitelistManager = default!; // Pirate whitelist
     public override string Command => "whitelistadd";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -102,23 +109,33 @@ public sealed class AddWhitelistCommand : LocalizedCommands
             return;
         }
 
-        var db = IoCManager.Resolve<IServerDbManager>();
-        var loc = IoCManager.Resolve<IPlayerLocator>();
-
         var name = string.Join(' ', args).Trim();
-        var data = await loc.LookupIdByNameOrIdAsync(name);
+        var data = await _locator.LookupIdByNameOrIdAsync(name);
 
         if (data != null)
         {
             var guid = data.UserId;
-            var isWhitelisted = await db.GetWhitelistStatusAsync(guid);
+            var isWhitelisted = await _dbManager.GetWhitelistStatusAsync(guid);
             if (isWhitelisted)
             {
                 shell.WriteLine(Loc.GetString("cmd-whitelistadd-existing", ("username", data.Username)));
                 return;
             }
 
-            await db.AddToWhitelistAsync(guid);
+            await _dbManager.AddToWhitelistAsync(guid);
+
+            // Pirate whitelist start
+            foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+            {
+                if (job.Whitelisted)
+                {
+                    var jobProtoId = new ProtoId<JobPrototype>(job.ID);
+                    if (!await _dbManager.IsJobWhitelisted(guid, jobProtoId))
+                        _jobWhitelistManager.AddWhitelist(guid, jobProtoId);
+                }
+            }
+            // Pirate whitelist end
+
             shell.WriteLine(Loc.GetString("cmd-whitelistadd-added", ("username", data.Username)));
             return;
         }
@@ -140,6 +157,11 @@ public sealed class AddWhitelistCommand : LocalizedCommands
 [AdminCommand(AdminFlags.Ban)]
 public sealed class RemoveWhitelistCommand : LocalizedCommands
 {
+    [Dependency] private readonly IPlayerLocator _locator = default!;
+    [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Pirate whitelist
+    [Dependency] private readonly JobWhitelistManager _jobWhitelistManager = default!; // Pirate whitelist
+
     public override string Command => "whitelistremove";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -151,23 +173,33 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
             return;
         }
 
-        var db = IoCManager.Resolve<IServerDbManager>();
-        var loc = IoCManager.Resolve<IPlayerLocator>();
-
         var name = string.Join(' ', args).Trim();
-        var data = await loc.LookupIdByNameOrIdAsync(name);
+        var data = await _locator.LookupIdByNameOrIdAsync(name);
 
         if (data != null)
         {
             var guid = data.UserId;
-            var isWhitelisted = await db.GetWhitelistStatusAsync(guid);
+            var isWhitelisted = await _dbManager.GetWhitelistStatusAsync(guid);
             if (!isWhitelisted)
             {
                 shell.WriteLine(Loc.GetString("cmd-whitelistremove-existing", ("username", data.Username)));
                 return;
             }
 
-            await db.RemoveFromWhitelistAsync(guid);
+            await _dbManager.RemoveFromWhitelistAsync(guid);
+
+            // Pirate whitelist start
+            foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+            {
+                if (job.Whitelisted)
+                {
+                    var jobProtoId = new ProtoId<JobPrototype>(job.ID);
+                    if (await _dbManager.IsJobWhitelisted(guid, jobProtoId))
+                        _jobWhitelistManager.RemoveWhitelist(guid, jobProtoId);
+                }
+            }
+            // Pirate whitelist end
+
             shell.WriteLine(Loc.GetString("cmd-whitelistremove-removed", ("username", data.Username)));
             return;
         }
@@ -189,6 +221,11 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
 [AdminCommand(AdminFlags.Ban)]
 public sealed class KickNonWhitelistedCommand : LocalizedCommands
 {
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IServerNetManager _netManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IServerDbManager _dbManager = default!;
+
     public override string Command => "kicknonwhitelisted";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -200,24 +237,16 @@ public sealed class KickNonWhitelistedCommand : LocalizedCommands
             return;
         }
 
-        var cfg = IoCManager.Resolve<IConfigurationManager>();
-
-        if (!cfg.GetCVar(CCVars.WhitelistEnabled))
+        if (!_configManager.GetCVar(CCVars.WhitelistEnabled))
             return;
 
-        var player = IoCManager.Resolve<IPlayerManager>();
-        var db = IoCManager.Resolve<IServerDbManager>();
-        var net = IoCManager.Resolve<IServerNetManager>();
-
-        foreach (var session in player.NetworkedSessions)
+        foreach (var session in _playerManager.NetworkedSessions)
         {
-            if (await db.GetAdminDataForAsync(session.UserId) is not null)
+            if (await _dbManager.GetAdminDataForAsync(session.UserId) is not null)
                 continue;
 
-            if (!await db.GetWhitelistStatusAsync(session.UserId))
-            {
-                net.DisconnectChannel(session.Channel, Loc.GetString("whitelist-not-whitelisted"));
-            }
+            if (!await _dbManager.GetWhitelistStatusAsync(session.UserId))
+                _netManager.DisconnectChannel(session.Channel, Loc.GetString("whitelist-not-whitelisted"));
         }
     }
 }

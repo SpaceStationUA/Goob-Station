@@ -12,14 +12,15 @@
 - type: entity
   parent: [ ClothingOuterBase, AllowSuitStorageClothing, BaseMajorContraband ]
   id: ClothingOuterArmorAbductor
-  name: "жилет агента"
+  name: agent vest
   components:
   - type: Sprite
     sprite: _Shitmed/Clothing/OuterClothing/Armor/abductor.rsi
   - type: AbductorVest
   - type: ModifyDelayedKnockdown # Goobstation
-    delayDelta: 3
-    knockdownTimeDelta: -3
+    cancel: true
+  - type: StaminaResistance
+    damageCoefficient: 0.25
   - type: ItemSwitch
     state: stealth
     states:
@@ -43,6 +44,8 @@
           - Arm
           - Leg
           - Tail
+          - Hand
+          - Foot
           modifiers:
             coefficients:
               Blunt: 0.6
@@ -89,8 +92,6 @@
               Piercing: 0.25
               Radiation: 0.25
               Caustic: 0.1
-        - type: StaminaResistance
-          damageCoefficient: 0.25
         - type: ExplosionResistance
           damageCoefficient: 0.5
         - type: Clothing
@@ -102,8 +103,8 @@
 - type: entity
   parent: [ ClothingOuterStorageBase, AllowSuitStorageClothing, BaseMajorContraband]
   id: ClothingOuterCoatAbductor
-  name: "лабораторний халат викрадача"
-  description: "Костюм інопланетного походження, що захищає від різних травм, а також від розливів хімікатів."
+  name: alien lab coat
+  description: A suit of alien origin that protects from various injuries, as well as from chemical spills.
   components:
   - type: Sprite
     sprite: _Shitmed/Clothing/OuterClothing/Coats/abductor.rsi
@@ -132,3 +133,8 @@
         Caustic: 0.4
   - type: ExplosionResistance
     damageCoefficient: 0.75
+  - type: StaminaResistance
+    damageCoefficient: 0.4
+  - type: ModifyDelayedKnockdown
+    delayDelta: 3
+    knockdownTimeDelta: -3

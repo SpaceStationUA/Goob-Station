@@ -42,8 +42,8 @@
 
 - type: entity
   id: Chronofield
-  name: "хронополе"
-  description: "ЗА ВАРУДО!"
+  name: chronofield
+  description: ZA WARUDO!
   components:
   - type: TimedDespawn
     lifetime: 10
@@ -186,7 +186,7 @@
 
 - type: entity
   id: EffectSpark
-  name: "іскри"
+  name: sparks
   categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
@@ -325,13 +325,13 @@
   - type: AnimationPlayer
   - type: LightBehaviour
     behaviours:
-    - !type:PulseBehaviour
-      id: pulse
-      property: Energy
-      maxDuration: 2
-      minValue: 0
-      maxValue: 16
-      enabled: true
+      - !type:PulseBehaviour
+        id: pulse
+        property: Energy
+        maxDuration: 2
+        startValue: 0
+        endValue: 16
+        enabled: true
 
 - type: entity
   parent: EffectRay
@@ -340,13 +340,13 @@
   components:
   - type: LightBehaviour
     behaviours:
-    - !type:PulseBehaviour
-      id: pulse
-      property: Energy
-      maxDuration: 1
-      minValue: 0
-      maxValue: 16
-      enabled: true
+      - !type:PulseBehaviour
+        id: pulse
+        property: Energy
+        maxDuration: 1
+        startValue: 0
+        endValue: 16
+        enabled: true
 
 - type: entity
   id: SanguineBloodEffect
@@ -417,7 +417,7 @@
 
 - type: entity
   id: BindSoulParticle
-  name: "нечиста енергія"
+  name: unholy energy
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -450,3 +450,5 @@
         hard: false
   - type: HomingProjectile
     homingSpeed: null
+  - type: TileFrictionModifier
+    modifier: 0

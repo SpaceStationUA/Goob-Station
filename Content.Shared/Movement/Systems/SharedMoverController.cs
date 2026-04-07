@@ -109,7 +109,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
-using Content.Goobstation.Common.Movement;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
@@ -119,11 +118,13 @@ using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared._DV.StepTrigger.Components; // DeltaV - NoShoesSilentFootstepsComponent
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -136,6 +137,8 @@ using Robust.Shared.Utility;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared._vg.TileMovement;
+using Content.Shared.Standing; // Goobstation - kil mofs
+using Content.Goobstation.Common.MomentumSteering; // Goobstation - also kil mofs
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 
 namespace Content.Shared.Movement.Systems;
@@ -160,6 +163,9 @@ public abstract partial class SharedMoverController : VirtualController
     [Dependency] private   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly TagSystem _tags = default!;
     [Dependency] private   readonly SharedInteractionSystem _interaction = default!; // Tile Movement Change
+    [Dependency] private   readonly StandingStateSystem _standing = default!; // Goobstation - kil mofs
+    [Dependency] private   readonly CommonMomentumSteeringSystem _momentumSteering = default!; // Goobstation - momentum steering
+    [Dependency] private   readonly CommonMomentumThrustSystem _momentumThrust = default!; // Goobstation - jetpack thrust falloff
 
     protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
     protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
@@ -174,11 +180,13 @@ public abstract partial class SharedMoverController : VirtualController
     protected EntityQuery<RelayInputMoverComponent> RelayQuery;
     protected EntityQuery<PullableComponent> PullableQuery;
     protected EntityQuery<TransformComponent> XformQuery;
+    protected EntityQuery<NoShoesSilentFootstepsComponent> NoShoesSilentQuery; // DeltaV - NoShoesSilentFootstepsComponent
 
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
     protected EntityQuery<FixturesComponent> FixturesQuery; // Tile Movement Change
     protected EntityQuery<TileMovementComponent> TileMovementQuery; // Tile Movement Change
+    protected EntityQuery<MomentumSteeringComponent> MomentumSteeringQuery; // Goobstation - momentum steering
 
     private bool _relativeMovement;
     private float _minDamping;
@@ -190,6 +198,8 @@ public abstract partial class SharedMoverController : VirtualController
     /// Cache the mob movement calculation to re-use elsewhere.
     /// </summary>
     public Dictionary<EntityUid, bool> UsedMobMovement = new();
+
+    private readonly HashSet<EntityUid> _aroundColliderSet = [];
 
     public override void Initialize()
     {
@@ -210,7 +220,9 @@ public abstract partial class SharedMoverController : VirtualController
         MapGridQuery = GetEntityQuery<MapGridComponent>();
         FixturesQuery = GetEntityQuery<FixturesComponent>(); // Tile Movement Change
         TileMovementQuery = GetEntityQuery<TileMovementComponent>(); // Tile Movement Change
+        NoShoesSilentQuery = GetEntityQuery<NoShoesSilentFootstepsComponent>(); // DeltaV - NoShoesSilentFootstepsComponent
         MapQuery = GetEntityQuery<MapComponent>();
+        MomentumSteeringQuery = GetEntityQuery<MomentumSteeringComponent>(); // Goobstation - momentum steering
 
         SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
 
@@ -296,14 +308,8 @@ public abstract partial class SharedMoverController : VirtualController
         // If we're not the target of a relay then handle lerp data.
         if (relaySource == null)
         {
-            if (TileMovementQuery.HasComponent(uid)) // Goobstation Change
+            if (TileMovementQuery.HasComponent(uid) || mover.LerpTarget < Timing.CurTime)
                 TryUpdateRelative(uid, mover, xform);
-
-            // Update relative movement
-            if (mover.LerpTarget < Timing.CurTime)
-            {
-                TryUpdateRelative(uid, mover, xform);
-            }
 
             LerpRotation(uid, mover, frameTime);
         }
@@ -313,10 +319,6 @@ public abstract partial class SharedMoverController : VirtualController
             || !PhysicsQuery.TryComp(uid, out var physicsComponent)
             || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
         {
-            // Goobstation start
-            var cantMoveEvent = new MoverControllerCantMoveEvent();
-            RaiseLocalEvent(uid, ref cantMoveEvent);
-            // Goobstation end
             UsedMobMovement[uid] = false;
             return;
         }
@@ -411,7 +413,8 @@ public abstract partial class SharedMoverController : VirtualController
                 friction = moveSpeedComponent?.OffGridFriction ?? _offGridDamping;
             }
 
-            accel = moveSpeedComponent?.WeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
+            accel = moveSpeedComponent?.WeightlessAcceleration != null && !_standing.IsDown(entity) ? moveSpeedComponent.WeightlessAcceleration : MovementSpeedModifierComponent.DefaultWeightlessAcceleration; // Goobstation edit - kil mofs - added check for standing state
+
         }
         else
         {
@@ -440,10 +443,9 @@ public abstract partial class SharedMoverController : VirtualController
             accel *= tileDef?.MobAcceleration ?? 1f;
         }
 
-        // Goobstation start
-        var getTileEvent = new MoverControllerGetTileEvent(tileDef);
-        RaiseLocalEvent(uid, ref getTileEvent);
-        // Goobstation end
+        // Goobstation - momentum steering
+        if (weightless && MomentumSteeringQuery.TryComp(uid, out var momSteer))
+            _momentumSteering.KillFriction(momSteer, velocity, ref friction);
 
         // This way friction never exceeds acceleration when you're trying to move.
         // If you want to slow down an entity with "friction" you shouldn't be using this system.
@@ -453,8 +455,19 @@ public abstract partial class SharedMoverController : VirtualController
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
         Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
 
-        if (!weightless || touching)
+        // Goobstation - momentum steering
+        if (weightless && touching && wishDir != Vector2.Zero
+            && MomentumSteeringQuery.TryComp(uid, out var momSteer2)
+            && _momentumSteering.TryAdjustedWishDir(uid, momSteer2, velocity, wishDir, out var adjWishDir, out var momSpeed))
+        {
+            _momentumThrust.AdjustWishDir(uid, momSteer2, wishDir, ref adjWishDir, momSpeed); // Goobstation - jetpack thrust falloff
+            Accelerate(ref velocity, in adjWishDir, accel, frameTime);
+            _momentumSteering.TryApplyMomentumJitter(uid, momSteer2, momSpeed);
+        }
+        else if (!weightless || touching)
+        {
             Accelerate(ref velocity, in wishDir, accel, frameTime);
+        }
 
         SetWishDir((uid, mover), wishDir);
 
@@ -617,7 +630,9 @@ public abstract partial class SharedMoverController : VirtualController
         var (uid, collider, mover, transform) = entity;
         var enlargedAABB = _lookup.GetWorldAABB(entity.Owner, transform).Enlarged(mover.GrabRange);
 
-        foreach (var otherEntity in lookupSystem.GetEntitiesIntersecting(transform.MapID, enlargedAABB))
+        _aroundColliderSet.Clear();
+        lookupSystem.GetEntitiesIntersecting(transform.MapID, enlargedAABB, _aroundColliderSet);
+        foreach (var otherEntity in _aroundColliderSet)
         {
             if (otherEntity == uid)
                 continue; // Don't try to push off of yourself!
@@ -688,6 +703,14 @@ public abstract partial class SharedMoverController : VirtualController
             return false;
 
         mobMover.StepSoundDistance -= distanceNeeded;
+
+        // DeltaV - Don't play the sound if they have no shoes and the component
+        if (NoShoesSilentQuery.HasComp(uid) &&
+            !_inventory.TryGetSlotEntity(uid, "shoes", out var _))
+        {
+            return false;
+        }
+        // End DeltaV code
 
         if (FootstepModifierQuery.TryComp(uid, out var moverModifier))
         {

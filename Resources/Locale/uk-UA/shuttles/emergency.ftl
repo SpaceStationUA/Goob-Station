@@ -13,11 +13,9 @@ emergency-shuttle-command-launch-desc = Ранній запуск аварійн
 # Emergency shuttle
 emergency-shuttle-left = Аварійний Шатл покинув станцію. Приблизний час до прибуття на ЦК: {$transitTime} секунд.
 emergency-shuttle-launch-time = Аварійний Шатл стартує через {$consoleAccumulator} секунд.
-emergency-shuttle-docked = Аварійний Шатл пристикувався до станції зі сторони: {$direction}. Він відчалює через {$time} секунд
+emergency-shuttle-docked = Аварійний шатл пришвартувався {$direction} від станції, {$location}. Він відлетить через {$time} секунд.{$extended}
 emergency-shuttle-good-luck = Аварійний Шатл не може знайти станцію. Хай щастить.
-emergency-shuttle-nearby = Аварійний Шатл не може знайти вільний стикувальний порт. Він був переміщений у напрямку {$direction} від станції.
-
-# Emergency shuttle console popup / announcement
+emergency-shuttle-nearby = Аварійний шатл не зміг знайти придатний док. Він виринув {$direction} від станції, {$location}. Він відлетить через {$time} секунд.{$extended}
 emergency-shuttle-console-no-early-launches = Достроковий запуск вимкнено
 emergency-shuttle-console-auth-left = Необхідно {$remaining} авторизацій, для дострокового запуску шатлу.
 emergency-shuttle-console-auth-revoked = Авторизацію для дострокового запуску скасовано, необхідно авторизацій: {$remaining}.
@@ -34,8 +32,16 @@ emergency-shuttle-ui-repeal = СКАСУВАТИ
 emergency-shuttle-ui-authorizations = Авторизацій
 emergency-shuttle-ui-remaining = Залишилося: {$remaining}
 
-emergency-shuttle-extended = Час запуску було подовжено через незручні обставини.
-
-# Спливаюче вікно/оголошення консолі аварійного шатла
+emergency-shuttle-extended = Час запуску подовжено через незручні обставини
 map-name-centcomm = Центральне Командування
 map-name-terminal = Термінал прибуття
+cmd-delayroundend-desc = Зупиняє таймер, який завершує раунд, коли аварійний шатл виходить з гіперпростору.
+cmd-delayroundend-help = Використання: delayroundend
+cmd-dockemergencyshuttle-desc = Викликає аварійний шатл і пристиковує його до станції... якщо це можливо.
+cmd-dockemergencyshuttle-help = Використання: dockemergencyshuttle
+
+## Запустити аварійний шатл
+cmd-launchemergencyshuttle-desc = Запускає аварійний шатл раніше, якщо це можливо.
+cmd-launchemergencyshuttle-help = Використання: launchemergencyshuttle
+
+# Аварійний шатл

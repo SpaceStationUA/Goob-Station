@@ -67,15 +67,15 @@
 - type: entity
   id: HighSecDoor
   parent: BaseStructure
-  name: "двері з високим ступенем захисту"
-  description: "Тримає погане назовні, а хороше - всередині."
+  name: high security door
+  description: Keeps the bad out and keeps the good in.
   placement:
     mode: SnapgridCenter
   components:
   - type: StationAiWhitelist
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/highsec/highsec.rsi # Pirate changes
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -136,6 +136,7 @@
     fuel: 10
     time: 10
   - type: Airlock
+  - type: AirlockIllumination # Pirate changes
   - type: NavMapDoor
   - type: DoorBolt
   - type: AccessReader
@@ -181,9 +182,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
   - type: Construction
     graph: Airlock
     node: highSecDoor
@@ -194,3 +192,5 @@
   - type: Penetratable # Goobstation - Better snipers
     penetrateDamage: 200
     damagePenalty: 0.4
+  - type: WeldingSparksAnimation # Goobstation
+    startingOffset: 0, 0.5

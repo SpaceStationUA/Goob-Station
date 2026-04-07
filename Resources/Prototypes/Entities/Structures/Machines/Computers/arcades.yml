@@ -52,8 +52,8 @@
 - type: entity
   abstract: true
   id: ArcadeBase
-  description: "Шафа для ігрових автоматів."
-  name: "аркада"
+  description: An arcade cabinet.
+  name: arcade
   parent: BaseComputer
   components:
   - type: ApcPowerReceiver
@@ -107,7 +107,7 @@
 
 - type: entity
   id: SpaceVillainArcade
-  name: "космічні Лиходії"
+  name: space villain arcade
   parent: ArcadeBase
   components:
   - type: Sprite
@@ -222,10 +222,12 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
-  - type: Advertise
-    pack: SpaceVillainAds
-    minimumWait: 60 # Arcades are noisy
-    maximumWait: 240
+  - type: Vocalizer
+    minVocalizeInterval: 1m # Arcades are noisy
+    maxVocalizeInterval: 4m
+    hideChat: true
+  - type: DatasetVocalizer
+    dataset: SpaceVillainAds
   - type: SpeakOnUIClosed
     pack: SpaceVillainGoodbyes
 
@@ -240,8 +242,8 @@
 
 - type: entity
   id: BlockGameArcade
-  description: "Аркадна шафа з дивно знайомою грою."
-  name: "НТетріс"
+  description: An arcade cabinet with a strangely familiar game.
+  name: NT block game
   parent: ArcadeBase
   components:
   - type: Sprite
@@ -267,9 +269,11 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
-  - type: Advertise
-    pack: BlockGameAds
-    minimumWait: 60 # Arcades are noisy
-    maximumWait: 240
+  - type: Vocalizer
+    minVocalizeInterval: 1m # Arcades are noisy
+    maxVocalizeInterval: 4m
+    hideChat: true
+  - type: DatasetVocalizer
+    dataset: BlockGameAds
   - type: SpeakOnUIClosed
     pack: BlockGameGoodbyes

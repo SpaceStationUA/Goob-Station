@@ -1,0 +1,155 @@
+- type: soundCollection
+  id: GoblinCackle
+  files:
+  - /Audio/_Pirate/Voice/Goblin/goblin_cackle_1.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_cackle_2.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_cackle_3.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_cackle_4.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_cackle_5.ogg
+
+- type: soundCollection
+  id: GoblinCry
+  files:
+  - /Audio/_Pirate/Voice/Goblin/goblin_cry_1.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_cry_2.ogg
+
+- type: soundCollection
+  id: GoblinDeathGasp
+  files:
+  - /Audio/_Pirate/Voice/Goblin/goblin_deathgasp_1.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_deathgasp_2.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_deathgasp_3.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_deathgasp_4.ogg
+
+- type: soundCollection
+  id: GoblinGasp
+  files:
+  - /Audio/_Pirate/Voice/Goblin/goblin_gasp_1.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_gasp_2.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_gasp_3.ogg
+
+- type: soundCollection
+  id: GoblinHiss
+  files:
+  - /Audio/_Pirate/Voice/Goblin/goblin_hiss_1.ogg
+
+- type: soundCollection
+  id: GoblinMutterCollection
+  files:
+  - /Audio/_Pirate/Voice/Goblin/goblin_mutter_1.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_mutter_2.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_mutter_3.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_mutter_4.ogg
+
+- type: soundCollection
+  id: GoblinScreams
+  files:
+  - /Audio/_Pirate/Voice/Goblin/goblin_scream_1.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_scream_2.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_scream_3.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_scream_4.ogg
+
+- type: soundCollection
+  id: GoblinThroatSingingCollection
+  files:
+  - /Audio/_Pirate/Voice/Goblin/goblin_throat_singing_1.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_throat_singing_2.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_throat_singing_3.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_throat_singing_4.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_throat_singing_5.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_throat_singing_6.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_throat_singing_7.ogg
+  - /Audio/_Pirate/Voice/Goblin/goblin_throat_singing_8.ogg
+
+- type: speechVerb
+  id: Goblin
+  name: chat-speech-verb-name-goblin
+  speechVerbStrings:
+  - chat-speech-verb-goblin-1
+  - chat-speech-verb-goblin-2
+  - chat-speech-verb-goblin-3
+  - chat-speech-verb-goblin-4
+  - chat-speech-verb-goblin-5
+
+- type: emote
+  id: GoblinMutter
+  name: chat-emote-name-goblin-muttering
+  category: Vocal
+  available: false
+  icon: Interface/Emotes/sigh.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-goblin-muttering"]
+  chatTriggers:
+  - mutter
+  - mutters
+  - muttered
+  - muttering
+
+- type: emote
+  id: GoblinThroatSinging
+  name: chat-emote-name-goblin-throat-singing
+  category: Vocal
+  available: false
+  icon: Interface/Emotes/whistle.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-goblin-throat-singing"]
+  chatTriggers:
+  - sing
+  - sings
+  - sang
+  - sung
+  - singing
+
+- type: emoteSounds
+  id: MaleGoblin
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: GoblinScreams
+    Laugh:
+      collection: GoblinCackle
+    Hiss:
+      collection: GoblinHiss
+    Crying:
+      collection: GoblinCry
+    Gasp:
+      collection: GoblinGasp
+    DefaultDeathgasp:
+      collection: GoblinDeathGasp
+    GoblinMutter:
+      collection: GoblinMutterCollection
+    GoblinThroatSinging:
+      collection: GoblinThroatSingingCollection
+
+- type: emoteSounds
+  id: FemaleGoblin
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: GoblinScreams
+    Laugh:
+      collection: GoblinCackle
+    Hiss:
+      collection: GoblinHiss
+    Crying:
+      collection: GoblinCry
+    Gasp:
+      collection: GoblinGasp
+    DefaultDeathgasp:
+      collection: GoblinDeathGasp
+    GoblinMutter:
+      collection: GoblinMutterCollection
+    GoblinThroatSinging:
+      collection: GoblinThroatSingingCollection

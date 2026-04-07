@@ -139,29 +139,53 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 9000 # 2.5 hours
+      time: 14400 # 4 hours
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 9000 # 2.5 hours
+      time: 14400 # 4 hours
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 9000 # 2.5 hrs
+      time: 14400 # 4 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 9000 # 2.5 hrs
+      time: 14400 # 4 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 9000 # 2.5 hours
-    - !type:SpeciesRequirement # Goob - None Felinid
+      time: 14400 # 4 hours
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+    - !type:SpeciesRequirement # Pirate edit
       inverted: true
       species:
-      - Felinid
+      #- Felinid
+      - Hydrakin
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
+    # Pirate contractor end
+  guides: # goobstation
+  - Command
+  - Succession
+  - StandardProceduresSOP
+  - HeadOfPersonnelSOP
+  - Writing
   goobcoins: 40 #Goob content
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
   supervisors: job-supervisors-captain
   canBeAntag: false
+  whitelisted: true # Pirate
   access:
   - Command
   - HeadOfPersonnel
@@ -189,6 +213,8 @@
   - Cargo
   - Atmospherics
   - Medical
+  - Journalism # Goob
+  - Robotics # Goob
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -204,10 +230,11 @@
     #gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetAltCommand
     belt: BoxFolderClipboard
+    eyes: ClothingEyesHudCommand
   storage:
     back:
     - Flash
-    - TelescopicBaton # Goobstation
+    #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit
   id: HeadOfPersonnelChameleonOutfit
@@ -219,4 +246,3 @@
     mask: ClothingMaskNeckGaiterRed
     neck: ClothingNeckCloakHop
     outerClothing: ClothingOuterWinterHoP
-

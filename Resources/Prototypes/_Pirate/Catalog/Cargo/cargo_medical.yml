@@ -1,0 +1,59 @@
+- type: cargoProduct
+  id: CrateCombatSurgeryRed
+  icon:
+    sprite: _Pirate/Clothing/Belt/combatsurgeon.rsi
+    state: icon
+  product: CrateCombatSurgeryRed
+  cost: 1200
+  category: cargoproduct-category-name-medical
+  group: market
+  
+- type: cargoProduct
+  id: CrateCombatSurgeryBlue
+  icon:
+    sprite: _Pirate/Clothing/Belt/combatsurgeonblue.rsi
+    state: icon
+  product: CrateCombatSurgeryBlue
+  cost: 1200
+  category: cargoproduct-category-name-medical
+  group: market
+  
+- type: cargoProduct
+  id: CrateCombatSurgeryRedKit
+  icon:
+    sprite: _Pirate/Clothing/Belt/combatsurgeon.rsi
+    state: icon
+  product: CrateCombatSurgeryRedKit
+  cost: 3200
+  category: cargoproduct-category-name-medical
+  group: market
+  
+- type: cargoProduct
+  id: CrateCombatSurgeryBlueKit
+  icon:
+    sprite: _Pirate/Clothing/Belt/combatsurgeonblue.rsi
+    state: icon
+  product: CrateCombatSurgeryBlueKit
+  cost: 3200
+  category: cargoproduct-category-name-medical
+  group: market
+  
+- type: cargoProduct
+  id: CrateCombatSurgeryAdvancedRed
+  icon:
+    sprite: _Pirate/Clothing/Belt/combatsurgeon.rsi
+    state: icon
+  product: CrateCombatSurgeryAdvancedRed
+  cost: 5000
+  category: cargoproduct-category-name-medical
+  group: market
+  
+- type: cargoProduct
+  id: CrateCombatSurgeryAdvancedBlue
+  icon:
+    sprite: _Pirate/Clothing/Belt/combatsurgeonblue.rsi
+    state: icon
+  product: CrateCombatSurgeryAdvancedBlue
+  cost: 5000
+  category: cargoproduct-category-name-medical
+  group: market

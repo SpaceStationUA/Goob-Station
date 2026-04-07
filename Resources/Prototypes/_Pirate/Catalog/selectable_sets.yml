@@ -1,3 +1,35 @@
+## Command - Командування
+# Captain - Капітан
+- type: selectableSet
+  id: CaptainSabre
+  name: selectable-set-captain-sabre-name
+  description: selectable-set-captain-sabre-description
+  sprite:
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+    state: icon
+  content:
+    - ClothingBeltSheathFilled
+
+- type: selectableSet
+  id: CaptainSabreHeavy
+  name: selectable-set-captain-sabre-heavy-name
+  description: selectable-set-captain-sabre-heavy-description
+  sprite:
+    sprite: _Pirate/Objects/Weapons/Melee/Captain_sabres/heavy.rsi
+    state: icon
+  content:
+    - ClothingBeltSheathHeavyFilled
+
+- type: selectableSet
+  id: CaptainSabreShashka
+  name: selectable-set-captain-sabre-shashka-name
+  description: selectable-set-captain-sabre-shashka-description
+  sprite:
+    sprite: _Pirate/Objects/Weapons/Melee/Captain_sabres/shashka.rsi
+    state: icon
+  content:
+    - ClothingBeltSheathShashkaFilled
+
 # Interdyne Secure
 
 - type: selectableSet
@@ -121,14 +153,34 @@
   
 # Interdyne ENG
 - type: selectableSet
-  id: IPClothingBeltCE
-  name: "Пояс головного інженера"
-  description: "Пояс з просунутими інструментами для головного інженера"
+  id: IPBeltCE
+  name: Пояс з просунутими інструмментами
+  description: Пояс СЕ
   sprite:
     sprite: Clothing/Belt/ce.rsi
     state: icon
   content:
   - ClothingBeltChiefEngineerFilled
+  
+- type: selectableSet
+  id: IPJetpackVoid
+  name: Реактивний ранець Void
+  description: Реактивний ранець для поясу, працюйте в космосі без страху відлетіти від станції чи шатлу
+  sprite:
+    sprite: Objects/Tanks/Jetpacks/void.rsi
+    state: icon
+  content:
+  - JetpackVoidFilled
+  
+- type: selectableSet
+  id: IPRCD
+  name: Interdyne RCD
+  description: Унікальний РЦД Інтердайну, розроблений Cybersun, краще вам не губити його
+  sprite:
+    sprite: _Pirate/Objects/Tools/rcd_dark.rsi
+    state: icon
+  content:
+  - RCDInterdyne
   
 # Interdyne Pilot
 - type: selectableSet
@@ -284,7 +336,7 @@
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
     state: icon
   content:
-  - WeaponSubMachineGunWt550
+  - WeaponEnergyShotgun
   - ClothingBeltSheathFilledNavyOfficer
   - ClothingEyesGlassesBSO
   - WeaponPistolN1984
@@ -294,7 +346,6 @@
   - TelescopicBaton
   - ClothingBeltChemBagSyndiFilled
   - CQCManual
-  - ClothingOuterArmourInvisibleSyndie
   
 - type: selectableSet
   id: IPCyberpunk
@@ -313,17 +364,60 @@
 #  Interdyne Officer
 - type: selectableSet
   id: IPOfficer
-  name: "Набір офіцера Interdyne"
-  description: "Набір головного керівника Interdyne"
+  name: "Набір офіцера ІнтерДайн"
+  description: "Набір головного керівника ІнтерДайн"
   sprite:
     sprite: Clothing/Belt/sheath.rsi
     state: sheath-sabre
   content:
-  - ClothingBackpackDuffelSyndicateFilledWSPR
+  - WeaponSubMachineSmart
+  - MagazineSmart
+  - MagazineSmart
+  - MagazineSmart
   - TelescopicBaton
   - ClothingEyesGlassesBSO
-  - ClothingBeltSheathFilledNavyOfficer
+  - EnergySword
   - TelescopicShield
   - ClothingBeltChemBagSyndiFilled
   - CQCManual
+  - CigPackSyndicate
+  - CigPackSyndicate
+  - InterdyneFlippo
   - ClothingOuterArmourInvisibleSyndie
+
+# ГШР КШР
+
+- type: selectableSet
+  id: ERTBreacherSet
+  name: "набір «Руйнівник»"
+  description: selectable-set-ert-Breacher-description
+  sprite:
+    sprite: _Goobstation/Objects/Weapons/Guns/Lever/combatshotgun.rsi
+    state: base
+  content:
+    - ClothingEyesThermalVisionGoggles
+    - WeaponShotgunCombat
+    - MagazineBoxShotgunHighCaliber
+    - MagazineBoxShotgunHighCaliber
+    - SeismicCharge
+    - SeismicCharge
+    - MagazineBoxShotgunIncendiaryHighCaliber
+
+- type: selectableSet
+  id: ERTGuardianSet
+  name: "набір «Вартовий»"
+  description: selectable-set-ert-Guardian-description
+  sprite:
+    sprite: _Goobstation/Objects/Shields/blueshieldshield.rsi
+    state: icon-on
+  content:
+    - BlueShieldShieldFilled
+    - WeaponPistolUniversal
+    - MagazineUniversalMagnum
+    - MagazineUniversalMagnum
+    - MagazineBoxMagnum
+    - MagazineUniversalMagnumUranium
+    - GrenadeIncendiary
+    - GrenadeIncendiary
+    - GrenadeShrapnel
+    - GrenadeShrapnel

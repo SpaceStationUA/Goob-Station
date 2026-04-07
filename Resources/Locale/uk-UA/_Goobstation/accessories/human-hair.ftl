@@ -35,3 +35,7 @@ marking-HumanHairStyledCurls = Стилізовані кучері
 marking-HumanHairUnkemptScientist = Неохайний вчений
 marking-HumanHairWispy = Тонкі пасма
 marking-HumanHairLongTwinTails = Довгі хвостики
+
+marking-HumanHairClassicBun = Класичний пучок
+marking-HumanHairLooseBun = Вільний пучок
+marking-HumanHairLowPonytail = Низький хвіст

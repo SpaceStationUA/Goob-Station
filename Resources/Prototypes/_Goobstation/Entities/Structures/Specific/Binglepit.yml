@@ -14,8 +14,8 @@
 - type: entity
   id: BinglePit
   categories: [ Spawner ] # needed so tests don't sus
-  name: "яма Бінгла"
-  description: "Виглядає голодною"
+  name: binglepit
+  description: Looks Hungry
   placement:
     mode: SnapgridCenter
   components:
@@ -30,6 +30,8 @@
     anchored: true
   - type: Physics
     bodyType: Static
+  - type: WarpPoint
+    location: bingle pit
   - type: Fixtures
     fixtures:
       fix1:
@@ -45,7 +47,7 @@
   - type: Sprite
     drawdepth: FloorTiles
     layers:
-    - sprite: _Goobstation/Mobs/Bingle/bingle.rsi
+    - sprite: _Goobstation/Mobs/Bingle/bingle_pit.rsi
       state: pit
   - type: Appearance
   - type: InteractionOutline
@@ -72,6 +74,8 @@
   - type: Drain # remove liquids around pit
     unitsPerSecond: 10
     unitsDestroyedPerSecond: 10
+  - type: ExplosionResistance
+    damageCoefficient: 0.9 #No more suicide bombers inshallah
   - type: PassiveDamage #passive Healing
     damage:
       types:

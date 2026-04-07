@@ -66,8 +66,8 @@
   id: PlastitaniumWindowBase
   parent: BaseStructure
   abstract: true
-  name: "пластитанове вікно"
-  description: "Не заляпуйте скло там, унизу."
+  name: plastitanium window
+  description: Don't smudge up the glass down there.
   placement:
     mode: SnapgridCenter
     snap:
@@ -113,7 +113,7 @@
 - type: entity
   id: PlastitaniumWindowSquareBase
   abstract: true
-  name: "пластитанове вікно"
+  name: plastitanium window
   parent: PlastitaniumWindowBase
   components:
   - type: Sprite
@@ -123,7 +123,7 @@
     sprite: Structures/Windows/plastitanium_window.rsi
     state: full
   - type: IconSmooth
-    key: windows
+    key: walls # Pirate
     base: ptwindow
   - type: Airtight
   - type: Fixtures
@@ -138,13 +138,16 @@
 
 - type: entity
   id: PlastitaniumWindowIndestructible
-  name: "пластитанове вікно"
+  name: plastitanium window
   parent: PlastitaniumWindowSquareBase
   suffix: indestructible
+  components:
+  - type: ExaminableDamage
+    messages: null
 
 - type: entity
   id: PlastitaniumWindow
-  name: "пластитанове вікно"
+  name: plastitanium window
   parent: PlastitaniumWindowSquareBase
   components:
   - type: Destructible
@@ -188,7 +191,7 @@
 - type: entity
   id: PlastitaniumWindowDiagonalBase
   abstract: true
-  name: "пластитанове вікно"
+  name: plastitanium window
   parent: PlastitaniumWindowBase
   suffix: diagonal
   components:
@@ -204,7 +207,7 @@
     state: state0
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls # Pirate
     base: state
   - type: Fixtures
     fixtures:
@@ -228,13 +231,16 @@
 
 - type: entity
   id: PlastitaniumWindowDiagonalIndestructible
-  name: "пластитанове вікно"
+  name: plastitanium window
   parent: PlastitaniumWindowDiagonalBase
   suffix: diagonal, indestructible
+  components:
+  - type: ExaminableDamage
+    messages: null
 
 - type: entity
   id: PlastitaniumWindowDiagonal
-  name: "пластитанове вікно"
+  name: plastitanium window
   parent: PlastitaniumWindowDiagonalBase
   suffix: diagonal
   components:

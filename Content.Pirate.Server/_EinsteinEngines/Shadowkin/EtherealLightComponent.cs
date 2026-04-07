@@ -1,4 +1,4 @@
-namespace Content.Server.Shadowkin;
+namespace Content.Pirate.Server._EinsteinEngines.Shadowkin;
 
 [RegisterComponent]
 public sealed partial class EtherealLightComponent : Component

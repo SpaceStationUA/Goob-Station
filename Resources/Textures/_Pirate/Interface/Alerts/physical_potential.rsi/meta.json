@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created for PhysicalPotential trait",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        { "name": "powerLevel0" },
+        { "name": "powerLevel1" },
+        { "name": "powerLevel2" },
+        { "name": "powerLevel3" },
+        { "name": "powerLevel4" },
+        { "name": "powerLevel5" },
+        { "name": "powerLevel6" },
+        { "name": "powerLevel7" },
+        { "name": "powerLevel8" },
+        { "name": "powerLevel9" }
+    ]
+}

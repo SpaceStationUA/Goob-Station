@@ -97,13 +97,14 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Explosion.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Throwing;
+using Content.Shared.Trigger.Components;
+using Content.Shared.Trigger.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -139,7 +140,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var coordinates = Transform(uid).Coordinates;
             _audio.PlayPvs(_audio.ResolveSound(creamPie.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
 
-            if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
+            if (TryComp(uid, out FoodComponent? foodComp))
             {
                 if (_solutions.TryGetSolution(uid, foodComp.Solution, out _, out var solution))
                 {
@@ -147,12 +148,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 }
                 foreach (var trash in foodComp.Trash)
                 {
-                    EntityManager.SpawnEntity(trash, Transform(uid).Coordinates);
+                    Spawn(trash, Transform(uid).Coordinates);
                 }
             }
             ActivatePayload(uid);
 
-            EntityManager.QueueDeleteEntity(uid);
+            QueueDel(uid);
         }
 
         private void OnConsume(Entity<CreamPieComponent> entity, ref ConsumeDoAfterEvent args)
@@ -171,15 +172,9 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 if (_itemSlots.TryEject(uid, itemSlot, user: null, out var item))
                 {
-                    if (TryComp<OnUseTimerTriggerComponent>(item.Value, out var timerTrigger))
+                    if (TryComp<TimerTriggerComponent>(item.Value, out var timerTrigger))
                     {
-                        _trigger.HandleTimerTrigger(
-                            item.Value,
-                            null,
-                            timerTrigger.Delay,
-                            timerTrigger.BeepInterval,
-                            timerTrigger.InitialBeepDelay,
-                            timerTrigger.BeepSound);
+                        _trigger.ActivateTimerTrigger((item.Value, timerTrigger));
                     }
                 }
             }

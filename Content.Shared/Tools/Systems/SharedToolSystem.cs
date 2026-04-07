@@ -75,6 +75,8 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Common.Tools; // Goob (obviously)
+using Robust.Shared.Audio; // goob
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
@@ -90,6 +92,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Whitelist; // PIRATE imp
 using Content.Shared.Tools.Systems;
@@ -99,6 +102,7 @@ namespace Content.Shared.Tools.Systems;
 public abstract partial class SharedToolSystem : EntitySystem
 {
     [Dependency] private   readonly EntityWhitelistSystem _whitelist = default!; // PIRATE imp
+    [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] private   readonly IMapManager _mapManager = default!;
     [Dependency] private   readonly IPrototypeManager _protoMan = default!;
     [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
@@ -173,12 +177,12 @@ public abstract partial class SharedToolSystem : EntitySystem
         args.PushMessage(message);
     }
 
-    public void PlayToolSound(EntityUid uid, ToolComponent tool, EntityUid? user)
+    public void PlayToolSound(EntityUid uid, ToolComponent tool, EntityUid? user, AudioParams? audioParams = null) // Goob - audioParams
     {
         if (tool.UseSound == null)
             return;
 
-        _audioSystem.PlayPredicted(tool.UseSound, uid, user);
+        _audioSystem.PlayPredicted(tool.UseSound, uid, user, audioParams); // also goob - audioParams
     }
 
     /// <summary>
@@ -253,7 +257,8 @@ public abstract partial class SharedToolSystem : EntitySystem
             return false;
 
         var toolEvent = new ToolDoAfterEvent(fuel, doAfterEv, GetNetEntity(target));
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
+        var doAfterLength = delay / toolComponent.SpeedModifier; // Goob - doAfterLength var
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, doAfterLength, toolEvent, tool, target: target, used: tool)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -262,7 +267,11 @@ public abstract partial class SharedToolSystem : EntitySystem
             AttemptFrequency = fuel > 0 || toolComponent.AlwaysCheckDoAfter ? AttemptFrequency.EveryTick : AttemptFrequency.Never
         };
 
-        _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
+        // Goobstation - Moved `TryStartDoAfter` into a check and added `UseToolEvent`.
+        if (_doAfterSystem.TryStartDoAfter(doAfterArgs, out id))
+        {
+            RaiseLocalEvent(tool, new UseToolEvent(user, target, id.Value.Index, doAfterLength));
+        }
         return true;
     }
 
@@ -349,10 +358,17 @@ public abstract partial class SharedToolSystem : EntitySystem
         return !beforeAttempt.Cancelled;
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        UpdateWelders();
+    }
+
     #region DoAfterEvents
 
     [Serializable, NetSerializable]
-    protected sealed partial class ToolDoAfterEvent : DoAfterEvent
+    public sealed partial class ToolDoAfterEvent : DoAfterEvent // Goob - Protected -> Public
     {
         [DataField]
         public float Fuel;

@@ -6,3 +6,5 @@ add-uplink-command-completion-2 = UID Аплінку (номер КПК за з�
 add-uplink-command-error-1 = Обраний гравець не контролює жодної сутності
 add-uplink-command-error-2 = Не вдалося додати аплінк до гравця
 add-uplink-command-completion-3 = Чи ввімкнена знижка за аплінк
+cmd-adduplink-desc = Створює аплінк на вибраному предметі та прив'язує його до облікового запису користувача
+cmd-adduplink-help = Використання: adduplink [ім'я_користувача] [id_предмета] [знижка_ввімкнена]

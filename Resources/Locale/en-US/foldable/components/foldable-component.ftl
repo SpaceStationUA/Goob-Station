@@ -19,3 +19,11 @@ fold-flip-verb = Flip
 
 fold-zip-verb = Zip up
 fold-unzip-verb = Unzip
+
+fold-verb-clothing-jacket = Take off jacket
+unfold-verb-clothing-jacket = Put on jacket
+
+# Hijacking this because it works well for toggling hideable layers - Goob
+
+fold-showhair-verb = Show hair
+fold-hidehair-verb = Hide hair

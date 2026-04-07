@@ -1,5 +1,4 @@
 ﻿using Content.Shared._Shitmed.Medical.Surgery.Traumas.Components;
-using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
 using Content.Shared.Body.Organ;
 using Content.Goobstation.Maths.FixedPoint;
 using Robust.Shared.Serialization;
@@ -14,6 +13,7 @@ public enum TraumaType
     VeinsDamage,
     NerveDamage, // pain
     Dismemberment,
+    FaceMutilation, // DOWNSTREAM-TPirates: face mutilation
 }
 
 #region Organs

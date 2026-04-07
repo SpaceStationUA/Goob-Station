@@ -1,0 +1,6 @@
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  categories:
+    - Coats
+  id: PirateStraightjacketLatheRecipe
+  result: ClothingOuterStraightjacket

@@ -55,10 +55,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
+  parent: BaseWallmount
   categories: [ HideSpawnMenu ]
   id: BaseAPC
-  name: "АПЦ"
-  description: "Термінал управління електричними системами району."
+  name: APC
+  description: A control terminal for the area's electrical systems.
   placement:
     mode: SnapgridCenter
   components:
@@ -75,12 +76,8 @@
     color: "#3db83b"
     castShadows: false
     netsync: false
-  - type: Clickable
   - type: AccessReader
     access: [["Engineering"]]
-  - type: InteractionOutline
-  - type: Transform
-    anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Power/apc.rsi
@@ -92,26 +89,21 @@
     - state: display-charging
       shader: unshaded
       map: ["enum.ApcVisualLayers.ChargeState"]
-    - state: lock0-locked
+    - state: lock0-unlocked
       shader: unshaded
       map: ["enum.ApcVisualLayers.InterfaceLock"]
-      visible: false
-    - state: lock1-locked
+    - state: lock1-unlocked
       shader: unshaded
       map: ["enum.ApcVisualLayers.PanelLock"]
-      visible: false
-    - state: lock1-locked #when these are implemented get actual sprites.
+    - state: channel0-auto_on
       shader: unshaded
       map: ["enum.ApcVisualLayers.Equipment"]
-      visible: false
-    - state: lock1-locked
+    - state: channel1-auto_on
       shader: unshaded
       map: ["enum.ApcVisualLayers.Lighting"]
-      visible: false
-    - state: lock1-locked
+    - state: channel2-auto_on
       shader: unshaded
       map: ["enum.ApcVisualLayers.Environment"]
-      visible: false
   - type: Appearance
   - type: ApcVisuals
   - type: Battery
@@ -145,6 +137,8 @@
     interfaces:
       enum.ApcUiKey.Key:
         type: ApcBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
     key: enum.ApcUiKey.Key
@@ -158,6 +152,10 @@
     supplyRampRate: 500
   - type: WallMount
   - type: WiresPanel
+  - type: Wires
+    alwaysRandomize: true
+    boardName: wires-board-name-apc
+    layoutId: APC
   - type: WiresVisuals
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -208,28 +206,20 @@
 
 # APC under construction
 - type: entity
+  parent: BaseWallmountMetallic
   categories: [ HideSpawnMenu ]
   id: APCFrame
-  name: "Рама АПЦ"
-  description: "Термінал управління електричними системами району, в якому відсутня електроніка."
+  name: APC frame
+  description: A control terminal for the area's electrical systems, lacking the electronics.
   placement:
     mode: SnapgridCenter
   components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Transform
-    anchored: true
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Power/apc.rsi
     state: frame
   - type: Construction
     graph: APC
     node: apcFrame
-  - type: WallMount
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:

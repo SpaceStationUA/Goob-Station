@@ -31,8 +31,8 @@
     - Moth
     - Reptilian
     - SlimePerson
-    # Goobstation
-    # - Felinid
+     # Goobstation
+    - Felinid
     - Gingerbread
     - Harpy
     - Vox
@@ -45,6 +45,10 @@
     - Tajaran
     - Chitinid
     - Plasmaman
+    - Feroxi
+    - Shadowkin
+    - Hydrakin # Pirate port: Mono - Hydrakin
+    - Goblin
 
 - type: guideEntry
   id: Arachnid
@@ -82,10 +86,10 @@
   text: "/ServerInfo/Guidebook/Mobs/SlimePerson.xml"
 
 # Goobstation
-#- type: guideEntry
-#  id: Felinid
-#  name: species-name-felinid
-#  text: "/ServerInfo/Guidebook/Mobs/Felinid.xml"
+- type: guideEntry
+  id: Felinid
+  name: species-name-felinid
+  text: "/ServerInfo/Guidebook/Mobs/Felinid.xml"
 
 - type: guideEntry
   id: Gingerbread
@@ -131,3 +135,13 @@
   id: Plasmaman
   name: species-name-plasmaman
   text: "/ServerInfo/Guidebook/Mobs/Plasmaman.xml"
+
+- type: guideEntry
+  id: Shadowkin
+  name: species-name-shadowkin
+  text: "/ServerInfo/Guidebook/Mobs/Shadowkin.xml"
+
+- type: guideEntry
+  id: Goblin
+  name: species-name-goblin
+  text: "/ServerInfo/_Pirate/Guidebook/Mobs/Goblin.xml"

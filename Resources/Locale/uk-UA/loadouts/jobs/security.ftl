@@ -47,6 +47,3 @@ loadout-name-LoadoutMagazineUniversalMagnumRubberSpare = магазин мк 32 
 
 # Службова зброя
 loadout-name-LoadoutSecurityPistolUniversal = мк 32 "Універсальний" (летальний)
-loadout-name-LoadoutSecurityPistolUniversalNonLethal = мк 32 "Універсальний" (нелетальний)
-
-# Службова холодна зброя

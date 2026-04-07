@@ -10,8 +10,10 @@
 using System.Text;
 using Content.Server.Speech.Components;
 using Content.Shared.Drunk;
+using Content.Shared.Speech;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -23,10 +25,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-
-
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string SlurKey = "SlurredSpeech";
+    private static readonly ProtoId<StatusEffectPrototype> SlurKey = "SlurredSpeech";
 
     public override void Initialize()
     {
@@ -75,11 +74,9 @@ public sealed class SlurredSystem : SharedSlurredSystem
                 var lower = char.ToLowerInvariant(character);
                 var newString = lower switch
                 {
-                    'o' => "u",
-                    's' => "ch",
-                    'a' => "ah",
-                    'u' => "oo",
-                    'c' => "k",
+                    'о' => "у-у",
+                    'а' => "а-а",
+                    'и' => "и-и",
                     _ => $"{character}",
                 };
 

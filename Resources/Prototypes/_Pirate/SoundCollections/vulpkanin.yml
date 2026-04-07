@@ -1,0 +1,17 @@
+- type: soundCollection
+  id: VulpkaninGekkers
+  files:
+  - /Audio/_Pirate/Voice/Vulpkanin/fox_gekker1.ogg
+  - /Audio/_Pirate/Voice/Vulpkanin/fox_gekker2.ogg
+  - /Audio/_Pirate/Voice/Vulpkanin/fox_gekker3.ogg
+
+- type: soundCollection
+  id: VulpkaninCry
+  files:
+  - /Audio/_Pirate/Voice/Vulpkanin/fox_cry1.ogg
+  - /Audio/_Pirate/Voice/Vulpkanin/fox_cry2.ogg
+
+- type: soundCollection
+  id: VulpkaninSneeze
+  files:
+  - /Audio/_Pirate/Voice/Vulpkanin/fox_sneeze.ogg

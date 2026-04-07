@@ -21,3 +21,5 @@ scrying-orb-verb-message = Увійти в царство мертвих
 scrying-orb-verb-text = Активувати сферу
 
 wizard-mirror-guardian-change-species-fail = Ви не можете змінити свій вид, поки у вас є дух-охоронець!
+
+wizard-mirror-blood-crawl-change-species-fail = Ви не можете змінити свій вид після використання демонічного серця!

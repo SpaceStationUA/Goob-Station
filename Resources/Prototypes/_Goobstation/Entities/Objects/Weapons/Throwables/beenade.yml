@@ -10,8 +10,8 @@
 - type: entity
   parent: [GrenadeBase, BaseSyndicateContraband]
   id: BeeGrenade
-  name: "Бджолоната"
-  description: "Тільки не бджоли!!!"
+  name: Beenade
+  description: Not the bees!!!
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Grenades/beenades.rsi
@@ -21,7 +21,7 @@
   - type: ScatteringGrenade
     fillPrototype: MobSyndieAngryBee
     capacity: 5
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/_Goobstation/Effects/Grenades/beenade_buzz.ogg"
       params:
@@ -34,4 +34,3 @@
   - type: ContainerContainer
     containers:
       cluster-payload: !type:Container
-

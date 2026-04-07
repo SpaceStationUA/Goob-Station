@@ -33,19 +33,19 @@
 
 - type: entity
   id: BulletLightRifle
-  name: "куля (0.30 гвинтівкова)"
+  name: bullet (0.30 rifle)
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
       types:
-        Piercing: 19
-      armorPenetration: 0.4 # Goobstation
+        Piercing: 20 # Pirate
+      armorPenetration: 0.45 # Pirate
 
 - type: entity
   id: BulletLightRiflePractice
-  name: "куля (0.30 гвинтівкова тренувальна)"
+  name: bullet (0.30 rifle practice)
   parent: BaseBulletPractice
   categories: [ HideSpawnMenu ]
   components:
@@ -57,7 +57,7 @@
 - type: entity
   id: BulletLightRifleIncendiary
   parent: BaseBulletIncendiary
-  name: "куля (0.30 гвинтівкова запалювальна)"
+  name: bullet (0.30 rifle incendiary)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -69,7 +69,7 @@
 - type: entity
   id: BulletLightRifleUranium
   parent: BaseBulletUranium
-  name: "куля (0.30 гвинтівкова уранова)"
+  name: bullet (0.30 rifle uranium)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile

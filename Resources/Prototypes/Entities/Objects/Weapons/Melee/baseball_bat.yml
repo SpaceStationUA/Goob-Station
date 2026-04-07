@@ -46,10 +46,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "бейсбольна біта"
+  name: baseball bat
   parent: [BaseItem, BaseMinorContraband]
   id: BaseBallBat
-  description: "Міцна бейсбольна бита."
+  description: A robust baseball bat.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
@@ -77,7 +77,12 @@
     speed: 5
   - type: Item
     size: Large # Goob edit
-    storedRotation: 45 # Goob
+    storedRotation: 90 # Goob
+    shape:
+    - 0,0,0,3
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/baseball_bat.rsi
   - type: Tool
     qualities:
     - Rolling
@@ -100,26 +105,31 @@
   - type: UndetectableContraband #Goobstation-Contraband detector
 
 - type: entity
-  name: "незавершена бейсбольна біта"
+  name: incomplete baseball bat
   parent: BaseItem
   id: IncompleteBaseBallBat
-  description: "Кілька дерев'яних дощок, скріплених разом."
+  description: A few planks of wood stuck together.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/incomplete_bat.rsi
     state: icon
   - type: Item
     size: Normal
+    shape:
+    - 0,0,0,3
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/incomplete_bat.rsi
     sprite: Objects/Weapons/Melee/incomplete_bat.rsi
   - type: Construction
     graph: WoodenBat
     node: incompleteBat
 
 - type: entity
-  name: "ударна палиця"
+  name: knockback stick
   parent: BaseBallBat
   id: WeaponMeleeKnockbackStick
-  description: "А потім у нього почалася кровотеча."
+  description: And then he spleefed all over.
   categories: [ DoNotMap ]
   components:
   - type: MeleeThrowOnHit

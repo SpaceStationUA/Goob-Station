@@ -23,7 +23,7 @@ public sealed class ColorTintOverlay : Overlay
     /// <summary>
     ///     The color to tint the screen to as RGB on a scale of 0-1.
     /// </summary>
-    public Robust.Shared.Maths.Vector3? TintColor = null;
+    public Vector3? TintColor = null;
     /// <summary>
     ///     The percent to tint the screen by on a scale of 0-1.
     /// </summary>
@@ -32,7 +32,7 @@ public sealed class ColorTintOverlay : Overlay
     public ColorTintOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _shader = _prototype.Index<ShaderPrototype>("ColorTint").InstanceUnique();
+        _shader = _prototype.Index<ShaderPrototype>("PirateColorTint").InstanceUnique();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -50,7 +50,7 @@ public sealed class ColorTintOverlay : Overlay
 
         _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         if (TintColor != null)
-            _shader.SetParameter("tint_color", (Robust.Shared.Maths.Vector3) TintColor);
+            _shader.SetParameter("tint_color", TintColor.Value);
         if (TintAmount != null)
             _shader.SetParameter("tint_amount", (float) TintAmount);
 

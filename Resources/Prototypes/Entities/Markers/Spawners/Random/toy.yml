@@ -39,15 +39,15 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "спавнер іграшки"
+  name: Toy Spawner
   id: ToySpawner
   parent: MarkerBase
   components:
     - type: Sprite
       layers:
-        - state: red
-        - sprite: Objects/Fun/toys.rsi
-          state: plushie_h
+      - state: red
+      - sprite: Objects/Fun/Plushies/bee.rsi
+        state: icon
     - type: RandomSpawner
       rarePrototypes:
         - FoamBlade
@@ -79,11 +79,26 @@
         - PlushieJvne # Goobstation
         - PlushieFern # Goobstation
         - PlushieAbductor # Goobstation
+        # PIRATE PLUSHIES START VVVV
+        - PlushieVulpSusie
+        - PlushieEntony
+        - PlushieIpcCat
+        - PlushieTK
+        - PlushieKateryna
+        - PlushieNicholasGray
+        - PlushieOlia
+        - PlushieSkeleton
+        - PlushieTayler
+        - PlushiePocketAssistant
+        # PIRATE PLUSHIES END ^^^^
+        # WD EDIT START
+        - FaceHuggerToys
+        # WD EDIT END
       chance: 0.5
       offset: 0.2
 
 - type: entity
-  name: "спавнер призової статуетки"
+  name: Prize Figurine Spawner
   id: FigureSpawner
   parent: MarkerBase
   components:
@@ -118,7 +133,7 @@
       offset: 0.2
 
 - type: entity
-  name: "спавнер мініфігурки"
+  name: Spacemen Minifigure Spawner
   suffix: Librarian only, map with care!
   id: SpacemenFigureSpawner
   parent: MarkerBase

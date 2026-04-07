@@ -94,6 +94,7 @@ namespace Content.Client.Ghost
         public event Action? PlayerDetached;
         public event Action<GhostWarpsResponseEvent>? GhostWarpsResponse;
         public event Action<GhostUpdateGhostRoleCountEvent>? GhostRoleCountUpdated;
+        public event Action<NetEntity, int>? GhostWarpObserverCountUpdated; // DOWNSTREAM-TPirates: ghost follow menu update
 
         public override void Initialize()
         {
@@ -108,6 +109,7 @@ namespace Content.Client.Ghost
 
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
+            SubscribeNetworkEvent<GhostWarpObserverCountChangedEvent>(OnGhostWarpObserverCountChanged); // DOWNSTREAM-TPirates: ghost follow menu update
 
             SubscribeLocalEvent<EyeComponent, ToggleLightingActionEvent>(OnToggleLighting);
             SubscribeLocalEvent<EyeComponent, ToggleFoVActionEvent>(OnToggleFoV);
@@ -225,6 +227,13 @@ namespace Content.Client.Ghost
             GhostRoleCountUpdated?.Invoke(msg);
         }
 
+        #region DOWNSTREAM-TPirates: ghost follow menu update
+        private void OnGhostWarpObserverCountChanged(GhostWarpObserverCountChangedEvent msg)
+        {
+            GhostWarpObserverCountUpdated?.Invoke(msg.Entity, msg.ObserverCount);
+        }
+        #endregion
+
         public void RequestWarps()
         {
             RaiseNetworkEvent(new GhostWarpsRequestEvent());
@@ -239,11 +248,6 @@ namespace Content.Client.Ghost
         public void OpenGhostRoles()
         {
             _console.RemoteExecuteCommand(null, "ghostroles");
-        }
-
-        public void GhostBarSpawn() // Goobstation - Ghost Bar
-        {
-            RaiseNetworkEvent(new GhostBarSpawnEvent());
         }
 
         public void ToggleGhostVisibility(bool? visibility = null)

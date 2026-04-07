@@ -11,8 +11,8 @@
 - type: entity
   id: OperatingTable
   parent: Bed
-  name: "операційний стіл"
-  description: "Використовується для складних медичних процедур." # Shitmed
+  name: operating table
+  description: Used for advanced medical procedures. # Shitmed
   components:
   - type: Sprite
     sprite: Structures/Furniture/Tables/optable.rsi
@@ -22,6 +22,7 @@
     sprite: Structures/Furniture/Tables/optable.rsi
     state: operating_table
   - type: OperatingTable
+    speedModifier: 1.5 # Shitmed
   # Begin Shitmed Changes
   - type: Construction
     graph: Machine

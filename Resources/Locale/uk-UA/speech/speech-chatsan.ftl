@@ -1,84 +1,71 @@
-chatsan-word-1 = 1
-chatsan-replacement-1 = 1
-chatsan-word-2 = 2
-chatsan-replacement-2 = 2
+chatsan-word-1 = пох
+chatsan-replacement-1 = начхати
 
-chatsan-word-3 = пох
-chatsan-replacement-3 = начхати
+chatsan-word-2 = даун
+chatsan-replacement-2 = пришелепкуватий
 
-chatsan-word-4 = 4
-chatsan-replacement-4 = 4
+chatsan-word-3 = пж
+chatsan-replacement-3 = будь ласка
 
-chatsan-word-5 = бл
-chatsan-replacement-5 = блін
-chatsan-word-6 = блят
-chatsan-replacement-6 = блять
+chatsan-word-4 = аноми
+chatsan-replacement-4 = аномалії
+chatsan-word-5 = анома
+chatsan-replacement-5 = аномалія
 
+chatsan-word-6 = 6
+chatsan-replacement-6 = 6
 chatsan-word-7 = 7
 chatsan-replacement-7 = 7
 chatsan-word-8 = 8
 chatsan-replacement-8 = 8
 chatsan-word-9 = 9
 chatsan-replacement-9 = 9
-
-chatsan-word-10 = лох
-chatsan-replacement-10 = вайло
-
-chatsan-word-11 = сука
-chatsan-replacement-11 = курва
+chatsan-word-10 = 10
+chatsan-replacement-10 = 10
+chatsan-word-11 = 11
+chatsan-replacement-11 = 11
 chatsan-word-12 = 12
 chatsan-replacement-12 = 12
-
-chatsan-word-13 = даун
-chatsan-replacement-13 = пришелепкуватий
-
-chatsan-word-14 = жах
-chatsan-replacement-14 = жахіття
-
-chatsan-word-15 = пр
-chatsan-replacement-15 = привіт
-
-chatsan-word-16 = пж
-chatsan-replacement-16 = будь ласка
-
-chatsan-word-17 = хз
-chatsan-replacement-17 = не знаю
-
+chatsan-word-13 = 13
+chatsan-replacement-13 = 13
+chatsan-word-14 = 14
+chatsan-replacement-14 = 14
+chatsan-word-15 = 15
+chatsan-replacement-15 = 15
+chatsan-word-16 = 16
+chatsan-replacement-16 = 16
+chatsan-word-17 = 17
+chatsan-replacement-17 = 17
 chatsan-word-18 = 18
 chatsan-replacement-18 = 18
+chatsan-word-19 = 19
+chatsan-replacement-19 = 19
+chatsan-word-20 = 20
+chatsan-replacement-20 = 20
 
-chatsan-word-19 = анома
-chatsan-replacement-19 = аномалія
-chatsan-word-20 = аноми
-chatsan-replacement-20 = аномалії
+chatsan-word-21 = 21
+chatsan-word-22 = 21
+chatsan-word-23 = 21
+chatsan-replacement-please = 21
 
-chatsan-word-21 = єбать!
-chatsan-word-22 = ебать!
-chatsan-word-23 = еба!
-chatsan-replacement-please = йосип голий!
-
-chatsan-word-24 = інж
-chatsan-replacement-24 = інженер
-chatsan-word-25 = інжа
-chatsan-replacement-25 = інженера
-chatsan-word-26 = інжі
-chatsan-replacement-26 = інженери
-chatsan-word-27 = інжів
-chatsan-replacement-27 = інженерів
-
-chatsan-word-28 = арт
-chatsan-replacement-28 = артефакт
-chatsan-word-29 = арти
-chatsan-replacement-29 = артефакти
-chatsan-word-30 = артів
-chatsan-replacement-30 = артефактів
-
-chatsan-word-31 = сБ
-chatsan-replacement-31 = служба безпеки
-
-chatsan-word-32 = нВ
-chatsan-replacement-32 = науковий відділ
-
+chatsan-word-24 = 24
+chatsan-replacement-24 = 24
+chatsan-word-25 = 25
+chatsan-replacement-25 = 25
+chatsan-word-26 = 26
+chatsan-replacement-26 = 26
+chatsan-word-27 = 27
+chatsan-replacement-27 = 27
+chatsan-word-28 = 28
+chatsan-replacement-28 = 28
+chatsan-word-29 = 29
+chatsan-replacement-29 = 29
+chatsan-word-30 = 30
+chatsan-replacement-30 = 30
+chatsan-word-31 = 31
+chatsan-replacement-31 = 31
+chatsan-word-32 = 32
+chatsan-replacement-32 = 32
 chatsan-word-33 = 33
 chatsan-replacement-33 = 33
 chatsan-word-34 = 34
@@ -92,9 +79,9 @@ chatsan-replacement-37 = 37
 chatsan-word-38 = 38
 chatsan-replacement-38 = 38
 
-chatsan-word-39 = хєр
-chatsan-word-40 = хер
-chatsan-replacement-etcetera = хєрня
+chatsan-word-39 = 40
+chatsan-word-40 = 40
+chatsan-replacement-etcetera = 40
 
 chatsan-word-41 = 41
 chatsan-replacement-41 = 41

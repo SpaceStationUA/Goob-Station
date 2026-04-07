@@ -38,7 +38,7 @@
 
 - type: entity
   save: false
-  name: "Уріст МакВульп"
+  name: Urist McVulp
   parent: BaseMobSpeciesOrganic
   id: BaseMobVulpkanin
   abstract: true
@@ -70,8 +70,9 @@
     noRot: true
     drawdepth: Mobs
     layers:
-      - map: [ "enum.HumanoidVisualLayers.Chest" ]
+      - map: [ "enum.HumanoidVisualLayers.TailBehind" ] # Pirate - port Floofstation custom layers
       - map: [ "enum.HumanoidVisualLayers.Groin" ]
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
       - map: [ "enum.HumanoidVisualLayers.Head" ]
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
@@ -116,6 +117,7 @@
       - map: [ "mask" ]
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ]
+      - map: [ "enum.HumanoidVisualLayers.TailOversuit" ] # Pirate - port Floofstation custom layers
       - map: [ "head" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
@@ -147,6 +149,8 @@
       Male: MaleVulpkanin
       Female: FemaleVulpkanin
       Unsexed: MaleVulpkanin
+  - type: Wagging # Pirate - port EE vulp wagging
+  - type: NoShoesSilentFootsteps # PIRATE
   - type: Tag
     tags:
     - CanPilot
@@ -157,11 +161,11 @@
 
 - type: entity
   save: false
-  name: "Манекен Вульпи"
+  name: Vulpkanin Dummy
   parent: MobHumanDummy
   id: MobVulpkaninDummy
   categories: [ HideSpawnMenu ]
-  description: "Фіктивна вульпа, призначена для використання в налаштуванні персонажа."
+  description: A dummy vulpkanin meant to be used in character setup.
   components:
   - type: HumanoidAppearance
     species: Vulpkanin

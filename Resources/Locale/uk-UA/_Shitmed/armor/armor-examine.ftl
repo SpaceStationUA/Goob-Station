@@ -1,4 +1,4 @@
-armor-coverage-value = - [color=yellow]Ця броня зменшує отримувану шкоду для ваших { $type }[/color]
+armor-coverage-value = - Ця броня захищає [color=yellow]{ $type }[/color].
 armor-coverage-type-arm = рук
 armor-coverage-type-hand = кистей
 armor-coverage-type-foot = ступнів

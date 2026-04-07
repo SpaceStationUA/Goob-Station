@@ -94,7 +94,7 @@ accent-dwarf-words-30 = так
 accent-dwarf-words-replace-30 = так
 
 accent-dwarf-words-31 = теж
-accent-dwarf-words-replace-31 = тхэ
+accent-dwarf-words-replace-31 = тхе
 
 accent-dwarf-words-32 = мій
 accent-dwarf-words-replace-32 = мене

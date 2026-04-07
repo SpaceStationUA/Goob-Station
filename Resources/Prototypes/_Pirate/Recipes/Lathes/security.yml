@@ -1,3 +1,78 @@
+## Амуніція - Набої
+# MK 32
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazineUniversalMagnumEmpty
+  result: MagazineUniversalMagnumEmpty
+  completetime: 5
+  materials:
+    Steel: 40
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineUniversalMagnum
+  result: MagazineUniversalMagnum
+  completetime: 5
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineUniversalMagnumRubber
+  result: MagazineUniversalMagnumRubber
+  completetime: 5
+  materials:
+    Steel: 70
+    Plastic: 170
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineUniversalMagnumUranium
+  result: MagazineUniversalMagnumUranium
+  completetime: 5
+  materials:
+    Steel: 40
+    Plastic: 75
+    Uranium: 200
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineUniversalMagnumIncendiary
+  result: MagazineUniversalMagnumIncendiary
+  completetime: 5
+  materials:
+    Steel: 40
+    Plastic: 200
+
+# .45 Магнум
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineMagnumUranium
+  result: MagazineMagnumUranium
+  completetime: 5
+  materials:
+    Steel: 30
+    Plastic: 75
+    Uranium: 150
+
+# 9.5mm
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineCaselessRifleStandard
+  result: MagazineCaselessRifleStandard
+  completetime: 5
+  materials:
+    Steel: 400
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxCaselessRifleStandard
+  result: MagazineBoxCaselessRifleStandard
+  completetime: 5
+  materials:
+    Steel: 720
+
+## Різне
 - type: latheRecipe
   id: ClothingNeckBaseShockCollar
   icon:
@@ -9,3 +84,18 @@
     Steel: 300
     Glass: 100
     Plastic: 100
+
+- type: latheRecipe
+  id: ClothingHandsGlovesMansusBlock
+  icon:
+    sprite: _Pirate/Clothing/Hands/Gloves/marsulbloskgloves.rsi
+    state: icon
+  result: ClothingHandsGlovesMansusBlock
+  completetime: 2
+  materials:
+    Plasma: 100
+    BSCrystal: 20
+    Steel: 250
+    Plastic: 50
+    Uranium: 100
+    Gold: 50

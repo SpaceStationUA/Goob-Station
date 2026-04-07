@@ -1,8 +1,8 @@
 - type: entity
-  name: "древній базовий ксеноморф"
+  name: ancient base xeno
   id: CMBaseXeno
   parent: SimpleSpaceMobBase
-  description: "Чужий трутень."
+  description: An alien drone.
   abstract: true
   components:
   - type: CombatMode
@@ -36,7 +36,7 @@
       Extinguish: [Touch]
   - type: NpcFactionMember
     factions:
-    - Xeno
+    - SimpleHostile
   - type: Hands
   - type: ComplexInteraction
   - type: Sprite
@@ -84,7 +84,6 @@
       groups:
         Brute: 5
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: drone
@@ -146,7 +145,7 @@
   - type: Fauna # Lavaland Change
 
 - type: entity
-  name: "древній трутень"
+  name: ancient drone
   id: CMMobXenoDrone
   parent: CMBaseXeno
   components:
@@ -163,10 +162,10 @@
         - MobLayer
 
 - type: entity
-  name: "древній Бурровер"
+  name: ancient Burrower
   id: CMMobXenoBurrower
   parent: CMBaseXeno
-  description: "Кремезний чужий з гострими кігтями."
+  description: A beefy alien with sharp claws.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -185,7 +184,6 @@
           Slash: 8
           Structural: 10
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: burrower
@@ -197,10 +195,10 @@
     factor: 1 # times more dangerous than a crew-member
 
 - type: entity
-  name: "древній воїн"
+  name: ancient warrior
   id: CMMobXenoWarrior
   parent: CMBaseXeno
-  description: "Кремезний чужий з броньованим панциром."
+  description: A beefy alien with an armored carapace.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -227,7 +225,6 @@
       200: Critical
       250: Dead
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: warrior
@@ -239,10 +236,10 @@
     factor: 1.8 # times more dangerous than a crew-member
 
 - type: entity
-  name: "древній крушитель"
+  name: ancient crusher
   id: CMMobXenoCrusher
   parent: CMBaseXeno
-  description: "Величезний чужий з величезним броньованим гребенем."
+  description: A huge alien with an enormous armored crest.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -269,7 +266,6 @@
       400: Critical
       500: Dead
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: crusher
@@ -281,10 +277,10 @@
     factor: 2 # times more dangerous than a crew-member
 
 - type: entity
-  name: "древній спустошувач"
+  name: ancient ravager
   id: CMMobXenoRavager
   parent: CMBaseXeno
-  description: "Величезний, огидний червоний чужий з величезними косоподібними кігтями."
+  description: A huge, nasty red alien with enormous scythed claws.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -308,7 +304,6 @@
       280: Critical
       340: Dead
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: ravager
@@ -322,10 +317,10 @@
     factor: 2.5 # times more dangerous than a crew-member
 
 - type: entity
-  name: "древній король"
+  name: ancient king
   id: CMMobXenoKing
   parent: CMBaseXeno
-  description: "Масивний чужий, вкритий шипами та броньованими пластинами."
+  description: A massive alien covered in spines and armoured plates.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -352,7 +347,6 @@
       500: Critical
       600: Dead
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: king
@@ -380,10 +374,10 @@
     factor: 5 # times more dangerous than a crew-member
 
 - type: entity
-  name: "древня королева"
+  name: ancient queen
   id: CMMobXenoQueen
   parent: CMBaseXeno
-  description: "Королева, у всій її величі."
+  description: The Queen, in all her glory.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -412,7 +406,6 @@
       750: Critical
       800: Dead
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: queen
@@ -439,8 +432,12 @@
     - id: ClothingOuterArmorQueenCarapace
       amount: 1
   - type: Devourer
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
+    foodPreferenceWhitelist:
+      components:
+      - HumanoidAppearance
+    stomachStorageWhitelist:
+      components:
+      - MobState
     chemical: Ichor
     healRate: 7.5
     whitelist:
@@ -453,10 +450,10 @@
     factor: 5 # times more dangerous than a crew-member
 
 - type: entity
-  name: "древній король-вигнанець"
+  name: ancient rogue king
   id: CMMobXenoRogueKing
   parent: CMMobXenoQueen
-  description: "Вигнаний в ізоляцію, після стількох років цей Король виріс у нестримну машину для вбивства."
+  description: Driven into isolation, after all these years, this King has grown to be an unstoppable killing machine.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -485,7 +482,6 @@
       800: Critical
       900: Dead
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: rogue

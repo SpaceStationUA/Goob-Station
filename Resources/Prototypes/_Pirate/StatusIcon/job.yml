@@ -4,3 +4,17 @@
   icon:
     sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
     state: AdminAssistant
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCBURN
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: CBURN
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconERT
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: ERT

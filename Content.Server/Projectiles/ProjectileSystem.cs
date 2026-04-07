@@ -63,6 +63,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Common.Projectiles;
 using Content.Goobstation.Common.Weapons.Penetration;
 using Content.Server.Administration.Logs;
 using Content.Server.Destructible;
@@ -72,9 +73,14 @@ using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
+using Content.Shared._Pirate.Projectiles; // Pirate: gunplay
+using Robust.Shared.Physics; // Pirate: gunplay
+using Robust.Shared.Physics.Components; // Pirate: gunplay
+using Robust.Shared.Physics.Dynamics; // Pirate: gunplay
 
 namespace Content.Server.Projectiles;
 
@@ -86,6 +92,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly GunSystem _guns = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     public override void Initialize()
     {
@@ -100,9 +107,47 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             || component.ProjectileSpent || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
 
-        var target = args.OtherEntity;
+        // Pirate: gunplay
+        DoHit(uid, component, args.OurBody, args.OtherEntity, args.OtherFixture);
+    }
+
+    #region Pirate: gunplay
+    public void DoHit(EntityUid uid, EntityUid target)
+    {
+        if (!TryComp(uid, out ProjectileComponent? component) ||
+            !TryComp(uid, out PhysicsComponent? body) ||
+            component.ProjectileSpent ||
+            component is { Weapon: null, OnlyCollideWhenShot: true } ||
+            FindHardFixture(target) is not { } fixture)
+        {
+            return;
+        }
+
+        DoHit(uid, component, body, target, fixture);
+    }
+
+    // Pirate: gunplay
+    private Fixture? FindHardFixture(EntityUid uid)
+    {
+        if (!TryComp<FixturesComponent>(uid, out var fixtures) || fixtures == null)
+            return null;
+
+        foreach (var fixture in fixtures.Fixtures.Values)
+        {
+            if (fixture.Hard)
+                return fixture;
+        }
+
+        return null;
+    }
+    #endregion
+
+    // Pirate: gunplay
+    private void DoHit(EntityUid uid, ProjectileComponent component, PhysicsComponent ourBody, EntityUid target, Fixture otherFixture)
+    {
         // it's here so this check is only done once before possible hit
-        var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);
+        // Pirate: gunplay
+        var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false, target);
         RaiseLocalEvent(target, ref attemptEv);
         if (attemptEv.Cancelled)
         {
@@ -122,10 +167,22 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             damageRequired -= damageableComponent.TotalDamage;
             damageRequired = FixedPoint2.Max(damageRequired, FixedPoint2.Zero);
         }
-        var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, damageable: damageableComponent, origin: component.Shooter); // Goob edit
+
+        // Goob edit start
+        TargetBodyPart? targetPart = null;
+        if (TryComp(uid, out ProjectileMissTargetPartChanceComponent? missComp) &&
+            !missComp.PerfectHitEntities.Contains(target))
+            targetPart = TargetBodyPart.Chest;
+        var modifiedDamage = _damageableSystem.TryChangeDamage(target,
+            ev.Damage,
+            component.IgnoreResistances,
+            damageable: damageableComponent,
+            origin: component.Shooter,
+            targetPart: targetPart);
+        // Goob edit end
         var deleted = Deleted(target);
 
-        if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
+        if (modifiedDamage is not null && Exists(component.Shooter))
         {
             if (modifiedDamage.AnyPositive() && !deleted)
             {
@@ -204,12 +261,17 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             _guns.PlayImpactSound(target, modifiedDamage, component.SoundHit, component.ForceSound);
 
-            if (!args.OurBody.LinearVelocity.IsLengthZero())
-                _sharedCameraRecoil.KickCamera(target, args.OurBody.LinearVelocity.Normalized());
+            if (!ourBody.LinearVelocity.IsLengthZero()) // Pirate: gunplay
+                _sharedCameraRecoil.KickCamera(target, ourBody.LinearVelocity.Normalized());
         }
 
-        if ((component.DeleteOnCollide && component.ProjectileSpent) || (component.NoPenetrateMask & args.OtherFixture.CollisionLayer) != 0) // Goobstation - Make x-ray arrows not penetrate blob
+        if ((component.DeleteOnCollide && component.ProjectileSpent) || (component.NoPenetrateMask & otherFixture.CollisionLayer) != 0) // Goobstation - Make x-ray arrows not penetrate blob
+        {
+            // Pirate: gunplay
+            var deleteEv = new DeletingProjectileEvent(uid);
+            RaiseLocalEvent(ref deleteEv);
             QueueDel(uid);
+        }
 
         if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))
         {

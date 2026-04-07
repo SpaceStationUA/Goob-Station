@@ -20,6 +20,11 @@
   copyright: "Modified standart laught.png icon by BombasterDS)"
   source: "https://github.com/BombasterDS"
 
+- files: ["surprised.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from closet.rsi, Was last changed by #4252 link below"
+  source: "https://github.com/Goob-Station/Goob-Station/commit/321de01ced0b70df7764b42d08e7dbf032d982f0"
+
 - files: ["mew.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Made by BombasterDS"
@@ -99,3 +104,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Made by Loltart"
   source: "https://github.com/loltart"
+
+- files: ["flip.png", "jump.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Rouge2t7"
+  source: "https://github.com/Sarahon"

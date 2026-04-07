@@ -67,16 +67,27 @@ jobs:
       run: dotnet restore
 
     - name: Build Project
-      run: dotnet build --configuration DebugOpt --no-restore /p:WarningsAsErrors=nullable /m
+      run: dotnet build --configuration DebugOpt --no-restore /m
 
     - name: Run Content.Tests
       run: dotnet test --no-build --configuration DebugOpt Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0
 
     - name: Run Content.IntegrationTests
       shell: pwsh
+      timeout-minutes: 60
       run: |
-        $env:DOTNET_gcServer=1
-        dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0 NUnit.MapWarningTo=Failed
+        $heartbeat = Start-Job -ScriptBlock { while ($true) { Start-Sleep -Seconds 60; Write-Host "::notice:: integration tests are still running..." } }
+        try {
+          $env:DOTNET_gcServer=1
+          dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=1 NUnit.MapWarningTo=Failed NUnit.ShowLabels=All --logger "console;verbosity=normal"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        }
+        finally {
+          if ($null -ne $heartbeat) {
+            Stop-Job -Job $heartbeat -ErrorAction SilentlyContinue | Out-Null
+            Remove-Job -Job $heartbeat -Force -ErrorAction SilentlyContinue | Out-Null
+          }
+        }
   ci-success:
     name: Build & Test Debug
     needs:

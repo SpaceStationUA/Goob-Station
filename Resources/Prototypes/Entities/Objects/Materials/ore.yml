@@ -39,7 +39,7 @@
   abstract: true
   parent: BaseItem
   id: OreBase
-  description: "Шматок необробленої руди."
+  description: A piece of unrefined ore.
   components:
   - type: Sprite
     sprite: Objects/Materials/ore.rsi
@@ -64,16 +64,11 @@
 - type: entity
   parent: OreBase
   id: GoldOre
-  name: "золота руда"
+  name: gold ore
   suffix: Full
   components:
   - type: Stack
     stackType: GoldOre
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: gold
   - type: Material
@@ -106,16 +101,11 @@
 - type: entity
   parent: OreBase
   id: DiamondOre
-  name: "алмазна руда"
+  name: diamond ore
   suffix: Full
   components:
   - type: Stack
     stackType: DiamondOre
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: diamond
   - type: Material
@@ -144,16 +134,11 @@
 - type: entity
   parent: OreBase
   id: SteelOre
-  name: "залізна руда"
+  name: iron ore
   suffix: Full
   components:
   - type: Stack
     stackType: SteelOre
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: iron
   - type: Material
@@ -182,16 +167,11 @@
 - type: entity
   parent: OreBase
   id: PlasmaOre
-  name: "плазмова руда"
+  name: plasma ore
   suffix: Full
   components:
   - type: Stack
     stackType: PlasmaOre
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: plasma
   - type: Material
@@ -229,16 +209,11 @@
 - type: entity
   parent: OreBase
   id: SilverOre
-  name: "срібна руда"
+  name: silver ore
   suffix: Full
   components:
   - type: Stack
     stackType: SilverOre
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: silver
   - type: Material
@@ -271,16 +246,11 @@
 - type: entity
   parent: OreBase
   id: SpaceQuartz
-  name: "космічний кварц"
+  name: space quartz
   suffix: Full
   components:
   - type: Stack
     stackType: SpaceQuartz
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: spacequartz
   - type: Material
@@ -309,16 +279,11 @@
 - type: entity
   parent: OreBase
   id: UraniumOre
-  name: "уранова руда"
+  name: uranium ore
   suffix: Full
   components:
   - type: Stack
     stackType: UraniumOre
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: uranium
   - type: Material
@@ -359,16 +324,11 @@
 - type: entity
   parent: OreBase
   id: BananiumOre
-  name: "бананіумна руда"
+  name: bananium ore
   suffix: Full
   components:
   - type: Stack
     stackType: BananiumOre
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: bananium
   - type: Material
@@ -410,16 +370,11 @@
 - type: entity
   parent: OreBase
   id: Coal
-  name: "вугілля"
+  name: coal
   suffix: Full
   components:
   - type: Stack
     stackType: Coal
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: coal
   - type: Material
@@ -480,16 +435,11 @@
 - type: entity
   parent: OreBase
   id: SaltOre
-  name: "сіль"
+  name: salt
   suffix: Full
   components:
   - type: Stack
     stackType: SaltOre
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: salt
   - type: Material
@@ -508,6 +458,12 @@
           Quantity: 5
   - type: Item
     heldPrefix: salt
+  - type: StatusEffectOnCollideGhost # Goobstation
+    whitelist:
+      tags:
+      - WeakToSalt
+    statusEffect: Corporeal
+    duration: 15
 
 - type: entity
   parent: SaltOre

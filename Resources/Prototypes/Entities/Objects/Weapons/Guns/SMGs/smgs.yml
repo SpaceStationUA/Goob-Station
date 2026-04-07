@@ -48,10 +48,12 @@
 # SPDX-FileCopyrightText: 2024 whateverusername0 <whateveremail>
 # SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Armok <155400926+ARMOKS@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Avalon <jfbentley1@gmail.com>
 # SPDX-FileCopyrightText: 2025 BramvanZijp <56019239+BramvanZijp@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
 # SPDX-FileCopyrightText: 2025 K-Dynamic <20566341+K-Dynamic@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Killerqu00 <47712032+Killerqu00@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Nox <nebulousnox38@gmail.com>
 # SPDX-FileCopyrightText: 2025 PunishedJoe <PunishedJoeseph@proton.me>
 # SPDX-FileCopyrightText: 2025 SX-7 <92227810+SX-7@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
@@ -62,10 +64,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "BaseSMG"
+  name: BaseSMG
   parent: BaseItem
   id: BaseWeaponSubMachineGun
-  description: "Корінцевий зубастий і пагонистий."
+  description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
@@ -130,8 +132,18 @@
   - type: EmitSoundOnLand
     sound:
       collection: SMGDrop
+  - type: RestrictGunshotsByUserTag # Goobstation
+    doesntContain:
+    - Oni
+    messages:
+    - oni-cannot-shoot-guns-1
+    - oni-cannot-shoot-guns-2
+    - oni-cannot-shoot-guns-3
   # Goobstation edit end
   - type: Multishot # Goobstation V
+    missChance: 0.4
+    spreadMultiplier: 3
+    spreadAddition: 50 #very hard to hold two of these steady let alone steady while shooting them
   - type: AltFireMelee
     attackType: Heavy
   - type: MeleeWeapon
@@ -145,10 +157,10 @@
   - type: CanTakeAim # PIRATE
 
 - type: entity
-  name: "Атрейдес"
+  name: Atreides
   parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunAtreides
-  description: "Рідкісний автоматичний пістолет часів Корпоративних Воєн. Його надзвичайно висока скорострільність і компактність роблять його корисним у ближньому бою. Незважаючи на свій вік, він у чудовому стані. Живиться з магазинів для пістолетів-кулеметів .35 калібру."
+  description: A rare, compact machine pistol not often found in the Spinward sector. Being produced during the Corporate Wars and the design specs being long since lost to time, the Atreides excels at CQB due to its overwhelming firerate. Feeds from .35 Auto SMG magazines. # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
@@ -168,10 +180,10 @@
   - type: Appearance
 
 - type: entity
-  name: "пістолет-кулемет C-20r"
+  name: C-20R
   parent: [BaseWeaponSubMachineGun, BaseSyndicateContraband]
   id: WeaponSubMachineGunC20r
-  description: "Класичний і поширений пістолет-кулемет, сумнозвісний через його використання Мародерами Горлекса. Один з перших власних проєктів Waffle Corp., він і досі перебуває на озброєнні. Живиться з магазинів для пістолетів-кулеметів .35 калібру."
+  description: The right hand of those who fight under the three serpents. A one-handed, bullpup SMG from the Waffle Corporation that sacrifices accuracy for pure firerate. Feeds from .35 Auto SMG magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -211,10 +223,10 @@
     price: 5000
 
 - type: entity
-  name: "Дрозд"
+  name: Drozd
   parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunDrozd
-  description: "Сучасний пістолет-кулемет, вироблений відділом стрілецької зброї Nanotrasen. Він має виняткову скорострільність в режимі черги, що корисно для утримання оборонних позицій або враження супротивників на великих відстанях. Живиться з магазинів для пістолетів-кулеметів .35 калібру."
+  description: A bullpup SMG designed for the narrow and tight corridors common in station warfare. This law-enforcement model is select fire, but the Drozd's burst focused design throttles its full-auto performance massively. Feeds from .35 Auto SMG magazines.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
@@ -268,19 +280,12 @@
       steps: 1
       zeroVisible: true
     - type: Appearance
-    - type: RestrictGunshotsByUserTag # Goobstation
-      doesntContain:
-      - Oni
-      messages:
-      - oni-cannot-shoot-guns-1
-      - oni-cannot-shoot-guns-2
-      - oni-cannot-shoot-guns-3
 
 - type: entity
-  name: "автоматична гвинтівка WT550" # Goobstation
-  parent: [ BaseWeaponSubMachineGun, BaseSecurityContraband]
+  name: WT550 # Goobstation
+  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunWt550
-  description: "Воістину унікальна вогнепальна зброя, WT550 була розроблена відділом стрілецької зброї Nanotrasen як компактний, дешевий і масовий пістолет-кулемет, повністю керований однією рукою. Він містить екзотичний внутрішній буфер віддачі та живиться зі спеціальних магазинів .35 калібру з верхнім кріпленням."
+  description: A truly unique firearm, the WT550 loads from a proprietary top-mounted magazine parallel to the barrel. While the RPM isn't great, the small package and steady recoil make it fully usable one-handed. Feeds from top-mounted .35 Auto SMG magazines. # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi

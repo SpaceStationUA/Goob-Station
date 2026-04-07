@@ -341,6 +341,8 @@ namespace Content.Server.Voting.Managers
                     if (_gameMapManager.TrySelectMapIfEligible(picked.ID))
                     {
                         ticker.UpdateInfoText();
+                        _gameMapManager.ProcessPirateMapRotationUnavailablePool(); // Pirate - map rotation
+                        _gameMapManager.TryAddPirateMapRotationUnavailablePool(picked); // Pirate - map rotation
                     }
                 }
                 else

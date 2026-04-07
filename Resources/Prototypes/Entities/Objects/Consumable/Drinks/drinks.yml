@@ -170,9 +170,9 @@
 # TODO: Find empty containers (e.g. mug, pitcher) and move to their own yml
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_glass.yml
 - type: entity
+  abstract: true
   parent: BaseItem
   id: DrinkBase
-  abstract: true
   components:
   - type: SolutionContainerManager
     solutions:
@@ -182,7 +182,10 @@
     solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
-  - type: Drink
+  - type: Edible
+    edible: Drink
+    solution: drink
+    destroyOnEmpty: false
   - type: Sprite
     state: icon
   - type: MeleeWeapon
@@ -198,6 +201,8 @@
   - type: RefillableSolution
     solution: drink
   - type: DrainableSolution
+    solution: drink
+  - type: ExaminableSolution
     solution: drink
   - type: UserInterface
     interfaces:
@@ -253,8 +258,6 @@
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Glass: 25
-  - type: ExaminableSolution
-    solution: drink
   - type: FitsInDispenser
     solution: drink
   - type: Tag
@@ -265,11 +268,15 @@
     damage:
       types:
         Blunt: 5
+  # Pirate banking start
+  - type: StaticPrice
+    price: 20
+  # Pirate banking end
 
 # Transformable container - normal glass
 - type: entity
-  name: "метаморфна склянка"
-  description: "Метаморфна склянка, яка автоматично перетворюється на склянку, що відповідає напою всередині. На дні є зашліфований номер патенту."
+  name: metamorphic glass
+  description: A metamorphic glass that automagically turns into a glass appropriate for the drink within. There's a sanded off patent number on the bottom.
   parent: DrinkGlassBase
   id: DrinkGlass
   components:
@@ -298,8 +305,8 @@
   - type: TransformableContainer
 
 - type: entity
-  name: "скляний келих"
-  description: "Класичний келих купе з тонким горлом, ікона тендітних етикеток на ящиках по всій галактиці."
+  name: coupe glass
+  description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
   parent: DrinkGlassBase
   id: DrinkGlassCoupeShaped
   components:
@@ -1264,7 +1271,7 @@
   parent: DrinkGlass
   id: DrinkHoochGlass
   suffix: hooch
-  description: "Ви дійсно досягли дна... Ваша печінка спакувала валізи і пішла вчора ввечері."
+  description: You've really hit rock bottom now... your liver packed its bags and left last night.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -2314,8 +2321,8 @@
 - type: entity
   parent: DrinkGlassBase
   id: DrinkTeapot
-  name: "чайник"  # short and stout
-  description: "Елегантний чайник. Він просто випромінює клас."
+  name: teapot  # short and stout
+  description: An elegant teapot. It simply oozes class.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -2536,8 +2543,8 @@
 - type: entity
   parent: DrinkGlassBase
   id: DrinkWaterJug
-  name: "глечик з водою"
-  description: "Не забувайте пити воду."
+  name: water jug
+  description: Stay hydrated.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -2856,7 +2863,7 @@
 - type: entity
   parent: DrinkGlassBase
   id: DrinkShakeBlue
-  name: "блакитний молочний коктейль"
+  name: blue milkshake
   description: ''
   components:
   - type: Drink
@@ -2866,7 +2873,7 @@
 - type: entity
   parent: DrinkGlassBase
   id: DrinkShakeEmpty
-  name: "трясця, трясця"
+  name: shakeempty
   description: ''
   components:
   - type: Drink
@@ -2876,7 +2883,7 @@
 - type: entity
   parent: DrinkGlassBase
   id: DrinkShakeMeat
-  name: "м'ясний коктейль"
+  name: meat shake
   description: ''
   components:
   - type: Drink
@@ -2886,7 +2893,7 @@
 - type: entity
   parent: DrinkGlassBase
   id: DrinkShakeRobo
-  name: "робо-шейк"
+  name: robo shake
   description: ''
   components:
   - type: Drink
@@ -2896,7 +2903,7 @@
 - type: entity
   parent: DrinkGlassBase
   id: DrinkShakeWhite
-  name: "білий шейк"
+  name: white shake
   description: ''
   components:
   - type: Drink
@@ -2923,7 +2930,7 @@
   parent: DrinkGlass
   id: DrinkBacchusBlessing
   suffix: bacchus blessing
-  description: "Ви не думали, що рідина може бути настільки огидною. Ви впевнені в цьому...?"
+  description: You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?
   components:
   - type: SolutionContainerManager
     solutions:

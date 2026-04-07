@@ -100,6 +100,16 @@
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Cloth: 75
+  - type: SuitSensorShockable # Goobstation
+  # Pirate banking start
+  - type: StaticPrice
+    price: 50
+  # Pirate banking end
+  # Pirate clothingDelay start
+  - type: Clothing
+    equipDelay: 1.5
+    unequipDelay: 1.2
+  # Pirate clothingDelay end
 
 - type: entity
   abstract: true
@@ -114,3 +124,17 @@
     - Skirt
     - ClothMade
     - WhitelistChameleon
+
+# Goobstation
+
+- type: entity
+  abstract: true
+  parent: BaseFoldable
+  id: ClothingUniformFoldableBase
+  components:
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: unfold-verb-clothing-jacket
+    foldVerbText: fold-verb-clothing-jacket
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded

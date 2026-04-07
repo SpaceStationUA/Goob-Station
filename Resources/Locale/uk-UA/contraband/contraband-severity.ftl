@@ -25,3 +25,4 @@ contraband-department-plural = {$department}
 contraband-job-plural = {MAKEPLURAL($job)}
 
 contraband-examine-text-Magical = [color=#b337b3]Цей предмет є надзвичайно нелегальною магічною контрабандою![/color]
+contraband-examine-text-Clown = [color=yellow]Цей предмет належить клоуну, поверніть його, поки він не засумував.[/color]

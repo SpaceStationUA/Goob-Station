@@ -58,14 +58,15 @@
   - type: StationEvent
     isSelectable: false
 
-- type: entity
-  parent: RevenantSpawn
-  id: TokenRevenantSpawn
-  components:
-  - type: RandomSpawnRule
-    prototype: MobRevenantToken
-  - type: StationEvent
-    isSelectable: false
+#- type: entity
+#  parent: RevenantSpawn
+#  id: TokenRevenantSpawn
+#  components:
+#  - type: RandomSpawnRule
+#    prototype: MobRevenantToken
+#  - type: StationEvent
+#    isSelectable: false
+#    weight: 0 # This will prevent it from being selected - fuck revenants
 
 - type: entity
   parent: LoneOpsSpawn
@@ -120,11 +121,15 @@
     isSelectable: false
 
 - type: entity
-  parent: AncientRogueKingSpawn
+  parent: SpawnPointGhostAncientRogueKing
   id: TokenAncientRogueKingSpawn
   components:
-  - type: RandomSpawnRule
-    prototype: AncientRogueKingToken
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: AncientRogueKingToken
+      min: 1
+      max: 1
+      pickPlayer: false
   - type: StationEvent
     isSelectable: false
 
@@ -226,3 +231,177 @@
     - MidroundAntag
   - type: StationEvent
     isSelectable: false
+
+- type: entity
+  parent: SlaughterDemonMidround
+  id: TokenSlaughterDemon
+  components:
+  - type: AntagSelection
+    agentName: lesser-slaughter-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointSlaughterDemonToken
+      min: 1
+      max: 1
+      pickPlayer: false
+      mindRoles:
+      - MindRoleSlaughterDemon
+      briefing:
+        text: slaughter-role-greeting
+        color: Red
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - NamesSlaughterTitle
+        - NamesSlaughter
+        nameFormat: name-format-slaughter
+  - type: AntagRandomSpawn
+  - type: AntagSpawner
+    prototype: MobLesserSlaughterDemon
+  - type: StationEvent
+    weight: 2
+    earliestStart: 75
+    minimumPlayers: 40
+    duration: null
+    maxOccurrences: 1
+    chaos: # todo: adjust all this
+      Hostile: 300
+      Medical: 300
+      Death: 300
+    eventType: HostilesSpawn
+  - type: GameRule
+    chaosScore: 800
+  - type: Tag
+    tags:
+    - MidroundAntag
+  - type: AntagObjectives
+    objectives:
+    - SlaughterDevourObjective
+    - AnnihilateAllJanitorsObjectiveFluff
+    - SpareCrewObjectiveFluff
+    - HuntTheBraveObjectiveFluff
+    - HuntTheCowardsObjectiveFluff
+    - ShowCrewPowerObjectiveFluff
+    - DriveInsaneObjectiveFluff
+    - SpreadBloodObjectiveFluff
+
+- type: entity
+  parent: LaughterDemonSummon
+  id: TokenLaughterDemon
+  components:
+  - type: AntagSpawner
+    prototype: MobLaughterDemon
+  - type: AntagSelection
+    agentName: laughter-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointLaughterDemonToken
+      min: 1
+      max: 1
+      pickPlayer: false
+      mindRoles:
+      - MindRoleSlaughterDemon
+      briefing:
+        text: laughter-role-greeting
+        color: Pink
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - NamesLaughterTitle
+        - NamesSlaughter
+        nameFormat: name-format-slaughter
+  - type: AntagRandomSpawn
+  - type: AntagObjectives
+    objectives:
+    - SlaughterHugAndTickleObjective
+
+- type: entity
+  parent: SlasherSpawn
+  id: TokenSlasherSpawn
+  components:
+  - type: AntagSelection
+    selectionTime: PostPlayerSpawn
+    agentName: slasher-round-end-agent-name # Change later
+    definitions:
+    - spawnerPrototype: SpawnPointGhostSlasherToken
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: SlasherGear
+      roleLoadout:
+      - RoleSurvivalEVA
+      briefing:
+        text: slasher-role-greeting
+        color: Red
+        sound: /Audio/_Goobstation/Effects/Slasher/SlasherIntro.ogg
+      mindRoles:
+      - MindRoleSlasher
+      components:
+      - type: Slasher
+      - type: SlasherSummonMachete
+      - type: SlasherStaggerArea
+      - type: SlasherRelentlessGrab
+      - type: SlasherRegenerate
+      - type: SlasherBloodTrail
+      - type: SlasherIncorporeal
+      - type: SlasherSoulSteal
+      - type: SlasherSummonMeatSpike
+      - type: NightVision
+        color: "#FF0000"
+        toggleAction: ActionSlasherNightVision
+        activateSound: !type:SoundCollectionSpecifier
+          collection: EyeOpen
+        deactivateSound: !type:SoundCollectionSpecifier
+          collection: EyeClose
+      - type: Puller
+        grabThrownSpeed: 10
+        throwingDistance: 8
+        softGrabSpeedModifier: 1
+        hardGrabSpeedModifier: 1
+        chokeGrabSpeedModifier: 1
+      - type: Hunger
+        baseDecayRate: 0
+      - type: Thirst
+        baseDecayRate: 0
+      - type: MobThresholds
+        thresholds:
+          0: Alive
+          150: Dead
+      - type: RandomMetadata
+        nameSegments:
+        - NamesSlasherTitle
+        - NamesSlasher
+        nameFormat: name-format-slasher
+
+- type: entity
+  parent: ContractorSpawn
+  id: TokenContractorSpawn
+  components:
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: ContractorTokenSpawner
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: ContractorGear
+      unequipOldGear: true
+      roleLoadout:
+      - RoleSurvivalNukie
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - NamesSyndicateNormal
+        nameFormat: name-format-nukie-agent
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+  - type: StationEvent
+    isSelectable: false
+    startAnnouncement: null
+    weight: 1
+    duration: null
+    earliestStart: 30
+    minimumPlayers: 30
+    chaos:
+      Hostile: 40
+      Combat: 40
+      Death: 40
+    eventType: HostilesSpawn

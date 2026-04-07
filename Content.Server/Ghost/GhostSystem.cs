@@ -97,7 +97,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
-using Content.Server.Warps;
+#region DOWNSTREAM-TPirates: ghost follow menu update
 using Content.Shared.Actions;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -107,6 +107,7 @@ using Content.Shared.Examine;
 using Content.Shared.Eye;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Follower;
+using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -119,7 +120,9 @@ using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tag;
+using Content.Shared._White.Xenomorphs.Infection;
 using Robust.Server.GameObjects;
+#endregion
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -137,11 +140,12 @@ using Content.Shared._Shitmed.Body;
 using Content.Shared._Shitmed.Damage;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared._EinsteinEngines.Silicon.Components;
+using Content.Shared.Warps;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost
 {
-    public sealed class GhostSystem : SharedGhostSystem
+    public sealed partial class GhostSystem : SharedGhostSystem // DOWNSTREAM-TPirates: ghost follow menu update
     {
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly IAdminLogManager _adminLog = default!;
@@ -174,7 +178,8 @@ namespace Content.Server.Ghost
         private EntityQuery<PhysicsComponent> _physicsQuery;
 
         private static readonly ProtoId<TagPrototype> AllowGhostShownByEventTag = "AllowGhostShownByEvent";
-
+        private static readonly ProtoId<DamageTypePrototype> AsphyxiationDamageType = "Asphyxiation";
+        private static readonly ProtoId<DamageTypePrototype> IonDamageType = "Ion";
         public override void Initialize()
         {
             base.Initialize();
@@ -207,6 +212,12 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
+            #region DOWNSTREAM-TPirates: ghost follow menu update
+            SubscribeLocalEvent<EntityStartedFollowingEvent>(ev => OnFollowChanged(ev));
+            SubscribeLocalEvent<EntityStoppedFollowingEvent>(ev => OnFollowChanged(ev));
+            SubscribeLocalEvent<MetaDataComponent, EntityTerminatingEvent>(OnWarpObserverEntityTerminating);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnWarpObserverRoundRestart);
+            #endregion
         }
 
         private void OnGhostVis(Entity<GhostComponent> ent, ref GetVisMaskEvent args)
@@ -397,7 +408,16 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
+            #region DOWNSTREAM-TPirates: ghost follow menu update
+            var playerOwnedWarpTargets = BuildPlayerOwnedWarpIndex(entity);
+            var response = new GhostWarpsResponseEvent(
+                GetLocationWarps()
+                    .Concat(GetPlayerWarps(playerOwnedWarpTargets))
+                    .Concat(GetDeadPlayerWarps(playerOwnedWarpTargets))
+                    .Concat(GetGhostWarps(entity))
+                    .Concat(GetMobWarps(playerOwnedWarpTargets))
+                    .ToList());
+            #endregion
             RaiseNetworkEvent(response, args.SenderSession.Channel);
         }
 
@@ -439,8 +459,12 @@ namespace Content.Server.Ghost
         private void WarpTo(EntityUid uid, EntityUid target)
         {
             _adminLog.Add(LogType.GhostWarp, $"{ToPrettyString(uid)} ghost warped to {ToPrettyString(target)}");
-
-            if ((TryComp(target, out WarpPointComponent? warp) && warp.Follow) || HasComp<MobStateComponent>(target))
+            #region DOWNSTREAM-TPirates: ghost follow menu update
+            if ((TryComp(target, out WarpPointComponent? warp) && warp.Follow) ||
+                HasComp<ActorComponent>(target) ||
+                HasComp<MobStateComponent>(target) ||
+                _ghostQuery.HasComp(target))
+            #endregion
             {
                 _followerSystem.StartFollowingEntity(uid, target);
                 return;
@@ -451,35 +475,6 @@ namespace Content.Server.Ghost
             _transformSystem.AttachToGridOrMap(uid, xform);
             if (_physicsQuery.TryComp(uid, out var physics))
                 _physics.SetLinearVelocity(uid, Vector2.Zero, body: physics);
-        }
-
-        private IEnumerable<GhostWarp> GetLocationWarps()
-        {
-            var allQuery = AllEntityQuery<WarpPointComponent>();
-
-            while (allQuery.MoveNext(out var uid, out var warp))
-            {
-                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true);
-            }
-        }
-
-        private IEnumerable<GhostWarp> GetPlayerWarps(EntityUid except)
-        {
-            foreach (var player in _player.Sessions)
-            {
-                if (player.AttachedEntity is not {Valid: true} attached)
-                    continue;
-
-                if (attached == except) continue;
-
-                TryComp<MindContainerComponent>(attached, out var mind);
-
-                var jobName = _jobs.MindTryGetJobName(mind?.Mind);
-                var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({jobName})";
-
-                if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
-            }
         }
 
         #endregion
@@ -584,9 +579,9 @@ namespace Content.Server.Ghost
             // If all else fails, it'll default to the default entity prototype name, "observer".
             // However, that should rarely happen.
             if (!string.IsNullOrWhiteSpace(mind.Comp.CharacterName))
-                _metaData.SetEntityName(ghost, mind.Comp.CharacterName);
+                _metaData.SetEntityName(ghost, FormattedMessage.EscapeText(mind.Comp.CharacterName)); // Goob Sanitize Text
             else if (mind.Comp.UserId is { } userId && _player.TryGetSessionById(userId, out var session))
-                _metaData.SetEntityName(ghost, session.Name);
+                _metaData.SetEntityName(ghost, FormattedMessage.EscapeText(session.Name)); // Goob Sanitize Text
 
             if (mind.Comp.TimeOfDeath.HasValue)
             {
@@ -617,9 +612,9 @@ namespace Content.Server.Ghost
             if (playerEntity != null && viaCommand)
             {
                 if (forced)
-                    _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} was forced to ghost via command");
+                    _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} was forced to ghost via command");
                 else
-                    _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
+                    _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
             }
 
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
@@ -663,46 +658,49 @@ namespace Content.Server.Ghost
             // + If we're in a mob that is critical, and we're supposed to be able to return if possible,
             //   we're succumbing - the mob is killed. Therefore, character is dead. Ghosting OK.
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
-            var canReturn = canReturnGlobal && _mind.IsCharacterDeadPhysically(mind);
+            var canReturn = handleEv.CanReturnGlobal && _mind.IsCharacterDeadPhysically(mind); // Goob edit
 
             if (_configurationManager.GetCVar(CCVars.GhostKillCrit) &&
-                canReturnGlobal &&
+                handleEv.CanReturnGlobal && // Goob edit
                 TryComp(playerEntity, out MobStateComponent? mobState))
             {
                 if (_mobState.IsCritical(playerEntity.Value, mobState))
                 {
                     canReturn = true;
 
-                    FixedPoint2 dealtDamage = 200;
-
-                    if (TryComp<DamageableComponent>(playerEntity, out var damageable)
-                        && TryComp<MobThresholdsComponent>(playerEntity, out var thresholds))
+                    if (!HasComp<XenomorphPreventSuicideComponent>(playerEntity.Value))
                     {
-                        var playerDeadThreshold = _mobThresholdSystem.GetThresholdForState(playerEntity.Value, MobState.Dead, thresholds);
-                        dealtDamage = playerDeadThreshold - damageable.TotalDamage;
+                        FixedPoint2 dealtDamage = 200;
+
+                        if (TryComp<DamageableComponent>(playerEntity, out var damageable)
+                            && TryComp<MobThresholdsComponent>(playerEntity, out var thresholds))
+                        {
+                            var playerDeadThreshold = _mobThresholdSystem.GetThresholdForState(playerEntity.Value, MobState.Dead, thresholds);
+                            dealtDamage = playerDeadThreshold - damageable.TotalDamage;
+                        }
+
+                        // Shitmed Change Start
+                        var damageType = HasComp<SiliconComponent>(playerEntity)
+                            ? IonDamageType
+                            : AsphyxiationDamageType;
+                        DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>(damageType), dealtDamage);
+
+                        if (TryComp<BodyComponent>(playerEntity, out var body)
+                            && body.BodyType == BodyType.Complex
+                            && body.RootContainer.ContainedEntities.FirstOrNull() is { } root)
+                            _damageable.TryChangeDamage(playerEntity,
+                                damage,
+                                true,
+                                targetPart: TargetBodyPart.All);
+                        else
+                            _damageable.TryChangeDamage(playerEntity, damage, true);
+                        // Shitmed Change End
                     }
-
-                    // Shitmed Change Start
-                    var damageType = HasComp<SiliconComponent>(playerEntity)
-                        ? "Ion"
-                        : "Asphyxiation";
-                    DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>(damageType), dealtDamage);
-
-                    if (TryComp<BodyComponent>(playerEntity, out var body)
-                        && body.BodyType == BodyType.Complex
-                        && body.RootContainer.ContainedEntities.FirstOrNull() is { } root)
-                        _damageable.TryChangeDamage(playerEntity,
-                            damage,
-                            true,
-                            targetPart: _bodySystem.GetTargetBodyPart(root));
-                    else
-                        _damageable.TryChangeDamage(playerEntity, damage, true);
-                    // Shitmed Change End
                 }
             }
 
             if (playerEntity != null)
-                _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
+                _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
             var ghost = SpawnGhost((mindId, mind), position, canReturn);
 
@@ -716,7 +714,7 @@ namespace Content.Server.Ghost
     public sealed class GhostAttemptHandleEvent(MindComponent mind, bool canReturnGlobal) : HandledEntityEventArgs
     {
         public MindComponent Mind { get; } = mind;
-        public bool CanReturnGlobal { get; } = canReturnGlobal;
+        public bool CanReturnGlobal { get; set; } = canReturnGlobal; // Goob edit
         public bool Result { get; set; }
     }
 }

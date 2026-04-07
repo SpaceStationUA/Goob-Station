@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Ported from tgstation sprites",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cartridge_basic"
+    },
+    {
+      "name": "cartridge_blend"
+    },
+    {
+      "name": "cartridge_blue_mtn"
+    },
+    {
+      "name": "cartridge_kilimanjaro"
+    },
+    {
+      "name": "cartridge_mocha"
+    },
+    {
+      "name": "cartridge_decaf"
+    },
+    {
+      "name": "cartridge_bootleg"
+    },
+    {
+      "name": "cartridge_blank"
+    }
+  ]
+}

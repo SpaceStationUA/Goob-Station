@@ -1,6 +1,6 @@
 - type: entity
-  name: "Святий посібник для співробітників Нанотрайзен"
-  description: "Прославляй НТ, провчай клоунів, навчай асистентів стандартним робочим процедурам!"
+  name: Святий посібник для співробітників Нанотрайзен
+  description: Прославляй НТ, провчай клоунів, навчай асистентів стандартним робочим процедурам!
   parent: BaseStorageItem
   id: NTEmployeeHandbook
   suffix: Bible
@@ -16,6 +16,9 @@
       groups:
         Brute: 15
         Airloss: 15
+    damageOnUnholyUse: ## What an unholy creature takes when picking up the bible
+      groups:
+        Burn: 20
     damageOnUntrainedUse:
       groups:
         Burn: 10
@@ -62,8 +65,8 @@
 
 - type: selectableSet
   id: NTEmployeeHandbookSet
-  name: "Святий посібник для співробітників Нанотрайзен"
-  description: "Прославляй НТ, провчай клоунів, навчай асистентів!"
+  name: Святий посібник для співробітників Нанотрайзен
+  description: Прославляй НТ, провчай клоунів, навчай асистентів!
   sprite:
     sprite: _Pirate/Objects/Specific/Chapel/NTEmployeeHandbook.rsi
     state: icon

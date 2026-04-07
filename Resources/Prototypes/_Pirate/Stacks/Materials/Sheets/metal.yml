@@ -1,0 +1,6 @@
+- type: stack
+  id: Plastitanium
+  name: stack-plastitanium
+  icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: plastitanium }
+  spawn: SheetPlastitanium1
+  maxCount: 30

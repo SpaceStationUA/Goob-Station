@@ -42,8 +42,8 @@
   parent: [ ClothingBeltDeathsquadWebbing, BaseCentcommContraband ]
   suffix: Filled, DO NOT MAP
   id: ClothingBeltDeathsquadWebbingFilled
-  name: "розгрузка оператора загону смерті"
-  description: "Міцна та надійна розгрузка, що містить усе необхідне для продовження бою. Ймовірно, вам не доведеться її використовувати."
+  name: deathsquad operative chestrig
+  description: "A robust and durable chestrig, containing everything you need to keep you in the fight. You probably won't need to use it."
   components:
   - type: StorageFill
     contents:
@@ -120,7 +120,6 @@
     children:
     - id: Handcuffs
     - id: Handcuffs
-    - id: Handcuffs
     - id: HoloprojectorSecurity
     - id: RadioHandheldSecurity
     - id: WeaponDisabler #Goobstation
@@ -138,8 +137,8 @@
 - type: entity
   id: ClothingBeltHolsterFilledChaplain
   parent: ClothingBeltBase
-  name: "Кобура капелана"
-  description: "Наплічна кобура від Богів. Містить набір з двох пістолетів."
+  name: Chaplains' Holster
+  description: A shoulder holster from the Gods. Contains a set of dual pistols.
   suffix: Filled, Chaplain
   components:
   - type: Item
@@ -172,6 +171,18 @@
       - WeaponPistolCasul
       item2:
       - WeaponPistolJackal
+  - type: DivineIntervention
+    validSpellDenialSlots:
+    - BELT
+  - type: Reflect
+    reflectProb: 1
+    slotFlags:
+    - BELT
+    reflects:
+    - Magic
+  - type: Tag
+    tags:
+    - ChaplainsHolster
 
 - type: entityTable
   id: BeltAssaultBSOEntityTable
@@ -220,6 +231,7 @@
     - id: LargeBeaker
     - id: OmnimedToolSyndie
     - id: DartGun
+    - id: CigPackMedical
     - id: ChemistryBottleEpinephrine
       amount: 2
     - id: ChemistryBottleEphedrine
@@ -227,6 +239,8 @@
     - id: ChemistryBottleOmnizine
     - id: ChemistryBottleTramadol
     - id: ChemistryBottleOxycodone
+    - id: MedicalPatchBasic
+      amount: 3
 
 - type: entity
   id: ClothingBeltHolsterFilledBlueshield

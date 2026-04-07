@@ -8,8 +8,8 @@
 - type: entity
   id: OrganAnimalBrain
   parent: BaseAnimalOrganUnGibbable
-  name: "мозок тварини"
-  description: "Не такий вже й розумний, не такий вже й гудок."
+  name: animal brain
+  description: "Not so intelligence, not so honk."
   components:
   - type: Sprite
     state: brain
@@ -20,7 +20,7 @@
     integrityThresholds:
       Normal: 28
       Damaged: 16
-      Destroyed: 0    
+      Destroyed: 0
   - type: Input
     context: "ghost"
   - type: Brain
@@ -49,10 +49,8 @@
       - people
   - type: FoodSequenceElement
     entries:
-      burger:
-        name: food-sequence-content-brain
-      taco:
-        name: food-sequence-content-brain
+      Burger: Brain
+      Taco: Brain
   - type: Item
     size: Small
     heldPrefix: brain
@@ -64,8 +62,8 @@
 - type: entity
   id: OrganAnimalEyes
   parent: BaseAnimalOrgan
-  name: "очі тварин"
-  description: "Я тебе бачу!"
+  name: animal eyes
+  description: "I see you!"
   components:
   # start-backmen: surgery
   - type: Organ
@@ -75,7 +73,7 @@
     integrityThresholds:
       Normal: 12
       Damaged: 6
-      Destroyed: 0    
+      Destroyed: 0
   - type: Eyes
   # end-backmen: surgery
   - type: Sprite

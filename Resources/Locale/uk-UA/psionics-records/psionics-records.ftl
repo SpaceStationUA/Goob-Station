@@ -5,15 +5,8 @@ psionics-records-console-no-records = Ніяких записів не знай�
 psionics-records-console-no-record-found = Записів на дану особу немає
 
 psionics-records-console-status = Статус
-psionics-records-status-none = Ні
-psionics-records-status-registered = Зареєстрований псионік
-psionics-records-status-suspected = Підозра на псіоніку
-psionics-records-status-abusing = Зловживання псионікою
 
 psionics-records-console-wanted-reason = [color=gray]Список Псіоників[/color]
-psionics-records-console-suspected-reason = [color=gray]Підозрювана причина[/color]
-psionics-records-console-reason = Псіоніка/Причина
-psionics-records-console-reason-placeholder = Наприклад: {$placeholder}
 
 psionics-records-permission-denied = У дозволі відмовлено
 
@@ -27,5 +20,7 @@ psionics-records-console-unknown-officer = <невідомий офіцер>
 
 psionics-records-filter-placeholder = Введіть текст і натисніть "Enter"
 psionics-records-name-filter = Ім'я
+psionics-records-job-filter = Робота
+psionics-records-species-filter = Вид
 psionics-records-prints-filter = Відбитки пальців
 psionics-records-dna-filter = ДНК

@@ -66,7 +66,7 @@
   - MagazineShotgunSlug
   - SpeedLoaderMagnum
   - SpeedLoaderMagnumEmpty
-  - ExplosivePayload
+  - ShrapnelPayload
 
 - type: latheRecipePack
   id: SecurityWeaponsStatic
@@ -84,14 +84,17 @@
   - ClothingBackpackElectropack
   - HoloprojectorSecurity
   - HoloprojectorSecurityAdvanced
+  - AntiMindControlDevice
   - PortableRecharger
   - PowerCageHigh
   - PowerCageMedium
   - PowerCageSmall
   - TelescopicShield
+  - ClothingBackpackHarmpack
   - ClothingHeadHelmetInsulated # PIRATE psionic
   - ClothingHeadCage # PIRATE psionic
   - ClothingNeckBaseShockCollar # PIRATE
+  - ClothingHandsGlovesMansusBlock # PIRATE
 
 - type: latheRecipePack
   id: SecurityBoards
@@ -137,10 +140,10 @@
   - MagazineShotgunIncendiary
   - SpeedLoaderMagnumIncendiary
   - SpeedLoaderMagnumUranium
-  - MagazinePistolMindbreaker # PIRATE psionic
-  - MagazineBoxPistolMindbreaker # PIRATE psionic
+  - MagazinePistolCryptobiolin # PIRATE psionic
+  - MagazineBoxPistolCryptobiolin # PIRATE psionic
   - ShellSoulbreaker # PIRATE psionic
-  - BoxShellSoulbreaker
+  - BoxShellSoulbreaker # PIRATE psionic
 
 - type: latheRecipePack
   id: SecurityWeapons
@@ -151,6 +154,7 @@
   - WeaponLaserCarbine
   - WeaponXrayCannon
   - WeaponTemperatureGun # Goobstation
+  - Terminus # Goobstation
 
 - type: latheRecipePack
   id: SecurityDisablers

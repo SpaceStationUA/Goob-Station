@@ -165,6 +165,8 @@
     equipSound:
       collection: GenericEquip
   # Goobstation edit end
+    equipDelay: 1.2 # Pirate clothingDelay
+    unequipDelay: 1 # Pirate clothingDelay
   - type: Sprite
     state: icon
 
@@ -271,7 +273,7 @@
   abstract: true
   parent: [ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing]
   id: ClothingOuterHardsuitBase
-  name: "базовий скафандр"
+  name: base hardsuit
   components:
 # SlotBlocker blocked until UI change
 #  - type: SlotBlock
@@ -369,12 +371,17 @@
     damageProtection:
       flatReductions:
         Blunt: 2 # Pirate ^
+  # Pirate clothingDelay start
+  - type: Clothing
+    equipDelay: 4
+    unequipDelay: 3
+  # Pirate clothingDelay end
 
 - type: entity
   abstract: true
   parent: [ClothingOuterBase, AllowSuitStorageClothing]
   id: ClothingOuterEVASuitBase
-  name: "базовий скафандр EVA"
+  name: base EVA Suit
   components:
 # SlotBlocker blocked until UI change
 #  - type: SlotBlock
@@ -414,11 +421,16 @@
   - type: Tag
     tags:
     - PlasmamanSafe # EE Plasmeme Change
+  # Pirate clothingDelay start
+  - type: Clothing
+    equipDelay: 1.25
+    unequipDelay: 1
+  # Pirate clothingDelay end
 
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterBaseToggleable
-  name: "худі з капюшоном"
+  name: hoodie with hood
   abstract: True
   components:
   - type: ToggleableClothing # Goobstation - Modsuits change

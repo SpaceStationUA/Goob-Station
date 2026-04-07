@@ -87,6 +87,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Client._Pirate.Photo;
 using Content.Client.StatusIcon;
 using Content.Client.UserInterface.Systems;
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness.Components; // Shitmed Change
@@ -119,6 +120,7 @@ public sealed class EntityHealthBarOverlay : Overlay
     private readonly StatusIconSystem _statusIconSystem;
     private readonly SpriteSystem _spriteSystem;
     private readonly ProgressColorSystem _progressColor;
+    private readonly PhotoCaptureFilterSystem _photoCaptureFilter; // # Pirate: camera
 
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
@@ -135,10 +137,14 @@ public sealed class EntityHealthBarOverlay : Overlay
         _statusIconSystem = _entManager.System<StatusIconSystem>();
         _spriteSystem = _entManager.System<SpriteSystem>();
         _progressColor = _entManager.System<ProgressColorSystem>();
+        _photoCaptureFilter = _entManager.System<PhotoCaptureFilterSystem>(); // # Pirate: camera
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (_photoCaptureFilter.IsSuppressedForEye(args.Viewport.Eye, PhotoCaptureSuppressionMask.StatusIndicators)) // # Pirate: camera
+            return;
+
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
@@ -218,16 +224,17 @@ public sealed class EntityHealthBarOverlay : Overlay
     /// </summary>
     private (float ratio, bool inCrit)? CalcProgress(EntityUid uid, MobStateComponent component, DamageableComponent dmg, MobThresholdsComponent thresholds)
     {
+        var totalDamage = _mobThresholdSystem.CheckVitalDamage(uid, dmg); // GoobStation
         if (_mobStateSystem.IsAlive(uid, component))
         {
-            if (dmg.HealthBarThreshold != null && dmg.TotalDamage < dmg.HealthBarThreshold)
+            if (dmg.HealthBarThreshold != null && totalDamage < dmg.HealthBarThreshold) // GoobStation
                 return null;
 
             if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds) &&
                 !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholds))
                 return (1, false);
 
-            var ratio = 1 - ((FixedPoint2)(dmg.TotalDamage / threshold)).Float();
+            var ratio = 1 - ((FixedPoint2)(totalDamage / threshold)).Float(); // GoobStation
             return (ratio, false);
         }
 
@@ -239,7 +246,7 @@ public sealed class EntityHealthBarOverlay : Overlay
                 return (1, true);
             }
 
-            var ratio = 1 - ((dmg.TotalDamage - critThreshold) / (deadThreshold - critThreshold)).Value.Float();
+            var ratio = 1 - ((totalDamage - critThreshold) / (deadThreshold - critThreshold)).Value.Float(); // GoobStation
 
             return (ratio, true);
         }

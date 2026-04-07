@@ -68,6 +68,8 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
+using Content.Server.Hands.Systems;
+using Content.Server.Power.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
@@ -83,19 +85,28 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
+#region DOWNSTREAM-TPirates: borg wireless access
+using Content.Shared.Coordinates; 
+using Content.Shared.Interaction.Components;
+#endregion
+
 namespace Content.Server.Wires;
 
 public sealed class WiresSystem : SharedWiresSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ConstructionSystem _construction = default!;
     [Dependency] private readonly TagSystem _tags = default!; // Shitmed Change
-
+    #region DOWNSTREAM-TPirates: borg wireless access
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    #endregion
     private static readonly ProtoId<ToolQualityPrototype> CuttingQuality = "Cutting";
     private static readonly ProtoId<ToolQualityPrototype> PulsingQuality = "Pulsing";
 
@@ -459,7 +470,7 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         var player = args.Actor;
 
-        if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
+        if (!TryComp(player, out HandsComponent? handsComponent))
         {
             _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, player);
             return;
@@ -471,19 +482,23 @@ public sealed class WiresSystem : SharedWiresSystem
             return;
         }
 
-        var activeHand = handsComponent.ActiveHand;
+        #region DOWNSTREAM-TPirates: borg wireless access
+        // access to wires requires proximity, InRangeUnobstructed will not work because range checks are overridden. ikr it makes the code
+        // tangled too much and there is likely a better way with events, but i don't want to mess with too much code and cause possible conflicts
+        if (TryComp<RemoteInteractionComponent>(player, out var _) && !IsInNormalRange(player, uid))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), uid, player);
+            return;
+        }
+        #endregion
 
-        if (activeHand == null)
+        if (!_hands.TryGetActiveItem((player, handsComponent), out var heldEntity))
             return;
 
-        if (activeHand.HeldEntity == null)
+        if (!TryComp(heldEntity, out ToolComponent? tool))
             return;
 
-        var activeHandEntity = activeHand.HeldEntity.Value;
-        if (!EntityManager.TryGetComponent(activeHandEntity, out ToolComponent? tool))
-            return;
-
-        TryDoWireAction(uid, player, activeHandEntity, args.Id, args.Action, component, tool);
+        TryDoWireAction(uid, player, heldEntity.Value, args.Id, args.Action, component, tool);
     }
 
     private void OnDoAfter(EntityUid uid, WiresComponent component, WireDoAfterEvent args)
@@ -562,6 +577,24 @@ public sealed class WiresSystem : SharedWiresSystem
 
         UpdateUserInterface(uid);
     }
+
+    #region DOWNSTREAM-TPirates: borg wireless access
+    private bool IsInNormalRange(EntityUid user, EntityUid target)
+    {
+        if (!_entityManager.TryGetComponent<TransformComponent>(user, out var userXForm) ||
+            !_entityManager.TryGetComponent<TransformComponent>(target, out var targetXForm))
+        {
+            return false;
+        }
+
+        return _interactionSystem.InRangeUnobstructed(
+            (user, userXForm),
+            (target, targetXForm),
+            targetXForm.Coordinates,
+            targetXForm.LocalRotation);
+    }
+    #endregion
+
     #endregion
 
     #region Entity API

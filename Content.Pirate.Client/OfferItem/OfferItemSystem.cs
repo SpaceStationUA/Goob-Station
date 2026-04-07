@@ -2,7 +2,6 @@ using Content.Pirate.Shared.OfferItem;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Shared.Configuration;
 
 namespace Content.Pirate.Client.OfferItem;
 
@@ -22,6 +21,7 @@ public sealed class OfferItemSystem : SharedOfferItemSystem
             _eye,
             this));
     }
+
     public override void Shutdown()
     {
         _overlayManager.RemoveOverlay<OfferItemIndicatorsOverlay>();

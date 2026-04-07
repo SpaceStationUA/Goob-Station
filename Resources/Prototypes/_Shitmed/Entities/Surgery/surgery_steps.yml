@@ -18,7 +18,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepOpenIncisionScalpel
-  name: "Вирізати скальпелем"
+  name: Cut with a scalpel
   components:
   - type: SurgeryStep
     tool:
@@ -43,7 +43,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepClampBleeders
-  name: "Затисніть кровотечу"
+  name: Clamp the bleeders
   components:
   - type: SurgeryStep
     tool:
@@ -61,7 +61,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepCloseBloodOutputs
-  name: "Зашити зруйновані тканини"
+  name: Stitch up destroyed tissues
   components:
   - type: SurgeryStep
     tool:
@@ -81,7 +81,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepRetractSkin
-  name: "Відтягніть шкіру"
+  name: Retract the skin
   components:
   - type: SurgeryStep
     tool:
@@ -96,7 +96,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepRemoveSeveredSkin
-  name: "Видалити мертву шкіру"
+  name: Remove the dead skin
   components:
   - type: SurgeryStep
     tool:
@@ -115,13 +115,13 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepSawBones
-  name: "Розпилював кістки наскрізь"
+  name: Saw through bones
   components:
   - type: SurgeryStep
     tool:
     - type: BoneSaw
     add:
-    - type: RibcageSawed
+    - type: BonesSawed
     duration: 4
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/circular-saw.rsi
@@ -135,13 +135,13 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepRemoveLeftoverBones
-  name: "Прибрати залишки кісток"
+  name: Clear up bone leftovers
   components:
   - type: SurgeryStep
     tool:
     - type: BoneSaw
     add:
-    - type: RibcageOpen
+    - type: BonesOpen
     duration: 5
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/circular-saw.rsi
@@ -150,7 +150,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepMendBones
-  name: "Зростити кістки"
+  name: Mend bones
   components:
   - type: SurgeryStep
     tool:
@@ -172,7 +172,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepHealOrgans
-  name: "Загоїти органи"
+  name: Heal Organs
   components:
   - type: SurgeryStep
     tool:
@@ -194,13 +194,13 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepPriseOpenBones
-  name: "Розкрийте кістки"
+  name: Prise the bones open
   components:
   - type: SurgeryStep
     tool:
     - type: Retractor
     add:
-    - type: RibcageOpen
+    - type: BonesOpen
     duration: 2
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/retractor.rsi
@@ -242,13 +242,13 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepCloseBones
-  name: "Зблизити кістки"
+  name: Close bones
   components:
   - type: SurgeryStep
     tool:
     - type: Retractor
     remove:
-    - type: RibcageOpen
+    - type: BonesOpen
     duration: 2
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/retractor.rsi
@@ -256,23 +256,33 @@
 
 - type: entity
   parent: SurgeryStepBase
-  id: SurgeryStepMendRibcage
-  name: "Виправляємо грудну клітку"
+  id: SurgeryStepSealBones
+  name: Seal bones
   components:
   - type: SurgeryStep
     tool:
     - type: BoneGel
     remove:
-    - type: RibcageSawed
+    - type: BonesSawed
     duration: 2
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/bone-gel.rsi
     state: bone-gel
 
 - type: entity
+  parent: SurgeryStepSealBones
+  id: SurgeryStepSealSkull
+  name: Seal skull
+
+- type: entity
+  parent: SurgeryStepSealBones
+  id: SurgeryStepSealRibcage
+  name: Seal ribcage
+
+- type: entity
   parent: SurgeryStepBase
   id: SurgeryStepCloseIncision
-  name: "Закритий розріз"
+  name: Close incision
   components:
   - type: SurgeryStep
     tool:
@@ -303,7 +313,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepInsertFeature
-  name: "Вставна частина"
+  name: Insert part
   components:
   - type: SurgeryStep
     tool:
@@ -317,7 +327,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepSealWounds
-  name: "Ущільнені рани"
+  name: Seal wounds
   components:
   - type: SurgeryStep
     tool:
@@ -347,7 +357,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepSawFeature
-  name: "Розпилював кістки наскрізь"
+  name: Saw through bones
   components:
   - type: SurgeryStep
     tool:
@@ -367,7 +377,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepClampInternalBleeders
-  name: "Затискач для внутрішніх кровотеч"
+  name: Clamp internal bleeders
   components:
   - type: SurgeryStep
     tool:
@@ -387,7 +397,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepRemoveFeature
-  name: "Ампутувати частину"
+  name: Amputate part
   components:
   - type: SurgeryStep
     tool:
@@ -414,7 +424,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepCarefulIncisionScalpel
-  name: "Обережно зробіть надріз"
+  name: Make a careful incision
   components:
   - type: SurgeryStep
     tool:
@@ -433,7 +443,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepRepairBruteTissue
-  name: "Відновлення пошкоджених тканин"
+  name: Repair damaged tissue
   components:
   - type: SurgeryStep
     tool:
@@ -451,7 +461,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepRepairBurnTissue
-  name: "Відновлення обпалених тканин"
+  name: Repair burnt tissue
   components:
   - type: SurgeryStep
     tool:
@@ -470,7 +480,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepSealTendWound
-  name: "Заклейте рану"
+  name: Seal the wound
   components:
   - type: SurgeryStep
     tool:
@@ -494,7 +504,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepSealDismembermentWound
-  name: "Зашити рану від відчленування"
+  name: Stitch up the dismemberment wound
   components:
   - type: SurgeryStep
     tool:
@@ -518,7 +528,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepInsertItem
-  name: "Вставте предмет у порожнину"
+  name: Insert item into cavity
   components:
   - type: SurgeryStep
     duration: 4
@@ -536,7 +546,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepRemoveItem
-  name: "Вийміть предмет з порожнини"
+  name: Remove item from cavity
   components:
   - type: SurgeryStep
     duration: 4
@@ -556,7 +566,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepRemoveOrgan
-  name: "Видалити орган"
+  name: Remove organ
   components:
   - type: SurgeryStep
     tool:
@@ -575,7 +585,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepInsertOrgan
-  name: "Додати орган"
+  name: Add organ
   components:
   - type: SurgeryStep
     tool:
@@ -594,7 +604,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepOpenOrganSlot
-  name: "Вирізати порожнину"
+  name: Carve out a cavity
   components:
   - type: SurgeryStep
     tool:
@@ -604,12 +614,15 @@
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
     state: insertion
   - type: SurgeryAddOrganSlotStep
-  - type: SurgeryStepEmoteEffect
+  - type: SurgeryStepPainInflicter
+    amount: 21
+    painDuration: 60
+    sleepModifier: 0.34
 
 - type: entity
   parent: SurgeryStepInsertOrgan
   id: SurgeryStepInsertLungs
-  name: "Додайте легені"
+  name: Add lungs
   components:
   - type: SurgeryDamageChangeEffect
     damage:
@@ -622,7 +635,7 @@
 - type: entity
   parent: SurgeryStepInsertOrgan
   id: SurgeryStepInsertLiver
-  name: "Додати печінку"
+  name: Add liver
   components:
   - type: SurgeryDamageChangeEffect
     damage:
@@ -635,27 +648,26 @@
 - type: entity
   parent: SurgeryStepInsertOrgan
   id: SurgeryStepInsertEyes
-  name: "Додати очі"
+  name: Add eyes
 
 - type: entity
   parent: SurgeryStepInsertOrgan
   id: SurgeryStepInsertHeart
-  name: "Додати серце"
+  name: Add heart
   components:
   - type: SurgerySpecialDamageChangeEffect
     damageType: Rot
     isConsumable: true
 
-# Doesn't serve much of a purpose right now. Just here for completeness-sake.
 - type: entity
   parent: SurgeryStepInsertOrgan
-  id: SurgeryStepInsertStomach
-  name: "Додати шлунок"
+  id: SurgeryStepInsertPump
+  name: Add pump
 
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepSealOrganWound
-  name: "Ущільнені рани"
+  name: Seal wounds
   components:
   - type: SurgeryStep
     tool:
@@ -760,3 +772,65 @@
 #  - type: ??? moth ops go here when wings can be destroyed
 #  - type: Sprite
 #    sprite: Interface/Emotes/chitter.png
+
+# Augments
+
+- type: entity
+  parent: SurgeryStepInsertOrgan
+  id: SurgeryStepInsertAugmentPowerCellSlot
+  name: Add power cell slot
+
+- type: entity
+  parent: SurgeryStepInsertOrgan
+  id: SurgeryStepInsertAugmentPowerCellCharger
+  name: Add power cell charger
+
+- type: entity
+  parent: SurgeryStepInsertOrgan
+  id: SurgeryStepInsertAugmentArm
+  name: Add arm augment
+
+# Lobotomy
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepLobotomize
+  name: Lobotomize patient
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Drill
+    addOrganOnAdd:
+      brain:
+      - type: OhioAccent
+      - type: RatvarianLanguage
+      - type: Clumsy
+    duration: 5
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/drill.rsi
+    state: drill
+  - type: SurgeryStepEmoteEffect
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Piercing: 10
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepMendBrainTissue
+  name: Mend brain tissue
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Hemostat
+    duration: 4
+    removeOrganOnAdd:
+      brain:
+      - type: OhioAccent
+      - type: RatvarianLanguage
+      - type: Clumsy
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryStepEmoteEffect

@@ -1,6 +1,6 @@
+using Content.Shared.Abilities.Psionics;
 using Content.Shared.GameTicking.Components;
 using Content.Server.Psionics;
-using Content.Shared.Abilities.Psionics;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Server.Inventory;
@@ -13,9 +13,9 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
-using Content.Pirate.Server.StationEvents.Components;
 using Content.Server.StationEvents.Events;
 using Robust.Server.Player;
+using Content.Pirate.Server.StationEvents.Components;
 
 namespace Content.Pirate.Server.StationEvents.Events;
 
@@ -62,7 +62,8 @@ internal sealed class NoosphericFryRule : StationEventSystem<NoosphericFryRuleCo
                 Spawn("Ash", Transform(pair.wearer).Coordinates);
                 _popupSystem.PopupEntity(Loc.GetString("psionic-burns-up", ("item", pair.worn.Owner)), pair.wearer, PopupType.MediumCaution);
                 _audioSystem.PlayPvs("/Audio/Effects/lightburn.ogg", pair.worn.Owner);
-            } else
+            }
+            else
             {
                 _popupSystem.PopupEntity(Loc.GetString("psionic-burn-resist", ("item", pair.worn.Owner)), pair.wearer, PopupType.SmallCaution);
                 _audioSystem.PlayPvs("/Audio/Effects/lightburn.ogg", pair.worn.Owner);
@@ -74,11 +75,4 @@ internal sealed class NoosphericFryRule : StationEventSystem<NoosphericFryRuleCo
             _damageableSystem.TryChangeDamage(pair.wearer, damage);
         }
     }
-}
-
-// Placeholder component - you'll need to implement this based on your tinfoil hat system
-public sealed partial class TinfoilHatComponent : Component
-{
-    [DataField("destroyOnFry")]
-    public bool DestroyOnFry = true;
 }

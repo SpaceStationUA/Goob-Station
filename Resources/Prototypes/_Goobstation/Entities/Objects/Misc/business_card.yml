@@ -1,8 +1,8 @@
 - type: entity
   id: CentralCommandBusinessCard
-  name: "візитка Центкому"
+  name: centcomm business card
   parent: Paper
-  description: "Зелена картка з логотипом Nanotrasen. На звороті щось написано."
+  description: A green card with nanotrasen's logo. There's something written on the back.
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -22,3 +22,11 @@
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 4.0, 4.0, 4.0, 4.0
     maxWritableArea: 400.0, 256.0
+
+- type: entity
+  id: TunnelClownBusinessCard
+  name: tunnel clown business card
+  parent: CentralCommandBusinessCard
+  components:
+  - type: Paper
+    content: tunnel-clown-business-card

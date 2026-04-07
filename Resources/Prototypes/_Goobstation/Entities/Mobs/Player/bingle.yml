@@ -18,13 +18,33 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+# This is for random skins
 - type: entity
-  name: "бінгл"
+  id: MobBingleRandom
+  parent: MarkerBase
+  name: bingle
+  suffix: Random
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Mobs/Bingle/bingle.rsi
+    state: alive
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: MobBingle
+        weight: 49    # 49/50
+      - id: MobTurkle
+        weight: 1     # 01/50
+
+# Base bingle
+- type: entity
+  name: bingle
   id: MobBingle
   parent: MobSpaceBasic
-  description: "бінгл"
+  description: bingle
   components:
   - type: Bingle
+    upgradedID: MobBingleUpgraded
   - type: GhostTakeoverAvailable
   - type: GhostRole
     name: ghost-role-information-bingle-name
@@ -55,7 +75,6 @@
       - Alive
       - Dead
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: alive
@@ -65,6 +84,7 @@
     bloodMaxVolume: 100
     bloodReagent: Nitrogen # by request
   - type: MeleeWeapon
+    altDisarm: false
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
@@ -79,11 +99,13 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2 # same as slime
     baseSprintSpeed : 4
+  - type: Sprinter
+    staminaDrainRate: 27 #fat legs
   - type: Stamina
     critThreshold: 120
-  - type: StaminaDamageOnHit # from stunbaton
-    damage: 15
-    overtime: 40
+  - type: StaminaDamageOnHit # Should consistently stamcrit in 3 hits, 4-5 against sec
+    damage: 25
+    overtime: 15
     sound: /Audio/Weapons/egloves.ogg
   - type: Damageable
     damageContainer: Biological
@@ -101,7 +123,8 @@
   - type: LanguageKnowledge
     speaks:
     - Bingle
-    understands: []
+    understands:
+    - TauCetiBasic
   - type: CollectiveMind
     defaultChannel: Binglemind
     respectAccents: true
@@ -151,7 +174,6 @@
       state: combat
       visible: false
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: Upgraded
@@ -171,3 +193,51 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: BingleUpgraded
+
+# Skin - turkle
+- type: entity
+  name: turkle
+  id: MobTurkle
+  parent: MobBingle
+  description: A bingle from foreign lands lost to time. Seems very proud of their homeland.
+  components:
+  - type: Bingle
+    upgradedID: MobTurkleUpgraded
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Goobstation/Mobs/Bingle/turkle.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: alive
+    - map: ["enum.BingleVisual.Upgraded"]
+      state: Upgraded
+      visible: false
+    - map: ["enum.BingleVisual.Combat"]
+      state: combat
+      visible: false
+  - type: NightVision
+    color: "#802000"
+    activateSound: null
+    deactivateSound: null
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#ad2a33"
+
+- type: entity
+  id: MobTurkleUpgraded
+  parent: MobBingleUpgraded
+  suffix: Upgraded
+  components:
+  - type: Bingle
+    upgraded: true
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Goobstation/Mobs/Bingle/turkle.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base", "movement" ]
+      state: Upgraded
+    - map: [ "enum.BingleVisual.Combat" ]
+      state: combat
+      visible: false
+

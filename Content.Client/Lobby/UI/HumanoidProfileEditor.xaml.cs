@@ -159,11 +159,13 @@ using System.Numerics;
 using Content.Client.Humanoid;
 using Content.Client.Lobby.UI.Loadouts;
 using Content.Client.Lobby.UI.Roles;
+using Content.Client._Pirate.Traits.UI; // Pirate: port and modified DV traits UI
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
+using Content.Shared._Pirate.Contractors.Prototypes; // Pirate - port EE contractors
 using Content.Pirate.UIKit.UserInterface.Lobby; // Pirate - Alternative Jobs
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
@@ -189,9 +191,11 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
-
+using Content.Goobstation.Common.CCVar; // Goob Station - Barks
+using Content.Goobstation.Common.Barks; // Goob Station - Barks
 namespace Content.Client.Lobby.UI
 {
     [GenerateTypedNameReferences]
@@ -207,6 +211,8 @@ namespace Content.Client.Lobby.UI
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
         private readonly LobbyUIController _controller;
+
+        private bool _suppressSelectors; // Pirate - port EE contractors
 
         private readonly SpriteSystem _sprite;
 
@@ -249,6 +255,10 @@ namespace Content.Client.Lobby.UI
         public HumanoidCharacterProfile? Profile;
 
         private List<SpeciesPrototype> _species = new();
+        // Pirate edit start - port EE contractors
+        private List<NationalityPrototype> _nationalies = new();
+        private List<EmployerPrototype> _employers = new();
+        // Pirate edit end - port EE contractors
 
         private List<(string, RequirementsSelector)> _jobPriorities = new();
 
@@ -262,8 +272,7 @@ namespace Content.Client.Lobby.UI
 
         private bool _isDirty;
 
-        [ValidatePrototypeId<GuideEntryPrototype>]
-        private const string DefaultSpeciesGuidebook = "Species";
+        private static readonly ProtoId<GuideEntryPrototype> DefaultSpeciesGuidebook = "Species";
 
         public event Action<List<ProtoId<GuideEntryPrototype>>>? OnOpenGuidebook;
 
@@ -381,6 +390,17 @@ namespace Content.Client.Lobby.UI
 
             #endregion Gender
 
+            // Goob Station
+            #region Barks
+
+            if (configurationManager.GetCVar(GoobCVars.BarksEnabled))
+            {
+                BarksContainer.Visible = true;
+                InitializeBarkVoice();
+            }
+
+            #endregion
+
             RefreshSpecies();
 
             SpeciesButton.OnItemSelected += args =>
@@ -392,10 +412,33 @@ namespace Content.Client.Lobby.UI
                 UpdateHeightWidthSliders(); // Goobstation: port EE height/width sliders
             };
 
+            // Pirate edit start - port EE contractors
+            #region Contractors
+
+            RefreshNationalities();
+            RefreshEmployers();
+
+            NationalityButton.OnItemSelected += args =>
+            {
+                if (_suppressSelectors)
+                    return;
+                NationalityButton.SelectId(args.Id);
+                SetNationality(_nationalies[args.Id].ID);
+            };
+
+            EmployerButton.OnItemSelected += args =>
+            {
+                if (_suppressSelectors)
+                    return;
+                EmployerButton.SelectId(args.Id);
+                SetEmployer(_employers[args.Id].ID);
+            };
+
+            #endregion Contractors
+            // Pirate edit end - port EE contractors
+
             // begin Goobstation: port EE height/width sliders
             #region Height and Width
-
-            var prototype = _species.Find(x => x.ID == Profile?.Species) ?? _species.First();
 
             UpdateHeightWidthSliders();
             UpdateDimensions(SliderUpdate.Both);
@@ -405,12 +448,14 @@ namespace Content.Client.Lobby.UI
 
             HeightReset.OnPressed += _ =>
             {
+                var prototype = _species.Find(x => x.ID == Profile?.Species) ?? _species.First();
                 HeightSlider.Value = prototype.DefaultHeight;
                 UpdateDimensions(SliderUpdate.Height);
             };
 
             WidthReset.OnPressed += _ =>
             {
+                var prototype = _species.Find(x => x.ID == Profile?.Species) ?? _species.First();
                 WidthSlider.Value = prototype.DefaultWidth;
                 UpdateDimensions(SliderUpdate.Width);
             };
@@ -426,6 +471,7 @@ namespace Content.Client.Lobby.UI
             };
 
             RgbSkinColorContainer.AddChild(_rgbSkinColorSelector = new ColorSelectorSliders());
+            _rgbSkinColorSelector.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv; // defaults color selector to HSV
             _rgbSkinColorSelector.OnColorChanged += _ =>
             {
                 OnSkinColorOnValueChanged();
@@ -599,6 +645,7 @@ namespace Content.Client.Lobby.UI
             #endregion Jobs
 
             TabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
+            TabContainer.SetTabTitle(3, Loc.GetString("trait-editor-title")); // Pirate: port and modified DV traits UI
 
             RefreshTraits();
 
@@ -639,6 +686,16 @@ namespace Content.Client.Lobby.UI
 
             SpeciesInfoButton.OnPressed += OnSpeciesInfoButtonPressed;
 
+            // Pirate start: port and modified DV traits UI
+            TraitsTab.OnTraitsChanged += traits =>
+            {
+                if (Profile == null)
+                    return;
+                Profile = Profile.WithTraitPreferences(traits);
+                SetDirty();
+            };
+            // Pirate end: port and modified DV traits UI
+
             UpdateSpeciesGuidebookIcon();
             IsDirty = false;
         }
@@ -677,114 +734,16 @@ namespace Content.Client.Lobby.UI
         /// <summary>
         /// Refreshes traits selector
         /// </summary>
+        // Pirate start: port and modified DV traits UI
         public void RefreshTraits()
         {
-            TraitsList.DisposeAllChildren();
-
-            var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => t.Cost).ToList(); // Pirate - Traits Rework
-            TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
-
-            if (traits.Count < 1)
-            {
-                TraitsList.AddChild(new Label
-                {
-                    Text = Loc.GetString("humanoid-profile-editor-no-traits"),
-                    FontColorOverride = Color.Gray,
-                });
+            if (Profile == null)
                 return;
-            }
 
-            // Setup model
-            Dictionary<string, List<string>> traitGroups = new();
-            List<string> defaultTraits = new();
-            traitGroups.Add(TraitCategoryPrototype.Default, defaultTraits);
-
-            foreach (var trait in traits)
-            {
-                if (trait.Category == null)
-                {
-                    defaultTraits.Add(trait.ID);
-                    continue;
-                }
-
-                if (!_prototypeManager.HasIndex(trait.Category))
-                    continue;
-
-                var group = traitGroups.GetOrNew(trait.Category);
-                group.Add(trait.ID);
-            }
-
-            // Create UI view from model
-            foreach (var (categoryId, categoryTraits) in traitGroups)
-            {
-                TraitCategoryPrototype? category = null;
-
-                if (categoryId != TraitCategoryPrototype.Default)
-                {
-                    category = _prototypeManager.Index<TraitCategoryPrototype>(categoryId);
-                    // Label
-                    TraitsList.AddChild(new Label
-                    {
-                        Text = Loc.GetString(category.Name),
-                        Margin = new Thickness(0, 10, 0, 0),
-                        StyleClasses = { StyleBase.StyleClassLabelHeading },
-                    });
-                }
-
-                List<TraitPreferenceSelector?> selectors = new();
-                var selectionCount = 0;
-
-                foreach (var traitProto in categoryTraits)
-                {
-                    var trait = _prototypeManager.Index<TraitPrototype>(traitProto);
-                    var selector = new TraitPreferenceSelector(trait);
-
-                    selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
-                    if (selector.Preference)
-                        selectionCount += trait.Cost;
-
-                    selector.PreferenceChanged += preference =>
-                    {
-                        if (preference)
-                        {
-                            Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
-                        }
-                        else
-                        {
-                            Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
-                        }
-
-                        SetDirty();
-                        RefreshTraits(); // If too many traits are selected, they will be reset to the real value.
-                    };
-                    selectors.Add(selector);
-                }
-
-                // Selection counter
-                if (category is { MaxTraitPoints: >= 0 })
-                {
-                    TraitsList.AddChild(new Label
-                    {
-                        Text = Loc.GetString("humanoid-profile-editor-trait-count-hint", ("current", selectionCount), ("max", category.MaxTraitPoints)),
-                        FontColorOverride = Color.Gray
-                    });
-                }
-
-                foreach (var selector in selectors)
-                {
-                    if (selector == null)
-                        continue;
-
-                    if (category is { MaxTraitPoints: >= 0 } &&
-                        selector.Cost + selectionCount > category.MaxTraitPoints)
-                    {
-                        selector.Checkbox.Label.FontColorOverride = Color.DarkGray; // Pirate - Traits Rework
-                    }
-
-                    TraitsList.AddChild(selector);
-                }
-            }
+            TraitsTab.SetSelectedTraits(Profile.TraitPreferences);
+            TraitsTab.UpdateConditions(Profile);
         }
+        // Pirate end: port and modified DV traits UI
 
         /// <summary>
         /// Refreshes the species selector.
@@ -817,6 +776,124 @@ namespace Content.Client.Lobby.UI
                 }
             }
         }
+        // Pirate edit start - port EE contractors
+        public void RefreshNationalities()
+        {
+            NationalityButton.Clear();
+            _nationalies.Clear();
+
+            var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
+
+            if (Profile != null && _prototypeManager.TryIndex(Profile.Nationality, out NationalityPrototype? currentNat))
+            {
+                if (!CheckRequirementsValid(currentNat.Requirements, prof))
+                {
+                    Profile = Profile.WithNationality(SharedHumanoidAppearanceSystem.DefaultNationality);
+                    prof = Profile;
+                    SetDirty();
+                }
+            }
+
+            _nationalies.AddRange(_prototypeManager.EnumeratePrototypes<NationalityPrototype>()
+                .Where(o =>
+                {
+                    var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
+                    return CheckRequirementsValid(o.Requirements, prof);
+                }));
+
+            _suppressSelectors = true;
+            try
+            {
+                // Ensure the currently saved nationality is present even if filtered out (avoid UI resetting to default).
+                if (Profile != null && !_nationalies.Any(n => n.ID == Profile.Nationality)
+                    && _prototypeManager.TryIndex(Profile.Nationality, out NationalityPrototype? savedNat))
+                {
+                    _nationalies.Insert(0, savedNat);
+                }
+
+                var selectedIndex = -1;
+                for (var i = 0; i < _nationalies.Count; i++)
+                {
+                    NationalityButton.AddItem(Loc.GetString(_nationalies[i].NameKey), i);
+                    if (selectedIndex < 0 && Profile?.Nationality == _nationalies[i].ID)
+                        selectedIndex = i;
+                }
+                if (selectedIndex >= 0)
+                    NationalityButton.SelectId(selectedIndex);
+            }
+            finally
+            {
+                _suppressSelectors = false;
+            }
+        }
+
+        public void RefreshEmployers()
+        {
+            EmployerButton.Clear();
+            _employers.Clear();
+
+            var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
+
+            if (Profile != null && _prototypeManager.TryIndex(Profile.Employer, out EmployerPrototype? currentEmp))
+            {
+                if (!CheckRequirementsValid(currentEmp.Requirements, prof))
+                {
+                    Profile = Profile.WithEmployer(SharedHumanoidAppearanceSystem.DefaultEmployer);
+                    prof = Profile;
+                    SetDirty();
+                }
+            }
+
+            _employers.AddRange(_prototypeManager.EnumeratePrototypes<EmployerPrototype>()
+                .Where(o =>
+                {
+                    var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
+                    return CheckRequirementsValid(o.Requirements, prof);
+                }));
+
+            _suppressSelectors = true;
+            try
+            {
+                // Preserve saved employer if filtered out.
+                if (Profile != null && !_employers.Any(e => e.ID == Profile.Employer)
+                    && _prototypeManager.TryIndex(Profile.Employer, out EmployerPrototype? savedEmp))
+                {
+                    _employers.Insert(0, savedEmp);
+                }
+
+                var selectedEmployer = -1;
+                for (var i = 0; i < _employers.Count; i++)
+                {
+                    EmployerButton.AddItem(Loc.GetString(_employers[i].NameKey), i);
+                    if (selectedEmployer < 0 && Profile?.Employer == _employers[i].ID)
+                        selectedEmployer = i;
+                }
+                if (selectedEmployer >= 0)
+                    EmployerButton.SelectId(selectedEmployer);
+            }
+            finally
+            {
+                _suppressSelectors = false;
+            }
+        }
+
+        private bool CheckRequirementsValid(IReadOnlyCollection<JobRequirement>? requirements, HumanoidCharacterProfile profile)
+        {
+            if (requirements == null || requirements.Count == 0)
+                return true;
+
+            var session = _playerManager.LocalSession;
+            var playTimes = session != null ? _requirements.GetPlayTimes(session) : new Dictionary<string, TimeSpan>();
+
+            foreach (var requirement in requirements)
+            {
+                if (!requirement.Check(_entManager, _prototypeManager, profile, playTimes, out _))
+                    return false;
+            }
+
+            return true;
+        }
+        // Pirate edit end - port EE contractors
 
         public void RefreshAntags()
         {
@@ -865,18 +942,45 @@ namespace Content.Client.Lobby.UI
                 selector.OnSelected += preference =>
                 {
                     Profile = Profile?.WithAntagPreference(antag.ID, preference == 0);
+                    RefreshTraits(); // Pirate: port and modified DV traits UI
                     SetDirty();
                 };
 
                 antagContainer.AddChild(selector);
 
-                antagContainer.AddChild(new Button()
+                var loadoutWindowBtn = new Button()
                 {
-                    Disabled = true,
                     Text = Loc.GetString("loadout-window"),
                     HorizontalAlignment = HAlignment.Right,
                     Margin = new Thickness(3f, 0f, 0f, 0f),
-                });
+                };
+
+                // Goob start
+                if (!_prototypeManager.TryIndex<RoleLoadoutPrototype>(LoadoutSystem.GetAntagPrototype(antag.ID), out var roleLoadoutProto))
+                {
+                    loadoutWindowBtn.Disabled = true;
+                }
+                else
+                {
+                    loadoutWindowBtn.OnPressed += _ =>
+                    {
+                        RoleLoadout? loadout = null;
+
+                        Profile?.Loadouts.TryGetValue(LoadoutSystem.GetAntagPrototype(antag.ID), out loadout);
+                        loadout = loadout?.Clone();
+
+                        if (loadout == null)
+                        {
+                            loadout = new RoleLoadout(roleLoadoutProto.ID);
+                            loadout.SetDefault(Profile, _playerManager.LocalSession, _prototypeManager);
+                        }
+
+                        OpenLoadout(null, loadout, roleLoadoutProto, Loc.GetString(antag.Name));
+                    };
+                }
+
+                antagContainer.AddChild(loadoutWindowBtn);
+                // Goob end
 
                 AntagList.AddChild(antagContainer);
             }
@@ -940,6 +1044,23 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public void SetProfile(HumanoidCharacterProfile? profile, int? slot)
         {
+            // Pirate changes start
+            if (profile != null)
+            {
+                var ckey = _playerManager.LocalSession?.Name;
+                if (ckey != null)
+                {
+                    var originalMarkings = profile.Appearance.Markings;
+                    var validMarkings = _markingManager.FilterValidMarkings(originalMarkings, profile.Species, profile.Sex, ckey);
+
+                    if (originalMarkings.Count != validMarkings.Count)
+                    {
+                        profile = profile.WithCharacterAppearance(profile.Appearance.WithMarkings(validMarkings));
+                    }
+                }
+            }
+            // Pirate changes end
+
             Profile = profile?.Clone();
             CharacterSlot = slot;
             IsDirty = false;
@@ -955,6 +1076,7 @@ namespace Content.Client.Lobby.UI
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateMarkings();
+            UpdateBarkVoice(); // Goob Station - Barks
             UpdateHairPickers();
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
@@ -966,6 +1088,8 @@ namespace Content.Client.Lobby.UI
             RefreshJobs();
             RefreshLoadouts();
             RefreshSpecies();
+            RefreshNationalities(); // Pirate - port EE contractors
+            RefreshEmployers(); // Pirate - port EE contractors
             RefreshTraits();
             RefreshFlavorText();
             ReloadPreview();
@@ -1001,9 +1125,9 @@ namespace Content.Client.Lobby.UI
             var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
             var page = DefaultSpeciesGuidebook;
             if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
-                page = species;
+                page = new ProtoId<GuideEntryPrototype>(species.Id); // Gross. See above todo comment.
 
-            if (_prototypeManager.TryIndex<GuideEntryPrototype>(DefaultSpeciesGuidebook, out var guideRoot))
+            if (_prototypeManager.TryIndex(DefaultSpeciesGuidebook, out var guideRoot))
             {
                 var dict = new Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry>();
                 dict.Add(DefaultSpeciesGuidebook, guideRoot);
@@ -1150,6 +1274,7 @@ namespace Content.Client.Lobby.UI
                         ReloadPreview();
 
                         UpdateJobPriorities();
+                        RefreshTraits(); // Pirate: port and modified DV traits UI
                         SetDirty();
                     };
 
@@ -1220,7 +1345,7 @@ namespace Content.Client.Lobby.UI
             UpdateAlternativeJobs(); // Pirate - Alternative Jobs
         }
 
-        private void OpenLoadout(JobPrototype? jobProto, RoleLoadout roleLoadout, RoleLoadoutPrototype roleLoadoutProto)
+        private void OpenLoadout(JobPrototype? jobProto, RoleLoadout roleLoadout, RoleLoadoutPrototype roleLoadoutProto, string? title = null)
         {
             _loadoutWindow?.Dispose();
             _loadoutWindow = null;
@@ -1234,7 +1359,7 @@ namespace Content.Client.Lobby.UI
 
             _loadoutWindow = new LoadoutWindow(Profile, roleLoadout, roleLoadoutProto, _playerManager.LocalSession, collection)
             {
-                Title = jobProto?.ID + "-loadout",
+                Title = Loc.GetString("loadout-window-title-loadout", ("job", $"{jobProto?.LocalizedName}")),
             };
 
             // Refresh the buttons etc.
@@ -1462,13 +1587,51 @@ namespace Content.Client.Lobby.UI
             RefreshLoadouts();
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
+            RefreshNationalities(); // Pirate - port EE contractors
+            RefreshEmployers(); // Pirate - port EE contractors
             ReloadPreview();
+            UpdateBarkVoice(); // Goob Station - Barks
             // begin Goobstation: port EE height/width sliders
             // Changing species provides inaccurate sliders without these
             UpdateHeightWidthSliders();
             UpdateWeight();
             // end Goobstation: port EE height/width sliders
+            RefreshTraits(); // Goobstation: ported from DeltaV - Species trait exclusion
         }
+
+        // Pirate edit start - port EE contractors
+        private void SetNationality(string newNationality)
+        {
+            Profile = Profile?.WithNationality(newNationality);
+            UpdateCharacterRequired();
+            IsDirty = true;
+            ReloadProfilePreview();
+            ReloadClothes();
+        }
+
+        private void SetEmployer(string newEmployer)
+        {
+            Profile = Profile?.WithEmployer(newEmployer);
+            UpdateCharacterRequired();
+            IsDirty = true;
+            ReloadProfilePreview();
+            ReloadClothes();
+        }
+
+        private void UpdateCharacterRequired()
+        {
+            // Refresh requirement-gated UI after profile changes that may affect availability.
+            RefreshNationalities();
+            RefreshEmployers();
+            RefreshJobs();
+        }
+
+        private void ReloadClothes()
+        {
+            // Minimal implementation: rebuild the preview entity respecting the ShowClothes toggle.
+            ReloadPreview();
+        }
+        // Pirate edit end - port EE contractors
 
         private void SetName(string newName)
         {
@@ -1487,7 +1650,7 @@ namespace Content.Client.Lobby.UI
             SetDirty();
         }
 
-        // begin Goobstation: port EE height/width sliders
+        // Goob Station - Start
         private void SetProfileHeight(float height)
         {
             Profile = Profile?.WithHeight(height);
@@ -1501,7 +1664,12 @@ namespace Content.Client.Lobby.UI
             ReloadProfilePreview();
             IsDirty = true;
         }
-        // end Goobstation: port EE height/width sliders
+        private void SetBarkVoice(BarkPrototype newVoice)
+        {
+            Profile = Profile?.WithBarkVoice(newVoice);
+            IsDirty = true;
+        }
+        // Goob Station - End
 
         public bool IsDirty
         {
@@ -1725,13 +1893,18 @@ namespace Content.Client.Lobby.UI
 
             var species = _species.Find(x => x.ID == Profile?.Species) ?? _species.First();
 
+            // we increase the min/max values of the sliders before we set their value, just so that we don't accidentally clamp down on a value loaded from a profile when we shouldn't
+            HeightSlider.MinValue = 0;
+            HeightSlider.MaxValue = 2;
+            HeightSlider.SetValueWithoutEvent(Profile?.Height ?? species.DefaultHeight);
             HeightSlider.MinValue = species.MinHeight;
             HeightSlider.MaxValue = species.MaxHeight;
-            HeightSlider.SetValueWithoutEvent(Profile?.Height ?? species.DefaultHeight);
 
+            WidthSlider.MinValue = 0;
+            WidthSlider.MaxValue = 2;
+            WidthSlider.SetValueWithoutEvent(Profile?.Width ?? species.DefaultWidth);
             WidthSlider.MinValue = species.MinWidth;
             WidthSlider.MaxValue = species.MaxWidth;
-            WidthSlider.SetValueWithoutEvent(Profile?.Width ?? species.DefaultWidth);
 
             var height = MathF.Round(species.AverageHeight * HeightSlider.Value);
             HeightLabel.Text = Loc.GetString("humanoid-profile-editor-height-label", ("height", (int) height));
@@ -1772,8 +1945,8 @@ namespace Content.Client.Lobby.UI
             heightValue = Math.Clamp(heightValue, species.MinHeight, species.MaxHeight);
             widthValue = Math.Clamp(widthValue, species.MinWidth, species.MaxWidth);
 
-            HeightSlider.Value = heightValue;
-            WidthSlider.Value = widthValue;
+            HeightSlider.SetValueWithoutEvent(heightValue);
+            WidthSlider.SetValueWithoutEvent(widthValue);
 
             SetProfileHeight(heightValue);
             SetProfileWidth(widthValue);
@@ -1794,14 +1967,12 @@ namespace Content.Client.Lobby.UI
 
             var species = _species.Find(x => x.ID == Profile.Species) ?? _species.First();
             //  TODO: Remove obsolete method
-            _prototypeManager.Index(species.Prototype).TryGetComponent<FixturesComponent>(out var fixture);
+            _prototypeManager.Index(species.Prototype).TryGetComponent<FixturesComponent>(out var fixture, _entManager.ComponentFactory);
 
             if (fixture != null)
             {
-                var radius = fixture.Fixtures["fix1"].Shape.Radius;
-                var density = fixture.Fixtures["fix1"].Density;
                 var avg = (Profile.Width + Profile.Height) / 2;
-                var weight = MathF.Round(MathF.PI * MathF.Pow(radius * avg, 2) * density);
+                var weight = FixtureSystem.GetMassData(fixture.Fixtures["fix1"].Shape, fixture.Fixtures["fix1"].Density).Mass * avg;
                 WeightLabel.Text = Loc.GetString("humanoid-profile-editor-weight-label", ("weight", (int) weight));
             }
             else // Whelp, the fixture doesn't exist, guesstimate it instead
@@ -1821,17 +1992,13 @@ namespace Content.Client.Lobby.UI
             {
                 return;
             }
-            var hairMarking = Profile.Appearance.HairStyleId switch
-            {
-                HairStyles.DefaultHairStyle => new List<Marking>(),
-                _ => new() { new(Profile.Appearance.HairStyleId, new List<Color>() { Profile.Appearance.HairColor }) },
-            };
+            var hairMarking = Profile.Appearance.HairStyleId == HairStyles.DefaultHairStyle
+                ? new List<Marking>()
+                : new() { new(Profile.Appearance.HairStyleId, new List<Color>() { Profile.Appearance.HairColor }) };
 
-            var facialHairMarking = Profile.Appearance.FacialHairStyleId switch
-            {
-                HairStyles.DefaultFacialHairStyle => new List<Marking>(),
-                _ => new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }) },
-            };
+            var facialHairMarking = Profile.Appearance.FacialHairStyleId == HairStyles.DefaultFacialHairStyle
+                ? new List<Marking>()
+                : new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }) };
 
             HairStylePicker.UpdateData(
                 hairMarking,

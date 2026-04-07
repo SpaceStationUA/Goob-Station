@@ -20,6 +20,7 @@ using Content.Shared.Power;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Speech;
+using Content.Shared.Speech.Components;
 using Content.Shared.Telephone;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -132,7 +133,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     {
         base.Update(frameTime);
 
-        var query = EntityManager.EntityQueryEnumerator<TelephoneComponent>();
+        var query = EntityQueryEnumerator<TelephoneComponent>();
         while (query.MoveNext(out var uid, out var telephone))
         {
             var entity = new Entity<TelephoneComponent>(uid, telephone);
@@ -498,6 +499,6 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public bool IsTelephonePowered(Entity<TelephoneComponent> entity)
     {
-        return this.IsPowered(entity, EntityManager) || !entity.Comp.RequiresPower;
+        return this.IsPowered(entity, EntityManager);
     }
 }

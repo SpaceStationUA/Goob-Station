@@ -88,6 +88,18 @@ namespace Content.Shared.Localizations
             _loc.AddFunction(cultureEn, "PLAYTIME", FormatPlaytime);
             _loc.AddFunction(cultureUa, "MAKEPLURAL", FormatMakePlural); // Ukrainian translation
             _loc.AddFunction(cultureUa, "MANY", FormatMany); // Ukrainian translation
+
+            // Pirate - Localization should not affect data/prototype parsing.
+            // Robust localization sets CultureInfo.CurrentCulture to the UI culture (e.g. uk-UA),
+            // but content YAML/prototype numbers always use '.' as the decimal separator.
+            // Some serializers use TryParse without CultureInfo.InvariantCulture, which can make values like "0.0"
+            // fail to parse and even crash the YAML linter via recursive fallbacks.
+            //
+            // Keep UI culture for localization, but force numeric culture to be invariant for deterministic parsing.
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            CultureInfo.CurrentUICulture = culture;
         }
 
         private ILocValue FormatMany(LocArgs args)

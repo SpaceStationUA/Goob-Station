@@ -40,7 +40,19 @@ ghostrole-prophet-name = Неотесаний Пророк
 ghostrole-stalker-name = Переслідувач з плоті
 ghostrole-rustwalker-name = Іржавий ходок
 ghostrole-ghoul-desc = Допоможіть своєму призивачу досягти вознесіння.
-ghostrole-prophet-desc = Допоможіть своєму призивачу досягти вознесіння. Підключайте інших вірян до Зв'язку Мансуса.
+ghostrole-prophet-desc = Допоможіть вашому закликателю досягти вознесіння. Підключайте інших віруючих до Зв'язку Мансусу. Пасивно лікуйте єретиків і елдритських істот.
 ghostrole-stalker-desc = Допоможіть своєму призивачу досягти вознесіння. Телепортуйтеся та саботуйте освітлення екіпажу.
 ghostrole-rustwalker-desc = Допоможіть своєму прикликачу досягти вознесіння. Поширюйте іржу всюди.
 ghostrole-ghoul-rules = Ви - [color=red][bold]Командний Антагоніст[/bold][/color] разом із тим, хто вас викликав, та іншими потойбічними істотами.
+
+ghostrole-fire-shark-name = Вогняна акула
+ghostrole-fire-shark-desc = Допоможіть своєму призивачу досягти вознесіння. Спалюйте своїх жертв.
+ghostrole-stargazer-name = Зорегляд
+ghostrole-stargazer-desc = Допоможіть своєму прикликачу сіяти хаос всюди.
+ghostrole-flesh-mimic-name = М'ясний Імітатор
+ghostrole-flesh-mimic-desc = Допоможіть вашому закликателю досягти вознесіння. Майте на увазі, що ви вмираєте з часом.
+heretic-ghoul-briefing-start = Вас призвав у цей світ {CAPITALIZE(THE($ent))}!
+heretic-ghoul-briefing-start-noname = Вас призвали у цей світ надприродні сили.
+heretic-ghoul-briefing-end = Виконуйте накази своїх господарів незважаючи ні на що.
+
+    використовуйте +m в чаті для доступу до зв'язку мансусу.

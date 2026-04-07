@@ -43,6 +43,11 @@
   - MopItem
   - Holoprojector
   - WetFloorSign
+  - WireBrush
+  - PhotoCamera # Pirate: camera
+  - CameraFilm # Pirate: camera
+  - DrinkCoffeepotPirate # Pirate: coffeemaker
+  - DrinkCoffeeCupPirate # Pirate: coffeemaker
 
 - type: latheRecipePack
   id: ServiceBoardsStatic

@@ -12,10 +12,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "система глобального позиціонування"
+  name: global positioning system
   parent: BaseItem
   id: HandheldGPSBasic
-  description: "Допомагає загубленим космонавтам знаходити шлях через планети з 2016 року."
+  description: Helping lost spacemen find their way through the planets since 2016.
   components:
   - type: Sprite
     sprite: Objects/Devices/gps.rsi
@@ -24,7 +24,7 @@
     - state: active
   - type: Item
     sprite: Objects/Devices/gps.rsi
-  - type: HandheldGPS
+  - type: GPS # Goob Station - what if gps didnt suck doo doo balls
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Steel: 200
@@ -32,20 +32,17 @@
   - type: Tag
     tags:
     - GPS
-  - type: RadarConsole
-    maxRange: 256
-    followEntity: true
   - type: ActivatableUI
-    key: enum.RadarConsoleUiKey.Key
+    key: enum.GpsUiKey.Key # Goob Station - what if gps didnt suck doo doo balls
     inHandsOnly: true
     singleUser: true
   - type: UserInterface
     interfaces:
-      enum.RadarConsoleUiKey.Key:
-        type: RadarConsoleBoundUserInterface
+      enum.GpsUiKey.Key: # Goob Station - what if gps didnt suck doo doo balls
+        type: GpsBoundUserInterface
 
 - type: entity #why does this exist? Well, "global positioning system" is too long to fit in the cyborg's hand slot.
-  name: "Інтегрований GPS"
+  name: Integrated GPS
   parent: HandheldGPSBasic
   id: BorgHandheldGPSBasic
-  description: "Мініатюризована глобальна система позиціонування для використання в кіборгах."
+  description: A miniaturized Global Positioning System for use in cyborg units.

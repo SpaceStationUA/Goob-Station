@@ -19,10 +19,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: [ ClothingOuterBaseMedium, ClothingOuterStorageToggleableBase, AllowSuitStorageClothing, BaseMagicalContraband ]
+  parent: [ ClothingOuterStorageToggleableBase, AllowSuitStorageClothing, BaseMagicalContraband ]
   id: ClothingOuterArmorHeretic
-  name: "зловісні обладунки"
-  description: "Пошарпаний, запилений комплект обладунків. Дивні очі вишикувалися зсередини."
+  name: ominous armor
+  description: A ragged, dusty set of robes. Strange eyes line the inside.
   components:
   - type: UnholyItem
   - type: Sprite
@@ -47,6 +47,12 @@
         Heat: 0.5
         Caustic: 0.5
         Holy: 1.25
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0.0
+      NerveDamage: 0.0
   - type: ExplosionResistance
     damageCoefficient: 0.25
   - type: ToggleableClothing # Goobstation - Modsuits change
@@ -60,6 +66,11 @@
   - type: HideClothingLayerClothing
     hiddenSlots:
     - jumpsuit
+  - type: FireProtection
+    reduction: 0.4
+  - type: TemperatureProtection
+    heatingCoefficient: 0.5
+    coolingCoefficient: 0.5
 
 - type: entity
   parent: ClothingOuterArmorHeretic
@@ -118,10 +129,24 @@
       head: ClothingHeadHatHoodHereticBlade
 
 - type: entity
+  parent: ClothingOuterArmorHeretic
+  id: ClothingOuterArmorHereticCosmos
+  suffix: Cosmos
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/cosmos_armor.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Goobstation/Heretic/Clothing/OuterClothing/cosmos_armor.rsi
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingHeadHatHoodHereticCosmos
+
+- type: entity
   parent: [ ClothingOuterBaseMedium, ClothingOuterStorageToggleableBase, AllowSuitStorageClothing, BaseMagicalContraband ]
   id: ClothingOuterArmorCloakVoid
-  name: "порожній плащ"
-  description: "Чорний, як смола, не відбиває світла. Рунічні символи вишикувані зовні. З кожним спалахом ви втрачаєте розуміння того, що бачите."
+  name: void cloak
+  description: Black like tar, reflecting no light. Runic symbols line the outside. With each flash you lose comprehension of what you are seeing.
   components:
   # - type: UnholyItem # This should only be active when cloak is visible. Can't simply ensure/remove this component on
   # cloak toggle due to goobmod. Should be done when heretic is mored to goobmod probably.
@@ -149,6 +174,12 @@
         Heat: 0.7
         Caustic: 0.7
         # Holy: 1.25
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0.0
+      NerveDamage: 0.0
   - type: ExplosionResistance
     damageCoefficient: 0.7
   - type: ToggleableClothing # Goobstation - Modsuits change

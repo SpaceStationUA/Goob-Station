@@ -15,10 +15,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "Burner"
+  name: Burner
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleBurner
-  description: "Великокаліберна синдикатна зброя під набій .50 калібру, здатна стріляти протиматеріальними та фугасними набоями."
+  description: An obscene fully-automatic anti-materiel rifle that slings .50 downrange as long as you can shoulder it. You don't want to know how much it costs. Feeds from .50 Anti-Materiel magazines.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Rifles/burner.rsi
@@ -27,6 +27,8 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Goobstation/Objects/Weapons/Guns/Rifles/burner.rsi
   - type: Gun
     fireRate: 3
     soundGunshot:
@@ -67,10 +69,10 @@
     - 0,0,5,2
 
 - type: entity
-  name: "M-90"
+  name: M-90
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleM90
-  description: "Модифікація M-90gl, у якій видалено вбудований гранатомет. Використовує гвинтівкові набої .20."
+  description: A cheaper revision of the M-90GL that omits the integrated grenade launcher. Feeds from .20 Rifle magazines.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Rifles/m90.rsi
@@ -113,10 +115,10 @@
     fireRate: 6
 
 - type: entity
-  name: "Annie"
+  name: Annie
   parent: [BaseCentcommContraband, BaseWeaponRifle]
   id: WeaponRifleAnnie
-  description: "Звір, розроблений, щоб нести тягар нездійсненних місій. Використовує гвинтівкові набої .30."
+  description: A beast designed to shoulder the weight of impossible missions, and the pride of the Emergency Response corps. Feeds from .30 Rifle magazines.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Rifles/annie.rsi
@@ -170,10 +172,10 @@
   - type: Appearance
 
 - type: entity
-  name: "WSPR"
+  name: WSPR
   parent: [BaseSyndicateContraband, BaseWeaponRifle]
   id: WeaponRifleWSPR
-  description: "Передова гвинтівка від Cybersun, універсальна, надійна та схвалена Синдикатом. Використовує безгільзові патрони 9.5мм магнум."
+  description: An obscure rifle from Cybersun designed for covert missions in target-rich environments. Silenced, subsonic, and caseless, for the operative that leaves no trace. Feeds from 9.5mm SMG magazines.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Rifles/wspr.rsi

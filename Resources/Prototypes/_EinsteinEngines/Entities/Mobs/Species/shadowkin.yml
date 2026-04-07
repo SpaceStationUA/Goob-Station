@@ -6,6 +6,7 @@
 # SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
 # SPDX-FileCopyrightText: 2025 vorpuscl <198003781+vorpuscl@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 ThanosDeGraf <richardgirgindontstop@gmail.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -14,7 +15,7 @@
   parent:
   - BaseMobSpeciesOrganic
   id: MobShadowkinBase
-  name: "Уріст Макшедоу"
+  name: Urist McShadow
   abstract: true
   components:
   - type: LanguageKnowledge # Einstein Engines - Language
@@ -76,12 +77,16 @@
   - type: Perishable
   - type: FireVisuals
     alternateState: Standing
-  - type: LayingDown
+  - type: Crawler
   - type: Hunger
   - type: Thirst
   - type: Carriable
   - type: HumanoidAppearance
     species: Shadowkin
+    customBaseLayers: # Pirate: glowing eyes patch
+      Eyes: # Pirate: glowing eyes patch
+        id: MobShadowkinEyes # Pirate: glowing eyes patch
+        shader: unshaded # Pirate: glowing eyes patch
   - type: Icon
     sprite: _EinsteinEngines/Mobs/Species/Shadowkin/parts.rsi
     state: full
@@ -139,8 +144,9 @@
     drawdepth: Mobs
     # scale: 0.85, 0.85 # Goobstation: port EE height/width sliders
     layers:
-      - map: ["enum.HumanoidVisualLayers.Chest"]
+      - map: [ "enum.HumanoidVisualLayers.TailBehind" ] # Pirate - port Floofstation custom layers
       - map: ["enum.HumanoidVisualLayers.Groin"]
+      - map: ["enum.HumanoidVisualLayers.Chest"]
       - map: ["enum.HumanoidVisualLayers.Head"]
       - map: ["enum.HumanoidVisualLayers.Snout"]
       - map: ["enum.HumanoidVisualLayers.Eyes"]
@@ -149,10 +155,10 @@
       - map: ["enum.HumanoidVisualLayers.LArm"]
       - map: ["enum.HumanoidVisualLayers.RLeg"]
       - map: ["enum.HumanoidVisualLayers.LLeg"]
-#      shader: StencilClear
-#      sprite: Mobs/Species/Human/parts.rsi
-#      state: l_leg
-        shader: StencilMask
+      - shader: StencilClear
+        sprite: Mobs/Species/Human/parts.rsi
+        state: l_leg
+      - shader: StencilMask
       - map: ["enum.HumanoidVisualLayers.StencilMask"]
         sprite: Mobs/Customization/masking_helpers.rsi
         state: full
@@ -191,6 +197,7 @@
       - map: ["pocket1"]
       - map: ["pocket2"]
       - map: ["enum.HumanoidVisualLayers.Tail"]
+      - map: [ "enum.HumanoidVisualLayers.TailOversuit" ] # Pirate - port Floofstation custom layers
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
@@ -222,6 +229,11 @@
     - DoorBumpOpener
     - AnomalyHost
     - ShadowkinEmotes
+  - type: Respirator #Goob edit start - Lore Accurate Shadowkin superdense iron blood.
+    updateInterval: 6
+    saturationLoss: 0.2
+    maxSaturation: 30
+    saturation: 30 #Goob Edit end
   - type: Shadowkin # Pirate psionic start
   - type: Psionic
     mindbreakingFeedback: shadowkin-blackeye
@@ -236,10 +248,14 @@
   parent: MobHumanDummy
   id: MobShadowkinDummy
   categories: [ HideSpawnMenu ]
-  description: "Манекен шедовкіна, призначений для використання в налаштуванні персонажа."
+  description: A dummy shadowkin meant to be used in character setup.
   components:
     - type: HumanoidAppearance
       species: Shadowkin
+      customBaseLayers: # Pirate: glowing eyes patch
+        Eyes: # Pirate: glowing eyes patch
+          id: MobShadowkinEyes # Pirate: glowing eyes patch
+          shader: unshaded # Pirate: glowing eyes patch
     - type: Sprite
       netsync: false
       noRot: true
@@ -256,9 +272,9 @@
         - map: ["enum.HumanoidVisualLayers.LArm"]
         - map: ["enum.HumanoidVisualLayers.RLeg"]
         - map: ["enum.HumanoidVisualLayers.LLeg"]
-#     - shader: StencilClear
-#      sprite: Mobs/Species/Human/parts.rsi
-#      state: l_leg
+        - shader: StencilClear
+          sprite: Mobs/Species/Human/parts.rsi
+          state: l_leg
         - shader: StencilMask
           map: ["enum.HumanoidVisualLayers.StencilMask"]
           sprite: Mobs/Customization/masking_helpers.rsi

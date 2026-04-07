@@ -22,6 +22,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Goobstation.Common.SecondSkin;
 
 namespace Content.Shared._Shitmed.Medical.Surgery.Traumas.Systems;
 
@@ -55,6 +56,7 @@ public partial class TraumaSystem
             TargetType = comp.TargetType,
             TraumaType = comp.TraumaType,
             TraumaSeverity = comp.TraumaSeverity,
+            MarkingId = comp.MarkingId, // DOWNSTREAM-TPirates: face mutilation
         };
 
         args.State = state;
@@ -70,6 +72,7 @@ public partial class TraumaSystem
         component.TargetType = state.TargetType;
         component.TraumaType = state.TraumaType;
         component.TraumaSeverity = state.TraumaSeverity;
+        component.MarkingId = state.MarkingId; // DOWNSTREAM-TPirates: face mutilation
     }
 
 
@@ -291,6 +294,12 @@ public partial class TraumaSystem
             RandomOrganTraumaChance((target, woundable), woundInflicter))
             traumaList.Add(TraumaType.OrganDamage);
 
+        #region DOWNSTREAM-TPirates: face mutilation
+        if (woundInflicter.Comp.AllowedTraumas.Contains(TraumaType.FaceMutilation) &&
+            RandomFaceMutilationChance((target, woundable), woundInflicter))
+            traumaList.Add(TraumaType.FaceMutilation);
+        #endregion
+
         //if (RandomVeinsTraumaChance(woundable))
         //    traumaList.Add(TraumaType.VeinsDamage);
 
@@ -301,17 +310,22 @@ public partial class TraumaSystem
     {
         var deduction = FixedPoint2.Zero;
 
+        var ev = new GetSecondSkinDeductionEvent((int) coverage, (int) traumaType);
+        RaiseLocalEvent(body, ref ev);
+        deduction += ev.Deduction;
+
         foreach (var ent in _inventory.GetHandOrInventoryEntities(body, SlotFlags.WITHOUT_POCKET))
         {
             if (!TryComp<ArmorComponent>(ent, out var armour))
                 continue;
 
-            if (!inflicter.Comp.AllowArmourDeduction.Contains(traumaType) && armour.TraumaDeductions[traumaType] >= 0)
+            var armorDeduction = armour.TraumaDeductions.GetValueOrDefault(traumaType, FixedPoint2.Zero); // DOWNSTREAM-TPirates: face mutilation
+            if (!inflicter.Comp.AllowArmourDeduction.Contains(traumaType) && armorDeduction >= 0) // DOWNSTREAM-TPirates: face mutilation
                 continue;
 
             if (armour.ArmorCoverage.Contains(coverage))
             {
-                deduction += armour.TraumaDeductions[traumaType];
+                deduction += armorDeduction; // DOWNSTREAM-TPirates: face mutilation
             }
         }
 
@@ -321,12 +335,12 @@ public partial class TraumaSystem
     public FixedPoint2 GetTraumaChanceDeduction(
         Entity<TraumaInflicterComponent> inflicter,
         EntityUid body,
-        EntityUid traumaTarget,
+        Entity<WoundableComponent> traumaTarget,
         FixedPoint2 severity,
         TraumaType traumaType,
         BodyPartType coverage)
     {
-        var deduction = FixedPoint2.Zero;
+        var deduction = traumaTarget.Comp.TraumaDeductions.GetValueOrDefault(traumaType, FixedPoint2.Zero);
         deduction += GetArmourChanceDeduction(body, inflicter, traumaType, coverage);
 
         var traumaDeductionEvent = new TraumaChanceDeductionEvent(severity, traumaType, 0);
@@ -513,24 +527,40 @@ public partial class TraumaSystem
         if (deduction == 1)
             return false;
 
-        var bonePenalty = FixedPoint2.New(0.1);
+        var bonePenalty = FixedPoint2.New(1); // higher means less chance to delimb
+        if (TryComp<BonelessComponent>(target.Owner, out var bonelessComp))
+            bonePenalty = bonelessComp.BonePenalty;
 
-        // Broken bones increase the chance of your limb getting delimbed
+        // Healthy bones decrease the chance of your limb getting delimbed
         var bone = target.Comp.Bone.ContainedEntities.FirstOrNull();
+        var multiplier = 1f;
         if (bone != null && TryComp<BoneComponent>(bone, out var boneComp))
         {
-            if (boneComp.BoneSeverity < BoneSeverity.Cracked)
-                return false;
-
-            bonePenalty = 1 - boneComp.BoneIntegrity / boneComp.IntegrityCap;
+            switch (boneComp.BoneSeverity)
+            {
+                case BoneSeverity.Normal:
+                    multiplier *= 0.3f; // decreases delimb chance by 70%
+                    break;
+                case BoneSeverity.Damaged:
+                    multiplier *= 0.6f; // 40%
+                    break;
+                case BoneSeverity.Cracked:
+                    multiplier *= 1f; // 0%
+                    break;
+                case BoneSeverity.Broken:
+                    multiplier *= 1.2f; // increases by 20%
+                    break;
+                default:
+                    break;
+            }
         }
 
         var chance =
             FixedPoint2.Clamp(
-                1 - target.Comp.WoundableIntegrity / target.Comp.IntegrityCap * bonePenalty
+                (1f - (MathF.Pow(target.Comp.WoundableIntegrity.Float(), 1.3f) / target.Comp.IntegrityCap - 1f) * bonePenalty) * multiplier
                 - deduction + woundInflicter.Comp.TraumasChances[TraumaType.Dismemberment],
                 0,
-                0.7); // Maximum 70% chance to dismember, because it's a bit too free otherwise
+                1);
 
         var result = _random.Prob((float) chance);
         return result;
@@ -611,6 +641,7 @@ public partial class TraumaSystem
 
         if (trauma.Comp.TraumaTarget != null)
         {
+            TryRemoveFaceMutilationMarkings(trauma); // DOWNSTREAM-TPirates: face mutilation
             var ev = new TraumaBeingRemovedEvent(trauma, trauma.Comp.TraumaTarget.Value, trauma.Comp.TraumaSeverity, trauma.Comp.TraumaType);
             RaiseLocalEvent(inflicterWound, ref ev);
 
@@ -665,6 +696,12 @@ public partial class TraumaSystem
                 case TraumaType.NerveDamage:
                     targetChosen = target;
                     break;
+
+                #region DOWNSTREAM-TPirates: face mutilation
+                case TraumaType.FaceMutilation:
+                    targetChosen = target;
+                    break;
+                #endregion
             }
 
             if (targetChosen == null)
@@ -749,6 +786,12 @@ public partial class TraumaSystem
                         Logger.Debug($"Amputating woundable.");
                     }
                     break;
+
+                #region DOWNSTREAM-TPirates: face mutilation
+                case TraumaType.FaceMutilation:
+                    ApplyFaceMutilationTrauma(target, targetChosen.Value, inflicter);
+                    break;
+                #endregion
             }
 
             //Log.Debug($"A new trauma (Raw Severity: {severity}) was created on target: {ToPrettyString(target)}. Type: {trauma}.");

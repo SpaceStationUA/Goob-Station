@@ -1,0 +1,153 @@
+- type: entity
+  parent: SmokeGrenade
+  id: SmokeGrenadeLove
+  name: love grenade
+  description: A grenade that releases a cloud of love-inducing smoke. Spreads feelings of affection and warmth.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    color: "#FF6FA3"
+  - type: SmokeOnTrigger
+    duration: 20
+    spreadAmount: 40
+    solution:
+      reagents:
+      - ReagentId: WitchLove
+        Quantity: 25
+
+- type: entity
+  parent: SmokeGrenade
+  id: SmokeGrenadeCourage
+  name: courage grenade
+  description: A grenade that releases a cloud of courage-inducing smoke. Boosts confidence and bravery.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    color: "#FF4500"
+  - type: SmokeOnTrigger
+    duration: 20
+    spreadAmount: 40
+    solution:
+      reagents:
+      - ReagentId: AlchemistCourage
+        Quantity: 25
+
+- type: entity
+  parent: SmokeGrenade
+  id: SmokeGrenadeSerenity
+  name: serenity grenade
+  description: A grenade that releases a cloud of calming smoke. Induces peace and tranquility.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    color: "#87CEEB"
+  - type: SmokeOnTrigger
+    duration: 20
+    spreadAmount: 40
+    solution:
+      reagents:
+      - ReagentId: WitchSerenity
+        Quantity: 25
+
+- type: entity
+  parent: SmokeGrenade
+  id: SmokeGrenadeInspiration
+  name: inspiration grenade
+  description: A grenade that releases a cloud of inspiring smoke. Sparks creativity and motivation.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    color: "#FFD700"
+  - type: SmokeOnTrigger
+    duration: 20
+    spreadAmount: 40
+    solution:
+      reagents:
+      - ReagentId: WitchInspiration
+        Quantity: 25
+
+- type: entity
+  parent: SmokeGrenade
+  id: SmokeGrenadeWisdom
+  name: wisdom grenade
+  description: A grenade that releases a cloud of wisdom-inducing smoke. Enhances understanding and insight.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    color: "#8B4513"
+  - type: SmokeOnTrigger
+    duration: 20
+    spreadAmount: 40
+    solution:
+      reagents:
+      - ReagentId: WitchWisdom
+        Quantity: 25
+
+- type: entity
+  parent: SmokeGrenade
+  id: SmokeGrenadeHope
+  name: hope grenade
+  description: A grenade that releases a cloud of hopeful smoke. Fills hearts with optimism and possibility.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    color: "#90EE90"
+  - type: SmokeOnTrigger
+    duration: 20
+    spreadAmount: 40
+    solution:
+      reagents:
+      - ReagentId: WitchHope
+        Quantity: 25
+
+- type: entity
+  parent: SmokeGrenade
+  id: SmokeGrenadeDetermination
+  name: determination grenade
+  description: A grenade that releases a cloud of determination-inducing smoke. Strengthens resolve and willpower.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    color: "#DC143C"
+  - type: SmokeOnTrigger
+    duration: 20
+    spreadAmount: 40
+    solution:
+      reagents:
+      - ReagentId: AlchemistDetermination
+        Quantity: 25
+
+- type: entity
+  parent: SmokeGrenade
+  id: SmokeGrenadeCompassion
+  name: compassion grenade
+  description: A grenade that releases a cloud of compassionate smoke. Awakens empathy and kindness.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    color: "#FFB6C1"
+  - type: SmokeOnTrigger
+    duration: 20
+    spreadAmount: 40
+    solution:
+      reagents:
+      - ReagentId: WitchCompassion
+        Quantity: 25
+
+- type: entity
+  parent: SmokeGrenade
+  id: SmokeGrenadeClarity
+  name: clarity grenade
+  description: A grenade that releases a cloud of clarity-inducing smoke. Sharpens focus and mental acuity.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    color: "#E0FFFF"
+  - type: SmokeOnTrigger
+    duration: 20
+    spreadAmount: 40
+    solution:
+      reagents:
+      - ReagentId: WitchClarity
+        Quantity: 25
+

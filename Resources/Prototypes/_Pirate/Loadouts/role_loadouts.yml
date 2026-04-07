@@ -1,3 +1,27 @@
+# Miscellaneous
+
+# Command
+- type: roleLoadout
+  id: JobAdministrativeAssistant
+  groups:
+  - GroupTankHarness
+  - AdminAssistantHeadset
+  - AdminAssistantJumpsuit
+  - AdminAssistantShoes
+  - CommonBackpack
+  - Glasses
+  - Survival
+  - Trinkets
+  - Animals
+  - GroupSpeciesBreathTool
+
+# Civilian
+
+# Cargo
+
+# Engineering
+
+# Science
 - type: roleLoadout
   id: JobForensicMantis
   groups:
@@ -15,16 +39,172 @@
   - Trinkets
   - GroupSpeciesBreathTool
 
+# Security
+
+# Medical
+
+# Wildcards
+
+# Interdyne
 - type: roleLoadout
-  id: JobAdministrativeAssistant
+  id: JobCaptainInterdyne
   groups:
   - GroupTankHarness
-  - AdminAssistantHeadset
-  - AdminAssistantJumpsuit
-  - AdminAssistantShoes
-  - CommonBackpack
-  - Glasses
-  - Survival
-  - Trinkets
+  - InterdyneOfficerHead
+  - MedicalMask
+  - InterdyneCommandHeadset
+  - SyndicateSuit
+  - InterdyneBack
+  - InterdyneClothing
+  - InterdyneSurgery
+  - InterdyneOfficerGloves
+  - InterdyneShoes
+  - InterdyneOfficerStamp
+  - SecurityMelee # Goobstation
+  - SeniorSecurityWeapon # Pirate
+  - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
+  
+- type: roleLoadout
+  id: JobInterdyneDeputy
+  groups:
+  - GroupTankHarness
+  - InterdyneHead
+  - MedicalMask
+  - InterdyneCommandHeadset
+  - SyndicateSuit
+  - InterdyneBack
+  - InterdyneClothing
+  - InterdyneSurgery
+  - InterdyneOfficerGloves
+  - InterdyneShoes
+  - InterdyneDeputyStamp
+  - SecurityMelee # Goobstation
+  - SeniorSecurityWeapon # Pirate
+  - SurvivalSecurity
+  - Animals
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobInterdynePilot
+  groups:
+  - GroupTankHarness
+  - InterdyneHead
+  - MedicalMask
+  - InterdyneCommandHeadset
+  - SyndicateSuit
+  - InterdyneBack
+  - InterdyneClothing
+  - InterdyneSurgery
+  - InterdyneOfficerGloves
+  - InterdyneShoes
+  - SecurityMelee # Goobstation
+  - SeniorSecurityWeapon # Pirate
+  - SurvivalSecurity
+  - Animals
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobInterdyne
+  groups:
+  - GroupTankHarness
+  - InterdyneHead
+  - MedicalMask
+  - InterdyneCommandHeadset
+  - SyndicateSuit
+  - InterdyneBack
+  - InterdyneClothing
+  - InterdyneShoes
+  - SecurityMelee # Goobstation
+  - SeniorSecurityWeapon # Pirate
+  - SurvivalSecurity
+  - Animals
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout # Функція parent не допомогла, тому просто продублював речі
+  id: JobInterdyneMed
+  groups:
+  - GroupTankHarness
+  - InterdyneHead
+  - MedicalMask
+  - InterdyneCommandHeadset
+  - SyndicateSuit
+  - InterdyneBack
+  - InterdyneClothing
+  - InterdyneShoes
+  - SecurityMelee # Goobstation
+  - SeniorSecurityWeapon # Pirate
+  - SurvivalSecurity
+  - Animals
+  - GroupSpeciesBreathTool
+  
+- type: roleLoadout
+  id: JobInterdyneEngineer
+  groups:
+  - GroupTankHarness
+  - InterdyneHead
+  - MedicalMask
+  - InterdyneCommandHeadset
+  - SyndicateSuit
+  - InterdyneBack
+  - InterdyneClothing
+  - InterdyneShoes
+  - SecurityMelee # Goobstation
+  - SeniorSecurityWeapon # Pirate
+  - SurvivalSecurity
+  - Animals
+  - GroupSpeciesBreathTool
+  
+- type: roleLoadout
+  id: JobInterdyneSecure
+  groups:
+  - GroupTankHarness
+  - InterdyneHead
+  - MedicalMask
+  - InterdyneCommandHeadset
+  - SyndicateSuit
+  - InterdyneBack
+  - InterdyneClothing
+  - InterdyneShoes
+  - SecurityMelee # Goobstation
+  - SeniorSecurityWeapon # Pirate
+  - SurvivalSecurity
+  - Animals
+  - GroupSpeciesBreathTool
+  
+- type: roleLoadout
+  id: JobInterdyneService
+  groups:
+  - GroupTankHarness
+  - InterdyneHead
+  - MedicalMask
+  - InterdyneCommandHeadset
+  - SyndicateSuit
+  - InterdyneBack
+  - InterdyneClothing
+  - InterdyneShoes
+  - SecurityMelee # Goobstation
+  - SeniorSecurityWeapon # Pirate
+  - SurvivalSecurity
+  - Animals
+  - GroupSpeciesBreathTool
+  
+- type: roleLoadout
+  id: JobInterdyneShaftMiners
+  groups:
+  - GroupTankHarness
+  - InterdyneHead
+  - MedicalMask
+  - InterdyneCommandHeadset
+  - SyndicateSuit
+  - InterdyneBack
+  - InterdyneClothing
+  - InterdyneShoes
+  - SecurityMelee # Goobstation
+  - SeniorSecurityWeapon # Pirate
+  - SurvivalSecurity
+  - Animals
+  - GroupSpeciesBreathTool
+  
+# Other

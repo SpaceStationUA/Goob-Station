@@ -50,7 +50,8 @@ public partial class SharedGunSystem
 
     protected virtual (EntityUid Entity, IShootable) GetSolutionShot(EntityUid uid, SolutionAmmoProviderComponent component, EntityCoordinates position)
     {
-        var ent = Spawn(component.Prototype, position);
+        // Pirate: gunplay
+        var ent = PredictedSpawnAtPosition(component.Prototype, position);
         return (ent, EnsureShootable(ent));
     }
 

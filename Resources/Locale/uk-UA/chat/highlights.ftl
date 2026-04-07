@@ -1,14 +1,12 @@
 # Command
-highlights-captain = Капітан, "Кеп", Місток, Командування
-highlights-head-of-personnel = Голова Персоналу, "ГП", Служба, Місток, Командування
-highlights-chief-engineer = Головний інженер, "ГІ", Інженерія, Інженер, "Інж", Місток, Командування
-highlights-chief-medical-officer = Головний лікар, "ГЛ", МедВідсік, "Мед", Місток, Командування
-highlights-head-of-security = Голова служби безпеки, "ГСБ", Безпека, "СБ", Місток, Командування
-highlights-quartermaster = Квартирмейстер, "КМ", Карго, Місток, Командування
-highlights-research-director = Науковий керівник, "НК", Наука, "НА", Місток, Командування
-
-# Security
-highlights-detective = Детектив, "Дет", Безпека, "СБ"
+highlights-captain = Капітан, "Кеп", Місток, "Команда"
+highlights-head-of-personnel = Глава Персоналу, "ГП", Сервіс, Місток, "Команда"
+highlights-chief-engineer = Старший Інженер, "СІ", Інженерка, Інженер, "Інжі", Місток, "Команда"
+highlights-chief-medical-officer = Головний Лікар, "ГЛ", Медбей, "Мед", Місток, "Команда"
+highlights-head-of-security = Глава Служби Безпеки, "ГСБ", Безпека, "СБ", Місток, "Команда"
+highlights-quartermaster = Квартирмейстер, "КМ", Карго, Місток, "Команда"
+highlights-research-director = Директор досліджень, "ДД", Наука, Міст, "Командування
+highlights-detective = Детектив, "Дек", Безпека, "СБ"
 highlights-security-cadet = Кадет служби безпеки, Офіцер, Кадет, Безпека, "СБ"
 highlights-security-officer = Офіцер служби безпеки, Офіцер, Безпека, "СБ"
 highlights-warden = Наглядач, "Нагляд", Безпека, "СБ"
@@ -55,3 +53,6 @@ highlights-psychologist = Психолог, Психологія
 highlights-personal-ai = Персональний ШІ, "пШІ"
 highlights-cyborg = Кіборг, Силікон, Борг
 highlights-station-ai = Станційний ШІ, Силікон, "ШІ", "сШІ"
+
+highlights-nanotrasen-representative = Представник Нанотрейзен, "Центральне Командування", "ПНТ", "НТ", "ЦК", Місток, "Команда"
+highlights-blueshield-officer = Офіцер Блакитного Щита, "Центральне Командування", "ОБЩ", "ЦК", Міст, "Командування

@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Ported from tgstation sprites",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "coffeemaker_nopot_nocart"
+    },
+    {
+      "name": "coffeemaker_pot_empty"
+    },
+    {
+      "name": "coffeemaker_pot_full"
+    },
+    {
+      "name": "coffeemaker_cartridge"
+    },
+    {
+      "name": "coffeemaker_impressa"
+    },
+    {
+      "name": "pot_empty"
+    },
+    {
+      "name": "pot_full"
+    },
+    {
+      "name": "grinder_full"
+    },
+    {
+      "name": "grinder_half"
+    },
+    {
+      "name": "cups_3"
+    },
+    {
+      "name": "cups_2"
+    },
+    {
+      "name": "cups_1"
+    },
+    {
+      "name": "extras_1"
+    },
+    {
+      "name": "extras_2"
+    },
+    {
+      "name": "extras_3"
+    }
+  ]
+}

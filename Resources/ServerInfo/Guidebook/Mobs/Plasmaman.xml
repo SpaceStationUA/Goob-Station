@@ -1,74 +1,72 @@
 <Document>
-  # Plasmamen
+  # Плазмолюди
 
   <Box>
     <GuideEntityEmbed Entity="MobPlasmaman" Caption=""/>
   </Box>
 
-  They breathe plasma, and oxygen is highly toxic to them when inhaled.
-  Being exposed to oxygen sets them on fire.
+  Вони дихають плазмою, а кисень для них дуже токсичний при вдиханні.
+  Перебування в кисневому середовищі підпалює їх.
 
-  To prevent ignition, they wear sealed suits made up of an envirosuit (in the jumpsuit slot) and a [bold]spaceworthy[/bold] envirosuit helmet.
-  Other suits like EVA suits, vacsuits, tacsuits and hardsuits will also seal them from oxygen exposure.
+  Щоб запобігти займанню, вони носять герметичні костюми, що складаються з екокостюма (у слоті комбінезона) та [bold]придатного для космосу[/bold] шолома до нього.
+  Інші костюми, такі як скафандри для ВКД, вакуумні костюми та важкі скафандри, також захистять їх від впливу кисню.
 
-  They don't experience hunger nor thirst.
-  They don't have blood and cannot bleed out.
+  Вони не відчувають голоду та спраги.
+  У них немає крові, і вони не можуть стекти кров'ю.
 
-  Due to their skeleton body, they can consume Milk to gain a positive moodlet and slowly heal Brute, Heat, Shock, and Caustic damage.
-  They can also consume Plasma to gain a bigger positive moodlet and heal every damage type faster, except for Cellular damage.
+  Завдяки своєму скелетному тілу, вони можуть пити молоко, щоб отримати позитивний настрій і повільно лікувати грубу, термічну, шокову та їдку шкоду.
+  Вони також можуть споживати плазму, щоб отримати більший позитивний настрій і швидше лікувати всі типи шкоди, окрім клітинної.
 
   <Box>
     <GuideEntityEmbed Entity="DrinkCartonMilk" />
     <GuideEntityEmbed Entity="SheetPlasma1" />
   </Box>
 
-  They infuse their fists with plasma dust that combusts when they punch, dealing [color=orange]5 Heat[/color] and [color=red]2.25 Blunt[/color] damage. However, each successful punch deals [color=orange]1 Heat[/color] damage to their hands.
+  Вони наповнюють свої кулаки плазмовим пилом, який спалахує при ударі, завдаючи [color=orange]5 термічної[/color] та [color=red]2.25 тупої[/color] шкоди. Однак кожен успішний удар завдає [color=orange]1 термічної[/color] шкоди їхнім рукам.
 
-  Plasmamen with the traits [bold]Claws[/bold], [bold]Talons[/bold] or [bold]Natural Weapons Removal[/bold] have less unarmed damage but don't take self-damage from unarmed attacks.
+  Плазмолюди з рисами [bold]Кігті[/bold], [bold]Пазурі[/bold] або [bold]Видалення природної зброї[/bold] мають меншу шкоду без зброї, але не отримують шкоди від власних атак без зброї.
 
-  They take [color=#1e90ff]25% less Piercing, 20% less Poison, and 15% less Slash damage[/color],
-  and are [color=#8658fc]immune to Radiation and Cold damage[/color],
-  but take [color=#ffa500]50% more Blunt and 50% more Heat damage[/color].
+  Вони отримують [color=#1e90ff]на 25% менше проникаючої, на 20% менше отруйної та на 15% менше ріжучої шкоди[/color],
+  і [color=#8658fc]невразливі до радіаційної та холодової шкоди[/color],
+  але отримують [color=#ffa500]на 50% більше тупої та на 50% більше термічної шкоди[/color].
 
-  Due to their [color=#8658fc]Cold immunity[/color], they can live in cold environments without the need of a winter coat.
+  Завдяки своїй [color=#8658fc]невразливості до холоду[/color], вони можуть жити в холодному середовищі без потреби в зимовому одязі.
 
-  They have a slightly lower density than the average species. This results in weaknesses such as but not limited to: being slightly more vulnerable to being shoved, picked up, and thrown by Space Wind, and having a harder time pulling heavy objects.
+  Вони мають трохи меншу щільність, ніж середньостатистичний вид. Це призводить до таких слабкостей, як, але не обмежуючись: вони трохи вразливіші до штовхання, підняття та кидання космічним вітром, і їм важче тягнути важкі предмети.
 
-  ## Equipment
+  ## Спорядження
   <Box>
-    <GuideEntityEmbed Entity="ClothingUniformEnvirosuit" Caption="envirosuit"/>
-    <GuideEntityEmbed Entity="ClothingHeadEnvirohelm" Caption="envirosuit helmet"/>
+    <GuideEntityEmbed Entity="ClothingUniformEnvirosuit" Caption="екокостюм"/>
+    <GuideEntityEmbed Entity="ClothingHeadEnvirohelm" Caption="шолом до екокостюма"/>
     <GuideEntityEmbed Entity="DoubleEmergencyPlasmaTankFilled" />
   </Box>
 
-  All Plasmamen start with an envirosuit, an envirosuit helmet, and a plasma internals tank.
+  Усі плазмолюди починають з екокостюмом, шоломом до нього та балоном з плазмою для дихання.
 
-  Their envirosuits contain a [color=#1e90ff]self-extinguisher[/color] with limited charges, which they can activate when they are on fire
-  and wearing their envirosuit helmet. The self-extinguisher needs to recharge between uses.
+  Їхні екокостюми містять [color=#1e90ff]само-вогнегасник[/color] з обмеженими зарядами, який вони можуть активувати, коли горять і носять свій шолом. Само-вогнегасник потребує перезарядки між використаннями.
 
   <Box HorizontalAlignment="Stretch">
-    Cartridge refills of the envirosuit's self-extinguisher can be bought in [bold]Loadouts[/bold], or printed at the medical techfab after research.
-    A refill makes a recharging self-extinguisher immediately usable again.
+    Запасні картриджі для само-вогнегасника екокостюма можна придбати в [bold]Спорядженні[/bold] або надрукувати в медичному техфабі після дослідження.
+    Заміна робить само-вогнегасник, що перезаряджається, знову негайно придатним до використання.
     <GuideEntityEmbed Entity="EnvirosuitExtinguisherRefill" />
   </Box>
 
-  Their envirosuit helmets are [bold]spaceworthy[/bold] and provide welding protection. The helmet's visor can be lit up like a flashlight, using the inserted power cell as a battery.
-  They cannot eat nor drink without taking off their envirosuit helmet.
+  Їхні шоломи [bold]придатні для космосу[/bold] і забезпечують захист від зварювання. Візор шолома може підсвічуватися як ліхтарик, використовуючи вставлений елемент живлення як батарею.
+  Вони не можуть їсти чи пити, не знімаючи свого шолома.
 
-  The plasma internals tank lasts roughly an hour before needing to be replaced or refilled.
+  Балона з плазмою для дихання вистачає приблизно на годину, після чого його потрібно замінити або заправити.
 
-  ## Medical Treatment
+  ## Медичне лікування
   <Box>
     <GuideEntityEmbed Entity="StasisBed" />
   </Box>
 
-  Before performing surgery on a Plasmaman, their envirosuit needs to be unequipped first, which is disastrous in an oxygenated environment.
+  Перед проведенням операції на плазмолюдині, її екокостюм потрібно спочатку зняти, що є катастрофічним у кисневому середовищі.
 
-  To get around this, the Plasmaman can be buckled to a [bold]stasis bed[/bold] before removing their envirosuit
-  to prevent them from self-igniting throughout the surgical procedure.
+  Щоб обійти це, плазмолюдину можна пристебнути до [bold]стазис-ліжка[/bold] перед зняттям екокостюма, щоб запобігти її самозайманню під час хірургічної процедури.
 
   <Box HorizontalAlignment="Stretch">
-    Their envirosuit helmets prevents them from eating pills, but their envirosuits allow chemicals to be injected through them.
+    Їхні шоломи не дозволяють їм їсти таблетки, але їхні екокостюми дозволяють вводити хімікати через них.
     <GuideEntityEmbed Entity="Syringe" Caption=""/>
   </Box>
 

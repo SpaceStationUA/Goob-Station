@@ -35,10 +35,6 @@ air-alarm-ui-mode-fill = Заповнення
 air-alarm-ui-mode-panic = Всасування (Паніка)
 air-alarm-ui-mode-none = Немає
 
-## Widgets
-
-### General
-
 air-alarm-ui-widget-enable = Ввімкнено
 air-alarm-ui-widget-copy = Копіювати налаштування на подібні пристрої
 air-alarm-ui-widget-copy-tooltip = Копіює налаштування цього пристрою на всі пристрої на цій вкладці повітряної тривоги.
@@ -56,9 +52,7 @@ air-alarm-ui-vent-internal-bound-label = Внутрішнє обмеження
 
 air-alarm-ui-scrubber-pump-direction-label = Напрямок
 air-alarm-ui-scrubber-volume-rate-label = Швидкість (Л)
-air-alarm-ui-scrubber-wide-net-label = Широка мережа (WideNet)
-
-### Thresholds
+air-alarm-ui-scrubber-wide-net-label = Широка мережа
 
 air-alarm-ui-sensor-gases = Гази
 air-alarm-ui-sensor-thresholds = Пороги
@@ -81,3 +75,14 @@ air-alarm-ui-window-listing-title = {$address} : {-air-alarm-state-name(state:$s
 air-alarm-ui-thresholds-copy = Копіювати пороги на всі пристрої
 air-alarm-ui-thresholds-copy-tooltip = Копіює порогові значення датчиків цього пристрою на всі пристрої в цій вкладці повітряної тривоги.
 air-alarm-ui-window-mode-select-locked-label = [bold][color=red] Помилка селектора режимів! [/color][/bold]
+air-alarm-ui-title = Повітряна сигналізація
+air-alarm-ui-pump-direction-siphoning = Відкачування
+air-alarm-ui-pump-direction-scrubbing = Очищення
+air-alarm-ui-pump-direction-releasing = Випуск
+air-alarm-ui-pressure-bound-nobound = Без обмежень
+air-alarm-ui-pressure-bound-internalbound = Внутрішнє обмеження
+air-alarm-ui-pressure-bound-externalbound = Зовнішнє обмеження
+air-alarm-ui-pressure-bound-both = Обидва
+air-alarm-ui-widget-gas-filters = Газові фільтри
+air-alarm-ui-scrubber-select-all-gases-label = Вибрати всі
+air-alarm-ui-scrubber-deselect-all-gases-label = Скасувати вибір усіх

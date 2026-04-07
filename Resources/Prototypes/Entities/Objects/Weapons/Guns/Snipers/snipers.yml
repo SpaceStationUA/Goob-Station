@@ -68,10 +68,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "BaseWeaponSniper"
+  name: BaseWeaponSniper
   parent: BaseItem
   id: BaseWeaponSniper
-  description: "Корінцевий зубастий і пагонистий."
+  description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
@@ -130,10 +130,10 @@
 
 # Goobstation - Start - I decided to put it here, because it changes Hristov.
 - type: entity
-  name: "БазовийСнайперськийМагазин"
+  name: BaseMagazineSniper
   parent: [BaseItem, BaseGunWieldable]
   id: BaseWeaponSniperMagazine
-  description: "Корінцевий зубастий і пагонистий."
+  description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
@@ -192,41 +192,67 @@
 # Goobstation - End
 
 - type: entity
-  name: "Кардашев-Мосін"
+  name: Kardashev-Mosin
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband]
   id: WeaponSniperMosin
-  description: "Справжня реліквія, Кардашев-Мосін служив майже в кожному збройному конфлікті з моменту свого створення 670 років тому. Конструкція гвинтівки з ковзним затвором залишається практично ідентичною до свого початкового дизайну, чи то для полювання, снайперської стрільби, чи для нескінченної окопної війни. Заряджається 10 патронами калібру .30."
+  description: A true relic, the Kardashev-Mosin has served in nearly every armed conflict since its creation 670 years ago. The bolt-action design of the rifle remains virtually identical to its original design, whether used for hunting, sniping, or endless trench warfare. Loads 10 rounds of .30 Rifle.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
-  - type: Item  # Goob edit start
-    size: Large
-    storedRotation: 45
-  - type: Gun
-    fireRate: 1.2
-  - type: AltFireMelee
-    attackType: Heavy
+    layers:
+    - state: base
+    - state: base1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: base
+    inHandsFillBaseName: -fill-
+    inHandsMaxFillLevels: 1
+    equippedFillBaseName: -fill-
+    equippedMaxFillLevels: 1
   - type: MeleeWeapon
+    wideAnimationRotation: -135
+    animationRotation: -135 # WWDP
     damage:
       types:
-       Slash: 6
-       Piercing: 7
+        Piercing: 12
     angle: 0
-    animationRotation: -135 # WWDP
-    wideAnimationRotation: -135
     animation: WeaponArcThrust
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
-  - type: MeleeRequiresWield # Goob edit end
+  - type: MeleeRequiresWield
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 2
+  - type: MeleeChemicalInjector
+    solution: melee
+  - type: RefillableSolution
+    solution: melee
+  - type: InjectableSolution
+    solution: melee
+  - type: SolutionTransfer
+    maxTransferAmount: 2
+  - type: Sharp
+    butcherDelayModifier: 2 #It's a bayonet
   - type: GunRequiresWield
   - type: StaticPrice
     price: 500
+  - type: Item  # Goob edit
+    size: Large
+    storedRotation: 45
+  - type: ScannableForPoints # goob edit
+    points: 2
 
 - type: entity
-  name: "Христов"
+  name: Hristov
   parent: [BaseWeaponSniperMagazine, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperHristov
-  description: "Портативна протитанкова гвинтівка. Стріляє бронебійними 14,5 мм снарядами. Використовує боєприпаси калібру .60."
+  description: A portable anti-materiel rifle for when you need to make someone regret their life choices from a safe distance. Comes with an integrated long-range scope. Feeds from .60 Anti-Materiel magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
@@ -258,10 +284,10 @@
     price: 3500
 
 - type: entity
-  name: "мушкет"
+  name: musket
   parent: [ BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband ]
   id: Musket
-  description: "Це мало бути в музеї задовго до вашого народження. Використовує набої .60 калібру."
+  description: This should've been in a museum long before you were born. Loads one round of .60 Anti-Materiel.
   components:
   - type: Sharp
   - type: Item
@@ -297,10 +323,10 @@
   - type: GunRequiresWield
 
 - type: entity
-  name: "крем'яний пістолет"
+  name: flintlock pistol
   parent: [BaseWeaponSniper, BaseMajorContraband]
   id: WeaponPistolFlintlock
-  description: "Супутник пірата. Йо-хо-хо! Використовує патрони .45 magnum."
+  description: A pirate's companion. Yarrr! Loads one round of .45 Magnum.
   components:
   - type: Gun
     minAngle: 0

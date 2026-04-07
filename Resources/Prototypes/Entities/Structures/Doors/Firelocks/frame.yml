@@ -58,11 +58,11 @@
 - type: entity
   id: FirelockFrame
   parent: BaseStructureDynamic
-  name: "рама вогневого шлюзу"
-  description: "Це рама вогневого шлюзу"
+  name: firelock frame
+  description: That is a firelock frame.
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/firelock.rsi # Pirate edit
     layers:
     - state: frame1
       map: [ "enum.ConstructionVisuals.Layer" ]

@@ -1,9 +1,0 @@
-- type: marking
-  id: VarenHairJudy
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vulpkanin, Human]
-  playerRestriction: [Vareniko]
-  sprites:
-  - sprite: _Pirate/Mobs/Customization/varen_hair.rsi
-    state: judyHair

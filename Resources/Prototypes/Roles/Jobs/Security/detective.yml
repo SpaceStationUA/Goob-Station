@@ -72,10 +72,32 @@
   - !type:RoleTimeRequirement
     role: JobSecurityOfficer
     time: 18000 #5 hrs
+  - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - MovementImpaired
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+  # Pirate contractor start
+  - !type:CharacterEmployerRequirement
+    employers:
+    - NanoTrasen
+    - ZavodskoiInterstellar
+    - PMCG
+  # Pirate contractor end
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  guides: # goobstation
+  - Forensics
+  - Security
+  - DetectiveSOP
   goobcoins: 30 #Goob content
   access:
   - Security
@@ -106,6 +128,8 @@
     - ForensicPad
     - ForensicScanner
     - ClothingMaskGasSecurity # Goobstation
+    - PhotoCameraFilled # Pirate: camera
+    - CameraFilm # Pirate: camera
 
 - type: chameleonOutfit
   id: DetectiveChameleonOutfit

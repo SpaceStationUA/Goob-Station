@@ -66,7 +66,7 @@ job-name-chaplain = Капелан
 job-name-botanist = Ботанік
 job-name-bartender = Бармен
 ## goob edit - epic passengers
-job-name-passenger = Асистент
+job-name-passenger = Пасажир
 job-name-salvagespec = Утилізатор
 job-name-station-ai = ШІ станції
 job-name-qm = Квартирмейстер
@@ -82,10 +82,6 @@ job-name-ertjanitor = Прибиральник КШР
 job-name-boxer = Боксер
 job-name-zookeeper = Доглядач зоопарку
 job-name-visitor = Відвідувач
-
-# невикористовувані роботи
-# вони потрібні для підказок значків роботи в ID карті агента
-# Я залишаю їх для можливостей рольової гри
 job-name-geneticist = Генетик
 job-name-no-id = Без ID
 job-name-prisoner = В'язень
@@ -133,7 +129,7 @@ JobMedicalIntern = Медичний інтерн
 JobMime = Мім
 JobMusician = Музикант
 JobParamedic = Парамедик
-JobPassenger = Асистент
+JobPassenger = Пасажир
 JobPsychologist = Психолог
 JobQuartermaster = Квартирмейстер
 JobReporter = Репортер
@@ -150,3 +146,11 @@ JobTechnicalAssistant = Технічний асистент
 JobVisitor = Відвідувач
 JobWarden = Наглядач
 JobZookeeper = Доглядач зоопарку
+
+job-name-cluwne = Клууня
+job-name-security-clown = Клоун безпеки
+job-name-command-maid = Покоївка командування
+job-name-party-maker = Організатор вечірок
+JobCommandMaid = Покоївка командування
+JobPartyMaker = Організатор вечірок
+JobSecurityClown = Клоун безпеки

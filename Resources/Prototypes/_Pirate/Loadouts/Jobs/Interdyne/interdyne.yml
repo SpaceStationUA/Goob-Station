@@ -1,0 +1,103 @@
+# Head
+- type: loadout
+  id: LoadoutInterdyneWhiteOfficer
+  equipment:
+    head: ClothingHeadHatInterdyneOfficerWhite
+- type: loadout
+  id: LoadoutInterdyneOfficer
+  equipment:
+    head: ClothingHeadHatInterdyneOfficer
+- type: loadout
+  id: LoadoutInterdyneBeret
+  equipment:
+    head: ClothingHeadHatBeretInterdyneWhite
+# Neck
+# Ears
+- type: loadout
+  id: LoadoutHeadsetInterdyneCommand
+  equipment:
+    ears: ClothingHeadsetInterdyneCommand
+- type: loadout
+  id: LoadoutHeadsetInterdyneCommandAlt
+  equipment:
+    ears: ClothingHeadsetInterdyneCommandAlt
+# Звичайна гарнітура
+- type: loadout
+  id: LoadoutHeadsetInterdyne
+  equipment:
+    ears: ClothingHeadsetInterdyne
+- type: loadout
+  id: LoadoutHeadsetAltInterdyne
+  equipment:
+    ears: ClothingHeadsetAltInterdyne
+# Uniform
+- type: loadout
+  id: LoadoutJumpsuitOperative
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+- type: loadout
+  id: LoadoutJumpskirtOperative
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtOperative
+# Back
+- type: loadout
+  id: LoadoutBackpackInterdyne
+  equipment:
+    back: ClothingBackpackInterdyne
+- type: loadout
+  id: LoadoutBackpackSatchelInterdyne
+  equipment:
+    back: ClothingBackpackSatchelInterdyne
+- type: loadout
+  id: LoadoutBackpackDuffelInterdyne
+  equipment:
+    back: ClothingBackpackDuffelInterdyne
+- type: loadout
+  id: LoadoutBackpackMessengerBaseInterdyne
+  equipment:
+    back: ClothingBackpackMessengerBaseInterdyne
+# OuterClothing
+- type: loadout
+  id: LoadoutCoatInterdyneJacket
+  equipment:
+    outerClothing: ClothingOuterCoatInterdyneJacket
+- type: loadout
+  id: LoadoutCoatInterdyneBlack
+  equipment:
+    outerClothing: ClothingOuterCoatInterdyneBlack
+- type: loadout
+  id: LoadoutCoatInterdyneWhite
+  equipment:
+    outerClothing: ClothingOuterCoatInterdyneWhite
+# Gloves
+- type: loadout
+  id: LoadoutGlovesInterdyneCombat
+  equipment:
+    gloves: ClothingHandsGlovesCombat
+- type: loadout
+  id: LoadoutGlovesInterdyneCombatMed
+  equipment:
+    gloves: ClothingHandsGlovesCombatNitrile
+# Shoes
+# ID
+# Eyes
+# Belt
+- type: loadout
+  id: LoadoutClothingBeltCombatSurgeryInterdyne
+  equipment:
+    belt: ClothingBeltCombatSurgeryAdvancedFilledInterdyneGreen
+
+#Інше
+- type: loadout
+  id: LoadoutRubberStampOfficerInterdyne
+  equipment:
+    back: RubberStampOfficerInterdyne
+- type: loadout
+  id: LoadoutRubberStampDeputyInterdyne
+  equipment:
+    back: RubberStampDeputyInterdyne
+
+- type: loadout
+  id: LoadoutEncryptionKeyInterdyne
+  equipment:
+    pocket1: EncryptionKeyInterdyne

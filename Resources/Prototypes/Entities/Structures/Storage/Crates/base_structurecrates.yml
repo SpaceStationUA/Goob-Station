@@ -59,8 +59,8 @@
   parent: BaseStructureDynamic
   id: CrateGeneric
   categories: [ HideSpawnMenu ]
-  name: "ящик"
-  description: "Великий контейнер для речей."
+  name: crate
+  description: A large container for items.
   components:
   - type: Animateable
   - type: Transform
@@ -151,6 +151,9 @@
     containers:
       - entity_storage
   - type: RequireProjectileTarget
+  - type: Tag
+    tags:
+      - Crate
 
 - type: entity
   parent: CrateGeneric
@@ -215,3 +218,5 @@
     materialComposition:
       Steel: 125
   - type: RecyclableOnUnlock #Goobstation - Recycle update
+  - type: Paintable
+    group: CrateSecure

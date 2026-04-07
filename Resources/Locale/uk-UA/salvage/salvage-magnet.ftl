@@ -13,6 +13,7 @@ salvage-magnet-resources = {$resource ->
     [OreQuartz] Кварц
     [OreSalt] Сіль
     [OreGold] Золото
+    [OreTitanium] Титан
     [OreSilver] Срібло
     [OrePlasma] Плазма
     [OreUranium] Уран

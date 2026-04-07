@@ -9,6 +9,11 @@
 using Content.Goobstation.Shared.Vehicles;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+#region DOWNSTREAM-TPirates: vehicle overlay fix
+using Robust.Client.Utility;
+using Robust.Shared.Maths;
+using System;
+#endregion
 
 namespace Content.Goobstation.Client.Vehicles;
 
@@ -16,7 +21,8 @@ public sealed class VehicleSystem : SharedVehicleSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
-    [Dependency] private readonly SpriteSystem _sprites = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!; // DOWNSTREAM-TPirates: vehicle overlay fix
 
     public override void Initialize()
     {
@@ -25,51 +31,64 @@ public sealed class VehicleSystem : SharedVehicleSystem
         SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnMove);
     }
 
-    private void OnAppearanceChange(EntityUid uid, VehicleComponent comp, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(Entity<VehicleComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null)
+        if (args.Sprite == null
+            || !_appearance.TryGetData(ent, VehicleState.Animated, out bool animated)
+            || !TryComp<SpriteComponent>(ent, out var spriteComp))
             return;
 
-        if (!_appearance.TryGetData<bool>(uid, VehicleState.Animated, out bool animated))
+        SpritePos(ent);
+
+        if(!_sprite.TryGetLayer((ent,spriteComp),0,out var layer, false))
             return;
 
-        if (!TryComp<SpriteComponent>(uid, out var spriteComp))
-            return;
-
-        SpritePos(uid, comp);
-        spriteComp.LayerSetAutoAnimated(0, animated);
+        _sprite.LayerSetAutoAnimated(layer, animated);
     }
 
-    private void OnMove(EntityUid uid, VehicleComponent component, ref MoveEvent args)
+    private void OnMove(Entity<VehicleComponent> ent, ref MoveEvent args)
     {
-        SpritePos(uid, component);
+        SpritePos(ent);
     }
 
-    private void SpritePos(EntityUid uid, VehicleComponent comp)
+    private void SpritePos(Entity<VehicleComponent> ent)
     {
-        if (!TryComp<SpriteComponent>(uid, out var spriteComp))
+        if (!TryComp<SpriteComponent>(ent, out var spriteComp)
+            || !_appearance.TryGetData(ent, VehicleState.DrawOver, out bool drawOver)) // DOWNSTREAM-TPirates: vehicle overlay fix
             return;
 
-        if (!_appearance.TryGetData<bool>(uid, VehicleState.DrawOver, out bool depth))
+        _sprite.SetDrawDepth((ent, spriteComp), (int)Content.Shared.DrawDepth.DrawDepth.Objects);
+
+        if (!drawOver || ent.Comp.RenderOver == VehicleRenderOver.None) // DOWNSTREAM-TPirates: vehicle overlay fix
             return;
 
-        spriteComp.DrawDepth = (int)Content.Shared.DrawDepth.DrawDepth.Objects;
-
-        if (comp.RenderOver == VehicleRenderOver.None)
-            return;
-
-        var eye = _eye.CurrentEye;
-        Direction vehicleDir = (Transform(uid).LocalRotation + eye.Rotation).GetCardinalDir();
-
-        VehicleRenderOver renderOver = (VehicleRenderOver)(1 << (int)vehicleDir);
-
-        if ((comp.RenderOver & renderOver) == renderOver)
+        #region DOWNSTREAM-TPirates: vehicle overlay fix
+        // Get the sprite's visual direction using the engine's logic
+        var worldRot = _transform.GetWorldRotation(ent) + _eye.CurrentEye.Rotation;
+        var dir = worldRot.GetDir();
+        if (_sprite.TryGetLayer((ent, spriteComp), 0, out var layer, false) &&
+            layer.ActualRsi is { } rsi &&
+            rsi.TryGetState(layer.State, out var state))
         {
-            spriteComp.DrawDepth = (int)Content.Shared.DrawDepth.DrawDepth.OverMobs;
+            var angle = worldRot.Reduced().FlipPositive();
+            var rsiDir = SpriteComponent.Layer.GetDirection(state.RsiDirections, angle);
+            dir = rsiDir.Convert();
         }
-        else
+        #endregion
+        var renderOverFlag = dir switch
         {
-            spriteComp.DrawDepth = (int)Content.Shared.DrawDepth.DrawDepth.Objects;
-        }
+            Direction.North => VehicleRenderOver.North,
+            Direction.NorthEast => VehicleRenderOver.NorthEast,
+            Direction.East => VehicleRenderOver.East,
+            Direction.SouthEast => VehicleRenderOver.SouthEast,
+            Direction.South => VehicleRenderOver.South,
+            Direction.SouthWest => VehicleRenderOver.SouthWest,
+            Direction.West => VehicleRenderOver.West,
+            Direction.NorthWest => VehicleRenderOver.NorthWest,
+            _ => VehicleRenderOver.None,
+        };
+
+        if ((ent.Comp.RenderOver & renderOverFlag) == renderOverFlag)
+            _sprite.SetDrawDepth((ent, spriteComp), (int) Content.Shared.DrawDepth.DrawDepth.OverMobs);
     }
 }

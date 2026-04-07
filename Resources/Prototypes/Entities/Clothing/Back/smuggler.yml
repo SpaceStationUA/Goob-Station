@@ -37,9 +37,9 @@
 - type: entity
   parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackSatchel, BaseMinorContraband ]
   id: ClothingBackpackSatchelSmuggler
-  name: "сумка контрабандиста"
+  name: smuggler's satchel
   suffix: Empty
-  description: "Зручна, підозріло виглядаюча сумка. Досить пласка, щоб поміститися під плиткою підлоги."
+  description: A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi
@@ -48,9 +48,9 @@
 - type: entity
   parent: [ BaseSubfloorAnchorStorage, ClothingBackpackSatchel, BaseMinorContraband ]
   id: ClothingBackpackSatchelSmugglerUnanchored
-  name: "сумка контрабандиста"
+  name: smuggler's satchel
   suffix: Empty, Unanchored
-  description: "Зручна, підозріло виглядаюча сумка. Досить пласка, щоб поміститися під плиткою підлоги."
+  description: A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi
@@ -59,7 +59,7 @@
 - type: entity
   parent: [ BaseSubfloorAnchorStorageAnchored, BriefcaseSyndie, BaseMinorContraband ]
   id: BriefcaseSmugglerCash
-  name: "портфель контрабандиста"
+  name: smuggler's briefcase
   suffix: Smuggler, Do Not Map
   components:
   - type: EntityTableContainerFill
@@ -73,7 +73,7 @@
 - type: entity
   parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackDuffelClown, BaseMinorContraband ]
   id: ClothingBackpackDuffelClownSmuggler
-  name: "клоунська сумка контрабандиста"
+  name: smuggler's clown duffel bag
   suffix: Smuggler, Do Not Map
   components:
   - type: EntityTableContainerFill
@@ -82,16 +82,16 @@
         children:
         - id: SpeedLoaderCap
           amount: !type:RangeNumberSelector
-            range: 4, 8
+            range: 4, 5
         - !type:GroupSelector
           children:
           - id: RevolverCapGun
             amount: !type:RangeNumberSelector
-              range: 4, 8
+              range: 4, 5
             weight: 95
           - id: RevolverCapGunFake
             amount: !type:RangeNumberSelector
-              range: 1, 8
+              range: 1, 2
             weight: 5
 
 - type: entity
@@ -110,7 +110,7 @@
 - type: entity
   parent: MarkerBase
   id: RandomSatchelSpawner
-  name: "генератор випадкових сумок контрабандиста"
+  name: random smuggler's satchel spawner
   suffix: Do Not Map
   components:
   - type: Sprite

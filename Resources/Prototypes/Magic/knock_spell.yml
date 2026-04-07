@@ -14,10 +14,12 @@
 - type: entity
   parent: BaseAction
   id: ActionKnock
-  name: "Постукати"
-  description: "Це заклинання відкриває сусідні двері." # Goob edit
+  name: Knock
+  description: Opens nearby doors and lockers. # Goob edit
   components:
   - type: Action
+    raiseOnUser: true # Goobstation
+    checkCanInteract: false # Goobstation
     useDelay: 10
     itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier

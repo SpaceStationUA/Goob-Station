@@ -11,3 +11,5 @@ secretplus-admeme-title = Secret+ Хаос
 secretplus-admeme-description = Якщо це може статися, це станеться.
 survivalplus-title = Виживання+
 survivalplus-description = Починається досить спокійно. Закінчується не зовсім так.
+hermitplus-title = Відлюдник
+hermitplus-description = Режим гри, що зосереджується на внутрішніх загрозах, а не зовнішніх.

@@ -22,6 +22,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Maps;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Station.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -33,6 +34,7 @@ namespace Content.Server.GameTicking.Rules;
 public abstract partial class GameRuleSystem<T> where T: IComponent
 {
     [Dependency] private readonly StationSystem _station = default!; // Goobstation
+    [Dependency] private readonly TurfSystem _turf = default!; // Goobstation
 
     protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
     {
@@ -121,7 +123,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
     protected Entity<MapGridComponent>? GetStationMainGrid(StationDataComponent station)
     {
-        if ((station.Grids.FirstOrNull(HasComp<BecomesStationComponent>) ?? _station.GetLargestGrid(station)) is not
+        if ((station.Grids.FirstOrNull(HasComp<BecomesStationComponent>) ?? _station.GetLargestGrid(station.Owner)) is not //todo goobstation station.owner obsolete patchup
             { } grid || !TryComp(grid, out MapGridComponent? gridComp))
             return null;
 
@@ -146,7 +148,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
             tile = new Vector2i(randomX, randomY);
 
             if (!_map.TryGetTile(grid.Comp, tile, out var selectedTile) || selectedTile.IsEmpty ||
-                selectedTile.IsSpace())
+                _turf.IsSpace(selectedTile))
                 continue;
 
             if (_atmosphere.IsTileSpace(grid.Owner, Transform(grid.Owner).MapUid, tile)

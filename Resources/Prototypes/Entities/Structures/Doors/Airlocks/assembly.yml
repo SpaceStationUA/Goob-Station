@@ -23,7 +23,7 @@
   suffix: Atmospherics
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/atmospherics.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/atmospherics.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -32,7 +32,7 @@
   suffix: Atmospherics, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/atmospherics.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/atmospherics.rsi # Pirate changes
     state: "assembly"
 
 #Cargo
@@ -42,7 +42,7 @@
   suffix: Cargo
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/cargo.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/cargo.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -51,13 +51,13 @@
   suffix: Cargo, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/cargo.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/cargo.rsi # Pirate changes
     state: "assembly"
 
 #Clockwork
 - type: entity
   id: PinionAirlockAssembly
-  name: "збірка шлюзу"
+  name: airlock assembly
   suffix: Pinion, Clockwork
   parent: AirlockAssembly
   components:
@@ -86,7 +86,7 @@
   suffix: Command
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/command.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/command.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -95,7 +95,7 @@
   suffix: Command, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/command.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/command.rsi # Pirate changes
     state: "assembly"
 
 #Engineering
@@ -105,7 +105,7 @@
   suffix: Engineering
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/engineering.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/engineering.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -114,7 +114,7 @@
   suffix: Engineering, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/engineering.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/engineering.rsi # Pirate changes
     state: "assembly"
 
 #External
@@ -124,7 +124,7 @@
   suffix: External
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/external.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/external.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -133,7 +133,7 @@
   suffix: External, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/external.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/external.rsi # Pirate changes
     state: "assembly"
 
 #Public (Glass Airlock)
@@ -143,7 +143,7 @@
   suffix: Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/glass.rsi # Pirate changes
     state: "assembly"
 
 #Freezer
@@ -153,7 +153,7 @@
   suffix: Freezer
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/freezer.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/freezer.rsi # Pirate changes
     state: "assembly"
 
 #Hydroponics
@@ -163,7 +163,7 @@
   suffix: Hydroponics
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/hydroponics.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/hydroponics.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -172,7 +172,7 @@
   suffix: Hydroponics, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/hydroponics.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/hydroponics.rsi # Pirate changes
     state: "assembly"
 
 #Maintenance
@@ -182,7 +182,7 @@
   suffix: Maintenance
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -191,7 +191,7 @@
   suffix: Maintenance, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/maint.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/maint.rsi # Pirate changes
     state: "assembly"
 
 #Medical
@@ -201,7 +201,7 @@
   suffix: Medical
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/medical.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/medical.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -210,7 +210,7 @@
   suffix: Medical, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/medical.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/medical.rsi # Pirate changes
     state: "assembly"
 
 #Salvage
@@ -220,7 +220,7 @@
   suffix: Salvage
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/salvage.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/salvage.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -229,7 +229,7 @@
   suffix: Salvage, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/salvage.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/salvage.rsi # Pirate changes
     state: "assembly"
 
 #Science
@@ -239,7 +239,7 @@
   suffix: Science
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/science.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/science.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -248,7 +248,7 @@
   suffix: Science, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/science.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/science.rsi # Pirate changes
     state: "assembly"
 
 #Security
@@ -258,7 +258,7 @@
   suffix: Security
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/security.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/security.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -267,7 +267,7 @@
   suffix: Security, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/security.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/security.rsi # Pirate changes
     state: "assembly"
 
 #Shuttle
@@ -296,7 +296,7 @@
   suffix: Virology
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/virology.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/virology.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -305,7 +305,7 @@
   suffix: Virology, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/virology.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/virology.rsi # Pirate changes
     state: "assembly"
 
 #CentralCommand
@@ -315,7 +315,7 @@
   suffix: CentralCommand
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/centcomm.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/centcomm.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -324,7 +324,7 @@
   suffix: CentralCommand, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/centcomm.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/centcomm.rsi # Pirate changes
     state: "assembly"
 
 #Mining
@@ -353,7 +353,7 @@
   suffix: Syndicate
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/syndicate.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/syndicate.rsi # Pirate changes
     state: "assembly"
 
 - type: entity
@@ -362,7 +362,7 @@
   suffix: Syndicate, Glass
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/syndicate.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/syndicate.rsi # Pirate changes
     state: "assembly"
 
 #ShuttleSyndicate
@@ -391,5 +391,5 @@
   suffix: HighSec
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/highsec/highsec.rsi # Pirate changes
     state: "assembly"

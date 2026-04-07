@@ -1,8 +1,8 @@
 devil-roundend-name = Диявол
 objective-issuer-devil = Диявол
 
-roundend-prepend-devil-contracts = Хтось уклав {$number} успішних контрактів.
-roundend-prepend-devil-contracts-named = {$name} уклав(ла) {$number} успішних контрактів.
+roundend-prepend-devil-contracts = Хтось уклав [color=red]{$number}[/color] успішних контрактів.
+roundend-prepend-devil-contracts-named = [color=white]{$name}[/color] уклав [color=red]{$number}[/color] успішних контрактів.
 
 devil-component-examined = [color=darkred]Очі {CAPITALIZE(POSS-ADJ($target))} ледь світяться червоним.[/color]
 condemned-component-examined = [color=chartreuse]Очі {CAPITALIZE($target)} порожні та бездушні.[/color]
@@ -37,3 +37,6 @@ invalid-possession-target = Ви не можете вселитися в цю ц
 devil-power-level-increase-weak = З кінчиків ваших пальців спалахують іскри полум'я. Ваш зв'язок з пеклом зміцнився.
 devil-power-level-increase-moderate = Ви відчуваєте приплив сили. Ваш зв'язок з пеклом зміцнився.
 devil-power-level-increase-powerful = Ви майже виконали свої завдання. Ще кілька душ.
+
+objective-condition-weight-title = Укладайте вигідні угоди.
+objective-condition-weight-description = Переконайтеся, що угоди приносять вам якомога більше користі.

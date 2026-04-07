@@ -178,7 +178,35 @@ public sealed partial class StationRecordSet
             table.Remove(key);
         }
 
+        _recentlyAccessed.Remove(key); // Pirate: records photos
+        return true; // Pirate: records photos
+    }
+
+    #region Pirate: records photos
+    /// <summary>
+    ///     Removes a single typed record entry from this key.
+    /// </summary>
+    public bool RemoveRecordEntry<T>(uint key)
+    {
+        if (!Keys.Contains(key)
+            || !_tables.TryGetValue(typeof(T), out var table)
+            || !table.Remove(key))
+        {
+            return false;
+        }
+
+        if (_tables.Values.All(otherTable => !otherTable.ContainsKey(key)))
+        {
+            Keys.Remove(key);
+            _recentlyAccessed.Remove(key);
+        }
+        else
+        {
+            _recentlyAccessed.Add(key);
+        }
+
         return true;
     }
+    #endregion
 }
 

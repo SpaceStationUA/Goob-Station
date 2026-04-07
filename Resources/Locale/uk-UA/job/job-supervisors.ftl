@@ -26,3 +26,5 @@ job-supervisors-security = Офіцери служби безпеки, нагл�
 job-supervisors-science = Науковці та науковий керівник
 job-supervisors-hire = той, хто вас найме
 job-supervisors-everyone = абсолютно всі
+
+job-supervisors-command = командування станції

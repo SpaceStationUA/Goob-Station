@@ -23,13 +23,14 @@
 # SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
+# SPDX-FileCopyrightText: 2025 Androidonator <33227516+Androidonator@users.noreply.github.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: job
   id: BlueshieldOfficer
-  name: "Офіцер Блакитного Щита"
-  description: "Виступати в ролі охоронця та радника для VIP-персон командування та Центрального командування."
+  name: job-name-bso
+  description: "Act as a bodyguard and advisor for Command and CentCom VIPs."
   playTimeTracker: JobBlueshieldOfficer
   requirements:
     - !type:DepartmentTimeRequirement
@@ -43,10 +44,32 @@
       time: 90000 # 25 hours
     - !type:AgeRequirement
       requiredAge: 21
-    - !type:SpeciesRequirement # Goob - None Felinid
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - MovementImpaired
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+    - !type:SpeciesRequirement # Pirate edit
       inverted: true
       species:
-      - Felinid
+      #- Felinid
+      - Hydrakin
+  # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - PMCG
+  # Pirate contractor end
+  guides:
+  - BlueshieldOfficerSOP
+  - Command
+  - Succession
   goobcoins: 45
   weight: 20
   startingGear: BlueshieldOfficerGear
@@ -54,6 +77,7 @@
   joinNotifyCrew: true
   supervisors: job-supervisors-ntr-centcom
   canBeAntag: false
+  whitelisted: true # Pirate
   access:
   - Security
   - Brig
@@ -77,9 +101,6 @@
       - type: CommandStaff
       - type: Condemned
         soulOwnedNotDevil: true
-  - !type:AddObjectiveSpecial
-    objectives:
-    - BlueshieldRandomCommandAliveObjective
 
 - type: startingGear
   id: BlueshieldOfficerGear
@@ -93,7 +114,8 @@
   storage:
     back:
     - Flash
-    - ClothingMaskGasSecurity
+    - ClothingBSOMaskGasSwat
+    - CombatKnife
 
 - type: chameleonOutfit
   id: BlueshieldOfficerChameleonOutfit

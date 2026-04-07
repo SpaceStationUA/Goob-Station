@@ -74,6 +74,7 @@
 // SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 pathetic meowmeow <uhhadd@gmail.com>
+// SPDX-FileCopyrightText: 2025 RichardBlonski <48651647+RichardBlonski@users.noreply.github.com>
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -104,6 +105,15 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.CCVar; // Pirate
+
+// Goob Station - End of Round Screen
+using Content.Goobstation.Common.LastWords;
+using Content.Shared.Damage;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Goobstation.Maths.FixedPoint;
+using Content.Goobstation.Shared.Mind.Components;
 
 namespace Content.Server.GameTicking
 {
@@ -192,6 +202,10 @@ namespace Content.Server.GameTicking
             if (mainStationMap != null)
             {
                 maps.Add(mainStationMap);
+                // Pirate VVV
+                _gameMapManager.SelectMap(mainStationMap.ID);
+                _cfg.SetCVar(CCVars.GameMap, string.Empty);
+                // Pirate ^^^
             }
             else
             {
@@ -492,7 +506,7 @@ namespace Content.Server.GameTicking
 
             RoundLengthMetric.Set(0);
 
-            var startingEvent = new Content.Server.GameTicking.Events.RoundStartingEvent(RoundId); // Pirate - Port Station Goals
+            var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
 
             var origReadyPlayers = readyPlayers.ToArray();
@@ -518,7 +532,6 @@ namespace Content.Server.GameTicking
             AnnounceRound();
             UpdateInfoText();
             SendRoundStartedDiscordMessage();
-            RaiseLocalEvent(new Content.Pirate.Common.GameTicking.RoundStartedEvent(RoundId)); // Pirate - Port Station Goals
 
 #if EXCEPTION_TOLERANCE
             }
@@ -643,6 +656,33 @@ namespace Content.Server.GameTicking
 
                 var roles = _roles.MindGetAllRoleInfo(mindId);
 
+                // Goobstation - End of round last words
+                #region Goob Station - End of round last words
+
+                var lastWords = "";
+                var mobState = MobState.Invalid;
+                var damagePerGroup = new Dictionary<string, FixedPoint2>();
+                var lastMob = TryComp<MindLastMobComponent>(mindId, out var lastMobComponent)
+                    ? lastMobComponent.LastMob
+                    : null;
+
+                // Get last words if they exist (stored on the mind)
+                if (TryComp<LastWordsComponent>(mindId, out var lastWordsComponent))
+                    lastWords = lastWordsComponent.LastWords;
+
+                // Get mob state and damage if the mob still exists
+                if (lastMob != null && !TerminatingOrDeleted(lastMob))
+                {
+                    if (TryComp<MobStateComponent>(lastMob, out var mobStateComp))
+                        mobState = mobStateComp.CurrentState;
+
+                    if (TryComp<DamageableComponent>(lastMob, out var damageableComp))
+                        damagePerGroup = damageableComp.DamagePerGroup;
+                }
+
+                #endregion
+                // END
+
                 var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                 {
                     // Note that contentPlayerData?.Name sticks around after the player is disconnected.
@@ -659,7 +699,11 @@ namespace Content.Server.GameTicking
                     JobPrototypes = roles.Where(role => !role.Antagonist).Select(role => role.Prototype).ToArray(),
                     AntagPrototypes = roles.Where(role => role.Antagonist).Select(role => role.Prototype).ToArray(),
                     Observer = observer,
-                    Connected = connected
+                    Connected = connected,
+                    // Goob Station - End of Round Screen
+                    LastWords = lastWords,
+                    EntMobState = mobState,
+                    DamagePerGroup = damagePerGroup
                 };
                 listOfPlayerInfo.Add(playerEndRoundInfo);
             }
@@ -682,7 +726,6 @@ namespace Content.Server.GameTicking
 
             _replayRoundPlayerInfo = listOfPlayerInfoFinal;
             _replayRoundText = roundEndText;
-            RaiseLocalEvent(new Content.Pirate.Common.GameTicking.RoundEndedEvent(RoundId, roundDuration)); // Pirate - Port Station Goals
         }
 
         private async void SendRoundEndDiscordMessage()

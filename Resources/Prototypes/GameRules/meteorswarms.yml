@@ -103,7 +103,7 @@
     - id: GameRuleMeteorSwarmMedium
     - id: GameRuleMeteorSwarmLarge
     - id: GameRuleUristSwarm
-    - id: ImmovableRodSpawn
+#    - id: ImmovableRodSpawn # PIRATE
 
 - type: weightedRandomEntity
   id: MeteorSpawnAsteroidWallTable
@@ -281,48 +281,50 @@
       min: 10
       max: 10
 
-- type: entity
-  id: ImmovableRodSpawn
-  parent: BaseGameRule
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-immovable-rod-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 3.5
-    reoccurrenceDelay: 1
-    duration: 1
-    earliestStart: 30
-    minimumPlayers: 25
-    chaos: # Goobstation
-      Power: 100
-      Atmos: 100
-  - type: ImmovableRodRule
-    rodPrototypes:
-    - id: ImmovableRodKeepTiles
-      prob: 0.94
-      orGroup: rodProto
-    - id: ImmovableRodMop
-      prob: 0.0075
-      orGroup: rodProto
-    - id: ImmovableRodShark
-      prob: 0.0075
-      orGroup: rodProto
-    - id: ImmovableRodClown
-      prob: 0.0075
-      orGroup: rodProto
-    - id: ImmovableRodBanana
-      prob: 0.0075
-      orGroup: rodProto
-    - id: ImmovableRodHammer
-      prob: 0.0075
-      orGroup: rodProto
-    - id: ImmovableRodThrongler
-      prob: 0.0075
-      orGroup: rodProto
-    - id: ImmovableRodGibstick
-      prob: 0.0075
-      orGroup: rodProto
-    - id: ImmovableRodWeh
-      prob: 0.0075
-      orGroup: rodProto
+# PIRATE vvvv
+#- type: entity
+#  id: ImmovableRodSpawn
+#  parent: BaseGameRule
+#  components:
+#  - type: StationEvent
+#    startAnnouncement: station-event-immovable-rod-start-announcement
+#    startAudio:
+#      path: /Audio/Announcements/attention.ogg
+#    weight: 3.5
+#    reoccurrenceDelay: 1
+#    duration: 1
+#    earliestStart: 30
+#    minimumPlayers: 25
+#    chaos: # Goobstation
+#      Power: 100
+#      Atmos: 100
+#  - type: ImmovableRodRule
+#    rodPrototypes:
+#    - id: ImmovableRodKeepTiles
+#      prob: 0.94
+#      orGroup: rodProto
+#    - id: ImmovableRodMop
+#      prob: 0.0075
+#      orGroup: rodProto
+#    - id: ImmovableRodShark
+#      prob: 0.0075
+#      orGroup: rodProto
+#    - id: ImmovableRodClown
+#      prob: 0.0075
+#      orGroup: rodProto
+#    - id: ImmovableRodBanana
+#      prob: 0.0075
+#      orGroup: rodProto
+#    - id: ImmovableRodHammer
+#      prob: 0.0075
+#      orGroup: rodProto
+#    - id: ImmovableRodThrongler
+#      prob: 0.0075
+#      orGroup: rodProto
+#    - id: ImmovableRodGibstick
+#      prob: 0.0075
+#      orGroup: rodProto
+#    - id: ImmovableRodWeh
+#      prob: 0.0075
+#      orGroup: rodProto
+# PIRATE ^^^^

@@ -33,6 +33,8 @@ using Content.Shared.Construction;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Server.Station.Systems; // Pirate: records photos
+using Content.Shared.CriminalRecords; // Pirate: records photos
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Content.Shared.Throwing;
@@ -41,6 +43,12 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+// Pirate banking start
+using Content.Server._Pirate.Banking;
+using Content.Shared._Pirate.Banking;
+using Content.Server.Roles.Jobs;
+using Content.Server.Roles;
+// Pirate banking end
 
 namespace Content.Server.Access.Systems;
 
@@ -49,6 +57,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly StationRecordsSystem _record = default!;
+    #region Pirate: records photos
+    [Dependency] private readonly StationSystem _station = default!;
+    #endregion
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly AccessSystem _access = default!;
@@ -59,11 +70,18 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
 
+    // Pirate banking start
+    [Dependency] private readonly RoleSystem _roles = default!;
+    [Dependency] private readonly JobSystem _job = default!;
+    [Dependency] private readonly BankCardSystem _bankCard = default!;
+    // Pirate banking end
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<IdCardConsoleComponent, WriteToTargetIdMessage>(OnWriteToTargetIdMessage);
+        SubscribeLocalEvent<IdCardConsoleComponent, SetTargetIdAccessMessage>(OnSetTargetIdAccessMessage); // Pirate: id card console fix
 
         // one day, maybe bound user interfaces can be shared too.
         SubscribeLocalEvent<IdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
@@ -95,7 +113,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         List<ProtoId<AccessLevelPrototype>>? possibleAccess = null;
         if (component.PrivilegedIdSlot.Item is { Valid: true } item)
         {
-            privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
+            privilegedIdName = Comp<MetaDataComponent>(item).EntityName;
             possibleAccess = _accessReader.FindAccessTags(item).ToList();
         }
 
@@ -117,8 +135,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         }
         else
         {
-            var targetIdComponent = EntityManager.GetComponent<IdCardComponent>(targetId);
-            var targetAccessComponent = EntityManager.GetComponent<AccessComponent>(targetId);
+            var targetIdComponent = Comp<IdCardComponent>(targetId);
+            var targetAccessComponent = Comp<AccessComponent>(targetId);
 
             var jobProto = targetIdComponent.JobPrototype ?? new ProtoId<AccessLevelPrototype>(string.Empty);
             if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
@@ -170,8 +188,17 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
             _idCard.TryChangeJobDepartment(targetId, job);
+            // Pirate START - Fix alt jobs screwing allowed jobs check
+            if (TryComp<IdCardComponent>(targetId, out var idCardComp))
+            {
+                idCardComp.JobPrototype = job.ID;
+            }
+            // Pirate END - Fix alt jobs screwing allowed jobs check
         }
 
+        #region Pirate: records photos
+        TryLinkTargetIdToExistingRecord(uid, targetId, newFullName);
+        #endregion
         UpdateStationRecord(uid, targetId, newFullName, newJobTitle, job);
         if ((!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
             || keyStorage.Key is not { } key
@@ -209,6 +236,26 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
         var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
         _access.TrySetTags(targetId, newAccessList);
+
+        // Pirate banking start
+        if (newJobProto.Id != string.Empty &&
+            TryComp<BankCardComponent>(targetId, out var bankCard) &&
+            bankCard.AccountId.HasValue &&
+            _bankCard.TryGetAccount(bankCard.AccountId.Value, out var account) &&
+            account.Mind != null)
+        {
+            var mindId = GetEntity(account.Mind.Value);
+
+            if (_prototype.TryIndex<JobPrototype>(newJobProto, out var jobPrototype))
+            {
+                if (_job.MindTryGetJob(mindId, out var oldJob))
+                {
+                    _roles.MindRemoveRole(mindId, oldJob.ID);
+                }
+                _job.MindAddJob(mindId, jobPrototype.ID);
+            }
+        }
+        // Pirate banking end
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
@@ -252,8 +299,43 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             record.JobIcon = newJobProto.Icon;
         }
 
+        #region Pirate: records photos
+        if (_record.TryGetRecord<CriminalRecord>(key, out var criminalRecord))
+        {
+            criminalRecord.GeneralRecordSnapshot = record with { };
+
+            if (criminalRecord.PortraitProfileSnapshot != null)
+                criminalRecord.PortraitProfileSnapshot = criminalRecord.PortraitProfileSnapshot.WithName(newFullName);
+        }
+        #endregion
+
         _record.Synchronize(key);
     }
+
+    #region Pirate: records photos
+    private void TryLinkTargetIdToExistingRecord(EntityUid console, EntityUid targetId, string newFullName)
+    {
+        if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
+            && keyStorage.Key is { } existingKey
+            && _record.TryGetRecord<GeneralStationRecord>(existingKey, out _))
+        {
+            return;
+        }
+
+        if (_station.GetOwningStation(console) is not { } station)
+            return;
+
+        var matchingIds = _record.GetRecordIdsByName(station, newFullName);
+        if (matchingIds.Count != 1)
+            return;
+
+        var key = new StationRecordKey(matchingIds[0], station);
+        if (!_record.TryGetRecord<GeneralStationRecord>(key, out _))
+            return;
+
+        _record.SetIdKey(targetId, key);
+    }
+    #endregion
 
     private void OnMachineDeconstructed(Entity<IdCardConsoleComponent> entity, ref MachineDeconstructedEvent args)
     {
@@ -295,5 +377,57 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         return didEject;
     }
 
+    #endregion
+
+    #region Pirate: id card console fix
+    private void TrySetTargetIdAccess(EntityUid uid,
+        ProtoId<AccessLevelPrototype> access,
+        bool enabled,
+        EntityUid player,
+        IdCardConsoleComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.TargetIdSlot.Item is not { Valid: true } targetId || !PrivilegedIdIsAuthorized(uid, component))
+            return;
+
+        if (!component.AccessLevels.Contains(access))
+        {
+            _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
+            return;
+        }
+
+        var privilegedId = component.PrivilegedIdSlot.Item;
+        var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
+        if (!privilegedPerms.Contains(access))
+        {
+            _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
+            return;
+        }
+
+        var oldTags = (_access.TryGetTags(targetId) ?? new List<ProtoId<AccessLevelPrototype>>()).ToHashSet();
+        if (oldTags.Contains(access) == enabled)
+            return;
+
+        if (enabled)
+            oldTags.Add(access);
+        else
+            oldTags.Remove(access);
+
+        _access.TrySetTags(targetId, oldTags.ToList());
+
+        var delta = (enabled ? "+" : "-") + access;
+        _adminLogger.Add(LogType.Action, LogImpact.Medium,
+            $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{delta}] [{string.Join(", ", oldTags)}]");
+    }
+    private void OnSetTargetIdAccessMessage(EntityUid uid, IdCardConsoleComponent component, SetTargetIdAccessMessage args)
+    {
+        if (args.Actor is not { Valid: true } player)
+            return;
+
+        TrySetTargetIdAccess(uid, args.Access, args.Enabled, player, component);
+        UpdateUserInterface(uid, component, args);
+    }
     #endregion
 }

@@ -84,9 +84,20 @@
   - !type:DepartmentTimeRequirement
     department: Medical
     time: 9000 #2.5 hrs
+  # Pirate contractor start
+  - !type:CharacterEmployerRequirement
+    employers:
+    - NanoTrasen
+    - ZengHuPharmaceuticals
+    - PMCG
+  # Pirate contractor end
   startingGear: ParamedicGear
   icon: "JobIconParamedic"
   supervisors: job-supervisors-cmo
+  guides: # goobstation
+  - MedicalDoctor
+  - Medical
+  - Medicine
   goobcoins: 20 #Goob content
   access:
   - Medical

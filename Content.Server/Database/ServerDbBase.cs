@@ -92,7 +92,6 @@
 // SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
 // SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Conchelle <mary@thughunt.ing>
 // SPDX-FileCopyrightText: 2025 DrSmugleaf <10968691+DrSmugleaf@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 DrSmugleaf <drsmugleaf@gmail.com>
 // SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
@@ -111,11 +110,9 @@
 // SPDX-FileCopyrightText: 2025 Poips <Hanakohashbrown@gmail.com>
 // SPDX-FileCopyrightText: 2025 PuroSlavKing <103608145+PuroSlavKing@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 SX-7 <92227810+SX-7@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
-// SPDX-FileCopyrightText: 2025 Sara Aldrete's Top Guy <mary@thughunt.ing>
 // SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
 // SPDX-FileCopyrightText: 2025 Whisper <121047731+QuietlyWhisper@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 YotaXP <yotaxp@gmail.com>
+// SPDX-FileCopyrightText: 2025 Zekins <zekins3366@gmail.com>
 // SPDX-FileCopyrightText: 2025 beck-thompson <107373427+beck-thompson@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 blobadoodle <me@bloba.dev>
 // SPDX-FileCopyrightText: 2025 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
@@ -156,6 +153,8 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Collections.Generic; // Pirate: cameras (photo persistence)
+using Content.Shared._Pirate.Photo; // Pirate: cameras (photo persistence)
 
 namespace Content.Server.Database
 {
@@ -394,10 +393,14 @@ namespace Content.Server.Database
                 loadouts[role.RoleName] = loadout;
             }
 
+            var barkVoice = profile.BarkVoice ?? SharedHumanoidAppearanceSystem.DefaultBarkVoice; // Goob Station - Barks
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.FlavorText,
                 profile.Species,
+                profile.Nationality, // Pirate - port EE contractors
+                profile.Employer, // Pirate - port EE contractors
                 profile.Height, // Goobstation: port EE height/width sliders
                 profile.Width, // Goobstation: port EE height/width sliders
                 profile.Age,
@@ -419,7 +422,8 @@ namespace Content.Server.Database
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToHashSet(),
                 traits.ToHashSet(),
-                loadouts
+                loadouts,
+                barkVoice // Goob Station - Barks
             );
         }
 
@@ -439,6 +443,8 @@ namespace Content.Server.Database
             profile.Species = humanoid.Species;
             profile.Height = humanoid.Height; // Goobstation: port EE height/width sliders
             profile.Width = humanoid.Width; // Goobstation: port EE height/width sliders
+            profile.Nationality = humanoid.Nationality; // Pirate - port EE contractors
+            profile.Employer = humanoid.Employer; // Pirate - port EE contractors
             profile.Age = humanoid.Age;
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
@@ -471,6 +477,8 @@ namespace Content.Server.Database
                 humanoid.TraitPreferences
                         .Select(t => new Trait { TraitName = t })
             );
+
+            profile.BarkVoice = humanoid.BarkVoice; // Goob Station - Barks
 
             profile.Loadouts.Clear();
 
@@ -876,8 +884,11 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
             var dbPlayer = await db.DbContext.Player.Where(dbPlayer => dbPlayer.UserId == userId).SingleOrDefaultAsync();
-            if (dbPlayer == null)
+
+            // Check if we didn't get user from DB
+            if (dbPlayer == null || dbPlayer.UserId != userId)
                 return false;
+
             dbPlayer.LastRolledAntag = to;
             await db.DbContext.SaveChangesAsync();
             return true;
@@ -2050,9 +2061,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task<(string Message, string User)?> GetRandomLobbyMessage()
+        public async Task<List<(string Message, string User)>> GetLobbyMessages()
         {
-            // TODO RMC14 the random row is evaluated outside the DB, if we have that many patrons I guess we have better problems!
             await using var db = await GetDb();
             var messages = await db.DbContext.RMCPatronLobbyMessages
                 .Include(p => p.Patron)
@@ -2060,18 +2070,14 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .Where(p => p.Patron.Tier.LobbyMessage)
                 .Where(p => !string.IsNullOrWhiteSpace(p.Message))
                 .Select(p => new { p.Message, p.Patron.Player.LastSeenUserName })
+                .Select(p => new ValueTuple<string, string>(p.Message, p.LastSeenUserName))
                 .ToListAsync();
 
-            if (messages.Count == 0)
-                return null;
-
-            var random = messages[Random.Shared.Next(messages.Count)];
-            return (random.Message, random.LastSeenUserName);
+            return messages;
         }
 
-        public async Task<string?> GetRandomShoutout()
+        public async Task<List<string>> GetShoutouts()
         {
-            // TODO RMC14 the random row is evaluated outside the DB, if we have that many patrons I guess we have better problems!
             await using var db = await GetDb();
             var ntNames = await db.DbContext.RMCPatronRoundEndNTShoutouts
                 .Include(p => p.Patron)
@@ -2080,12 +2086,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .Select(p => p.Name)
                 .ToListAsync();
 
-            var ntName = ntNames.Count == 0 ? null : ntNames[Random.Shared.Next(ntNames.Count)];
-
-            if (ntName == null)
-                ntName = "John Nanotrasen";
-
-            return (ntName);
+            return ntNames;
         }
 
         #endregion
@@ -2157,22 +2158,546 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
-        #region Comedy
+        #region Goob Polls
 
-        public async Task<List<Guid>> GetAllSpiderFriends()
+        public async Task<int> CreatePollAsync(Poll poll)
         {
             await using var db = await GetDb();
-            return await db.DbContext.GoobMisandrySpiderFriends
-                .Select(p => p.Guid)
-                .ToListAsync();
+            db.DbContext.Polls.Add(poll);
+            await db.DbContext.SaveChangesAsync();
+            return poll.Id;
         }
 
-        public async Task AddSpiderFriend(SpiderFriend friend)
+        public async Task<Poll?> GetPollAsync(int pollId, CancellationToken cancel = default)
         {
-            await using var db = await GetDb();
-            db.DbContext.GoobMisandrySpiderFriends.Add(friend);
+            await using var db = await GetDb(cancel);
 
-            await db.DbContext.SaveChangesAsync();
+            return await db.DbContext.Polls
+                .Include(p => p.Options)
+                .Include(p => p.Votes)
+                .Include(p => p.CreatedBy)
+                .AsSplitQuery()
+                .SingleOrDefaultAsync(p => p.Id == pollId, cancel);
+        }
+
+        public async Task<List<Poll>> GetActivePollsAsync(CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.Polls
+                .Include(p => p.Options)
+                .Include(p => p.CreatedBy)
+                .AsSplitQuery()
+                .Where(p => p.Active && (p.EndTime == null || p.EndTime > DateTime.UtcNow))
+                .OrderByDescending(p => p.StartTime)
+                .ToListAsync(cancel);
+        }
+
+        public async Task<List<Poll>> GetAllPollsAsync(bool includeInactive = true, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var query = db.DbContext.Polls
+                .Include(p => p.Options)
+                .Include(p => p.CreatedBy)
+                .AsSplitQuery();
+
+            if (!includeInactive)
+                query = query.Where(p => p.Active);
+
+            return await query.OrderByDescending(p => p.StartTime).ToListAsync(cancel);
+        }
+
+        public async Task UpdatePollStatusAsync(int pollId, bool active, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var poll = await db.DbContext.Polls.SingleOrDefaultAsync(p => p.Id == pollId, cancel);
+            if (poll == null)
+                return;
+
+            poll.Active = active;
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        public async Task<bool> AddPollVoteAsync(int pollId, int optionId, NetUserId userId, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var poll = await db.DbContext.Polls
+                .Include(p => p.Options)
+                .SingleOrDefaultAsync(p => p.Id == pollId, cancel);
+
+            if (poll?.Active != true)
+                return false;
+
+            if (poll.EndTime < DateTime.UtcNow)
+                return false;
+
+            if (!poll.Options.Any(o => o.Id == optionId))
+                return false;
+
+            var existingVote = await db.DbContext.PollVotes
+                .AnyAsync(v => v.PollId == pollId && v.PollOptionId == optionId && v.PlayerUserId == userId.UserId, cancel);
+
+            if (existingVote)
+                return false;
+
+            if (!poll.AllowMultipleChoices)
+            {
+                var existingVotes = await db.DbContext.PollVotes
+                    .Where(v => v.PollId == pollId && v.PlayerUserId == userId.UserId)
+                    .ToListAsync(cancel);
+
+                db.DbContext.PollVotes.RemoveRange(existingVotes);
+            }
+
+            var vote = new PollVote
+            {
+                PollId = pollId,
+                PollOptionId = optionId,
+                PlayerUserId = userId.UserId,
+                VotedAt = DateTime.UtcNow
+            };
+
+            db.DbContext.PollVotes.Add(vote);
+            await db.DbContext.SaveChangesAsync(cancel);
+            return true;
+        }
+
+        public async Task<bool> RemovePollVoteAsync(int pollId, int optionId, NetUserId userId, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var vote = await db.DbContext.PollVotes
+                .FirstOrDefaultAsync(v => v.PollId == pollId && v.PollOptionId == optionId && v.PlayerUserId == userId.UserId, cancel);
+
+            if (vote == null)
+                return false;
+
+            db.DbContext.PollVotes.Remove(vote);
+            await db.DbContext.SaveChangesAsync(cancel);
+            return true;
+        }
+
+        public async Task<List<PollVote>> GetPollVotesAsync(int pollId, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.PollVotes
+                .Include(v => v.Player)
+                .Include(v => v.PollOption)
+                .Where(v => v.PollId == pollId)
+                .ToListAsync(cancel);
+        }
+
+        public async Task<List<PollVote>> GetPlayerVotesAsync(int pollId, NetUserId userId, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.PollVotes
+                .Include(v => v.PollOption)
+                .Where(v => v.PollId == pollId && v.PlayerUserId == userId.UserId)
+                .ToListAsync(cancel);
+        }
+
+        public async Task<bool> HasPlayerVotedAsync(int pollId, NetUserId userId, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.PollVotes
+                .AnyAsync(v => v.PollId == pollId && v.PlayerUserId == userId.UserId, cancel);
+        }
+
+        public async Task<Dictionary<int, int>> GetPollResultsAsync(int pollId, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.PollVotes
+                .Where(v => v.PollId == pollId)
+                .GroupBy(v => v.PollOptionId)
+                .Select(g => new { OptionId = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.OptionId, x => x.Count, cancel);
+        }
+
+        #endregion
+
+        #region Pirate Admin Ratings
+
+        // #Pirate Changes
+        public async Task<List<PirateAdminHelpRating>> GetPirateAdminHelpRatingsAsync(CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.PirateAdminHelpRatings
+                .AsNoTracking()
+                .ToListAsync(cancel);
+        }
+
+        // #Pirate Changes
+        public async Task UpsertPirateAdminHelpRatingAsync(
+            string adminKey,
+            string adminName,
+            NetUserId playerId,
+            byte rating,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var entity = await db.DbContext.PirateAdminHelpRatings
+                .SingleOrDefaultAsync(
+                    r => r.AdminKey == adminKey && r.PlayerUserId == playerId.UserId,
+                    cancel);
+
+            if (entity == null)
+            {
+                entity = new PirateAdminHelpRating
+                {
+                    AdminKey = adminKey,
+                    AdminName = adminName,
+                    PlayerUserId = playerId.UserId,
+                    Rating = rating,
+                    UpdatedAt = DateTime.UtcNow
+                };
+
+                db.DbContext.PirateAdminHelpRatings.Add(entity);
+            }
+            else
+            {
+                entity.AdminName = adminName;
+                entity.Rating = rating;
+                entity.UpdatedAt = DateTime.UtcNow;
+            }
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        #endregion
+
+        #region Pirate: cameras (photo persistence)
+        public async Task<int?> GetCharacterProfileIdAsync(NetUserId userId, int slot, CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            return await db.DbContext.Profile
+                .Where(profile => profile.Preference.UserId == userId.UserId && profile.Slot == slot)
+                .Select(profile => (int?) profile.Id)
+                .SingleOrDefaultAsync(cancel);
+        }
+
+        public async Task<PersistentPhotoAlbumSnapshot?> GetPersistentPhotoAlbumSnapshotAsync(
+            string ownerKind,
+            int? profileId,
+            string? ownerId,
+            string albumKey,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var albums = db.DbContext.PersistentPhotoAlbums
+                .Include(entry => entry.Photos)
+                .Where(entry => entry.OwnerKind == ownerKind &&
+                                entry.AlbumKey == albumKey);
+
+            PersistentPhotoAlbum? album;
+            if (profileId != null)
+            {
+                album = await albums.SingleOrDefaultAsync(entry => entry.ProfileId == profileId, cancel);
+            }
+            else
+            {
+                album = await albums.SingleOrDefaultAsync(
+                    entry => entry.ProfileId == null && entry.OwnerId == ownerId,
+                    cancel);
+            }
+
+            if (album == null)
+                return null;
+
+            var photos = new List<PersistentPhotoData>(album.Photos.Count);
+            foreach (var photo in album.Photos.OrderBy(entry => entry.SortOrder))
+            {
+                photos.Add(new PersistentPhotoData
+                {
+                    ImageData = [.. photo.ImageData],
+                    PreviewData = photo.PreviewData is { Length: > 0 } preview ? [.. preview] : null,
+                    CustomName = photo.CustomName,
+                    CustomDescription = photo.CustomDescription,
+                    Caption = photo.Caption,
+                    BaseDescription = TruncatePersistentPhotoBaseDescription(photo.BaseDescription),
+                    CaptureData = DeserializeCaptureData(photo.CaptureDataJson),
+                    CreatedAt = NormalizeDatabaseTime(photo.CreatedAt),
+                    UpdatedAt = NormalizeDatabaseTime(photo.UpdatedAt)
+                });
+            }
+
+            return new PersistentPhotoAlbumSnapshot
+            {
+                OwnerKind = album.OwnerKind,
+                ProfileId = album.ProfileId,
+                OwnerId = album.OwnerId,
+                AlbumKey = album.AlbumKey,
+                IsPublic = album.IsPublic,
+                SavedAt = NormalizeDatabaseTime(album.SavedAt),
+                Photos = photos
+            };
+        }
+
+        public async Task UpsertPersistentPhotoAlbumSnapshotAsync(
+            string ownerKind,
+            int? profileId,
+            string? ownerId,
+            string albumKey,
+            bool isPublic,
+            IReadOnlyCollection<PersistentPhotoData> photos,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var albums = db.DbContext.PersistentPhotoAlbums
+                .Include(entry => entry.Photos)
+                .Where(entry => entry.OwnerKind == ownerKind &&
+                                entry.AlbumKey == albumKey);
+
+            PersistentPhotoAlbum? album;
+            if (profileId != null)
+            {
+                album = await albums.SingleOrDefaultAsync(entry => entry.ProfileId == profileId, cancel);
+            }
+            else
+            {
+                album = await albums.SingleOrDefaultAsync(
+                    entry => entry.ProfileId == null && entry.OwnerId == ownerId,
+                    cancel);
+            }
+
+            if (album == null)
+            {
+                album = new PersistentPhotoAlbum
+                {
+                    OwnerKind = ownerKind,
+                    ProfileId = profileId,
+                    OwnerId = profileId == null ? ownerId : null,
+                    AlbumKey = albumKey
+                };
+                db.DbContext.PersistentPhotoAlbums.Add(album);
+            }
+            else if (album.Photos.Count > 0)
+            {
+                db.DbContext.PersistentPhotoAlbumPhotos.RemoveRange(album.Photos);
+                album.Photos.Clear();
+            }
+
+            album.SavedAt = DateTime.UtcNow;
+            album.IsPublic = isPublic;
+            album.ProfileId = profileId;
+            album.OwnerId = profileId == null ? ownerId : null;
+
+            var sortOrder = 0;
+            foreach (var photo in photos)
+            {
+                album.Photos.Add(new PersistentPhotoAlbumPhoto
+                {
+                    SortOrder = sortOrder++,
+                    ImageData = [.. photo.ImageData],
+                    PreviewData = photo.PreviewData is { Length: > 0 } preview ? [.. preview] : null,
+                    CustomName = TruncatePersistentPhotoCustomName(photo.CustomName),
+                    CustomDescription = TruncatePersistentPhotoCustomDescription(photo.CustomDescription),
+                    Caption = TruncatePersistentPhotoCaption(photo.Caption),
+                    BaseDescription = TruncatePersistentPhotoBaseDescription(photo.BaseDescription),
+                    CaptureDataJson = SerializeCaptureData(photo.CaptureData),
+                    CreatedAt = photo.CreatedAt,
+                    UpdatedAt = photo.UpdatedAt
+                });
+            }
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        private static string? SerializeCaptureData(PhotoCaptureData? data)
+        {
+            const int captureDataJsonMaxLength = 10000;
+
+            if (data == null)
+                return null;
+
+            var sanitized = SanitizeCaptureData(data);
+            var json = JsonSerializer.Serialize(sanitized);
+            if (json.Length <= captureDataJsonMaxLength)
+                return json;
+
+            return TrimSerializedCaptureDataToFit(sanitized);
+        }
+
+        private static string? TruncatePersistentPhotoBaseDescription(string? value)
+        {
+            const int baseDescriptionMaxLength = 2000;
+            return TruncatePersistentPhotoText(value, baseDescriptionMaxLength);
+        }
+
+        private static string? TruncatePersistentPhotoCustomName(string? value)
+        {
+            const int customNameMaxLength = 32;
+            return TruncatePersistentPhotoText(value, customNameMaxLength);
+        }
+
+        private static string? TruncatePersistentPhotoCustomDescription(string? value)
+        {
+            const int customDescriptionMaxLength = 128;
+            return TruncatePersistentPhotoText(value, customDescriptionMaxLength);
+        }
+
+        private static string? TruncatePersistentPhotoCaption(string? value)
+        {
+            const int captionMaxLength = 256;
+            return TruncatePersistentPhotoText(value, captionMaxLength);
+        }
+
+        private static string? TruncatePersistentPhotoText(string? value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value) || value.Length <= maxLength)
+                return value;
+
+            return value[..maxLength];
+        }
+
+        private static PhotoCaptureData? DeserializeCaptureData(string? json)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+                return null;
+
+            try
+            {
+                return JsonSerializer.Deserialize<PhotoCaptureData>(json);
+            }
+            catch (JsonException)
+            {
+                return null;
+            }
+        }
+
+        private static PhotoCaptureData SanitizeCaptureData(PhotoCaptureData data)
+        {
+            const int captureSubjectsMaxCount = 32;
+            const int captureRecognizedNamesMaxCount = 32;
+            const int captureHeldItemsMaxCount = 8;
+            const int captureDisplayNameMaxLength = 128;
+            const int captureGenderKeyMaxLength = 32;
+            const int captureHeldItemMaxLength = 64;
+            const int captureRecognizedNameMaxLength = 128;
+
+            var subjects = new List<PhotoCapturedSubjectData>(
+                Math.Min(data.Subjects.Count, captureSubjectsMaxCount));
+            for (var i = 0; i < data.Subjects.Count && i < captureSubjectsMaxCount; i++)
+            {
+                var subject = data.Subjects[i];
+                var heldItems = new List<string>(
+                    Math.Min(subject.HeldItems.Count, captureHeldItemsMaxCount));
+
+                for (var j = 0; j < subject.HeldItems.Count && j < captureHeldItemsMaxCount; j++)
+                {
+                    heldItems.Add(
+                        TruncatePersistentPhotoText(
+                            subject.HeldItems[j],
+                            captureHeldItemMaxLength) ?? string.Empty);
+                }
+
+                subjects.Add(new PhotoCapturedSubjectData(
+                    TruncatePersistentPhotoText(
+                        subject.DisplayName,
+                        captureDisplayNameMaxLength) ?? string.Empty,
+                    subject.State,
+                    TruncatePersistentPhotoText(
+                        subject.GenderKey,
+                        captureGenderKeyMaxLength) ?? string.Empty,
+                    heldItems,
+                    subject.IsHumanoid));
+            }
+
+            var recognizedNames = new List<string>(
+                Math.Min(data.RecognizedNames.Count, captureRecognizedNamesMaxCount));
+            for (var i = 0; i < data.RecognizedNames.Count && i < captureRecognizedNamesMaxCount; i++)
+            {
+                recognizedNames.Add(
+                    TruncatePersistentPhotoText(
+                        data.RecognizedNames[i],
+                        captureRecognizedNameMaxLength) ?? string.Empty);
+            }
+
+            return new PhotoCaptureData(
+                data.AreaWidth,
+                data.AreaHeight,
+                subjects,
+                recognizedNames);
+        }
+
+        private static string TrimSerializedCaptureDataToFit(PhotoCaptureData data)
+        {
+            const int captureDataJsonMaxLength = 10000;
+            var subjects = new List<PhotoCapturedSubjectData>(data.Subjects.Count);
+            foreach (var subject in data.Subjects)
+            {
+                subjects.Add(new PhotoCapturedSubjectData(
+                    subject.DisplayName,
+                    subject.State,
+                    subject.GenderKey,
+                    new List<string>(subject.HeldItems),
+                    subject.IsHumanoid));
+            }
+
+            var recognizedNames = new List<string>(data.RecognizedNames);
+
+            while (true)
+            {
+                var candidate = new PhotoCaptureData(
+                    data.AreaWidth,
+                    data.AreaHeight,
+                    subjects,
+                    recognizedNames);
+
+                var json = JsonSerializer.Serialize(candidate);
+                if (json.Length <= captureDataJsonMaxLength)
+                    return json;
+
+                if (recognizedNames.Count > 0)
+                {
+                    recognizedNames.RemoveAt(recognizedNames.Count - 1);
+                    continue;
+                }
+
+                var removedHeldItem = false;
+                for (var i = subjects.Count - 1; i >= 0; i--)
+                {
+                    if (subjects[i].HeldItems.Count == 0)
+                        continue;
+
+                    var heldItems = new List<string>(subjects[i].HeldItems);
+                    heldItems.RemoveAt(heldItems.Count - 1);
+                    subjects[i] = new PhotoCapturedSubjectData(
+                        subjects[i].DisplayName,
+                        subjects[i].State,
+                        subjects[i].GenderKey,
+                        heldItems,
+                        subjects[i].IsHumanoid);
+                    removedHeldItem = true;
+                    break;
+                }
+
+                if (removedHeldItem)
+                    continue;
+
+                if (subjects.Count > 0)
+                {
+                    subjects.RemoveAt(subjects.Count - 1);
+                    continue;
+                }
+
+                return JsonSerializer.Serialize(new PhotoCaptureData(
+                    data.AreaWidth,
+                    data.AreaHeight,
+                    new List<PhotoCapturedSubjectData>(),
+                    new List<string>()));
+            }
         }
         #endregion
 

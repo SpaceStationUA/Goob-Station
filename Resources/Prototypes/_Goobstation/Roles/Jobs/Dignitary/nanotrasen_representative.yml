@@ -95,8 +95,8 @@
 
 - type: job
   id: NanotrasenRepresentative
-  name: "Представник Нанотрейзен"
-  description: "Представляти НТ, надсилати звіти про ситуацію на станції, інформувати керівників про накази Центкому."
+  name: job-name-ntr
+  description: "Represent NT, Send reports back to them on the station's situation, Inform the heads of anything CentCom orders them to do."
   playTimeTracker: JobNanotrasenRepresentative
   requirements:
     - !type:DepartmentTimeRequirement
@@ -104,10 +104,26 @@
       time: 180000  #50 hours
     - !type:AgeRequirement
       requiredAge: 21
-    - !type:SpeciesRequirement # Goob - None Felinid
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+    - !type:SpeciesRequirement # Pirate edit
       inverted: true
       species:
-      - Felinid
+      #- Felinid
+      - Hydrakin
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+    # Pirate contractor end
   weight: 20
   startingGear: NanotrasenRepresentativeGear
   icon: "JobIconNanotrasenRepresentative"
@@ -115,6 +131,12 @@
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  whitelisted: true # Pirate
+  guides:
+  - NanotrasenRepSOP
+  - SOP
+  - SpaceLaw
+  - Writing
   goobcoins: 40
   access:
   - Security
@@ -146,18 +168,21 @@
   id: NanotrasenRepresentativeGear
   equipment:
     id: NanotrasenRepresentativePDA
+    eyes: ClothingEyesGlassesCommand
     ears: ClothingHeadsetAltCentCom
     pocket1: UniqueNanorepLockerTeleporter
   storage:
     back:
     - Flash
     - TelescopicBaton
+  # inhand:
+  #   - ExecutiveBriefcaseEmpty # TODO: Maybe change this to not-empty, so that ntr wouldn't be poor at the start of every shift but whatever
 
 - type: chameleonOutfit
   id: NanotrasenRepresentativeChameleonOutfit
   job: NanotrasenRepresentative
   equipment:
-    eyes: ClothingEyesGlassesSunglasses
+    eyes: ClothingEyesGlassesCommand
     mask: ClothingMaskBreath
     ears: ClothingHeadsetAltCentCom
     gloves: ClothingHandsGlovesHeavyGoldenTrim

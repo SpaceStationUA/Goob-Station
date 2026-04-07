@@ -11,7 +11,7 @@
 # Abilities
 changeling-biomass-deficit = Недостатньо біомаси!
 changeling-chemicals-deficit = Недостатньо хімікатів!
-changeling-action-fail-lesserform = Неможливо використати у меншій формі!
+changeling-action-fail-lesserform = Неможливо виконати цю дію в нижчій формі!
 
 changeling-action-fail-absorbed = Потрібно поглинути ще {$number} організмів, щоб використати це!
 changeling-absorb-start = {CAPITALIZE(THE($user))} починає поглинати ДНК {CAPITALIZE(THE($target))}!
@@ -93,3 +93,22 @@ changeling-sting-fail-fakeweapon = Вони не зможуть підтриму
 changeling-sting-fail-hollow = Ми не можемо вжалити порожнистий організм.
 changeling-sting-extract-fail-duplicate = Ми вже витягували цю ДНК у минулому.
 changeling-sting-extract-fail-lesser = Ми не можемо витягти ДНК з меншої істоти!
+changeling-biomass-warn-first = Нас починає мучити голод...
+changeling-biomass-warn-second = Наш голод викликає напад болю...
+changeling-biomass-warn-third = Наш голод починає позначатися на нашій формі...
+changeling-biomass-warn-death = Наші клітини починають пожирати самі себе. Шляху назад немає.
+changeling-adrenaline = Ми вводимо надзвичайно потужний адреналін у наше тіло.
+changeling-voidadapt-lowpressure-start = Ми адаптуємося до навколишнього низького тиску.
+changeling-voidadapt-lowpressure-end = Тиск навколо більше не низький. Ми скасовуємо нашу адаптацію.
+changeling-voidadapt-lowtemperature-start = Ми адаптуємося до навколишнього морозу.
+changeling-voidadapt-lowtemperature-end = Температура навколо стала вищою. Ми скасовуємо нашу адаптацію.
+changeling-voidadapt-onfire = Наші адаптації стають занадто болючими для підтримки у вогні! Ми відкидаємо їх!
+changeling-stasis-finished = Наша регенерація завершена. Ми готові прокинутися.
+changeling-action-fail-onfire = Наші клітини корчаться в агонії, не в змозі виконати дію!
+changeling-action-fail-not-changeling = Та ну. Ти не повинен мати цю дію. Повідом про це як про баг.
+changeling-stasis-enter-dead = Ми входимо в регенеративний стазис. Наші катастрофічні травми потребуватимуть надзвичайно багато часу для загоєння...
+changeling-stasis-absorbed = Ми не контролюємо наші клітини. Наше тіло мовчить. Це кінець.
+changeling-stasis-defib = Удар струму пронизує нас. Наш стазис перервано!
+changeling-regenerate = Наше тіло миттєво позбувається будь-яких ран і зламаних кісток.
+changeling-regenerate-limbs = Наше тіло видає гучний тріск, коли відсутні кінцівки, рани та зламані кістки миттєво відновлюються!
+changeling-chameleon-fire = Наша прозорість зникає, коли вогонь охоплює нас!

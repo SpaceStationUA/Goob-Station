@@ -162,11 +162,12 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+# base
 - type: entity
   id: VendingMachine
   parent: BaseMachinePowered
-  name: "торговий автомат"
-  description: "Просто додайте капіталізм!"
+  name: vending machine
+  description: Just add capitalism!
   abstract: true
   components:
   - type: ActionGrant
@@ -237,6 +238,11 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
+  - type: Vocalizer
+    minVocalizeInterval: 8m
+    maxVocalizeInterval: 10m
+    hideChat: true
+  - type: VocalizerRequiresPower
   - type: SpookySpeaker
     messageSet: SpookySpeakerMessagesGeneric
     speakChance: 0.2
@@ -253,6 +259,7 @@
     defaultChannel: Binary
     channels:
     - Binary
+  - type: IntellicardableMind # Goobstation - intellicard on more AIs
   - type: DoAfter
   - type: Electrified
     enabled: false
@@ -285,10 +292,76 @@
     - RobotTalk
 
 - type: entity
+  id: VendingMachineWallmount
+  parent: BaseWallmountMachine
+  name: vending machine
+  abstract: true
+  components:
+  - type: StationAiWhitelist
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 3
+    enabled: false
+    sound:
+      path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+      - !type:EjectVendorItems
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: Repairable
+    doAfterDelay: 8
+  - type: ActivatableUI
+    key: enum.VendingMachineUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.VendingMachineUiKey.Key:
+        type: VendingMachineBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-vendingmachine
+    layoutId: Vending
+  - type: PointLight
+    enabled: false
+    castShadows: false
+    radius: 1.5
+  - type: LitOnPowered
+  - type: Appearance
+  - type: WiresVisuals
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: Rotatable
+
+# Vending machines
+
+- type: entity
   parent: VendingMachine
   id: VendingMachineCondiments
-  name: "приправна станція"
-  description: "Намащуйте ці густі липкі речовини на їжу для отримання повного смакового ефекту."
+  name: condiment station
+  description: Slather these thick gooey substances on your food for a full flavor effect.
   components:
   - type: VendingMachine
     pack: CondimentInventory
@@ -310,8 +383,8 @@
         layer:
         - MachineLayer
         density: 190
-  - type: Advertise
-    pack: CondimentVendAds
+  - type: DatasetVocalizer
+    dataset: CondimentVendAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Transform
@@ -320,16 +393,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineAmmo
-  name: "визвольна станція"
-  description: "Переважна кількість стародавнього патріотизму охоплює вас, коли ви просто дивитеся на машину."
+  name: liberation station
+  description: An overwhelming amount of ancient patriotism washes over you just by looking at the machine.
   components:
   - type: VendingMachine
     pack: AmmoVendInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: AmmoVendAds
+  - type: DatasetVocalizer
+    dataset: CondimentVendAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -346,8 +419,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineBooze
-  name: "Booze-O-Mat"
-  description: "Технологічне диво, яке нібито здатне змішати саме ту суміш, яку ви хочете випити, щойно ви попросите."
+  name: Booze-O-Mat
+  description: A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one.
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
@@ -356,8 +429,8 @@
     normalState: normal-unshaded
     denyState: deny-unshaded
     loopDeny: false
-  - type: Advertise
-    pack: BoozeOMatAds
+  - type: DatasetVocalizer
+    dataset: BoozeOMatAds
   - type: SpeakOnUIClosed
     pack: BoozeOMatGoodbyes
   - type: Sprite
@@ -380,8 +453,8 @@
 - type: entity
   parent: VendingMachineBooze
   id: VendingMachineBoozeSyndicate # syndie booze-o-mat for nukie outpost
-  name: "Синяк-О-Мат"
-  description: "Відновлений Бухло-О-Мат для підвищення морального духу оперативників. З одного боку видно відбиток криваво-червоного скафандра, а з іншого - фарба ніби вигоріла."
+  name: Bruise-O-Mat
+  description: A refurbished Booze-O-Mat for boosting operative morale. An imprint of a blood-red hardsuit is visible on one side, and the paint seems ashed off on the other side.
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
@@ -390,8 +463,8 @@
     normalState: normal-unshaded
     denyState: deny-unshaded
     loopDeny: false
-  - type: Advertise
-    pack: BruiseOMatAds
+  - type: DatasetVocalizer
+    dataset: BruiseOMatAds
   - type: SpeakOnUIClosed
     pack: BruiseOMatGoodbyes
   - type: Sprite
@@ -414,8 +487,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCart
-  name: "PTech"
-  description: "Вендинг PTech! Широкий вибір КПК, картриджів та всього іншого, що може знадобитися нудному штовхачу паперу!"
+  name: PTech
+  description: PTech vending! Providing a ROBUST selection of PDAs, cartridges, and anything else a dull paper pusher needs!
   components:
   - type: VendingMachine
     pack: PTechInventory
@@ -452,8 +525,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineChefvend
-  name: "ChefVend"
-  description: "Постачальник інгредієнтів для всіх ваших потреб у шафах."
+  name: ChefVend
+  description: An ingredient vendor for all your cheffin needs.
   components:
   - type: VendingMachine
     pack: ChefvendInventory
@@ -461,8 +534,8 @@
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
-  - type: Advertise
-    pack: ChefvendAds
+  - type: DatasetVocalizer
+    dataset: ChefvendAds
   - type: SpeakOnUIClosed
     pack: ChefvendGoodbyes
   - type: Sprite
@@ -487,8 +560,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCigs
-  name: "ShadyCigs Deluxe"
-  description: "Якщо ви хочете захворіти на рак, зробіть це стильно."
+  name: ShadyCigs Deluxe
+  description: If you want to get cancer, might as well do it in style.
   components:
   - type: VendingMachine
     pack: CigaretteMachineInventory
@@ -499,8 +572,8 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-  - type: Advertise
-    pack: CigaretteMachineAds
+  - type: DatasetVocalizer
+    dataset: CigaretteMachineAds
   - type: SpeakOnUIClosed
     pack: CigaretteMachineGoodbyes
   - type: Sprite
@@ -523,8 +596,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineClothing
-  name: "ClothesMate"
-  description: "Торговий автомат з одягом."
+  name: ClothesMate
+  description: A vending machine for clothing.
   components:
   - type: VendingMachine
     pack: ClothesMateInventory
@@ -532,8 +605,8 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
-  - type: Advertise
-    pack: ClothesMateAds
+  - type: DatasetVocalizer
+    dataset: ClothesMateAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -559,8 +632,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineWinter
-  name: "WinterDrobe"
-  description: "Найкраще місце, щоб насолодитися холодом!"
+  name: WinterDrobe
+  description: The best place to enjoy the cold!
   components:
   - type: VendingMachine
     pack: WinterDrobeInventory
@@ -568,8 +641,8 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
-  - type: Advertise
-    pack: ClothesMateAds
+  - type: DatasetVocalizer
+    dataset: ClothesMateAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -595,8 +668,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCoffee
-  name: "Найкращі гарячі напої від Solar"
-  description: "Подається киплячим, щоб залишався гарячим протягом усієї зміни!"
+  name: Solar's Best Hot Drinks
+  description: Served boiling so it stays hot all shift!
   components:
   - type: VendingMachine
     pack: HotDrinksMachineInventory
@@ -611,8 +684,8 @@
     ejectDelay: 5
     soundVend: /Audio/Machines/machine_vend_hot_drink.ogg
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: HotDrinksMachineAds
+  - type: DatasetVocalizer
+    dataset: HotDrinksMachineAds
   - type: SpeakOnUIClosed
     pack: HotDrinksMachineGoodbyes
   - type: Sprite
@@ -644,8 +717,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCola
-  name: "Міцні безалкогольні напої"
-  description: "Постачальник безалкогольних напоїв наданий компанією Robust Industries, LLC."
+  name: Robust Softdrinks
+  description: A softdrink vendor provided by Robust Industries, LLC.
   components:
   - type: VendingMachine
     pack: RobustSoftdrinksInventory
@@ -658,8 +731,8 @@
     denyState: deny-unshaded
     ejectDelay: 1.9
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: RobustSoftdrinksAds
+  - type: DatasetVocalizer
+    dataset: RobustSoftdrinksAds
   - type: SpeakOnUIClosed
     pack: RobustSoftdrinksGoodbyes
   - type: Sprite
@@ -710,8 +783,8 @@
 - type: entity
   parent: VendingMachineCola
   id: VendingMachineColaRed
-  name: "Космічний продавець кока-коли"
-  description: "Він продає колу в космосі."
+  name: Space Cola Vendor
+  description: It vends cola, in space.
   components:
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/cola.rsi
@@ -733,8 +806,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSpaceUp
-  name: "Space-Up! Продавець"
-  description: "Побалуйте себе вибухом смаку."
+  name: Space-Up! Vendor
+  description: Indulge in an explosion of flavor.
   components:
   - type: VendingMachine
     pack: SpaceUpInventory
@@ -794,8 +867,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineStarkist
-  name: "Постачальник Star-kist"
-  description: "Смак зірки в рідкому вигляді."
+  name: Star-kist Vendor
+  description: The taste of a star in liquid form.
   components:
   - type: VendingMachine
     pack: StarkistInventory
@@ -823,8 +896,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineShamblersJuice
-  name: "Продавець соку Shambler's"
-  description: "~Налий мені соку Шамблер!"
+  name: Shambler's Juice Vendor
+  description: ~Shake me up some of that Shambler's Juice!~
   components:
   - type: VendingMachine
     pack: ShamblersJuiceInventory
@@ -837,8 +910,8 @@
     denyState: deny-unshaded
     ejectDelay: 1.9
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: RobustSoftdrinksAds
+  - type: DatasetVocalizer
+    dataset: RobustSoftdrinksAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/shamblersjuice.rsi
     layers:
@@ -859,8 +932,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachinePwrGame
-  name: "Постачальник ігор Pwr"
-  description: "Ви хочете, ми маємо це. Зроблено у партнерстві з \"Салати Влада\"."
+  name: Pwr Game Vendor
+  description: You want it, we got it. Brought to you in partnership with Vlad's Salads.
   components:
   - type: VendingMachine
     pack: PwrGameInventory
@@ -873,8 +946,8 @@
     denyState: deny-unshaded
     ejectDelay: 1.9
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: RobustSoftdrinksAds
+  - type: DatasetVocalizer
+    dataset: RobustSoftdrinksAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -897,8 +970,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineDrGibb
-  name: "Доктор Гібб Вендор"
-  description: "Консерви - вибух різноманітних смаків саме у цього постачальника!"
+  name: Dr. Gibb Vendor
+  description: Canned explosion of different flavors in this very vendor!
   components:
   - type: VendingMachine
     pack: DrGibbInventory
@@ -911,8 +984,8 @@
     denyState: deny-unshaded
     ejectDelay: 1.9
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: DrGibbAds
+  - type: DatasetVocalizer
+    dataset: DrGibbAds
   - type: SpeakOnUIClosed
     pack: DrGibbGoodbyes
   - type: Sprite
@@ -935,8 +1008,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSmite
-  name: "Торговий автомат Smite"
-  description: "Популярний серед адміністрації."
+  name: Smite Vendor
+  description: Popular with the administration.
   components:
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/smite.rsi
@@ -959,8 +1032,8 @@
     denyState: deny-unshaded
     ejectDelay: 1.9
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: SmiteAds
+  - type: DatasetVocalizer
+    dataset: SmiteAds
   - type: SpeakOnUIClosed
     pack: SmiteGoodbyes
   - type: PointLight
@@ -971,8 +1044,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineDinnerware
-  name: "Постачальник кухонного посуду Plasteel"
-  description: "Постачальник кухонного та ресторанного обладнання."
+  name: Plasteel Chef's Dinnerware Vendor
+  description: A kitchen and restaurant equipment vendor.
   components:
   - type: VendingMachine
     pack: DinnerwareInventory
@@ -981,8 +1054,8 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-  - type: Advertise
-    pack: DinnerwareAds
+  - type: DatasetVocalizer
+    dataset: DinnerwareAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -1013,8 +1086,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineMagivend
-  name: "MagiVend"
-  description: "Чарівний торговий автомат."
+  name: MagiVend
+  description: A magic vending machine.
   components:
   - type: VendingMachine
     pack: MagiVendInventory
@@ -1023,8 +1096,8 @@
     normalState: normal-unshaded
     denyState: deny-unshaded
     ejectState: eject-unshaded
-  - type: Advertise
-    pack: MagiVendAds
+  - type: DatasetVocalizer
+    dataset: MagiVendAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -1053,8 +1126,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineDiscount
-  name: "Знижка від Дена"
-  description: "Торговий автомат зі зниженими закусками від сумнозвісної франшизи \"Discount Dan\"."
+  name: Discount Dan's
+  description: A vending machine containing discount snacks from the infamous 'Discount Dan' franchise.
   components:
   - type: VendingMachine
     pack: DiscountDansInventory
@@ -1064,8 +1137,8 @@
     brokenState: broken
     normalState: normal-unshaded
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: DiscountDansAds
+  - type: DatasetVocalizer
+    dataset: DiscountDansAds
   - type: SpeakOnUIClosed
     pack: DiscountDansGoodbyes
   - type: Sprite
@@ -1088,8 +1161,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineEngivend
-  name: "Engi-Vend"
-  description: "Торгівля запасними інструментами. Що? Ви очікували дотепного опису?"
+  name: Engi-Vend
+  description: Spare tool vending. What? Did you expect some witty description?
   components:
   - type: VendingMachine
     pack: EngiVendInventory
@@ -1129,8 +1202,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineMedical
-  name: "НаноМед Плюс"
-  description: "Це дозатор медичних препаратів. Тільки натуральні хімікати! (І інвалідні візки, чому б і ні)" # Goobstation
+  name: NanoMed Plus
+  description: It's a medical drug dispenser. Natural chemicals only! (And wheelchairs, why not) # Goobstation
   components:
   - type: VendingMachine
     pack: NanoMedPlusInventory
@@ -1140,8 +1213,8 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     ejectDelay: 0.6
-  - type: Advertise
-    pack: NanoMedAds
+  - type: DatasetVocalizer
+    dataset: NanoMedAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -1165,7 +1238,7 @@
     autoRot: true
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
   - type: Transform
     noRot: false
   - type: Rotatable
@@ -1175,8 +1248,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineNutri
-  name: "NutriMax"
-  description: "Торговий автомат з поживними речовинами для рослин та ботанічними інструментами."
+  name: NutriMax
+  description: A vending machine containing nutritional substances for plants and botanical tools.
   components:
   - type: VendingMachine
     pack: NutriMaxInventory
@@ -1185,8 +1258,8 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-  - type: Advertise
-    pack: NutriMaxAds
+  - type: DatasetVocalizer
+    dataset: NutriMaxAds
   - type: SpeakOnUIClosed
     pack: NutriMaxGoodbyes
   - type: Sprite
@@ -1211,8 +1284,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSec
-  name: "SecTech"
-  description: "Торговий автомат, що містить охоронне обладнання. На етикетці написано \"ТІЛЬКИ ДЛЯ ПЕРСОНАЛУ СЛУЖБИ БЕЗПЕКИ\"."
+  name: SecTech
+  description: A vending machine containing Security equipment. A label reads SECURITY PERSONNEL ONLY.
   components:
   - type: VendingMachine
     pack: SecTechInventory
@@ -1221,8 +1294,8 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-  - type: Advertise
-    pack: SecTechAds
+  - type: DatasetVocalizer
+    dataset: SecTechAds
   - type: SpeakOnUIClosed
     pack: SecTechGoodbyes
   - type: Sprite
@@ -1258,8 +1331,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSeedsUnlocked
-  name: "MegaSeed Servitor"
-  description: "Для тих, кому швидко потрібне насіння. Безумовно, найкращий вибір насіння на станції!"
+  name: MegaSeed Servitor
+  description: For when you need seeds fast. Hands down the best seed selection on the station!
   suffix: Unlocked
   components:
   - type: VendingMachine
@@ -1269,8 +1342,8 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-  - type: Advertise
-    pack: MegaSeedAds
+  - type: DatasetVocalizer
+    dataset: MegaSeedAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -1301,8 +1374,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSnack
-  name: "Getmore Chocolate Corp"
-  description: "Автомат із закусками, люб'язно наданий шоколадною корпорацією Getmore, що базується на Марсі."
+  name: Getmore Chocolate Corp
+  description: A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars.
   components:
   - type: VendingMachine
     pack: GetmoreChocolateCorpInventory
@@ -1314,8 +1387,8 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: GetmoreChocolateCorpAds
+  - type: DatasetVocalizer
+    dataset: GetmoreChocolateCorpAds
   - type: SpeakOnUIClosed
     pack: GetmoreChocolateCorpGoodbyes
   - type: Sprite
@@ -1344,8 +1417,8 @@
 - type: entity
   parent: VendingMachineSnack
   id: VendingMachineSustenance
-  name: "Постачальник послуг з життєзабезпечення"
-  description: "Торговий автомат, який продає їжу, як того вимагає розділ 47-C Угоди про етичне поводження з ув'язненими NT."
+  name: Sustenance Vendor
+  description: A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement.
   components:
   - type: VendingMachine
     pack: SustenanceInventory
@@ -1464,8 +1537,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSovietSoda
-  name: "БОДА"
-  description: "Старий автомат із солодкою водою."
+  name: BODA
+  description: An old vending machine containing sweet water.
   components:
   - type: VendingMachine
     pack: BodaInventory
@@ -1477,8 +1550,8 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: BodaAds
+  - type: DatasetVocalizer
+    dataset: BodaAds
   - type: SpeakOnUIClosed
     pack: BodaGoodbyes
   - type: Sprite
@@ -1508,8 +1581,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineTheater
-  name: "AutoDrobe"
-  description: "Торговий автомат з костюмами."
+  name: AutoDrobe
+  description: A vending machine containing costumes.
   components:
   - type: VendingMachine
     pack: AutoDrobeInventory
@@ -1519,8 +1592,8 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     screenState: screen
-  - type: Advertise
-    pack: AutoDrobeAds
+  - type: DatasetVocalizer
+    dataset: AutoDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -1555,8 +1628,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineVendomat
-  name: "Vendomat"
-  description: "Тільки найкраще надійне обладнання в космосі!"
+  name: Vendomat
+  description: Only the finest robust equipment in space!
   components:
   - type: VendingMachine
     pack: VendomatInventory
@@ -1565,8 +1638,8 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-  - type: Advertise
-    pack: VendomatAds
+  - type: DatasetVocalizer
+    dataset: VendomatAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -1595,8 +1668,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineRobotics
-  name: "Robotech Deluxe"
-  description: "Всі інструменти, необхідні для створення власної армії роботів."
+  name: Robotech Deluxe
+  description: All the tools you need to create your own robot army.
   components:
   - type: VendingMachine
     pack: RoboticsInventory
@@ -1605,8 +1678,8 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-  - type: Advertise
-    pack: VendomatAds
+  - type: DatasetVocalizer
+    dataset: VendomatAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -1640,8 +1713,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineYouTool
-  name: "YouTool"
-  description: "Торговий автомат зі стандартними інструментами. Напис на етикетці: Інструменти для інструментів."
+  name: YouTool
+  description: "A vending machine containing standard tools. A label reads: Tools for tools."
   components:
   - type: VendingMachine
     pack: YouToolInventory
@@ -1679,8 +1752,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineGames
-  name: "Хороша чиста забава"
-  description: "Продає речі, які, ймовірно, не сподобаються капітану та начальнику відділу кадрів, якщо ви будете возитися з ними замість того, щоб виконувати свою роботу..."
+  name: Good Clean Fun
+  description: Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job...
   components:
   - type: VendingMachine
     pack: GoodCleanFunInventory
@@ -1689,8 +1762,8 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     ejectDelay: 1.8
-  - type: Advertise
-    pack: GoodCleanFunAds
+  - type: DatasetVocalizer
+    dataset: GoodCleanFunAds
   - type: SpeakOnUIClosed
     pack: GoodCleanFunGoodbyes
   - type: Sprite
@@ -1719,8 +1792,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineChang
-  name: "Пане Чанг"
-  description: "Автомат для приготування китайської їжі з самообслуговуванням, для всіх ваших потреб в китайській їжі."
+  name: Mr. Chang
+  description: A self-serving Chinese food machine, for all your Chinese food needs.
   components:
   - type: VendingMachine
     pack: ChangInventory
@@ -1732,8 +1805,8 @@
     denyState: deny-unshaded
     ejectState: eject-unshaded
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: ChangAds
+  - type: DatasetVocalizer
+    dataset: ChangAds
   - type: SpeakOnUIClosed
     pack: ChangGoodbyes
   - type: Sprite
@@ -1761,8 +1834,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSalvage
-  name: "Постачальник металобрухту"
-  description: "Найкращий друг гнома!"
+  name: Salvage Vendor
+  description: A dwarf's best friend!
   components:
   #- type: VendingMachine # DeltaV: Use mining points instead of limited stock
   #  pack: SalvageEquipmentInventory
@@ -1803,12 +1876,11 @@
         type: MiningVoucherBoundUserInterface
   - type: MiningVendor # Lavaland Change
     kits:
-    - MiningCrusher
+    - MiningCombat
     - MiningExtraction
-    #- MiningResonator
     - MiningSurvival
+    - MiningMedical
     #- MiningDrone
-    - MiningConscription
   - type: Wires # DeltaV: Use shop vendor wires layout
     layoutId: ShopVendor
   - type: AccessReader
@@ -1820,8 +1892,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineDonut
-  name: "Пончики Monkin' Donuts"
-  description: "Постачальник пончиків наданий компанією Robust Industries, LLC."
+  name: Monkin' Donuts
+  description: A donut vendor provided by Robust Industries, LLC.
   components:
   - type: VendingMachine
     pack: DonutInventory
@@ -1831,8 +1903,8 @@
     brokenState: broken
     normalState: normal-unshaded
     initialStockQuality: 0.33
-  - type: Advertise
-    pack: DonutAds
+  - type: DatasetVocalizer
+    dataset: DonutAds
   - type: SpeakOnUIClosed
     pack: DonutGoodbyes
   - type: Sprite
@@ -1852,85 +1924,21 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
 
-# wallmounted machines
-
-- type: entity
-  id: VendingMachineWallmount
-  parent: VendingMachine
-  name: "торговий автомат"
-  abstract: true
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
-  components:
-  - type: Sprite
-    drawdepth: WallMountedItems
-    snapCardinals: false
-  - type: WallMount
-    arc: 175
-  - type: Transform
-    noRot: false
-  - type: Rotatable
-    rotateWhileAnchored: false
-    rotateWhilePulling: true
-
-- type: entity
-  parent: VendingMachineWallmount
-  id: VendingMachineWallMedical
-  name: "NanoMed"
-  description: "Це настінний диспенсер для медичного обладнання. Тільки натуральні хімікати!"
-  components:
-  - type: VendingMachine
-    pack: NanoMedInventory
-    offState: off
-    brokenState: broken
-    normalState: normal-unshaded
-    denyState: deny-unshaded
-    ejectState: eject-unshaded
-  - type: Sprite
-    noRot: true
-    sprite: Structures/Machines/VendingMachines/wallmed.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: AccessReader
-    access: [["Medical"]]
-  - type: GuideHelp
-    guides:
-    - Medical
-  - type: Transform
-    noRot: false
-  - type: Rotatable
-    rotateWhileAnchored: false
-    rotateWhilePulling: true
-  - type: PointLight
-    radius: 1.3
-    energy: 1.6
-    color: "#43ccb5"
-    mask: /Textures/Effects/LightMasks/cone.png
-    autoRot: true
-
 # job clothing
 
 - type: entity
   parent: VendingMachine
   id: VendingMachineHydrobe
-  name: "HyDrobe"
-  description: "Автомат з промовистою назвою. Він видає одяг та спорядження, пов'язані з ботанікою."
+  name: HyDrobe
+  description: A machine with a catchy name. It dispenses botany related clothing and gear.
   components:
   - type: VendingMachine
     pack: HyDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: HyDrobeAds
+  - type: DatasetVocalizer
+    dataset: HyDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -1953,16 +1961,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineLawDrobe
-  name: "LawDrobe"
-  description: "Протестую! Цей гардероб видає верховенство права... і адвокатський одяг..."
+  name: LawDrobe
+  description: Objection! This wardrobe dispenses the rule of law... and lawyer clothing..
   components:
   - type: VendingMachine
     pack: LawDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: LawDrobeAds
+  - type: DatasetVocalizer
+    dataset: LawDrobeAds
   - type: SpeakOnUIClosed
     pack: LawDrobeGoodbyes
   - type: Sprite
@@ -1981,16 +1989,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSecDrobe
-  name: "SecDrobe"
-  description: "Торговий автомат для продажу одягу, пов'язаного з охороною та безпекою!"
+  name: SecDrobe
+  description: A vending machine for security and security-related clothing!
   components:
   - type: VendingMachine
     pack: SecDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: SecDrobeAds
+  - type: DatasetVocalizer
+    dataset: SecDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2013,16 +2021,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingBarDrobe
-  name: "BarDrobe"
-  description: "Стильний продавець для продажу найстильнішого одягу для бару!"
+  name: BarDrobe
+  description: A stylish vendor to dispense the most stylish bar clothing!
   components:
   - type: VendingMachine
     pack: BarDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: BarDrobeAds
+  - type: DatasetVocalizer
+    dataset: BarDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2041,7 +2049,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineChapel
-  name: "PietyVend"
+  name: PietyVend
   components:
   - type: VendingMachine
     pack: PietyVendInventory
@@ -2071,16 +2079,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCargoDrobe
-  name: "CargoDrobe"
-  description: "Високотехнологічний торговий автомат для безкоштовної купівлі одягу, пов'язаного з вантажем."
+  name: CargoDrobe
+  description: A highly advanced vending machine for buying cargo related clothing for free.
   components:
   - type: VendingMachine
     pack: CargoDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: CargoDrobeAds
+  - type: DatasetVocalizer
+    dataset: CargoDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2103,16 +2111,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineMediDrobe
-  name: "MediDrobe"
-  description: "Торговий автомат, який, за чутками, може видавати одяг для медичного персоналу."
+  name: MediDrobe
+  description: A vending machine rumoured to be capable of dispensing clothing for medical personnel.
   components:
   - type: VendingMachine
     pack: MediDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: MediDrobeAds
+  - type: DatasetVocalizer
+    dataset: MediDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2131,16 +2139,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineChemDrobe
-  name: "ChemDrobe"
-  description: "Торговий автомат для видачі одягу, пов'язаного з хімією."
+  name: ChemDrobe
+  description: A vending machine for dispensing chemistry related clothing.
   components:
   - type: VendingMachine
     pack: ChemDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: ChemDrobeAds
+  - type: DatasetVocalizer
+    dataset: ChemDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2159,16 +2167,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCuraDrobe
-  name: "CuraDrobe"
-  description: "Постачальник з невеликим асортиментом, здатний продавати одяг лише для кураторів та бібліотекарів."
+  name: CuraDrobe
+  description: A lowstock vendor only capable of vending clothing for curators and librarians.
   components:
   - type: VendingMachine
     pack: CuraDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: CuraDrobeAds
+  - type: DatasetVocalizer
+    dataset: CuraDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2187,16 +2195,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineAtmosDrobe
-  name: "AtmosDrobe"
-  description: "Цей відносно невідомий торговий автомат видає одяг для техніків-атмосферистів, не менш невідомої професії."
+  name: AtmosDrobe
+  description: This relatively unknown vending machine delivers clothing for Atmospherics Technicians, an equally unknown job.
   components:
   - type: VendingMachine
     pack: AtmosDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: AtmosDrobeAds
+  - type: DatasetVocalizer
+    dataset: AtmosDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2219,16 +2227,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineEngiDrobe
-  name: "EngiDrobe"
-  description: "Торговий автомат, відомий тим, що продає одяг промислового класу."
+  name: EngiDrobe
+  description: A vending machine renowned for vending industrial grade clothing.
   components:
   - type: VendingMachine
     pack: EngiDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: EngiDrobeAds
+  - type: DatasetVocalizer
+    dataset: EngiDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2251,16 +2259,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineChefDrobe
-  name: "ChefDrobe"
-  description: "Цей торговий автомат, можливо, не видає м'ясо, але він точно видає одяг для кухарів."
+  name: ChefDrobe
+  description: This vending machine might not dispense meat, but it certainly dispenses chef related clothing.
   components:
   - type: VendingMachine
     pack: ChefDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: ChefDrobeAds
+  - type: DatasetVocalizer
+    dataset: ChefDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2279,16 +2287,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineDetDrobe
-  name: "DetDrobe"
-  description: "Машина для всіх ваших детективних потреб, доки вам потрібен одяг."
+  name: DetDrobe
+  description: A machine for all your detective needs, as long as you need clothes.
   components:
   - type: VendingMachine
     pack: DetDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: DetDrobeAds
+  - type: DatasetVocalizer
+    dataset: DetDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2307,16 +2315,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineJaniDrobe
-  name: "JaniDrobe"
-  description: "Самоочисний торговий автомат, здатний видавати одяг для прибиральників."
+  name: JaniDrobe
+  description: A self cleaning vending machine capable of dispensing clothing for janitors.
   components:
   - type: VendingMachine
     pack: JaniDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: JaniDrobeAds
+  - type: DatasetVocalizer
+    dataset: JaniDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2341,16 +2349,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSciDrobe
-  name: "SciDrobe"
-  description: "Простий торговий автомат, придатний для видачі добре пошитого наукового одягу. Схвалений космічними кубинцями."
+  name: SciDrobe
+  description: A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Space Cubans.
   components:
   - type: VendingMachine
     pack: SciDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: SciDrobeAds
+  - type: DatasetVocalizer
+    dataset: SciDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2369,16 +2377,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSyndieDrobe
-  name: "SyndieDrobe"
-  description: "Гардеробна машина, закодована синдикатом, містить елітне вбрання для різних операцій."
+  name: SyndieDrobe
+  description: Wardrobe machine encoded by the syndicate, contains elite outfits for various operations.
   components:
   - type: VendingMachine
     pack: SyndieDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: SyndieDrobeAds
+  - type: DatasetVocalizer
+    dataset: SyndieDrobeAds
   - type: SpeakOnUIClosed
     pack: SyndieDrobeGoodbyes
   - type: Sprite
@@ -2401,16 +2409,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineRoboDrobe
-  name: "RoboDrobe"
-  description: "Торговий автомат, призначений для видачі одягу, відомий лише робототехнікам."
+  name: RoboDrobe
+  description: A vending machine designed to dispense clothing known only to roboticists.
   components:
   - type: VendingMachine
     pack: RoboDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: RoboDrobeAds
+  - type: DatasetVocalizer
+    dataset: RoboDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2429,16 +2437,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineGeneDrobe
-  name: "GeneDrobe"
-  description: "Машина для видачі одягу, пов'язаного з генетикою."
+  name: GeneDrobe
+  description: A machine for dispensing clothing related to genetics.
   components:
   - type: VendingMachine
     pack: GeneDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: GeneDrobeAds
+  - type: DatasetVocalizer
+    dataset: GeneDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2457,16 +2465,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineViroDrobe
-  name: "ViroDrobe"
-  description: "Нестерилізована машина для видачі одягу, пов'язаного з вірусологією."
+  name: ViroDrobe
+  description: An unsterilized machine for dispending virology related clothing.
   components:
   - type: VendingMachine
     pack: ViroDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: ViroDrobeAds
+  - type: DatasetVocalizer
+    dataset: ViroDrobeAds
   - type: SpeakOnUIClosed
     pack: GenericVendGoodbyes
   - type: Sprite
@@ -2485,8 +2493,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCentDrobe
-  name: "CentDrobe"
-  description: "Унікальний торговий автомат для всіх ваших естетичних потреб ЦентКому!"
+  name: CentDrobe
+  description: A one-of-a-kind vending machine for all your centcomm aesthetic needs!
   components:
   - type: VendingMachine
     pack: CentDrobeInventory
@@ -2515,8 +2523,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineHappyHonk
-  name: "Happy Honk Dispenser"
-  description: "Щасливий диспенсер для коробочок з їжею honk! від honk! co."
+  name: Happy Honk Dispenser
+  description: A happy honk meal box dispenser made by honk! co.
   components:
   - type: VendingMachine
     pack: HappyHonkDispenserInventory
@@ -2545,8 +2553,8 @@
     color: "#3c5eb5"
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-  - type: Advertise
-    pack: HappyHonkAds
+  - type: DatasetVocalizer
+    dataset: HappyHonkAds
   - type: SpeakOnUIClosed
     pack: HappyHonkGoodbyes
   - type: AccessReader
@@ -2557,16 +2565,16 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachinePride
-  name: "Прайд-О-Мат"
-  description: "Торговий автомат, що містить гордість."
+  name: Pride-O-Mat
+  description: A vending machine containing pride.
   components:
   - type: VendingMachine
     pack: PrideDrobeInventory
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-  - type: Advertise
-    pack: PrideDrobeAds
+  - type: DatasetVocalizer
+    dataset: PrideDrobeAds
   - type: SpeakOnUIClosed
     pack: PrideDrobeGoodbyes
   - type: Speech
@@ -2591,8 +2599,8 @@
   parent: VendingMachine
   id: VendingMachineTankDispenserEVA
   suffix: EVA [O2, N2]
-  name: "стійка з газовими балонами"
-  description: "Постачальник газових балонів для роздачі."
+  name: gas tank dispenser
+  description: A vendor for dispensing gas tanks.
   components:
   - type: VendingMachine
     pack: TankDispenserEVAInventory
@@ -2604,8 +2612,8 @@
   parent: VendingMachine
   id: VendingMachineTankDispenserEngineering
   suffix: ENG [O2, Plasma]
-  name: "стійка з газовими балонами"
-  description: "Постачальник газових балонів. Цей має ліврею інженера."
+  name: gas tank dispenser
+  description: A vendor for dispensing gas tanks. This one has an engineering livery.
   components:
   - type: VendingMachine
     pack: TankDispenserEngineeringInventory
@@ -2618,8 +2626,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineChemicals
-  name: "ChemVend"
-  description: "Мабуть, це не кавоварка."
+  name: ChemVend
+  description: Probably not the coffee machine.
   components:
   - type: VendingMachine
     pack: ChemVendInventory
@@ -2627,7 +2635,7 @@
     brokenState: broken
     normalState: normal
     denyState: deny
-    ejectDelay: 2
+  # ejectDelay: 2 Goobstation - No reason for the eject delay to be 2 seconds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chemvend.rsi
     layers:
@@ -2647,8 +2655,8 @@
 - type: entity
   parent: VendingMachineChemicals
   id: VendingMachineChemicalsSyndicate
-  name: "SyndieJuice"
-  description: "Сподіваюся, не зі свіжовичавлених синдиків."
+  name: SyndieJuice
+  description: Not made with freshly squeezed syndies I hope.
   components:
   - type: VendingMachine
     pack: ChemVendInventorySyndicate
@@ -2659,3 +2667,36 @@
     ejectDelay: 2
   - type: AccessReader
     access: [["SyndicateAgent"]]
+
+# wallmount
+- type: entity
+  parent: VendingMachineWallmount
+  id: VendingMachineWallMedical
+  name: NanoMed
+  description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
+  components:
+  - type: VendingMachine
+    pack: NanoMedInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/wallmed.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.3
+    energy: 1.6
+    color: "#43ccb5"
+  - type: AccessReader
+    access: [["Medical"]]
+  - type: GuideHelp
+    guides:
+    - Medical

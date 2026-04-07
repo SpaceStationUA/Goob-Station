@@ -72,4 +72,12 @@ public sealed partial class LoadoutGroupPrototype : IPrototype
 
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();
+
+    // Pirate edit start - port frontier subgroups
+    /// <summary>
+    /// Loadout subgroups - will be appended to loadout list.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<LoadoutGroupPrototype>> Subgroups = new();
+    // Pirate edit end - port frontier subgroups
 }

@@ -1,0 +1,44 @@
+- type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretSAN
+  suffix: Sol Alliance Navy
+  description: A turret designed to provide protection for Sol Marines during combat drops. It menaces targets with a twin-linked C-20r, although its cheap fire controller lends to poor accuracy.
+  components:
+    - type: ContainerContainer
+      containers:
+        ballistic-ammo: !type:Container
+    - type: SolutionContainerManager
+    - type: NpcFactionMember
+      factions:
+        - SAN
+    - type: Gun
+      fireRate: 10
+      minAngle: 40
+      maxAngle: 45
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+    - type: BallisticAmmoProvider
+      proto: CartridgePistol
+      capacity: 200
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalGlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 3
+                  max: 5

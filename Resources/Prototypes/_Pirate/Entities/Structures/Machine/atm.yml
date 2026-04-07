@@ -1,0 +1,65 @@
+- type: entity
+  id: ATM
+  name: Банкомат
+  description: Для всіх ваших грошових потреб!
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/atm.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.ATMVisualLayers.Base"]
+    - state: unshaded
+      map: ["enum.ATMVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: ATM
+    idCardSlot:
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: false
+      whitelist:
+        components:
+        - BankCard
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      IdCardSlot: !type:ContainerSlot
+  - type: Appearance
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 3
+    enabled: false
+    sound:
+      path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+  - type: ActivatableUI
+    key: enum.ATMUiKey.Key
+    singleUser: true
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.ATMUiKey.Key:
+        type: ATMBui
+  - type: PointLight
+    enabled: false
+    castShadows: false
+    radius: 1.5
+  - type: LitOnPowered
+  - type: ApcPowerReceiver
+    powerLoad: 200
+    priority: Low
+  - type: ExtensionCableReceiver
+  - type: EmitSoundOnUIOpen
+    sound:
+      collection: Keyboard

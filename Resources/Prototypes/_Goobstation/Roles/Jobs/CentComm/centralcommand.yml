@@ -13,7 +13,7 @@
 
 - type: job
   id: NavyOfficer
-  name: "офіцер флоту"
+  name: job-name-navy-officer
   description: job-description-navy-officer
   playTimeTracker: JobNavyOfficer
   setPreference: false
@@ -50,7 +50,7 @@
 
 - type: job
   id: NavyCaptain
-  name: "капітан флоту"
+  name: job-name-navy-captain
   description: job-description-navy-captain
   playTimeTracker: JobNavyCaptain
   setPreference: false
@@ -133,8 +133,8 @@
 
 - type: job
   id: SpecialOperationsOfficer
-  name: "офіцер спецоперацій"
-  description: "елітний оперативник, відправлений для виконання критично важливих завдань та усунення загроз високого рівня"
+  name: job-name-special-operations-officer
+  description: job-description-operations-officer
   playTimeTracker: JobSpecialOperationsOfficer
   setPreference: false
   startingGear: SpecialOperationsOfficerGear
@@ -214,7 +214,7 @@
 - type: job
   id: Inspector
   name: job-name-inspector
-  description: "аудитор, відправлений Центральним Командуванням для перевірки відповідності станції протоколам та виявлення будь-яких порушень"
+  description: job-description-inspector
   playTimeTracker: JobInspector
   setPreference: false
   startingGear: InspectorGear
@@ -247,3 +247,58 @@
     id: InspectorPDA
     ears: ClothingHeadsetAltCentCom
     belt: BoxFolderCentComClipboard
+
+# Nerfed CentComm Space Salvage Gear
+- type: startingGear
+  id: MobRandomCommandCorpseCentComm
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatCentcomcap
+    eyes: ClothingEyesGlassesCommand
+    gloves: ClothingHandsGlovesHeavyGoldenTrim
+    back: ClothingBackpackSatchelLeather
+    outerClothing: ClothingOuterArmorCentcommCarapace
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCentCom
+    pocket1: BoxFolderCentCom
+
+# Outer Command
+- type: job
+  id: OuterCommander
+  name: job-name-outercommander
+  description: job-description-outercommander
+  playTimeTracker: JobOuterCommander
+  setPreference: false
+  startingGear: OuterCommanderGear
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-commander
+  canBeAntag: false
+  requirements:
+    - !type:AgeRequirement
+      requiredAge: 21
+  accessGroups:
+    - AllAccess
+  access:
+    - CentralCommand
+    - NanotrasenRepresentative
+    - BlueshieldOfficer
+  special:
+    - !type:AddImplantSpecial
+      implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant ]
+
+- type: startingGear
+  id: OuterCommanderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOuterCommand
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatOuterCommandcap
+    neck: ClothingNeckCloakOuterCommand
+    eyes: ClothingEyesGlassesCommand
+    gloves: ClothingHandsGlovesHeavyGoldenTrim
+    back: ClothingBackpackSatchelLeatherFilledInspector
+    outerClothing: ClothingOuterArmoredJacketOuterCommand
+    id: OuterCommandPDA
+    ears: ClothingHeadsetAltCentCom
+    pocket1: BoxFolderCentCom
+    pocket2: ExecutiveIDCard

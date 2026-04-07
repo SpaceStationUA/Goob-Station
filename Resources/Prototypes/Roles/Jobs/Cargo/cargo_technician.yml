@@ -76,9 +76,18 @@
   name: job-name-cargotech
   description: job-description-cargotech
   playTimeTracker: JobCargoTechnician
+  # Pirate contractor start
+  requirements: 
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - OrionExpress
+  # Pirate contractor end
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"
   supervisors: job-supervisors-qm
+  guides: # goobstation
+  - Cargo
   goobcoins: 20 #Goob content
   access:
   - Cargo

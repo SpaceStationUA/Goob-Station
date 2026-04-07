@@ -11,10 +11,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "кувалда"
+  name: sledgehammer
   parent: BaseItem
   id: Sledgehammer
-  description: "Ідеальний інструмент для безглуздої різанини."
+  description: The perfect tool for wanton carnage.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/sledgehammer.rsi
@@ -25,6 +25,8 @@
       types:
         Blunt: 10
         Structural: 10
+      woundSeverityMultipliers: #Goob
+        Blunt: 1.5
     soundHit:
       collection: MetalThud
   - type: Wieldable
@@ -39,29 +41,33 @@
 - type: entity
   id: Mjollnir
   parent: BaseItem
-  name: "Мйольнір"
-  description: "Зброя, гідна бога, здатна завдавати ударів з силою блискавки. Вона тріщить від ледь стримуваної енергії."
+  name: Mjollnir
+  description: A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy.
   components:
   - type: Wieldable
     useDelayOnWield: false # GoobStation Edit
+  - type: MeleeRequiresWield # Goobstation
   - type: LandAtCursor
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Melee/mjollnir.rsi # GoobStation Edit
     layers:
     - state: icon
-  - type: UseDelay
-    delay: 5 # Goobstation
-  - type: UseDelayOnMeleeHit
+  # - type: UseDelay
+  #   delay: 5 # Goobstation
+  # - type: UseDelayOnMeleeHit
   - type: MeleeThrowOnHit
     distance: 10 # Goobstation
     stunTime: 3
     activateOnThrown: true
   - type: MeleeWeapon
+    attackRate: 0.75 # Goobstation
     wideAnimationRotation: -135
     damage:
       types:
         Blunt: 10 # GoobStation Edit
         Structural: 10 # GoobStation Edit
+      woundSeverityMultipliers:
+        Blunt: 2
     soundHit:
       path: /Audio/Effects/tesla_consume.ogg
       params:
@@ -69,23 +75,27 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 10 # GoobStation Edit
-        Structural: 15 # GoobStation Edit
+        Blunt: 20 # GoobStation Edit
+        Structural: 35 # GoobStation Edit
   - type: DamageOtherOnHit
     damage:
       types:
         Blunt: 15
         Structural: 15
+      woundSeverityMultipliers:
+        Blunt: 2
   - type: Item
     size: Ginormous
   - type: Boomerang # Goobstation
     maxHops: 20
+  - type: StaticPrice
+    price: 50000
 
 - type: entity
   id: SingularityHammer
   parent: BaseItem
-  name: "Молот Сингулярності"
-  description: "Вершина технології ближнього бою, молот використовує силу мініатюрної сингулярності для нанесення нищівних ударів."
+  name: Singularity Hammer
+  description: The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows.
   components:
   - type: Wieldable
     useDelayOnWield: false
@@ -101,15 +111,18 @@
       components:
       - MobMover
       - Item
-  - type: UseDelay
-    delay: 5
-  - type: UseDelayOnMeleeHit
+  # - type: UseDelay
+  #   delay: 5
+  # - type: UseDelayOnMeleeHit
   - type: MeleeWeapon
+    attackRate: 0.75 # Goobstation
     wideAnimationRotation: -135
     damage:
       types:
         Blunt: 5
         Structural: 5
+      woundSeverityMultipliers:
+        Blunt: 2
     soundHit:
       path: /Audio/Effects/radpulse5.ogg
       params:
@@ -117,7 +130,9 @@
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 15
-        Structural: 15
+        Blunt: 25 # Goob edit
+        Structural: 35 # Goob edit
   - type: Item
     size: Ginormous
+  - type: StaticPrice
+    price: 30000

@@ -1,0 +1,9 @@
+- type: reagent
+  id: KortaNectarPirate
+  name: reagent-name-korta-nectar-pirate
+  group: Foods
+  desc: reagent-desc-korta-nectar-pirate
+  physicalDesc: reagent-physical-desc-syrupy
+  flavor: sweet
+  color: "#f5b14a"
+  recognizable: true

@@ -1,0 +1,59 @@
+<Document>
+
+  # Пекельний розрив
+
+  <Box>
+    <GuideEntityEmbed Entity="LegionnaireBonfire" Caption=""/>
+  </Box>
+
+  «Пекельний розрив» — це [textlink="бойове мистецтво" link="MartialArts"], що зосереджується на розриванні натовпів демонів із
+  жорстокою ефективністю. Оволодіти цим мистецтвом можуть лише демони різанини пекла, адже для нього потрібна величезна сирцева сила,
+  однак і Космічні Чарівники здатні розкрити його таємниці.
+  Повне розуміння цього мистецтва дозволить залити станцію кров’ю. Ніхто не буде у безпеці від вашої різанини.
+
+  ## Особливі здібності
+
+  Майстри Пекельного розриву завдають надзвичайних обсягів шкоди у короткі проміжки, що робить їх неперевершеними у рукопашному бою.
+
+  ## Комбо-атаки
+
+  ### Роздирання
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+
+  Завдає величезної рубальної шкоди й спричиняє кровотечу цілі.
+
+  ### Виривання голови
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+
+  Зриває голову з уже мертвого супротивника; украй смертоносно. Неможливо виконати, якщо ціль жива.
+
+  ### Пекельний удар
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Збиває супротивника з ніг і завдає великої шкоди витривалості. Якщо ви повалені — піднімаєтеся на ноги.
+
+  ### Дроп-кік
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+
+  Підкидає лежачого супротивника. Чудово для «фарбування». Неможливо виконати, коли ви на землі.
+
+</Document>

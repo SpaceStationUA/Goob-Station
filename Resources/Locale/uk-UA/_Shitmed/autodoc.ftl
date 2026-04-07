@@ -98,3 +98,15 @@ autodoc-body-symmetry-Left = Ліва
 autodoc-body-symmetry-Right = Права
 
 autodoc-submit = Підтвердити
+
+autodoc-error-reality-breaking = ПОРУШЕННЯ РЕАЛЬНОСТІ
+autodoc-error-step-invalid-None = ОБРАНИЙ КРОК НЕМОЖЛИВИЙ
+autodoc-error-step-invalid-MissingSkills = У ПРИСТРОЮ ВІДСУТНІ НАВИЧКИ
+autodoc-error-step-invalid-NeedsOperatingTable = ВІДСУТНІЙ ОПЕРАЦІЙНИЙ СТІЛ
+autodoc-error-step-invalid-Armor = КІНЦІВКА ПЕРЕКРИТА ОДЯГОМ
+autodoc-error-step-invalid-ToolInvalid = ОБРАНИЙ ІНСТРУМЕНТ НЕПРИДАТНИЙ
+autodoc-error-step-invalid-SurgeryInvalid = ПАЦІЄНТ НЕОПЕРАБЕЛЬНИЙ
+autodoc-error-step-invalid-MissingPreviousSteps = ПОПЕРЕДНІ КРОКИ НЕ ЗАВЕРШЕНО
+autodoc-error-step-invalid-StepCompleted = КРОК ВЖЕ ЗАВЕРШЕНО
+autodoc-error-step-invalid-MissingTool = ВІДСУТНІЙ ПОТРІБНИЙ ІНСТРУМЕНТ
+autodoc-error-step-invalid-DoAfterFailed = НЕМОЖЛИВО ВИКОНАТИ РАНІШЕ

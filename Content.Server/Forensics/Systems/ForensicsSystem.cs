@@ -78,8 +78,10 @@
 // SPDX-FileCopyrightText: 2024 voidnull000 <18663194+voidnull000@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+// SPDX-FileCopyrightText: 2025 Hagvan <22118902+Hagvan@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
 // SPDX-FileCopyrightText: 2025 ScarKy0 <106310278+ScarKy0@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
 // SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
 // SPDX-FileCopyrightText: 2025 Zachary Higgs <compgeek223@gmail.com>
 // SPDX-FileCopyrightText: 2025 godisdeadLOL <169250097+godisdeadLOL@users.noreply.github.com>
@@ -95,6 +97,7 @@ using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics.Components;
 using Content.Server.Popups;
+using Content.Shared.Body.Events;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Chemistry.Components;
@@ -103,6 +106,7 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
@@ -112,16 +116,18 @@ using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Timing; // Goobstation
 
 namespace Content.Server.Forensics
 {
-    public sealed class ForensicsSystem : EntitySystem
+    public sealed class ForensicsSystem : SharedForensicsSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly IGameTiming _timing = default!; // Goobstation
 
         public override void Initialize()
         {
@@ -148,7 +154,7 @@ namespace Content.Server.Forensics
             if (soln.Count > 0)
             {
                 var comp = EnsureComp<ForensicsComponent>(ent.Owner);
-                foreach (string dna in soln)
+                foreach (var dna in soln) // Goobstation
                 {
                     comp.DNAs.Add(dna);
                 }
@@ -204,7 +210,7 @@ namespace Content.Server.Forensics
             foreach (EntityUid part in args.GibbedParts)
             {
                 var partComp = EnsureComp<ForensicsComponent>(part);
-                partComp.DNAs.Add(dna);
+                partComp.DNAs.Add((dna, TimeSpan.Zero)); // Goobstation
                 partComp.CanDnaBeCleaned = false;
                 Dirty(part, partComp); // Einstein Engines
             }
@@ -219,7 +225,13 @@ namespace Content.Server.Forensics
                 foreach (EntityUid hitEntity in args.HitEntities)
                 {
                     if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp) && hitEntityComp.DNA != null)
-                        component.DNAs.Add(hitEntityComp.DNA);
+                    { // Goobstation Start
+                        // remove old DNA if it exists because need to refresh the freshness timestamp
+                        // seems to be shitcode but why is it a hashset in the first place, it never gets large so why not just use a list?
+                        component.DNAs.RemoveWhere(x => x.Item1 == hitEntityComp.DNA);
+
+                        component.DNAs.Add((hitEntityComp.DNA, _timing.CurTime));
+                    } // Goobstation End
                 }
             }
             Dirty(uid, component); // Einstein Engines
@@ -228,7 +240,7 @@ namespace Content.Server.Forensics
         private void OnRehydrated(Entity<ForensicsComponent> ent, ref GotRehydratedEvent args)
         {
             CopyForensicsFrom(ent.Comp, args.Target);
-            Dirty(args.Target, ent.Comp); // Einstein Engines
+            Dirty(args.Target, Comp<ForensicsComponent>(args.Target)); // Einstein Engines
         }
 
         /// <summary>
@@ -259,9 +271,9 @@ namespace Content.Server.Forensics
             }
         }
 
-        public List<string> GetSolutionsDNA(EntityUid uid)
+        public List<(string, TimeSpan)> GetSolutionsDNA(EntityUid uid) // Goobstation
         {
-            List<string> list = new();
+            List<(string, TimeSpan)> list = new(); // Goobstation
             if (TryComp<SolutionContainerManagerComponent>(uid, out var comp))
             {
                 foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, comp)))
@@ -272,16 +284,16 @@ namespace Content.Server.Forensics
             return list;
         }
 
-        public List<string> GetSolutionsDNA(Solution soln)
+        public List<(string, TimeSpan)> GetSolutionsDNA(Solution soln) // Goobstation
         {
-            List<string> list = new();
+            List<(string, TimeSpan)> list = new(); // Goobstation
             foreach (var reagent in soln.Contents)
             {
                 foreach (var data in reagent.Reagent.EnsureReagentData())
                 {
                     if (data is DnaData)
                     {
-                        list.Add(((DnaData) data).DNA);
+                        list.Add((((DnaData) data).DNA, ((DnaData) data).Freshness)); // Goobstation
                     }
                 }
             }
@@ -465,17 +477,12 @@ namespace Content.Server.Forensics
                 return;
 
             var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
-            recipientComp.DNAs.Add(component.DNA);
+            recipientComp.DNAs.Add((component.DNA, TimeSpan.Zero)); // Goobstation
             recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
         }
 
         #region Public API
-
-        /// <summary>
-        /// Give the entity a new, random DNA string and call an event to notify other systems like the bloodstream that it has been changed.
-        /// Does nothing if it does not have the DnaComponent.
-        /// </summary>
-        public void RandomizeDNA(Entity<DnaComponent?> ent)
+        public override void RandomizeDNA(Entity<DnaComponent?> ent)
         {
             if (!Resolve(ent, ref ent.Comp, false))
                 return;
@@ -487,11 +494,7 @@ namespace Content.Server.Forensics
             RaiseLocalEvent(ent.Owner, ref ev);
         }
 
-        /// <summary>
-        /// Give the entity a new, random fingerprint string.
-        /// Does nothing if it does not have the FingerprintComponent.
-        /// </summary>
-        public void RandomizeFingerprint(Entity<FingerprintComponent?> ent)
+        public override void RandomizeFingerprint(Entity<FingerprintComponent?> ent)
         {
             if (!Resolve(ent, ref ent.Comp, false))
                 return;
@@ -511,7 +514,7 @@ namespace Content.Server.Forensics
             if (TryComp<DnaComponent>(donor, out var donorComp) && donorComp.DNA != null)
             {
                 EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
-                recipientComp.DNAs.Add(donorComp.DNA);
+                recipientComp.DNAs.Add((donorComp.DNA, TimeSpan.Zero)); // Goobstation
                 recipientComp.CanDnaBeCleaned = canDnaBeCleaned;
             }
         }

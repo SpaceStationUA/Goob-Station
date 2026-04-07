@@ -142,7 +142,7 @@
 - type: entity
   parent: [MobObserverBase, InventoryBase]
   id: AdminObserver
-  name: "адміністратор-спостерігач"
+  name: admin observer
   categories: [ HideSpawnMenu ]
   components:
   - type: ContentEye
@@ -157,12 +157,21 @@
     - SilentStorageUser
     - PreventAccessLogging
     - AllowBiomeLoading
+    - IgnoreBalanceChecks # Pirate banking
   - type: Input
     context: "aghost"
   - type: Ghost
     canInteract: true
   - type: GhostHearing
   - type: Hands
+    hands:
+      hand_right:
+        location: Right
+      hand_left:
+        location: Left
+    sortedHands:
+    - hand_right
+    - hand_left
   - type: ComplexInteraction
   - type: Puller
     needsHands: false
@@ -247,12 +256,19 @@
   - type: Speech # Goobstation
     speechVerb: HolierThanThou
   - type: Eye
-    visMask:
-      - Ghost
+    visMask: # Goob edit
       - Normal
-      - CosmicCultMonument # DeltaV - Cosmic Cult
+      - Ghost
       - Abductor
+      - CosmicCultMonument # DeltaV - Cosmic Cult
+      - EldritchInfluence
+      - EldritchInfluenceSpent
+      - Admin
       - TargetingGhost # Pirate, so they can see
+  - type: OwnInteractionVerbs
+    allowedVerbs: []
+  - type: ExplosionResistance
+    damageCoefficient: 0
 
 - type: entity
   abstract: true
@@ -268,8 +284,8 @@
 - type: entity
   parent: BaseAGhostAction
   id: ActionAGhostShowSolar
-  name: "Інтерфейс керування сонячними панелями"
-  description: "Переглянути інтерфейс керування сонячними панелями."
+  name: Solar Control Interface
+  description: View a Solar Control Interface.
   components:
   - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.SolarControlConsoleUiKey.Key }
@@ -277,8 +293,8 @@
 - type: entity
   parent: BaseAGhostAction
   id: ActionAGhostShowCommunications
-  name: "Інтерфейс зв'язку"
-  description: "Переглянути інтерфейс зв'язку."
+  name: Communications Interface
+  description: View a Communications Interface.
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: comms_console }
@@ -291,8 +307,8 @@
 - type: entity
   parent: BaseAGhostAction
   id: ActionAGhostShowRadar
-  name: "Інтерфейс сканера мас"
-  description: "Переглянути інтерфейс сканера мас."
+  name: Mass Scanner Interface
+  description: View a Mass Scanner Interface.
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
@@ -305,8 +321,8 @@
 - type: entity
   parent: BaseAGhostAction
   id: ActionAGhostShowCargo
-  name: "Інтерфейс замовлення вантажу"
-  description: "Переглянути інтерфейс замовлення вантажу."
+  name: Cargo Ordering Interface
+  description: View a Cargo Ordering Interface.
   components:
   - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.CargoConsoleUiKey.Orders }
@@ -314,8 +330,8 @@
 - type: entity
   parent: BaseAGhostAction
   id: ActionAGhostShowCrewMonitoring
-  name: "Інтерфейс моніторингу екіпажу"
-  description: "Переглянути інтерфейс моніторингу екіпажу."
+  name: Crew Monitoring Interface
+  description: View a Crew Monitoring Interface.
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: crew_monitor }
@@ -328,8 +344,8 @@
 - type: entity
   parent: BaseAGhostAction
   id: ActionAGhostShowStationRecords
-  name: "Інтерфейс записів станції"
-  description: "Переглянути інтерфейс записів станції."
+  name: Station Records Interface
+  description: View a Station Records Interface.
   components:
   - type: Action
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: station_records }

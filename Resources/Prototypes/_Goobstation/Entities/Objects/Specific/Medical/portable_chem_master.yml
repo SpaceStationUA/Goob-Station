@@ -51,8 +51,8 @@
 - type: entity
   id: portableChemicalMixer
   parent: BaseItem
-  name: "портативний хімічний змішувач"
-  description: "Хімічний маніпулятор класу «Тайдер»"
+  name: portable chemical mixer
+  description: A "Tider" grade chemical manipulator
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Tools/chemical_mixer.rsi
@@ -60,6 +60,14 @@
       - state: chemical_mixer
   - type: Item
     size: Huge
+  - type: ItemMapper
+    containerWhitelist: [beakerSlot]
+    mapLayers:
+      chemical_mixer_beaker:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: Appearance
   - type: ChemMaster
     pillDosageLimit: 20
   - type: Destructible
@@ -102,7 +110,7 @@
   - type: SolutionContainerManager
     solutions:
       buffer:
-        maxVol: 400
+        maxVol: 600
         canReact: false     # added becuse there where instances that the chemicals can mix on transfer
   - type: DumpableSolution
     solution: buffer
@@ -123,8 +131,8 @@
 - type: entity
   id: portableChemicalMixerIncomplete
   parent: BaseItem
-  name: "незавершений портативний хімічний змішувач"
-  description: "Незавершений хімічний маніпулятор класу «Тайдер»"
+  name: Incomplete portable chemical mixer
+  description: A incompleted "Tider" grade chemical manipulator
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

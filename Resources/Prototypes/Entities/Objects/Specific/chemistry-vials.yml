@@ -88,10 +88,10 @@
 # TODO: Have a seperate lid state that can be popped on and off (not as a seperate item) that changes whether the vial can be spilled or not.
 
 - type: entity
-  name: "флакон"
+  name: vial
   parent: BaseItem
   id: BaseChemistryEmptyVial
-  description: "Маленький пухирець."
+  description: A small vial.
   components:
   - type: Tag
     tags:
@@ -130,6 +130,7 @@
     solution: beaker
   - type: ExaminableSolution
     solution: beaker
+    exactVolume: true
   - type: DrawableSolution
     solution: beaker
   - type: SolutionTransfer
@@ -194,12 +195,24 @@
     damage:
       types:
         Blunt: 15
+  - type: HeatTint # Goob - color liquid by temperature
+    colorGradient:
+    - temperature: 200
+      color: "#A0BCE0"
+    - temperature: 293
+      color: "#FFFFFF"
+    - temperature: 350
+      color: "#FFC0A8"
+    - temperature: 800
+      color: "#FF9880"
+    affectedLayers:
+    - "enum.SolutionContainerLayers.Fill"
 
 - type: entity
   parent: BaseItem
   id: BorgVial
-  name: "вбудована пробірка"
-  description: "Внутрішній відсік, встановлений у кіборга. Розрахований на 30 одиниць будь-якої рідини."
+  name: integrated vial
+  description: An internal compartment installed into a cyborg. Rated for 30 units of any liquid.
   components:
   # All this shit is here to avoid inheriting breakable, since borgs can't replace broken vials.
   - type: Sprite
@@ -229,6 +242,7 @@
     solution: beaker
   - type: ExaminableSolution
     solution: beaker
+    exactVolume: true
   - type: DrawableSolution
     solution: beaker
   - type: SolutionTransfer
@@ -279,7 +293,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 5
+        maxVol: 30 # Goobstation
         reagents:
           - ReagentId: Radium
             Quantity: 5
@@ -294,7 +308,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 5
+        maxVol: 30 # Goobstation
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
@@ -309,7 +323,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 10
+        maxVol: 30 # Goobstation
         reagents:
           - ReagentId: Plasma
-            Quantity: 10
+            Quantity: 30 # Goobstation

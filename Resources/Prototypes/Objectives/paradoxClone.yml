@@ -17,8 +17,8 @@
 - type: entity
   parent: [BaseParadoxCloneObjective, BaseLivingObjective]
   id: ParadoxCloneLivingObjective
-  name: "Втекти на ЦентКом живим і нестриманим."
-  description: "Поверніться до свого старого життя."
+  name: Escape to centcomm alive and unrestrained.
+  description: Return to your old life, via the evacuation shuttle. # Goobstation
   components:
   - type: Objective
     icon:
@@ -26,15 +26,19 @@
       state: shuttle
   - type: EscapeShuttleCondition
 
+# Pirate edit start VVV
 - type: entity
-  parent: [BaseParadoxCloneObjective, BaseKillObjective]
-  id: ParadoxCloneKillObjective
-  name: "Виправити просторово-часовий парадокс."
-  description: "Замініть свій оригінал, щоб виправити парадокс. Пам'ятайте, ваша місія - злитися з оточенням, не вбивайте нікого, якщо в цьому немає потреби!"
+  parent: [BaseParadoxCloneObjective, BaseKeepAliveObjective]
+  id: ParadoxCloneFriendObjective
+  name: Переконайтеся, що оригінал виживе
+  description: Ти повинен знайти свого двійника і переконатися, що він виживе, щоб ти міг повернутися до свого світу!
   components:
-  - type: PickSpecificPerson
-  - type: KillPersonCondition
-    requireDead: true
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Objects/Misc/folders.rsi
+      state: folder-white
+  - type: KeepAliveCondition
   - type: TargetObjective
-    title: objective-condition-kill-head-title # kill <name>, <job>
-
+    title: roles-antag-paradox-clone-objective
+# Pirate edit end ^^^

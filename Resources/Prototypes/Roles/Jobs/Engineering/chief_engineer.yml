@@ -136,23 +136,45 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician
-      time: 9000 #2.5 hrs
+      time: 18000 #5 hrs
     - !type:RoleTimeRequirement
       role: JobStationEngineer
-      time: 18000 #5 hrs
+      time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Engineering
       time: 36000 #10 hrs
-    - !type:SpeciesRequirement # Goob - None Felinid
+    - !type:TraitsRequirement # Pirate
       inverted: true
-      species:
-      - Felinid
+      traits:
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+    #- !type:SpeciesRequirement # Pirate remove requirement
+    #  inverted: true
+    #  species:
+    #  - Felinid
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - EinsteinEngines
+      - ZavodskoiInterstellar
+      - HephaestusIndustries
+    # Pirate contractor end
   weight: 10
   startingGear: ChiefEngineerGear
   icon: "JobIconChiefEngineer"
   supervisors: job-supervisors-captain
   #canBeAntag: false
+  whitelisted: true # Pirate
   antagAdvantage: 75 # Goobstation
+  guides: # goobstation
+  - Engineering
+  - ChiefEngineerSOP
+  - EngineeringSOP
+  - Command
+  - EmergenciesSOP
   goobcoins: 40 #Goob content
   access:
   - Maintenance
@@ -181,7 +203,7 @@
   storage:
     back:
     - Flash
-    - TelescopicBaton # Goobstation
+    #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit
   id: ChiefEngineerChameleonOutfit

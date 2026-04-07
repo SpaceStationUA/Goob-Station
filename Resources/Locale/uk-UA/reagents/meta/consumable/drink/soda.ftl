@@ -43,7 +43,7 @@ reagent-name-root-beer = кореневе пиво
 reagent-desc-root-beer = Дуже солодкий, газований напій, що нагадує сарсапарілу. Добре поєднується з морозивом.
 
 reagent-name-root-beer-float = кореневе пиво-флоат
-reagent-desc-root-beer-float = Кореневе пиво, але тепер з морозивом зверху. Це справді magnum opus канадських літніх напоїв.
+reagent-desc-root-beer-float = Кореневе пиво, але тепер з морозивом зверху. Це справді вершина майстерності канадських літніх напоїв.
 
 reagent-name-sol-dry = Сол Драй
 reagent-desc-sol-dry = Солодка імбирна содова з космосу!

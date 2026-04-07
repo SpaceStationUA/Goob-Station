@@ -7,10 +7,10 @@ rcd-component-examine-detail = Поточний режим {$mode}.
 ### Interaction Messages
 
 # Shown when changing RCD Mode
-rcd-component-change-mode = Режим RCD виставлено на {$mode}.
+rcd-component-change-mode = Режим УЗК виставлено на {$mode}.
 
-rcd-component-no-ammo-message = В RCD закінчились заряди!
-rcd-component-tile-obstructed-message = Ви не можете деконструювати тайли, коли на них щось є!
+rcd-component-no-ammo-message = В УЗК закінчились заряди!
+rcd-component-tile-obstructed-message = Ви не можете розбирати плитку, коли на ній щось є!
 rcd-component-tile-indestructible-message = Цю плитку неможливо знищити!
 rcd-component-deconstruct-target-not-on-whitelist-message = Ви не можете деконструювати це!
 rcd-component-cannot-build-floor-tile-not-empty-message = Ви можете побудувати підлогу тільки в космосі!
@@ -18,16 +18,11 @@ rcd-component-cannot-build-wall-tile-not-empty-message = Ви не можете 
 rcd-component-cannot-build-airlock-tile-not-empty-message = Ви не можете побудувати шлюз в космосі!
 
 rcd-component-examine-mode-details = Наразі встановлено режим '{$mode}'.
-rcd-component-examine-build-details = Наразі встановлено збірку {MAKEPLURAL($name)}.
-
-
-### Повідомлення про взаємодію
-
-# Зміна режиму
-rcd-component-change-build-mode = Тепер RCD налаштовано на збірку {$name}.
+rcd-component-examine-build-details = Зараз налаштовано на будівництво: {MAKEPLURAL($name)}
+rcd-component-change-build-mode = Тепер УЗК налаштовано на збірку {$name}.
 
 # Кількість набоїв
-rcd-component-insufficient-ammo-message = У RCD не вистачає зарядів!
+rcd-component-insufficient-ammo-message = У УЗК не вистачає зарядів!
 
 # Деконструкція
 rcd-component-nothing-to-deconstruct-message = Тут немає чого деконструювати!
@@ -56,3 +51,7 @@ rcd-component-piping = Трубопровід
 rcd-component-atmosphericutility = Атмосферні утиліти
 rcd-component-pumps = Насоси та клапани
 rcd-component-vents = Вентиляційні отвори
+rcd-component-deconstruct-target-no-access = У вас немає доступу, щоб деконструювати це!
+rcd-component-deconstruct-target-is-bolted = Болти механізму перешкоджають деконструкції!
+
+# Construction

@@ -114,7 +114,7 @@ reagent-name-banana-honk = Банановий Гонк
 reagent-desc-banana-honk = Напій з Клоунського Раю.
 
 reagent-name-barefoot = босоніж
-reagent-desc-barefoot = Боса та вагітна.
+reagent-desc-barefoot = Молочний коктейль із касісу, зроблений з вершків, фруктового соку та вермуту.
 
 reagent-name-beepsky-smash = Удар Біпскі
 reagent-desc-beepsky-smash = Заперечуйте вживання цього напою і готуйтеся до ЗАКОНУ.
@@ -312,7 +312,7 @@ reagent-name-vodka-martini = горілчаний мартіні
 reagent-desc-vodka-martini = Горілка замість джина. Не зовсім так, як любив 007, але все одно смачно.
 
 reagent-name-vodka-tonic = горілка-тонік
-reagent-desc-vodka-tonic = Коли джин-тонік недостатньо російський.
+reagent-desc-vodka-tonic = Коли джин-тонік витягли з індії та засунули в село.
 
 reagent-name-whiskey-cola = віскі-кола
 reagent-desc-whiskey-cola = Віскі, змішане з колою. Напрочуд освіжає.

@@ -1,0 +1,7 @@
+- type: oreDunGen
+  id: OreTitanium
+  replacement: AsteroidRock
+  entity: AsteroidRockTitanium
+  count: 4
+  minGroupSize: 5
+  maxGroupSize: 7

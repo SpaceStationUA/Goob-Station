@@ -15,8 +15,8 @@
 - type: entity
   parent: [Clothing, ContentsExplosionResistanceBase]
   id: ClothingModsuitStandard
-  name: "блок керування стандартним скафандром"
-  description: "Спеціальний блок керування модульним костюмом, що містить усі необхідні модульні частини скафандра."
+  name: standard modsuit control unit
+  description: A special modular suit contol unit containing all necessary modular hardsuit parts.
   components:
   - type: Appearance
   - type: Sprite
@@ -97,6 +97,75 @@
     walkModifier: 0.95
 
 - type: entity
+  parent: Clothing
+  id: ClothingModsuitStandardNoStorage
+  name: standard modsuit control unit
+  description: A special modular suit contol unit containing all necessary modular hardsuit parts.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Back/Modsuits/standard.rsi
+    layers:
+    - state: control
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      toggleable-clothing: !type:Container
+      cell_slot: !type:ContainerSlot
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.ToggleClothingUiKey.Key:
+        type: ToggleableClothingBoundUserInterface
+  - type: UseDelay
+    delay: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: ToggleableClothing
+    requiredSlot: back
+    blockUnequipWhenAttached: false # easier to use and now its fixed
+    replaceCurrentClothing: true
+    clothingPrototypes:
+      head: ClothingModsuitHelmetStandard
+      gloves: ClothingModsuitGauntletsStandard
+      outerClothing: ClothingModsuitChestplateStandard
+      shoes: ClothingModsuitBootsStandard
+  - type: WiresPanel
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        whitelist:
+          components:
+            - PowerCell
+  - type: ItemSlotsRequirePanel
+    slots:
+      cell_slot: true
+  - type: PowerCellDraw
+    drawRate: 0.8 # Sealed draw rate
+    useRate: 4 # Draw rate for sealing
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    fitsInCharger: false
+  - type: DoAfter
+  - type: SealableClothingControl
+  - type: SealableClothingRequiresPower
+  - type: Construction
+    graph: Modsuit
+    node: standard
+  - type: ClothingSpeedModifier
+    sprintModifier: 0.95
+    walkModifier: 0.95
+
+- type: entity
   parent: ClothingModsuitStandard
   id: ClothingModsuitStandardPowerCell
   suffix: High-Capacity Battery
@@ -113,8 +182,8 @@
 - type: entity
   parent: [ClothingModsuitStandard, BaseSecurityContraband]
   id: ClothingModsuitSecurity
-  name: "блок управління скафандром \"Солдат"
-  description: "Міцний модульний блок управління скафандром для розгрому комуняк у космосі."
+  name: security soldat modsuit control unit
+  description: A robust modular hardsuit control module unit for thrashing commies in spess.
   components:
   - type: Appearance
   - type: Sprite
@@ -151,8 +220,8 @@
 - type: entity
   parent: [ClothingModsuitStandard, BaseCommandContraband]
   id: ClothingModsuitHeadOfSecurity
-  name: "блок управління скафандром \"Бастіон\" голови служби безпеки"
-  description: "Міцний модульний блок управління МІЦНІШИМ скафандром для голови служби безпеки."
+  name: head of security's bulwark modsuit control unit
+  description: A robust modular HARDERsuit control module unit for the head of security.
   components:
   - type: Appearance
   - type: Clothing
@@ -197,8 +266,8 @@
 - type: entity
   parent: [ClothingModsuitStandard, BaseMedicalContraband]
   id: ClothingModsuitParamedic
-  name: "блок управління скафандром \"Санітар"
-  description: "Модульний блок управління скафандром для парамедиків."
+  name: sanitater modsuit control unit
+  description: A modular hardsuit control module unit for paramedics.
   components:
   - type: Appearance
   - type: Sprite
@@ -240,8 +309,8 @@
 - type: entity
   parent: [ClothingModsuitStandard, BaseEngineeringContraband]
   id: ClothingModsuitEngineer
-  name: "блок управління скафандром \"Сапер"
-  description: "Модульний блок управління скафандром, що витримує найбільші небезпеки на роботі."
+  name: engineer sapper modsuit control unit
+  description: A modular hardsuit control module unit for withstanding the greatest hazards on the job.
   components:
   - type: Appearance
   - type: Sprite
@@ -280,8 +349,8 @@
 - type: entity
   parent: [ClothingModsuitStandard, BaseEngineeringContraband]
   id: ClothingModsuitAtmostech
-  name: "блок управління скафандром \"Еол\" атмосферного техніка"
-  description: "Модульний блок управління скафандром, що витримує найбільші небезпеки на роботі."
+  name: atmospheric technician aeolus modsuit control unit
+  description: A modular hardsuit control module unit for withstanding the greatest hazards on the job.
   components:
   - type: Appearance
   - type: Sprite
@@ -320,8 +389,8 @@
 - type: entity
   parent: [ClothingModsuitStandard, BaseCommandContraband, BaseGrandTheftContraband]
   id: ClothingModsuitResearchDirector
-  name: "блок управління скафандром \"Мінерва\" наукового керівника"
-  description: "Модульний блок управління скафандром, що витримує чергову бомбу на шатлі."
+  name: RD's minerva modsuit control unit
+  description: A modular hardsuit control module unit for withstanding another shuttlebomb.
   components:
   - type: Appearance
   - type: Sprite
@@ -363,8 +432,8 @@
 - type: entity
   parent: [ClothingModsuitStandard, BaseCommandContraband]
   id: ClothingModsuitCaptain
-  name: "блок управління скафандром \"Магнат\" капітана"
-  description: "Інкрустований дорогоцінними каменями, відполірований до дзеркального блиску і абсолютно МАГНАТСЬКИЙ броньований скафандр, охолоджуюча рідина - кров дракона, розбавлена доктором Гіббом. Ця хрінь для тебе ніщо, чувак."
+  name: captain's magnate modsuit control unit
+  description: A gem-encrusted, mirror-shined and absolutely MAGNATE armored modsuit. The cooling fluid is dragons' blood watered down with Dr. Gibb. This shit is nothing to you, man. # goob edit - grammar
   components:
   - type: Appearance
   - type: Sprite

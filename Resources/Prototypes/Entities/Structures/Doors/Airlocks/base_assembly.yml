@@ -18,13 +18,13 @@
 #Base
 - type: entity
   id: AirlockAssembly
-  name: "збірка шлюзу"
-  description: "Він відкривається, закривається і, можливо, розчавить вас."
+  name: airlock assembly
+  description: It opens, it closes, and maybe crushes you.
   components:
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/basic.rsi # Pirate changes
     state: "assembly"
   - type: Physics
   - type: Fixtures

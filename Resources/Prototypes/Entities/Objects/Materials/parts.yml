@@ -43,6 +43,7 @@
   - type: Tag
     tags:
       - DroneUsable # Goobstation
+      - PartBase # Goobstation
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: FlimsyMetallic
@@ -58,7 +59,7 @@
 - type: entity
   parent: PartBase
   id: PartRodMetal
-  name: "металевий стрижень"
+  name: metal rod
   suffix: Full
   components:
   - type: PhysicalComposition
@@ -73,11 +74,6 @@
     - rods_3
     - rods_4
     - rods_5
-  # Goobstation - Custom stack splitting dialog
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: rods_5
     layers:
@@ -115,7 +111,7 @@
 - type: entity
   parent: PartRodMetal
   id: PartRodMetal10
-  name: "металевий стрижень"
+  name: metal rod
   suffix: 10
   components:
   - type: Tag
@@ -130,7 +126,7 @@
 - type: entity
   parent: PartRodMetal
   id: PartRodMetal1
-  name: "металевий стрижень"
+  name: metal rod
   suffix: Single
   components:
   - type: Tag

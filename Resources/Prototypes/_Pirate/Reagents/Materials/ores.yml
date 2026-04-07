@@ -1,0 +1,9 @@
+- type: material
+  id: RawTitanium
+  stackEntity: TitaniumOre1
+  name: materials-raw-titanium
+  unit: materials-unit-chunk
+  icon: { sprite: _Pirate/Objects/Materials/ore.rsi, state: titanium }
+  color: "#76808A"
+  price: 0.2
+  

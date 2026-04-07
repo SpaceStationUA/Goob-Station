@@ -16,9 +16,9 @@ namespace Content.Pirate.Server.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class TargetGhostCommand : IConsoleCommand
     {
-        public string Command => "targetghost";
+        public string Command => "justdecortargetghost";
         public string Description => "Перетворює себе, гравця (ckey) або предмет (EntityUid) на ghost з TargetingGhost layer.";
-        public string Help => "targetghost [ckey|uid]";
+        public string Help => "justdecortargetghost [ckey|uid]";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             EntityUid targetUid = default;
@@ -56,7 +56,7 @@ namespace Content.Pirate.Server.Commands
             }
             else
             {
-                shell.WriteLine("Використання: targetghost [ckey|uid]");
+                shell.WriteLine("Використання: justdecortargetghost [ckey|uid]");
                 return;
             }
 
@@ -76,15 +76,15 @@ namespace Content.Pirate.Server.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class SetTargetGhostCommand : IConsoleCommand
     {
-        public string Command => "settargetghost";
+        public string Command => "justdecorsettargetghost";
         public string Description => "Встановлює target ghost для entity (ckey або uid) на іншу entity (ckey або uid).";
-        public string Help => "settargetghost <ckey|uid> <ckey|uid>";
+        public string Help => "justdecorsettargetghost <ckey|uid> <ckey|uid>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteLine("Використання: settargetghost <ckey|uid> <ckey|uid>");
+                shell.WriteLine("Використання: justdecorsettargetghost <ckey|uid> <ckey|uid>");
                 return;
             }
 

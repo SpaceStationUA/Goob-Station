@@ -75,9 +75,19 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 1800 # 30 Minutes
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
+    # Pirate contractor end
   startingGear: BartenderGear
   icon: "JobIconBartender"
   supervisors: job-supervisors-hop
+  guides: # goobstation
+  - Bartender
+  - Drinks
   goobcoins: 10 #Goob content
   access:
   - Service

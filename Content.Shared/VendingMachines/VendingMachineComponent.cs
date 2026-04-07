@@ -17,8 +17,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Actions;
+using Content.Shared.Stacks; // Pirate banking
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes; // Pirate banking
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -209,22 +211,57 @@ namespace Content.Shared.VendingMachines
         [DataField("loopDeny")]
         public bool LoopDenyAnimation = true;
         #endregion
+
+        // Pirate banking start
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public double PriceMultiplier = 1;
+
+        [DataField]
+        public ProtoId<StackPrototype> CreditStackPrototype = "Credit";
+
+        [DataField]
+        public string CurrencyType = "SpaceCash";
+
+        [DataField]
+        public SoundSpecifier SoundInsertCurrency =
+            new SoundPathSpecifier("/Audio/_Pirate/Machines/polaroid2.ogg");
+
+        [DataField]
+        public SoundSpecifier SoundWithdrawCurrency =
+            new SoundPathSpecifier("/Audio/_Pirate/Machines/polaroid1.ogg");
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Credits;
+        // Pirate banking end
     }
 
-    [Serializable, NetSerializable]
-    public sealed class VendingMachineInventoryEntry
+    [Serializable, NetSerializable, DataDefinition]
+    public sealed partial class VendingMachineInventoryEntry
     {
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public InventoryType Type;
-        [ViewVariables(VVAccess.ReadWrite)]
+
+        [DataField]
         public string ID;
-        [ViewVariables(VVAccess.ReadWrite)]
+
+        [DataField]
         public uint Amount;
-        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
+
+        // Pirate banking start
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Price;
+        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount, int price)
+        // Pirate banking end
         {
             Type = type;
             ID = id;
             Amount = amount;
+            Price = price; // Pirate banking
+        }
+
+        public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
+            : this(type, id, amount, 0)
+        {
         }
 
         public VendingMachineInventoryEntry(VendingMachineInventoryEntry entry)
@@ -232,6 +269,7 @@ namespace Content.Shared.VendingMachines
             Type = entry.Type;
             ID = entry.ID;
             Amount = entry.Amount;
+            Price = entry.Price; // Pirate banking
         }
     }
 

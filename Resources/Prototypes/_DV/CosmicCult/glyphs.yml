@@ -6,8 +6,8 @@
 
 - type: entity
   id: CosmicGlyphBase
-  name: "базовий гліф"
-  description: "Дивне, потойбічне маркування."
+  name: base glyph
+  description: A strange, otherworldly marking.
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -38,7 +38,7 @@
 - type: entity
   parent: CosmicGlyphBase
   id: CosmicGlyphTruth
-  name: "Гліф Істини"
+  name: Glyph of Truth
   components:
   - type: Sprite
     sprite: _DV/CosmicCult/Objects/glyphs_floor.rsi
@@ -51,14 +51,14 @@
     requiredCultists: 3
     activationDamage:
       types:
-        Asphyxiation: 30
+        Asphyxiation: 10
   - type: CosmicCultExamine
     cultistText: cosmic-examine-glyph-truth
 
 - type: entity
   parent: CosmicGlyphBase
   id: CosmicGlyphKnowledge
-  name: "Гліф Знання"
+  name: Glyph of Knowledge
   components:
   - type: Sprite
     sprite: _DV/CosmicCult/Objects/glyphs_floor.rsi
@@ -67,17 +67,17 @@
     drawdepth: Puddles
   - type: CosmicGlyphConversion
   - type: CosmicGlyph
-    requiredCultists: 2
+    requiredCultists: 1
     activationDamage:
       types:
-        Asphyxiation: 30
+        Asphyxiation: 10
   - type: CosmicCultExamine
     cultistText: cosmic-examine-glyph-knowledge
 
 - type: entity
   parent: CosmicGlyphBase
   id: CosmicGlyphCessation
-  name: "Гліф Припинення"
+  name: Glyph of Cessation
   components:
   - type: Sprite
     layers:
@@ -94,14 +94,14 @@
     requiredCultists: 1
     activationDamage:
       types:
-        Asphyxiation: 20
+        Asphyxiation: 10
   - type: CosmicCultExamine
     cultistText: cosmic-examine-glyph-cessation
 
 - type: entity
   parent: CosmicGlyphBase
   id: CosmicGlyphBlades
-  name: "Гліф Клинків"
+  name: Glyph of Blades
   components:
   - type: Sprite
     sprite: _DV/CosmicCult/Objects/glyphs_floor.rsi
@@ -117,17 +117,17 @@
       components:
       - Sharp
   - type: CosmicGlyph
-    requiredCultists: 2
+    requiredCultists: 1
     activationDamage:
       types:
-        Asphyxiation: 20
+        Asphyxiation: 10
   - type: CosmicCultExamine
     cultistText: cosmic-examine-glyph-blades
 
 - type: entity
   parent: CosmicGlyphBase
   id: CosmicGlyphWarding
-  name: "Гліф Захисту"
+  name: Glyph of Warding
   components:
   - type: Sprite
     sprite: _DV/CosmicCult/Objects/glyphs_floor.rsi
@@ -143,17 +143,17 @@
       - ClothingSpeedModifier
       - PressureProtection
   - type: CosmicGlyph
-    requiredCultists: 2
+    requiredCultists: 1
     activationDamage:
       types:
-        Asphyxiation: 30
+        Asphyxiation: 10
   - type: CosmicCultExamine
     cultistText: cosmic-examine-glyph-warding
 
 - type: entity
   parent: CosmicGlyphBase
   id: CosmicGlyphProjection
-  name: "Гліф Проєкції"
+  name: Glyph of Projection
   components:
   - type: Sprite
     sprite: _DV/CosmicCult/Objects/glyphs_floor.rsi

@@ -30,15 +30,3 @@ reagent-desc-nitrous-oxide = Знаєте, як усе здається сміш
 
 reagent-name-frezon = фрезон
 reagent-desc-frezon = Дуже ефективний холодоагент... і галюциноген.
-
-reagent-name-bz = бз
-reagent-desc-bz = Потужний галюциноген, який також вводить слаймів у стазис.
-
-reagent-name-healium = хіліум
-reagent-desc-healium = Потужний снодійний засіб із регенеративними властивостями.
-
-reagent-name-nitrium = нітріум
-reagent-desc-nitrium = Експериментальний газ, що підвищує продуктивність. Нітріум може мати посилений ефект, коли більше його потрапляє в кров.
-
-reagent-name-pluoxium = плуоксіум
-reagent-desc-pluoxium = Газ, який може постачати ще більше кисню в кров при вдиханні, не будучи окислювачем.

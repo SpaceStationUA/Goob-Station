@@ -131,6 +131,7 @@ public sealed partial class NanoChatUiFragment : BoxContainer
 
         // Add predicted message
         var predictedMessage = new NanoChatMessage(
+            0, // Pirate: camera (nanochat gallery)
             _timing.CurTime,
             messageContent,
             _ownNumber

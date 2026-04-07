@@ -69,11 +69,13 @@
 
 using System.Linq;
 using System.Numerics;
+using Content.Shared._Pirate.Traits.Assorted; // Pirate port: DeltaV
 using Content.Shared.Atmos;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Goobstation.Shared.Disease;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
@@ -99,6 +101,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using System.Globalization;
+using Content.Goobstation.Shared.Disease.Components;
 
 namespace Content.Client.HealthAnalyzer.UI
 {
@@ -109,6 +112,7 @@ namespace Content.Client.HealthAnalyzer.UI
         private readonly SpriteSystem _spriteSystem;
         private readonly IPrototypeManager _prototypes;
         private readonly IResourceCache _cache;
+        private readonly UnborgableSystem _unborgable; // Pirate port: DeltaV - unborgable trait
 
         // Shitmed Change Start
         private readonly WoundSystem _wound;
@@ -132,6 +136,7 @@ namespace Content.Client.HealthAnalyzer.UI
             _spriteSystem = _entityManager.System<SpriteSystem>();
             _prototypes = dependencies.Resolve<IPrototypeManager>();
             _cache = dependencies.Resolve<IResourceCache>();
+            _unborgable = _entityManager.System<UnborgableSystem>(); // Pirate port: DeltaV - unborgable trait
             // Shitmed Change Start
             _wound = _entityManager.System<WoundSystem>();
             _bodyPartControls = new Dictionary<TargetBodyPart, TextureButton>
@@ -271,6 +276,11 @@ namespace Content.Client.HealthAnalyzer.UI
             DamageLabelHeading.Visible = true;
             DamageLabel.Visible = true;
             DamageLabel.Text = damageable.TotalDamage.ToString();
+            // Goobstation start
+            DamageLabelHeadingVital.Visible = true;
+            DamageLabelVital.Visible = true;
+            DamageLabelVital.Text = msg.VitalDamage.ToString();
+            // Goobstation end
 
             if (part != null)
                 PartNameLabel.Text = _entityManager.HasComponent<MetaDataComponent>(part)
@@ -285,12 +295,25 @@ namespace Content.Client.HealthAnalyzer.UI
 
             DrawDiagnosticGroups(damageSortedGroups, damagePerType);
 
+            // Goobstation
+            if (_entityManager.TryGetComponent<DiseaseCarrierComponent>(_target, out var carrier))
+            {
+                DrawDiseases(carrier.Diseases.ContainedEntities);
+            }
+
             ConditionsListContainer.RemoveAllChildren();
 
             if (msg.Unrevivable == true)
                 ConditionsListContainer.AddChild(new RichTextLabel
                 {
                     Text = Loc.GetString("condition-body-unrevivable", ("entity", Identity.Name(_target.Value, _entityManager))),
+                    Margin = new Thickness(0, 4),
+                });
+
+            if (_unborgable.IsUnborgable(_target.Value)) // Pirate port: DeltaV - unborgable trait
+                ConditionsListContainer.AddChild(new RichTextLabel
+                {
+                    Text = Loc.GetString("health-analyzer-window-entity-unborgable-text"),
                     Margin = new Thickness(0, 4),
                 });
 
@@ -579,6 +602,49 @@ namespace Content.Client.HealthAnalyzer.UI
 
                     groupContainer.AddChild(CreateDiagnosticItemLabel(reagentString.Insert(0, " · ")));
                 }
+            }
+        }
+
+        // Goobstation
+        private void DrawDiseases(IReadOnlyList<EntityUid> diseases)
+        {
+            DiseasesContainer.RemoveAllChildren();
+
+            if (diseases.Count == 0)
+            {
+                DiseasesDivider.Visible = false;
+                DiseasesContainer.Visible = false;
+                return;
+            }
+            DiseasesDivider.Visible = true;
+            DiseasesContainer.Visible = true;
+
+            DiseasesContainer.AddChild(new RichTextLabel
+            {
+                Text = Loc.GetString("health-analyzer-window-diseases"),
+            });
+
+            foreach (var diseaseUid in diseases)
+            {
+                if (!_entityManager.TryGetComponent<DiseaseComponent>(diseaseUid, out var disease))
+                    continue;
+
+                var diseaseInfoContainer = new BoxContainer
+                {
+                    Align = BoxContainer.AlignMode.Begin,
+                    Orientation = BoxContainer.LayoutOrientation.Vertical,
+                };
+                diseaseInfoContainer.AddChild(CreateDiagnosticItemLabel(Loc.GetString("health-analyzer-window-disease-type-text", ("type", disease.Genotype))));
+                diseaseInfoContainer.AddChild(CreateDiagnosticItemLabel(" · " + Loc.GetString(
+                    "health-analyzer-window-disease-progress-text",
+                    ("progress", disease.InfectionProgress)
+                )));
+                diseaseInfoContainer.AddChild(CreateDiagnosticItemLabel(" · " + Loc.GetString(
+                    "health-analyzer-window-immunity-progress-text",
+                    ("progress", disease.ImmunityProgress)
+                )));
+
+                DiseasesContainer.AddChild(diseaseInfoContainer);
             }
         }
 

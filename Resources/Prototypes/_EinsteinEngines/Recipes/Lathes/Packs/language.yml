@@ -1,3 +1,9 @@
+# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+# SPDX-FileCopyrightText: 2025 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Marty <martynashagriefer@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 - type: latheRecipePack
   id: Translators
   recipes:
@@ -13,7 +19,11 @@
   - ValyrianStandardTranslator
   - ChittinTranslator
   - SiikMaasTranslator
-  - MarishTranslator
+  #- MarishTranslator Pirate removed
+  - NewKinPidginTranslator
+  - SchechiTranslator
+  - GruntishTranslator
+  - YowKriolTranslator # goob edit - yowie language
 
 - type: latheRecipePack
   id: TranslatorImplanters
@@ -30,4 +40,10 @@
   - ValyrianStandardTranslatorImplanter
   - ChittinTranslatorImplanter
   - SiikMaasTranslatorImplanter
-  - MarishTranslatorImplanter
+  #- MarishTranslatorImplanter Pirate removed
+  - ChevalTranslatorImplanter
+  - NewKinPidginTranslatorImplanter
+  - SchechiTranslatorImplanter
+  - GruntishTranslatorImplanter
+  - YowKriolTranslatorImplanter # goob edit - yowie language
+  - SignTranslatorImplanter # goob edit

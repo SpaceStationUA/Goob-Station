@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: [BaseWeaponBallisticTurret, BaseSyndicateContraband]
+  parent: [BaseWeaponBallisticTurret, BaseSyndicateAnchoredContraband]
   id: WeaponTurretSyndicate
   suffix: Syndicate
   components:
@@ -17,7 +17,7 @@
 - type: entity
   parent: BaseWeaponBallisticTurret
   id: WeaponTurretSyndicateDisposable
-  name: "одноразова балістична турель"
+  name: disposable ballistic turret
   suffix: Syndicate, Disposable
   components:
   - type: NpcFactionMember
@@ -54,15 +54,15 @@
   - type: Repairable
     qualityNeeded: "Anchoring"
     doAfterDelay: 3
-  - type: TriggerWhenEmpty
- # Goobstation - no
- #- type: ExplodeOnTrigger
- #- type: Explosive
- #  explosionType: Default
- #  maxIntensity: 10
- #  intensitySlope: 1.5
- #  totalIntensity: 30
- #  canCreateVacuum: false
+  - type: TriggerOnEmptyGunshot
+# Goobstation - no
+#  - type: ExplodeOnTrigger
+#  - type: Explosive
+#    explosionType: Default
+#    maxIntensity: 10
+#    intensitySlope: 1.5
+#    totalIntensity: 30
+#    canCreateVacuum: false
 
 - type: entity
   parent: BaseWeaponBallisticTurret
@@ -94,9 +94,9 @@
 - type: entity
   parent: BaseWeaponBallisticTurret
   id: WeaponTurretXeno
-  name: "ксено-турель"
+  name: xeno turret
   suffix: Xeno
-  description: "Стріляє кислотними снарядами 9мм."
+  description: Shoots 9mm acid projectiles.
   components:
   - type: NpcFactionMember
     factions:

@@ -20,6 +20,7 @@ chat-language-Sign-name = Жестова
 chat-language-Marish-name = Маріш
 chat-language-Chittin-name = Хітинова
 chat-language-Xeeplian-name = Ксіпліан
+chat-language-Hydraspeak-name = Гі'драв'та
 
 # Додаткові мови
 
@@ -52,3 +53,6 @@ chat-language-Pig-name = Свиняча
 chat-language-Sheep-name = Овеча
 chat-language-Xeno-name = Ксено
 chat-language-DroneTalk-name = Дрон
+
+chat-language-Schechi-name = Шечі
+chat-language-NewKinPidgin-name = Ка'ракк

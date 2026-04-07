@@ -28,9 +28,9 @@
 - type: entity
   id: BaseMaterialDoor
   parent: BaseStructure
-  name: "двері"
+  name: door
   abstract: true
-  description: "Двері, куди вони ведуть?"
+  description: A door, where will it lead?
   components:
   - type: InteractionOutline
   - type: Sprite
@@ -84,7 +84,7 @@
         acts: ["Destruction"]
   - type: Occluder
   - type: BlockWeather
-  - type: InteractionVerbs #Pirate
+  - type: InteractionVerbs # EE: Interaction Verbs
     allowedVerbs:
     - KnockOn
 
@@ -97,7 +97,7 @@
 
 - type: entity
   id: MetalDoor
-  name: "металеві двері"
+  name: metal door
   parent: BaseMaterialDoorNavMap
   components:
   - type: Construction
@@ -106,9 +106,9 @@
 
 - type: entity
   id: WoodDoor
-  name: "дерев'яні двері"
+  name: wooden door
   parent: BaseMaterialDoorNavMap
-  description: "Двері, куди вони ведуть?"
+  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/wood_door.rsi
@@ -143,9 +143,9 @@
 
 - type: entity
   id: PaperDoor
-  name: "паперові двері"
+  name: paper door
   parent: BaseMaterialDoorNavMap
-  description: "Двері, куди вони ведуть?"
+  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/paper_door.rsi
@@ -171,9 +171,9 @@
 
 - type: entity
   id: PlasmaDoor
-  name: "плазмові двері"
+  name: plasma door
   parent: BaseMaterialDoorNavMap
-  description: "Двері, куди вони ведуть?"
+  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/plasma_door.rsi
@@ -197,9 +197,9 @@
 
 - type: entity
   id: GoldDoor
-  name: "золоті двері"
+  name: gold door
   parent: BaseMaterialDoorNavMap
-  description: "Двері, куди вони ведуть?"
+  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/gold_door.rsi
@@ -212,9 +212,9 @@
 
 - type: entity
   id: SilverDoor
-  name: "срібні двері"
+  name: silver door
   parent: BaseMaterialDoorNavMap
-  description: "Двері, куди вони ведуть?"
+  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/silver_door.rsi
@@ -227,9 +227,9 @@
 
 - type: entity
   id: BananiumDoor
-  name: "бананіумні двері"
+  name: bananium door
   parent: BaseMaterialDoorNavMap
-  description: "Двері, куди вони ведуть?"
+  description: A door, where will it lead?
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/bananium_door.rsi
@@ -247,9 +247,9 @@
 
 - type: entity
   id: WebDoor
-  name: "павутинні двері"
+  name: web door
   parent: BaseMaterialDoorNavMap
-  description: "Ручні дверцята з павутиння, зазвичай розміщені безпосередньо перед ямою або пасткою."
+  description: A door, leading to the lands of the spiders... or a spaced room.
   components:
   - type: Sprite
     sprite: Structures/Doors/web_door.rsi
@@ -291,3 +291,82 @@
       path: /Audio/Effects/rustle1.ogg
     openSound:
       path: /Audio/Effects/rustle2.ogg
+
+
+- type: entity
+  id: CardDoor
+  parent: BaseStructure
+  name: cardboard door
+  description: A door, where will it lead?
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Doors/MineralDoors/card_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - FlimsyLayer
+  - type: Door
+    bumpOpen: false
+    clickOpen: true
+    canCrush: false
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openingAnimationTime: 1.2
+    closingAnimationTime: 1.2
+    openSound:
+      path: /Audio/Effects/card_drag.ogg 
+    closeSound:
+      path: /Audio/Effects/card_drag.ogg
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/pierce.ogg"
+  - type: Appearance
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Card
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Icon
+    sprite: Structures/Doors/MineralDoors/card_door.rsi
+    state: closed
+  - type: Construction
+    graph: DoorGraph
+    node: cardDoor
+  - type: NavMapDoor
+  - type: Occluder
+  - type: BlockWeather

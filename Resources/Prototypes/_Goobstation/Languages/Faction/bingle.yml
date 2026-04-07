@@ -6,7 +6,8 @@
 - type: language
   id: Bingle
   speech:
-    fontId: Eatday
+    # fontId: Eatday # Pirate no cyrillic support
+    # boldFontId: Eatday # Pirate no cyrillic support
     color: "#33528d"
   obfuscation:
     !type:PhraseObfuscation

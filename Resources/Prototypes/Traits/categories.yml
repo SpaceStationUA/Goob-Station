@@ -7,13 +7,17 @@
 - type: traitCategory
   id: Disabilities
   name: trait-category-disabilities
+  priority: 100 # Pirate
 
 - type: traitCategory
   id: SpeechTraits
   name: trait-category-speech
-  maxTraitPoints: 2
+  #maxTraitPoints: 2 # Pirate trait rework
+  maxTraits: 2 # Pirate trait rework
+  priority: 50 # Pirate trait rework
 
 - type: traitCategory
   id: Quirks
   name: trait-category-quirks
-  maxTraitPoints: 0
+  #maxTraitPoints: 0 # Pirate trait rework
+  priority: 100 # Pirate

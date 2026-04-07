@@ -196,6 +196,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             }
 
             var loadouts = groupLoadouts[..Math.Min(groupLoadouts.Count, groupProto.MaxLimit)];
+            var allValidLoadoutIds = groupProto.GetAllLoadouts(protoManager).ToHashSet();   // Pirate - port frontier subgroups
 
             // Validate first
             for (var i = loadouts.Count - 1; i >= 0; i--)
@@ -210,7 +211,8 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
                 }
 
                 // Malicious client maybe, check the group even has it.
-                if (!groupProto.Loadouts.Contains(loadout.Prototype))
+                // if (!groupProto.Loadouts.Contains(loadout.Prototype))
+                if (!allValidLoadoutIds.Contains(loadout.Prototype)) // Pirate - port frontier subgroups
                 {
                     loadouts.RemoveAt(i);
                     continue;
@@ -231,7 +233,8 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             // If you put invalid ones first but that's your fault for not using sensible defaults
             if (loadouts.Count < groupProto.MinLimit)
             {
-                foreach (var protoId in groupProto.Loadouts)
+                //foreach (var protoId in groupProto.Loadouts)
+                foreach (var protoId in groupProto.GetAllLoadouts(protoManager).Distinct()) // Pirate - port frontier subgroups
                 {
                     if (loadouts.Count >= groupProto.MinLimit)
                         break;
@@ -303,7 +306,8 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             if (groupProto.MinLimit > 0)
             {
                 // Apply any loadouts we can.
-                foreach (var protoId in groupProto.Loadouts)
+                //foreach (var protoId in groupProto.Loadouts)
+                foreach (var protoId in groupProto.GetAllLoadouts(protoManager).Distinct()) // Pirate - port frontier subgroups
                 {
                     // Reached the limit, time to stop
                     if (loadouts.Count >= groupProto.MinLimit)

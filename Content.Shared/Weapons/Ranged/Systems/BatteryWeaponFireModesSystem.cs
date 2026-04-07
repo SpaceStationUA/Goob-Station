@@ -48,7 +48,8 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var proto))
             return;
 
-        args.PushMarkup(Loc.GetString("gun-set-fire-mode", ("mode", proto.Name)));
+        // Pirate: gunplay
+        args.PushMarkup(Loc.GetString("gun-set-fire-mode-examine", ("mode", proto.Name)));
     }
 
     private BatteryWeaponFireMode GetMode(BatteryWeaponFireModesComponent component)
@@ -134,12 +135,13 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
                 _appearanceSystem.SetData(uid, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
 
             if (user != null)
-                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, user.Value);
+                // Pirate: gunplay
+                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode-popup", ("mode", prototype.Name)), uid, user.Value);
         }
 
+        // Pirate: gunplay
         if (TryComp(uid, out ProjectileBatteryAmmoProviderComponent? projectileBatteryAmmoProviderComponent))
         {
-            // TODO: Have this get the info directly from the batteryComponent when power is moved to shared.
             var OldFireCost = projectileBatteryAmmoProviderComponent.FireCost;
             projectileBatteryAmmoProviderComponent.Prototype = fireMode.Prototype;
             projectileBatteryAmmoProviderComponent.FireCost = fireMode.FireCost;
@@ -153,5 +155,23 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
             RaiseLocalEvent(uid, ref updateClientAmmoEvent);
         }
+
+        #region Pirate: gunplay
+        if (TryComp(uid, out HitscanBatteryAmmoProviderComponent? hitscanBatteryAmmoProviderComponent))
+        {
+            var oldFireCost = hitscanBatteryAmmoProviderComponent.FireCost;
+            hitscanBatteryAmmoProviderComponent.Prototype = fireMode.Prototype;
+            hitscanBatteryAmmoProviderComponent.FireCost = fireMode.FireCost;
+
+            var fireCostDiff = (float)fireMode.FireCost / oldFireCost;
+            hitscanBatteryAmmoProviderComponent.Shots = (int)Math.Round(hitscanBatteryAmmoProviderComponent.Shots / fireCostDiff);
+            hitscanBatteryAmmoProviderComponent.Capacity = (int)Math.Round(hitscanBatteryAmmoProviderComponent.Capacity / fireCostDiff);
+
+            Dirty(uid, hitscanBatteryAmmoProviderComponent);
+
+            var updateClientAmmoEvent = new UpdateClientAmmoEvent();
+            RaiseLocalEvent(uid, ref updateClientAmmoEvent);
+        }
+        #endregion
     }
 }
