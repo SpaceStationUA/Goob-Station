@@ -131,8 +131,8 @@
         
 # Medical Alternative
 - type: entity
-  parent: AirlockMedical
-  id: AirlockMedicalLocked
+  parent: AirlockMedicalAlt
+  id: AirlockMedicalLockedAlt
   suffix: Medical, Locked
   components:
   - type: ContainerFill
@@ -140,27 +140,18 @@
       board: [ DoorElectronicsMedical ]
 
 - type: entity
-  parent: AirlockMedical
-  id: AirlockMedicalMorgueLocked
+  parent: AirlockMedicalAlt
+  id: AirlockMedicalMorgueLockedAlt
   suffix: Morgue, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMorgue ]
-
-- type: entity
-  parent: AirlockScience
-  id: AirlockMedicalScienceLocked
-  suffix: Medical/Science, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsMedicalResearch ]
 
 # Medical Alternative Glass
 - type: entity
-  parent: AirlockMedicalGlass
-  id: AirlockMedicalMorgueGlassLocked
+  parent: AirlockMedicalGlassAlt
+  id: AirlockMedicalMorgueGlassLockedAlt
   suffix: Morgue, Locked
   components:
   - type: ContainerFill
@@ -168,19 +159,10 @@
       board: [ DoorElectronicsMorgue ]
 
 - type: entity
-  parent: AirlockMedicalGlass
-  id: AirlockMedicalGlassLocked
+  parent: AirlockMedicalGlassAlt
+  id: AirlockMedicalGlassLockedAlt
   suffix: Medical, Locked
   components:
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMedical ]
-
-- type: entity
-  parent: AirlockScienceGlass
-  id: AirlockMedicalScienceGlassLocked
-  suffix: Medical/Science, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsMedicalResearch ]

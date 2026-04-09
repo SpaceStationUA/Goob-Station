@@ -26,7 +26,7 @@
 
 - type: entity
   parent: AirlockGlass
-  id: AirlockMedicalAlt
+  id: AirlockMedicalGlassAlt
   suffix: Medical, Alternative
   components:
   - type: Sprite
@@ -36,7 +36,7 @@
 
 - type: entity
   parent: Airlock
-  id: AirlockMedicalAlt
+  id: AirlockBathroom
   suffix: Bathroom
   components:
   - type: Sprite
