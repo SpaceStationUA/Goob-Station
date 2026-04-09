@@ -1,0 +1,27 @@
+- type: gameMapPool
+  id: DefaultMapPoolTP
+  maps:
+# Hight-pop
+  - Delta
+  - BoxTP
+  - GateTP
+  - FlandHighPop
+  - OasisHighPop
+  - Meta
+# Medium-pop
+  - Oasis  
+  - Marathon
+  - Bagel
+  - Origin
+  - KettleTP
+  - Cog 
+  - Barratry 
+  - Leonid
+# Low-pop
+  - Saltern
+  - Packed
+  - OmegaTP
+  - Amber
+  - GlacierTP
+  - Cluster
+  - Atlas
