@@ -21,8 +21,6 @@
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Doors/Airlocks/Standard/alternativemedical.rsi
-  - type: Wires
-    layoutId: AirlockMedical
 
 - type: entity
   parent: AirlockGlass
@@ -31,8 +29,6 @@
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Doors/Airlocks/Glass/alternativemedical.rsi
-  - type: Wires
-    layoutId: AirlockMedical
 
 - type: entity
   parent: Airlock
@@ -40,4 +36,4 @@
   suffix: Bathroom
   components:
   - type: Sprite
-    sprite: _Pirate/Structures/Doors/Airlocks/Glass/bathroom.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/bathroom.rsi
