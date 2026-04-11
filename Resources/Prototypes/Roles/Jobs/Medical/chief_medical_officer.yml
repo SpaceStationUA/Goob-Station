@@ -207,9 +207,9 @@
     ears: ClothingHeadsetAltMedical # Goobstation
     eyes: ClothingEyesGlassesMedChemFlash #Omu
     belt: ClothingBeltMedicalFilled
-  storage:
-    back:
-    - Flash
+  #storage: # Pirate
+    #back: # Pirate
+    #- Flash # Pirate
     #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit

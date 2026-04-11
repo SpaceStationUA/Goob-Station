@@ -145,7 +145,7 @@
   - HoPJumpsuit
   - HoPBackpack
   - HoPOuterClothing
-  - Glasses
+ #- Glasses # Pirate
   - CommandSelfDefense # Pirate
   - Survival
   - Trinkets
