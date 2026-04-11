@@ -1,4 +1,9 @@
 guide-entry-setting-lore = Лор
+
+guide-entry-nations = Нації
+guide-entry-sol-alliance = Солоріанський Альянс
+guide-entry-izweski-hegemony = Гегемонія Ізвескі
+
 guide-entry-corporations = Корпорації
 guide-entry-einstein-engines = Двигуни Ейнштейна
 guide-entry-hephaestus-industries = Гефест Індастріз

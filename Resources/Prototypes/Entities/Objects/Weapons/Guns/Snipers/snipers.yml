@@ -192,10 +192,10 @@
 # Goobstation - End
 
 - type: entity
-  name: "Кардашев-Мосін"
+  name: "Кардашов-Мосін"
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband]
   id: WeaponSniperMosin
-  description: "Справжня реліквія, Кардашев-Мосін служив майже в кожному збройному конфлікті з моменту свого створення 670 років тому. Конструкція гвинтівки з ковзним затвором залишається практично ідентичною до свого початкового дизайну, чи то для полювання, снайперської стрільби, чи для нескінченної окопної війни. Заряджається 10 патронами калібру .30."
+  description: "Справжня реліквія, Кардашов-Мосін служив майже в кожному збройному конфлікті з моменту свого створення 670 років тому. Болтова конструкція гвинтівки практично не відрізняється від оригінальної — чи то для полювання, снайпінгу, чи нескінченної окопної війни. Вміщує 10 набоїв .30 Rifle."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
@@ -249,10 +249,10 @@
     points: 2
 
 - type: entity
-  name: "Хрістов"
+  name: "Христов"
   parent: [BaseWeaponSniperMagazine, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperHristov
-  description: "Коли вам абсолютно, позитивно потрібно змусити когось пошкодувати про свій життєвий вибір з безпечної відстані. Використовує патрони .60 anti-materiel."
+  description: "Портативна протиматеріальна гвинтівка, коли потрібно змусити когось пошкодувати про життєві рішення з безпечної відстані. Має вбудований далекобійний приціл. Живиться з магазинів .60 Anti-Materiel."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
@@ -287,7 +287,7 @@
   name: "мушкет"
   parent: [ BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband ]
   id: Musket
-  description: "Це мало бути в музеї задовго до вашого народження. Використовує набої .60 калібру."
+  description: "Цьому місце в музеї задовго до вашого народження. Заряджається одним набоєм .60 Anti-Materiel."
   components:
   - type: Sharp
   - type: Item
@@ -323,10 +323,10 @@
   - type: GunRequiresWield
 
 - type: entity
-  name: "крем'яний пістолет"
+  name: "кремінний пістолет"
   parent: [BaseWeaponSniper, BaseMajorContraband]
   id: WeaponPistolFlintlock
-  description: "Супутник пірата. Йо-хо-хо! Використовує патрони .45 magnum."
+  description: "Піратський напарник. Арр! Заряджається одним набоєм .45 Magnum."
   components:
   - type: Gun
     minAngle: 0

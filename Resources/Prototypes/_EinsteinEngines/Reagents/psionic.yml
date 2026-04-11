@@ -74,24 +74,20 @@
     Narcotic:
       metabolismRate: 0.2
       effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
-        time: 5
-        refresh: false
       - !type:ChemRerollPsionic
         bonusMultiplier: 4
         conditions:
         - !type:ReagentThreshold
           reagent: LotophagoiOil
           min: 20
-      - !type:GenericStatusEffect
-        key: Stutter
-        component: ScrambledAccent
-      - !type:GenericStatusEffect
-        key: SlurredSpeech
-        component: TelepathicRepeater
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        time: 20
+        type: Add
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectLotophagoiOil
+        time: 20
+        type: Add
       #- !type:ChemAddMoodlet PIRATE START
       #  moodPrototype: LotoTranscendence
       #  conditions:
@@ -116,11 +112,10 @@
             - !type:ReagentThreshold
               reagent: OusianaDust
               min: 5
-        - !type:GenericStatusEffect
-          key: SeeingRainbows
-          component: SeeingRainbows
-          type: Add
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectSeeingRainbow
           time: 30
+          type: Add
         - !type:GenericStatusEffect
           key: Stutter
           component: StutteringAccent

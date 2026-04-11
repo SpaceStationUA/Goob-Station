@@ -71,3 +71,14 @@
     lowThreshold: 1 # very sensitive
     mediumThreshold: 20
     highThreshold: 40
+
+- type: entity
+  parent: ClothingEyesHudSyndicate
+  id: ClothingEyesHudContractor
+  name: "візор контрактора"
+  description: "Професійний HUD Гільдії, розроблений для кращого виявлення гуманоїдів та їх подальшого захоплення."
+  components:
+  - type: ThermalVision
+    isEquipment: true
+    color: "#05570a"
+    lightRadius: 15

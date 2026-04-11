@@ -1,0 +1,165 @@
+# Legendary CQC Martial Art Definition
+- type: martialArt
+  id: LegendaryCloseQuartersCombat
+  martialArtsForm: LegendaryCloseQuartersCombat
+  minRandomDamageModifier: 3
+  maxRandomDamageModifier: 8
+  baseDamageModifier: 2
+  randomDamageModifier: true
+  roundstartCombos: LegendaryCQCMoves
+  startingStage: Hard
+  randomSayings:
+  - legendary-cqc-saying-1
+  - legendary-cqc-saying-2
+  - legendary-cqc-saying-3
+  randomSayingsDowned:
+  - legendary-cqc-downed-saying-1
+  - legendary-cqc-downed-saying-2
+
+# Legendary CQC Combo List
+- type: comboList
+  id: LegendaryCQCMoves
+  combos:
+  - LegendaryCQCTakedown
+  - LegendaryCQCDisarm
+  - LegendaryCQCThrow
+  - LegendaryCQCChoke
+  - LegendaryCQCChain
+  - LegendaryCQCCounter
+  - LegendaryCQCInterrogation
+  - LegendaryCQCStealthTakedown
+  - LegendaryCQCRush
+  - LegendaryCQCFinisher
+
+# РљРѕРјР±Рѕ Р”РµС„С–РЅС–С†С–С—
+- type: combo
+  id: LegendaryCQCTakedown
+  martialArtsForm: LegendaryCloseQuartersCombat
+  attacks:
+  - Grab
+  - Disarm
+  - Harm
+  name: legendary-cqc-takedown-name
+  paralyzeTime: 8
+  extraDamage: 15.0
+  staminaDamage: 40.0
+  event: !type:LegendaryCQCTakedownPerformedEvent { }
+
+- type: combo
+  id: LegendaryCQCDisarm
+  martialArtsForm: LegendaryCloseQuartersCombat
+  attacks:
+  - Harm
+  - Grab
+  name: legendary-cqc-disarm-name
+  paralyzeTime: 2
+  extraDamage: 5.0
+  staminaDamage: 30.0
+  event: !type:LegendaryCQCDisarmPerformedEvent { }
+
+- type: combo
+  id: LegendaryCQCThrow
+  martialArtsForm: LegendaryCloseQuartersCombat
+  attacks:
+  - Grab
+  - Harm
+  - Disarm
+  name: legendary-cqc-throw-name
+  paralyzeTime: 6
+  extraDamage: 20.0
+  staminaDamage: 35.0
+  event: !type:LegendaryCQCThrowPerformedEvent { }
+
+- type: combo
+  id: LegendaryCQCChoke
+  martialArtsForm: LegendaryCloseQuartersCombat
+  attacks:
+  - Grab
+  - Grab
+  - Harm
+  name: legendary-cqc-choke-name
+  paralyzeTime: 3
+  extraDamage: 10.0
+  staminaDamage: 25.0
+  event: !type:LegendaryCQCChokePerformedEvent { }
+
+- type: combo
+  id: LegendaryCQCChain
+  martialArtsForm: LegendaryCloseQuartersCombat
+  attacks:
+  - Harm
+  - Harm
+  - Harm
+  name: legendary-cqc-chain-name
+  paralyzeTime: 4
+  extraDamage: 18.0
+  staminaDamage: 45.0
+  event: !type:LegendaryCQCChainPerformedEvent { }
+
+- type: combo
+  id: LegendaryCQCCounter
+  martialArtsForm: LegendaryCloseQuartersCombat
+  attacks:
+  - Disarm
+  - Harm
+  - Harm
+  name: legendary-cqc-counter-name
+  paralyzeTime: 8
+  extraDamage: 20.0
+  staminaDamage: 60.0
+  event: !type:LegendaryCQCCounterPerformedEvent { }
+
+- type: combo
+  id: LegendaryCQCInterrogation
+  martialArtsForm: LegendaryCloseQuartersCombat
+  attacks:
+  - Grab
+  - Disarm
+  - Grab
+  - Harm
+  name: legendary-cqc-interrogation-name
+  paralyzeTime: 5
+  extraDamage: 12.0
+  staminaDamage: 30.0
+  event: !type:LegendaryCQCInterrogationPerformedEvent { }
+
+- type: combo
+  id: LegendaryCQCStealthTakedown
+  martialArtsForm: LegendaryCloseQuartersCombat
+  attacks:
+  - Disarm
+  - Harm
+  - Grab
+  name: legendary-cqc-stealth-name
+  paralyzeTime: 12
+  extraDamage: 25.0
+  staminaDamage: 50.0
+  event: !type:LegendaryCQCStealthTakedownPerformedEvent { }
+
+- type: combo
+  id: LegendaryCQCRush
+  martialArtsForm: LegendaryCloseQuartersCombat
+  attacks:
+  - Harm
+  - Disarm
+  - Grab
+  - Harm
+  name: legendary-cqc-rush-name
+  paralyzeTime: 6
+  extraDamage: 22.0
+  staminaDamage: 55.0
+  event: !type:LegendaryCQCRushPerformedEvent { }
+
+- type: combo
+  id: LegendaryCQCFinisher
+  martialArtsForm: LegendaryCloseQuartersCombat
+  attacks:
+  - Grab
+  - Harm
+  - Harm
+  - Disarm
+  name: legendary-cqc-finisher-name
+  paralyzeTime: 20
+  extraDamage: 40.0
+  staminaDamage: 80.0
+  event: !type:LegendaryCQCFinisherPerformedEvent { }

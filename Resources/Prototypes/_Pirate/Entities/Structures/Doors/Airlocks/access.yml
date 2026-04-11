@@ -118,3 +118,51 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsIPCommand ]
+
+# Solarian Alliance Navy
+- type: entity
+  parent: HighSecDoor
+  id: HighSecSANLocked
+  suffix: SAN, Locked
+  components:
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronicsSAN]
+        
+# Medical Alternative
+- type: entity
+  parent: AirlockMedicalAlt
+  id: AirlockMedicalLockedAlt
+  suffix: Medical, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMedical ]
+
+- type: entity
+  parent: AirlockMedicalAlt
+  id: AirlockMedicalMorgueLockedAlt
+  suffix: Morgue, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMorgue ]
+
+# Medical Alternative Glass
+- type: entity
+  parent: AirlockMedicalGlassAlt
+  id: AirlockMedicalMorgueGlassLockedAlt
+  suffix: Morgue, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMorgue ]
+
+- type: entity
+  parent: AirlockMedicalGlassAlt
+  id: AirlockMedicalGlassLockedAlt
+  suffix: Medical, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMedical ]

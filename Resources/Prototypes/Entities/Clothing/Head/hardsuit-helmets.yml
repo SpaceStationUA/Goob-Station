@@ -269,6 +269,12 @@
       - state: equipped-head-dog
       - state: equipped-head-unshaded-dog
         shader: unshaded
+      # Pirate port start: Mono - Hydrakin
+      head-hydrakin:
+      - state: equipped-head-hydrakin
+      - state: equipped-head-unshaded-hydrakin
+        shader: unshaded
+      # Pirate port end: Mono - Hydrakin
   - type: PointLight
     radius: 6
   - type: PressureProtection
@@ -318,6 +324,7 @@
     - CorgiWearable
     - WhitelistChameleon
 
+#Goliath Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitGoliath
@@ -380,6 +387,7 @@
     - CorgiWearable
     - WhitelistChameleon
 
+#Maxim Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitMaxim
@@ -626,6 +634,8 @@
         Heat: 0.45
         Radiation: 0.05
         Caustic: 0.4
+  - type: EyeProtection #Goob
+  - type: FlashImmunity #Goob
   - type: Tag
     tags:
     - CorgiWearable
@@ -1100,6 +1110,10 @@
       head:
       - state: equipped-head
       - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
         shader: unshaded
   - type: PointLight
     color: orange

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Shock collar created by Juhius, Resprited by Stanislav4ix",
+  "copyright": "Made by Vareniko, inspired by the shock collar from Juhius",
   "size": {
     "x": 32,
     "y": 32
@@ -10,10 +10,12 @@
   "states": [
     {
       "name": "equipped-NECK",
-      "directions": 4
+      "directions": 4,
+      "delays": [[0.5, 0.5], [0.5, 0.5], [0.5, 0.5], [0.5, 0.5]]
     },
     {
-      "name": "icon"
+      "name": "icon",
+      "delays": [[0.5, 0.5]]
     }
   ]
 }

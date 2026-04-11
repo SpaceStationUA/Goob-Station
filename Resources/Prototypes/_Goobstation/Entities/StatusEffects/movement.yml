@@ -1,0 +1,31 @@
+# these are generic slowdowns we could make shit more interesting but thats not for me to do right now
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: SlasherSlowdownStatusEffect
+  name: "сповільнення слешера"
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: TentacleSlowdownStatusEffect
+  name: "сповільнення щупальця"
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: MartialArtsGenericSlowdownEffect
+  name: "сповільнення бойових мистецтв"
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: OrgansDamagedSlowdownEffect
+  name: "сповільнення від пошкодження органів"
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: ShadowCloakSlowdownEffect
+  name: "сповільнення тіньового плаща"
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: ShadowlingGlareSlowdownEffect
+  name: "сповільнення погляду шедоулінга"

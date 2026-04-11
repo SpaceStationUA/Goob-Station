@@ -83,8 +83,11 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Content.Server.Players.JobWhitelist; // Pirate whitelist
+using Content.Shared.Roles; // Pirate whitelist
 using Robust.Shared.Console;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes; // Pirate whitelist
 
 namespace Content.Server.Whitelist;
 
@@ -93,6 +96,8 @@ public sealed class AddWhitelistCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Pirate whitelist
+    [Dependency] private readonly JobWhitelistManager _jobWhitelistManager = default!; // Pirate whitelist
     public override string Command => "whitelistadd";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -118,6 +123,19 @@ public sealed class AddWhitelistCommand : LocalizedCommands
             }
 
             await _dbManager.AddToWhitelistAsync(guid);
+
+            // Pirate whitelist start
+            foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+            {
+                if (job.Whitelisted)
+                {
+                    var jobProtoId = new ProtoId<JobPrototype>(job.ID);
+                    if (!await _dbManager.IsJobWhitelisted(guid, jobProtoId))
+                        _jobWhitelistManager.AddWhitelist(guid, jobProtoId);
+                }
+            }
+            // Pirate whitelist end
+
             shell.WriteLine(Loc.GetString("cmd-whitelistadd-added", ("username", data.Username)));
             return;
         }
@@ -141,6 +159,8 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Pirate whitelist
+    [Dependency] private readonly JobWhitelistManager _jobWhitelistManager = default!; // Pirate whitelist
 
     public override string Command => "whitelistremove";
 
@@ -167,6 +187,19 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
             }
 
             await _dbManager.RemoveFromWhitelistAsync(guid);
+
+            // Pirate whitelist start
+            foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+            {
+                if (job.Whitelisted)
+                {
+                    var jobProtoId = new ProtoId<JobPrototype>(job.ID);
+                    if (await _dbManager.IsJobWhitelisted(guid, jobProtoId))
+                        _jobWhitelistManager.RemoveWhitelist(guid, jobProtoId);
+                }
+            }
+            // Pirate whitelist end
+
             shell.WriteLine(Loc.GetString("cmd-whitelistremove-removed", ("username", data.Username)));
             return;
         }

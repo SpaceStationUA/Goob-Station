@@ -166,7 +166,7 @@
   name: "Інспектор"
   parent: [BaseWeaponRevolver, BaseSecurityContraband]
   id: WeaponRevolverInspector
-  description: "Револьвер одинарної дії, що виробляється різними компаніями. Він легкодоступний на цивільному ринку, що робить його популярним вибором серед приватних детективів. Тримаючи його, ви відчуваєте себе щасливчиком. Заряджається 6 патронами .45 magnum."
+  description: "Револьвер одинарної дії, відлитий із холодної плазмосталі. Популярний серед цивільних, приватних детективів і правоохоронців — ви відчуваєте себе щасливчиком, просто тримаючи його. Вміщує 6 набоїв .45 Magnum." # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
@@ -181,7 +181,7 @@
   name: "Матеба"
   parent: [BaseWeaponRevolver, BaseCentcommContraband]
   id: WeaponRevolverMateba
-  description: "Сучасний револьвер, що використовується елітним, майже міфічним загоном Nanotrasen \"Загін Смерті\". Його унікальний спусковий механізм та розташування ствола забезпечують високу скорострільність з мінімальним підкиданням дула. Багато хто дивився в це дуло, але мало хто вижив, щоб розповісти про це. Заряджається 6 патронами .45 magnum."
+  description: "Рідкісний і прекрасний напівавтоматичний револьвер. Надається лише еліті NanoTrasen; Матеба має унікальну конструкцію ствола, що значно зменшує підкидання. Багато хто дивився в ствол цієї зброї, і ще менше вижили, щоб розповісти цю історію. Вміщує 6 набоїв .45 Magnum." # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
@@ -214,10 +214,10 @@
     proto: CartridgeMagnumAP
 
 - type: entity
-  name: "Пітон"
+  name: "Пайтон"
   parent: [BaseWeaponRevolver, BaseSyndicateContraband]
   id: WeaponRevolverPython
-  description: "Потужний револьвер подвійної дії, вироблений Синдикатом. Гучний і ефектний, ідеально підходить для будь-якого агента, який хоче заявити про себе. Заряджається 6 патронами .45 magnum."
+  description: "Потужний револьвер подвійної дії, створений корпорацією Waffle. Гучний і ефектний — ідеальний для будь-якого агента, який хоче заявити про себе. Вміщує 6 набоїв .45 Magnum." # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi

@@ -1,0 +1,15 @@
+- type: entity
+  id: CrusherUpgradeFrame
+  parent: BaseItem
+  name: "рама покращення дробарки"
+  description: "Порожня рама для основного покращення дробарки; може вміщувати есенцію вмираючих створінь Лаваленду, щоб використовувати їхню енергію для покращень."
+  components:
+  - type: Sprite
+    sprite: _Lavaland/Objects/Weapons/Upgrades/crusher.rsi
+    state: base
+  - type: Item
+    size: Small
+
+  - type: Tag
+    tags:
+    - CrusherUpgradeFrame

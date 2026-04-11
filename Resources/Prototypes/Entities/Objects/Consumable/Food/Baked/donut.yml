@@ -469,9 +469,9 @@
 # Tastes like jelly-donut, fizzy tutti frutti.
 
 - type: entity
-  name: "джемовий пончик скуррета" # Goobstation
+  name: "джемовий пончик скуррета"
   parent: FoodDonutBase
-  id: FoodDonutJellyScurret # Goobstation
+  id: FoodDonutJellyScurret
   description: "У цьому пончику немає дірки на випадок, якщо з’явиться підозрілий на вигляд жердиноподібний предмет."
   components:
   - type: Sprite

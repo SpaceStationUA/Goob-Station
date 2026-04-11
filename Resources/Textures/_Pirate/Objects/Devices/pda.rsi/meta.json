@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d | pda-corpsman from yogstation at  https://github.com/yogstation13/Yogstation/commit/a75671b22476ed8e117229f38501b9b63f8d6bc1 | pda-martialartist by Floofers | pda-chiefjustice and pda-clerk by leonardo_dabepis (Discord) | pda-prosecutor by Timemaster99 (Discord) | admin assistant by Radezolid",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d | pda-corpsman from yogstation at  https://github.com/yogstation13/Yogstation/commit/a75671b22476ed8e117229f38501b9b63f8d6bc1 | pda-martialartist by Floofers | pda-chiefjustice and pda-clerk by leonardo_dabepis (Discord) | pda-prosecutor by Timemaster99 (Discord) | admin assistant by Radezolid | pda-interdyne by Nazar_m (Discord)",
   "size": {
     "x": 32,
     "y": 32
@@ -25,6 +25,23 @@
     },
     {
       "name": "pda-admin-assistant"
+    },
+	{
+      "name": "pda-interdyne"
+    },
+	{
+      "name": "pda-interdyne-deputy"
+    },
+	{
+      "name": "pda-interdyne-officer",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
     }
   ]
 }

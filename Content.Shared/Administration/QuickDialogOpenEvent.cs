@@ -100,13 +100,24 @@ public sealed class QuickDialogEntry
     /// </summary>
     public string? Placeholder;
 
-    public QuickDialogEntry(string fieldId, QuickDialogEntryType type, string prompt, string? placeholder = null)
+    #region Pirate: camera
+    /// <summary>
+    /// Initial text shown in the input when the dialog opens.
+    /// </summary>
+    public string? Value;
+
+    /// <summary>
+    /// Creates a quick dialog entry.
+    /// </summary>
+    public QuickDialogEntry(string fieldId, QuickDialogEntryType type, string prompt, string? placeholder = null, string? value = null)
     {
         FieldId = fieldId;
         Type = type;
         Prompt = prompt;
         Placeholder = placeholder;
+        Value = value;
     }
+    #endregion
 }
 
 /// <summary>

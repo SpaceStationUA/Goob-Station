@@ -17,6 +17,8 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared.TextScreen;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement; // Pirate: screen text
+using Robust.Shared.Resources; // Pirate: screen text
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -42,7 +44,9 @@ namespace Content.Client.TextScreen;
 public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsComponent>
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IResourceCache _resourceCache = default!; // Pirate: screen text
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    private RSIResource? _textRsiResource; // Pirate: screen text
 
     /// <summary>
     ///     Contains char/state Key/Value pairs. <br/>
@@ -53,6 +57,9 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
             { ':', "colon" },
             { '!', "exclamation" },
             { '?', "question" },
+            { '\'', "apostrophe" }, // Pirate: screen text
+            { '\u2019', "apostrophe" }, // Pirate: screen text
+            { '\u02BC', "apostrophe" }, // Pirate: screen text
             { '*', "star" },
             { '+', "plus" },
             { '-', "dash" },
@@ -69,12 +76,13 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     ///     A string prefix for all timer layers.
     /// </summary>
     private const string TimerMapKey = "timerMapKey";
-    private const string TextPath = "Effects/text.rsi";
+    private const string TextPath = "_Pirate/Effects/text.rsi"; // Pirate: screen text
     private const int CharWidth = 4;
 
     public override void Initialize()
     {
         base.Initialize();
+        _textRsiResource = _resourceCache.GetResource<RSIResource>(new ResPath($"/Textures/{TextPath}")); // Pirate: screen text
 
         SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<TextScreenTimerComponent, ComponentInit>(OnTimerInit);
@@ -351,19 +359,23 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
     /// <summary>
     ///     Returns the Effects/text.rsi state string based on <paramref name="character"/>, or null if none available.
     /// </summary>
-    public static string? GetStateFromChar(char? character)
+    private string? GetStateFromChar(char? character) // Pirate: screen text
     {
         if (character == null)
             return null;
 
+        var normalized = char.ToLowerInvariant(character.Value); // Pirate: screen text
+
         // First checks if its one of our special characters
-        if (CharStatePairs.TryGetValue(character.Value, out var value))
+        if (CharStatePairs.TryGetValue(normalized, out var value)) // Pirate: screen text
             return value;
 
-        // Or else it checks if its a normal letter or digit
-        if (char.IsLetterOrDigit(character.Value))
-            return character.Value.ToString().ToLower();
+        #region Pirate: screen text
+        var state = normalized.ToString();
+        if (_textRsiResource?.RSI.TryGetState(state, out _) == true)
+            return state;
 
-        return null;
+        return "question";
+        #endregion
     }
 }

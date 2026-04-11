@@ -1,0 +1,174 @@
+- type: entity
+  id: JugJustDecorBase
+  abstract: true
+  parent: Jug
+  components:
+  - type: Tag
+    tags:
+    - ChemDispensable
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Courage
+  id: JugJustDecorCourage
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Мужність"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: AlchemistCourage
+          Quantity: 200
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Serenity
+  id: JugJustDecorSerenity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Спокій"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: WitchSerenity
+          Quantity: 200
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Inspiration
+  id: JugJustDecorInspiration
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Натхнення"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: WitchInspiration
+          Quantity: 200
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Wisdom
+  id: JugJustDecorWisdom
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Мудрість"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: WitchWisdom
+          Quantity: 200
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Hope
+  id: JugJustDecorHope
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Надія"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: WitchHope
+          Quantity: 200
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Determination
+  id: JugJustDecorDetermination
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Рішучість"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: AlchemistDetermination
+          Quantity: 200
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Compassion
+  id: JugJustDecorCompassion
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Співчуття"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: WitchCompassion
+          Quantity: 200
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Clarity
+  id: JugJustDecorClarity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Ясність"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: WitchClarity
+          Quantity: 200
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Starlight Potion
+  id: JugJustDecorStarlightPotion
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Зілля Зоряного Світла"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: WitchStarlightPotion
+          Quantity: 200
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Elixir of Life
+  id: JugJustDecorElixirOfLife
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Еліксир Життя"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: AlchemistElixirOfLife
+          Quantity: 200
+
+- type: entity
+  parent: JugJustDecorBase
+  suffix: Alchemical Explosion
+  id: JugJustDecorAlchemicalExplosion
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Label
+    currentLabel: "Алхімічний Вибух"
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: AlchemistAlchemicalExplosion
+          Quantity: 200
+

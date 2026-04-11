@@ -1,0 +1,37 @@
+﻿
+- type: entity
+  parent: [ClothingEyesBase, ShowMedicalIcons]
+  id: ClothingEyesGlassesMedChem
+  name: "медхімічні захисні окуляри"
+  description: "Захисні окуляри, що можуть сканувати хімічний склад розчину, з вбудованим медичним HUD."
+  components:
+  - type: Sprite
+    sprite: _Omu/Clothing/Eyes/Glasses/medichem.rsi
+  - type: Clothing
+    sprite: _Omu/Clothing/Eyes/Glasses/medichem.rsi
+  - type: SolutionScanner
+  - type: Construction
+    graph: GogglesMedChemHUD
+    node: gogglesMedChem
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HudMedichem
+
+- type: entity
+  parent: [ClothingEyesBase, ShowMedicalIcons, ClothingEyesGlassesSunglasses]
+  id: ClothingEyesGlassesMedChemFlash
+  name: "медхімічні окуляри"
+  description: "Сонцезахисні окуляри з медичним HUD і аналізатором розчинів."
+  components:
+  - type: Sprite
+    sprite: _Omu/Clothing/Eyes/Glasses/medichemglasses.rsi
+  - type: Clothing
+    sprite: _Omu/Clothing/Eyes/Glasses/medichemglasses.rsi
+  - type: SolutionScanner
+  - type: Construction
+    graph: GlassesMedChemHUD
+    node: glassesMedChem
+  - type: Tag
+    tags:
+    - WhitelistChameleon

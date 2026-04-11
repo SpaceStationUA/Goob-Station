@@ -16,3 +16,4 @@ store-preset-name-uplink = Аплінк
 store-preset-name-spellbook = Книга заклинань
 store-preset-name-uplink-ghost = Контрабандний Аплінк
 store-preset-name-spellbook-ghost = Примарна Крамниця Заклинань
+store-ui-refund-text = Повернути

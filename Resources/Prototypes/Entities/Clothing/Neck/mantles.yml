@@ -41,9 +41,9 @@
   description: "Для керівника медичної служби, який побував у достатній кількості медпунктів, і знає, що більше ЗІЗ означає менше візитів до хімчистки центральної команди після закінчення зміни."
   components:
   - type: Sprite
-    sprite: Clothing/Neck/mantles/cmomantle.rsi
+    sprite: _Goobstation/Clothing/Neck/Mantle/cmomantle.rsi # Goob Station - mantle resprite
   - type: Clothing
-    sprite: Clothing/Neck/mantles/cmomantle.rsi
+    sprite: _Goobstation/Clothing/Neck/Mantle/cmomantle.rsi # Goob Station - mantle resprite
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]

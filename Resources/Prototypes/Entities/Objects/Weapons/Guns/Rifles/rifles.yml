@@ -175,7 +175,7 @@
   name: "АКМ"
   parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleAk
-  description: "Дещо побита бойова гвинтівка, розроблена на старій Землі. Улюблена злочинцями, ополченцями та терористами завдяки своїй знаменитій надійності та простоті виготовлення. Живиться магазинами калібру .30."
+  description: "Дещо пошарпана бойова гвинтівка староземного походження. Її полюбляють злочинці, ополчення та терористи за легендарну надійність і просту у виробництві конструкцію. Живиться з магазинів .30 Rifle."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -221,10 +221,10 @@
   - type: Appearance
 
 - type: entity
-  name: "М-90г"
+  name: "M-90GL" # Goobstation
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleM90GrenadeLauncher
-  description: "Стара модель карабіна буллпап, з підствольним гранатометом. Використовує гвинтівкові набої калібру .20."
+  description: "Штурмова гвинтівка Waffle Corporation у компоновці булпап із вбудованим гранатометом. Живиться з магазинів .20 Rifle." # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
@@ -270,7 +270,7 @@
   name: "Лектер"
   parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleLecter
-  description: "Штурмова гвинтівка високого військового класу. Використовує набої 20-го калібру."
+  description: "Штурмова гвинтівка військового класу, що бачила більше війн, ніж ви здатні згадати. Повнорозмірна конструкція та стабільна віддача допомагають Лектеру блискуче проявляти себе в одному — ювелірній точності. Живиться з магазинів .20 Rifle." # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
@@ -315,10 +315,10 @@
   - type: Appearance
 
 - type: entity
-  name: "Есток" # goob
+  name: "Есток" # Goob
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleEstoc
-  description: "Штурмова гвинтівка з прицілом, призначена для боїв на середніх та дальніх дистанціях. Використовує гвинтівкові набої .20." # goob
+  description: "Нині вже знята з озброєння військова гвинтівка марксмана зі стрільбою короткими чергами. Есток швидко потрапив до рук воєнізованих формувань і абордажних команд. Має дорогий тритієвий приціл для швидшого захоплення цілі. Живиться з магазинів .30 Rifle." # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
@@ -332,42 +332,41 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
-    minAngle: 30
-    maxAngle: 43
+    minAngle: 30 # Goob
+    maxAngle: 45 # Goob
     shotsPerBurst: 3
     selectedMode: Burst
     availableModes:
     - Burst
-    - SemiAuto
-    burstFireRate: 14
+    burstFireRate: 10 # Goob
   - type: GunWieldBonus
-    minAngle: -28
-    maxAngle: -35 # goob
+    minAngle: -30 # Goob
+    maxAngle: -40 # Goob
   - type: ItemSlots
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineRifle
+        startingItem: MagazineLightRifle # Goob
         insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
         priority: 2
         whitelist:
           tags:
-          - MagazineRifle
+          - MagazineLightRifle # Goob
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeRifle
+        startingItem: CartridgeLightRifle # Goob
         priority: 1
         whitelist:
           tags:
-          - CartridgeRifle
+          - CartridgeLightRifle # Goob
   - type: SpeedModifiedOnWield
-    walkModifier: 0.9 # goob
-    sprintModifier: 0.9 # goob
+    walkModifier: 0.8
+    sprintModifier: 0.8
   - type: CursorOffsetRequiresWield
   - type: EyeCursorOffset
-    maxOffset: 2
+    maxOffset: 3.5 # Goob
     pvsIncrease: 0.2
   - type: ContainerContainer
     containers:

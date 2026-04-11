@@ -223,3 +223,35 @@
   - type: Sprite
     sprite: _Pirate/Structures/Wallmounts/Posters/safetymoth.rsi
     state: safetymoth_11
+
+#Interdyne poster
+- type: entity
+  parent: PosterBase
+  id: PosterLegitInterdynePublicZone
+  name: "Плакат Інтердайну — відкрита територія"
+  description: "Плакат із зеленим хрестом позначає територію, де інший персонал може перебувати без проблем з персоналом Інтердайну."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/Posters/Interdyne.rsi
+    state: poster_interdyne_public_zone
+    
+- type: entity
+  parent: PosterBase
+  id: PosterLegitInterdynePrivateZone
+  name: "Плакат Інтердайну — приватна територія"
+  description: "Погрозливий червоний колір плаката натякає, що далі вам не треба. Та й навіщо воно вам?"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/Posters/Interdyne.rsi
+    state: poster_interdyne_private_zone
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitInterdyneHQ
+  name: "Плакат Інтердайну — командування"
+  description: "Плакат свідчить, що ви перебуваєте перед офісом командування Інтердайну."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/Posters/Interdyne.rsi
+    state: poster_interdyne_hq
+    

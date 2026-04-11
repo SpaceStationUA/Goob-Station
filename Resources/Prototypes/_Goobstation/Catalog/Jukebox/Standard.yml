@@ -312,3 +312,21 @@
   name: "Mrjajkes — Пісня Ґрейтайду"
   path:
     path: /Audio/_Goobstation/Music/the_gray_tide_song.ogg
+
+- type: jukebox
+  id: future_perception
+  name: "Меркт - Передчуття майбутнього"
+  path:
+    path: /Audio/_Goobstation/Music/future_perception.ogg
+
+- type: jukebox
+  id: mind_crawler
+  name: "Меркт - Мандрівник свідомості"
+  path:
+    path: /Audio/_Goobstation/Music/mind_crawler.ogg
+
+- type: jukebox
+  id: one_against_all
+  name: "мрджайкс - Один проти всіх"
+  path:
+    path: /Audio/StationEvents/one_against_all.ogg

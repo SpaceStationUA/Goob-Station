@@ -1,0 +1,60 @@
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectSlowdown
+  abstract: true
+  name: "сповільнення"
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+    blacklist:
+      tags:
+      - SlowImmune
+  - type: MovementModStatusEffect
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: VomitingSlowdownStatusEffect
+  name: "сповільнення від блювання"
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: TaserSlowdownStatusEffect
+  name: "сповільнення від пострілу тазером"
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: FlashSlowdownStatusEffect
+  name: "сповільнення від спалаху"
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: StatusEffectStaminaLow
+  name: "низька витривалість"
+
+# Makes you more slippery, or perhaps less slippery.
+- type: entity
+  parent: MobStatusEffectDebuff # Debatable if this should be MobStatusEffectBase or not
+  id: StatusEffectFriction
+  name: "тертя"
+  components:
+  - type: FrictionStatusEffect
+
+# Stunnable Status Effect
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectStunned
+  name: "оглушення"
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+    blacklist:
+      tags:
+      - StunImmune
+  - type: StatusEffectAlert
+    alert: Stun
+  - type: StunnedStatusEffect

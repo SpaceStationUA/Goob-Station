@@ -8,7 +8,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Goobstation.Common.Changeling;
 using Content.Shared._Shitmed.CCVar;
 using Content.Shared._Shitmed.DoAfter;
 using Content.Shared._Shitmed.Medical.Surgery.Pain.Components;
@@ -33,6 +32,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
+using Content.Goobstation.Common.Medical;
 
 namespace Content.Shared._Shitmed.Medical.Surgery.Wounds.Systems;
 
@@ -271,6 +272,10 @@ public sealed partial class WoundSystem
         {
             if (damageValue == 0)
                 continue; // Only create wounds for damage or healing
+
+            if (TryComp<DamageableComponent>(uid, out var damageable)
+                    && !damageable.Damage.DamageDict.ContainsKey(damageType))
+                continue;
 
             if (damageValue < 0)
             {
@@ -901,9 +906,13 @@ public sealed partial class WoundSystem
 
         _audio.PlayPvs(woundableComp.WoundableDelimbedSound, bodyPart.Body.Value);
 
+        // goob edit
+        var ampEv = new BeforeAmputationDamageEvent();
+        RaiseLocalEvent(bodyPart.Body.Value, ref ampEv);
+
         if (woundableComp.DamageOnAmputate != null
             && _body.TryGetRootPart(bodyPart.Body.Value, out var rootPart)
-            && !HasComp<ChangelingComponent>(bodyPart.Body.Value)) // TODO change to ChangelingIdentityComponent
+            && !ampEv.Cancelled) // goob edit
             _damageable.TryChangeDamage(bodyPart.Body.Value,
                 woundableComp.DamageOnAmputate,
                 targetPart: _body.GetTargetBodyPart(rootPart));
@@ -1327,30 +1336,40 @@ public sealed partial class WoundSystem
         if (!Resolve(woundable, ref component, false))
             return;
 
-        var nearestSeverity = component.WoundableSeverity;
-        foreach (var (severity, value) in component.Thresholds.OrderByDescending(kv => kv.Value))
+        var oldSeverity = component.WoundableSeverity;
+        var integrity = component.WoundableIntegrity;
+
+        var nearestSeverity = oldSeverity;
+        if (integrity >= component.IntegrityCap)
         {
-            if (component.WoundableIntegrity >= component.IntegrityCap)
+            nearestSeverity = WoundableSeverity.Healthy;
+        }
+        else
+        {
+            var found = false;
+            var nearestThreshold = FixedPoint2.Zero;
+
+            foreach (var (severity, value) in component.Thresholds)
             {
-                nearestSeverity = WoundableSeverity.Healthy;
-                break;
+                if (integrity < value)
+                    continue;
+
+                if (!found || value > nearestThreshold)
+                {
+                    found = true;
+                    nearestThreshold = value;
+                    nearestSeverity = severity;
+                }
             }
-
-            if (component.WoundableIntegrity < value)
-                continue;
-
-            nearestSeverity = severity;
-            break;
         }
 
-        if (nearestSeverity != component.WoundableSeverity)
+        if (nearestSeverity != oldSeverity)
         {
-            var ev = new WoundableSeverityChangedEvent(component.WoundableSeverity, nearestSeverity);
+            var ev = new WoundableSeverityChangedEvent(oldSeverity, nearestSeverity);
             RaiseLocalEvent(woundable, ref ev);
+            component.WoundableSeverity = nearestSeverity;
+            Dirty(woundable, component);
         }
-        component.WoundableSeverity = nearestSeverity;
-
-        Dirty(woundable, component);
 
         var bodyPart = Comp<BodyPartComponent>(woundable);
         if (bodyPart.Body == null)

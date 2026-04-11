@@ -126,6 +126,7 @@
     sprite: Objects/Tanks/Jetpacks/blue.rsi
     slots:
       - Back
+      - SuitStorage # Pirate
 
 # Filled blue
 - type: entity
@@ -159,6 +160,7 @@
     sprite: Objects/Tanks/Jetpacks/black.rsi
     slots:
       - Back
+      - SuitStorage # Pirate
   - type: StaticPrice
     price: 1000
 
@@ -275,6 +277,7 @@
     sprite: Objects/Tanks/Jetpacks/security.rsi
     slots:
       - Back
+      - SuitStorage # Pirate
 
 #Filled security
 - type: entity

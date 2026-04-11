@@ -2,7 +2,7 @@
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponShotgunHushpup
   name: "Хашпап"
-  description: "Маловідома модифікація «Енфорсера», оснащена експериментальним глушником. Чудово підходить для тих, хто має суворий моральний кодекс. Використовує дробовикові патрони 12 калібру."
+  description: "Маловідома модифікація «Енфорсера», оснащена громіздким глушником. Чудово підходить тим, у кого суворий моральний кодекс. Вміщує 5 набоїв 12 Gauge." # Goobstation
   components:
   - type: Sprite
     sprite: _Harmony/Objects/Weapons/Guns/Shotguns/hushpup.rsi

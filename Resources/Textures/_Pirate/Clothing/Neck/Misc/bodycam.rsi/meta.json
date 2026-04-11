@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by NeKognitoHazard, icon taken from https://github.com/fulpstation/fulpstation/pull/347 and resprite by Vareniko",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-NECK",
+      "directions": 4,
+      "delays": [[0.5, 0.5], [0.5, 0.5], [0.5, 0.5], [0.5, 0.5]]
+    },
+    {
+      "name": "icon",
+      "delays": [[0.5, 0.5]]
+    }
+  ]
+}

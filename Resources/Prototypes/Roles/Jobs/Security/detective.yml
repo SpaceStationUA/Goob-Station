@@ -75,6 +75,10 @@
   - !type:TraitsRequirement # Pirate
       inverted: true
       traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - MovementImpaired
       - Blindness
       - Narcolepsy
       - Muted
@@ -85,15 +89,6 @@
     - NanoTrasen
     - ZavodskoiInterstellar
     - PMCG
-  - !type:CharacterLifepathRequirement
-    inverted: true
-    lifepaths:
-    - Cultist
-    - Smuggler
-    - ExCriminal
-    - Enforcer
-    - Hacker
-    - ConArtist
   # Pirate contractor end
   startingGear: DetectiveGear
   icon: "JobIconDetective"
@@ -102,7 +97,7 @@
   guides: # goobstation
   - Forensics
   - Security
-  - Detective SOP
+  - DetectiveSOP
   goobcoins: 30 #Goob content
   access:
   - Security
@@ -133,6 +128,8 @@
     - ForensicPad
     - ForensicScanner
     - ClothingMaskGasSecurity # Goobstation
+    - PhotoCameraFilled # Pirate: camera
+    - CameraFilm # Pirate: camera
 
 - type: chameleonOutfit
   id: DetectiveChameleonOutfit

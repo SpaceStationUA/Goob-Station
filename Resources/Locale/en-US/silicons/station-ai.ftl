@@ -8,10 +8,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 # General
-ai-wire-snipped = Wire has been cut at {$coords}.
+ai-wire-snipped = One of your systems' wires has been cut at {$source}.
 wire-name-ai-vision-light = AIV
 wire-name-ai-act-light = AIA
 station-ai-takeover = AI takeover
+station-ai-eye-name = AI eye - {$name}
 
 # Radial actions
 ai-open = Open actions
@@ -29,6 +30,7 @@ electrify-door-off = Disable overcharge
 toggle-light = Toggle light
 
 ai-device-not-responding = Device is not responding
+ai-device-too-far = You can't reach there! # DOWNSTREAM-TPirates: borg wireless access
 
 ai-consciousness-download-warning = Your consciousness is being downloaded.
 
@@ -51,8 +53,3 @@ station-ai-icon-smiley = All smiles
 station-ai-hologram-female = Female appearance
 station-ai-hologram-male = Male appearance
 station-ai-hologram-face = Disembodied head
-# Goob, consistentcy, form -> appearance
-station-ai-hologram-cat = Cat appearance 
-station-ai-hologram-dog = Corgi appearance
-station-ai-hologram-kobold = Kobold appearance
-station-ai-hologram-monkey = Monkey appearance

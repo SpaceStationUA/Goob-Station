@@ -121,7 +121,7 @@
   description: "Це космічний короп."
   abstract: true
   components:
-    - type: WeatherImmune
+    - type: WeatherImmune # Lavaland Change
     - type: InputMover
     - type: MobMover
     - type: HTN

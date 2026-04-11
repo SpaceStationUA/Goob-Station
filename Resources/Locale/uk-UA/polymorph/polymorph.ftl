@@ -3,3 +3,5 @@ polymorph-self-action-description = Миттєво перетворіть себ
 
 polymorph-popup-generic = {CAPITALIZE($parent)} перетворився на {$child}.
 polymorph-revert-popup-generic = {CAPITALIZE($parent)} повернуто назад у {$child}.
+
+polymorph-paused-map-name = Мапа зберігання тіл поліморфу

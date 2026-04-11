@@ -13,6 +13,8 @@
 
 using System.Numerics;
 using Content.Client._Mono.Radar;
+using Content.Client.Station; // Pirate port - Monolith shields
+using Content.Shared._Pirate.ShipShields; // Pirate port - Monolith shields
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -28,6 +30,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Content.Shared._Mono.Radar;
+using Robust.Shared.Physics.Collision.Shapes; // Pirate port - Monolith shields
 
 namespace Content.Client.Shuttles.UI;
 
@@ -275,6 +278,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         var shuttleToWorld = Matrix3x2.Multiply(posMatrix, ourEntMatrix);
         Matrix3x2.Invert(shuttleToWorld, out var worldToShuttle);
         var shuttleToView = Matrix3x2.CreateScale(new Vector2(MinimapScale, -MinimapScale)) * Matrix3x2.CreateTranslation(MidPointVector);
+
+        DrawShields(handle, xform, worldToShuttle); // Pirate port - Monolith shields
 
         // Frontier Corvax: north line drawing
         var rot = ourEntRot + _rotation.Value;
@@ -785,15 +790,57 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     /// <summary>
     /// Draws a shield ring with constant thickness regardless of zoom level.
     /// </summary>
-    private void DrawShieldRing(DrawingHandleScreen handle, Vector2 position, float radius, Color color)
+    private void DrawShieldRing(DrawingHandleScreen handle, Vector2 position, float worldRadius, Color color)
     {
+        var displayRadius = worldRadius * MinimapScale * 0.85f; // Pirate port - Monolith shields
+
         // Draw the shield outline as a ring with constant thickness
         const float ringThickness = 2.0f; // Fixed thickness in pixels
 
         // Draw multiple circles with slightly different radii to create a solid ring effect
         for (float offset = 0; offset <= ringThickness; offset += 0.5f)
         {
-            handle.DrawCircle(position, radius + offset, color.WithAlpha(0.5f), false);
+            handle.DrawCircle(position, displayRadius + offset, color.WithAlpha(0.5f), false);
         }
     }
+
+    // Pirate port start - Monolith shields
+    private void DrawShields(DrawingHandleScreen handle, TransformComponent consoleXform, Matrix3x2 matrix)
+    {
+        var shields = EntManager.AllEntityQueryEnumerator<ShipShieldVisualsComponent, FixturesComponent, TransformComponent>();
+        while (shields.MoveNext(out var uid, out var visuals, out var fixtures, out var xform))
+        {
+            if (!EntManager.TryGetComponent<TransformComponent>(xform.GridUid, out var parentXform))
+                continue;
+        if (xform.MapID != consoleXform.MapID)
+            continue;
+            var shieldFixture = fixtures.Fixtures.TryGetValue("shield", out var fixture) ? fixture : null;
+
+            if (shieldFixture == null || shieldFixture.Shape is not ChainShape)
+                continue;
+
+            ChainShape chain = (ChainShape) shieldFixture.Shape;
+
+            var count = chain.Count;
+            var verticies = chain.Vertices;
+
+            var center = xform.LocalPosition;
+
+            for (int i = 1; i < count; i++)
+            {
+                var v1 = Vector2.Add(center, verticies[i - 1]);
+                v1 = Vector2.Transform(v1, parentXform.WorldMatrix); // transform to world matrix
+                v1 = Vector2.Transform(v1, matrix); // get back to local matrix for drawing
+                v1.Y = -v1.Y;
+                v1 = ScalePosition(v1);
+                var v2 = Vector2.Add(center, verticies[i]);
+                v2 = Vector2.Transform(v2, parentXform.WorldMatrix);
+                v2 = Vector2.Transform(v2, matrix);
+                v2.Y = -v2.Y;
+                v2 = ScalePosition(v2);
+                handle.DrawLine(v1, v2, visuals.ShieldColor);
+            }
+        }
+    }
+    // Pirate port end - Monolith shields
 }

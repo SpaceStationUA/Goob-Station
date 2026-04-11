@@ -1105,6 +1105,27 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 
+- type: entity
+  id: BorgModuleAdvancedClowning
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: "модуль просунутого клоунування кіборга"
+  description: "Просунутий сервісний модуль лише для найсмішніших кіборгів! Містить вбудовану піч, що автоматично випікає пироги з часом, голопіл-проектор і штовхальний горн."
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-clown-adv
+  - type: ItemBorgModule
+    moduleId: AdvancedClowning
+    items:
+    - HoloprojectorClownBorg
+    - BorgLauncherCreamPie
+    - ClownRecorder
+    - PushHorn
+    - BikeHornInstrument
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-clowning-module }
+
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon
@@ -1236,6 +1257,40 @@
     - type: StaticPrice
       price: 2000
 
+# Goob upstreamer todo fixborghands earlyadding this so i dont have to do shitcode for xenoborgs and i dont want to earlymerge every part of them
+# Kill this shit when you start upstreaming xenoborgs proper
+# <Goobstreamer>
+# mothership module
+- type: entity
+  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: MothershipModule
+  name: "модуль мотершипа"
+  description: "Модуль, що допомагає мозкам боргів мотершипа встановлювати інші модулі."
+  components:
+  - type: Tag
+    tags:
+    - MothershipModule
+  - type: Sprite
+    layers:
+    - state: xenoborg_generic
+    - state: icon-xenoborg-tools
+  - type: ItemBorgModule
+    moduleId: MothershipBasic # This makes this version of xenoborgs technically a backport which is so accursed.
+    items:
+    - DoorRemoteXenoborg
+    - MMI
+    - PowerCellHigh
+    - XenoborgModuleBasic
+    - HandheldGPSBasic
+    - MaterialBag
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-martyr-module }
+- type: Tag
+  id: MothershipModule # Cyborg module category for evil xenoborg core
+  # Yeah im just, whatever, ill kill this as i upstream.
+
+# </Goobstreamer>
+
 # Shitmed Modules
 
 - type: entity
@@ -1308,7 +1363,7 @@
   parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleBasic
   name: "базовий модуль ксеноборга"
-  description: "Основні предмети для будь-якого ксеноборга."
+  description: "Необхідні предмети для будь-якого ксеноборга."
   components:
   - type: Sprite
     layers:
@@ -1434,7 +1489,7 @@
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleSpaceMovement
   name: "модуль космічного руху ксеноборга"
-  description: "Модуль, який допомагає ксеноборгу краще рухатися в космосі."
+  description: "Модуль, що допомагає ксеноборгу краще рухатися в космосі."
   components:
   - type: Sprite
     layers:
@@ -1524,7 +1579,7 @@
 - type: entity
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleCloakDevice
-  name: "модуль маскувального пристрою ксеноборга"
+  name: "модуль пристрою маскування ксеноборга"
   description: "Модуль з пристроєм, що дозволяє ксеноборгам ставати невидимими на деякий час."
   components:
   - type: Sprite
@@ -1537,3 +1592,20 @@
     - CloakingDevice
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleSuperCloakDevice
+  name: "модуль пристрою маскування ксеноборга"
+  description: "Модуль із пристроєм, що дозволяє ксеноборгам ставати по-справжньому невидимими на менший час."
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_stealth
+    - state: icon-xenoborg-cloak2
+  - type: ItemBorgModule
+    moduleId: SuperCloakDevice
+    items:
+    - SuperCloakingDevice
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye2-module }

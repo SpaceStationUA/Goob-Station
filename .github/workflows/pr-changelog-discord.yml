@@ -1,0 +1,135 @@
+# SPDX-FileCopyrightText: 2026 Goob Station contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: "PR Changelog: Discord"
+
+on:
+  workflow_run:
+    workflows: ["PR Changelogs"]
+    types: [completed]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.id }}
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve PR number
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          api_url="${GITHUB_API_URL:-https://api.github.com}"
+          repo="${GITHUB_REPOSITORY}"
+
+          head_sha="$(jq -r '.workflow_run.head_sha // empty' "$GITHUB_EVENT_PATH")"
+          pr_number="$(jq -r '.workflow_run.pull_requests[0].number // empty' "$GITHUB_EVENT_PATH")"
+
+          # Fallback 1: parse PR number from the merge commit message/title.
+          if [ -z "$pr_number" ]; then
+            msg="$(jq -r '.workflow_run.head_commit.message // empty' "$GITHUB_EVENT_PATH")"
+            if [[ "$msg" =~ \#([0-9]+) ]]; then
+              pr_number="${BASH_REMATCH[1]}"
+            fi
+          fi
+
+          # Fallback 2: parse PR number from workflow_run display title.
+          if [ -z "$pr_number" ]; then
+            title="$(jq -r '.workflow_run.display_title // empty' "$GITHUB_EVENT_PATH")"
+            if [[ "$title" =~ \#([0-9]+) ]]; then
+              pr_number="${BASH_REMATCH[1]}"
+            fi
+          fi
+
+          # Fallback 3: ask GitHub which PR is associated with the triggering commit.
+          if [ -z "$pr_number" ] && [ -n "$head_sha" ]; then
+            pr_number="$(
+              curl -fsSL \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                "$api_url/repos/$repo/commits/$head_sha/pulls?per_page=1" \
+              | jq -r '.[0].number // empty' || true
+            )"
+          fi
+
+          if [ -z "$pr_number" ]; then
+            echo "Could not resolve PR number from workflow_run payload, skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "number=$pr_number" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout base branch
+        if: steps.pr.outputs.skip != 'true'
+        uses: actions/checkout@v4.2.2
+        with:
+          ref: ${{ vars.CHANGELOG_BRANCH || 'master' }}
+          fetch-depth: 100
+
+      - name: Resolve changelog commit
+        if: steps.pr.outputs.skip != 'true'
+        id: cl
+        run: |
+          set -euo pipefail
+
+          pr_number="${{ steps.pr.outputs.number }}"
+          branch="${{ vars.CHANGELOG_BRANCH || 'master' }}"
+
+          # Ensure we have enough history to find the changelog commit.
+          git fetch --no-tags --prune --depth=200 origin "$branch"
+
+          cl_sha="$(git log \
+            --format='%H' \
+            --all-match \
+            --grep='Automated changelog' \
+            --grep="(#${pr_number})" \
+            -n 1 \
+            "origin/$branch" || true)"
+
+          if [ -z "$cl_sha" ]; then
+            echo "No changelog commit found for PR #${pr_number}; falling back to PR diff mode."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "found=true" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$cl_sha" >> "$GITHUB_OUTPUT"
+          echo "base_sha=$(git rev-parse "${cl_sha}^")" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Python
+        if: steps.pr.outputs.skip != 'true'
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        if: steps.pr.outputs.skip != 'true'
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pyyaml
+
+      - name: Publish changelog delta (Discord)
+        if: steps.pr.outputs.skip != 'true'
+        run: python3 Tools/actions_pr_changelog_to_discord.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_PR_DISCORD_WEBHOOK }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          CHANGELOG_DIR: Resources/Changelog
+          CHANGELOG_EXT: .yml
+          CHANGELOG_BASE_SHA: ${{ steps.cl.outputs.base_sha }}
+          CHANGELOG_HEAD_SHA: ${{ steps.cl.outputs.head_sha }}
+          # Optional tuning:
+          DISCORD_MESSAGE_DELAY_SECONDS: "2.0"

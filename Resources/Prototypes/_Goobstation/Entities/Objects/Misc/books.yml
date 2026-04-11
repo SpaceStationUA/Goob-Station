@@ -20,3 +20,44 @@
     openOnActivation: true
     guides:
     - DevilClauses
+
+- type: entity
+  id: AdvMimeryVol1
+  parent: [BaseSyndicateContraband, BaseSpellbook]
+  name: "Посібник з просунутої мімії. Том 1"
+  description: "Сторінки не видають жодного звуку, коли їх перегортають."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/bookmime.rsi
+    layers:
+    - state: icon
+  - type: Spellbook
+    spellActions:
+      ActionInvisibleBlockade: null
+    learnPermanently: true
+
+- type: entity
+  id: AdvMimeryVol2
+  parent: [BaseSyndicateContraband, BaseSpellbook]
+  name: "Посібник з просунутої мімії. Том 2"
+  description: "Тут не написано жодного слова..."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/bookmime.rsi
+    layers:
+    - state: icon
+  - type: Spellbook
+    spellActions:
+      ActionFingerGuns: null
+    learnPermanently: true
+
+- type: entity
+  id: BoxAdvMimery
+  parent: [BaseSyndicateContraband, BoxCardboard]
+  name: "Коробка серії «Посібник з просунутої мімії»"
+  components:
+  - type: StorageFill
+    contents:
+    - id: AdvMimeryVol1
+    - id: AdvMimeryVol2
+    - id: ClothingMaskMime

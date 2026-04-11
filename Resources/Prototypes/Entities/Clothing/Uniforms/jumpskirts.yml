@@ -116,6 +116,8 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+# Hey idiot, the sprites under _Goobstation/ are goobstation duh.
+
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtBartender
@@ -128,37 +130,45 @@
     sprite: Clothing/Uniforms/Jumpskirt/bartender.rsi
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseCommandContraband] # Goob
   id: ClothingUniformJumpskirtCaptain
   name: "капітанська спідниця"
   description: "Це синій комбінезон із золотими знаками, що позначають звання \"капітан\"."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/captain.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/captain.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/captain.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/captain.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtCargo
   name: "спідниця-комбінезон вантажного техніка"
   description: "Міцна спідниця-комбінезон, що видається членам вантажного відділу."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/cargotech.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Cargo/cargotech.rsi # Goob
+  - type: Item # Goob
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#b7793d"
+      right:
+      - state: inhand-right
+        color: "#b7793d"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/cargotech.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Cargo/cargotech.rsi # Goob
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseCommandContraband] # Goob
   id: ClothingUniformJumpskirtChiefEngineer
   name: "комбінезон головного інженера"
   description: "Це - комбінезон високої видимості, що видається тим інженерам, які достатньо божевільні, щоб досягти звання головного інженера."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/ce.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Engineering/ce.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/ce.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Engineering/ce.rsi # Goob
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -194,48 +204,48 @@
     sprite: Clothing/Uniforms/Jumpskirt/chef.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtChemistry
   name: "хімічний комбінезон"
   description: "На цій спідниці якісь дивні плями. Хм."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/chemistry.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/chemistry.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/chemistry.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/chemistry.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtVirology
   name: "вірусологічна спідниця"
   description: "Він виготовлений зі спеціального волокна, яке забезпечує особливий захист від біонебезпеки. На ньому є нашивка зі званням вірусолога."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/virology.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/virology.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/virology.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/virology.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtGenetics
   name: "генетична спідниця"
   description: "Він виготовлений зі спеціального волокна, яке забезпечує особливий захист від біологічних загроз. На ньому є нашивка зі званням генетика."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/genetics.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/genetics.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/genetics.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/genetics.rsi # Goob
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseCommandContraband] # Goob
   id: ClothingUniformJumpskirtCMO
   name: "комбінезон головного лікаря"
   description: "Це комбінезон, який носять ті, хто має досвід роботи на посаді головного лікаря. Забезпечує незначний біологічний захист."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/cmo.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/cmo.rsi # Goob
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -249,84 +259,84 @@
     sprite: Clothing/Uniforms/Jumpskirt/cmo_turtle.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseSecurityContraband] # Goob
   id: ClothingUniformJumpskirtDetective
   name: "поношена спідниця-костюм"
   description: "Той, хто це носить, налаштований серйозно."
   components:
     - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
+      sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Security/detective.rsi # Goob
     - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
+      sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Security/detective.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseSecurityContraband] # Goob
   id: ClothingUniformJumpskirtDetectiveGrey
   name: "нуарна спідниця-костюм"
   description: "Сірий костюм крутого приватного детектива, доповнений затискачем для краватки."
   components:
     - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+      sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Security/detective_grey.rsi # Goob
     - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+      sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Security/detective_grey.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtEngineering
   name: "інженерний комбінезон"
   description: "Якби цей костюм був непровідним, можливо, інженери справді робили б свою чортову роботу."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/engineering.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Engineering/engineering.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/engineering.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Engineering/engineering.rsi # Goob
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseCommandContraband] # Goob
   id: ClothingUniformJumpskirtHoP
   name: "комбінезон начальника відділу кадрів"
   description: "Досить м'який і ненав'язливий. Ідеально підходить для того, щоб зникнути з лиця всесвіту."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hop.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/hop.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hop.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/hop.rsi # Goob
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseCommandContraband] # Goob
   id: ClothingUniformJumpskirtHoS
   name: "спідниця-комбінезон голови служби безпеки"
   description: "Вона яскраво-червона і досить хрустка, як і жертви служби безпеки."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/hos.rsi # Pirate bluesec
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/hos.rsi # Pirate bluesec
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#335E87" # Pirate
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        color: "#263E5D" # Pirate bluesec
+        sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/color/color.rsi # Goob
       - state: overlay-inhand-left
-        sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+        sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/hos.rsi # Pirate bluesec
       right:
       - state: inhand-right
-        color: "#335E87" # Pirate
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        color: "#263E5D" # Pirate bluesec
+        sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/color/color.rsi # Goob
       - state: overlay-inhand-right
-        sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+        sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/hos.rsi # Pirate bluesec
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseCommandContraband] # Goob
   id: ClothingUniformJumpskirtHoSAlt
   name: "водолазка начальника служби безпеки"
   description: "Це водолазка, яку носять ті, хто достатньо сильний і дисциплінований, щоб досягти посади керівника служби безпеки."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/hos_alt.rsi # Pirate bluesec
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/hos_alt.rsi # Pirate bluesec
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -351,59 +361,67 @@
     sprite: Clothing/Uniforms/Jumpskirt/commandgeneric.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtHydroponics
   name: "гідропоніка спідниця-комбінезон"
   description: "Має сильний земляний запах. Сподіваємося, що це просто бруд, а не забруднення."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hydro.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/hydro.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hydro.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/hydro.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtJanitor
   name: "комбінезон прибиральниці"
   description: "Спідниця для бідних з шваброю."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/janitor.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/janitor.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/janitor.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/janitor.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtMedicalDoctor
   name: "медичний комбінезон"
   description: "Він виготовлений зі спеціального волокна, яке забезпечує незначний захист від біологічних загроз. На грудях є хрест, який означає, що власник є підготовленим медичним персоналом."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/medical.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/medical.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtMime
   name: "мімічна спідниця"
   description: "..."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/mime.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/mime.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtParamedic
   name: "комбінезон-спідниця парамедика"
   description: "Це плюс, це ж добре, чи не так?"
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/paramedic.rsi # Goob
+  - type: Item # Goob
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#364660"
+      right:
+      - state: inhand-right
+        color: "#364660"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/paramedic.rsi # Goob
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -417,34 +435,34 @@
     sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtPrisoner
   name: "спідниця-комбінезон в'язня"
   description: "Спідниця-комбінезон для в'язнів. У ній постійно увімкнені датчики костюма."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/color/prisoner.rsi # Goob
     layers:
     - state: icon
-      color: "#ff8300"
-    - state: prisoner-icon
+    #  color: "#ff8300" # Goob
+    #- state: prisoner-icon
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#ff8300"
-      - state: prisoner-inhand-left
+    #    color: "#ff8300"  # Goob
+    #  - state: prisoner-inhand-left
       right:
       - state: inhand-right
-        color: "#ff8300"
-      - state: prisoner-inhand-right
+    #    color: "#ff8300" # Goob
+    #  - state: prisoner-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/color.rsi
-    clothingVisuals:
-      jumpsuit:
-      - state: equipped-INNERCLOTHING
-        color: "#ff8300"
-      - state: prisoner-equipped-INNERCLOTHING
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/color/prisoner.rsi # Goob
+    #clothingVisuals: # Goob
+    #  jumpsuit:
+    #  - state: equipped-INNERCLOTHING
+    #    color: "#ff8300"
+    #  - state: prisoner-equipped-INNERCLOTHING
   - type: SuitSensor
     controlsLocked: true
     randomMode: false
@@ -458,26 +476,42 @@
     - Skirt
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseCommandContraband] # Goob
   id: ClothingUniformJumpskirtQM
   name: "спідниця-комбінезон квартирмейстера"
   description: "Що коричневий може зробити для вас?"
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/qm.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Cargo/qm.rsi # Goob
+  - type: Item # Goob
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#b7793d"
+      right:
+      - state: inhand-right
+        color: "#b7793d"
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/qm.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Cargo/qm.rsi # Goob
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseCommandContraband] # Goob
   id: ClothingUniformJumpskirtQMTurtleneck
   name: "водолазка квартирмейстера"
   description: "Стильна водолазка, створена для важких умов роботи у відділі постачання."
   components:
     - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi
+      sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Cargo/qmturtleskirt.rsi # Goob
+    - type: Item # Goob
+      inhandVisuals:
+        left:
+        - state: inhand-left
+          color: "#b7793d"
+        right:
+        - state: inhand-right
+          color: "#b7793d"
     - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi
+      sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Cargo/qmturtleskirt.rsi # Goob
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -486,82 +520,81 @@
   description: "Це водолазка, яку носять ті, хто має знання, щоб обійняти посаду наукового керівника. Її тканина забезпечує незначний захист від біологічних забруднювачів."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/rnd.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/RND/rnd.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/rnd.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/RND/rnd.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtScientist
   name: "комбінезон-спідниця вченого"
   description: "Він виготовлений зі спеціального волокна, яке збільшує сприйняття інтелекту і зменшує особисту етику. Має маркування, що позначає власника як науковця."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/scientist.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/RND/scientist.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/scientist.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/RND/scientist.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtRoboticist
   name: "комбінезон-спідниця робототехніка"
   description: "Це тонкий чорний колір з посиленими швами; чудово підходить для промислової роботи."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/roboticist.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/RND/roboticist.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/roboticist.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/RND/roboticist.rsi # Goob
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseSecurityContraband] # Goob
   id: ClothingUniformJumpskirtSec
   name: "спідниця-комбінезон служби безпеки"
   description: "Спідниця-комбінезон з міцного матеріалу, що забезпечує надійний захист."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/security.rsi # Pirate bluesec
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/security.rsi # Pirate bluesec
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#335E87" # Pirate
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        color: "#263E5D" # Pirate bluesec
+        sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/color/color.rsi # Goob
       - state: overlay-inhand-left
-        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+        sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/security.rsi # Goob
       right:
       - state: inhand-right
-        color: "#335E87" # Pirate
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        color: "#263E5D" # Pirate bluesec
+        sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/color/color.rsi # Goob
       - state: overlay-inhand-right
-        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
-
+        sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Security/security.rsi # Goob
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseSecurityContraband]
   id: ClothingUniformJumpskirtWarden
   name: "форма начальника охорони"
-  description: "Формальний костюм служби безпеки для офіцерів з пряжкою на ремені від НаноТрейзен."
+  description: "Формальний костюм служби безпеки для офіцерів з пряжкою на ремені від НаноТрейзен." # Goob
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/warden.rsi # Pirate bluesec
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/warden.rsi # Pirate bluesec
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#2D3644" # Pirate
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        color: "#2D3644" # Pirate bluesec
+        sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/color/color.rsi # Goob
       - state: overlay-inhand-left
-        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+        sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/warden.rsi # Pirate bluesec
       right:
       - state: inhand-right
-        color: "#2D3644" # Pirate
-        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+        color: "#2D3644" # Pirate bluesec
+        sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/color/color.rsi # Goob
       - state: overlay-inhand-right
-        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+        sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/warden.rsi # Pirate bluesec
 
 
 - type: entity
@@ -593,9 +626,9 @@
   description: "Привіт, я Скотт, президент \"Донк Піца\". Ви чули про [ВІДОМОГО ВІРТУАЛЬНОГО ВИКОНАВЦЯ]?"
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/performer.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/performer.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/performer.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Civilian/performer.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -631,15 +664,15 @@
     sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformSkirtBase, BaseSyndicateContraband]
+  parent: [UnsensoredClothingUniformSkirtBase,ClothingUniformFoldableBase, BaseSyndicateContraband] # Goob
   id: ClothingUniformJumpskirtOperative
   name: "комбінезон-спідниця оперативника"
   description: "Уніформа для елітних оперативників синдикату, які виконують тактичні операції у відкритому космосі."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Syndicate/operative_s.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Syndicate/operative_s.rsi # Goob
   - type: StaticPrice
     price: 500
 
@@ -659,15 +692,15 @@
       mode: SensorOff
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtAtmos
   name: "комбінезон-спідниця атмосферного техніка"
   description: "Я на роботі. Я не можу покинути роботу. Робота - це дихання. Я перевіряю якість повітря."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/atmosf.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Engineering/atmosf.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/atmosf.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Engineering/atmosf.rsi # Goob
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -780,59 +813,59 @@
       sprite: Clothing/Uniforms/Jumpskirt/skirtoflife.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtSeniorEngineer
   name: "спідниця старшого інженера"
   description: "Ознака майстерності та престижу в інженерному відділі."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/senior_engineer.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Engineering/senior_engineer.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/senior_engineer.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Engineering/senior_engineer.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtSeniorResearcher
   name: "спідниця-комбінезон старшого дослідника"
   description: "Знак майстерності та престижу в науковому відділі."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/senior_researcher.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/RND/senior_researcher.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/senior_researcher.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/RND/senior_researcher.rsi # Goob
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase] # Goob
   id: ClothingUniformJumpskirtSeniorPhysician
   name: "комбінезон старшого лікаря"
   description: "Ознака майстерності та престижу в медичному відділенні."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/senior_physician.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/senior_physician.rsi # Goob
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/senior_physician.rsi
+    sprite: _Goobstation/Clothing/Uniforms/Jumpskirt/Medical/senior_physician.rsi # Goob
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseSecurityContraband] # Goob
   id: ClothingUniformJumpskirtSeniorOfficer
   name: "спідниця старшого офіцера"
   description: "Ознака майстерності та престижу у відділі безпеки."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/senior_officer.rsi # Pirate bluesec
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/senior_officer.rsi # Pirate bluesec
 
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
+  parent: [ClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseSecurityContraband] # Goob
   id: ClothingUniformJumpskirtSecGrey
   name: "сіра спідниця-комбінезон служби безпеки"
   description: "Тактична реліквія минулих років, перш ніж НаноТрейзен вирішила, що дешевше фарбувати костюми в червоний, ніж відмивати кров."
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/security_grey.rsi # Pirate bluesec
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/security_grey.rsi # Pirate bluesec
 
 - type: entity
   parent: ClothingUniformSkirtBase

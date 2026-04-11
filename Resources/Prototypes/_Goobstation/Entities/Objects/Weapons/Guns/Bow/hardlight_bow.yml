@@ -6,10 +6,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "лук хардлайт"
+  name: "лук з твердого світла"
   parent: [BaseItem, BaseSyndicateContraband]
   id: BowHardlight
-  description: "Сучасний лук, який може випускати надлегкі стріли, використовуючи внутрішню енергію. Цей лук розроблений Синдикатом для безшумного знищення цілей."
+  description: "Цей складаний лук — розробка Donk Co. на основі DT-12 «Lawbringer» — може генерувати безліч типів стріл під потреби користувача."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Bow/hardlight_bow.rsi

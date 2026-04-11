@@ -1,0 +1,63 @@
+#Cargo sell
+- type: entity
+  id: CrateCombatSurgeryRed
+  parent: CrateMedicalInterdyneSecure
+  name: "Ящик із компактною сумкою та приладдям польового хірурга"
+  description: "Контейнер із сумкою для парамедиків і бріг-лікарів, або для тих, хто полюбляє надійність."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltCombatSurgeryFilledRed
+      
+- type: entity
+  id: CrateCombatSurgeryBlue
+  parent: CrateMedicalInterdyneSecure
+  name: "Ящик із компактною сумкою та приладдям польового хірурга"
+  description: "Контейнер із сумкою для парамедиків і бріг-лікарів, або для тих, хто полюбляє надійність."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltCombatSurgeryFilledBlue
+
+- type: entity
+  id: CrateCombatSurgeryRedKit
+  parent: CrateMedicalInterdyneSecure
+  name: "Ящик із компактними сумками з приладдям польового хірурга"
+  description: "Контейнер містить три сумки: для бріг-лікаря, парамедика і, щоб ніхто не образився, для головного лікаря."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltCombatSurgeryFilledRed
+        amount: 3
+        
+- type: entity
+  id: CrateCombatSurgeryBlueKit
+  parent: CrateMedicalInterdyneSecure
+  name: "Ящик із компактними сумками з приладдям польового хірурга"
+  description: "Контейнер містить три сумки: для бріг-лікаря, парамедика і, щоб ніхто не образився, для головного лікаря."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltCombatSurgeryFilledBlue
+        amount: 3
+
+#Просунуті хірургічні інструменти
+- type: entity
+  id: CrateCombatSurgeryAdvancedRed
+  parent: CrateMedicalInterdyneSecure
+  name: "Ящик із компактною сумкою та просунутим приладдям польового хірурга"
+  description: "Контейнер із сумкою для парамедиків і бріг-лікарів, або для тих, хто полюбляє надійність."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltCombatSurgeryAdvancedFilledRed
+      
+- type: entity
+  id: CrateCombatSurgeryAdvancedBlue
+  parent: CrateMedicalInterdyneSecure
+  name: "Ящик із компактною сумкою та просунутим приладдям польового хірурга"
+  description: "Контейнер із сумкою для парамедиків і бріг-лікарів, або для тих, хто полюбляє надійність."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltCombatSurgeryAdvancedFilledBlue

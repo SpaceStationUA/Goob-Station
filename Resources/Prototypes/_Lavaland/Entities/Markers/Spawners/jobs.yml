@@ -1,0 +1,11 @@
+- type: entity
+  id: SpawnPointShaftMiner
+  parent: SpawnPointJobBase
+  name: "шахтар"
+  components:
+  - type: SpawnPoint
+    job_id: ShaftMiner
+  - type: Sprite
+    layers:
+      - state: green
+      - state: salvagespecialist

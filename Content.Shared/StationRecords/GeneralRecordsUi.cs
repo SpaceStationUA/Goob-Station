@@ -48,21 +48,24 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
     public readonly Dictionary<uint, string>? RecordListing;
     public readonly StationRecordsFilter? Filter;
     public readonly bool CanDeleteEntries;
+    public readonly uint MaxStringLength; // Pirate: records photos
 
     public GeneralStationRecordConsoleState(uint? key,
         GeneralStationRecord? record,
         Dictionary<uint, string>? recordListing,
         StationRecordsFilter? newFilter,
-        bool canDeleteEntries)
+        bool canDeleteEntries,
+        uint maxStringLength) // Pirate: records photos
     {
         SelectedKey = key;
         Record = record;
         RecordListing = recordListing;
         Filter = newFilter;
         CanDeleteEntries = canDeleteEntries;
+        MaxStringLength = maxStringLength; // Pirate: records photos
     }
 
-    public GeneralStationRecordConsoleState() : this(null, null, null, null, false)
+    public GeneralStationRecordConsoleState() : this(null, null, null, null, false, 256) // Pirate: records photos
     {
     }
 
@@ -96,3 +99,48 @@ public sealed class DeleteStationRecord : BoundUserInterfaceMessage
 
     public readonly uint Id;
 }
+
+#region Pirate: records photos
+[Serializable, NetSerializable]
+public sealed class GeneralRecordCreateRecord : BoundUserInterfaceMessage
+{
+    public readonly string Name;
+
+    public GeneralRecordCreateRecord(string name)
+    {
+        Name = name;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class GeneralRecordEditIdentity : BoundUserInterfaceMessage
+{
+    public readonly string Species;
+    public readonly string Nationality;
+    public readonly string Employer;
+    public readonly int Age;
+    public readonly Robust.Shared.Enums.Gender Gender;
+
+    public GeneralRecordEditIdentity(string species, string nationality, string employer, int age, Robust.Shared.Enums.Gender gender)
+    {
+        Species = species;
+        Nationality = nationality;
+        Employer = employer;
+        Age = age;
+        Gender = gender;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class GeneralRecordEditForensics : BoundUserInterfaceMessage
+{
+    public readonly string Fingerprint;
+    public readonly string Dna;
+
+    public GeneralRecordEditForensics(string fingerprint, string dna)
+    {
+        Fingerprint = fingerprint;
+        Dna = dna;
+    }
+}
+#endregion

@@ -36,6 +36,7 @@
     - BoneDamage
     - VeinsDamage
     - NerveDamage
+    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     allowArmourDeduction:
     - Dismemberment
     - OrganDamage
@@ -48,6 +49,7 @@
       BoneDamage: 0.8
       VeinsDamage: 0
       NerveDamage: 0
+      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
     mangledMultipliers:
       BoneDamage: 1
   - type: PainInflicter
@@ -75,6 +77,7 @@
     - BoneDamage
     - VeinsDamage
     - NerveDamage
+    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     allowArmourDeduction:
     - Dismemberment
     - OrganDamage
@@ -87,6 +90,7 @@
       BoneDamage: 0.14
       VeinsDamage: -0.4 # goes through rather easy.
       NerveDamage: -0.4
+      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
     mangledMultipliers:
       BoneDamage: 0.1
   - type: PainInflicter
@@ -117,12 +121,14 @@
     - BoneDamage
     - VeinsDamage
     - NerveDamage
+    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     traumasChances:
       Dismemberment: -1.8 # Bullets go THROUGH people
       OrganDamage: 0.24
       BoneDamage: 0.24
       VeinsDamage: -0.4
       NerveDamage: -0.4
+      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
   - type: PainInflicter
     multiplier: 0.44
   - type: BleedInflicter
@@ -146,6 +152,7 @@
     - Dismemberment
     - VeinsDamage
     - NerveDamage
+    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     allowArmourDeduction:
     - Dismemberment # seems rather reasonable. Wear armour, guys
     - VeinsDamage
@@ -156,6 +163,7 @@
       BoneDamage: 0
       VeinsDamage: 0.27
       NerveDamage: 0.27
+      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
     mangledMultipliers:
       BoneDamage: 0.2
   - type: PainInflicter
@@ -180,6 +188,7 @@
     - BoneDamage
     - VeinsDamage
     - NerveDamage
+    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     allowArmourDeduction:
     - OrganDamage
     - BoneDamage
@@ -191,6 +200,7 @@
       BoneDamage: -0.21
       VeinsDamage: 0.34
       NerveDamage: 0.34
+      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
   - type: PainInflicter
     multiplier: 0.8
   - type: BleedRemover
@@ -214,6 +224,7 @@
 #    - BoneDamage
     - VeinsDamage
     - NerveDamage
+    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     allowArmourDeduction:
     - OrganDamage # No matter what ultrasuperduper cool armour you have, while getting fucking boiled alive - YOUR VEINS AND NERVES WILL HURT.
     - BoneDamage
@@ -223,6 +234,7 @@
 #      BoneDamage: -0.21
       VeinsDamage: 0.34
       NerveDamage: 0.34
+      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
     mangledMultipliers:
       BoneDamage: 1
   - type: PainInflicter
@@ -243,12 +255,14 @@
     allowedTraumas:
     - VeinsDamage
     - NerveDamage
+    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     traumasChances:
       Dismemberment: 0
       OrganDamage: 0
       BoneDamage: 0
       VeinsDamage: 0.5
       NerveDamage: 0.5
+      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
   - type: PainInflicter
     multiplier: 0.75 # it hurts
 

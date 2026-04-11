@@ -17,6 +17,12 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Content.Shared.Humanoid.Prototypes; // Goob: Ported from DeltaV - Species specific trait support.
 
+// Pirate start: port and modified DV traits system
+using Content.Shared._Pirate.Traits.Conditions;
+using Content.Shared._Pirate.Traits.Effects;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+// Pirate end: port and modified DV traits system
+
 namespace Content.Shared.Traits;
 
 /// <summary>
@@ -53,11 +59,31 @@ public sealed partial class TraitPrototype : IPrototype
     [DataField]
     public EntityWhitelist? Blacklist;
 
+    // Pirate start: port and modified DV traits system
+    /// <summary>
+    /// Pirate port: Modernized - List of conditions to meet for availability.
+    /// </summary>
+    [DataField("conditions")]
+    public List<BaseTraitCondition> Conditions { get; set; } = new();
+
+    /// <summary>
+    /// Pirate port: Modernized - Effects applied when the trait is granted.
+    /// </summary>
+    [DataField("effects")]
+    public List<BaseTraitEffect> Effects { get; set; } = new();
+
+    /// <summary>
+    /// Pirate port: Modernized - Other traits that are mutually exclusive with this one.
+    /// </summary>
+    [DataField("conflicts")]
+    public List<ProtoId<TraitPrototype>> Conflicts { get; set; } = new();
+
     /// <summary>
     /// The components that get added to the player, when they pick this trait.
     /// </summary>
-    [DataField]
-    public ComponentRegistry Components { get; private set; } = default!;
+    [DataField("components")]
+    public ComponentRegistry Components { get; set; } = new();
+    // Pirate end: port and modified DV traits system
 
     /// <summary>
     /// Gear that is given to the player, when they pick this trait.
@@ -77,29 +103,17 @@ public sealed partial class TraitPrototype : IPrototype
     [DataField]
     public ProtoId<TraitCategoryPrototype>? Category;
 
-    /// <summary>
-    /// Pirate: port - List of traits that ca't be taken together with this one.
-    /// </summary>
-    [DataField]
-    public HashSet<ProtoId<TraitPrototype>> MutuallyExclusiveTraits { get; private set; } = new();
-
-    /// <summary>
-    /// Pirate: port - List of species that can't have this trait.
-    /// </summary>
-    [DataField]
-    public HashSet<ProtoId<SpeciesPrototype>> SpeciesBlacklist { get; private set; } = new();
-
+    // Pirate start: port and modified DV traits system
     /// <summary>
     /// Goob: Ported from DeltaV - Hides traits from specific species
     /// </summary>
-    //[DataField]
-    //public HashSet<ProtoId<SpeciesPrototype>> ExcludedSpecies = new(); Pirate removal
+    [DataField]
+    public HashSet<ProtoId<SpeciesPrototype>> ExcludedSpecies = new();
 
-    /// <summary>
-    /// Goob: Only shows traits to specific species
-    /// </summary>
-    //[DataField]
-    //public HashSet<ProtoId<SpeciesPrototype>> IncludedSpecies = new(); Pirate removal
+    // Goob: Only shows traits to specific species
+    [DataField]
+    public HashSet<ProtoId<SpeciesPrototype>> IncludedSpecies = new();
+    // Pirate end: port and modified DV traits system
 
     // Einstein Engines - Language begin (remove this if trait system refactor)
     /// <summary>

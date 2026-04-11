@@ -1,359 +1,4 @@
 Entries:
-- author: BackeTako
-  changes:
-  - message: Нові утилізаційні двері.
-    type: Add
-  id: 8282
-  time: '2025-04-20T12:03:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36375
-- author: HyperB1
-  changes:
-  - message: Полиці відділів тепер можуть містити ширший асортимент предметів.
-    type: Tweak
-  id: 8283
-  time: '2025-04-20T12:19:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34292
-- author: ScarKy0
-  changes:
-  - message: Вантажний відділ отримуватиме трохи менше пошти, але зароблятиме з неї більше спесо. Загальний заробіток в середньому залишається таким самим.
-    type: Tweak
-  id: 8284
-  time: '2025-04-20T13:55:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36767
-- author: HyperB1
-  changes:
-  - message: Інженерний скафандр ERT тепер має належний протипожежний захист.
-    type: Fix
-  id: 8285
-  time: '2025-04-20T14:06:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34949
-- author: K-Dynamic
-  changes:
-  - message: Ящик з нелетальною метальною зброєю можна замовити у вантажному відділі (2500 спесо). Він містить 4 боласи, 4 світлошумові гранати, 4 гранати зі сльозогінним газом та 4 жалючі гранати.
-    type: Add
-  id: 8286
-  time: '2025-04-20T14:08:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35808
-- author: RedBookcase
-  changes:
-  - message: Оновлено піратську зброю та скафандри, щоб вони більше відповідали аналогічним предметам.
-    type: Tweak
-  id: 8287
-  time: '2025-04-20T20:55:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35986
-- author: Booblesnoot42
-  changes:
-  - message: Спрайти головних вівтарів каплиці були скориговані.
-    type: Tweak
-  id: 8289
-  time: '2025-04-20T21:09:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35685
-- author: UBlueberry
-  changes:
-  - message: Шапки-біні тепер можна знайти в шафах "ВінтерДроуб", знаєте.
-    type: Add
-  id: 8290
-  time: '2025-04-20T21:15:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32946
-- author: Lanedon
-  changes:
-  - message: Шапки Санти тепер можна скласти, щоб прибрати бороду.
-    type: Tweak
-  id: 8291
-  time: '2025-04-20T21:17:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36510
-- author: Princess Cheeseballs
-  changes:
-  - message: Предмети тепер ковзають на слизьких поверхнях.
-    type: Add
-  - message: Слизькість калюж була налаштована так, щоб бути більш інтуїтивною.
-    type: Tweak
-  id: 8292
-  time: '2025-04-20T21:27:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35845
-- author: uhbg
-  changes:
-  - message: Бармен тепер може робити Ег-ног, змішуючи в шейкері яйце, молоко та ром.
-    type: Add
-  id: 8293
-  time: '2025-04-20T21:27:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34065
-- author: notquitehadouken
-  changes:
-  - message: Завдання на вбивство тепер завжди вимагатимуть висадити вашу ціль у космос.
-    type: Tweak
-  id: 8294
-  time: '2025-04-20T21:34:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35825
-- author: Entvari
-  changes:
-  - message: Додано нову гарнітуру для Чарівника.
-    type: Add
-  - message: Чарівник тепер починає раунд з новою гарнітурою.
-    type: Tweak
-  id: 8295
-  time: '2025-04-20T21:38:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35732
-- author: aada
-  changes:
-  - message: Додано категорії фільтрів до принтера мікросхем.
-    type: Add
-  id: 8296
-  time: '2025-04-20T22:27:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35713
-- author: ScarKy0
-  changes:
-  - message: Появу пошти було перероблено. Поштовий телепортер тепер потрібно спорожняти вручну, щоб забрати всю пошту. (Це можна зробити, натиснувши на нього з затиснутим Alt або використавши дію).
-    type: Tweak
-  - message: Поштовий телепортер тепер має внутрішню ємність на 20 одиниць. Він не буде створювати пошту, доки його хтось не спорожнить.
-    type: Add
-  id: 8297
-  time: '2025-04-21T09:32:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36774
-- author: ScarKy0
-  changes:
-  - message: Стандартний розподіл прибутку вантажного відділу тепер становить 50% замість 75%. Сейфи-контейнери залишаються без змін.
-    type: Tweak
-  id: 8298
-  time: '2025-04-21T10:32:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36800
-- author: Phooooooooooooooooooooooooooooooosphate
-  changes:
-  - message: Додано медичний HUD до спорядження медичного персоналу.
-    type: Add
-  id: 8299
-  time: '2025-04-21T12:07:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32847
-- author: aada
-  changes:
-  - message: Електроплитки та кухонні грилі тепер можна закріплювати на столах.
-    type: Fix
-  - message: Електроплитки та кухонні грилі тепер стикаються зі стінами.
-    type: Fix
-  id: 8300
-  time: '2025-04-21T15:38:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34776
-- author: insoPL
-  changes:
-  - message: Виправлено можливість перетягувати деякі продукти харчування на злив та ХімМайстер.
-    type: Fix
-  id: 8301
-  time: '2025-04-21T15:50:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34683
-- author: Hrosts
-  changes:
-  - message: Додано регідратуючий куб для відра для швабри, який замінив велике та громіздке жовте відро в ящику з прибиральним інвентарем.
-    type: Add
-  id: 8302
-  time: '2025-04-21T17:16:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34586
-- author: K-Dynamic
-  changes:
-  - message: Збільшено співвідношення екіпажу до злодіїв з 15 до 20.
-    type: Tweak
-  id: 8303
-  time: '2025-04-21T17:24:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36531
-- author: centcomofficer24
-  changes:
-  - message: Додано значок гендерфлюїдності!
-    type: Add
-  id: 8304
-  time: '2025-04-21T17:46:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35854
-- author: ScarKy0
-  changes:
-  - message: ШІ станції тепер має ідентифікатор, що додається після його імені.
-    type: Tweak
-  id: 8305
-  time: '2025-04-21T17:54:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36801
-- author: lzk228
-  changes:
-  - message: Виправлено розкриття особистості у спливаючих повідомленнях про кремацію та насаджування на м'ясний гак.
-    type: Fix
-  id: 8306
-  time: '2025-04-21T20:15:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32003
-- author: ShadowCommander
-  changes:
-  - message: Додано індикатори на вогнетривких шлюзах для попереджень про тиск та температуру.
-    type: Add
-  id: 8307
-  time: '2025-04-21T22:39:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28339
-- author: lzk228
-  changes:
-  - message: Боти тепер можуть оглядати, використовувати масштабування та бачити свої сповіщення (здоров'я та витривалість).
-    type: Tweak
-  - message: Додано емоції боргів для ботів.
-    type: Tweak
-  id: 8308
-  time: '2025-04-21T22:49:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29949
-- author: Ghagliiarghii
-  changes:
-  - message: Мавпяча версія капітанської форми та хом'яча версія капітанських капелюхів оновлені, щоб відповідати гуманоїдним версіям.
-    type: Tweak
-  id: 8309
-  time: '2025-04-22T01:03:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36804
-- author: Doc-Michael
-  changes:
-  - message: Змінено значення захисту скафандрів служби безпеки.
-    type: Tweak
-  - message: Зроблено плащі Наглядача/ГСБ трохи більш захисними, щоб краще відповідати їхній посаді.
-    type: Tweak
-  id: 8310
-  time: '2025-04-22T03:22:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30212
-- author: K-Dynamic
-  changes:
-  - message: Змінено таймери гранат з 3.5 до 3 секунд, включаючи касетні гранати та гранати з металевою піною.
-    type: Tweak
-  - message: Гранати з металевою піною були перероблені - тепер вони розпилюють піну ромбом 5x5, яка твердне протягом двох секунд.
-    type: Tweak
-  - message: Зменшено міцність застиглої металевої піни (можна зламати за 6 ударів ломом).
-    type: Tweak
-  - message: Змінено таймер хитрої бомби Синдикату з 3.5 до 5 секунд, щоб він збігався з таймером міні-бомб.
-    type: Tweak
-  id: 8311
-  time: '2025-04-22T05:51:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34579
-- author: muburu
-  changes:
-  - message: Дракони тепер можуть виламувати двері, включаючи вогнетривкі шлюзи.
-    type: Tweak
-  id: 8312
-  time: '2025-04-22T06:33:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36811
-- author: sowelipililimute
-  changes:
-  - message: Комп'ютер розподілу фінансування тепер може регулювати відсоток, який Вантажний відділ отримує від продажу сейфів-контейнерів.
-    type: Add
-  - message: Комп'ютер розподілу фінансування не показує Вантажний відділ окремо від його 75% частки.
-    type: Tweak
-  id: 8313
-  time: '2025-04-22T12:34:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36790
-- author: yuitop
-  changes:
-  - message: Рукавички без пальців більше не перешкоджають зняттю відбитків пальців.
-    type: Tweak
-  id: 8314
-  time: '2025-04-22T18:15:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31864
-- author: GoldenCan
-  changes:
-  - message: Голови персоналу тепер можуть виготовляти загальний одяг у стилі командування за допомогою свого принтера уніформи.
-    type: Add
-  id: 8315
-  time: '2025-04-22T18:35:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32103
-- author: Ilya246
-  changes:
-  - message: Численні замовлення у вантажному відділі стали дешевшими.
-    type: Tweak
-  id: 8316
-  time: '2025-04-22T18:38:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32375
-- author: Southbridge
-  changes:
-  - message: Сонячні панелі тепер можуть бути випадково пошкоджені або недобудовані на початку раунду.
-    type: Add
-  id: 8317
-  time: '2025-04-22T19:46:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36825
-- author: Kickguy223
-  changes:
-  - message: Знижено ціну електроніки для вогнетривких шлюзів до половини вартості вихідних матеріалів.
-    type: Tweak
-  id: 8318
-  time: '2025-04-22T23:53:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33469
-- author: murolem
-  changes:
-  - message: Тепер враховується орієнтація будівництва для огорож, діагональних решіток та діагональної стіни шатла.
-    type: Fix
-  id: 8319
-  time: '2025-04-23T01:58:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36488
-- author: kosticia
-  changes:
-  - message: Додано аналог донк-кишень для метеликів - мот-кишені.
-    type: Add
-  id: 8320
-  time: '2025-04-23T05:36:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34517
-- author: AgentSmithRadio
-  changes:
-  - message: Нові ящики з їжею тепер доступні для покупки на автоматичній торговій станції!
-    type: Add
-  - message: Ви більше не можете використовувати фісташки "Sweetie's" для виконання загального замовлення на фрукти від вантажного відділу.
-    type: Remove
-  id: 8321
-  time: '2025-04-23T05:37:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33286
-- author: SaphireLattice
-  changes:
-  - message: Сталеві листи більше не мають неінтуїтивно марнотратного розміщення обшивки, яке можна зробити за допомогою сталевих плиток.
-    type: Remove
-  id: 8322
-  time: '2025-04-23T11:08:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33443
-- author: ArchRBX
-  changes:
-  - message: оШІ тепер можуть встановлювати різноманітне корисне програмне забезпечення через свій новий Каталог Програм.
-    type: Add
-  - message: оШІ більше не починають з Картою Станції або MIDI-програвачем, і повинні купувати їх через магазин.
-    type: Tweak
-  id: 8323
-  time: '2025-04-23T23:55:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36857
-- author: NoElkaTheGod
-  changes:
-  - message: Іграшковий меч тепер дійсно виглядає майже як справжній, як і обіцяно в описі.
-    type: Tweak
-  id: 8324
-  time: '2025-04-24T01:21:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34199
-- author: Pronana
-  changes:
-  - message: Метелики тепер можуть їсти таблетки.
-    type: Tweak
-  id: 8325
-  time: '2025-04-24T02:28:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35609
-- author: Coolsurf6
-  changes:
-  - message: Оновлено більше предметів контрабанди для Синдикату та Служби Безпеки.
-    type: Tweak
-  id: 8326
-  time: '2025-04-24T02:57:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35102
-- author: Beck Thompson
-  changes:
-  - message: Тепер ви можете ховати предмети всередині торта за допомогою ножа! Поїдання торта з предметом всередині завдасть незначної шкоди.
-    type: Add
-  id: 8327
-  time: '2025-04-24T03:00:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31015
-- author: RedBookcase
-  changes:
-  - message: Додано Покращену циркулярну пилу як специфічний предмет для медичного лікаря в аплінку.
-    type: Add
-  - message: Видалено хірургічну сумку Синдикату з аплінку.
-    type: Remove
-  id: 8328
-  time: '2025-04-24T03:01:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35915
-- author: AgentSmithRadio, MadeOfHeartAndStone
-  changes:
-  - message: Додано сутність та рецепт сендвіча з плавленим сиром та ватою.
-    type: Add
-  id: 8329
-  time: '2025-04-24T03:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36135
 - author: SG6732
   changes:
   - message: Додано м'ясні котлети. Беріть вугілля і почнемо смажити.
@@ -3724,3 +3369,382 @@ Entries:
   id: 8794
   time: '2025-07-19T22:10:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30645
+- author: Princess-Cheeseballs
+  changes:
+  - message: Додано повзання!
+    type: Add
+  id: 8795
+  time: '2025-07-19T23:54:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36881
+- author: Princess-Cheeseballs
+  changes:
+  - message: Турелі та НПС тепер можуть стріляти по повалених цілях.
+    type: Tweak
+  id: 8796
+  time: '2025-07-20T21:23:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39085
+- author: sowelipililimute
+  changes:
+  - message: Смартфриджі тепер реалізовано. У них можна зберігати великі обсяги
+      хімікатів і рослин для загального доступу.
+    type: Add
+  id: 8797
+  time: '2025-07-21T03:21:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38648
+- author: ArtisticRoomba
+  changes:
+  - message: Осколкові гранати «Чайна-лейк» тепер розкидають уламки в усі боки
+      при ударі. Їхню вибухову шкоду зменшено.
+    type: Tweak
+  - message: Фугасні гранати «Чайна-лейк» більше не спричиняють розгерметизацію.
+    type: Tweak
+  id: 8798
+  time: '2025-07-22T15:05:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39106
+- author: perryprog
+  changes:
+  - message: «Войд-аплодисменти» знову мають працювати як очікується.
+    type: Fix
+  id: 8799
+  time: '2025-07-22T19:34:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38731
+- author: treytipton
+  changes:
+  - message: Оголошення про ліквідацію НюкОпс зроблено менш багатослівним.
+    type: Tweak
+  id: 8800
+  time: '2025-07-23T02:58:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39158
+- author: lzk228
+  changes:
+  - message: Результати команди customvote тепер показують заголовок, який було
+      задано команді.
+    type: Tweak
+  id: 8801
+  time: '2025-07-23T14:15:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39137
+- author: FairlySadPanda
+  changes:
+  - message: Майже всі інструменти оновлено на новий саундфонт (GeneralUser-GS),
+      що уніфікує звучання на всіх ОС і значно покращує звук деяких інструментів.
+    type: Add
+  id: 8802
+  time: '2025-07-23T15:51:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39142
+- author: slarticodefast
+  changes:
+  - message: Увімкнено команди "showrot", "showvel" і "showangvel" для дебаг-дозволів.
+    type: Tweak
+  - message: Виправлено дозволи для команди "showplayervelocity".
+    type: Tweak
+  id: 8803
+  time: '2025-07-23T18:06:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39167
+- author: Lokachop
+  changes:
+  - message: Інженерський хардсьют і хардсьют головного інженера тепер коректно
+      світяться в темряві.
+    type: Fix
+  id: 8804
+  time: '2025-07-24T03:04:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39153
+- author: K-Dynamic
+  changes:
+  - message: Сповільнення від холоду тепер менш відчутні.
+    type: Tweak
+  id: 8805
+  time: '2025-07-24T09:44:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36316
+- author: B-Kirill
+  changes:
+  - message: Око ШІ тепер має підпис із назвою самого ШІ.
+    type: Add
+  id: 8806
+  time: '2025-07-24T11:24:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39177
+- author: SlamBamActionman
+  changes:
+  - message: Масштабування шкоди вибуху калій-вода відкориговано, щоб вибух був
+      менш потужним.
+    type: Tweak
+  id: 8807
+  time: '2025-07-25T16:04:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37924
+- author: SlamBamActionman
+  changes:
+  - message: Хімічні реакції піни та диму тепер спрацьовують після звичайних реакцій
+      змішування.
+    type: Tweak
+  - message: Реакції піни, диму й вибуху більше не передають енергії реагентів
+      контейнеру.
+    type: Tweak
+  id: 8808
+  time: '2025-07-25T16:33:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37915
+- author: Quantum-cross
+  changes:
+  - message: Виправлено некоректне центрування стрілки пінпоінтера.
+    type: Fix
+  id: 8809
+  time: '2025-07-25T19:46:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38657
+- author: PJB3005
+  changes:
+  - message: Більшість звуків плюшевих іграшок зроблено тихішими, а самі іграшки
+      використовуються повільніше.
+    type: Tweak
+  id: 8811
+  time: '2025-07-28T07:11:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39250
+- author: EmoGarbage404
+  changes:
+  - message: Виправлено неможливість складати деякий одяг, коли його вдягнуто.
+    type: Fix
+  id: 8812
+  time: '2025-07-28T10:19:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39257
+- author: lzk228
+  changes:
+  - message: Джанібелт тепер може містити золотий вантуз.
+    type: Fix
+  id: 8813
+  time: '2025-07-28T12:59:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39213
+- author: SuperGDPWYL
+  changes:
+  - message: Наглядач тепер починає з мережевим конфігуратором у своїй шафці.
+    type: Add
+  id: 8814
+  time: '2025-07-28T16:09:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39254
+- author: TrixxedHeart
+  changes:
+  - message: Виправлено кілька дивних проблем зі спрайтами у Вокс, зокрема перекриття
+      обличчя комбінезонами та багатьма предметами на шиї, а також проблему
+      шарів, коли їхній балон відображався поверх волосся.
+    type: Fix
+  id: 8815
+  time: '2025-07-28T21:28:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39219
+- author: K-Dynamic
+  changes:
+  - message: Іконки посади та айді квартирмейстера тепер базуються на іконках вантажних
+      техніків.
+    type: Tweak
+  id: 8816
+  time: '2025-07-29T07:34:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39259
+- author: Alkheemist
+  changes:
+  - message: Захищені сітки тепер знову можна ремонтувати по корпусу та плитках
+      (Евак, АТС тощо).
+    type: Fix
+  - message: Захищені сітки більше не можна розширювати за межі їхнього початкового
+      розміру.
+    type: Fix
+  id: 8817
+  time: '2025-07-29T12:01:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39271
+- author: Admiral-Obvious-001
+  changes:
+  - message: Деякі просунуті хімікати тепер діють повільніше, але з підвищеними
+      порогами передозування і зменшеною шкодою від передозування. Лікування
+      за одиницю лишається майже тим самим.
+    type: Tweak
+  - message: Бікарадин більше не утворює разоріум при змішуванні з просунутими
+      брут-хімікатами. Просунуті брут-хімікати все ще змішуються між собою
+      й утворюють разоріум.
+    type: Tweak
+  id: 8818
+  time: '2025-07-29T18:52:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38811
+- author: aada
+  changes:
+  - message: Ліполіцид тепер продовжує отруювати на 0 голоду.
+    type: Fix
+  - message: Трикордразин тепер лікує і рівно на 50 шкоди, а не лише нижче 50.
+      Аналогічні пороги на інших реагентах також підкориговано.
+    type: Tweak
+  id: 8819
+  time: '2025-07-30T06:44:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36289
+- author: Disp-Dev
+  changes:
+  - message: Додано новий рецепт, бавовняні тістечка, їстівні для молей.
+    type: Add
+  id: 8820
+  time: '2025-07-30T22:51:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39222
+- author: spanky-spanky
+  changes:
+  - message: Чарівник тепер спавниться в лігві, а не в шатлі.
+    type: Tweak
+  id: 8821
+  time: '2025-07-31T04:08:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37701
+- author: perryprog
+  changes:
+  - message: Виправлено випадки, коли зони настільних ігор інколи накладалися
+      на зони інших настільних ігор.
+    type: Fix
+  id: 8822
+  time: '2025-08-01T21:48:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39327
+- author: Krosus
+  changes:
+  - message: Виправлено краш під час завантаження збережених профілів персонажів.
+    type: Fix
+  id: 8823
+  time: '2025-08-02T15:14:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39333
+- author: FairlySadPanda
+  changes:
+  - message: Додано новий торт «Ягідна насолода», який готується з основи для
+      торта, ягід і молока.
+    type: Add
+  id: 8824
+  time: '2025-08-02T18:35:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38881
+- author: DrSmugleaf
+  changes:
+  - message: Виправлено затримку дієслів повороту та стрибання інтерфейсу правої
+      кнопки
+      миші, коли вони з'являлися з малою затримкою.
+    type: Fix
+  id: 8825
+  time: '2025-08-03T00:34:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38165
+- author: alexalexmax
+  changes:
+  - message: Опис синдикатських метальних ножів в аплінку оновлено, тепер зазначено,
+      що вони ігнорують броню.
+    type: Tweak
+  id: 8826
+  time: '2025-08-04T19:19:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39374
+- author: TrixxedHeart
+  changes:
+  - message: Додано тростини у вкладку екіпірування дрібничок.
+    type: Add
+  - message: Додано зміщені тростини для рольового антуражу. Їх можна виготовити
+      в медичному верстаті.
+    type: Add
+  id: 8827
+  time: '2025-08-04T23:39:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39272
+- author: qwerltaz
+  changes:
+  - message: У контролері скрубера у вікні повітряної сигналізації тепер є кнопки
+      вибору та скасування вибору всіх газів.
+    type: Add
+  id: 8828
+  time: '2025-08-05T00:34:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39296
+- author: perryprog
+  changes:
+  - message: Гравці більше не можуть циклічно перемикати таймер через меню дієслів
+      на кіборзі.
+    type: Fix
+  id: 8829
+  time: '2025-08-05T03:26:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39388
+- author: Luxeator
+  changes:
+  - message: Виправлено помилку при вибуху пристебнутих мобів (та інших майже
+      миттєвих змінах).
+    type: Fix
+  id: 8830
+  time: '2025-08-05T23:15:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39410
+- author: ScarKy0, beck-thompson
+  changes:
+  - message: Різні представники псових тепер іноді незграбно проливають те, що п'ють.
+    type: Add
+  id: 8831
+  time: '2025-08-06T13:00:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38852
+- author: aada
+  changes:
+  - message: Тепер можна оглянути паливні баки й побачити рівень їхнього заповнення.
+    type: Add
+  id: 8832
+  time: '2025-08-06T16:11:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39362
+- author: Tao7891
+  changes:
+  - message: Додано крафт картонних конструкцій та спорядження.
+    type: Add
+  id: 8833
+  time: '2025-08-06T16:58:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37363
+- author: slarticodefast
+  changes:
+  - message: Виправлено мерехтіння інвентарних спрайтів при наведенні на слот
+      із предметом.
+    type: Fix
+  id: 8834
+  time: '2025-08-06T20:14:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39379
+- author: Thinbug0
+  changes:
+  - message: Додано нову мутацію цибулі Блуніонс, цибулини, що плавають як повітряні
+      кульки.
+    type: Add
+  id: 8835
+  time: '2025-08-07T01:51:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33375
+- author: Kittygyat
+  changes:
+  - message: Бейсбольні бити змінено з 2x2 на 1x4.
+    type: Tweak
+  - message: Додано нові іконки бейсбольних бит в інвентарі.
+    type: Add
+  id: 8836
+  time: '2025-08-07T03:03:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38392
+- author: lolman360
+  changes:
+  - message: Виправлено випадки, коли деякі предмети (наприклад, кайла) інколи
+      не вставлялися в контейнери, хоча місця було достатньо.
+    type: Fix
+  id: 8837
+  time: '2025-08-07T16:01:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38896
+- author: chromiumboy
+  changes:
+  - message: Станційний ШІ тепер отримує чат-сповіщення, коли його сторожові турелі
+      починають стріляти по ворожих цілях.
+    type: Add
+  id: 8838
+  time: '2025-08-08T18:56:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35277
+- author: K-Dynamic
+  changes:
+  - message: Капітан і голова персоналу тепер починають відповідно з адміністративними
+      окулярами та HUD-інтерфейсом.
+    type: Add
+  id: 8839
+  time: '2025-08-08T19:00:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35531
+- author: perryprog
+  changes:
+  - message: Радіальне меню емоцій тепер показує правильні іконки для підкатегорій.
+    type: Fix
+  id: 8840
+  time: '2025-08-08T19:27:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39481
+- author: Flareguy
+  changes:
+  - message: Оновлено дисплейсмент-мапи молей, виправлено відсутні пікселі та
+      інші різні проблеми.
+    type: Fix
+  id: 8841
+  time: '2025-08-09T21:52:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39174
+- author: Princess-Cheeseballs
+  changes:
+  - message: Моби на кшталт боргів, драконів тощо більше не можуть повзати.
+    type: Tweak
+  id: 8842
+  time: '2025-08-10T17:49:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39084

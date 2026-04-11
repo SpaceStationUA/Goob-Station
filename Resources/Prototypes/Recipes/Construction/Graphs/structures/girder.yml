@@ -282,6 +282,42 @@
               amount: 2
               doAfter: 1
 
+    # Pirate Onyx start
+        - to: plastitaniumWallOnyx
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Welding
+              doAfter: 4
+            - material: MetalRod
+              amount: 4
+              doAfter: 1
+            - material: Plastitanium
+              amount: 3
+              doAfter: 1
+            - tool: Welding
+              doAfter: 6
+
+        - to: plastitaniumWindowOnyx
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - material: Plastitanium
+              amount: 2
+              doAfter: 1
+            - material: ReinforcedGlass
+              amount: 2
+              doAfter: 1
+            - tool: Welding
+              doAfter: 4
+      # Pirate Onyx end
+
         - to: shuttleWall
           completed:
             - !type:SnapToGrid
@@ -375,6 +411,104 @@
                   data: 0
             - tool: Cutting
               doAfter: 1
+
+    # Pirate Onyx Wall start
+    - node: plastitaniumWallOnyx
+      entity: WallPlastitaniumOnyx
+      edges:
+        - to: reinforcedGirder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastitanium1
+              amount: 3
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 4
+          steps:
+            - tool: Cutting
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.PlastitaniumWallOnyxVisuals.DeconstructionStage"
+                  data: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Welding
+              doAfter: 10
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.PlastitaniumWallOnyxVisuals.DeconstructionStage"
+                  data: 4
+            - tool: Prying
+              doAfter: 1
+            - tool: Welding
+              doAfter: 10
+            - tool: Prying
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.PlastitaniumWallOnyxVisuals.DeconstructionStage"
+                  data: 3
+            - tool: Welding
+              doAfter: 10
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.PlastitaniumWallOnyxVisuals.DeconstructionStage"
+                  data: 2
+            - tool: Prying
+              doAfter: 1
+            - tool: Welding
+              doAfter: 10
+            - tool: Prying
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.PlastitaniumWallOnyxVisuals.DeconstructionStage"
+                  data: 1
+            - tool: Screwing
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.PlastitaniumWallOnyxVisuals.DeconstructionStage"
+                  data: 0
+            - tool: Cutting
+              doAfter: 1
+
+    - node: plastitaniumWindowOnyx
+      entity: PlastitaniumWindowOnyx
+      edges:
+        - to: reinforcedGirder
+          completed:
+            - !type:GivePrototype
+              prototype: SheetRGlass1
+              amount: 2
+            - !type:GivePrototype
+              prototype: SheetPlastitanium1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 10
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Welding
+              doAfter: 10
+            - tool: Prying
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Welding
+              doAfter: 10
+            - tool: Prying
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 1
+    # Pirate Onyx Wall end
 
     - node: shuttleWall
       entity: WallShuttle

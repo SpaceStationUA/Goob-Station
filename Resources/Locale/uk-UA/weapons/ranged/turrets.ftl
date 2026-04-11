@@ -12,3 +12,5 @@ station-ai-turret-is-attacking-warning = {CAPITALIZE($source)} вступив у
 deployable-turret-component-cannot-access-wires = Ви не можете дістатися до панелі обслуговування, поки турель активна 
 
 # Сповіщення про турель для ШІ станції
+station-ai-turret-component-name = {$name} ({$address})
+station-ai-turret-component-is-attacking-warning = {CAPITALIZE($source)} вступив у бій з ворожою ціллю.

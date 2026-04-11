@@ -205,3 +205,13 @@
   - type: Sprite
     sprite: _Goobstation/Structures/posters.rsi
     state: goob_poster2_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandGoobRedFOSS
+  name: "Постер «Червоний Тукс»"
+  description: "Постер, що називає вільне програмне забезпечення з відкритим кодом комунізмом; ти не впевнений, автор цього постера за це чи проти."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Structures/posters.rsi
+    state: goob_poster3_contraband

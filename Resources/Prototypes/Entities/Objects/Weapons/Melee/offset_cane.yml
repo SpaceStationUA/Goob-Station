@@ -1,0 +1,85 @@
+- type: entity
+  parent: BaseItem
+  id: OffsetCane
+  name: "стандартна офсетна тростина"
+  description: "Стандартна офсетна тростина, незамінна для пересування, коли ваші ноги не справляються. Може дати вам мудрість літніх, а може й ні."
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/offset_canes/standard.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: Objects/Weapons/Melee/offset_canes/standard.rsi
+#  - type: RandomSprite # Ideally I'd rather these be their own selectable item instead of randomly picked.
+#    available:
+#    - color: "#91949C"  # standard gray
+#    - color: "#000000"  # black
+#    - color: "#406BDE"  # blue
+#    - color: "#00FFFF"  # cyan
+#    - color: "#00FF00"  # green
+#    - color: "#FF69B4"  # pink
+#    - color: "#800080"  # purple
+#    - color: "#FF0000"  # red
+#    - color: "#FFFF00"  # yellow
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 5
+  - type: StaminaDamageOnHit
+    damage: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 3
+  - type: UseDelay
+    delay: 1
+
+- type: entity
+  parent: OffsetCane
+  id: OffsetCaneClown
+  name: "райдужна офсетна тростина"
+  description: "Райдужна офсетна тростина, ідеальна для клоунів і тих, хто любить яскраві барви у своєму житті."
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/offset_canes/clown.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Melee/offset_canes/clown.rsi
+
+- type: entity
+  parent: OffsetCane
+  id: OffsetCaneMime
+  name: "смугаста офсетна тростина"
+  description: "Чорно-біла смугаста тростина, ідеальна для безмовних виступів."
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/offset_canes/mime.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Melee/offset_canes/mime.rsi
+
+- type: entity
+  parent: OffsetCane
+  id: OffsetCaneNT
+  name: "офсетна тростина Нанотрейзен"
+  description: "Офсетна тростина стандартного зразка Нанотрейзен з логотипом НТ, улюблений вибір тих, хто надає перевагу більш корпоративному вигляду."
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/offset_canes/nanotrasen.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Melee/offset_canes/nanotrasen.rsi
+
+- type: entity
+  parent: OffsetCane
+  id: OffsetCaneWood
+  name: "дерев’яна офсетна тростина"
+  description: "Дерев’яна офсетна тростина, класичний вибір для тих, хто цінує природні матеріали й надійний хват."
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/offset_canes/wood.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Melee/offset_canes/wood.rsi

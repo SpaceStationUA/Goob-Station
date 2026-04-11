@@ -40,6 +40,7 @@
   name: "вогняний магічний болт"
   description: "Наносить шкоду та підпалює"
   components:
+  - type: MagicDamageSource
   - type: IgniteOnCollide
     fireStacks: 4
 
@@ -49,6 +50,7 @@
   name: "магічний болт"
   description: "Наносити шкоду та ставати"
   components:
+  - type: MagicDamageSource
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
@@ -59,6 +61,7 @@
   name: "магічний болт"
   description: "Завдає шкоди та отруює"
   components:
+  - type: MagicDamageSource
   - type: Projectile
     damage:
       types:

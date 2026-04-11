@@ -51,16 +51,17 @@ public sealed partial class VampireMutationMenu : DefaultWindow
             //if (!_prototypeManager.TryIndex("NormalBlobTile", out EntityPrototype? proto))
             //    continue;
 
-            string texturePath = Mutation switch
+            const string rsiPath = "/Textures/_Pirate/Interface/Actions/actions_vampire.rsi";
+            var textureState = Mutation switch
             {
-                VampireMutationsType.None => "/Textures/_Pirate/Interface/Actions/actions_vampire.rsi/deathsembrace.png",
-                VampireMutationsType.Hemomancer => "/Textures/_Pirate/Interface/Actions/actions_vampire.rsi/hemomancer.png",
-                VampireMutationsType.Umbrae => "/Textures/_Pirate/Interface/Actions/actions_vampire.rsi/umbrae.png",
-                VampireMutationsType.Gargantua => "/Textures/_Pirate/Interface/Actions/actions_vampire.rsi/gargantua.png",
-                VampireMutationsType.Dantalion => "/Textures/_Pirate/Interface/Actions/actions_vampire.rsi/dantalion.png",
-                VampireMutationsType.Bestia => "/Textures/_Pirate/Interface/Actions/actions_vampire.rsi/bestia.png",
-                VampireMutationsType.Sire => "/Textures/_Pirate/Interface/Actions/actions_vampire.rsi/sire.png",
-                _ => "/Textures/_Pirate/Interface/Actions/actions_vampire.rsi/deathsembrace.png"
+                VampireMutationsType.None => "deathsembrace",
+                VampireMutationsType.Hemomancer => "hemomancer",
+                VampireMutationsType.Umbrae => "umbrae",
+                VampireMutationsType.Gargantua => "gargantua",
+                VampireMutationsType.Dantalion => "dantalion",
+                VampireMutationsType.Bestia => "bestia",
+                VampireMutationsType.Sire => "sire",
+                _ => "deathsembrace"
             };
 
             var button = new Button
@@ -77,7 +78,14 @@ public sealed partial class VampireMutationMenu : DefaultWindow
             button.OnPressed += _ => OnIdSelected?.Invoke(Mutation);
             Grid.AddChild(button);
 
-            var texture = _resourceCache.GetTexture(texturePath);
+            var rsi = _resourceCache.GetResource<RSIResource>(rsiPath).RSI;
+            if (!rsi.TryGetState(textureState, out var rsiState)
+                && !rsi.TryGetState("deathsembrace", out rsiState))
+            {
+                continue;
+            }
+
+            var texture = rsiState.Frame0;
             button.AddChild(new TextureRect
             {
                 Stretch = TextureRect.StretchMode.KeepAspectCentered,

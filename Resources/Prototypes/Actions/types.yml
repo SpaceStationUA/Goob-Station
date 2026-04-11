@@ -174,7 +174,7 @@
       state: gib
 
 - type: entity
-  parent: BaseAction
+  parent: BaseImplantAction
   id: ActionActivateFreedomImplant
   name: "Вирвися на волю"
   description: "Активація імплантату свободи звільнить вас від будь-яких обмежень для рук"
@@ -187,8 +187,6 @@
     icon:
       sprite: Actions/Implants/implants.rsi
       state: freedom
-  - type: InstantAction
-    event: !type:UseFreedomImplantEvent
 
 - type: entity
   parent: BaseAction
@@ -221,7 +219,7 @@
       state: icon
 
 - type: entity
-  parent: BaseAction
+  parent: BaseImplantAction
   id: ActionActivateScramImplant
   name: "КРИК!"
   description: "Випадково телепортує вас на велику відстань."
@@ -236,11 +234,9 @@
     icon:
       sprite: Structures/Specific/anomaly.rsi
       state: anom4
-  - type: InstantAction
-    event: !type:UseScramImplantEvent
 
 - type: entity
-  parent: BaseAction
+  parent: BaseImplantAction
   id: ActionActivateDnaScramblerImplant
   name: "Скремблювання ДНК"
   description: "Випадковим чином змінює ваше ім'я та зовнішність."
@@ -255,8 +251,6 @@
     icon:
       sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
       state: icon
-  - type: InstantAction
-    event: !type:UseDnaScramblerImplantEvent
 
 - type: entity
   parent: BaseAction

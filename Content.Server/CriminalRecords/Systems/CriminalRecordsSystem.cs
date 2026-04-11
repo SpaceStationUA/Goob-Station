@@ -47,9 +47,33 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
         SubscribeLocalEvent<WantedListCartridgeComponent, CriminalHistoryRemovedEvent>(OnHistoryRemoved);
     }
 
+    #region Pirate: records photos
+    public void NotifyCriminalRecordDeleted(string name)
+    {
+        if (!string.IsNullOrWhiteSpace(name))
+            UpdateCriminalIdentity(name, SecurityStatus.None);
+
+        var args = new CriminalRecordChangedEvent(new CriminalRecord());
+        var query = EntityQueryEnumerator<WantedListCartridgeComponent>();
+        while (query.MoveNext(out var readerUid, out _))
+        {
+            RaiseLocalEvent(readerUid, ref args);
+        }
+    }
+    #endregion
+
     private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
     {
-        _records.AddRecordEntry(ev.Key, new CriminalRecord());
+        #region Pirate: records photos
+        var record = new CriminalRecord
+        {
+            GeneralRecordSnapshot = ev.Record with { }
+        };
+        if (!string.IsNullOrWhiteSpace(ev.Record.Species))
+            record.PortraitProfileSnapshot = new(ev.Profile);
+
+        _records.AddRecordEntry(ev.Key, record);
+        #endregion
         _records.Synchronize(ev.Key);
     }
 
@@ -181,10 +205,14 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
             {
                 var (i, r) = cr;
                 var key = new StationRecordKey(i, station);
-                // Hopefully it will work smoothly.....
-                _records.TryGetRecord(key, out GeneralStationRecord? generalRecord);
-                return new WantedRecord(generalRecord!, r.Status, r.Reason, r.InitiatorName, r.History);
-            });
+                _records.TryGetRecord(key, out GeneralStationRecord? generalRecord); // Pirate: record photos
+                var targetInfo = generalRecord ?? r.GeneralRecordSnapshot; // Pirate: record photos
+                return targetInfo == null 
+                    ? (WantedRecord?) null
+                    : new WantedRecord(targetInfo, r.Status, r.Reason, r.InitiatorName, r.History);
+            })
+            .Where(record => record != null) // Pirate: record photos
+            .Select(record => record!.Value); // Pirate: record photos
         var state = new WantedListUiState(records.ToList());
 
         _cartridge.UpdateCartridgeUiState(loaderUid, state);

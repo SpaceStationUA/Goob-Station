@@ -100,7 +100,7 @@
   description: "Стерильний блакитний плащ із зеленим хрестом, що випромінює почуття обов'язку і готовність допомогти іншим."
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/cmo.rsi
+    sprite: _Goobstation/Clothing/Neck/Cloaks/cmo.rsi # Goob Station - cloak resprite
   - type: StealTarget
     stealGroup: HeadCloak
 
@@ -122,7 +122,7 @@
   description: "Міцний коричневий плащ зі світловідбиваючою смугою, хоч і не такий вишуканий, як інші, він демонструє ваші управлінські навички."
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/qm.rsi
+    sprite: _Goobstation/Clothing/Neck/Cloaks/qm.rsi # Goob Station - cloak resprite
   - type: StealTarget
     stealGroup: HeadCloak
 

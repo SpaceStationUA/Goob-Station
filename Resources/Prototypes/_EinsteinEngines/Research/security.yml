@@ -10,8 +10,8 @@
   recipeUnlocks:
   - ClothingHeadHelmetInsulated
   - ClothingHeadCage
-  - MagazineBoxPistolMindbreaker
-  - MagazinePistolMindbreaker
+  - MagazineBoxPistolCryptobiolin
+  - MagazinePistolCryptobiolin
   - ShellSoulbreaker
   - BoxShellSoulbreaker
   position: -2,-3

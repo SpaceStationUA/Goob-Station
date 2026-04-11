@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseObjective
+  id: BaseContractorObjective
+  abstract: true
+  components:
+  - type: Objective
+    difficulty: 1
+    issuer: objective-issuer-syndicate
+    icon:
+      sprite: _Goobstation/Objects/Weapons/Melee/contractor_baton.rsi
+      state: icon
+  - type: RoleplayObjective
+
+- type: entity
+  parent: BaseContractorObjective
+  id: ContractorRansomObjective
+  name: "Вимагайте викуп за члена екіпажу."
+  description: "У вас закінчуються гроші... час підзаробити легко."
+  components:
+  - type: Objective
+    icon:
+      sprite: _Goobstation/Objects/Weapons/Melee/contractor_baton.rsi
+      state: icon

@@ -1,0 +1,5 @@
+- type: entity
+  save: false
+  name: "Уріст МакГідра"
+  parent: BaseMobHydrakin
+  id: MobHydrakin

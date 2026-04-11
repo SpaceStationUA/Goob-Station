@@ -14,7 +14,7 @@
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: [BaseItem, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponShotgunAntelope
-  description: "Дробовик з магазинним живленням, призначений для нейтралізації загроз та утримання злочинців на відстані за допомогою нищівної сили."
+  description: "Рушниця, що живиться з магазину, створена для нейтралізації загроз і утримання злочинців на відстані завдяки приголомшливій силі. Живиться з барабанних магазинів 12 Gauge."
   suffix: DO NOT MAP # This should be made obtainable at some point.
   components:
   - type: Sprite
@@ -83,10 +83,10 @@
     price: 500
 
 - type: entity
-  name: "'Боєвич' бойовий дробовик"
+  name: "Боєвич"
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponShotgunCombat
-  description: "Стара конструкція з потужнішою гільзою, призначена для відбиття абордажних груп; цього разу абордажна група - це ви. На стволі вибито '8-Й КАЛІБР'."
+  description: "Коли треба дістати цілі, що ховаються за двома стінами з пластілу, холодильником і дверима авто. Помпова й стріляти з неї — чорт як весело, щоправда не для вашого плеча. Вміщує 5 набоїв 8 Gauge."
   components:
   - type: Item
     size: Large
@@ -96,7 +96,9 @@
     sprite: _Goobstation/Objects/Weapons/Guns/Lever/combatshotgun.rsi
   - type: GunRequiresWield # remove when inaccuracy on spreads is fixed
   - type: Gun
-    fireRate: 1
+    fireRate: 2
+  - type: GunSpreadModifier
+    spread: 0.6
   - type: Tag
     tags:
     - WeaponShotgunKammerer
@@ -114,7 +116,7 @@
   name: "NZ CSG-242"
   parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponShotgunHeavy
-  description: "Важкий дробовик з магазинним живленням на 3 патрони для повного знищення. Використовує боєприпаси 2-го калібру."
+  description: "Переносне порушення прав людини. Стріляє чергами, використовує високовибухові набої й при пострілі буквально відштовхує вас на шість футів. Живиться з барабанних магазинів 2 Gauge. Чорт забирай."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Shotguns/magshot.rsi

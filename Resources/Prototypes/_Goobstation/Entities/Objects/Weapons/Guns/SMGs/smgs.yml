@@ -6,10 +6,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "пістолет-кулемет M7S \"Вентилятор"
+  name: "M7S «Вентилятор»"
   parent: [BaseWeaponSubMachineGun, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSubMachineGunM7S
-  description: "Ви можете бути зеленим, а можете й ні, але ви все одно дуже, дуже злий. Приймає власні магазини для гвинтівок 5x23 мм з бічним завантаженням."
+  description: "Коли треба провітрити цілий коридор — силоміць. Живиться з магазинів із боковим заряджанням 5x23mm."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/SMGs/M7S.rsi

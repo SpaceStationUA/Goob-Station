@@ -51,10 +51,9 @@ public sealed class OfferItemIndicatorsOverlay : Overlay
         if (mousePosMap.MapId != args.MapId)
             return;
 
-
         var mousePos = mouseScreenPosition.Position;
         var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
-        var limitedScale = uiScale > 1.25f ? 1.25f : uiScale;
+        var limitedScale = MathF.Min(uiScale, 1.25f);
 
         DrawSight(_sight, args.ScreenHandle, mousePos, limitedScale * _scale);
     }

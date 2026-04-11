@@ -1,0 +1,543 @@
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckEnsembleCaptain
+  name: "ансамбль капітана"
+  description: "Ти загартований ветеран і керуєш цією станцією залізною рукою. Та шахова партія? Її ніколи не було."
+  suffix: DO NOT MAP
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: both
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/cap.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/cap.rsi
+    equippedPrefix: both
+    slots:
+    - Neck
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: ItemSwitch
+    state: both
+    showLabel: true
+    states:
+      both: !type:ItemSwitchState
+        verb: both
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/cap.rsi
+          state: icon
+      mantle: !type:ItemSwitchState
+        verb: mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/cap.rsi
+          state: mantle-icon
+      cloak: !type:ItemSwitchState
+        verb: cloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/cap.rsi
+          state: cloak-icon
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckEnsembleChiefEngineer
+  name: "ансамбль головного інженера"
+  description: "У разі деламінації це не захистить тебе від радіації. З тим, як довго ти цим займаєшся, такого ж не станеться. Так?"
+  suffix: DO NOT MAP
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: both
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/ce.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/ce.rsi
+    equippedPrefix: both
+    slots:
+    - Neck
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: ItemSwitch
+    state: both
+    showLabel: true
+    states:
+      both: !type:ItemSwitchState
+        verb: both
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/ce.rsi
+          state: icon
+      mantle: !type:ItemSwitchState
+        verb: mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/ce.rsi
+          state: mantle-icon
+      cloak: !type:ItemSwitchState
+        verb: cloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/ce.rsi
+          state: cloak-icon
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckEnsembleChiefMedicalOfficer
+  name: "ансамбль головного лікаря"
+  description: "З огляду на кількість медблоків, які ти бачив, ти справжній полі-мат — розпаковуєш людей, мов посилки, і перемелюєш тіла, наче це дрібниці. ТИ ж налаштуєш клонування, так?"
+  suffix: DO NOT MAP
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: all
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/cmo.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/cmo.rsi
+    equippedPrefix: all
+    slots:
+    - Neck
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: ItemSwitch
+    state: all
+    showLabel: true
+    states:
+      all: !type:ItemSwitchState
+        verb: all
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/cmo.rsi
+          state: icon
+      mantle: !type:ItemSwitchState
+        verb: mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/cmo.rsi
+          state: mantle-icon
+      cloak: !type:ItemSwitchState
+        verb: cloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/cmo.rsi
+          state: cloak-icon
+      wings: !type:ItemSwitchState
+        verb: wings
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/cmo.rsi
+          state: wings-icon
+      cloakmantle: !type:ItemSwitchState
+        verb: cloak&mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/cmo.rsi
+          state: cloakmantle-icon
+      cloakwings: !type:ItemSwitchState
+        verb: cloak&wings
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/cmo.rsi
+          state: cloakwings-icon
+      mantlewings: !type:ItemSwitchState
+        verb: mantle&wings
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/cmo.rsi
+          state: mantlewings-icon
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckEnsembleHeadOfSecurity
+  name: "ансамбль начальника охорони"
+  description: "Заплямований кров'ю тайдерів і сльозами кадетів. Слово \"шитсек\" дарує тобі радість — сльоза на оці."
+  suffix: DO NOT MAP
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: both
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/hos.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/hos.rsi
+    equippedPrefix: both
+    slots:
+    - Neck
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: ItemSwitch
+    state: both
+    showLabel: true
+    states:
+      both: !type:ItemSwitchState
+        verb: both
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/hos.rsi
+          state: icon
+      mantle: !type:ItemSwitchState
+        verb: mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/hos.rsi
+          state: mantle-icon
+      cloak: !type:ItemSwitchState
+        verb: cloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/hos.rsi
+          state: cloak-icon
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckEnsembleResearchDirector
+  name: "ансамбль директора досліджень"
+  description: "Кінцева точка всіх досліджень веде сюди. Ти справді вершина науки — монумент досягненням Нанотрейзен і здатності зліпити тебе докупи. Невже тобі так часто доводиться вибухати?"
+  suffix: DO NOT MAP
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: all
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/rd.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/rd.rsi
+    equippedPrefix: all
+    slots:
+    - Neck
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: ItemSwitch
+    state: all
+    showLabel: true
+    states:
+      all: !type:ItemSwitchState
+        verb: all
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/rd.rsi
+          state: icon
+      mantle: !type:ItemSwitchState
+        verb: mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/rd.rsi
+          state: mantle-icon
+      wings: !type:ItemSwitchState
+        verb: wings
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/rd.rsi
+          state: wings-icon
+      mantlewings: !type:ItemSwitchState
+        verb: mantle&wings
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/rd.rsi
+          state: mantlewings-icon
+      cloak: !type:ItemSwitchState
+        verb: cloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/rd.rsi
+          state: cloak-icon
+      cloakmantle: !type:ItemSwitchState
+        verb: cloak&mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/rd.rsi
+          state: cloakmantle-icon
+      cloakwings: !type:ItemSwitchState
+        verb: cloak&wings
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/rd.rsi
+          state: cloakwings-icon
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckEnsembleQuarterMaster
+  name: "ансамбль квартирмейстера"
+  description: "Делікатно виготовлений з найпреміальніших матеріалів, які можна купити за спесоси; плащ, що справді уособлює Дух Каргонії... і твій банківський рахунок."
+  suffix: DO NOT MAP
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: both
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/qm.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/qm.rsi
+    equippedPrefix: both
+    slots:
+    - Neck
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: ItemSwitch
+    state: both
+    showLabel: true
+    states:
+      both: !type:ItemSwitchState
+        verb: both
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/qm.rsi
+          state: icon
+      mantle: !type:ItemSwitchState
+        verb: mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/qm.rsi
+          state: mantle-icon
+      cloak: !type:ItemSwitchState
+        verb: cloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/qm.rsi
+          state: cloak-icon
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckEnsembleHeadOfPersonnel
+  name: "ансамбль керівника персоналу"
+  description: "Немає в цьому світі нічого солодшого, ніж сльози людини, яку змусили написати п'ять абзаців паперової тяганини. І ти, звісно, все одно їй відмовив."
+  suffix: DO NOT MAP
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: both
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/hop.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/hop.rsi
+    equippedPrefix: both
+    slots:
+    - Neck
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: ItemSwitch
+    state: both
+    showLabel: true
+    states:
+      both: !type:ItemSwitchState
+        verb: both
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/hop.rsi
+          state: icon
+      mantle: !type:ItemSwitchState
+        verb: mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/hop.rsi
+          state: mantle-icon
+      cloak: !type:ItemSwitchState
+        verb: cloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/hop.rsi
+          state: cloak-icon
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCentcommCommandContraband]
+  id: ClothingNeckEnsembleBlueshield
+  name: "ансамбль офіцера Блюшилд"
+  description: "Після того як ти відбив безліч тайдерів на захисті командування, Нанотрейзен нарешті дарувала тобі можливість померти зі стилем. Тож вперед — захищай солдата НТР!"
+  suffix: DO NOT MAP
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: cloakblackmantle
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/bso.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/bso.rsi
+    equippedPrefix: cloakblackmantle
+    slots:
+    - Neck
+  - type: ItemSwitch
+    state: cloakblackmantle
+    showLabel: true
+    states:
+      cloakblackmantle: !type:ItemSwitchState
+        verb: cloakblack&mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/bso.rsi
+          state: icon
+      cloakwhitemantle: !type:ItemSwitchState
+        verb: cloakwhite&mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/bso.rsi
+          state: cloakwhitemantle-icon
+      cloakwhite: !type:ItemSwitchState
+        verb: cloakwhite
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/bso.rsi
+          state: cloakwhite-icon
+      cloakblack: !type:ItemSwitchState
+        verb: cloakblack
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/bso.rsi
+          state: cloakblack-icon
+      mantle: !type:ItemSwitchState
+        verb: mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/bso.rsi
+          state: mantle-icon
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCentcommCommandContraband]
+  id: ClothingNeckEnsembleNanotrasenRepresentative
+  name: "ансамбль представника Нанотрейзен"
+  description: "Після років, коли ти майже нічого не робив, Центральне Командування подарувало тобі цей плащ. Тепер ти можеш нічого не робити, зате гарно виглядати!"
+  suffix: DO NOT MAP
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: both
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/ntr.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/ntr.rsi
+    equippedPrefix: both
+    slots:
+    - Neck
+  - type: ItemSwitch
+    state: both
+    showLabel: true
+    states:
+      both: !type:ItemSwitchState
+        verb: both
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/ntr.rsi
+          state: icon
+      mantle: !type:ItemSwitchState
+        verb: mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/ntr.rsi
+          state: mantle-icon
+      cloak: !type:ItemSwitchState
+        verb: cloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/ntr.rsi
+          state: cloak-icon
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckEnsembleTrans
+  name: "трансильванський ансамбль"
+  description: "Його носять високопоставлені вампіри Трансильванського товариства вампірів."
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: all
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/trans.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/trans.rsi
+    equippedPrefix: all
+    slots:
+    - Neck
+  - type: ItemSwitch
+    state: all
+    showLabel: true
+    states:
+      all: !type:ItemSwitchState
+        verb: all
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/trans.rsi
+          state: icon
+      cloak: !type:ItemSwitchState
+        verb: cloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/trans.rsi
+          state: cloak-icon
+      cloakJewelry: !type:ItemSwitchState
+        verb: cloak&jewelry
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/trans.rsi
+          state: cloak-icon
+      cloakSash: !type:ItemSwitchState
+        verb: cloak&sash
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/trans.rsi
+          state: cloakSash-icon
+      cloakSashL: !type:ItemSwitchState
+        verb: altcloak&mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/trans.rsi
+          state: cloakSashL-icon
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckEnsembleSalvager
+  name: "ансамбль сальваджера"
+  description: "Хто сказав, що не можна мати стиль, винищуючи істот поза межами людського розуміння?"
+  suffix: DO NOT MAP
+  components:
+  - type: Item
+    size: Small
+    heldPrefix: both
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Ensembles/salvager.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Ensembles/salvager.rsi
+    equippedPrefix: both
+    slots:
+    - Neck
+  - type: ItemSwitch
+    state: both
+    showLabel: true
+    states:
+      both: !type:ItemSwitchState
+        verb: both
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/salvager.rsi
+          state: icon
+      cloak: !type:ItemSwitchState
+        verb: cloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/salvager.rsi
+          state: cloak-icon
+      mantle: !type:ItemSwitchState
+        verb: mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/salvager.rsi
+          state: mantle-icon
+      altcloak: !type:ItemSwitchState
+        verb: altcloak
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/salvager.rsi
+          state: altcloak-icon
+      altcloakmantle: !type:ItemSwitchState
+        verb: altcloak&mantle
+        sprite:
+          sprite: _Goobstation/Clothing/Neck/Ensembles/salvager.rsi
+          state: altcloakmantle-icon

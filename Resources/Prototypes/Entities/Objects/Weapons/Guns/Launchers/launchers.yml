@@ -158,10 +158,10 @@
   - type: CanTakeAim # PIRATE
 
 - type: entity
-  name: "чайна-лейк"
+  name: "Чайна Лейк"
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponLauncherChinaLake
-  description: "ПЛЮХ."
+  description: "ПЛЮП."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi

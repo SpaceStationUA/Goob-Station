@@ -45,6 +45,12 @@
     },
 	{
       "name": "locked"
+    },
+	{
+      "name": "interdyne_officer_door"
+    },
+	{
+      "name": "interdyne_deputy_door"
     }
   ]
 }

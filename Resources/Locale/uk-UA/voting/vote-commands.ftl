@@ -12,8 +12,8 @@ cmd-createvote-arg-vote-type = <тип голосу>
 
 cmd-customvote-desc = Створити своє голосування
 cmd-customvote-help = Використовуйте: customvote <title> <option1> <option2> [option3...]
-cmd-customvote-on-finished-tie = Нічия між {$ties}!
-cmd-customvote-on-finished-win = Переможець: {$winner}!
+cmd-customvote-on-finished-tie = Голосування '{$title}' завершено: нічия між {$ties}!
+cmd-customvote-on-finished-win = Голосування '{$title}' завершено: перемагає {$winner}!
 cmd-customvote-arg-title = <назва>
 cmd-customvote-arg-option-n = <опція{ $n }>
 

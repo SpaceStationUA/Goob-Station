@@ -24,9 +24,7 @@ network-configurator-link = Зв'язати
 network-configurator-title-saved-devices = Збережені пристрої
 network-configurator-title-device-configuration = Конфігурація пристрою
 network-configurator-ui-clear-button = Очистити
-network-configurator-ui-count-label = {$count} Пристроїв
-
-# підказки
+network-configurator-ui-count-label = {$count} пристроїв
 network-configurator-tooltip-set = Встановлює список пристроїв цілі
 network-configurator-tooltip-add = Додає до списку пристроїв цілі
 network-configurator-tooltip-edit = Редагування списку пристроїв цілі
@@ -46,3 +44,8 @@ network-configurator-item-status-label = Поточний режим: {$mode}
 
 cmd-clearnetworklinkoverlays-desc = Очистити всі накладення мережевих з'єднань.
 cmd-clearnetworklinkoverlays-help = Використання: clearnetworklinkoverlays
+network-configurator-text-set = Встановити
+network-configurator-text-add = Додати
+network-configurator-text-clear = Очистити
+network-configurator-text-copy = Копіювати
+network-configurator-text-show = Показати

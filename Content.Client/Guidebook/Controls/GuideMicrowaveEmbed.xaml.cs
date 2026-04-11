@@ -24,12 +24,14 @@ namespace Content.Client.Guidebook.Controls;
 /// Control for embedding a microwave recipe into a guidebook.
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
-public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, ISearchableControl
+public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, ISearchableControl, IPrototypeRepresentationControl //Pirate: add IPrototypeRepresentationControl
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
+
+    public IPrototype? RepresentedPrototype { get; private set; } // Pirate
 
     public GuideMicrowaveEmbed()
     {
@@ -85,6 +87,8 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
     {
         var entity = _prototype.Index<EntityPrototype>(recipe.Result);
 
+        RepresentedPrototype = entity; // Pirate
+
         IconContainer.AddChild(new GuideEntityEmbed(recipe.Result, false, false));
         ResultName.SetMarkup(entity.Name);
         ResultDescription.SetMarkup(entity.Description);
@@ -104,8 +108,9 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             solidNameMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-solid-name-display", ("ingredient", ingredient.Name)));
             solidNameMsg.Pop();
 
-            var solidNameLabel = new RichTextLabel();
+            var solidNameLabel = new GuidebookRichPrototypeLink(); // Pirate
             solidNameLabel.SetMessage(solidNameMsg);
+            solidNameLabel.LinkedPrototype = ingredient; // Pirate
 
             IngredientsGrid.AddChild(solidNameLabel);
 
@@ -134,9 +139,10 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             liquidColorMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-reagent-color-display", ("color", reagent.SubstanceColor)));
             liquidColorMsg.Pop();
 
-            var liquidColorLabel = new RichTextLabel();
+            var liquidColorLabel = new GuidebookRichPrototypeLink(); // Pirate
             liquidColorLabel.SetMessage(liquidColorMsg);
             liquidColorLabel.HorizontalAlignment = Control.HAlignment.Center;
+            liquidColorLabel.LinkedPrototype = reagent; // Pirate
 
             IngredientsGrid.AddChild(liquidColorLabel);
 

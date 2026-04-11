@@ -96,3 +96,6 @@ spellbook-upgrade-force-wall-desc = Покращує «Силову стіну»
 
 spellbook-upgrade-simians-name = Покращення «Прикликання мавп»
 spellbook-upgrade-simians-desc = Покращує «Прикликання мавп» до 5-го рівня!
+
+spellbook-upgrade-rathen-name = Покращення Таємниці Ратена
+spellbook-upgrade-rathen-desc = Покращує Таємницю Ратена максимум до 3 рівня!

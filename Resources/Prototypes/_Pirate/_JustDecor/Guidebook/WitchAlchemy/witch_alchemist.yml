@@ -1,0 +1,74 @@
+- type: guideEntry
+  id: PirateMagicGuide
+  name: guide-entry-pirate-magic-guide
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/Magic.xml"
+  children:
+  - EventPotionRolesGuide
+  - PirateMagicChemicalsGuide
+
+- type: guideEntry
+  id: EventPotionRolesGuide
+  name: guide-entry-event-potion-roles
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/EventPotionRoles.xml"
+  children:
+  - WitchGuide
+  - AlchemistGuide
+
+- type: guideEntry
+  id: WitchGuide
+  name: guide-entry-witch-guide
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/Witch.xml"
+
+- type: guideEntry
+  id: AlchemistGuide
+  name: guide-entry-alchemist-guide
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/Alchemist.xml"
+
+- type: guideEntry
+  id: PirateMagicChemicalsGuide
+  name: guide-entry-pirate-magic-chemicals-guide
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/MagicChemicals.xml"
+  filterEnabled: True
+  children:
+  - PirateMagicEmotionsGuide
+  - PirateMagicWitchcraftGuide
+  - PirateMagicAlchemyGuide
+  - PirateMagicElixirsGuide
+  - PirateMagicOccultGuide
+  - PirateMagicResiduesGuide
+
+- type: guideEntry
+  id: PirateMagicEmotionsGuide
+  name: guide-entry-pirate-magic-emotions-guide
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/MagicEmotions.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: PirateMagicWitchcraftGuide
+  name: guide-entry-pirate-magic-witchcraft-guide
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/MagicWitchcraft.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: PirateMagicAlchemyGuide
+  name: guide-entry-pirate-magic-alchemy-guide
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/MagicAlchemy.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: PirateMagicElixirsGuide
+  name: guide-entry-pirate-magic-elixirs-guide
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/MagicElixirs.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: PirateMagicOccultGuide
+  name: guide-entry-pirate-magic-occult-guide
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/MagicOccult.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: PirateMagicResiduesGuide
+  name: guide-entry-pirate-magic-residues-guide
+  text: "/ServerInfo/_Pirate/Guidebook/WitchAlchemy/MagicResidues.xml"
+  filterEnabled: True

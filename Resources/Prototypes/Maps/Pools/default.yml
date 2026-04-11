@@ -57,12 +57,13 @@
   - Bagel
   - BoxTP # Pirate
   #- Box # Pirate
+  - GateTP # Pirate
   - Cluster
   #- Core
   - Fland
   - GlacierTP # Pirate
- # - Gate Goobstation - My name is Walter Hartwell White, I live at 2308 Negra alloya line albequrque new mexico.
-  - Loop
+  #- Gate Goobstation - My name is Walter Hartwell White, I live at 2308 Negra alloya line albequrque new mexico.
+  #- Loop Goobstation - I love maintenance!!!
   - Marathon
   - Meta
   - Oasis
@@ -76,8 +77,8 @@
   - FlandHighPop
   - OasisHighPop
   - Barratry # Goobstation - Re-add barratry
-  - Kettle # Goobstation - Re-add kettle (before it was gemini!)
-  - Submarine # goobstation - kill yourse
+  - KettleTP # Pirate - Попа.
+  #- Kettle # Pirate
   - Leonid # Goobstation - for goob by goob
   - Delta # Goobstation - ported from Corvax
   - Chloris # Goobstation - also Corvax because we love goidamaps

@@ -10,6 +10,8 @@
     sprite: _EinsteinEngines/Clothing/Head/Hats/tinfoil.rsi
   - type: TinfoilHat
   - type: Armor
+    coverage:
+    - Head
     modifiers:
       coefficients:
         Radiation: 0.95
@@ -47,6 +49,8 @@
   - type: Clothing
     sprite: _EinsteinEngines/Clothing/Head/Helmets/insulative_skullcap.rsi
   - type: Armor
+    coverage:
+    - Head
     modifiers:
       coefficients:
         Blunt: 0.85

@@ -11,13 +11,13 @@ on:
     types: [closed]
 
 env:
-  GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+  #GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }} # Pirates use the automatically provided GITHUB_TOKEN instead of an undefined BOT_TOKEN
   CHANGELOG_DIR: ${{ vars.CHANGELOG_DIR }}
   PR_NUMBER: ${{ github.event.number }}
 
 jobs:
   changelog:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest # Pirate
     if: github.event.pull_request.merged == true
     permissions:
       contents: write
@@ -25,14 +25,24 @@ jobs:
       - name: Checkout Master
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.BOT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }} # Pirate
           ref: "${{ vars.CHANGELOG_BRANCH }}"
 
+      # Pirate add
       - name: Setup Git
+        env:
+         CHANGELOG_USER: ${{ vars.CHANGELOG_USER }}
+         CHANGELOG_EMAIL: ${{ vars.CHANGELOG_EMAIL }}
+         ACTOR_NAME: ${{ github.actor }}
+         ACTOR_ID: ${{ github.actor_id }}
         run: |
-          git config --global user.name "${{ vars.CHANGELOG_USER }}"
-          git config --global user.email "${{ vars.CHANGELOG_EMAIL }}"
+         # Use provided vars if present, otherwise fall back to the actor and noreply email
+         GIT_NAME="${CHANGELOG_USER:-$ACTOR_NAME}"
+         GIT_EMAIL="${CHANGELOG_EMAIL:-${ACTOR_ID}+${ACTOR_NAME}@users.noreply.github.com}"
+         git config --global user.name "$GIT_NAME"
+         git config --global user.email "$GIT_EMAIL"
         shell: bash
+      # Pirate end
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -53,10 +63,11 @@ jobs:
         shell: bash
         continue-on-error: true
 
+      # Pirate change commit summary
       - name: Commit Changelog
         run: |
           git add *.yml
-          git commit -m "${{ vars.CHANGELOG_MESSAGE }} (#${{ env.PR_NUMBER }})"
+          git commit -m "Automated changelog - (#${{ env.PR_NUMBER }})"
           git push
         shell: bash
         continue-on-error: true

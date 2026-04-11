@@ -25,7 +25,7 @@ selectable-set-thief-syndie-description =
     Trinkets from a disavowed past, or stolen from a careless agent?
     You've made some connections. Whiskey, echo...
     Includes: An Emag, Access Breaker, Interdyne cigs, a Syndicate codeword,
-    a Radio Jammer, a lighter and some strange red crystals.
+    a Radio Jammer, a novelty lighter box and some strange red crystals.
 
 selectable-set-thief-sleeper-name = Sleeper Kit
 selectable-set-thief-sleeper-description =
@@ -147,6 +147,13 @@ selectable-set-blueshield-dragon-description =
     Sometimes you need to get your hands dirty.
     Includes: A book capable of teaching the user
     advanced kung fu martial art.
+
+#region Pirate: katana
+selectable-set-blueshield-kendo-name = kendo set
+selectable-set-blueshield-kendo-description =
+    A swordsman's set focused on patience and defense. The blade can block and deflect attacks, then answer with stronger strikes as its power grows.
+    Includes: a sheath and uchigatana.
+#endregion Pirate: katana
 
 selectable-set-blueshield-chester-name = chester set
 selectable-set-blueshield-chester-description =

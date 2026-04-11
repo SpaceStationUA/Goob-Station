@@ -1,0 +1,21 @@
+# Helmets
+- type: entity
+  parent: [ClothingHeadHelmetBasic, SolAllianceInfo, BaseClothingRadio, BaseMajorContraband]
+  id: ClothingHeadHelmetSAN
+  name: "тактичний шолом SAN"
+  suffix: SAN
+  description: "Простий дизайн соляріанського шолома, лише трохи відмінний від давнього салета, що його надихнув. Сьогодні їх роблять із того самого сплаву, що й корпуси зорельотів."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Helmet/SAN_tactical_helmet.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Helmet/SAN_tactical_helmet.rsi
+    - type: Armor 
+      coverage:
+      - Head
+      modifiers:
+       coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.6
+          Heat: 0.7

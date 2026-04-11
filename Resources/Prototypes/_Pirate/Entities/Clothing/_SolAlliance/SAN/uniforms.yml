@@ -1,0 +1,180 @@
+# Uniforms
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolArmyService
+  name: "літня біла службова уніформа соляріанського флоту"
+  suffix: SAN
+  description: "Стандартна службова уніформа для рядового складу соляріанської армії. Її рідко носять: більшість військовослужбовців обирає свої BDU, окрім урочистих випадків."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_army_service.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_army_service.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolArmyServiceGeneral
+  name: "службова уніформа генерала соляріанської армії"
+  suffix: SAN
+  description: "Стандартна службова уніформа для офіцерів соляріанської армії. Її мають носити генерали в полі."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_army_service_general.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_army_service_general.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolArmyServiceOfficer
+  name: "службова уніформа офіцера соляріанської армії"
+  suffix: SAN
+  description: "Стандартна службова уніформа для офіцерів соляріанської армії."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_army_service_officer.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_army_service_officer.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolFatigueGreen
+  name: "зелені польові мундири соляріанців"
+  suffix: SAN
+  description: "Звична уніформа, яку носять «рядові» в Соляріанських Збройних Силах. Хоч Земля вже не є зеленою утопією минулого, оливкові польові мундири залишаються емблемою старих земних армій."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_fatigue_green.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_fatigue_green.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolFatigueGrey
+  name: "сірі польові мундири соляріанців"
+  suffix: SAN
+  description: "Звична уніформа, яку носять «рядові» в Соляріанських Збройних Силах. Хоч кам’яно-сірі BDU не такі поширені, як оливкові, «кам’яно-сірий» і далі залишається популярним вибором кольору уніформи."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_fatigue_grey.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_fatigue_grey.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolFatigueIPC
+  name: "польова форма IPC соляріанців"
+  suffix: SAN
+  description: "IPC — єдиний виняток із сумнозвісної ксенофобії Соляріанських Збройних Сил. Адже хоча SAN жодного разу не дозволили жодному прибульцю служити, вони охоче використовують синтетиків, щоб уберегти «чистих» людей від виснажливої праці або щоб не гнати їх у м’ясорубки."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_fatigue_ipc.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_fatigue_ipc.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolFatigueTan
+  name: "польова форма соляріанців"
+  suffix: SAN
+  description: "Звична уніформа, яку носять «рядові» в Соляріанських Збройних Силах. Ця — кольору хакі для пустельних умов."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_fatigue_tan.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_fatigue_tan.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolMarineDress
+  name: "парадний мундир морської піхоти соляріанців"
+  suffix: SAN
+  description: "Комплект «дрес-блюз», який носять соляріанські морпіхи під час урочистих подій."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_mahreen_dress.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_mahreen_dress.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolNavyCoveralls
+  name: "робочий комбінезон соляріанського флоту"
+  suffix: SAN
+  description: "Звична робоча уніформа для членів соляріанського флоту."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_navy_coveralls.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_navy_coveralls.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolNavyDress
+  name: "парадний однострій соляріанського флоту"
+  suffix: SAN
+  description: "Парадний однострій, який носять моряки соляріанського флоту під час урочистих подій. Або офіцери як стандартну уніформу."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_navy_dress.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_navy_dress.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolNavyDressAdmiral
+  name: "парадний однострій адмірала соляріанського флоту"
+  suffix: SAN
+  description: "Парадний однострій для соляріанського адміралтейства. На відміну від інших звань, адміралтейство зобов’язане носити його і як службову уніформу."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_navy_dress_admiral.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_navy_dress_admiral.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolNavyDressOfficer
+  name: "парадний однострій офіцера соляріанського флоту"
+  suffix: SAN
+  description: "Парадний однострій для офіцерів соляріанського флоту. Залежно від звання він також може бути службовою уніформою."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_navy_dress_officer.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_navy_dress_officer.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolNavyDressSeniorOfficer
+  name: "парадний однострій старшого офіцера соляріанського флоту"
+  suffix: SAN
+  description: "Парадний однострій для старших офіцерів соляріанського флоту. Його також слід носити як службову уніформу."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_navy_dress_senior_officer.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_navy_dress_senior_officer.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolNavySailor
+  name: "службова уніформа матроса соляріанського флоту"
+  suffix: SAN
+  description: "Службова уніформа для рядового складу соляріанського флоту."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_sailor.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_sailor.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, SolAllianceInfo, BaseMinorContraband]
+  id: ClothingUniformJumpsuitSolServiceWhite
+  name: "літня біла службова уніформа соляріанського флоту"
+  suffix: SAN
+  description: "Службова уніформа для рядового складу соляріанського флоту. Ця — «літньо-біла», її мають носити в часи миру. Сьогодні вона майже не трапляється."
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_service_white.rsi
+    - type: Clothing
+      sprite: _Pirate/Clothing/_SolAlliance/Uniforms/SAN_service_white.rsi

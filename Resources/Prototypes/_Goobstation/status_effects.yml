@@ -65,8 +65,8 @@
   alwaysAllowed: true
 
 - type: statusEffect
-  id: ShadowCloak
-  alert: ShadowCloak
+  id: ShadowCloakAlertSE
+  alert: ShadowCloakAlert
   alwaysAllowed: true
 
 - type: entity
@@ -75,3 +75,10 @@
   name: "модифікатор опору витривалості"
   components:
   - type: StaminaResistanceModifierStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectMeleeVulnerability
+  name: "вразливість до ближнього бою"
+  components:
+  - type: MeleeVulnerabilityStatusEffect

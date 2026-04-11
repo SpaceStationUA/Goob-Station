@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Ported from tgstation sprites",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "coffee_arabica"
+    },
+    {
+      "name": "coffee_robusta"
+    },
+    {
+      "name": "coffee_synthetic"
+    },
+    {
+      "name": "coffee_stenophylla"
+    }
+  ]
+}

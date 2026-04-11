@@ -1,0 +1,17 @@
+- type: latheRecipe
+  id: SheetPlastitanium1
+  result: SheetPlastitanium1
+  completetime: 0
+  materials:
+    RawPlasma: 100
+    RawTitanium: 80
+    Coal: 30
+
+- type: latheRecipe
+  id: SheetPlastitanium30
+  result: SheetPlastitanium
+  completetime: 5
+  materials:
+    RawPlasma: 3000
+    RawTitanium: 2400
+    Coal: 1000

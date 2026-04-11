@@ -83,8 +83,13 @@ public sealed class BloodRegenerationPirateSystem : EntitySystem
         {
             if (ent.Comp.BloodSolution == null)
                 return false;
-            return _solutions.RemoveReagent(ent.Comp.BloodSolution.Value, new ReagentId(ent.Comp.BloodReagent, _bloodstream.GetEntityBloodData(ent.Owner)), -amount);
+
+            return _solutions.RemoveReagent(
+                       ent.Comp.BloodSolution.Value,
+                       new ReagentId(ent.Comp.BloodReagent, _bloodstream.GetEntityBloodData(ent.Owner)),
+                       -amount) > FixedPoint2.Zero;
         }
+
         return false;
     }
 }

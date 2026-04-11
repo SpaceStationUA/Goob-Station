@@ -1,0 +1,44 @@
+- type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretSAN
+  suffix: Sol Alliance Navy
+  description: "Турель, створена щоб захищати соляріанських морпіхів під час бойових десантів. Вона загрожує цілям спареним C-20r, однак через дешеву систему керування вогнем їй бракує точності."
+  components:
+    - type: ContainerContainer
+      containers:
+        ballistic-ammo: !type:Container
+    - type: SolutionContainerManager
+    - type: NpcFactionMember
+      factions:
+        - SAN
+    - type: Gun
+      fireRate: 10
+      minAngle: 40
+      maxAngle: 45
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+    - type: BallisticAmmoProvider
+      proto: CartridgePistol
+      capacity: 200
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalGlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 3
+                  max: 5

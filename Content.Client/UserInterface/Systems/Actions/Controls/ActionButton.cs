@@ -41,6 +41,7 @@ using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using static Robust.Client.UserInterface.Controls.TextureRect;
 using Direction = Robust.Shared.Maths.Direction;
+using Robust.Shared.Log; // DOWNSTREAM-TPirates: IPC screens
 
 namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
@@ -71,6 +72,8 @@ public sealed class ActionButton : Control, IEntityControl
     public readonly TextureRect Button;
     public readonly PanelContainer HighlightRect;
     private readonly TextureRect _bigActionIcon;
+    private readonly Control _scaledIconContainer;// DOWNSTREAM-TPirates: IPC screens
+    private readonly TextureRect _scaledActionIcon; // DOWNSTREAM-TPirates: IPC screens
     private readonly TextureRect _smallActionIcon;
     public readonly Label Label;
     public readonly CooldownGraphic Cooldown;
@@ -184,6 +187,24 @@ public sealed class ActionButton : Control, IEntityControl
         OnKeyBindUp += OnUnpressed;
 
         TooltipSupplier = SupplyTooltip;
+        #region DOWNSTREAM-TPirates: IPC screens
+        _scaledIconContainer = new LayoutContainer
+        {
+            Visible = false,
+            SetSize = new Vector2(64, 64)
+        };
+        _scaledActionIcon = new TextureRect
+        {
+            Stretch = StretchMode.Scale,
+            Visible = true,
+            SetSize = new Vector2(144, 144),
+            HorizontalAlignment = HAlignment.Left,
+            VerticalAlignment = VAlignment.Top
+        };
+        LayoutContainer.SetPosition(_scaledActionIcon, new Vector2(0, 36));
+        _scaledIconContainer.AddChild(_scaledActionIcon);
+        AddChild(_scaledIconContainer);
+        #endregion
     }
 
     protected override void OnThemeUpdated()
@@ -272,6 +293,7 @@ public sealed class ActionButton : Control, IEntityControl
                     _smallItemSpriteView.SetEntity(entity);
                     break;
                 case ItemActionIconStyle.NoItem:
+                case ItemActionIconStyle.ScaledAction:// // DOWNSTREAM-TPirates: IPC screens
                     _bigItemSpriteView.Visible = false;
                     _bigItemSpriteView.SetEntity(null);
                     _smallItemSpriteView.Visible = false;
@@ -285,6 +307,17 @@ public sealed class ActionButton : Control, IEntityControl
     {
         if (Action?.Comp is not {} action || texture == null)
         {
+        #region DOWNSTREAM-TPirates: IPC screens
+            _bigActionIcon.Texture = null;
+            _bigActionIcon.Visible = false;
+            _smallActionIcon.Texture = null;
+            _smallActionIcon.Visible = false;
+            ResetIconContainer();
+        }
+        else if (action.ItemIconStyle == ItemActionIconStyle.ScaledAction)
+        {
+            ResetScaledIcon(action, texture);
+        #endregion
             _bigActionIcon.Texture = null;
             _bigActionIcon.Visible = false;
             _smallActionIcon.Texture = null;
@@ -297,6 +330,7 @@ public sealed class ActionButton : Control, IEntityControl
             _smallActionIcon.Visible = true;
             _bigActionIcon.Texture = null;
             _bigActionIcon.Visible = false;
+            ResetIconContainer(); // DOWNSTREAM-TPirates: IPC screens
         }
         else
         {
@@ -305,6 +339,7 @@ public sealed class ActionButton : Control, IEntityControl
             _bigActionIcon.Visible = true;
             _smallActionIcon.Texture = null;
             _smallActionIcon.Visible = false;
+            ResetIconContainer(); // DOWNSTREAM-TPirates: IPC screens
         }
     }
 
@@ -473,4 +508,25 @@ public sealed class ActionButton : Control, IEntityControl
     }
 
     EntityUid? IEntityControl.UiEntity => Action;
+    #region DOWNSTREAM-TPirates: IPC screens
+    public void ResetIconContainer()
+    {
+        _scaledActionIcon.Texture = null;
+        _scaledIconContainer.Visible = false;
+    }
+
+    public void ResetScaledIcon(ActionComponent action, Texture? texture)
+    {
+        _scaledActionIcon.Texture = texture;
+        _scaledActionIcon.Modulate = action.IconColor;
+        var size = action.IconSize ?? new Vector2(144, 144);
+        _scaledActionIcon.SetSize = size;
+        // get the position to center the icon in the 64x64 container, then add the offset.
+        var containerSize = new Vector2(64, 64);
+        var centerPos = (containerSize - size) / 2;
+        var offset = action.IconOffset ?? Vector2.Zero;
+        LayoutContainer.SetPosition(_scaledActionIcon, centerPos + offset);
+        _scaledIconContainer.Visible = true;
+    }
+    #endregion
 }

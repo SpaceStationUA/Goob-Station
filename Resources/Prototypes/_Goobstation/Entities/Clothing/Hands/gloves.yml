@@ -443,13 +443,15 @@
 - type: entity
   parent: [BaseSyndicateContraband, ClothingHandsGlovesCombat]
   id: ClothingHandsGlovesGuerrilla
-  name: "партизанські рукавиці"
-  description: "Бойові рукавиці найвищої якості, хороші для захватів, а також для поглинання електричних розрядів."
+  name: "герилья-рукавички"
+  description: "Бойові рукавички синдикату найвищої якості, добрі як для захватів, так і для поглинання електричних розрядів. Схоже, працюють на телекристалах."
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Hands/Gloves/guerrilla.rsi
   - type: Clothing
     sprite: _Goobstation/Clothing/Hands/Gloves/guerrilla.rsi
+    equipDelay: 2 #sadly this has to exist for telegraphing reasons
+    unequipDelay: 2
   - type: Item
     inhandVisuals:
       left:

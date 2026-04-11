@@ -299,3 +299,16 @@
       weight: 1
     - id: VinylSleeveWhite
       weight: 1
+
+- type: entity
+  id: CrateHolySupplies
+  parent: CratePlastic
+  name: "ящик зі святими припасами"
+  description: "Містить Біблію та 2 глечики святої води для релігійних потреб"
+  components:
+    - type: StorageFill
+      contents:
+        - id: JugHolyWater
+          amount: 2
+        - id: Bible
+          amount: 1

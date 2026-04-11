@@ -1,0 +1,27 @@
+- type: tile
+  id: PlatingCornerNE
+  parent: Plating
+  name: "покриття ПнСх"
+  sprite: /Textures/_Pirate/Tiles/plating/ne.png
+  vertices: ["1, 0", "1, 1", "0, 1"]
+
+- type: tile
+  id: PlatingCornerNW
+  parent: Plating
+  name: "покриття ПнЗх"
+  sprite: /Textures/_Pirate/Tiles/plating/nw.png
+  vertices: ["0, 0", "1, 1", "0, 1"]
+
+- type: tile
+  id: PlatingCornerSE
+  parent: Plating
+  name: "покриття ПдСх"
+  sprite: /Textures/_Pirate/Tiles/plating/se.png
+  vertices: ["0, 0", "1, 0", "1, 1"]
+
+- type: tile
+  id: PlatingCornerSW
+  parent: Plating
+  name: "покриття ПдЗх"
+  sprite: /Textures/_Pirate/Tiles/plating/sw.png
+  vertices: ["0, 0", "1, 0", "0, 1"]

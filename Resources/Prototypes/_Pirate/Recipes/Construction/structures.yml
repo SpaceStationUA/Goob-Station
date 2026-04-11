@@ -1,0 +1,46 @@
+- type: construction
+  id: WallPlastitaniumOnyx
+  graph: Girder
+  startNode: start
+  targetNode: plastitaniumWallOnyx
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: PlastitaniumWindowOnyx
+  graph: Girder
+  startNode: start
+  targetNode: plastitaniumWindowOnyx
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+    
+- type: construction
+  id: BlastDoorOnyx
+  graph: BlastDoorOnyx
+  startNode: start
+  targetNode: blastdoorOnyx
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: BlastDoorOnyxCorner
+  graph: BlastDoorOnyxCorner
+  startNode: start
+  targetNode: blastdoorOnyxCorner
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  

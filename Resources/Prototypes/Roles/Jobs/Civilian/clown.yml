@@ -124,15 +124,10 @@
   name: job-name-clown
   description: job-description-clown
   playTimeTracker: JobClown
-  # Pirate contractor start
-  requirements: 
-    - !type:CharacterLifepathRequirement
-      lifepaths:
-      - Entertainer
-  # Pirate contractor end
   startingGear: ClownGear
   icon: "JobIconClown"
   supervisors: job-supervisors-hop
+  whitelisted: true # Pirate
   goobcoins: 15 #Goob content
   access:
   - Theatre

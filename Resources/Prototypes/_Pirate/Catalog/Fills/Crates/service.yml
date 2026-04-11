@@ -1,0 +1,52 @@
+- type: entity
+  id: CrateServiceCoffeemakerPirate
+  parent: CrateGenericSteel
+  name: "ящик з кавоваркою"
+  description: "Містить флетпак кавоварки Modello 3 та повний набір кавового сервісу."
+  components:
+    - type: StorageFill
+      contents:
+        - id: CoffeemakerFlatpackPirate
+        - id: CoffeeCartridgeFancyPirate
+          amount: 3
+        - id: DrinkCoffeepotPirate
+        - id: CoffeeCondimentDisplayPirate
+        - id: DrinkCreamCartonPirate
+        - id: DrinkMilkCarton
+        - id: DrinkSoyMilkCarton
+        - id: DrinkSugarBottlePirate
+        - id: FoodCondimentBottleCaramelSyrupPirate
+        - id: Multitool
+
+- type: entity
+  id: CrateServiceCoffeemakerImpressaPirate
+  parent: CrateGenericSteel
+  name: "ящик з кавоваркою Impressa"
+  description: "Містить флетпак кавоварки Impressa та повний набір кавового сервісу."
+  components:
+    - type: StorageFill
+      contents:
+        - id: CoffeemakerImpressaFlatpackPirate
+        - id: CoffeePackRobustaPirate
+        - id: CoffeePackPirate
+        - id: DrinkCoffeepotPirate
+        - id: CoffeeCondimentDisplayPirate
+        - id: DrinkCreamCartonPirate
+        - id: DrinkMilkCarton
+        - id: DrinkSoyMilkCarton
+        - id: DrinkSugarBottlePirate
+        - id: FoodCondimentBottleCaramelSyrupPirate
+        - id: Multitool
+
+- type: entity
+  id: CrateServiceContrabandSyrupsPirate
+  parent:
+    - CratePlastic
+    - BaseSyndicateContraband
+  name: "ящик нелегальних сиропів"
+  description: "Упаковка з забороненими кавовими сиропами."
+  components:
+    - type: StorageFill
+      contents:
+        - id: FoodCondimentBottleLaughSyrupPirate
+          amount: 2

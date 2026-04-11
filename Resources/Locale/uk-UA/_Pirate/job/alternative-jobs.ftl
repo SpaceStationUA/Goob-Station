@@ -1,3 +1,4 @@
+alternative-job-notify = Хоча вашу роль тепер називають '{$newJobName}', це не означає, що ви перестали бути {$parentJobName}. Ваша роль та обов'язки залишаються незмінними.
 # Карго
 job-alternative-name-mailman = Поштар
 

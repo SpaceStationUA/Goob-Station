@@ -69,6 +69,7 @@
 
 using System.Linq;
 using System.Numerics;
+using Content.Shared._Pirate.Traits.Assorted; // Pirate port: DeltaV
 using Content.Shared.Atmos;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Damage;
@@ -111,6 +112,7 @@ namespace Content.Client.HealthAnalyzer.UI
         private readonly SpriteSystem _spriteSystem;
         private readonly IPrototypeManager _prototypes;
         private readonly IResourceCache _cache;
+        private readonly UnborgableSystem _unborgable; // Pirate port: DeltaV - unborgable trait
 
         // Shitmed Change Start
         private readonly WoundSystem _wound;
@@ -134,6 +136,7 @@ namespace Content.Client.HealthAnalyzer.UI
             _spriteSystem = _entityManager.System<SpriteSystem>();
             _prototypes = dependencies.Resolve<IPrototypeManager>();
             _cache = dependencies.Resolve<IResourceCache>();
+            _unborgable = _entityManager.System<UnborgableSystem>(); // Pirate port: DeltaV - unborgable trait
             // Shitmed Change Start
             _wound = _entityManager.System<WoundSystem>();
             _bodyPartControls = new Dictionary<TargetBodyPart, TextureButton>
@@ -304,6 +307,13 @@ namespace Content.Client.HealthAnalyzer.UI
                 ConditionsListContainer.AddChild(new RichTextLabel
                 {
                     Text = Loc.GetString("condition-body-unrevivable", ("entity", Identity.Name(_target.Value, _entityManager))),
+                    Margin = new Thickness(0, 4),
+                });
+
+            if (_unborgable.IsUnborgable(_target.Value)) // Pirate port: DeltaV - unborgable trait
+                ConditionsListContainer.AddChild(new RichTextLabel
+                {
+                    Text = Loc.GetString("health-analyzer-window-entity-unborgable-text"),
                     Margin = new Thickness(0, 4),
                 });
 

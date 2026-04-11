@@ -1,3 +1,35 @@
+## Command - Командування
+# Captain - Капітан
+- type: selectableSet
+  id: CaptainSabre
+  name: selectable-set-captain-sabre-name
+  description: selectable-set-captain-sabre-description
+  sprite:
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+    state: icon
+  content:
+    - ClothingBeltSheathFilled
+
+- type: selectableSet
+  id: CaptainSabreHeavy
+  name: selectable-set-captain-sabre-heavy-name
+  description: selectable-set-captain-sabre-heavy-description
+  sprite:
+    sprite: _Pirate/Objects/Weapons/Melee/Captain_sabres/heavy.rsi
+    state: icon
+  content:
+    - ClothingBeltSheathHeavyFilled
+
+- type: selectableSet
+  id: CaptainSabreShashka
+  name: selectable-set-captain-sabre-shashka-name
+  description: selectable-set-captain-sabre-shashka-description
+  sprite:
+    sprite: _Pirate/Objects/Weapons/Melee/Captain_sabres/shashka.rsi
+    state: icon
+  content:
+    - ClothingBeltSheathShashkaFilled
+
 # Interdyne Secure
 
 - type: selectableSet
@@ -48,8 +80,8 @@
   
 - type: selectableSet
   id: IPCQCManual
-  name: "CQC"
-  description: "Посібник з ближнього бою (Close Quarters Combat)"
+  name: "Ближній бій"
+  description: "Посібник із ближнього бою"
   sprite:
     sprite: _Goobstation/Objects/Misc/cqc_manual.rsi
     state: icon
@@ -60,7 +92,7 @@
 - type: selectableSet
   id: IPFullMedicalKit
   name: "Повний медичний набір"
-  description: "Набір з трьох аптечок, розрахованих на усі можливі пошкодження. Краще, ніж нічого"
+  description: "Набір з трьох аптечок, розрахованих на всі можливі пошкодження. Краще, ніж нічого"
   sprite:
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     state: blackkit
@@ -72,7 +104,7 @@
 - type: selectableSet
   id: IPSuperKit
   name: "Супер-набір медика"
-  description: "Набір бойових аптечок та медіпенів різних типів. Містить портативний дефібрилятор Interdyne, досить корисний набір, має всі найкращі ліки"
+  description: "Набір бойових аптечок та медіпенів різних типів. Містить портативний дефібрилятор Інтердайну та всі найкращі ліки"
   sprite:
     sprite: Objects/Specific/Medical/defibsyndi.rsi
     state: icon
@@ -81,8 +113,8 @@
   
 - type: selectableSet
   id: IPStimKit
-  name: "Набір з інжекторами Гіперзіну"
-  description: "Використовуйте при дуже тяжких умовах, щоб втекти від загрози"
+  name: "Набір з інжекторами гіперзину"
+  description: "Використовуйте за дуже тяжких умов, щоб утекти від загрози"
   sprite:
     sprite: Objects/Specific/Medical/medipen.rsi
     state: microstimpen
@@ -92,7 +124,7 @@
 - type: selectableSet
   id: IPSurgeon
   name: "Набір хірурга"
-  description: "Набір хірургічних інструментів. В комплект також входить компактний дефібрилятор Interdyne!"
+  description: "Набір хірургічних інструментів. До комплекту також входить компактний дефібрилятор Інтердайну!"
   sprite:
     sprite: Clothing/Back/Duffels/syndicate.rsi
     state: icon-med
@@ -121,20 +153,40 @@
   
 # Interdyne ENG
 - type: selectableSet
-  id: IPClothingBeltCE
-  name: "Пояс головного інженера"
-  description: "Пояс з просунутими інструментами для головного інженера"
+  id: IPBeltCE
+  name: "Пояс із просунутими інструментами"
+  description: "Пояс головного інженера"
   sprite:
     sprite: Clothing/Belt/ce.rsi
     state: icon
   content:
   - ClothingBeltChiefEngineerFilled
   
+- type: selectableSet
+  id: IPJetpackVoid
+  name: "реактивний ранець \"Воїд"
+  description: "Реактивний ранець для пояса. Працюйте в космосі без страху відлетіти від станції чи шатла"
+  sprite:
+    sprite: Objects/Tanks/Jetpacks/void.rsi
+    state: icon
+  content:
+  - JetpackVoidFilled
+  
+- type: selectableSet
+  id: IPRCD
+  name: "RCD Інтердайну"
+  description: "Унікальний RCD Інтердайну, розроблений Кіберсаном. Краще вам його не губити"
+  sprite:
+    sprite: _Pirate/Objects/Tools/rcd_dark.rsi
+    state: icon
+  content:
+  - RCDInterdyne
+  
 # Interdyne Pilot
 - type: selectableSet
   id: IPHitman
   name: "Набір найманця"
-  description: "Улюблений набір усього Interdyne"
+  description: "Улюблений набір усього персоналу Інтердайну"
   sprite:
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
     state: base
@@ -154,7 +206,7 @@
 - type: selectableSet
   id: IPPilot
   name: "Набір пілота"
-  description: "Містить в собі EVA-скафандр, набір медикаментів та \"щелепи життя\". А для самозахисту надається револьвер \"Декард\""
+  description: "Містить EVA-скафандр, набір медикаментів і \"щелепи життя\". Для самозахисту також видається револьвер \"Декард\""
   sprite:
     sprite: _Goobstation/Clothing/Back/Modsuits/security.rsi
     state: control
@@ -168,7 +220,7 @@
 - type: selectableSet
   id: IPAdmin
   name: "Набір адміністратора"
-  description: "Візор, що показує тільки професію і не виявляє членів Синдикату. Також сюди входить ручка \"Кіберсан\"."
+  description: "Візор, що показує лише професію і не виявляє членів Синдикату. Також сюди входить ручка \"Кіберсан\"."
   sprite:
     sprite: Clothing/Eyes/Hud/command.rsi
     state: icon
@@ -278,13 +330,13 @@
 #  Interdyne Deputy
 - type: selectableSet
   id: IPDeputy
-  name: "Набір заступника Interdyne"
-  description: "Основний набір, щоб виглядати крутим"
+  name: "Набір заступника офіцера Інтердайну"
+  description: "Основний набір, щоб виглядати круто"
   sprite:
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
     state: icon
   content:
-  - WeaponSubMachineGunWt550
+  - WeaponEnergyShotgun
   - ClothingBeltSheathFilledNavyOfficer
   - ClothingEyesGlassesBSO
   - WeaponPistolN1984
@@ -294,7 +346,6 @@
   - TelescopicBaton
   - ClothingBeltChemBagSyndiFilled
   - CQCManual
-  - ClothingOuterArmourInvisibleSyndie
   
 - type: selectableSet
   id: IPCyberpunk
@@ -313,19 +364,25 @@
 #  Interdyne Officer
 - type: selectableSet
   id: IPOfficer
-  name: "Набір офіцера ІнтерДайн"
-  description: "Набір головного керівника ІнтерДайн"
+  name: "Набір офіцера Інтердайну"
+  description: "Набір головного офіцера Інтердайну"
   sprite:
     sprite: Clothing/Belt/sheath.rsi
     state: sheath-sabre
   content:
-  - ClothingBackpackDuffelSyndicateFilledWSPR
+  - WeaponSubMachineSmart
+  - MagazineSmart
+  - MagazineSmart
+  - MagazineSmart
   - TelescopicBaton
   - ClothingEyesGlassesBSO
-  - ClothingBeltSheathFilledNavyOfficer
+  - EnergySword
   - TelescopicShield
   - ClothingBeltChemBagSyndiFilled
   - CQCManual
+  - CigPackSyndicate
+  - CigPackSyndicate
+  - InterdyneFlippo
   - ClothingOuterArmourInvisibleSyndie
 
 # ГШР КШР

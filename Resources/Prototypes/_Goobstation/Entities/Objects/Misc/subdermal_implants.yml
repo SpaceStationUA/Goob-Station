@@ -34,7 +34,7 @@
   - type: TriggerOnMobstateChange
     mobState:
     - Dead
-  - type: TriggerImplantAction
+  - type: TriggerOnActivateImplant
   - type: DeleteParentOnTrigger
   - type: SpawnOnTrigger
     proto: BluespaceLifelineSpawnCore
@@ -89,11 +89,11 @@
   components:
     - type: SubdermalImplant
       implantAction: ActivateSmokeImplant
-    - type: TriggerImplantAction
+    - type: TriggerOnActivateImplant
     - type: SmokeOnTrigger
       spreadAmount: 25
       duration: 10
-    - type: SoundOnTrigger
+    - type: EmitSoundOnTrigger
       sound: /Audio/Effects/smoke.ogg
 
 - type: entity
@@ -258,22 +258,6 @@
 
 - type: entity
   parent: BaseSubdermalImplant
-  id: AntagImplantHeretic
-  name: "імплант єретика"
-  description: "Цей імплант дозволяє користувачеві підключатися до сил мансуса."
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: ComponentsImplant
-    added:
-    - type: Heretic
-    - type: Store
-      currencyWhitelist:
-      - KnowledgePoint
-      balance:
-        KnowledgePoint: 2
-
-- type: entity
-  parent: BaseSubdermalImplant
   id: AntagImplantSpaceNinja
   name: "імплант космічного ніндзя"
   description: "Цей імплант дозволяє користувачеві отримати навички космічного ніндзя."
@@ -316,7 +300,7 @@
     - type: TriggerOnMobstateChange
       mobState:
         - Dead
-    - type: TriggerImplantAction
+    - type: TriggerOnActivateImplant
     - type: DeleteParentOnTrigger
     - type: SpawnOnTrigger
       proto: RedspaceLifelineSpawnCore

@@ -1,0 +1,37 @@
+#region Mechanics
+- type: trait
+  id: Unborgable
+  name: trait-unborgable-name
+  description: trait-unborgable-desc
+  category: Meta
+  conditions:
+    - !type:IsSpeciesCondition
+      invert: true
+      species:
+        - IPC
+  components:
+  - type: Unborgable
+
+- type: trait
+  id: ByondYourPrime
+  name: trait-tile-movement-name
+  description: trait-tile-movement-desc
+  category: Meta
+  components:
+  - type: TileMovement
+
+- type: trait
+  id: Unrevivable
+  name: trait-unrevivable-name
+  description: trait-unrevivable-desc
+  category: Meta
+  conditions:
+    - !type:IsSpeciesCondition
+      invert: true
+      species:
+        - IPC
+        - Plasmaman
+  components:
+    - type: Unrevivable
+      cloneable: true
+#endregion

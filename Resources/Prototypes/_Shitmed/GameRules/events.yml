@@ -23,8 +23,8 @@
   - type: StationEvent
     earliestStart: 15
     reoccurrenceDelay: 45
-    weight: 0 # Pirate no abductor
-    minimumPlayers: 10
+    weight: 4 # Goobstation - 7.5 -> 4
+    minimumPlayers: 200 # Pirate removal
     duration: null # Goobstation - chud
     chaos:
       Hostile: 75
@@ -123,8 +123,8 @@
   - type: StationEvent
     earliestStart: 15
     reoccurrenceDelay: 45
-    weight: 0 # Pirate no abductor
-    minimumPlayers: 20
+    weight: 4 # Goobstation - 7.5 -> 4
+    minimumPlayers: 200 # Pirate removal
     duration: null # Goobstation - chud
     chaos:
       Hostile: 150

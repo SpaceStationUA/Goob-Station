@@ -47,6 +47,7 @@
   description: "Клонуюча капсула. Надійність 50%."
   components:
   - type: CloningPod
+    cloningTime: 90 # Goobstation
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired

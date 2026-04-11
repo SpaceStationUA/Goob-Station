@@ -126,6 +126,7 @@
 - type: entity
   parent: [ClothingShoesBootsMagBase, BaseMajorContraband]
   id: ClothingShoesRealJordans
+  suffix: Magboots
   name: "ейр джордани"
   description: "Найсучасніші, офіційні, незім'яті Джордани, які захищають вас від ковзання, коли увімкнені."
   components:
@@ -210,6 +211,7 @@
 - type: entity
   parent: [ClothingShoesBootsMagBase, BaseMajorContraband]
   id: ClothingShoesRealJordansAutographed
+  suffix: Devil
   name: "ейр джордани"
   description: "Це не просто Джордани, їх підписав сам Майкл Джордан. Вони, мабуть, коштують ЦІЛЕ СТАТТЯ."
   components:

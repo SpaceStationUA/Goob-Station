@@ -107,6 +107,10 @@
     proto: ShellShotgun
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+    soundRack: #Mono start
+      path: /Audio/_Mono/Weapons/Guns/Cock/shotgun_cock.ogg
+      params:
+        volume: -3 #Mono end
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -148,7 +152,7 @@
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponShotgunBulldog
-  description: "Автоматичний дробовик з магазинним живленням для ближнього бою. Віддача як у мула на стероїдах. Використовує патрони 12 калібру." # Goob edit
+  description: "Повністю автоматична булпап-рушниця, коли у вас є три секунди, щоб перетворити вісьмох людей на соус для пасти. Віддача — як у мула на стероїдах. Живиться з барабанних магазинів 12 Gauge." # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
@@ -243,10 +247,10 @@
     proto: ShellShotgunBeanbag
 
 - type: entity
-  name: "Правоохоронець"
+  name: "Енфорсер"
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponShotgunEnforcer
-  description: "Преміальний напівавтоматичний дробовик, гордість усіх сил безпеки. Використовує патрони 12 калібру." # Goob edit
+  description: "Преміальна напівавтоматична рушнична платформа, розроблена для правоохоронних органів та контртерористичних операцій. Надійна, як помпова рушниця, навіть в екстремальних умовах. Вміщує 7 набоїв 12 Gauge." # Goobstation
   components: # intend for Enforcer to have wider choke for semi-auto function
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
@@ -273,7 +277,7 @@
   name: "Каммерер"
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponShotgunKammerer
-  description: "Стара, але вірна конструкція, улюблена нерегулярними силами багатьох світів. Використовує патрони 12 калібру." # Goob edit
+  description: "Стара й вірна помпова рушниця: Каммерер дешевий, легкий і, ймовірно, працюватиме навіть якщо залишити його в камері випалу на тиждень. Популярний серед цивільних і улюбленець NanoTrasen через мізерний цінник. Вміщує 7 набоїв 12 Gauge." # Goobstation
   components: # intend for Kammerer to have tighter choke for slower fire rate and/or manual cycling
   - type: Item
     size: Normal

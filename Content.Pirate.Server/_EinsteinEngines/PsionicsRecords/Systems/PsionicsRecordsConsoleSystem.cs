@@ -145,8 +145,10 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
             // this is impossible
             _ => "not-wanted"
         };
+        // Get radio channel from IdExaminablePsionicsComponent or use default
+        var radioChannel = "Science";
         _radio.SendRadioMessage(ent, Loc.GetString($"psionics-records-console-{statusString}", args),
-            ent.Comp.RadioChannel, ent);
+            radioChannel, ent);
 
         UpdateUserInterface(ent);
         UpdatePsionicsIdentity(name, msg.Status);

@@ -18,3 +18,5 @@ lathe-recipe-NewKinPidginTranslatorImplanter-subname = імплант-перек
 lathe-recipe-ChevalTranslatorImplanter-subname = імплант-перекладач мови Cheval
 
 lathe-recipe-YowKriolTranslatorImplanter-subname = імплант-перекладач мови Yow Kriol
+
+lathe-recipe-SignTranslatorImplanter-subname = імплант перекладача жестової мови

@@ -119,7 +119,7 @@
   name: "мініатюрний енергетичний арбалет"
   parent: [ BaseWeaponBatterySmall, BaseSyndicateContraband ]
   id: MiniatureEnergyCrossbow
-  description: "Енергетичний арбалет синдикату, маленький, тихий і смертоносний."
+  description: "Фірмова розробка Donk Co.: цей арбалет стріляє тонким дротиком, зарядженим седативами та депресантами, створеним, щоб пробивати навіть найважчу броню."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/miniature_ebow.rsi
@@ -186,7 +186,7 @@
   - type: MagazineVisuals
     magState: mag
     steps: 5
-    zeroVisible: false
+    zeroVisible: true
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Steel: 100
@@ -204,10 +204,10 @@
     startingCharge: 0
 
 - type: entity
-  name: "EG-4 Зрівнювач"
+  name: "EG-4 «Еквалайзер»"
   parent: [ BaseWeaponCustomCellSmall, BaseCentcommContraband ]
   id: WeaponEnergyRevolver
-  description: "Високотехнологічний енергетичний револьвер, здатний стріляти різними зарядами залежно від елемента живлення."
+  description: "Перед лицем смерті всі рівні. «Еквалайзер» — права рука корпусу Блюшилд, модульна платформа енергетичного револьвера, створена для летального та нелетального знешкодження цілей. Використовує енергетичні швидкозаряджувачі."
   components:
   - type: Item
     heldPrefix: lethal
@@ -256,10 +256,10 @@
             - EnergySpeedloader
 
 - type: entity
-  name: "дизейблер центкому"
+  name: "удосконалений дизейблер"
   parent: [ WeaponDisablerPractice, BaseCentcommContraband ]
   id: WeaponDisablerAdvanced
-  description: "Нелетальна зброя самооборони для агентів, яким не довіряють традиційну летальну зброю. Перезаряджається з часом."
+  description: "Зброя самозахисту для корпоративних керівників, у яких грошей хоч відбавляй. Тонкий, міцний і самозарядний — для вашої зручності."
   components:
   - type: Sprite
     sprite: _EinsteinEngines/Objects/Weapons/Guns/Battery/ccdisabler.rsi
@@ -269,6 +269,8 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0.03125, 0.0625"
   - type: Clothing
     sprite: _EinsteinEngines/Objects/Weapons/Guns/Battery/ccdisabler.rsi
     quickEquip: false
@@ -282,12 +284,25 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 40
-
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
+    containers:
+      flashlight: !type:ContainerSlot
 - type: entity
-  name: "дизейблер синдикату"
+  name: "дизейблер Синдикату"
   parent: [ WeaponDisablerPractice, BaseSyndicateContraband ]
   id: WeaponDisablerSyndicate
-  description: "Просунутий дизейблер, створений на основі реверс-інжинірингу прототипу Nanotrasen. Хоча йому бракує трохи зупиняючої сили, він компенсує це акумулятором, що перезаряджається."
+  description: "Витончений дизейблер, створений на основі прототипу NanoTrasen, отриманого шляхом реверс-інжинірингу. Хоч йому бракує зупиняючої дії, він компенсує це самозарядною батареєю."
   components:
     - type: Gun
       fireRate: 3
@@ -323,10 +338,10 @@
       autoRechargeRate: 50
 
 - type: entity
-  name: "покращений імпульсний карабін"
+  name: "удосконалений імпульсний карабін"
   parent: WeaponPulseCarbine
   id: WeaponPulseCarbineAdvanced
-  description: "Найсучасніший імпульсний карабін. Цей конкретний має експериментальну перезаряджувану комірку."
+  description: "Сучасний лазерний карабін, що стріляє швидко пульсуючим променем. Дорогий, але його полюбляє Корпус екстреного реагування завдяки здатності самозаряджатися."
   components:
   - type: Tag
     tags:
@@ -336,10 +351,10 @@
     autoRechargeRate: 80
 
 - type: entity
-  name: "енергетична штурмова гвинтівка CR-2"
+  name: "CR-2 «Гера»"
   parent: [ BaseWeaponCustomCell, BaseGunWieldable, BaseSecurityContraband ]
   id: WeaponEnergyRifle
-  description: "Покращена енергетична гвинтівка, здатна стріляти різними зарядами залежно від магазину з енергетичною коміркою."
+  description: "Універсальна плазмова штурмова гвинтівка, створена на базі нині знятої з експлуатації енергетичної гвинтівки. Живиться з магазинів для енергогвинтівки."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/energy_rifle.rsi
@@ -386,10 +401,10 @@
             - EnergyMagAmmo
 
 - type: entity
-  name: "DT-12 \"Законник\""
+  name: "DT-12 «Lawbringer»"
   parent: [BaseWeaponBatterySmall, BaseGrandTheftContraband]
   id: WeaponEnergyGunLawbringer
-  description: "Універсальна енергетична гармата з багатьма різними режимами. Власник цієї гармати втілює сам закон."
+  description: "Іноді звання — це функція вогневої міці. Універсальна енергетична зброя з безліччю режимів стрільби, створена для Голови служби безпеки. Самозаряджається після затримки у 40 секунд."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/lawbringer.rsi
@@ -484,7 +499,7 @@
 - type: entity
   name: "іонна гвинтівка"
   id: WeaponEnergyIonRifle
-  description: "Енергетична гвинтівка, що стріляє іонізованими енергетичними зарядами, призначеними для знищення механічних цілей."
+  description: "Гвинтівка, що стріляє іонними болтами, створеними для виведення з ладу механічних цілей. Ідеальна проти бойових мехів і сіліконів, але майже марна проти всього іншого."
   parent: [BaseWeaponBattery, BaseSecurityContraband]
   components:
   - type: Sprite

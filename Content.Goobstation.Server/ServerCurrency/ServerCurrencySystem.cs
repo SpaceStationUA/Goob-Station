@@ -15,6 +15,7 @@ using Content.Goobstation.Common.ServerCurrency;
 using Content.Server._RMC14.LinkAccount;
 using Content.Server.GameTicking;
 using Content.Server.Popups;
+using Content.Server.Sandbox;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -39,6 +40,7 @@ namespace Content.Goobstation.Server.ServerCurrency
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly LinkAccountManager _linkAccount = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly SandboxSystem _sandbox = default!; // Pirate
 
         private int _goobcoinsPerPlayer = 10;
         private int _goobcoinsNonAntagMultiplier = 1;
@@ -73,6 +75,9 @@ namespace Content.Goobstation.Server.ServerCurrency
 
         private void OnRoundEndText(RoundEndTextAppendEvent ev)
         {
+            if (_sandbox.IsSandboxEnabled) // Pirate
+                return;
+
             if (_players.PlayerCount < _goobcoinsMinPlayers)
                 return;
 

@@ -224,6 +224,12 @@ namespace Content.Server.Nutrition.EntitySystems
                     {
                         var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
                         _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, uid, true);
+
+                        // Pirate start - Smoke Sensitivity trait
+                        var mixture = _atmos.GetContainingMixture((uid, transform), ignoreExposed: true, excite: true);
+                        if (mixture != null)
+                            mixture.AdjustMoles(Gas.WaterVapor, 0.01f);
+                        // Pirate end - Smoke Sensitivity trait
                     }
                 }
 

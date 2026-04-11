@@ -1,0 +1,42 @@
+- type: entity
+  parent: BaseAction
+  id: ActionInvisibleBlockade
+  name: "Невидима барикада"
+  description: "Сформуйте невидиму барикаду завширшки в три тайли."
+  components:
+  - type: Action
+    raiseOnUser: true
+    useDelay: 60
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Goobstation/Actions/mime.rsi
+      state: invisible_blockade
+  - type: InstantAction
+    event: !type:InvisibleBlockadeActionEvent
+  - type: AdvancedMimeryAction
+
+- type: entity
+  parent: BaseAction
+  id: ActionFingerGuns
+  name: "Пальцеві пістолети"
+  description: "Вистріліть до трьох мімованих куль зі своїх пальців, які завдають шкоди та позбавляють цілі голосу. Не можна використовувати, якщо у вас щось у руках."
+  components:
+  - type: Action
+    raiseOnUser: true
+    useDelay: 0.25 # use delay is controlled by FingerGunsActionComponent
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Goobstation/Actions/mime.rsi
+      state: finger_guns
+  - type: TargetAction
+    checkCanAccess: false
+    repeat: true
+    interactOnMiss: false
+    range: 20
+  - type: EntityTargetAction
+    canTargetSelf: false
+  - type: WorldTargetAction
+    event: !type:FingerGunsActionEvent
+      prototype: BulletMime
+  - type: AdvancedMimeryAction
+  - type: FingerGunsAction

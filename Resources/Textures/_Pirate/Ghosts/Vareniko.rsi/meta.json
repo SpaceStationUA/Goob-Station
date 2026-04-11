@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "made by Vareniko for self using",
+    "size": {
+      "x": 50,
+      "y": 50
+    },
+    "states": [
+        {
+          "name": "animated",
+          "delays": [[0.2, 0.2, 0.2, 0.2]]
+        }
+      ]
+  }

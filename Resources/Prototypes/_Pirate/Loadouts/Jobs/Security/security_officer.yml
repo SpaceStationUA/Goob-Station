@@ -1,3 +1,23 @@
+# Head - Голова
+- type: loadout
+  id: SecurityHelmetLight
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorOfficer
+  equipment:
+    head: ClothingHeadHelmetSecurityLight
+  groupBy: "Helmets" # Pirate
+
+- type: loadout
+  id: SecurityOfficerSoft
+  equipment:
+    head: ClothingHeadHatSecsoftOfficer
+
+- type: loadout
+  id: SecurityOfficerBeret
+  equipment:
+    head: ClothingHeadHatBeretSecurityOfficer
+
 # Mask - Маски
 - type: loadout
   id: BlackBalaclava

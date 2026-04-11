@@ -43,6 +43,8 @@
     chemicalComposition:
       Zinc: 7.5
 
+# region SMG Power Cells
+# base smg power cell
 - type: entity
   id: BaseMilitaryPowerCellSMG
   abstract: true
@@ -64,7 +66,7 @@
     tags:
     - MilitaryPowerCellSMG
     - MilitaryPowerCell
-
+# basic smg power cell
 - type: entity
   name: "енергокомірка для ПП"
   description: "Військова енергокомірка, сумісна з лазерами масштабу ПП."
@@ -75,9 +77,9 @@
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_pistol_lethal.rsi
   - type: HitscanBatteryAmmoProvider
-    proto: SmallRedLaser
+    proto: SMGLaser
     fireCost: 50
-
+# x-ray smg power cell
 - type: entity
   name: "рентгенівська енергокомірка для ПП"
   description: "Військова енергокомірка, сумісна з лазерами масштабу ПП, що випромінює рентгенівські промені."
@@ -88,9 +90,9 @@
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_pistol_xray.rsi
   - type: HitscanBatteryAmmoProvider
-    proto: SmallXrayLaser
+    proto: SMGLaserXray
     fireCost: 50
-
+# overclocked smg power cell
 - type: entity
   name: "розігнана енергокомірка для ПП"
   description: "Військова енергокомірка, сумісна з лазерами масштабу ПП, яка була розігнана."
@@ -101,9 +103,25 @@
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_pistol_overcharge.rsi
   - type: HitscanBatteryAmmoProvider
-    proto: SmallOverchargedLaser
+    proto: SMGLaserOvercharged
     fireCost: 100
-
+# bluespace smg power cell
+- type: entity
+  name: "блюспейсова батарея для ПП"
+  description: "Мілітаризована батарея, сумісна з лазерами масштабу ПП, що стріляє променями каліброваних блюспейсових частинок, які пробивають кілька дюймів броні."
+  id: PowerCellBluespaceSMG
+  suffix: Full
+  parent: BaseMilitaryPowerCellSMG
+  components:
+  - type: Battery
+    maxCharge: 1500
+    startingCharge: 1500
+  - type: Sprite
+    sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_pistol_bluespace.rsi
+  - type: HitscanBatteryAmmoProvider
+    proto: SMGLaserBluespace
+    fireCost: 50
+# pulse smg power cell
 - type: entity
   name: "імпульсна енергокомірка для ПП"
   description: "Військова енергокомірка, сумісна з лазерами масштабу ПП, що випромінює імпульсні промені."
@@ -111,12 +129,12 @@
   suffix: Full
   parent: BaseMilitaryPowerCellSMG
   components:
-  - type: Sprite
-    sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_pistol_pulse.rsi
-  - type: HitscanBatteryAmmoProvider
-    proto: SmallPulseLaser
-    fireCost: 50
-
+    - type: Sprite
+      sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_pistol_bluespace.rsi
+    - type: HitscanBatteryAmmoProvider
+      proto: SMGLaserPulse
+      fireCost: 50
+# ion smg power cell
 - type: entity
   name: "іонна енергокомірка для ПП"
   description: "Військова енергокомірка, сумісна з лазерами масштабу ПП, що випромінює іонні промені."
@@ -127,10 +145,12 @@
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_pistol_ion.rsi
   - type: HitscanBatteryAmmoProvider
-    proto: SmallIonLaser
+    proto: SMGLaserIon
     fireCost: 50
+# endregion SMG Power Cells
 
-
+# region Sniper Power Cells
+# base sniper power cell
 - type: entity
   id: BaseMilitaryPowerCellSniper
   abstract: true
@@ -160,7 +180,7 @@
       Plasma: 60
     chemicalComposition:
       Zinc: 10
-
+# basic sniper power cell
 - type: entity
   name: "снайперська енергокомірка"
   description: "Військова енергокомірка, сумісна з лазерними снайперськими гвинтівками."
@@ -171,9 +191,9 @@
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_rifle_lethal.rsi
   - type: HitscanBatteryAmmoProvider
-    proto: MediumRedLaser
+    proto: SniperRedLaser
     fireCost: 100
-
+# x-ray sniper power cell
 - type: entity
   name: "рентгенівська снайперська енергокомірка"
   description: "Військова енергокомірка, сумісна з лазерними снайперськими гвинтівками, що випромінює рентгенівські промені."
@@ -184,9 +204,9 @@
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_rifle_xray.rsi
   - type: HitscanBatteryAmmoProvider
-    proto: MediumXrayLaser
+    proto: SniperXrayLaser
     fireCost: 100
-
+# overclocked sniper power cell
 - type: entity
   name: "розігнана снайперська енергокомірка"
   description: "Військова енергокомірка, сумісна з лазерними снайперськими гвинтівками, яка була розігнана."
@@ -197,9 +217,25 @@
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_rifle_overcharge.rsi
   - type: HitscanBatteryAmmoProvider
-    proto: MediumOverchargedLaser
+    proto: SniperOverchargedLaser
     fireCost: 200
-
+# bluespace sniper power cell
+- type: entity
+  name: "блюспейсова батарея для снайперської гвинтівки"
+  description: "Мілітаризована батарея, сумісна з лазерними снайперськими гвинтівками, що стріляє променями каліброваних блюспейсових частинок, які пробивають кілька дюймів броні."
+  id: PowerCellBluespaceSniper
+  suffix: Full
+  parent: BaseMilitaryPowerCellSniper
+  components:
+  - type: Battery
+    maxCharge: 1800
+    startingCharge: 1800
+  - type: Sprite
+    sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_rifle_bluespace.rsi
+  - type: HitscanBatteryAmmoProvider
+    proto: SniperBluespaceLaser
+    fireCost: 100
+# pulse sniper power cell
 - type: entity
   name: "імпульсна снайперська енергокомірка"
   description: "Військова енергокомірка, сумісна з лазерними снайперськими гвинтівками, що випромінює імпульсні промені."
@@ -207,12 +243,12 @@
   suffix: Full
   parent: BaseMilitaryPowerCellSniper
   components:
-  - type: Sprite
-    sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_rifle_pulse.rsi
-  - type: HitscanBatteryAmmoProvider
-    proto: MediumPulseLaser
-    fireCost: 100
-
+    - type: Sprite
+      sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_rifle_bluespace.rsi
+    - type: HitscanBatteryAmmoProvider
+      proto: SniperPulseLaser
+      fireCost: 100
+# ion sniper power cell
 - type: entity
   name: "іонна снайперська енергокомірка"
   description: "Військова енергокомірка, сумісна з лазерними снайперськими гвинтівками, що випромінює іонні промені."
@@ -223,10 +259,12 @@
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_rifle_ion.rsi
   - type: HitscanBatteryAmmoProvider
-    proto: MediumIonLaser
+    proto: SniperIonLaser
     fireCost: 100
+# endregion Sniper Power Cells
 
-
+# region Revolver Power Cells
+# base revolver power cell
 - type: entity
   id: BaseMilitaryPowerCellRevolver
   abstract: true
@@ -253,7 +291,7 @@
       Plasma: 20
     chemicalComposition:
       Zinc: 5
-
+# basic revolver power cell
 - type: entity
   name: "револьверна енергокомірка"
   description: "Військова енергокомірка, сумісна з лазерними револьверами."
@@ -277,9 +315,9 @@
             state: lethal
             shader: null
   - type: HitscanBatteryAmmoProvider
-    proto: MediumRedLaser
+    proto: RevolverRedLaser
     fireCost: 62.5
-
+# x-ray revolver power cell
 - type: entity
   name: "рентгенівська револьверна енергокомірка"
   description: "Військова енергокомірка, сумісна з лазерними револьверами, що випромінює рентгенівські промені."
@@ -303,9 +341,9 @@
             state: xray
             shader: null
   - type: HitscanBatteryAmmoProvider
-    proto: MediumXrayLaser
+    proto: RevolverXrayLaser
     fireCost: 62.5
-
+# overclocked revolver power cell
 - type: entity
   name: "розігнана револьверна енергокомірка"
   description: "Військова енергокомірка, сумісна з лазерними револьверами, яка була розігнана."
@@ -329,35 +367,38 @@
             state: overcharge
             shader: null
   - type: HitscanBatteryAmmoProvider
-    proto: MediumOverchargedLaser
+    proto: RevolverOverchargedLaser
     fireCost: 125
-
+# bluespace revolver power cell
 - type: entity
-  name: "імпульсна револьверна енергокомірка"
-  description: "Військова енергокомірка, сумісна з лазерними револьверами, що випромінює імпульсні промені."
-  id: PowerCellPulseRevolver
+  name: "блюспейсова батарея для лазерного револьвера"
+  description: "Мілітаризована батарея, сумісна з лазерними револьверами, що стріляє променями каліброваних блюспейсових частинок, які пробивають кілька дюймів броні."
+  id: PowerCellBluespaceRevolver
   suffix: Full
   parent: BaseMilitaryPowerCellRevolver
   components:
   - type: Sprite
     layers:
     - map: [ "base" ]
-      state: pulse_charge
+      state: bluespace_charge
       shader: unshaded
+  - type: Battery
+    maxCharge: 750
+    startingCharge: 750    
   - type: GenericVisualizer
     visuals:
       enum.AmmoVisuals.HasAmmo:
         base:
           True:
-            state: pulse_charge
+            state: bluespace_charge
             shader: unshaded
           False:
-            state: pulse
+            state: bluespace
             shader: null
   - type: HitscanBatteryAmmoProvider
-    proto: MediumPulseLaser
+    proto: RevolverBluespaceLaser
     fireCost: 62.5
-
+# ion revolver power cell
 - type: entity
   name: "іонна револьверна енергокомірка"
   description: "Військова енергокомірка, сумісна з лазерними револьверами, що випромінює іонні промені."
@@ -381,10 +422,12 @@
             state: ion
             shader: null
   - type: HitscanBatteryAmmoProvider
-    proto: MediumIonLaser
+    proto: RevolverIonLaser
     fireCost: 62.5
+# endregion Revolver Power Cells
 
-
+# region LMG Power Cell
+# basic lmg power cell
 - type: entity
   id: MilitaryPowerCellLMG
   parent: BaseMilitaryPowerCell
@@ -409,7 +452,7 @@
   - type: BatteryDrinkerSource
     maxAmount: 500
   - type: HitscanBatteryAmmoProvider
-    proto: SmallRedLaser
+    proto: LMGLaser
     fireCost: 15
   - type: Tag
     tags:
@@ -425,3 +468,45 @@
       Plasma: 200
     chemicalComposition:
       Zinc: 20
+      
+- type: entity
+  id: MilitaryPowerCellBluespaceLMG
+  parent: BaseMilitaryPowerCell
+  name: "блюспейсова батарея для легкого кулемета"
+  description: "Високотехнологічна блюспейсова батарея, що стріляє зарядженими блюспейсовими фотонними частинками, каліброваними так, щоб легко пробивати кілька дюймів броні."
+  components:
+    - type: Sprite
+      sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_cell_lmg_bluespace.rsi
+      layers:
+        - map: [ "enum.PowerCellVisualLayers.Base" ]
+          state: icon
+        - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+          state: o4
+          shader: unshaded
+    - type: Item
+      size: Large
+      shape:
+        - 0,0,2,1
+    - type: Battery
+      maxCharge: 2100
+      startingCharge: 2100
+    - type: BatteryDrinkerSource
+      maxAmount: 500
+    - type: HitscanBatteryAmmoProvider
+      proto: LMGLaserBluespace
+      fireCost: 15
+    - type: Tag
+      tags:
+        - MilitaryPowerCellLMG
+        - MilitaryPowerCell
+    - type: Clothing
+      slots: BELT
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 300
+        Gold: 40
+        Glass: 160
+        Plasma: 200
+      chemicalComposition:
+        Zinc: 20
+# endregion LMG Power Cell

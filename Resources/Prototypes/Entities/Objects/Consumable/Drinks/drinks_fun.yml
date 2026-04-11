@@ -93,6 +93,26 @@
   - type: TrashOnSolutionEmpty
     solution: drink
 
+- type: entity
+  parent: BluespaceBeaker
+  id: BottomlessLube
+  name: "бездонний бекер лубриканту"
+  suffix: DEBUG
+  description: "Цей аномальний бекер нескінченно виробляє космолюбрикант і тому має суворо охоронятися, щоб не потрапити в чужі руки."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 1000
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 1000
+  - type: SolutionRegeneration
+    solution: beaker
+    generated:
+      reagents:
+      - ReagentId: SpaceLube
+        Quantity: 200
 
 # Mopwata
 - type: weightedRandomFillSolution

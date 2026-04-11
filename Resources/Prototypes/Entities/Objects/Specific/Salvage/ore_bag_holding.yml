@@ -8,7 +8,7 @@
 - type: entity
   name: "рудний мішок утримання"
   id: OreBagOfHolding
-  parent: OreBag
+  parent: OreBagMagnetic # Lavaland Change
   description: "Міцний мішок для перевезення великої кількості руди, який підійде як мільярдерам-утилізаторам, так і багатим шахтарям. Прикріплена до пояса, притягує руду, що лежить поруч."
   components:
   - type: MagnetPickup

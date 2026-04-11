@@ -43,3 +43,5 @@ research-technology-extended-communication = Розширені комуніка
 research-technology-xenobiology = Ксенобіологічне обладнання
 research-technology-radio-music-communication = Радіомузичні комунікації
 research-technology-xenobag-holding = Блюспейсне ксенобіологічне обладнання
+research-technology-bluespace-munitions = Боєприпаси Блюспейсу
+research-technology-cloning = Біологічна реконструкція

@@ -36,9 +36,9 @@
     - type: StationAiVision
       range: 4
   - type: Sprite
-    sprite: _Goobstation/Clothing/Neck/Misc/nopro.rsi
+    sprite: _Pirate/Clothing/Neck/Misc/bodycam.rsi # Pirate bodycam resprite
   - type: Clothing
-    sprite: _Goobstation/Clothing/Neck/Misc/nopro.rsi
+    sprite: _Pirate/Clothing/Neck/Misc/bodycam.rsi # Pirate bodycam resprite
     quickEquip: true
 
 - type: entity

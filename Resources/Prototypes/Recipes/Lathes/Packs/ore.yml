@@ -28,5 +28,6 @@
   id: AdvancedSmelting
   recipes:
   - SheetPlasteel1
+  - SheetPlastitanium1 # Pirate
   - SheetUGlass1
   - SheetRUGlass1

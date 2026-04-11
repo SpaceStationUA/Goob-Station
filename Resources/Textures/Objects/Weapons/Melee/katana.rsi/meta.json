@@ -19,11 +19,30 @@
             "directions": 4
         },
         {
+            "name": "wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-right",
+            "directions": 4
+        },
+        {
             "name": "equipped-BACKPACK",
             "directions": 4
         },
         {
             "name": "equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "handle-ICON"
+        },
+        {
+            "name": "handle-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "handle-BELT",
             "directions": 4
         }
     ]

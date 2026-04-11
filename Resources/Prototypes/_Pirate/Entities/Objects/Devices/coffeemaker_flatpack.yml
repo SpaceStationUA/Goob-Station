@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseFlatpack
+  id: CoffeemakerFlatpackPirate
+  name: "плоский пакет кавоварки"
+  description: "Набір для збирання кавоварки Modello 3."
+  components:
+  - type: Flatpack
+    entity: CoffeemakerMachinePirate
+    checkObstruction: false
+
+- type: entity
+  parent: BaseFlatpack
+  id: CoffeemakerImpressaFlatpackPirate
+  name: "плоский пакет кавоварки Impressa"
+  description: "Набір для збирання кавоварки Impressa."
+  components:
+  - type: Flatpack
+    entity: CoffeemakerImpressaMachinePirate
+    checkObstruction: false

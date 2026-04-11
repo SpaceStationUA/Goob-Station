@@ -142,9 +142,9 @@
 - type: entity
   parent: [ PinpointerBase, BaseXenoborgContraband ]
   id: PinpointerMothership
-  name: "пінпоінтер до ядра матері"
+  name: "пінпоінтер ядра"
   suffix: Mothership
-  description: "Ручний пристрій стеження, який вказує напрямок до ядра материнського корабля."
+  description: "Ручний пристрій відстеження, що вказує напрямок до ядра Мотершипа."
   components:
   - type: Sprite
     layers:
@@ -161,4 +161,3 @@
       components:
       - XenoborgMothership
     targetName: the mothership # Goob edit
-

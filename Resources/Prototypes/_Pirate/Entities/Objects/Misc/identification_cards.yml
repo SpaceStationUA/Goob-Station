@@ -166,3 +166,22 @@
     heldPrefix: silver
   - type: PresetIdCard
     job: AdministrativeAssistant
+
+- type: entity
+  parent: [IDCardStandard, SolAllianceInfo]
+  id: SANIdCard
+  name: "RFID-мітки Флоту Соляріанського Альянсу"
+  components:
+    - type: Icon
+      sprite: _Pirate/Clothing/Neck/Misc/dogtags.rsi
+      state: icon
+    - type: Sprite
+      sprite: _Pirate/Clothing/Neck/Misc/dogtags.rsi
+      state: icon
+    - type: Clothing
+      sprite: _Pirate/Clothing/Neck/Misc/dogtags.rsi
+      slots:
+        - idcard
+    - type: Access
+      tags:
+        - SAN

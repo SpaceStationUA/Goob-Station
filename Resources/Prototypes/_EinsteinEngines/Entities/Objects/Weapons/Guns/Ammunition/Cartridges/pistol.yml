@@ -1,11 +1,11 @@
 - type: entity
-  id: CartridgePistolMindbreaker
-  name: "патрон (.35 auto mindbreaker)"
-  description: "Мабуть, найпопулярніший калібр на ринку, що використовується у всіляких пістолетах та пістолетах-кулеметах."
+  id: CartridgePistolCryptobiolin
+  name: "патрон (.35 auto Криптобіолін)"
+  description: "Мабуть, це найпопулярніший калібр на ринку, який використовується в найрізноманітніших пістолетах і пістолетах-кулеметах."
   parent: [ BaseCartridgePistol, BaseMantisContraband ]
   components:
   - type: CartridgeAmmo
-    proto: BulletPistolMindbreaker
+    proto: BulletPistolCryptobiolin
   -  type: Sprite
      layers:
        - state: base

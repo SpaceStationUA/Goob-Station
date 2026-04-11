@@ -127,7 +127,8 @@ public abstract partial class SharedGunSystem
         switch (component)
         {
             case ProjectileBatteryAmmoProviderComponent proj:
-                var ent = Spawn(proj.Prototype, coordinates);
+                // Pirate: gunplay
+                var ent = PredictedSpawnAtPosition(proj.Prototype, coordinates);
                 return (ent, EnsureShootable(ent));
             case HitscanBatteryAmmoProviderComponent hitscan:
                 return (null, ProtoManager.Index<HitscanPrototype>(hitscan.Prototype));

@@ -9,3 +9,16 @@
 - type: accessLevel
   id: InterdyneOfficer
   name: id-card-access-level-interdyne-officer
+  
+- type: accessGroup
+  id: Interdyne
+  tags:
+  - Interdyne
+  - InterdyneCommand
+  - InterdyneOfficer
+
+- type: accessGroup
+  id: Syndicate
+  tags:
+  - NuclearOperative
+  - SyndicateAgent

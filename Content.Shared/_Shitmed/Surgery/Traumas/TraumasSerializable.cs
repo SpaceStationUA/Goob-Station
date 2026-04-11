@@ -13,6 +13,7 @@ public enum TraumaType
     VeinsDamage,
     NerveDamage, // pain
     Dismemberment,
+    FaceMutilation, // DOWNSTREAM-TPirates: face mutilation
 }
 
 #region Organs

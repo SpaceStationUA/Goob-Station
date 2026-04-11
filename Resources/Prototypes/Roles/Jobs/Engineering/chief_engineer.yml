@@ -161,28 +161,20 @@
       - EinsteinEngines
       - ZavodskoiInterstellar
       - HephaestusIndustries
-    - !type:CharacterLifepathRequirement
-      inverted: true
-      lifepaths:
-      - Cultist
-      - Smuggler
-      - ExCriminal
-      - Enforcer
-      - Hacker
-      - ConArtist
     # Pirate contractor end
   weight: 10
   startingGear: ChiefEngineerGear
   icon: "JobIconChiefEngineer"
   supervisors: job-supervisors-captain
   #canBeAntag: false
+  whitelisted: true # Pirate
   antagAdvantage: 75 # Goobstation
   guides: # goobstation
   - Engineering
-  - ChiefEngineer SOP
-  - Engineering SOP
+  - ChiefEngineerSOP
+  - EngineeringSOP
   - Command
-  - Emergencies SOP
+  - EmergenciesSOP
   goobcoins: 40 #Goob content
   access:
   - Maintenance
@@ -208,9 +200,9 @@
     eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetAltEngineering # Goobstation
     belt: ClothingBeltUtilityEngineering
-  storage:
-    back:
-    - Flash
+  #storage: # Pirate
+    #back: # Pirate
+    #- Flash # Pirate
     #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit

@@ -1,0 +1,13 @@
+- type: entity
+  parent: BaseAction
+  id: ActionMouseCall
+  name: "Виклик мишей"
+  description: "Покличте найближчих мишей до себе."
+  components:
+  - type: Action
+    icon:
+      sprite: _Goobstation/Actions/call.rsi
+      state: icon
+    useDelay: 15
+  - type: InstantAction
+    event: !type:MobCallActionEvent

@@ -16,3 +16,5 @@ toolshed-verb-mark-description = Поміщає цей об'єкт у змінн
 
 admin-verbs-freeze-and-mute = Заморозити і замутити
 export-entity-verb-get-data-text = Експортувати спрайт
+admin-verbs-camera = Відкрити камеру
+admin-verbs-camera-description = Відкрити вікно камери, яке слідує за вибраною сутністю.

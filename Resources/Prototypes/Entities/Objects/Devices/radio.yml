@@ -32,7 +32,10 @@
   - type: TelecomExempt
   - type: RadioMicrophone
     broadcastChannel: Handheld
+    toggleOnInteract: false # Pirate - Handheld Radios port
+    frequency: 1330 # Pirate - Handheld Radios port
   - type: RadioSpeaker
+    toggleOnInteract: false # Pirate - Handheld Radios port
     channels:
     - Handheld
   - type: ListenBlacklist # Goobstation - annoying as shit
@@ -53,6 +56,14 @@
   - type: Tag
     tags:
     - Radio
+  # Pirate start - Handheld Radios port
+  - type: ActivatableUI
+    key: enum.HandheldRadioUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.HandheldRadioUiKey.Key:
+        type: HandheldRadioBoundUserInterface
+  # Pirate end - Handheld Radios port
 
 - type: entity
   name: "радіостанція охорони"

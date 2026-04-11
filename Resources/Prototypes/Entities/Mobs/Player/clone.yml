@@ -82,6 +82,8 @@
   - Vampirism
   - BloodDeficiency
   # Pirate end
+  eventComponents:
+  - PhysicalPotential # Pirate
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit

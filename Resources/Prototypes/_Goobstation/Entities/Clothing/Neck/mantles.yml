@@ -19,3 +19,15 @@
   - type: Clothing
     sprite: _Goobstation/Clothing/Neck/Mantle/bsomantle.rsi
 
+#Senior Security mantle
+- type: entity
+  parent: [ ClothingNeckBase ]
+  id: ClothingNeckMantleVeteranSecurity
+  name: "мантія ветерана охорони"
+  description: "Особисто вручена керівником служби безпеки за відбиття атаки Синдикату; одного погляду на неї досить, щоб трохи підняти бойовий дух"
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Neck/Mantle/veteran_security.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Neck/Mantle/veteran_security.rsi
+

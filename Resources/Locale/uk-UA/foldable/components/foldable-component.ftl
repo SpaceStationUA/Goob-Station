@@ -11,6 +11,8 @@ fold-rollsleeves-verb = закатати рукава
 fold-unrollsleeves-verb = розкатати рукава вниз
 fold-verb-clothing-jacket = Зняти куртку
 unfold-verb-clothing-jacket = Одягти куртку
+
+# Використано тут, бо це добре працює для перемикання приховуваних шарів - Goob
 foldable-fold-fail = Ви не можете скласти {$object} тут.
 foldable-unfold-fail = Ви не можете розкласти {$object} тут.
 fold-showhair-verb = Показати волосся

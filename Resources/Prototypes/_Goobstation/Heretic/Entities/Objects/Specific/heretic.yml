@@ -13,6 +13,7 @@
 - type: entity
   parent: [ BaseItem, BaseMagicalContraband ]
   id: CodexCicatrix
+  suffix: MagicItem
   name: "кодекс шрамів"
   description: "Цей важкий том сповнений загадкових карлючок та неможливих діаграм. За легендою, його можна розшифрувати, щоб розкрити таємниці завіси між світами."
   components:
@@ -131,25 +132,3 @@
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
   - type: Reflective
     reflective: None
-
-- type: entity
-  id: Inkofimaginination
-  name: "Чорнило уяви"
-  description: "Покличте до великого мінімального, щоб породити справжнє існування... Завершальна істина"
-  parent: BaseItem
-  components:
-  - type: UnholyItem
-  - type: Sprite
-    sprite: _Goobstation/Heretic/book.rsi
-    state: icon
-  - type: Icon
-    sprite: _Goobstation/Heretic/book.rsi
-    state: icon
-  - type: SpawnItemsOnUse
-    items:
-      - id: EldritchInfluence
-      - id: EldritchInfluence
-  - type: Tag
-    tags:
-    - HereticItem
-

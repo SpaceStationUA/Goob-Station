@@ -300,7 +300,7 @@
     maxIntensity: 0.01
     intensitySlope: 1
     totalIntensity: 0.01
-  - type: SoundOnTrigger
+  - type: EmitSoundOnTrigger
     sound:
       collection: Explosion
 
@@ -1079,47 +1079,20 @@
   suffix: Evil
 
 - type: entity
-  parent: BaseItem
-  id: ToyMansusGrasp
-  name: "зелена хватка"
-  description: "Сила Богів Жартів, спрямована через вашу хватку. Служба безпеки не оцінить жарт."
-  components:
-  - type: Sprite
-    sprite: _Goobstation/Heretic/mansus_grasp.rsi
-    state: icon
-  - type: MeleeWeapon
-    attackRate: 1.5
-    angle: 0
-    animation: WeaponArcThrust
-    wideAnimationRotation: 90
-    damage:
-      types:
-        Blunt: 0
-    soundHit:
-      path: /Audio/Items/welder.ogg
-  - type: Item
-    size: Small
-    sprite: _Goobstation/Heretic/mansus_grasp.rsi
-  - type: UseDelay
-    delay: 1.5
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/welder.ogg
-  - type: Construction
-    graph: ToyMansusGrasp
-    node: toymansusgrasp
+  name: "Злий Туфіш"
+  parent: PlushieTwofish
+  id: EvilPlushieTwofish
+  suffix: Evil
 
+  
 - type: entity
   parent: BaseItem
   id: ToyBladeEldritch
-  name: "репліка ельдричного клинка"
-  description: "Пластиковий зелений серпоподібний клинок, оздоблений декоративним оком. Вам здається, що за вами стежать..."
+  name: "іграшковий клинок"
+  description: "Пластикове жовте серповидне лезо, прикрашене декоративним оком. Вам здається, що за вами стежать..."
   components:
-  - type: Construction
-    graph: ToyBlades
-    node: start
   - type: Sprite
-    sprite: _Goobstation/Heretic/Blades/eldritch_blade.rsi
+    sprite: _Goobstation/Heretic/Blades/eldrich_blade-toy.rsi
     state: icon
   - type: MeleeWeapon
     attackRate: 1.5
@@ -1131,133 +1104,38 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: Small
-    sprite: _Goobstation/Heretic/Blades/eldritch_blade-inhands.rsi
+    sprite: _Goobstation/Heretic/Blades/eldrich_blade-toy-inhands.rsi
+
 
 - type: entity
-  parent: ToyBladeEldritch
-  id: ToyBladeAsh
-  name: "репліка попелястого клинка"
-  description: "Розплавлений і невикований, шмат пластика, викривлений до попелу й шлаку. Недомарений, він прагне бути більшим, ніж є."
+  parent: BasePlushie
+  id: PlushieTwofish
+  name: "плюшевий Туфіш"
+  description: "Зблизька виглядає як чадді"
   components:
   - type: Sprite
-    sprite: _Goobstation/Heretic/Blades/blade_ash.rsi
-    state: icon
-  - type: MeleeWeapon
-    attackRate: 1.5
-    wideAnimationRotation: -125
-    damage:
-      types:
-        Blunt: 0
-    soundHit:
-      path: /Audio/Weapons/bladeslice.ogg
+    sprite: _Goobstation/Objects/Fun/toys.rsi
+    state: plushie_twofish
   - type: Item
-    size: Small
-    sprite: _Goobstation/Heretic/Blades/blade_ash-inhand.rsi
-
-- type: entity
-  parent: ToyBladeEldritch
-  id: ToyBladeBlade
-  name: "репліка розтрощеного клинка"
-  description: "Гордий клинок, відсічений і розірваний. У люті він ріже. Пластикові шрами навіки прив’язують його до темної мети."
-  components:
-  - type: Sprite
-    sprite: _Goobstation/Heretic/Blades/blade_blade.rsi
-    state: icon
-  - type: MeleeWeapon
-    attackRate: 1.5
-    wideAnimationRotation: -125
-    damage:
-      types:
-        Blunt: 0
-    soundHit:
-      path: /Audio/Weapons/bladeslice.ogg
-  - type: Item
-    size: Small
-    sprite: _Goobstation/Heretic/Blades/blade_blade-inhand.rsi
-
-- type: entity
-  parent: ToyBladeEldritch
-  id: ToyBladeFlesh
-  name: "репліка кривавого клинка"
-  description: "Серпоподібний клинок, народжений із плоттю викривленого пластика. У свідомості він прагне поширити на інших нестерпну комедію, яку пережив через своє моторошне походження."
-  components:
-  - type: Sprite
-    sprite: _Goobstation/Heretic/Blades/blade_flesh.rsi
-    state: icon
-  - type: MeleeWeapon
-    attackRate: 1.5
-    wideAnimationRotation: -125
-    damage:
-      types:
-        Blunt: 0
-    soundHit:
-      path: /Audio/Weapons/bladeslice.ogg
-  - type: Item
-    size: Small
-    sprite: _Goobstation/Heretic/Blades/blade_flesh-inhand.rsi
-
-- type: entity
-  parent: ToyBladeEldritch
-  id: ToyBladeRust
-  name: "репліка іржавого клинка"
-  description: "Цей серпоподібний клинок занепалий, в’яне до іржі. Та все одно кусає, розриваючи плоть і кістки зазубреним, гнилим пластиком."
-  components:
-  - type: Sprite
-    sprite: _Goobstation/Heretic/Blades/blade_rust.rsi
-    state: icon
-  - type: MeleeWeapon
-    attackRate: 1.5
-    wideAnimationRotation: -125
-    damage:
-      types:
-        Blunt: 0
-    soundHit:
-      path: /Audio/Weapons/bladeslice.ogg
-  - type: Item
-    size: Small
-    sprite: _Goobstation/Heretic/Blades/blade_rust-inhand.rsi
-
-- type: entity
-  parent: ToyBladeEldritch
-  id: ToyBladeVoid
-  name: "репліка клинка порожнечі"
-  description: "Позбавлений будь-якої субстанції, цей клинок віддзеркалює комедію. Він — справжній образ безглуздя й хаосу, що виникає після його застосування."
-  components:
-  - type: Sprite
-    sprite: _Goobstation/Heretic/Blades/blade_void.rsi
-    state: icon
-  - type: MeleeWeapon
-    attackRate: 1.5
-    wideAnimationRotation: -125
-    damage:
-      types:
-        Blunt: 0
-    soundHit:
-      path: /Audio/Weapons/bladeslice.ogg
-  - type: Item
-    size: Small
-    sprite: _Goobstation/Heretic/Blades/blade_void-inhand.rsi
-
-- type: entity
-  parent: BaseItem
-  id: ToyCodexCicatrix
-  name: "кодекс Цікатрікс"
-  description: "Цей легкий фоліант сповнений загадкових карлючок і заплутаних схем. За легендою, його можна розшифрувати й відкрити таємниці завіси між світами."
-  components:
-  - type: UseDelay
-    delay: 1.5
+    heldPrefix: plushietwofish
+  - type: Clothing
+    quickEquip: true
+    sprite: _Goobstation/Objects/Fun/toys.rsi
+    equippedPrefix: plushietwofish
+    slots:
+    - HEAD
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/_Goobstation/Heretic/castsummon.ogg
-  - type: Sprite
-    sprite: _Goobstation/Heretic/book.rsi
-    layers:
-    - state: icon
-      map: [ "base" ]
-  - type: Item
-    size: Small
-    sprite: _Goobstation/Heretic/book.rsi
-  - type: Construction
-    graph: ToyCodexCicatrix
-    node: toycodexcicatrix
-
+      path: /Audio/Effects/Chemistry/bubbles.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/Chemistry/bubbles.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Effects/Chemistry/bubbles.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/Chemistry/bubbles.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Chemistry/bubbles.ogg

@@ -32,6 +32,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.Containers;
+using Content.Client._Pirate.Photo; // Pirate: camera
 
 namespace Content.Client.DoAfter;
 
@@ -47,6 +48,7 @@ public sealed class DoAfterOverlay : Overlay
     private readonly ProgressColorSystem _progressColor;
     private readonly SharedContainerSystem _container;
     private readonly SpriteSystem _sprite;
+    private readonly PhotoCaptureFilterSystem _photoCaptureFilter; // Pirate: camera
 
     private readonly Texture _barTexture;
     private readonly ShaderInstance _unshadedShader;
@@ -72,6 +74,7 @@ public sealed class DoAfterOverlay : Overlay
         _container = _entManager.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
         _progressColor = _entManager.System<ProgressColorSystem>();
         _sprite = _entManager.System<SpriteSystem>();
+        _photoCaptureFilter = _entManager.System<PhotoCaptureFilterSystem>(); // Pirate: camera
         var sprite = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
         _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
 
@@ -80,6 +83,11 @@ public sealed class DoAfterOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        #region Pirate: camera
+        if (_photoCaptureFilter.IsSuppressedForEye(args.Viewport.Eye, PhotoCaptureSuppressionMask.StatusIndicators))
+            return;
+        #endregion
+
         var handle = args.WorldHandle;
         var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();

@@ -45,3 +45,4 @@ lathe-category-steel = Сталь
 lathe-category-white = Білий
 lathe-category-wood = Деревина
 lathe-category-marble = Мармур
+lathe-category-modules = Модулі

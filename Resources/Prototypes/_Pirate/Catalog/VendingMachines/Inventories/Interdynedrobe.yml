@@ -4,7 +4,7 @@
     ClothingUniformJumpskirtOperative: 4
     ClothingUniformJumpsuitOperative: 4
     CigPackSyndicate: 12 # ЦІ ЦИГАРКИ ВИРОБНИЦВА ІНТЕРДАЙНУ ТА НАЛЕЖАТЬ ЙОМУ!!!
-    FlippoLighter: 2
+    InterdyneFlippo: 4 # Подякуємо апстріму від Goob https://github.com/Goob-Station/Goob-Station/pull/4307
     Lighter: 2
     ClothingOuterCoatInterdyneWhite: 8
     ClothingOuterCoatInterdyneBlack: 8
@@ -20,8 +20,8 @@
 #   ClothingHeadHatInterdyneOfficer
 #   ClothingHeadHatBeretInterdyneDeputy (Над цим працює Крафт)
     CombatKnife: 3
-    ClothingUniformJumpskirtBrigmedic: 4
-    ClothingUniformJumpsuitBrigmedic: 4
+#   ClothingUniformJumpskirtBrigmedic: 4 (Спрайт цього одягу не сильно підходить)
+#   ClothingUniformJumpsuitBrigmedic: 4
     ClothingUniformJumpskirtDetective: 4
     ClothingUniformJumpsuitDetective: 4
     ClothingUniformJumpskirtDetectiveGrey: 4

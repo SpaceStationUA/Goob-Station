@@ -18,8 +18,8 @@
     BSCrystal: 20
 
 - type: latheRecipe
-  id: MagazineBoxPistolMindbreaker
-  result: MagazineBoxPistolMindbreaker
+  id: MagazineBoxPistolCryptobiolin
+  result: MagazineBoxPistolCryptobiolin
   completetime: 5
   materials:
     Plastic: 1250
@@ -27,8 +27,8 @@
     BSCrystal: 75
 
 - type: latheRecipe
-  id: MagazinePistolMindbreaker
-  result: MagazinePistolMindbreaker
+  id: MagazinePistolCryptobiolin
+  result: MagazinePistolCryptobiolin
   completetime: 4
   materials:
     Steel: 400

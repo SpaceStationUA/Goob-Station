@@ -1,0 +1,269 @@
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchLove
+  components:
+  - type: SeeingRainbowsStatusEffect
+  - type: MovementModStatusEffect
+    walkSpeedModifier: 0.95
+    sprintSpeedModifier: 0.95
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchParanoia
+  components:
+  - type: SeeingRainbowsStatusEffect
+  - type: MovementModStatusEffect
+    walkSpeedModifier: 0.92
+    sprintSpeedModifier: 0.92
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: BlurryVision
+      magnitude: 4.5
+      correctionPower: 1.5
+    - type: PirateClientTextureVision
+      mode: Xeno
+      range: 12
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchRage
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: WitchRage
+      faction: SimpleHostile
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchInvisibility
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: WitchInvisibility
+      visibility: -1.5
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchMindFog
+  components:
+  - type: MovementModStatusEffect
+    walkSpeedModifier: 0.9
+    sprintSpeedModifier: 0.9
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: BlurryVision
+      magnitude: 5
+      correctionPower: 2
+    - type: WitchMindFog
+      shuffleInterval: 0.45
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchMirrorCurse
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: WitchMirrorCurse
+      range: 10
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchSoulShadow
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: Trail
+      particleAmount: 1
+      maxParticleAmount: 6
+      frequency: 0.2
+      lifetime: 2.2
+      alphaLerpAmount: 0.1
+      alphaLerpTarget: 0
+      positionLerpAmount: 0.08
+      color: "#00000088"
+      renderedEntityRotationStrategy: RenderedEntity
+      spawnRemainingTrail: false
+    - type: EntityTrail
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchBloodBond
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: WitchBloodBond
+      radius: 3
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchSubstitution
+  components:
+  - type: WitchSubstitutionStatusEffect
+    range: 6
+    fallbackDamage: 5
+    interval: 1.5
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchBlackBile
+  components:
+  - type: SeeingRainbowsStatusEffect
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: BlurryVision
+      magnitude: 6
+      correctionPower: 1.2
+    - type: PirateClientTextureVision
+      mode: Skeleton
+      range: 12
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchEcho
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: WitchEcho
+      repeats: 3
+      delaySeconds: 1.65
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchNameCurse
+  components:
+  - type: WitchNameCurseStatusEffect
+    range: 7
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectWitchHungerPotion
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: WitchHungerPotion
+      radius: 8
+      hungerDelta: -4
+      interval: 2
+      aliveDevourTime: 3.25
+      stasiziumPerVictim: 3
+    - type: PirateClientTextureVision
+      mode: Food
+      range: 10
+    - type: Devourer
+      devourTime: 2.5
+      structureDevourTime: 999
+      chemical: Nutriment
+      healRate: 2
+      stomachStorageWhitelist:
+        components:
+        - MobState
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectAlchemistBubbleGas
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: AlchemistBubbleGas
+      minInterval: 0.75
+      maxInterval: 1.4
+      jumpSpeed: 4.5
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectAlchemistGravityPotion
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: GravityPotion
+      radius: 4.5
+      pullStrength: 5
+      interval: 0.35
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectAlchemistCatalyst
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: AlchemistCatalyst
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectAlchemistSoulCopperas
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: AlchemistSoulCopperas
+      damagePerTick: 4
+      corrodeThreshold: 8
+      interval: 2
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectAlchemistClownTrail
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: NoSlip
+    - type: AlchemistTrail
+      trailReagent: SpaceLube
+      spillQuantity: 1.78
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectAlchemistMimicJuice
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: AlchemistMimicJuice
+      searchRadius: 7
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: StatusEffectAlchemistNitricSlowdown
+  components:
+  - type: MovementModStatusEffect
+    walkSpeedModifier: 0.8
+    sprintSpeedModifier: 0.8
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectAlchemistNitricEssence
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: AlchemistNitricEssence
+      radius: 3
+      interval: 0.5
+      temperatureDelta: -65
+      atmosphereHeatDelta: -60000
+      slowdownEffect: StatusEffectAlchemistNitricSlowdown
+      slowdownSeconds: 3
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectAlchemistMagnusElixir
+  components:
+  - type: MovementModStatusEffect
+    walkSpeedModifier: 1.45
+    sprintSpeedModifier: 1.45
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: StaminaResistance
+      damageCoefficient: 0.35
+      worn: false
+    - type: AlchemistMagnusElixir
+      collapseKnockdownSeconds: 5
+      collapseParalyzeSeconds: 3
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectAntiMagicWard
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: AntiMagicWard
+
+
+

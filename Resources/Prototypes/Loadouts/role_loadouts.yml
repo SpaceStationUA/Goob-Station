@@ -145,7 +145,7 @@
   - HoPJumpsuit
   - HoPBackpack
   - HoPOuterClothing
-  - Glasses
+ #- Glasses # Pirate
   - CommandSelfDefense # Pirate
   - Survival
   - Trinkets
@@ -182,7 +182,7 @@
   - PiratePassengerNeck
  # Pirate wardrobe end ^^^
   #- PassengerNeck # Pirate wardrobe
-  - PassengerFace 
+  - PassengerFace
   - PassengerGloves
   #- PassengerOuterClothing # Pirate wardrobe
   #- PassengerShoes # Pirate wardrobe
@@ -445,6 +445,7 @@
   - GroupTankHarness
   - SalvageSpecialistNeck # Goobstation
   - SalvageSpecialistBackpack
+  - SalvageSpecialistJumpsuit # Goobstation
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
   - Glasses
@@ -603,7 +604,7 @@
   - HeadofSecurityJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
-  - SeniorSecurityWeapon # Pirate
+  - SecurityWeapon # Pirate
   - SecurityBelt
   - HeadofSecurityOuterClothing
   - HeadofSecurityShoes # Goobstation edit
@@ -625,7 +626,7 @@
   - WardenJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
-  - SeniorSecurityWeapon # Pirate
+  - SecurityWeapon # Pirate
   - SecurityNeck
   - SecurityBelt
   - WardenOuterClothing
@@ -643,7 +644,7 @@
 - type: roleLoadout
   id: JobSecurityOfficer
   groups:
-  - SecurityHead
+  - SecurityOfficerHead # Pirate
   - SecurityJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation
@@ -687,6 +688,7 @@
 - type: roleLoadout
   id: JobSecurityCadet
   groups:
+  - SecurityHead # Pirate
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SecurityMelee # Goobstation

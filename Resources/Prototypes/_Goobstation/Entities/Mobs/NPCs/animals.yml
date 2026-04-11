@@ -740,6 +740,7 @@
       - Dog
       understands:
       - Dog
+      - TauCetiBasic
 
 - type: entity
   name: "кінь"
@@ -927,3 +928,59 @@
       Male: ClownGoblin
       Female: ClownGoblin
       Unsexed: ClownGoblin
+
+- type: entity
+  name: "гірчична тарганоміль"
+  parent: MobMothroach
+  id: MobMothroachMustard
+  description: "Чудовий результат того, як найкращі кухарі світу схрестили м'ясо із соусом."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Mobs/Animals/mustard_mothroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mothroach
+  - type: FaxableObject
+    insertingState: inserting_mothroach_mustard
+
+- type: entity
+  name: "леопардова тарганоміль"
+  parent: MobMothroach
+  id: MobMothroachLeopard
+  description: "Чарівний результат численних спроб схрестити комах із хижаками."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Mobs/Animals/leopard_mothroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mothroach
+  - type: FaxableObject
+    insertingState: inserting_mothroach_leopard
+
+- type: entity
+  name: "тарганоміль цекропія"
+  parent: MobMothroach
+  id: MobMothroachCecropia
+  description: "Чарівний результат численних спроб схрестити рід із родини кропивових із тарганами."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Mobs/Animals/cecropia_mothroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mothroach
+  - type: FaxableObject
+    insertingState: inserting_mothroach_cecropia
+
+- type: entity
+  name: "місячна тарганоміль"
+  parent: MobMothroach
+  id: MobMothroachLunar
+  description: "Хтось залишив цю тарганоміль під місячним сяйвом."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Mobs/Animals/lunar_mothroach.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mothroach
+  - type: FaxableObject
+    insertingState: inserting_mothroach_lunar

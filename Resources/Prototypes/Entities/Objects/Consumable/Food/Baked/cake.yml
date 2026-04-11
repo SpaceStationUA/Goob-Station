@@ -1293,13 +1293,148 @@
     tags:
     - Slice
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/Baked/cake.rsi
-      state: suppermatter-shard
     entries:
-      burger:
-        name: food-sequence-burger-content-suppermatter
-      taco:
-        name: food-sequence-content-suppermatter
+      Taco: Suppermatter
+      Burger: SuppermatterBurger
   - type: Item
     heldPrefix: suppermatter-shard
+
+- type: entity
+  name: "бавовняний торт"
+  parent: FoodCakeBase
+  id: FoodCakeCotton
+  description: "Торт із волокнистою глазур’ю та грудочкою бавовни зверху."
+  components:
+  - type: Sprite
+    state: cotton
+  - type: SliceableFood
+    slice: FoodCakeCottonSlice
+  - type: Tag
+    tags:
+    - Cake
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Item
+    heldPrefix: cotton
+
+- type: entity
+  name: "шматок бавовняного торта"
+  parent: FoodCakeSliceBase
+  id: FoodCakeCottonSlice
+  description: "Шматок бавовняного торта. Можете просто злизати глазур, це нормально."
+  components:
+  - type: Sprite
+    state: cotton-slice
+  - type: Tag
+    tags:
+    - Cake
+    - ClothMade
+    - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Fiber
+          Quantity: 2
+  - type: Item
+    heldPrefix: cotton-slice
+
+# Motivating
+
+- type: entity
+  name: "ягідна насолода"
+  parent: FoodCakeBase
+  id: FoodCakeBerryDelight
+  description: "Це торт, що наближається."
+  components:
+  - type: Sprite
+    state: berry_delight
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - berry
+      - motivating
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 40
+        - ReagentId: Vitamin
+          Quantity: 10
+        - ReagentId: Milk
+          Quantity: 10
+  - type: SliceableFood
+    slice: FoodCakeBerryDelightSlice
+  - type: Tag
+    tags:
+    - Cake
+    - Fruit
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      - state: alpha-filling-inhand-left
+        color: red
+      right:
+      - state: plain-inhand-right
+      - state: alpha-filling-inhand-right
+        color: red
+
+- type: entity
+  name: "шматок «Ягідної насолоди»"
+  parent: FoodCakeSliceBase
+  id: FoodCakeBerryDelightSlice
+  description: "Встроміть виделку, а голод залиште на самоті."
+  components:
+  - type: Sprite
+    state: berry_delight_slice
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - berry
+      - motivating
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Milk
+          Quantity: 2
+  - type: Tag
+    tags:
+    - Cake
+    - Fruit
+    - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-slice-inhand-left
+        color: white
+      - state: alpha-slice-filling-inhand-left
+        color: red
+      right:
+      - state: alpha-slice-inhand-right
+        color: white
+      - state: alpha-slice-filling-inhand-right
+        color: red
