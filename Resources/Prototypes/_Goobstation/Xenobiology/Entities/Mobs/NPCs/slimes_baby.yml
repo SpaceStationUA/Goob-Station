@@ -1,7 +1,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyGrey
-  name: grey slime
+  name: "сірий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: GreyMutation
@@ -9,7 +9,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyOrange
-  name: orange slime
+  name: "помаранчевий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: OrangeMutation
@@ -17,7 +17,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyPurple
-  name: purple slime
+  name: "фіолетовий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: PurpleMutation
@@ -25,7 +25,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyBlue
-  name: blue slime
+  name: "синій слайм"
   components:
   - type: PendingSlimeSpawn
     breed: BlueMutation
@@ -33,7 +33,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyMetal
-  name: metal slime
+  name: "металевий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: MetalMutation
@@ -41,7 +41,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyYellow
-  name: yellow slime
+  name: "жовтий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: YellowMutation
@@ -49,7 +49,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyDarkPurple
-  name: dark purple slime
+  name: "темно-фіолетовий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: DarkPurpleMutation
@@ -57,7 +57,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyDarkBlue
-  name: dark blue slime
+  name: "темно-синій слайм"
   components:
   - type: PendingSlimeSpawn
     breed: DarkBlueMutation
@@ -65,7 +65,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabySilver
-  name: silver slime
+  name: "срібний слайм"
   components:
   - type: PendingSlimeSpawn
     breed: SilverMutation
@@ -73,7 +73,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyBluespace
-  name: bluespace slime
+  name: "блюспейсовий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: BluespaceMutation
@@ -81,7 +81,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabySepia
-  name: sepia slime
+  name: "сепієвий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: SepiaMutation
@@ -89,7 +89,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyCerulean
-  name: cerulean slime
+  name: "церулеановий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: CeruleanMutation
@@ -97,7 +97,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyPyrite
-  name: pyrite slime
+  name: "піритовий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: PyriteMutation
@@ -105,7 +105,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyRed
-  name: red slime
+  name: "червоний слайм"
   components:
   - type: PendingSlimeSpawn
     breed: RedMutation
@@ -113,7 +113,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyGreen
-  name: green slime
+  name: "зелений слайм"
   components:
   - type: PendingSlimeSpawn
     breed: GreenMutation
@@ -121,7 +121,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyPink
-  name: pink slime
+  name: "рожевий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: PinkMutation
@@ -129,7 +129,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyGold
-  name: gold slime
+  name: "золотий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: GoldMutation
@@ -137,7 +137,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyOil
-  name: oil slime
+  name: "нафтовий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: OilMutation
@@ -145,7 +145,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyLightPink
-  name: light pink slime
+  name: "світло-рожевий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: LightPinkMutation
@@ -153,7 +153,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyBlack
-  name: black slime
+  name: "чорний слайм"
   components:
   - type: PendingSlimeSpawn
     breed: BlackMutation
@@ -161,7 +161,7 @@
 - type: entity
   parent: MobSlimeXenobioBabyPending
   id: MobSlimeXenobioBabyAdamantine
-  name: adamantite slime
+  name: "адамантиновий слайм"
   components:
   - type: PendingSlimeSpawn
     breed: AdamantineMutation

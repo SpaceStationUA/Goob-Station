@@ -20,7 +20,7 @@
 - type: entity
   parent: [ PartHydrakinBase, BaseChest ]
   id: ChestHydrakin
-  name: "hydrakin torso"
+  name: "тулуб гідракіна"
   components:
     - type: Sprite
       sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
@@ -39,7 +39,7 @@
 - type: entity
   parent: [ PartHydrakinBase, BaseGroin ]
   id: GroinHydrakin
-  name: "hydrakin groin"
+  name: "пах гідракіна"
   components:
     - type: Sprite
       sprite: _Pirate/Mobs/Species/Hydrakin/parts.rsi
@@ -85,12 +85,12 @@
 - type: entity
   parent: [ PartHydrakinBase, BaseLeftHand ]
   id: LeftHandHydrakin
-  name: "ліва кість гідракіна"
+  name: "ліва кисть гідракіна"
 
 - type: entity
   parent: [ PartHydrakinBase, BaseRightHand ]
   id: RightHandHydrakin
-  name: "права кість гідракіна"
+  name: "права кисть гідракіна"
 
 - type: entity
   parent: [ PartHydrakinBase, BaseLeftLeg ]

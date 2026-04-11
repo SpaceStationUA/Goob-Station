@@ -5,9 +5,9 @@
 
 - type: entity
   id: SpellCardFun
-  name: spell card
+  name: "карта заклинання"
   parent: BaseItem
-  description: A spell card in form of an item, that speaks of your presence for all living beings around you.
+  description: "Карта заклинання у формі предмета, яка сповіщає про вашу присутність усім живим істотам навколо."
   components:
   - type: Sprite
     sprite: _Goobstation/Wizard/Projectiles/spellcard.rsi

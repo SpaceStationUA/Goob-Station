@@ -116,6 +116,12 @@ selectable-set-blueshield-cqc-description = Іноді доводиться бр
     Включає: книгу, здатну навчити користувача
     просунутому ближньому бою.
 
+#region Pirate: katana
+selectable-set-blueshield-kendo-name = набір «Кендо»
+selectable-set-blueshield-kendo-description = Набір мечника, зосереджений на терпінні та захисті. Клинок може блокувати й відбивати удари, а потім відповідати сильнішими атаками, коли його сила зростає.
+    Включає: піхви та учігатану.
+#endregion Pirate: katana
+
 selectable-set-blueshield-chester-name = набір «Честер»
 selectable-set-blueshield-chester-description = Готові до полювання?
     Включає: дробовик 8-го калібру, «Честер». Запасні набої,

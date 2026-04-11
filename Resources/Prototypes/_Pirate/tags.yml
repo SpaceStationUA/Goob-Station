@@ -35,6 +35,9 @@
   id: CaptainSabreShashka
 
 - type: Tag
+  id: KatanaSheathable
+
+- type: Tag
   id: CoffeeCondimentSugarPirate
 
 - type: Tag

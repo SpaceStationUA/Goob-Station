@@ -1,0 +1,377 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "spacestationua",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "dormant-icon"
+        },
+        {
+            "name": "dormant-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "dormant-wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "dormant-wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "dormant-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "dormant-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "dormant-equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "level-1-icon"
+        },
+        {
+            "name": "level-1-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "level-1-wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "level-1-wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "level-1-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "level-1-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "level-1-equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "level-2-icon"
+        },
+        {
+            "name": "level-2-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "level-2-wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "level-2-wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "level-2-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "level-2-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "level-2-equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "level-3-icon"
+        },
+        {
+            "name": "level-3-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "level-3-wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "level-3-wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "level-3-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "level-3-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "level-3-equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "level-4-icon"
+        },
+        {
+            "name": "level-4-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "level-4-wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "level-4-wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "level-4-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "level-4-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "level-4-equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "level-5-icon"
+        },
+        {
+            "name": "level-5-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "level-5-wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "level-5-wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "level-5-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "level-5-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "level-5-equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "level-6-icon",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "level-6-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "level-6-wielded-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "level-6-wielded-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "level-6-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "level-6-equipped-BACKPACK",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "level-6-equipped-BELT",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "handle-ICON"
+        },
+        {
+            "name": "handle-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "handle-BELT",
+            "directions": 4
+        }
+    ]
+}

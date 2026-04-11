@@ -21,11 +21,22 @@ using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.Humanoid;
 using Content.Server.Revolutionary.Components;
+using Content.Shared.Body.Components; // Pirate
+using Content.Shared.Body.Organ; // Pirate
+using Content.Shared.Damage; // Pirate
+using Content.Shared.Damage.Prototypes; // Pirate
+using Content.Shared.Damage.Systems; // Pirate
 using Content.Shared.Mind;
+using Content.Shared.Mobs; // Pirate
+using Content.Shared.Mobs.Systems; // Pirate
 using Content.Shared.Heretic;
 using Content.Server.Heretic.EntitySystems;
 using Content.Shared.Gibbing.Events;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Goobstation.Shared.Teleportation.Systems; // Pirate
+using Robust.Shared.Random; // Pirate
+using Robust.Shared.GameObjects; // Pirate
+using Content.Shared._Shitmed.Targeting; // Pirate
 using Content.Shared.Store.Components;
 
 namespace Content.Server.Heretic.Ritual;
@@ -66,10 +77,14 @@ namespace Content.Server.Heretic.Ritual;
     protected HereticSystem _heretic = default!;
     protected BodySystem _body = default!;
     protected EntityLookupSystem _lookup = default!;
+    protected DamageableSystem _damageable = default!; // Pirate
+    protected SharedRandomTeleportSystem _randomTeleport = default!; // Pirate
+    protected MobStateSystem _mobState = default!; // Pirate
+    [Dependency] protected IRobustRandom _random = default!; // Pirate
     [Dependency] protected IPrototypeManager _proto = default!;
     [Dependency] protected ILogManager _log = default!;
 
-    private ISawmill? _sawmill;
+    private EntityQuery<MobStateComponent>? _mobStateQuery; // Pirate
 
     protected List<EntityUid> uids = new();
 
@@ -79,8 +94,13 @@ namespace Content.Server.Heretic.Ritual;
         _heretic = args.EntityManager.System<HereticSystem>();
         _body = args.EntityManager.System<BodySystem>();
         _lookup = args.EntityManager.System<EntityLookupSystem>();
+        _damageable = args.EntityManager.System<DamageableSystem>(); // Pirate
+        _randomTeleport = args.EntityManager.System<SharedRandomTeleportSystem>(); // Pirate
         _proto = IoCManager.Resolve<IPrototypeManager>();
         _log = IoCManager.Resolve<ILogManager>();
+        _random = IoCManager.Resolve<IRobustRandom>(); // Pirate
+        _mobState = args.EntityManager.System<MobStateSystem>(); // Pirate
+        _mobStateQuery = args.EntityManager.GetEntityQuery<MobStateComponent>(); // Pirate
 
         uids = new();
 
@@ -120,6 +140,10 @@ namespace Content.Server.Heretic.Ritual;
 
     public override void Finalize(RitualData args)
     {
+        _mobStateQuery ??= args.EntityManager.GetEntityQuery<MobStateComponent>(); // Pirate
+        _damageable ??= args.EntityManager.System<DamageableSystem>(); // Pirate
+    
+            uids = new();
         var heretic = args.Mind.Comp;
 
         if (!args.EntityManager.TryGetComponent(args.Mind, out StoreComponent? store) ||
@@ -143,19 +167,50 @@ namespace Content.Server.Heretic.Ritual;
                     ? isCommand || isSec || isHeretic ? 3f : 2f
                     : 0f;
 
-            try
-            {
-                // YES!!! GIB!!!
-                _body.GibBody(uid);
-            }
-            catch (Exception e)
-            {
-                if (!args.EntityManager.IsQueuedForDeletion(uid) && !args.EntityManager.Deleted(uid))
-                    args.EntityManager.QueueDeleteEntity(uid);
+        // Pirate start
+        if (!args.EntityManager.TryGetComponent<BodyComponent>(uid, out var body))
+            continue;
 
-                _sawmill ??= _log.GetSawmill("sacrifice");
-                _sawmill.Error(e.Message);
-            }
+        // Kill critical targets with massive asphyxiation damage
+        if (_mobStateQuery.Value.TryComp(uid, out var mobState) && mobState.CurrentState == MobState.Critical)
+        {
+            var proto = _proto ?? IoCManager.Resolve<IPrototypeManager>();
+            var asphyxiation = new DamageSpecifier(proto.Index<DamageTypePrototype>("Asphyxiation"), 1000f);
+            var damageable = _damageable ?? args.EntityManager.System<DamageableSystem>();
+            damageable.TryChangeDamage(uid, asphyxiation, ignoreResistances: true, interruptsDoAfters: true,
+                origin: args.Performer, targetPart: TargetBodyPart.All, ignoreBlockers: true);
+        }
+
+        // Get all organs from the body
+        var allOrgans = _body.GetBodyOrgans(uid, body).ToList();
+        // Filter out brain and kidneys
+        var eligibleOrgans = allOrgans
+            .Where(o => o.Component.SlotId != "brain" && o.Component.SlotId != "kidneys")
+            .Select(o => o.Id)
+            .ToList();
+
+        // Select 1-3 random organs and drop them at ritual site
+        if (_random == null)
+        {
+            continue;
+        }
+        var numToExtract = _random.Next(1, 4);
+        var organsToExtract = eligibleOrgans
+            .OrderBy(_ => _random.Next())
+            .Take(Math.Min(numToExtract, eligibleOrgans.Count))
+            .ToList();
+        foreach (var organ in organsToExtract)
+        {
+            _body.RemoveOrgan(organ);
+        }
+
+        // Teleport the corpse to a random safe location on the station
+        if (_randomTeleport.RandomTeleportToStation(uid, 50, false) != null)
+            continue;
+
+        // Remove sacrificed target from heretic target list
+        heretic.SacrificeTargets.RemoveAll(x => x.Entity == args.EntityManager.GetNetEntity(uid));
+        //Pirate end
 
             // Sacrificed heretics lose their powers forever
             if (otherMind != EntityUid.Invalid && otherHeretic is { } h)

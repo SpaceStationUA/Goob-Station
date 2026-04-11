@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Goobstation.Common.Weapons.Ranged;
+using Content.Shared._Pirate.Weapons.Ranged.Events;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -31,6 +32,13 @@ public abstract partial class SharedGunSystem
     {
         if (Timing.IsFirstTimePredicted)
             Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+    }
+
+    protected bool TryAttemptHitscanBlock(EntityUid? user, EntityUid gunUid, EntityUid hitEntity)
+    {
+        var blockEv = new HitScanBlockAttemptEvent(user, gunUid, hitEntity);
+        RaiseLocalEvent(hitEntity, ref blockEv);
+        return blockEv.Cancelled;
     }
 
     protected void SharedShoot(

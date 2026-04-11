@@ -327,7 +327,7 @@
       - id: SkullBalaclava # Pirate
 
 - type: entity
-  name: Maint Loot Spawner
+  name: "спавнер луту із техів"
   suffix: Fluff+Clothes
   id: MaintenanceFluffSpawner
   parent: MarkerBase
@@ -463,7 +463,7 @@
         weight: 0.05
 
 - type: entity
-  name: Maint Loot Spawner
+  name: "спавнер луту із техів"
   suffix: Tools+Cells+Mats
   id: MaintenanceToolSpawner
   parent: MarkerBase
@@ -514,6 +514,7 @@
         - id: Gauze1
       - id: Bola
       - id: SurvivalKnife
+      - id: Katana # Pirate: katana
       - id: ScalpelShiv
       - id: Shiv
       - id: SawImprov
@@ -521,7 +522,7 @@
       - id: ClothingHandsKnuckleDusters
 
 - type: entity
-  name: Maint Loot Spawner
+  name: "спавнер луту із техів"
   suffix: Scrap+Weapons
   id: MaintenanceWeaponSpawner
   parent: MarkerBase
@@ -537,7 +538,7 @@
       prob: 0.6
 
 - type: entity
-  name: Maint Loot Spawner
+  name: "спавнер луту із техів"
   suffix: Plants
   id: MaintenancePlantSpawner
   parent: MarkerBase
@@ -568,7 +569,7 @@
       weight: 1
 
 - type: entity
-  name: Maint Loot Spawner
+  name: "спавнер луту із техів"
   id: MaintenanceInsulsSpawner
   suffix: Insuls, safe
   parent: MarkerBase

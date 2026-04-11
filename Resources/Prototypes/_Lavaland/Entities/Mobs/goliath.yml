@@ -18,7 +18,7 @@
 - type: entity
   id: MobLavalandGoliathAncient
   parent: MobGoliath
-  name: ancient goliath
+  name: "древній голіаф"
   suffix: Lavaland
   components:
   - type: Sprite

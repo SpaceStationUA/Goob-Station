@@ -168,10 +168,10 @@
 
 #Shortswords
 - type: entity
-  name: cutlass
+  name: "шабля"
   parent: [ BaseSword, BaseMajorContraband ]
   id: Cutlass
-  description: A wickedly curved blade, often seen in the hands of space pirates.
+  description: "Зловісно вигнуте лезо, яке часто можна побачити в руках космічних піратів."
   components:
   - type: Tag
     tags:
@@ -195,10 +195,10 @@
   - type: DisarmMalus
 
 - type: entity
-  name: machete
+  name: "мачете"
   parent: [ BaseSword, BaseMajorContraband ]
   id: Machete
-  description: A large, vicious looking blade.
+  description: "Велике, злісне на вигляд лезо."
   components:
   - type: Tag
     tags:
@@ -223,10 +223,10 @@
 
 #Longswords
 - type: entity
-  name: captain's sabre
+  name: "шабля капітана"
   parent: [ BaseSword, BaseCommandContraband ]
   id: CaptainSabre
-  description: A ceremonial weapon belonging to the captain of the station.
+  description: "Церемоніальна зброя, що належить капітану станції."
   components:
   # Goobstation edit start
   - type: EmitSoundOnLand
@@ -265,22 +265,29 @@
     # not putting a BlockMovement component here cause that's funny.
 
 - type: entity
-  name: katana
+  name: "катана"
   parent: [ BaseSword, BaseMajorContraband ]
   id: Katana
-  description: Ancient craftwork made with not so ancient plasteel.
+  description: "Старовинний ремісничий виріб із не такої вже й давньої пласталі."
   components:
   - type: Tag
     tags:
     - Katana
+    - KatanaSheathable # Pirate: kataba
+  - type: KatanaSheathHandle # Pirate: katana
+    sprite: Objects/Weapons/Melee/katana.rsi # Pirate: kataba
+    inventoryState: handle-ICON # Pirate: katana
+    beltState: handle-BELT # Pirate: katana
+    backpackState: handle-BACKPACK # Pirate: katana
   - type: Sprite
     sprite: Objects/Weapons/Melee/katana.rsi
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 15
+        Slash: 20
       woundSeverityMultipliers:
         Slash: 2.5
+      armorPenetration: 0.3
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -294,21 +301,27 @@
     slots:
     - Back
     - Belt
+  - type: Wieldable # Pirate: katana
+    wieldedInhandPrefix: wielded # Pirate: katana
+  - type: TimedDeflectBlock # Pirate: katana
   - type: DisarmMalus
 
 - type: entity
-  name: energy katana
+  name: "енергетична катана"
   parent: Katana
   id: EnergyKatana
-  description: A katana infused with strong energy.
+  description: "Катана, наповнена сильною енергією."
   components:
+  - type: Tag # Pirate: kataba
+    tags: # Pirate: kataba
+    - Katana # Pirate: kataba
   - type: Sprite
     sprite: Objects/Weapons/Melee/energykatana.rsi
-  - type: MeleeWeapon
-    wideAnimationRotation: -60
+  - type: MeleeWeapon # Pirate: katana
+    wideAnimationRotation: -60 # Pirate: katana
     damage:
       types:
-        Slash: 30
+        Slash: 20
       woundSeverityMultipliers:
         Slash: 2
   - type: Item
@@ -331,13 +344,17 @@
   - type: Reflect
     slotFlags:
     - NONE
+  - type: TimedDeflectBlock # Pirate: katana
+    deflectToSource: true # Pirate: katana
+  - type: DisarmMalus # Pirate: katana - override Katana's malus so the katana IS disarmable
+    malus: 0
 
 #Greatswords
 - type: entity
-  name: claymore
+  name: "клеймор"
   parent: [ BaseSword, BaseMajorContraband ]
   id: Claymore
-  description: An ancient war blade.
+  description: "Стародавній бойовий клинок."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/claymore.rsi
@@ -365,10 +382,10 @@
 
 #Other/Weird
 - type: entity
-  name: throngler
+  name: "тронглер"
   parent: [ BaseSword, BaseMajorContraband ]
   id: Throngler
-  description: If Security dares take it from you, just remind them that they are indeed mortal.
+  description: "Якщо Служба Безпеки наважиться забрати його у вас, просто нагадайте їм, що вони смертні."
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/Throngler2.rsi

@@ -392,10 +392,10 @@
   id: HoPBackpack
   name: loadout-group-hop-backpack
   loadouts:
-  - CommonBackpack
-  - CommonSatchel
-  - CommonDuffel
-  - CommonMessenger # Frontier
+  - HOPBackpack # Pirate
+  - HOPBackpackSatchel # Pirate
+  - HOPBackpackDuffel # Pirate
+  - HOPBackpackMessengerBase # Pirate
   - HoPBackpackIan
 
 - type: loadoutGroup
@@ -478,7 +478,7 @@
   name: loadout-group-passenger-shoes
   loadouts:
   - BlackShoes
-  - WinterBoots 
+  - WinterBoots
 
 - type: loadoutGroup
   id: BartenderHead

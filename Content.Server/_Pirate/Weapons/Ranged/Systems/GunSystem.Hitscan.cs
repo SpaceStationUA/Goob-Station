@@ -9,9 +9,12 @@ using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Reflect;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -31,6 +34,7 @@ public sealed partial class GunSystem
         List<EntityUid> shotProjectiles)
     {
         EntityUid? lastHit = null;
+        var blocked = false;
 
         var from = fromMap;
         var effectCoordinates = fromEffect;
@@ -67,13 +71,17 @@ public sealed partial class GunSystem
                 var hit = result.HitEntity;
                 lastHit = hit;
 
-                FireEffects(effectCoordinates, result.Distance, dir.Normalized().ToAngle(), hitscan, hit, user);
-
                 var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false, hitscan.Damage, hit);
                 RaiseLocalEvent(hit, ref ev);
 
                 if (!ev.Reflected)
+                {
+                    blocked = TryAttemptHitscanBlock(user, gunUid, hit);
+                    FireHitscanEffects(effectCoordinates, result.Distance, dir.Normalized().ToAngle(), hitscan, user, blocked);
                     break;
+                }
+
+                FireHitscanEffects(effectCoordinates, result.Distance, dir.Normalized().ToAngle(), hitscan, user);
 
                 effectCoordinates = Transform(hit).Coordinates;
                 from = TransformSystem.ToMapCoordinates(effectCoordinates);
@@ -82,9 +90,10 @@ public sealed partial class GunSystem
             }
         }
 
-        if (lastHit != null)
+        if (lastHit != null && !blocked)
         {
             var hitEntity = lastHit.Value;
+
             if (hitscan.StaminaDamage > 0f)
                 _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: user, applyResistances: true);
 
@@ -126,11 +135,76 @@ public sealed partial class GunSystem
                 }
             }
         }
-        else
+        else if (!blocked)
         {
-            FireEffects(effectCoordinates, hitscan.MaxLength, dir.ToAngle(), hitscan, user: user);
+            FireHitscanEffects(effectCoordinates, hitscan.MaxLength, dir.ToAngle(), hitscan, user);
         }
 
         Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+    }
+
+    private void FireHitscanEffects(
+        EntityCoordinates fromCoordinates,
+        float distance,
+        Angle angle,
+        HitscanPrototype hitscan,
+        EntityUid? user = null,
+        bool blocked = false)
+    {
+        var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
+        var fromXform = Transform(fromCoordinates.EntityId);
+
+        var gridUid = fromXform.GridUid;
+        if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
+        {
+            var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
+            var map = TransformSystem.ToMapCoordinates(fromCoordinates);
+            fromCoordinates = new EntityCoordinates(gridUid.Value, Vector2.Transform(map.Position, gridInvMatrix));
+            angle -= gridRot;
+        }
+        else
+        {
+            angle -= TransformSystem.GetWorldRotation(fromXform);
+        }
+
+        if (distance >= 1f)
+        {
+            if (hitscan.MuzzleFlash != null)
+            {
+                var coords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
+                var netCoords = GetNetCoordinates(coords);
+
+                sprites.Add((netCoords, angle, hitscan.MuzzleFlash, 1f));
+            }
+
+            if (hitscan.TravelFlash != null)
+            {
+                var coords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
+                var netCoords = GetNetCoordinates(coords);
+
+                sprites.Add((netCoords, angle, hitscan.TravelFlash, distance - 1.5f));
+            }
+        }
+
+        if (!blocked && hitscan.ImpactFlash != null)
+        {
+            var coords = fromCoordinates.Offset(angle.ToVec() * distance);
+            var netCoords = GetNetCoordinates(coords);
+
+            sprites.Add((netCoords, angle.FlipPositive(), hitscan.ImpactFlash, 1f));
+        }
+
+        if (sprites.Count <= 0)
+            return;
+
+        var filter = Filter.Pvs(fromCoordinates, entityMan: EntityManager);
+
+        if (TryComp<ActorComponent>(user, out var actor))
+            filter.RemovePlayer(actor.PlayerSession);
+
+        RaiseNetworkEvent(new HitscanEvent
+        {
+            Sprites = sprites,
+        }, filter);
     }
 }

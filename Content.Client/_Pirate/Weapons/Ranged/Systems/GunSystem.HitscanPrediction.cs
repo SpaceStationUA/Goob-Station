@@ -33,6 +33,7 @@ public sealed partial class GunSystem
         List<EntityUid> shotProjectiles)
     {
         EntityUid? lastHit = null;
+        var blocked = false;
 
         var from = fromMap;
         var effectCoordinates = fromEffect;
@@ -70,13 +71,17 @@ public sealed partial class GunSystem
                 var hit = result.HitEntity;
                 lastHit = hit;
 
-                FirePredictedHitscanEffects(effectCoordinates, result.Distance, dir.Normalized().ToAngle(), hitscan, hit);
-
                 var ev = new HitScanReflectAttemptEvent(user, gunUid, hitscan.Reflective, dir, false, hitscan.Damage, hit);
                 RaiseLocalEvent(hit, ref ev);
 
                 if (!ev.Reflected)
+                {
+                    blocked = TryAttemptHitscanBlock(user, gunUid, hit);
+                    FirePredictedHitscanEffects(effectCoordinates, result.Distance, dir.Normalized().ToAngle(), hitscan, blocked);
                     break;
+                }
+
+                FirePredictedHitscanEffects(effectCoordinates, result.Distance, dir.Normalized().ToAngle(), hitscan);
 
                 effectCoordinates = Transform(hit).Coordinates;
                 from = TransformSystem.ToMapCoordinates(effectCoordinates);
@@ -85,7 +90,7 @@ public sealed partial class GunSystem
             }
         }
 
-        if (lastHit == null)
+        if (lastHit == null && !blocked)
             FirePredictedHitscanEffects(effectCoordinates, hitscan.MaxLength, dir.ToAngle(), hitscan);
 
         base.HandleHitscanShot(
@@ -107,7 +112,7 @@ public sealed partial class GunSystem
         float distance,
         Angle angle,
         HitscanPrototype hitscan,
-        EntityUid? hitEntity = null)
+        bool blocked = false)
     {
         if (!Timing.IsFirstTimePredicted)
             return;
@@ -147,7 +152,7 @@ public sealed partial class GunSystem
             }
         }
 
-        if (hitscan.ImpactFlash != null)
+        if (!blocked && hitscan.ImpactFlash != null)
         {
             var coords = fromCoordinates.Offset(angle.ToVec() * distance);
             var netCoords = GetNetCoordinates(coords);

@@ -103,6 +103,17 @@
       - Stimpack
       - Stimpack
 
+#region Pirate: katana
+- type: startingGear
+  id: ThunderdomeUchigatana
+  equipment:
+    belt: ClothingBeltDarkKatanaSheathUchigatanaFilled
+  storage:
+    back:
+      - Stimpack
+      - Stimpack
+#endregion Pirate: katana
+
 - type: startingGear
   id: ThunderdomeCapoeira
   equipment:

@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseMobHuman
   id: MobHumanGreyTide
-  name: The Greytide
+  name: "Грей тайд"
   components:
   - type: Loadout
     prototypes: [ GreyTideAntagGear ]
@@ -9,7 +9,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanTunnelClown
-  name: Tunnel clown
+  name: "Тунельний клоун"
   components:
   - type: RandomHumanoidAppearance
     randomizeName: true
@@ -20,7 +20,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanSingulothKnight
-  name: Singuloth Knight
+  name: "Лицар Синґулота"
   components:
   - type: RandomHumanoidAppearance
     randomizeName: true
@@ -30,7 +30,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanDarkLord
-  name: The Dark Lord
+  name: "Темний лорд"
   components:
   - type: ActionGrant
     actions:
@@ -44,7 +44,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanChosenOne
-  name: The chosen one
+  name: "Обраний"
   components:
   - type: ActionGrant
     actions:
@@ -59,7 +59,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanMimeAssassin
-  name: Mime assassin
+  name: "Мім-убивця"
   components:
   - type: AutoImplant
     implants:
@@ -75,7 +75,7 @@
 - type: entity
   parent: MobHuman
   id: MobHumanDarkPriest
-  name: Dark Priest
+  name: "Темний жрець"
   components:
   - type: RandomHumanoidAppearance
     randomizeName: true
@@ -85,7 +85,7 @@
 - type: entity
   parent: MobVox
   id: MobVoxRaider
-  name: Vox Raider
+  name: "Вокс-рейдер"
   components:
   - type: AutoImplant
     implants:
@@ -101,7 +101,7 @@
 - type: entity
   parent: BaseMobHuman
   id: SantaClaus
-  name: Santa Claus
+  name: "Санта-Клаус"
   components:
   - type: Loadout
     prototypes: [ SantaGear ]

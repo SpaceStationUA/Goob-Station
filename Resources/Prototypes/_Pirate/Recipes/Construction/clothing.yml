@@ -5,3 +5,19 @@
   targetNode: goggles
   category: construction-category-clothing
   objectType: Item
+
+- type: construction
+  id: ClothingBeltKatanaSheath
+  graph: ClothingBeltKatanaSheath
+  startNode: start
+  targetNode: sheath
+  category: construction-category-clothing
+  objectType: Item
+
+- type: construction
+  id: ClothingBeltDarkKatanaSheath
+  graph: ClothingBeltDarkKatanaSheath
+  startNode: start
+  targetNode: sheath
+  category: construction-category-clothing
+  objectType: Item

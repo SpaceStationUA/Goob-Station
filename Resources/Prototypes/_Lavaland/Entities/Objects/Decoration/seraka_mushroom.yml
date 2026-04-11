@@ -1,8 +1,8 @@
 - type: entity
-  name: seraka mushrooms
+  name: "гриби серака"
   parent: BaseStructure
   id: SerakaMushroom
-  description: A small cluster of seraka mushrooms. These must have come with the ashlizards.
+  description: "Невелике скупчення грибів серака. Мабуть, вони прибули разом із попелястими ящірками."
   components:
   - type: Sprite
     sprite: _Lavaland/Objects/Decoration/Flora/seraka_mushroom.rsi
