@@ -1,0 +1,101 @@
+- type: entity
+  id: JustDecorLinkedTeleportPad
+  parent: CollideFloorTrap
+  name: односторонній телепад
+  description: Телепортує лише до прив'язаної точки призначення.
+  suffix: JustDecor
+  components:
+  - type: Sprite
+    sprite: Tiles/Misc/floortrap.rsi
+    state: floortrapspawn
+  - type: TriggerOnCollide
+    fixtureID: floortrap
+  - type: LinkedTeleportPad
+    linkId: teleport-a
+
+- type: entity
+  id: JustDecorLinkedTeleportTarget
+  name: точка призначення телепорту
+  description: Невидима точка, куди веде односторонній телепад.
+  suffix: JustDecor
+  components:
+  - type: Transform
+    anchored: true
+  - type: LinkedTeleportTarget
+    linkId: teleport-a
+
+- type: entity
+  id: SpawnJustDecorLinkedTeleportTarget
+  parent: MarkerBase
+  name: marker цілі телепорту
+  suffix: JustDecor
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Markers/cross.rsi
+        state: red
+  - type: ConditionalSpawner
+    prototypes:
+      - JustDecorLinkedTeleportTarget
+
+- type: entity
+  id: JustDecorRoomFiveLockerBase
+  abstract: true
+  parent: BaseWallLocker
+  suffix: JustDecor
+  components:
+  - type: Appearance
+
+- type: entity
+  id: JustDecorRoomFiveRedLocker
+  parent: JustDecorRoomFiveLockerBase
+  name: червона шафа
+  description: Шафа, що відкривається ключем.
+  components:
+  - type: AccessReader
+    access: [["JustDecorRoomFiveRed"]]
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: red_door
+
+- type: entity
+  id: JustDecorRoomFiveBlueLocker
+  parent: JustDecorRoomFiveLockerBase
+  name: синя шафа
+  description: Шафа, що відкривається ключем.
+  components:
+  - type: AccessReader
+    access: [["JustDecorRoomFiveBlue"]]
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: blue_door
+
+- type: entity
+  id: JustDecorRoomFiveYellowLocker
+  parent: JustDecorRoomFiveLockerBase
+  name: жовта шафа
+  description: Шафа, що відкривається ключем.
+  components:
+  - type: AccessReader
+    access: [["JustDecorRoomFiveYellow"]]
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: yellow_door
+
+- type: entity
+  id: JustDecorLightReactiveWall
+  parent: WallSolid
+  suffix: UltraViolet, JustDecor
+  components:
+  - type: DeviceLinkSource
+    ports:
+      - On
+      - Off
+  - type: LightReactive
+    requiredColor: "#9f66ff"
+    reactSound:
+      path: /Audio/Machines/button.ogg

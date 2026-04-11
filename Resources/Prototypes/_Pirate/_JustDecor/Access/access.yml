@@ -1,0 +1,11 @@
+- type: accessLevel
+  id: JustDecorRoomFiveRed
+  name: Червоний ключ головоломки
+
+- type: accessLevel
+  id: JustDecorRoomFiveBlue
+  name: Синій ключ головоломки
+
+- type: accessLevel
+  id: JustDecorRoomFiveYellow
+  name: Жовтий ключ головоломки

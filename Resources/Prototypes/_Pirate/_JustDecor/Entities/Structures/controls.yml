@@ -1,0 +1,151 @@
+- type: entity
+  id: JustDecorSignalButtonBase
+  abstract: true
+  parent: MarkerBase
+  suffix: JustDecor
+  components:
+  - type: UseDelay
+    delay: 0.5
+  - type: SignalSwitch
+    onPort: Pressed
+    offPort: Pressed
+    statusPort: Pressed
+  - type: DeviceLinkSource
+    ports:
+      - Pressed
+
+- type: entity
+  id: JustDecorResumeSwitch
+  parent: JustDecorSignalButtonBase
+  name: кнопка пуску
+  description: Подає сигнал для запуску або відновлення підключеного механізму.
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Markers/arrow.rsi
+        state: mono
+  - type: SignalSwitch
+    onPort: Start
+    offPort: Start
+    statusPort: Start
+  - type: DeviceLinkSource
+    ports:
+      - Start
+
+- type: entity
+  id: JustDecorPauseSwitch
+  parent: JustDecorSignalButtonBase
+  name: кнопка паузи
+  description: Подає сигнал для зупинки підключеного механізму.
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Markers/cross.rsi
+        state: red
+  - type: SignalSwitch
+    onPort: Stop
+    offPort: Stop
+    statusPort: Stop
+  - type: DeviceLinkSource
+    ports:
+      - Stop
+
+- type: entity
+  id: JustDecorBellButton
+  parent: JustDecorSignalButtonBase
+  name: кнопка дзвоника
+  description: Натисканням подає дзвінок.
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Devices/signaller.rsi
+        state: signaller
+  - type: SignalSwitch
+    onPort: Bell
+    offPort: Bell
+    statusPort: Bell
+    clickSound:
+      path: /Audio/_JustDecor/Machines/chime.ogg
+  - type: DeviceLinkSource
+    ports:
+      - Bell
+
+- type: entity
+  id: JustDecorNpcConveyor
+  parent: MarkerBase
+  name: конвеєр НПС
+  description: Штовхає НПС, що стоять на ньому, у бік свого повороту, доки отримує сигнал пуску.
+  suffix: Paused, JustDecor
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Markers/arrow.rsi
+        state: mono
+  - type: Rotatable
+  - type: DeviceLinkSink
+    ports:
+      - Start
+      - Stop
+      - Toggle
+  - type: NpcConveyor
+    enabled: false
+
+- type: entity
+  id: JustDecorNpcConveyorOn
+  parent: JustDecorNpcConveyor
+  suffix: Running, JustDecor
+  components:
+  - type: NpcConveyor
+    enabled: true
+
+- type: entity
+  id: JustDecorNpcConveyorResumeSwitch
+  parent: JustDecorResumeSwitch
+  name: пуск конвеєра НПС
+  description: Відновлює або запускає рух НПС на підключеному конвеєрі.
+
+- type: entity
+  id: JustDecorNpcConveyorPauseSwitch
+  parent: JustDecorPauseSwitch
+  name: пауза конвеєра НПС
+  description: Зупиняє рух НПС на підключеному конвеєрі.
+
+- type: entity
+  id: JustDecorBellRelay
+  parent: MarkerBase
+  name: ретранслятор дзвоника
+  description: Відтворює дзвінок, коли отримує сигнал.
+  suffix: JustDecor
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Devices/signaller.rsi
+        state: signaller
+  - type: DeviceLinkSink
+    ports:
+      - Bell
+  - type: SignalRelay
+    sinkPort: Bell
+    sound:
+      path: /Audio/_JustDecor/Machines/chime.ogg
+
+- type: entity
+  id: JustDecorBellResumeRelay
+  parent: JustDecorBellRelay
+  name: дзвоник + пуск
+  description: Дзвонить і одразу пересилає сигнал пуску далі.
+  suffix: JustDecor
+  components:
+  - type: DeviceLinkSource
+    ports:
+      - Start
+  - type: SignalRelay
+    sinkPort: Bell
+    outputPort: Start
+    sound:
+      path: /Audio/_JustDecor/Machines/chime.ogg

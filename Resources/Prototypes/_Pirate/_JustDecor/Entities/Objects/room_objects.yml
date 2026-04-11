@@ -1,0 +1,69 @@
+- type: entity
+  id: JustDecorRoomFiveKeyBase
+  abstract: true
+  parent: EncryptionKey
+  suffix: JustDecor
+  components:
+  - type: Access
+  - type: Item
+    size: Tiny
+
+- type: entity
+  id: JustDecorRoomFiveRedKey
+  parent: JustDecorRoomFiveKeyBase
+  name: червоний ключ
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: crypt_red
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Access
+    tags:
+      - JustDecorRoomFiveRed
+
+- type: entity
+  id: JustDecorRoomFiveBlueKey
+  parent: JustDecorRoomFiveKeyBase
+  name: синій ключ
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: crypt_blue
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Access
+    tags:
+      - JustDecorRoomFiveBlue
+
+- type: entity
+  id: JustDecorRoomFiveYellowKey
+  parent: JustDecorRoomFiveKeyBase
+  name: жовтий ключ
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    state: crypt_gold
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Access
+    tags:
+      - JustDecorRoomFiveYellow
+
+- type: entity
+  id: JustDecorUvFlashlight
+  parent: FlashlightLantern
+  name: ультрафіолетовий ліхтарик
+  description: Ліхтарик із кольором променя для прихованих міток.
+  suffix: JustDecor
+  components:
+  - type: HandheldLight
+    addPrefix: false
+    wattage: 0.3
+  - type: PointLight
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 4
+    netsync: false
+    color: "#9f66ff"
