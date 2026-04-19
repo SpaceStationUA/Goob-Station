@@ -17,3 +17,32 @@
     - Zombie
     - Revolutionary
     - Dragon
+    
+- type: npcFaction
+  id: SimpleHostile
+  hostile:
+    - NanoTrasen
+    - SAN
+    
+- type: npcFaction
+  id: Xeno
+  hostile:
+    - NanoTrasen
+    - SimpleHostile
+    - SAN
+    - Zombie
+    - Syndicate
+
+- type: npcFaction
+  id: Zombie
+  hostile:
+    - NanoTrasen
+    - SAN
+    
+- type: npcFaction
+  id: Dragon
+  hostile:
+    - SAN
+    - Zombie
+    - NanoTrasen
+    - Syndicate
