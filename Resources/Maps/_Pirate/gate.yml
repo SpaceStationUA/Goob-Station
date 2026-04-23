@@ -105512,11 +105512,6 @@ entities:
     - type: Transform
       pos: 56.5,48.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 32
   - uid: 15025
     components:
     - type: Transform
@@ -141673,11 +141668,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -96.5,16.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-      deviceLists:
-      - 40
   - uid: 19789
     components:
     - type: Transform

@@ -3,7 +3,7 @@
   mapName: 'Perdition Island'
   mapPath: /Maps/_Pirate/perdition.yml
   minPlayers: 0
-  maxPlayers: 19
+  maxPlayers: 20
   stations:
     Perdition:
       stationProto: StandardNanotrasenStation
@@ -19,7 +19,7 @@
           availableJobs:
           # Command
             Captain: [ 1, 1 ]
-            BlueshieldOfficer: [ 1, 1]
+            BlueshieldOfficer: [ 1, 1 ]
             NanotrasenRepresentative: [ 1, 1 ]
             AdministrativeAssistant: [ 0, 0 ]
             HeadOfPersonnel: [ 1, 1 ]
