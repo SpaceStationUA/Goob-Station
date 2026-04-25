@@ -1,50 +1,49 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: Баґ репорт
+about:
 title: ''
 labels: ''
 assignees: ''
 ---
 
-## 📋 Description
-Explain what the bug is and what you expected to happen instead.  
-> Example: When using the fire extinguisher in zero-G, it doesn’t push the player backwards like it should.
+## 📋 Опис
+Опишіть баґ, та який був очікуваний результат
+> Приклад: При використанні вогнегасника у невагомості гравець не був відштовхнутий.
 
 ---
 
-## 🔁 Steps to Reproduce
-List the steps that consistently cause the issue.
+## 🔁 Відтворення
+Перелічіть кроки, які призводять до виникнення баґу.
 
-1. Spawn as X role  
-2. Do Y action  
-3. See Z happen  
-
----
-
-## 💥 Expected Behavior
-Describe what you expected to happen.  
-> Example: The extinguisher should propel me backwards in zero-G.
+1. Заспавнитися як роль Х
+2. Зробити дію Y
+3. Побачити дію
 
 ---
 
-## 🧠 Actual Behavior
-Describe what actually happens.  
-> Example: Nothing happens, and I just float in place.
+## 💥 Очікуваний результат
+Опишіть який був очікуваний результат.
+> Приклад: Вогнегасник відштовхнув мене у невагомості.
 
 ---
 
-## 📸 Screenshots / Videos
-Attach any screenshots, clips, or logs that help show the problem.
+## 🧠 Отриманий результат
+Опишіть що дійсно сталося.
+> Приклад: Нічого не відбулося, я просто застиг на місці.
 
 ---
 
-## 🗺️ Additional Details
-Any other info that might help, like:
-- Map / Round ID (if known)  
-- Game mode  
+## 📸 Знімки екрана/Відео
+Прикріпіть будь-яке медіа, яке може допомогти нам у вирішенні вашої проблеми.
 
 ---
 
-## 🧩 Notes
-Anything else that might help contributors reproduce or understand the issue.
-Add any other context about the problem here.
+## 🗺️ Деталі
+Додаткова інформація, яка може нам допомогти:
+- Мапа або номер раунду (Якщо відомо)
+- Ігровий режим
+
+---
+
+## 🧩 Нотатки
+Якісь додаткові нотатки або додатковий контекст, який допоможе нам у вирішенні проблеми.

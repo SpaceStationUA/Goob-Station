@@ -4,7 +4,7 @@
   components:
   - type: GameRule
     minPlayers: 10
-    chaosScore: 100 # Pirate - was 20
+    chaosScore: 100
   - type: VampireRule
   - type: AntagSelection
     selectionTime: IntraPlayerSpawn
@@ -13,8 +13,8 @@
     - prefRoles: [ Vampire ]
       max: 1
       playerRatio: 5
-      chaosScore: 100
-      jobBlacklist: [ Chaplain ] # GOOBSTATION
+      chaosScore: 200
+      jobBlacklist: [ Chaplain ]
       blacklist:
         components:
         - CommandStaff

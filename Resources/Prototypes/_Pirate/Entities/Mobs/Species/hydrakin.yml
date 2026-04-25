@@ -36,7 +36,8 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 5
+        Slash: 10
+  - type: Sharp
   - type: Body
     prototype: Hydrakin
     requiredLegs: 2

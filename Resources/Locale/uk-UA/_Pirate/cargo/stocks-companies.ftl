@@ -1,0 +1,6 @@
+stock-trading-company-nanotrasen = НаноТрейзен [NT]
+stock-trading-company-einstein = Двигуни Ейнштейна [EE]
+stock-trading-company-idris = Ідріс Інкорпорейтед [IDR]
+stock-trading-company-zavodskiy = Заводський Інтерстеллар [ZI]
+stock-trading-company-hephaestus = Гефест Індастріз [HI]
+stock-trading-company-zenghu = Зенг-Ху Фармасьютікалз [ZH]

@@ -99,7 +99,7 @@
   - NanotrasenRepresentativeNeck
   - NanotrasenRepresentativeShoes
   - NanotrasenRepresentativeBelt
-  - Glasses
+  #- Glasses # Pirate
   - Trinkets
   - Animals
   - GroupSpeciesBreathTool
@@ -169,7 +169,7 @@
   - RoboticistGloves
   - RoboticistShoes
   - RoboticistPDA
-  - Glasses
+   #- Glasses # Pirate
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool

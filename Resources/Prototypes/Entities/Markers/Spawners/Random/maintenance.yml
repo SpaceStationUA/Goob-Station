@@ -514,6 +514,7 @@
         - id: Gauze1
       - id: Bola
       - id: SurvivalKnife
+      - id: Katana # Pirate: katana
       - id: ScalpelShiv
       - id: Shiv
       - id: SawImprov

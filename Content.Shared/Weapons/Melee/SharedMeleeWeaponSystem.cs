@@ -735,7 +735,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Goobstation start
-        var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm);
+        var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm, damage); // Pirate: katana
         RaiseLocalEvent(target.Value, beforeEvent);
         if (beforeEvent.Cancelled)
             return;
@@ -893,7 +893,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 continue;
 
             // Goobstation start
-            var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm);
+            var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm, damage); // Pirate: katana
             RaiseLocalEvent(entity, beforeEvent);
             if (beforeEvent.Cancelled)
                 continue;

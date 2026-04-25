@@ -168,6 +168,7 @@
     - id: RubberStampQm
     - id: LavalandShuttleConsoleCircuitboard # Goobstation - Mining Shuttle Board
     - id: AstroNavCartridge
+    - id: StockTradingCartridge # Pirate port - Delta-V stocks trading
     - id: CargoTechFabCircuitboard # Goobstation - Cargo Techfab
     - id: MailTeleporterMachineCircuitboard # GoobStation port of DeltaV mail
     - id: ClothingHandsKnuckleDustersQM # Goobstation - ROCK THAT MF!!

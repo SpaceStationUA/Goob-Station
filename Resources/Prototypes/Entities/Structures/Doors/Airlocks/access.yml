@@ -854,7 +854,7 @@
     containers:
       board: [ DoorElectronicsQuartermaster ]
   - type: Sprite
-    sprite: _Pirate/Structures/Doors/Airlocks/Standard/quartermaster.rsi # Pirate Changes
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/quartermaster.rsi # Pirate Changes
 
 - type: entity
   parent: AirlockSecurityGlass

@@ -15,6 +15,7 @@
 # SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 BeeRobynn <166929042+BeeRobynn@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2026 Vareniko <213822582+Vareniko@users.noreply.github.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -118,6 +119,10 @@
       - PosterContrabandGoobChuckler # Goobstation
       - PosterContrabandGoobYakub # Goobstation
       - PosterContrabandGoobRedFOSS # Goobstation
+      # Pirate VVV
+      - PosterContrabandSaucerNumberOne
+      - PosterContrabandBreadLies
+      - PosterContrabandSafetyMothSyndie
     chance: 1
 
 - type: entity
@@ -202,4 +207,28 @@
       - PosterLegitOppenhopper
       - PosterLegitTyrone
       - PosterLegitHelio
+      # Pirate VVV
+      - PosterLegitDejaVu
+      - PosterLegitDontPanic
+      - PosterLegitBarDrinks
+      - PosterLegitBotanyFood
+      - PosterLegitHotDonkExplosion
+      - PosterLegitEatMeat
+      - PosterLegitMoreBread
+      - PosterLegitPieSlice
+      - PosterLegitPizzaHope
+      - PosterLegitMedicate
+      - PosterLegitNoTouching
+      - PosterLegitChknDnnr
+      - PosterLegitCornzza
+      - PosterLegitFuckAround
+      - PosterLegitSafetyMothPoisoning
+      - PosterLegitSafetyMothBoH
+      - PosterLegitSafetyMothFires
+      - PosterLegitSafetyMothPills
+      - PosterLegitSafetyMothGlimmer
+      - PosterLegitInterdynePublicZone
+      - PosterLegitInterdynePrivateZone
+      - PosterLegitInterdyneHQ
+      - PosterLegitLoveFurry
     chance: 1

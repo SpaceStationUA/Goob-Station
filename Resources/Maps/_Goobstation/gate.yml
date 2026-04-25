@@ -99816,8 +99816,6 @@ entities:
       pos: 56.5,48.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 5336
   - uid: 860
@@ -135354,8 +135352,6 @@ entities:
       pos: -96.5,16.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 10331
   - uid: 10860

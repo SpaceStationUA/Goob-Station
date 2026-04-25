@@ -82,6 +82,14 @@
       - tag: MakeshiftShield
         name: construction-graph-tag-blue
         doAfter: 3
+    - to: OrangeAltarNode # Pirate: katana
+      completed: # Pirate: katana
+      - !type:SnapToGrid # Pirate: katana
+        southRotation: true # Pirate: katana
+      steps: # Pirate: katana
+      - material: Gold # Pirate: katana
+        amount: 1 # Pirate: katana
+        doAfter: 3 # Pirate: katana
     - to: HeavenAltarNode
       completed:
       - !type:SnapToGrid
@@ -215,6 +223,18 @@
       steps:
       - tool: Prying
         doAfter: 1
+
+  - node: OrangeAltarNode # Pirate: katana
+    entity: AltarConvertOrange # Pirate: katana
+    edges: # Pirate: katana
+    - to: AltarConvertNode # Pirate: katana
+      completed: # Pirate: katana
+      - !type:SpawnPrototype # Pirate: katana
+        prototype: IngotGold1 # Pirate: katana
+        amount: 1 # Pirate: katana
+      steps: # Pirate: katana
+      - tool: Prying # Pirate: katana
+        doAfter: 1 # Pirate: katana
 
   - node: HeavenAltarNode
     entity: AltarHeaven

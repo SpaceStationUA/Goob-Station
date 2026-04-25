@@ -45,7 +45,7 @@
     rotation: -90
   - type: GuideHelp
     guides:
-    - AltarsGolemancy # Pirate end
+      - AltarsGolemancy # Pirate end
   - type: EnchantingTable # Goobstation
   - type: RecallPrayable # Goobstation
   
@@ -325,6 +325,13 @@
     radius: 1.5
     energy: 1
     color: "#fbceb1"
+  - type: AltarSource # Pirate: katana
+    rodProto: NullrodHolyKatana # Pirate: katana
+    effectProto: EffectSpark # Pirate: katana
+    soundPath: /Audio/Effects/hallelujah.ogg # Pirate: katana
+  - type: Construction # Pirate: katana
+    graph: AltarsGraph # Pirate: katana
+    node: OrangeAltarNode # Pirate: katana
 
 - type: entity
   id: AltarConvertRed

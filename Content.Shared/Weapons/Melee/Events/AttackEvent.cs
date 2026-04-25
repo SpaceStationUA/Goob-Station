@@ -68,11 +68,12 @@ namespace Content.Shared.Weapons.Melee.Events
     }
 
     // Goobstation start
-    public sealed class BeforeHarmfulActionEvent(EntityUid user, HarmfulActionType type) : CancellableEntityEventArgs
+    public sealed class BeforeHarmfulActionEvent(EntityUid user, HarmfulActionType type, DamageSpecifier? damage = null) : CancellableEntityEventArgs // Pirate: katana
     {
         public EntityUid User { get; } = user;
 
         public HarmfulActionType Type { get; } = type;
+        public DamageSpecifier? Damage { get; } = damage; // Pirate: katana
     }
 
     public enum HarmfulActionType : byte
