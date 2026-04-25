@@ -17,3 +17,15 @@
   materials:
     Steel: 100
     Glass: 100
+
+- type: latheRecipe
+  id: DrinkCoffeepotPirate
+  result: DrinkCoffeepotPirate
+  materials:
+    Glass: 200
+
+- type: latheRecipe
+  id: DrinkCoffeeCupPirate
+  result: DrinkCoffeeCupPirate
+  materials:
+    Plastic: 50

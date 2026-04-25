@@ -159,11 +159,11 @@ using System.Numerics;
 using Content.Client.Humanoid;
 using Content.Client.Lobby.UI.Loadouts;
 using Content.Client.Lobby.UI.Roles;
+using Content.Client._Pirate.Traits.UI; // Pirate: port and modified DV traits UI
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
 using Content.Client.Stylesheets;
-using Content.Client.UserInterface.Controls; // Pirate - traits rework
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared._Pirate.Contractors.Prototypes; // Pirate - port EE contractors
 using Content.Pirate.UIKit.UserInterface.Lobby; // Pirate - Alternative Jobs
@@ -645,6 +645,7 @@ namespace Content.Client.Lobby.UI
             #endregion Jobs
 
             TabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
+            TabContainer.SetTabTitle(3, Loc.GetString("trait-editor-title")); // Pirate: port and modified DV traits UI
 
             RefreshTraits();
 
@@ -685,6 +686,16 @@ namespace Content.Client.Lobby.UI
 
             SpeciesInfoButton.OnPressed += OnSpeciesInfoButtonPressed;
 
+            // Pirate start: port and modified DV traits UI
+            TraitsTab.OnTraitsChanged += traits =>
+            {
+                if (Profile == null)
+                    return;
+                Profile = Profile.WithTraitPreferences(traits);
+                SetDirty();
+            };
+            // Pirate end: port and modified DV traits UI
+
             UpdateSpeciesGuidebookIcon();
             IsDirty = false;
         }
@@ -723,500 +734,16 @@ namespace Content.Client.Lobby.UI
         /// <summary>
         /// Refreshes traits selector
         /// </summary>
+        // Pirate start: port and modified DV traits UI
         public void RefreshTraits()
-        {
-            TraitsList.DisposeAllChildren();
-
-            EnforceSpeciesTraitRestrictions(); // Pirate - Traits Rework
-
-            var traits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => t.Cost).ToList(); // Pirate - Traits Rework
-            TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
-
-            if (traits.Count < 1)
-            {
-                TraitsList.AddChild(new Label
-                {
-                    Text = Loc.GetString("humanoid-profile-editor-no-traits"),
-                    FontColorOverride = Color.Gray,
-                });
-                return;
-            }
-
-            // Pirate - Traits Rework
-            // Dictionary to store category buttons - moved up before it's used
-            Dictionary<string, TraitCategoryButton> categoryButtons = new();
-
-            var clearAllButton = new ConfirmButton
-            {
-                Text = Loc.GetString("humanoid-profile-editor-clear-all-traits-button"),
-                ConfirmationText = Loc.GetString("humanoid-profile-editor-clear-all-traits-confirm"),
-                MinSize = new Vector2(0, 30)
-            };
-            clearAllButton.OnPressed += _ =>
-            {
-                if (Profile == null)
-                    return;
-
-                Profile = Profile.WithoutAllTraitPreferences();
-                SetDirty();
-                RefreshTraits();
-            };
-            TraitsList.AddChild(clearAllButton);
-
-            // Add expand/collapse all buttons
-            var expandCollapseButtons = new TraitExpandCollapseButtons();
-            expandCollapseButtons.OnExpandCollapseAll += expanded =>
-            {
-                // Set the static dictionary state
-                TraitCategoryButton.SetAllExpanded(expanded);
-
-                // Update all visible category buttons
-                foreach (var button in categoryButtons.Values)
-                {
-                    button.SetExpanded(expanded);
-                }
-            };
-            TraitsList.AddChild(expandCollapseButtons);
-            // Pirate end - Traits Rework
-
-            // Setup model
-            Dictionary<string, List<string>> traitGroups = new();
-            List<string> defaultTraits = new();
-            traitGroups.Add(TraitCategoryPrototype.Default, defaultTraits);
-
-            var allSelectors = new Dictionary<ProtoId<TraitPrototype>, TraitPreferenceSelector>(); // Pirate - Traits Rework
-
-            foreach (var trait in traits)
-            {
-                // Pirate removal start
-                /* Begin Goobstation: ported from DeltaV - Species trait exclusion
-                if (Profile?.Species is { } selectedSpecies && (trait.ExcludedSpecies.Contains(selectedSpecies) ||
-                    trait.IncludedSpecies.Count > 0 && !trait.IncludedSpecies.Contains(selectedSpecies)))
-                {
-                    Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
-                    continue;
-                }
-                */// End Goobstation: ported from DeltaV - Species trait exclusion
-                // Pirate removal end
-
-                if (trait.Category == null)
-                {
-                    defaultTraits.Add(trait.ID);
-                    continue;
-                }
-
-                if (!_prototypeManager.HasIndex(trait.Category))
-                    continue;
-
-                var group = traitGroups.GetOrNew(trait.Category);
-                group.Add(trait.ID);
-            }
-
-            // Create UI view from model
-            foreach (var (categoryId, categoryTraits) in traitGroups)
-            {
-                // Pirate start - Traits Rework
-                // Skip the default category if it has no traits
-                if (categoryId == TraitCategoryPrototype.Default && categoryTraits.Count == 0)
-                    continue;
-
-                string categoryName;
-                int? maxTraitPoints = null;
-                TraitCategoryPrototype? category = null;
-
-                if (categoryId != TraitCategoryPrototype.Default)
-                {
-                    category = _prototypeManager.Index<TraitCategoryPrototype>(categoryId);
-                    categoryName = Loc.GetString(category.Name);
-                    maxTraitPoints = category.MaxTraitPoints;
-                }
-                else
-                {
-                    categoryName = Loc.GetString("humanoid-profile-editor-traits-default-category");
-                }
-
-                categoryTraits.Sort((a, b) =>
-                {
-                    var traitA = _prototypeManager.Index<TraitPrototype>(a);
-                    var traitB = _prototypeManager.Index<TraitPrototype>(b);
-
-                    var costCompare = traitA.Cost.CompareTo(traitB.Cost);
-                    if (costCompare != 0)
-                        return costCompare;
-
-                    var traitNameA = Loc.GetString(traitA.Name);
-                    var traitNameB = Loc.GetString(traitB.Name);
-                    return string.Compare(traitNameA, traitNameB, StringComparison.CurrentCulture);
-                });
-
-                // Create category button
-                var categoryButton = new TraitCategoryButton(categoryName);
-                categoryButtons[categoryId] = categoryButton;
-                TraitsList.AddChild(categoryButton);
-                // Pirate end - Traits Rework
-
-                List<TraitPreferenceSelector?> selectors = new();
-                var selectionCount = 0;
-
-                // First pass: calculate current points and create selectors
-                foreach (var traitProto in categoryTraits)
-                {
-                    var trait = _prototypeManager.Index<TraitPrototype>(traitProto);
-                    var selector = new TraitPreferenceSelector(trait);
-
-                    selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
-                    if (selector.Preference)
-                        selectionCount += trait.Cost;
-
-                    // Pirate start - Traits Rework
-                    {
-                        var tooltipParts = new List<string>();
-                        if (trait.Description is { } tdesc)
-                        {
-                            var descText = Loc.GetString(tdesc);
-                            tooltipParts.Add(descText);
-                        }
-
-                        if (trait.MutuallyExclusiveTraits.Count > 0)
-                        {
-                            var names = new List<string>();
-                            foreach (var exId in trait.MutuallyExclusiveTraits)
-                            {
-                                if (_prototypeManager.TryIndex(exId, out var exProto))
-                                    names.Add($"[color=#ADD8E6]{Loc.GetString(exProto.Name)}[/color]");
-                            }
-                            if (names.Count > 0)
-                            {
-                                var exclusiveText = $"You must not have one of these traits: {string.Join(", ", names)}";
-                                tooltipParts.Add(exclusiveText);
-                            }
-                        }
-
-                        if (trait.SpeciesBlacklist.Count > 0)
-                        {
-                            var names = new List<string>();
-                            foreach (var speciesId in trait.SpeciesBlacklist)
-                            {
-                                if (_prototypeManager.TryIndex(speciesId, out var speciesProto))
-                                {
-                                    var speciesName = Loc.GetString(speciesProto.Name);
-                                    names.Add($"[color=#087209]{speciesName}[/color]");
-                                }
-                            }
-                            if (names.Count > 0)
-                            {
-                                var blacklistText = $"You must not be: {string.Join(", ", names)}";
-                                tooltipParts.Add(blacklistText);
-                            }
-                        }
-
-                        if (tooltipParts.Count > 0)
-                        {
-                            var fullTooltip = string.Join("\n", tooltipParts);
-                            selector.SetTooltip(fullTooltip);
-                        }
-                    }
-
-                    // Hide trait if current species is in the blacklist
-                    if (Profile?.Species is { } currentSpecies && trait.SpeciesBlacklist.Contains(currentSpecies))
-                    {
-                        selector.Visible = false;
-                    }
-
-                    allSelectors[trait.ID] = selector;
-
-                    selector.PreferenceChanged += preference =>
-                    {
-                        if (preference)
-                        {
-                            // Calculate current points for this category before adding the new trait
-                            var currentPoints = 0;
-                            if (category != null && category.MaxTraitPoints >= 0)
-                            {
-                                foreach (var existingTraitId in Profile?.TraitPreferences ?? new HashSet<ProtoId<TraitPrototype>>())
-                                {
-                                    if (!_prototypeManager.TryIndex<TraitPrototype>(existingTraitId, out var existingProto))
-                                        continue;
-
-                                    if (existingProto.Category == categoryId)
-                                        currentPoints += existingProto.Cost;
-                                }
-
-                                // Check if adding this trait would exceed the maximum points
-                                if (currentPoints + trait.Cost > category.MaxTraitPoints)
-                                {
-                                    // Reset the selection without triggering the event
-                                    selector.Preference = false;
-                                    return;
-                                }
-                            }
-
-                            var oldProfile = Profile;
-                            Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
-
-                            // If the profile didn't change, it means the trait couldn't be added (e.g., due to point limits)
-                            if (Profile == oldProfile)
-                            {
-                                // Reset the selection without triggering the event
-                                selector.Preference = false;
-                                return;
-                            }
-                            // Pirate end - Traits Rework
-                        }
-                        else
-                        {
-                            Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
-                        }
-
-                        SetDirty();
-                        // Pirate start - Traits Rework
-                        UpdateTraitIncompatibilityVisibility(allSelectors);
-
-                        // Instead of refreshing the entire UI, just update the point counter if needed
-                        if (category is { MaxTraitPoints: >= 0 })
-                        {
-                            // Recalculate points for this category
-                            var currentPoints = 0;
-                            foreach (var traitId in Profile?.TraitPreferences ?? new HashSet<ProtoId<TraitPrototype>>())
-                            {
-                                if (!_prototypeManager.TryIndex<TraitPrototype>(traitId, out var proto))
-                                    continue;
-
-                                if (proto.Category == category.ID)
-                                    currentPoints += proto.Cost;
-                            }
-
-                            // Find and update the point counter label
-                            if (categoryButton.TraitsContainer.ChildCount >= 2)
-                            {
-                                var maxPoints = category.MaxTraitPoints.Value;
-                                float pointsLeft = Math.Max(0, maxPoints - currentPoints);
-                                if (categoryButton.TraitsContainer.GetChild(0) is ProgressBar progressBar)
-                                {
-                                    progressBar.Value = pointsLeft;
-                                    float percentRemaining = pointsLeft / maxPoints;
-
-                                    Color barColor;
-
-                                    if (percentRemaining > 0.5f)
-                                    {
-                                        barColor = Color.FromHex("#33FF33");
-                                    }
-                                    else if (percentRemaining > 0.25f)
-                                    {
-                                        barColor = Color.FromHex("#FFFF33");
-                                    }
-                                    else
-                                    {
-                                        barColor = Color.FromHex("#FF3333");
-                                    }
-
-                                    if (progressBar.ForegroundStyleBoxOverride is StyleBoxFlat styleBox)
-                                    {
-                                        styleBox.BackgroundColor = barColor;
-                                    }
-                                }
-
-                                if (categoryButton.TraitsContainer.GetChild(1) is Label pointsLabel)
-                                {
-                                    pointsLabel.Text = Loc.GetString("humanoid-profile-editor-trait-count-hint",
-                                        ("current", pointsLeft),
-                                        ("max", category.MaxTraitPoints));
-                                }
-                            }
-
-                            // Update all trait colors based on the new point total
-                            RefreshTraitColors(categoryButton, category, currentPoints);
-                        }
-                        // Pirate end - Traits Rework
-                    };
-                    selectors.Add(selector);
-                }
-
-                // Selection counter
-                if (category is { MaxTraitPoints: >= 0 })
-                {
-                    // Pirate start - Traits Rework
-                    var maxPoints = category.MaxTraitPoints.Value;
-                    var progressBar = new ProgressBar
-                    {
-                        MinHeight = 4,
-                        SetHeight = 4f,
-                        MinValue = 0,
-                        MaxValue = maxPoints,
-                        Value = maxPoints - selectionCount,
-                        Margin = new Thickness(0, 0, 0, 2)
-                    };
-
-                    float pointsLeft = Math.Max(0, maxPoints - selectionCount);
-                    float percentRemaining = pointsLeft / maxPoints;
-
-                    Color barColor;
-                    if (percentRemaining > 0.5f)
-                    {
-                        barColor = Color.FromHex("#33FF33");
-                    }
-                    else if (percentRemaining > 0.25f)
-                    {
-                        barColor = Color.FromHex("#FFFF33");
-                    }
-                    else
-                    {
-                        barColor = Color.FromHex("#FF3333");
-                    }
-
-                    progressBar.ForegroundStyleBoxOverride = new StyleBoxFlat
-                    {
-                        BackgroundColor = barColor,
-                    };
-
-                    categoryButton.AddTrait(progressBar);
-
-                    categoryButton.AddTrait(new Label
-                    {
-                        Text = Loc.GetString("humanoid-profile-editor-trait-count-hint", ("current", pointsLeft), ("max", category.MaxTraitPoints)),
-                        FontColorOverride = Color.Green
-                        // Pirate end - Traits Rework
-                    });
-                }
-
-                // Second pass: add selectors to UI with appropriate colors
-                foreach (var selector in selectors)
-                {
-                    if (selector == null)
-                        continue;
-
-                    // Pirate start - Traits Rework
-                    // Color traits red if they would exceed the point limit
-                    if (category is { MaxTraitPoints: >= 0 })
-                    {
-                        // If this trait would exceed the limit when added to current selection
-                        if (!selector.Preference && selector.Cost + selectionCount > category.MaxTraitPoints)
-                        {
-                            selector.SetUnavailable(true);
-                        }
-                        // If this trait is already selected but would exceed the limit if added now
-                        else if (selector.Preference && selectionCount > category.MaxTraitPoints)
-                        {
-                            // This shouldn't happen normally, but just in case
-                            selector.SetUnavailable(true);
-                        }
-                    }
-
-                    categoryButton.AddTrait(selector);
-                }
-
-            }
-
-            // Update trait visibility after all selectors are created
-            UpdateTraitIncompatibilityVisibility(allSelectors);
-        }
-
-        // Helper method to refresh trait colors when points change
-        private void RefreshTraitColors(TraitCategoryButton categoryButton, TraitCategoryPrototype category, int currentPoints)
-        {
-            // Skip the first child which is the points label
-            for (int i = 1; i < categoryButton.TraitsContainer.ChildCount; i++)
-            {
-                if (categoryButton.TraitsContainer.GetChild(i) is TraitPreferenceSelector selector)
-                {
-                    // Reset color
-                    selector.TraitButton.ModulateSelfOverride = null;
-                    selector.SetUnavailable(false);
-
-                    // If this trait would exceed the limit when added to current selection
-                    if (!selector.Preference && selector.Cost + currentPoints > category.MaxTraitPoints)
-                    {
-                        selector.SetUnavailable(true);
-                    }
-                    // Enable traits that can now be selected
-                    else if (!selector.Preference && selector.Cost + currentPoints <= category.MaxTraitPoints)
-                    {
-                        selector.SetUnavailable(false);
-                    }
-                }
-            }
-        }
-
-        private void UpdateTraitIncompatibilityVisibility(Dictionary<ProtoId<TraitPrototype>, TraitPreferenceSelector> allSelectors)
-        {
-            var selected = Profile?.TraitPreferences ?? new HashSet<ProtoId<TraitPrototype>>();
-            var currentSpecies = Profile?.Species;
-
-            foreach (var (traitId, selector) in allSelectors)
-            {
-                var hide = false;
-
-                if (!_prototypeManager.TryIndex<TraitPrototype>(traitId, out var thisProto))
-                {
-                    selector.Visible = false;
-                    continue;
-                }
-
-                // Check species blacklist first, even for selected traits
-                if (currentSpecies != null)
-                {
-                    ProtoId<SpeciesPrototype> speciesId = currentSpecies.Value;
-                    if (thisProto.SpeciesBlacklist.Contains(speciesId))
-                    {
-                        hide = true;
-                    }
-                }
-
-                // If trait is selected, keep it visible unless it's species-blacklisted
-                if (selected.Contains(traitId) && !hide)
-                {
-                    selector.Visible = true;
-                    continue;
-                }
-
-                if (!hide)
-                {
-                    foreach (var sel in selected)
-                    {
-                        if (!_prototypeManager.TryIndex<TraitPrototype>(sel, out var selProto))
-                            continue;
-
-                        if (selProto.MutuallyExclusiveTraits.Contains(traitId) || thisProto.MutuallyExclusiveTraits.Contains(sel))
-                        {
-                            hide = true;
-                        }
-                    }
-                }
-
-                selector.Visible = !hide;
-            }
-        }
-        private void EnforceSpeciesTraitRestrictions()
         {
             if (Profile == null)
                 return;
 
-            var species = Profile.Species;
-            var toRemove = new List<ProtoId<TraitPrototype>>();
-
-            foreach (var traitId in Profile.TraitPreferences)
-            {
-                if (!_prototypeManager.TryIndex(traitId, out TraitPrototype? trait))
-                    continue;
-
-                if (trait.SpeciesBlacklist.Contains(species))
-                {
-                    toRemove.Add(traitId);
-                }
-            }
-
-            foreach (var traitId in toRemove)
-            {
-                Profile = Profile.WithoutTraitPreference(traitId, _prototypeManager);
-            }
-
-            if (toRemove.Count > 0)
-            {
-                SetDirty();
-            }
+            TraitsTab.SetSelectedTraits(Profile.TraitPreferences);
+            TraitsTab.UpdateConditions(Profile);
         }
-        // Pirate end
+        // Pirate end: port and modified DV traits UI
 
         /// <summary>
         /// Refreshes the species selector.
@@ -1415,6 +942,7 @@ namespace Content.Client.Lobby.UI
                 selector.OnSelected += preference =>
                 {
                     Profile = Profile?.WithAntagPreference(antag.ID, preference == 0);
+                    RefreshTraits(); // Pirate: port and modified DV traits UI
                     SetDirty();
                 };
 
@@ -1746,6 +1274,7 @@ namespace Content.Client.Lobby.UI
                         ReloadPreview();
 
                         UpdateJobPriorities();
+                        RefreshTraits(); // Pirate: port and modified DV traits UI
                         SetDirty();
                     };
 

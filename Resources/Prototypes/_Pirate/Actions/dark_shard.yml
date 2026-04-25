@@ -1,0 +1,11 @@
+- type: entity
+  parent: BaseAction
+  id: ActionCallCursedKatana
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Objects/Weapons/Melee/dark_shard.rsi
+      state: icon
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:CallCursedKatanaEvent {}

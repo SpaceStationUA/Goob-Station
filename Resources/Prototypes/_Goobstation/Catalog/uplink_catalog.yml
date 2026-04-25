@@ -93,8 +93,8 @@
 
 - type: listing
   id: UplinkBoxReagentGrenades
-  name: "Коробка з реагентними гранатами"
-  description: "Містить 2 клейові гранати та 2 гранати з мастилом"
+  name: Box of Reagent Grenades
+  description: Contains 2 Glue grenades and 2 Lube Grenades
   productEntity: BoxReagentGrenades
   cost:
     Telecrystal: 30
@@ -443,7 +443,7 @@
   icon: { sprite: /Textures/_Goobstation/Objects/Weapons/Guns/Shotguns/magshot.rsi, state: icon }
   productEntity: WeaponShotgunHeavy
   cost:
-    Telecrystal: 200
+    Telecrystal: 175
   categories:
   - UplinkWeaponry
   conditions:
@@ -752,8 +752,8 @@
 
 - type: listing
   id: UplinkLubeGrenade
-  name: "Мастильна граната"
-  description: "Робить підлогу слизькою!"
+  name: Lube grenade
+  description: Make the floor slippery!
   productEntity: LubeGrenade
   cost:
     Telecrystal: 14
@@ -768,8 +768,8 @@
 
 - type: listing
   id: UplinkGlueGrenade
-  name: "Клейова граната"
-  description: "Ускладнює пересування по підлозі!"
+  name: Glue grenade
+  description: Make the floor hard to walk in!
   productEntity: GlueGrenade
   cost:
     Telecrystal: 5
@@ -884,6 +884,7 @@
   - !type:BuyerJobCondition
     whitelist:
     - SalvageSpecialist
+    - ShaftMiner
 
 - type: listing
   id: UplinkGreyTide
@@ -1377,7 +1378,7 @@
   icon: { sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/heavy_shotgun.rsi, state: icon }
   productEntity: MagazineShotgunHeavy
   cost:
-    Telecrystal: 30
+    Telecrystal: 20
   categories:
   - UplinkAmmo
   conditions:
@@ -1393,7 +1394,7 @@
   icon: { sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/heavy_shotgun.rsi, state: icon2 }
   productEntity: MagazineShotgunHeavySlug
   cost:
-    Telecrystal: 40
+    Telecrystal: 25
   categories:
   - UplinkAmmo
   conditions:

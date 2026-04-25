@@ -1,5 +1,11 @@
 photoalbum-sign-verb = Sign photo album
+photoalbum-make-private-verb = Make album private
+photoalbum-make-public-verb = Make album public
 photoalbum-signed = {THE($user)} signed the photo album
+photoalbum-made-private = {THE($user)} marked the photo album as private
+photoalbum-made-public = {THE($user)} marked the photo album as public
+photoalbum-persistent-examine = Contains old photos.
+photoalbum-private-examine = This album is marked as private.
 photoalbum-signed-examine = There is a signature on this album.
 photoalbum-signed-name-possessive = {$name}'s photo album
 photoalbum-signed-name-title = {$name} photo album

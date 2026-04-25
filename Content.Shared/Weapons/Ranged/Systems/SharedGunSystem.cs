@@ -65,6 +65,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared._Shitmed.Weapons.Ranged.Events; // Shitmed Change
+using Content.Shared._Lavaland.Weapons.Ranged.Events; // Pirate: gunplay
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -229,6 +230,9 @@ public abstract partial class SharedGunSystem : EntitySystem
             gun.Target = potentialTarget;
         // Goob edit end
         AttemptShoot(user.Value, ent, gun);
+        // Pirate: gunplay
+        if (msg.Continuous)
+            gun.ShotCounter = 0;
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
@@ -574,9 +578,31 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (shooter != null)
             Projectiles.SetShooter(uid, projectile, shooter.Value);
 
-        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle() + projectile.Angle);
+        // Pirate: gunplay
+        Physics.UpdateIsPredicted(uid, physics);
+
+        // Pirate: gunplay (fix projectile rotation on fire, it had 0 angle(south) regardless of gun target)
+        TransformSystem.SetWorldRotationNoLerp((uid, Transform(uid)), direction.ToWorldAngle() + projectile.Angle);
         if (targetCoordinates.HasValue) // Goobstation
             projectile.TargetCoordinates = targetCoordinates.Value; // Goobstation
+
+        #region Pirate: gunplay
+        if (user is { } userUid)
+        {
+            var ev = new Content.Shared._Pirate.Projectiles.PlayerShotProjectileEvent(uid, userUid);
+            RaiseLocalEvent(ref ev);
+        }
+
+        // Pirate: gunplay
+        if (gunUid is { } gun)
+        {
+            var shotEv = new ProjectileShotEvent
+            {
+                FiredProjectile = uid,
+            };
+            RaiseLocalEvent(gun, shotEv);
+        }
+        #endregion
     }
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);

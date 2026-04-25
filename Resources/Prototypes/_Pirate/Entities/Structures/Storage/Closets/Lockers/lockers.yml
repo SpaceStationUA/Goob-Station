@@ -1,6 +1,6 @@
 - type: entity
   id: LockerInterdyne
-  name: "Шафка персоналу Interdyne"
+  name: Шафка персоналу Інтердайна
   parent: LockerBaseSecure
   components:
   - type: Appearance
@@ -15,7 +15,7 @@
 
 - type: entity
   id: LockerInterdyneCommand
-  name: "Шафка просунутого персоналу Interdyne"
+  name: Шафка просунутого персоналу Інтердайна
   parent: LockerBaseSecure
   components:
   - type: Appearance
@@ -27,11 +27,41 @@
     stateBaseClosed: interdyne_command
     stateDoorOpen: interdyne_command_open
     stateDoorClosed: interdyne_command_door
+    
+- type: entity
+  id: LockerInterdyneOfficer
+  name: Шафка Офіцера Інтердайну
+  parent: LockerBaseSecure
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Pirate/Structures/Storage/closet.rsi
+  - type: AccessReader
+    access: [["InterdyneOfficer"]]
+  - type: EntityStorageVisuals
+    stateBaseClosed: interdyne_command
+    stateDoorOpen: interdyne_command_open
+    stateDoorClosed: interdyne_officer_door
+    
+- type: entity
+  id: LockerInterdyneDeputy
+  name: Шафка Заступника Офіцера Інтердайну
+  parent: LockerBaseSecure
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Pirate/Structures/Storage/closet.rsi
+  - type: AccessReader
+    access: [["InterdyneOfficer"]]
+  - type: EntityStorageVisuals
+    stateBaseClosed: interdyne
+    stateDoorOpen: interdyne_command_open
+    stateDoorClosed: interdyne_deputy_door
 
 - type: entity
   id: LockerBartender
   parent: LockerBase
-  name: "шафка бармена"
+  name: Шафка бармена
   components:
   - type: Appearance
   - type: EntityStorageVisuals

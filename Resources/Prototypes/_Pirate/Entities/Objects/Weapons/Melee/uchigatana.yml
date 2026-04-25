@@ -1,0 +1,22 @@
+- type: entity
+  parent: Katana
+  id: Uchigatana
+  name: katana
+  description: Woefully underpowered in D20.
+  components:
+  - type: Contraband
+    severity: Restricted
+    allowedDepartments: [ CentralCommand ]
+  - type: Tag
+    tags:
+    - Katana
+    - KatanaSheathable
+  - type: KatanaSheathHandle
+    sprite: _Pirate/Objects/Weapons/Melee/uchigatana.rsi
+    inventoryState: handle-ICON
+    beltState: handle-BELT
+    backpackState: handle-BACKPACK
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/uchigatana.rsi
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Melee/uchigatana.rsi

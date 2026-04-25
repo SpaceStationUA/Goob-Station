@@ -33,3 +33,18 @@
 
 - type: Tag
   id: CaptainSabreShashka
+
+- type: Tag
+  id: KatanaSheathable
+
+- type: Tag
+  id: CoffeeCondimentSugarPirate
+
+- type: Tag
+  id: CoffeeCondimentSweetenerPirate
+
+- type: Tag
+  id: CoffeeCondimentCreamerPirate
+
+- type: Tag
+  id: CoffeeCondimentChocolatePirate

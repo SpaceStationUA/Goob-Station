@@ -14,7 +14,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity #DeltaV, modified by Goobstation to work in this folder.
-  name: "енергетичний болт"
+  name: energy bolt
   id: BulletEnergyGunLaser
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
@@ -28,11 +28,12 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: heavylaser
+    - state: medium # Pirate
       shader: unshaded
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectHeavyLaser # Pirate
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -53,7 +54,7 @@
       collection: MeatLaserImpact
 
 - type: entity #Goobstation, put here so the X-01 stuff isnt spread everywhere.
-  name: "іонний заряд"
+  name: ion bolt
   id: BulletEnergyGunIon
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
@@ -67,12 +68,13 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: omnilaser_greyscale
+    - state: mediumtemp2 # Pirate
       shader: unshaded
       color: blue
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectTempCold # Pirate
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -92,7 +94,7 @@
       collection: MeatLaserImpact
 
 - type: entity # Goobstation, put here so the X-01 stuff isnt spread everywhere.
-  name: "магнум болт"
+  name: magnum bolt
   id: BulletEnergyGunMagnum
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
@@ -111,6 +113,7 @@
     - state: bolt_red_heavy
       shader: unshaded
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectHeavyLaser # Pirate
   - type: Physics
   - type: Fixtures
     fixtures:

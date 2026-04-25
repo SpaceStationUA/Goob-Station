@@ -1,0 +1,13 @@
+- type: entity
+  parent: BaseAction
+  id: ActionHydrakinCoolOff
+  name: Cool Off
+  description: Dissipate some of your body heat.
+
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon: { sprite: _Pirate/Actions/hydrakin_cooldown.rsi, state: hydra_cooldown }
+    useDelay: 5
+  - type: InstantAction
+    event: !type:HydrakinCoolOffActionEvent

@@ -35,3 +35,5 @@ action-speech-spell-gorilla-form = B'NA NAH-SLEMA!
 action-speech-spell-summon-stick-minions = Повстаньте, мої творіння! Зі сторінок у цей світ!
 action-speech-spell-tile-toggle = РУК'АТ
 action-speech-spell-curse-of-byond = ПРОКЛЯТТЯ БІОНДУ!!
+
+action-speech-spell-rathen = АРС НАТ!!

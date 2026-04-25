@@ -13,11 +13,5 @@ ghost-respawn-log-character-almost-same = Гравець { $player } { $try ->
     *[false] спробував приєднатися
 } у раунд після респауну зі схожим іменем. Минуле ім'я: { $oldName }, поточне: { $newName }.
 ghost-respawn-log-return-to-lobby = { $userName } повернувся у лоббі.
-ghost-respawn-minutes-left = Будь ласка, зачекайте {$time} {$time ->
-    [one] хвилину
-   *[other] хвилин
-}, перш ніж намагатися відродитися.
-ghost-respawn-seconds-left = Будь ласка, зачекайте {$time} {$time ->
-    [one] секунду
-   *[other] секунд
-}, перш ніж намагатися відродитися.
+ghost-respawn-minutes-left = Респавн: {$time} хв
+ghost-respawn-seconds-left = Респавн: {$time} с

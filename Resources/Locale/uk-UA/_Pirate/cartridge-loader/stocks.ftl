@@ -1,0 +1,9 @@
+stock-trading-program-name = Біржа
+stock-trading-title = Міжзоряна біржа
+stock-trading-balance = Баланс: {$balance} спесо
+stock-trading-no-entries = Немає компаній
+stock-trading-owned-shares = У власності: {$shares}
+stock-trading-buy-button = Купити
+stock-trading-sell-button = Продати
+stock-trading-amount-placeholder = Кількість
+stock-trading-price-history = Історія цін

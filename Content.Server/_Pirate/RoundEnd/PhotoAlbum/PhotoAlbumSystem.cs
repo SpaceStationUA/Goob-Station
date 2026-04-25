@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 using System;
+using System.Linq;
 using Content.Server._Pirate.Photo;
 using Content.Server.GameTicking;
 using Content.Server.Popups;
@@ -17,6 +18,7 @@ using Robust.Server.Containers;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server._Pirate.RoundEnd.PhotoAlbum;
 public sealed class PhotoAlbumSystem : EntitySystem
@@ -94,7 +96,8 @@ public sealed class PhotoAlbumSystem : EntitySystem
     {
         if (!Resolve(uid, ref photoAlbum, false) ||
             photoAlbum.IsSigned ||
-            !HasComp<AutoSignPhotoAlbumComponent>(uid))
+            !HasComp<AutoSignPhotoAlbumComponent>(uid) ||
+            !SupportsSigning(uid))
         {
             _unsignedAutoSignAlbums.Remove(uid);
             return;
@@ -113,7 +116,8 @@ public sealed class PhotoAlbumSystem : EntitySystem
         {
             if (!TryComp<PhotoAlbumComponent>(uid, out var photoAlbum) ||
                 !HasComp<AutoSignPhotoAlbumComponent>(uid) ||
-                photoAlbum.IsSigned)
+                photoAlbum.IsSigned ||
+                !SupportsSigning(uid))
             {
                 _unsignedAutoSignAlbums.Remove(uid);
                 continue;
@@ -145,33 +149,59 @@ public sealed class PhotoAlbumSystem : EntitySystem
 
     private void OnGetVerbs(Entity<PhotoAlbumComponent> entity, ref GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || entity.Comp.IsSigned)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
         if (args.Using is not { } pen || !_tags.HasTag(pen, "Write"))
             return;
 
-        var target = args.Target;
         var user = args.User;
 
-        var verb = new Verb
+        if (!entity.Comp.IsSigned && SupportsSigning(entity.Owner))
         {
-            Text = Loc.GetString("photoalbum-sign-verb"),
-            Act = () => VerbSignPhotoAlbum(entity, user)
-        };
-        args.Verbs.Add(verb);
+            var signVerb = new Verb
+            {
+                Text = Loc.GetString("photoalbum-sign-verb"),
+                Act = () => VerbSignPhotoAlbum(entity, user)
+            };
+            args.Verbs.Add(signVerb);
+        }
+
+        if (TryComp<PersistentPhotoAlbumComponent>(entity, out var persistent) && persistent.SupportsPrivacy)
+        {
+            var privacyVerb = new Verb
+            {
+                Text = persistent.EffectiveIsPublic
+                    ? Loc.GetString("photoalbum-make-private-verb")
+                    : Loc.GetString("photoalbum-make-public-verb"),
+                Icon = persistent.EffectiveIsPublic
+                    ? new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/lock.svg.192dpi.png"))
+                    : new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")),
+                Act = () => VerbToggleAlbumPrivacy(entity, persistent, user)
+            };
+            args.Verbs.Add(privacyVerb);
+        }
     }
 
     private void OnExamine(Entity<PhotoAlbumComponent> entity, ref ExaminedEvent args)
     {
-        if (!entity.Comp.IsSigned)
-            return;
+        if (TryComp<PersistentPhotoAlbumComponent>(entity, out var persistent))
+        {
+            args.PushMarkup(Loc.GetString("photoalbum-persistent-examine"));
 
-        args.PushMarkup(Loc.GetString("photoalbum-signed-examine"));
+            if (persistent.SupportsPrivacy && !persistent.EffectiveIsPublic)
+                args.PushMarkup(Loc.GetString("photoalbum-private-examine"));
+        }
+
+        if (entity.Comp.IsSigned && SupportsSigning(entity.Owner))
+            args.PushMarkup(Loc.GetString("photoalbum-signed-examine"));
     }
 
     private void VerbSignPhotoAlbum(Entity<PhotoAlbumComponent> entity, EntityUid user)
     {
+        if (!SupportsSigning(entity.Owner))
+            return;
+
         string? username = null;
         if (_player.TryGetSessionByEntity(user, out var session))
             username = session.Data.UserName;
@@ -206,40 +236,79 @@ public sealed class PhotoAlbumSystem : EntitySystem
         _metaData.SetEntityName(entity, albumName);
     }
 
+    private bool SupportsSigning(EntityUid uid)
+    {
+        return !TryComp<PersistentPhotoAlbumComponent>(uid, out var persistent) || persistent.SupportsSigning;
+    }
+
+    private void VerbToggleAlbumPrivacy(
+        Entity<PhotoAlbumComponent> entity,
+        PersistentPhotoAlbumComponent persistent,
+        EntityUid user)
+    {
+        if (!persistent.SupportsPrivacy)
+            return;
+
+        persistent.IsPublic = !persistent.EffectiveIsPublic;
+
+        var popup = persistent.EffectiveIsPublic
+            ? Loc.GetString("photoalbum-made-public", ("user", user))
+            : Loc.GetString("photoalbum-made-private", ("user", user));
+        _popup.PopupEntity(popup, entity);
+        _audio.PlayPvs(entity.Comp.SignSound, entity);
+    }
+
     private void OnRoundEndTextAppend(RoundEndTextAppendEvent args)
     {
         _roundEndImageData.Clear();
 
         List<AlbumData>? albums = new();
+        var sortableAlbums = new List<(DateTime LatestActivity, int OriginalIndex, AlbumData Album)>();
         var query = EntityQueryEnumerator<PhotoAlbumComponent>();
+        var albumIndex = 0;
 
         while (query.MoveNext(out var uid, out var photoAlbum)) // query all photoalbums and send photos them to players
         {
+            if (TryComp<PersistentPhotoAlbumComponent>(uid, out var persistentAlbum) && !persistentAlbum.EffectiveIsPublic)
+                continue;
+
             if (!_container.TryGetContainer(uid, photoAlbum.ContainerId, out var container))
                 continue;
 
             List<AlbumImageData> photos = new();
+            var sortablePhotos = new List<(int OriginalIndex, PhotoCardComponent PhotoCard)>();
 
             string? authorCKey = default;
             string? authorName = default;
 
-            foreach (var item in container.ContainedEntities)
+            for (var i = 0; i < container.ContainedEntities.Count; i++)
             {
+                var item = container.ContainedEntities[i];
                 if (!TryComp<PhotoCardComponent>(item, out var photoCard))
                     continue;
 
                 if (photoCard.ImageData is null)
                     continue;
 
+                sortablePhotos.Add((i, photoCard));
+            }
+
+            var sortedPhotos = sortablePhotos
+                .OrderByDescending(entry => GetPhotoSortTimestamp(entry.PhotoCard))
+                .ThenBy(entry => entry.OriginalIndex)
+                .ToList();
+
+            foreach (var (_, photoCard) in sortedPhotos)
+            {
                 var imageId = Guid.NewGuid();
-                _roundEndImageData[imageId] = photoCard.ImageData;
+                _roundEndImageData[imageId] = photoCard.ImageData!;
                 photos.Add(new AlbumImageData(imageId, photoCard.PreviewData, photoCard.CustomName));
             }
 
             if (photos.Count == 0)
                 continue;
 
-            if (photoAlbum.IsSigned)
+            if (photoAlbum.IsSigned && SupportsSigning(uid))
             {
                 if (photoAlbum.SignerUid is not null && Exists(photoAlbum.SignerUid))
                     authorName = MetaData(photoAlbum.SignerUid.Value).EntityName;
@@ -249,11 +318,27 @@ public sealed class PhotoAlbumSystem : EntitySystem
                 authorCKey = photoAlbum.SignerUsername;
             }
 
-            albums.Add(new AlbumData(photos, authorCKey, authorName));
+            var latestActivity = GetPhotoSortTimestamp(sortedPhotos[0].PhotoCard);
+            var title = MetaData(uid).EntityName;
+            sortableAlbums.Add((latestActivity, albumIndex++, new AlbumData(photos, title, authorCKey, authorName)));
+        }
+
+        foreach (var (_, _, album) in sortableAlbums
+                     .OrderByDescending(entry => entry.LatestActivity)
+                     .ThenBy(entry => entry.OriginalIndex))
+        {
+            albums.Add(album);
         }
 
         if (albums.Count > 0)
             RaiseNetworkEvent(new PhotoAlbumEvent(albums));
+    }
+
+    private static DateTime GetPhotoSortTimestamp(PhotoCardComponent photoCard)
+    {
+        var createdAt = photoCard.CreatedAt ?? DateTime.MinValue;
+        var updatedAt = photoCard.UpdatedAt ?? DateTime.MinValue;
+        return createdAt >= updatedAt ? createdAt : updatedAt;
     }
 }
 

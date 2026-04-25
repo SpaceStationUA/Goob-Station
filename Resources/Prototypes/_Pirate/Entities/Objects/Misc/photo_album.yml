@@ -6,8 +6,8 @@
 - type: entity
   id: PhotoAlbum
   parent: BaseItem
-  name: photo album
-  description: A book with a bunch of memories. Put the photos in it and they will end up in the round end summary window. Use a pen to customize photo titles, descriptions, and captions.
+  name: "фотоальбом"
+  description: "Книга зі спогадами. Покладіть туди фотографії, щоб вони потрапили у фінальне зведення раунду. Використайте ручку, щоб налаштувати назви, описи та підписи фото."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
@@ -51,11 +51,14 @@
   suffix: loadout
   components:
   - type: AutoSignPhotoAlbum
+  - type: PersistentPhotoAlbum
+    ownerKind: profile
+    albumKey: personal
 
 - type: entity
   id: PhotoAlbumGreen
   parent: PhotoAlbum
-  name: green photo album
+  name: "зелений фотоальбом"
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
@@ -70,7 +73,7 @@
 - type: entity
   id: PhotoAlbumRed
   parent: PhotoAlbum
-  name: red photo album
+  name: "червоний фотоальбом"
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
@@ -85,7 +88,7 @@
 - type: entity
   id: PhotoAlbumBlue
   parent: PhotoAlbum
-  name: blue photo album
+  name: "синій фотоальбом"
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Misc/Photo/photo_album.rsi
@@ -98,80 +101,80 @@
     state: album_blue
 
 - type: entity
-  id: PhotoAlbumHeadCaptain
-  parent: PhotoAlbumBlue
-  name: captain's photo album
+  id: PhotoAlbumDepartmentService
+  parent: PhotoAlbumGreen
+  name: "фотоальбом сервісного відділу"
   components:
-  - type: PhotoAlbum
-    isSigned: true
-    signerName: Captain
-    usePossessiveSignerName: false
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: service
+    albumKey: default
 
 - type: entity
-  id: PhotoAlbumHeadHop
-  parent: PhotoAlbumBlue
-  name: head of personnel's photo album
+  id: PhotoAlbumDepartmentSecurity
+  parent: PhotoAlbumRed
+  name: "фотоальбом охорони"
   components:
-  - type: PhotoAlbum
-    isSigned: true
-    signerName: Head of Personnel
-    usePossessiveSignerName: false
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: security
+    albumKey: default
 
 - type: entity
-  id: PhotoAlbumHeadHos
+  id: PhotoAlbumDepartmentSupply
   parent: PhotoAlbumBlue
-  name: head of security's photo album
+  name: "фотоальбом постачання"
   components:
-  - type: PhotoAlbum
-    isSigned: true
-    signerName: Head of Security
-    usePossessiveSignerName: false
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: supply
+    albumKey: default
 
 - type: entity
-  id: PhotoAlbumHeadRd
+  id: PhotoAlbumDepartmentScience
   parent: PhotoAlbumBlue
-  name: research director's photo album
+  name: "фотоальбом наукового відділу"
   components:
-  - type: PhotoAlbum
-    isSigned: true
-    signerName: Research Director
-    usePossessiveSignerName: false
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: science
+    albumKey: default
 
 - type: entity
-  id: PhotoAlbumHeadCmo
+  id: PhotoAlbumDepartmentCommand
   parent: PhotoAlbumBlue
-  name: chief medical officer's photo album
+  name: "фотоальбом командування"
   components:
-  - type: PhotoAlbum
-    isSigned: true
-    signerName: Chief Medical Officer
-    usePossessiveSignerName: false
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: command
+    albumKey: default
 
 - type: entity
-  id: PhotoAlbumHeadQm
+  id: PhotoAlbumDepartmentEngineering
   parent: PhotoAlbumBlue
-  name: quartermaster's photo album
+  name: "фотоальбом інженерного відділу"
   components:
-  - type: PhotoAlbum
-    isSigned: true
-    signerName: Quartermaster
-    usePossessiveSignerName: false
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: engineering
+    albumKey: default
 
 - type: entity
-  id: PhotoAlbumHeadCe
+  id: PhotoAlbumDepartmentMedical
   parent: PhotoAlbumBlue
-  name: chief engineer's photo album
+  name: "фотоальбом медичного відділу"
   components:
-  - type: PhotoAlbum
-    isSigned: true
-    signerName: Chief Engineer
-    usePossessiveSignerName: false
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: medical
+    albumKey: default
 
 - type: entity
   id: PhotoAlbumMakeshift
   parent: PhotoAlbum
-  name: makeshift photo album
-  description: A makeshift book containing a bunch of memories. Put the photos in it and they will end up in the round end summary window. Use a pen to customize photo titles, descriptions, and captions.
+  name: "саморобний фотоальбом"
+  description: "Саморобна книжка зі спогадами. Покладіть туди фотографії, щоб вони потрапили у фінальне зведення раунду. Використайте ручку, щоб налаштувати назви, описи та підписи фото."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Misc/Photo/photo_album_makeshift.rsi

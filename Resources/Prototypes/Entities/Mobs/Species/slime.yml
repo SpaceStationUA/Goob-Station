@@ -66,7 +66,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "Уріст МакСлайм"
+  name: Urist McSlime
   parent: BaseMobSpeciesOrganic
   id: BaseMobSlimePerson
   abstract: true
@@ -104,8 +104,6 @@
       # Goobstation - changelings
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface
-      enum.HereticLivingHeartKey.Key: # goob edit - heretics
-        type: LivingHeartMenuBoundUserInterface
       enum.RadarConsoleUiKey.Key: #goob - contractor
         type: RadarConsoleBoundUserInterface
   # to prevent bag open/honk spam

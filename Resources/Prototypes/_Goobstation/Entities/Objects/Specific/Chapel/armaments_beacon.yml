@@ -1,6 +1,6 @@
 - type: entity
-  name: "маяк озброєння"
-  description: "Викликає набір стандартного спорядження капелана, згідно з I.C.R.A."
+  name: armaments beacon
+  description: Summon a set of standard issue chaplain armaments, as dictated by I.C.R.A.
   parent: BaseItem
   id: ArmamentsBeacon
   components:
@@ -58,6 +58,10 @@
     - prototype: SpawnArmamentsInquisitor
       icon:
         sprite: _ShitChap/Clothing/Neck/Misc/inquisitor.rsi
+        state: icon
+    - prototype: SpawnSchemaMonk
+      icon:
+        sprite: _Goobstation/Clothing/OuterClothing/Misc/schema_monk.rsi
         state: icon
   - type: StaticPrice
     price: 500

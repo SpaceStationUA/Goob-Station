@@ -126,6 +126,23 @@ public sealed partial class DiseaseSystem : SharedDiseaseSystem
     }
 
     /// <summary>
+    /// Makes a random disease from a base prototype and optionally constrains its type.
+    /// </summary>
+    public EntityUid? MakeRandomDisease(EntProtoId baseProto, float complexity, List<ProtoId<DiseaseTypePrototype>> possibleTypes, float mutationRate = 0f)
+    {
+        var ent = MakeRandomDisease(baseProto, complexity, mutationRate);
+        if (ent == null || possibleTypes.Count == 0)
+            return ent;
+
+        if (!TryComp<DiseaseComponent>(ent.Value, out var diseaseComp))
+            return ent;
+
+        diseaseComp.DiseaseType = _random.Pick(possibleTypes);
+        Dirty(ent.Value, diseaseComp);
+        return ent;
+    }
+
+    /// <summary>
     /// Makes a clone of the provided disease entity
     /// </summary>
     public override EntityUid? TryClone(Entity<DiseaseComponent?> ent)

@@ -91,6 +91,7 @@
   - !type:HereticPathCondition
     stage: 2
 
+# Pirate - uncommented for now, because pirates are friendly :D
 - type: listing
   id: HereticSidePathKnowledge
   name: knowledge-path-side-knowledge-name
@@ -106,6 +107,7 @@
     stock: 1
   - !type:HereticPathCondition
     stage: 0
+# Pirate end
 
 - type: listing
   id: HereticSidePath6RustWalker

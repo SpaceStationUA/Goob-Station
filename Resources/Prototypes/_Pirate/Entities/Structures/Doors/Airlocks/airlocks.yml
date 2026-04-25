@@ -13,3 +13,27 @@
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Doors/Airlocks/Glass/interdyne.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockMedicalAlt
+  suffix: Medical, Alternative
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/alternativemedical.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockMedicalGlassAlt
+  suffix: Medical, Alternative
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/alternativemedical.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockBathroom
+  suffix: Bathroom
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/bathroom.rsi

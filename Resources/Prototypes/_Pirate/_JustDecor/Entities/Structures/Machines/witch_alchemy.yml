@@ -1,0 +1,121 @@
+- type: entity
+  id: JustDecorWitchCauldron
+  parent: BaseStructure
+  name: казан відьми
+  description: Важкий ритуальний казан для відьомського варіння. Працює лише тоді, коли міцно закріплений ключем. 
+  components:
+  - type: Anchorable
+  - type: Sprite
+    sprite: Structures/Hydroponics/containers.rsi
+    state: claypot-large
+  - type: Appearance
+  - type: UserInterface
+    interfaces:
+      enum.BrewStationUiKey.Key:
+        type: BrewStationBoundUI
+  - type: SolutionContainerMixer
+    mixDuration: 6
+    mixingSound:
+      path: /Audio/Effects/Chemistry/bubbles.ogg
+      params:
+        volume: -4
+  - type: BrewStation
+    listenRange: 4
+    voiceHint: "казан, вари / казан вари"
+    voiceCommands:
+    - "казан, вари"
+    - "казан вари"
+  - type: ActiveListener
+    range: 4
+  - type: ReactionMixer
+    reactionTypes:
+    - WitchBrew
+    - OccultConvergence
+  - type: ItemSlots
+    slots:
+      mixer:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: ContainerContainer
+    containers:
+      mixer: !type:ContainerSlot
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.32,-0.28,0.32,0.28"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+
+- type: entity
+  id: JustDecorAlchemistApparatus
+  parent: BaseStructure
+  name: алхімічний апарат
+  description: Перегінний алхімічний апарат для точного варіння еліксирів. Працює лише тоді, коли надійно закріплений ключем. 
+  components:
+  - type: Anchorable
+  - type: Sprite
+    sprite: Structures/Machines/Medical/electrolysis.rsi
+    offset: "0.0,0.4"
+    layers:
+    - state: base
+    - state: unshaded
+      shader: unshaded
+      visible: false
+      map: [ "mixing" ]
+  - type: Appearance
+  - type: UserInterface
+    interfaces:
+      enum.BrewStationUiKey.Key:
+        type: BrewStationBoundUI
+  - type: GenericVisualizer
+    visuals:
+      enum.SolutionContainerMixerVisuals.Mixing:
+        mixing:
+          True: { visible: true }
+          False: { visible: false }
+  - type: SolutionContainerMixer
+    mixDuration: 8
+    mixingSound:
+      path: /Audio/Machines/buzz_loop.ogg
+      params:
+        volume: -5
+  - type: BrewStation
+    listenRange: 4
+    voiceHint: "апарат, дистилюй / апарат дистилюй"
+    voiceCommands:
+    - "апарат, дистилюй"
+    - "апарат дистилюй"
+    - "апарат, вари"
+  - type: ActiveListener
+    range: 4
+  - type: ReactionMixer
+    reactionTypes:
+    - AlchemistDistill
+    - OccultConvergence
+  - type: ItemSlots
+    slots:
+      mixer:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: ContainerContainer
+    containers:
+      mixer: !type:ContainerSlot
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.20,0.00,0.20,0.40"
+        density: 60
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer

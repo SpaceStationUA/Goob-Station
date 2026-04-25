@@ -1,0 +1,24 @@
+- type: entity
+  id: BaseStationStockMarket
+  abstract: true
+  components:
+  - type: StationStockMarket
+    companies:
+    - displayName: stock-trading-company-nanotrasen
+      basePrice: 310
+      currentPrice: 310
+    - displayName: stock-trading-company-einstein
+      basePrice: 185
+      currentPrice: 185
+    - displayName: stock-trading-company-idris
+      basePrice: 260
+      currentPrice: 260
+    - displayName: stock-trading-company-zavodskiy
+      basePrice: 115
+      currentPrice: 115
+    - displayName: stock-trading-company-hephaestus
+      basePrice: 235
+      currentPrice: 235
+    - displayName: stock-trading-company-zenghu
+      basePrice: 225
+      currentPrice: 225

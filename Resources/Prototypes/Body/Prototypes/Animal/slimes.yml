@@ -5,7 +5,7 @@
 
 - type: body
   id: Slimes
-  name: "слизи"
+  name: "slimes"
   root: chest
   slots:
     chest:
@@ -14,6 +14,29 @@
       - groin
       organs:
         core: SentientSlimesCore
+        lungs: OrganSlimesLungs
+    groin:
+      part: GroinSlime
+      connections:
+      - legs
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal
+
+- type: body # Goobstation add
+  id: XenobioSlimes
+  name: "xenobio slimes"
+  root: chest
+  slots:
+    chest:
+      part: ChestSlime
+      connections:
+      - groin
+      organs:
+        core: XenobioSentientSlimesCore
         lungs: OrganSlimesLungs
     groin:
       part: GroinSlime

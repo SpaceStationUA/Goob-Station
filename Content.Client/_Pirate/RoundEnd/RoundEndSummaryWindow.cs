@@ -172,13 +172,7 @@ public sealed partial class RoundEndSummaryWindow
             };
 
             var stationAlbumAuthorHeaderLabel = new RichTextLabel();
-
-            string authorName = album.AuthorName ?? Loc.GetString("round-end-summary-album-photo-no-author-name");
-            string authorCKey = album.AuthorCkey ?? Loc.GetString("round-end-summary-album-photo-no-author-ckey");
-            var escapedAuthorName = FormattedMessage.EscapeText(authorName);
-            var escapedAuthorCKey = FormattedMessage.EscapeText(authorCKey);
-
-            stationAlbumAuthorHeaderLabel.SetMarkup(Loc.GetString("round-end-summary-album-photo-author", ("authorName", escapedAuthorName), ("authorCKey", escapedAuthorCKey)));
+            stationAlbumAuthorHeaderLabel.SetMessage(album.Title);
 
             stationAlbumAuthorHeaderPanel.AddChild(stationAlbumAuthorHeaderLabel);
             stationAlbumAuthorHeaderContainer.AddChild(stationAlbumAuthorHeaderPanel);

@@ -1,0 +1,102 @@
+<Document>
+
+  # Легендарний CQC (Ближній бій)
+
+  <Box>
+    <GuideEntityEmbed Entity="LegendaryCQCManual" Caption=""/>
+  </Box>
+
+  Legendary CQC - це легендарна форма бойового мистецтва, розроблена для максимально швидкого та ефективного виведення супротивника з ладу.
+  На відміну від стандартного CQC, цей стиль включає більш складні та руйнівні техніки, такі як контратаки, стрімкі атаки та приховані добивання.
+
+  ## Особливості
+
+  - Мобільність: Користувачі Legendary CQC рухаються трохи швидше в бойовому режимі.
+  - Running Tackle: Стрімкий напад під час бігу, що збиває ворога з ніг.
+  - Counter Stance: Можливість активувати контратаку, що тимчасово зменшує отримувану шкоду на 75%.
+
+  ## Комбо
+
+  ### CQC Повалення (Takedown)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+  Миттєво знешкоджує супротивника, завдає шкоди та сильно виснажує витривалість.
+
+  ### Тотальне Роззброєння (Total Disarm)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+  Відбирає предмет з рук ворога. Якщо щось вдалося вихопити, ціль одразу відпускається; якщо ні, захват зберігається.
+
+  ### Кидок Через Плече (Over-Shoulder Throw)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+  Потужний кидок, що відкидає ціль на значну відстань і завдає тупої шкоди.
+
+  ### Удушливий Захват (Choke)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+  Довготривалий захват, який швидко позбавляє ціль свідомості.
+
+  ### Ланцюгова Атака (Chain Attack)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+  Серія швидких ударів, що завдає шкоди витривалості й добиває виснажену ціль.
+
+  ### Контратака (Counter)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+  Захисна стійка, що дозволяє пережити вхідний удар і відповісти власною комбінацією.
+
+  ### Скритне Повалення (Stealth Takedown)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+  Безшумно знешкоджує ціль ззаду. Найкраще працює проти ворогів, які ще не увійшли в бій.
+
+  ### CQC Штурм (CQC Rush)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+  Стрімка серія атак, що відкидає ворога та тимчасово підвищує швидкість користувача.
+
+  ### Завершальний Удар (Finisher)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+  Смертельна техніка для критично ослаблених ворогів. За правильних умов може миттєво завершити бій.
+
+</Document>

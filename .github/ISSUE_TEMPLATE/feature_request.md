@@ -6,22 +6,22 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 ---
-name: Feature request
-about: Suggest an idea for this project
+name: Запит на додавання функції
+about: Запропонуйте ідею для цього проєкту
 title: ''
-labels: enhancement
+labels: покращення
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**Чи пов'язана ваша пропозиція щодо функції з якоюсь проблемою? Якщо так, то опишіть її.**
+Чіткий і лаконічний опис суті проблеми. Наприклад: "Мене завжди дратує, коли [...]"
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**Опишіть бажане рішення**
+Чіткий і лаконічний опис того, як ви хочете, щоб все працювало.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**Опишіть альтернативні варіанти, які ви розглядали**
+Чіткий і лаконічний опис будь-яких альтернативних рішень або функцій, які ви розглядали.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Додатковий контекст**
+Додайте додатковий контекст та/або знімки екрана, аби ми зрозуміли що саме ви хочете додати.

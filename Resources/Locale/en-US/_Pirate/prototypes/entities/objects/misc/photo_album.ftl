@@ -13,26 +13,26 @@ ent-PhotoAlbumRed = red photo album
 ent-PhotoAlbumBlue = blue photo album
     .desc = { ent-PhotoAlbum.desc }
 
-ent-PhotoAlbumHeadCaptain = captain's photo album
-    .desc = A big book used to store photos and mementos.
+ent-PhotoAlbumDepartmentService = service department photo album
+    .desc = { ent-PhotoAlbum.desc }
 
-ent-PhotoAlbumHeadHop = head of personnel's photo album
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentSecurity = security photo album
+    .desc = { ent-PhotoAlbumDepartmentService.desc }
 
-ent-PhotoAlbumHeadHos = head of security's photo album
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentSupply = supply photo album
+    .desc = { ent-PhotoAlbumDepartmentService.desc }
 
-ent-PhotoAlbumHeadRd = research director's photo album
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentScience = science department photo album
+    .desc = { ent-PhotoAlbumDepartmentService.desc }
 
-ent-PhotoAlbumHeadCmo = chief medical officer's photo album
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentCommand = command photo album
+    .desc = { ent-PhotoAlbumDepartmentService.desc }
 
-ent-PhotoAlbumHeadQm = quartermaster's photo album
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentEngineering = engineering department photo album
+    .desc = { ent-PhotoAlbumDepartmentService.desc }
 
-ent-PhotoAlbumHeadCe = chief engineer's photo album
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentMedical = medical department photo album
+    .desc = { ent-PhotoAlbumDepartmentService.desc }
 
 ent-PhotoAlbumMakeshift = makeshift photo album
     .desc = A makeshift book packed with memories. Put photos into it so they appear in the final round summary. Use a pen to customize photo titles, descriptions, and captions.

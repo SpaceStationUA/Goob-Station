@@ -133,6 +133,7 @@
   id: Warden
   name: job-name-warden
   description: job-description-warden
+  whitelisted: true # Pirate
   playTimeTracker: JobWarden
   requirements:
     - !type:RoleTimeRequirement
@@ -163,7 +164,7 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZavodskoiInterstellar
+      - ZavodskiyInterstellar
       - PMCG
     # Pirate contractor end
   weight: 5

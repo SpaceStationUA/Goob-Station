@@ -1,0 +1,152 @@
+#region Vision
+- type: trait
+  id: Blindness
+  name: trait-blindness-name
+  description: trait-blindness-desc
+  traitGear: WhiteCane
+  category: Medical
+  cost: -8
+  whitelist:
+    components:
+      - Blindable
+  components:
+    - type: PermanentBlindness
+
+- type: trait
+  id: PoorVision
+  name: trait-poor-vision-name
+  description: trait-poor-vision-desc
+  traitGear: ClothingEyesPrescriptionGlasses
+  category: Medical
+  cost: -3
+  whitelist:
+    components:
+      - Blindable
+  components:
+    - type: PermanentBlindness
+      blindness: 3
+
+- type: trait
+  id: Monochromacy
+  name: trait-monochromacy-name
+  description: trait-monochromacy-desc
+  category: Medical
+  components:
+  - type: BlackAndWhiteOverlay
+#endregion
+
+#region Blood
+- type: trait
+  id: BloodDeficiency
+  name: trait-vampiric-blood-deficiency-name
+  description: trait-vampiric-blood-deficiency-desc
+  category: Medical
+  cost: -2
+  conditions:
+    - !type:IsSpeciesCondition
+      invert: true
+      species:
+        - IPC
+        - Plasmaman
+  components:
+    - type: BloodDeficiency
+      bloodLossPercentage: 0.0002333333 # ~10 хв. до крита
+
+- type: trait
+  id: Vampirism
+  name: trait-vampirism-name
+  description: trait-vampirism-desc
+  category: Medical
+  cost: 3
+  conditions:
+    - !type:IsSpeciesCondition
+      invert: true
+      species:
+        - IPC
+        - Plasmaman
+  components:
+  - type: Vampirism
+    succDelay: 3
+    specialDigestible:
+      tags:
+      - Pill
+      - Crayon
+      - Paper
+  - type: WeakToHoly
+    alwaysTakeHoly: true
+#endregion
+
+#region Hearing
+- type: trait
+  id: DeafTrait
+  name: trait-deaf-name
+  description: trait-deaf-disc
+  category: Medical
+  cost: -5
+  blacklist:
+    components:
+    - BorgChassis
+  components:
+    - type: Deaf
+#endregion
+
+#region Speech
+- type: trait
+  id: Muted
+  name: trait-muted-name
+  description: trait-muted-desc
+  category: Medical
+  cost: -3
+  blacklist:
+    components:
+      - BorgChassis
+  components:
+    - type: Muted
+#endregion
+
+#region Metabolism
+- type: trait
+  id: LightweightDrunk
+  name: trait-lightweight-name
+  description: trait-lightweight-desc
+  category: Medical
+  components:
+  - type: LightweightDrunk
+    boozeStrengthMultiplier: 2
+
+- type: trait
+  id: Narcolepsy
+  name: trait-narcolepsy-name
+  description: trait-narcolepsy-desc
+  category: Medical
+  cost: -3
+  conditions:
+    - !type:IsSpeciesCondition
+      invert: true
+      species:
+        - IPC
+        - Plasmaman
+  components:
+    - type: Narcolepsy
+      timeBetweenIncidents: 300, 600
+      durationOfIncident: 10, 30
+
+- type: trait
+  id: SmokeSensitivity
+  name: trait-smoke-sensitivity-name
+  description: trait-smoke-sensitivity-desc
+  category: Medical
+  conditions:
+    - !type:IsSpeciesCondition
+      invert: true
+      species:
+        - IPC
+        - Shadowkin
+        - Plasmaman
+        - Vox
+        - Yowie
+        - Feroxi
+        - SlimePerson
+  components:
+  - type: SmokeSensitivity
+#endregion

@@ -1,0 +1,49 @@
+- type: entity
+  id: SpawnPodCoffeemakerImpressaPirate
+  categories: [ HideSpawnMenu ]
+  name: "coffeemaker supply drop"
+  parent: SpawnSupplyEmpty
+  components:
+  - type: SpawnOnDespawn
+    prototype: CrateServiceCoffeemakerImpressaPirate
+
+- type: entity
+  id: SpawnPodCoffeemakerModelloPirate
+  categories: [ HideSpawnMenu ]
+  name: "coffeemaker supply drop"
+  parent: SpawnSupplyEmpty
+  components:
+  - type: SpawnOnDespawn
+    prototype: CrateServiceCoffeemakerPirate
+
+- type: entity
+  parent: BaseItem
+  id: CoffeemakerDropTeleporterPirate
+  name: "impressa coffee delivery beacon"
+  description: "Summon an Impressa coffee crate with supplies to get started brewing."
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/station_beacon.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Devices/station_beacon.rsi
+  - type: UseOnStationOnly
+  - type: SpawnItemsOnUse
+    sound: /Audio/Items/Mining/fultext_launch.ogg
+    items:
+    - id: SpawnPodCoffeemakerImpressaPirate
+  - type: StaticPrice
+    price: 0.01
+
+- type: entity
+  parent: CoffeemakerDropTeleporterPirate
+  id: CoffeemakerDropTeleporterModelloPirate
+  name: "modello coffee delivery beacon"
+  description: "Summon a Modello 3 coffee crate with supplies to get started brewing."
+  components:
+  - type: SpawnItemsOnUse
+    sound: /Audio/Items/Mining/fultext_launch.ogg
+    items:
+    - id: SpawnPodCoffeemakerModelloPirate
+  - type: StaticPrice
+    price: 0.01

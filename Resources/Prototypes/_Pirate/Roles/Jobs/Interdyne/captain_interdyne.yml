@@ -1,10 +1,37 @@
 - type: job
   id: CaptainInterdyne
-  name: "офіцер Interdyne"
-  description: "керуйте операціями Interdyne, забезпечуючи виконання контрактів та безпеку персоналу"
-  icon: "JobIconCaptainInterdyne"
-  canBeAntag: false
   playTimeTracker: JobCaptainInterdyne
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Interdyne
+      time: 50400 # 14 hours
+    - !type:CharacterEmployerRequirement
+      employers:
+      - Interdyne
+  startingGear: InterdyneOfficerGear
+  name: job-name-captain-interdyne
+  description: job-description-captain-interdyne
+  icon: "JobIconCaptainInterdyne"
+  goobcoins: 10 #Goob content (PvE content)
+  canBeAntag: false
   access:
     - Maintenance
     - External
@@ -13,3 +40,24 @@
     - Interdyne
     - InterdyneCommand
     - InterdyneOfficer
+  special:
+  # Keep surgery speed bonus on the Interdyne captain role.
+  - !type:AddComponentSpecial
+    components:
+    - type: SurgerySpeedModifier
+      speedModifier: 2
+      
+- type: startingGear
+  id: InterdyneOfficerGear
+  equipment:
+    # Remaining round-start equipment is selected via role loadouts.
+    id: CaptainInterdyneIDCard
+
+- type: chameleonOutfit
+  id: CaptainInterdyneChameleonOutfit
+  job: CaptainInterdyne
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatInterdyneOfficer
+    ears: ClothingHeadsetInterdyneCommand
+    jumpsuit: ClothingUniformJumpsuitOperative

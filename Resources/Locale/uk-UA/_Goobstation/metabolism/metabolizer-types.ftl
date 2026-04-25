@@ -5,3 +5,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 metabolizer-type-yowie = Йові
+
+metabolizer-type-xenobio-slime = Мутований слимак

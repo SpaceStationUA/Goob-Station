@@ -735,7 +735,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Goobstation start
-        var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm);
+        var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm, damage); // Pirate: katana
         RaiseLocalEvent(target.Value, beforeEvent);
         if (beforeEvent.Cancelled)
             return;
@@ -893,7 +893,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 continue;
 
             // Goobstation start
-            var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm);
+            var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm, damage); // Pirate: katana
             RaiseLocalEvent(entity, beforeEvent);
             if (beforeEvent.Cancelled)
                 continue;
@@ -1273,9 +1273,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var userPos = TransformSystem.ToMapCoordinates(user.ToCoordinates()).Position;
         var targetPos = TransformSystem.ToMapCoordinates(target.ToCoordinates()).Position;
         var pushVector = (targetPos - userPos).Normalized() * force;
-
         var animated = HasComp<ItemComponent>(target);
-
         _throwing.TryThrow(target, pushVector, force * _shoveSpeed, animated: animated);
     }
 

@@ -135,6 +135,7 @@
   name: job-name-cmo
   description: job-description-cmo
   playTimeTracker: JobChiefMedicalOfficer
+  whitelisted: true # Pirate
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist
@@ -153,10 +154,11 @@
       - Narcolepsy
       - Muted
       - WheelchairBound # Pirate end
-    #- !type:SpeciesRequirement # Pirate remove requirement
-    #  inverted: true
-    #  species:
-    #  - Felinid
+    - !type:SpeciesRequirement # Pirate edit
+      inverted: true
+      species:
+      #- Felinid
+      - Hydrakin
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
       employers:
@@ -203,11 +205,11 @@
   equipment:
     id: CMOPDA
     ears: ClothingHeadsetAltMedical # Goobstation
-    eyes: ClothingEyesGlassesMed # Goobstation
+    eyes: ClothingEyesGlassesMedChemFlash #Omu
     belt: ClothingBeltMedicalFilled
-  storage:
-    back:
-    - Flash
+  #storage: # Pirate
+    #back: # Pirate
+    #- Flash # Pirate
     #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit
@@ -216,7 +218,7 @@
   hasMindShield: true
   equipment:
     head: ClothingHeadHatBeretCmo
-    eyes: ClothingEyesHudMedical
+    eyes: ClothingEyesGlassesMedChemFlash # Omu
     mask: ClothingMaskSterile
     neck: ClothingCloakCmo
     outerClothing: ClothingOuterCoatLabCmo

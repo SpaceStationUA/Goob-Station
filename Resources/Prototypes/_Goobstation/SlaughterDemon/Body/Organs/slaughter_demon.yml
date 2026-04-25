@@ -6,7 +6,7 @@
 - type: entity
   parent: [OrganAnimalHeart, BaseMagicalContraband]
   id: OrganSlaughterHeart
-  name: "демонічне серце"
+  name: demonic heart
   components:
   - type: Sprite
     sprite: _Goobstation/SlaughterDemon/heart.rsi
@@ -88,10 +88,11 @@
     - type: DemonicWhisper # allows the demon to demonic whisper
     - type: DemonicAccent # the accent
     - type: Puller
+      needsHands: false
+    - type: GrabIntent
       stageChangeCooldown: 0.5
       grabThrowDamageModifier: 6.0
       throwingDistance: 30
-      needsHands: false
     - type: Speech
       speechVerb: SlaughterDemon
       speechSounds: SlaughterDemon

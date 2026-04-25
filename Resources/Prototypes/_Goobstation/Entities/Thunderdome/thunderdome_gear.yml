@@ -103,6 +103,17 @@
       - Stimpack
       - Stimpack
 
+#region Pirate: katana
+- type: startingGear
+  id: ThunderdomeUchigatana
+  equipment:
+    belt: ClothingBeltDarkKatanaSheathUchigatanaFilled
+  storage:
+    back:
+      - StimpackMini
+      - StimpackMini
+#endregion Pirate: katana
+
 - type: startingGear
   id: ThunderdomeCapoeira
   equipment:
@@ -111,3 +122,14 @@
     back:
     - BruteAutoInjector
     - BurnAutoInjector
+
+- type: startingGear
+  id: ThunderdomeMosin
+  equipment:
+    suitstorage: WeaponSniperMosin
+  storage:
+    back:
+    - SpeedLoaderLightRifle
+    - SpeedLoaderLightRifle
+    - ClothingHeadHatUshanka
+    - DrinkPremiumVodkaBottleFull

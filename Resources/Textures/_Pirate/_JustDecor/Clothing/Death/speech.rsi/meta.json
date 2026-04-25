@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "JustDecor",
+    "states": [
+        {
+            "name": "skeleton0",
+            "delays": [
+                [
+                    0.15,
+                    0.25,
+                    0.25,
+                    0.5,
+                    0.1,
+                    0.15,
+                    0.1,
+                    0.7,
+                    0.25,
+                    0.25,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "skeleton1"
+        },
+        {
+            "name": "skeleton2"
+        }
+    ]
+}

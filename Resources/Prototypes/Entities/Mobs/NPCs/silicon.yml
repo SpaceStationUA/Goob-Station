@@ -258,6 +258,7 @@
     defaultChannel: Binary
     channels:
     - Binary
+  - type: IntellicardableMind # Goobstation - intellicard on more AIs
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -309,8 +310,8 @@
 - type: entity
   parent: MobSiliconBase
   id: MobFireBot
-  name: "вогнебот"
-  description: "Маленький бот-вогнегасник. Виглядає досить стривоженим."
+  name: firebot
+  description: A little fire extinguishing bot. He looks rather anxious.
   components:
   - type: Sprite
     sprite: Mobs/Silicon/Bots/firebot.rsi
@@ -357,8 +358,8 @@
 - type: entity
   parent: MobSiliconBase
   id: MobHonkBot
-  name: "гудкобот"
-  description: "Жахливо."
+  name: honkbot
+  description: Horrifying.
   components:
   - type: SpamEmitSound
     minInterval: 2
@@ -426,8 +427,8 @@
 - type: entity
   parent: MobHonkBot
   id: MobJonkBot
-  name: "сміхобот"
-  description: "Жахливо."
+  name: jonkbot
+  description: Horrifying.
   components:
   - type: SpamEmitSound
     sound:
@@ -467,8 +468,8 @@
 - type: entity
   parent: MobSiliconBase
   id: MobCleanBot
-  name: "чистко-бот"
-  description: "Повзуча автоматизація тепер загрожує космічним прибиральникам."
+  name: cleanbot
+  description: The creep of automation now threatening space janitors.
   components:
   - type: Sprite
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
@@ -521,8 +522,8 @@
   - ShowMedicalIcons
   - StripableInventoryBase
   id: MobMedibot
-  name: "медико-бот"
-  description: "Це не замінить лікаря, але краще, ніж нічого."
+  name: medibot
+  description: No substitute for a doctor, but better than nothing.
   components:
   - type: Medibot
     treatments:
@@ -530,7 +531,7 @@
         reagent: Tricordrazine
         quantity: 30
         minDamage: 0
-        maxDamage: 50
+        maxDamage: 100 # Goobstation
       Critical:
         reagent: Inaprovaline
         quantity: 15
@@ -595,8 +596,8 @@
   - MobSiliconBase
   - StripableInventoryBase
   id: MobMimeBot
-  name: "мім-бот"
-  description: "Чому б не помахати мім-боту дружелюбно?"
+  name: mimebot
+  description: Why not give the mimebot a friendly wave?
   components:
   - type: Sprite
     layers:
@@ -626,8 +627,8 @@
 - type: entity
   parent: MobSiliconBase
   id: MobSupplyBot
-  name: "supplybot"
-  description: "Доставляє вантаж!"
+  name: supplybot
+  description: Delivers cargo!
   components:
   - type: Sprite
     sprite: Mobs/Silicon/Bots/supplybot.rsi

@@ -1,169 +1,26 @@
+# Зовнішня бюрократія
 - type: latheRecipe
   id: PrintedDocumentReportStationRecipe
   result: PrintedDocumentReportStation
-  categories: [Reports]
+  categories: [ExternalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
 
 - type: latheRecipe
-  id: PrintedDocumentReportOnEliminationOfViolationsRecipe
-  result: PrintedDocumentReportOnEliminationOfViolations
-  categories: [Reports]
+  id: PrintedDocumentAppealToCentComRecipe
+  result: PrintedDocumentAppealToCentCom
+  categories: [ExternalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
 
 - type: latheRecipe
-  id: PrintedDocumentReportDepartmentRecipe
-  result: PrintedDocumentReportDepartment
-  categories: [Reports]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentReportEmployeePerformanceRecipe
-  result: PrintedDocumentReportEmployeePerformance
-  categories: [Reports]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentReportOnTheChaptersMeetingRecipe
-  result: PrintedDocumentReportOnTheChaptersMeeting
-  categories: [Reports]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentInternalAffairsAgentsReportRecipe
-  result: PrintedDocumentInternalAffairsAgentsReport
-  categories: [Reports]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentConditionReportRecipe
-  result: PrintedDocumentConditionReport
-  categories: [Reports]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentReportStudyObjectRecipe
-  result: PrintedDocumentReportStudyObject
-  categories: [Reports]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentExperimentReportRecipe
-  result: PrintedDocumentExperimentReport
-  categories: [Reports]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentDisposalReportRecipe
-  result: PrintedDocumentDisposalReport
-  categories: [Reports]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentApplicationAppointmentInterimRecipe
-  result: PrintedDocumentApplicationAppointmentInterim
-  categories: [Statements]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentApplicationEmploymentRecipe
-  result: PrintedDocumentApplicationEmployment
-  categories: [Statements]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentLetterResignationRecipe
-  result: PrintedDocumentLetterResignation
-  categories: [Statements]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentApplicationAccessRecipe
-  result: PrintedDocumentApplicationAccess
-  categories: [Statements]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentApplicationEquipmentRecipe
-  result: PrintedDocumentApplicationEquipment
-  categories: [Statements]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentAppealRecipe
-  result: PrintedDocumentAppeal
-  categories: [InquiriesAndAppeals]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentEvacuationShuttleRequestRecipe
-  result: PrintedDocumentEvacuationShuttleRequest
-  categories: [InquiriesAndAppeals]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentShuttleRegistrationRequestRecipe
-  result: PrintedDocumentShuttleRegistrationRequest
-  categories: [InquiriesAndAppeals]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentRequestCallMembersCentralCommitteeDSORecipe
-  result: PrintedDocumentRequestCallMembersCentralCommitteeDSO
-  categories: [InquiriesAndAppeals]
+  id: PrintedDocumentRequestCallMembersCentralCommitteeRecipe
+  result: PrintedDocumentRequestCallMembersCentralCommittee
+  categories: [ExternalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
@@ -172,205 +29,54 @@
 - type: latheRecipe
   id: PrintedDocumentRequestRequestToEstablishThreatLevelRecipe
   result: PrintedDocumentRequestRequestToEstablishThreatLevel
-  categories: [InquiriesAndAppeals]
+  categories: [ExternalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
 
 - type: latheRecipe
-  id: PrintedDocumentRequestChangeSalaryRecipe
-  result: PrintedDocumentRequestChangeSalary
-  categories: [InquiriesAndAppeals]
+  id: PrintedDocumentEvacuationShuttleRequestRecipe
+  result: PrintedDocumentEvacuationShuttleRequest
+  categories: [ExternalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
 
 - type: latheRecipe
-  id: PrintedDocumentRequestForNonlistedEmploymentRecipe
-  result: PrintedDocumentRequestForNonlistedEmployment
-  categories: [InquiriesAndAppeals]
+  id: PrintedDocumentShuttleRegistrationRequestRecipe
+  result: PrintedDocumentShuttleRegistrationRequest
+  categories: [ExternalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
 
 - type: latheRecipe
-  id: PrintedDocumentRequestForPromotionRecipe
-  result: PrintedDocumentRequestForPromotion
-  categories: [InquiriesAndAppeals]
+  id: PrintedDocumentERTRequestRecipe
+  result: PrintedDocumentERTRequest
+  categories: [ExternalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
 
 - type: latheRecipe
-  id: PrintedDocumentRequestDocumentsRecipe
-  result: PrintedDocumentRequestDocuments
-  categories: [InquiriesAndAppeals]
+  id: PrintedDocumentCBURNRequestRecipe
+  result: PrintedDocumentCBURNRequest
+  categories: [ExternalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
+# Кінець Зовнішня бюрократія
 
+# Медична бюрократія
 - type: latheRecipe
   id: PrintedDocumentRequestEuthanasiaRecipe
   result: PrintedDocumentRequestEuthanasia
-  categories: [InquiriesAndAppeals]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentRequestConstructionWorkRecipe
-  result: PrintedDocumentRequestConstructionWork
-  categories: [InquiriesAndAppeals]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentRequestModernizationRecipe
-  result: PrintedDocumentRequestModernization
-  categories: [InquiriesAndAppeals]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentComplaintViolationLaborRulesRecipe
-  result: PrintedDocumentComplaintViolationLaborRules
-  categories: [Complaints]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentComplaintOffenseRecipe
-  result: PrintedDocumentComplaintOffense
-  categories: [Complaints]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentPermissionEquipmentRecipe
-  result: PrintedDocumentPermissionEquipment
-  categories: [Permissions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentPermissionToTravelInCaseOfThreatRecipe
-  result: PrintedDocumentPermissionToTravelInCaseOfThreat
-  categories: [Permissions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentSearchPermissionRecipe
-  result: PrintedDocumentSearchPermission
-  categories: [Permissions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentPermissionToCarryWeaponsRecipe
-  result: PrintedDocumentPermissionToCarryWeapons
-  categories: [Permissions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentPrescriptionDrugAuthorizationRecipe
-  result: PrintedDocumentPrescriptionDrugAuthorization
-  categories: [Permissions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentPermissionDisposeBodyRecipe
-  result: PrintedDocumentPermissionDisposeBody
-  categories: [Permissions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentConstructionPermitRecipe
-  result: PrintedDocumentConstructionPermit
-  categories: [Permissions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentPermissionToExtendMarriageRecipe
-  result: PrintedDocumentPermissionToExtendMarriage
-  categories: [Permissions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentOrderDismissalRecipe
-  result: PrintedDocumentOrderDismissal
-  categories: [OrdersAndInstructions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentOrderDeprivationAccessRecipe
-  result: PrintedDocumentOrderDeprivationAccess
-  categories: [OrdersAndInstructions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentOrderEncouragementRecipe
-  result: PrintedDocumentOrderEncouragement
-  categories: [OrdersAndInstructions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentOrderParolePrisonerRecipe
-  result: PrintedDocumentOrderParolePrisoner
-  categories: [OrdersAndInstructions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentOrderRecognizingSentienceCreatureRecipe
-  result: PrintedDocumentOrderRecognizingSentienceCreature
-  categories: [OrdersAndInstructions]
+  categories: [MedicalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
@@ -379,70 +85,16 @@
 - type: latheRecipe
   id: PrintedDocumentOrderMedicalInterventionRecipe
   result: PrintedDocumentOrderMedicalIntervention
-  categories: [OrdersAndInstructions]
+  categories: [MedicalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
 
 - type: latheRecipe
-  id: PrintedDocumentProductManufacturingOrderRecipe
-  result: PrintedDocumentProductManufacturingOrder
-  categories: [Orders]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentOrderPurchaseResourcesEquipmentRecipe
-  result: PrintedDocumentOrderPurchaseResourcesEquipment
-  categories: [Orders]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentOrderingSpecialEquipmentRecipe
-  result: PrintedDocumentOrderingSpecialEquipment
-  categories: [Orders]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentOrderPurchaseWeaponsRecipe
-  result: PrintedDocumentOrderPurchaseWeapons
-  categories: [Orders]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentCertificateRecipe
-  result: PrintedDocumentCertificate
-  categories: [Evidence]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentCertificateAdvancedTrainingRecipe
-  result: PrintedDocumentCertificateAdvancedTraining
-  categories: [Evidence]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentCertificateOffenseRecipe
-  result: PrintedDocumentCertificateOffense
-  categories: [Evidence]
+  id: PrintedDocumentReportDepartmentMedRecipe
+  result: PrintedDocumentReportDepartmentMed
+  categories: [MedicalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
@@ -451,52 +103,25 @@
 - type: latheRecipe
   id: PrintedDocumentDeathCertificateRecipe
   result: PrintedDocumentDeathCertificate
-  categories: [Evidence]
+  categories: [MedicalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
 
 - type: latheRecipe
-  id: PrintedDocumentMarriageCertificateRecipe
-  result: PrintedDocumentMarriageCertificate
-  categories: [Evidence]
+  id: PrintedDocumentPermissionDisposeBodyRecipe
+  result: PrintedDocumentPermissionDisposeBody
+  categories: [MedicalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
 
 - type: latheRecipe
-  id: PrintedDocumentDivorceCertificateRecipe
-  result: PrintedDocumentDivorceCertificate
-  categories: [Evidence]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentClosingIndictmentRecipe
-  result: PrintedDocumentClosingIndictment
-  categories: [ConclusionsAndDecisions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentSentenceRecipe
-  result: PrintedDocumentSentence
-  categories: [ConclusionsAndDecisions]
-  completetime: 2
-  applyMaterialDiscount: false
-  materials:
-    SheetPrinter: 100
-
-- type: latheRecipe
-  id: PrintedDocumentJudgmentRecipe
-  result: PrintedDocumentJudgment
-  categories: [ConclusionsAndDecisions]
+  id: PrintedDocumentPrescriptionDrugAuthorizationRecipe
+  result: PrintedDocumentPrescriptionDrugAuthorization
+  categories: [MedicalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
@@ -505,7 +130,346 @@
 - type: latheRecipe
   id: PrintedDocumentStatementHealtheRecipe
   result: PrintedDocumentStatementHealth
-  categories: [ConclusionsAndDecisions]
+  categories: [MedicalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentMedRequestRecipe
+  result: PrintedDocumentMedRequest
+  categories: [MedicalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentCloningReportRecipe
+  result: PrintedDocumentCloningReport
+  categories: [MedicalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentRequestMentalHealthRecipe
+  result: PrintedDocumentRequestMentalHealth
+  categories: [MedicalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentRecomendMentalHealthRecipe
+  result: PrintedDocumentRecomendMentalHealth
+  categories: [MedicalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentPsychologistRecipe
+  result: PrintedDocumentPsychologist
+  categories: [MedicalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentNotesRecipe
+  result: PrintedDocumentNotes
+  categories: [MedicalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentMedChemicalRequestRecipe
+  result: PrintedDocumentMedChemicalRequest
+  categories: [MedicalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+# Кінець Медична бюрократія
+
+#Загальна бюрократія
+- type: latheRecipe
+  id: PrintedDocumentRequestChangeSalaryRecipe
+  result: PrintedDocumentRequestChangeSalary
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentRequestForNonlistedEmploymentRecipe
+  result: PrintedDocumentRequestForNonlistedEmployment
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentRequestForPromotionRecipe
+  result: PrintedDocumentRequestForPromotion
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentOrderDeprivationAccessRecipe
+  result: PrintedDocumentOrderDeprivationAccess
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentOrderEncouragementRecipe
+  result: PrintedDocumentOrderEncouragement
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentOrderDismissalRecipe
+  result: PrintedDocumentOrderDismissal
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentReportEmployeePerformanceRecipe
+  result: PrintedDocumentReportEmployeePerformance
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentApplicationAccessRecipe
+  result: PrintedDocumentApplicationAccess
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentApplicationEquipmentRecipe
+  result: PrintedDocumentApplicationEquipment
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentLetterResignationRecipe
+  result: PrintedDocumentLetterResignation
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100 
+
+- type: latheRecipe
+  id: PrintedDocumentApplicationEmploymentRecipe
+  result: PrintedDocumentApplicationEmployment
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentCertificateAdvancedTrainingRecipe
+  result: PrintedDocumentCertificateAdvancedTraining
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentDivorceCertificateRecipe
+  result: PrintedDocumentDivorceCertificate
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentMarriageCertificateRecipe
+  result: PrintedDocumentMarriageCertificate
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentCertificateRecipe
+  result: PrintedDocumentCertificate
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentPermissionToTravelInCaseOfThreatRecipe
+  result: PrintedDocumentPermissionToTravelInCaseOfThreat
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentPermissionEquipmentRecipe
+  result: PrintedDocumentPermissionEquipment
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentPromotionOrderRecipe
+  result: PrintedDocumentPromotionOrder
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentTemporaryPermitRecipe
+  result: PrintedDocumentTemporaryPermit
+  categories: [GeneralBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+# Кінець Загальна бюрократія
+
+# Інженерна бюрократія
+- type: latheRecipe
+  id: PrintedDocumentRequestConstructionWorkRecipe
+  result: PrintedDocumentRequestConstructionWork
+  categories: [EngineeringBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentRequestModernizationRecipe
+  result: PrintedDocumentRequestModernization
+  categories: [EngineeringBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentConditionReportRecipe
+  result: PrintedDocumentConditionReport
+  categories: [EngineeringBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentReportDepartmentEngRecipe
+  result: PrintedDocumentReportDepartmentEng
+  categories: [EngineeringBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentConstructionPermitRecipe
+  result: PrintedDocumentConstructionPermit
+  categories: [EngineeringBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentShipBuildRecipe
+  result: PrintedDocumentShipBuild
+  categories: [EngineeringBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+# Кінець Інженерна бюрократія
+
+# Юридична бюрократія
+- type: latheRecipe
+  id: PrintedDocumentRequestDocumentsRecipe
+  result: PrintedDocumentRequestDocuments
+  categories: [LegalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentComplaintViolationLaborRulesRecipe
+  result: PrintedDocumentComplaintViolationLaborRules
+  categories: [LegalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentComplaintOffenseRecipe
+  result: PrintedDocumentComplaintOffense
+  categories: [LegalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentJudgmentRecipe
+  result: PrintedDocumentJudgment
+  categories: [LegalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentSentenceRecipe
+  result: PrintedDocumentSentence
+  categories: [LegalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
@@ -514,11 +478,301 @@
 - type: latheRecipe
   id: PrintedDocumentDecisionToStartTrialRecipe
   result: PrintedDocumentDecisionToStartTrial
-  categories: [ConclusionsAndDecisions]
+  categories: [LegalBureaucracy]
   completetime: 2
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentComplaintDirectorRecipe
+  result: PrintedDocumentComplaintDirector
+  categories: [LegalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentComplaintEmployeRecipe
+  result: PrintedDocumentComplaintEmploye
+  categories: [LegalBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+# Кінець Юридична бюрократія
+
+# Охоронна бюрократія
+- type: latheRecipe
+  id: PrintedDocumentOrderParolePrisonerRecipe
+  result: PrintedDocumentOrderParolePrisoner
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentInternalAffairsAgentsReportRecipe
+  result: PrintedDocumentInternalAffairsAgentsReport
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentReportDepartmentSecRecipe
+  result: PrintedDocumentReportDepartmentSec
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentCertificateOffenseRecipe
+  result: PrintedDocumentCertificateOffense
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentSearchPermissionRecipe
+  result: PrintedDocumentSearchPermission
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentPermissionToCarryWeaponsRecipe
+  result: PrintedDocumentPermissionToCarryWeapons
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentClosingIndictmentRecipe
+  result: PrintedDocumentClosingIndictment
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentRequestHearingRecipe
+  result: PrintedDocumentRequestHearing
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentRequestExecutionRecipe
+  result: PrintedDocumentRequestExecution
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentRequestSecurityRecipe
+  result: PrintedDocumentRequestSecurity
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+# Кінець Охоронна бюрократія
+
+# Дослідницька бюрократія
+- type: latheRecipe
+  id: PrintedDocumentOrderRecognizingSentienceCreatureRecipe
+  result: PrintedDocumentOrderRecognizingSentienceCreature
+  categories: [ResearchBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentReportStudyObjectRecipe
+  result: PrintedDocumentReportStudyObject
+  categories: [ResearchBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentExperimentReportRecipe
+  result: PrintedDocumentExperimentReport
+  categories: [ResearchBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentReportDepartmentResRecipe
+  result: PrintedDocumentReportDepartmentRes
+  categories: [ResearchBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentRequestCyborgizationRecipe
+  result: PrintedDocumentRequestCyborgization
+  categories: [ResearchBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentProductionOrderRecipe
+  result: PrintedDocumentProductionOrder
+  categories: [ResearchBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentArtifactReportRecipe
+  result: PrintedDocumentArtifactReport
+  categories: [ResearchBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+# Кінець Дослідницька бюрократія
+
+# Логістична бюрократія
+- type: latheRecipe
+  id: PrintedDocumentOrderingSpecialEquipmentRecipe
+  result: PrintedDocumentOrderingSpecialEquipment
+  categories: [LogisticsBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentOrderPurchaseResourcesEquipmentRecipe
+  result: PrintedDocumentOrderPurchaseResourcesEquipment
+  categories: [LogisticsBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentProductManufacturingOrderRecipe
+  result: PrintedDocumentProductManufacturingOrder
+  categories: [LogisticsBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentOrderPurchaseWeaponsRecipe
+  result: PrintedDocumentOrderPurchaseWeapons
+  categories: [LogisticsBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentReportDepartmentLogRecipe
+  result: PrintedDocumentReportDepartmentLog
+  categories: [LogisticsBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentRequestShippingRecipe
+  result: PrintedDocumentRequestShipping
+  categories: [LogisticsBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentDisposalReportRecipe
+  result: PrintedDocumentDisposalReport
+  categories: [LogisticsBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+# Кінець Логістична бюрократія
+
+# Вища бюрократія
+- type: latheRecipe
+  id: PrintedDocumentReportOnTheChaptersMeetingRecipe
+  result: PrintedDocumentReportOnTheChaptersMeeting
+  categories: [TopBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentApplicationAppointmentInterimRecipe
+  result: PrintedDocumentApplicationAppointmentInterim
+  categories: [TopBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
+  id: PrintedDocumentOrderToDismissDirectorRecipe
+  result: PrintedDocumentOrderToDismissDirector
+  categories: [TopBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+# Кінець Вища бюрократія
+
+# ???
+# - type: latheRecipe
+#   id: PrintedDocumentReportOnEliminationOfViolationsRecipe
+#   result: PrintedDocumentReportOnEliminationOfViolations
+#   categories: [Reports]
+#   completetime: 2
+#   applyMaterialDiscount: false
+#   materials:
+#     SheetPrinter: 100
+
+# - type: latheRecipe
+#   id: PrintedDocumentPermissionToExtendMarriageRecipe
+#   result: PrintedDocumentPermissionToExtendMarriage
+#   categories: [Permissions]
+#   completetime: 2
+#   applyMaterialDiscount: false
+#   materials:
+#     SheetPrinter: 100
+#
 
 - type: latheRecipe
   id: PrintedDocumentErrorLoadingFormHeaderRecipe

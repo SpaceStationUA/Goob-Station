@@ -1,8 +1,8 @@
 - type: entity
   parent: CMBaseXenoStructure
   id: ResinDoor
-  name: "смоляні двері"
-  description: "Густа смола, що застигла у формі дверей."
+  name: resin Door
+  description: Thick resin solidified into a door.
   placement:
     mode: SnapgridCenter
   components:
@@ -53,10 +53,10 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Resin
-  - type: MeleeSound
+  - type: MeleeSound #omu
     soundGroups:
       Brute:
-        collection: blood
+        collection: XenoResinBreak
   - type: Destructible
     thresholds:
     - trigger:

@@ -13,26 +13,26 @@ ent-PhotoAlbumRed = червоний фотоальбом
 ent-PhotoAlbumBlue = синій фотоальбом
     .desc = { ent-PhotoAlbum.desc }
 
-ent-PhotoAlbumHeadCaptain = фотоальбом капітана
-    .desc = Велика книга для зберігання фотографій і пам’яток.
+ent-PhotoAlbumDepartmentService = фотоальбом сервісного відділу
+    .desc = { ent-PhotoAlbum.desc }
 
-ent-PhotoAlbumHeadHop = фотоальбом голови персоналу
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentSecurity = фотоальбом охорони
+    .desc = { ent-PhotoAlbum.desc }
 
-ent-PhotoAlbumHeadHos = фотоальбом голови служби безпеки
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentSupply = фотоальбом постачання
+    .desc = { ent-PhotoAlbum.desc }
 
-ent-PhotoAlbumHeadRd = фотоальбом наукового керівника
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentScience = фотоальбом наукового відділу
+    .desc = { ent-PhotoAlbum.desc }
 
-ent-PhotoAlbumHeadCmo = фотоальбом головного лікаря
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentCommand = фотоальбом командування
+    .desc = { ent-PhotoAlbum.desc }
 
-ent-PhotoAlbumHeadQm = фотоальбом квартирмейстера
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentEngineering = фотоальбом інженерного відділу
+    .desc = { ent-PhotoAlbum.desc }
 
-ent-PhotoAlbumHeadCe = фотоальбом головного інженера
-    .desc = { ent-PhotoAlbumHeadCaptain.desc }
+ent-PhotoAlbumDepartmentMedical = фотоальбом медичного відділу
+    .desc = { ent-PhotoAlbum.desc }
 
 ent-PhotoAlbumMakeshift = саморобний фотоальбом
     .desc = Саморобна книжка зі спогадами. Покладіть туди фотографії, щоб вони потрапили у фінальне зведення раунду. Використайте ручку, щоб налаштувати назви, описи та підписи фото.

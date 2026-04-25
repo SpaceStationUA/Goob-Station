@@ -8,6 +8,7 @@
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Shared.Serialization;
+using Robust.Shared.Enums; // Pirate: records photos
 
 namespace Content.Shared.CriminalRecords;
 
@@ -123,3 +124,77 @@ public sealed class CriminalRecordSetStatusFilter : BoundUserInterfaceMessage
         FilterStatus = newFilterStatus;
     }
 }
+
+#region Pirate: records photos
+[Serializable, NetSerializable]
+public sealed class CriminalRecordEditIdentity : BoundUserInterfaceMessage
+{
+    public readonly string Species;
+    public readonly string Nationality;
+    public readonly string Employer;
+    public readonly int Age;
+    public readonly Gender Gender;
+
+    public CriminalRecordEditIdentity(string species, string nationality, string employer, int age, Gender gender)
+    {
+        Species = species;
+        Nationality = nationality;
+        Employer = employer;
+        Age = age;
+        Gender = gender;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CriminalRecordCreateRecord : BoundUserInterfaceMessage
+{
+    public readonly string Name;
+
+    public CriminalRecordCreateRecord(string name)
+    {
+        Name = name;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CriminalRecordEditForensics : BoundUserInterfaceMessage
+{
+    public readonly string Fingerprint;
+    public readonly string Dna;
+
+    public CriminalRecordEditForensics(string fingerprint, string dna)
+    {
+        Fingerprint = fingerprint;
+        Dna = dna;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CriminalRecordPrintPhoto : BoundUserInterfaceMessage
+{
+    public readonly uint RecordKey;
+    public readonly byte[]? GeneratedImageData;
+
+    public CriminalRecordPrintPhoto(uint recordKey, byte[]? generatedImageData = null)
+    {
+        RecordKey = recordKey;
+        GeneratedImageData = generatedImageData == null ? null : (byte[]) generatedImageData.Clone();
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CriminalRecordUploadPhoto : BoundUserInterfaceMessage;
+
+[Serializable, NetSerializable]
+public sealed class CriminalRecordStoreGeneratedPhoto : BoundUserInterfaceMessage
+{
+    public readonly uint RecordKey;
+    public readonly byte[] ImageData;
+
+    public CriminalRecordStoreGeneratedPhoto(uint recordKey, byte[] imageData)
+    {
+        RecordKey = recordKey;
+        ImageData = (byte[]) imageData.Clone();
+    }
+}
+#endregion

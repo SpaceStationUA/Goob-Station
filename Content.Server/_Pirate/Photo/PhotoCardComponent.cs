@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-only
 
+using Content.Shared._Pirate.Photo;
+
 namespace Content.Server._Pirate.Photo;
 
 [RegisterComponent]
@@ -42,6 +44,21 @@ public sealed partial class PhotoCardComponent : Component
     public string? BaseDescription;
 
     /// <summary>
+    /// Structured capture metadata for later persistence and feature use.
+    /// </summary>
+    public PhotoCaptureData? CaptureData;
+
+    /// <summary>
+    /// UTC timestamp when the photo was taken.
+    /// </summary>
+    public DateTime? CreatedAt;
+
+    /// <summary>
+    /// UTC timestamp when user-editable metadata was last changed.
+    /// </summary>
+    public DateTime? UpdatedAt;
+
+    /// <summary>
     /// Entities captured in this photo at capture time.
     /// Runtime metadata only; not serialized for persistence.
     /// </summary>
@@ -58,6 +75,12 @@ public sealed partial class PhotoCardComponent : Component
     /// Runtime metadata only; not serialized for persistence.
     /// </summary>
     public List<string> NamesSeen = new();
+
+    /// <summary>
+    /// True when this photo card was recreated from a persistent album snapshot.
+    /// Runtime metadata only; not serialized for persistence.
+    /// </summary>
+    public bool IsArchivedAlbumPhoto;
 }
 
 

@@ -30,6 +30,12 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool> BwoinkSoundEnabled =
         CVarDef.Create("audio.bwoink_sound_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+    public static readonly CVarDef<bool> RadioSoundsEnabled = // Pirate: radio sounds
+        CVarDef.Create("audio.radio_sounds_enabled", true, CVar.ARCHIVE | CVar.CLIENT | CVar.REPLICATED); // Pirate: radio sounds
+
+    public static readonly CVarDef<float> RadioSoundsDelay = // Pirate: radio sounds
+        CVarDef.Create("audio.radio_sounds_delay", 0.5f, CVar.ARCHIVE | CVar.CLIENT | CVar.REPLICATED); // Pirate: radio sounds
+
     public static readonly CVarDef<string> AdminChatSoundPath =
         CVarDef.Create("audio.admin_chat_sound_path",
             "/Audio/Items/pop.ogg",

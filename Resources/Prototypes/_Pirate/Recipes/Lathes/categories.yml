@@ -37,3 +37,42 @@
 - type: latheCategory
   id: ErrorDocument
   name: lathe-category-error
+
+# Нове
+- type: latheCategory
+  id: ExternalBureaucracy
+  name: lathe-category-external-bureaucracy
+
+- type: latheCategory
+  id: TopBureaucracy
+  name: lathe-category-top-bureaucracy
+
+- type: latheCategory
+  id: SecurityBureaucracy
+  name: lathe-category-security-bureaucracy
+
+- type: latheCategory
+  id: LegalBureaucracy
+  name: lathe-category-legal-bureaucracy
+
+- type: latheCategory
+  id: LogisticsBureaucracy
+  name: lathe-category-logistics-bureaucracy
+
+- type: latheCategory
+  id: ResearchBureaucracy
+  name: lathe-category-research-bureaucracy
+
+- type: latheCategory
+  id: EngineeringBureaucracy
+  name: lathe-category-engineering-bureaucracy
+
+- type: latheCategory
+  id: MedicalBureaucracy
+  name: lathe-category-medical-bureaucracy
+
+- type: latheCategory
+  id: GeneralBureaucracy
+  name: lathe-category-general-bureaucracy
+
+# 

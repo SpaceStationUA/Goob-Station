@@ -1,8 +1,8 @@
 - type: entity
   parent: BasePDA
   id: AdminAssistantPDA
-  name: "адміністративний асистент КПК"
-  description: "По краях - каракулі ручкою, і на ній приклеєно кілька липких записок."
+  name: administrative assistant PDA
+  description: Theres pen scribbles all over the edges, and a few sticky notes stuck on it.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Devices/pda.rsi
@@ -39,3 +39,100 @@
       - NewsReaderCartridge
       - NanoChatCartridge
       - WalletCartridge # Pirate banking
+
+- type: entity
+  parent: [ BaseMedicalPDA, BaseInterdyneContraband ]
+  id: InterdyneOfficerPDA
+  name: PDA офіцера Інтердайна
+  description: Офіцерський ПДА Інтердайну, модифікований різними медичними сенсорами та усім необхідним для праці офіцера Інтердайна.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/pda.rsi
+  - type: Pda
+    id: CaptainInterdyneIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-interdyne-officer
+  - type: PdaBorderColor
+    borderColor: "#367450" # Pirate
+    accentHColor: "#d7d7d0"
+    accentVColor: "#d7d7d0"
+  - type: Icon
+    sprite: _Pirate/Objects/Devices/pda.rsi
+    state: pda-interdyne-officer
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
+    - MedTekCartridge
+    - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
+    
+- type: entity
+  parent: [ BaseMedicalPDA, BaseInterdyneContraband ]
+  id: InterdyneDeputyPDA
+  name: PDA заступника офіцера Інтердайна
+  description: Навіює авторитетом.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/pda.rsi
+  - type: Pda
+    id: InterdyneDeputyIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-interdyne-deputy
+  - type: PdaBorderColor
+    borderColor: "#2d6043"
+    accentHColor: "#d7d7d0"
+    accentVColor: "#d7d7d0"
+  - type: Icon
+    sprite: _Pirate/Objects/Devices/pda.rsi
+    state: pda-interdyne-deputy
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
+    - MedTekCartridge
+    - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
+    
+- type: entity
+  parent: [ BaseMedicalPDA, BaseInterdyneContraband ]
+  id: InterdynePDA
+  name: PDA персоналу Інтердайна
+  description: Пахне медициною та... Біологічною зброєю.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/pda.rsi
+  - type: Pda
+    id: InterdyneIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-interdyne
+  - type: PdaBorderColor
+    borderColor: "#1e453d"
+    accentHColor: "#d7d7d0"
+    accentVColor: "#d7d7d0"
+  - type: Icon
+    sprite: _Pirate/Objects/Devices/pda.rsi
+    state: pda-interdyne
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking

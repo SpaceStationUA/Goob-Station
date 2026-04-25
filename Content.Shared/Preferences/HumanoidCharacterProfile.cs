@@ -62,6 +62,7 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Goobstation.Common.Barks; // Goob Station - Barks
 using Content.Shared.Traits;
+using Content.Shared._Pirate.CCVars; // Pirate - traits rework
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -102,7 +103,7 @@ namespace Content.Shared.Preferences
         private HashSet<ProtoId<AntagPrototype>> _antagPreferences = new();
 
         /// <summary>
-        /// Enabled traits.
+        /// Enabled traits. // Pirate: port and modified DV traits system
         /// </summary>
         [DataField]
         private HashSet<ProtoId<TraitPrototype>> _traitPreferences = new();
@@ -149,7 +150,7 @@ namespace Content.Shared.Preferences
         [DataField]
         public string Employer { get; set; } = SharedHumanoidAppearanceSystem.DefaultEmployer;
         // Pirate edit end - port EE contractors
-        // Pirate - traits
+        // Pirate start: port and modified DV traits system
         public HumanoidCharacterProfile WithoutAllTraitPreferences()
         {
             return new(this)
@@ -157,7 +158,15 @@ namespace Content.Shared.Preferences
                 _traitPreferences = new HashSet<ProtoId<TraitPrototype>>(),
             };
         }
-        // Pirate end - traits
+
+        public HumanoidCharacterProfile WithTraitPreferences(IEnumerable<ProtoId<TraitPrototype>> traitPreferences)
+        {
+            return new(this)
+            {
+                _traitPreferences = new(traitPreferences),
+            };
+        }
+        // Pirate end: port and modified DV traits system
 
         // begin Goobstation: port EE height/width sliders
         [DataField]
@@ -200,7 +209,7 @@ namespace Content.Shared.Preferences
         public IReadOnlySet<ProtoId<AntagPrototype>> AntagPreferences => _antagPreferences;
 
         /// <summary>
-        /// <see cref="_traitPreferences"/>
+        /// <see cref="_traitPreferences"/> // Pirate: port and modified DV traits system
         /// </summary>
         public IReadOnlySet<ProtoId<TraitPrototype>> TraitPreferences => _traitPreferences;
 
@@ -227,7 +236,7 @@ namespace Content.Shared.Preferences
             Dictionary<ProtoId<JobPrototype>, ProtoId<AlternativeJobPrototype>> jobAlternatives, // Pirate - Alternative Jobs
             PreferenceUnavailableMode preferenceUnavailable,
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
-            HashSet<ProtoId<TraitPrototype>> traitPreferences,
+            HashSet<ProtoId<TraitPrototype>> traitPreferences, // Pirate: port and modified DV traits system
             Dictionary<string, RoleLoadout> loadouts,
             ProtoId<BarkPrototype> barkVoice) // Goob Station - Barks
         {
@@ -644,7 +653,7 @@ namespace Content.Shared.Preferences
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
-            if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
+            if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false; // Pirate: port and modified DV traits system
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
@@ -832,8 +841,12 @@ namespace Content.Shared.Preferences
             _antagPreferences.Clear();
             _antagPreferences.UnionWith(antags);
 
-            _traitPreferences.Clear();
-            _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
+            _traitPreferences.Clear(); // Pirate: port and modified DV traits system
+            // Pirate start - traits rework
+            var maxPoints = configManager.GetCVar(PirateVars.MaxTraitPoints);
+            var maxCount = configManager.GetCVar(PirateVars.MaxTraitCount);
+            _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager, maxPoints, maxCount));
+            // Pirate end - traits rework
 
             // Checks prototypes exist for all loadouts and dump / set to default if not.
             var toRemove = new ValueList<string>();
@@ -859,21 +872,40 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Takes in an IEnumerable of traits and returns a List of the valid traits.
         /// </summary>
-        public List<ProtoId<TraitPrototype>> GetValidTraits(IEnumerable<ProtoId<TraitPrototype>> traits, IPrototypeManager protoManager)
+        // Pirate start: port and modified DV traits system
+        public List<ProtoId<TraitPrototype>> GetValidTraits(
+            IEnumerable<ProtoId<TraitPrototype>> traits,
+            IPrototypeManager protoManager,
+            int maxGlobalPoints,
+            int maxGlobalCount)
         {
             // Track points count for each group.
             var groups = new Dictionary<string, int>();
+            var counts = new Dictionary<string, int>();
             var result = new List<ProtoId<TraitPrototype>>();
+            var totalPoints = 0;
+            var totalCount = 0;
 
-            foreach (var trait in traits)
+            var sortedTraits = traits
+                .Where(protoManager.HasIndex)
+                .OrderBy(id => protoManager.Index(id).Cost);
+
+            foreach (var traitId in sortedTraits)
             {
-                if (!protoManager.TryIndex(trait, out var traitProto))
+                if (!protoManager.TryIndex(traitId, out var traitProto))
                     continue;
 
-                // Always valid.
+                if (totalCount + 1 > maxGlobalCount)
+                    continue;
+
+                if (totalPoints + traitProto.Cost > maxGlobalPoints)
+                    continue;
+
                 if (traitProto.Category == null)
                 {
-                    result.Add(trait);
+                    result.Add(traitId);
+                    totalPoints += traitProto.Cost;
+                    totalCount++;
                     continue;
                 }
 
@@ -881,19 +913,28 @@ namespace Content.Shared.Preferences
                 if (!protoManager.TryIndex(traitProto.Category, out var category))
                     continue;
 
-                var existing = groups.GetOrNew(category.ID);
-                existing += traitProto.Cost;
+                var existingPoints = groups.GetValueOrDefault(category.ID, 0);
+                var existingCount = counts.GetValueOrDefault(category.ID, 0);
 
-                // Too expensive.
-                if (existing > category.MaxTraitPoints)
+                var maxCatPoints = category.MaxPoints ?? category.MaxTraitPoints;
+
+                if (maxCatPoints.HasValue && existingPoints + traitProto.Cost > maxCatPoints.Value)
                     continue;
 
-                groups[category.ID] = existing;
-                result.Add(trait);
+                // Too expensive.
+                if (category.MaxTraits.HasValue && existingCount + 1 > category.MaxTraits.Value)
+                    continue;
+
+                groups[category.ID] = existingPoints + traitProto.Cost;
+                counts[category.ID] = existingCount + 1;
+                result.Add(traitId);
+                totalPoints += traitProto.Cost;
+                totalCount++;
             }
 
             return result;
         }
+        // Pirate end: port and modified DV traits system
 
         public ICharacterProfile Validated(ICommonSession session, IDependencyCollection collection)
         {
@@ -927,7 +968,7 @@ namespace Content.Shared.Preferences
             var hashCode = new HashCode();
             hashCode.Add(_jobPriorities);
             hashCode.Add(_antagPreferences);
-            hashCode.Add(_traitPreferences);
+            hashCode.Add(_traitPreferences); // Pirate: port and modified DV traits system
             hashCode.Add(_loadouts);
             hashCode.Add(Name);
             hashCode.Add(FlavorText);

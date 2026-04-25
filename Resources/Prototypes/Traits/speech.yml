@@ -15,7 +15,7 @@
   name: trait-accentless-name
   description: trait-accentless-desc
   category: SpeechTraits
-  cost: 2
+  cost: 0 # Pirate trait rework
   components:
   - type: Accentless
     removes:
@@ -33,7 +33,7 @@
   name: trait-southern-name
   description: trait-southern-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: SouthernAccent
 
@@ -42,7 +42,7 @@
   name: trait-pirate-accent-name
   description: trait-pirate-accent-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: PirateAccent
 
@@ -51,7 +51,7 @@
   name: trait-cowboy-name
   description: trait-cowboy-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: ReplacementAccent
     accent: cowboy
@@ -61,7 +61,7 @@
   name: trait-german-name
   description: trait-german-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: GermanAccent
 
@@ -70,7 +70,7 @@
   name: trait-italian-name
   description: trait-italian-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: ReplacementAccent
     accent: italian
@@ -80,7 +80,7 @@
   name: trait-french-name
   description: trait-french-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: FrenchAccent
 
@@ -89,7 +89,7 @@
   name: trait-spanish-name
   description: trait-spanish-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: SpanishAccent
 
@@ -98,7 +98,7 @@
   name: trait-liar-name
   description: trait-liar-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: ReplacementAccent
     accent: liar
@@ -110,7 +110,7 @@
   name: trait-socialanxiety-name
   description: trait-socialanxiety-desc
   category: SpeechTraits
-  cost: 2
+  cost: 0 # Pirate trait rework
   components:
   - type: StutteringAccent
     matchRandomProb: 0.1
@@ -123,6 +123,6 @@
   name: trait-frontal-lisp-name
   description: trait-frontal-lisp-desc
   category: SpeechTraits
-  cost: 2
+  cost: 0 # Pirate trait rework
   components:
   - type: FrontalLisp

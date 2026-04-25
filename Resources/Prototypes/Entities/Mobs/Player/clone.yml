@@ -82,6 +82,8 @@
   - Vampirism
   - BloodDeficiency
   # Pirate end
+  eventComponents:
+  - PhysicalPotential # Pirate
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit
@@ -112,7 +114,7 @@
 
 - type: entity
   id: RandomCloneSpawner
-  name: "Спавнер випадкового клона"
+  name: Random Clone
   suffix: Non-Antag
   components:
   - type: Sprite

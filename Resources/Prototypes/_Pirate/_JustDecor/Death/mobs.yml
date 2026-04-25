@@ -1,0 +1,95 @@
+- type: entity
+  id: MobDeathSkeleton
+  name: Кістлява смерть
+  parent: BaseMobSkeletonPerson
+  suffix: JustDecor, Death
+  components:
+    - type: HumanoidAppearance
+      species: Skeleton
+      skinColor: "#000000"
+    - type: Damageable
+      damageContainer: Biological
+      damageModifierSet: Skeleton
+      healthIcons:
+        Alive: HealthIconDead
+        Critical: HealthIconDead
+        Dead: HealthIconDead
+      healthBarThreshold: 9999
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        125: Critical
+        200: Dead
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 2550
+        behaviors:
+        - !type:GibBehavior # Shitmed Change
+          gibContents: Skip # Shitmed Change
+    - type: GhostRole
+      name: Кістлява смерть
+      description: "Ти - Жива Смерть, втілення загибелі. Твоя задача - випробувати екіпаж, використовуючи свою косу. Не забувай: ти не людина, а надприродна сила, і твоя поява - це знак кінця."
+      rules: |
+        1. Грай атмосферно, не розмовляй як звичайна людина.
+        2. Використовуй свою косу, щоб випробувати екіпаж на міцність.
+        3. Не вбивай усіх одразу - давай шанс на епічну боротьбу.
+        4. Не залишай свою роль без причини, не допомагай екіпажу.
+        5. Пам'ятай: твоя мета - створити атмосферу страху та випробування, а не просто знищити всіх.
+        6. Лікуй підданих монстрів або тих, хто загинув несправедливо, за допомогою свого дефібрилятора. Можеш ним кидатися, щоб відновити усе здоров'я або використати його як звичайний дефібрилятор на неживій істоті.
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [SkeletonDeathGear]
+    - type: GhostTargeting
+    - type: ActionGrant
+      actions:
+      - ActionToggleLighting
+      - ActionToggleFov
+      - ActionToggleGhosts
+    - type: Spectral
+    - type: Tag
+      tags:
+      - CanPilot
+      - BypassInteractionRangeChecks
+      - BypassDropChecks
+      - NoConsoleSound
+      - FootstepSound
+      - DoorBumpOpener
+    - type: Puller
+      needsHands: false
+    - type: Thieving
+      stripTimeReduction: 9999
+      stealthy: true
+    - type: BypassInteractionChecks
+    - type: SupermatterImmune
+    - type: MovementIgnoreGravity
+    - type: AutoImplant
+      implants: [ ShiftImplant, BlinkImplant, FreedomImplant, ScramImplant, StopTimeImplant, NutrimentPumpImplant, SpaceProofImplant, StypticStimulatorImplant ]
+    - type: Respirator
+      damage:
+        types:
+          Asphyxiation: 0.1
+      damageRecovery:
+        types:
+          Asphyxiation: -10.0
+    - type: GhostHearing
+    - type: Eye
+      drawFov: false
+      visMask:
+        - Normal
+        - Ghost
+        - TargetingGhost
+        - CosmicCultMonument # DeltaV - Cosmic Cult
+        - Abductor # Shitmed - Starlight Abductors
+
+- type: typingIndicator
+  id: death
+  spritePath: /Textures/_Pirate/_JustDecor/Clothing/Death/speech.rsi
+  typingState: skeleton0
+  idleState: skeleton1
+  offset: 0, 0.2 # 0625

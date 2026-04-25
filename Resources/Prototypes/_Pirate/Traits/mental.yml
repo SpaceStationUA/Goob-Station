@@ -1,0 +1,60 @@
+#region Social
+- type: trait
+  id: SocialAnxietyTrait
+  name: trait-social-anxiety-name
+  description: trait-social-anxiety-disc
+  category: Mental
+  cost: -1
+  components:
+    - type: SocialAnxiety
+#endregion
+
+#region Psychology
+- type: trait
+  id: Pacifist
+  name: trait-pacifist-name
+  description: trait-pacifist-desc
+  category: Mental
+  cost: -4
+  components:
+  - type: Pacified
+#endregion
+
+#region Sensory
+- type: trait
+  id: Paracusia
+  name: trait-paracusia-name
+  description: trait-paracusia-desc
+  category: Mental
+  components:
+    - type: Paracusia
+      minTimeBetweenIncidents: 0.1
+      maxTimeBetweenIncidents: 300
+      maxSoundDistance: 7
+      sounds:
+        collection: Paracusia
+#endregion
+
+#region Abilities
+- type: trait
+  id: Psionic
+  name: trait-psionic-name
+  description: trait-psionic-desc
+  category: Mental
+  cost: 2
+  conditions:
+    - !type:IsSpeciesCondition
+      invert: true
+      species:
+        - IPC
+        - Plasmaman
+        - Shadowkin
+    - !type:HasCompCondition
+      invert: true
+      component: BorgChassis
+  components:
+    - type: Psionic
+    - type: InnatePsionicPowers
+      powersToAdd:
+        - TelepathyPower
+#endregion

@@ -66,6 +66,7 @@ using Content.Shared.Chat.RadioIconsEvents; // Goobstation
 using Content.Shared.Whitelist; // Goobstation
 using Content.Shared.StatusIcon; // Goobstation
 using Content.Goobstation.Shared.Radio; // Goobstation
+using Content.Shared._Pirate.Radio; // Pirate: radio sounds
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -255,6 +256,15 @@ public sealed partial class RadioSystem : EntitySystem
             frequency = GetFrequency(messageSource, channel);
         // Pirate end - handheld radios port
 
+        #region Pirate: radio sounds
+        var importantRadioSound = HasComp<HeadsetComponent>(radioSource) && HasActiveRadioLoudspeaker(messageSource);
+        if (canSend) 
+        {
+            var soundEv = new PirateRadioSentEvent(messageSource, channel, radioSource, frequency.Value);
+            RaiseLocalEvent(radioSource, ref soundEv);
+        } 
+        #endregion
+
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
@@ -287,6 +297,8 @@ public sealed partial class RadioSystem : EntitySystem
                 continue;
 
             // send the message
+            var receiveSoundEv = new PirateRadioReceivedEvent(messageSource, channel, radioSource, receiver, frequency.Value, importantRadioSound); // Pirate: radio sounds
+            RaiseLocalEvent(receiver, ref receiveSoundEv); // Pirate: radio sounds
             RaiseLocalEvent(receiver, ref ev);
         }
 
@@ -397,4 +409,26 @@ public sealed partial class RadioSystem : EntitySystem
             .Any(server => server.Item3.MapID == mapId && server.Item2.Powered);
     }
     // goob end
+
+    #region Pirate: radio sounds
+    private bool HasActiveRadioLoudspeaker(EntityUid source)
+    {
+        var getLoudspeakerEv = new GetLoudspeakerEvent();
+        RaiseLocalEvent(source, ref getLoudspeakerEv);
+
+        if (getLoudspeakerEv.Loudspeakers == null)
+            return false;
+
+        foreach (var loudspeaker in getLoudspeakerEv.Loudspeakers)
+        {
+            var loudSpeakerEv = new GetLoudspeakerDataEvent();
+            RaiseLocalEvent(loudspeaker, ref loudSpeakerEv);
+
+            if (loudSpeakerEv.IsActive && loudSpeakerEv.AffectRadio)
+                return true;
+        }
+
+        return false;
+    }
+    #endregion
 }

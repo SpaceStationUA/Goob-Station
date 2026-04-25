@@ -1,4 +1,5 @@
 using System;
+using Content.Goobstation.Common.Grab;
 using Content.Goobstation.Common.MartialArts;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared._Pirate;
@@ -25,6 +26,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -49,6 +51,9 @@ public sealed partial class PullingSystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Update(float frameTime)
     {
@@ -299,7 +304,7 @@ public sealed partial class PullingSystem
 
         if (puller.Comp.Pulling != pullable.Owner
             || pullable.Comp.Puller != puller.Owner
-            || puller.Comp.GrabStage != GrabStage.Hard
+            || GetGrabStage(puller.Owner) != GrabStage.Hard
             || !_combatMode.IsInCombatMode(puller.Owner)
             || !_blocker.CanAttack(puller.Owner, pullable.Owner)
             || !TryComp<MobStateComponent>(pullable.Owner, out _)
@@ -328,7 +333,7 @@ public sealed partial class PullingSystem
 
         if (puller.Comp.Pulling != pullable.Owner
             || pullable.Comp.Puller != puller.Owner
-            || puller.Comp.GrabStage != GrabStage.Hard
+            || GetGrabStage(puller.Owner) != GrabStage.Hard
             || !_combatMode.IsInCombatMode(puller.Owner)
             || !_blocker.CanAttack(puller.Owner, pullable.Owner)
             || !TryComp<MobStateComponent>(pullable.Owner, out _)
@@ -708,5 +713,12 @@ public sealed partial class PullingSystem
             TargetBodyPart.RightLeg => Loc.GetString("popup-grab-limb-right-leg"),
             _ => Loc.GetString("popup-grab-limb-leg"),
         };
+    }
+
+    private GrabStage GetGrabStage(EntityUid puller)
+    {
+        var ev = new GetGrabStageEvent();
+        RaiseLocalEvent(puller, ref ev);
+        return ev.Stage;
     }
 }

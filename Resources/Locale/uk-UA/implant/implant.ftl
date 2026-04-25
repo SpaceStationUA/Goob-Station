@@ -15,8 +15,6 @@ implanter-label = Імплант: [color=green]{$implantName}[/color] Режим
 
 implanter-contained-implant-text = [color=green]{$desc}[/color]
 
-scramble-implant-activated-popup = Ваша зовнішність змінюється!
-
 implanter-component-implant-already = {$target} вже має імплант {$implant}!
 
 ## UI

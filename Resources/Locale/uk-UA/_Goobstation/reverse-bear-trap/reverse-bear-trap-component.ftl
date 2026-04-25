@@ -25,3 +25,7 @@ reverse-bear-trap-component-start-unlocking-target-self = Ви починаєт�
 reverse-bear-trap-component-start-unlocking-observer = {$user} відкриває пастку на голові {$target}!
 reverse-bear-trap-component-start-unlocking-target = Ви починаєте відкривати пастку на {$targetName}.
 reverse-bear-trap-component-start-unlocking-by-other = {$otherName} відкриває пастку на вашій голові!
+
+verb-trigger-timer-set = {$time} сек
+verb-trigger-timer-set-current = {$time} сек (поточний час)
+popup-trigger-timer-set = Таймер пастки встановлено на {$time} сек.

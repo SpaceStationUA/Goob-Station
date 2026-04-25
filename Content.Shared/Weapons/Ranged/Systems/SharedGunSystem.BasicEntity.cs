@@ -42,6 +42,7 @@ public abstract partial class SharedGunSystem
                                         prototypes.Weights.Count == 0))
             return;
         // Goobstation end
+        var rand = PredictedRandom(uid); // Pirate: gunplay
 
         for (var i = 0; i < args.Shots; i++)
         {
@@ -53,10 +54,9 @@ public abstract partial class SharedGunSystem
                 component.Count--;
             }
 
-            // Goob edit start
-            var proto = component.Proto ?? prototypes!.Pick(Random);
-            var ent = Spawn(proto, args.Coordinates);
-            // Goob edit end
+            // Pirate: gunplay
+            var proto = component.Proto ?? prototypes!.Pick(rand);
+            var ent = PredictedSpawnAtPosition(proto, args.Coordinates);
             args.Ammo.Add((ent, EnsureShootable(ent)));
         }
 

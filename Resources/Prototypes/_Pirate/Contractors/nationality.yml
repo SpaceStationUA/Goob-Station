@@ -12,6 +12,7 @@
       species:
         - Vox
         - IPC
+        - Hydrakin
   passportPrototype: NralakkPassport
 
 - type: nationality
@@ -33,7 +34,7 @@
       employers:
       - PMCG
       - HephaestusIndustries
-      - ZavodskoiInterstellar
+      - ZavodskiyInterstellar
       - IdrisIncorporated
       - ZengHuPharmaceuticals
     - !type:SpeciesRequirement
@@ -41,6 +42,7 @@
       species:
         - Vox
         - IPC
+        - Hydrakin
   languages:
     - Tradeband
   passportPrototype: EridanPassport
@@ -64,6 +66,7 @@
       species:
         - Vox
         - IPC
+        - Hydrakin
   passportPrototype: IzweskiPassport
 
 - type: nationality

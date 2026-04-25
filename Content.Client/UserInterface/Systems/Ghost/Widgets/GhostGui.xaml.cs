@@ -17,6 +17,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System;
 using Content.Client.Stylesheets;
 #region DOWNSTREAM-TPirates: ghost follow menu update
 using Content.Client._Pirate.UserInterface.Systems.Ghost.Controls;
@@ -38,6 +39,7 @@ public sealed partial class GhostGui : UIWidget
     public event Action? ReturnToBodyPressed;
     public event Action? GhostRolesPressed;
     public event Action? ThunderdomePressed; // Goobstation - Thunderdome
+    public event Action? RespawnToLobbyPressed; // Pirate
     private int _prevNumberRoles;
 
     public GhostGui()
@@ -53,6 +55,9 @@ public sealed partial class GhostGui : UIWidget
         GhostRolesButton.OnPressed += _ => GhostRolesPressed?.Invoke();
         GhostRolesButton.OnPressed += _ => GhostRolesButton.StyleClasses.Remove(StyleBase.ButtonCaution);
         ThunderdomeButton.OnPressed += _ => ThunderdomePressed?.Invoke(); // Goobstation - Thunderdome
+        ReturnToRoundButton.OnPressed += _ => RespawnToLobbyPressed?.Invoke(); // PIRATE
+        ReturnToRoundButton.Disabled = true; // PIRATE
+        ReturnToRoundButton.Visible = false; // PIRATE
     }
 
     public void Hide()
@@ -99,4 +104,38 @@ public sealed partial class GhostGui : UIWidget
             TargetWindow.Dispose();
         }
     }
+
+    #region PIRATE
+    public void UpdatePirateRespawn(bool hasStatus, bool canRespawn, TimeSpan remainingTime)
+    {
+        if (!hasStatus)
+        {
+            ReturnToRoundButton.Visible = false;
+            ReturnToRoundButton.Disabled = true;
+            ReturnToRoundButton.Text = Loc.GetString("ghost-gui-return-to-round-button");
+            return;
+        }
+
+        ReturnToRoundButton.Visible = true;
+
+        if (canRespawn)
+        {
+            ReturnToRoundButton.Disabled = false;
+            ReturnToRoundButton.Text = Loc.GetString("ghost-gui-return-to-round-button");
+            return;
+        }
+
+        ReturnToRoundButton.Disabled = true;
+
+        if (remainingTime.TotalSeconds >= 60)
+        {
+            var minutesLeft = Math.Max(1, (int) Math.Ceiling(remainingTime.TotalMinutes));
+            ReturnToRoundButton.Text = Loc.GetString("ghost-respawn-minutes-left", ("time", minutesLeft));
+            return;
+        }
+
+        var secondsLeft = Math.Max(1, (int) Math.Ceiling(remainingTime.TotalSeconds));
+        ReturnToRoundButton.Text = Loc.GetString("ghost-respawn-seconds-left", ("time", secondsLeft));
+    }
+    #endregion
 }

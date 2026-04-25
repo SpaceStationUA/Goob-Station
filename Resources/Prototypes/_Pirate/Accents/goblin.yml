@@ -1,0 +1,13 @@
+- type: accent
+  id: goblin_accent
+  wordReplacements:
+    accent-goblin-words-1: accent-goblin-replacement-1
+    accent-goblin-words-2: accent-goblin-replacement-2
+    accent-goblin-words-3: accent-goblin-replacement-3
+    accent-goblin-words-4: accent-goblin-replacement-4
+    accent-goblin-words-5: accent-goblin-replacement-5
+    accent-goblin-words-6: accent-goblin-replacement-6
+    accent-goblin-words-7: accent-goblin-replacement-7
+    accent-goblin-words-8: accent-goblin-replacement-8
+    accent-goblin-words-9: accent-goblin-replacement-9
+    accent-goblin-words-10: accent-goblin-replacement-10

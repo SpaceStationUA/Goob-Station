@@ -30,7 +30,7 @@
 - type: job
   id: BlueshieldOfficer
   name: job-name-bso
-  description: "Виконуйте роль охоронця та радника для Командування й VIP із Центкому."
+  description: "Act as a bodyguard and advisor for Command and CentCom VIPs."
   playTimeTracker: JobBlueshieldOfficer
   requirements:
     - !type:DepartmentTimeRequirement
@@ -55,10 +55,11 @@
       - Narcolepsy
       - Muted
       - WheelchairBound # Pirate end
-    #- !type:SpeciesRequirement # Pirate remove requirement
-    #  inverted: true
-    #  species:
-    #  - Felinid
+    - !type:SpeciesRequirement # Pirate edit
+      inverted: true
+      species:
+      #- Felinid
+      - Hydrakin
   # Pirate contractor start
     - !type:CharacterEmployerRequirement
       employers:

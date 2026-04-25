@@ -1,0 +1,11 @@
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineHeretic
+  name: "фігурка єретика"
+  description: "Фігурка, що зображує тіньовика, який тримає серп, на ньому одягнений дивний медальйон. Його ліва рука виглядає трохи дивно..."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/figurines.rsi
+    state: heretic
+  - type: SpeakOnTrigger
+    pack: FigurinesHeretic

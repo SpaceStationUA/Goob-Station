@@ -33,7 +33,7 @@
 
 - type: entity
   save: false
-  name: "Уріст МакГарпі"
+  name: Urist McHarpy
   parent: BaseMobHuman
   id: MobHarpyBase
   abstract: true
@@ -70,8 +70,6 @@
       # Goobstation - changelings
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface
-      enum.HereticLivingHeartKey.Key: # goob edit - heretics
-        type: LivingHeartMenuBoundUserInterface
       enum.WizardTeleportUiKey.Key: # Goobstation - wizard
         type: WizardTeleportBoundUserInterface
         requireInputValidation: false
@@ -214,11 +212,11 @@
 
 - type: entity
   save: false
-  name: "Уріст МакРуки"
+  name: Urist McHands
   parent: MobHumanDummy
   id: MobHarpyDummy
   categories: [ HideSpawnMenu ]
-  description: "Манекен гарпії, призначений для використання при створенні персонажа."
+  description: A dummy Harpy meant to be used in character setup.
   components:
   - type: HumanoidAppearance
     species: Harpy

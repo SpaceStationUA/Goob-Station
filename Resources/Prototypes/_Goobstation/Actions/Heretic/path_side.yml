@@ -10,13 +10,12 @@
 - type: entity
   parent: BaseAction
   id: ActionHereticIceSpear
-  name: "Таємниці Створення"
-  description: "Активуйте, щоб створити Льодовиковий Спис або викликати вже існуючий."
+  name: Mysteries of Creation
+  description: Activate to create the Glacier Spear or summon already existing spear.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
     checkCanInteract: true
-    raiseOnUser: true
     useDelay: 5
     itemIconStyle: NoItem
     sound:
@@ -28,14 +27,15 @@
     event: !type:EventHereticIceSpear
   - type: HereticAction
     requireMagicItem: true
-    messageLoc: heretic-speech-ice-spear
+  - type: SpeakOnAction
+    sentence: heretic-speech-ice-spear
   - type: IceSpearAction
 
 - type: entity
   parent: BaseAction
   id: ActionHereticCleave
-  name: "Розсічення"
-  description: "Спричиняє сильну кровотечу у цілі та кількох цілей навколо неї."
+  name: Cleave
+  description: Causes severe bleeding on a target and several targets around them.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -45,7 +45,6 @@
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: cleave
     checkCanInteract: false
-    raiseOnUser: true
   - type: TargetAction
     checkCanAccess: false
     range: 4
@@ -53,4 +52,5 @@
     event: !type:EventHereticCleave
   - type: HereticAction
     requireMagicItem: true
-    messageLoc: heretic-speech-cleave
+  - type: SpeakOnAction
+    sentence: heretic-speech-cleave

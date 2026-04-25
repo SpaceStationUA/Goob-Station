@@ -198,6 +198,13 @@ namespace Content.Server.Database
         public DbSet<PollOption> PollOptions { get; set; } = default!;
         public DbSet<PollVote> PollVotes { get; set; } = default!;
 
+        //Pirate Changes
+        public DbSet<PirateAdminHelpRating> PirateAdminHelpRatings { get; set; } = default!;
+        #region Pirate: cameras (photo persistence)
+        public DbSet<PersistentPhotoAlbum> PersistentPhotoAlbums { get; set; } = default!;
+        public DbSet<PersistentPhotoAlbumPhoto> PersistentPhotoAlbumPhotos { get; set; } = default!;
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Preference>()
@@ -613,6 +620,16 @@ namespace Content.Server.Database
             modelBuilder.Entity<PollVote>()
                 .HasIndex(v => new { v.PollId, v.PlayerUserId, v.PollOptionId })
                 .IsUnique();
+
+            //Pirate Changes Start
+            modelBuilder.Entity<PirateAdminHelpRating>()
+                .HasOne(r => r.Player)
+                .WithMany()
+                .HasForeignKey(r => r.PlayerUserId)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            //Pirate Changes End
+            PersistentPhotoAlbumModelConfiguration.Configure(modelBuilder); //Pirate: cameras (photo persistence)
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)

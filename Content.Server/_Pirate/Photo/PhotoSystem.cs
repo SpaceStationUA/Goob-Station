@@ -27,6 +27,7 @@ using Robust.Shared.Prototypes;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Numerics;
 
@@ -61,6 +62,8 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
     const int MAX_PREVIEW_WIDTH = 256;
     const int MAX_PREVIEW_HEIGHT = 256;
     const int MAX_PREVIEW_PIXELS = MAX_PREVIEW_WIDTH * MAX_PREVIEW_HEIGHT;
+    private const int PreviewSize = 8;
+    private const int PreviewSampleSize = 32;
     private const int MaxCustomNameLength = 32;
     private const int MaxCustomDescriptionLength = 128;
     private const int MaxCustomCaptionLength = 256;
@@ -293,7 +296,11 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
             photo.DeadSeen = new List<EntityUid>(captureMetadata.DeadSeen);
             photo.NamesSeen = new List<string>(captureMetadata.NamesSeen);
             photo.BaseDescription = captureMetadata.Description;
+            photo.CaptureData = captureMetadata.CaptureData;
         }
+
+        photo.CreatedAt = DateTime.UtcNow;
+        photo.UpdatedAt = photo.CreatedAt;
 
         UpdatePhotoCardAppearance(card, photo);
         UpdatePhotoCardExamineDescription(card, photo);
@@ -312,6 +319,102 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
             return;
 
         _appearance.SetData(uid, PhotoCardVisuals.PreviewImage, component.PreviewData ?? Array.Empty<byte>(), appearance);
+    }
+
+    public bool TryPreparePhotoCardData(byte[] imageData, byte[]? previewData, out byte[] preparedImageData, out byte[]? preparedPreviewData)
+    {
+        preparedImageData = Array.Empty<byte>();
+        preparedPreviewData = null;
+
+        if (!ValidatePngData(imageData, MAX_SIZE, MAX_WIDTH, MAX_HEIGHT, MAX_PIXELS))
+            return false;
+
+        preparedImageData = [.. imageData];
+
+        if (previewData is { Length: > 0 } preview &&
+            ValidatePngData(preview, MAX_PREVIEW_SIZE, MAX_PREVIEW_WIDTH, MAX_PREVIEW_HEIGHT, MAX_PREVIEW_PIXELS))
+        {
+            preparedPreviewData = [.. preview];
+            return true;
+        }
+
+        preparedPreviewData = GeneratePreviewData(preparedImageData);
+        return true;
+    }
+
+    public bool TrySetPhotoCardData(
+        EntityUid uid,
+        PhotoCardComponent component,
+        byte[] imageData,
+        byte[]? previewData,
+        string? customName = null,
+        string? customDescription = null,
+        string? caption = null,
+        string? baseDescription = null,
+        PhotoCaptureData? captureData = null,
+        DateTime? createdAt = null,
+        DateTime? updatedAt = null)
+    {
+        if (!TryPreparePhotoCardData(imageData, previewData, out var preparedImageData, out var preparedPreviewData))
+            return false;
+
+        component.ImageData = preparedImageData;
+        component.PreviewData = preparedPreviewData;
+        component.CustomName = customName;
+        component.CustomDescription = customDescription;
+        component.Caption = caption;
+        component.BaseDescription = baseDescription;
+        component.CaptureData = captureData;
+        component.NamesSeen = captureData?.RecognizedNames is { } names
+            ? new List<string>(names)
+            : new List<string>();
+        component.MobsSeen = new List<EntityUid>();
+        component.DeadSeen = new List<EntityUid>();
+        component.CreatedAt = createdAt;
+        component.UpdatedAt = updatedAt ?? createdAt;
+        component.IsArchivedAlbumPhoto = false;
+
+        UpdatePhotoCardAppearance(uid, component);
+        UpdatePhotoCardExamineDescription(uid, component);
+        UpdatePhotoCardInterface(uid, component);
+        return true;
+    }
+
+    public bool TryCreatePersistentPhotoData(PhotoCardComponent component, [NotNullWhen(true)] out PersistentPhotoData? data)
+    {
+        data = null;
+        if (component.ImageData is not { Length: > 0 } imageData)
+            return false;
+
+        data = new PersistentPhotoData
+        {
+            ImageData = [.. imageData],
+            PreviewData = component.PreviewData is { Length: > 0 } preview ? [.. preview] : null,
+            CustomName = component.CustomName,
+            CustomDescription = component.CustomDescription,
+            Caption = component.Caption,
+            BaseDescription = component.BaseDescription,
+            CaptureData = CloneCaptureData(component.CaptureData),
+            CreatedAt = component.CreatedAt,
+            UpdatedAt = component.UpdatedAt
+        };
+        return true;
+    }
+
+    public bool TryApplyPersistentPhotoData(EntityUid uid, PhotoCardComponent component, PersistentPhotoData data)
+    {
+        return TrySetPhotoCardData(
+            uid,
+            component,
+            data.ImageData,
+            data.PreviewData,
+            data.CustomName,
+            data.CustomDescription,
+            data.Caption,
+            data.BaseDescription,
+            CloneCaptureData(data.CaptureData),
+            data.CreatedAt,
+            data.UpdatedAt);
     }
 
     private bool CanPrintPhoto(EntityUid uid, PhotoCameraComponent component)
@@ -371,6 +474,94 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
         }
     }
 
+    private byte[]? GeneratePreviewData(byte[] imageData)
+    {
+        try
+        {
+            using var imageStream = new MemoryStream(imageData, writable: false);
+            using var image = Image.Load<Rgba32>(imageStream);
+            if (!image.DangerousTryGetSinglePixelMemory(out var imageMemory))
+                return null;
+
+            var stageOne = DownscaleBox(imageMemory.Span, image.Width, image.Height, PreviewSampleSize, PreviewSampleSize);
+            var stageTwo = DownscaleBox(stageOne, PreviewSampleSize, PreviewSampleSize, PreviewSize, PreviewSize);
+
+            using var miniature = new Image<Rgba32>(PreviewSize, PreviewSize);
+            if (!miniature.DangerousTryGetSinglePixelMemory(out var miniatureMemory))
+                return null;
+
+            stageTwo.CopyTo(miniatureMemory.Span);
+
+            using var previewStream = new MemoryStream();
+            miniature.SaveAsPng(previewStream);
+
+            var previewData = previewStream.ToArray();
+            return ValidatePngData(previewData, MAX_PREVIEW_SIZE, MAX_PREVIEW_WIDTH, MAX_PREVIEW_HEIGHT, MAX_PREVIEW_PIXELS)
+                ? previewData
+                : null;
+        }
+        catch (Exception ex)
+        {
+            Log.Warning($"Failed to generate photo preview PNG: {ex}");
+            return null;
+        }
+    }
+
+    private static Rgba32[] DownscaleBox(ReadOnlySpan<Rgba32> source, int sourceWidth, int sourceHeight, int targetWidth, int targetHeight)
+    {
+        var result = new Rgba32[targetWidth * targetHeight];
+
+        for (var y = 0; y < targetHeight; y++)
+        {
+            var sourceY0 = y * sourceHeight / targetHeight;
+            var sourceY1 = (y + 1) * sourceHeight / targetHeight;
+            if (sourceY1 <= sourceY0)
+                sourceY1 = sourceY0 + 1;
+
+            for (var x = 0; x < targetWidth; x++)
+            {
+                var sourceX0 = x * sourceWidth / targetWidth;
+                var sourceX1 = (x + 1) * sourceWidth / targetWidth;
+                if (sourceX1 <= sourceX0)
+                    sourceX1 = sourceX0 + 1;
+
+                var sumR = 0;
+                var sumG = 0;
+                var sumB = 0;
+                var sumA = 0;
+                var count = 0;
+
+                for (var sourceY = sourceY0; sourceY < sourceY1; sourceY++)
+                {
+                    var rowOffset = sourceY * sourceWidth;
+                    for (var sourceX = sourceX0; sourceX < sourceX1; sourceX++)
+                    {
+                        var pixel = source[rowOffset + sourceX];
+                        sumR += pixel.R;
+                        sumG += pixel.G;
+                        sumB += pixel.B;
+                        sumA += pixel.A;
+                        count++;
+                    }
+                }
+
+                if (count <= 0)
+                {
+                    result[y * targetWidth + x] = default;
+                    continue;
+                }
+
+                result[y * targetWidth + x] = new Rgba32(
+                    (byte) (sumR / count),
+                    (byte) (sumG / count),
+                    (byte) (sumB / count),
+                    (byte) (sumA / count));
+            }
+        }
+
+        return result;
+    }
+
     private PhotoCaptureMetadata BuildPhotoMetadata(EntityUid photographer, IReadOnlyList<NetEntity> capturedEntities, Vector2 viewBox, float zoom)
     {
         var areaWidth = Math.Max(1, (int) MathF.Ceiling(viewBox.X * Math.Clamp(zoom, 0.01f, 10f)));
@@ -384,6 +575,7 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
         var mobsSeen = new List<EntityUid>();
         var deadSeen = new List<EntityUid>();
         var namesSeen = new List<string>();
+        var subjects = new List<PhotoCapturedSubjectData>();
         var seen = new HashSet<EntityUid>();
 
         foreach (var netEntity in capturedEntities)
@@ -406,14 +598,27 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
 
             var heldItems = GetHeldItems(entity, photographer);
             var gender = GetPhotoGender(entity);
+            subjects.Add(new PhotoCapturedSubjectData(
+                entityName,
+                mobState.CurrentState,
+                gender,
+                new List<string>(heldItems),
+                HasComp<HumanoidAppearanceComponent>(entity)));
             descriptionLines.Add(BuildEntityDescriptionLine(entityName, mobState.CurrentState, heldItems, gender));
         }
+
+        var captureData = new PhotoCaptureData(
+            areaWidth,
+            areaHeight,
+            subjects,
+            new List<string>(namesSeen));
 
         return new PhotoCaptureMetadata(
             mobsSeen,
             deadSeen,
             namesSeen,
-            string.Join("\n", descriptionLines));
+            string.Join("\n", descriptionLines),
+            captureData);
     }
 
     private static float SanitizeCaptureZoom(PhotoCameraComponent component, float zoom)
@@ -617,7 +822,11 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
         if (!TryComp<PhotoCardComponent>(photo, out var photoCard))
             return;
 
+        if (photoCard.CustomName == customName)
+            return;
+
         photoCard.CustomName = customName;
+        TouchPhotoCard(photoCard);
         UpdatePhotoCardInterface(photo, photoCard);
     }
 
@@ -632,7 +841,11 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
         if (!TryComp<PhotoCardComponent>(photo, out var photoCard))
             return;
 
+        if (photoCard.CustomDescription == customDescription)
+            return;
+
         photoCard.CustomDescription = customDescription;
+        TouchPhotoCard(photoCard);
         UpdatePhotoCardExamineDescription(photo, photoCard);
     }
 
@@ -647,7 +860,11 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
         if (!TryComp<PhotoCardComponent>(photo, out var photoCard))
             return;
 
+        if (photoCard.Caption == caption)
+            return;
+
         photoCard.Caption = caption;
+        TouchPhotoCard(photoCard);
         UpdatePhotoCardInterface(photo, photoCard);
     }
 
@@ -674,22 +891,28 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
         return trimmed;
     }
 
-    private void UpdatePhotoCardExamineDescription(EntityUid uid, PhotoCardComponent component)
+    public void UpdatePhotoCardExamineDescription(EntityUid uid, PhotoCardComponent component)
     {
         var baseDescription = component.BaseDescription;
         var customDescription = component.CustomDescription;
 
-        string? composedDescription = null;
+        var descriptionParts = new List<string>();
+
+        if (component.IsArchivedAlbumPhoto)
+            descriptionParts.Add(Loc.GetString("photo-card-archived-description"));
+
         if (!string.IsNullOrWhiteSpace(customDescription))
         {
-            composedDescription = string.IsNullOrWhiteSpace(baseDescription)
+            descriptionParts.Add(string.IsNullOrWhiteSpace(baseDescription)
                 ? customDescription
-                : $"{customDescription} - {baseDescription}";
+                : $"{customDescription} - {baseDescription}");
         }
         else if (!string.IsNullOrWhiteSpace(baseDescription))
         {
-            composedDescription = baseDescription;
+            descriptionParts.Add(baseDescription);
         }
+
+        var composedDescription = string.Join(" ", descriptionParts);
 
         if (!string.IsNullOrWhiteSpace(composedDescription))
             _metaData.SetEntityDescription(uid, composedDescription);
@@ -710,11 +933,41 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
         _userInterface.SetUiState(uid, PhotoCardUiKey.Key, state);
     }
 
+    private static PhotoCaptureData? CloneCaptureData(PhotoCaptureData? data)
+    {
+        if (data == null)
+            return null;
+
+        var subjects = new List<PhotoCapturedSubjectData>(data.Subjects.Count);
+        foreach (var subject in data.Subjects)
+        {
+            subjects.Add(new PhotoCapturedSubjectData(
+                subject.DisplayName,
+                subject.State,
+                subject.GenderKey,
+                new List<string>(subject.HeldItems),
+                subject.IsHumanoid));
+        }
+
+        return new PhotoCaptureData(
+            data.AreaWidth,
+            data.AreaHeight,
+            subjects,
+            new List<string>(data.RecognizedNames));
+    }
+
+    private static void TouchPhotoCard(PhotoCardComponent component)
+    {
+        component.UpdatedAt = DateTime.UtcNow;
+        component.CreatedAt ??= component.UpdatedAt;
+    }
+
     private sealed record PhotoCaptureMetadata(
         List<EntityUid> MobsSeen,
         List<EntityUid> DeadSeen,
         List<string> NamesSeen,
-        string Description);
+        string Description,
+        PhotoCaptureData CaptureData);
 }
 
 

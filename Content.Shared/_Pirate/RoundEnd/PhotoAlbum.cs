@@ -23,13 +23,15 @@ public sealed class PhotoAlbumEvent : EntityEventArgs
 public struct AlbumData
 {
     public List<AlbumImageData> Images;
+    public string Title;
 
     public string? AuthorCkey;
     public string? AuthorName;
 
-    public AlbumData(List<AlbumImageData> images, string? authorCkey, string? authorName)
+    public AlbumData(List<AlbumImageData> images, string title, string? authorCkey, string? authorName)
     {
         this.Images = images;
+        this.Title = title;
         this.AuthorCkey = authorCkey;
         this.AuthorName = authorName;
     }

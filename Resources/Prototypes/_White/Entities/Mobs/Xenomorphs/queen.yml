@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseMobXenomorphAdult
   id: BaseMobXenomorphQueen
-  name: "королева ксеноморфів"
-  description: "Найвища особина, центральний елемент і мати Вулика. Знищення Королеви в більшості випадків означає крах Вулика."
+  name: xenomorph queen
+  description: The highest individual, the central element and mother of the Hive. The destruction of the Queen in most cases means the collapse of the Hive.
   abstract: true
   components:
   - type: Sprite
@@ -71,7 +71,7 @@
     speaks:
     - Xeno
 #    - XenoHivemind # Goobstation - collective mind
-    - TauCetiBasic
+#    - TauCetiBasic # Pirate edit
     understands:
     - Xeno
 #    - XenoHivemind # Goobstation - collective mind
@@ -81,6 +81,16 @@
   # - type: GuideHelp
   #   guides:
   #   - XenomorphQueen
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    - Critical
+    damage:
+      types:
+        Heat: -0.5
+      groups:
+        Brute: -0.5
+  # Pirate end
 
 - type: entity
   parent: BaseMobXenomorphQueen

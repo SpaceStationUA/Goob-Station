@@ -1,11 +1,8 @@
 
-verb-trigger-timer-set = {$time} сек
-verb-trigger-timer-set-current = {$time} сек (поточний час)
+
 verb-trigger-timer-cycle = Циклічна затримка
 
 examine-trigger-timer = Таймер встановлено на {$time} сек.
-
-popup-trigger-timer-set = Таймер встановлено на {$time} сек.
 
 verb-start-detonation = Запустити детонацію
 
