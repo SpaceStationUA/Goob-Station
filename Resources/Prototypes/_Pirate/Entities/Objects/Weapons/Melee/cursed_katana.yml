@@ -1,0 +1,22 @@
+- type: entity
+  parent: Katana
+  id: CursedKatana
+  name: cursed katana
+  description: A cursed katana that clings to its wielder and refuses to be sheathed.
+  components:
+  - type: Tag
+    tags:
+    - Katana # unremovable, can't place in sheath
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/cursed_katana.rsi
+    state: icon
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Melee/cursed_katana.rsi
+    size: Ginormous
+    storedSprite: null
+    shape:
+    - 0,0,0,3
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Melee/cursed_katana.rsi
+    slots: NONE
+  - type: Unremoveable

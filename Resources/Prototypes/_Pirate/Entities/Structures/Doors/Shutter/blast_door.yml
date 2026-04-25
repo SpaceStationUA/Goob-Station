@@ -1,0 +1,104 @@
+- type: entity
+  id: BlastDoorOnyx
+  parent: BlastDoor
+  suffix: Onyx
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Shutters/blastdoor.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    closeTimeOne: 0.4
+    closeTimeTwo: 0.4
+    openTimeOne: 0.4
+    openTimeTwo: 0.4
+    openingAnimationTime: 0.8
+    closingAnimationTime: 0.8
+    canPry: false
+    crushDamage:
+      types:
+        Blunt: 25
+    openSound:
+      path: /Audio/Machines/blastdoor.ogg
+    closeSound:
+      path: /Audio/Machines/blastdoor.ogg
+  - type: Construction
+    graph: BlastDoorOnyx
+    node: blastdoorOnyx
+    containers:
+    - board
+
+- type: entity
+  id: BlastDoorOnyxOpen
+  parent: BlastDoorOnyx
+  suffix: Open, Onyx
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Physics
+    canCollide: false
+  - type: Airtight
+    airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
+
+- type: entity
+  id: BlastDoorOnyxFrame
+  parent: BlastDoorFrame
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Shutters/blastdoor.rsi
+    state: assembly
+  - type: Transform
+    noRot: false
+  - type: Construction
+    graph: BlastDoorOnyx
+    node: frame1
+
+
+
+- type: entity
+  id: BlastDoorOnyxCorner
+  parent: BlastDoorOnyx
+  suffix: Onyx
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Shutters/blastdoor_corner.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: BlastDoorOnyxCorner
+    node: blastdoorOnyxCorner
+    containers:
+    - board
+
+- type: entity
+  id: BlastDoorOnyxCornerOpen
+  parent: BlastDoorOnyxOpen
+  suffix: Open, Onyx
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Shutters/blastdoor_corner.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: BlastDoorOnyxCorner
+    node: blastdoorOnyxCorner
+    containers:
+    - board
+
+- type: entity
+  id: BlastDoorOnyxCornerFrame
+  parent: BlastDoorOnyxFrame
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Shutters/blastdoor_corner.rsi
+    state: assembly
+  - type: Construction
+    graph: BlastDoorOnyxCorner
+    node: frame1c

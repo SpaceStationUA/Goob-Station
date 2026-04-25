@@ -45,6 +45,7 @@
   - type: SwappableInstrument
     instrumentList:
       "Daw": { 0: 0 }
+  - type: ScreenSaver # DOWNSTREAM-TPirates: IPC screens
   - type: UserInterface
     interfaces:
       enum.InstrumentUiKey.Key:
@@ -59,13 +60,13 @@
       # Goobstation - changelings (technically, IPCs cant be a ling, but whatever)
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface
-      enum.HereticLivingHeartKey.Key: # goob edit - heretics
-        type: LivingHeartMenuBoundUserInterface
       enum.WizardTeleportUiKey.Key: # Goobstation - wizard
         type: WizardTeleportBoundUserInterface
         requireInputValidation: false
       enum.SurgeryUIKey.Key: # Shitmed
         type: SurgeryBui
+      enum.RadarConsoleUiKey.Key: #goob - contractor
+        type: RadarConsoleBoundUserInterface
   # Goobstation Start - Energycrit
   # - type: PowerCellSlot
   #   cellSlotId: cell_slot

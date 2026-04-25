@@ -15,11 +15,15 @@
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectEnergySmall
   - type: SpawnOnTrigger
+    keysIn:
+    - timer
     # proto: MobBeeroboros
     proto: BeeGrenadeActivated
-  - type: ActiveTimerTrigger
-    timeRemaining: 0.25
+  - type: TimerTrigger
+    delay: 0.25
   - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: Projectile
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:

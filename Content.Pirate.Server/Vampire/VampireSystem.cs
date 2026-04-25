@@ -27,6 +27,8 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition;
 using Content.Shared.Popups;
 using Content.Shared.Prayer;
 using Content.Shared.StatusEffectNew;
@@ -58,7 +60,7 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly VampireHelpers _vHelper = default!; // PIRATE
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly IAdminLogManager _admin = default!;
-    [Dependency] private readonly FoodSystem _food = default!;
+    [Dependency] private readonly IngestionSystem _ingestion = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly RottingSystem _rotting = default!;
@@ -209,8 +211,14 @@ public sealed partial class VampireSystem : EntitySystem
             return;
 
         // Show extended fangs if the mouth is visible.
-        if (HasComp<VampireFangsExtendedComponent>(uid) && !_food.IsMouthBlocked(uid))
-            args.AddMarkup($"{Loc.GetString("vampire-fangs-extended-examine")}{Environment.NewLine}");
+        if (HasComp<VampireFangsExtendedComponent>(uid))
+        {
+            var ingestAttempt = new IngestionAttemptEvent(IngestionSystem.DefaultFlags);
+            RaiseLocalEvent(uid, ref ingestAttempt);
+
+            if (!ingestAttempt.Cancelled)
+                args.AddMarkup($"{Loc.GetString("vampire-fangs-extended-examine")}{Environment.NewLine}");
+        }
 
         // Show glowing red eyes when they are not covered.
         var eyesEvent = new Content.Goobstation.Shared.Devil.IsEyesCoveredCheckEvent();

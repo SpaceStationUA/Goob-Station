@@ -127,8 +127,10 @@ function getChanges(body) {
 
 // Get the highest changelog number from the changelogs file
 function getHighestCLNumber() {
+    const filePath = "../../Resources/Changelog/changelogPirate.yml"; // Pirate
+
     // Read changelogs file
-    const file = fs.readFileSync(`../../${process.env.CHANGELOG_DIR}`, "utf8");
+    const file = fs.readFileSync(filePath, "utf8"); // Pirate
 
     // Get list of CL numbers
     const data = yaml.load(file);
@@ -141,10 +143,11 @@ function getHighestCLNumber() {
 
 function writeChangelog(entry) {
     let data = { Entries: [] };
+    const filePath = "../../Resources/Changelog/changelogPirate.yml"; // Pirate
 
     // Create a new changelogs file if it does not exist
-    if (fs.existsSync(`../../${process.env.CHANGELOG_DIR}`)) {
-        const file = fs.readFileSync(`../../${process.env.CHANGELOG_DIR}`, "utf8");
+    if (fs.existsSync(filePath)) { // Pirate
+        const file = fs.readFileSync(filePath, "utf8"); // Pirate
         data = yaml.load(file);
     }
 
@@ -155,8 +158,8 @@ function writeChangelog(entry) {
 
     // Write updated changelogs file
     fs.writeFileSync(
-        `../../${process.env.CHANGELOG_DIR}`,
-        "Name: Gooblog\nOrder: -1\nEntries:\n" + // IF YOU ARE A FORK, CHANGE THIS!!!!!!!!!!!!
+        filePath, // Pirate
+        "Name: Pirate Log\nOrder: -2\nEntries:\n" + // Pirate
             yaml.dump(data.Entries, { indent: 2 }).replace(/^---/, "")
     );
 }

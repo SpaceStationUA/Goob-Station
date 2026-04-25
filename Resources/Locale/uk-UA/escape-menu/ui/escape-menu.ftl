@@ -8,3 +8,5 @@ ui-escape-wiki = Вікі
 ui-escape-disconnect = Від'єднатися
 ui-escape-quit = Вийти
 
+
+ui-escape-character = Редактор персонажа

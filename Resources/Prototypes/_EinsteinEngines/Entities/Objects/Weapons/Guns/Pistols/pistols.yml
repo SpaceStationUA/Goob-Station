@@ -23,7 +23,7 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazinePistolMindbreaker
+        startingItem: MagazinePistolCryptobiolin
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
         priority: 2
@@ -33,7 +33,7 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgePistolMindbreaker
+        startingItem: CartridgePistolCryptobiolin
         priority: 1
         whitelist:
           tags:

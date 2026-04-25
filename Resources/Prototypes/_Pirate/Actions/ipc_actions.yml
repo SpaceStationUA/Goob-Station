@@ -1,0 +1,16 @@
+- type: entity
+  parent: BaseAction
+  id: ActionScreenSaver
+  name: Change Screen
+  description: Change screen display
+  components:
+  - type: Action
+    icon: { sprite: _EinsteinEngines/Mobs/Customization/ipc_screens.rsi, state: ipc_screen_smile }
+    itemIconStyle: ScaledAction
+    iconSize: 144, 144
+    iconOffset: 2, 36
+    checkConsciousness: true
+    checkCanInteract: true
+    clientExclusive: true
+  - type: InstantAction
+    event: !type:ScreenSaverActionEvent

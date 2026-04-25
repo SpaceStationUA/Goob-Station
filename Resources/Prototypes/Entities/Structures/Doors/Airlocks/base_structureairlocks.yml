@@ -105,7 +105,7 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/basic.rsi # Pirate changes
     snapCardinals: true
     layers:
     - state: closed
@@ -240,10 +240,27 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-      # TODO this should go to the broken node first
+      # TODO this should go to the broken node first  < Solved but left wizden comment
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
+    # Goobstart
+    - trigger: !type:DamageTrigger
+        damage: 450
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 2
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: assembly
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    # Goobend
   - type: Construction
     graph: Airlock
     node: airlock
@@ -274,6 +291,9 @@
   - type: InteractionVerbs
     allowedVerbs:
     - KnockOn
+  - type: WeldingSparksAnimation # Goobstation
+    startingOffset: 0, 0.5
+  - type: AirlockIllumination # Pirate changes
   placement:
     mode: SnapgridCenter
 
@@ -300,7 +320,7 @@
   - type: Occluder
     enabled: false
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/glass.rsi # Pirate changes
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:

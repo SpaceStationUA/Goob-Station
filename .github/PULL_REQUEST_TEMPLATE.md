@@ -9,47 +9,47 @@ SPDX-FileCopyrightText: 2023 Kevin Zheng <kevinz5000@gmail.com>
 SPDX-FileCopyrightText: 2024 Vasilis <vasilis@pikachu.systems>
 SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
 SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 Iced-Coded <volkogon212@gmail.com>
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
-<!-- Guidelines: https://docs.spacestation14.io/en/getting-started/pr-guideline -->
-<!-- NOTE: All code submitted to this repository is ALWAYS licensed under the AGPL-3.0-or-later license. 
-The REUSE Specification headers or separate .license files indicate a secondary license (e.g., MPL or MIT) solely to facilitate 
-integration for projects that do not use the AGPL license. This secondary license does not replace the fact that AGPL-3.0-or-later remains the primary and binding license. 
-Uncomment and modify the following line if you wish to change the license from the default of AGPL.-->
-<!--- LICENSE: AGPL -->
-## About the PR
-<!-- What did you change? -->
+<!-- Правила (Англійською): https://docs.spacestation14.io/en/getting-started/pr-guideline -->
+<!-- ПРИМІТКА: Увесь код у цьому репозиторії використовує ліцензію AGPL-3.0-or-later.
+Заголовки специфікації REUSE або окремі файли .license вказують на додаткову ліцензію (наприклад MPL або MIT) виключно для того, щоб полегшити інтеграцію для проєктів, що не використовують ліцензію AGPL. Ця додаткова ліцензія не скасовує того факту, що AGPL-3.0-or-later залишається основною та обов'язковою ліцензією.
+Розкоментуйте та змініть наступний рядок, якщо ви бажаєте змінити ліцензію з AGPL. -->
+<!--- ЛІЦЕНЗІЯ: AGPL -->
+## Про запит на злиття
+<!-- Що ви змінили? -->
 
-## Why / Balance
-<!-- Discuss how this would affect game balance or explain why it was changed. Link any relevant discussions or issues. -->
+## Чому / Баланс
+<!-- Опишіть як це змінить ігровий баланс, або поясніть чому ці зміни були внесені. Відмітьте усі пов'язані діалоги або проблеми. -->
 
-## Technical details
-<!-- Summary of code changes for easier review. -->
+## Технічні деталі
+<!-- Опишіть усі технічні зміни. -->
 
-## Media
-<!-- Attach media if the PR makes ingame changes (clothing, items, features, etc).
-Small fixes/refactors are exempt. Media may be used in SS14 progress reports with credit. -->
+## Медіа
+<!-- Прикріпляйте медіа якщо запит на злиття робить геймплейні зміни (одяг, предмети, фічі, тощо).
+Малі фікси або переробки є винятком. -->
 
-## Requirements
-<!-- Confirm the following by placing an X in the brackets [X]: -->
-- [ ] I have read and am following the [Pull Request and Changelog Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
-- [ ] I have added media to this PR or it does not require an ingame showcase.
-<!-- You should understand that not following the above may get your PR closed at maintainer’s discretion -->
+## Вимоги
+<!-- Підтвердіть наступне, записавши X у квадратні дужки [X]: -->
+- [ ] Я прочитав та дотримуюсь [Правил запитів на злиття та журналу змін](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
+- [ ] Я додав медіа, **АБО** цей запит на злиття не потребує медіа.
+<!-- Ви повинні розуміти, що недотримування пунктів вище може бути підставою для закриття вашого запиту. -->
 
-## Breaking changes
-<!-- List any breaking changes, including namespaces, public class/method/field changes, prototype renames; and provide instructions for fixing them.
-This will be posted in #codebase-changes. -->
+## Зміни, що порушують сумісність
+<!-- Перелічте усі зміни, які порушують сумісність (зміни публічних класів, методів, перейменування прототипів, тощо) та надайте інструкції для їх виправлення. -->
 
-**Changelog**
-<!-- Add a Changelog entry to make players aware of new features or changes that could affect gameplay.
-Make sure to read the guidelines and take this Changelog template out of the comment block in order for it to show up.
-Changelog must have a :cl: symbol, so the bot recognizes the changes and adds them to the game's changelog. -->
+**Журнал змін**
+<!-- Додайте запис до журналу змін, аби гравці знали про нові функції або зміни, які впливають на геймплей.
+Обов'язково прочитайте правила та винесіть цей шаблон з блоку коментарів, аби він став видимим.
+Запис обов'язково має містити символ :cl:, аби бот міг розпізнати зміни та автоматично додав їх до гри.
+Прибирати цей коментар не обов'язково, проте, якщо ви хочете аби ваші зміни були у журналі змін - розкоментуйте блок нижче.-->
 <!--
 :cl:
-- add: Added fun!
-- remove: Removed fun!
-- tweak: Changed fun!
-- fix: Fixed fun!
+- add: Додав жарти!
+- remove: Прибрав жарти!
+- tweak: Змінив жарти!
+- fix: Починив жарти!
 -->

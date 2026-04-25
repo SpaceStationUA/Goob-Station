@@ -64,6 +64,7 @@
   frequency: 1337
   color: "#2681a5"
   longRange: true
+  showFrequency: true # Pirate - Handheld Radios port
 
 - type: radioChannel
   id: Command

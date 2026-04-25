@@ -201,6 +201,7 @@
   - type: Tag
     tags:
     - PetWearable
+    - MesonGoggles
     - WhitelistChameleon
 
 - type: entity
@@ -449,6 +450,7 @@
       tags:
       - PetWearable
       - WhitelistChameleon
+      - HudChemistry #omu edit
 
 - type: entity
   parent: [ClothingEyesBase, BaseMajorContraband]

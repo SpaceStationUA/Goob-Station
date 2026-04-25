@@ -44,6 +44,14 @@ public sealed partial class TraumaComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public TraumaType TraumaType;
+
+    #region DOWNSTREAM-TPirates: face mutilation
+    /// <summary>
+    /// Optional marking added by this trauma so it can be removed later by surgery.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public string? MarkingId;
+    #endregion
 }
 
 // The networking on consciousness is rather silly.
@@ -55,4 +63,5 @@ public sealed class TraumaComponentState : ComponentState
     public (BodyPartType, BodyPartSymmetry)? TargetType;
     public FixedPoint2 TraumaSeverity;
     public TraumaType TraumaType;
+    public string? MarkingId; // DOWNSTREAM-TPirates: face mutilation
 }

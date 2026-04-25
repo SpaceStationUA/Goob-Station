@@ -91,17 +91,17 @@ traitor-beeliberationfront-roundend = [color=green]активіст Фронту
 traitor-cybersunindustries-intro = Ви - спеціаліст з Cybersun Industries.
 traitor-cybersunindustries-goal = Не створюйте значної присутності на вказаному об'єкті, оскільки більші інциденти важче приховати.
 traitor-cybersunindustries-allies = Оперативникам Cybersun можна довіряти. Членам організації MI13 можна довіряти. Усім іншим агентам синдикату довіряти не можна.
-traitor-cybersunindustries-uplink = Вам надали інструменти для роботи у вигляді аплінку синдикату, розташованого у вашому КПК.
+traitor-cybersunindustries-uplink = Вам надали інструменти для роботи у вигляді аплінку Синдикату, розташованого у вашому КПК.
 traitor-cybersunindustries-roundend = [color=yellow]спеціаліст з Cybersun Industries[/color]
 traitor-donkcorporation-intro = Ви - диверсант Donk Co.
 traitor-donkcorporation-goal = Ми не схвалюємо безглуздих вбивств невинних робітників; увійшов, зробив, вийшов - ось наш девіз.
 traitor-donkcorporation-allies = Членів Waffle Co. вбивати на місці; їм не дозволено перебувати на станції, поки ми тут.
-traitor-donkcorporation-uplink = Для виконання завдання вам було надано аплінк синдикату, розташований у вашому КПК.
+traitor-donkcorporation-uplink = Для виконання завдання вам було надано аплінк Синдикату, розташований у вашому КПК.
 traitor-donkcorporation-roundend = [color=orange]співробітник Donk Corporation[/color]
 traitor-gorlexmarauders-intro = Ви - Мародер Горлексу.
 traitor-gorlexmarauders-goal = Бути поміченим - не проблема, і ви можете використовувати будь-який рівень озброєння для виконання роботи. Проте, не робіть це недбало, влаштовуючи випадкову різанину.
 traitor-gorlexmarauders-allies = Ви можете співпрацювати з будь-якими друзями коаліції Синдикату, але стежте за тими виродками з Тигрів, якщо вони з'являться.
-traitor-gorlexmarauders-uplink = Для виконання завдання вам було надано аплінк синдикату, розташований у вашому КПК.
+traitor-gorlexmarauders-uplink = Для виконання завдання вам було надано аплінк Синдикату, розташований у вашому КПК.
 traitor-gorlexmarauders-roundend = [color=red]Мародер Горлексу[/color]
 traitor-tigercooperative-intro = Ви - Фанатик Кооперативу Тигрів.
 traitor-tigercooperative-goal = Пам'ятайте вчення Хай-лургіксона; спочатку вбивай, потім став питання!
@@ -118,8 +118,18 @@ traitor-wafflecorporationterrorist-goal = Наші інвестори потре
 traitor-wafflecorporationterrorist-allies = Більшості інших агентів синдикату не можна довіряти, за винятком членів Gorlex Marauders.
 traitor-wafflecorporationterrorist-uplink = Для виконання завдання вам надано доступ до синдикатного аплінку у вашому КПК.
 traitor-wafflecorporationterrorist-roundend = [color=red]терорист з Waffle Corporation[/color]
-traitor-neulithivfederationvisionary-intro = Ви — візіонер Федерації Неулітів
+traitor-neulithivfederationvisionary-intro = Ви — візіонер Федерації Неулітів.
 traitor-neulithivfederationvisionary-goal = Федерація Космічних Чарівників хоче, щоб ми довели, що можемо добре з ними працювати. Приверніть до себе якомога більше уваги, виконуючи своє завдання.
 traitor-neulithivfederationvisionary-allies = Членам Федерації Космічних Чарівників та іншим візіонерам можна довіряти. Довіряти іншим членам Синдикату чи ні — ваш вибір.
 traitor-neulithivfederationvisionary-uplink = Федерація надала вам аплінк у вашому КПК. Використовуйте його з розумом.
 traitor-neulithivfederationvisionary-roundend = [color=violet]візіонер Федерації[/color]
+traitor-postal-intro = Ви пішли в рознос.
+traitor-postal-goal = Підготовку нарешті завершено. Сьогодні той самий день, коли ви підете в рознос. Ви збираєтеся захопити аварійний шатл і почати нове життя без Нанотрейзен.
+traitor-postal-allies = Якщо Синдикат дізнається про ваш план, вас ліквідують і заберуть аплінк. Не ризикуйте.
+traitor-postal-uplink = Вам вдалося поцупити повноцінний аплінк ще місяць тому. Це точно допоможе досягти ваших цілей.
+traitor-postal-roundend = [color=white]просто пішов у повний рознос[/color]
+traitor-evilchampion-intro = Ви - Чемпіон Зла!
+traitor-evilchampion-goal = У вас є кілька планів, нашкрябних на серветці, щоб сьогодні творити ЗЛО. До того ж Чемпіони Зла завжди шукають ще більше морально смердючих лиходіїв. Займіться вербуванням!
+traitor-evilchampion-allies = Кожен, хто бачить, як ви, і відчуває, як ви, може приєднатися до Чемпіонів Зла! Це можуть бути агенти Синдикату, егоїсти або навіть божевільні, головне - мати темне серце
+traitor-evilchampion-uplink = Чемпіони Зла мають добрі зв'язки на чорному ринку. Ваш аплінк видано для максимально злочинних звершень!
+traitor-evilchampion-roundend = [color=red]Чемпіон Зла[/color]

@@ -3,8 +3,6 @@ materials-glass = скло
 materials-reinforced-glass = армоване скло
 materials-plasma-glass = плазмове скло
 materials-reinforced-plasma-glass = армоване плазмове скло
-
-# Метали
 materials-steel = сталь
 materials-gold = золото
 materials-silver = срібло
@@ -32,6 +30,7 @@ materials-raw-quartz = сирий кварц
 materials-raw-gold = сире золото
 materials-raw-silver = сире срібло
 materials-raw-plasma = сира плазма
+materials-raw-titanium = сирий титан
 materials-raw-uranium = сирий уран
 materials-raw-bananium = сирий бананіуміум
 materials-raw-salt = неочищена сіль
@@ -60,3 +59,7 @@ materials-raw-diamond = необроблений діамант
 materials-cotton = бавовна
 
 # Руди
+materials-uranium-glass = уранове скло
+materials-reinforced-uranium-glass = армоване уранове скло
+
+# Metals

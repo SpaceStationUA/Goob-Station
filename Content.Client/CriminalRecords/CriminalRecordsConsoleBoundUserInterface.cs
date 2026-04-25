@@ -50,6 +50,33 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
             SendMessage(new CriminalRecordChangeStatus(status, reason));
         _window.OnStatusFilterPressed += (statusFilter) =>
             SendMessage(new CriminalRecordSetStatusFilter(statusFilter));
+        #region Pirate: records photos
+        _window.OnCreateRecord += name =>
+            SendMessage(new CriminalRecordCreateRecord(name));
+        _window.OnDeleteRecord += id =>
+            SendMessage(new DeleteStationRecord(id));
+        _window.OnIdentityInfoChanged += (species, nationality, employer, age, gender) =>
+            SendMessage(new CriminalRecordEditIdentity(species, nationality, employer, age, gender));
+        _window.OnForensicsInfoChanged += (fingerprint, dna) =>
+            SendMessage(new CriminalRecordEditForensics(fingerprint, dna));
+        _window.OnPrintPhoto += async () =>
+        {
+            try
+            {
+                var message = await _window.BuildPrintPhotoMessage();
+                if (message != null)
+                    SendMessage(message);
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorS("criminal-records", $"Failed to build print photo message: {ex}"); // Pirate: records photos
+            }
+        };
+        _window.OnUploadPhoto += () =>
+            SendMessage(new CriminalRecordUploadPhoto());
+        _window.OnStoreGeneratedPortrait += (recordKey, imageData) =>
+            SendMessage(new CriminalRecordStoreGeneratedPhoto(recordKey, imageData));
+        #endregion
         _window.OnHistoryUpdated += UpdateHistory;
         _window.OnHistoryClosed += () => _historyWindow?.Close();
         _window.OnClose += Close;

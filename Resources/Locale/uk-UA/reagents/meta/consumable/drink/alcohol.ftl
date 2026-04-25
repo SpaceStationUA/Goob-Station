@@ -114,7 +114,7 @@ reagent-name-banana-honk = Банановий Гонк
 reagent-desc-banana-honk = Напій з Клоунського Раю.
 
 reagent-name-barefoot = босоніж
-reagent-desc-barefoot = Боса та вагітна.
+reagent-desc-barefoot = Молочний коктейль із касісу, зроблений з вершків, фруктового соку та вермуту.
 
 reagent-name-beepsky-smash = Удар Біпскі
 reagent-desc-beepsky-smash = Заперечуйте вживання цього напою і готуйтеся до ЗАКОНУ.

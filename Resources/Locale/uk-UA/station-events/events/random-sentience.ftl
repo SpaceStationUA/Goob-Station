@@ -38,3 +38,4 @@ station-event-random-sentience-flavor-kobold = кобольди
 station-event-random-sentience-flavor-slime = слайми
 
 station-event-random-sentience-flavor-inanimate = неживий
+station-event-random-sentience-flavor-scurret = скуррет

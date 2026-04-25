@@ -11,10 +11,10 @@ signal-port-name-off-receiver = Вимкнути
 signal-port-description-off-receiver = Вимикає пристрій.
 
 signal-port-name-forward = Вперед
-signal-port-description-forward = Змушує пристрій (наприклад, конвеєр) працювати в нормальному напрямку.
+signal-port-description-forward = Запускає пристрій (напр., конвеєр) у звичайному напрямку.
 
 signal-port-name-reverse = Назад
-signal-port-description-reverse = Змушує пристрій (наприклад, конвеєр) працювати у зворотному напрямку.
+signal-port-description-reverse = Запускає пристрій (напр., конвеєр) у зворотному напрямку.
 
 signal-port-name-open = Відкрити
 signal-port-description-open = Відкриває пристрій.
@@ -86,3 +86,8 @@ signal-port-description-timer = Запускає зворотний відлік
 signal-port-description-logic-memory-input = Сигнал для завантаження в комірку пам'яті, коли увімкнено.
 signal-port-name-logic-enable = Увімкнути
 signal-port-description-logic-enable = Завантажує вхідний сигнал у комірку пам'яті лише при високому рівні (HIGH).
+
+signal-port-name-trigger-receiver = Тригер
+signal-port-description-trigger-receiver = Запускає якийсь механізм на пристрої.
+signal-port-name-logic-random-input = Вхідний сигнал
+signal-port-description-logic-random-input = Отримує будь-який сигнал, щоб запустити випадковий вихід.

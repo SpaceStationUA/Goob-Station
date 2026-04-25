@@ -31,12 +31,14 @@ public sealed class TagSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private EntityQuery<TagComponent> _tagQuery;
+    private bool _tagQueryInitialized; // Pirate Changes verbs fix
 
     public override void Initialize()
     {
         base.Initialize();
 
         _tagQuery = GetEntityQuery<TagComponent>();
+        _tagQueryInitialized = true; // Pirate Changes verbs fix
 
 #if DEBUG
         SubscribeLocalEvent<TagComponent, ComponentInit>(OnTagInit);
@@ -78,7 +80,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool AddTags(EntityUid entityUid, [ForbidLiteral] params ProtoId<TagPrototype>[] tags)
     {
-        return AddTags(entityUid, (IEnumerable<ProtoId<TagPrototype>>)tags);
+        return AddTags(entityUid, (IEnumerable<ProtoId<TagPrototype>>) tags);
     }
 
     /// <summary>
@@ -123,7 +125,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool TryAddTags(EntityUid entityUid, [ForbidLiteral] params ProtoId<TagPrototype>[] tags)
     {
-        return TryAddTags(entityUid, (IEnumerable<ProtoId<TagPrototype>>)tags);
+        return TryAddTags(entityUid, (IEnumerable<ProtoId<TagPrototype>>) tags);
     }
 
     /// <summary>
@@ -153,6 +155,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasTag(EntityUid entityUid, [ForbidLiteral] ProtoId<TagPrototype> tag)
     {
+        EnsureTagQuery(); // Pirate Changes verbs fix
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasTag(component, tag);
     }
@@ -180,6 +183,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entityUid, [ForbidLiteral] params ProtoId<TagPrototype>[] tags)
     {
+        EnsureTagQuery(); // Pirate Changes verbs fix
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasAllTags(component, tags);
     }
@@ -195,6 +199,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entityUid, [ForbidLiteral] HashSet<ProtoId<TagPrototype>> tags)
     {
+        EnsureTagQuery(); // Pirate Changes verbs fix
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasAllTags(component, tags);
     }
@@ -210,6 +215,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entityUid, [ForbidLiteral] List<ProtoId<TagPrototype>> tags)
     {
+        EnsureTagQuery(); // Pirate Changes verbs fix
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasAllTags(component, tags);
     }
@@ -225,6 +231,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAllTags(EntityUid entityUid, [ForbidLiteral] IEnumerable<ProtoId<TagPrototype>> tags)
     {
+        EnsureTagQuery(); // Pirate Changes verbs fix
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasAllTags(component, tags);
     }
@@ -252,6 +259,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entityUid, [ForbidLiteral] params ProtoId<TagPrototype>[] tags)
     {
+        EnsureTagQuery(); // Pirate Changes verbs fix
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasAnyTag(component, tags);
     }
@@ -267,6 +275,7 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entityUid, [ForbidLiteral] HashSet<ProtoId<TagPrototype>> tags)
     {
+        EnsureTagQuery(); // Pirate Changes verbs fix
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasAnyTag(component, tags);
     }
@@ -282,9 +291,24 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entityUid, [ForbidLiteral] List<ProtoId<TagPrototype>> tags)
     {
+        if (tags == null) // Pirate Changes verbs fix
+            return false; // Pirate Changes verbs fix
+
+        EnsureTagQuery(); // Pirate Changes verbs fix
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasAnyTag(component, tags);
     }
+
+    // Pirate Changes Start verbs fix
+    private void EnsureTagQuery() // Pirate Changes verbs fix
+    {
+        if (_tagQueryInitialized)
+            return;
+
+        _tagQuery = GetEntityQuery<TagComponent>();
+        _tagQueryInitialized = true;
+    }
+    // Pirate Changes End verbs fix
 
     /// <summary>
     /// Checks if any of the given tags have been added to an entity.
@@ -297,6 +321,10 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(EntityUid entityUid, [ForbidLiteral] IEnumerable<ProtoId<TagPrototype>> tags)
     {
+        if (tags == null) // Pirate Changes verbs fix
+            return false; // Pirate Changes verbs fix
+
+        EnsureTagQuery(); // Pirate Changes verbs fix
         return _tagQuery.TryComp(entityUid, out var component) &&
                HasAnyTag(component, tags);
     }
@@ -514,6 +542,9 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(TagComponent component, [ForbidLiteral] List<ProtoId<TagPrototype>> tags)
     {
+        if (tags == null) // Pirate Changes verbs fix
+            return false; // Pirate Changes verbs fix
+
         foreach (var tag in tags)
         {
 #if DEBUG
@@ -537,6 +568,9 @@ public sealed class TagSystem : EntitySystem
     /// </exception>
     public bool HasAnyTag(TagComponent component, [ForbidLiteral] IEnumerable<ProtoId<TagPrototype>> tags)
     {
+        if (tags == null) // Pirate Changes verbs fix
+            return false; // Pirate Changes verbs fix
+
         foreach (var tag in tags)
         {
 #if DEBUG

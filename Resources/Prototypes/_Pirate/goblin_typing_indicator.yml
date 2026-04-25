@@ -1,0 +1,6 @@
+- type: typingIndicator
+  id: goblin
+  spritePath: /Textures/_DV/Effects/speech.rsi
+  typingState: rodentia0
+  idleState: rodentia0
+  offset: 0, 0.125

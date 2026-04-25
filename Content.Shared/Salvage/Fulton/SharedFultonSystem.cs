@@ -158,7 +158,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     private void Unfulton(EntityUid uid, FultonedComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false) || !component.Removeable)
+        if (!Resolve(uid, ref component, false) || !component.Removable)
             return;
 
         RemCompDeferred<FultonedComponent>(uid);
@@ -178,7 +178,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
         fultoned.Beacon = fulton.Beacon;
         fultoned.NextFulton = Timing.CurTime + fulton.FultonDuration;
         fultoned.FultonDuration = fulton.FultonDuration;
-        fultoned.Removeable = fulton.Removeable;
+        fultoned.Removable = fulton.Removable;
         UpdateAppearance(args.Target.Value, fultoned);
         Dirty(args.Target.Value, fultoned);
         Audio.PlayPredicted(fulton.FultonSound, args.Target.Value, args.User);

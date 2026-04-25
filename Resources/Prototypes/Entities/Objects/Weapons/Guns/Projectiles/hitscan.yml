@@ -55,6 +55,7 @@
   damage:
     types:
       Heat: 14
+    armorPenetration: 0.4 # Pirate edit
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
@@ -85,6 +86,7 @@
   damage:
     types:
       Heat: 17
+    armorPenetration: 0.4 # Pirate edit
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
@@ -100,6 +102,7 @@
   damage:
     types:
       Heat: 7
+    armorPenetration: 0.4 # Pirate edit
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
@@ -117,6 +120,7 @@
       Heat: 10
       Radiation: 10
       Ion: 15 #Goobstation
+    armorPenetration: 0.8 # Pirate edit
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_xray
@@ -165,6 +169,7 @@
     types:
       Heat: 45
       Structural: 10
+    armorPenetration: 1 # Pirate edit
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_beam_heavy2

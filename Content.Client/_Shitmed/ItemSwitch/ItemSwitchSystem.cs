@@ -22,7 +22,25 @@ public sealed class ItemSwitchSystem : SharedItemSwitchSystem
         SubscribeLocalEvent<ItemSwitchComponent, AfterAutoHandleStateEvent>(OnChanged);
     }
 
-    private void OnChanged(Entity<ItemSwitchComponent> ent, ref AfterAutoHandleStateEvent args) => UpdateVisuals(ent, ent.Comp.State);
+    private void OnChanged(Entity<ItemSwitchComponent> ent, ref AfterAutoHandleStateEvent args) // Pirate: katana
+    {
+        UpdateVisuals(ent, ent.Comp.State);
+        RaiseReplicatedItemSwitched(ent); // Pirate: katana
+    }
+
+    #region Pirate: katana
+    private void RaiseReplicatedItemSwitched(Entity<ItemSwitchComponent> ent)
+    {
+        var switched = new ItemSwitchedEvent
+        {
+            Predicted = false,
+            State = ent.Comp.State,
+            User = null,
+        };
+
+        RaiseLocalEvent(ent, ref switched);
+    }
+    #endregion Pirate: katana
 
     protected override void UpdateVisuals(Entity<ItemSwitchComponent> ent, string key)
     {

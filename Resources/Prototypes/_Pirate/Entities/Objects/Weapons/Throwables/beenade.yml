@@ -12,8 +12,9 @@
   parent: [BeeGrenade]
   id: BeeGrenadeActivated
   components:
-  - type: ActiveTimerTrigger
-    timeRemaining: 2
+  - type: TriggerOnSpawn
+  - type: TimerTrigger
+    delay: 2
   - type: ScatteringGrenade
     fillPrototype: MobAngryBeeWeak
     capacity: 4 # 20% less bees to prevent spamming

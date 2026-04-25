@@ -14,7 +14,10 @@ ent-CrateMaterialWood = Ящик з деревиною
     .desc = Купа дерев'яних дощок.
 
 ent-CrateMaterialPlasteel = Ящик з пласталлю
-    .desc = 90 аркушів пласталі.
+    .desc = 30 аркушів пласталі.
+
+ent-CrateMaterialPlastitanium = Ящик з пластитаном
+    .desc = 30 аркушів пластитану.
 
 ent-CrateMaterialPlasma = Ящик з твердою плазмою
     .desc = 90 аркушів плазми.

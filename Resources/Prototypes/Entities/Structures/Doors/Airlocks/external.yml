@@ -35,11 +35,13 @@
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/external.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/external.rsi # Pirate changes
   - type: Wires
     layoutId: AirlockExternal
   - type: Paintable
     group: null
+  - type: WeldingSparksAnimation # Goobstation
+    startingOffset: -0.5, 0
 
 - type: entity
   parent: AirlockExternal
@@ -51,7 +53,7 @@
   - type: Occluder
     enabled: false
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/external.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/external.rsi # Pirate changes
   - type: Fixtures
     fixtures:
       fix1:

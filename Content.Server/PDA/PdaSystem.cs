@@ -252,7 +252,12 @@ namespace Content.Server.PDA
 
         private void OnNotification(Entity<PdaComponent> ent, ref CartridgeLoaderNotificationSentEvent args)
         {
-            _ringer.RingerPlayRingtone(ent.Owner);
+            #region Pirate: pda fix
+            /* PDA notification ringtone fix:
+             * only play local ringtone when the cartridge event explicitly requests it. */
+            if (args.PlayRingtone)
+                _ringer.RingerPlayRingtone(ent.Owner);
+            #endregion
 
             if (!_containerSystem.TryGetContainingContainer((ent, null, null), out var container)
                 || !TryComp<ActorComponent>(container.Owner, out var actor))

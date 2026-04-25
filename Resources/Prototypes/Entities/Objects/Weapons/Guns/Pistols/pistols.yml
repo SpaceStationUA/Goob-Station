@@ -203,15 +203,25 @@
   - type: CanTakeAim # PIRATE
 
 - type: entity
-  name: viper
+  name: Viper
   parent: [BaseWeaponPistol, BaseSyndicateContraband]
   id: WeaponPistolViper
-  description: A common handgun illegally modified by the Syndicate. The Viper sports a selector switch between semi-auto and ‘rock and roll’. The standard sidearm for any soldier who fights under the three serpents. Feeds from .35 pistol magazines.
+  description: A sleek machine pistol designed by the Waffle Corporation. Boasting a selector switch that toggles between semi-auto and rock & roll, the Viper punches high above its weight class given its bulk and concealability. Feeds from .35 Auto pistol magazines. # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
-  - type: ItemSlots
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0.03125, 0.15625"
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
     slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
       gun_magazine:
         name: Magazine
         startingItem: MagazinePistol
@@ -230,18 +240,20 @@
         whitelist:
           tags:
             - CartridgePistol
-  - type: ContainerContainer
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
     containers:
+      flashlight: !type:ContainerSlot
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
   - type: StaticPrice
     price: 1000
 
 - type: entity
-  name: echis
+  name: Echis
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: WeaponPistolEchis
-  description: A cyborg-mounted weapon system based on the Viper pistol. Creates ammunition on the fly from an internal fabricator, which slowly self-charges.
+  description: A cyborg-mounted weapon system based on the Viper platform. Creates ammunition on the fly from an internal fabricator, which slowly self-charges. # Goobstation
   components:
   - type: Gun
     fireRate: 5
@@ -258,9 +270,24 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: ContainerContainer
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0.03125, 0.15625"
+  - type: Appearance
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
     containers:
+      flashlight: !type:ContainerSlot
       ballistic-ammo: !type:Container
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
   - type: ProjectileBatteryAmmoProvider
     proto: BulletPistol
     fireCost: 100
@@ -273,10 +300,10 @@
   - type: AmmoCounter
 
 - type: entity
-  name: cobra
+  name: Cobra
   parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
   id: WeaponPistolCobra
-  description: Integrally suppressed semi-automatic pistol used by the Syndicate, firing caseless subsonic rounds. Favored by any agent who likes to keep things quiet and leave no evidence behind. Feeds from 9.5mm pistol magazines.
+  description: An integrally suppressed, semi-automatic pistol that leaves no trace. Being subsonic, the rounds are near silent at the cost of damage. Feeds from 9.5mm pistol magazines. # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
@@ -285,6 +312,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "-0.03125, 0.1875"
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: ChamberMagazineAmmoProvider
@@ -298,8 +327,16 @@
     projectileSpeed: 35 # Goobstation
     availableModes:
     - SemiAuto
-  - type: ItemSlots
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
     slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
       gun_magazine:
         name: Magazine
         startingItem: MagazinePistolCaselessRifle
@@ -317,18 +354,20 @@
         whitelist:
           tags:
             - CartridgeCaselessRifle
-  - type: ContainerContainer
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
     containers:
+      flashlight: !type:ContainerSlot
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
   - type: StaticPrice
     price: 1500
 
 - type: entity
-  name: mk 58
+  name: MK58
   parent: [BaseWeaponPistol, BaseSecurityContraband]
   id: WeaponPistolMk58
-  description: Designed by Nanotrasen’s Small Arms Division, the Mk58 is a conventional semi-automatic pistol with a simple recoil-operated action and excellent reliability. The standard sidearm of Nanotrasen’s station security and emergency response teams. Feeds from .35 pistol magazines.
+  description: A bog standard semi-automatic pistol chambered in thirty-five. Slim, simple, and accurate in the right hands, it's one of NanoTrasen Small Arms' crown jewels and the most common sidearm in the free world. Feeds from .35 Auto pistol magazines. # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
@@ -337,6 +376,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0, 0.15625"
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Gun
@@ -345,12 +386,45 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
+    containers:
+      flashlight: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: N1984
   parent: [BaseWeaponPistol, BaseSecurityContraband]
   id: WeaponPistolN1984
-  description: An exceptionally powerful ‘hand cannon’ designed as part of Nanotrasen's BFG initiative. Chambered in .45, the lord’s caliber, it is generally considered too unwieldy for standard use but has become something of a status symbol among Nanotrasen officials. Feeds from .45 pistol magazines.
+  description: A ridiculously overengineered hand cannon that fires a revolver cartridge. While the firerate is measured in malfunctions per second, it's become a sort of status symbol among the NanoTrasen elite due to its sheer power and gaudy price tag. Feeds from .45 Magnum pistol magazines. # Goobstation
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
@@ -359,6 +433,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0, 0.1875"
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
   - type: Gun
@@ -373,8 +449,16 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg # Goob edit
-  - type: ItemSlots
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
     slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
       gun_magazine:
         name: Magazine
         startingItem: MagazineMagnum
@@ -392,5 +476,11 @@
         whitelist:
           tags:
             - CartridgeMagnum
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
+    containers:
+      flashlight: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: Multishot #Goob
     spreadMultiplier: 30

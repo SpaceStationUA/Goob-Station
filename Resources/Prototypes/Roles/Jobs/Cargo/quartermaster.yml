@@ -142,6 +142,7 @@
     - !type:TraitsRequirement # Pirate
       inverted: true
       traits:
+      - DeafTrait
       - Blindness
       - Narcolepsy
       - Muted
@@ -155,15 +156,6 @@
       employers:
       - NanoTrasen
       - OrionExpress
-    - !type:CharacterLifepathRequirement
-      inverted: true
-      lifepaths:
-      - Cultist
-      - Smuggler
-      - ExCriminal
-      - Enforcer
-      - Hacker
-      - ConArtist
   # Pirate contractor end
   weight: 10
   startingGear: QuartermasterGear
@@ -173,8 +165,8 @@
   antagAdvantage: 75 # Goobstation
   guides: # goobstation
   - Cargo
-  - Quartermaster SOP
-  - Cargo SOP
+  - QuartermasterSOP
+  - CargoSOP
   - Command
   goobcoins: 40 #Goob content
   access:
@@ -202,9 +194,9 @@
     ears: ClothingHeadsetAltCargo # Goobstation
     belt: BoxFolderClipboard
     pocket1: AppraisalTool
-  storage:
-    back:
-    - Flash
+  #storage: # Pirate
+    #back: # Pirate
+    #- Flash # Pirate
     #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit

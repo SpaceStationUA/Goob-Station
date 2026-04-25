@@ -79,6 +79,7 @@ public abstract partial class SharedHandsSystem
         InitializeDrop();
         InitializePickup();
         InitializeRelay();
+        InitializeEventListeners();
 
         SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
@@ -207,6 +208,26 @@ public abstract partial class SharedHandsSystem
         }
 
         return false;
+    }
+
+    /// <summary>
+    ///     Does this entity have any empty hands, and how many?
+    /// </summary>
+    public int GetEmptyHandCount(Entity<HandsComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp, false) || entity.Comp.Count == 0)
+            return 0;
+
+        var hands = 0;
+
+        foreach (var hand in EnumerateHands(entity))
+        {
+            if (!HandIsEmpty(entity, hand))
+                continue;
+            hands++;
+        }
+
+        return hands;
     }
 
     /// <summary>
@@ -495,4 +516,24 @@ public abstract partial class SharedHandsSystem
 
         handsComp.SortedHands.Insert(index, handName);
     }
+
+    #region DOWNSTREAM-TPirates: combat actions
+    /// <summary>
+    /// Attempts to retrieve a held item, preferring the active hand.
+    /// </summary>
+    public bool TryGetHeldItem(Entity<HandsComponent?> entity, [NotNullWhen(true)] out EntityUid? item)
+    {
+        item = null;
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
+
+        foreach (var held in EnumerateHeld(entity))
+        {
+            item = held;
+            return true;
+        }
+
+        return false;
+    }
+    #endregion
 }

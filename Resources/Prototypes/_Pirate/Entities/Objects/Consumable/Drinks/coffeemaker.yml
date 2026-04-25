@@ -1,0 +1,433 @@
+- type: entity
+  id: BlankCoffeeCartridgePirate
+  parent: BaseItem
+  name: blank coffee cartridge
+  description: A blank coffee cartridge for use with the Modello 3 coffeemaker system.
+  components:
+    - type: Sprite
+      sprite: _Pirate/Objects/Consumable/Drinks/coffeemaker_cartridges.rsi
+      layers:
+        - map: ["enum.CoffeeCartridgeVisualLayers.Base"]
+          state: cartridge_blank
+    - type: Icon
+      sprite: _Pirate/Objects/Consumable/Drinks/coffeemaker_cartridges.rsi
+      state: cartridge_blank
+    - type: Item
+      sprite: _Pirate/Objects/Consumable/Drinks/coffeemaker_cartridges.rsi
+      size: Tiny
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.CoffeeCartridgeVisuals.Variant:
+          enum.CoffeeCartridgeVisualLayers.Base:
+            Basic: { state: cartridge_basic }
+            Blend: { state: cartridge_blend }
+            BlueMountain: { state: cartridge_blue_mtn }
+            Kilimanjaro: { state: cartridge_kilimanjaro }
+            Mocha: { state: cartridge_mocha }
+            Decaf: { state: cartridge_decaf }
+            Bootleg: { state: cartridge_bootleg }
+            Blank: { state: cartridge_blank }
+    - type: StaticPrice
+      price: 0.01
+
+- type: entity
+  id: CoffeeCartridgePirate
+  parent: BlankCoffeeCartridgePirate
+  name: coffeemaker cartridge - Caffe Generico
+  description: A coffee cartridge manufactured for use with the Modello 3 coffeemaker system.
+  components:
+    - type: CoffeeCartridge
+      charges: 5
+      variant: Basic
+      brewReagent: Coffee
+      brewAmount: 120
+      extraReagents:
+        - ReagentId: Ephedrine
+          Quantity: 4
+    - type: Icon
+      state: cartridge_basic
+
+- type: entity
+  id: CoffeeCartridgeFancyPirate
+  parent: CoffeeCartridgePirate
+  name: coffeemaker cartridge - Caffe Fantasioso
+  description: A fancy coffee cartridge manufactured for use with the Modello 3 coffeemaker system.
+  components:
+    - type: CoffeeCartridge
+      brewReagent: Coffee
+      brewAmount: 120
+      extraReagents:
+        - ReagentId: Tricordrazine
+          Quantity: 2
+        - ReagentId: Ephedrine
+          Quantity: 2
+      variant: Blend
+      fancyVariants:
+        - variant: Blend
+          name: coffeemaker cartridge - Miscela di Piccione
+        - variant: BlueMountain
+          name: coffeemaker cartridge - Montagna Blu
+        - variant: Kilimanjaro
+          name: coffeemaker cartridge - Kilimangiaro
+
+- type: entity
+  id: CoffeeCartridgeDecafPirate
+  parent: CoffeeCartridgePirate
+  name: coffeemaker cartridge - Caffe Decaffeinato
+  description: A cartridge with decaf coffee for use with the Modello 3 coffeemaker system.
+  components:
+    - type: CoffeeCartridge
+      variant: Decaf
+    - type: Icon
+      state: cartridge_decaf
+
+- type: entity
+  id: CoffeeCartridgeBootlegPirate
+  parent: CoffeeCartridgePirate
+  name: coffeemaker cartridge - Botany blend
+  description: A jury-rigged cartridge. It works, but probably voids the warranty.
+  components:
+    - type: CoffeeCartridge
+      brewReagent: Coffee
+      brewAmount: 120
+      extraReagents:
+        - ReagentId: Omnizine
+          Quantity: 2
+        - ReagentId: Ephedrine
+          Quantity: 2
+      variant: Bootleg
+    - type: Icon
+      state: cartridge_bootleg
+
+- type: entity
+  id: CoffeeCartridgeSyntheticPirate
+  parent: CoffeeCartridgePirate
+  name: coffeemaker cartridge - Caffe Sintetico
+  description: A synthetic coffee cartridge for use with the Modello 3 coffeemaker system.
+  components:
+    - type: CoffeeCartridge
+      brewReagent: SyntheticCoffee
+      brewAmount: 120
+      extraReagents:
+        - ReagentId: Inaprovaline
+          Quantity: 2
+        - ReagentId: Ephedrine
+          Quantity: 2
+      variant: Mocha
+    - type: Icon
+      state: cartridge_mocha
+
+- type: entity
+  id: DrinkCoffeepotPirate
+  parent: DrinkBaseCup
+  name: coffeepot
+  description: A large pot for dispensing coffee. Contains four standard cups.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 120
+    - type: SolutionTransfer
+      canChangeTransferAmount: true
+      maxTransferAmount: 30
+    - type: Sprite
+      sprite: _Pirate/Objects/Consumable/Drinks/coffeepot.rsi
+      state: coffeepot_empty
+      layers:
+        - state: coffeepot_empty
+        - map: ["enum.SolutionContainerLayers.Fill"]
+          state: coffeepot_fill_1
+          visible: false
+    - type: Icon
+      sprite: _Pirate/Objects/Consumable/Drinks/coffeepot.rsi
+      state: coffeepot_empty
+    - type: Item
+      sprite: _Pirate/Objects/Consumable/Drinks/coffeepot.rsi
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 7
+      fillBaseName: coffeepot_fill_
+      changeColor: true
+    - type: Coffeepot
+
+- type: entity
+  id: DrinkCoffeeCupPirate
+  parent: DrinkBaseCup
+  name: coffee cup
+  description: A heat-formed plastic coffee cup.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 30
+    - type: SolutionTransfer
+      canChangeTransferAmount: true
+      maxTransferAmount: 10
+    - type: Openable
+      closeable: true
+      openableByHand: false
+      sound: null
+      closeSound: null
+    - type: EmitSoundOnPickup
+      sound: null
+    - type: EmitSoundOnDrop
+      sound: null
+    - type: Sprite
+      sprite: _Pirate/Objects/Consumable/Drinks/coffeemaker_drinks.rsi
+      layers:
+        - map: ["coffee_cup_base"]
+          state: coffee
+    - type: Icon
+      sprite: _Pirate/Objects/Consumable/Drinks/coffeemaker_drinks.rsi
+      state: coffee
+    - type: Item
+      sprite: _Pirate/Objects/Consumable/Drinks/coffeemaker_drinks.rsi
+    - type: Appearance
+    - type: DrinkableThroughLid
+    - type: CoffeeCupVisuals
+    - type: SolutionContainerVisuals
+      maxFillLevels: 1
+      fillBaseName: coffee_full_
+      changeColor: false
+      emptySpriteName: coffee_empty
+    - type: TrashOnSolutionEmpty
+      solution: drink
+
+- type: entity
+  id: FoodCoffeeBeansPirate
+  parent: BaseItem
+  name: arabica coffee beans
+  description: Dry coffee beans for impressa coffeemakers.
+  components:
+    - type: Sprite
+      sprite: _Pirate/Objects/Specific/Hydroponics/coffee_beans.rsi
+      state: coffee_arabica
+    - type: Icon
+      sprite: _Pirate/Objects/Specific/Hydroponics/coffee_beans.rsi
+      state: coffee_arabica
+    - type: Item
+      sprite: _Pirate/Objects/Specific/Hydroponics/coffee_beans.rsi
+      size: Tiny
+    - type: CoffeeBean
+      brewReagent: Coffee
+      extraReagents:
+        - ReagentId: Tricordrazine
+          Quantity: 4
+        - ReagentId: Ephedrine
+          Quantity: 4
+
+- type: entity
+  id: FoodCoffeeBeansRobustaPirate
+  parent: FoodCoffeeBeansPirate
+  name: robusta coffee beans
+  components:
+    - type: Sprite
+      state: coffee_robusta
+    - type: Icon
+      state: coffee_robusta
+    - type: CoffeeBean
+      extraReagents:
+        - ReagentId: Ephedrine
+          Quantity: 8
+
+- type: entity
+  id: FoodCoffeeBeansSynthetic
+  parent: FoodCoffeeBeansPirate
+  name: synthetic coffee beans
+  components:
+    - type: Sprite
+      state: coffee_synthetic
+    - type: Icon
+      state: coffee_synthetic
+    - type: CoffeeBean
+      brewReagent: SyntheticCoffee
+      extraReagents:
+        - ReagentId: Inaprovaline
+          Quantity: 4
+        - ReagentId: Ephedrine
+          Quantity: 4
+
+- type: entity
+  id: FoodCoffeeBeansStenophylla
+  parent: FoodCoffeeBeansPirate
+  name: stenophylla coffee beans
+  components:
+    - type: Sprite
+      state: coffee_stenophylla
+    - type: Icon
+      state: coffee_stenophylla
+    - type: CoffeeBean
+      extraReagents:
+        - ReagentId: Omnizine
+          Quantity: 4
+        - ReagentId: Ephedrine
+          Quantity: 4
+
+- type: entity
+  id: FoodCoffeeBeans
+  parent: FoodCoffeeBeansPirate
+
+- type: entity
+  id: FoodCoffeeBeansRobusta
+  parent: FoodCoffeeBeansRobustaPirate
+
+- type: entity
+  id: FoodCondimentPacketCreamerPirate
+  parent: BaseFoodCondimentPacket
+  name: creamer packet
+  description: A tiny packet of coffee creamer.
+  components:
+    - type: Tag
+      tags:
+        - CoffeeCondimentCreamerPirate
+    - type: SolutionTransfer
+      maxTransferAmount: 5
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 5
+          reagents:
+            - ReagentId: Cream
+              Quantity: 5
+    - type: Sprite
+      layers:
+        - state: packet-solid-2
+          map: ["enum.SolutionContainerLayers.Fill"]
+          visible: true
+        - state: packet-layer
+          map: ["enum.OpenableVisuals.Layer"]
+        - state: packet-label
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 2
+      fillBaseName: packet-solid-
+
+- type: entity
+  id: FoodCondimentPacketSugarPirate
+  parent: BaseFoodCondimentPacket
+  name: sugar packet
+  description: Tasty spacey sugar!
+  components:
+    - type: Tag
+      tags:
+        - CoffeeCondimentSugarPirate
+    - type: SolutionTransfer
+      maxTransferAmount: 5
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 5
+          reagents:
+            - ReagentId: Sugar
+              Quantity: 5
+    - type: Sprite
+      layers:
+        - state: packet-solid-2
+          map: ["enum.SolutionContainerLayers.Fill"]
+          visible: true
+        - state: packet-layer
+          map: ["enum.OpenableVisuals.Layer"]
+        - state: packet-label
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 2
+      fillBaseName: packet-solid-
+
+- type: entity
+  id: FoodCondimentPacketAstrotamePirate
+  parent: BaseFoodCondimentPacket
+  name: astrotame packet
+  description: The sweetness of a thousand sugars, but none of the calories.
+  components:
+    - type: Tag
+      tags:
+        - CoffeeCondimentSweetenerPirate
+    - type: SolutionTransfer
+      maxTransferAmount: 5
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 5
+          reagents:
+            - ReagentId: Astrotame
+              Quantity: 5
+    - type: Sprite
+      layers:
+        - state: packet-trans-2
+          map: ["enum.SolutionContainerLayers.Fill"]
+          visible: true
+        - state: packet-layer
+          map: ["enum.OpenableVisuals.Layer"]
+        - state: packet-label-a
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 2
+      fillBaseName: packet-trans-
+
+- type: entity
+  id: DrinkCreamCartonPirate
+  parent: DrinkCreamCarton
+  name: cream carton
+  description: A compact cream carton for coffee stations.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 100
+          reagents:
+            - ReagentId: Cream
+              Quantity: 100
+
+- type: entity
+  id: DrinkSugarBottlePirate
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  name: sugar bottle
+  description: A smaller sugar bottle used for coffee stations.
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 100
+          reagents:
+            - ReagentId: Sugar
+              Quantity: 100
+    - type: Drink
+    - type: Label
+      currentLabel: reagent-name-sugar
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/generic_jug.rsi
+
+- type: entity
+  id: FoodCondimentPacketChocolatePirate
+  parent: BaseFoodCondimentPacket
+  name: chocolate packet
+  description: A tiny packet of cocoa powder for coffee.
+  components:
+    - type: Tag
+      tags:
+        - CoffeeCondimentChocolatePirate
+    - type: SolutionTransfer
+      maxTransferAmount: 5
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 5
+          reagents:
+            - ReagentId: CocoaPowder
+              Quantity: 5
+    - type: Sprite
+      layers:
+        - state: packet-solid-2
+          map: ["enum.SolutionContainerLayers.Fill"]
+          visible: true
+        - state: packet-layer
+          map: ["enum.OpenableVisuals.Layer"]
+        - state: packet-label
+          color: "#5a3728"
+    - type: Icon
+      state: packet-mixed
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 2
+      fillBaseName: packet-solid-

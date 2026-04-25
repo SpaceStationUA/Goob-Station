@@ -1,11 +1,4 @@
-- type: entity
-  parent: Paper
-  id: PrintedDocument
-  abstract: true
-  description: Bureaucratic unit. A document printed on a printer.
-  components:
-    - type: Paper
-
+# Зовнішня бюрократія
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentReportStation
@@ -16,123 +9,27 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentReportOnEliminationOfViolations
-  name: Report on elimination of violations
+  id: PrintedDocumentAppealToCentCom
+  name: "Лист для Центрального Командування"
   components:
     - type: Paper
-      content: doc-text-printer-report-on-elimination-of-violations
+      content: doc-text-printer-appeal-to-centcom
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentReportDepartment
-  name: Report on the work of the department
+  id: PrintedDocumentRequestCallMembersCentralCommittee
+  name: "Запит на виклик членів Центрального Комітету"
   components:
     - type: Paper
-      content: doc-text-printer-report-department
+      content: doc-text-printer-request-call-members-central-committee
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentReportEmployeePerformance
-  name: Report on employee performance
+  id: PrintedDocumentRequestRequestToEstablishThreatLevel
+  name: Request to establish threat level
   components:
     - type: Paper
-      content: doc-text-printer-report-employee-performance
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentReportOnTheChaptersMeeting
-  name: Report on chapter meeting
-  components:
-    - type: Paper
-      content: doc-text-printer-report-on-the-chapters-meeting
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentInternalAffairsAgentsReport
-  name: Internal Investigation Report
-  components:
-    - type: Paper
-      content: doc-text-printer-internal-affairs-agents-report
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentConditionReport
-  name: Report on technical condition
-  components:
-    - type: Paper
-      content: doc-text-printer-condition-report
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentReportStudyObject
-  name: Report on object Investigation
-  components:
-    - type: Paper
-      content: doc-text-printer-report-study-object
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentExperimentReport
-  name: Experiment report
-  components:
-    - type: Paper
-      content: doc-text-printer-experiment-report
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentDisposalReport
-  name: Disposal report
-  components:
-    - type: Paper
-      content: doc-text-printer-disposal-report
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentApplicationAppointmentInterim
-  name: Statement of Appointment to the Temporary Acting Authority
-  components:
-    - type: Paper
-      content: doc-text-printer-application-appointment-interim
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentApplicationEmployment
-  name: Statement of Employment
-  components:
-    - type: Paper
-      content: doc-text-printer-application-employment
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentLetterResignation
-  name: Statement of Dismissal
-  components:
-    - type: Paper
-      content: doc-text-printer-letter-resignation
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentApplicationAccess
-  name: Statement of access
-  components:
-    - type: Paper
-      content: doc-text-printer-application-access
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentApplicationEquipment
-  name: Statement for equipment
-  components:
-    - type: Paper
-      content: doc-text-printer-application-equipment
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentAppeal
-  name: Appeal
-  components:
-    - type: Paper
-      content: doc-text-printer-appeal
+      content: doc-text-printer-request-to-establish-threat-level
 
 - type: entity
   parent: PrintedDocument
@@ -152,20 +49,136 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentRequestCallMembersCentralCommitteeDSO
-  name: Request to call members of CC, DSO
+  id: PrintedDocumentERTRequest
+  name: "Запит на виклик ГШР"
   components:
     - type: Paper
-      content: doc-text-printer-request-call-members-central-committee-dso
+      content: doc-text-printer-ert-request
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentRequestRequestToEstablishThreatLevel
-  name: Request to establish threat level
+  id: PrintedDocumentCBURNRequest
+  name: "Запит на виклик РХБЗ"
   components:
     - type: Paper
-      content: doc-text-printer-request-to-establish-threat-level
+      content: doc-text-printer-cburn-request
+# Кінець Зовнішня бюрократія
 
+# Медична бюрократія
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestEuthanasia
+  name: Request for euthanasia
+  components:
+    - type: Paper
+      content: doc-text-printer-request-euthanasia
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentOrderMedicalIntervention
+  name: Order for medical intervention
+  components:
+    - type: Paper
+      content: doc-text-printer-order-medical-intervention
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportDepartmentMed
+  name: "Звіт про роботу Медичного відділу"
+  components:
+    - type: Paper
+      content: doc-text-printer-report-department-med
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentDeathCertificate
+  name: Death certificate
+  components:
+    - type: Paper
+      content: doc-text-printer-death-certificate
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPermissionDisposeBody
+  name: Authorization to dispose of the body
+  components:
+    - type: Paper
+      content: doc-text-printer-permission-dispose-body
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPrescriptionDrugAuthorization
+  name: Prescription Drug Authorization
+  components:
+    - type: Paper
+      content: doc-text-printer-prescription-drug-authorization
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentStatementHealth
+  name: Health report
+  components:
+    - type: Paper
+      content: doc-text-printer-statement-health
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentMedRequest
+  name: "Замовлення на поповнення медикаментів"
+  components:
+    - type: Paper
+      content: doc-text-printer-med-request
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentMedChemicalRequest
+  name: "Замовлення хімічних речовин"
+  components:
+    - type: Paper
+      content: doc-text-printer-med-chemical-request
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentCloningReport
+  name: "Звіт клонування"
+  components:
+    - type: Paper
+      content: doc-text-printer-cloning-report
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestMentalHealth
+  name: "Запит на примусове психічне лікування"
+  components:
+    - type: Paper
+      content: doc-text-printer-request-mental-health
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRecomendMentalHealth
+  name: "Рекомендація до проходження психологічного лікування"
+  components:
+    - type: Paper
+      content: doc-text-printer-recomend-mental-health
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPsychologist
+  name: "Документ від психолога"
+  components:
+    - type: Paper
+      content: doc-text-printer-psychologist
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentNotes
+  name: "Довідка"
+  components:
+    - type: Paper
+      content: doc-text-printer-notes
+# Кінець Медична бюрократія
+
+#Загальна бюрократія
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentRequestChangeSalary
@@ -192,20 +205,134 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentRequestDocuments
-  name: Request for the provision of documents
+  id: PrintedDocumentOrderDeprivationAccess
+  name: Denial of access order
   components:
     - type: Paper
-      content: doc-text-printer-request-documents
+      content: doc-text-printer-order-deprivation-access
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentRequestEuthanasia
-  name: Request for euthanasia
+  id: PrintedDocumentOrderEncouragement
+  name: Incentive order
   components:
     - type: Paper
-      content: doc-text-printer-request-euthanasia
+      content: doc-text-printer-order-encouragement
 
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentOrderDismissal
+  name: Dismissal order
+  components:
+    - type: Paper
+      content: doc-text-printer-order-dismissal
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportEmployeePerformance
+  name: Report on employee performance
+  components:
+    - type: Paper
+      content: doc-text-printer-report-employee-performance
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentApplicationAccess
+  name: Statement of access
+  components:
+    - type: Paper
+      content: doc-text-printer-application-access
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentApplicationEquipment
+  name: Statement for equipment
+  components:
+    - type: Paper
+      content: doc-text-printer-application-equipment
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentLetterResignation
+  name: Statement of Dismissal
+  components:
+    - type: Paper
+      content: doc-text-printer-letter-resignation
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentApplicationEmployment
+  name: Statement of Employment
+  components:
+    - type: Paper
+      content: doc-text-printer-application-employment
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentCertificateAdvancedTraining
+  name: Certificate of advanced training
+  components:
+    - type: Paper
+      content: doc-text-printer-certificate-advanced-training
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentDivorceCertificate
+  name: Certificate of divorce
+  components:
+    - type: Paper
+      content: doc-text-printer-divorce-certificate
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentMarriageCertificate
+  name: Marriage certificate
+  components:
+    - type: Paper
+      content: doc-text-printer-marriage-certificate
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentCertificate
+  name: Certificate
+  components:
+    - type: Paper
+      content: doc-text-printer-certificate
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPermissionToTravelInCaseOfThreat
+  name: Permission to travel in case of threat
+  components:
+    - type: Paper
+      content: doc-text-printer-permission-to-travel-in-case-of-threat
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPermissionEquipment
+  name: Authorization to use equipment
+  components:
+    - type: Paper
+      content: doc-text-printer-permission-equipment
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPromotionOrder
+  name: "Наказ про підвищення"
+  components:
+    - type: Paper
+      content: doc-text-printer-promotion-order
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentTemporaryPermit
+  name: "Дозвіл на тимчасове перебування на станції"
+  components:
+    - type: Paper
+      content: doc-text-printer-temporary-permit
+# Кінець Загальна бюрократія
+
+# Інженерна бюрократія
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentRequestConstructionWork
@@ -221,6 +348,48 @@
   components:
     - type: Paper
       content: doc-text-printer-request-modernization
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentConditionReport
+  name: Report on technical condition
+  components:
+    - type: Paper
+      content: doc-text-printer-condition-report
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportDepartmentEng
+  name: "Звіт про роботу Інженерного відділу"
+  components:
+    - type: Paper
+      content: doc-text-printer-report-department-eng
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentConstructionPermit
+  name: Building permit
+  components:
+    - type: Paper
+      content: doc-text-printer-construction-permit
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentShipBuild
+  name: "Дозвіл на будівництво шатлу"
+  components:
+    - type: Paper
+      content: doc-text-printer-ship-build
+# Кінець Інженерна бюрократія
+
+# Юридична бюрократія
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestDocuments
+  name: Request for the provision of documents
+  components:
+    - type: Paper
+      content: doc-text-printer-request-documents
 
 - type: entity
   parent: PrintedDocument
@@ -240,19 +409,77 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPermissionEquipment
-  name: Authorization to use equipment
+  id: PrintedDocumentJudgment
+  name: Judgment
   components:
     - type: Paper
-      content: doc-text-printer-permission-equipment
+      content: doc-text-printer-judgment
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPermissionToTravelInCaseOfThreat
-  name: Permission to travel in case of threat
+  id: PrintedDocumentSentence
+  name: Sentence
   components:
     - type: Paper
-      content: doc-text-printer-permission-to-travel-in-case-of-threat
+      content: doc-text-printer-sentence
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentDecisionToStartTrial
+  name: Decision to start a trial
+  components:
+    - type: Paper
+      content: doc-text-printer-decision-to-start-trial
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentComplaintDirector
+  name: "Скарга на керівника"
+  components:
+    - type: Paper
+      content: doc-text-printer-complaint-director
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentComplaintEmploye
+  name: "Скарга на працівника"
+  components:
+    - type: Paper
+      content: doc-text-printer-complaint-employe
+# Кінець Юридична бюрократія
+
+# Охоронна бюрократія
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentOrderParolePrisoner
+  name: Prisoner parole order
+  components:
+    - type: Paper
+      content: doc-text-printer-order-parole-prisoner
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentInternalAffairsAgentsReport
+  name: Internal Investigation Report
+  components:
+    - type: Paper
+      content: doc-text-printer-internal-affairs-agents-report
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportDepartmentSec
+  name: "Звіт про роботу відділу Служби Безпеки"
+  components:
+    - type: Paper
+      content: doc-text-printer-report-department-sec
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentCertificateOffense
+  name: Certificate of Offense
+  components:
+    - type: Paper
+      content: doc-text-printer-certificate-offense
 
 - type: entity
   parent: PrintedDocument
@@ -272,68 +499,38 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPrescriptionDrugAuthorization
-  name: Prescription Drug Authorization
+  id: PrintedDocumentClosingIndictment
+  name: Indictment
   components:
     - type: Paper
-      content: doc-text-printer-prescription-drug-authorization
+      content: doc-text-printer-closing-indictment
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPermissionDisposeBody
-  name: Authorization to dispose of the body
+  id: PrintedDocumentRequestHearing
+  name: "Заява на проведення суду"
   components:
     - type: Paper
-      content: doc-text-printer-permission-dispose-body
+      content: doc-text-printer-request-hearing
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentConstructionPermit
-  name: Building permit
+  id: PrintedDocumentRequestExecution
+  name: "Запит на страту"
   components:
     - type: Paper
-      content: doc-text-printer-construction-permit
+      content: doc-text-printer-request-execution
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentPermissionToExtendMarriage
-  name: Permission to extend marriage
+  id: PrintedDocumentRequestSecurity
+  name: "Наказ на охорону"
   components:
     - type: Paper
-      content: doc-text-printer-permission-to-extend-marriage
+      content: doc-text-printer-request-security
+# Кінець Охоронна бюрократія
 
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentOrderDismissal
-  name: Dismissal order
-  components:
-    - type: Paper
-      content: doc-text-printer-order-dismissal
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentOrderDeprivationAccess
-  name: Denial of access order
-  components:
-    - type: Paper
-      content: doc-text-printer-order-deprivation-access
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentOrderEncouragement
-  name: Incentive order
-  components:
-    - type: Paper
-      content: doc-text-printer-order-encouragement
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentOrderParolePrisoner
-  name: Prisoner parole order
-  components:
-    - type: Paper
-      content: doc-text-printer-order-parole-prisoner
-
+# Дослідницька бюрократія
 - type: entity
   parent: PrintedDocument
   id: PrintedDocumentOrderRecognizingSentienceCreature
@@ -341,22 +538,55 @@
   components:
     - type: Paper
       content: doc-text-printer-order-recognizing-sentience-creature
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentExperimentReport
+  name: Experiment report
+  components:
+    - type: Paper
+      content: doc-text-printer-experiment-report
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentOrderMedicalIntervention
-  name: Order for medical intervention
+  id: PrintedDocumentReportDepartmentRes
+  name: "Звіт про роботу Дослідницького відділу"
   components:
     - type: Paper
-      content: doc-text-printer-order-medical-intervention
+      content: doc-text-printer-report-department-res
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentProductManufacturingOrder
-  name: Order for the production of a product
+  id: PrintedDocumentRequestCyborgization
+  name: "Запит на кіборгізацію"
   components:
     - type: Paper
-      content: doc-text-printer-product-manufacturing-order
+      content: doc-text-printer-request-cyborgization
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentProductionOrder
+  name: "Замовлення на виробництво"
+  components:
+    - type: Paper
+      content: doc-text-printer-production-order
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentArtifactReport
+  name: "Звіт про артефакт"
+  components:
+    - type: Paper
+      content: doc-text-printer-artifact-report
+# Кінець Дослідницька бюрократія
+
+# Логістична бюрократія
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentOrderingSpecialEquipment
+  name: Ordering special equipment
+  components:
+    - type: Paper
+      content: doc-text-printer-ordering-special-equipment
 
 - type: entity
   parent: PrintedDocument
@@ -368,11 +598,11 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentOrderingSpecialEquipment
-  name: Ordering special equipment
+  id: PrintedDocumentProductManufacturingOrder
+  name: Order for the production of a product
   components:
     - type: Paper
-      content: doc-text-printer-ordering-special-equipment
+      content: doc-text-printer-product-manufacturing-order
 
 - type: entity
   parent: PrintedDocument
@@ -384,91 +614,88 @@
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentCertificate
-  name: Certificate
+  id: PrintedDocumentReportDepartmentLog
+  name: "Звіт про роботу Логістичного відділу"
   components:
     - type: Paper
-      content: doc-text-printer-certificate
+      content: doc-text-printer-report-department-log
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentCertificateAdvancedTraining
-  name: Certificate of advanced training
+  id: PrintedDocumentDisposalReport
+  name: Disposal report
   components:
     - type: Paper
-      content: doc-text-printer-certificate-advanced-training
+      content: doc-text-printer-disposal-report
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentCertificateOffense
-  name: Certificate of Offense
+  id: PrintedDocumentRequestShipping
+  name: "Заява на доставлення вантажу"
   components:
     - type: Paper
-      content: doc-text-printer-certificate-offense
+      content: doc-text-printer-request-shipping
+# Кінець Логістична бюрократія
+
+# Вища бюрократія
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentReportOnTheChaptersMeeting
+  name: Report on chapter meeting
+  components:
+    - type: Paper
+      content: doc-text-printer-report-on-the-chapters-meeting
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentDeathCertificate
-  name: Death certificate
+  id: PrintedDocumentApplicationAppointmentInterim
+  name: Statement of Appointment to the Temporary Acting Authority
   components:
     - type: Paper
-      content: doc-text-printer-death-certificate
+      content: doc-text-printer-application-appointment-interim
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentMarriageCertificate
-  name: Marriage certificate
+  id: PrintedDocumentOrderToDismissDirector
+  name: "Наказ про звільнення керівника"
   components:
     - type: Paper
-      content: doc-text-printer-marriage-certificate
+      content: doc-text-printer-order-to-dismiss-director
+# Кінець Вища бюрократія
+
+- type: entity
+  parent: Paper
+  id: PrintedDocument
+  abstract: true
+  description: Bureaucratic unit. A document printed on a printer.
+  components:
+    - type: Paper
+
+# ???
+# - type: entity
+#   parent: PrintedDocument
+#   id: PrintedDocumentReportOnEliminationOfViolations
+#   name: "Звіт про усунення порушень"
+#   components:
+#     - type: Paper
+#       content: doc-text-printer-report-on-elimination-of-violations
+
+# - type: entity
+#   parent: PrintedDocument
+#   id: PrintedDocumentPermissionToExtendMarriage
+#   name: "Дозвіл на продовження шлюбу"
+#   components:
+#     - type: Paper
+#       content: doc-text-printer-permission-to-extend-marriage
+#
 
 - type: entity
   parent: PrintedDocument
-  id: PrintedDocumentDivorceCertificate
-  name: Certificate of divorce
+  id: PrintedDocumentReportStudyObject
+  name: Report on object Investigation
   components:
     - type: Paper
-      content: doc-text-printer-divorce-certificate
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentClosingIndictment
-  name: Indictment
-  components:
-    - type: Paper
-      content: doc-text-printer-closing-indictment
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentSentence
-  name: Sentence
-  components:
-    - type: Paper
-      content: doc-text-printer-sentence
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentJudgment
-  name: Judgment
-  components:
-    - type: Paper
-      content: doc-text-printer-judgment
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentStatementHealth
-  name: Health report
-  components:
-    - type: Paper
-      content: doc-text-printer-statement-health
-
-- type: entity
-  parent: PrintedDocument
-  id: PrintedDocumentDecisionToStartTrial
-  name: Decision to start a trial
-  components:
-    - type: Paper
-      content: doc-text-printer-decision-to-start-trial
+      content: doc-text-printer-report-study-object
 
 - type: entity
   parent: PrintedDocument

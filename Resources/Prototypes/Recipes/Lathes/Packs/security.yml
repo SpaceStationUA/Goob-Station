@@ -140,8 +140,8 @@
   - MagazineShotgunIncendiary
   - SpeedLoaderMagnumIncendiary
   - SpeedLoaderMagnumUranium
-  - MagazinePistolMindbreaker # PIRATE psionic
-  - MagazineBoxPistolMindbreaker # PIRATE psionic
+  - MagazinePistolCryptobiolin # PIRATE psionic
+  - MagazineBoxPistolCryptobiolin # PIRATE psionic
   - ShellSoulbreaker # PIRATE psionic
   - BoxShellSoulbreaker # PIRATE psionic
 

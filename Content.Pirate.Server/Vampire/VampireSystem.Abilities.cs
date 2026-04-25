@@ -25,6 +25,7 @@ using Content.Shared.Popups;
 using Content.Shared.Polymorph;
 using Content.Shared.Prying.Components;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Storage.Components;
 //using Content.Shared.Store.Events;
 using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
@@ -362,7 +363,7 @@ public sealed partial class VampireSystem
 
             if (HasComp<HumanoidAppearanceComponent>(entity))
             {
-                _stun.TryParalyze(entity, duration ?? TimeSpan.FromSeconds(3), false);
+                _stun.TryAddParalyzeDuration(entity, duration ?? TimeSpan.FromSeconds(3));
                 _chat.TryEmoteWithoutChat(entity, _prototypeManager.Index<EmotePrototype>(VampireComponent.ScreamEmoteProto), true);
             }
 
@@ -383,14 +384,14 @@ public sealed partial class VampireSystem
 
         if (HasComp<BibleUserComponent>(target))
         {
-            _stun.TryParalyze(vampire, duration ?? TimeSpan.FromSeconds(3), true);
+            _stun.TryUpdateParalyzeDuration(vampire, duration ?? TimeSpan.FromSeconds(3));
             _chat.TryEmoteWithoutChat(vampire.Owner, _prototypeManager.Index<EmotePrototype>(VampireComponent.ScreamEmoteProto), true);
             if (damage != null)
                 _damageableSystem.TryChangeDamage(vampire.Owner, damage);
             return;
         }
 
-        _stun.TryParalyze(target.Value, duration ?? TimeSpan.FromSeconds(3), true);
+        _stun.TryUpdateParalyzeDuration(target.Value, duration ?? TimeSpan.FromSeconds(3));
     }
     private void PolymorphSelf(Entity<VampireComponent> vampire, string? polymorphTarget)
     {
@@ -462,7 +463,7 @@ public sealed partial class VampireSystem
                 //Dont check this time, if we are full - just continue anyway
                 TryIngestBlood(vampire, bloodSolution);
 
-                AddBloodEssence(vampire, volumeToConsume * 2);
+                AddBloodEssence(vampire, volumeToConsume);
 
                 _beam.TryCreateBeam(vampire, entity, "VampireLightning");
 
@@ -868,7 +869,7 @@ public sealed partial class VampireSystem
         if (!_interaction.InRangeUnobstructed(vampire.Owner, target, popup: true))
             return false;
 
-        if (_food.IsMouthBlocked(target, vampire))
+        if (!_ingestion.HasMouthAvailable(vampire.Owner, target))
             return false;
 
         if (_rotting.IsRotten(target))
@@ -902,7 +903,7 @@ public sealed partial class VampireSystem
         if (!HasComp<VampireFangsExtendedComponent>(entity))
             return;
 
-        if (_food.IsMouthBlocked(entity, entity))
+        if (!_ingestion.HasMouthAvailable(entity.Owner, entity.Owner))
             return;
 
         if (_rotting.IsRotten(args.Target!.Value))

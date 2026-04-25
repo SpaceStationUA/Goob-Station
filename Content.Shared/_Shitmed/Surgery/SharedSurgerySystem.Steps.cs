@@ -582,6 +582,15 @@ public abstract partial class SharedSurgerySystem
                         _trauma.RemoveTrauma(trauma);
 
                 break;
+
+            #region DOWNSTREAM-TPirates: face mutilation
+            case TraumaType.FaceMutilation:
+                if (_trauma.TryGetWoundableTrauma(args.Part, out var faceTraumas, TraumaType.FaceMutilation))
+                    foreach (var trauma in faceTraumas)
+                        _trauma.RemoveTrauma(trauma);
+
+                break;
+            #endregion
         }
     }
 

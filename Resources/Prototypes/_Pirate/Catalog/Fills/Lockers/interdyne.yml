@@ -71,6 +71,14 @@
       - id: PanicButtonInterdyne
       - id: ClothingHeadsetInterdyneCommand
       - id: InterdyneSecureUndeterminedWeapon
+      - id: WeaponEnergyGunPistol
+      - id: Flash
+      - id: ClothingShoesBootsJack
+      - id: ClothingHeadHatBeretInterdyneWhite
+      - id: ClothingOuterCoatInterdyneJacket
+      - id: InterdyneFlippo
+      - id: CigPackSyndicate
+        amount: 2
 
 - type: entity
   parent: LockerInterdyneCommand
@@ -90,6 +98,13 @@
       - id: PanicButtonInterdyne
       - id: ClothingHeadsetInterdyneCommand
       - id: InterdynePilotUndeterminedWeapon
+      - id: ClothingOuterCoatHoSTrench
+      - id: ClothingBeltUtilityEngineering
+      - id: ClothingHeadHatBeretInterdyneWhite
+      - id: ClothingOuterCoatInterdyneJacket
+      - id: InterdyneFlippo
+      - id: CigPackSyndicate
+        amount: 2
 
 # ENG Interdyne
 - type: entity
@@ -101,7 +116,7 @@
     contents:
       - id: ClothingHeadsetInterdyneCommand
       - id: InterdyneEngUndeterminedWeapon
-      - id: RCD
+      - id: RCDInterdyne
       - id: RCDAmmo
         amount: 5
       - id: ClothingHandsGlovesColorYellow
@@ -112,6 +127,8 @@
       - id: ClothingMaskGas
       - id: ClothingShoesBootsMag
       - id: WeaponNailgun
+      - id: ClothingEyesGlassesMeson
+      - id: ClothingBeltUtilityEngineering
 
 - type: entity
   parent: LockerInterdyneCommand
@@ -133,6 +150,8 @@
       - id: ClothingHandsGlovesAtmosInsulated
       - id: InterdyneEngUndeterminedWeapon
       - id: ClothingHeadsetInterdyneCommand
+      - id: ClothingEyesGlassesMeson
+      - id: ClothingBeltUtilityEngineering
 
 # Miners Interdyne
 - type: entity

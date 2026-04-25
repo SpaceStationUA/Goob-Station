@@ -48,7 +48,7 @@ namespace Content.Server.IdentityManagement;
 /// <summary>
 ///     Responsible for updating the identity of an entity on init or clothing equip/unequip.
 /// </summary>
-public sealed class IdentitySystem : SharedIdentitySystem
+public sealed partial class IdentitySystem : SharedIdentitySystem // DOWNSTREAM-TPirates: face mutilation
 {
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
@@ -76,6 +76,7 @@ public sealed class IdentitySystem : SharedIdentitySystem
 
         SubscribeLocalEvent<IdentityBlockerComponent, ComponentInit>(BlockerUpdateIdentity); // Goobstation - Update component state on component toggle
         SubscribeLocalEvent<IdentityBlockerComponent, ComponentRemove>(BlockerUpdateIdentity); // Goobstation - Update component state on component toggle
+        InitializePirateFaceMutilation(); // DOWNSTREAM-TPirates: face mutilation
     }
 
     public override void Update(float frameTime)
@@ -168,7 +169,15 @@ public sealed class IdentitySystem : SharedIdentitySystem
         var ev = new SeeIdentityAttemptEvent();
 
         RaiseLocalEvent(target, ev);
-        return representation.ToStringKnown(!ev.Cancelled);
+        #region DOWNSTREAM-TPirates: face mutilation
+        var knownIdentity = representation.ToStringKnown(!ev.Cancelled);
+        // Preserve SeeIdentityAttemptEvent and ID-card identity rules first, then apply face mutilation identity only when identity is visible and not ID-based.
+        if (!ev.Cancelled
+            && representation.PresumedName == null
+            && TryGetPirateFaceMutilationIdentity(target, representation, out var pirateIdentity))
+            return pirateIdentity;
+        return knownIdentity;
+        #endregion
     }
 
     /// <summary>
@@ -181,6 +190,9 @@ public sealed class IdentitySystem : SharedIdentitySystem
         _criminalRecordsConsole.CheckNewIdentity(uid);
         _psionicsRecordsConsole.CheckNewIdentity(uid);
     }
+
+    private partial void InitializePirateFaceMutilation(); // DOWNSTREAM-TPirates: face mutilation
+    private partial bool TryGetPirateFaceMutilationIdentity(EntityUid target, IdentityRepresentation representation, out string identity); // DOWNSTREAM-TPirates: face mutilation
 
     /// <summary>
     ///     Gets an 'identity representation' of an entity, with their true name being the entity name

@@ -1,0 +1,9 @@
+chat-speech-verb-goblin-1 = бурчить
+chat-speech-verb-goblin-2 = верещить
+chat-speech-verb-goblin-3 = гарчить
+chat-speech-verb-goblin-4 = бубонить
+chat-speech-verb-goblin-5 = каркає
+chat-emote-name-goblin-muttering = гоблінське бурмотіння
+chat-emote-msg-goblin-muttering = бурмоче собі під ніс.
+chat-emote-name-goblin-throat-singing = гоблінський горловий спів
+chat-emote-msg-goblin-throat-singing = затягує дивний горловий спів.

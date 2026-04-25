@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by Taro Varne",
+  "copyright": "Sprited by Taro Varne, bluesec color resprite by Vareniko",
   "size": {
     "x": 32,
     "y": 32
@@ -32,6 +32,10 @@
     },
     {
       "name": "equipped-OUTERCLOTHING-resomi",
+      "directions": 4
+    }, 
+    {
+      "name": "equipped-OUTERCLOTHING-feroxi",
       "directions": 4
     }
   ]

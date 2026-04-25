@@ -125,15 +125,10 @@
   name: job-name-mime
   description: job-description-mime
   playTimeTracker: JobMime
-  # Pirate contractor start
-  requirements: 
-    - !type:CharacterLifepathRequirement
-      lifepaths:
-      - Entertainer
-  # Pirate contractor end
   startingGear: MimeGear
   icon: "JobIconMime"
   supervisors: job-supervisors-hop
+  whitelisted: true # Pirate
   goobcoins: 10 #Goob content
   access:
   - Theatre

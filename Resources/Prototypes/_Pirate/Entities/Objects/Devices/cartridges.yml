@@ -35,3 +35,28 @@
       sprite: _Pirate/Structures/Machines/atm.rsi
       state: icon
   - type: BankCartridge
+
+- type: entity
+  parent: BaseItem
+  id: StockTradingCartridge
+  name: біржовий картридж
+  description: Картридж для відстеження міжзоряного ринку акцій.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Devices/cartridge.rsi
+    state: cart-stonk
+  - type: Icon
+    sprite: _DV/Objects/Devices/cartridge.rsi
+    state: cart-stonk
+  - type: UIFragment
+    ui: !type:StockTradingUi
+  - type: StockTradingCartridge
+  - type: Cartridge
+    programName: stock-trading-program-name
+    icon:
+      sprite: _DV/Misc/program_icons.rsi
+      state: stock_trading
+  - type: AccessReader
+    access:
+    - [ "Quartermaster" ]
+    - [ "Cargo" ]

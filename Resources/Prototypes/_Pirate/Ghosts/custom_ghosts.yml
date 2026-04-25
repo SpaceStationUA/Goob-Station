@@ -194,7 +194,7 @@
   ghostDescription: Вибухова ляля
 
 - type: customGhost
-  id: JustDecorghost
+  id: JustDecor-ghost
   ckey: JustDecor
   sprite:
     - Structures/Decoration/banner.rsi
@@ -210,6 +210,15 @@
   alpha: 1
   ghostName: "Просто Декорація"
   ghostDescription: "Усі люди наділені талантами, а я просто декорація"
+
+- type: customGhost
+  id: VCS-ghost
+  ckey: VCS
+  sprite:
+    - _Pirate/Ghosts/VCS.rsi
+  alpha: 1
+  ghostName: VCS
+  ghostDescription: Той самий НВех який все поламав.
 
 - type: customGhost
   id: luciusGG-ghost
@@ -228,3 +237,122 @@
   alpha: 1
   ghostName: щурик в капелюсі
   ghostDescription: "пік! пік-пік!"
+
+- type: customGhost
+  id: Redsten-ghost
+  ckey: NEO404
+  sprite:
+    # Вибач боже, за те, що я зроблю далі...
+    - Mobs/Animals/bat.rsi
+    - Mobs/Animals/bear.rsi
+    - Mobs/Animals/bee.rsi
+    - Mobs/Animals/buffrat.rsi
+    - Mobs/Animals/butterfly.rsi
+    - Mobs/Animals/chick.rsi
+    - Mobs/Animals/chicken.rsi
+    - Mobs/Animals/clownspider.rsi
+    - Mobs/Animals/cockroach.rsi
+    - Mobs/Animals/cow.rsi
+    - Mobs/Animals/crab.rsi
+    - Mobs/Animals/duck.rsi
+    - Mobs/Animals/fox.rsi
+    - Mobs/Animals/frog.rsi
+    - Mobs/Animals/goat.rsi
+    - Mobs/Animals/goose.rsi
+    - Mobs/Animals/gorilla.rsi
+    - Mobs/Animals/grenadepenguin.rsi
+    - Mobs/Animals/hamster.rsi
+    - Mobs/Animals/kangaroo.rsi
+    - Mobs/Animals/kobold.rsi
+    - Mobs/Animals/lizard.rsi
+    - Mobs/Animals/monkey.rsi
+    - Mobs/Animals/mothroach/displacement.rsi
+    - Mobs/Animals/mothroach/moproach.rsi
+    - Mobs/Animals/mothroach/mothroach.rsi
+    - Mobs/Animals/mouse.rsi
+    - Mobs/Animals/nymph.rsi
+    - Mobs/Animals/parrot/displacement.rsi
+    - Mobs/Animals/parrot/parrot.rsi
+    - Mobs/Animals/penguin.rsi
+    - Mobs/Animals/pig.rsi
+    - Mobs/Animals/possum.rsi
+    - Mobs/Animals/possum_old.rsi
+    - Mobs/Animals/raccoon.rsi
+    - Mobs/Animals/rat.rsi
+    - Mobs/Animals/regalrat.rsi
+    - Mobs/Animals/reindeer_buck.rsi
+    - Mobs/Animals/reindeer_doe.rsi
+    - Mobs/Animals/scurret/displacement.rsi
+    - Mobs/Animals/scurret/scurret.rsi
+    - Mobs/Animals/slug.rsi
+    - Mobs/Animals/snail.rsi
+    - Mobs/Animals/snake.rsi
+    - Mobs/Animals/spacecobra.rsi
+    - Mobs/Animals/spacespider.rsi
+    - Mobs/Animals/spider.rsi
+  alpha: 1
+  ghostName: "Редстен"
+  ghostDescription: "Найбільший боржник і ручна тваринка декора."
+
+- type: customGhost
+  id: crazydraggy-ghost
+  ckey: crazydraggy
+  sprite:
+    - _Pirate/Ghosts/CrazyDraggy.rsi
+  alpha: 0.8
+  ghostName: "Блюспейс дракон"
+  ghostDescription: "Він дивится тобі прямо у очі, чи хоче він тебе з'їсти?"
+
+- type: customGhost
+  id: Vareniko-ghost
+  ckey: Vareniko
+  sprite:
+    - _Pirate/Ghosts/Vareniko.rsi
+  alpha: 1
+  ghostName: Vareniko
+  ghostDescription: Уєєє... Ненавиджу генокрадів і єретиків... а ще різників... а ще...
+
+- type: customGhost
+  id: BlackTank-ghost
+  ckey: BlackTank
+  sprite:
+    - _Pirate/Ghosts/BlackTank.rsi
+  alpha: 1
+  ghostName: BlackTank
+  ghostDescription: Wawa!
+
+- type: customGhost
+  id: narinder-ghost
+  ckey: narinder
+  sprite:
+    - _Pirate/Ghosts/Narinder.rsi
+  alpha: 0.8
+  ghostName: "Narinder"
+  ghostDescription: "неко-інженер якого не зупинила смерть від продовження роботи, чомусь ви відчуваєте тепло та запах металу з кавою поруч з ним. RIG на спині показує незький рівень здоровя"
+
+- type: customGhost
+  id: hhhhhhhhruo-ghost
+  ckey: hhhhhhhhruo
+  sprite:
+    - _Pirate/Ghosts/hhhhhhhhruo.rsi
+  alpha: 1
+  ghostName: hhhhhhhhruo
+  ghostDescription: лютий хард РПешер
+
+- type: customGhost
+  id: Bukhhalter-ghost
+  ckey: Bukhhalter
+  sprite:
+    - _Pirate/Ghosts/Bukhhalter.rsi
+  alpha: 1
+  ghostName: Ітан Лі
+  ghostDescription: От і догрався
+
+- type: customGhost
+  id: zubr-ghost
+  ckey: zubr
+  sprite:
+    - _Pirate/Ghosts/zubr.rsi
+  alpha: 1
+  ghostName: Tony [Zubr]
+  ghostDescription: I fucking hate these people. This party sucks.

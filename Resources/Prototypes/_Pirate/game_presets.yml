@@ -1,11 +1,11 @@
 - type: gamePreset
-  id: PirateOmakSecret
+  id: PirateSecret
   alias:
     - secret
     - sekrit
   name: "Секерет"
   showInVote: true # Goob - Game Director
-  description: Більш спокійна, частково експериментальна версія секрету, без антагоністів середині гри.
+  description: "Експериментальна версія секрету.Чесно я сам не впевнений, як воно працює..."
   rules:
     - Secret
     - PsionicEventsScheduler # Pirate

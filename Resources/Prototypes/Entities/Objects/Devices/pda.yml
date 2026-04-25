@@ -198,6 +198,8 @@
       map: [ "enum.PdaVisualLayers.IdLight" ]
       shader: "unshaded"
       visible: false
+    - state: "insert_overlay" # Goob
+      map: [ "enum.PdaVisualLayers.Pen" ]
   - type: Icon
     sprite: Objects/Devices/pda.rsi
     state: pda
@@ -334,6 +336,8 @@
       map: [ "enum.PdaVisualLayers.IdLight" ]
       shader: "unshaded"
       visible: false
+    - state: "insert_overlay" # Goob
+      map: [ "enum.PdaVisualLayers.Pen" ]
 
 - type: entity
   parent: BasePDA
@@ -680,6 +684,7 @@
     - NotekeeperCartridge
     - NanoTaskCartridge
     - NewsReaderCartridge
+    - StockTradingCartridge # Pirate port - Delta-V stocks trading
     - AstroNavCartridge
     - MailMetricsCartridge
     - NanoChatCartridge # DeltaV
@@ -702,6 +707,15 @@
     borderColor: "#e39751"
   - type: Icon
     state: pda-cargo
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - StockTradingCartridge # Pirate port - Delta-V stocks trading
+    - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA

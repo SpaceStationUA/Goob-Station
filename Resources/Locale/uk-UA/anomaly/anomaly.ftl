@@ -96,3 +96,5 @@ anomaly-behavior-moving = [color=crimson]Виявлено нестабільні
 anomaly-scanner-scan-copied = Скановані дані аномалії скопійовано!
 
 anomaly-behavior-invisibility = Виявлено спотворення світлових хвиль.
+anomaly-sync-disconnect-verb-text = Від'єднати аномалію
+anomaly-sync-disconnect-verb-message = Від'єднати підключену аномалію від {THE($machine)}.

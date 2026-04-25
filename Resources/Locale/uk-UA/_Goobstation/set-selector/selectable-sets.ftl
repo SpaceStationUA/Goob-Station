@@ -1,3 +1,16 @@
+## Command - Командування
+# Captain - Капітан
+
+selectable-set-captain-sabre-name = Капітанська шабля
+selectable-set-captain-sabre-description = Стандартна, сучасного дизайну шабля. 
+
+selectable-set-captain-sabre-heavy-name = Важка шабля
+selectable-set-captain-sabre-heavy-description = Важка та товста що не дає їй змоги різати, але має чудову пробивну силу, що пробиває навіть самі товсті скафандри ваших ворогів.
+
+selectable-set-captain-sabre-shashka-name = Шашка
+selectable-set-captain-sabre-shashka-description = Легка швидка та гостра, але має погане пробиття.
+
+
 # Thief
 
 selectable-set-thief-anatomy-name = Набір «Анатомія»
@@ -18,10 +31,10 @@ selectable-set-thief-chameleon-description = Ви — всі і ніхто; ви
     Маскуйтеся під будь-кого і будь-що.
 
 selectable-set-thief-syndie-name = Набір «Синдикат»
-selectable-set-thief-syndie-description = Дрібнички з минулого, від якого відмовилися, чи вкрадені у недбалого агента?
-    Ви налагодили деякі зв'язки. Віскі, ехо...
-    Включає: емаг, ламач доступу, сигарети Interdyne, кодове слово Синдикату,
-    радіоглушник, запальничку та кілька дивних червоних кристалів.
+selectable-set-thief-syndie-description = Дрібнички з відреченого минулого чи вкрадені в необережного агента?
+    Ви завели кілька зв’язків. Віскі, ехо...
+    Містить: Емаг, Зламувач доступу, цигарки Інтердайн, кодове слово Синдикату,
+    глушник радіозв’язку, коробку з сувенірними запальничками та якісь дивні червоні кристали.
 
 selectable-set-thief-sleeper-name = Набір «Соня»
 selectable-set-thief-sleeper-description = Поки ми не закриємо очі назавжди, використовуйте свої нелегальні препарати,
@@ -102,6 +115,12 @@ selectable-set-blueshield-cqc-name = набір «Ближній бій»
 selectable-set-blueshield-cqc-description = Іноді доводиться бруднити руки.
     Включає: книгу, здатну навчити користувача
     просунутому ближньому бою.
+
+#region Pirate: katana
+selectable-set-blueshield-kendo-name = набір «Кендо»
+selectable-set-blueshield-kendo-description = Набір мечника, зосереджений на терпінні та захисті. Клинок може блокувати й відбивати удари, а потім відповідати сильнішими атаками, коли його сила зростає.
+    Включає: піхви та учігатану.
+#endregion Pirate: katana
 
 selectable-set-blueshield-chester-name = набір «Честер»
 selectable-set-blueshield-chester-description = Готові до полювання?
@@ -196,7 +215,7 @@ selectable-set-syndicate-builder-description = Ламати веселіше, н
 selectable-set-blueshield-dragon-name = набір посібників з кунг-фу
 selectable-set-blueshield-dragon-description = Іноді доводиться бруднити руки.
     Включає: Книгу, здатну навчити користувача
-    просунутому бойовому мистецтву кунг-фу.
+    просунутому бойовому мистецтву кунг-фу
 selectable-set-syndicate-western-name = Західний набір
 selectable-set-syndicate-western-description = Запали західну голо-сигару, нахили капелюха й дозволь музиці заграти.
     Містить: західна голо-сигара, шифрувальний ключ Синдикату,

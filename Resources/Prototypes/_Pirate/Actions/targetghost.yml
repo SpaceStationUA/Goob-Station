@@ -57,7 +57,9 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Action
-      icon: _Goobstation/Wizard/Icons/spellblade.rsi/blink.png
+      icon:
+        sprite: _Goobstation/Wizard/Icons/spellblade.rsi
+        state: blink
       useDelay: 3
       raiseOnUser: true
     - type: InstantAction

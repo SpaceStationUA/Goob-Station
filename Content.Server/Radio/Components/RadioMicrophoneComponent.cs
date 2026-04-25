@@ -47,4 +47,9 @@ public sealed partial class RadioMicrophoneComponent : Component
     /// </summary>
     [DataField("unobstructedRequired")]
     public bool UnobstructedRequired = false;
+
+    // Pirate start - Handheld Radios port
+    [DataField]
+    public int Frequency = 1459;
+    // Pirate end - Handheld Radios port
 }

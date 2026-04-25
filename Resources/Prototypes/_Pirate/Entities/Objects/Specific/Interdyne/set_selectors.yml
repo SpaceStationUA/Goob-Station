@@ -11,7 +11,6 @@
     possibleSets:
     - IPSpecialForces
     - IPAdvancedDetentionTools
-    - IPESword
     - IPAdvancedProtect
     - IPHitman
     - IPCQCManual
@@ -48,7 +47,8 @@
     state: icon
   - type: SetSelector
     possibleSets:
-    - IPClothingBeltCE
+    - IPBeltCE
+    - IPRCD
     - IPNutrimentImplanter
     maxSelectedSets: 1
 
@@ -66,7 +66,6 @@
     - IPHitman
     - IPNutrimentImplanter
     - IPPilot
-    - IPESword
     maxSelectedSets: 2
     
 - type: entity

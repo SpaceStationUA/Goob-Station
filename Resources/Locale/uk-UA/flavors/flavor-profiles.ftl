@@ -358,12 +358,10 @@ flavor-complex-dark-and-stormy = як імбирний ель з ромом
 flavor-complex-radler = як лимонад з алкоголем
 flavor-base-trashy = сміттєвий
 
-# Складні смаки. Додайте смак сюди, якщо хочете щось більш
-# конкретне.
-
 flavor-complex-dog-food = як собачий корм
 
 # Специфічні смаки напоїв.
 
 ## Загальний смак алкоголю/содової. Це слід замінити на справжній смаковий профіль.
 flavor-complex-artifact-glue = як подрібнені артефакти
+flavor-base-motivating = мотивуючий

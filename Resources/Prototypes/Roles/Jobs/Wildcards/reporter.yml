@@ -87,6 +87,10 @@
     - CassetteTape
     - CassetteTape
     - MicrophoneInstrument # Goobstation
+    - PhotoCameraFilled # Pirate: camera
+    - CameraFilm # Pirate: camera
+    - CameraFilm # Pirate: camera
+    - PhotoAlbumLoadoutSigned # Pirate: camera
 
 - type: chameleonOutfit
   id: ReporterChameleonOutfit

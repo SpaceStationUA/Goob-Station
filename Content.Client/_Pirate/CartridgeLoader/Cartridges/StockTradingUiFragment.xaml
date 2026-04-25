@@ -1,0 +1,40 @@
+<cartridges:StockTradingUiFragment
+    xmlns="https://spacestation14.io"
+    xmlns:cartridges="clr-namespace:Content.Client._Pirate.CartridgeLoader.Cartridges"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Margin="5"
+    VerticalExpand="True">
+
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <PanelContainer StyleClasses="AngleRect">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0,0,5,0">
+                    <Label Text="{Loc stock-trading-title}"
+                           HorizontalExpand="True"
+                           HorizontalAlignment="Left" />
+                </BoxContainer>
+                <Label Name="Balance"
+                       Text="{Loc stock-trading-balance}"
+                       HorizontalAlignment="Right" />
+            </BoxContainer>
+        </PanelContainer>
+
+        <customControls:HSeparator Margin="5 3 5 5" />
+
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <Label Name="NoEntries"
+                   Text="{Loc stock-trading-no-entries}"
+                   HorizontalExpand="True"
+                   HorizontalAlignment="Center"
+                   Visible="False" />
+            <ScrollContainer HorizontalExpand="True"
+                             VerticalExpand="True"
+                             Margin="0,5,0,0">
+                <BoxContainer Name="Entries"
+                              Orientation="Vertical"
+                              VerticalAlignment="Top"
+                              HorizontalExpand="True" />
+            </ScrollContainer>
+        </BoxContainer>
+    </BoxContainer>
+</cartridges:StockTradingUiFragment>

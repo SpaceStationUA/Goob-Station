@@ -1,0 +1,11 @@
+figurines-heretic-1 = Вже занадто пізно.
+figurines-heretic-2 = Мар.
+figurines-heretic-3 = Вибач...
+figurines-heretic-4 = Люблю холод.
+figurines-heretic-5 = На сьогодні все.
+figurines-heretic-6 = Час тікати.
+figurines-heretic-7 = Капелан, ти запізнився.
+figurines-heretic-8 = Все ще живий.
+figurines-heretic-9 = Порожнеча передає привіт.
+figurines-heretic-10 = МЕНЕ ТИСНЕ ТИСК!
+figurines-heretic-11 = Трохи холодно.

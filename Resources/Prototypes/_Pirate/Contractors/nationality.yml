@@ -4,6 +4,18 @@
   passportPrototype: BieselPassport
 
 - type: nationality
+  id: Nralakk
+  nameKey: nationality_name_nralakk
+  requirements:
+    - !type:SpeciesRequirement
+      inverted: true
+      species:
+        - Vox
+        - IPC
+        - Hydrakin
+  passportPrototype: NralakkPassport
+
+- type: nationality
   id: Solarian
   nameKey: nationality_name_solarian
   requirements:
@@ -22,7 +34,7 @@
       employers:
       - PMCG
       - HephaestusIndustries
-      - ZavodskoiInterstellar
+      - ZavodskiyInterstellar
       - IdrisIncorporated
       - ZengHuPharmaceuticals
     - !type:SpeciesRequirement
@@ -30,6 +42,7 @@
       species:
         - Vox
         - IPC
+        - Hydrakin
   languages:
     - Tradeband
   passportPrototype: EridanPassport
@@ -39,9 +52,9 @@
   nameKey: nationality_name_adhomai
   requirements:
     - !type:SpeciesRequirement
-      inverted: true
       species:
-        - Vox
+        - Tajaran
+        - Resomi
   passportPrototype: AdhomaiPassport
 
 - type: nationality
@@ -52,6 +65,8 @@
       inverted: true
       species:
         - Vox
+        - IPC
+        - Hydrakin
   passportPrototype: IzweskiPassport
 
 - type: nationality

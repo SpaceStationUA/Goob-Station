@@ -28,3 +28,5 @@ store-caregory-spellbook-utility = Корисні Заклинання
 store-caregory-spellbook-equipment = Оснащення Мага
 store-caregory-spellbook-events = Заклинання Подій
 store-discounted-items = Знижки
+
+store-category-contractor = Підрядник

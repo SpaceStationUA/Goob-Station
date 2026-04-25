@@ -345,7 +345,8 @@
   outputKnowledge: CreatorsGift
   outputEvent: !type:EventHereticAscension
 
-### side knowledge
+# Pirate uncomment
+## side knowledge
 - type: hereticRitual
   id: RitualOfKnowledge
   locName: knowledge-path-side-knowledge-name
@@ -355,6 +356,7 @@
     state: icon
   customBehaviors:
   - !type:RitualKnowledgeBehavior
+# Pirate end
 
 ## stage 3
 - type: hereticRitual

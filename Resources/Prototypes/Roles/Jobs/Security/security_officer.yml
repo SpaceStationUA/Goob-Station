@@ -91,10 +91,14 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 #10 hrs
+      time: 36000 #10 hrs # Pirate
     - !type:TraitsRequirement # Pirate
       inverted: true
       traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - MovementImpaired
       - Blindness
       - Narcolepsy
       - Muted
@@ -103,17 +107,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZavodskoiInterstellar
+      - ZavodskiyInterstellar
       - PMCG
-    - !type:CharacterLifepathRequirement
-      inverted: true
-      lifepaths:
-      - Cultist
-      - Smuggler
-      - ExCriminal
-      - Enforcer
-      - Hacker
-      - ConArtist
     # Pirate contractor end
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
@@ -121,10 +116,10 @@
   canBeAntag: false
   guides: # goobstation
   - Security
-  - Legal SOP
-  - OfficerCadet SOP
+  - LegalSOP
+  - OfficerCadetSOP
   - CorporateJudo
-  - Alert Levels
+  - AlertLevels
   goobcoins: 30 #Goob content
   access:
   - Security

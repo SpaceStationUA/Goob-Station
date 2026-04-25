@@ -181,4 +181,55 @@ public sealed partial class QuickDialogSystem
             cancelAction ?? (() => { })
         );
     }
+    #region Pirate: camera
+    /// <summary>
+    /// Opens a dialog with one input and pre-filled value.
+    /// </summary>
+    /// <param name="session">Client to show a dialog for.</param>
+    /// <param name="title">Title of the dialog.</param>
+    /// <param name="prompt">The prompt.</param>
+    /// <param name="okAction">The action to execute upon Ok being pressed.</param>
+    /// <param name="initialValue">Initial text shown in the input.</param>
+    /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
+    /// <typeparam name="T1">Type of the input.</typeparam>
+    [PublicAPI]
+    public void OpenDialogPrefilled<T1>(
+        ICommonSession session,
+        string title,
+        string prompt,
+        Action<T1> okAction,
+        string? initialValue = null,
+        Action? cancelAction = null)
+    {
+        var entryType = TypeToEntryType(typeof(T1));
+
+        if (initialValue != null && !TryParseQuickDialog<T1>(entryType, initialValue, out _))
+        {
+            throw new ArgumentException(
+                $"Invalid quick dialog prefill value '{initialValue}' for entry type '{entryType}'.",
+                nameof(initialValue));
+        }
+
+        OpenDialogInternal(
+            session,
+            title,
+            new List<QuickDialogEntry>
+            {
+                new("1", entryType, prompt, value: initialValue)
+            },
+            QuickDialogButtonFlag.OkButton | QuickDialogButtonFlag.CancelButton,
+            (ev =>
+            {
+                if (TryParseQuickDialog<T1>(entryType, ev.Responses["1"], out var v1))
+                    okAction.Invoke(v1);
+                else
+                {
+                    session.Channel.Disconnect("Replied with invalid quick dialog data.");
+                    cancelAction?.Invoke();
+                }
+            }),
+            cancelAction ?? (() => { })
+        );
+    }
+    #endregion
 }

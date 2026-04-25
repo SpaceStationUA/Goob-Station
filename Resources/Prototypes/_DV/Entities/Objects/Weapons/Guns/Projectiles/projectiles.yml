@@ -28,11 +28,12 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: heavylaser
+    - state: medium # Pirate
       shader: unshaded
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectHeavyLaser # Pirate
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -48,6 +49,7 @@
     damage:
       types:
         Heat: 20 # Pirate edit
+      armorPenetration: 0.4 # Pirate edit
     soundHit:
       collection: MeatLaserImpact
 
@@ -66,12 +68,13 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: omnilaser_greyscale
+    - state: mediumtemp2 # Pirate
       shader: unshaded
       color: blue
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectTempCold # Pirate
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -110,6 +113,7 @@
     - state: bolt_red_heavy
       shader: unshaded
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectHeavyLaser # Pirate
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -126,5 +130,6 @@
       types:
         Blunt: 4
         Heat: 20
+      armorPenetration: 0.4 # Pirate edit
     soundHit:
       collection: MeatLaserImpact

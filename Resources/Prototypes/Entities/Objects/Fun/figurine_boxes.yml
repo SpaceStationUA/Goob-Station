@@ -103,6 +103,8 @@
         orGroup: SpacemenFig
       - id: ToyFigurineDevil # Goobstation
         orGroup: SpacemenFig
+      - id: ToyFigurineHeretic # Pirate edit
+        orGroup: SpacemenFig
       - id: ToyFigurineFootsoldier
         orGroup: SpacemenFig
       - id: ToyFigurineWizardFake

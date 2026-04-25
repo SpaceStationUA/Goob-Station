@@ -23,6 +23,7 @@
 using Content.Client.Ghost;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Ghost.Widgets;
+using Content.Goobstation.Shared.MisandryBox.Thunderdome;
 using Content.Shared.Ghost;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -32,11 +33,11 @@ namespace Content.Client.UserInterface.Systems.Ghost;
 // TODO hud refactor BEFORE MERGE fix ghost gui being too far up
 public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSystem>
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IEntityNetworkManager _net = default!;
     [UISystemDependency] private readonly GhostSystem? _system = default;
 
     private GhostGui? Gui => UIManager.GetActiveUIWidgetOrNull<GhostGui>();
-
 
     public override void Initialize()
     {
@@ -45,6 +46,10 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
+
+        // Goobstation - Thunderdome
+        _entManager.EventBus.SubscribeEvent<ThunderdomePlayerCountEvent>
+            (EventSource.Network, this, OnThunderdomePlayerCount);
     }
 
     private void OnScreenLoad()
@@ -65,6 +70,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         system.PlayerDetached += OnPlayerDetached;
         system.GhostWarpsResponse += OnWarpsResponse;
         system.GhostRoleCountUpdated += OnRoleCountUpdated;
+        system.GhostWarpObserverCountUpdated += OnObserverCountUpdated; // DOWNSTREAM-TPirates: ghost follow menu update
     }
 
     public void OnSystemUnloaded(GhostSystem system)
@@ -75,6 +81,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         system.PlayerDetached -= OnPlayerDetached;
         system.GhostWarpsResponse -= OnWarpsResponse;
         system.GhostRoleCountUpdated -= OnRoleCountUpdated;
+        system.GhostWarpObserverCountUpdated -= OnObserverCountUpdated; // DOWNSTREAM-TPirates: ghost follow menu update
     }
 
     public void UpdateGui()
@@ -121,6 +128,13 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         window.Populate();
     }
 
+    #region DOWNSTREAM-TPirates: ghost follow menu update
+    private void OnObserverCountUpdated(NetEntity entity, int count)
+    {
+        Gui?.TargetWindow?.UpdateObserverCount(entity, count);
+    }
+    #endregion
+
     private void OnRoleCountUpdated(GhostUpdateGhostRoleCountEvent msg)
     {
         UpdateGui();
@@ -146,8 +160,10 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui.RequestWarpsPressed += RequestWarps;
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
+        Gui.ThunderdomePressed += ThunderdomePressed; // Goobstation - Thunderdome
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
         Gui.TargetWindow.OnGhostnadoClicked += OnGhostnadoClicked;
+        Gui.TargetWindow.RefreshPressed += OnRefreshPressed; // DOWNSTREAM-TPirates: ghost follow menu update
 
         UpdateGui();
     }
@@ -160,7 +176,9 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui.RequestWarpsPressed -= RequestWarps;
         Gui.ReturnToBodyPressed -= ReturnToBody;
         Gui.GhostRolesPressed -= GhostRolesPressed;
+        Gui.ThunderdomePressed -= ThunderdomePressed; // Goobstation - Thunderdome
         Gui.TargetWindow.WarpClicked -= OnWarpClicked;
+        Gui.TargetWindow.RefreshPressed -= OnRefreshPressed; // DOWNSTREAM-TPirates: ghost follow menu update
 
         Gui.Hide();
     }
@@ -177,8 +195,26 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         Gui?.TargetWindow.OpenCentered();
     }
 
+    #region DOWNSTREAM-TPirates: ghost follow menu update
+    private void OnRefreshPressed()
+    {
+        _system?.RequestWarps();
+    }
+    #endregion
+
     private void GhostRolesPressed()
     {
         _system?.OpenGhostRoles();
+    }
+
+    // Goobstation - Thunderdome
+    private void ThunderdomePressed()
+    {
+        _net.SendSystemNetworkMessage(new ThunderdomeJoinRequestEvent());
+    }
+
+    private void OnThunderdomePlayerCount(ThunderdomePlayerCountEvent ev)
+    {
+        Gui?.UpdateThunderdome(ev.Count);
     }
 }

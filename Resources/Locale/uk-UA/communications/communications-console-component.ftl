@@ -18,6 +18,7 @@ comms-console-announcement-unknown-sender = Невідомо
 comms-console-announcement-title-station = Комунікаційна Консоль
 comms-console-announcement-title-centcom = Центральне Командування
 comms-console-announcement-title-nukie = Ядерні Оперативники 'СИНДИКАТ'
+comms-console-announcement-title-SAN = Соляріанського Флоту
 
 comms-console-message-too-long = Повідомлення занадто довге
 

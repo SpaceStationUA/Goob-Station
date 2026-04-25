@@ -1,0 +1,13 @@
+loadout-group-interdyne-officer-head = Interdyne officer headwear
+loadout-group-interdyne-head = Interdyne headwear
+loadout-group-interdyne-command-headset = Interdyne command headsets
+loadout-group-interdyne-headset = Interdyne headsets
+loadout-group-interdyne-back = Interdyne backpacks
+loadout-group-interdyne-clothing = Interdyne outerwear
+loadout-group-interdyne-officer-gloves = Interdyne officer gloves
+loadout-group-interdyne-shoes = Interdyne shoes
+loadout-group-interdyne-stamp-officer = Interdyne officer stamp
+loadout-group-interdyne-stamp-deputy = Interdyne deputy stamp
+loadout-group-interdyne-surgery = Interdyne surgery gear
+loadout-group-interdyne-key = Interdyne encryption key
+loadout-group-syndicate-suit = Syndicate uniform

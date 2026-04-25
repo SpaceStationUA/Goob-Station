@@ -1,0 +1,105 @@
+- type: entity
+  parent: BaseGameRule
+  id: Deserters
+  components:
+  - type: StationEvent
+    earliestStart: 30
+    reoccurrenceDelay: 30
+    weight: 4
+    minimumPlayers: 20
+    duration: null
+    chaos:
+      Hostile: 100
+      Medical: 30
+    eventType: HostilesSpawn
+  - type: GameRule
+    chaosScore: 200
+    minPlayers: 20
+  - type: LoadMapRule
+    gridPath: /Maps/_Pirate/Shuttles/ShuttleEvent/SANDropship.yml
+
+- type: entity
+  categories: [HideSpawnMenu]
+  id: SpawnPointGhostSANDeserter
+  name: ghost role spawn point
+  suffix: SAN Deserter
+  parent: MarkerBase
+  components:
+    - type: GhostRole
+      name: ghost-role-information-deserter-name
+      description: ghost-role-information-deserter-description
+      rules: ghost-role-information-deserter-rules
+    - type: GhostRoleMobSpawner
+      prototype: MobHumanSANDeserter
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Structures/Wallmounts/signs.rsi
+          state: radiation
+    - type: GhostRoleAntagSpawner
+
+- type: entity
+  categories: [HideSpawnMenu]
+  parent: MobHuman
+  id: MobHumanSANDeserter
+  name: SAN Deserter
+  components:
+    - type: Loadout
+      prototypes: [SANDeserterGearFull]
+    - type: NpcFactionMember
+      factions:
+      - SAN
+    - type: RandomMetadata
+      nameSegments:
+      - NamesMilitaryFirst
+      - NamesLast
+    - type: LanguageKnowledge
+      speaks:
+      - SolCommon
+      understands:
+      - SolCommon
+    - type: GhostRole
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 180000 #50 hours
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 7200 #2 hours
+
+- type: antag
+  id: SANDeserter
+  name: roles-antag-sol-alliance-navy-deserter
+  antagonist: true
+  setPreference: false
+  objective: roles-antag-sol-alliance-navy-deserter-objective
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleDeserter
+  name: SAN Deserter Role
+  components:
+  - type: MindRole
+    antagPrototype: SANDeserter
+    exclusiveAntag: false
+    roleType: SANAntagonist
+
+- type: roleType
+  id: SANAntagonist
+  name: role-type-SAN-antagonist-name
+  color: '#d82000'
+
+- type: startingGear
+  id: SANDeserterGearFull
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSolFatigueGreen
+    head: ClothingHeadHelmetSAN
+    back: ClothingBackpackMerc
+    mask: GreenBalaclava
+    gloves: ClothingHandsMercGlovesCombat
+    shoes: ClothingShoesBootsCombatFilled
+    id: SANIdCard
+    pocket1: WeaponPistolSol
+    pocket2: MagazinePistol
+    belt: ClothingBeltMercWebbing
+    outerClothing: ClothingOuterVestWebSAN

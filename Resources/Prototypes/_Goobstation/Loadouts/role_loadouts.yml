@@ -99,7 +99,7 @@
   - NanotrasenRepresentativeNeck
   - NanotrasenRepresentativeShoes
   - NanotrasenRepresentativeBelt
-  - Glasses
+  #- Glasses # Pirate
   - Trinkets
   - Animals
   - GroupSpeciesBreathTool
@@ -161,15 +161,15 @@
   id: JobRoboticist
   groups:
   - GroupTankHarness
-  - ScientistHead
+  - RoboticistHead
   - ScientistNeck
-  - ScientistJumpsuit
-  - ScientistBackpack
-  - ScientistOuterClothing
-  - ScientistGloves
-  - ScientistShoes
-  - ScientistPDA
-  - Glasses
+  - RoboticistJumpsuit
+  - RoboticistBackpack
+  - RoboticistOuterClothing
+  - RoboticistGloves
+  - RoboticistShoes
+  - RoboticistPDA
+   #- Glasses # Pirate
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -185,7 +185,7 @@
   - MedicalMask
   - BrigmedicJumpsuit
   - BrigmedicOuterClothing
-  - MedicalGloves
+  - BrigmedicGloves
   - BrigmedicBackpack
   - SecurityMelee # EE parity, make corpsman able to carry weapons like the rest of security
   - SecurityShoes

@@ -1,0 +1,15 @@
+- type: entity
+  parent: WeaponEnergyTurretStationBase
+  id: WeaponEnergyTurretInterdyne
+  suffix: Interdyne
+  components:
+  - type: AccessReader
+    access: [["Interdyne"]]
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - Interdyne
+#  - type: Machine (Потім додам)
+#    board: WeaponEnergyTurretSecurityMachineCircuitboard
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretControl
+    transmitFrequencyId: Turret

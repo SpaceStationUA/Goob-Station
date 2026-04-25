@@ -241,6 +241,13 @@
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/syndicate.rsi
+  - type: RadioSoundProfile # Pirate: radio sounds
+    transmitSound: /Audio/_Pirate/Radio/radio_talk_alter.ogg # Pirate: radio sounds
+    receiveSound: /Audio/_Pirate/Radio/radio_receive_alter.ogg # Pirate: radio sounds
+    allowedChannels: # Pirate: radio sounds
+      - Syndicate # Pirate: radio sounds
+      - Interdyne # Pirate: radio sounds
+      - InterdynePrivat # Pirate: radio sounds
 
 - type: entity
   parent: ClothingHeadsetAlt

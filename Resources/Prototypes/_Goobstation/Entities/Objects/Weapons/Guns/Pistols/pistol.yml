@@ -16,7 +16,7 @@
   name: Dualetta
   parent: [BaseWeaponPistol, BaseSyndicateContraband]
   id: WeaponPistolDualetta
-  description: The coolest pistol in the sector. It is said that nobody is strong enough of will to tarnish this weapon's reputation by daring to fire it without its paired pistol.
+  description: The coolest pistol in the sector. It is said that nobody is strong enough of will to tarnish this weapon's reputation by daring to fire it without its paired pistol. Feeds from .35 Auto pistol magazines.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Pistols/Dualetta.rsi
@@ -25,6 +25,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "-0.03125, 0.1875"
   - type: Clothing
     sprite: _Goobstation/Objects/Weapons/Guns/Pistols/Dualetta.rsi
   - type: Gun
@@ -38,8 +40,16 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
-  - type: ItemSlots
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
     slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
       gun_magazine:
         name: Magazine
         startingItem: MagazinePistolHighCapacity
@@ -58,6 +68,12 @@
         whitelist:
           tags:
             - CartridgePistol
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
+    containers:
+      flashlight: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: Tag
     tags:
     - WeaponPistolDualetta
@@ -74,7 +90,7 @@
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: WeaponPistolAnaconda
   name: Anaconda
-  description: A heavy pistol capable of supplying itself with the ammo on the way using a built-in fabricator.
+  description: A bulky hand cannon with a built in fabricator in its grip. Slowly prints ammo for itself, though don't count on it being fast enough for sustained firefights.
   components:
   - type: Item
     size: Small
@@ -89,6 +105,9 @@
     layers:
     - state: icon
       map: ["enum.GunVisualLayers.Base"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0.09375, 0.125"
+  - type: Appearance
   - type: Clothing
     sprite: _Goobstation/Objects/Weapons/Guns/Pistols/anaconda.rsi
     quickEquip: false
@@ -117,15 +136,27 @@
     - oni-cannot-shoot-guns-2
     - oni-cannot-shoot-guns-3
   - type: AmmoCounter
-  - type: ContainerContainer
+  - type: UpgradeableWeapon # DOWNSTREAM-TPirates: gun flashlights
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 5
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
     containers:
+      flashlight: !type:ContainerSlot
       ballistic-ammo: !type:Container
 
 - type: entity
-  name: contract terminator
+  name: Contract Terminator
   parent: [BaseWeaponPistol, BaseCentcommContraband]
   id: WeaponPistolCentcommAgent
-  description: A pistol specifically designed to fire neurotoxin laced bullets. It's capable concealing itself via bluespace technology.
+  description: Necessity is the mother of deception.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Pistols/agentpistol.rsi

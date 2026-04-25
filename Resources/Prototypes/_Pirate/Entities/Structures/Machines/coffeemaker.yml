@@ -1,0 +1,205 @@
+- type: entity
+  id: CoffeemakerMachinePirate
+  parent: BaseMachinePowered
+  name: coffeemaker
+  description: A Modello 3 coffeemaker that brews coffee and keeps it hot.
+  components:
+  - type: Coffeemaker
+    usesBeans: false
+    brewTime: 20
+    steamOffset: 0, 0.2975
+    beanCapacity: 0
+    cups: 15
+    maxCups: 15
+    sugarPacks: 10
+    maxSugarPacks: 10
+    sweetenerPacks: 10
+    maxSweetenerPacks: 10
+    creamerPacks: 10
+    maxCreamerPacks: 10
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CoffeemakerVisuals.PotState:
+        pot:
+          None: { visible: false }
+          Empty: { visible: true, state: coffeemaker_pot_empty }
+          Full: { visible: true, state: coffeemaker_pot_full }
+      enum.CoffeemakerVisuals.HasCartridge:
+        cartridge:
+          True: { visible: true, state: coffeemaker_cartridge }
+          False: { visible: false }
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/coffeemaker.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    offset: 0, 0.25
+    layers:
+    - state: coffeemaker_nopot_nocart
+    - map: ["pot"]
+      state: coffeemaker_pot_empty
+      visible: false
+    - map: ["cartridge"]
+      state: coffeemaker_cartridge
+      visible: false
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.16"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: ApcPowerReceiver
+    powerLoad: 300
+  - type: ItemSlots
+    slots:
+      potSlot:
+        name: coffeemaker-slot-pot
+        insertOnInteract: false
+        startingItem: DrinkCoffeepotPirate
+        whitelist:
+          components:
+          - Coffeepot
+      cartridgeSlot:
+        name: coffeemaker-slot-cartridge
+        insertOnInteract: false
+        whitelist:
+          components:
+          - CoffeeCartridge
+  - type: ContainerContainer
+    containers:
+      potSlot: !type:ContainerSlot
+      cartridgeSlot: !type:ContainerSlot
+      beanContainer: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - potSlot
+    - cartridgeSlot
+    - beanContainer
+  - type: UserInterface
+    interfaces:
+      enum.RadialSelectorUiKey.Key:
+        type: PirateCoffeemakerRadialMenuBUI
+  - type: ActivatableUI
+    key: enum.RadialSelectorUiKey.Key
+    singleUser: true
+
+- type: entity
+  id: CoffeemakerImpressaMachinePirate
+  parent: BaseMachinePowered
+  name: impressa coffeemaker
+  description: An industry-grade impressa coffeemaker. Makes coffee from dried whole beans.
+  components:
+  - type: Coffeemaker
+    usesBeans: true
+    cartridgeSlotId: null
+    brewTime: 15
+    steamOffset: 0, 0.4513
+    beanCapacity: 10
+    cups: 15
+    maxCups: 15
+    sugarPacks: 10
+    maxSugarPacks: 10
+    sweetenerPacks: 10
+    maxSweetenerPacks: 10
+    creamerPacks: 10
+    maxCreamerPacks: 10
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CoffeemakerVisuals.PotState:
+        pot:
+          None: { visible: false }
+          Empty: { visible: true, state: pot_empty }
+          Full: { visible: true, state: pot_full }
+      enum.CoffeemakerVisuals.CupsState:
+        cups:
+          None: { visible: false }
+          Low: { visible: true, state: cups_1 }
+          Medium: { visible: true, state: cups_2 }
+          High: { visible: true, state: cups_3 }
+      enum.CoffeemakerVisuals.HasSugar:
+        sugar:
+          True: { visible: true, state: extras_1 }
+          False: { visible: false }
+      enum.CoffeemakerVisuals.HasCreamer:
+        creamer:
+          True: { visible: true, state: extras_2 }
+          False: { visible: false }
+      enum.CoffeemakerVisuals.HasSweetener:
+        sweetener:
+          True: { visible: true, state: extras_3 }
+          False: { visible: false }
+      enum.CoffeemakerVisuals.GrinderState:
+        grinder:
+          None: { visible: false }
+          Half: { visible: true, state: grinder_half }
+          Full: { visible: true, state: grinder_full }
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/coffeemaker.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    offset: 0, 0.1875
+    layers:
+    - state: coffeemaker_impressa
+    - map: ["pot"]
+      state: pot_empty
+      visible: false
+    - map: ["cups"]
+      state: cups_1
+      visible: false
+    - map: ["sugar"]
+      state: extras_1
+      visible: false
+    - map: ["creamer"]
+      state: extras_2
+      visible: false
+    - map: ["sweetener"]
+      state: extras_3
+      visible: false
+    - map: ["grinder"]
+      state: grinder_half
+      visible: false
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: ApcPowerReceiver
+    powerLoad: 300
+  - type: ItemSlots
+    slots:
+      potSlot:
+        name: coffeemaker-slot-pot
+        insertOnInteract: false
+        startingItem: DrinkCoffeepotPirate
+        whitelist:
+          components:
+          - Coffeepot
+  - type: ContainerContainer
+    containers:
+      potSlot: !type:ContainerSlot
+      beanContainer: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - potSlot
+    - beanContainer
+  - type: UserInterface
+    interfaces:
+      enum.RadialSelectorUiKey.Key:
+        type: PirateCoffeemakerRadialMenuBUI
+  - type: ActivatableUI
+    key: enum.RadialSelectorUiKey.Key
+    singleUser: true

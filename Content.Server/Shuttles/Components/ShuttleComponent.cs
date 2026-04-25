@@ -37,7 +37,7 @@ namespace Content.Server.Shuttles.Components
         /// Maximum velocity.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseMaxLinearVelocity = 60f;
+        public float BaseMaxLinearVelocity = 40f; // Pirate edit - was 60f
 
         public const float MaxAngularVelocity = 4f;
 

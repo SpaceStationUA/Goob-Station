@@ -5,7 +5,7 @@
   description: Сповіщує про смерть робітника.
   categories: [ HideSpawnMenu ]
   components:
-  - type: Rattle
+  - type: RattleOnTrigger
     radioChannel: InterdynePrivat
     
 - type: entity

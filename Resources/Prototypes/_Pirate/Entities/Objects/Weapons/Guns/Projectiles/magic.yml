@@ -6,8 +6,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardMouse
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -19,8 +19,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: ArtifactCluwne
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -32,8 +32,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardBread
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -45,8 +45,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardChicken
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -58,8 +58,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardMonkey
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -71,8 +71,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardGoat
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -84,8 +84,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardCow
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -97,8 +97,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardPig
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 - type: entity
@@ -109,8 +109,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardHamster
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -122,8 +122,8 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardCat
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Body
 
@@ -133,6 +133,7 @@
   description: Brrrrr.
   parent: BaseBullet
   components:
+  - type: MagicDamageSource
   - type: Projectile
     damage:
       types:
@@ -151,6 +152,7 @@
   name: magic tesla ball
   description: 2 bajillion volts
   components:
+  - type: MagicDamageSource
   - type: TimedDespawn
     lifetime: 5
   - type: Sprite
@@ -180,6 +182,7 @@
   id: SpellswordBolt
   parent: BaseBullet
   components:
+  - type: MagicDamageSource
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
     layers:

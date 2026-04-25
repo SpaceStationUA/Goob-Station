@@ -62,6 +62,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Globalization; // Pirate: radio sounds
 using Content.Client.Administration.Managers;
 using Content.Client.Audio;
 using Content.Goobstation.Common.CCVar;
@@ -137,6 +138,18 @@ public sealed partial class AudioTab : Control
             SliderHighlightVolume,
             scale: 1f);
 
+        #region Pirate: radio sounds
+        Control.AddOption(new OptionSliderFloatCVar(
+            Control,
+            _cfg,
+            CCVars.RadioSoundsDelay,
+            SliderRadioSoundDelay,
+            0f,
+            4f,
+            0.1f,
+            (_, value) => Loc.GetString("ui-options-radio-sound-delay-value", ("seconds", value.ToString("0.0#", CultureInfo.InvariantCulture)))));
+        #endregion
+
         Control.AddOptionSlider(
             CCVars.MaxAmbientSources,
             SliderMaxAmbienceSounds,
@@ -149,6 +162,7 @@ public sealed partial class AudioTab : Control
         Control.AddOptionCheckBox(CCVars.EventMusicEnabled, EventMusicCheckBox);
         Control.AddOptionCheckBox(CCVars.AdminSoundsEnabled, AdminSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.BwoinkSoundEnabled, BwoinkSoundCheckBox);
+        Control.AddOptionCheckBox(CCVars.RadioSoundsEnabled, RadioSoundsCheckBox); // Pirate: radio sounds
 
         Control.Initialize();
     }

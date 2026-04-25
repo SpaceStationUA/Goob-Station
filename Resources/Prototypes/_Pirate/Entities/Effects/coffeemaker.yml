@@ -1,0 +1,30 @@
+- type: entity
+  id: EffectCoffeemakerSteamPirate
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+    anchored: true
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  id: EffectCoffeemakerSteamPuffPirate
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    color: "#FFFFFFB0"
+    scale: 1.0125, 1.0125
+    layers:
+    - shader: unshaded
+      sprite: _Pirate/Effects/coffeemaker_steam.rsi
+      state: steam
+  - type: FadingTimedDespawn
+    lifetime: 0
+    fadeOutTime: 1.4
+  - type: CoffeemakerSteamPuff
+  - type: Tag
+    tags:
+    - HideContextMenu

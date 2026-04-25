@@ -12,10 +12,10 @@
 - type: entity
   parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitCadet
-  name: футболка кадета
-  description: Футболка зроблена з міцної тканини, використовується кадетами Служби Безпеки
+  name: "уніформа кадета"
+  description: Уніформа, яка використовується кадетами Служби Безпеки. Немає ніяких знаків розрізнення чи шевронів, окрім букви К з тильної сторони.
   components:
   - type: Sprite
-    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/security_cadet.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/security_cadet.rsi
   - type: Clothing
-    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/security_cadet.rsi
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/security_cadet.rsi

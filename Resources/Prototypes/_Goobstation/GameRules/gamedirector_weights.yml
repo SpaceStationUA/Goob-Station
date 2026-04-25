@@ -16,16 +16,16 @@
 - type: weightedRandom
   id: GameDirector
   weights:
-    Traitor: 0.25
-    Changeling: 0.10
-    Nukeops: 0.05
-    Revolutionary: 0.05
-    Zombie: 0.04
+    Traitor: 0.18 # Pirate
+    Changeling: 0.06 # Pirate
+    Nukeops: 0.07 # Pirate
+    Revolutionary: 0.07 # Pirate
+    Zombie: 0.05 # Pirate
     Heretic: 0.11
     BlobGameMode: 0.05
-    Wizard: 0.025
-    CosmicCult: 0.05 # make it semi often so we can test it
-    Vampire: 0.08 # Pirate
+    Wizard: 0.03 # Pirate
+    CosmicCult: 0.03 # Pirate - make it semi often so we can test it
+    Vampire: 0.04 # Pirate
     #HonkOps: 0.01 # this test fail was real holy shit it was only a preset the entire a time i was lied too by myself
 
 
@@ -59,6 +59,7 @@
   modes:
   - Heretic
   - CosmicCult
+  - Changeling # Pirate
 
 - type: incompatibleModes
   id: BlobGameMode
@@ -92,3 +93,10 @@
   - BlobGameMode
   - CosmicCult
   - Heretic
+
+# Pirate VVV
+- type: incompatibleModes
+  id: Changeling
+  modes:
+  - Heretic
+  - CosmicCult

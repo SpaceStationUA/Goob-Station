@@ -1,0 +1,13 @@
+- type: startingGear
+  id: SkeletonDeathGear
+  equipment:
+    outerClothing: ClothingOuterSuitDeath
+    jumpsuit: ClothingUniformBlackDeath
+    shoes: ClothingShoesBootsMagDeath
+    neck: ClothingNeckCloakDeath
+    id: AgentIDCard
+    back: ClothingBackpackHoldingInvisible
+    belt: BoxFolderCentComClipboardDeath
+    ears: ClothingHeadsetAltCentCom
+  inhand:
+    - WeaponScytheDeath

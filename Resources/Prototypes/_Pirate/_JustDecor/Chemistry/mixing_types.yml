@@ -1,0 +1,20 @@
+- type: mixingCategory
+  id: WitchBrew
+  verbText: mixing-verb-witch-brew
+  icon:
+    sprite: Structures/Hydroponics/containers.rsi
+    state: claypot-large
+
+- type: mixingCategory
+  id: AlchemistDistill
+  verbText: mixing-verb-alchemist-distill
+  icon:
+    sprite: Structures/Machines/Medical/electrolysis.rsi
+    state: base
+
+- type: mixingCategory
+  id: OccultConvergence
+  verbText: mixing-verb-occult-convergence
+  icon:
+    sprite: Structures/Machines/Medical/centrifuge.rsi
+    state: base

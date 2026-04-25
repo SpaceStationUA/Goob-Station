@@ -19,11 +19,13 @@ SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
+<!-- Pirate: port and modified DV traits UI -->
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
+         xmlns:pirate="clr-namespace:Content.Client._Pirate.Traits.UI"
          HorizontalExpand="True">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10" HorizontalExpand="True">
@@ -98,17 +100,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                     <TextureButton Name="EmployerInfoButton" Scale="0.3 0.3" VerticalAlignment="Center"
                                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
                                     <OptionButton Name="EmployerButton" HorizontalAlignment="Right" />
-                                </BoxContainer>
-                                <!-- Lifepath -->
-                                <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-lifepath-label'}" />
-                                    <Control HorizontalExpand="True"/>
-                                    <TextureButton Name="LifepathInfoButton" Scale="0.3 0.3" VerticalAlignment="Center"
-                                                   ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
-                                    <OptionButton Name="LifepathButton" HorizontalAlignment="Right" />
-                                </BoxContainer>
-                                <BoxContainer HorizontalExpand="True" Margin="0 5 0 0">
-                                    <RichTextLabel Name="LifepathDescriptionLabel" MinHeight="35" MaxWidth="600" />
                                 </BoxContainer>
                                 <!-- end Pirate: port EE contractors -->
                                 <!-- Age -->
@@ -199,12 +190,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <BoxContainer Name="AntagList" Orientation="Vertical" />
                     </ScrollContainer>
                 </BoxContainer>
-                <BoxContainer Orientation="Vertical" Margin="10">
                     <!-- Traits -->
-                    <ScrollContainer VerticalExpand="True">
-                        <BoxContainer Name="TraitsList" Orientation="Vertical" />
-                    </ScrollContainer>
-                </BoxContainer>
+                    <!-- Pirate start: port and modified DV traits UI -->
+                    <pirate:TraitsTab Name="TraitsTab" />
+                    <!-- Pirate end: port and modified DV traits UI -->
                 <BoxContainer Name="MarkingsTab" Orientation="Vertical" Margin="10">
                     <!-- Markings -->
                     <ScrollContainer VerticalExpand="True">

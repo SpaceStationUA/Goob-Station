@@ -28,7 +28,7 @@
       - Chittin
       - Gruntish
       - NewKinPidgin # = Ka'rakk
-      - Marish
+      #- Marish Pirate, no marish implants
       - Moffic
       - Nehina
       - Nekomimetic
@@ -65,7 +65,7 @@
       - Chittin
       - Gruntish
       - NewKinPidgin # = Ka'rakk
-      - Marish
+      #- Marish Pirate
       - Moffic
       - Nehina
       - Nekomimetic
@@ -140,5 +140,20 @@
     - YowKriol
     spoken:
     - YowKriol
+    requires:
+    - TauCetiBasic
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: SignTranslatorImplant
+  name: sign translator implant
+  description: An implant giving the ability to understand and speak Sign Language.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TranslatorImplant
+    understood:
+    - Sign
+    spoken:
+    - Sign
     requires:
     - TauCetiBasic

@@ -73,3 +73,22 @@
     sprite: _Pirate/Clothing/OuterClothing/Coats/ip_labcoatblack.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/OuterClothing/Coats/ip_labcoatblack.rsi
+
+- type: entity
+  parent: ClothingOuterCoatAMG
+  id: ClothingOuterCoatBrigMedic
+  name: "халат бригмедика"
+  description: "Халат бригмедика, зроблений з міцної і легкої тканини, що забезпечує базовий захист. Ідеально підходе до сукні."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/brigmedic.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/brigmedic.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.5
+        Piercing: 0.7
+        Heat: 0.4
+        Caustic: 0.4

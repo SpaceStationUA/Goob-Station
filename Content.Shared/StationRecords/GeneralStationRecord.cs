@@ -45,6 +45,14 @@ public sealed record GeneralStationRecord
     [DataField]
     public string JobPrototype = string.Empty;
 
+    #region Pirate: records photos
+    [DataField]
+    public string Nationality = string.Empty;
+
+    [DataField]
+    public string Employer = string.Empty;
+    #endregion
+
     /// <summary>
     ///     Species tied to this station record.
     /// </summary>

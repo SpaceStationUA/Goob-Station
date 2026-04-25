@@ -137,6 +137,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared._Lavaland.Weapons;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Coordinates;
 using Content.Shared.Hands;
@@ -235,6 +236,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     /// If an attack is released within this buffer it's assumed to be full damage.
     /// </summary>
     public const float GracePeriod = 0.05f;
+    private const float ArmOrHandDisarmChanceMultiplier = 1.5f; // DOWNSTREAM-TPirates: combat actions
 
     public override void Initialize()
     {
@@ -482,6 +484,20 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             if (TryComp(held, out melee) &&
                 !melee.MustBeEquippedToUse)
             {
+                // Lavaland Change start
+                if (HasComp<MeleeWeaponRelayComponent>(held.Value))
+                {
+                    var relay = new GetRelayMeleeWeaponEvent();
+                    RaiseLocalEvent(held.Value, ref relay);
+                    if (relay.Handled && TryComp(relay.Found, out MeleeWeaponComponent? relayMelee))
+                    {
+                        weaponUid = relay.Found.Value;
+                        melee = relayMelee;
+                        return true;
+                    }
+                }
+                // Lavaland Change end
+
                 weaponUid = held.Value;
                 return true;
             }
@@ -719,7 +735,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Goobstation start
-        var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm);
+        var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm, damage); // Pirate: katana
         RaiseLocalEvent(target.Value, beforeEvent);
         if (beforeEvent.Cancelled)
             return;
@@ -877,7 +893,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 continue;
 
             // Goobstation start
-            var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm);
+            var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm, damage); // Pirate: katana
             RaiseLocalEvent(entity, beforeEvent);
             if (beforeEvent.Cancelled)
                 continue;
@@ -1173,6 +1189,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return true;
 
         var chance = CalculateDisarmChance(user, target, inTargetHand, combatMode);
+        #region DOWNSTREAM-TPirates: combat actions
+        if (TryComp<TargetingComponent>(user, out var targeting) && IsArmOrHandTarget(targeting.Target))
+        {
+            // Aiming at arms/hands should improve disarm odds, but not bypass stamina/health/item malus checks.
+            chance = Math.Clamp(chance * ArmOrHandDisarmChanceMultiplier, 0f, 1f);
+        }
+        #endregion
 
         _audio.PlayPredicted(combatMode.DisarmSuccessSound,
             user, user,
@@ -1250,9 +1273,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var userPos = TransformSystem.ToMapCoordinates(user.ToCoordinates()).Position;
         var targetPos = TransformSystem.ToMapCoordinates(target.ToCoordinates()).Position;
         var pushVector = (targetPos - userPos).Normalized() * force;
-
         var animated = HasComp<ItemComponent>(target);
-
         _throwing.TryThrow(target, pushVector, force * _shoveSpeed, animated: animated);
     }
 
@@ -1332,4 +1353,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             }
         }
     }
+    
+    #region DOWNSTREAM-TPirates: combat actions
+    private static bool IsArmOrHandTarget(TargetBodyPart targetPart)
+    {
+        return targetPart is TargetBodyPart.LeftArm
+            or TargetBodyPart.RightArm
+            or TargetBodyPart.LeftHand
+            or TargetBodyPart.RightHand;
+    }
+    #endregion
 }

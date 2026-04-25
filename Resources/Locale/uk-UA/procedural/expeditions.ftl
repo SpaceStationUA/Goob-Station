@@ -1,7 +1,7 @@
 salvage-expedition-structure-examine = Це завдання [color=#B02E26]на знищення[/color]
 salvage-expedition-structure-remaining = {$count ->
-     [one] залишилося {$count} структур.
-    *[other] {$count} структур залишилися.
+     [one] залишилася {$count} структура.
+    *[other] залишилося {$count} структур.
 }
 
 salvage-expedition-type = Місія

@@ -25,6 +25,10 @@ namespace Content.Shared.Chemistry
     public sealed class SharedReagentDispenser
     {
         public const string OutputSlotName = "beakerSlot";
+        #region Pirate: chem recipes
+        public const string RecipeDiskSlotName = "recipeDiskSlot";
+        public const int RecipeNameMaxLength = 16;
+        #endregion
     }
 
     [Serializable, NetSerializable]
@@ -145,12 +149,34 @@ namespace Content.Shared.Chemistry
 
         public readonly ReagentDispenserDispenseAmount SelectedDispenseAmount;
 
-        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, NetEntity? outputContainerEntity, List<ReagentInventoryItem> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
+        public readonly List<ReagentDispenserRecipeItem> SavedRecipes;// Pirate: chem recipes
+        public readonly bool HasRecipeDisk;// Pirate: chem recipes
+        public readonly List<ReagentDispenserRecipeItem> DiskRecipes;// Pirate: chem recipes
+        public readonly bool IsRecordingRecipe;// Pirate: chem recipes
+        public readonly List<ReagentQuantity> RecordingRecipeReagents;// Pirate: chem recipes
+
+        public ReagentDispenserBoundUserInterfaceState( // Pirate: chem recipes
+            ContainerInfo? outputContainer,
+            NetEntity? outputContainerEntity,
+            List<ReagentInventoryItem> inventory,
+            ReagentDispenserDispenseAmount selectedDispenseAmount,
+            List<ReagentDispenserRecipeItem> savedRecipes,
+            bool hasRecipeDisk,
+            List<ReagentDispenserRecipeItem> diskRecipes,
+            bool isRecordingRecipe,
+            List<ReagentQuantity> recordingRecipeReagents)
         {
             OutputContainer = outputContainer;
             OutputContainerEntity = outputContainerEntity;
             Inventory = inventory;
             SelectedDispenseAmount = selectedDispenseAmount;
+            #region Pirate: chem recipes
+            SavedRecipes = savedRecipes;
+            HasRecipeDisk = hasRecipeDisk;
+            DiskRecipes = diskRecipes;
+            IsRecordingRecipe = isRecordingRecipe;
+            RecordingRecipeReagents = recordingRecipeReagents;
+            #endregion
         }
     }
 
@@ -159,4 +185,103 @@ namespace Content.Shared.Chemistry
     {
         Key
     }
+    #region Pirate: chem recipes
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserRecipeItem(string name, Color color)
+    {
+        public string Name = name;
+        public Color Color = color;
+    }
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserStartRecipeRecordingMessage : BoundUserInterfaceMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserCancelRecipeRecordingMessage : BoundUserInterfaceMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserSaveRecipeMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Name;
+
+        public ReagentDispenserSaveRecipeMessage(string name)
+        {
+            Name = name;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserDispenseRecipeMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Name;
+
+        public ReagentDispenserDispenseRecipeMessage(string name)
+        {
+            Name = name;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserDeleteRecipeMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Name;
+
+        public ReagentDispenserDeleteRecipeMessage(string name)
+        {
+            Name = name;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserClearRecipesMessage : BoundUserInterfaceMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserSaveRecipeToDiskMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Name;
+
+        public ReagentDispenserSaveRecipeToDiskMessage(string name)
+        {
+            Name = name;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserCopyDiskRecipeMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Name;
+
+        public ReagentDispenserCopyDiskRecipeMessage(string name)
+        {
+            Name = name;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserDispenseDiskRecipeMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Name;
+
+        public ReagentDispenserDispenseDiskRecipeMessage(string name)
+        {
+            Name = name;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserDeleteDiskRecipeMessage : BoundUserInterfaceMessage
+    {
+        public readonly string Name;
+
+        public ReagentDispenserDeleteDiskRecipeMessage(string name)
+        {
+            Name = name;
+        }
+    }
+    #endregion
 }
