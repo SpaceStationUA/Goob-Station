@@ -17,7 +17,7 @@ employer_name_zenghupharmaceuticals = Зенг-Ху Фармасьютікалз
 
 employer_name_idrisincorporated = Ідріс Інкорпорейтед
 
-employer_name_zavodskoiinterstellar = Заводской Інтерстеллар
+employer_name_zavodskiyinterstellar = Заводський Інтерстеллар
 
 employer_name_orionexpress = Оріон Експрес
 

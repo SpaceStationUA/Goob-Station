@@ -228,7 +228,7 @@ namespace Content.Server.Nutrition.EntitySystems
                         // Pirate start - Smoke Sensitivity trait
                         var mixture = _atmos.GetContainingMixture((uid, transform), ignoreExposed: true, excite: true);
                         if (mixture != null)
-                            mixture.AdjustMoles(Gas.WaterVapor, 0.01f);
+                            mixture.AdjustMoles(Gas.WaterVapor, 0.1f);
                         // Pirate end - Smoke Sensitivity trait
                     }
                 }

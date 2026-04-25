@@ -1,0 +1,29 @@
+# Head
+# Neck
+# Ears
+# Back
+- type: loadout
+  id: HOPBackpack
+  equipment:
+    back: ClothingBackpackHOP
+
+- type: loadout
+  id: HOPBackpackSatchel
+  equipment:
+    back: ClothingBackpackSatchelHOP
+
+- type: loadout
+  id: HOPBackpackDuffel
+  equipment:
+    back: ClothingBackpackDuffelHOP
+
+- type: loadout
+  id: HOPBackpackMessengerBase
+  equipment:
+    back: ClothingBackpackMessengerBaseHOP
+# OuterClothing
+# Gloves
+# Shoes
+# ID
+# Eyes
+# Belt

@@ -421,6 +421,18 @@
   content:
     - ClothingBeltMilitaryWebbingBSOFilled
 
+#region Pirate: katana
+- type: selectableSet
+  id: BSOKendoSet
+  name: selectable-set-blueshield-kendo-name
+  description: selectable-set-blueshield-kendo-description
+  sprite:
+    sprite: _Pirate/Objects/Weapons/Melee/uchigatana.rsi
+    state: icon
+  content:
+    - ClothingBeltDarkKatanaSheathUchigatanaFilled # Pirate: katana
+#endregion Pirate: katana
+
 # Blueshield hardsuits
 
 - type: selectableSet

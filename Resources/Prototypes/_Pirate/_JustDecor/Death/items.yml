@@ -1,0 +1,263 @@
+- type: entity
+  id: WeaponScytheDeath
+  suffix: JustDecor, Death
+  name: Коса Смерті
+  parent: BaseItem
+  description: Коса, що випромінює загрозу. Лезо вкрите засохлою кров'ю.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _Pirate/_JustDecor/Clothing/Death/scythe.rsi
+    layers:
+      - state: icon
+  - type: MeleeWeapon
+    attackRate: 2
+    range: 1.3
+    damage:
+      types:
+       Slash: 15
+    wideAnimationRotation: 135
+    heavyStaminaCost: 2
+    angle: 120
+  - type: TeleportStrike
+    maxRange: 7
+    behindOffset: 0.5
+    returnDelay: 0.25
+  - type: Tool
+    qualities:
+      - Prying
+  - type: Utensil
+    breakChance: 0
+  - type: AutoRecharge
+    rechargeDuration: 10
+  - type: Tag
+    tags:
+    - Katana
+    - BotanyHatchet
+  - type: ThrowingAngle
+    angle: 315
+  - type: Clothing
+    sprite: _Pirate/_JustDecor/Clothing/Death/scythe.rsi
+    slots:
+    - back
+    - suitstorage
+  - type: BoneSaw
+    speed: 0.35
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_Shitmed/Medical/Surgery/saw.ogg
+  - type: Item
+    size: Ginormous
+    sprite: _Pirate/_JustDecor/Clothing/Death/scythe.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Structural: 5
+  - type: Reflect
+    reflectProb: .35
+    spread: 120
+    soundOnReflect:
+      path: /Audio/_DV/CosmicCult/cosmicsword_glance.ogg
+      params:
+        variation: 0.2
+        volume: -6
+  - type: Wieldable
+    wieldSound:
+      path: /Audio/_DV/CosmicCult/cosmic_wield.ogg
+      params:
+        variation: 0.2
+        volume: -2
+    unwieldSound:
+      path: /Audio/_DV/CosmicCult/cosmic_unwield.ogg
+      params:
+        variation: 0.2
+        volume: 0
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 12
+        Holy: 12
+  - type: Boomerang
+  - type: Execution
+
+- type: entity
+  suffix: JustDecor, Death
+  id: ClothingOuterSuitDeath
+  name: "Костюм Смерті"
+  description: "Здатися - це єдиний варіант..."
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing]
+  components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.1
+        Slash: 0.1
+        Piercing: 0.1
+        Heat: 0.1
+  - type: Unremoveable
+  - type: Storage
+    grid:
+    - 0,0,2,1
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: StorageFill
+    contents:
+      - id: AmnestizineHypospray
+      - id: BoxAmnestizineCartridge
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Armor/covert_armor.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Armor/covert_armor.rsi
+  - type: ModifyDelayedKnockdown
+    delayDelta: 3
+    knockdownTimeDelta: -3
+  - type: StaminaResistance
+    damageCoefficient: 0.5
+  - type: StripMenuInvisible # No peeking!
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+
+- type: entity
+  suffix: JustDecor, Death
+  id: BoxFolderCentComClipboardDeath
+  parent: BoxFolderCentComClipboard
+  components:
+  - type: StorageFill
+    contents:
+    - id: DeathTicket
+      amount: 10
+  - type: ItemSlots
+    slots:
+      pen_slot:
+        name: clipboard-slot-component-slot-name-pen
+        whitelist:
+          tags:
+          - Write
+        insertOnInteract: false
+        startingItem: PenFuture
+
+- type: entity
+  suffix: JustDecor, Death
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakDeath
+  name: "Стара мантія"
+  description: "Порвана мантія"
+  components:
+  - type: Sprite
+    scale: 0.6, 0.6
+    sprite: _Pirate/_JustDecor/Clothing/Death/cloakicon.rsi
+  - type: Clothing
+    sprite: _Pirate/_JustDecor/Clothing/Death/cloakequiped.rsi
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:Container { }
+      storagebase: !type:Container
+        ents: [ ]
+  - type: ToggleableClothing
+    requiredSlot: neck
+    blockUnequipWhenAttached: false
+    replaceCurrentClothing: true
+    clothingPrototypes:
+      head: ClothingHeadHatDeath
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatDeath
+  name: "Стара мантія"
+  description: "Порвана мантія"
+  categories: [ HideSpawnMenu ] 
+  components:
+  - type: Sprite
+    sprite: _Pirate/_JustDecor/Clothing/Death/cloakequiped.rsi
+  - type: Clothing
+    sprite: _Pirate/_JustDecor/Clothing/Death/cloakequiped.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformBlackDeath
+  name: "Чорна уніформа"
+  description: "Чорна уніформа"
+  components:
+  - type: Sprite
+    sprite: _Pirate/_JustDecor/Clothing/Death/uniform.rsi
+  - type: Clothing
+    sprite: _Pirate/_JustDecor/Clothing/Death/uniform.rsi
+
+- type: entity
+  suffix: JustDecor, Death
+  parent: ClothingShoesBootsMagEmergencyResponseTeam
+  id: ClothingShoesBootsMagDeath
+  name: "Черевики"
+  description: "Звук цих черевиків, це останнє, що ти почуєш..."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Shoes/Boots/deathsquad.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Shoes/Boots/deathsquad.rsi
+  - type: Item
+    sprite: _Goobstation/Clothing/Shoes/Boots/deathsquad.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.10
+    sprintModifier: 1.10
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHeavySuit
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 13 minutes of thrust
+      volume: 5
+      temperature: 293.15
+      moles:
+        - 1.025689525 # oxygen
+        - 1.025689525 # nitrogen
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: NoSlip
+
+- type: entity
+  suffix: JustDecor, Death
+  parent: ClothingBackpackHolding
+  id: ClothingBackpackHoldingInvisible
+  components:
+  - type: Clothing
+    sprite:  _Pirate/_JustDecor/Clothing/Death/back.rsi
+  - type: Item
+    sprite: Clothing/Back/Backpacks/holding.rsi
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,14,5
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 500
+      Silver: 187
+      Plasma: 375
+      Uranium: 37
+      BSCrystal: 50
+  - type: StaticPrice
+    price: 1850
+  - type: HideContrabandContent
+  - type: StripMenuInvisible

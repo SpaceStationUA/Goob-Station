@@ -50,7 +50,10 @@ public sealed class PredictedProjectileHitSystem : EntitySystem
 
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixtureId != SharedProjectileSystem.ProjectileFixture || !args.OtherFixture.Hard)
+        if (args.OurFixtureId != SharedProjectileSystem.ProjectileFixture)
+            return;
+
+        if (!args.OtherFixture.Hard)
             return;
 
         DoHit((uid, component, args.OurBody), args.OtherEntity, args.OtherFixture);
@@ -61,9 +64,7 @@ public sealed class PredictedProjectileHitSystem : EntitySystem
         if (!_projectileQuery.TryComp(uid, out var component) ||
             !_physicsQuery.TryComp(uid, out var physics) ||
             FindHardFixture(target) is not { } otherFixture)
-        {
             return;
-        }
 
         DoHit((uid, component, physics), target, otherFixture);
     }
@@ -115,10 +116,15 @@ public sealed class PredictedProjectileHitSystem : EntitySystem
 
         var modifiedDamage = damageable != null ? hitEv.Damage : null;
         var deleted = Deleted(target);
+        var hasPenetratable = HasComp<PenetratableComponent>(target);
+        var conservativeStop = false;
 
         if (modifiedDamage is not null)
         {
-            component.ProjectileSpent = !TryPenetrate((uid, component), target, modifiedDamage, damageRequired);
+            // The client does not know destructible thresholds, so non-piercing predicted projectiles
+            // stop conservatively on the first hard damageable hit unless the target explicitly supports penetration.
+            conservativeStop = !component.Penetrate && !hasPenetratable;
+            component.ProjectileSpent = conservativeStop || !TryPenetrate((uid, component), target, modifiedDamage, damageRequired);
         }
         else
         {

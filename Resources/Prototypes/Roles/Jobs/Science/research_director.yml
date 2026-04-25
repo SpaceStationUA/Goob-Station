@@ -212,9 +212,9 @@
   equipment:
     id: RnDPDA
     ears: ClothingHeadsetAltScience # Goobstation
-  storage:
-    back:
-    - Flash
+  #storage: # Pirate
+    #back: # Pirate
+    #- Flash # Pirate
     #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit

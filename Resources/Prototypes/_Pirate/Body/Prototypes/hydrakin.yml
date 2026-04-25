@@ -35,7 +35,7 @@
       organs:
         stomach: OrganHydrakinStomach
         liver: OrganHydrakinLiver
-        kidneys: OrganHumanKidneys
+        kidneys: OrganHydrakinKidneys
     right arm:
       part: RightArmHydrakin
       connections:

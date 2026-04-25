@@ -1,0 +1,38 @@
+- type: entity
+  parent: HolyKatana
+  id: NullrodHolyKatana
+  name: suncatcher
+  description: A sunlit ceremonial blade of dull gold, borne by a fallen swordsman seeking atonement.
+  components:
+  - type: DivineIntervention
+  - type: AlternatePrayable
+  - type: Reflect
+    reflectProb: 1
+    reflects:
+    - Magic
+    slotFlags:
+    - NONE
+  - type: Nullrod
+    DamageOnUntrainedUse:
+      types:
+        Slash: 15
+        Holy: 5
+      woundSeverityMultipliers:
+        Slash: 2
+    UntrainedUseString: nullrod-holyclaymore-untrained-usage-popup
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 15
+        Holy: 5
+      woundSeverityMultipliers:
+        Slash: 2
+  - type: TimedDeflectBlock
+    bonusDamagePerLevel:
+      Holy: 1.5
+      Slash: 1.5
+  - type: Tag
+    tags:
+    - Katana
+    - KatanaSheathable
+    - Nullrod

@@ -551,12 +551,14 @@
   actionPrototypes:
   - ActionResetStarGazerConsciousness
 
-### side paths
-#- type: hereticKnowledge
-#  id: RitualOfKnowledge
-#  sideKnowledge: true
-#  ritualPrototypes:
-#  - RitualOfKnowledge
+# Pirate uncomment
+## side paths
+- type: hereticKnowledge
+  id: RitualOfKnowledge
+  sideKnowledge: true
+  ritualPrototypes:
+  - RitualOfKnowledge
+# Pirate end
 
 ## stage 3
 - type: hereticKnowledge

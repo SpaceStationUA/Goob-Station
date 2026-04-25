@@ -1,0 +1,72 @@
+- type: entity
+  parent: Katana
+  id: HolyKatana
+  name: suncatcher
+  description: A sunlit ceremonial blade of dull gold, borne by a fallen swordsman seeking atonement.
+  components:
+  - type: Contraband
+    severity: Restricted
+    allowedDepartments: [ Civilian ]
+  - type: Tag
+    tags:
+    - Katana
+    - KatanaSheathable
+  - type: KatanaSheathHandle
+    sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+    inventoryState: handle-ICON
+    beltState: handle-BELT
+    backpackState: handle-BACKPACK
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+    state: dormant-icon
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+    heldPrefix: dormant
+    storedSprite: null
+    shape:
+    - 0,0,0,3
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+    equippedPrefix: dormant
+    slots:
+    - Back
+    - Belt
+  - type: Wieldable
+    wieldedInhandPrefix: dormant-wielded
+  - type: TimedDeflectBlock
+    bonusDamagePerLevel:
+      Holy: 1.5
+      Slash: 1.5
+  - type: ItemSwitch
+    state: dormant
+    onActivate: false
+    onUse: false
+    states:
+      dormant: !type:ItemSwitchState
+        sprite:
+          sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+          state: dormant-icon
+      level-1: !type:ItemSwitchState
+        sprite:
+          sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+          state: level-1-icon
+      level-2: !type:ItemSwitchState
+        sprite:
+          sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+          state: level-2-icon
+      level-3: !type:ItemSwitchState
+        sprite:
+          sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+          state: level-3-icon
+      level-4: !type:ItemSwitchState
+        sprite:
+          sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+          state: level-4-icon
+      level-5: !type:ItemSwitchState
+        sprite:
+          sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+          state: level-5-icon
+      level-6: !type:ItemSwitchState
+        sprite:
+          sprite: _Pirate/Objects/Weapons/Melee/holy_katana.rsi
+          state: level-6-icon

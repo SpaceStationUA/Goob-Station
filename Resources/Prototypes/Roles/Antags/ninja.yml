@@ -105,7 +105,7 @@
     ears: ClothingHeadsetGrey
     pocket1: SpiderCharge
     pocket2: PinpointerStation
-    belt: EnergyKatana
+    belt: ClothingBeltEnergyKatanaSheathFilled # Pirate: katana
   inhand:
     - JetpackBlackFilled
     - NinjutsuScroll # Goobstation

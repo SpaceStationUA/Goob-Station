@@ -194,9 +194,9 @@
     ears: ClothingHeadsetAltCargo # Goobstation
     belt: BoxFolderClipboard
     pocket1: AppraisalTool
-  storage:
-    back:
-    - Flash
+  #storage: # Pirate
+    #back: # Pirate
+    #- Flash # Pirate
     #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit

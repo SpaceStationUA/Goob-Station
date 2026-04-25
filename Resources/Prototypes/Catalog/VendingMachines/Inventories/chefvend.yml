@@ -124,5 +124,6 @@
     FoodFrozenSandwich: 2
     FoodFrozenSandwichStrawberry: 2
   emaggedInventory: # Goobstation
+    Katana: 2 # Pirate: katana
     WeaponCroissant: 3
     WeaponBaguette: 2

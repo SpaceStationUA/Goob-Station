@@ -87,7 +87,7 @@
   - !type:CharacterEmployerRequirement
     employers:
     - NanoTrasen
-    - ZavodskoiInterstellar
+    - ZavodskiyInterstellar
     - PMCG
   # Pirate contractor end
   startingGear: DetectiveGear
