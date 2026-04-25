@@ -1,0 +1,61 @@
+- type: entity
+  id: JustDecorHandTeleporterInvisible
+  suffix: JustDecor, Portal
+  parent: BaseItem
+  name: Invisible
+  components:
+  - type: Sprite
+    sprite: /Textures/Objects/Devices/hand_teleporter.rsi
+    layers:
+    - state: icon
+      color: green
+  - type: HandTeleporter
+    allowPortalsOnDifferentGrids: true
+    allowPortalsOnDifferentMaps: true
+    firstPortalPrototype: JustDecorPortalGatewayBlue
+    secondPortalPrototype: JustDecorPortalGatewayOrange
+
+- type: entity
+  id: JustDecorBasePortal
+  abstract: true
+  name: Портал
+  components:
+  - type: Transform
+    anchored: True
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+  - type: Portal
+
+
+- type: entity
+  id: JustDecorPortalGatewayBlue
+  parent: JustDecorBasePortal
+  components:
+  - type: PointLight
+    color: SkyBlue
+    radius: 3
+    energy: 1
+    netsync: false
+
+- type: entity
+  id: JustDecorPortalGatewayOrange
+  parent: JustDecorBasePortal
+  components:
+  - type: PointLight
+    color: OrangeRed
+    radius: 3
+    energy: 1
+    netsync: false

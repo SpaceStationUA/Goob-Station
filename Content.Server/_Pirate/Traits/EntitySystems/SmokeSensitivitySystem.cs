@@ -17,7 +17,7 @@ public sealed class SmokeSensitivitySystem : EntitySystem
     private const string MaskSlot = "mask";
     private const string HeadSlot = "head";
     private const string CoughEmoteId = "Cough";
-    private const float MinWaterVaporMoles = 0.000001f;
+    private const float MinWaterVaporMoles = 0.1f;
 
     public override void Update(float frameTime)
     {
@@ -71,6 +71,6 @@ public sealed class SmokeSensitivitySystem : EntitySystem
     private bool HasWaterVapor(EntityUid uid, TransformComponent xform)
     {
         var mixture = _atmos.GetContainingMixture((uid, xform), ignoreExposed: true);
-        return mixture != null && mixture.GetMoles(Gas.WaterVapor) > MinWaterVaporMoles;
+        return mixture != null && mixture.GetMoles(Gas.WaterVapor) >= MinWaterVaporMoles;
     }
 }

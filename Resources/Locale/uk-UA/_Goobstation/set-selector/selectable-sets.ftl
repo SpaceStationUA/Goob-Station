@@ -215,7 +215,7 @@ selectable-set-syndicate-builder-description = Ламати веселіше, н
 selectable-set-blueshield-dragon-name = набір посібників з кунг-фу
 selectable-set-blueshield-dragon-description = Іноді доводиться бруднити руки.
     Включає: Книгу, здатну навчити користувача
-    просунутому бойовому мистецтву кунг-фу.
+    просунутому бойовому мистецтву кунг-фу
 selectable-set-syndicate-western-name = Західний набір
 selectable-set-syndicate-western-description = Запали західну голо-сигару, нахили капелюха й дозволь музиці заграти.
     Містить: західна голо-сигара, шифрувальний ключ Синдикату,

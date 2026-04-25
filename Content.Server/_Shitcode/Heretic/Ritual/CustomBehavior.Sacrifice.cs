@@ -142,8 +142,7 @@ namespace Content.Server.Heretic.Ritual;
     {
         _mobStateQuery ??= args.EntityManager.GetEntityQuery<MobStateComponent>(); // Pirate
         _damageable ??= args.EntityManager.System<DamageableSystem>(); // Pirate
-    
-            uids = new();
+
         var heretic = args.Mind.Comp;
 
         if (!args.EntityManager.TryGetComponent(args.Mind, out StoreComponent? store) ||
@@ -167,50 +166,49 @@ namespace Content.Server.Heretic.Ritual;
                     ? isCommand || isSec || isHeretic ? 3f : 2f
                     : 0f;
 
-        // Pirate start
-        if (!args.EntityManager.TryGetComponent<BodyComponent>(uid, out var body))
-            continue;
+            // Pirate start
+            if (!args.EntityManager.TryGetComponent<BodyComponent>(uid, out var body))
+                continue;
 
-        // Kill critical targets with massive asphyxiation damage
-        if (_mobStateQuery.Value.TryComp(uid, out var mobState) && mobState.CurrentState == MobState.Critical)
-        {
-            var proto = _proto ?? IoCManager.Resolve<IPrototypeManager>();
-            var asphyxiation = new DamageSpecifier(proto.Index<DamageTypePrototype>("Asphyxiation"), 1000f);
-            var damageable = _damageable ?? args.EntityManager.System<DamageableSystem>();
-            damageable.TryChangeDamage(uid, asphyxiation, ignoreResistances: true, interruptsDoAfters: true,
-                origin: args.Performer, targetPart: TargetBodyPart.All, ignoreBlockers: true);
-        }
+            // Kill critical targets with massive asphyxiation damage
+            if (_mobStateQuery.Value.TryComp(uid, out var mobState) && mobState.CurrentState == MobState.Critical)
+            {
+                var proto = _proto ?? IoCManager.Resolve<IPrototypeManager>();
+                var asphyxiation = new DamageSpecifier(proto.Index<DamageTypePrototype>("Asphyxiation"), 1000f);
+                var damageable = _damageable ?? args.EntityManager.System<DamageableSystem>();
+                damageable.TryChangeDamage(uid, asphyxiation, ignoreResistances: true, interruptsDoAfters: true,
+                    origin: args.Performer, targetPart: TargetBodyPart.All, ignoreBlockers: true);
+            }
 
-        // Get all organs from the body
-        var allOrgans = _body.GetBodyOrgans(uid, body).ToList();
-        // Filter out brain and kidneys
-        var eligibleOrgans = allOrgans
-            .Where(o => o.Component.SlotId != "brain" && o.Component.SlotId != "kidneys")
-            .Select(o => o.Id)
-            .ToList();
+            // Get all organs from the body
+            var allOrgans = _body.GetBodyOrgans(uid, body).ToList();
+            // Filter out brain and kidneys
+            var eligibleOrgans = allOrgans
+                .Where(o => o.Component.SlotId != "brain" && o.Component.SlotId != "kidneys")
+                .Select(o => o.Id)
+                .ToList();
 
-        // Select 1-3 random organs and drop them at ritual site
-        if (_random == null)
-        {
-            continue;
-        }
-        var numToExtract = _random.Next(1, 4);
-        var organsToExtract = eligibleOrgans
-            .OrderBy(_ => _random.Next())
-            .Take(Math.Min(numToExtract, eligibleOrgans.Count))
-            .ToList();
-        foreach (var organ in organsToExtract)
-        {
-            _body.RemoveOrgan(organ);
-        }
+            // Select 1-3 random organs and drop them at ritual site
+            if (_random == null)
+            {
+                continue;
+            }
+            var numToExtract = _random.Next(1, 4);
+            var organsToExtract = eligibleOrgans
+                .OrderBy(_ => _random.Next())
+                .Take(Math.Min(numToExtract, eligibleOrgans.Count))
+                .ToList();
+            foreach (var organ in organsToExtract)
+            {
+                _body.RemoveOrgan(organ);
+            }
 
-        // Teleport the corpse to a random safe location on the station
-        if (_randomTeleport.RandomTeleportToStation(uid, 50, false) != null)
-            continue;
+            // Teleport the corpse to a random safe location on the station
+            _randomTeleport.RandomTeleportToStation(uid, 50, false);
 
-        // Remove sacrificed target from heretic target list
-        heretic.SacrificeTargets.RemoveAll(x => x.Entity == args.EntityManager.GetNetEntity(uid));
-        //Pirate end
+            // Remove sacrificed target from heretic target list
+            heretic.SacrificeTargets.RemoveAll(x => x.Entity == args.EntityManager.GetNetEntity(uid));
+            //Pirate end
 
             // Sacrificed heretics lose their powers forever
             if (otherMind != EntityUid.Invalid && otherHeretic is { } h)

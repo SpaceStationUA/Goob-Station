@@ -76,7 +76,7 @@ public sealed partial class GunSystem
 
                 if (!ev.Reflected)
                 {
-                    blocked = TryAttemptHitscanBlock(user, gunUid, hit);
+                    blocked = TryAttemptHitscanBlock(user, gunUid, hit, hitscan);
                     FirePredictedHitscanEffects(effectCoordinates, result.Distance, dir.Normalized().ToAngle(), hitscan, blocked);
                     break;
                 }

@@ -34,9 +34,9 @@ public abstract partial class SharedGunSystem
             Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
     }
 
-    protected bool TryAttemptHitscanBlock(EntityUid? user, EntityUid gunUid, EntityUid hitEntity)
+    protected bool TryAttemptHitscanBlock(EntityUid? user, EntityUid gunUid, EntityUid hitEntity, HitscanPrototype hitscan)
     {
-        var blockEv = new HitScanBlockAttemptEvent(user, gunUid, hitEntity);
+        var blockEv = new HitScanBlockAttemptEvent(user, gunUid, hitEntity, hitscan.Damage);
         RaiseLocalEvent(hitEntity, ref blockEv);
         return blockEv.Cancelled;
     }

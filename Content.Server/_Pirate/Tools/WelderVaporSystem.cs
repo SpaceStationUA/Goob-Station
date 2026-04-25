@@ -11,7 +11,7 @@ public sealed class WelderVaporSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
 
     private const float UpdateInterval = 1.0f;
-    private const float VaporAmountPerUpdate = 0.02f;
+    private const float VaporAmountPerUpdate = 0.20f;
     private float _accumulator;
 
     public override void Update(float frameTime)

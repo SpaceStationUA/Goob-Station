@@ -4,7 +4,7 @@
 
 - type: entity
   id: BaseHydrakinOrgan
-  name: "орган гідракіна"
+  name: hydrakin organ 
   parent: [BaseItem]
   abstract: true
   components:
@@ -27,7 +27,7 @@
 - type: entity
   id: OrganHydrakinStomach
   parent: BaseHydrakinOrgan
-  name: "шлунок гідракіна"
+  name: hydrakin stomach
   components:
   - type: Sprite
     state: stomach
@@ -50,7 +50,7 @@
 - type: entity
   id: OrganHydrakinBrain
   parent: [ BaseHydrakinOrgan, OrganHumanBrain ]
-  name: "мозок гідракіна"
+  name: hydrakin brain
   components:
   - type: Sprite
     state: brain
@@ -61,7 +61,7 @@
 - type: entity
   id: OrganHydrakinLiver
   parent: [ BaseHydrakinOrgan ]
-  name: "печінка гідракіна"
+  name: hydrakin liver
   components:
   - type: Sprite
     layers:
@@ -74,7 +74,7 @@
   - type: Organ # Shitmed Change
     slotId: liver # Shitmed Change
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
-    metabolizerTypes: [Human]
+    metabolizerTypes: [ Hydrakin ]
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
@@ -82,16 +82,20 @@
 - type: entity
   id: OrganHydrakinHeart
   parent: [ BaseHydrakinOrgan , OrganHumanHeart ]
-  name: "серце гідракіна"
+  name: hydrakin heart
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Hydrakin ]
+    metabolizerTypes: [ Animal, Hydrakin ]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
 
 - type: entity
   id: OrganHydrakinLungs
   parent: BaseHydrakinOrgan
-  name: "легені гідракіна"
-  description: "Легені гідракіна, здатні переробляти будь-який газ без негативних наслідків."
+  name: hydrakin lungs
+  description: "Hydrakin lungs, capable of processing any gas without negative effects."
   components:
   - type: Sprite
     layers:
@@ -127,3 +131,22 @@
           Quantity: 5
         - ReagentId: AmmoniaBlood
           Quantity: 5
+
+- type: entity
+  id: OrganHydrakinKidneys
+  parent: BaseHydrakinOrgan
+  name: hydrakin kidneys
+  components:
+  - type: Sprite
+    layers:
+    - state: kidney-l
+    - state: kidney-r
+  - type: Organ
+    slotId: kidneys
+  - type: Metabolizer
+    maxPoisonsProcessable: 5
+    metabolizerTypes: [ Hydrakin ]
+    removeEmpty: true
+  - type: Item
+    size: Small
+    heldPrefix: kidneys

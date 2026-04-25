@@ -1,0 +1,7 @@
+- type: entity
+  id: DeathTicket
+  suffix: Death
+  parent: Paper
+  components:
+  - type: Paper
+    content: doc-text-death-ticket
