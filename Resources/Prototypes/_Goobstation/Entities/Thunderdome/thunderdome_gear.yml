@@ -110,8 +110,8 @@
     belt: ClothingBeltDarkKatanaSheathUchigatanaFilled
   storage:
     back:
-      - Stimpack
-      - Stimpack
+      - StimpackMini
+      - StimpackMini
 #endregion Pirate: katana
 
 - type: startingGear

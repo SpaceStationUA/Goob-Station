@@ -684,6 +684,7 @@
     - NotekeeperCartridge
     - NanoTaskCartridge
     - NewsReaderCartridge
+    - StockTradingCartridge # Pirate port - Delta-V stocks trading
     - AstroNavCartridge
     - MailMetricsCartridge
     - NanoChatCartridge # DeltaV
@@ -706,6 +707,15 @@
     borderColor: "#e39751"
   - type: Icon
     state: pda-cargo
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - StockTradingCartridge # Pirate port - Delta-V stocks trading
+    - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA

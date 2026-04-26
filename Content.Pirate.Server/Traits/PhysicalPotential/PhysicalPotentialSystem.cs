@@ -1,6 +1,5 @@
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Goobstation.Shared.Sprinting;
-using Content.Shared._Pirate.Stunnable;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Cloning.Events;
@@ -16,6 +15,13 @@ using Robust.Shared.Random;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Content.Shared.Alert;
+using Content.Shared.Examine;
+using Content.Shared.Standing;
+using Content.Shared.IdentityManagement;
+using Robust.Shared.Enums;
+using Content.Shared.Humanoid;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Pirate.Server.Traits.PhysicalPotential
 {
@@ -33,11 +39,13 @@ namespace Content.Pirate.Server.Traits.PhysicalPotential
             base.Initialize();
             SubscribeLocalEvent<MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<PhysicalPotentialComponent, DamageModifyEvent>(OnDamageModify);
-            SubscribeLocalEvent<PhysicalPotentialComponent, ForcedStandSucceededEvent>(OnForcedStandSucceeded);
+            SubscribeLocalEvent<PhysicalPotentialComponent, StoodEvent>(OnStood);
 
             SubscribeLocalEvent<PhysicalPotentialComponent, ComponentInit>(OnComponentInit);
 
             SubscribeLocalEvent<PhysicalPotentialComponent, CloningEvent>(OnClone);
+
+            SubscribeLocalEvent<PhysicalPotentialComponent, ExaminedEvent>(OnExamine);
         }
 
         private void OnComponentInit(EntityUid uid, PhysicalPotentialComponent comp, ComponentInit args)
@@ -168,7 +176,7 @@ namespace Content.Pirate.Server.Traits.PhysicalPotential
         }
 
         // -- PUSH-UP --
-        private void OnForcedStandSucceeded(EntityUid uid, PhysicalPotentialComponent comp, ForcedStandSucceededEvent args)
+        private void OnStood(EntityUid uid, PhysicalPotentialComponent comp,StoodEvent args)
         {
             if (!TryComp<MeleeWeaponComponent>(uid, out var melee)) return;
 
@@ -247,9 +255,6 @@ namespace Content.Pirate.Server.Traits.PhysicalPotential
             comp.IsResting = true;
         }
 
-
-
-
         private void HandleRecovery(EntityUid uid, PhysicalPotentialComponent comp)
         {
             if (!TryComp<MobStateComponent>(uid, out var mob) || mob.CurrentState != MobState.Alive) return;
@@ -292,15 +297,11 @@ namespace Content.Pirate.Server.Traits.PhysicalPotential
             }
 
             // Update stamina bonus
-            if (TryComp<StaminaComponent>(uid, out var stamina))
+            if (TryComp<StaminaComponent>(uid, out var stamina) && comp.StaminaBonus < comp.MaxStamina)
             {
-                var staminaIncrease = MathF.Min(strain.Stamina, comp.MaxStamina - stamina.CritThreshold);
-                if (staminaIncrease > 0f)
-                {
-                    stamina.CritThreshold += staminaIncrease;
-                    comp.StaminaBonus += staminaIncrease;
-                    Dirty(uid, stamina);
-                }
+                stamina.CritThreshold += strain.Stamina;
+                comp.StaminaBonus += strain.Stamina;
+                Dirty(uid, stamina);
             }
 
             comp.Strains.RemoveAt(comp.Strains.Count - 1);
@@ -318,19 +319,13 @@ namespace Content.Pirate.Server.Traits.PhysicalPotential
         }
         #endregion
 
-        #region Alert
         private void UpdateAlert(EntityUid uid, PhysicalPotentialComponent comp)
         {
-            short stateIndex = (short) Math.Clamp(Math.Round(comp.PowerLevel / 10f * 9f), 0, 9);
+            short stateIndex = (short) Math.Clamp(Math.Round(comp.PowerLevel * 1.8f), 0, 9);
 
             _alertsSystem.ShowAlert(uid, "PhysicalPotential", stateIndex);
         }
 
-
-
-
-
-        #endregion
 
         private void OnClone(Entity<PhysicalPotentialComponent> ent, ref CloningEvent args)
         {
@@ -377,6 +372,34 @@ namespace Content.Pirate.Server.Traits.PhysicalPotential
             }
 
             Dirty(args.CloneUid, clone);
+        }
+
+        private void OnExamine(EntityUid uid, PhysicalPotentialComponent comp, ExaminedEvent args)
+        {
+            if (comp.PowerLevel < 1.4f) return;
+
+            string key = comp.PowerLevel switch
+            {
+                >= 4f => "system-physical-potential-examine-level3",
+                >= 3f => "system-physical-potential-examine-level2",
+                _ => "system-physical-potential-examine-level1",
+            };
+
+            // Використовуємо логіку, яку ти знайшов:
+            var entityGender = Gender.Neuter; // за замовчуванням
+
+            if (TryComp<HumanoidAppearanceComponent>(uid, out var humanoid))
+            {
+                entityGender = humanoid.Gender;
+            }
+            else if (TryComp<GrammarComponent>(uid, out var grammar))
+            {
+                entityGender = grammar.Gender ?? Gender.Neuter;
+            }
+
+            // Передаємо об'єкт Gender безпосередньо. 
+            // Fluent сам зрозуміє його як male/female/neuter/epicene.
+            args.PushMarkup(Loc.GetString(key, ("gender", (object) entityGender)));
         }
     }
 }

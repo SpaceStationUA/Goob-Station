@@ -23,8 +23,8 @@
   nameKey: employer_name_hephaestusindustries
 
 - type: employer
-  id: ZavodskoiInterstellar
-  nameKey: employer_name_zavodskoiinterstellar
+  id: ZavodskiyInterstellar
+  nameKey: employer_name_zavodskiyinterstellar
 
 - type: employer
   id: PMCG

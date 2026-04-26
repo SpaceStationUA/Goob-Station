@@ -6,3 +6,7 @@ queue-patreon = Дякуємо за підтримку на Patreon! Ваша п
 
 queue-position-label = Позиція
 queue-total-label = У черзі
+queue-estimated-wait = Прибл. очікування: ~{$minutes} хв
+queue-estimated-wait-soon = Прибл. очікування: <1 хв
+queue-estimated-wait-unknown = Прибл. очікування: обчислюється...
+queue-server-info = {$map} · {$mode} · {$players}/{$max} гравців · Раунд: {$duration} хв

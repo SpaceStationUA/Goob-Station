@@ -18,4 +18,4 @@ alerts-changeling-adrenaline-desc = Оглушення, збивання з ні
 alerts-changeling-panacea-name = Анатомічна панацея
 alerts-changeling-panacea-desc = Нефізичні пошкодження зцілюються! Хвороби, хімікати та вплив наркотиків очищуються. [color=red]Ефект припиняється, якщо ви горите або мертві.[/color]
 alerts-changeling-voidadapt-name = Адаптація до порожнечі
-alerts-changeling-voidadapt-desc = Відбувається адаптація до екстремально низьких показників. [color=yellow]Хімічна регенерація знижена на 25%[/color]. [color=red]Ефект припиняється, якщо ви горите.[/color]
+alerts-changeling-voidadapt-desc = Відбувається адаптація до екстремально низьких умов. [color=yellow]Хімічна регенерація зупинена[/color]. [color=red]Ефект припиняється, доки ви горите.[/color]
