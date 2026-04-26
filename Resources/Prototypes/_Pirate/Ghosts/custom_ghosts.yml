@@ -347,3 +347,12 @@
   alpha: 1
   ghostName: Ітан Лі
   ghostDescription: От і догрався
+
+- type: customGhost
+  id: The_Question-ghost
+  ckey: The_Question
+  sprite:
+    - _Pirate/Ghosts/The_Question.rsi
+  alpha: 1
+  ghostName: The_Question
+  ghostDescription: Хтось сказав ERP?
