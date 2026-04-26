@@ -90617,9 +90617,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,27.5
       parent: 2
-    - type: DeviceList
-      devices:
-      - 13742
 - proto: WeaponEnergyTurretSecurity
   entities:
   - uid: 13744
