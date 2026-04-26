@@ -1,10 +1,10 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "made by Vareniko inspired by old Sol Alliance flag from Aurora Station lore: https://wiki.aurorastation.org/index.php/File:Old_Sol.png",
+    "copyright": "Made by The_Question for self using",
     "size": {
-      "x": 32,
-      "y": 32
+      "x": 64,
+      "y": 64
     },
     "states": [
         {
