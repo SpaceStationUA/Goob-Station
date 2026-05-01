@@ -29,6 +29,12 @@ poll-command-create-success = Опитування успішно створен
 poll-command-create-fail = Не вдалося створити опитування.
 poll-command-close-success = Опитування {$id} було закрито.
 poll-command-list-no-polls = Немає активних опитувань.
-poll-command-info-not-found = Опитування {$id} не знайдено
+poll-command-info-not-found = Опитування {$id} не знайдено.
 cmd-polls-desc = Відкриває вікно опитувань спільноти.
 cmd-polls-help = Використання: polls
+
+poll-control-seen-by = { $count ->
+    [one] Переглянув {$count} гравець
+    [few] Переглянули {$count} гравці
+   *[other] Переглянули {$count} гравців
+}

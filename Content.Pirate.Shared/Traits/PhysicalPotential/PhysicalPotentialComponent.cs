@@ -54,7 +54,7 @@ namespace Content.Pirate.Shared.Traits.PhysicalPotential
         public FixedPoint2 DefenseBonus = new();
 
         [DataField("maxDefenseBonus"), ViewVariables(VVAccess.ReadWrite)]
-        public float MaxDefenseBonus = 0.3f;
+        public float MaxDefenseBonus = 5f;
         #endregion
 
         #region Stamina and Sprint
@@ -74,15 +74,15 @@ namespace Content.Pirate.Shared.Traits.PhysicalPotential
         #endregion
 
         [DataField("pushUpsEfficiency"), ViewVariables(VVAccess.ReadWrite)]
-        public float PushUpsEfficiency = 0.5f;
+        public float PushUpsEfficiency = 0.2f;
 
         #region Rest
         [DataField("timeForRest"), ViewVariables(VVAccess.ReadWrite)]
         public float TimeForRest = 180f;
 
-        [ViewVariables] public TimeSpan EndRestTime;
-        [ViewVariables] public bool IsResting;
-        [ViewVariables] public TimeSpan NextStrainTime;
+        public TimeSpan EndRestTime;
+        public bool IsResting;
+        public TimeSpan NextStrainTime;
         #endregion
 
         #region Strain
@@ -96,6 +96,7 @@ namespace Content.Pirate.Shared.Traits.PhysicalPotential
         public float HungerCost = 1f;
         #endregion
 
+        [ViewVariables(VVAccess.ReadOnly)]
         public float PowerLevel
         {
             get
@@ -103,7 +104,7 @@ namespace Content.Pirate.Shared.Traits.PhysicalPotential
                 // Перетворюємо кожну частину у float перед додаванням
                 float damage = DamageBonus.GetTotal().Float();
                 float defense = DefenseBonus.Float();
-                float stamina = (StaminaBonus / 50f);
+                float stamina = (StaminaBonus / 40f);
 
                 return (damage + defense + stamina) / 3f;
             }
