@@ -1,0 +1,14 @@
+- type: gamePreset
+  id: Relaxed
+  alias:
+  - relaxed
+  - relax
+  - розслаблений
+  name: relaxed-title
+  showInVote: true
+  description: relaxed-description
+  rules:
+  - BasicStationEventSchedulerNoAntag
+  - ParadoxCloneSpawn
+  - Devil
+  - BasicRoundstartVariation
