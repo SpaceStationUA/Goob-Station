@@ -18,6 +18,8 @@
   - MagazineBoxShotgunHighCaliber
   - MagazineBoxShotgunSlugHighCaliber
   - MagazineBoxShotgunPracticeHighCaliber
+  - MagazineShotgunLeverRifle # Pirate - tweak recipes | Add BSO rifle mags to goob ammo pack
+  - MagazineShotgunLeverRifleEmpty # Pirate - tweak recipes | Add BSO rifle mags to goob ammo pack
 
 - type: latheRecipePack
   id: SecurityEquipmentStaticGoob

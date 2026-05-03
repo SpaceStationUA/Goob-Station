@@ -58,10 +58,12 @@ public sealed partial class DevilContractSystem : EntitySystem
 
     private ISawmill _sawmill = null!;
 
+    private readonly Dictionary<string, string> _ukrainianClauseToIdMap = new(); // Pirate
     public override void Initialize()
     {
         base.Initialize();
         InitializeRegex();
+        InitializeUkrainianClauseMap(); // Pirate
         InitializeSpecialActions();
 
         SubscribeLocalEvent<DevilContractComponent, BeingSignedAttemptEvent>(OnContractSignAttempt);
@@ -303,9 +305,16 @@ public sealed partial class DevilContractSystem : EntitySystem
             if (!match.Success)
                 continue;
 
+            // Pirate V
             var clauseKey = match.Groups["clause"].Value.Trim().ToLowerInvariant().Replace(" ", "");
+            var finalClauseId = clauseKey;
 
-            if (!_prototypeManager.TryIndex(clauseKey, out DevilClausePrototype? clauseProto)
+            if (_ukrainianClauseToIdMap.TryGetValue(clauseKey, out var mappedId))
+            {
+                finalClauseId = mappedId;
+            }
+			// Pirate ^
+            if (!_prototypeManager.TryIndex(finalClauseId, out DevilClausePrototype? clauseProto) // Pirate
                 || !contract.Comp.CurrentClauses.Add(clauseProto))
                 continue;
 
@@ -332,7 +341,14 @@ public sealed partial class DevilContractSystem : EntitySystem
 
             var targetKey = match.Groups["target"].Value.Trim().ToLowerInvariant().Replace(" ", "");
             var clauseKey = match.Groups["clause"].Value.Trim().ToLowerInvariant().Replace(" ", "");
+			// Pirate V
+            var finalClauseId = clauseKey;
 
+            if (_ukrainianClauseToIdMap.TryGetValue(clauseKey, out var mappedId))
+            {
+                finalClauseId = mappedId;
+            }
+            // Pirate ^
             var locId = _targetResolvers.Keys.FirstOrDefault(id => Loc.GetString(id).Equals(targetKey, StringComparison.OrdinalIgnoreCase));
             var resolver = _targetResolvers[locId];
 
@@ -342,16 +358,16 @@ public sealed partial class DevilContractSystem : EntitySystem
                 continue;
             }
 
-            if (!_prototypeManager.TryIndex(clauseKey, out DevilClausePrototype? clause))
+            if (!_prototypeManager.TryIndex(finalClauseId, out DevilClausePrototype? clause)) // Pirate
             {
-                _sawmill.Warning($"Unknown contract clause: {clauseKey}");
+                _sawmill.Warning($"Unknown contract clause: {finalClauseId} (original from paper: {clauseKey})"); // Pirate
                 continue;
             }
 
             // no duplicates
-            if (!processedClauses.Add(clauseKey))
+            if (!processedClauses.Add(finalClauseId)) // Pirate
             {
-                _sawmill.Warning($"Attempted to apply duplicate clause: {clauseKey} on contract {ToPrettyString(contract)}");
+                _sawmill.Warning($"Attempted to apply duplicate clause: {finalClauseId} (original from paper: {clauseKey}) on contract {ToPrettyString(contract)}"); // Pirate
                 continue;
             }
 
@@ -361,7 +377,7 @@ public sealed partial class DevilContractSystem : EntitySystem
             if (targetEntity is not null)
                 ApplyEffectToTarget(targetEntity.Value, clause, contract);
             else
-                _sawmill.Warning($"Invalid target entity from resolver for clause {clauseKey} in contract {ToPrettyString(contract)}");
+                _sawmill.Warning($"Invalid target entity from resolver for clause {finalClauseId} (original from paper: {clauseKey}) in contract {ToPrettyString(contract)}"); // Pirate
         }
     }
 
@@ -530,4 +546,42 @@ public sealed partial class DevilContractSystem : EntitySystem
     }
 
     #endregion
+
+    // Pirate V
+    private void InitializeUkrainianClauseMap()
+    {
+        _ukrainianClauseToIdMap["смертність"] = "mortality";
+        _ukrainianClauseToIdMap["слабкість"] = "weakness";
+        _ukrainianClauseToIdMap["жадоба"] = "avarice";
+        _ukrainianClauseToIdMap["страхсмерті"] = "fearofdeath";
+        _ukrainianClauseToIdMap["смерть"] = "death";
+        _ukrainianClauseToIdMap["тіні"] = "shadows";
+        _ukrainianClauseToIdMap["злидні"] = "brokeness";
+        _ukrainianClauseToIdMap["страхвогню"] = "fearoffire";
+        _ukrainianClauseToIdMap["шанс"] = "chance";
+        _ukrainianClauseToIdMap["страхсвітла"] = "fearoflight";
+        _ukrainianClauseToIdMap["страхелектрики"] = "fearofelectricity";
+        _ukrainianClauseToIdMap["ненажерливість"] = "gluttony";
+        _ukrainianClauseToIdMap["страхутоплення"] = "fearofdrowning";
+        _ukrainianClauseToIdMap["страхклоунів"] = "fearofclowns";
+        _ukrainianClauseToIdMap["страхрозчавлення"] = "fearofcrushing";
+        _ukrainianClauseToIdMap["страхзамерзання"] = "fearoffreezing";
+        _ukrainianClauseToIdMap["жадібність"] = "greed";
+        _ukrainianClauseToIdMap["біль"] = "pain";
+        _ukrainianClauseToIdMap["внутрішнійспокій"] = "innerpeace";
+        _ukrainianClauseToIdMap["голос"] = "voice";
+        _ukrainianClauseToIdMap["рука"] = "ahand";
+        _ukrainianClauseToIdMap["нога"] = "aleg";
+        _ukrainianClauseToIdMap["власністьдуші"] = "soulownership";
+        _ukrainianClauseToIdMap["сила"] = "strength";
+        _ukrainianClauseToIdMap["зв'язність"] = "coherence";
+        _ukrainianClauseToIdMap["неспання"] = "awake";
+        _ukrainianClauseToIdMap["орган"] = "anorgan";
+        _ukrainianClauseToIdMap["ноги"] = "legs";
+        _ukrainianClauseToIdMap["зір"] = "sight";
+        _ukrainianClauseToIdMap["волядоборотьби"] = "willtofight";
+        _ukrainianClauseToIdMap["людяність"] = "humanity";
+        _ukrainianClauseToIdMap["час"] = "time";
+    }
+    // Pirate ^
 }

@@ -162,6 +162,10 @@
     tags:
     - Trash
   - type: SpaceGarbage
+  # Pirate banking start
+  - type: StaticPrice
+    price: 2
+  # Pirate banking end
 
 - type: entity
   parent: [Matchbox, BaseSyndicateContraband]

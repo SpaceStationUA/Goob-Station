@@ -1,52 +1,53 @@
 <Document>
-  # Slaughter Demon
+  # Демон різанини
 
   <Box>
     <GuideEntityEmbed Entity="BaseMobSlaughterDemon" Caption=""/>
   </Box>
 
-  Slaughter Demons are large, armour-plated monsters sent from the depths of hell to steal the souls of the crew in a very violent fashion.
-  They can use blood to travel quickly, possess a pair of large blades in place of arms, and can fully heal by eating downed crewmembers.
+  Демони різанини - це великі, броньовані монстри, відправлені з глибин пекла, щоб викрасти душі екіпажу з особливою жорстокістю.
+  Вони можуть використовувати кров для швидкого переміщення, мають пару великих лез замість рук і можуть повністю зцілюватися, поїдаючи повалених членів екіпажу.
 
-  ## Summoning a Being from Hell
+  ## Призов Істоти з Пекла
 
   <Box>
     <GuideEntityEmbed Entity="ClothingHeadHatWizard" Caption=""/>
   </Box>
 
-  There are a two ways a Slaughter Demon may enter the station to terrorize it. It can be summoned onto the overworld with a mystical summoning item by a Wizard foolish enough to do so, or through a Midround roll.
-  Both options let spirits take over the role of a blood thirsty spawn of Satan.
+  Є два способи, якими Демон Різанини може потрапити на станцію, щоб тероризувати її. Він може бути викликаний у надсвіт за допомогою містичного предмету для призову, якщо знайдеться досить нерозумний Чарівник, або через Midround roll.
+  Обидва варіанти дозволяють духам взяти на себе роль кровожерливого породження Сатани.
 
-  ## How to play as the slaughter demon, by a slaughter demon
+  ## Як грати за демона різанини, від демона різанини
 
-  LISTEN, DEMON. [color=red]ALL YOU HAVE TO DO IS KILL[/color]. RIP THEIR GUTS OUT, DRINK THEIR BLOOD... YOU KNOW, DAILY UNDERWORLD ACTIVITIES.
-  JUST GO OUT THERE AND HIT PEOPLE, MAKE THEM BLEED. YOU UNDERSTAND???
+  СЛУХАЙ, ДЕМОНЕ. [color=red]ВСЕ, ЩО ТОБІ ТРЕБА РОБИТИ - ЦЕ ВБИВАТИ[/color]. ВИРВИ ЇМ НУТРОЩІ, ПИЙ ЇХНЮ КРОВ... ТИ Ж ЗНАЄШ, ЩОДЕННІ ПЕКЕЛЬНІ СПРАВИ.
+  ПРОСТО ЙДИ І БИЙ ЛЮДЕЙ, ЗМУШУЙ ЇХ СТІКАТИ КРОВ'Ю. ЗРОЗУМІВ???
 
-  BUT REMEMBER, DEVILS ARE OUR HOMIES SO DON'T GO ATTACKING THEM FOR NO REASON!
+  АЛЕ ПАМ'ЯТАЙ, ДИЯВОЛИ - НАШІ БРАТАНИ, ТОЖ НЕ НАПАДАЙ НА НИХ БЕЗ ПРИЧИНИ!
 
-  OH, AND IF YOU SEE A LAUGHTER DEMON THEN MAKE FUN OF THEM, OR MAKE THEIR DAY WORSE... SATAN TOLD US THAT WE CAN'T KILL THEM, SOOOO... DEAL WITH THEM FOR THE TIME BEING!
-  HOW CAN THEY NOT LOVE BLOOD AS MUCH AS WE DO????
+  О, І ЯКЩО ПОБАЧИШ ДЕМОНА СМІХУ, ТО НАСМІХАЙСЯ З НЬОГО, АБО ЗРОБИ ЙОГО ДЕНЬ ГІРШИМ... САТАНА СКАЗАВ НАМ, ЩО МИ НЕ МОЖЕМО ЇХ ВБИВАТИ, ТОООЖ... ПОКИ ЩО РОЗБИРАЙТЕСЯ З НИМИ!
+  ЯК ВОНИ МОЖУТЬ НЕ ЛЮБИТИ КРОВ ТАК САМО, ЯК МИ????
 
-  ## BASIC ABILITIES
+  ## БАЗОВІ ЗДІБНОСТІ
 
-  - BLOOD JAUNTING
+  - КРИВАВИЙ СТРИБОК
 
-  SPREADING BLOOD ALL THROUGH THE HALLWAYS (DRAGGING A CORPSE WHILE SLASHING IT) WILL HELP YOU IN THE LONG RUN, TRUST ME.
-  HAVING THE ABILITY TO TELEPORT ANYWHERE PROVES TO BE PRETTY USEFUL.
+  РОЗКИДАЙ КРОВ ПО ВСІХ КОРИДОРАХ (ТЯГНУЧИ ТРУП І РІЖУЧИ ЙОГО), ЦЕ ДОПОМОЖЕ ТОБІ В ДОВГОСТРОКОВІЙ ПЕРСПЕКТИВІ, ПОВІР МЕНІ.
+  МОЖЛИВІСТЬ ТЕЛЕПОРТУВАТИСЯ БУДЬ-КУДИ ДОВОЛІ КОРИСНА.
 
-  - CORPSE FEEDING
+  - ПОЇДАННЯ ТРУПІВ
 
-  NO SHAME ON TAKING A BITE ONCE YOU DRAG THEM TO HELL, MY FRIEND.
-  IT'S YOUR ONLY WAY OF HEALING, SHORT OF A HUMAN PATCHING YOU UP. NOT ONLY IS A HUMAN GIVING YOU MEDICAL HELP A DISGRACE TO ALL DEMONKIND,
-  BUT IF YOU EVEN ADMIT THAT YOU'RE CLOSE TO DYING THEY'LL PROBABLY JUST KILL YOU ANYWAY, YOU STUPID IDIOT DEMON.
+  НЕ СОРОМСЯ ВІДКУСИТИ ШМАТОЧОК, КОЛИ ТЯГНЕШ ЇХ У ПЕКЛО, ДРУЖЕ.
+  ЦЕ ТВОЯ ЄДИНА МОЖЛИВІСТЬ ЗЦІЛИТИСЯ, ЯКЩО НЕ РАХУВАТИ ЛЮДЕЙ, ЩО ТЕБЕ ПІДЛАТАЮТЬ. АЛЕ ЛЮДСЬКА МЕДИЧНА ДОПОМОГА - ЦЕ НЕ ТІЛЬКИ ГАНЬБА ДЛЯ ВСЬОГО ДЕМОНІЧНОГО РОДУ,
+  АЛЕ ЯКЩО ТИ НАВІТЬ ВИЗНАЄШ, ЩО ТИ ПРИ СМЕРТІ, ВОНИ, ЙМОВІРНО, ПРОСТО ВБ'ЮТЬ ТЕБЕ, ТИ ДУРНИЙ ІДІОТ ДЕМОН.
 
-  [bold](In order to corpse feed, drag a body with one hand and use blood jaunt on a blood pool)[/bold]
+  [bold](Щоб поїдати трупи, тягніть тіло однією рукою і використовуйте кривавий стрибок на калюжі крові)[/bold]
 
-  - JAUNT KILLING
+  - ВБИВЧИЙ СТРИБОК
 
-  WE ARE SLOW, OKAY? IT TURNS OUT HAVING A SUIT OF INFERNAL ARMOR GLUED TO US IS PRETTY HEAVY. LUCKILY, YOU CAN GET SOME PRETTY EASY KILLS JUMPING OUT OF BLOOD AS THE BLOOD WILL GIVE YOU A SPEED BOOST.
-  FANTASTIC COMBO, JUMP OUT OF BLOOD, ATTACK, TRY TO GET IN A FEW, AND THEN RETREAT TO THE BLOOD FOR ANOTHER SPEED ATTACK.
-  REALLY THE ONLY WAY YOU'RE REALISTICALLY GOING TO STOP A SHOTGUN WIELDING ASSHOLE, SO PRACTICE MAKES PERFECT.
+  МИ ПОВІЛЬНІ, ЗРОЗУМІЛО? ВИЯВЛЯЄТЬСЯ, ПЕКЕЛЬНА БРОНЯ, ПРИКЛЕЄНА ДО НАС, ДОВОЛІ ВАЖКА. НА ЩАСТЯ, ТИ МОЖЕШ ЛЕГКО ВБИВАТИ, ВИСТРИБУЮЧИ З КРОВІ, ОСКІЛЬКИ КРОВ ДАЄ ТОБІ ПРИСКОРЕННЯ.
+  ФАНТАСТИЧНЕ КОМБО: ВИСТРИБНИ З КРОВІ, АТАКУЙ, СПРОБУЙ ЗАВДАТИ КІЛЬКА УДАРІВ, А ПОТІМ ВІДСТУПИ В КРОВ ДЛЯ ЩЕ ОДНІЄЇ ШВИДКІСНОЇ АТАКИ.
+  ЦЕ СПРАВДІ ЄДИНИЙ РЕАЛІСТИЧНИЙ СПОСІБ ЗУПИНИТИ ЗАСРАНЦЯ З ДРОБОВИКОМ, ТОЖ ПРАКТИКА ВЕДЕ ДО ДОСКОНАЛОСТІ.
 
-  ANYWAYS, I'M TOO BUSY WITH DRINKING SOME CLOWN'S BLOOD RIGHT NOW, SO I'LL SEE YA LATER IN HELL.
+  У БУДЬ-ЯКОМУ РАЗІ, Я ЗАРАЗ ЗАЙНЯТИЙ ПИТТЯМ КРОВІ ЯКОГОСЬ КЛОУНА, ТОЖ ПОБАЧИМОСЯ В ПЕКЛІ.
+
 </Document>

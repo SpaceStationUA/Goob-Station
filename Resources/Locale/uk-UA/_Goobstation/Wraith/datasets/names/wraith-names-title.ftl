@@ -1,0 +1,10 @@
+names-wraith-title-dataset-1 = проколювач
+names-wraith-title-dataset-2 = мучитель
+names-wraith-title-dataset-3 = покинутий
+names-wraith-title-dataset-4 = руйнівник
+names-wraith-title-dataset-5 = пожирач
+names-wraith-title-dataset-6 = тиран
+names-wraith-title-dataset-7 = владика
+names-wraith-title-dataset-8 = проклятий
+names-wraith-title-dataset-9 = спустошувач
+names-wraith-title-dataset-10 = вигнанець

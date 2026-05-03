@@ -218,9 +218,9 @@
           Quantity: 1
   - type: Item
     size: Tiny
-  - type: PhysicalComposition #Goobstation - Recycle update
-    materialComposition:
-      Paper: 25
+  #- type: PhysicalComposition #Goobstation - Recycle update # Pirate photos
+  #  materialComposition:
+  #    Paper: 25
 
 - type: entity
   name: paper
@@ -254,6 +254,13 @@
     graph: SpesosCounterfeit
     node: start
   - type: StationAiWhitelist
+  # Pirate Port Document Printer VVV
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      SheetPrinter: 100
+      Paper: 100 # Pirate: camera
+  # Pirate Port Document Printer ^^^
 
 - type: entity
   name: paper scrap

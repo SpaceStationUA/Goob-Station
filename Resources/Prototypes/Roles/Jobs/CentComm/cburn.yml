@@ -16,7 +16,7 @@
   playTimeTracker: JobCBURN
   setPreference: false
   startingGear: CBURNGear
-  icon: "JobIconNanotrasen"
+  icon: "JobIconCBURN" # Pirate
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
@@ -54,6 +54,12 @@
     - AmbuzolMedipen # Injectors are cooler.
     - MedkitCombatFilled # Ah yes, let's send them in with ZERO meds. Good luck!
     - CburnSpear # SPEAAR
+    # Pirate VVV
+    - ERTSecurityUndeterminedWeapon
+    - CrowbarRed
+  inhand:
+    - WeaponFlamerXiuhcoatl
+    # Pirate ^^^
 # Goobstation - End - Sol
 
 - type: chameleonOutfit

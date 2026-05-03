@@ -1,0 +1,15 @@
+- type: entity
+  id: BaseInterdyneContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Interdyne ]
+
+- type: entity
+  id: BaseMantisContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ ForensicMantis, ResearchDirector ]

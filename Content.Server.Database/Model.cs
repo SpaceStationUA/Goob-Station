@@ -141,9 +141,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
+using Content.Shared._Pirate.Contractors.Prototypes; // Pirate - port EE contractors
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
 using NpgsqlTypes;
+using Robust.Shared.Prototypes; // Pirate - port EE contractors
 
 namespace Content.Server.Database
 {
@@ -196,6 +198,13 @@ namespace Content.Server.Database
         public DbSet<PollOption> PollOptions { get; set; } = default!;
         public DbSet<PollVote> PollVotes { get; set; } = default!;
         public DbSet<PollSeen> PollSeen { get; set; } = default!;
+
+        //Pirate Changes
+        public DbSet<PirateAdminHelpRating> PirateAdminHelpRatings { get; set; } = default!;
+        #region Pirate: cameras (photo persistence)
+        public DbSet<PersistentPhotoAlbum> PersistentPhotoAlbums { get; set; } = default!;
+        public DbSet<PersistentPhotoAlbumPhoto> PersistentPhotoAlbumPhotos { get; set; } = default!;
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -629,6 +638,16 @@ namespace Content.Server.Database
             modelBuilder.Entity<PollSeen>()
                 .HasIndex(s => new { s.PollId, s.PlayerUserId })
                 .IsUnique();
+
+            //Pirate Changes Start
+            modelBuilder.Entity<PirateAdminHelpRating>()
+                .HasOne(r => r.Player)
+                .WithMany()
+                .HasForeignKey(r => r.PlayerUserId)
+                .HasPrincipalKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            //Pirate Changes End
+            PersistentPhotoAlbumModelConfiguration.Configure(modelBuilder); //Pirate: cameras (photo persistence)
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -660,6 +679,8 @@ namespace Content.Server.Database
         public int Slot { get; set; }
         [Column("char_name")] public string CharacterName { get; set; } = null!;
         public string FlavorText { get; set; } = null!;
+        public string Nationality { get; set; } = null!; // Pirate - port EE contractors
+        public string Employer { get; set; } = null!; // Pirate - port EE contractors
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
@@ -695,6 +716,7 @@ namespace Content.Server.Database
 
         public string JobName { get; set; } = null!;
         public DbJobPriority Priority { get; set; }
+        public string? ActiveAlternativeJobId { get; set; } // Pirate - Alternative Jobs
     }
 
     public enum DbJobPriority

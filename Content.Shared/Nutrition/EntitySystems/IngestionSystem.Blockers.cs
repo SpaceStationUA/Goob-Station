@@ -8,6 +8,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Storage;
 using Content.Shared.Weapons.Ranged.Systems;
+using Content.Shared._Pirate.Coffeemaker.Components; // Pirate: coffeemaker
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -120,6 +121,12 @@ public sealed partial class IngestionSystem
     {
         if (args.Cancelled)
             return;
+
+        #region Pirate: coffeemaker
+        // Coffee cups are intentionally drinkable through closed lids.
+        if (HasComp<DrinkableThroughLidComponent>(ent))
+            return;
+        #endregion
 
         if (_openable.IsClosed(ent, args.User, ent.Comp, predicted: true))
             args.Cancelled = true;

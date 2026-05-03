@@ -1,0 +1,115 @@
+## Other
+- type: loadout
+  id: WardrobeCloakSanabi
+  equipment:
+    neck: ClothingNeckCloakSanabi
+  groupBy: "NeckOther"
+
+
+
+## Scarfs
+- type: loadout
+  id: WardrobeScarfStripedPurple
+  equipment:
+    neck: ClothingNeckScarfStripedPurple
+  groupBy: "NeckScarfStriped"
+
+
+- type: loadout
+  id: WardrobeScarfStripedOrange
+  equipment:
+    neck: ClothingNeckScarfStripedOrange
+  groupBy: "NeckScarfStriped"
+
+
+- type: loadout
+  id: WardrobeScarfStripedLightBlue
+  equipment:
+    neck: ClothingNeckScarfStripedLightBlue
+  groupBy: "NeckScarfStriped"
+
+
+- type: loadout
+  id: WardrobeScarfStripedBrown
+  equipment:
+    neck: ClothingNeckScarfStripedBrown
+  groupBy: "NeckScarfStriped"
+
+
+- type: loadout
+  id: WardrobeScarfStripedBlack
+  equipment:
+    neck: ClothingNeckScarfStripedBlack
+  groupBy: "NeckScarfStriped"
+
+
+- type: loadout
+  id: WardrobeScarfStripedBlue
+  equipment:
+    neck: ClothingNeckScarfStripedBlue
+  groupBy: "NeckScarfStriped"
+
+
+- type: loadout
+  id: WardrobeScarfStripedGreen
+  equipment:
+    neck: ClothingNeckScarfStripedGreen
+  groupBy: "NeckScarfStriped"
+
+
+- type: loadout
+  id: WardrobeScarfStripedRed
+  equipment:
+    neck: ClothingNeckScarfStripedRed
+  groupBy: "NeckScarfStriped"
+
+
+
+## Ponchos
+- type: loadout
+  id: WardrobePonchoSmallWhite
+  equipment:
+    neck: ClothingNeckPonchoSmallWhite
+  groupBy: "NeckPoncho"
+
+
+- type: loadout
+  id: WardrobePonchoSmallBlack
+  equipment:
+    neck: ClothingNeckPonchoSmallBlack
+  groupBy: "NeckPoncho"
+
+
+- type: loadout
+  id: WardrobePonchoSmallPurple
+  equipment:
+    neck: ClothingNeckPonchoSmallPurple
+  groupBy: "NeckPoncho"
+
+
+- type: loadout
+  id: WardrobePonchoSmallRed
+  equipment:
+    neck: ClothingNeckPonchoSmallRed
+  groupBy: "NeckPoncho"
+
+
+- type: loadout
+  id: WardrobePonchoSmallPink
+  equipment:
+    neck: ClothingNeckPonchoSmallPink
+  groupBy: "NeckPoncho"
+
+
+- type: loadout
+  id: WardrobePonchoArctic
+  equipment:
+    neck: ClothingNeckPonchoArctic
+  groupBy: "NeckPoncho"
+
+
+- type: loadout
+  id: WardrobePonchoBlack
+  equipment:
+    neck: ClothingNeckPonchoBlack
+  groupBy: "NeckPoncho"

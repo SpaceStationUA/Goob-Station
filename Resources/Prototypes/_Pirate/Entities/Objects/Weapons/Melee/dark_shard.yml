@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseItem
+  id: DarkShard
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/dark_shard.rsi
+    state: icon
+  - type: PointLight
+    radius: 1.5
+    energy: 1.5
+    color: "#141414"
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 7
+  - type: DarkShard
+  - type: Organ
+    slotId: dark_shard

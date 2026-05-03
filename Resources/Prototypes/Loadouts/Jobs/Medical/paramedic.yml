@@ -118,3 +118,4 @@
   id: BlueShoes
   equipment:
     shoes: ClothingShoesColorBlue
+  groupBy: "ShoesColor" # Pirate

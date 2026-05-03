@@ -48,6 +48,8 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Rotation;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Content.Shared.Tag; // DOWNSTREAM - TPirates: vehicle overlay fix (and chairs)
+using Robust.Shared.Prototypes; // DOWNSTREAM - TPirates: vehicle overlay fix (and chairs)
 
 namespace Content.Client.Buckle;
 
@@ -57,6 +59,8 @@ internal sealed class BuckleSystem : SharedBuckleSystem
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly TagSystem _tag = default!; // DOWNSTREAM-TPirates: vehicle overlay fix (and chairs)
+    private static readonly ProtoId<TagPrototype> ChairTag = "Chair"; // DOWNSTREAM-TPirates: vehicle overlay fix (and chairs)
 
     public override void Initialize()
     {
@@ -101,6 +105,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         var angle = _xformSystem.GetWorldRotation(uid) + _eye.CurrentEye.Rotation; // Get true screen position, or close enough
 
         var isNorth = angle.GetCardinalDir() == Direction.North;
+        UpdateChairStrapDepth(uid, strapSprite, isNorth, component.BuckledEntities.Count > 0); // DOWNSTREAM-TPirates: vehicle overlay fix (and chairs)
         foreach (var buckledEntity in component.BuckledEntities)
         {
             if (!TryComp<BuckleComponent>(buckledEntity, out var buckle))
@@ -140,6 +145,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         // Goobstation - Start
         var angle = _xformSystem.GetWorldRotation(args.Strap) + _eye.CurrentEye.Rotation;
         var isNorth = angle.GetCardinalDir() == Direction.North;
+        UpdateChairStrapDepth(args.Strap, strapSprite, isNorth, true); // DOWNSTREAM-TPirates: vehicle overlay fix (and chairs)
 
         ent.Comp.OriginalDrawDepth ??= buckledSprite.DrawDepth;
         _sprite.SetDrawDepth(
@@ -154,6 +160,14 @@ internal sealed class BuckleSystem : SharedBuckleSystem
     /// </summary>
     private void OnUnbuckledEvent(Entity<BuckleComponent> ent, ref UnbuckledEvent args)
     {
+        #region DOWNSTREAM-TPirates: vehicle overlay fix (and chairs)
+        if (TryComp<SpriteComponent>(args.Strap, out var strapSprite))
+        {
+            var angle = _xformSystem.GetWorldRotation(args.Strap) + _eye.CurrentEye.Rotation;
+            var isNorth = angle.GetCardinalDir() == Direction.North;
+            UpdateChairStrapDepth(args.Strap, strapSprite, isNorth, args.Strap.Comp.BuckledEntities.Count > 0);
+        }
+        #endregion
         if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
 
@@ -181,4 +195,20 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         // TODO: Dump this when buckle is better
         _rotationVisualizerSystem.AnimateSpriteRotation(uid, args.Sprite, rotVisuals.HorizontalRotation, 0.125f);
     }
+    #region DOWNSTREAM-TPirates: vehicle overlay fix (and chairs)
+    private void UpdateChairStrapDepth(EntityUid strap, SpriteComponent strapSprite, bool isNorth, bool occupied)
+    {
+        // For chair straps, move the chair itself over mobs when occupied and north-facing.
+        // This keeps layering correct even if buckled mob depth gets reset by unrelated visuals.
+        if (HasComp<VehicleComponent>(strap) || !_tag.HasTag(strap, ChairTag))
+            return;
+
+        var targetDepth = occupied && isNorth
+            ? (int)Content.Shared.DrawDepth.DrawDepth.OverMobs
+            : (int)Content.Shared.DrawDepth.DrawDepth.Objects;
+
+        if (strapSprite.DrawDepth != targetDepth)
+            _sprite.SetDrawDepth((strap, strapSprite), targetDepth);
+    }
+    #endregion
 }

@@ -1,71 +1,71 @@
 <Document>
-## The Xenomorph Life Cycle
+## Життєвий цикл ксеноморфів
 
 <Box>
   <GuideEntityEmbed Entity="XenomorphEgg" Caption=""/>
   <GuideEntityEmbed Entity="MobXenomorphFaceHugger" Caption=""/>
 </Box>
 
-  The lowliest form of Xenomorph is the humble [color=#FFBF00]facehugger[/color], the only type of xenomorph not usually player-controlled.
-  [color=#FFBF00]Facehuggers[/color] hatch from eggs laid by Queens, and on their own simply meander around.
-  If they come close to appropriate prey, typically humans or monkeys, they will launch themselves at their targets, ripping off most (but not all) forms of face protection and aggressively violating their victim's esophagus.
+  Найнижча форма ксеноморфа - скромний [color=#FFBF00]фейсхагер[/color], єдиний тип ксеноморфа, яким зазвичай не керують гравці.
+  [color=#FFBF00]Фейсхагери[/color] вилуплюються з яєць, знесених Королевами, і самі по собі просто блукають навколо.
+  Якщо вони підходять близько до відповідної здобичі, зазвичай людей або мавп, вони кидаються на своїх цілей, зриваючи більшість (але не всі) форми захисту обличчя і агресивно порушуючи стравохід своєї жертви.
 
-  The facehugger dies afterwards, but their target will have an alien larva planted inside them,
-  which will fatally burst out of their chest after some time.
-  Note that facehuggers act as pseudo-items, and can be picked up by mature xenomorphs to throw at prey.
+  Після цього фейсхагер гине, але в їхній цілі буде посаджено личинку прибульця,
+  яка фатально вирветься з їхньої грудної клітки через деякий час.
+  Зауважте, що фейсхагери діють як псевдо-предмети, і їх можуть підняти дорослі ксеноморфи, щоб кинути в здобич.
 
 <Box>
 <GuideEntityEmbed Entity="MobXenomorphLarva" Caption=""/>
 </Box>
 
-  Also known as chestbursters, [color=#E97451]Larva[/color] are violently born from the bodies of those who fall prey to facehuggers.
-  When a larva is born, a random ghost player takes control of it, joining the xenomorphs and adding to their growing army.
+  Також відомі як честберстери, [color=#E97451]Личинки[/color] насильственно народжуються з тіл тих, хто став жертвами фейсхагерів.
+  Коли личинка народжується, випадковий гравець-привид бере під контроль її, приєднуючись до ксеноморфів і збільшуючи їхню армію.
 
-  [color=#E97451]Larva[/color] are relatively helpless, having no real offensive capability; instead, they must stay alive long enough to grow into an adult xenomorph.
-  They can crawl through vents to escape danger, and hide under tables to avoid detection.
-  Once they've grown enough, they can become one of three types of xeno:
-  - Hunters
-  - Sentinels
-  - Drones
+  [color=#E97451]Личинки[/color] відносно безпорадні, не маючи реальної наступальної здатності; натомість вони повинні вижити достатньо довго, щоб вирости в дорослого ксеноморфа.
+  Вони можуть повзти крізь вентиляційні отвори, щоб уникнути небезпеки, і ховатися під столами, щоб уникнути виявлення.
+  Коли вони виростуть достатньо, вони можуть стати одним з трьох типів ксено:
+  - Мисливці
+  - Вартові
+  - Дрони
 
-  ## The xenomorphs
+  ## Ксеноморфи
 <Box>
 <GuideEntityEmbed Entity="MobXenomorphHunter" Caption=""/>
 </Box>
 
-  The offensive backbone of the xenos, [color=#9F2B68]Hunters[/color] move at blistering speed and can tackle down their unlucky opponents for quick stuns.
-  Hunters are typically tasked with securing new prey by ventcrawling through the station, facehuggers in hand, looking for lone crew members to throw them at.
-  They're also the best class for starting new outposts and spreading plasma weeds, due to their speed.
+  Наступна основа ксенів, [color=#9F2B68]Мисливці[/color] рухаються з шаленою швидкістю і можуть збивати з ніг своїх нещасних опонентів для швидкого оглушения.
+  Мисливці зазвичай займаються захопленням нової здобичі, повзаючи вентиляцією по станції, тримаючи фейсхагерів у руках, шукаючи самотніх членів екіпажу, щоб кинути в них фейсхагерів.
+  Вони також найкращий клас для створення нових аванпостів і поширення плазмових бур'янів, завдяки своїй швидкості.
 
 <Box>
 <GuideEntityEmbed Entity="MobXenomorphSentinel" Caption=""/>
 </Box>
 
-  Defensive guards of the nest, [color=#5D3FD3]Sentinels[/color] are slower and beefier than Hunters, and can become partially invisible by staying still.
-  Their abilities recharge quicker than Hunters', and they usually stay near nests, keeping any captured humans from escaping and protecting the Drones.
+  Оборонні охоронці гнізда, [color=#5D3FD3]Вартові[/color] повільніші і міцніші за Мисливців, і можуть стати частково невидимими, залишаючись нерухомими.
+  Їхні здатності перезаряджаються швидше, ніж у Мисливців, і вони зазвичай залишаються біля гнізд, не даючи захопленим людям втекти і захищаючи Дронів.
 
 <Box>
 <GuideEntityEmbed Entity="MobXenomorphDrone" Caption=""/>
 </Box>
 
-  An important type of xenomorph, second only to the Queen, [color=#871F78]Drones[/color] are the builders of the xenomorphs.
-  They can construct resin walls to block pathways, resin nests to keep prey secured, and other such structures.
-  Drones are also the only adult xenomorph capable of further evolution, into a Praetorian.
+  Важливий тип ксеноморфа, другий за значущістю після Королеви, [color=#871F78]Дрони[/color] є будівельниками ксеноморфів.
+  Вони можуть будувати смолисті стіни для блокування шляхів, смолисті гнізда для утримання здобичі в безпеці та інші подібні структури.
+  Дрони також є єдиним дорослим ксеноморфом, здатним до подальшої еволюції, у Праеторіанця.
 
 <Box>
 <GuideEntityEmbed Entity="MobXenomorphPraetorian" Caption=""/>
 </Box>
 
-  [color=#871F78]Praetorians[/color] share many of the same abilities as Queens, without the ability to lay eggs.
-  If none exist on the station, Praetorians can evolve into Queens themselves.
-  Each xenomorph colony only has one Queen, and each is a massive engine of destruction, though their real power is in the ability to lay eggs. A nest with no Queen is crippled, and a colony with no Queens, Praetorians or Drones is effectively neutered.
-  Both Praetorians and Queens are also incredibly slow, and the only aliens who can't ventcrawl.
+  [color=#871F78]Праеторіанці[/color] мають багато однакових здатностей з Королевами, але не можуть зносити яйця.
+  Якщо на станції не існує жодного, Праеторіанці можуть еволюціонувати в Королев самостійно.
+  Кожна колонія ксеноморфів має лише одну Королеву, і кожна є масивним двигуном руйнування, хоча їхня справжня сила в здатності зносити яйця. Гніздо без Королеви калічне, а колонія без Королев, Праеторіанців або Дронів фактично стерильна.
+  І Праеторіанці, і Королеви також надзвичайно повільні, і єдині прибульці, які не можуть повзти вентиляцією.
 
 <Box>
 <GuideEntityEmbed Entity="MobXenomorphQueen" Caption=""/>
 </Box>
 
-  The [color=#702963]Queen[/color] is the heart of the hive, laying eggs to expand the colony.
+  [color=#702963]Королева[/color] є серцем вулика, зносячи яйця для розширення колонії.
 
-  [bold]Also, it should be noted that all xenos have a 3 shove 15 second stun.[/bold]
+  [bold]Також слід зазначити, що всі ксени мають 3 поштовхи з оглушенням на 15 секунд.[/bold]
 </Document>

@@ -236,6 +236,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     /// If an attack is released within this buffer it's assumed to be full damage.
     /// </summary>
     public const float GracePeriod = 0.05f;
+    private const float ArmOrHandDisarmChanceMultiplier = 1.5f; // DOWNSTREAM-TPirates: combat actions
 
     public override void Initialize()
     {
@@ -734,7 +735,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Goobstation start
-        var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm);
+        var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm, damage); // Pirate: katana
         RaiseLocalEvent(target.Value, beforeEvent);
         if (beforeEvent.Cancelled)
             return;
@@ -892,7 +893,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 continue;
 
             // Goobstation start
-            var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm);
+            var beforeEvent = new BeforeHarmfulActionEvent(user, HarmfulActionType.Harm, damage); // Pirate: katana
             RaiseLocalEvent(entity, beforeEvent);
             if (beforeEvent.Cancelled)
                 continue;
@@ -1188,6 +1189,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return true;
 
         var chance = CalculateDisarmChance(user, target, inTargetHand, combatMode);
+        #region DOWNSTREAM-TPirates: combat actions
+        if (TryComp<TargetingComponent>(user, out var targeting) && IsArmOrHandTarget(targeting.Target))
+        {
+            // Aiming at arms/hands should improve disarm odds, but not bypass stamina/health/item malus checks.
+            chance = Math.Clamp(chance * ArmOrHandDisarmChanceMultiplier, 0f, 1f);
+        }
+        #endregion
 
         _audio.PlayPredicted(combatMode.DisarmSuccessSound,
             user, user,
@@ -1345,4 +1353,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             }
         }
     }
+    
+    #region DOWNSTREAM-TPirates: combat actions
+    private static bool IsArmOrHandTarget(TargetBodyPart targetPart)
+    {
+        return targetPart is TargetBodyPart.LeftArm
+            or TargetBodyPart.RightArm
+            or TargetBodyPart.LeftHand
+            or TargetBodyPart.RightHand;
+    }
+    #endregion
 }

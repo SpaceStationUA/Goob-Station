@@ -1,0 +1,13 @@
+- type: antag
+  id: Vampire
+  name: roles-antag-vamire-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-vampire-description
+  requirements:
+  - !type:SpeciesRequirement
+    inverted: true
+    species:
+    - IPC
+    - Plasmaman
+#  guides: [ Changelings ]

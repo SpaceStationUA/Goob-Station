@@ -124,6 +124,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -307,14 +308,8 @@ public abstract partial class SharedMoverController : VirtualController
         // If we're not the target of a relay then handle lerp data.
         if (relaySource == null)
         {
-            if (TileMovementQuery.HasComponent(uid)) // Goobstation Change
+            if (TileMovementQuery.HasComponent(uid) || mover.LerpTarget < Timing.CurTime)
                 TryUpdateRelative(uid, mover, xform);
-
-            // Update relative movement
-            if (mover.LerpTarget < Timing.CurTime)
-            {
-                TryUpdateRelative(uid, mover, xform);
-            }
 
             LerpRotation(uid, mover, frameTime);
         }

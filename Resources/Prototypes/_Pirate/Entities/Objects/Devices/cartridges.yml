@@ -1,0 +1,62 @@
+- type: entity
+  parent: BaseItem
+  id: CrimeAssistCartridge
+  name: картридж кримінального помічника
+  description: Картридж, який допомагає призначати відповідне покарання.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/cartridge.rsi
+    state: cart-cri
+  - type: Icon
+    sprite: _Pirate/Objects/Devices/cartridge.rsi
+    state: cart-cri
+  - type: UIFragment
+    ui: !type:CrimeAssistUi
+  - type: Cartridge
+    programName: crime-assist-program-name
+    icon:
+      sprite: _Pirate/Icons/cri.rsi
+      state: cri
+
+- type: entity
+  parent: BaseItem
+  id: WalletCartridge
+  name: virtual wallet cartridge
+  description: A program for managing bank account
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+  - type: UIFragment
+    ui: !type:BankUi
+  - type: Cartridge
+    programName: bank-program-name
+    icon:
+      sprite: _Pirate/Structures/Machines/atm.rsi
+      state: icon
+  - type: BankCartridge
+
+- type: entity
+  parent: BaseItem
+  id: StockTradingCartridge
+  name: біржовий картридж
+  description: Картридж для відстеження міжзоряного ринку акцій.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Devices/cartridge.rsi
+    state: cart-stonk
+  - type: Icon
+    sprite: _DV/Objects/Devices/cartridge.rsi
+    state: cart-stonk
+  - type: UIFragment
+    ui: !type:StockTradingUi
+  - type: StockTradingCartridge
+  - type: Cartridge
+    programName: stock-trading-program-name
+    icon:
+      sprite: _DV/Misc/program_icons.rsi
+      state: stock_trading
+  - type: AccessReader
+    access:
+    - [ "Quartermaster" ]
+    - [ "Cargo" ]

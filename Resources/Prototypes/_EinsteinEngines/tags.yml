@@ -6,3 +6,12 @@
 
 - type: Tag
   id: ShadowkinEmotes
+
+- type: Tag
+  id: ForensicBeltEquip
+
+- type: Tag
+  id: NormalityCrystal
+
+- type: Tag
+  id: FoodBowlBig

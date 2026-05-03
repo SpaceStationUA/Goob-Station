@@ -45,7 +45,10 @@ public partial class ConsciousnessSystem
 
     private void OnComponentGet(EntityUid uid, ConsciousnessComponent comp, ref ComponentGetState args)
     {
-        var state = new ConsciousnessComponentState();
+        var state = new ConsciousnessComponentState(
+            comp.Modifiers.Count,
+            comp.Multipliers.Count,
+            comp.RequiredConsciousnessParts.Count);
 
         state.Threshold = comp.Threshold;
         state.RawConsciousness = comp.RawConsciousness;

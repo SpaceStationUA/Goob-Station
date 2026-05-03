@@ -1,0 +1,16 @@
+- type: startingGear
+  id: MercenaryGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMercenary
+    eyes: ClothingEyesGlassesMercenary
+    back: ClothingBackpackMerc
+    shoes: ClothingShoesBootsMercFilled
+    head: ClothingHeadHelmetMerc
+    gloves: ClothingHandsMercGlovesCombat
+    ears: ClothingHeadsetAltFreelancer
+    belt: ClothingBeltMercWebbingHelldiverFilled
+    outerClothing: ClothingOuterVestWebMerc
+    pocket1: WeaponLaserSvalinn
+    pocket2: RadioHandheld
+    id: AgentIDCard
+    mask: ClothingMaskGasMerc

@@ -13,4 +13,11 @@ public sealed partial class TriggerBlockerComponent : Component
 
     [DataField]
     public EntityWhitelist? MapBlacklist;
+    #region Pirates: death rattle update
+    /// <summary>
+    /// Blocks trigger activation while the trigger user (or owner if no user) is on a station grid.
+    /// </summary>
+    [DataField]
+    public bool RequireOffStation;
+    #endregion
 }

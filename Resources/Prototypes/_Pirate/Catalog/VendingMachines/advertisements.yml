@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: InterdyneDrobeAds
+  values:
+    prefix: advertisement-interdynedrobe-
+    count: 5

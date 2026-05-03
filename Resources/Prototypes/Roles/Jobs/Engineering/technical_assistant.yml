@@ -65,10 +65,18 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 7200 # 2 hrs
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 36000 #10 hrs
-      inverted: true # stop playing intern if you're good at engineering!
+    # - !type:DepartmentTimeRequirement # Pirate
+    #   department: Engineering # Pirate
+    #   time: 18000 #5 hrs # Pirate
+    #   inverted: true # stop playing intern if you're good at engineering! # Pirate
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - EinsteinEngines
+      - ZavodskiyInterstellar
+      - HephaestusIndustries
+    # Pirate contractor end
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"
   supervisors: job-supervisors-engineering

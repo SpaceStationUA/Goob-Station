@@ -15,6 +15,8 @@ namespace Content.Server.Heretic.Components;
 [RegisterComponent]
 public sealed partial class ProtectiveBladeComponent : Component
 {
+    // Pirate: gunplay
+    [DataField] public EntityUid User;
     [DataField] public float Lifetime = 60f;
     [ViewVariables(VVAccess.ReadWrite)] public float Timer = 60f;
 }

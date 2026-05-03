@@ -203,6 +203,10 @@
     tags:
     - DrinkCan
   - type: DnaSubstanceTrace
+  # Pirate banking start
+  - type: StaticPrice
+    price: 18
+  # Pirate banking end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -392,6 +396,10 @@
     sprite: Objects/Consumable/Drinks/purple_can.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/purple_can.rsi
+  # Pirate banking start
+  - type: StaticPrice
+    price: 24
+  # Pirate banking end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -419,6 +427,10 @@
   - type: Tag
     tags:
     - Beer
+  # Pirate banking start
+  - type: StaticPrice
+    price: 36
+  # Pirate banking end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -466,6 +478,10 @@
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
+  # Pirate banking start
+  - type: StaticPrice
+    price: 24
+  # Pirate banking end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -490,6 +506,10 @@
     sprite: Objects/Consumable/Drinks/space-up.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/space-up.rsi
+  # Pirate banking start
+  - type: StaticPrice
+    price: 24
+  # Pirate banking end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -514,6 +534,10 @@
     sprite: Objects/Consumable/Drinks/sol_dry.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/sol_dry.rsi
+  # Pirate banking start
+  - type: StaticPrice
+    price: 24
+  # Pirate banking end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -585,6 +609,10 @@
     sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
+  # Pirate banking start
+  - type: StaticPrice
+    price: 15
+  # Pirate banking end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -635,6 +663,10 @@
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
+  # Pirate banking start
+  - type: StaticPrice
+    price: 30
+  # Pirate banking end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -667,6 +699,10 @@
     sprite: Objects/Consumable/Drinks/robustnukie.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/robustnukie.rsi
+  # Pirate banking start
+  - type: StaticPrice
+    price: 150
+  # Pirate banking end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -692,6 +728,10 @@
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
+  # Pirate banking start
+  - type: StaticPrice
+    price: 24
+  # Pirate banking end
 
 - type: entity
   id: DrinkCanPack
@@ -823,6 +863,10 @@
   - type: Tag
     tags:
     - Beer
+  # Pirate banking start
+  - type: StaticPrice
+    price: 30
+  # Pirate banking end
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -851,3 +895,7 @@
   - type: Tag
     tags:
     - Wine
+  # Pirate banking start
+  - type: StaticPrice
+    price: 60
+  # Pirate banking end

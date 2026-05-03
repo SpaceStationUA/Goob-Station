@@ -17,7 +17,7 @@
   name: trait-dementia-name
   description: trait-dementia-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: ReplacementAccent
     accent: dementia
@@ -27,7 +27,7 @@
   name: trait-scottish-name
   description: trait-scottish-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: ReplacementAccent
     accent: scottish
@@ -37,7 +37,7 @@
   name: trait-bogan-name
   description: trait-bogan-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: ReplacementAccent
     accent: bogan
@@ -47,7 +47,7 @@
   name: trait-medieval-accent-name
   description: trait-medieval-accent-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: MedievalAccent
 
@@ -56,7 +56,7 @@
   name: trait-newyork-name
   description: trait-newyork-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: ReplacementAccent
     accent: newyork
@@ -66,7 +66,7 @@
   name: trait-british-name
   description: trait-british-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0 # Pirate trait rework
   components:
   - type: ReplacementAccent
     accent: british

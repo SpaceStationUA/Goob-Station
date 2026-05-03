@@ -1,0 +1,40 @@
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseEngineeringContraband]
+  id: ClothingOuterHardsuitAtmosOld
+  name: atmos hardsuit # Pirate
+  description: An old atmospheric hardsuit. It looks like it has seen better days, but it still provides good fire protection. Feels heavy.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Hardsuits/atmospherics_old.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Hardsuits/atmospherics_old.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: FireProtection
+    reduction: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.7
+        Radiation: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.65
+    sprintModifier: 0.65
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing # Goobstation - Modsuits change
+    clothingPrototypes:
+      head: ClothingHeadHelmetHardsuitAtmosOld
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 3 # Pirate ^

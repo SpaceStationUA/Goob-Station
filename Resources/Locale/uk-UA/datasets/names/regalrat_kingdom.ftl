@@ -1,0 +1,15 @@
+names-regal-rat-kingdom-dataset-1 = Чума
+names-regal-rat-kingdom-dataset-2 = Аміак
+names-regal-rat-kingdom-dataset-3 = Техвідділ
+names-regal-rat-kingdom-dataset-4 = Сміття
+names-regal-rat-kingdom-dataset-5 = Відходи
+names-regal-rat-kingdom-dataset-6 = Щур
+names-regal-rat-kingdom-dataset-7 = Шкідник
+names-regal-rat-kingdom-dataset-8 = Сир
+names-regal-rat-kingdom-dataset-9 = Гризун
+names-regal-rat-kingdom-dataset-10 = Великий
+names-regal-rat-kingdom-dataset-11 = Бруд
+names-regal-rat-kingdom-dataset-12 = Каналізація
+names-regal-rat-kingdom-dataset-13 = Утилізація
+names-regal-rat-kingdom-dataset-14 = Служба
+names-regal-rat-kingdom-dataset-15 = Артикль

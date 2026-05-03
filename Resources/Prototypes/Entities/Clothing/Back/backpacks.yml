@@ -71,6 +71,8 @@
     quickEquip: false
     slots:
     - back
+    equipDelay: 0.3 # pirate clothingDelay
+    unequipDelay: 0.3 # pirate clothingDelay
   # Goobstation edit start
     equipSound:
       path: /Audio/_Goobstation/Items/handling/backpack_equip.ogg

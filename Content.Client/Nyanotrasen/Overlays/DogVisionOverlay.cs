@@ -9,6 +9,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Content.Shared.Abilities;
 using System.Numerics;
+using Content.Client._Pirate.Photo; // Pirate: camera
 
 namespace Content.Client.Nyanotrasen.Overlays;
 
@@ -17,6 +18,7 @@ public sealed partial class DogVisionOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] IEntityManager _entityManager = default!;
+    private readonly PhotoCaptureFilterSystem _photoCaptureFilter; // Pirate: camera
 
 
     public override bool RequestScreenTexture => true;
@@ -26,11 +28,15 @@ public sealed partial class DogVisionOverlay : Overlay
     public DogVisionOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _photoCaptureFilter = _entityManager.System<PhotoCaptureFilterSystem>(); // Pirate: camera
         _dogVisionShader = _prototypeManager.Index<ShaderPrototype>("DogVision").Instance().Duplicate();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
+        if (_photoCaptureFilter.IsSuppressedForEye(args.Viewport.Eye, PhotoCaptureSuppressionMask.VisionEffects)) // Pirate: camera
+            return false;
+
         if (_playerManager.LocalEntity is not { Valid: true } player
             || !_entityManager.HasComponent<DogVisionComponent>(player))
         {

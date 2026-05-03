@@ -120,14 +120,19 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
-    lifetime: 0.4
+    lifetime: 0.2 # Pirate
   - type: Sprite
     drawdepth: BelowMobs
     layers:
     - shader: unshaded
       map: ["enum.EffectLayers.Unshaded"]
-      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
-      state: muzzle_bullet
+      sprite: _Pirate/Objects/Weapons/Guns/Projectiles/muzzleflashes.rsi # Pirate
+      state: kinetic # Pirate
+  - type: PointLight # Pirate
+    enabled: true
+    color: "#ffa223"
+    radius: 1.4
+    energy: 5.0
   - type: EffectVisuals
   - type: Tag
     tags:
@@ -145,8 +150,13 @@
     layers:
     - shader: unshaded
       map: ["enum.EffectLayers.Unshaded"]
-      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-      state: omnilaser_flash
+      sprite: _Pirate/Objects/Weapons/Guns/Projectiles/muzzleflashes.rsi # Pirate
+      state: energystun # Pirate
+  - type: PointLight # Pirate
+    enabled: true
+    color: "#0ab8c4"
+    radius: 1.4
+    energy: 5.0
 
 - type: entity
   parent: MuzzleFlashEffect
@@ -159,8 +169,13 @@
     layers:
     - shader: unshaded
       map: ["enum.EffectLayers.Unshaded"]
-      sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-      state: heavylaser_flash
+      sprite: _Pirate/Objects/Weapons/Guns/Projectiles/muzzleflashes.rsi # Pirate
+      state: energy # Pirate
+  - type: PointLight # Pirate
+    enabled: true
+    color: "#d63b28"
+    radius: 1.4
+    energy: 5.0
 
 # One bullet to bring them all into the darkness and bind them
 - type: entity
@@ -313,11 +328,9 @@
       params:
         volume: 5
   - type: Sprite
-    noRot: true
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    color: "#ffff33"
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: spark
+    - state: lightgold # Pirate
       shader: unshaded
   - type: Physics
   - type: Fixtures
@@ -332,6 +345,7 @@
         - BulletImpassable
       fly-by: *flybyfixture
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectGoldLaser # Pirate
   - type: Projectile
     damage:
       types:
@@ -391,9 +405,9 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: omnilaser
+    - state: mediumstun
       shader: unshaded
   - type: Physics
   - type: Fixtures
@@ -407,6 +421,7 @@
         - Opaque # Goobstation
       fly-by: *flybyfixture
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectOmnilaser # Pirate
   - type: StaminaDamageOnCollide
     damage: 20 # Goob edit
   - type: Projectile
@@ -430,9 +445,9 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: omnilaser
+    - state: mediumstun # Pirate
       shader: unshaded
   - type: Physics
   - type: Fixtures
@@ -446,6 +461,7 @@
         - Opaque # Goobstation
       fly-by: *flybyfixture
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectOmnilaser # Pirate
   - type: StaminaDamageOnCollide
     damage: 1
   - type: Projectile
@@ -464,12 +480,12 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Structures/Power/Generation/Singularity/emitter.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: projectile
+    - state: mediumsynd # Pirate
       shader: unshaded
   - type: Ammo
-    muzzleFlash: null
+    muzzleFlash: MuzzleFlashEffectSyndLaser # Pirate
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -510,9 +526,9 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: omnilaser
+    - state: lightstun # Pirate
       shader: unshaded
   - type: Ammo
     muzzleFlash: null
@@ -1289,6 +1305,7 @@
         - Opaque # Goobstation
       fly-by: *flybyfixture
   - type: Ammo
+    muzzleFlash: MuzzleFlashEffectOmnilaser # Pirate
   - type: StaminaDamageOnCollide
     damage: 12 # Goob edit
   - type: Projectile
@@ -1315,9 +1332,9 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: heavylaser
+    - state: medium # Pirate
       shader: unshaded
   - type: Physics
   - type: Fixtures
@@ -1341,9 +1358,9 @@
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectHeavyLaser
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: heavylaser
+    - state: medium # Pirate
       shader: unshaded
   - type: Projectile
     impactEffect: BulletImpactEffectOrangeDisabler
@@ -1360,9 +1377,9 @@
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectOmnilaser
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: omnilaser
+    - state: mediumstun # Pirate
       shader: unshaded
   - type: StaminaDamageOnCollide
     damage: 30
@@ -1426,9 +1443,9 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi # Pirate
     layers:
-    - state: heavylaser
+    - state: light # Pirate
       shader: unshaded
   - type: Physics
   - type: Fixtures
@@ -1458,6 +1475,8 @@
     proto: BulletLaser
     count: 5 #65 heat damage if you hit all your shots, but wide spread
     spread: 30
+  - type: Ammo # Pirate
+    muzzleFlash: MuzzleFlashEffectHeavyLaser # Pirate
 
 - type: entity
   name: narrow laser barrage
@@ -1469,6 +1488,8 @@
     proto: BulletLaser
     count: 4 #52 heat damage if you hit all your shots, but narrower spread
     spread: 10
+  - type: Ammo # Pirate
+    muzzleFlash: MuzzleFlashEffectHeavyLaser # Pirate
 
 - type: entity
   name: disabling laser barrage

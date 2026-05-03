@@ -206,3 +206,4 @@
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
     - SubGamemodesRule
+    - PsionicEventsScheduler # Pirate

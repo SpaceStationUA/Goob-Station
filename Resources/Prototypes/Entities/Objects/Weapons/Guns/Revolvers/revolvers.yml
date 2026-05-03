@@ -111,6 +111,7 @@
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: StaticPrice
     price: 500
+  - type: CanTakeAim # PIRATE
   - type: Multishot # Goobstation V
     missChance: 0.4
     spreadMultiplier: 3

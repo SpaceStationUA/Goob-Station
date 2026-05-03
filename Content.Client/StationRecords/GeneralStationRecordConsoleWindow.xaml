@@ -14,10 +14,30 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     <BoxContainer Orientation="Vertical">
         <BoxContainer Margin="5 5 5 10" HorizontalExpand="true" VerticalAlignment="Center">
             <OptionButton Name="StationRecordsFilterType" MinWidth="200" Margin="0 0 10 0"/>
+            <!-- Pirate: records photos (start) -->
             <LineEdit Name="StationRecordsFiltersValue"
-                PlaceHolder="{Loc 'general-station-record-for-filter-line-placeholder'}" HorizontalExpand="True"/>
-            <Button Name="StationRecordsFilters" Text="{Loc 'general-station-record-console-search-records'}"/>
-            <Button Name="StationRecordsFiltersReset" Text="{Loc 'general-station-record-console-reset-filters'}"/>
+                PlaceHolder="{Loc 'general-station-record-for-filter-line-placeholder'}" HorizontalExpand="True" Margin="0 0 10 0"/>
+            <Button Name="DeleteRecordButton"
+                    MaxSize="32 32"
+                    StyleClasses="OpenBoth"
+                    Margin="0 0 4 0"
+                    ToolTip="{Loc 'general-station-record-console-delete-record'}">
+                <TextureRect StyleClasses="ButtonSquare"
+                             TexturePath="/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"
+                             Stretch="KeepAspectCentered"
+                             MinSize="18 18" />
+            </Button>
+            <Button Name="AddRecordButton"
+                    MaxSize="32 32"
+                    StyleClasses="OpenBoth"
+                    Margin="0 0 10 0"
+                    ToolTip="{Loc 'general-station-record-console-add-record'}">
+                <TextureRect StyleClasses="ButtonSquare"
+                             TexturePath="/Textures/Interface/VerbIcons/plus.svg.192dpi.png"
+                             Stretch="KeepAspectCentered"
+                             MinSize="18 18" />
+            </Button>
+            <!-- Pirate: records photos (end) -->
         </BoxContainer>
         <BoxContainer VerticalExpand="True">
             <!-- Record listing -->
@@ -27,9 +47,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <ItemList Name="RecordListing" />
                 </ScrollContainer>
             </BoxContainer>
-            <BoxContainer Orientation="Vertical" Margin="5">
+            <!-- Pirate: records photos (start) -->
+            <BoxContainer Orientation="Vertical" Margin="5" HorizontalExpand="True">
+            <!-- Pirate: records photos (end) -->
                 <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'general-station-record-console-select-record-info'}"/>
-                <Control Name="RecordContainer" Visible="False"/>
+                <!-- Pirate: records photos (start) -->
+                <Control Name="RecordContainer" Visible="False" HorizontalExpand="True"/>
+                <!-- Pirate: records photos (end) -->
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

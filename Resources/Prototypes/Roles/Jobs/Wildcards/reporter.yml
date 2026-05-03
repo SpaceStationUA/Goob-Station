@@ -58,6 +58,14 @@
   name: job-name-reporter
   description: job-description-reporter
   playTimeTracker: JobReporter
+  # Pirate contractor start
+  requirements: 
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
+  # Pirate contractor end
   startingGear: ReporterGear
   icon: "JobIconReporter"
   goobcoins: 15 #Goob content
@@ -79,6 +87,10 @@
     - CassetteTape
     - CassetteTape
     - MicrophoneInstrument # Goobstation
+    - PhotoCameraFilled # Pirate: camera
+    - CameraFilm # Pirate: camera
+    - CameraFilm # Pirate: camera
+    - PhotoAlbumLoadoutSigned # Pirate: camera
 
 - type: chameleonOutfit
   id: ReporterChameleonOutfit

@@ -170,6 +170,7 @@
   - alertType: DragonPower # Goobstation
   - category: Ninjutsu # Goobstation
   - category: Counter # WD EDIT
+  - alertType: Offer # Pirate - port EE item offesrs
 
 - type: entity
   id: AlertSpriteView

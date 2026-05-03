@@ -10,6 +10,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Pirate.Common.Traits.Lightweight; // Pirate - Traits Rework
 using Content.Shared._DV.Polymorph;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
@@ -376,7 +377,8 @@ public sealed class CarryingSystem : EntitySystem
         var mod = _contests.MassContest(carried, carrier);
         length *= mod;
 
-        return length;
+        TryComp<LightweightComponent>(carried, out var lightweight); // Pirate - Traits Rework
+        return length / float.Max(lightweight?.PickupSpeedMultiplier ?? 1f, 1f); // Pirate - Traits Rework
     }
 
     private void OnDelete(Entity<BeingCarriedComponent> ent, ref EntityTerminatingEvent args)

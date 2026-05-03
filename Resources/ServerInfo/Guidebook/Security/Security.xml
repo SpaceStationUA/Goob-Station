@@ -12,46 +12,49 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-# Security
-Ensuring the safety of both station and crew is number one for [color=#cb0000]Security[/color]. They are ready for any situation, and [color=#cb0000]Security[/color] are on hand to maintain order and control crowds.
+# Служба безпеки
+Забезпечення безпеки як станції, так і екіпажу — головний пріоритет [color=#cb0000]Служби безпеки[/color]. Вони готові до будь‑якої ситуації й завжди поруч, щоб підтримувати порядок і контролювати натовп.
 
-They face [textlink="Syndicate Agents" link="Traitors"], [textlink="Nuclear Operatives" link="NuclearOperatives"], [textlink="Zombies" link="Zombies"] and unruly staff.
+Їм протистоять [textlink="Syndicate Agents" link="Traitors"], [textlink="Nuclear Operatives" link="NuclearOperatives"], [textlink="Zombies" link="Zombies"] та неслухняний персонал.
 
-## Personnel
-[color=#cb0000]Security[/color]'s staff is made up of Security Cadets, Security Officers, the Detective and the Brigmedic. [color=#cb0000]Security[/color] is run by the Warden and Head of Security.
+## Персонал
+До складу [color=#cb0000]Служби безпеки[/color] входять курсанти СБ, офіцери СБ, детектив і бригмедик. [color=#cb0000]Службою безпеки[/color] керують варден і Голова служби безпеки.
 
   <Box>
-    <GuideEntityEmbed Entity="ToyFigurineSecurity" Caption="Secoff"/>
-    <GuideEntityEmbed Entity="ToyFigurineDetective" Caption="Detective"/>
-    <GuideEntityEmbed Entity="ToyFigurineBrigmedic" Caption="Brigmedic"/>
-    <GuideEntityEmbed Entity="ToyFigurineWarden" Caption="Warden"/>
-    <GuideEntityEmbed Entity="ToyFigurineHeadOfSecurity" Caption="HoS"/>
+    <GuideEntityEmbed Entity="ToyFigurineSecurity" Caption="Офіцер СБ"/>
+    <GuideEntityEmbed Entity="ToyFigurineDetective" Caption="Детектив"/>
+    <GuideEntityEmbed Entity="ToyFigurineBrigmedic" Caption="Бригмедик"/>
+    <GuideEntityEmbed Entity="ToyFigurineWarden" Caption="Варден"/>
+    <GuideEntityEmbed Entity="ToyFigurineHeadOfSecurity" Caption="ГСБ"/>
   </Box>
 
-## Gear
-First we have non-lethals a step above simply telling someone to cooperate with instructions. Both the stunbaton and disabler are capable of limiting the movement of an assailant, whereas handcuffs can be applied to deny a criminal free movement and access to their hands.
+## Спорядження
+Почнемо з нелетальної зброї — кроку вище за прості словесні накази. І шокова дубинка, і дизейблер здатні обмежити пересування нападника, тоді як наручники позбавляють злочинця вільного руху та доступу до рук.
 
-Stunbaton operates differently depending on attack type. On light attack ([color=yellow]Left click[/color]) it deals 60 immediate stamina damage and knocks target down for 4 seconds after 2 second delay, these values are can be modified or cancelled entirely by armor and stimulants. Light attacks are delayed by 2.5 seconds and consume twice as much battery power. Heavy attacks ([color=yellow]Right click[/color]) deal 15 immediate stamina damage and 40 overtime stamina damage, which soft-crits the target after 2 hits when overtime stamina damage reaches stamcrit threshold (100 stamina damage for most species). Soft stamina crit still allows the target to crawl, but any immediate stamina damage will stamcrit them, allowing them to be cuffed. To stun your target using heavy stunbaton attack, you need to either hit them twice, then wait a while until they are knocked down and hit them once more to fully stamcrit them, or hit them four times in quick succession.
+Шокова дубинка поводиться по‑різному залежно від типу атаки. При легкій атаці ([color=yellow]ліва кнопка миші[/color]) вона завдає 60 миттєвої шкоди витривалості й через 2 секунди валить ціль на підлогу на 4 секунди; ці значення можуть бути змінені або повністю скасовані бронею та стимуляторами. Легкі удари мають затримку в 2,5 секунди й витрачають удвічі більше заряду. Важкі атаки ([color=yellow]права кнопка миші[/color]) завдають 15 миттєвої шкоди витривалості та 40 шкоди витривалості з часом, що після двох влучань «м’яко виносить по витривалості» ціль, коли шкода з часом досягає порогу станкрітів (100 шкоди витривалості для більшості рас). М’який станкрит усе ще дозволяє цілі повзати, але будь‑яка додаткова миттєва шкода витривалості переведе її в повний станкрит, після чого її можна спокійно закувати в наручники. Щоб оглушити ціль важкими ударами дубинки, потрібно або вдарити її двічі, почекати, поки вона впаде, і вдарити ще раз для повного станкриту, або вдарити чотири рази підряд.
+
   <Box>
     <GuideEntityEmbed Entity="Stunbaton"/>
     <GuideEntityEmbed Entity="Handcuffs"/>
    <GuideEntityEmbed Entity="WeaponDisabler"/>
   </Box>
 
-## Flashes
-[color=#a4885c]Flashes[/color] are an effective tool for dispersing crowds and apprehending particularly evasive targets, with a large area of effect blinding all those without protection.
-It is worth noting that flashes can be both used in a large area ([color=yellow]Z[/color] hotkey) and if you attack somebody with it while [color=red]harm mode[/color] is active. Important to note that localized flashes last [color=yellow]2.5[/color] times as long as large area ones.
-[color=#cb0000]Security[/color] and [color=#a4885c]some[/color] other members of staff have eye protection from flashbangs and flashes.
+## Спалахи
+[color=#a4885c]Спалахи[/color] — ефективний інструмент для розсіювання натовпу та затримання особливо спритних цілей, оскільки мають велику зону дії й засліплюють усіх без захисту очей.
+Варто пам’ятати, що спалах можна використати як по великій площі (гаряча клавіша [color=yellow]Z[/color]), так і цілеспрямовано, атакувавши ним когось у [color=red]режимі шкоди[/color]. Важливо: локалізовані спалахи тривають у [color=yellow]2,5[/color] рази довше, ніж спалахи по площі.
+[color=#cb0000]Служба безпеки[/color] і [color=#a4885c]деякі[/color] інші члени екіпажу мають захист очей від світлошумових гранат і спалахів.
 
-Flashbangs emit loud noise on trigger, knocking down everyone in large area, knockdown duration scales with the distance to the epicenter. Ear protection in a form of some helmets and over-ear headsets that [color=#cb0000]Security[/color] and [color=#a4885c]all[/color] command staff has suppresses flashbang noise to some extent, allowing you to use flashbangs safely at range but at the same time preventing you from blowing them up in your hands.
+Світлошумові гранати видають гучний звук під час спрацьовування, збиваючи з ніг усіх у великій зоні; тривалість нокдауну залежить від відстані до епіцентру. Захист слуху у вигляді деяких шоломів і накладних гарнітур, якими користуються [color=#cb0000]Служба безпеки[/color] і [color=#a4885c]усі[/color] члени командування, частково приглушує звук світлошумових гранат. Це дозволяє безпечно використовувати їх на відстані, але водночас заважає підривати їх у себе в руках.
+
   <Box>
     <GuideEntityEmbed Entity="Flash"/>
     <GuideEntityEmbed Entity="ClothingEyesGlassesSecurity"/>
     <GuideEntityEmbed Entity="GrenadeFlashBang"/>
   </Box>
 
-## Lethals
-Should the situation dictate, [color=#cb0000]Security[/color] have access to laser rifles, shotguns, handguns and automatic rifles able to put down substantial fire against any who would stand against the station.
+## Летальна зброя
+Якщо ситуація цього вимагає, у [color=#cb0000]Служби безпеки[/color] є доступ до лазерних гвинтівок, дробовиків, пістолетів і автоматичних гвинтівок, здатних обрушити серйозний вогонь на будь‑кого, хто виступить проти станції.
+
   <Box>
     <GuideEntityEmbed Entity="WeaponLaserCarbine"/>
     <GuideEntityEmbed Entity="WeaponShotgunKammerer"/>

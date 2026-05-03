@@ -8,6 +8,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Atmos;
+using Content.Shared._Pirate.Weapons.Ranged.Events; // Pirate: katana
 using Content.Shared.Camera;
 using Content.Shared.Hands.Components;
 using Content.Shared.Movement.Systems;
@@ -40,6 +41,7 @@ public abstract partial class SharedHandsSystem
         SubscribeLocalEvent<HandsComponent, ExtinguishEvent>(RefRelayEvent);
         SubscribeLocalEvent<HandsComponent, ProjectileReflectAttemptEvent>(RefRelayEvent);
         SubscribeLocalEvent<HandsComponent, HitScanReflectAttemptEvent>(RefRelayEvent);
+        SubscribeLocalEvent<HandsComponent, HitScanBlockAttemptEvent>(RefRelayEvent); // Pirate: katana
         SubscribeLocalEvent<HandsComponent, WieldAttemptEvent>(RefRelayEvent);
         SubscribeLocalEvent<HandsComponent, UnwieldAttemptEvent>(RefRelayEvent);
         SubscribeLocalEvent<HandsComponent, TargetHandcuffedEvent>(RefRelayEvent);

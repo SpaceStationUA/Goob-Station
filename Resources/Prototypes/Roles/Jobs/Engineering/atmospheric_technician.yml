@@ -68,6 +68,14 @@
   - !type:DepartmentTimeRequirement
     department: Engineering
     time: 9000 #2.5 hrs
+  # Pirate contractor start
+  - !type:CharacterEmployerRequirement
+    employers:
+    - NanoTrasen
+    - EinsteinEngines
+    - ZavodskiyInterstellar
+    - HephaestusIndustries
+  # Pirate contractor end
   startingGear: AtmosphericTechnicianGear
   icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce

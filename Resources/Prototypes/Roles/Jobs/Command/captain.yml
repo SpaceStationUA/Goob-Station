@@ -154,13 +154,30 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 28000 # 8 hours
-    - !type:SpeciesRequirement # Goob - None Felinid
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - Foreigner
+      - ForeignerLight
+      - DeafTrait
+      - MovementImpaired
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+    - !type:SpeciesRequirement # Pirate edit
       inverted: true
       species:
-      - Felinid
+      #- Felinid
+      - Hydrakin
       #any MRP using our code might eventually want to use it
     # - !type:SaturationRequirement # MisandryBox - no neon hair on captain
     #   hairColorSaturation: 0.30
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+    # Pirate contractor end
   guides: # goobstation
   - Command
   - Succession
@@ -173,6 +190,7 @@
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
+  whitelisted: true # Pirate
   accessGroups:
   - AllAccess
   special:
@@ -192,10 +210,10 @@
     #gloves: ClothingHandsGlovesCaptain - Goobstation, moved to loadouts
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
-  storage:
-    back:
-    - Flash
-    - TelescopicBaton # Goobstation
+  #storage: # Pirate
+    #back: # Pirate
+    #- Flash # Pirate
+    #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
     # - StationCharter
 
 - type: chameleonOutfit

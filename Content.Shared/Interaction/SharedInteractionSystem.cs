@@ -180,6 +180,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+#region DOWNSTREAM-TPirates: borg wireless access
+using Content.Shared._DV.Silicons.Laws;
+#endregion
 
 namespace Content.Shared.Interaction
 {
@@ -342,6 +345,10 @@ namespace Content.Shared.Interaction
             if (range < 0) // Goobstation
                 return true;
 
+            #region DOWNSTREAM-TPirates: borg wireless access
+            if (HasComp<SlavedBorgComponent>(user.Owner))
+                return true; // lets borgs bypass range checks for door radial interaction I.E. bolt/electrify/EA
+            #endregion
             if (!Resolve(target, ref target.Comp))
                 return false;
 
@@ -592,6 +599,11 @@ namespace Content.Shared.Interaction
                 UseInHandInteraction(user, target.Value, checkCanUse: false, checkCanInteract: false);
                 return;
             }
+
+            #region DOWNSTREAM-TPirates: borg wireless access
+            if (HasComp<RemoteInteractionComponent>(user) && !_actionBlockerSystem.CanInteractUsing(user, target, used))
+                return;
+            #endregion
 
             if (inRangeUnobstructed && target != null)
             {

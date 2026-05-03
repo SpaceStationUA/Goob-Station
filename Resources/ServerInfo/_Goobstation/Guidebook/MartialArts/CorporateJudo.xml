@@ -1,55 +1,53 @@
 <Document>
 
-  # Corporate Judo
+  # Корпоративне дзюдо
 
   <Box>
     <GuideEntityEmbed Entity="ClothingBeltCorporateJudo" Caption=""/>
   </Box>
 
-  Corporate Judo, or simply Judo, is a [textlink="martial art" link="MartialArts"] that focuses on restraining your opponent with more
-  complex but effective moves. You will see this style most used by Security Officers, as they get access to the belts in their department.
-  Harness the art and strike any tider that gets in your way. A good understanding of intents is required.
+  Корпоративне дзюдо, або просто дзюдо, — це [textlink="бойове мистецтво" link="MartialArts"], що зосереджується на утриманні супротивника складнішими, але ефективними прийомами. Найчастіше цей стиль використовують офіцери СБ, адже саме вони мають доступ до поясів у своєму відділі.
+  Оволодій мистецтвом і карай будь‑якого тайдера, який стане у тебе на шляху. Для ефективного використання потрібне добре розуміння намірів.
 
-  ## Special abilities
+  ## Особливі вміння
 
-  Judo users are better at Harm intent, as their unarmed attacks will deal extra damage to the opponent.
+  Користувачі дзюдо сильніші в намірі Шкода (Harm): їхні атаки без зброї завдають додаткової шкоди супротивнику.
 
-  ### Stunbaton Scorn
+  ### Зневага до шокових дубинок
 
-  A Judo user is unable to use stunbatons. A true master relies on technique, using the
-  body’s leverage and strength to subdue, leaving the need for electrified force behind.
+  Користувач дзюдо не може використовувати шокові дубинки. Справжній майстер покладається на техніку, використовуючи важіль тіла й силу, щоби придушити опір, залишаючи електричну силу в минулому.
 
-  ## Combo attacks
+  ## Комбо-атаки
 
-  ### Discombobulate
+  ### Дезорієнтація
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
   </Box>
 
-  Slows the opponent down and reduces their stamina resistance temporarily.
+  Сповільнює супротивника й тимчасово знижує його опір шкоді витривалості.
 
-  ### Eye Poke
+  ### Тик в око
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
   </Box>
 
-  Blinds the opponent and blurs their vision, regardless of eye protection, and deals some Blunt damage.
+  Засліплює супротивника та розмиває йому зір незалежно від наявності захисту очей, а також завдає трохи тупої шкоди.
 
-  ### Judo Throw
+  ### Кидок дзюдо
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
   </Box>
 
-  Can only be perfomed while standing. Only works on standing opponents, dealing Stamina damage and knocking them down.
-  Knockdown duration is affected by their Stamina resistance.
+  Може бути виконаний лише стоячи. Працює тільки по цілях, які також стоять, завдаючи шкоди витривалості й збиваючи їх з ніг.
+  Тривалість нокдауну залежить від їхнього опору шкоді витривалості.
 
-  ### Armbar
+  ### Залом руки
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
@@ -57,10 +55,10 @@
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
   </Box>
 
-  Only works on downed opponents. Inflicts Stamina damage, disarms them, and locks them in an armbar until they manage to stand up.
-  Armbar works similarly to a knockdown and choke grab, and its duration is affected by their Stamina resistance.
+  Працює тільки по повалених цілях. Завдає шкоди витривалості, вибиває предмети з рук і фіксує супротивника в заломі руки, доки він не зможе підвестися.
+  Залом працює подібно до нокдауну та захвату за горло, а його тривалість залежить від опору шкоді витривалості.
 
-  ### Wheel Throw
+  ### Кидок колесом
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
@@ -68,7 +66,7 @@
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
   </Box>
 
-  Only works on opponents locked in an armbar. Flips the opponent over the shoulder,
-  inflicting massive Stamina damage, and forces the user back on their feet.
+  Працює лише по цілях, уже зафіксованих у заломі руки. Перекидає супротивника через плече,
+  завдаючи величезної шкоди витривалості, і змушує користувача знову встати на ноги.
 
 </Document>

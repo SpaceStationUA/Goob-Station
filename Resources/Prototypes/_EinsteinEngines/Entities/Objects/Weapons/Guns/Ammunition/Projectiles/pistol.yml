@@ -1,0 +1,26 @@
+- type: entity
+  id: BulletPistolCryptobiolin
+  name: bullet (.38 special Cryptobiolin)
+  parent: BulletPistolPractice
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        reagents:
+        - ReagentId: Cryptobiolin
+          Quantity: 5
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
+  - type: SolutionInjectOnProjectileHit
+    transferAmount: 5
+    solution: ammo
+  - type: InjectableSolution
+    solution: ammo
+

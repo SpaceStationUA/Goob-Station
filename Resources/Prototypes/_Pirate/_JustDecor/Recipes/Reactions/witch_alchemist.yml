@@ -1,0 +1,630 @@
+- type: reaction
+  id: WitchLoveReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Blood:
+      amount: 2
+    Sugar:
+      amount: 2
+    Happiness:
+      amount: 1
+  products:
+    WitchLove: 5
+
+- type: reaction
+  id: WitchParanoiaReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    MindbreakerToxin:
+      amount: 1
+    Nocturine:
+      amount: 2
+    Blood:
+      amount: 1
+  products:
+    WitchParanoia: 4
+
+- type: reaction
+  id: WitchRageReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Ephedrine:
+      amount: 2
+    Blood:
+      amount: 2
+    Ash:
+      amount: 1
+  products:
+    WitchRage: 5
+
+- type: reaction
+  id: WitchInvisibilityReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Nocturine:
+      amount: 2
+    Mercury:
+      amount: 2
+    Holywater:
+      amount: 1
+  products:
+    WitchInvisibility: 5
+
+- type: reaction
+  id: WitchMindFogReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    MindbreakerToxin:
+      amount: 1
+    Cryptobiolin:
+      amount: 2
+    Water:
+      amount: 2
+  products:
+    WitchMindFog: 5
+
+- type: reaction
+  id: WitchMirrorCurseReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Mercury:
+      amount: 2
+    Cognizine:
+      amount: 1
+    Holywater:
+      amount: 1
+  products:
+    WitchMirrorCurse: 4
+
+- type: reaction
+  id: WitchBloodBondReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Blood:
+      amount: 3
+    Iron:
+      amount: 1
+    Saline:
+      amount: 2
+  products:
+    WitchBloodBond: 6
+
+- type: reaction
+  id: WitchSoulShadowReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Ash:
+      amount: 2
+    Nocturine:
+      amount: 2
+    SpaceDrugs:
+      amount: 1
+  products:
+    WitchSoulShadow: 5
+
+- type: reaction
+  id: WitchSubstitutionReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Mercury:
+      amount: 1
+    SpaceDrugs:
+      amount: 1
+    Cognizine:
+      amount: 1
+    Blood:
+      amount: 1
+  products:
+    WitchSubstitution: 2
+
+- type: reaction
+  id: WitchBlackBileReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Blood:
+      amount: 1
+    Ash:
+      amount: 2
+    MindbreakerToxin:
+      amount: 1
+    Ipecac:
+      amount: 1
+  products:
+    WitchBlackBile: 5
+
+- type: reaction
+  id: WitchEchoReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Water:
+      amount: 2
+    Mercury:
+      amount: 1
+    Cognizine:
+      amount: 1
+  products:
+    WitchEcho: 4
+
+- type: reaction
+  id: WitchNameCurseReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    GreyMatter:
+      amount: 1
+    Blood:
+      amount: 2
+    Holywater:
+      amount: 1
+  products:
+    WitchNameCurse: 4
+
+- type: reaction
+  id: WitchHungerPotionReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Blood:
+      amount: 1
+    Nutriment:
+      amount: 3
+    Ipecac:
+      amount: 1
+  products:
+    WitchHungerPotion: 5
+
+- type: reaction
+  id: AlchemistAcidReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    SulfuricAcid:
+      amount: 2
+    Fluorine:
+      amount: 2
+    Water:
+      amount: 2
+  products:
+    AlchemistAcid: 6
+
+- type: reaction
+  id: AlchemistPhilosopherStoneReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Gold:
+      amount: 1
+    Mercury:
+      amount: 2
+    Plasma:
+      amount: 3
+  products:
+    AlchemistPhilosopherStone: 6
+
+- type: reaction
+  id: AlchemistMagicNeutralizerReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Holywater:
+      amount: 2
+    Charcoal:
+      amount: 1
+    Saline:
+      amount: 2
+  products:
+    AlchemistMagicNeutralizer: 5
+
+- type: reaction
+  id: AlchemistCatalystReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Mercury:
+      amount: 1
+    Oxygen:
+      amount: 3
+    Synaptizine:
+      amount: 1
+  products:
+    AlchemistCatalyst: 5
+
+- type: reaction
+  id: AlchemistSoulCopperasReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Copper:
+      amount: 2
+    SulfuricAcid:
+      amount: 1
+    Ichor:
+      amount: 1
+  products:
+    AlchemistSoulCopperas: 4
+
+- type: reaction
+  id: AlchemistBubbleGasReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Mercury:
+      amount: 1
+    Water:
+      amount: 3
+    Cryptobiolin:
+      amount: 1
+  products:
+    AlchemistBubbleGas: 5
+
+- type: reaction
+  id: AlchemistGravityPotionReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Iron:
+      amount: 2
+    Blood:
+      amount: 2
+    Saline:
+      amount: 1
+  products:
+    AlchemistGravityPotion: 5
+
+- type: reaction
+  id: AlchemistClownTrailReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Sulfur:
+      amount: 2
+    WeldingFuel:
+      amount: 2
+    Oil:
+      amount: 1
+  products:
+    AlchemistClownTrail: 5
+
+- type: reaction
+  id: AlchemistChaosSaltReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    TableSalt:
+      amount: 3
+    Radium:
+      amount: 1
+    Blood:
+      amount: 1
+  products:
+    AlchemistChaosSalt: 5
+
+- type: reaction
+  id: AlchemistMimicJuiceReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Phosphorus:
+      amount: 1
+    WeldingFuel:
+      amount: 2
+    Oil:
+      amount: 1
+  products:
+    AlchemistMimicJuice: 4
+
+- type: reaction
+  id: AlchemistNitricEssenceReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Nitrogen:
+      amount: 2
+    Water:
+      amount: 2
+    Cryoxadone:
+      amount: 1
+  products:
+    AlchemistNitricEssence: 5
+
+- type: reaction
+  id: AlchemistMagnusElixirReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Stimulants:
+      amount: 2
+    Ephedrine:
+      amount: 1
+    Cognizine:
+      amount: 1
+    DexalinPlus:
+      amount: 1
+  products:
+    AlchemistMagnusElixir: 5
+
+- type: reaction
+  id: WitchSerenityReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Water:
+      amount: 2
+    Holywater:
+      amount: 1
+    Synaptizine:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    WitchSerenity: 5
+
+- type: reaction
+  id: WitchInspirationReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Cognizine:
+      amount: 2
+    Happiness:
+      amount: 1
+    Sugar:
+      amount: 1
+    SpaceDrugs:
+      amount: 1
+  products:
+    WitchInspiration: 5
+
+- type: reaction
+  id: WitchWisdomReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Cognizine:
+      amount: 2
+    GreyMatter:
+      amount: 1
+    Synaptizine:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    WitchWisdom: 5
+
+- type: reaction
+  id: WitchStarlightPotionReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Holywater:
+      amount: 2
+    Cognizine:
+      amount: 1
+    Synaptizine:
+      amount: 1
+    Plasma:
+      amount: 1
+  products:
+    WitchStarlightPotion: 5
+
+- type: reaction
+  id: WitchHopeReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Sugar:
+      amount: 2
+    Happiness:
+      amount: 1
+    Holywater:
+      amount: 1
+    Saline:
+      amount: 1
+  products:
+    WitchHope: 5
+
+- type: reaction
+  id: WitchCompassionReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Blood:
+      amount: 1
+    Sugar:
+      amount: 1
+    Saline:
+      amount: 1
+    Happiness:
+      amount: 1
+  products:
+    WitchCompassion: 4
+
+- type: reaction
+  id: WitchClarityReaction
+  requiredMixerCategories:
+  - WitchBrew
+  reactants:
+    Synaptizine:
+      amount: 2
+    Cognizine:
+      amount: 1
+    Holywater:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    WitchClarity: 5
+
+- type: reaction
+  id: AlchemistCourageReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Ephedrine:
+      amount: 2
+    Iron:
+      amount: 1
+    Blood:
+      amount: 1
+    Bruizine:
+      amount: 1
+  products:
+    AlchemistCourage: 5
+
+- type: reaction
+  id: AlchemistDeterminationReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Iron:
+      amount: 2
+    Stimulants:
+      amount: 1
+    Ephedrine:
+      amount: 1
+    Saline:
+      amount: 1
+  products:
+    AlchemistDetermination: 5
+
+- type: reaction
+  id: AlchemistElixirOfLifeReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    Razorium:
+      amount: 1
+    Puncturase:
+      amount: 1
+    Pyrazine:
+      amount: 1
+    Saline:
+      amount: 1
+    Holywater:
+      amount: 1
+  products:
+    AlchemistElixirOfLife: 5
+
+- type: reaction
+  id: AlchemistAlchemicalExplosionReaction
+  requiredMixerCategories:
+  - AlchemistDistill
+  reactants:
+    WeldingFuel:
+      amount: 2
+    Phosphorus:
+      amount: 1
+    Potassium:
+      amount: 1
+    Plasma:
+      amount: 1
+  products:
+    AlchemistAlchemicalExplosion: 5
+
+- type: reaction
+  id: InteractionCursedSaltReaction
+  requiredMixerCategories:
+  - OccultConvergence
+  reactants:
+    WitchBlackBile:
+      amount: 1
+    AlchemistChaosSalt:
+      amount: 2
+    Ash:
+      amount: 1
+  products:
+    InteractionCursedSalt: 4
+
+- type: reaction
+  id: InteractionAntiMagicReaction
+  requiredMixerCategories:
+  - OccultConvergence
+  reactants:
+    AlchemistMagicNeutralizer:
+      amount: 1
+    WitchMirrorCurse:
+      amount: 1
+    Holywater:
+      amount: 2
+  products:
+    InteractionAntiMagic: 4
+
+- type: reaction
+  id: InteractionHolyRemedyReaction
+  requiredMixerCategories:
+  - OccultConvergence
+  reactants:
+    WitchLove:
+      amount: 1
+    AlchemistMagicNeutralizer:
+      amount: 1
+    Holywater:
+      amount: 2
+    Saline:
+      amount: 2
+  products:
+    InteractionHolyRemedy: 6
+
+- type: reaction
+  id: InteractionChaosMixtureReaction
+  requiredMixerCategories:
+  - OccultConvergence
+  reactants:
+    WitchRage:
+      amount: 1
+    AlchemistMagnusElixir:
+      amount: 1
+    Mercury:
+      amount: 1
+    Plasma:
+      amount: 1
+  products:
+    InteractionChaosMixture: 4
+
+- type: reaction
+  id: AlchemistChaosSaltWater
+  impact: Medium
+  priority: 20
+  conserveEnergy: false
+  reactants:
+    AlchemistChaosSalt:
+      amount: 1
+    Water:
+      amount: 1
+  effects:
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      intensityPerUnit: 0.18
+      maxTotalIntensity: 12
+      intensitySlope: 3
+      maxIntensity: 3
+
+- type: reaction
+  id: AlchemistChaosSaltBlood
+  impact: Medium
+  priority: 20
+  conserveEnergy: false
+  reactants:
+    AlchemistChaosSalt:
+      amount: 1
+    Blood:
+      amount: 1
+  effects:
+    - !type:ExplosionReactionEffect
+      explosionType: Default
+      intensityPerUnit: 0.18
+      maxTotalIntensity: 12
+      intensitySlope: 3
+      maxIntensity: 3
+

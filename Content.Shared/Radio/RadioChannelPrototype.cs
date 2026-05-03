@@ -60,4 +60,9 @@ public sealed partial class RadioChannelPrototype : IPrototype
 
     [DataField]
     public EntityWhitelist? ReceiveWhitelist = null;
+
+    // Pirate start - Handheld Radios port
+    [DataField, ViewVariables]
+    public bool ShowFrequency = false;
+    // Pirate end - Handheld Radios port
 }

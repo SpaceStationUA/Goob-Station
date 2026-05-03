@@ -813,6 +813,7 @@
     node: cratecoffin
     containers:
     - entity_storage
+  - type: Coffin # Pirate
 
 - type: entity
   parent: CrateGeneric

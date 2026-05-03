@@ -102,6 +102,7 @@
     - BibleSet
     - QuaranSet
     - TanakhSet
+    - NTEmployeeHandbookSet #Pirate changes atheist
     - ClockworkSet
     maxSelectedSets: 1
 
@@ -163,6 +164,9 @@
       groups:
         Brute: 15
         Airloss: 15
+    damageOnUnholyUse: ## Pirate - What an unholy creature takes when picking up the bible
+      groups:
+        Burn: 20
     damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
       groups:
         Burn: 10

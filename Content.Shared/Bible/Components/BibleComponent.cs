@@ -49,6 +49,13 @@ namespace Content.Goobstation.Shared.Bible // Death to serverside components. Gl
         [DataField(required: true)]
         public DamageSpecifier DamageOnUntrainedUse = default!;
 
+        // Pirate VVV
+        [DataField("damageOnUnholyUse", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier DamageOnUnholyUse = default!;
+        // Pirate ^^^
+
+
         /// <summary>
         /// Chance the bible will fail to heal someone with no helmet
         /// </summary>

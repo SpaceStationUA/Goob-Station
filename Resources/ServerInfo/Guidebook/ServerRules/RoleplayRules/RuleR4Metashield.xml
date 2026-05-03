@@ -9,105 +9,191 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-  # Roleplay Rule 4 - Do not metagame, obey the Metashield
-  Something that is "shielded" cannot be known by your character during a round until the "revealing condition" happens. This also means that your character cannot do things based on "shielded" information. Knowing or acting on something that is shielded before the revealing condition is met is referred to as metagaming.
+  # Правило рольової гри 4 - Не метагейміть, дотримуйтесь Метащита
+  Щось, що є "захищеним", не може бути відомим вашому персонажу під час раунду, доки не відбудеться "умова розкриття". Це також означає, що ваш персонаж не може діяти на основі "захищеної" інформації. Знання або дії на основі чогось, що є захищеним, до того, як буде виконана умова розкриття, називається метагеймінгом.
 
-  Revealing conditions reveal the shielded information for the round, not for a specific instance. This means that once a revealing condition is met in a round, the shield no longer applies in any case for the remainder of the round.
+  Умови розкриття розкривають захищену інформацію на весь раунд, а не для конкретного випадку. Це означає, що як тільки умова розкриття виконана в раунді, щит більше не застосовується в жодному випадку до кінця раунду.
 
-  ## Never Revealed IC
-  Some shields are never revealed IC. This means that your character can never act as if they know about that shielded thing.
+  ## Ніколи не розкривається в грі
+  Деякі щити ніколи не розкриваються в грі. Це означає, що ваш персонаж ніколи не може діяти так, ніби він знає про цю захищену річ.
 
-  The following are shielded:
-  - Current game mode and possible antags during the current game mode.
-  - Events from previous rounds.
-  - Events you experienced as a different character.
-  - All information related to the player of a character rather than the character itself. (See "Metafriending and Metagrudging" below.)
-  - All information gained while dead or a ghost.
-  - All information gained while in critical condition or unconscious.
-  - The fact that a round will end.
+  Наступне є захищеним:
+  - Поточний ігровий режим та можливі антагоністи під час поточного ігрового режиму.
+  - Події з попередніх раундів.
+  - Події, які ви пережили як інший персонаж.
+  - Вся інформація, пов'язана з гравцем персонажа, а не з самим персонажем. (Див. "Метадружба та Метаворожнеча" нижче.)
+  - Вся інформація, отримана під час смерті або будучи привидом.
+  - Вся інформація, отримана в критичному стані або без свідомості.
+  - Той факт, що раунд закінчиться.
 
-  This does not prevent knowing that a shift will end, but does prohibit things like preparing to kill people at central command when roleplay rules stop being enforced on LRP.
+  Це не заважає знати, що зміна закінчиться, але забороняє такі речі, як підготовка до вбивства людей на центральному командуванні, коли правила рольової гри перестають діяти на LRP.
 
-  ## Nuclear Operatives
+  ## Ядерні оперативники
 
-  - Nuclear Operatives are rumoured but not proven. Have fun with this rumour.
+  Ядерні оперативники вважаються пропагандою Nanotrasen, і екіпаж про них взагалі не інформують.
+  Плакати, що висять на станції, ігноруються і називаються пропагандою синдикату.
 
-  ## Changelings
+  Той факт, що ядерний диск повинен бути захищений і може бути використаний зловмисником для спроби знищити станцію, не є захищеним.
 
-  - In the eyes of the public, changelings are an exterminated predatory lifeform, they could always come back, but they'd not be on our station, right?
+  Умовою розкриття для цього щита є будь-яка з наступних:
+  - виявлення шатла ядерного оперативника
+  - ім'я оперативника
+  - оголошення про військові операції
+  - бути ядерним оперативником
 
-  ## Heretics
+  ## Перевертні
 
-  - The chaplain is aware of the existence of heretics, but the chaplain is always spewing nonsense. What do they even mean?
+  В очах громадськості перевертні - це винищений хижий вид, і їхнє потенційне існування на станції є захищеним.
+  Цей метащит забороняє гравцям проводити аналіз крові екіпажу, доки метащит не буде розкритий.
 
-  ## Cosmic Cult
+  Знання про здібності перевертнів не є захищеним.
 
-  - The chaplain is saying words again! Why do they hire such weird people?
+  Умовою розкриття для цього щита є будь-яка з наступних:
+  - виявлення порожнього тіла
+  - спостереження за тим, як перевертень використовує свої не-стелс здібності (не укуси або пасивні здібності)
+  - спостереження за тим, як хтось намагається поглинути тіло
+  - спостереження за тим, як хтось змінює свою зовнішність
+  - бути перевертнем
 
-  ## Devils
+  ## Єретики
 
-  - The chaplain is now...talking about DEVILS? What is this nonsense? Devils are just a myth, right? They can't be real!
+  Для звичайних людей єретики, як правило, невідомі. Служба безпеки та командування можуть знати, що існує група людей, які слідують за богом-відступником, але це абсурдна реальність.
+  Цей метащит забороняє звичайним гравцям знати, що таке руни або розломи реальності. Служба безпеки може ставитися до них з підозрою.
 
-  Knowledge about the abilities and consequences of a Devil deal are not shielded.
+  Знання про здібності єретиків не є захищеним.
 
-  ## Zombies
+  Умовою розкриття для цього щита є будь-яка з наступних:
+  - спостереження за тим, як член екіпажу малює руну
+  - спостереження за тим, як член екіпажу збирає розлом реальності
+  - спостереження за тим, як член екіпажу використовує свої сили
 
-  Zombies are known galaxy-wide, but not as real-life, instead, as fiction.
-  Nuclear Operatives and Syndicate Agents are aware of Romerol and what it can do, but there's no benefit to revealing it to the crew. People likely won't believe you anyway.
+  ## Космічний культ
 
-  ## Infections(Once the zombie virus is proven)
+  Як і інші практики заборонених мистецтв, Космічний культ невідомий звичайним людям.
+  Командування знає про існування потойбічних сил, але метащит забороняє гравцям знати, що таке гліфи та реальні/злоякісні зрушення.
 
-  Such infections have been known to be extinct. But luckily advanced medicine has been able to cure the infection. The cure is not known to the public, but it is known to Chemists and Chief Medical Officers. The cure is not known to be a cure for the zombie virus, but it is known to be a cure for an infection that causes people to become zombies.
+  Люди можуть ставитися до них з підозрою, а капелан знає, що це зла сила, яку потрібно стримувати.
 
-  ## Deathsquad
+  Умовою розкриття для цього щита є будь-яка з наступних:
+  - спостереження за членом екіпажу з характерною маскою
+  - спостереження за тим, як член екіпажу використовує гліф
+  - спостереження за тим, як член екіпажу поглинає злоякісне зрушення
+  - спостереження за тим, як член екіпажу використовує специфічну для культу здатність
+  - спостереження за культовим спорядженням, таким як ентропійні мечі та броня
 
-  Deathsquad is a sci-fi trope that is well known in the galaxy, but not as a real thing. It is a myth, a legend, and a story that people tell each other. The Deathsquad is not real, but some will argue that it is.
+  ## Дияволи
 
-  ## Implanted implants
+  Для більшості звичайних людей Диявол - це вигадана казка, створена, щоб лякати людей від розмов з незнайомцями.
+  Цей метащит забороняє гравцям знати, що гравець є дияволом, лише за його спорядженням, хоча вони можуть не довіряти йому скільки завгодно.
 
-  Implants are not shielded by default, but the fact that they are not Nanotrasen (NT) implants is shielded.
+  Знання про здібності та наслідки угоди з Дияволом не є захищеними.
 
-  ## Chameleon Items
+  Умовою розкриття для цього щита є будь-яка з наступних:
+  - Ви - Диявол.
+  - Ви - капелан, юрист або член Центрального командування. (Включаючи BSO та NTR)
+  - Ви уклали угоду з Дияволом.
+  - Ви бачили, як хтось укладає угоду.
 
-  Chameleon items are shielded.
-  Being suspicious of an item being fake or stolen is not shielded, but testing items or calling them chameleon is covered by this shield.
+  ## Зомбі
 
-  ## Stealth Items
+  Зомбі відомі по всій галактиці, але не як реальні, а як вигадка.
+  Ядерні оперативники та агенти Синдикату знають про Ромерол і що він може зробити, але їм заборонено говорити про це публічно - якщо вони не хочуть, щоб їхні сім'ї померли.
 
-  The fact that an item can be something other than what its visual appearance and examine description indicate is shielded.
-  Security may be aware of tampered items, but they are not aware of the specific item that is tamped. This means that security may not act on the fact that an item is tamped, but they may act on the fact that an item is suspicious.  (Example: Non-NT weapons on a persons is suspicious, how did they get it on station?)
-  This shield protects stealth items, including protecting them from being tested.
+  Умови розкриття щита "Зомбі":
+  - Ви - ядерний оперативник
+  - Ви - агент Синдикату
+  - Ви - зомбі
+  - Ви бачили зомбі на станції
 
+  ## Інфекції
 
-  ## Metafriending and Metagrudging
-  This section provides additional information on a concept that is prohibited by multiple metashield items that are never revealed IC. Giving a person or character preferential treatment based on something that your character should not know is considered metafriending. Treating a person or character negatively based on something that your character should not know is considered metagrudging.
+  Зомбі вважаються вимерлими, вони раніше спустошували людство сотні років тому в середньовіччі.
+  Ліки були створені, і досі зберігаються хіміками та головними медичними офіцерами як доказ того, як довго ваша сім'я працює в цій галузі.
 
-  ## Metafriending Examples
-  These are all examples of things that are prohibited by at least one metashield item that is never revealed IC.
-  - Giving a character additional access or a job because you are friends with the player who is playing that character.
-  - Trusting a character because you are friends with the player who is playing that character.
-  - Not fighting a character because you are friends with the player who is playing that character.
-  - Ignoring your objective to kill a character because your character and theirs became friends in a previous round.
+  Умови розкриття щита "Інфекції":
+  - Ви - хімік
+  - Ви - головний медичний офіцер
+  - Оголошено, що зомбі реальні і по всій станції
 
-  ## Metagrudging Examples
-  These are all examples of things that are prohibited by at least one metashield item that is never revealed IC.
-  - Not giving a character additional access or a job because you are mad at or don't like the player who is playing that character.
-  - Not trusting a character because you are mad at or don't like the player who is playing that character.
-  - Starting a fight with a character because of something that they did last round.
-  - Starting a fight with a character because they killed you while you were playing a different character.
-  - Targeting or harassing a character based on anything which that character did outside the current round.
-  - Targeting or harassing a character based on anything which the character's player did while not playing the character.
+  ## Загін смерті
 
-  ## Explicitly Not Shielded
-  The following is a list of things that are explicitly not shielded. If something is not on this list, it doesn't mean that it is shielded, but if something is on it then it definitely is not shielded.
-  - The fact that the nuke disk must be protected and could be used by a bad actor to try to destroy the station.
-  - Items that are of high value or are desired by the Syndicate, and therefore are likely targets of theft.
-  - The idea that any Syndicate agent or other bad actor has goals or objectives that they are attempting to accomplish.
-  - The number of goals or objectives that a Syndicate agent or other bad actor has.
-  - The fact that the Syndicate are enemies of Nanotrasen, and that they regularly attempt to send covert agents to spy on, sabotage, or attack Nanotrasen.
-  - A character's typical appearance. Though you should keep in mind that multiple characters can share the same name.
-  - The fact that the Syndicate have covert items capable of getting items to them, and that these items are known as uplinks.
-  - Wizards are not metashielded as the wizards federation is well rumoured about.
+  Відомо, що Загін смерті існує - згідно з плакатами на станції, але вони не відомі як загін для вбивства екіпажу, а як елітна команда, що відправляється на станції для боротьби з екстремальними загрозами, з якими не могли впоратися навіть найкращі керівники служби безпеки ERT.
+  Представник Nanotrasen на станції та офіцер Блакитного щита знають, що Загін смерті - це загін для вбивства екіпажу, але їм суворо заборонено згадувати про це, і з ними розберуться після або під час зміни.
 
-  For revealing conditions check out [textlink="Antag revealing conditions" link="Conditions"]
+  У приватних розмовах, факсах або телефонних дзвінках як BSO, так і NTR радять використовувати термін 'Загін прибиральників' для позначення Загону смерті.
+  Екіпаж також може вибрати рольову гру, ніби вони бачили фільми про загін смерті, знаючи обмежені аспекти їхнього спорядження, які можна було б розумно знати, дивлячись бойовик.
+
+  Умови розкриття щита "Загін смерті":
+  - Оголошено код Омікрон, що знищує станцію
+  - Оголошено код Епсилон, що розриває контракти
+  - Ви - представник Nanotrasen (NTR)
+  - Ви - офіцер Блакитного щита (BSO)
+  - Посадова особа Центрального командування (не NTR/BSO) згадує Загін смерті як [bold]Загін для вбивства[/bold]
+
+  ## Імплантовані імплантати
+
+  Імплантовані імплантати є захищеними.
+
+  Самі імплантатори та неімплантовані імплантати не є захищеними. Це забороняє перевірку імплантатів.
+
+  Умовою розкриття для цього щита є будь-яка з наступних:
+  - виявлення не-NT імплантатора, використаного чи ні
+  - виявлення не-NT коробки з імплантатами
+  - виявлення використання не-NT імплантату будь-ким
+  - виникнення ситуації, коли абсолютно жодне інше пояснення неможливе
+  - виявлення розблокованого аплінка
+
+  ## Предмети-хамелеони
+
+  Предмети-хамелеони є захищеними.
+
+  Підозра, що предмет є підробленим або вкраденим, не є захищеною, але перевірка предметів або називання їх хамелеонами покривається цим щитом.
+
+  Умовою розкриття для цього щита є будь-яка з наступних:
+  - бачити, як хтось інший змушує будь-який предмет-хамелеон змінюватися
+  - знаходження голографічних наномашинних волокон
+  - виникнення ситуації, коли абсолютно жодне інше пояснення неможливе
+  - виявлення розблокованого аплінка
+
+  ## Стелс-предмети
+
+  Той факт, що предмет може бути чимось іншим, ніж вказує його зовнішній вигляд та опис при огляді, є захищеним.
+
+  Цей щит захищає стелс-предмети, включаючи захист від їх перевірки.
+
+  Умовою розкриття для цього щита є будь-яка з наступних:
+  - бачити, як предмет поводиться інакше, ніж очікувана поведінка для цього предмета
+  - бачити, як предмет використовується для його прихованої мети
+  - виникнення ситуації, коли абсолютно жодне інше пояснення неможливе
+  - виявлення розблокованого аплінка
+
+  ## Метадружба та Метаворожнеча
+  Цей розділ надає додаткову інформацію про концепцію, яка заборонена кількома елементами метащита, які ніколи не розкриваються в грі. Надання особі або персонажу пільгового ставлення на основі чогось, що ваш персонаж не повинен знати, вважається метадружбою. Негативне ставлення до особи або персонажа на основі чогось, що ваш персонаж не повинен знати, вважається метаворожнечею.
+
+  ## Приклади метадружби
+  Це все приклади речей, які заборонені принаймні одним елементом метащита, який ніколи не розкривається в грі.
+  - Надання персонажу додаткового доступу або роботи, тому що ви друзі з гравцем, який грає цим персонажем.
+  - Довіра до персонажа, тому що ви друзі з гравцем, який грає цим персонажем.
+  - Не битися з персонажем, тому що ви друзі з гравцем, який грає цим персонажем.
+  - Ігнорування вашої мети вбити персонажа, тому що ваш персонаж і його стали друзями в попередньому раунді.
+
+  ## Приклади метаворожнечі
+  Це все приклади речей, які заборонені принаймні одним елементом метащита, який ніколи не розкривається в грі.
+  - Не надавати персонажу додаткового доступу або роботи, тому що ви злі на гравця, який грає цим персонажем, або він вам не подобається.
+  - Не довіряти персонажу, тому що ви злі на гравця, який грає цим персонажем, або він вам не подобається.
+  - Починати бійку з персонажем через те, що він зробив минулого раунду.
+  - Починати бійку з персонажем, тому що він убив вас, коли ви грали іншим персонажем.
+  - Цільове переслідування або домагання до персонажа на основі будь-чого, що цей персонаж зробив поза поточним раундом.
+  - Цільове переслідування або домагання до персонажа на основі будь-чого, що гравець персонажа зробив, не граючи цим персонажем.
+
+  ## Явно не захищено
+  Нижче наведено список речей, які явно не є захищеними. Якщо щось не в цьому списку, це не означає, що воно захищене, але якщо щось є в ньому, то воно точно не захищене.
+  - Той факт, що ядерний диск повинен бути захищений і може бути використаний зловмисником для спроби знищити станцію.
+  - Предмети, які мають високу цінність або бажані Синдикатом, і тому є ймовірними цілями для крадіжки.
+  - Ідея, що будь-який агент Синдикату або інший зловмисник має цілі або завдання, які він намагається виконати.
+  - Кількість цілей або завдань, які має агент Синдикату або інший зловмисник.
+  - Той факт, що Синдикат є ворогами Nanotrasen, і що вони регулярно намагаються відправляти таємних агентів для шпигунства, саботажу або нападу на Nanotrasen.
+  - Типовий вигляд персонажа. Хоча ви повинні пам'ятати, що кілька персонажів можуть мати однакове ім'я.
+  - Той факт, що Синдикат має таємні предмети, здатні доставляти їм предмети, і що ці предмети відомі як аплінки.
+  - Чарівники не є метазахищеними, оскільки про федерацію чарівників ходять чутки.
 </Document>

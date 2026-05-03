@@ -797,6 +797,8 @@
         variation: 0.125
     Surprised: # Goob
       path: /Audio/_Goobstation/Voice/surprised.ogg
+    SiliconDeathgasp: # DOWNSTREAM-TPirates: IPC screens
+      collection: BorgDeathGasp # DOWNSTREAM-TPirates: IPC screens
 
 - type: emoteSounds
   id: UnisexSiliconSyndicate
@@ -837,6 +839,8 @@
         variation: 0.125
     Surprised: # Goob
       path: /Audio/_Goobstation/Voice/surprised.ogg
+    SiliconDeathgasp: # DOWNSTREAM-TPirates: IPC screens
+      collection: BorgDeathGasp # DOWNSTREAM-TPirates: IPC screens
 
 - type: emoteSounds
   id: UnisexSiliconXenoborg

@@ -10,7 +10,7 @@
   isVisibleLanguage: true
   speech:
     color: "#4DBFD9"
-    fontId: Schoolbell
+    # fontId: Schoolbell # Pirate no cyrillic support
     fontSize: 14
   obfuscation:
     !type:SyllableObfuscation

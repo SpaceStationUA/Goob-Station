@@ -1,0 +1,17 @@
+names-regal-rat-title-dataset-1 = Король
+names-regal-rat-title-dataset-2 = Лорд
+names-regal-rat-title-dataset-3 = Принц
+names-regal-rat-title-dataset-4 = Імператор
+names-regal-rat-title-dataset-5 = Верховний
+names-regal-rat-title-dataset-6 = Повелитель
+names-regal-rat-title-dataset-7 = Майстер
+names-regal-rat-title-dataset-8 = Сьоґун
+names-regal-rat-title-dataset-9 = Боярин
+names-regal-rat-title-dataset-10 = Цар
+names-regal-rat-title-dataset-11 = Фан
+names-regal-rat-title-dataset-12 = Поціновувач
+names-regal-rat-title-dataset-13 = Президент
+names-regal-rat-title-dataset-14 = Мер
+names-regal-rat-title-dataset-15 = Бос
+names-regal-rat-title-dataset-16 = Пророк
+names-regal-rat-title-dataset-17 = Сир

@@ -1,0 +1,10 @@
+# Нашийники
+- type: loadout
+  id: CameraCollar
+  equipment:
+    neck: SurveillanceWirelessCameraCollar
+  effects:
+  - !type:SpeciesLoadoutEffect # Обмежено для Вульп та Таджар за дизайном. Без узгодження - не міняти!!!
+    species:
+    - Vulpkanin
+    - Tajaran

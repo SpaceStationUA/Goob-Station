@@ -112,6 +112,16 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: ScrambledAccent
+      - !type:GenericStatusEffect
+        key: PsionicallyInsulated
+        component: PsionicInsulation
+        type: Add
+        time: 900
+      - !type:GenericStatusEffect
+        key: PsionicsDisabled
+        component: PsionicsDisabled
+        type: Add
+        time: 900
       - !type:Drunk
         slurSpeech: false
         boozePower: 20
@@ -334,6 +344,18 @@
               Airloss: -3
               Brute: -3
               Burn: -3
+        # Pirate port start: Mono - Hydrakin
+        - !type:GenericStatusEffect
+          conditions:
+          - !type:OrganType #
+            type: Hydrakin
+          - !type:Temperature
+            max: 213.0
+          key: ForcedSleep
+          component: ForcedSleeping
+          refresh: false
+          type: Add
+        # Pirate port end: Mono - Hydrakin
 
 - type: reagent
   id: Doxarubixadone
@@ -358,6 +380,18 @@
           damage:
             types:
              Cellular: -2
+        # Pirate port start: Mono - Hydrakin
+        - !type:GenericStatusEffect
+          conditions:
+          - !type:OrganType #
+            type: Hydrakin
+          - !type:Temperature
+            max: 213.0
+          key: ForcedSleep
+          component: ForcedSleeping
+          refresh: false
+          type: Add
+        # Pirate port end: Mono - Hydrakin
 
 - type: reagent
   id: Dermaline
@@ -739,11 +773,21 @@
         conditions:
         - !type:Temperature
           max: 293.15
+        # Pirate port start: Mono - Hydrakin
+        - !type:OrganType
+          type: Hydrakin
+          shouldHave: false
+        # Pirate port end: Mono - Hydrakin
         amount: 100000 # thermal energy, not temperature!
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
           min: 293.15
+        # Pirate port start: Mono - Hydrakin
+        - !type:OrganType
+          type: Hydrakin
+          shouldHave: false
+        # Pirate port end: Mono - Hydrakin
         amount: -10000
       - !type:PopupMessage
         type: Local
@@ -753,6 +797,16 @@
       - !type:AdjustReagent
         reagent: Fresium
         amount: -5
+      # Pirate port start: Mono - Hydrakin
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 115.15
+        - !type:OrganType
+          type: Hydrakin
+          shouldHave: true
+        amount: -100000
+      # Pirate port end: Mono - Hydrakin
 
 - type: reagent
   id: Barozine
@@ -1429,6 +1483,10 @@
         conditions:
         - !type:ReagentThreshold
           min: 10
+      - !type:CureVampire # Pirate - cure antag vampires back into mortals
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
       - !type:HealthChange
         conditions:
         - !type:TotalDamage
@@ -1440,6 +1498,14 @@
             Heat: -0.2
             Shock: -0.2
             Cold: -0.2
+      - !type:HealthChange # Pirate - Holy damage without friendly fire :D
+        damage:
+          types:
+            Holy: 1
+        conditions:
+        - !type:HasComponentCondition
+          components:
+          - WeakToHoly
 
   reactiveEffects:
     Extinguish:
@@ -1614,6 +1680,18 @@
               Brute: -5.0
               Burn: -5.0
               Toxin: -5.0
+        # Pirate port start: Mono - Hydrakin
+        - !type:GenericStatusEffect
+          conditions:
+          - !type:OrganType
+            type: Hydrakin
+          - !type:Temperature
+            max: 217.15
+          key: ForcedSleep
+          component: ForcedSleeping
+          refresh: false
+          type: Add
+        # Pirate port end: Mono - Hydrakin
 
 - type: reagent
   id : Aloxadone
@@ -1640,6 +1718,18 @@
             Heat: -10.0
             Shock: -10.0
             Caustic: -10.0
+      # Pirate port start: Mono - Hydrakin
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:OrganType
+          type: Hydrakin
+        - !type:Temperature
+          max: 213.0
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
+      # Pirate port end: Mono - Hydrakin
 
 - type: reagent
   id : Mannitol # currently this is just a way to create psicodine

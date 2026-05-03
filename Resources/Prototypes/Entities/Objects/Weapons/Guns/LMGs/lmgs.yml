@@ -72,6 +72,7 @@
   - type: GunWieldBonus
     minAngle: -20
     maxAngle: -20
+  - type: GunRequiresWield # Pirate
   - type: Gun
     minAngle: 24
     maxAngle: 45
@@ -124,6 +125,7 @@
     - oni-cannot-shoot-guns-1
     - oni-cannot-shoot-guns-2
     - oni-cannot-shoot-guns-3
+  - type: CanTakeAim # PIRATE
   # Goobstation edit start
   - type: EmitSoundOnPickup
     sound:

@@ -25,6 +25,7 @@
     HeadSide: MobHumanoidAnyMarking
     Underwear: MobHumanoidAnyMarking
     Undershirt: MobHumanoidAnyMarking
+    Face: MobHumanoidAnyMarking #Pirate Changes
     Chest: MobGingerbreadChest
     Groin: MobGingerbreadGroin
     Eyes: MobGingerbreadEyes

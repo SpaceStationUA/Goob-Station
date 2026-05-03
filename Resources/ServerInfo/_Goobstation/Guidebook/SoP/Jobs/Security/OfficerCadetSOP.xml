@@ -6,64 +6,64 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-# Officer/Cadet SOP
-This is the list of procedures, responsibilities, and duties of the [color=#ba292c][bold]Security Officer[/bold][/color] and [color=#ba292c][bold]Security Cadet[/bold][/color] of this station.
+# SOP Офіцера/Кадета
+Це перелік процедур, обов'язків та завдань [color=#ba292c][bold]Офіцера СБ[/bold][/color] та [color=#ba292c][bold]Кадета СБ[/bold][/color] цієї станції.
 
 <ColorBox>
   <Box>
-    For the purposes of Alert Escalation: Treat higher alerts as if they are still on the previous alert level. (Yellow Alert is Blue Alert if it was Blue Alert prior.) Furthermore, treat Delta, Gamma, Epsilon, and Violet Alert as Red Alert.
+    Для цілей ескалації тривоги: Розглядайте вищі рівні тривоги так, ніби вони все ще перебувають на попередньому рівні. (Жовтий код вважається Синім, якщо перед цим був Синій). Крім того, розглядайте коди Дельта, Гамма, Епсилон та Фіолетовий як Червоний код.
   </Box>
 </ColorBox>
 
-[color=#ba292c][bold]Security Officer[/bold][/color]s are permitted to carry their shift-start pistols, but should follow escalation laws and leave them holstered on Green Alert.
+[color=#ba292c][bold]Офіцерам СБ[/bold][/color] дозволено носити свої пістолети, видані на початку зміни, але вони повинні дотримуватися правил ескалації та тримати їх у кобурі під час Зеленого коду.
 
-## Green Alert
-1. Security Officers are required to state the reasons behind an arrest before any further action is taken.
-<Box>Exception is made if the suspect refuses to stop.</Box>
+## Зелений код
+1. Офіцери СБ зобов'язані повідомити причину арешту перед вживанням будь-яких подальших дій.
+<Box>Виняток робиться, якщо підозрюваний відмовляється зупинитися.</Box>
 
-2. Security Officers must attempt to bring all suspects or witnesses to the Brig without handcuffing or incapacitating them. Should the suspect not cooperate, the officer may proceed as usual.
+2. Офіцери СБ повинні намагатися доставити всіх підозрюваних або свідків до Бригу без кайданків або знерухомлення. Якщо підозрюваний не співпрацює, офіцер може діяти як зазвичай.
 
-3. No lethal weaponry is to be unholstered unless the suspect attempts to run away or becomes actively hostile.
+3. Заборонено діставати летальну зброю, якщо підозрюваний не намагається втекти або не стає активно ворожим.
 
-4. Security Officers are permitted to carry a standard disabler, a flashbang, a stunbaton or a Judo belt, their issued melee weapon (polymer baton, combat knife or a telescopic spear) and other standard melee weapons.
+4. Офіцерам СБ дозволено носити стандартний стан-дизаблер, світлошумову гранату, стан-кийок або пояс дзюдоїста, видану холодну зброю (полімерний кийок, бойовий ніж або телескопічний спис) та іншу стандартну зброю ближнього бою.
 
-5. Security Officers may not demand access to the interior of other Departments during regular patrols. However, asking for access from the Head of Personnel is still acceptable.
-<Box>Exceptions apply when a hostile suspect is within an inaccessible area.</Box>
+5. Офіцери СБ не можуть вимагати доступу до приміщень інших відділів під час звичайного патрулювання. Однак, прохання про доступ у Голови Персоналу є прийнятним.
+<Box>Винятки діють, коли ворожий підозрюваний знаходиться в недоступній зоні.</Box>
 
-6. Security officers are not permitted to have weapons drawn during regular patrols.
-<Box>Refer to escalation rules for necessary use of duty-start pistols.</Box>
+6. Офіцерам СБ заборонено тримати зброю в руках під час звичайного патрулювання.
+<Box>Зверніться до правил ескалації щодо необхідного використання пістолетів, виданих на початку зміни.</Box>
 
-7. Security officers are permitted to conduct searches, provided there is reasonable evidence/suspicion that the person in question has committed a crime.
-<Box>Any further searches require a warrant from the Captain and/or Head of Security.</Box>
+7. Офіцерам СБ дозволено проводити обшуки за наявності обґрунтованих доказів/підозр, що дана особа вчинила злочин.
+<Box>Будь-які подальші обшуки вимагають ордера від Капітана та/або Голови Служби Безпеки.</Box>
 
-8. Security Officers are required to wear at least one (1) identifiable and visible piece of security equipment on their person at all times.
-<Box>Acceptable items are: any security jumpsuit, any security armor, any security jacket or security winter coat, any security helmet or headwear.</Box>
+8. Офіцери СБ зобов'язані носити при собі принаймні один (1) впізнаваний та видимий елемент спорядження служби безпеки постійно.
+<Box>Прийнятними предметами є: будь-який комбінезон СБ, будь-яка броня СБ, будь-яка куртка або зимове пальто СБ, будь-який шолом або головний убір СБ.</Box>
 
-## Blue Alert
-1. Guidelines 1, 2, 4 and 8 are carried over from [color=#388c34]Green Alert[/color].
+## Синій код
+1. Пункти 1, 2, 4 та 8 переносяться із [color=#388c34]Зеленого коду[/color].
 
-2. Security Officers are permitted to carry around any weapons or equipment available in the Armory, at the Warden's discretion, but never more than one at a time.
-<Box>Exception is made for extreme emergencies, such as Nuclear Operatives, Blob, and/or Delta Alert.</Box>
+2. Офіцерам СБ дозволено носити будь-яку зброю або спорядження, доступне в Збройовій, на розсуд Наглядача, але не більше однієї одиниці одночасно.
+<Box>Виняток робиться для надзвичайних ситуацій, таких як Ядерні Оперативники, Блоб та/або Дельта код.</Box>
 
-3. Security Officers are permitted to carry weapons in hand during regular patrols, although this is not advised.
+3. Офіцерам СБ дозволено носити зброю в руках під час звичайного патрулювання, хоча це не рекомендується.
 
-4. Security Officers are permitted to present weapons during arrests.
-<Box>Security Officers must prioritize non-lethal takedowns unless the suspect/wanted personnel is hostile and/or continuously evading arrest (over extended periods of time).</Box>
+4. Офіцерам СБ дозволено демонструвати зброю під час арештів.
+<Box>Офіцери СБ повинні надавати пріоритет нелетальним методам затримання, якщо підозрюваний/розшукуваний персонал не є ворожим та/або не ухиляється від арешту постійно (протягом тривалого часу).</Box>
 
-5. Security Officers may demand entry to specific Departments during regular patrols.
+5. Офіцери СБ можуть вимагати доступу до певних відділів під час звичайного патрулювання.
 
-6. Security Officers may randomly search crewmembers, but are not allowed to apply any degree of force unless said crewmember acts overtly hostile.
-<Box>Station Personnel who refuse to be searched may be stunned and cuffed for the search.</Box>
+6. Офіцери СБ можуть вибірково обшукувати членів екіпажу, але не мають права застосовувати силу, якщо член екіпажу не поводиться відкрито вороже.
+<Box>Персонал станції, який відмовляється від обшуку, може бути оглушений та закований у кайданки для проведення обшуку.</Box>
 
-7. Security Officers are permitted to leave prisoners buckle-cuffed should they act hostile.
+7. Офіцерам СБ дозволено залишати в'язнів пристебнутими в кайданках, якщо вони поводяться вороже.
 
-## Red Alert
-1. Guidelines 2, 3, 4, 5, 6, and 7 are carried over from [color=#1b67a5]Blue Alert[/color].
+## Червоний код
+1. Пункти 2, 3, 4, 5, 6 та 7 переносяться із [color=#1b67a5]Синього коду[/color].
 
-2. Guideline 8 is carried over from [color=#388c34]Green Alert[/color].
+2. Пункт 8 переноситься із [color=#388c34]Зеленого коду[/color].
 
-3. Security Officers may arrest crewmembers with no stated reason if there is evidence they are involved in criminal activities.
+3. Офіцери СБ можуть заарештовувати членів екіпажу без пояснення причин, якщо є докази їхньої причетності до злочинної діяльності.
 
-4. Security Officers may forcefully relocate crewmembers to their respective Departments if necessary.
+4. Офіцери СБ можуть примусово переміщувати членів екіпажу до їхніх відділів, якщо це необхідно.
 
 </Document>

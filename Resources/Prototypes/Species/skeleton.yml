@@ -23,7 +23,11 @@
 - type: speciesBaseSprites
   id: MobSkeletonSprites
   sprites:
+    Special: MobHumanoidAnyMarking #Pirate Changes
     Head: MobSkeletonHead
+    Face: MobHumanoidAnyMarking #Pirate Changes start
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking #Pirate Changes end
     Chest: MobSkeletonChest
     Groin: MobSkeletonGroin
     LArm: MobSkeletonLArm
@@ -34,6 +38,8 @@
     RLeg: MobSkeletonRLeg
     LFoot: MobSkeletonLFoot
     RFoot: MobSkeletonRFoot
+    Tail: MobHumanoidAnyMarking #Pirate Changes start
+    HeadSide: MobHumanoidAnyMarking #Pirate Changes end
 
 - type: humanoidBaseSprite
   id: MobSkeletonHead

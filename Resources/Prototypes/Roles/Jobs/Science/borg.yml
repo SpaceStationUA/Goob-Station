@@ -39,6 +39,7 @@
     role: JobBorg
     time: 18000  # 5 hrs
   canBeAntag: false
+  whitelisted: true # Pirate
   goobcoins: 40 #Goob content
   weight: 10 # Goob Edit
   icon: JobIconStationAi
@@ -46,6 +47,7 @@
   jobEntity: StationAiBrain
   jobPreviewEntity: PlayerStationAiPreview
   applyTraits: false
+  canHavePassport: false
 
 - type: job
   id: Borg
@@ -60,4 +62,5 @@
   icon: JobIconBorg
   supervisors: job-supervisors-rd
   jobEntity: PlayerBorgBattery
-  applyTraits: true
+  applyTraits: false
+  canHavePassport: false

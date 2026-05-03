@@ -1,0 +1,34 @@
+- type: entity
+  id: Mission1
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+  - type: MissionRule
+
+- type: entity
+  id: Mission1DrCaptured
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+  - type: MissionRule
+
+- type: entity
+  id: Mission2
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+  - type: MissionRule
+
+- type: entity
+  id: Mission3
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+  - type: MissionRule
+
+- type: entity
+  id: Mission4
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+  - type: MissionRule

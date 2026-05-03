@@ -313,14 +313,16 @@
   - type: Sprite
     state: poster17_contraband
 
+# PIRATE DECOMMUNISATION START VVVV
 - type: entity
   parent: PosterBase
-  id: PosterContrabandCommunistState
-  name: "Communist State"
-  description: "All hail the Communist party!"
+  id: PosterContrabandSolAlliance
+  name: "Солоріанський Альянс"
+  description: "Альянс непохитний, як світло зорі!"
   components:
   - type: Sprite
     state: poster18_contraband
+# PIRATE DECOMMUNISATION END ^^^^
 
 - type: entity
   parent: PosterBase

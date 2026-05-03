@@ -36,6 +36,7 @@
   id: MobVoxSprites
   sprites:
     Head: MobVoxHead
+    Face: MobHumanoidAnyMarking #Pirate Changes
     Snout: MobHumanoidAnyMarking
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
@@ -89,6 +90,11 @@
     LeftHand:
       points: 2
       required: false
+    # PIRATE START
+    Face:
+      points: 3
+      required: false
+    # PIRATE END
 
 - type: humanoidBaseSprite
   id: MobVoxEyes

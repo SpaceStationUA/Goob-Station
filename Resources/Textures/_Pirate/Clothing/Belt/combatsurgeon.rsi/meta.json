@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from github.com/NovaSector/NovaSector/tree/27be2a2b75f65a7ca10452a81ef0d4feb9891861",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+	{
+      "name": "equipped-BELT",
+	  "directions": 4
+    },
+	{
+      "name": "inhand-left",
+	  "directions": 4
+    },
+	{
+      "name": "inhand-right",
+	  "directions": 4
+    }
+  ]
+}

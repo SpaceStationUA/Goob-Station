@@ -50,11 +50,13 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Maths; // Pirate port: Mono better diagonal lattice and plating render on radar
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
+using System.Numerics; // Pirate port: Mono better diagonal lattice and plating render on radar
 
 namespace Content.Shared.Maps
 {
@@ -156,6 +158,14 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("mobFriction")]
         public float? MobFriction { get; private set; }
+
+        // <Pirate port: Mono better diagonal lattice and plating render on radar>
+        /// <summary>
+        /// Vertices for drawing purposes. Has to be a convex shape.
+        /// </summary>
+        [DataField]
+        public List<Vector2> Vertices = new() { Vector2.Zero, new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) };
+        // <Pirate port end>
 
         /// <summary>
         ///     Accel override for mob mover in <see cref="SharedMoverController"/>

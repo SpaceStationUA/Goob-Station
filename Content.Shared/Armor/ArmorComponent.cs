@@ -86,6 +86,7 @@ public sealed partial class ArmorComponent : Component
         { TraumaType.OrganDamage, 0 },
         { TraumaType.VeinsDamage, 0 },
         { TraumaType.NerveDamage, 0 },
+        { TraumaType.FaceMutilation, 0 }, // DOWNSTREAM-TPirates: face mutilation
     };
 }
 

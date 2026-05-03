@@ -1,0 +1,34 @@
+# Pirate: Psionics HUD status icons (ported from Einstein Engines / modeled after security icons)
+
+- type: psionicsIcon
+  id: PsionicsIconStatus
+  abstract: true
+  priority: 3
+  offset: 1
+  locationPreference: Right
+  isShaded: true
+  icon:
+    sprite: /Textures/_EinsteinEngines/Interface/Misc/psionics_icons.rsi
+    state: hud_registered
+
+- type: psionicsIcon
+  parent: PsionicsIconStatus
+  id: PsionicsIconSuspected
+  icon:
+    sprite: /Textures/_EinsteinEngines/Interface/Misc/psionics_icons.rsi
+    state: hud_suspected
+
+- type: psionicsIcon
+  parent: PsionicsIconStatus
+  id: PsionicsIconRegistered
+  icon:
+    sprite: /Textures/_EinsteinEngines/Interface/Misc/psionics_icons.rsi
+    state: hud_registered
+
+- type: psionicsIcon
+  parent: PsionicsIconStatus
+  id: PsionicsIconAbusing
+  icon:
+    sprite: /Textures/_EinsteinEngines/Interface/Misc/psionics_icons.rsi
+    state: hud_abusing
+

@@ -30,6 +30,7 @@ public sealed partial class GrabIntentSystem
         SubscribeLocalEvent<GrabbableComponent, DownedEvent>(OnDowned);
         SubscribeLocalEvent<GrabbableComponent, StoodEvent>(OnStood);
 
+        SubscribeLocalEvent<GrabIntentComponent, GetGrabStageEvent>(OnGetGrabStage);
         SubscribeLocalEvent<GrabIntentComponent, AttackedEvent>(OnAttacked);
         SubscribeLocalEvent<GrabIntentComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
     }
@@ -58,6 +59,11 @@ public sealed partial class GrabIntentSystem
             return;
 
         ResetGrabEscapeChance((ent.Owner, pullable, ent.Comp), (pullerUid, puller, grabIntent));
+    }
+
+    private void OnGetGrabStage(EntityUid uid, GrabIntentComponent component, ref GetGrabStageEvent args)
+    {
+        args.Stage = component.GrabStage;
     }
 
     private void OnAttacked(EntityUid uid, GrabIntentComponent component, ref AttackedEvent args)

@@ -1,0 +1,263 @@
+## Other
+- type: loadout
+  id: WardrobeJumpsuitFlannel
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitFlannel
+  groupBy: "JumpsuitOther"
+
+
+
+## Hawai
+- type: loadout
+  id: WardrobeJumpsuitHawaiYellow
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHawaiYellow
+  groupBy: "JumpsuitHawai"
+
+
+- type: loadout
+  id: WardrobeJumpsuitHawaiBlue
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHawaiBlue
+  groupBy: "JumpsuitHawai"
+
+
+- type: loadout
+  id: WardrobeJumpsuitHawaiBlack
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHawaiBlack
+  groupBy: "JumpsuitHawai"
+
+
+- type: loadout
+  id: WardrobeJumpsuitHawaiRed
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHawaiRed
+  groupBy: "JumpsuitHawai"
+
+
+
+## Color
+- type: loadout
+  id: WardrobeJumpskirtColorTeal
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorTeal
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorTeal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorTeal
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorDarkGreen
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorDarkGreen
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorDarkGreen
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkGreen
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorDarkBlue
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorDarkBlue
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorDarkBlue
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorPink
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorPink
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorPink
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPink
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorPurple
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorPurple
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorPurple
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorRed
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorRed
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorRed
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorOrange
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorOrange
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorOrange
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorOrange
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorGreen
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorGreen
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorGreen
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGreen
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorYellow
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorYellow
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorYellow
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorYellow
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorBlue
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorBlue
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorBlue
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorBlack
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorBlack
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorBlack
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorWhite
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorWhite
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorWhite
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpskirtColorGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorGrey
+  groupBy: "JumpsuitColor"
+
+
+- type: loadout
+  id: WardrobeJumpsuitColorGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+  groupBy: "JumpsuitColor"
+
+## MNK
+- type: loadout
+  id: WardrobeMNKBlackOveralls
+  equipment:
+    jumpsuit: ClothingUniformMNKBlackOveralls
+  groupBy: "UniformMNK"
+
+- type: loadout
+  id: WardrobeMNKTracksuitBlack
+  equipment:
+    jumpsuit: ClothingUniformMNKTracksuitBlack
+  groupBy: "UniformMNK"
+
+- type: loadout
+  id: WardrobeMNKBlackShoulder
+  equipment:
+    jumpsuit: ClothingUniformMNKBlackShoulder
+  groupBy: "UniformMNK"
+
+- type: loadout
+  id: WardrobeMNKDressBlack
+  equipment:
+    jumpsuit: ClothingUniformMNKDressBlack
+  groupBy: "UniformMNK"
+
+- type: loadout
+  id: WardrobeMNKGymBra
+  equipment:
+    jumpsuit: ClothingUniformMNKGymBra
+  groupBy: "UniformMNK"
+
+- type: loadout
+  id: WardrobeMNKUnderGarment
+  equipment:
+    jumpsuit: ClothingUniformMNKUnderGarment
+  groupBy: "UniformMNK"
+
+- type: loadout
+  id: WardrobeMNKOfficeSkirt
+  equipment:
+    jumpsuit: ClothingUniformMNKOfficeSkirt
+  groupBy: "UniformMNK"

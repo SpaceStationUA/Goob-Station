@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: soundCollection
+  id: PirateBladeDeflects
+  files:
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/deflect_01.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/deflect_02.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/deflect_03.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/deflect_04.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/deflect_05.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/deflect_06.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/deflect_07.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/deflect_08.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/deflect_09.ogg
+
+- type: soundCollection
+  id: PirateBladeBlocks
+  files:
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/block_01.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/block_02.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/block_03.ogg
+    - /Audio/_Pirate/Weapons/Melee/BladeDefense/block_04.ogg

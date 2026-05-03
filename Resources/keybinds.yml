@@ -775,3 +775,14 @@ binds:
   type: State
   key: MouseRight
   canFocus: true
+
+# Pirate VVV
+
+- function: OfferItem
+  type: State
+  key: F
+  mod1: Control
+- function: ToggleCrawlingUnder
+  type: State
+  key: R
+  mod1: Shift

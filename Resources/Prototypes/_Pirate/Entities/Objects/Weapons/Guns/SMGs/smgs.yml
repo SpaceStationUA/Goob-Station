@@ -1,0 +1,136 @@
+- type: entity
+  name: BRDI R-25
+  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband, BaseGunWieldable]
+  id: WeaponSubMachineGunBRDIR25
+  description: Іконічна зброя, яку використовують члени Іноземного легіону Республіки Бізель. Як гордість Республіки, вона символізує свободу від тиранії Солоріанського Альянсу. Стріляє набоями 9.5мм.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/BRDI_R25.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/BRDI_R25.rsi
+  - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -19
+    maxAngle: -16
+  - type: Gun
+    minAngle: 21
+    maxAngle: 32
+    fireRate: 5 # 300rpm in Semi & Full Auto
+    burstFireRate: 20 # 1200rpm in Burst mode.
+    shotsPerBurst: 5
+    burstCooldown: 0.8
+    cameraRecoilScalar: 0.5
+    selectedMode: Burst
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/Gunshots/brdi-r25-suppressed-gunshot.ogg
+      params:
+        volume: -3
+        maxDistance: 8
+        rolloffFactor: 1.2
+    availableModes:
+    - SemiAuto
+    - Burst
+    - FullAuto
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 1500
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineCaselessRifleStandard
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCaselessRifleStandard
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+
+- type: entity
+  name: антикварний BRDI R-25
+  parent: WeaponSubMachineGunBRDIR25
+  id: WeaponSubMachineGunBRDIR25Antique
+  description: Колись цю улюблену гвинтівку тримав невідомий член Іноземного легіону Республіки Бізеля; вона брала участь у боях з Солом в кожних боях Республіки.
+  components:
+    - type: Sprite
+      sprite: _Pirate/Objects/Weapons/Guns/SMGs/BRDI_R25_antique.rsi
+
+- type: entity
+  name: M470-L
+  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband, SolAllianceInfo]
+  id: WeaponSubMachineGunSol
+  suffix: SAN
+  description: Розроблена Zavodskoi Interstellar як зменшена версія їхньої M469, M470-L — це зброя особистого захисту, призначена для використання військовослужбовцями другої ланки всіх родів військ Соляріанської армії, такими як війська підтримки та члени екіпажу ВМС. Використовує магазини .35 калібру.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/sol_smg.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/sol_smg.rsi
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
+    boltClosed: null
+  - type: Gun
+    minAngle: 4
+    maxAngle: 20
+    fireRate: 6
+    burstFireRate: 8
+    angleIncrease: 2
+    angleDecay: 16
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/Gunshots/smg.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolSubMachineGun
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolSubMachineGun
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: Multishot
+    missChance: 0.3
+  - type: Item
+    shape:
+    - 0,0,2,1

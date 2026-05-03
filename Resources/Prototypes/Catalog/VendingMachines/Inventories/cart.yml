@@ -41,6 +41,7 @@
     EncryptionKeyScience: 2
     EncryptionKeySecurity: 1
     EncryptionKeyService: 3
+    Eftpos: 2 #Pirate banking
   contrabandInventory:
     BalloonNT: 2
     LuxuryPen: 1

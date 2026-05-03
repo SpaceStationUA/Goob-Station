@@ -73,6 +73,7 @@ public sealed partial class LavalandPlanetPrototype : IPrototype, IInheritingPro
         "OreSilver",
         "OrePlasma",
         "OreUranium",
+        "OreTitanium", // Pirate
         "BSCrystal",
         "OreBananium",
         "OreArtifactFragment",

@@ -1,8 +1,9 @@
 <Document>
-  # Trickster
+  # Шахрай
   <Box>
     <GuideEntityEmbed Entity="MobWraithTrickster" Caption=""/>
-  </Box> "The greatest trick the devil ever pulled was convincing the world he didn't exist."
+  </Box>
+  "Найбільший трюк, який коли-небудь провернув диявол, — це переконати світ, що його не існує."
 
-  [textlink="Back to Wraith Evolutions" link="Wraiths"]
+  [textlink="Назад до еволюцій Примари" link="Wraiths"]
 </Document>

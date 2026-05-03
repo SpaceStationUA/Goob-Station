@@ -8,34 +8,34 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-  # Vox
+  # Вокси
 
   <Box>
     <GuideEntityEmbed Entity="MobVox" Caption=""/>
   </Box>
 
-  [color=#ffa500]Warning! This species is not recommended for new players due to their fatal allergy to oxygen![/color]
+  [color=#ffa500]Увага! Ця раса не рекомендована для нових гравців через їхню смертельну алергію на кисень![/color]
 
-  Vox breathe nitrogen, and [color=#ffa500] oxygen is toxic to them.[/color]
-  Unfortunately, space stations tend to be full of oxygen,
-  so Vox must use an internal nitrogen supply at almost all times to avoid fatal exposure.
+  Вокси дихають азотом, і [color=#ffa500]кисень для них токсичний.[/color]
+  На жаль, космічні станції зазвичай заповнені киснем,
+  тому вокси повинні майже постійно використовувати внутрішній запас азоту, щоб уникнути смертельного впливу.
 
-  Vox always spawn wearing working nitrogen internals equipment.
-  A spare breathing mask and an emergency nitrogen canister is provided in their survival box.
+  Вокси завжди з'являються з робочим обладнанням для дихання азотом.
+  Запасна дихальна маска та аварійний балон з азотом надаються в їхній коробці для виживання.
 
-  In addition to regular foods, Vox can also eat various snack packaging, banana peels, eggshells, and raw meat without any ill effects. They also like to drink welding fuel.
+  На додаток до звичайної їжі, вокси також можуть їсти різну упаковку від снеків, бананові шкірки, яєчну шкаралупу та сире м'ясо без будь-яких наслідків. Вони також люблять пити зварювальне паливо.
 
-  Vox are good at handling disgust.
+  Вокси добре справляються з відразою.
 
-  Vox [color=#1e90ff]slowly recover from low levels of poison damage[/color] on their own,
-  so long as they are careful not to exceed 20 poison damage.
-  This allows them to endure breathing station air for up to thirty seconds at a time without lasting damage,
-  letting them quickly eat, drink, take oral medication, and so on.
-  A thirty second oxygen exposure takes them two minutes to recover from.
-  If their health does not seem to improve within a minute of oxygen exposure, they should seek medical attention.
+  Вокси [color=#1e90ff]повільно відновлюються від низького рівня отруйних пошкоджень[/color] самостійно,
+  за умови, що вони обережні та не перевищують 20 одиниць отруйних пошкоджень.
+  Це дозволяє їм витримувати дихання повітрям станції до тридцяти секунд без тривалих пошкоджень,
+  даючи їм змогу швидко їсти, пити, приймати пероральні ліки тощо.
+  Тридцятисекундний вплив кисню потребує двох хвилин для відновлення.
+  Якщо їхнє здоров'я не покращується протягом хвилини після впливу кисню, вони повинні звернутися до медичного персоналу.
 
-  Due to them being half-organic and half-silicon, they do not rot, but it's also impossible to clone them.
+  Через їхню напіворганічну та напівкремнієву природу вони не гниють, але їх також неможливо клонувати.
 
-  Vox deal Slash damage with their unarmed attack.
+  Вокси завдають Ріжучих пошкоджень своєю неозброєною атакою.
 
 </Document>

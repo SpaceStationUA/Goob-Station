@@ -168,12 +168,16 @@
     - id: RubberStampQm
     - id: LavalandShuttleConsoleCircuitboard # Goobstation - Mining Shuttle Board
     - id: AstroNavCartridge
+    - id: StockTradingCartridge # Pirate port - Delta-V stocks trading
     - id: CargoTechFabCircuitboard # Goobstation - Cargo Techfab
     - id: MailTeleporterMachineCircuitboard # GoobStation port of DeltaV mail
     - id: ClothingHandsKnuckleDustersQM # Goobstation - ROCK THAT MF!!
+    - id: PrinterDocFlatpack  # Pirate document printer
     - id: SalvageJobBoardComputerCircuitboard # Goobstation - This doesn't really have a use right now but it's there incase it ever gets use again
     - id: CargoMegaphone # goob - loudspeaker
     - id: SlotMachineHighRollerFlatPack # Goob - gambling
+    - id: Eftpos #Pirate banking
+    - id: PhotoAlbumDepartmentSupply
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -193,7 +197,8 @@
     - id: CaptainIDCard
     - id: CigarGoldCase
       prob: 0.25
-    - id: ClothingBeltSheathFilled
+    #- id: ClothingBeltSheathFilled # Pirate sabres
+    - id: CaptainUndeterminedSabre # Pirate sabres
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
     - id: CommsComputerCircuitboard
@@ -207,10 +212,12 @@
     - id: SpaceCash1000
     - id: WeaponDisabler
     - id: ClothingEyesGlassesCommand
+    - id: PrinterDocFlatpack  # Pirate document printer
     - id: HeadSkeleton # A skull to accompany your skeleton crew
       conditions:
       - !type:PlayerCountCondition
         max: 15
+    - id: PhotoAlbumDepartmentCommand
 
 # No laser table + Laser table
 - type: entityTable
@@ -299,6 +306,10 @@
     - id: ClothingEyesHudCommand
     - id: ServiceTechFabCircuitboard # Goobstation - Service Techfab
     - id: CommandMegaphone # goob - loudspeakers
+    - id: PrinterDocFlatpack  # Pirate document printer
+    - id: Eftpos #Pirate banking
+    - id: WalletCartridge #Pirate banking
+    - id: PhotoAlbumDepartmentService
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -341,6 +352,8 @@
     - id: WeaponLauncherSingularityBuster
     - id: MachinePowerTransmissionLaserFlatpack
     - id: RCDRechargingCE
+    - id: PrinterDocFlatpack  # Pirate document printer
+    - id: PhotoAlbumDepartmentEngineering
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -415,6 +428,9 @@
     - id: DiseaseDiagnoserFlatPack
     - id: VaccinatorFlatPack
     # Goobstation End
+    - id: PrinterDocFlatpack  # Pirate document printer
+    - id: ClothingHandsGlovesCombatNitrile #Pirate
+    - id: PhotoAlbumDepartmentMedical
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -476,6 +492,11 @@
     - id: ClothingBeltGeminiHoloProjector # Goobstation - Who better to do science with than yourself?
     - id: XenobiologyBountyComputerCircuitboard # Goobstation
     - id: MMI # Goobstation
+    - id: PrinterDocFlatpack  # Pirate document printer
+    - id: ClothingEyesGlassesEpistemics
+    - id: ClothingEyesHudEpistemics
+      amount: 3
+    - id: PhotoAlbumDepartmentScience
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -538,6 +559,8 @@
     - id: WantedListCartridge
     - id: DrinkHosFlask
     - id: ClothingBeltSheathHeadOfSecurityFilled # Goobstation - security revamp
+    - id: PrinterDocFlatpack  # Pirate document printer
+    - id: PhotoAlbumDepartmentSecurity
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

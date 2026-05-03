@@ -1,0 +1,48 @@
+- type: entity
+  parent: SheetMetalBase
+  id: SheetPlastitanium
+  name: пластитан
+  suffix: Full
+  components:
+  - type: Material
+  - type: Stack
+    stackType: Plastitanium
+    baseLayer: base
+    layerStates:
+    - plastitanium
+    - plastitanium_2
+    - plastitanium_3
+  - type: Sprite
+    state: plastitanium_3
+    layers:
+    - state: plastitanium_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: plastitanium
+  - type: Appearance
+  - type: Extractable
+    grindableSolutionName: plastitanium
+
+- type: entity
+  parent: SheetPlastitanium
+  id: SheetPlastitanium10
+  name: пластитан
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plastitanium
+  - type: Stack
+    stackType: Plastitanium
+    count: 10
+
+- type: entity
+  parent: SheetPlastitanium
+  id: SheetPlastitanium1
+  name: пластитан
+  suffix: Single
+  components:
+  - type: Sprite
+    state: plastitanium
+  - type: Stack
+    stackType: Plastitanium
+    count: 1

@@ -1,67 +1,67 @@
 <Document>
 
-  # Way of The Sleeping Carp
+  # Шлях Сплячого Коропа
 
   <Box>
     <GuideEntityEmbed Entity="SleepingCarpScroll" Caption=""/>
   </Box>
 
-  The Way of The Sleeping Carp, or simply the Sleeping Carp, is an ancient [textlink="martial art" link="MartialArts"] learned through intense study and meditation.
-  It is modeled after the graceful movement, combat, and flow of Space Carp. Ancient masters of this art are rumored to have studied among great schools of space carp
-  and survived, some have even befriended the aggressive creatures. This art is often utilized by zealots and extremists especially among The Syndicate.
+  Шлях Сплячого Коропа, або просто Сплячий Короп, - це стародавнє [textlink="бойове мистецтво" link="MartialArts"], вивчене через інтенсивне навчання та медитацію.
+  Воно змодельоване за граціозним рухом, боєм і потоком Космічного Коропа. Давні майстри цього мистецтва, за чутками, навчалися серед великих косяків космічних коропів
+  і вижили, деякі навіть подружилися з агресивними істотами. Це мистецтво часто використовують фанатики та екстремісти, особливо серед Синдикату.
 
-  ## Special abilities
+  ## Особливі здібності
 
-  Sleeping Carp users are better at Harm intent, as their unarmed attacks will deal extra damage to the opponent.
+  Користувачі Сплячого Коропа краще володіють наміром "шкодити", оскільки їхні беззбройні атаки наноситимуть додаткову шкоду супротивнику.
 
-  ### Riptide Reflection
+  ### Віддзеркалення припливу
 
-  Due to the graceful nature of this martial art, Sleeping Carp users are able to completely deflect almost all incoming
-  projectiles. Whether ballistic or energy-based projectiles, hitscan shots or bolas, they effortlessly reflect them.
-  However, explosives, knives, and syringes remain outside their control, slipping through the serene flow of their defense.
+  Завдяки граціозній природі цього бойового мистецтва, користувачі Сплячого Коропа здатні повністю відбивати майже всі вхідні
+  снаряди. Чи то балістичні, чи то енергетичні снаряди, постріли з миттєвим ураженням чи бола, вони без зусиль відбивають їх.
+  Однак вибухівка, ножі та шприци залишаються поза їхнім контролем, прослизаючи крізь безтурботний потік їхнього захисту.
 
-  ### Fellow Fish
+  ### Свій серед риб
 
-  Users of the Sleeping Carp style move with the grace of the waters, in perfect harmony with Space Carp.
-  These creatures, sensing the peaceful bond, will more often than not treat them as allies, not attacking them.
-  This connection extends to other Carp-like beings, including Sharkminnows and even the mighty Space Dragons.
+  Користувачі стилю Сплячого Коропа рухаються з грацією вод, у повній гармонії з Космічним Коропом.
+  Ці істоти, відчуваючи мирний зв'язок, частіше за все ставитимуться до них як до союзників, не нападаючи.
+  Цей зв'язок поширюється на інших коропоподібних істот, включаючи акуло-гольянів і навіть могутніх космічних драконів.
 
-  ### Gun Gainsay
+  ### Заперечення зброї
 
-  Part of becoming a Master of Sleeping Carp is to take an oath to abstain from using guns. This includes regular guns
-  and firearms attached to equipment such as mechs. It isn't quite clear why, however, it is thought that it allows the
-  user to intensify their focus on perfect flow and deflection. Others believe that it is part of the drive of the master
-  to further emulate the way of the Carp, to completely focus on the attack of the Carp: its [bold] Bite [/bold]. This does not prevent
-  the practitioners of Sleeping Carp from throwing items, bolas, floor tiles, or even people, all useful ranged weapons.
+  Частиною становлення Майстром Сплячого Коропа є обітниця утримуватися від використання вогнепальної зброї. Це стосується звичайної зброї
+  та вогнепальної зброї, прикріпленої до обладнання, такого як мехи. Не зовсім зрозуміло чому, однак, вважається, що це дозволяє
+  користувачеві посилити свою концентрацію на ідеальному потоці та відбитті. Інші вважають, що це частина прагнення майстра
+  ще більше наслідувати шлях Коропа, повністю зосередившись на атаці Коропа: його [bold] укусі [/bold]. Це не заважає
+  практикуючим Сплячого Коропа кидати предмети, бола, плитку для підлоги або навіть людей, все це корисна зброя дальнього бою.
 
-  ## Combo attacks
+  ## Комбо-атаки
 
-  ### Keelhaul
+  ### Протягнути під кілем
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
   </Box>
 
-  Kicks an opponent in the head, knocking them down and dealing both Slash and Stamina damage to them,
-  unless they are already stunned. In that case, it will as well completely disarm the opponent.
+  Б'є супротивника ногою в голову, збиваючи його з ніг і завдаючи як ріжучої шкоди, так і шкоди витривалості,
+  якщо тільки він не оглушений. У такому випадку він також повністю обеззброїть супротивника.
 
-  ### Crashing Waves Kick
+  ### Удар нищівних хвиль
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
   </Box>
 
-  Kicks the opponent square in the chest, sending them flying and dealing Slash damage. Only works on standing opponents.
+  Б'є супротивника прямо в груди, відкидаючи його і завдаючи ріжучої шкоди. Працює тільки на супротивниках, що стоять.
 
-  ### Gnashing Teeth
+  ### Скрегіт зубів
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
   </Box>
 
-  Deals extra Slash damage, and makes the user shout to strike fear into their opponent's heart.
+  Завдає додаткову ріжучу шкоду і змушує користувача кричати, щоб вселити страх у серце супротивника.
 
 </Document>

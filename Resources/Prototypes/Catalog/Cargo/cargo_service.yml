@@ -201,7 +201,7 @@
     sprite: Objects/Consumable/Drinks/generic_jug.rsi
     state: icon
   product: CrateServiceBoozeDispenser
-  cost: 750
+  cost: 1200 # Pirate
   category: cargoproduct-category-name-service
   group: market
 

@@ -1,92 +1,92 @@
 <Document>
-  # Void Summons
+  # Призови Порожнечі
 
-  Void summons are special minions summoned by the Wraith with skills that can put even robust crewmembers to shame. Fighting one alone is generally never recommended.
-  While not entirely meant for being killing machines by themselves, together with the Wraith and their lesser minions, a void summon can easily become a major pain in the neck.
+  Призови Порожнечі — це особливі міньйони, яких викликає Примара; їхні вміння можуть засоромити навіть найкмітливіших членів екіпажу. Битися з одним із них наодинці — майже завжди погана ідея.
+  Хоч вони й не призначені бути самодостатніми машинами для вбивства, разом із Примарою та її меншими прислужниками призов Порожнечі легко перетворюється на серйозний головний біль.
 
-  # Skeleton Commander
+  # Командир скелетів
   <Box>
     <GuideEntityEmbed Entity="MobSkeletonCommander" Caption=""/>
   </Box>
 
-  The tanky backbone of your army, skeleton commanders can hold the line and boost nearby minions.
+  Міцний «хребет» твоєї армії: командири скелетів можуть тримати лінію та підсилювати міньйонів поблизу.
 
-  ## Skills
+  ## Уміння
 
-  Don't expect to do much yourself to the crewmembers. You actions mostly rely on sending others to do the work for you.
+  Не розраховуй особисто робити багато проти екіпажу. Твої дії переважно полягають у тому, щоб спрямовувати інших працювати за тебе.
 
-  ### Rally
+  ### Збір
 
-  - Buffs all surrounding allied critters, giving them a temporary boost in combat.
+  - Посилює всіх навколишніх союзних створінь, даючи їм тимчасовий бойовий буст.
 
-  Best used when multiple summons are grouped together to maximize your army’s impact.
+  Найкраще використовувати, коли зібрано кілька призовів разом, щоб максимізувати вплив твоєї армії.
 
-  ### Summon Lesser Skeleton
+  ### Призвати молодшого скелета
 
-  - Spawns in a singular lesser skeleton to help you in whatever you are doing. The skeleton is mindless, and should generally be used right before a scuffle.
-  - The lesser skeleton does not have a lot of health, but they can cause a lot of damage while rallied.
+  - Призиває одного молодшого скелета на підмогу. Скелет бездумний і загалом має викликатися безпосередньо перед бійкою.
+  - Молодший скелет не має багато здоров’я, але під «Збором» може завдавати чимало шкоди.
 
-  # Tentacle Fiend
+  # Щупальцева потвора
   <Box>
     <GuideEntityEmbed Entity="MobVoidSpiker" Caption=""/>
   </Box>
 
-  Fast, ranged, and unpredictable. These fiends excel at controlling space and abducting targets to secure an easy kill for the Wraith.
-  Their meelee attacks, while extremely weak damage wise, quickly cause the target to be knocked out.
+  Швидка, дальнобійна й непередбачувана. Ці потвори відзначаються контролем простору та викраденням цілей для легких убивств для Примари.
+  Їхні атаки в ближньому бою, хоч і дуже слабкі за шкодою, швидко призводять до нокауту цілі.
 
-  ## Skills
+  ## Уміння
 
-  You have the perfect set of tools for kidnapping. 
+  У тебе ідеальний набір інструментів для викрадень.
 
-  ### Tentacle Hook
+  ### Щупальцевий гак
 
-  - Launch a tentacle at a target and drag them toward the fiend.
-  - While the target can try and run from the hook, it will always, inevitable, drag them into the fiend.
+  - Запускає щупальце в ціль і тягне її до потвори.
+  - Хоча ціль може намагатися тікати від гака, він неминуче стягуватиме її до тебе.
 
-  ### Shuffle
+  ### Прослизання
 
-  - Compress your body to slip through doors, cancel stuns, and escape attacks.
-  - Prevents using other skills during the usage of this skill, so is generally only meant for evading rather than for engaging.
+  - Стискаєш тіло, щоб прослизнути крізь двері, скасувати оглушення та уникнути атак.
+  - Під час дії цього вміння інші застосувати не можна, тож воно радше для втечі, ніж для ініціації.
 
-  ### Lash
+  ### Батіг
 
-  - Stun a target, cause them to bleed, and do considerable damage.
-  - Best used together with the tentacle hook. As soon as the target is within reach, lash them, and abduct them into maints, never to be seen again.
+  - Оглушає ціль, спричиняє кровотечу та завдає відчутної шкоди.
+  - Найкраще поєднувати зі «Щупальцевим гаком». Щойно ціль поруч — хльосни її й затягни у техтонелі, щоб вона зникла безвісти.
 
-  # Void Hound
+  # Гончак Порожнечі
   <Box>
     <GuideEntityEmbed Entity="MobVoidHound" Caption=""/>
   </Box>
 
-  Stealthy, fast, and deadly in close quarters. Void hounds are ideal for hit-and-run attacks and disruption.
-  The only minion from the Wraith capable of sprinting.
+  Потайний, швидкий і смертельний у ближньому бою. Гончі Порожнечі ідеальні для тактики «вдарив і втік» та дезорганізації.
+  Єдиний міньйон Примари, здатний спринтувати.
 
-  ## Skills
+  ## Уміння
 
-  Your actions are centered around catching people by surprise. 
+  Твої дії зосереджені на тому, щоб заскочити людей зненацька.
 
-  ### Cloak
+  ### Маскування
 
-  - Become partially invisible and difficult to detect.
-  - Doesn't last for very long, but is good for sneaking up on targets.
-  - Can be used for retreating into the shadows as well.
+  - Стаєш частково невидимим і важко помітним.
+  - Триває недовго, але добре підходить, щоб підкрастися до цілей.
+  - Також можна використати для відступу в тіні.
 
-  ### Rush Down
+  ### Стрімкий ривок
 
-  - Leap forward, knocking down the first person in your path and stunning in a large radius around where you land.
-  - Has a lenghthy cooldown, so use it to secure kills or to escape dire situations.
+  - Стрибаєш уперед, збиваючи з ніг першого на своєму шляху й оглушуючи у великому радіусі навколо місця приземлення.
+  - Має тривалу перезарядку, тож використовуй, щоб забезпечити вбивство або вийти з критичної ситуації.
 
-  ### General Tips
+  ### Загальні поради
 
-  Skeleton commanders are capable of soaking a lot of shots, but their rallying action is quite invaluable for the other minions. Choose wisely whether you wish to tank for them, or to stay behind buffing them from the backline.
+  Командири скелетів здатні витримати багато пострілів, але їхня дія «Збір» безцінна для інших міньйонів. Обирай, чи танкувати для них, чи залишатися позаду й підсилювати з тилу.
 
-  Tentacle fiends excel at picking off targets from afar and killing them while they are incapable of fighting back. Once the deed is done, call over the Wraith to absorb the corpse, and rinse and repeat.
+  Щупальцеві потвори чудово підбирають цілі здалеку й убивають їх, поки ті не можуть оборонятися. Коли справа зроблена, поклич Примару, щоб вона поглинула труп, і повторюй.
 
-  Void hounds are your mobile assassins, but not very tanky. While your stun is extremely potent, it can leave you right in the lion's den if unprepared.
+  Гончі Порожнечі — мобільні асасини, але не дуже витривалі. Хоч твій оглушальний інструмент дуже потужний, він може залишити тебе просто в лігві левів, якщо не підготувався.
 
-  Always consider positioning and timing. Summons can be fragile and die quickly if left unsupported.
+  Завжди враховуй позиціювання та таймінг. Призови крихкі й швидко гинуть, якщо їх не підтримують.
 
-  The Wraith should aim to combine minions with portals to maintain constant pressure and cause death en masse.
+  Примара має поєднувати міньйонів із порталами, щоб підтримувати постійний тиск і спричиняти масову загибель.
 
-  [textlink="Back to Harbinger of the Void" link="Harbinger"]
+  [textlink="Назад до Провісника Порожнечі" link="Harbinger"]
 </Document>

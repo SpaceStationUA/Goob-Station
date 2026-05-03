@@ -54,6 +54,10 @@
         path: /Audio/Weapons/Guns/Empty/empty.ogg
       ejectSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
+  # Pirate banking start
+  - type: StaticPrice
+    price: 80
+  # Pirate banking end
 
 - type: entity
   id: SmokingPipeFilledCannabis

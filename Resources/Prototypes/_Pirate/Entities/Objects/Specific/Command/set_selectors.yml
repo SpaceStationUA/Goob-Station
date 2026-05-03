@@ -1,0 +1,15 @@
+- type: entity
+  id: CaptainUndeterminedSabre
+  name: кейс для холодної зброї капітана
+  description: Оздоблений золотом кейс для холодної зброї капітана, цьому кейсу уже не один десяток років.
+  parent: [ BaseItem, BaseSetSelector, BaseCommandContraband ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Command/captainundetermined.rsi
+    state: icon
+  - type: SetSelector
+    possibleSets:
+    - CaptainSabre
+    - CaptainSabreHeavy
+    - CaptainSabreShashka
+    maxSelectedSets: 1

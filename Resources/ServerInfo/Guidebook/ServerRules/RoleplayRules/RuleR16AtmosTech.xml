@@ -4,17 +4,17 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-  # Roleplay Rule 21 - Atmospherics Technician
+  # Рольове правило 21 - Технік з атмосфери
 
-  Atmos Technicians are responsible for the maintenance and operation of the station's atmospheric systems. They ensure that the air quality is safe, manage gas supplies, and respond to emergencies related to the station's atmosphere.
-  Atmospheric Technicians are more knowledgeable engineers, and are expected to have a deep understanding of the station's atmospheric systems and how to repair them.
-  They are also expected to handle power if engineering is not available, and to be able to repair the station's power systems.
-  Any disaster caused by your mistakes will be your liability.
+  Техніки з атмосфери відповідають за обслуговування та експлуатацію атмосферних систем станції. Вони забезпечують безпечну якість повітря, керують запасами газу та реагують на надзвичайні ситуації, пов'язані з атмосферою станції.
+  Техніки з атмосфери є більш обізнаними інженерами, і від них очікується глибоке розуміння атмосферних систем станції та способів їх ремонту.
+  Вони також повинні займатися енергопостачанням, якщо інженерний відділ недоступний, і вміти ремонтувати енергетичні системи станції.
+  Будь-яка катастрофа, спричинена вашими помилками, буде вашою відповідальністю.
 
-  ## Responsibilities include:
-  - Monitoring and adjusting the station's atmospheric conditions.
-  - Repairing and maintaining airlocks, scrubbers, and other atmospheric equipment.
-  - Responding to breaches and leaks in the station's atmosphere.
-  - Collaborating with other departments to ensure the station's atmosphere is safe and functional.
-  - Assisting in emergencies related to the station's atmosphere, such as fires or gas leaks AND engineering emergencies.
+  ## Обов'язки включають:
+  - Моніторинг та регулювання атмосферних умов станції.
+  - Ремонт та обслуговування шлюзів, скруберів та іншого атмосферного обладнання.
+  - Реагування на пробої та витоки в атмосфері станції.
+  - Співпраця з іншими відділами для забезпечення безпечної та функціональної атмосфери станції.
+  - Допомога в надзвичайних ситуаціях, пов'язаних з атмосферою станції, таких як пожежі або витоки газу, ТА інженерних надзвичайних ситуаціях.
 </Document>

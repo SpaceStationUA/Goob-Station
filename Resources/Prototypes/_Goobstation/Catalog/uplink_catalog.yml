@@ -1797,13 +1797,20 @@
   description: uplink-holo-cigar-desc
   productEntity: HoloCigar
   cost:
-    Telecrystal: 35
+    Telecrystal: 75 # Pirate edit
   categories:
   - UplinkWearables
   conditions:
   - !type:BuyerSpeciesCondition
     whitelist:
     - Human
+  # Pirate start
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - ContractorUplink
+      - NukeOpsUplink
+  # Pirate end
 
 - type: listing
   id: UplinkUndeterminedBundle

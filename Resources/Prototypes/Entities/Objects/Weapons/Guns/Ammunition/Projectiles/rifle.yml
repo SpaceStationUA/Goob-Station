@@ -40,7 +40,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 17
+        Piercing: 23 # Pirate edit
       armorPenetration: 0.15 # Goobstation
 
 - type: entity

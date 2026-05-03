@@ -40,8 +40,8 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 19
-      armorPenetration: 0.4 # Goobstation
+        Piercing: 20 # Pirate
+      armorPenetration: 0.45 # Pirate
 
 - type: entity
   id: BulletLightRiflePractice

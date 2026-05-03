@@ -1,0 +1,601 @@
+- type: entity
+  id: PirateEventReagentVialBase
+  parent: BaseChemistryEmptyVial
+  abstract: true
+  name: магічна фляжка
+  components:
+  - type: AlchemistDirectApplication
+
+- type: entity
+  id: PirateVialWitchLove
+  parent: PirateEventReagentVialBase
+  suffix: Закоханість
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-love
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchLove
+          Quantity: 24
+
+- type: entity
+  id: PirateVialWitchParanoia
+  parent: PirateEventReagentVialBase
+  suffix: Параноя
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-paranoia
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchParanoia
+          Quantity: 16
+
+- type: entity
+  id: PirateVialWitchRage
+  parent: PirateEventReagentVialBase
+  suffix: Лють
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-rage
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchRage
+          Quantity: 10
+
+- type: entity
+  id: PirateVialWitchInvisibility
+  parent: PirateEventReagentVialBase
+  suffix: Невидимість
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-invisibility
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchInvisibility
+          Quantity: 12
+
+- type: entity
+  id: PirateVialWitchMindFog
+  parent: PirateEventReagentVialBase
+  suffix: Туман розуму
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-mind-fog
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchMindFog
+          Quantity: 14
+
+- type: entity
+  id: PirateVialWitchMirrorCurse
+  parent: PirateEventReagentVialBase
+  suffix: Прокльон дзеркала
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-mirror-curse
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchMirrorCurse
+          Quantity: 10
+
+- type: entity
+  id: PirateVialWitchBloodBond
+  parent: PirateEventReagentVialBase
+  suffix: Кров'яний зв'язок
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-blood-bond
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchBloodBond
+          Quantity: 12
+
+- type: entity
+  id: PirateVialWitchSoulShadow
+  parent: PirateEventReagentVialBase
+  suffix: Тінь душі
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-soul-shadow
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchSoulShadow
+          Quantity: 18
+
+- type: entity
+  id: PirateVialWitchSubstitution
+  parent: PirateEventReagentVialBase
+  suffix: Зілля заміщення
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-substitution
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchSubstitution
+          Quantity: 10
+
+- type: entity
+  id: PirateVialWitchBlackBile
+  parent: PirateEventReagentVialBase
+  suffix: Чорна жовч
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-black-bile
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchBlackBile
+          Quantity: 16
+
+- type: entity
+  id: PirateVialWitchEcho
+  parent: PirateEventReagentVialBase
+  suffix: Зілля ехо
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-echo
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchEcho
+          Quantity: 14
+
+- type: entity
+  id: PirateVialWitchNameCurse
+  parent: PirateEventReagentVialBase
+  suffix: Прокльон імені
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-name-curse
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchNameCurse
+          Quantity: 16
+
+- type: entity
+  id: PirateVialWitchHungerPotion
+  parent: PirateEventReagentVialBase
+  suffix: Зілля голоду
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-hunger-potion
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchHungerPotion
+          Quantity: 10
+
+- type: entity
+  id: PirateVialAlchemistAcid
+  parent: PirateEventReagentVialBase
+  suffix: Кислота
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-acid
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistAcid
+          Quantity: 12
+
+- type: entity
+  id: PirateVialAlchemistPhilosopherStone
+  parent: PirateEventReagentVialBase
+  suffix: Філософський камінь
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-philosopher-stone
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistPhilosopherStone
+          Quantity: 18
+
+- type: entity
+  id: PirateVialAlchemistMagicNeutralizer
+  parent: PirateEventReagentVialBase
+  suffix: Нейтралізатор магії
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-magic-neutralizer
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistMagicNeutralizer
+          Quantity: 16
+
+- type: entity
+  id: PirateVialAlchemistCatalyst
+  parent: PirateEventReagentVialBase
+  suffix: Каталізатор
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-catalyst
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistCatalyst
+          Quantity: 12
+
+- type: entity
+  id: PirateVialAlchemistSoulCopperas
+  parent: PirateEventReagentVialBase
+  suffix: Купорос душі
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-soul-copperas
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistSoulCopperas
+          Quantity: 12
+
+- type: entity
+  id: PirateVialAlchemistBubbleGas
+  parent: PirateEventReagentVialBase
+  suffix: Бульбашковий газ
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-bubble-gas
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistBubbleGas
+          Quantity: 8
+
+- type: entity
+  id: PirateVialAlchemistGravityPotion
+  parent: PirateEventReagentVialBase
+  suffix: Зілля гравітації
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-gravity-potion
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistGravityPotion
+          Quantity: 8
+
+- type: entity
+  id: PirateVialAlchemistClownTrail
+  parent: PirateEventReagentVialBase
+  suffix: Слід клоуна
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-clown-trail
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistClownTrail
+          Quantity: 6
+
+- type: entity
+  id: PirateVialAlchemistChaosSalt
+  parent: PirateEventReagentVialBase
+  suffix: Сіль хаосу
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-chaos-salt
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistChaosSalt
+          Quantity: 18
+
+- type: entity
+  id: PirateVialAlchemistMimicJuice
+  parent: PirateEventReagentVialBase
+  suffix: Сік мімічності
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-mimic-juice
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistMimicJuice
+          Quantity: 8
+
+- type: entity
+  id: PirateVialAlchemistNitricEssence
+  parent: PirateEventReagentVialBase
+  suffix: Азотна есенція
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-nitric-essence
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistNitricEssence
+          Quantity: 12
+
+- type: entity
+  id: PirateVialAlchemistMagnusElixir
+  parent: PirateEventReagentVialBase
+  suffix: Еліксир Магнуса
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-magnus-elixir
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistMagnusElixir
+          Quantity: 8
+
+- type: entity
+  id: PirateVialWitchSerenity
+  parent: PirateEventReagentVialBase
+  suffix: Спокій
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-serenity
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchSerenity
+          Quantity: 18
+
+- type: entity
+  id: PirateVialWitchInspiration
+  parent: PirateEventReagentVialBase
+  suffix: Натхнення
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-inspiration
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchInspiration
+          Quantity: 16
+
+- type: entity
+  id: PirateVialWitchWisdom
+  parent: PirateEventReagentVialBase
+  suffix: Мудрість
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-wisdom
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchWisdom
+          Quantity: 16
+
+- type: entity
+  id: PirateVialWitchStarlightPotion
+  parent: PirateEventReagentVialBase
+  suffix: Зілля Зоряного Світла
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-starlight-potion
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchStarlightPotion
+          Quantity: 14
+
+- type: entity
+  id: PirateVialWitchHope
+  parent: PirateEventReagentVialBase
+  suffix: Надія
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-hope
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchHope
+          Quantity: 18
+
+- type: entity
+  id: PirateVialWitchCompassion
+  parent: PirateEventReagentVialBase
+  suffix: Співчуття
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-compassion
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchCompassion
+          Quantity: 18
+
+- type: entity
+  id: PirateVialWitchClarity
+  parent: PirateEventReagentVialBase
+  suffix: Ясність
+  components:
+  - type: Label
+    currentLabel: reagent-name-witch-clarity
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: WitchClarity
+          Quantity: 16
+
+- type: entity
+  id: PirateVialAlchemistCourage
+  parent: PirateEventReagentVialBase
+  suffix: Мужність
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-courage
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistCourage
+          Quantity: 16
+
+- type: entity
+  id: PirateVialAlchemistDetermination
+  parent: PirateEventReagentVialBase
+  suffix: Рішучість
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-determination
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistDetermination
+          Quantity: 14
+
+- type: entity
+  id: PirateVialAlchemistElixirOfLife
+  parent: PirateEventReagentVialBase
+  suffix: Еліксир Життя
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-elixir-of-life
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistElixirOfLife
+          Quantity: 8
+
+- type: entity
+  id: PirateVialAlchemistAlchemicalExplosion
+  parent: PirateEventReagentVialBase
+  suffix: Алхімічний Вибух
+  components:
+  - type: Label
+    currentLabel: reagent-name-alchemist-alchemical-explosion
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: AlchemistAlchemicalExplosion
+          Quantity: 10
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelWitchReagentsFilled
+  suffix: Відьма, Filled, JustDecor
+  components:
+  - type: StorageFill
+    contents:
+    - id: PirateVialWitchLove
+    - id: PirateVialWitchParanoia
+    - id: PirateVialWitchRage
+    - id: PirateVialWitchInvisibility
+    - id: PirateVialWitchMindFog
+    - id: PirateVialWitchMirrorCurse
+    - id: PirateVialWitchBloodBond
+    - id: PirateVialWitchSoulShadow
+    - id: PirateVialWitchSubstitution
+    - id: PirateVialWitchBlackBile
+    - id: PirateVialWitchEcho
+    - id: PirateVialWitchNameCurse
+    - id: PirateVialWitchHungerPotion
+    - id: PirateVialWitchSerenity
+    - id: PirateVialWitchInspiration
+    - id: PirateVialWitchWisdom
+    - id: PirateVialWitchStarlightPotion
+    - id: PirateVialWitchHope
+    - id: PirateVialWitchCompassion
+    - id: PirateVialWitchClarity
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelAlchemistReagentsFilled
+  suffix: Алхім., Filled, JustDecor
+  components:
+  - type: StorageFill
+    contents:
+    - id: PirateVialAlchemistAcid
+    - id: PirateVialAlchemistPhilosopherStone
+    - id: PirateVialAlchemistMagicNeutralizer
+    - id: PirateVialAlchemistCatalyst
+    - id: PirateVialAlchemistSoulCopperas
+    - id: PirateVialAlchemistBubbleGas
+    - id: PirateVialAlchemistGravityPotion
+    - id: PirateVialAlchemistClownTrail
+    - id: PirateVialAlchemistChaosSalt
+    - id: PirateVialAlchemistMimicJuice
+    - id: PirateVialAlchemistNitricEssence
+    - id: PirateVialAlchemistMagnusElixir
+    - id: PirateVialAlchemistCourage
+    - id: PirateVialAlchemistDetermination
+    - id: PirateVialAlchemistElixirOfLife
+    - id: PirateVialAlchemistAlchemicalExplosion
+
+

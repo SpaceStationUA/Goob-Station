@@ -438,6 +438,11 @@
         type: Add
         time: 10
         refresh: false
+      - !type:ChemRemovePsionic #PIRATE
+        conditions:
+          - !type:ReagentThreshold
+            reagent: MindbreakerToxin
+            min: 20
   # TODO: PROPER hallucinations
 
 - type: reagent
@@ -502,11 +507,52 @@
         damage:
           types:
             Poison: 0.4
+      - !type:HealthChange # Pirate edit
+        conditions:
+        - !type:OrganType
+          type: Hydrakin
+        damage:
+          types:
+            Poison: 0.4
       - !type:ChemVomit
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:OrganType
             type: Animal
+      - !type:ChemVomit # Pirate edit
+        probability: 0.04
+        conditions:
+          - !type:OrganType
+            type: Hydrakin
+
+# Pirate: coffemaker
+- type: reagent
+  id: Anthrobromine
+  name: reagent-name-anthrobromine
+  group: Toxins
+  desc: reagent-desc-anthrobromine
+  physicalDesc: reagent-physical-desc-grainy
+  color: "#e3d7c6"
+  meltingPoint: 351
+  boilingPoint: 554
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        damage:
+          types:
+            Poison: 0.4
+      - !type:ChemVomit
+        probability: 0.04
+        conditions:
+          - !type:OrganType
+            type: Animal
+            shouldHave: false
 
 - type: reagent
   id: Amatoxin

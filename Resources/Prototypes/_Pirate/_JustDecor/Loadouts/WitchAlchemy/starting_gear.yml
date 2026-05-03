@@ -1,0 +1,21 @@
+- type: startingGear
+  id: WitchEventBrewerGear
+  equipment:
+    id: WizardPDA
+    gloves: ClothingHandsGlovesHeavyGoldenTrim
+    head: ClothingHeadHatClownReal
+    jumpsuit: ClothingUniformJumpsuitMilitaryColorPurple
+    outerClothing: ClothingOuterWizardPsyReal
+    shoes: ClothingShoesBootsJackFilled
+    back: ClothingBackpackSatchelLeatherWitchImprovedFilled
+
+- type: startingGear
+  id: AlchemistEventBrewerGear
+  equipment:
+    id: WizardPDA
+    gloves: ClothingHandsGlovesCombatNitrile
+    head: ClothingHeadHatBlackwizardReal
+    jumpsuit: ClothingUniformJumpsuitDetectiveGrey
+    outerClothing: ClothingOuterCoatLabOpened
+    shoes: ClothingShoesBootsJackFilled
+    back: ClothingBackpackSatchelLeatherAlchemistImprovedFilled

@@ -15,7 +15,7 @@
       Death: 400
     eventType: HostilesSpawn
   - type: GameRule
-    chaosScore: 400
+    chaosScore: 1000 # Pirate - was 400
   - type: VentSpawnRule
   - type: AntagSpawner
     prototype: MobXenomorphLarva

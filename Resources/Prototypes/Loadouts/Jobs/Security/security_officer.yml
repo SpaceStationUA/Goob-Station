@@ -126,6 +126,7 @@
   id: SecurityHelmetAlt
   equipment:
     head: ClothingHeadHelmetBasicAlt
+  groupBy: "Helmets" # Pirate
 
 
 - type: loadout

@@ -75,7 +75,7 @@
   - type: StationAiWhitelist
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/highsec/highsec.rsi # Pirate changes
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -136,6 +136,7 @@
     fuel: 10
     time: 10
   - type: Airlock
+  - type: AirlockIllumination # Pirate changes
   - type: NavMapDoor
   - type: DoorBolt
   - type: AccessReader

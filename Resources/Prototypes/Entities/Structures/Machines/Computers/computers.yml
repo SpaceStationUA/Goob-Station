@@ -676,6 +676,8 @@
     color: "#1f8c28"
   - type: Computer
     board: StationRecordsComputerCircuitboard
+  - type: AccessReader # Pirate: records photos
+    access: [["Security"]] # Pirate: records photos
   - type: GuideHelp
     guides:
     - Forensics
@@ -1165,7 +1167,7 @@
   - type: PointLight
     color: "#c9c042"
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [["ChiefEngineer"]] # Pirate banking
 
 - type: entity
   id: ComputerCargoOrdersMedical
@@ -1198,7 +1200,7 @@
   - type: PointLight
     color: "#41e0fc"
   - type: AccessReader
-    access: [["Medical"]]
+    access: [["ChiefMedicalOfficer"]] # Pirate banking
 
 - type: entity
   id: ComputerCargoOrdersScience
@@ -1231,7 +1233,7 @@
   - type: PointLight
     color: "#b53ca1"
   - type: AccessReader
-    access: [["Research"]]
+    access: [["ResearchDirector"]] # Pirate banking
 
 - type: entity
   id: ComputerCargoOrdersSecurity
@@ -1264,7 +1266,7 @@
   - type: PointLight
     color: "#d11d00"
   - type: AccessReader
-    access: [["Security"]]
+    access: [["HeadOfSecurity"]] # Pirate banking
 
 - type: entity
   id: ComputerCargoOrdersService
@@ -1297,7 +1299,7 @@
   - type: PointLight
     color: "#afe837"
   - type: AccessReader
-    access: [["Service"], ["Theatre"]]
+    access: [["HeadOfPersonnel"]] # Pirate banking
 
 - type: entity
   id: ComputerCargoBounty

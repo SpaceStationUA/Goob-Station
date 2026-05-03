@@ -5,7 +5,7 @@
 
 - type: gameMap
   id: Serpentcrest
-  mapName: 'Serpentcrest'
+  mapName: 'Серпенткрест'
   mapPath: /Maps/_Goobstation/serpentcrest.yml
   minPlayers: 50
   stations:
@@ -13,7 +13,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Serpentcrest {1}'
+          mapNameTemplate: '{0} Серпенткрест {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'B'

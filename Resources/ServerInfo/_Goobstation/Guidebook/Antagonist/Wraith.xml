@@ -1,106 +1,106 @@
 <Document>
-  # Wraith
+  # Примара
   <Box>
     <GuideEntityEmbed Entity="MobWraith" Caption=""/>
   </Box>
-  Where most other antagonist roles exist to make you afraid of some maniac with a fire extinguisher coming to get you,
-  the Wraith exists to make you afraid of the station itself.
+  Якщо більшість інших ролей антагоністів існують, щоб змусити вас боятися якогось маніяка з вогнегасником, що йде за вами,
+  то Примара існує, щоб змусити вас боятися самої станції.
 
-  Given enough time and corpses (and given that they almost always appear with other antagonists, there will be corpses), they can progress from an inconvenience to a terrifying juggernaut of murder.
+  Маючи достатньо часу та трупів (а враховуючи, що вони майже завжди з'являються з іншими антагоністами, трупи будуть), вони можуть перерости з незначної перешкоди в страхітливого джагернаута вбивства.
 
-  They have their downsides, though, and a clever chef with some salt can be far more dangerous to a wraith than an army of supercops armed to the teeth.
+  Хоча у них є свої недоліки, і кмітливий кухар із сіллю може бути набагато небезпечнішим для примари, ніж ціла армія суперкопів, озброєних до зубів.
 
-  ## So I've been reborn as a Wraith, now what?
+  ## Отже, я переродився Примарою, що далі?
 
-  First and foremost, wraiths are ghosts. They cannot be seen by the living unless manifested, they can hear everything on the station, they can talk to and see normal ghosts, fly through walls, all of it.
-  They can use their powers while incorporeal as well, and are effectively invulnerable in this state.
+  Перш за все, примари — це привиди. Живі не можуть їх бачити, якщо вони не матеріалізувалися, вони чують все на станції, можуть говорити та бачити звичайних привидів, літати крізь стіни — все це.
+  Вони також можуть використовувати свої здібності, перебуваючи безтілесними, і фактично невразливі в цьому стані.
 
-  When wraiths use the Haunt ability, they manifest in a physical form for about minute, able to be injured and even killed.
+  Коли примари використовують здібність Переслідування, вони матеріалізуються у фізичній формі приблизно на хвилину, і їх можна поранити або навіть вбити.
 
-  If killed while manifested, though, a wraith isn't necessarily dead. Wraiths can survive being banished from physical form once - the second time kills them for good.
-  Moreover, there's strings attached: when banished, they lose all of their built-up WP and, far more cripplingly, any WP regeneration bonuses from Absorb Corpse. The consolation prize is that Absorb Corpse's cooldown is reset as well.
+  Однак, якщо примару вбито під час матеріалізації, вона не обов'язково мертва. Примари можуть пережити вигнання з фізичної форми один раз — другий раз вбиває їх остаточно.
+  Більше того, є умови: при вигнанні вони втрачають всі накопичені ОП і, що набагато критичніше, будь-які бонуси регенерації ОП від Поглинання Трупа. Втішний приз у тому, що час відновлення Поглинання Трупа також скидається.
 
-  Wraiths can also move items by pulling them around.
+  Примари також можуть переміщувати предмети, перетягуючи їх.
 
-  ## Wraith Points
+  ## Очки Примари
 
-  Wraith abilities work off the creatively named Wraith Points, or WP, a resource that passively increases over time. The rate of regeneration can be permanently increased by absorbing corpses, or temporarily increased by using Haunt near a crowd or possessing a Revenant.
-  There's no upper limit to banked points or regeneration rate, but banishment resets both.
+  Здібності примари працюють на креативно названих Очках Примари, або ОП — ресурсі, який пасивно зростає з часом. Швидкість регенерації можна назавжди збільшити, поглинаючи трупи, або тимчасово збільшити, використовуючи Переслідування поблизу натовпу або вселяючись у Ревенанта.
+  Немає верхньої межі для накопичених очок або швидкості регенерації, але вигнання скидає обидва показники.
 
-  ### Ok, that's good and all, but how do I work this thing?
+  ### Гаразд, це все добре, але як цим користуватися?
 
-  At the beginning, you are fairly weak. Not necessarily in the literal sense, but without WP (Wraith Points!),
-  you are incapable of using most of your skills to cause actual harm. Your two most important abilities are:
+  На початку ви досить слабкі. Не обов'язково в буквальному сенсі, але без ОП (Очок Примари!),
+  ви не здатні використовувати більшість своїх навичок для заподіяння справжньої шкоди. Ваші дві найважливіші здібності:
 
-  ### Haunt
+  ### Переслідування
 
-  - Makes you corporeal, allowing others to see you. While this does leave you vulnerable to being attacked, it also increases the rate at which you gain WP based on the number of witnesses to your spooky presence.
-  - Some actions may only be used while corporeal, so this is your way of doing that.
+  - Робить вас матеріальним, дозволяючи іншим бачити вас. Хоча це робить вас вразливим для атак, це також збільшує швидкість отримання ОП залежно від кількості свідків вашої моторошної присутності.
+  - Деякі дії можна використовувати лише в матеріальному стані, тож це ваш спосіб це зробити.
 
-  ### Absorb Corpse
+  ### Поглинання Трупа
 
-  - Consumes a corpse (so long as they aren't rotting), giving you some extra WP regeneration permanently, as well as a nice chunk of WP in the process.
-  - Once this action is used, it will rot the target and create some nasty black smoke, so it isn't exactly subtle.
-  - Be warned! If you attempt to absorb a corpse that has at least 25 units of Formaldehyde inside it, while the chemical will be removed in the process, you will be left severely harmed! Avoid targetting corpses inside the morgue that may have been injected with this embalming chemical.
+  - Поглинає труп (якщо він не гниє), даючи вам додаткову регенерацію ОП назавжди, а також гарну порцію ОП в процесі.
+  - Після використання цієї дії труп згниє і створить неприємний чорний дим, тож це не дуже непомітно.
+  - Увага! Якщо ви спробуєте поглинути труп, що містить щонайменше 25 одиниць формальдегіду, хоча хімікат буде видалено в процесі, вам буде завдано серйозної шкоди! Уникайте трупів у моргу, які могли бути ін'єковані цією бальзамувальною речовиною.
 
-  These are your bread and butter. Once you absorb enough corpses, you will be allowed to...
+  Це ваш хліб з маслом. Як тільки ви поглинете достатньо трупів, вам буде дозволено...
 
-  ## Evolve
+  ## Еволюція
 
-  Past the basic wraith form, three unique paths are available in the form of an ability in its original power set. Each has their own ability set granted on top of the base wraith's, allowing for different styles of gameplay. The different forms also have their own weaknesses to go along with their individual strengths.
+  Після базової форми примари доступні три унікальні шляхи у формі здібності з її оригінального набору сил. Кожен має свій набір здібностей на додаток до базового набору примари, що дозволяє різні стилі гри. Різні форми також мають свої слабкості разом зі своїми індивідуальними сильними сторонами.
 
-  ### Be careful around these...
-    [color=red]Salt![/color]
-  - If you walk over salt, you will lose [color=red]all of your skills, and be made corporeal in the process against your will.[/color] This usually is a death sentence for your average Wraith, so always keep an eye out for any lines of salt or ore rocks lying around!
-  - Salt can be hidden under objects, or even inside doorways.
+  ### Будьте обережні з цим...
+    [color=red]Сіль![/color]
+  - Якщо ви пройдете через сіль, ви втратите [color=red]всі свої навички і станете матеріальним всупереч своїй волі.[/color] Зазвичай це смертний вирок для середньостатистичної Примари, тож завжди стежте за лініями солі або рудними каменями!
+  - Сіль може бути схована під об'єктами або навіть всередині дверних отворів.
 
-    [color=red]That pesky chaplain![/color]
-  - The chaplain is immune to most of your actions. In some cases, attempting to interact with them may even end up harming you, instead!
-  - However, the chaplain is not immortal. You can still find ways to kill him indirectly. His corpse will be quite delicious, I promise you that...
+    [color=red]Той надокучливий капелан![/color]
+  - Капелан імунний до більшості ваших дій. У деяких випадках спроби взаємодії з ним можуть навіть завдати вам шкоди!
+  - Однак капелан не безсмертний. Ви все ще можете знайти способи вбити його непрямо. Його труп буде дуже смачним, обіцяю вам це...
 
-  ## Fighting a Wraith
+  ## Боротьба з Примарою
 
 
-  The Wraith may seem powerful at first, but once you know their weakness, it is quite easy to deal with them.
+  Примара може здатися могутньою спочатку, але коли ви знаєте її слабкість, з нею досить легко впоратися.
 
-  - Use salt! [bold]You can make salt lines with salt shakers and salt packets[/bold]! Leave salt spread all over areas of interest for the Wraith.
-  - Get rid of corpses! Without corpses to absorb, the Wraith cannot evolve, which will significantly decrease the amount of harm it can cause. Gib corpses, recycle them, space them. Anything works, so long as there is nothing left to absorb.
-  - Formaldehyde! It is a chemical used to prevent rotting in corpses. It can be bought in cargo or easily synthesized in the Chemistry lab. Injecting a corpse with more than 25 units of Formaldehyde will cause the body to be tainted if the Wraith ever tries to absorb it, hurting them in the process.
-  - Spirit Candles. Although rare, they can be used to reveal wraith in a 12x12 tile area. [bold]If you activate them once Wraith appears, you can make them corporeal![/bold]. Craft one by placing a candle on a skull.
+  - Використовуйте сіль! [bold]Ви можете робити лінії солі за допомогою сільничок і пакетиків солі[/bold]! Розсипайте сіль по всіх цікавих для Примари місцях.
+  - Позбувайтеся трупів! Без трупів для поглинання Примара не може еволюціонувати, що значно зменшить кількість шкоди, яку вона може заподіяти. Перетворюйте трупи на кашу, переробляйте їх, викидайте у космос. Все підходить, головне, щоб не залишилося нічого для поглинання.
+  - Формальдегід! Це хімікат, який використовується для запобігання гниттю в трупах. Його можна купити в карго або легко синтезувати в хімічній лабораторії. Ін'єкція трупа понад 25 одиницями формальдегіду спричинить отруєння тіла, якщо Примара спробує його поглинути, завдавши їй шкоди в процесі.
+  - Духовні Свічки. Хоча вони рідкісні, їх можна використовувати для виявлення примари в області 12x12 клітинок. [bold]Якщо ви активуєте їх, коли з'явиться Примара, ви можете зробити її матеріальною![/bold] Створіть одну, поклавши свічку на череп.
 
-  ## Plaguebringer
+  ## Носій Чуми
 
-  [textlink="Learn about the Plaguebringer." link="Plaguebringer"]
+  [textlink="Дізнатися про Носія Чуми." link="Plaguebringer"]
 
-  ## Harbinger of the Void
+  ## Вісник Порожнечі
 
-  [textlink="Learn about the Harbinger of the Void." link="Harbinger"]
+  [textlink="Дізнатися про Вісника Порожнечі." link="Harbinger"]
 
-  ## Trickster
+  ## Обманщик
 
-  [textlink="Learn about the Trickster." link="Trickster"]
+  [textlink="Дізнатися про Обманщика." link="Trickster"]
 
-  # Being the Ghost with the Most (Evil)
+  # Бути Найзлішим Привидом
 
-  ## Making the Most of Base Abilities
+  ## Максимальне Використання Базових Здібностей
 
-  - You can't use Decay on a Cyborg to remove its laws, nor can you use it on a cyborg frame to make the borg it's built from have no laws.
-    With Decay you are able to emag stuff without the usual risk of being seen by others, and that can be extremely helpful for setting up traps and ambushes.
-  - Haunt can give you a ton of WP when used in a large crowd, but a large crowd is also in prime position to wreck you when you're at your most vulnerable.
-  - Whenever someone has a gun drawn, use Command to knock them down, immediately use Possess Object on the gun, and shoot them with it.
-  - Is the chaplain pissing you off? Command and Mass Command may not work on them when you click them directly, but if they're stunned, standing still, or distracted by animated objects, targeting the floor under them works just as well.
-  - Spook may seem harmless, but some cunning applications can save your ass or cause mass chaos in a clutch.
-  - Try using Possess Object on the fire extinguisher in Toxins Storage, bashing open a plasma tank. Then, use Spook to flip lights and cause a fire.
-  - Has Security recently confiscated some guns/weapons? Pop open the contraband safe with the Open doors, lockers, crates option from Spook.
+  - Ви не можете використовувати Розпад на Кіборга, щоб видалити його закони, як і не можете використовувати його на каркасі кіборга, щоб кіборг, зібраний з нього, не мав законів.
+    За допомогою Розпаду ви можете емагувати речі без звичайного ризику бути поміченим іншими, і це може бути надзвичайно корисним для налаштування пасток і засідок.
+  - Переслідування може дати вам купу ОП при використанні у великому натовпі, але великий натовп також в ідеальному положенні, щоб знищити вас, коли ви найбільш вразливі.
+  - Коли у когось витягнута зброя, використовуйте Команду, щоб збити його з ніг, негайно використовуйте Оволодіння предметом на зброї і стріляйте в нього нею.
+  - Капелан вас дратує? Команда і Масова Команда можуть не працювати на них, коли ви клацаєте безпосередньо по них, але якщо вони приголомшені, стоять нерухомо або відволікаються анімованими об'єктами, націлювання на підлогу під ними працює так само добре.
+  - Страшилка може здаватися нешкідливою, але деякі хитрі застосування можуть врятувати вас або спричинити масовий хаос у критичний момент.
+  - Спробуйте використати Одержання Об'єкта на вогнегаснику у Сховищі токсинів, розбивши плазмовий бак. Потім використовуйте Страшилку, щоб перемкнути світло і викликати пожежу.
+  - Служба Безпеки нещодавно конфіскувала зброю? Відкрийте сейф з контрабандою за допомогою опції Відкрити двері, шафки, ящики зі Страшилки.
 
-  ## In General
-  [bold]You are not invincible[/bold], no matter how much it may seem like it sometimes. It only takes one twitchy crew member with a weapon and a salt shaker to ruin you.
+  ## Загалом
+  [bold]Ви не невразливі[/bold], незалежно від того, наскільки це може здаватися іноді. Достатньо одного нервового члена екіпажу зі зброєю та сільничкою, щоб вас знищити.
 
-  Wraiths don't appear alone, so try to lay low for a little while and look for the other antagonists. Scavenge the corpses they'll inevitably leave in their wake for more WP regeneration, or try to strike deals with them with Whisper. A wraith with someone to feed it a steady stream of corpses can get very, very scary, but be warned that some antagonists might not trust you to not murder them and raise the alarm on you.
+  Примари не з'являються поодинці, тому спробуйте притаїтися на деякий час і пошукати інших антагоністів. Підбирайте трупи, які вони неминуче залишать після себе, для більшої регенерації ОП, або спробуйте укласти з ними угоди за допомогою Шепоту. Примара з кимось, хто годує її постійним потоком трупів, може стати дуже, дуже страшною, але майте на увазі, що деякі антагоністи можуть не довіряти вам, що ви їх не вб'єте і не піднімете на них тривогу.
 
-  Plan for things going terribly. You may not want to absorb every corpse you find just in case you get banished, but you may not want to leave any corpses undrained either in case the crew gets wise and starts spacing/gibbing/reclaiming corpses immediately.
+  Плануйте на випадок, якщо все піде жахливо. Ви можете не хотіти поглинати кожен знайдений труп на випадок вигнання, але ви також можете не хотіти залишати жодних трупів непоглинутими, на випадок якщо екіпаж розумніє і почне негайно викидати їх у космос/перетворювати на кашу/переробляти.
 
-You're not that great at outright killing people without isolating someone or being lucky. Be a scavenger; try to make a bad situation worse for someone already pretty fucked up rather than try to kill a healthy person. The crew will amaze you with how many ways they can kill themselves.
+Ви не дуже добре вбиваєте людей відверто без ізоляції когось або удачі. Будьте падальником; намагайтеся зробити погану ситуацію гіршою для когось, хто вже досить погано себе почуває, замість того, щоб намагатися вбити здорову людину. Екіпаж вразить вас тим, скількома способами вони можуть вбити себе.
 
 
 </Document>

@@ -71,6 +71,9 @@
     cost: 650
   - id: DoubleEmergencyNitrogenTankFilled
     cost: 650
+  - id: DeathRattleLavalandImplanter
+    cost: 700
+    overrideName: shop-listing-deathrattle-implant-lavaland-pirate # Pirates: death rattle update
   - id: ClothingMaskWeldingGas
     cost: 750
   - id: SpaceCash5000
@@ -136,3 +139,4 @@
     cost: 12500 #TODO: Make modules real
   # TODO: luxury elite bar capsule for 10k
   # TODO: mining drone stuff
+

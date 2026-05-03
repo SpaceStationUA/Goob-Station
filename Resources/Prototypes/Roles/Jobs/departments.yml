@@ -180,6 +180,7 @@
   - BlueshieldOfficer # Goobstation
   - NanotrasenRepresentative # Goobstation
   - NanotrasenCareerTrainer # Goobstation
+  - AdministrativeAssistant # Pirate
   - CentralCommandOfficial
   - CBURN
   - ERTLeader
@@ -242,6 +243,7 @@
   roles:
   - ResearchDirector
   - Scientist
+  - ForensicMantis
   - ResearchAssistant
   - Roboticist #Goob
 

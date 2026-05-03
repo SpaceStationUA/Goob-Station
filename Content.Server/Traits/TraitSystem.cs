@@ -1,3 +1,4 @@
+/* // Pirate traits rework: port and modified DV traits system
 // SPDX-FileCopyrightText: 2022 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2022 Paul Ritter <ritter.paul1@googlemail.com>
 // SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
@@ -107,3 +108,4 @@ public sealed class TraitSystem : EntitySystem
         }
     }
 }
+*/

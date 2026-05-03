@@ -458,6 +458,10 @@
         requireInputValidation: false
       enum.RadarConsoleUiKey.Key: #goob - contractor
         type: RadarConsoleBoundUserInterface
+      enum.VampireMutationUiKey.Key:
+        type: VampireMutationBoundUserInterface #Pirate
+      enum.SetPsionicsVerbMenu.Key: # Pirate-PsionicsMenu
+        type: PsionicsMenuBoundUserInterface
   - type: Puller
   - type: Speech
     speechSounds: Alto
@@ -496,6 +500,8 @@
     penetrateDamage: 50
     damagePenalty: 0.2
   - type: ExaminableCharacter # WWDP
+  - type: AlternativeJob # Pirate - Alternative Jobs
+  - type: OfferItem # Pirate - port EE item offesrs
   - type: Sprinter # Goobstation
   - type: MindControllable # Goobstation
   - type: VisibleContraband # Goobstation

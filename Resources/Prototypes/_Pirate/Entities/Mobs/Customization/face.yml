@@ -1,0 +1,13 @@
+- type: marking
+  id: IronJaw
+  bodyPart: Face
+  markingCategory: Face
+  speciesRestriction: [Dwarf, Human, SlimePerson, Felinid, Oni, Harpy, Arachne, Lamia, Tajaran]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: _Pirate/Mobs/Customization/augments/headaugs.rsi
+    state: iron_jaw

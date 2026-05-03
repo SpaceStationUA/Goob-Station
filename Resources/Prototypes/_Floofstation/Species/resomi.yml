@@ -38,6 +38,7 @@
   id: MobResomiSprites
   sprites:
     Head: MobResomiHead
+    Face: MobHumanoidAnyMarking # Pirate changes
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
     Snout: MobHumanoidAnyMarking
@@ -108,6 +109,11 @@
     LeftHand:
       points: 3
       required: false
+    # Pirate changes start
+    Face:
+      points: 1
+      required: false
+    # Pirate changes end
 
 - type: humanoidBaseSprite
   id: MobResomiEyes

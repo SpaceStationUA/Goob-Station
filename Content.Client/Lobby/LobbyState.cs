@@ -101,6 +101,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System;
 
 namespace Content.Client.Lobby
 {
@@ -125,6 +126,8 @@ namespace Content.Client.Lobby
 
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
         public LobbyGui? Lobby;
+
+        public static event Action<LobbyGui>? OnLobbyGuiReady; // Pirate
 
         protected override void Startup()
         {
@@ -168,6 +171,8 @@ namespace Content.Client.Lobby
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
 
             _serverCur.ClientBalanceChange += UpdatePlayerBalance; // Goobstation - Goob Coin
+
+            OnLobbyGuiReady?.Invoke(Lobby!); // Pirate
         }
 
         protected override void Shutdown()

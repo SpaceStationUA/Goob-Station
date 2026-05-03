@@ -12,7 +12,6 @@ using Content.Shared.Damage;
 using Content.Shared.Chat;
 using Content.Shared._Shitmed.Damage;
 
-
 namespace Content.Server.Speech.EntitySystems;
 
 /// <summary>
@@ -36,7 +35,7 @@ public sealed class SpeakOnActionSystem : SharedSpeakOnActionSystem
         var user = args.Performer;
 
         // If we can't speak, we can't speak
-        if (!HasComp<SpeechComponent>(user) || HasComp<MutedComponent>(user))
+        if (!HasComp<SpeechComponent>(user) || HasComp<MutedComponent>(user) || ent.Comp.IsEmote) //Pirate system handles emotes
             return;
 
         // Goob. TODO: Remove Aviu from this plane of existence for whatever has occured here.
@@ -61,7 +60,6 @@ public sealed class SpeakOnActionSystem : SharedSpeakOnActionSystem
 
         if (string.IsNullOrWhiteSpace(speech))
             return;
-
         _chat.TrySendInGameICMessage(user, Loc.GetString(speech), InGameICChatType.Speak, false);
     }
 }

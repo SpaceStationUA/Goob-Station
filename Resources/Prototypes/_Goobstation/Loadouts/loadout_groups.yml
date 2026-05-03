@@ -1031,6 +1031,7 @@
   - JackBoots
   - BlackCowboyBoots
   - SnowjacksBso
+  - BlueShieldHighHeels #Pirate
 
 - type: loadoutGroup
   id: BlueshieldOfficerEnvirohelm
@@ -1156,8 +1157,9 @@
   minLimit: 0
   loadouts:
   - Bodycam # Goobstation - Body cameras
-  - ClothingNeckCWPSec
+  #- ClothingNeckCWPSec # Pirate disable
   - ClothingNeckMantleVeteranSecurity
+  - CameraCollar # Pirate
 
 #honkops
 
@@ -1301,6 +1303,7 @@
   minLimit: 0
   loadouts:
   - MinerCloak
+  - SalvageEspecialistEnsemble # Pirate
 
 # Chemist
 
@@ -1404,6 +1407,7 @@
   name: loadout-group-brigmedic-outer
   loadouts:
   - BrigmedicAMG
+  - BrigmedicCoat # Pirate
   - ArmorVest
   - ArmorVestSlim
   - SecurityOfficerWintercoat

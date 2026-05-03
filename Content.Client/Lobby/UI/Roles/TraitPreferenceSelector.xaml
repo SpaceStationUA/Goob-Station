@@ -6,6 +6,7 @@ SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
+<!-- Pirate start: port and modified DV traits UI -->
 <Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
         <BoxContainer Name="Container"
@@ -13,3 +14,4 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <CheckBox Name="Checkbox" Access="Public"/>
         </BoxContainer>
 </Control>
+<!-- Pirate end: port and modified DV traits UI -->

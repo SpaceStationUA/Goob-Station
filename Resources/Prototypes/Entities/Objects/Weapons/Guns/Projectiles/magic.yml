@@ -195,6 +195,7 @@
   parent: ClosetSteelBase
   categories: [ HideSpawnMenu ]
   components:
+  - type: MagicDamageSource # Pirate changes
   - type: ResistLocker
     resistTime: 60 # Goob edit
   - type: Ammo # Goobstation

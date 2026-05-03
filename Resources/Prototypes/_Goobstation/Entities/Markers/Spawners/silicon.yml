@@ -1,7 +1,7 @@
 - type: entity
   parent: MarkerBase
-  id: SpawnMobGoidaBot
-  name: goidabot spawner
+  id: SpawnMobPotyzhnobot
+  name: potyzhnobot spawner
   components:
   - type: Sprite
     layers:
@@ -9,4 +9,4 @@
     - state: ai
   - type: ConditionalSpawner
     prototypes:
-    - MobGoidaBot
+    - MobPotyzhnobot

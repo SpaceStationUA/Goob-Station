@@ -1,0 +1,9 @@
+- type: loadout
+  id: BrigmedicCoat
+  equipment:
+    outerClothing: ClothingOuterCoatBrigMedic
+
+- type: loadout
+  id: CombatNitrileGloves
+  equipment:
+    gloves: ClothingHandsGlovesCombatNitrile

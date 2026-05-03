@@ -1,0 +1,95 @@
+- type: entity
+  name: NPC Carp Spawner
+  id: CarpSpawnerMundane
+  parent: MarkerBase
+  suffix: No Ghost Takeover
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Mobs/Aliens/Carps/space.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - MobCarp
+        - MobCarpMagic
+        - MobCarpHolo
+        - MobCarpRainbow
+      rarePrototypes:
+        - MobShark
+      rareChance: 0.05
+
+- type: entity
+  name: NPC Snake Spawner
+  id: SnakeSpawnerMundane
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+          state: purple_snake
+    - type: RandomSpawner
+      prototypes:
+        - MobPurpleSnake
+        - MobCobraSpace
+      rarePrototypes:
+        - MobSmallPurpleSnake
+      rareChance: 0.2
+
+- type: entity
+  name: Watcher Spawner
+  id: WatcherAISpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Mobs/Aliens/Lavaland/watcher.rsi
+          state: unshaded
+        - state: ai
+    - type: RandomSpawner
+      prototypes:
+        - MobWatcherLavaland
+        - MobWatcherIcewing
+        - MobWatcherMagmawing
+      rarePrototypes:
+        - MobWatcherPride
+      rareChance: 0.10
+
+- type: entity
+  name: Space Creature Spawner
+  id: SpaceCreatureAISpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Mobs/Animals/spacespider.rsi
+          state: spacespider
+        - state: ai
+    - type: RandomSpawner
+      prototypes:
+        - MobBearSpace
+        - MobKangarooSpace
+        - MobSpiderSpace
+
+- type: entity
+  name: Arena Spawner
+  id: ArenaSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Mobs/Animals/kangaroo.rsi
+          state: kangaroo-space
+        - state: ai
+    - type: RandomSpawner
+      prototypes:
+        - SpaceCreatureAISpawner
+        - WatcherAISpawner
+        - SpawnMobOreCrab
+      rarePrototypes:
+        - MobLaserRaptor
+      rareChance: 0.10

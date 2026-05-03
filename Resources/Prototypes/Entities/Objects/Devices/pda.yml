@@ -204,6 +204,13 @@
     sprite: Objects/Devices/pda.rsi
     state: pda
   - type: Pda
+    # Pirate edit start
+    passportSlot:
+      priority: -3
+      whitelist:
+        components:
+          - Passport
+    # Pirate edit end
     paiSlot:
       priority: -2
       whitelist:
@@ -230,6 +237,7 @@
       PDA-id: !type:ContainerSlot {}
       PDA-pen: !type:ContainerSlot {}
       PDA-pai: !type:ContainerSlot {}
+      PDA-passport: !type:ContainerSlot {} # Pirate edit start - port EE contractors
       Cartridge-Slot: !type:ContainerSlot {}
       program-container: !type:Container
   - type: ItemSlots
@@ -261,6 +269,7 @@
       - NanoTaskCartridge
       - NewsReaderCartridge
       - NanoChatCartridge # DeltaV
+      - WalletCartridge # Pirate banking
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -343,6 +352,8 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - NanoChatCartridge # DeltaV
+    - CrimeAssistCartridge # Pirate
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA
@@ -358,6 +369,7 @@
       - NewsReaderCartridge
       - MedTekCartridge
       - NanoChatCartridge # DeltaV
+      - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA
@@ -426,7 +438,7 @@
        pda-interncadet
   - type: PdaBorderColor
     borderColor: "#717059"
-    accentVColor: "#A32D26"
+    accentVColor: "#324155" # Pirate
   - type: Icon
     state: pda-interncadet
 
@@ -672,9 +684,11 @@
     - NotekeeperCartridge
     - NanoTaskCartridge
     - NewsReaderCartridge
+    - StockTradingCartridge # Pirate port - Delta-V stocks trading
     - AstroNavCartridge
     - MailMetricsCartridge
     - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA
@@ -693,6 +707,15 @@
     borderColor: "#e39751"
   - type: Icon
     state: pda-cargo
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - StockTradingCartridge # Pirate port - Delta-V stocks trading
+    - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA
@@ -721,6 +744,7 @@
       - NewsReaderCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BasePDA
@@ -1059,7 +1083,7 @@
        !type:String
        pda-hos
   - type: PdaBorderColor
-    borderColor: "#A32D26"
+    borderColor: "#324155" # Pirate
     accentHColor: "#447987"
   - type: Icon
     state: pda-hos
@@ -1072,6 +1096,7 @@
     - WantedListCartridge
     - LogProbeCartridge
     - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1087,7 +1112,7 @@
        !type:String
        pda-warden
   - type: PdaBorderColor
-    borderColor: "#A32D26"
+    borderColor: "#324155" # Pirate
     accentVColor: "#949137"
   - type: Icon
     state: pda-warden
@@ -1106,7 +1131,7 @@
        !type:String
        pda-security
   - type: PdaBorderColor
-    borderColor: "#A32D26"
+    borderColor: "#324155" # Pirate
   - type: Icon
     state: pda-security
 
@@ -1135,6 +1160,7 @@
     state: pda-centcom
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
+    diskSpace: 12 # DeltaV
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -1145,6 +1171,9 @@
       - LogProbeCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - GlimmerMonitorCartridge # Einstein Engines
+      - PsiWatchCartridge # Einstein Engines
+      - WalletCartridge # Pirate banking
 
 - type: entity
   parent: CentcomPDA
@@ -1162,7 +1191,7 @@
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     notificationsEnabled: false
-    diskSpace: 10 # DeltaV
+    diskSpace: 12 # DeltaV
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -1173,6 +1202,9 @@
       - MedTekCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - GlimmerMonitorCartridge # Einstein Engines
+      - PsiWatchCartridge # Einstein Engines
+      - WalletCartridge # Pirate banking
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
@@ -1295,6 +1327,7 @@
       - NotekeeperCartridge
       - NanoTaskCartridge
       - NanoChatCartridge # DeltaV
+      - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1318,6 +1351,7 @@
     state: pda-ert
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
+    diskSpace: 12 # Pirate - banking
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -1328,6 +1362,9 @@
       - LogProbeCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - GlimmerMonitorCartridge # Einstein Engines
+      - PsiWatchCartridge # Einstein Engines
+      - WalletCartridge # Pirate banking
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1498,6 +1535,7 @@
     - WantedListCartridge
     - LogProbeCartridge
     - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1513,7 +1551,7 @@
        !type:String
        pda-brigmedic
   - type: PdaBorderColor
-    borderColor: "#A32D26"
+    borderColor: "#324155" # Pirate
     accentHColor: "#d7d7d0"
     accentVColor: "#d7d7d0"
   - type: Icon
@@ -1527,6 +1565,8 @@
     - WantedListCartridge
     - MedTekCartridge
     - NanoChatCartridge # DeltaV
+    - CrimeAssistCartridge # Pirate
+    - WalletCartridge # Pirate banking
 
 - type: entity
   parent: ClownPDA
@@ -1628,7 +1668,7 @@
        !type:String
        pda-seniorofficer
   - type: PdaBorderColor
-    borderColor: "#A32D26"
+    borderColor: "#324155" # Pirate
     accentVColor: "#DFDFDF"
   - type: Icon
     state: pda-seniorofficer

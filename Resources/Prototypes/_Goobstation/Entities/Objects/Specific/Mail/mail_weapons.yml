@@ -32,7 +32,10 @@
       prob: 0.95
     - id: Katana
       orGroup: Sword
-      prob: 0.5
+      prob: 0.35
+    - id: Uchigatana
+      orGroup: Sword
+      prob: 0.35
     - id: CaneSheathFilled
       orGroup: Sword
       prob: 0.3

@@ -39,7 +39,7 @@ public sealed partial class GrabIntentComponent : Component
     public Dictionary<GrabStage, float> EscapeChances = new()
     {
         { GrabStage.No, 1f },
-        { GrabStage.Soft, 1f },
+        { GrabStage.Soft, 0.8f }, // Pirate
         { GrabStage.Hard, 0.6f },
         { GrabStage.Suffocate, 0.2f },
     };

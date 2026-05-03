@@ -1,46 +1,46 @@
 <Document>
-  # Corporate Agents
+  # Корпоративні Агенти
 
-  [color=#ac3a0d]An elite agent sent to infiltrate and complete missions onboard various stations.[/color]
+  [color=#ac3a0d]Елітний агент, відправлений для проникнення та виконання завдань на борту різних станцій.[/color]
 
-  Only select command members can become corporate agents: the Quartermaster, Chief Engineer, and Research Director.
+  Лише обрані члени командування можуть стати корпоративними агентами: Квартирмейстер, Головний інженер та Директор з досліджень.
   <Box>
-    <GuideEntityEmbed Entity="PosterLegitEnlist" Caption="Enlist now!"/>
+    <GuideEntityEmbed Entity="PosterLegitEnlist" Caption="Записуйтесь зараз!"/>
   </Box>
 
-  Corporate Agents are tasked with retrieving items, testing weak points, sabotaging, or assassinating targets who know too much.
+  Перед корпоративними агентами стоять завдання з вилучення предметів, перевірки слабких місць, саботажу або ліквідації цілей, які знають занадто багато.
 
-  Despite their deep connections to Nanotrasen/Central Command, they rarely receive help and are abandoned if caught.
-  Corporate agents should avoid causing excessive disruption, [color=red][bold]as corporations want to avoid bad press.[/bold][/color]
+  Незважаючи на їхні глибокі зв'язки з Нанотрейзен/Центральним Командуванням, вони рідко отримують допомогу і залишаються покинутими, якщо їх спіймають.
+  Корпоративні агенти повинні уникати надмірних заворушень, [color=red][bold]оскільки корпорації хочуть уникнути поганої преси.[/bold][/color]
 
-  ## How they play
+  ## Як вони грають
 
-  Unlike Traitors, Corporate Agents have limited freedom in their objectives.
-  First and foremost, [color=red][bold] they should not be causing more damage than necessary! [/bold][/color]
-  Corporate Agents must complete missions while maintaining their disguise as command members.
-  It wouldn't be very productive if the station fell apart due to them not doing their job as a head of staff, now would it?
+  На відміну від Зрадників, Корпоративні Агенти мають обмежену свободу у своїх цілях.
+  Перш за все, [color=red][bold] вони не повинні завдавати більше шкоди, ніж необхідно! [/bold][/color]
+  Корпоративні агенти повинні виконувати завдання, зберігаючи своє прикриття як члени командування.
+  Було б не дуже продуктивно, якби станція розвалилася через те, що вони не виконують свою роботу як керівники, чи не так?
 
-  [bold] Most people don't react well to finding out one of their closest allies is a spy. [/bold]
+  [bold] Більшість людей погано реагують, коли дізнаються, що один з їхніх найближчих союзників є шпигуном. [/bold]
 
-  ## Objectives
+  ## Цілі
 
-  Corporate Agents receive objectives at the start of the round, often involving traitors or other heads of staff.
-  Objectives typically include stealing items or eliminating targets who oppose the corporation or know sensitive information.
-  Sometimes someone's been talking against the corporation, or they've heard things they really shouldn't have.
+  Корпоративні агенти отримують цілі на початку раунду, часто пов'язані зі зрадниками або іншими керівниками.
+  Цілі зазвичай включають викрадення предметів або ліквідацію цілей, які виступають проти корпорації або знають конфіденційну інформацію.
+  Іноді хтось висловлюється проти корпорації, або вони почули те, що їм не слід було знати.
 
-  Agents may also need to handle suspected syndicate spies discreetly, as corporations aim to maintain appearances and avoid public violations of space law.
-  [bold]Corporate Agents are here to resolve these issues.[/bold]
+  Агентам також може знадобитися таємно розбиратися з підозрюваними шпигунами синдикату, оскільки корпорації прагнуть зберегти видимість і уникнути публічних порушень космічного права.
+  [bold]Корпоративні агенти тут для того, щоб вирішити ці проблеми.[/bold]
 
-  ## Equipment
+  ## Спорядження
 
-  Corporate Agents start with an uplink containing 25 telecrystals.
-  These corporations usually don't have an abundance of Telecrystals to spare even for their most elite agents.
-  Use them wisely.
-  Agents must carefully manage their purchases and utilize resources as command members.
+  Корпоративні агенти починають з аплінку, що містить 25 телекристалів.
+  Ці корпорації зазвичай не мають надлишку телекристалів, щоб ділитися ними навіть зі своїми найелітнішими агентами.
+  Використовуйте їх з розумом.
+  Агенти повинні ретельно керувати своїми покупками та використовувати ресурси як члени командування.
 
-  [color=red][bold]You didn't spend all this time infiltrating and gaining trust with nothing to show for it right?[/bold][/color]
+  [color=red][bold]Ви ж не витратили весь цей час на проникнення та завоювання довіри, щоб нічого не показати, так?[/bold][/color]
 
 
 
-  [textlink="For more information on how to play it look in the traitor tab." link="Traitors"]
+  [textlink="Для отримання додаткової інформації про те, як грати, дивіться у вкладці зрадників." link="Traitors"]
 </Document>

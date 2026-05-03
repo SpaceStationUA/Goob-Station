@@ -1,0 +1,123 @@
+# Частини мод-с'юту
+- type: entity
+  parent: [ClothingModsuitStandard, SolAllianceInfo, BaseSyndicateContraband]
+  id: ClothingModsuitSANMarine
+  name: блок керування мод-костюмом CSA-85x "Мазу"
+  description: Головний контролер для мод-костюма "Мазу". Рідкісний та неймовірно цінний екземпляр військового обладнання, який зазвичай використовують у спецпідрозділах Соляріанської армії.
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Modsuits/csa_85x.rsi
+    - type: ExplosionResistance
+      damageCoefficient: 0.5
+    - type: ToggleableClothing
+      clothingPrototypes:
+        head: ClothingModsuitHelmetSANMarine
+        gloves: ClothingModsuitGauntletsSANMarine
+        outerClothing: ClothingModsuitChestplateSANMarine
+        shoes: ClothingModsuitBootsSANMarine
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHyper
+          whitelist:
+            components:
+              - PowerCell
+    - type: Storage
+      maxItemSize: Huge
+      grid:
+        - 0,0,7,4
+
+- type: entity
+  parent: [ClothingModsuitGauntletsStandard, SolAllianceInfo, BaseSyndicateContraband]
+  id: ClothingModsuitGauntletsSANMarine
+  name: рукавиці мод-костюма CSA-85x "Мазу"
+  description: Пара рукавиць, призначених для розчавлювання черепів прибульців. Є частиною модного костюма "Мазу".
+  categories: [HideSpawnMenu]
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Modsuits/csa_85x.rsi
+    - type: Insulated
+
+- type: entity
+  parent: [ClothingModsuitHelmetStandard, SolAllianceInfo, ShowSecurityIcons, BaseClothingRadio, BaseSyndicateContraband]
+  id: ClothingModsuitHelmetSANMarine
+  name: шолом мод-костюма CSA-85x "Мазу"
+  description: Сучасний шолом для мод-костюма "Мазу". Він має вбудований проекційний дисплей.
+  categories: [HideSpawnMenu]
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Modsuits/csa_85x.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.85
+          Heat: 0.85
+          Radiation: 0.95
+    - type: ShowHealthBars
+      damageContainers:
+        - Biological
+    - type: PointLight
+      color: "#FF4500"
+
+- type: entity
+  parent: [ClothingModsuitChestplateStandard, SolAllianceInfo, BaseSyndicateContraband]
+  id: ClothingModsuitChestplateSANMarine
+  name: нагрудник мод-костюма CSA-85x "Мазу"
+  description: Сучасний нагрудник для мод-костюма "Мазу".
+  categories: [HideSpawnMenu]
+  components:
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Modsuits/csa_85x.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 0.95
+      sprintModifier: 0.95
+    - type: ExplosionResistance
+      damageCoefficient: 0.35
+    - type: Armor
+      traumaDeductions:
+        Dismemberment: 0.5
+        OrganDamage: 0.5
+        BoneDamage: 0.5
+        VeinsDamage: 0
+        NerveDamage: 0
+      modifiers:
+        coefficients:
+          Blunt: 0.40
+          Slash: 0.40
+          Piercing: 0.40
+          Heat: 0.40
+          Radiation: 0.40
+          Caustic: 0.40
+    - type: StaminaResistance
+      damageCoefficient: 0.5
+    - type: FireProtection
+      reduction: 0.90
+
+- type: entity
+  parent: [ClothingModsuitBootsStandard, SolAllianceInfo, BaseSyndicateContraband]
+  id: ClothingModsuitBootsSANMarine
+  name: чоботи мод-костюма CSA-85x "Мазу"
+  description: Сучасна пара чоботів для мод-костюма "Мазу".
+  categories: [HideSpawnMenu]
+  components:
+    - type: Appearance
+    - type: Sprite
+      sprite: _Pirate/Clothing/_SolAlliance/Modsuits/csa_85x.rsi
+    - type: Tag
+      tags:
+        - WhitelistChameleon
+
+# Кіти
+- type: entity
+  id: SuitStorageSANModsuit
+  parent: SuitStorageBase
+  suffix: CSA-85x
+  components:
+    - type: StorageFill
+      contents:
+          - id: OxygenTankFilled
+          - id: ClothingModsuitSANMarine
+          - id: ClothingMaskBreath

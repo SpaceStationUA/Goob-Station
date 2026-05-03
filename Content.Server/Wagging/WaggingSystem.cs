@@ -74,6 +74,8 @@ public sealed class WaggingSystem : EntitySystem
 
         wagging.Wagging = !wagging.Wagging;
 
+        _actions.SetToggled(wagging.ActionEntity, wagging.Wagging); // Pirate - port EE vulp wagging
+
         for (var idx = 0; idx < markings.Count; idx++) // Animate all possible tails
         {
             var currentMarkingId = markings[idx].MarkingId;

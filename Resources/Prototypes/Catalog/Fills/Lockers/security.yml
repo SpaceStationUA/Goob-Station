@@ -119,6 +119,8 @@
     - id: BookSpaceLaw
     - id: ClothingBackpackElectropack
       amount: 2
+    - id: ClothingNeckBaseShockCollar # Pirate
+    - id: ClothingHandsGlovesMansusBlock # Pirate
     - id: RemoteSignaller
       amount: 2
     - id: Binoculars
@@ -211,6 +213,8 @@
     - id: MedkitAdvancedFilled
     - id: BoxSyringe
     - id: BoxBodyBag # Goob Station
+    - id: MedkitRadiationFilled # Pirate
+    - id: MedkitToxinFilled # Pirate
 
 - type: entity
   id: LockerDetectiveFilled
@@ -250,6 +254,7 @@
     - id: BloodTrak # Goobstation
     - id: Betty # Goobstation
     - id: BoxTapeRecorder # DeltaV
+    - id: PhotoCameraFilled # Pirate: camera
     - id: PoliceBaton # Goobstation
 
 - type: entity

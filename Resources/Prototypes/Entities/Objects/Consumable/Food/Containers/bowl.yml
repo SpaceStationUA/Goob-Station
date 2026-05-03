@@ -87,6 +87,7 @@
   - type: Tag
     tags:
     - Trash
+    - FoodBowlBig #Pirate
   - type: ThrowableBlocked # Goobstation
     behavior: Damage
     damage:

@@ -89,6 +89,7 @@ using Content.Server.Roles;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
+using Content.Pirate.Common.Voting;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
@@ -104,6 +105,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.CCVar; // Pirate
 
 // Goob Station - End of Round Screen
 using Content.Goobstation.Common.LastWords;
@@ -200,6 +202,10 @@ namespace Content.Server.GameTicking
             if (mainStationMap != null)
             {
                 maps.Add(mainStationMap);
+                // Pirate VVV
+                _gameMapManager.SelectMap(mainStationMap.ID);
+                _cfg.SetCVar(CCVars.GameMap, string.Empty);
+                // Pirate ^^^
             }
             else
             {
@@ -594,7 +600,7 @@ namespace Content.Server.GameTicking
         public void ShowRoundEndScoreboard(string text = "")
         {
             // Log end of round
-            _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Round ended, showing summary");
+            _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Раунд завершено, показ результатів");
 
             //Tell every client the round has ended.
             var gamemodeTitle = CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty;
@@ -835,7 +841,9 @@ namespace Content.Server.GameTicking
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();
             RaiseLocalEvent(ev);
-
+#if !DEBUG
+            RaiseLocalEvent(new LobbyReadyUpEvent()); // Pirate
+#endif
             // So clients' entity systems can clean up too...
             RaiseNetworkEvent(ev);
 

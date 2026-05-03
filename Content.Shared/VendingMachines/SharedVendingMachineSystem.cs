@@ -310,7 +310,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     /// <param name="type">The type of inventory the item is from</param>
     /// <param name="itemId">The prototype ID of the item</param>
     /// <param name="component"></param>
-    public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
+    public virtual void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component) // Pirate banking
     {
         if (IsAuthorized(uid, sender, component))
         {
@@ -406,7 +406,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         foreach (var (id, amount) in entries)
         {
-            if (PrototypeManager.HasIndex<EntityPrototype>(id))
+            if (PrototypeManager.TryIndex<EntityPrototype>(id, out var proto)) // Pirate banking
             {
                 var restock = amount;
                 var chanceOfMissingStock = 1 - restockQuality;
@@ -416,6 +416,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                 {
                     restock = (uint) Math.Floor(amount * result / chanceOfMissingStock);
                 }
+                var price = GetEntryPrice(proto); // Pirate banking
 
                 if (inventory.TryGetValue(id, out var entry))
                     // Prevent a machine's stock from going over three times
@@ -426,8 +427,14 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     // losing the rest of the restock.
                     entry.Amount = Math.Min(entry.Amount + amount, 3 * restock);
                 else
-                    inventory.Add(id, new VendingMachineInventoryEntry(type, id, restock));
+                    inventory.Add(id, new VendingMachineInventoryEntry(type, id, restock, price)); // Pirate banking
             }
         }
     }
+    // Pirate banking start
+    protected virtual int GetEntryPrice(EntityPrototype proto)
+    {
+        return 25;
+    }
+    // Pirate banking end
 }

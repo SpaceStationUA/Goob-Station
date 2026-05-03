@@ -127,15 +127,15 @@
     Plastic: 50
     Gold: 50
 
-- type: latheRecipe
-  id: MarishTranslator
-  result: MarishTranslator
-  completetime: 2
-  materials:
-    Steel: 500
-    Glass: 100
-    Plastic: 50
-    Gold: 50
+#- type: latheRecipe Pirate start
+#  id: MarishTranslator
+#  result: MarishTranslator
+#  completetime: 2
+#  materials:
+#    Steel: 500
+#    Glass: 100
+#    Plastic: 50
+#    Gold: 50 Pirate end
 
 - type: latheRecipe
   id: SchechiTranslator
@@ -253,11 +253,11 @@
   subname: lathe-recipe-SiikMaasTranslatorImplanter-subname
   result: SiikMaasTranslatorImplanter
 
-- type: latheRecipe
-  parent: BaseTranslatorImplanter
-  id: MarishTranslatorImplanter
-  subname: lathe-recipe-MarishTranslatorImplanter-subname
-  result: MarishTranslatorImplanter
+#- type: latheRecipe Pirate start
+#  parent: BaseTranslatorImplanter
+#  id: MarishTranslatorImplanter
+#  subname: lathe-recipe-MarishTranslatorImplanter-subname
+#  result: MarishTranslatorImplanter Pirate end
 
 - type: latheRecipe
   parent: BaseTranslatorImplanter

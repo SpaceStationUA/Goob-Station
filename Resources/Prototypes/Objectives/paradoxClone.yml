@@ -26,15 +26,19 @@
       state: shuttle
   - type: EscapeShuttleCondition
 
+# Pirate edit start VVV
 - type: entity
-  parent: [BaseParadoxCloneObjective, BaseKillObjective]
-  id: ParadoxCloneKillObjective
-  name: Fix the space-time paradox.
-  description: Replace your original to fix the paradox. Remember, your mission is to blend in, do not kill anyone else unless you have to!
+  parent: [BaseParadoxCloneObjective, BaseKeepAliveObjective]
+  id: ParadoxCloneFriendObjective
+  name: Переконайтеся, що оригінал виживе
+  description: Ти повинен знайти свого двійника і переконатися, що він виживе, щоб ти міг повернутися до свого світу!
   components:
-  - type: PickSpecificPerson
-  - type: KillPersonCondition
-    requireDead: true
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Objects/Misc/folders.rsi
+      state: folder-white
+  - type: KeepAliveCondition
   - type: TargetObjective
-    title: objective-condition-kill-head-title # kill <name>, <job>
-
+    title: roles-antag-paradox-clone-objective
+# Pirate edit end ^^^

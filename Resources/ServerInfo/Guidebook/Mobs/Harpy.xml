@@ -9,31 +9,31 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-  # Harpy
+  # Гарпія
 
   <Box>
     <GuideEntityEmbed Entity="MobHarpy" Caption=""/>
   </Box>
 
-  Harpies are an avian human mutation, sprouting feathered wings and ruffled tails.
-  They see the world through an ultraviolet view, slash with their claws dealing
-  [color=#ec3a3a]piercing [/color]damage, and walk around on digitrade legs.
-  Their most iconic ability, however, is to take to the skies!
+  Гарпії — це птахоподібна мутація людини, що має оперені крила та скуйовджені хвости.
+  Вони бачать світ в ультрафіолетовому спектрі, атакують кігтями завдаючи
+  [color=#ec3a3a]колючих [/color]ушкоджень, та пересуваються на пальцехідних ногах.
+  Проте їхня найбільш знакова здібність — це здатність злітати в небо!
 
-  ## Sing your heart out
+  ## Співай від душі
 
-  Harpies are capable of singing out a tune on the spot with their voice, allowing for you to play music wherever you are,
-  as long as you aren't muffled.
+  Гарпії здатні співати мелодії на ходу, дозволяючи вам грати музику де завгодно,
+  якщо ваш рот не заблоковано.
 
-  ## Take to the skies!
+  ## Злітай в небеса!
 
-  Harpies can fly with their wings to increase their movement speed dramatically, at the cost of heavy stamina drain and a temporary inability to use their hands.
-  Their wings give them better acceleration if there is no gravity on the station, but they still can't move without equipment when floating out in space.
+  Гарпії можуть літати за допомогою крил, що значно збільшує швидкість пересування, але ціною великих витрат витривалості та тимчасової нездатності використовувати руки.
+  Їхні крила дають краще прискорення в невагомості, але вони все ще не можуть рухатися без спорядження у відкритому космосі.
 
-  ## Weaknesses
+  ## Слабкості
 
-  Due to their digitrade legs, they are unable to wear any type of footwear. Harpies also breathe [color=#1e90ff]3 times faster[/color] than other races.
-  They have weaker bones.
-  They are very lightweight, making it hard for them to pull any other species. However, they also run 10% faster than other species.
+  Через свої пальцехідні ноги вони не можуть носити будь-яке взуття. Гарпії також дихають [color=#1e90ff]в 3 рази швидше[/color], ніж інші раси.
+  Вони мають слабші кістки.
+  Вони дуже легкі, через що їм важко тягнути інші види. Однак вони також бігають на 10% швидше за інші види.
 
 </Document>

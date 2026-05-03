@@ -26,5 +26,12 @@ public sealed partial class IdExaminableComponent : Component
 [NetSerializable, Serializable]
 public enum SetWantedVerbMenu : byte
 {
-    Key,
+	Key,
+}
+
+// Pirate-PsionicsMenu
+[NetSerializable, Serializable]
+public enum SetPsionicsVerbMenu : byte
+{
+	Key,
 }

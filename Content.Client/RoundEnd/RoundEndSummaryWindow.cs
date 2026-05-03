@@ -58,20 +58,24 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 // Goob Station - End of Round Screen
 using Content.Client.Stylesheets;
 using Content.Shared.Mobs;
+using Robust.Client.UserInterface; // Pirate: camera
 
 namespace Content.Client.RoundEnd
 {
-    public sealed class RoundEndSummaryWindow : DefaultWindow
+    public sealed partial class RoundEndSummaryWindow : DefaultWindow // Pirate: camera
     {
+        private readonly IFileDialogManager _fileDialogManager; // Pirate: camera
         private readonly IEntityManager _entityManager;
+        private readonly TabContainer _roundEndTabs;
         public int RoundId;
 
         public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId,
-            RoundEndMessageEvent.RoundEndPlayerInfo[] info, IEntityManager entityManager)
+            RoundEndMessageEvent.RoundEndPlayerInfo[] info, IEntityManager entityManager, IFileDialogManager fileDialogManager) // Pirate: camera
         {
             _entityManager = entityManager;
+            _fileDialogManager = fileDialogManager; // Pirate: camera
 
-            MinSize = new Vector2(520, 580);
+            MinSize = new Vector2(610, 580); // Pirate: camera
 
             Title = Loc.GetString("round-end-summary-window-title");
 
@@ -82,12 +86,13 @@ namespace Content.Client.RoundEnd
             // Also good for serious info.
 
             RoundId = roundId;
-            var roundEndTabs = new TabContainer();
-            roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
-            roundEndTabs.AddChild(MakePlayerManifestTab(info));
-            roundEndTabs.AddChild(MakeStationReportTab()); //goob
+            _roundEndTabs = new TabContainer(); // Pirate: camera
+            _roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId)); // Pirate: camera
+            _roundEndTabs.AddChild(MakePlayerManifestTab(info)); // Pirate: camera
+            _roundEndTabs.AddChild(MakeStationReportTab()); //goob
+            AddOrUpdatePhotoReportTab(); // Pirate: camera
 
-            Contents.AddChild(roundEndTabs);
+            Contents.AddChild(_roundEndTabs);
 
             OpenCenteredRight();
             MoveToFront();
@@ -117,7 +122,8 @@ namespace Content.Client.RoundEnd
             var gamemodeMessage = new FormattedMessage();
             gamemodeMessage.AddMarkupOrThrow(Loc.GetString("round-end-summary-window-round-id-label", ("roundId", roundId)));
             gamemodeMessage.AddText(" ");
-            gamemodeMessage.AddMarkupOrThrow(Loc.GetString("round-end-summary-window-gamemode-name-label", ("gamemode", gamemode)));
+            gamemodeMessage.AddMarkupOrThrow(Loc.GetString("round-end-summary-window-gamemode-name-label",
+                ("gamemode", FormattedMessage.EscapeText(gamemode))));
             gamemodeLabel.SetMessage(gamemodeMessage);
             roundEndSummaryContainer.AddChild(gamemodeLabel);
 
@@ -133,7 +139,7 @@ namespace Content.Client.RoundEnd
             if (!string.IsNullOrEmpty(roundEnd))
             {
                 var roundEndLabel = new RichTextLabel();
-                roundEndLabel.SetMarkup(roundEnd);
+                roundEndLabel.SetMarkupPermissive(roundEnd);
                 roundEndSummaryContainer.AddChild(roundEndLabel);
             }
 
@@ -251,7 +257,7 @@ namespace Content.Client.RoundEnd
                     };
 
                     playerLastWordsText.SetMarkup(Loc.GetString("round-end-summary-window-last-words",
-                        ("lastWords", playerInfo.LastWords)));
+                        ("lastWords", FormattedMessage.EscapeText(playerInfo.LastWords))));
 
                     textVBox.AddChild(playerLastWordsText);
                 }
@@ -273,35 +279,35 @@ namespace Content.Client.RoundEnd
                     && playerInfo.DamagePerGroup.Values.Any(v => v > 0))
                 {
                     var totalDamage = playerInfo.DamagePerGroup.Values.Sum(static v => (decimal) v);
-                    var severityAdj = totalDamage switch
+                    var severityKey = totalDamage switch
                     {
-                        >= 1000 => "catastrophic",
-                        >= 750 => "devastating",
-                        >= 500 => "agonizing",
-                        >= 300 => "painful",
-                        >= 200 => "brutal",
-                        _ => "tragic"
+                        >= 1000 => "round-end-summary-window-death-severity-catastrophic",
+                        >= 750 => "round-end-summary-window-death-severity-devastating",
+                        >= 500 => "round-end-summary-window-death-severity-agonizing",
+                        >= 300 => "round-end-summary-window-death-severity-painful",
+                        >= 200 => "round-end-summary-window-death-severity-brutal",
+                        _ => "round-end-summary-window-death-severity-tragic"
                     };
 
                     var highestDamage = playerInfo.DamagePerGroup
                         .OrderByDescending(kvp => kvp.Value)
                         .First();
-                    var typeAdj = highestDamage.Key switch
+                    var typeKey = highestDamage.Key switch
                     {
-                        "Burn" => "fiery",
-                        "Brute" => "crushing",
-                        "Toxin" => "poisonous",
-                        "Airloss" => "suffocating",
-                        "Genetic" => "twisted",
-                        "Metaphysical" => "otherworldly",
-                        "Electronic" => "shocking",
-                        _ => "mysterious",
+                        "Burn" => "round-end-summary-window-death-type-fiery",
+                        "Brute" => "round-end-summary-window-death-type-crushing",
+                        "Toxin" => "round-end-summary-window-death-type-poisonous",
+                        "Airloss" => "round-end-summary-window-death-type-suffocating",
+                        "Genetic" => "round-end-summary-window-death-type-twisted",
+                        "Metaphysical" => "round-end-summary-window-death-type-otherworldly",
+                        "Electronic" => "round-end-summary-window-death-type-shocking",
+                        _ => "round-end-summary-window-death-type-mysterious",
                     };
 
                     deathLabel.SetMarkup(
                         Loc.GetString("round-end-summary-window-death",
-                            ("severity", severityAdj),
-                            ("type", typeAdj)));
+                            ("severity", Loc.GetString(severityKey)),
+                            ("type", Loc.GetString(typeKey))));
 
                     var damageTable = new GridContainer
                     {
@@ -392,9 +398,7 @@ namespace Content.Client.RoundEnd
                 Orientation = LayoutOrientation.Vertical
             };
             var StationReportLabel = new RichTextLabel();
-            var StationReportmessage = new FormattedMessage();
-            StationReportmessage.AddMarkupOrThrow(stationReportText);
-            StationReportLabel.SetMessage(StationReportmessage);
+            StationReportLabel.SetMarkupPermissive(stationReportText);
             StationReportContainer.AddChild(StationReportLabel);
 
 

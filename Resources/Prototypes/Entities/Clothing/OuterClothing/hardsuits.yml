@@ -271,6 +271,11 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 3 # Pirate ^
 
 # Engineering hardsuit, heavily edited by goobstation
 - type: entity
@@ -310,6 +315,11 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 5 # Pirate ^
 
 #Spationaut Hardsuit
 - type: entity
@@ -351,6 +361,11 @@
     - WhitelistChameleon
     - HardsuitSpatio
     - CorgiWearable
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 3 # Pirate ^
 
 #Salvage Hardsuit
 - type: entity
@@ -394,6 +409,11 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 6 # Pirate ^
 
 #Goliath Hardsuit
 - type: entity
@@ -440,6 +460,11 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 6 # Pirate ^
 
 #Maxim Hardsuit
 - type: entity
@@ -485,6 +510,11 @@
   - type: ModifyDelayedKnockdown # Goobstation
     delayDelta: 3
     knockdownTimeDelta: -3
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 6 # Pirate ^
 
 #Security Hardsuit (goob - not used)
 - type: entity
@@ -533,6 +563,11 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+  - type: DamageOnShootProtection #imp #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 8 # Pirate ^
 
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseSecurityContraband]
@@ -570,6 +605,11 @@
   - type: ModifyDelayedKnockdown # Goobstation
     delayDelta: 1.5
     knockdownTimeDelta: -1.5
+  - type: DamageOnShootProtection #imp  # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 4 # Pirate ^
 
 #Warden's Hardsuit
 - type: entity
@@ -613,6 +653,11 @@
   - type: ModifyDelayedKnockdown # Goobstation
     delayDelta: 3
     knockdownTimeDelta: -3
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 8 # Pirate ^
 
 #Captain's Hardsuit
 - type: entity
@@ -662,6 +707,11 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 8 # Pirate ^
 
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
@@ -711,6 +761,11 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 8 # Pirate ^
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -748,6 +803,11 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 5 # Pirate ^
 
 #Research Director's Hardsuit
 - type: entity
@@ -801,6 +861,11 @@
     knockdownTimeDelta: -2
   - type: StaminaResistance # Goobstation
     damageCoefficient: 0.65
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 6 # Pirate ^
 
 #Head of Security's Hardsuit, heavily edited by goob
 - type: entity
@@ -845,6 +910,11 @@
     knockdownTimeDelta: -2.5
   - type: StaminaResistance # Goobstation
     damageCoefficient: 0.5
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 8 # Pirate ^
 
 #Luxury Mining Hardsuit
 - type: entity
@@ -883,6 +953,11 @@
     knockdownTimeDelta: -2
   - type: StaminaResistance # Goobstation
     damageCoefficient: 0.7
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 4 # Pirate ^
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
@@ -939,6 +1014,11 @@
     knockdownTimeDelta: -3
   - type: StaticPrice
     price: 5000
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 8 # Pirate ^
 
 # Syndicate Medic Hardsuit
 - type: entity
@@ -963,6 +1043,11 @@
     knockdownTimeDelta: -3
   - type: StaminaResistance # Goobstation
     damageCoefficient: 0.5
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 6 # Pirate ^
 
 #Syndicate Elite Hardsuit
 - type: entity
@@ -1016,6 +1101,11 @@
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHelmetHardsuitSyndieElite
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 6 # Pirate ^
 
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseSyndicateContraband]
@@ -1064,6 +1154,11 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 10 # Pirate ^
 
 #Cybersun Juggernaut Hardsuit
 - type: entity
@@ -1114,6 +1209,11 @@
     - CorgiWearable
     - Hardsuit
     - WhitelistChameleon
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 10 # Pirate ^
 
 #Wizard Hardsuit
 - type: entity
@@ -1162,6 +1262,11 @@
     - WhitelistChameleon
     - SyringeArmor
     - CorgiWearable
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 6 # Pirate ^
 
 #Ling Space Suit (goob - not used)
 - type: entity
@@ -1278,6 +1383,11 @@
     knockdownTimeDelta: -3
   - type: StaminaResistance # Goobstation
     damageCoefficient: 0.5
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 8 # Pirate ^
 
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
@@ -1433,6 +1543,11 @@
     cancel: true
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 10 # Pirate ^
 
 #CBURN Hardsuit
 - type: entity
@@ -1478,6 +1593,11 @@
     knockdownTimeDelta: -3
   - type: StaminaResistance # Goobstation
     damageCoefficient: 0.5
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 6 # Pirate ^
 
 #MISC. HARDSUITS
 #Clown Hardsuit

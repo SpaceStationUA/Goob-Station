@@ -1,0 +1,78 @@
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingBalaclavaBase
+  components:
+  - type: Item
+    size: Small
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - mask
+  - type: Sprite
+    state: icon
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 2
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+    - FacialHair
+  - type: Tag
+    tags:
+    - Mask
+    - ClothMade
+
+
+
+- type: entity
+  parent: ClothingBalaclavaBase
+  id: Balaclava
+  name: балаклава
+  description: Чорна балаклава яка робить твій вигляд крутим.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Mask/balaclavas/black.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Clothing/Mask/balaclavas/black.rsi
+
+- type: entity
+  parent: ClothingBalaclavaBase
+  id: GreenBalaclava
+  name: зелена балаклава
+  description: Зелена балаклава яка робить твій вигляд крутим.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Mask/balaclavas/green.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Clothing/Mask/balaclavas/green.rsi
+
+- type: entity
+  parent: ClothingBalaclavaBase
+  id: SkullBalaclava
+  name: балаклава з черепем
+  description: Чорна балаклава з черепом, по всім канонам супер-елітних отрядів хах...
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Mask/balaclavas/skull.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Clothing/Mask/balaclavas/skull.rsi

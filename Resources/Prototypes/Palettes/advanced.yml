@@ -56,3 +56,9 @@
     neutralmedium: "#B3B3B3"
     neutraldark: "#999999"
     neutralblack: "#808080"
+
+# Pirate blue security
+    blueseclight: "#66A5DD"
+    bluesecmedium: "#3570A4"
+    bluesecdark: "#255D8F"
+    bluesecblack: "#193F60"

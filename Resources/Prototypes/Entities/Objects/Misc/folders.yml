@@ -206,6 +206,7 @@
     whitelist:
       tags:
       - Document
+      - Folder #Pirate Changes
   - type: ItemMapper
     mapLayers:
       clipboard_paper:

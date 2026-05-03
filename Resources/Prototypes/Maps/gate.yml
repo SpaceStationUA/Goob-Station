@@ -79,15 +79,15 @@
 
 - type: gameMap
   id: Gate
-  mapName: 'Gate Station'
+  mapName: 'Гейт'
   mapPath: /Maps/_Goobstation/gate.yml
-  minPlayers: 55
+  minPlayers: 35
   stations:
     Gate:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Gate Station {1}'
+          mapNameTemplate: '{0} Станція Гейт {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'ED'
@@ -105,7 +105,7 @@
             Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
             Janitor: [ 2, 2 ]
-            Chaplain: [ 1, 1 ]
+            Chaplain: [ 2, 2 ] #Pirate changes
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
             Zookeeper: [ 1, 1 ]

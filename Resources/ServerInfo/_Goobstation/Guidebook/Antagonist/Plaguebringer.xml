@@ -1,66 +1,66 @@
 <Document>
-  # Plaguebringer
+  # Чумотворець
   <Box>
     <GuideEntityEmbed Entity="MobWraithPlague" Caption=""/>
   </Box>
 
-  The Plaguebringer is a path focused around curses, diseases and filth. Most of your abilities involve applying debuffs to one of those clueless crewmembers, and then, once the time is right and their soul is ripe, collecting your dues.
+  Чумотворець — шлях, зосереджений на прокляттях, хворобах і багнюці. Більшість твоїх умінь накладають дебафи на когось із безпечних членів екіпажу, а потім, коли час настане і їхня душа достигне, ти збираєш свій урожай.
 
-  # Curses
+  # Прокляття
 
-  The Plaguebringer has access to four base curses, with one, final curse to rule them all.
+  Чумотворець має доступ до чотирьох базових проклять і одного фінального — завершального.
 
-  ## Blindness
+  ## Сліпота
 
-  - Slowly damages the eyesight of the afflicted until they are rendered fully blind.
+  - Поступово погіршує зір жертви, доки вона не осліпне повністю.
 
-  ## Blood
+  ## Кров
 
-  - Causes them to cough blood, sometimes a little, sometimes a lot. Mostly just an annoyance, but can get serious if left untreated.
-  - In an ideal world, this would also apply Hemophilia to the target, which makes them bleed for longer. However, that is not yet implemented.
+  - Змушує кашляти кров’ю — інколи трохи, інколи дуже багато. Переважно просто набридає, але без лікування може стати серйозним.
+  - В ідеальному світі це також накладало б гемофілію, через що кровотечі тривали б довше. Однак це ще не реалізовано.
 
-  ## Enfeeblement
+  ## Ослаблення
 
-  - This one has several effects, such as draining the stamina of the afflicted, or making them drowsy and forcing them into a sudden nap.
+  - Має кілька ефектів, зокрема виснажує витривалість жертви або присипляє, змушуючи раптово задрімати.
 
-  ## Rot
+  ## Гниль
 
-  - Causes the afflicted to randomly puke and cough all over the place. Great for spreading disease.
-  - Prevents them from eating at all. Combined with the fact that they are slowly puking out all the contents of their stomach, this will eventually leave them starving, unable to do anything about it.
+  - Змушує жертву навмання блювати й кашляти всюди. Чудово для поширення хвороб.
+  - Не дозволяє їм взагалі їсти. У поєднанні з тим, що вони поволі вивергають увесь вміст шлунка, це зрештою залишить їх голодними, без змоги щось із цим зробити.
 
-  ## Death
+  ## Смерть
 
-  - The final of the curses. Can only be applied once all four other curses have been applied on the same person.
-  - Once applied, the target will have less than a minute to live. They will hear a dreadful song signifying that their end is near.
-  - During that time, they will begin to experience several effects, such as falling to the ground or shaking.
-  - This curse deals damage that ramps up over time. It starts small, but quickly enough, becomes so deadly that no medicine in the world can help them survive it.
-  - Once they die, their corpse will gib, and you will permanently gain increased WP regeneration. This will count as if you had absorbed their corpse.
+  - Фінальне з проклять. Можна накласти лише після застосування всіх чотирьох інших на цю саму людину.
+  - Після накладання в цілі буде менше хвилини життя. Вона почує моторошну мелодію, що сповіщає про близький кінець.
+  - У цей час вони почнуть відчувати кілька ефектів, як-от падіння на підлогу або тремтіння.
+  - Це прокляття завдає шкоди, що наростає з часом. Починається слабо, але досить швидко стає настільки смертельним, що жодні ліки не допоможуть вижити.
+  - Коли вони помруть, їхнє тіло розірве на шматки, і ти назавжди отримаєш підвищену регенерацію WP. Це рахується так, ніби ти поглинув їхній труп.
 
-  Do note that if one curse is used, all other curses will go on cooldown. So there is a limit to how quickly you can reap someone's soul.
-  Also, important to mention, the Chaplain can [color=red]purge all of your curses with their bible by using it on the afflicted[/color], so don't expect this to be easy.
+  Зверни увагу: якщо використано одне прокляття, усі інші переходять на перезарядження. Тож є межа тому, як швидко ти можеш пожинати чиюсь душу.
+  Також важливо: капелан може [color=red]очистити всі твої прокляття своєю біблією, використавши її на жертві[/color], тож не розраховуй на легку прогулянку.
 
-  ## Defile
+  ## Осквернення
 
-  This serves to fill up either some sort of drink, or to contaminate food with a chemical of your choosing (It's always poison). First, use the action on yourself to pick the reagent, then use it again on the food/drink to defile it.
+  Слугує, щоб наповнити напій або забруднити їжу вибраним реагентом (це завжди отрута). Спочатку застосуй дію на себе, щоб обрати реагент, потім ще раз — на їжу/напій, щоб осквернити його.
 
-  ## Summon Plague Rat
+  ## Призвати чумного щура
 
-  Creates a diseased rat on your position, a ghost role that can be taken over by someone else. The diseased rat can eat trash to grow into a larger form of itself, gaining new abilities in the process. It starts very weak, but once fully grown, can prove to be a real pain.
+  Створює хворобливого щура у твоїй позиції — роль-привид, яку може взяти хтось інший. Чумний щур може їсти сміття, щоб вирости у більшу форму, здобуваючи нові уміння. Спочатку він дуже слабкий, але, повністю вирісши, може добряче допекти.
 
-  ## Create Rot Hulk
+  ## Створити гнильного громилу
 
-  Uses nearby filth to summon a mass of filth and decay that attacks nearby crew and explodes on death. Try using this action at disposals, or near large amounts of trash if you can find something of the sort.
-  If you manage to find a pile of more than 30 pieces of trash, it will spawn a much stronger version of the rot hulk.
+  Використовує навколишню багнюку, щоб призвати масу гнилі та розпаду, яка атакує екіпаж і вибухає при смерті. Спробуй застосовувати цю дію біля утилізації або поруч із великими купами сміття.
+  Якщо вдасться знайти купу більш ніж із 30 одиниць сміття, з’явиться значно сильніша версія гнильного громили.
 
-  # Sick! But how do I do better as this?
+  # Огидно! Як стати кращим у цій еволюції?
 
-  ## General tips
+  ## Загальні поради
 
-  It takes some time for you to apply all four curses on someone. And even more so, they still have another full minute before the death curse does them in. Try to use your curses on targets that are far away from the chaplain, to reduce the chances of them wasting all of your effort.
+  Накласти всі чотири прокляття на когось займає час. А потім у них ще є ціла хвилина, перш ніж «Смерть» їх доконає. Намагайся використовувати прокляття на цілях, що далеко від капелана, щоб зменшити шанси, що він знищить усі твої старання.
   
-  Use actions such as Possess object or Spook to create more trash by breaking windows or lightbulbs. This will allow you to summon stronger rot hulks, and can even help diseased rats to evolve faster.
+  Використовуй дії на кшталт Possess object або Spook, щоб створювати більше сміття, розбиваючи вікна чи лампочки. Це дозволить призивати сильніших гнильних громил і допоможе чумним щурам швидше еволюціонувати.
   
-  Defile leaves a very distinct taste in the mouth of whoever eats the contaminated food. You can use this to frame the chef or the bartender for trying to poison someone.
+  Осквернення лишає дуже виразний присмак у роті того, хто з’їв забруднену їжу. Можеш використати це, щоб підставити кухаря або бармена — нібито вони намагалися когось отруїти.
 
-  [textlink="Back to Wraith Evolutions" link="Wraiths"]
+  [textlink="Назад до еволюцій Примари" link="Wraiths"]
 </Document>

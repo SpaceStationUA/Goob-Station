@@ -55,6 +55,8 @@
       params:
         volume: -5
   # Goobstation edit end
+    equipDelay: 0.5 # Pirate clothingDelay
+    unequipDelay: 0.3 # Pirate clothingDelay
   - type: Sprite
     state: icon
   - type: Item

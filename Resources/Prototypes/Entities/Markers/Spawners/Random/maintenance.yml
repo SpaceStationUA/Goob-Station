@@ -193,6 +193,8 @@
       - id: ClothingHeadHatBeret
       - id: ClothingHeadHatBowlerHat
       - id: ClothingHeadHatFedoraBrown
+      - id: Balaclava # Pirate
+      - id: GreenBalaclava # Pirate
         weight: 0.5
       - id: ClothingHeadHatFedoraGrey
         weight: 0.5
@@ -311,6 +313,7 @@
       children:
       - id: Skub
       - id: PonderingOrb
+      - id: PhotoCameraFilled # Pirate: camera
       - id: CluwneHorn
       - id: DrinkMugDog
       - id: CigarGold
@@ -321,6 +324,7 @@
       - id: FoodSnackLollypopWrappedMysteryEvil # Goobstation - Lollypops!
       - id: MysteryLighterBox
       - id: GoldenPersonalAI
+      - id: SkullBalaclava # Pirate
 
 - type: entity
   name: Maint Loot Spawner
@@ -510,6 +514,7 @@
         - id: Gauze1
       - id: Bola
       - id: SurvivalKnife
+      - id: Katana # Pirate: katana
       - id: ScalpelShiv
       - id: Shiv
       - id: SawImprov

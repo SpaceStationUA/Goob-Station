@@ -23,6 +23,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Robust.Client.Player; // Pirate ckey for restricted players
 
 namespace Content.Client.Humanoid;
 
@@ -32,6 +33,7 @@ public sealed partial class MarkingPicker : Control
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!; // Pirate ckey for restricted players
 
     private readonly SpriteSystem _sprite;
 
@@ -216,9 +218,10 @@ public sealed partial class MarkingPicker : Control
 
     private IReadOnlyDictionary<string, MarkingPrototype> GetMarkings(MarkingCategories category)
     {
+        var ckey = _playerManager.LocalSession?.Name; // Pirate ckey for restricted players
         return IgnoreSpecies
-            ? _markingManager.MarkingsByCategoryAndSex(category, _currentSex)
-            : _markingManager.MarkingsByCategoryAndSpeciesAndSex(category, _currentSpecies, _currentSex);
+            ? _markingManager.MarkingsByCategoryAndSex(category, _currentSex, ckey) // Pirate ckey for restricted players
+            : _markingManager.MarkingsByCategoryAndSpeciesAndSex(category, _currentSpecies, _currentSex, ckey); // Pirate ckey for restricted players
     }
 
     public void Populate(string filter)
@@ -420,12 +423,35 @@ public sealed partial class MarkingPicker : Control
         List<ColorSelectorSliders> colorSliders = new();
         for (int i = 0; i < prototype.Sprites.Count; i++)
         {
+            // Pirate start - port Floofstation custom layers
+            var skipDraw = false;
+            if (prototype.ColorLinks?.Count > 0)
+            {
+                var name = prototype.Sprites[i] switch
+                {
+                    SpriteSpecifier.Rsi rsi => rsi.RsiState,
+                    SpriteSpecifier.Texture texture => texture.TexturePath.Filename,
+                    _ => null
+                };
+
+                if (name != null && prototype.ColorLinks.ContainsKey(name))
+                {
+                    skipDraw = true;
+                }
+            }
+            // Pirate end - port Floofstation custom layers
+            
             var colorContainer = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical,
             };
 
-            CMarkingColors.AddChild(colorContainer);
+            // Pirate start - port Floofstation custom layers
+            if (!skipDraw) 
+            {
+                CMarkingColors.AddChild(colorContainer);
+            }
+            // Pirate end - port Floofstation custom layers
 
             ColorSelectorSliders colorSelector = new ColorSelectorSliders();
             colorSelector.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv; // defaults color selector to HSV

@@ -28,11 +28,13 @@ public sealed class FaxUiState : BoundUserInterfaceState
     public bool IsPaperInserted { get; }
     public bool CanSend { get; }
     public bool CanCopy { get; }
+    public bool CanPrintFile { get; } // Pirate: camera
 
     public FaxUiState(string deviceName,
         Dictionary<string, string> peers,
         bool canSend,
         bool canCopy,
+        bool canPrintFile, // Pirate: camera
         bool isPaperInserted,
         string? destAddress)
     {
@@ -41,6 +43,7 @@ public sealed class FaxUiState : BoundUserInterfaceState
         IsPaperInserted = isPaperInserted;
         CanSend = canSend;
         CanCopy = canCopy;
+        CanPrintFile = canPrintFile; // Pirate: camera
         DestinationAddress = destAddress;
     }
 }

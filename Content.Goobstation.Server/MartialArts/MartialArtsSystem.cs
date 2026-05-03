@@ -36,10 +36,24 @@ public sealed class MartialArtsSystem : SharedMartialArtsSystem
     }
 
     private void OnPolymorphedCPC(Entity<CanPerformComboComponent> ent, ref PolymorphedEvent args)
-        => _polymorph.CopyPolymorphComponent<CanPerformComboComponent>(ent, args.NewEntity);
+    {
+        if (args.IsRevert && HasComp<MartialArtsKnowledgeComponent>(ent.Owner))
+            return;
+
+        _polymorph.CopyPolymorphComponent<CanPerformComboComponent>(ent, args.NewEntity);
+    }
 
     private void OnPolymorphedMAK(Entity<MartialArtsKnowledgeComponent> ent, ref PolymorphedEvent args)
-        => _polymorph.CopyPolymorphComponent<MartialArtsKnowledgeComponent>(ent, args.NewEntity);
+    {
+        _polymorph.CopyPolymorphComponent<MartialArtsKnowledgeComponent>(ent, args.NewEntity);
+
+        if (!args.IsRevert || !HasComp<CanPerformComboComponent>(ent.Owner))
+            return;
+
+        // Pirate: overwrite knowledge before combo state so martial-art shutdown cleanup
+        // cannot wipe the freshly copied combo list on the reverted body.
+        _polymorph.CopyPolymorphComponent<CanPerformComboComponent>(ent.Owner, args.NewEntity);
+    }
 
     private void OnSleepingCarpSaying(Entity<CanPerformComboComponent> ent, ref SleepingCarpSaying args)
     {

@@ -31,7 +31,7 @@
 
 - type: gameMap
   id: Saltern
-  mapName: 'Saltern'
+  mapName: 'Салтерн'
   mapPath: /Maps/_Goobstation/saltern.yml # Goobstation - use custom saltern
   minPlayers: 0
   maxPlayers: 35
@@ -41,7 +41,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Saltern {1}'
+          mapNameTemplate: '{0} Салтерн {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
@@ -59,7 +59,7 @@
             Botanist: [ 1, 2 ]
             Chef: [ 1, 1 ]
             Janitor: [ 1, 1 ]
-            Chaplain: [ 1, 1 ]
+            Chaplain: [ 2, 2 ] #Pirate changes
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
             #engineering

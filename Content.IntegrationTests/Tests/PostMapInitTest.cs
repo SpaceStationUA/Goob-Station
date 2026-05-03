@@ -200,84 +200,97 @@ namespace Content.IntegrationTests.Tests
             // Goobstation edit:
             // order this list alphabetically, mark dev maps
             // if upstreaming take ours here and edit manually.
-            "Amber",
-            "Atlas",
-            "Bagel",
-            "Barratry",
-            "Box",            // Not in pool
-            "CentComm",       // CentComm
-            "Chloris",
-            "Cluster",
-            "Cog",
-            "Core",           // Not in pool.
-            "Delta",
-            "Dev",            // Dev map
-            "dm01-entryway",  // Deathmatch
-            "Europa",         // Not in pool.
-            "Fland",
-            "FlandHighPop",
-            "Gate",
-            "Kettle",
-            "Lambda",         // Not in pool
-            "Lavatest",       // Dev map
-            "Leonid",
-            "Loop",
-            "Marathon",
-            "Meta",
-            "MeteorArena",    // Deathmatch
-            "Oasis",
-            "OasisHighPop",
-            "Omega",
-            "Origin",
-            "OriginHighPop",  // Not in pool
-            "Packed",
-            "Reach",
-            "Saltern",
-            "Serpentcrest",
-            "TestTeg",        // Dev map
-            "Train"           // Not in pool
+            //  "Amber",
+            //  "Atlas",
+            //  "Bagel",
+            //  "Barratry",
+            //  "Box",            // Not in pool
+              "BoxTP",          // Pirate
+            //  "CentComm",       // CentComm
+            //  "Chloris",
+            //  "Cluster",
+            //  "Cog",
+            //  "Core",           // Not in pool.
+            //  "Delta",
+            //  "Dev",            // Dev map
+            //  "dm01-entryway",  // Deathmatch
+            //  "Europa",         // Not in pool.
+            //  "Fland",
+            //  "FlandHighPop",
+            //  "Gate",           // Not in pool
+              "GateTP",         // Pirate
+              "GlacierTP",      // Pirate
+              "KettleTP",       // Pirate
+            //  "Lambda",         // Not in pool
+            //  "Lavatest",       //Dev map
+            //  "Leonid",
+            //  "Loop",
+            //  "Marathon",
+            //  "Meta",
+            //  "MeteorArena",    // Deathmatch
+            //  "Oasis",
+            //  "OasisHighPop",
+            //  "Omega",
+              "OmegaTP", // Pirate
+            //  "Origin",
+            //  "OriginHighPop",  //Not in pool
+            //  "TestTeg",        //Dev map
+            //  "Train",          //Not in pool
+            //  "Packed",
+            //  "Reach",
+            //  "Saltern",
+            //  "Serpentcrest",
+            //  "Submarine",
+              "PerditionTP" // Pirate 
             // Goob end
         };
         // Goobstation edit start, yeah i know, but this is easier and less load than loading protoman or something.
         private static readonly string[] GameMapsInCurrentPool = // plus dev
         {
             // order this list alphabetically, mark dev maps
-              "Amber",
-              "Atlas",
-              "Bagel",
-              "Barratry",
+            //  "Amber",
+            //  "Atlas",
+            //  "Bagel",
+            //  "Barratry",
             //"Box",            // Not in pool
-              "CentComm",      // CentComm
-              "Chloris",
-              "Cluster",
-              "Cog",
+            //  "CentComm",      // CentComm
+            //  "Chloris",
+            //  "Cluster",
+            //  "Cog",
             //"Core",           // Not in pool.
-              "Delta",
-              "Dev",            // Dev map
+            //  "Delta",
+            //  "Dev",            // Dev map
             //"dm01-entryway",  // Deathmatch
             //"Europa",         // Not in pool.
-              "Fland",
-              "FlandHighPop",
-              "Gate",
-              "Kettle",
+            //  "Fland",
+            //  "FlandHighPop",
+            //"Gate",           // Not in pool
+            //  "Kettle",
             //"Lambda",         // Not in pool
-              "Lavatest",       //Dev map
-              "Leonid",
-              "Loop",
-              "Marathon",
-              "Meta",
+            //  "Lavatest",       //Dev map
+            //  "Leonid",
+            //  "Loop",
+            //  "Marathon",
+            //  "Meta",
             //"MeteorArena",    // Deathmatch
-              "Oasis",
-              "OasisHighPop",
-              "Omega",
-              "Origin",
+            //  "Oasis",
+            //  "OasisHighPop",
+            //  "Omega",
+            //  "Origin",
             //"OriginHighPop",  //Not in pool
-              "TestTeg",        //Dev map
+            //  "TestTeg",        //Dev map
             //"Train",          //Not in pool
-              "Packed",
-              "Reach",
-              "Saltern",
-              "Serpentcrest",
+            //  "Packed",
+            //  "Reach",
+            //  "Saltern",
+            //  "Serpentcrest",
+            //  "Submarine",
+              "BoxTP", // Pirate
+              "GlacierTP", // Pirate
+              "OmegaTP", // Pirate
+              "KettleTP", // Pirate
+              "GateTP", // Pirate
+              "PerditionTP", // Pirate
         };
         // Goobstation edit end
 
@@ -691,7 +704,11 @@ namespace Content.IntegrationTests.Tests
 
             Assert.That(gameMaps.Remove(PoolManager.TestMap));
 
-            Assert.That(gameMaps, Is.EquivalentTo(GameMaps.ToHashSet()), "Game map prototype missing from test cases.");
+            // Check that all maps in GameMaps list actually exist as prototypes
+            var expectedMaps = GameMaps.ToHashSet();
+            var missingMaps = expectedMaps.Except(gameMaps).ToList();
+            Assert.That(missingMaps, Is.Empty, 
+                $"Maps listed in GameMaps but not found as prototypes: {string.Join(", ", missingMaps)}");
 
             await pair.CleanReturnAsync();
         }

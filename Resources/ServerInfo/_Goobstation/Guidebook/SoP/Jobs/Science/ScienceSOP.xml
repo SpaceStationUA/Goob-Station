@@ -6,17 +6,17 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-# Science Department SOP
-These are the list of SOPs that Science Personnel should follow. These are, as stated before, [bold]not checklists[/bold] and should be treated as guidelines.
+# СОП Наукового Відділу
+Нижче наведено перелік СОП, яких має дотримуватися науковий персонал. Як і зазначено раніше, це [bold]не чеклісти[/bold], а настанови.
 
-<Box>For clarification, Roboticist can extend to any Science personnel working on Robots.</Box>
+<Box>Для уточнення: роль Робототехніка може застосовуватися до будь-якого співробітника науки, який працює з роботами.</Box>
 
-It is expected that [color=#cc74fc]Research Assistant[/color] and [color=#cc74fc]Scientist[/color] coincide in the same SOP guidelines.
+Очікується, що [color=#cc74fc]Науковий Асистент[/color] та [color=#cc74fc]Вчений[/color] дотримуються однакових настанов СОП.
 
-The following jobs have entries in this Department, the [color=#1b67a5][bold]Research Director[/bold][/color] being the Head of Staff:
-- [textlink="Research Director" link="ResearchDirectorSOP"]
-- [textlink="Roboticist" link="RoboticistSOP"]
-- [textlink="Scientist" link="ScientistSOP"]
-- [textlink="Research Assistant" link="ScientistSOP"]
+Для наступних посад є записи в цьому розділі, а [color=#1b67a5][bold]Науковий Керівник[/bold][/color] є керівником відділу:
+- [textlink="Науковий Керівник" link="ResearchDirectorSOP"]
+- [textlink="Робототехнік" link="RoboticistSOP"]
+- [textlink="Вчений" link="ScientistSOP"]
+- [textlink="Науковий Асистент" link="ScientistSOP"]
 
 </Document>

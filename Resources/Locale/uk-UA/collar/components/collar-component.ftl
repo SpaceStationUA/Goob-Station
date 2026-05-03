@@ -1,0 +1,12 @@
+collar-component-put-on-success = Ви одягаєте нашийник на {$target}.
+collar-component-put-on-observer = {$user} одягає нашийник на {$target}.
+collar-component-remove-success = Ви знімаєте нашийник з {$target}.
+collar-component-remove-observer = { $user } знімає нашийник з { $target }.
+collar-component-already-wearing = {$target} вже носить нашийник!
+collar-component-already-being-used = Нашийник вже використовується!
+collar-component-already-being-removed = Нашийник вже знімається!
+collar-component-not-wearing = {$target} не носить нашийник!
+collar-component-not-leashed = {$target} не на повідку!
+collar-component-already-leashed = {$target} вже на повідку!
+collar-component-click-to-put-on = Клікніть на когось, щоб одягнути нашийник.
+collar-component-click-to-leash = Клікніть на когось з нашийником, щоб взяти на повідок.

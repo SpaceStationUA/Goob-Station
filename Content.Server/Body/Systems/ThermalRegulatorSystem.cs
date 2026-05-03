@@ -13,6 +13,8 @@ using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Mobs; // Pirate port: Mono - Hydrakin
+using Content.Shared.Mobs.Components; // Pirate port: Mono - Hydrakin
 using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems;
@@ -61,6 +63,14 @@ public sealed class ThermalRegulatorSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp2, logMissing: false))
             return;
+
+        // Pirate port start: Mono - Hydrakin
+        if (ent.Comp1.ProcessWhileDead == false && TryComp<MobStateComponent>(ent, out var mobComp1) && mobComp1.CurrentState == MobState.Dead)
+            return;
+
+        if (ent.Comp1.ProcessWhileCrit == false && TryComp<MobStateComponent>(ent, out var mobComp2) && mobComp2.CurrentState == MobState.Critical)
+            return;
+        // Pirate port end: Mono - Hydrakin
 
         // TODO: Why do we have two datafields for this if they are only ever used once here?
         var totalMetabolismTempChange = ent.Comp1.MetabolismHeat - ent.Comp1.RadiatedHeat;

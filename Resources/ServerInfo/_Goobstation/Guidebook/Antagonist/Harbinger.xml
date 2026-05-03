@@ -1,60 +1,59 @@
 <Document>
-  # Harbinger of the Void
+  # Провісник Порожнечі
   <Box>
     <GuideEntityEmbed Entity="MobWraithHarbinger" Caption=""/>
   </Box>
 
-  The Harbinger of the Void focuses on summoning and controlling the dead or otherworldly creatures. As a Harbinger, you summon minions to do the dirty work for you.
-  Your strength comes from the creatures you raise and the chaos they spread, so cry havoc, and let slip the dogs of war.
+  Провісник Порожнечі зосереджується на призиві та контролі мертвих чи потойбічних істот. Як Провісник, ти викликаєш прислужників, щоб вони виконували брудну роботу за тебе.
+  Твоя сила походить від істот, яких ти піднімаєш, і хаосу, що вони сіють, тож розв’язуй лють і випускай псів війни.
 
-  # Summoning
+  # Призив
 
-  Your main tools revolve around summoning minions. These minions range from fragile skeletal servants to terrifying revenants, and they are your primary way to apply pressure to the crew while you remain safe.
+  Твої основні інструменти пов’язані з призовом міньйонів. Вони варіюються від крихких скелетних слуг до страхітливих ревенантів і є твоїм головним способом тиснути на екіпаж, залишаючись у безпеці.
 
-  ## Raise Skeleton
+  ## Підняти скелета
 
-  - Commands a skeleton inside a corpse to detach and join your army.
-  - Only works on fully decomposed corpses, or on closets as a fun alternative. The closet skeleton is even weaker than the already weak raised skeleton. However, both of them pack a punch.
-  - Best used right after absorbing a corpse to maximize your WP gain and your undead workforce.
+  - Наказує скелету всередині тіла відокремитися й приєднатися до твоєї армії.
+  - Працює лише на повністю розкладених трупах або на шафах як кумедна альтернатива. «Шафний» скелет ще слабший за й без того кволого піднятого скелета. Втім обидва можуть завдати відчутної шкоди.
+  - Найкраще використовувати одразу після поглинання трупа, щоб максимізувати приріст WP і поповнити армію нежиті.
 
-  ## Create Void Portal
+  ## Створити портал Порожнечі
 
-  - Opens a summoning circle that periodically spawns in portals from the Void with creatures inside them.
-  - The portals spawn a few tiles away from the circle in random locations.
-  - The summoning circle grows stronger the longer it remains, gaining access to much more powerful creatures.
-  - The circle can only have up to 10 minions at any given time, so it is best used in an area where your minions will frequently be dying, so they can be resummoned.
-  - The ritual circle itself is extremely fragile, don't place it somewhere too obvious.
-  - You can only ever have one active ritual circle.
+  - Відкриває викличне коло, яке періодично породжує портали з Порожнечі з істотами всередині.
+  - Портали з’являються на кілька тайлів далі від кола у випадкових місцях.
+  - Коло стає сильнішим, чим довше існує, отримуючи доступ до значно потужніших істот.
+  - Коло може підтримувати щонайбільше 10 прислужників одночасно, тож найкраще ставити його там, де твої міньйони часто вмирають, щоб їх можна було перевикликати.
+  - Саме ритуальне коло надзвичайно крихке, не розміщуй його надто помітно.
+  - Одночасно ти можеш мати лише одне активне ритуальне коло.
 
-  Power increases slowly over time, starting at 10 points and growing in increments of 5. Timing and placement are key.
-  The ritual circle has the added benefit of increasing your WP regeneration while near it.
+  Потужність повільно зростає з часом, починаючи з 10 очок і збільшуючись кроками по 5. Важливі вчасність і розташування.
+  Перебування поруч із колом додатково підвищує регенерацію WP.
 
-  ## Summon Void Creature
+  ## Призвати істоту Порожнечі
 
-  Lets you summon one of three advanced minions from the Void with unique abilities. The summon will be a fragile cocoon that can be destroyed to prevent them from spawning in, so use this in a hidden place.
+  Дозволяє призвати одного з трьох просунутих прислужників із Порожнечі з унікальними вміннями. Призов створює крихку кокону, яку можна знищити, аби запобігти появі істоти, тож користуйся цим у прихованому місці.
 
-  [textlink="Find out about the skills of each Void summon:" link="VoidSummons"]
+  [textlink="Дізнайся про вміння кожного призову Порожнечі:" link="VoidSummons"]
 
-  The cocoon will be a ghost role, and whoever takes the role will be the one picking which Void creature to become. All of them will be useful to you, each with their own strenghts and weaknessess.
+  Кокона буде роллю-привидом, і той, хто її візьме, обере, якою істотою Порожнечі стати. Усі вони корисні по-своєму, кожна зі своїми сильними та слабкими сторонами.
 
-  ## Raise Revenant
+  ## Підняти ревенанта
 
-  Possess a relatively fresh corpse, taking control of it and gaining extremely powerful abilities and increased WP regeneration.
+  Оволодій відносно свіжим тілом, отримавши контроль над ним, надзвичайно потужні здібності та підвищену регенерацію WP.
 
-  [textlink="The revenant has its own set of skills and mechanics." link="Revenant"]
+  [textlink="Ревенант має власний набір умінь і механік." link="Revenant"]
 
-  ## General tips
+  ## Загальні поради
 
-  ### Your void portal
+  ### Твій портал Порожнечі
 
-  Position your portal wisely. Placing it near high-traffic areas can allow your minions to overwhelm the crew faster.
+  Розміщуй портал мудро. Біля жвавих місць твої прислужники швидше зможуть переповнити екіпаж.
 
-  Your minions are, overall, extremely fragile. They can deal nasty damage to unprepared crew, but even as soon as security gets into the armory, most of them stand no chance. Use your summons to secure more bodies, rather than to try and take over the station.
+  Твої міньйони загалом украй крихкі. Вони можуть завдати дошкульної шкоди непідготовленим, але щойно охорона дістанеться до зброярні, більшість із них не матимуть шансів. Використовуй призови, щоб здобувати більше тіл, а не намагатися захопити станцію.
 
-  Becoming a revenant is extremely expensive, but you'll be an unstopable killing machine during the short duration of your possesion. Amass lots of WP before using it, as activating this skill is already costly on its own.
+  Перетворення на ревенанта надзвичайно дороге, але на короткий час ти станеш нестримною машиною вбивств. Назбирай багато WP перед активацією — сам лише запуск уміння вже коштує дорого.
 
-  Your end goal should always be to use your other skills to amass power to become a revenant.
+  Твоя кінцева мета — використовувати інші вміння, щоб накопичити силу й стати ревенантом.
 
-
-  [textlink="Back to Wraith Evolutions" link="Wraiths"]
+  [textlink="Назад до еволюцій Примари" link="Wraiths"]
 </Document>

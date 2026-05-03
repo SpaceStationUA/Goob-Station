@@ -1,0 +1,27 @@
+bounty-item-extract-any-three = Будь-які три екстракти слайма
+bounty-item-grey-extract = Сірий екстракт слайма
+bounty-item-orange-extract = Помаранчевий екстракт слайма
+bounty-item-purple-extract = Фіолетовий екстракт слайма
+bounty-item-blue-extract = Синій екстракт слайма
+bounty-item-metal-extract = Металевий екстракт слайма
+bounty-item-yellow-extract = Жовтий екстракт слайма
+bounty-item-dark-purple-extract = Темно-фіолетовий екстракт слайма
+bounty-item-dark-blue-extract = Темно-синій екстракт слайма
+bounty-item-silver-extract = Срібний екстракт слайма
+bounty-item-bluespace-extract = Блюспейсовий екстракт слайма
+bounty-item-sepia-extract = Сепієвий екстракт слайма
+bounty-item-cerulean-extract = Церулеановий екстракт слайма
+bounty-item-pyrite-extract = Піритовий екстракт слайма
+bounty-item-red-extract = Червоний екстракт слайма
+bounty-item-green-extract = Зелений екстракт слайма
+bounty-item-pink-extract = Рожевий екстракт слайма
+bounty-item-gold-extract = Золотий екстракт слайма
+bounty-item-oil-extract = Нафтовий екстракт слайма
+bounty-item-light-pink-extract = Світло-рожевий екстракт слайма
+bounty-item-black-extract = Чорний екстракт слайма
+bounty-item-adamantine-extract = Адамантиновий екстракт слайма
+
+bounty-item-extract-any-three-tier1 = Будь-які три екстракти слизу рівня 1
+bounty-item-extract-any-three-tier2 = Будь-які три екстракти слизу рівня 2
+bounty-item-extract-any-three-tier3 = Будь-які три екстракти слизу рівня 3
+bounty-item-extract-any-three-tier4 = Будь-які три екстракти слизу рівня 4

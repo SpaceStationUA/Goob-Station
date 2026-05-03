@@ -68,3 +68,7 @@
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Cloth: 50
+  # Pirate banking start
+  - type: StaticPrice
+    price: 20
+  # Pirate banking end

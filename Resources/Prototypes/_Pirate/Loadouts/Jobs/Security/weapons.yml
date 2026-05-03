@@ -1,0 +1,27 @@
+## Потрібний награний час для отримання зброї
+## Зброя
+- type: loadout
+  id: LoadoutSecurityWeaponMk58
+  dummyEntity: WeaponPistolMk58
+  storage:
+    back:
+    - WeaponPistolMk58
+    - MagazinePistol
+
+- type: loadout
+  id: LoadoutSecurityEnergyGunPistol
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorOfficer
+  storage:
+    back:
+    - WeaponEnergyGunPistolSecurity
+
+# Зброя старшого офіцера
+- type: loadout
+  id: LoadoutSecurityPistolUniversal
+  dummyEntity: WeaponPistolUniversalSecurity
+  storage:
+    back:
+    - WeaponPistolUniversalSecurity
+    - MagazineUniversalMagnum

@@ -6,12 +6,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-# Cargo Department SOP
-These are the list of SOPs that Cargo Personnel should follow. These are, as stated before, [bold]not checklists[/bold] and should be treated as guidelines.
+# СОП Відділу Постачання
+Нижче наведено перелік СОП, яких має дотримуватися персонал відділу постачання. Як і зазначено раніше, це [bold]не чеклісти[/bold], а настанови.
 
-The following jobs have entries in this Department, the [color=#1b67a5][bold]Quartermaster[/bold][/color] being the Head of Staff:
-- [textlink="Quartermaster" link="QuartermasterSOP"]
-- [textlink="Cargo Technician" link="CargoTechSOP"]
-- [textlink="Salvage Specialist" link="SalvageSpecialistSOP"]
+Для наступних посад є записи в цьому розділі, а [color=#1b67a5][bold]Квартирмейстер[/bold][/color] є керівником відділу:
+- [textlink="Квартирмейстер" link="QuartermasterSOP"]
+- [textlink="Вантажний Технік" link="CargoTechSOP"]
+- [textlink="Спеціаліст із Пошуку" link="SalvageSpecialistSOP"]
 
 </Document>

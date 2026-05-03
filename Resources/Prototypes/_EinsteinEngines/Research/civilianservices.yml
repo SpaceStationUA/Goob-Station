@@ -26,7 +26,7 @@
   - ValyrianStandardTranslator
   - ChittinTranslator
   - SiikMaasTranslator
-  - MarishTranslator
+  #- MarishTranslator Pirate removed
   - ChevalTranslatorImplanter
   - NewKinPidginTranslator
   - SchechiTranslator
@@ -58,7 +58,7 @@
   - ValyrianStandardTranslatorImplanter
   - ChittinTranslatorImplanter
   - SiikMaasTranslatorImplanter
-  - MarishTranslatorImplanter
+  #- MarishTranslatorImplanter Pirate removed
   - SchechiTranslatorImplanter
   - NewKinPidginTranslatorImplanter
   - AnimalTranslator

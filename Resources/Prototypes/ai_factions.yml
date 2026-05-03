@@ -121,6 +121,18 @@
   id: SimpleNeutral
 
 - type: npcFaction
+  id: Goblin
+  hostile:
+  - SimpleHostile
+  - Zombie
+  - Xeno
+  - Dragon
+  - Syndicate
+  - AllHostile
+  friendly:
+  - NanoTrasen
+
+- type: npcFaction
   id: Syndicate
   hostile:
   - NanoTrasen
@@ -222,10 +234,10 @@
   - Lavafauna # Goob - Lavaland
 
 # Balloons Factions Edit:
-- type: npcFaction  
+- type: npcFaction
   id: Balloon
   # Balloons can't attack
-  
+
 - type: npcFaction
   id: Monkey
   hostile:
@@ -247,7 +259,7 @@
   - Xeno # rivalry
 
   # cause they are hostile to them
-  - SimpleHostile 
+  - SimpleHostile
   - AllHostile
   - Blob # Goobstation - Blob
   - Shadowling # Einstein Engines - Shadowlings

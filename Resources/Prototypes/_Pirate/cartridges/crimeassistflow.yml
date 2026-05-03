@@ -1,0 +1,547 @@
+- type: crimeAssistPage
+  id: "mainmenu"
+  locKey: "crime-assist-main-menu"
+  onStart: "crime-assist-q-category-person"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-category-person"
+  locKey: "crime-assist-q-category-person"
+  onYes: "crime-assist-q-harmperson-death"
+  onNo: "crime-assist-q-category-property"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-category-property"
+  locKey: "crime-assist-q-category-property"
+  onYes: "crime-assist-q-property-intent"
+  onNo: "crime-assist-q-category-theft"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-category-theft"
+  locKey: "crime-assist-q-category-theft"
+  onYes: "crime-assist-q-theft-itemtype-strategic-transport"
+  onNo: "crime-assist-q-category-possession"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-category-possession"
+  locKey: "crime-assist-q-category-possession"
+  onYes: "crime-assist-q-possession-itemtype-contraband-s"
+  onNo: "crime-assist-q-category-authority"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-category-authority"
+  locKey: "crime-assist-q-category-authority"
+  onYes: "crime-assist-q-authority-mutiny"
+  onNo: "resultInnocent"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-harmperson-death"
+  locKey: "crime-assist-q-harmperson-death"
+  onYes: "crime-assist-q-death-intentional"
+  onNo: "crime-assist-q-harmperson-kidnapping"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-death-intentional"
+  locKey: "crime-assist-q-death-intentional"
+  onYes: "resultLaw502"
+  onNo: "crime-assist-q-death-attempt"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-death-attempt"
+  locKey: "crime-assist-q-death-attempt"
+  onYes: "resultLaw402"
+  onNo: "crime-assist-q-death-grossnegligence"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-death-grossnegligence"
+  locKey: "crime-assist-q-death-grossnegligence"
+  onYes: "resultLaw405"
+  onNo: "resultError" # Видалено гілки про смерть внаслідок нападу/простої недбалості, бо їх немає в новому КЗ
+
+- type: crimeAssistPage
+  id: "crime-assist-q-harmperson-kidnapping"
+  locKey: "crime-assist-q-harmperson-kidnapping"
+  onYes: "crime-assist-q-kidnap-victimtype"
+  onNo: "crime-assist-q-harmperson-assault"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-kidnap-victimtype"
+  locKey: "crime-assist-q-kidnap-victimtype"
+  onYes: "resultLaw401"
+  onNo: "resultLaw301"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-harmperson-assault"
+  locKey: "crime-assist-q-harmperson-assault"
+  onYes: "crime-assist-q-assault-victimtype"
+  onNo: "crime-assist-q-harmperson-harassment"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-assault-victimtype"
+  locKey: "crime-assist-q-assault-victimtype"
+  onYes: "resultLaw302"
+  onNo: "resultLaw202"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-harmperson-harassment"
+  locKey: "crime-assist-q-harmperson-harassment"
+  onYes: "resultLaw201"
+  onNo: "crime-assist-q-harmperson-brawl"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-harmperson-brawl"
+  locKey: "crime-assist-q-harmperson-brawl"
+  onYes: "resultLaw102"
+  onNo: "resultError"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-property-intent"
+  locKey: "crime-assist-q-property-intent"
+  onYes: "crime-assist-q-property-terrorism"
+  onNo: "crime-assist-q-property-creatingdanger"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-property-terrorism"
+  locKey: "crime-assist-q-property-terrorism"
+  onYes: "resultLaw500"
+  onNo: "crime-assist-q-property-sabotagescale"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-property-sabotagescale"
+  locKey: "crime-assist-q-property-sabotagescale"
+  onYes: "resultLaw400"
+  onNo: "resultLaw300"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-property-creatingdanger"
+  locKey: "crime-assist-q-property-creatingdanger"
+  onYes: "resultLaw200"
+  onNo: "crime-assist-q-property-vandalism"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-property-vandalism"
+  locKey: "crime-assist-q-property-vandalism"
+  onYes: "resultLaw100"
+  onNo: "crime-assist-q-property-equipmisuse"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-property-equipmisuse"
+  locKey: "crime-assist-q-property-equipmisuse"
+  onYes: "resultLaw104" # Змінено з 106 на 104
+  onNo: "resultError"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-theft-itemtype-strategic-transport"
+  locKey: "crime-assist-q-theft-itemtype-strategic-transport"
+  onYes: "resultLaw507" # Змінено з 508 на 507
+  onNo: "crime-assist-q-theft-itemtype-nuclear-docs"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-theft-itemtype-nuclear-docs"
+  locKey: "crime-assist-q-theft-itemtype-nuclear-docs"
+  onYes: "resultLaw506" # Змінено з 507 на 506
+  onNo: "crime-assist-q-theft-itemtype-other-transport"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-theft-itemtype-other-transport"
+  locKey: "crime-assist-q-theft-itemtype-other-transport"
+  onYes: "resultLaw407" # Змінено з 408 на 407
+  onNo: "crime-assist-q-theft-itemtype-high-value"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-theft-itemtype-high-value"
+  locKey: "crime-assist-q-theft-itemtype-high-value"
+  onYes: "resultLaw406" # Змінено з 407 на 406
+  onNo: "crime-assist-q-theft-itemtype-restricted"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-theft-itemtype-restricted"
+  locKey: "crime-assist-q-theft-itemtype-restricted"
+  onYes: "resultLaw306" # Змінено з 307 на 306
+  onNo: "crime-assist-q-theft-itemtype-robbery"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-theft-itemtype-robbery"
+  locKey: "crime-assist-q-theft-itemtype-robbery"
+  onYes: "resultLaw206" # Змінено з 207 на 206
+  onNo: "crime-assist-q-theft-itemtype-minor"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-theft-itemtype-minor"
+  locKey: "crime-assist-q-theft-itemtype-minor"
+  onYes: "resultLaw106" # Змінено з 107 на 106
+  onNo: "resultError"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-possession-itemtype-contraband-s"
+  locKey: "crime-assist-q-possession-itemtype-contraband-s"
+  onYes: "resultLaw503" # Змінено з 506 на 503
+  onNo: "crime-assist-q-possession-itemtype-contraband-a"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-possession-itemtype-contraband-a"
+  locKey: "crime-assist-q-possession-itemtype-contraband-a"
+  onYes: "resultLaw303" # Змінено з 406 на 303
+  onNo: "crime-assist-q-possession-itemtype-weapon" # Пропускаємо Контрабанду C
+
+- type: crimeAssistPage
+  id: "crime-assist-q-possession-itemtype-weapon"
+  locKey: "crime-assist-q-possession-itemtype-weapon"
+  onYes: "crime-assist-q-possession-distrib-wpn"
+  onNo: "crime-assist-q-possession-itemtype-pyrotox"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-possession-distrib-wpn"
+  locKey: "crime-assist-q-possession-distrib-wpn"
+  onYes: "resultLaw404"
+  onNo: "resultLaw304"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-possession-itemtype-pyrotox"
+  locKey: "crime-assist-q-possession-itemtype-pyrotox"
+  onYes: "resultLaw403" # Об'єднано (було 303/403)
+  onNo: "crime-assist-q-possession-itemtype-coldweapon" # Пропускаємо distrib-tox
+
+- type: crimeAssistPage
+  id: "crime-assist-q-possession-itemtype-coldweapon"
+  locKey: "crime-assist-q-possession-itemtype-coldweapon"
+  onYes: "resultLaw204"
+  onNo: "crime-assist-q-possession-itemtype-drug"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-possession-itemtype-drug"
+  locKey: "crime-assist-q-possession-itemtype-drug"
+  onYes: "crime-assist-q-possession-distrib-drug"
+  onNo: "crime-assist-q-possession-itemtype-confiscated" # Пропускаємо selfdef
+
+- type: crimeAssistPage
+  id: "crime-assist-q-possession-distrib-drug"
+  locKey: "crime-assist-q-possession-distrib-drug"
+  onYes: "resultLaw203"
+  onNo: "resultLaw103"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-possession-itemtype-confiscated"
+  locKey: "crime-assist-q-possession-itemtype-confiscated"
+  onYes: "resultLaw104" # Змінено з 206 на 104
+  onNo: "resultError"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-authority-mutiny"
+  locKey: "crime-assist-q-authority-mutiny"
+  onYes: "resultLaw505"
+  onNo: "crime-assist-q-authority-trespass"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-authority-trespass"
+  locKey: "crime-assist-q-authority-trespass"
+  onYes: "crime-assist-q-authority-trespasslevel-secured"
+  onNo: "crime-assist-q-authority-riot"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-authority-trespasslevel-secured"
+  locKey: "crime-assist-q-authority-trespasslevel-secured"
+  onYes: "resultLaw307" # Змінено з 308 на 307
+  onNo: "crime-assist-q-authority-trespasslevel-brokeninto"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-authority-trespasslevel-brokeninto"
+  locKey: "crime-assist-q-authority-trespasslevel-brokeninto"
+  onYes: "resultLaw207" # Змінено з 208 на 207
+  onNo: "crime-assist-q-authority-trespasslevel-general"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-authority-trespasslevel-general"
+  locKey: "crime-assist-q-authority-trespasslevel-general"
+  onYes: "resultLaw107" # Змінено з 108 на 107
+  onNo: "resultError"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-authority-riot"
+  locKey: "crime-assist-q-authority-riot"
+  onYes: "resultLaw305"
+  onNo: "crime-assist-q-authority-hooliganism"
+
+- type: crimeAssistPage
+  id: "crime-assist-q-authority-hooliganism"
+  locKey: "crime-assist-q-authority-hooliganism"
+  onYes: "resultLaw105"
+  onNo: "resultError"
+
+# --- СТАТТІ 1XX ---
+- type: crimeAssistPage
+  id: "resultLaw100"
+  locKeyTitle: "crime-assist-title-100"
+  locKeyDescription: "crime-assist-desc-100"
+  locKeySeverity: "crime-assist-severity-light"
+  locKeyPunishment: "crime-assist-punish-100"
+
+- type: crimeAssistPage
+  id: "resultLaw102"
+  locKeyTitle: "crime-assist-title-102"
+  locKeyDescription: "crime-assist-desc-102"
+  locKeySeverity: "crime-assist-severity-light"
+  locKeyPunishment: "crime-assist-punish-102"
+
+- type: crimeAssistPage
+  id: "resultLaw103"
+  locKeyTitle: "crime-assist-title-103"
+  locKeyDescription: "crime-assist-desc-103"
+  locKeySeverity: "crime-assist-severity-light"
+  locKeyPunishment: "crime-assist-punish-103"
+
+- type: crimeAssistPage
+  id: "resultLaw104"
+  locKeyTitle: "crime-assist-title-104"
+  locKeyDescription: "crime-assist-desc-104"
+  locKeySeverity: "crime-assist-severity-light"
+  locKeyPunishment: "crime-assist-punish-104"
+
+- type: crimeAssistPage
+  id: "resultLaw105"
+  locKeyTitle: "crime-assist-title-105"
+  locKeyDescription: "crime-assist-desc-105"
+  locKeySeverity: "crime-assist-severity-light"
+  locKeyPunishment: "crime-assist-punish-105"
+
+- type: crimeAssistPage
+  id: "resultLaw106"
+  locKeyTitle: "crime-assist-title-106"
+  locKeyDescription: "crime-assist-desc-106"
+  locKeySeverity: "crime-assist-severity-light"
+  locKeyPunishment: "crime-assist-punish-106"
+
+- type: crimeAssistPage
+  id: "resultLaw107"
+  locKeyTitle: "crime-assist-title-107"
+  locKeyDescription: "crime-assist-desc-107"
+  locKeySeverity: "crime-assist-severity-light"
+  locKeyPunishment: "crime-assist-punish-107"
+
+# --- СТАТТІ 2XX ---
+- type: crimeAssistPage
+  id: "resultLaw200"
+  locKeyTitle: "crime-assist-title-200"
+  locKeyDescription: "crime-assist-desc-200"
+  locKeySeverity: "crime-assist-severity-medium"
+  locKeyPunishment: "crime-assist-punish-200"
+
+- type: crimeAssistPage
+  id: "resultLaw201"
+  locKeyTitle: "crime-assist-title-201"
+  locKeyDescription: "crime-assist-desc-201"
+  locKeySeverity: "crime-assist-severity-medium"
+  locKeyPunishment: "crime-assist-punish-201"
+
+- type: crimeAssistPage
+  id: "resultLaw202"
+  locKeyTitle: "crime-assist-title-202"
+  locKeyDescription: "crime-assist-desc-202"
+  locKeySeverity: "crime-assist-severity-medium"
+  locKeyPunishment: "crime-assist-punish-202"
+
+- type: crimeAssistPage
+  id: "resultLaw203"
+  locKeyTitle: "crime-assist-title-203"
+  locKeyDescription: "crime-assist-desc-203"
+  locKeySeverity: "crime-assist-severity-medium"
+  locKeyPunishment: "crime-assist-punish-203"
+
+- type: crimeAssistPage
+  id: "resultLaw204"
+  locKeyTitle: "crime-assist-title-204"
+  locKeyDescription: "crime-assist-desc-204"
+  locKeySeverity: "crime-assist-severity-medium"
+  locKeyPunishment: "crime-assist-punish-204"
+
+- type: crimeAssistPage
+  id: "resultLaw205"
+  locKeyTitle: "crime-assist-title-205"
+  locKeyDescription: "crime-assist-desc-205"
+  locKeySeverity: "crime-assist-severity-medium"
+  locKeyPunishment: "crime-assist-punish-205"
+
+- type: crimeAssistPage
+  id: "resultLaw206"
+  locKeyTitle: "crime-assist-title-206"
+  locKeyDescription: "crime-assist-desc-206"
+  locKeySeverity: "crime-assist-severity-medium"
+  locKeyPunishment: "crime-assist-punish-206"
+
+- type: crimeAssistPage
+  id: "resultLaw207"
+  locKeyTitle: "crime-assist-title-207"
+  locKeyDescription: "crime-assist-desc-207"
+  locKeySeverity: "crime-assist-severity-medium"
+  locKeyPunishment: "crime-assist-punish-207"
+
+# --- СТАТТІ 3XX ---
+- type: crimeAssistPage
+  id: "resultLaw300"
+  locKeyTitle: "crime-assist-title-300"
+  locKeyDescription: "crime-assist-desc-300"
+  locKeySeverity: "crime-assist-severity-heavy"
+  locKeyPunishment: "crime-assist-punish-300"
+
+- type: crimeAssistPage
+  id: "resultLaw301"
+  locKeyTitle: "crime-assist-title-301"
+  locKeyDescription: "crime-assist-desc-301"
+  locKeySeverity: "crime-assist-severity-heavy"
+  locKeyPunishment: "crime-assist-punish-301"
+
+- type: crimeAssistPage
+  id: "resultLaw302"
+  locKeyTitle: "crime-assist-title-302"
+  locKeyDescription: "crime-assist-desc-302"
+  locKeySeverity: "crime-assist-severity-heavy"
+  locKeyPunishment: "crime-assist-punish-302"
+
+- type: crimeAssistPage
+  id: "resultLaw303"
+  locKeyTitle: "crime-assist-title-303"
+  locKeyDescription: "crime-assist-desc-303"
+  locKeySeverity: "crime-assist-severity-heavy"
+  locKeyPunishment: "crime-assist-punish-303"
+
+- type: crimeAssistPage
+  id: "resultLaw304"
+  locKeyTitle: "crime-assist-title-304"
+  locKeyDescription: "crime-assist-desc-304"
+  locKeySeverity: "crime-assist-severity-heavy"
+  locKeyPunishment: "crime-assist-punish-304"
+
+- type: crimeAssistPage
+  id: "resultLaw305"
+  locKeyTitle: "crime-assist-title-305"
+  locKeyDescription: "crime-assist-desc-305"
+  locKeySeverity: "crime-assist-severity-heavy"
+  locKeyPunishment: "crime-assist-punish-305"
+
+- type: crimeAssistPage
+  id: "resultLaw306"
+  locKeyTitle: "crime-assist-title-306"
+  locKeyDescription: "crime-assist-desc-306"
+  locKeySeverity: "crime-assist-severity-heavy"
+  locKeyPunishment: "crime-assist-punish-306"
+
+- type: crimeAssistPage
+  id: "resultLaw307"
+  locKeyTitle: "crime-assist-title-307"
+  locKeyDescription: "crime-assist-desc-307"
+  locKeySeverity: "crime-assist-severity-heavy"
+  locKeyPunishment: "crime-assist-punish-307"
+
+# --- СТАТТІ 4XX ---
+- type: crimeAssistPage
+  id: "resultLaw400"
+  locKeyTitle: "crime-assist-title-400"
+  locKeyDescription: "crime-assist-desc-400"
+  locKeySeverity: "crime-assist-severity-veryheavy"
+  locKeyPunishment: "crime-assist-punish-400"
+
+- type: crimeAssistPage
+  id: "resultLaw401"
+  locKeyTitle: "crime-assist-title-401"
+  locKeyDescription: "crime-assist-desc-401"
+  locKeySeverity: "crime-assist-severity-veryheavy"
+  locKeyPunishment: "crime-assist-punish-401"
+
+- type: crimeAssistPage
+  id: "resultLaw402"
+  locKeyTitle: "crime-assist-title-402"
+  locKeyDescription: "crime-assist-desc-402"
+  locKeySeverity: "crime-assist-severity-veryheavy"
+  locKeyPunishment: "crime-assist-punish-402"
+
+- type: crimeAssistPage
+  id: "resultLaw403"
+  locKeyTitle: "crime-assist-title-403"
+  locKeyDescription: "crime-assist-desc-403"
+  locKeySeverity: "crime-assist-severity-veryheavy"
+  locKeyPunishment: "crime-assist-punish-403"
+
+- type: crimeAssistPage
+  id: "resultLaw404"
+  locKeyTitle: "crime-assist-title-404"
+  locKeyDescription: "crime-assist-desc-404"
+  locKeySeverity: "crime-assist-severity-veryheavy"
+  locKeyPunishment: "crime-assist-punish-404"
+
+- type: crimeAssistPage
+  id: "resultLaw405"
+  locKeyTitle: "crime-assist-title-405"
+  locKeyDescription: "crime-assist-desc-405"
+  locKeySeverity: "crime-assist-severity-veryheavy"
+  locKeyPunishment: "crime-assist-punish-405"
+
+- type: crimeAssistPage
+  id: "resultLaw406"
+  locKeyTitle: "crime-assist-title-406"
+  locKeyDescription: "crime-assist-desc-406"
+  locKeySeverity: "crime-assist-severity-veryheavy"
+  locKeyPunishment: "crime-assist-punish-406"
+
+- type: crimeAssistPage
+  id: "resultLaw407"
+  locKeyTitle: "crime-assist-title-407"
+  locKeyDescription: "crime-assist-desc-407"
+  locKeySeverity: "crime-assist-severity-veryheavy"
+  locKeyPunishment: "crime-assist-punish-407"
+
+# --- СТАТТІ 5XX ---
+- type: crimeAssistPage
+  id: "resultLaw500"
+  locKeyTitle: "crime-assist-title-500"
+  locKeyDescription: "crime-assist-desc-500"
+  locKeySeverity: "crime-assist-severity-critical"
+  locKeyPunishment: "crime-assist-punish-500"
+
+- type: crimeAssistPage
+  id: "resultLaw502"
+  locKeyTitle: "crime-assist-title-502"
+  locKeyDescription: "crime-assist-desc-502"
+  locKeySeverity: "crime-assist-severity-critical"
+  locKeyPunishment: "crime-assist-punish-502"
+
+- type: crimeAssistPage
+  id: "resultLaw503"
+  locKeyTitle: "crime-assist-title-503"
+  locKeyDescription: "crime-assist-desc-503"
+  locKeySeverity: "crime-assist-severity-critical"
+  locKeyPunishment: "crime-assist-punish-503"
+
+- type: crimeAssistPage
+  id: "resultLaw505"
+  locKeyTitle: "crime-assist-title-505"
+  locKeyDescription: "crime-assist-desc-505"
+  locKeySeverity: "crime-assist-severity-critical"
+  locKeyPunishment: "crime-assist-punish-505"
+
+- type: crimeAssistPage
+  id: "resultLaw506"
+  locKeyTitle: "crime-assist-title-506"
+  locKeyDescription: "crime-assist-desc-506"
+  locKeySeverity: "crime-assist-severity-critical"
+  locKeyPunishment: "crime-assist-punish-506"
+
+- type: crimeAssistPage
+  id: "resultLaw507"
+  locKeyTitle: "crime-assist-title-507"
+  locKeyDescription: "crime-assist-desc-507"
+  locKeySeverity: "crime-assist-severity-critical"
+  locKeyPunishment: "crime-assist-punish-507"
+
+# --- ІНШІ РЕЗУЛЬТАТИ ---
+- type: crimeAssistPage
+  id: "resultInnocent"
+  locKeyTitle: "crime-assist-title-innocent"
+  locKeyDescription: "crime-assist-desc-innocent"
+  locKeySeverity: "crime-assist-severity-innocent"
+  locKeyPunishment: "crime-assist-punish-innocent"
+
+- type: crimeAssistPage
+  id: "resultError"
+  locKeyTitle: "crime-assist-title-error"
+  locKeyDescription: "crime-assist-desc-error"
+  locKeySeverity: "crime-assist-severity-innocent"
+  locKeyPunishment: "crime-assist-punish-error"

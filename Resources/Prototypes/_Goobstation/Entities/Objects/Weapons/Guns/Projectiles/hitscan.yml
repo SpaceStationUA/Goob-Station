@@ -205,6 +205,7 @@
   damage:
     types:
       Heat: 10
+    armorPenetration: 0.4 # Pirate edit
   muzzleFlash:
     sprite: _Goobstation/Objects/Weapons/Guns/Projectiles/small_laser.rsi
     state: muzzle_beam_light
@@ -321,6 +322,7 @@
     types:
       Heat: 17
       Shock: 4
+    armorPenetration: 0.4 # Pirate edit
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_beam_heavy
@@ -337,6 +339,7 @@
   damage:
     types:
       Heat: 14
+    armorPenetration: 0.4 # Pirate edit
   muzzleFlash:
     sprite: _Goobstation/Objects/Weapons/Guns/Projectiles/small_laser.rsi
     state: muzzle_beam_light_overcharged

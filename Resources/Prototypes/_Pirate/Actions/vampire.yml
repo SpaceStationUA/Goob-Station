@@ -1,0 +1,236 @@
+- type: entity
+  id: ActionVampireOpenMutationsMenu
+  name: Mutations menu
+  description: "Opens menu with vampires mutations."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: summonheirloom
+    useDelay: 5
+  - type: InstantAction
+    event: !type:VampireOpenMutationsMenu
+
+#- type: entity
+#  id: ActionVampireToggleFangs
+#  name: Toggle Fangs
+#  description: "Extend or retract your fangs. Walking around with your fangs out might reveal your true nature."
+#  categories: [ HideSpawnMenu ]
+#  components:
+#  - type: Action
+#    icon:
+#      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+#      state: fangs_retracted
+#    iconOn:
+#      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+#      state: fangs_extended
+#    useDelay: 5
+#    checkCanInteract: false
+#  - type: InstantAction
+#    event: !type:VampireToggleFangsEvent
+
+- type: entity
+  id: ActionVampireGlare
+  name: Glare
+  description: "Release a blinding flash from your eyes, stunning a unprotected mortal for 10 seconds. Activation Cost: 20 Essence. Cooldown: 60 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: glare
+    useDelay: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/_Pirate/Effects/Vampire/glare.ogg
+  - type: TargetAction
+    range: 5
+  - type: EntityTargetAction
+    whitelist:
+      components:
+        - Body
+    event:
+      !type:VampireGlareEvent
+      definitionName: Glare
+
+- type: entity
+  id: ActionVampireHypnotise
+  name: Hypnotise
+  description: "Stare deeply into a mortals eyes, forcing them to sleep for 60 seconds. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: hypnotise
+    useDelay: 300
+    itemIconStyle: BigAction
+  - type: TargetAction
+    range: 25
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - HumanoidAppearance
+    event: !type:VampireHypnotiseEvent
+      definitionName: Hypnotise
+
+- type: entity
+  id: ActionVampireScreech
+  name: Screech
+  description: "Release a piercing scream, stunning unprotected mortals and shattering fragile objects nearby. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: screech
+    useDelay: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/_Pirate/Effects/Vampire/screech_tone.ogg
+  - type: InstantAction
+    event: !type:VampireScreechEvent
+      definitionName: Screech
+
+- type: entity
+  id: ActionVampireBloodSteal
+  name: Blood Steal
+  description: "Wrench the blood from all bodies nearby - living or dead. Activation Cost: 20 Essence. Cooldown: 60 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: bloodsteal
+    useDelay: 60
+    checkCanInteract: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/demon_consume.ogg
+  - type: InstantAction
+    event: !type:VampireBloodStealEvent
+      definitionName: BloodSteal
+
+- type: entity
+  id: ActionVampireUnholyStrength
+  name: Unholy Strength
+  description: "You get +10 slash damage to unarmed attacks.s Its works untill you off it Cooldown: 60 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: unholystrength
+    useDelay: 10
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:VampireUnholyStrengthEvent
+      definitionName: UnholyStrength
+
+- type: entity
+  id: ActionVampireSupernaturalStrength
+  name: SuperNatural Strength
+  description: "You can pry doors with hands, and additionally +15 slash damage to unarmed attacks.s Its works untill you off it Cooldown: 60 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: supernaturalstrength
+    useDelay: 10
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:VampireSupernaturalStrengthEvent
+      definitionName: SupernaturalStrength
+
+- type: entity
+  id: ActionVampireBatform
+  name: Bat Form
+  description: "Assume for form of a bat. Fast, Hard to Hit, Likes fruit. Activation Cost: 20 Essence. Cooldown: 30 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: batform
+    useDelay: 30
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/teleport_arrival.ogg
+  - type: InstantAction
+    event: !type:VampirePolymorphEvent
+      definitionName: PolymorphBat
+
+- type: entity
+  id: ActionVampireMouseform
+  name: Mouse Form
+  description: "Assume for form of a mouse. Fast, Small, Immune to doors. Activation Cost: 20 Essence. Cooldown: 30 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: mouseform
+    useDelay: 30
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/teleport_arrival.ogg
+  - type: InstantAction
+    event: !type:VampirePolymorphEvent
+      definitionName: PolymorphMouse
+
+- type: entity
+  id: ActionVampireCloakOfDarkness
+  name: Cloak of Darkness
+  description: "Cloak yourself from mortal eyes, rendering you invisible while stationary. Activation Cost: 30 Essence. Upkeep: 1 Essence/Second Cooldown: 10 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: cloakofdarkness
+    useDelay: 10
+  - type: InstantAction
+    event: !type:VampireCloakOfDarknessEvent
+      definitionName: CloakOfDarkness
+
+- type: entity
+  id: ActionVampireSire
+  name: Sire
+  description: "Turn a mortal into a vampire. Fails on mindshielded targets. Activation Cost: 200 Essence."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: sire
+    useDelay: 10
+    itemIconStyle: BigAction
+  - type: TargetAction
+    range: 25
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - HumanoidAppearance
+    event: !type:VampireSireEvent
+      definitionName: Sire
+
+- type: entity
+  id: ActionVampireDarkGift
+  name: Dark Gift
+  description: "Heal or revive a turned vampire. Activation Cost: 100 Essence."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      state: darkgift
+    useDelay: 0
+    itemIconStyle: BigAction
+  - type: TargetAction
+    range: 25
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - Vampire
+    event: !type:VampireDarkGiftEvent
+      definitionName: DarkGift

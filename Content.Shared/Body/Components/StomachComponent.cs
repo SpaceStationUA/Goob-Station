@@ -74,12 +74,14 @@ namespace Content.Shared.Body.Components
         ///     A whitelist for what special-digestible-required foods this stomach is capable of eating.
         /// </summary>
         [DataField]
+        [Access(Other = AccessPermissions.ReadWriteExecute)]
         public EntityWhitelist? SpecialDigestible = null;
 
         /// <summary>
         /// Controls whitelist behavior. If true, this stomach can digest <i>only</i> food that passes the whitelist. If false, it can digest normal food <i>and</i> any food that passes the whitelist.
         /// </summary>
         [DataField]
+        [Access(Other = AccessPermissions.ReadWriteExecute)]
         public bool IsSpecialDigestibleExclusive = true;
 
         /// <summary>

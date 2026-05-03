@@ -1,0 +1,57 @@
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineInterdyne
+  name: Автомат видачі спорядження Інтердайну
+  description: Містить одяг та особливі трав'яні лікарські цигарки власного виробництва
+  components:
+  - type: VendingMachine
+    pack: InterdyneInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+  - type: Advertise
+    pack: InterdyneDrobeAds
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/VendingMachines/interdynedrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["Interdyne"]]
+    
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineInterdynePtech
+  name: Автомат видачі важливого обладнання Інтердайну
+  description: Містить одяг, ключі шифрування, та навушники. З нами вам не треба боятись смерті, дивіться сміло їй в обличчя!
+  components:
+  - type: VendingMachine
+    pack: InterdynePtechCardInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+  - type: Advertise
+    pack: InterdyneDrobeAds
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/cart.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["InterdyneOfficer"]]

@@ -1,89 +1,89 @@
 <Document>
 
-  # Capoeira
+  # Капоейра
 
   <Box>
     <GuideEntityEmbed Entity="CapoeiraManual" Caption=""/>
   </Box>
 
-  Capoeira, the Syndicate's dance of war originating in Brazil, is a [textlink="martial art" link="MartialArts"] that disguises violence as beauty.
-  Swift attacks link into flowing combos, each move faster and harder than the last one, fueled by relentless momentum.
+  Капоейра, синдикатський танець війни, що походить із Бразилії, — це [textlink="бойове мистецтво" link="MartialArts"], у якому насильство маскується красою.
+  Швидкі атаки зливаються у плавні комбо: кожен наступний рух швидший і сильніший за попередній, підживлений невпинною інерцією.
 
-  ## Special abilities
+  ## Особливі здібності
 
-  Capoeira users are better at Grab intent. Successfully grabbing an opponent grants user a brief speed boost and denies target from sprinting temporarily.
+  Користувачі капоейри краще володіють наміром захоплення. Успішне захоплення супротивника на короткий час пришвидшує користувача і тимчасово позбавляє ціль можливості спринтувати.
 
-  ### Capoeira Stance
+  ### Стійка капоейри
 
-  You never stop moving while performing the ginga. This makes you very mobile while fighting.
+  Під час виконання гінги користувач не зупиняється ні на мить. Це робить його дуже мобільним у бою.
 
-  Through swift motion, Capoeira masters channel speed into energy, with combos being more deadly the faster they run.
-  Halt their flow, and their strength will vanish. Their combos, powered by movement, falter when they are prone.
+  Завдяки стрімким рухам майстри капоейри перетворюють швидкість на енергію: що швидше вони рухаються, то смертоносніші їхні комбо.
+  Зупиніть їхній потік — і сила зникне. Комбо, що живляться рухом, слабшають, коли користувач опиняється лежачи.
 
-  ### Capoeira Momentum
+  ### Імпульс капоейри
 
-  Through the flowing, relentless motion of Capoeira, each successful combo restores the user's stamina.
-  Every connected strike fuels their endurance, allowing them to fight longer, faster, and harder without pause.
+  Завдяки плавному, невпинному руху капоейри кожне успішне комбо відновлює витривалість користувача.
+  Кожен влучний удар підживлює витривалість, дозволяючи битися довше, швидше й жорсткіше без перепочинку.
 
-  ### Capoeira Tempo
+  ### Темп капоейри
 
-  Hit or miss, it's just part of the dance! And the best part is about to start!
+  Влучив чи схибив — це лише частина танцю! А найцікавіше тільки починається!
 
-  A missed attack sharpens the next, reducing its recovery and increasing the damage.
+  Промах загартовує наступну атаку: зменшує час відновлення та підвищує шкоду.
 
-  ## Combo attacks
+  ## Комбо-атаки
 
-  ### Push Kick
-
-  <Box>
-    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
-    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
-    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
-  </Box>
-
-  Disarms the opponent, pushes them away, as well as knocking them down causing them to be more vulnerable to unarmed melee attacks while they're down.
-  Only works on standing opponents.
-
-  ### Circle Kick
-
-  <Box>
-    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
-    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
-    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
-  </Box>
-
-  Deals Blunt damage and also slows down the opponent significantly.
-
-  ### Sweep Kick
-
-  <Box>
-    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
-    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
-    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
-  </Box>
-
-  Knocks down and deals Blunt and Stamina damage. Temporarily increases user's attack speed by a bit.
-  Cannot be performed if the user is moving too slow.
-
-  ### Spin Kick
+  ### Штовхальний удар
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Обеззброює супротивника, відштовхує його і збиває з ніг, роблячи вразливішим до беззбройних атак ближнього бою, доки він лежить.
+  Працює лише проти цілей, що стоять.
+
+  ### Коловий удар
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
   </Box>
 
-  Deals a lot of Blunt damage and knocks the opponent down. Also makes the user flip. Only works on standing opponents.
-  Cannot be performed if the user is moving too slow.
+  Завдає тупої шкоди та значно сповільнює супротивника.
 
-  ### Kick Up
+  ### Підсічка
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+
+  Збиває з ніг і завдає тупої шкоди та шкоди витривалості. Тимчасово трохи підвищує швидкість атаки користувача.
+  Не виконується, якщо користувач рухається надто повільно.
+
+  ### Обертальний удар
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Завдає багато тупої шкоди та збиває супротивника з ніг. Також змушує користувача зробити переворот. Працює лише проти цілей, що стоять.
+  Не виконується, якщо користувач рухається надто повільно.
+
+  ### Підйом ногами
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
   </Box>
 
-  Needs to be targeted at the user themselves. Can be performed while prone. Removes knock down status effect and forces the user to stand up instantly.
+  Потрібно наводити на самого себе. Можна виконувати лежачи. Знімає ефект «збитий з ніг» і миттєво змушує користувача встати.
 
 </Document>

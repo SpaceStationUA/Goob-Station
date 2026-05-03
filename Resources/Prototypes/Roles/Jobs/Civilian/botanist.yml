@@ -78,6 +78,14 @@
   extendedAccess:
   - Kitchen
   - Bar
+  # Pirate contractor start
+  requirements: 
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
+  # Pirate contractor end
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: FourTwenty

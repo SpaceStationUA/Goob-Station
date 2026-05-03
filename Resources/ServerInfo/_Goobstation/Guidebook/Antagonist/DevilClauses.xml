@@ -1,18 +1,18 @@
 <Document>
-  ## Mortality
+  ## Смертність
   <Box>
-    [color=#999999][italic]-135 Weight[/italic][/color]
+    [color=#999999][italic]-135 Вага[/italic][/color]
   </Box>
 
-  - Grants the target an unlimited amount of self revives.
+  - Надає цілі необмежену кількість самовідроджень.
 
-  ## Weakness
+  ## Слабкість
   <Box>
-    [color=#999999][italic]-35 Weight[/italic][/color]
+    [color=#999999][italic]-35 Вага[/italic][/color]
   </Box>
 
-  - Cuts all damage the contractee takes in half.
-  - Increases holy damage taken.
+  - Усі ушкодження, які отримує контрактник, зменшуються вдвічі.
+  - Збільшується отримувана свята шкода.
 
 <!-- Disabled, Used by shitters  ## Avarice
   <Box>
@@ -22,211 +22,210 @@
   - Allows the contractee to devour things whole, just like a dragon.
   -->
 
-  ## Fear of Death
+  ## Страх смерті
   <Box>
-    [color=#999999][italic]-25 Weight[/italic][/color]
+    [color=#999999][italic]-25 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee have no critical state. You stand, or you die.
+  - Скасовує критичний стан. Або стоїш, або помираєш.
 
-  ## Death
+  ## Смерть
   <Box>
-    [color=#999999][italic]-25 Weight[/italic][/color]
+    [color=#999999][italic]-25 Вага[/italic][/color]
   </Box>
 
-  - Allows the contractee to revive themselves exactly once on death.
-  - Default on every contract.
+  - Дозволяє контрактнику воскреснути рівно один раз після смерті.
+  - Присутнє у кожному контракті за замовчуванням.
 
-  ## Shadows
+  ## Тіні
   <Box>
-    [color=#999999][italic]-25 Weight[/italic][/color]
+    [color=#999999][italic]-25 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee invisible.
+  - Робить контрактника невидимим.
 
-  ## Brokeness
+  ## Злидні
   <Box>
-    [color=#999999][italic]-20 Weight[/italic][/color]
+    [color=#999999][italic]-20 Вага[/italic][/color]
   </Box>
 
-  - Grants the contractee a pair of sick fucking jays, signed by Micheal Jordan himself.
+  - Дарує контрактнику пару лютих кросівок, підписаних самим Майклом Джорданом.
 
-  ## Fear of Fire
+  ## Страх вогню
   <Box>
-    [color=#999999][italic]-20 Weight[/italic][/color]
+    [color=#999999][italic]-20 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee immune to fire, and immune to being lit on fire.
+  - Імунітет до вогню та до підпалювання.
 
-  ## Chance
+  ## Шанс
   <Box>
-    [color=#999999][italic]-15 Weight[/italic][/color]
+    [color=#999999][italic]-15 Вага[/italic][/color]
   </Box>
 
-  - Grants the contractee a completely random clause. Want to try your luck?
+  - Надає повністю випадковий пункт угоди. Хочеш спробувати удачу?
 
-  ## Fear of Light
+  ## Страх світла
   <Box>
-    [color=#999999][italic]-15 Weight[/italic][/color]
+    [color=#999999][italic]-15 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee immune to flashes.
+  - Імунітет до спалахів.
 
-
-  ## Fear of Electricity
+  ## Страх електрики
   <Box>
-    [color=#999999][italic]-15 Weight[/italic][/color]
+    [color=#999999][italic]-15 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee immune to electrical shocks.
+  - Імунітет до електричних ударів.
 
-  ## Gluttony
+  ## Ненажерливість
   <Box>
-    [color=#999999][italic]-10 Weight[/italic][/color]
+    [color=#999999][italic]-10 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee not need food or water.
+  - Скасовує потребу в їжі та воді.
 
-  ## Fear of Drowning
+  ## Страх утоплення
   <Box>
-    [color=#999999][italic]-10 Weight[/italic][/color]
+    [color=#999999][italic]-10 Вага[/italic][/color]
   </Box>
 
-  - Disables the contractees need to breathe.
+  - Скасовує потребу дихати.
 
-  ## Fear of Clowns
+  ## Страх клоунів
   <Box>
-    [color=#999999][italic]-10 Weight[/italic][/color]
+    [color=#999999][italic]-10 Вага[/italic][/color]
   </Box>
 
-  - Disables the contractees ability to slip.
+  - Імунітет до підслизгування.
 
-  ## Fear of Crushing
+  ## Страх розчавлення
   <Box>
-    [color=#999999][italic]-10 Weight[/italic][/color]
+    [color=#999999][italic]-10 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee immune to pressure damage.
+  - Імунітет до шкоди від тиску.
 
-  ## Fear of Freezing
+  ## Страх замерзання
   <Box>
-    [color=#999999][italic]-10 Weight[/italic][/color]
+    [color=#999999][italic]-10 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee immune to low temperatures.
+  - Імунітет до низьких температур.
 
-  ## Greed
+  ## Жадібність
   <Box>
-    [color=#999999][italic]-10 Weight[/italic][/color]
+    [color=#999999][italic]-10 Вага[/italic][/color]
   </Box>
 
-  - Grants the target a ton of cash-money.
+  - Дає цілі купу грошей.
 
-  ## Pain
+  ## Біль
   <Box>
-    [color=#999999][italic]-5 Weight[/italic][/color]
+    [color=#999999][italic]-5 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee feel no pain, and suffer no negatives from pain.
+  - Контрактник не відчуває болю та не страждає від його наслідків.
 
-  ## Inner Peace
+  ## Внутрішній спокій
   <Box>
-    [color=#999999][italic]5 Weight[/italic][/color]
+    [color=#999999][italic]5 Вага[/italic][/color]
   </Box>
 
-  - Grants the target peace. Everlasting.
+  - Дарує цілі спокій. Вічний.
 
-  ## Voice
+  ## Голос
   <Box>
-    [color=#999999][italic]20 Weight[/italic][/color]
+    [color=#999999][italic]20 Вага[/italic][/color]
   </Box>
 
-  - Permanently mutes the contractee.
+  - Назавжди позбавляє контрактника голосу.
 
-  ## A hand
+  ## Рука
   <Box>
-    [color=#999999][italic]20 Weight[/italic][/color]
+    [color=#999999][italic]20 Вага[/italic][/color]
   </Box>
 
-  - Immediately severs one of the contractees hands.
+  - Миттєво відтинає одну з рук контрактника.
 
-  ## A leg
+  ## Нога
   <Box>
-    [color=#999999][italic]20 Weight[/italic][/color]
+    [color=#999999][italic]20 Вага[/italic][/color]
   </Box>
 
-  - Immediately severs one of the contractees legs.
+  - Миттєво відтинає одну з ніг контрактника.
 
-  ## Soul Ownership
+  ## Власність душі
   <Box>
-    [color=#999999][italic]25 Weight[/italic][/color]
+    [color=#999999][italic]25 Вага[/italic][/color]
   </Box>
 
-  - Transfers ownership of a soul to the contractor.
-  - Default on every contract.
+  - Передає право власності на душу укладачеві контракту.
+  - Присутнє у кожному контракті за замовчуванням.
 
-  ## Strength
+  ## Сила
   <Box>
-    [color=#999999][italic]30 Weight[/italic][/color]
+    [color=#999999][italic]30 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee take double damage.
+  - Контрактник отримує подвійні ушкодження.
 
-  ## Coherence
+  ## Зв'язність
   <Box>
-    [color=#999999][italic]30 Weight[/italic][/color]
+    [color=#999999][italic]30 Вага[/italic][/color]
   </Box>
 
-  - Makes the contractee clumsy and messes up their speech.
+  - Робить контрактника незграбним і спотворює його мовлення.
 
-  ## Awake
+  ## Неспання
   <Box>
-    [color=#999999][italic]35 Weight[/italic][/color]
+    [color=#999999][italic]35 Вага[/italic][/color]
   </Box>
 
-  - Turns the target narcoleptic.
+  - Викликає нарколепсію у цілі.
 
-  ## An organ
+  ## Орган
   <Box>
-    [color=#999999][italic]30 Weight[/italic][/color]
+    [color=#999999][italic]30 Вага[/italic][/color]
   </Box>
 
-  - Dumps one of the contractees organs on the ground.
-  - This is most likely the heart.
+  - Викидає один із органів контрактника на підлогу.
+  - Найімовірніше, це буде серце.
 
-  ## Legs
+  ## Ноги
   <Box>
-    [color=#999999][italic]40 Weight[/italic][/color]
+    [color=#999999][italic]40 Вага[/italic][/color]
   </Box>
 
-  - Permanently paralyzes both of the contractees legs.
+  - Назавжди паралізує обидві ноги контрактника.
 
-  ## Sight
+  ## Зір
   <Box>
-    [color=#999999][italic]60 Weight[/italic][/color]
+    [color=#999999][italic]60 Вага[/italic][/color]
   </Box>
 
-  - Permanently blinds the contractee.
+  - Назавжди сліпить контрактника.
 
-  ## Will to fight
+  ## Воля до боротьби
   <Box>
-    [color=#999999][italic]60 Weight[/italic][/color]
+    [color=#999999][italic]60 Вага[/italic][/color]
   </Box>
 
-  - Permanently pacifies the contractee.
+  - Назавжди пацифікує контрактника.
 
-  ## Humanity
+  ## Людяність
   <Box>
-    [color=#999999][italic]80 Weight[/italic][/color]
+    [color=#999999][italic]80 Вага[/italic][/color]
   </Box>
 
-  - Turns the contractee into a frog.
-  - This is permanent.
+  - Перетворює контрактника на жабу.
+  - Це назавжди.
 
-  ## Time
+  ## Час
   <Box>
-    [color=#999999][italic]150 Weight[/italic][/color]
+    [color=#999999][italic]150 Вага[/italic][/color]
   </Box>
 
-  - Kills the contractee after five minutes.
+  - Вбиває контрактника через п’ять хвилин.
 </Document>

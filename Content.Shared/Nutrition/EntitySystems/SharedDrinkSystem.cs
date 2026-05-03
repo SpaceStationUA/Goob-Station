@@ -38,7 +38,7 @@ public abstract partial class SharedDrinkSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUseDrinkInHand, after: new[] { typeof(OpenableSystem), typeof(InventorySystem) });
-        SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(OnUseDrink);
+        SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(OnUseDrink, before: new[] { typeof(OpenableSystem) }); // Pirate: coffeemaker
 
         SubscribeLocalEvent<DrinkComponent, AttemptShakeEvent>(OnAttemptShake);
 

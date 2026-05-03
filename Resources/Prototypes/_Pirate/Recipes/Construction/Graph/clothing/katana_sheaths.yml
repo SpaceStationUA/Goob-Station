@@ -1,0 +1,27 @@
+- type: constructionGraph
+  id: ClothingBeltKatanaSheath
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sheath
+      steps:
+      - material: Cloth
+        amount: 3
+        doAfter: 3
+  - node: sheath
+    entity: ClothingBeltKatanaSheath
+
+- type: constructionGraph
+  id: ClothingBeltDarkKatanaSheath
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sheath
+      steps:
+      - material: Cloth
+        amount: 3
+        doAfter: 3
+  - node: sheath
+    entity: ClothingBeltDarkKatanaSheath

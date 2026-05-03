@@ -1,0 +1,17 @@
+- type: entity
+  parent: [ClothingHeadHelmetArmoredBase, ClothingHeadHatHardhatBase, BaseSecurityContraband]
+  id: ClothingHeadHelmetSecurityLight
+  name: шолом служби безпеки з фонарем
+  description: Стандартний шолом служиби безпеки з вбудованим фонариком. Захищає голову від ударів і куль.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/security.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/security.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD

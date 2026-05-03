@@ -10,53 +10,53 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-# Station and Shifts
+# Станція та зміни
 
-Every round of SS14 is a [bold]self-contained shift[/bold] that takes place on one of many different stations.
+Кожен раунд SS14 - це [bold]самодостатній зміна[/bold], що відбувається на одній з багатьох різних станцій.
 
-Rounds typically last from [color=cyan]45 to 90 minutes[/color], but players are free to leave and join at any point during a round.
+Раунди зазвичай тривають від [color=cyan]45 до 90 хвилин[/color], але гравці можуть вільно заходити та виходити в будь-який момент під час раунду.
 
-## Shuttle Terminal
-If you join in the middle of a shift, you will likely spawn on the [color=lime]shuttle terminal[/color].
-Here you can grab drinks, converse with other players, and wait for the shuttle to take you to the station.
+## Термінал шатла
+Якщо ви приєднаєтеся посередині зміни, ви, швидше за все, з'явитеся на [color=lime]терміналі шатла[/color].
+Тут ви можете взяти напої, поспілкуватися з іншими гравцями та чекати, поки шатл доставить вас на станцію.
 
-Screens on the walls will give you an ETA for the shuttle.
-When it arrives, simply walk on to be transported to the station.
+Екрани на стінах дадуть вам приблизний час прибуття шатла.
+Коли він прибуде, просто пройдіть у нього, щоб бути транспортованим на станцію.
 
-Make sure to stay inside the terminal and to not stand in the shuttle landing zone. [color=#EB2D3A][bold]You can be crushed by shuttles flying in[/bold][/color]
+Переконайтеся, що ви залишаєтеся всередині терміналу і не стоїте в зоні посадки шатла. [color=#EB2D3A][bold]Ви можете бути розчавленими шатлами, що прилітають[/bold][/color]
 
-## Navigation
-Every station has a wide variety of locations to visit.
-These range from specific departments where work happens to common areas where you can relax and chat with others.
+## Навігація
+Кожна станція має величезну різноманітність місць для відвідування.
+Вони варіюються від конкретних відділів, де відбувається робота, до загальних зон, де ви можете розслабитися та поспілкуватися з іншими.
 
 <Box>
   <GuideEntityEmbed Entity="StationMap"/>
-  <GuideEntityEmbed Entity="SignDirectionalDorms" Caption="Directional Signs"/>
-  <GuideEntityEmbed Entity="SignBridge" Caption="Marker Signs"/>
+  <GuideEntityEmbed Entity="SignDirectionalDorms" Caption="Напрямні знаки"/>
+  <GuideEntityEmbed Entity="SignBridge" Caption="Маркерні знаки"/>
 </Box>
 
-[color=cyan]Station maps[/color] give you an overview of the entire station with colored markers denoting locations of different things.
-Regular [color=cyan]signs[/color] on walls can point you to different departments.
+[color=cyan]Мапи станції[/color] дають вам огляд всієї станції з кольоровими маркерами, що позначають розташування різних речей.
+Звичайні [color=cyan]знаки[/color] на стінах можуть вказати вам шлях до різних відділів.
 
-## Leaving the Station
-At the end of the shift [color=gray](barring a [color=red][bold]nuclear disaster[/bold][/color])[/color], you will leave the station via the [color=lime]evac shuttle[/color].
-When it's called, an announcement will play on the station alerting the crew and signaling its [color=cyan]arrival in 10 minutes.[/color]
-Once it arrives, you'll need to make your way over to it, board it, and then survive the trip to [bold]Central Command[/bold].
+## Залишення станції
+Наприкінці зміни [color=gray](за винятком [color=red][bold]ядерної катастрофи[/bold][/color])[/color], ви залишите станцію через [color=lime]евакуаційний шатл[/color].
+Коли його викличуть, на станції пролунає оголошення, що сповістить екіпаж і сигналізує про [color=cyan]прибуття через 10 хвилин.[/color]
+Після прибуття вам потрібно буде дістатися до нього, зайти в нього, а потім вижити подорож до [bold]Центрального Командування[/bold].
 
-The round doesn't officially end until you reach [bold]Central Command[/bold]
+Раунд офіційно не закінчується, доки ви не досягнете [bold]Центрального Командування[/bold]
 
 <Box>
   <GuideEntityEmbed Entity="CryogenicSleepUnit"/>
 </Box>
 
-If you need to leave a round early, you can do so through a [color=lime]cryogenic sleep unit[/color].
-Simply going inside and leaving the game will store your belongings and ensure that they are not stolen or misused.
+Якщо вам потрібно залишити раунд рано, ви можете зробити це через [color=lime]криогенний агрегат сну[/color].
+Просто зайдіть у нього і вийдіть з гри, щоб ваші речі були збережені та не були вкрадені або зловживані.
 
-## More Info
-Learning the controls? [textlink="Click here to read about the different controls" link="Controls"]
+## Більше інформації
+Вивчаєте керування? [textlink="Натисніть тут, щоб прочитати про різні елементи керування" link="Controls"]
 
-Don't know how to perform a job? [textlink="Click here to jump to a list of departments" link="Jobs"]
+Не знаєте, як виконувати роботу? [textlink="Натисніть тут, щоб перейти до списку відділів" link="Jobs"]
 
-Keep dying? [textlink="Click here to see a survival guide" link="Survival"]
+Часто гинете? [textlink="Натисніть тут, щоб побачити посібник з виживання" link="Survival"]
 
 </Document>

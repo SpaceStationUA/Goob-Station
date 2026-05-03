@@ -1,46 +1,46 @@
 <Document>
 
-  # Krav Maga
+  # Крав-мага
 
   <Box>
     <GuideEntityEmbed Entity="ClothingHandsGlovesKravMaga" Caption=""/>
   </Box>
 
-  Krav Maga is a self-defence [textlink="martial art" link="MartialArts"] that was developed by ancient militaries on Terra six centuries ago.
-  It can be learned through years of training or be given to a user by advanced nanomachines stored inside gloves.
-  On the station, a singular pair of Krav Maga Gloves can be found the Warden's locker. Syndicate antagonists can use Krav Maga Implant for the same effect.
+  Крав-мага - це [textlink="бойове мистецтво" link="MartialArts"] для самозахисту, розроблене стародавніми військовими на Террі шість століть тому.
+  Його можна вивчити роками тренувань або отримати від передових наномашин, що зберігаються в рукавичках.
+  На станції одну пару рукавичок для крав-маги можна знайти в шафці наглядача. Антагоністи Синдикату можуть використовувати імплантат крав-маги для того ж ефекту.
 
-  ## Action Combat
+  ## Бойові дії
 
-  Krav Maga attacks aren't like the combos of most martial arts. The user must instead ready the attack they
-  wish to use in the action bar, then follow it up by performing Harm action on the opponent as normal.
+  Атаки крав-маги не схожі на комбо більшості бойових мистецтв. Користувач повинен натомість підготувати атаку, яку він
+  хоче використати, на панелі дій, а потім виконати дію "шкодити" на супротивнику, як зазвичай.
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
   </Box>
 
-  ### Leg Sweep
+  ### Підсічка
 
   <Box>
     <GuideEntityEmbed Entity="ActionLegSweep" Caption=""/>
   </Box>
 
-  Sweeps the legs out from under an opponent to knock them down.
+  Підсікає ноги супротивника, щоб збити його з ніг.
 
-  ### Neck Chop
+  ### Удар по шиї
 
   <Box>
     <GuideEntityEmbed Entity="ActionNeckChop" Caption=""/>
   </Box>
 
-  A hard swing with the side of the user's hand temporally disables the opponent's ability to speak.
+  Сильний удар ребром долоні тимчасово позбавляє супротивника можливості говорити.
 
-  ### Lung Punch
+  ### Удар у легені
 
   <Box>
     <GuideEntityEmbed Entity="ActionLungPunch" Caption=""/>
   </Box>
 
-  Deals Stamina damage and temporally disables the opponent's ability to breath.
+  Наносить шкоду витривалості і тимчасово позбавляє супротивника можливості дихати.
 
 </Document>

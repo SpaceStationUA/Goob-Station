@@ -1,0 +1,50 @@
+- type: Tag
+  id: CartridgeBazooka
+
+- type: Tag
+  id: EchionGun
+
+- type: Tag
+  id: SpeedLoaderAM
+
+- type: Tag
+  id: MagazineUniversalMagnum
+
+- type: Tag
+  id: IgnoreBalanceChecks
+
+- type: Tag
+  id: SpaceCash
+
+- type: Tag
+  id: ChemRecipeDisk
+
+- type: Tag
+  id: OreTitanium
+
+- type: Tag
+  id: Photo
+
+- type: Tag
+  id: CameraFilm
+
+- type: Tag
+  id: CaptainSabreHeavy
+
+- type: Tag
+  id: CaptainSabreShashka
+
+- type: Tag
+  id: KatanaSheathable
+
+- type: Tag
+  id: CoffeeCondimentSugarPirate
+
+- type: Tag
+  id: CoffeeCondimentSweetenerPirate
+
+- type: Tag
+  id: CoffeeCondimentCreamerPirate
+
+- type: Tag
+  id: CoffeeCondimentChocolatePirate

@@ -6,42 +6,42 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-# Standard Operating Procedure
-The Standard Operating Procedure, SOP, is the set of procedures for crew personnel to follow when there is (or isn't) an emergency on the station.
-These directives are here to assist you, as a valuable crew member on this station, with knowledge of what to do in these special scenarios.
+# Стандартні Операційні Процедури
+Стандартні операційні процедури (СОП) - це набір правил, яких має дотримуватися екіпаж як під час надзвичайних ситуацій, так і за їх відсутності.
+Ці директиви допомагають вам, як цінному члену екіпажу станції, розуміти, що робити в особливих сценаріях.
 
-These procedures are a guideline to assure all actions follow Nanotrasen's best interest. Failure to follow these can result in dismissal and/or demotion from your job position.
+Ці процедури є настановами, щоб усі дії відповідали інтересам Nanotrasen. Недотримання може призвести до звільнення та/або пониження на посаді.
 
-<Box>It is [bold]highly advised[/bold] to read over the [bold]Standard Procedures[/bold], [bold]Legal[/bold], and your [bold]Job Department[/bold] SOP!</Box>
+<Box>[bold]Наполегливо рекомендується[/bold] ознайомитися з [bold]Загальними Процедурами[/bold], [bold]Правовими Нормами[/bold] і СОП вашого [bold]Відділу[/bold]!</Box>
 
-## What Does This Define?
-The SOP outlines several procedures for alert levels, Chain of Command (command succession), treatment of prisoners, identification of threats, and much more.
-Adherence to these guidelines is expected but the guidelines are malleable to multiple scenarios. Should you choose to deviate from these guidelines, you must justify your actions when asked.
+## Що Це Визначає?
+СОП описує процедури для рівнів тривоги, ланцюга командування (порядку наступництва), поводження з ув'язненими, ідентифікації загроз та багато іншого.
+Очікується дотримання цих настанов, але вони гнучкі для різних сценаріїв. Якщо ви вирішите відхилитися від них, ви повинні пояснити свої дії на запит.
 
   <Box>
-    [bold]NOTE:[/bold] Blindly following SOP while ignoring context is a [italic]ridiciously bad idea[/italic] and is not suggested. [bold]Context is King![/bold]
+    [bold]ПРИМІТКА:[/bold] Сліпо виконувати СОП, ігноруючи контекст, - [italic]дуже погана ідея[/italic]. [bold]Контекст - понад усе![/bold]
   </Box>
   <Box>
-    Further note that any references to "This Station" or "Station" are assumed to be the station you are working on during this shift. You may find this on your PDA.
+    Також зверніть увагу: будь-які згадки "Ця станція" або "Станція" означають саме ту станцію, на якій ви працюєте в цю зміну. Перевірити це можна у вашому КПК.
   </Box>
 
-## General Station SOP
-The following links are for general knowledge of the station.
-- [textlink="Hiring, Promoting, Transferring" link="HiringSOP"]
-- [textlink="Firing, Demoting, Terminating" link="DemotingSOP"]
-- [textlink="Chain of Command" link="Succession"]
-- [textlink="Legal" link="LegalSOP"]
-- [textlink="Emergencies" link="EmergenciesSOP"]
-- [textlink="Alert Levels" link="AlertLevels"]
+## Загальний СОП Станції
+Наступні посилання містять загальні положення щодо функціонування станції:
+- [textlink="Найм, Підвищення, Переведення" link="HiringSOP"]
+- [textlink="Звільнення, Пониження, Усунення" link="DemotingSOP"]
+- [textlink="Ланцюг Командування" link="Succession"]
+- [textlink="Правові Норми" link="LegalSOP"]
+- [textlink="Надзвичайні Ситуації" link="EmergenciesSOP"]
+- [textlink="Рівні Тривоги" link="AlertLevels"]
 
-## General Department
-The following links are for general department SOPs. These will guide you to the folder entry.
-- [textlink="Cargo Department" link="CargoSOP"]
-- [textlink="Command Department" link="CommandSOP"]
-- [textlink="Engineering Department" link="EngineeringSOP"]
-- [textlink="Medical Department" link="MedicalSOP"]
-- [textlink="Science Department" link="ScienceSOP"]
-- [textlink="Security Department" link="SecuritySOP"]
-- [textlink="Service Department" link="ServiceSOP"]
+## Загальні СОП Відділів
+Наступні посилання ведуть до загальних СОП відділів:
+- [textlink="Відділ Постачання" link="CargoSOP"]
+- [textlink="Командний Відділ" link="CommandSOP"]
+- [textlink="Інженерний Відділ" link="EngineeringSOP"]
+- [textlink="Медичний Відділ" link="MedicalSOP"]
+- [textlink="Науковий Відділ" link="ScienceSOP"]
+- [textlink="Служба Безпеки" link="SecuritySOP"]
+- [textlink="Сервісний Відділ" link="ServiceSOP"]
 
 </Document>

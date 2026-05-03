@@ -1,0 +1,20 @@
+- files: ["echion.ogg"]
+  license: CC-BY-3.0
+  copyright: "Made by jalastram on opengameart"
+  source: "https://opengameart.org/content/collaboration-sound-effects-machine-001"
+
+- files: ["echion_off.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Q009 on opengameart"
+  source: "https://opengameart.org/content/q009s-weapon-sounds"
+
+- files: ["echion_on.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Q009 on opengameart"
+  source: "https://opengameart.org/content/q009s-weapon-sounds"
+
+- files: ["coffeemaker_brew.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Originally made by Adriana Lopez (Acekat13X31), edited by tgstation contributors"
+  source: "https://freesound.org/people/Acekat13X31/sounds/515685/"
+

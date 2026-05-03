@@ -167,7 +167,7 @@
 - type: entity
   parent: OreBase
   id: PlasmaOre
-  name: plasma ore
+  name: форон # Pirate
   suffix: Full
   components:
   - type: Stack

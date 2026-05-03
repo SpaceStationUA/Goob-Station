@@ -1,97 +1,97 @@
 <Document>
-# Virology
-This is a guide to diseases and how to handle them.
+# Вірусологія
+Це посібник про хвороби та про те, як із ними впоратися.
 
-## Infection
-Diseases initially come from a specific source. Most often, it's a plague mouse.
+## Зараження
+Хвороби спершу з'являються з певного джерела. Найчастіше — від чумної миші.
 
-<GuideEntityEmbed Entity="MobMousePlague" Caption="plague mouse"/>
+<GuideEntityEmbed Entity="MobMousePlague" Caption="чумна миша"/>
 
-If you're bitten by a plague mouse, there's a significant chance you get infected with a disease. The disease is random and can be anything, but will generally be weak. Alternatively, someone can cough near you, and you will get infected if not wearing protective gear.
+Якщо вас вкусить чумна миша, є значний шанс заразитися хворобою. Хвороба випадкова й може бути будь-якою, але зазвичай слабкою. Також хтось може кашлянути поруч із вами — і ви заразитеся, якщо не маєте захисного спорядження.
 
-Infections can also affect monkeys and other mice, but diseases do not have any effect in mice, so they act as disease spread vectors. However, non-plague mice have a smaller chance to infect on bite.
+Зараження може вразити й мавп та інших мишей, але на самих мишей хвороби не впливають, тож вони виступають переносниками. Втім, звичайні (не чумні) миші мають менший шанс заразити при укусі.
 
-## Disease lifecycle
-Once you're infected, the disease gains infection progress while inside of you. The only way to tell you're infected at this point is to use a health analyzer or a swab. Additionally, you gain permanent immunity to that disease's genotype, as if you've taken a vaccine, so one disease can't infect you twice.
+## Життєвий цикл хвороби
+Після зараження хвороба набирає прогрес інфекції, перебуваючи у вашому організмі. На цьому етапі дізнатися, що ви заражені, можна лише за допомогою аналізатора здоров'я або мазка. Крім того, ви отримуєте постійний імунітет до генотипу цієї хвороби, наче ви щепилися вакциною, тож одна й та сама хвороба не може заразити вас двічі.
 
-Symptoms will begin showing up once the infection progress crosses certain thresholds. The more infection progress, the stronger the effects. Eventually it will hit its full force and stop progressing.
+Симптоми почнуть проявлятися, коли прогрес інфекції перетне певні пороги. Чим вищий прогрес інфекції, тим сильніші ефекти. Зрештою хвороба досягне піку та перестане прогресувати.
 
-At that time, immunity progress will also start catching up, if not suppressed by the disease. Immunity progress will make the infection progress slow down and eventually reverse. For most diseases, this will make you eventually lose the disease on your own.
+У цей момент прогрес імунітету також почне наздоганяти, якщо хвороба його не пригнічує. Прогрес імунітету сповільнить прогрес інфекції й зрештою розверне його назад. Для більшості хвороб це означає, що з часом ви одужаєте самі.
 
-Disease effects can be varied. Most diseases will have some effect that makes it obvious you are sick, but rarely they will simply silently damage you. Some diseases will fight back against your immunity, not going away on their own.
+Ефекти хвороб можуть бути різними. Більшість хвороб має симптоми, за якими очевидно, що ви хворі, але іноді вони просто непомітно завдають шкоди. Деякі хвороби активно протидіють імунітету й не проходять самі по собі.
 
-Once the infection progress hits 0, you lose the disease.
+Коли прогрес інфекції падає до 0, хвороба зникає.
 
-## Treatment
-There's several ways to treat diseases.
+## Лікування
+Є кілька способів лікувати хвороби.
 
-The first and most important, of course, is simply not getting infected:
-- Avoid mice, especially if it's trying to bite you.
-- If you see someone coughing, keep away.
-- Wear sterile masks and other protective gear. Wear a biosuit for full protection. They can be ordered at cargo.
-- Wear a MedHUD to see who is infected.
-- Vaccines. If the virologist has gotten their hands on a disease, they might have a vaccine that will make you permanently immune.
+Перше й найважливіше, звісно, — просто не заразитися:
+- Уникайте мишей, особливо якщо вони намагаються вас вкусити.
+- Якщо бачите, що хтось кашляє — тримайтеся подалі.
+- Носіть стерильні маски та інші засоби захисту. Для повного захисту вдягайте біокостюм. Його можна замовити в Карго.
+- Носіть MedHUD, щоб бачити, хто заражений.
+- Вакцини. Якщо вірусолог дістав зразок хвороби, у нього може бути вакцина, яка зробить вас постійно імунними.
 
-If that didn't work, you'll have to cure the disease, and not even vaccines will work. This can be done in several ways:
-- Immurin. It's a chemical that boosts your immunity, causing the disease to go away on its own much quicker.
-- Specialised anti-disease-type chemicals, such as devirate or spaceacilin.
-- Additionally, pay a visit to the virologist and let them swab you so they may analyze the disease and make vaccines against it.
+Якщо це не спрацювало, доведеться вилікувати хворобу — і навіть вакцини вже не допоможуть. Це можна зробити кількома способами:
+- immurin. Це хімікат, що підсилює ваш імунітет, тож хвороба проходить сама значно швидше.
+- Спеціалізовані проти певних типів хвороб хімікати, наприклад devirate або spaceacilin.
+- Також завітайте до вірусолога й дайте йому взяти у вас мазок, щоб він міг проаналізувати хворобу та зробити вакцини проти неї.
 
-## Disease specifics and mutation
-Diseases aren't static, and they mutate every time they spread. Just about everything about a disease can mutate, even mutation rate itself, but not the disease type. Bacteria aren't going to mutate into viruses.
+## Особливості хвороб та мутації
+Хвороби не є статичними: щоразу, коли вони передаються, вони мутують. Мутувати може майже все, навіть швидкість мутацій, але не тип хвороби. Бактерії не мутують у віруси.
 
-The main properties of a disease are its genotype and its effects.
+Головні властивості хвороби — її генотип та ефекти.
 
-The genotype is relevant for immunity against this disease. If the disease mutates its genotype, the resulting mutated disease will be able to infect even people who have been sick with the original disease.
+Генотип визначає імунітет до цієї хвороби. Якщо хвороба змінить свій генотип, мутований варіант зможе заразити навіть тих, хто вже перехворів на початкову версію.
 
-The disease effects are self-explanatory. It's what the disease does, such as coughing, damage, immunity suppression, vomiting, or positive effects such as speeding you up.
+Ефекти хвороби — це те, що вона робить: кашель, шкода, пригнічення імунітету, блювання або навіть позитивні ефекти, наприклад прискорення.
 
-Diseases can be mutated by drinking unstable mutagen.
+Хвороби можна мутувати, випивши нестабільний мутаген.
 
-# Virologist
-This is a sub-guide on how to be the virologist.
+# Вірусолог
+Це додатковий гайд про те, як грати вірусологом.
 
-## The job
-As a virologist, your job is both to combat disease and to use it to your advantage.
+## Робота
+Як вірусолог, ви маєте і боротися з хворобами, і використовувати їх собі на користь.
 
-You have many tools you can use for that purpose.
+Для цього у вас є багато інструментів.
 
-## Your toolkit
-- Your ViroHUD. It's significantly more avanced than the MedHUD at spotting who is infected, and can tell the rough severity.
-- Disease-related chemicals. Ask chemistry to make some.
-- Your biosuit, which will protect you from infection. Plague mice can't infect you through it.
-- Swabs, which let you take samples of disease from infected people.
-- A health analyzer, which can see what people are infected with.
-- And of course, your virology machinery.
+## Ваш набір інструментів
+- Ваш ViroHUD. Він значно краще за MedHUD визначає, хто заражений, і може показати приблизну тяжкість.
+- Хімікати, пов'язані з хворобами. Попросіть хімію зробити їх.
+- Ваш біокостюм, який захистить вас від зараження. Чумні миші не можуть заразити вас крізь нього.
+- Мазки, які дозволяють брати зразки хвороби у заражених.
+- Аналізатор здоров'я, який показує, чим саме заражені люди.
+- І, звісно, ваше вірусологічне обладнання.
 
 <Box>
-<GuideEntityEmbed Entity="ClothingEyesHudViro" Caption="viro HUD"/>
+<GuideEntityEmbed Entity="ClothingEyesHudViro" Caption="ViroHUD"/>
 <GuideEntityEmbed Entity="VirologistPDA"/>
-<GuideEntityEmbed Entity="ClothingOuterBioVirology" Caption="biosuit"/>
+<GuideEntityEmbed Entity="ClothingOuterBioVirology" Caption="біокостюм"/>
 <GuideEntityEmbed Entity="Syringe"/>
 <GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
 </Box>
 
-## Virology machines
-The disease analyzer and vaccinator are necessary to be able to properly handle disease. To use both of the machines, you will need a swab with disease on it. To get one, take a sterile swab and use it on someone who is infected.
+## Машини вірусології
+Аналізатор хвороб та вакцинатор потрібні, щоб правильно працювати з хворобами. Для використання обох машин вам знадобиться мазок із хворобою. Щоб отримати його, візьміть стерильний мазок і використайте його на зараженій людині.
 
-<GuideEntityEmbed Entity="DiseaseSwab" Caption="swab"/>
+<GuideEntityEmbed Entity="DiseaseSwab" Caption="мазок"/>
 
-The disease analyzer is a machine that can tell the specifics of a disease. It's important for triage and deciding what to do about the disease.
+Аналізатор хвороб — це машина, що показує подробиці хвороби. Це важливо для тріажу та вирішення, що робити з цією хворобою.
 
-<GuideEntityEmbed Entity="DiseaseDiagnoser" Caption="disease analyzer"/>
+<GuideEntityEmbed Entity="DiseaseDiagnoser" Caption="аналізатор хвороб"/>
 
-The vaccinator has 2 modes. Vaccine mode, and live injector mode. In vaccine mode, when inserted a swab, it will output a vaccine against the genotype of the disease on the swab. Vaccines make it so that people they are applied to gain permanent immunity to the disease's genotype. In live injector mode, the vaccinator will instead output an injector that infects whoever it's applied to with the source disease.
+Вакцинатор має 2 режими: режим вакцини та режим живого інжектора. У режимі вакцини, коли вставити мазок, він видасть вакцину проти генотипу хвороби з мазка. Вакцини дають тим, кому їх застосували, постійний імунітет до генотипу хвороби. У режимі живого інжектора вакцинатор натомість видасть інжектор, який заражає того, до кого його застосують, вихідною хворобою.
 
 <Box>
-<GuideEntityEmbed Entity="Vaccine" Caption="vaccine"/>
-<GuideEntityEmbed Entity="LiveInjector" Caption="injector"/>
-<GuideEntityEmbed Entity="Vaccinator" Caption="vaccinator"/>
+<GuideEntityEmbed Entity="Vaccine" Caption="вакцина"/>
+<GuideEntityEmbed Entity="LiveInjector" Caption="інжектор"/>
+<GuideEntityEmbed Entity="Vaccinator" Caption="вакцинатор"/>
 </Box>
 
-## Experimentation
-And now, on why the live injector mode is needed, other than purposes not condoned by Nanotrasen.
+## Експерименти
+А тепер — навіщо потрібен режим живого інжектора, окрім цілей, не схвалених Nanotrasen.
 
-Diseases work on monkeys, so you can infect them and try to get the disease to mutate. Eventually, this might result in a positive effect, getting you a helpful disease. Additionally, if you get lucky, you might get a disease with the same genotype but way weaker. People sick with the weaker disease will gain immunity against the original disease. There's more usages that this guide won't go through.
+Хвороби діють на мавпах, тож ви можете заразити їх і спробувати домогтися мутацій. Зрештою це може дати позитивний ефект і принести вам корисну хворобу. Крім того, якщо пощастить, ви можете отримати хворобу з тим самим генотипом, але набагато слабшу. Люди, що перехворіють на слабший варіант, отримають імунітет до оригінальної хвороби. Є й інші застосування, які цей гайд не розглядає.
 
 </Document>

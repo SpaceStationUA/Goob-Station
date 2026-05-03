@@ -129,6 +129,11 @@
     LeftHand:
       points: 2
       required: false
+    # PIRATE START
+    Face:
+      points: 3
+      required: false
+    # PIRATE END
 
 - type: humanoidBaseSprite
   id: MobMothHead

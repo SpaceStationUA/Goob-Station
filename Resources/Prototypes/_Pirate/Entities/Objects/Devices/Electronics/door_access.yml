@@ -1,0 +1,32 @@
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsIP
+  suffix: Interdyne, Locked
+  components:
+  - type: AccessReader
+    access: [["Interdyne"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsIPCommand
+  suffix: InterdyneCommand, Locked
+  components:
+  - type: AccessReader
+    access: [["InterdyneCommand"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsIPOfficer
+  suffix: InterdyneOfficer, Locked
+  components:
+  - type: AccessReader
+    access: [["InterdyneOfficer"]]
+
+# Sol Alliance
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsSAN
+  suffix: SAN, Locked
+  components:
+  - type: AccessReader
+    access: [["SAN"]]

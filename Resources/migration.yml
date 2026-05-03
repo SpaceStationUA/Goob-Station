@@ -157,8 +157,8 @@ AirlockMaintMimeLocked: AirlockMaintTheatreLocked
 AirlockMaintPsychologistLocked: AirlockMaintMedLocked
 AirlockMaintReporterLocked: AirlockServiceLocked
 AirlockMaintZookeeperLocked: AirlockServiceLocked
-AirlockMantisGlassLocked: null
-AirlockMantisLocked: null
+#AirlockMantisGlassLocked: null Pirate
+#AirlockMantisLocked: null
 AirlockMimeGlassLocked: AirlockTheatreGlassLocked
 AirlockMusicianGlassLocked: AirlockTheatreGlassLocked
 AirlockPsychologistLocked: AirlockMedicalLocked
@@ -174,14 +174,14 @@ BenchParkRight: null
 BenchPewLeft: null
 BenchPewMiddle: null
 BenchPewRight: null
-#BenchSofaCorpLeft: null # Goob edit
+#BenchSofaCorpLeft: null # Goob edit # Pirate start
 #BenchSofaCorpMiddle: null # Goob edit
 #BenchSofaCorpRight: null # Goob edit
-BenchSofaLeft: null
-BenchSofaRight: null
-BenchSteelLeft: null
-BenchSteelMiddle: null
-BenchSteelRight: null
+#BenchSofaLeft: null
+#BenchSofaRight: null
+#BenchSteelLeft: null
+#BenchSteelMiddle: null
+#BenchSteelRight: null Pirate end
 BenchSteelWhiteLeft: null
 BenchSteelWhiteMiddle: null
 BenchSteelWhiteRight: null
@@ -195,7 +195,7 @@ ClothingCostumeArcDress: null
 ClothingHeadCourier: null
 ClothingHeadHatFedoraBlack: null
 ClothingHeadHatFedoraChoc: null
-ClothingHeadHatFezMantis: null
+#ClothingHeadHatFezMantis: null Pirate
 ClothingHeadPrisonGuard: null
 ClothingUniformMartialGi: null
 ClothingUniformTShirtKhakiPants: null
@@ -210,7 +210,7 @@ DefaultStationBeaconEngiOutpost: null
 DefaultStationBeaconExam: null
 DefaultStationBeaconJanitorsOffice: null
 DefaultStationBeaconMailroom: null
-DefaultStationBeaconMantis: null
+#DefaultStationBeaconMantis: null
 DefaultStationBeaconMetempsychosis: null
 DefaultStationBeaconPark: null
 DefaultStationBeaconPsychologist: null
@@ -219,61 +219,61 @@ DrinkBubbleTeaGlass: null
 FishLabeler: null
 FoodLollipop: null
 FoodPSB: null
-GlimmerProber: null
+#GlimmerProber: null Pirate
 GunSafeAdjutantShotgun: null
 GunSafeEnergyGunMini: null
 GunSafeVulcanRifle: null
-HatSpawner: null
+#HatSpawner: null # Pirate
 KitchenDeepFryer: null
 KvassTankFull: null
-LockerForensicMantisFilled: null
+#LockerForensicMantisFilled: null Pirate
 LunchboxSecurityFilledRandom: null
 MagazineBoxSpecialPractice: null
 MetempsychoticMachine: null
-Oracle: null
+#Oracle: null
 PaintingMothBigCatch: null
 PaintingSpoon: null
 PlushieMothMusician: null
 PlushieMothRandom: null
-PosterContrabandBreadLies: null
-PosterContrabandGotWood: null
-PosterContrabandSafetyMothSyndie: null
-PosterContrabandSaucerNumberOne: null
-PosterLegitBarDrinks: null
-PosterLegitBotanyFood: null
-PosterLegitChknDnnr: null
-PosterLegitCornzza: null
-PosterLegitDejaVu: null
-PosterLegitDontPanic: null
-PosterLegitEatMeat: null
-PosterLegitFuckAround: null
-PosterLegitHotDonkExplosion: null
-PosterLegitMedicate: null
-PosterLegitNoTouching: null
-PosterLegitPieSlice: null
-PosterLegitPizzaHope: null
-PosterLegitSafetyMothBoH: null
-PosterLegitSafetyMothFires: null
-PosterLegitSafetyMothGlimmer: null
-PosterLegitSafetyMothPills: null
-PosterLegitSafetyMothPoisoning: null
-PosterLegitShoukou: null
-PoweredLightBlueInterior: null
-PoweredLightColoredRed: null
+#PosterContrabandBreadLies: null
+#PosterContrabandGotWood: null
+#PosterContrabandSafetyMothSyndie: null
+#PosterContrabandSaucerNumberOne: null
+#PosterLegitBarDrinks: null
+#PosterLegitBotanyFood: null
+#PosterLegitChknDnnr: null
+#PosterLegitCornzza: null
+#PosterLegitDejaVu: null
+#PosterLegitDontPanic: null
+#PosterLegitEatMeat: null
+#PosterLegitFuckAround: null
+#PosterLegitHotDonkExplosion: null
+#PosterLegitMedicate: null
+#PosterLegitNoTouching: null
+#PosterLegitPieSlice: null
+#PosterLegitPizzaHope: null
+#PosterLegitSafetyMothBoH: null
+#PosterLegitSafetyMothFires: null
+#PosterLegitSafetyMothGlimmer: null
+#PosterLegitSafetyMothPills: null
+#PosterLegitSafetyMothPoisoning: null
+#PosterLegitShoukou: null
+#PoweredLightBlueInterior: null
+#PoweredLightColoredRed: null
 PoweredSmallLightMaintenance: null
 PoweredSmallLightMaintenanceRed: null
-RandomAmmoBox: null
-RandomAnimalSpawner: null
-RandomBoards: null
-RandomBook: null
-RandomCrystalSpawner: null
+#RandomAmmoBox: null # Pirate
+#RandomAnimalSpawner: null # Pirate
+#RandomBoards: null # Pirate
+#RandomBook: null # Pirate
+#RandomCrystalSpawner: null # Pirate
 ReverseEngineeringMachine: null
 Roboisseur: null
 SalvagePartsSpawnerLow: null
 SalvagePartsSpawnerMid: null
 SecBreachingHammer: null
 Shinai: null
-ShockCollar: null
+ShockCollar: ClothingNeckBaseShockCollar # Pirate
 shuttle_manipulator: null
 SignConspiracyBoard: null
 SignDirectionalLogistics: null
@@ -281,14 +281,14 @@ SignDirectionalMail: null
 SignDojo: null
 SignLastIdiot: null
 SignSec: null
-SophicScribe: null
+#SophicScribe: null
 SpaceCashLuckyBill: null
 SpareIdCabinetFilled: null
 SpawnMobArcticFoxSiobhan: null
 SpawnMobFerret: null
 SpawnMobMothroach: null
 SpawnPointCourier: null
-SpawnPointForensicMantis: null
+# SpawnPointForensicMantis: null Pirate
 SpawnPointLocationMidRoundAntag: null
 SpawnPointMartialArtist: null
 SpawnPointMedicalBorg: null
@@ -405,8 +405,8 @@ SpeedLoaderPistolHighVelocity: SpeedLoaderPistol
 # 2023-08-07
 #If the name is anything to go off of, these are presumably just CEV-Eris versions of the snow rock (which we already have.)
 #They are practically never used in this way however, so they're migrated to the basic rock type.
-MountainRock: AsteroidRock
-MountainRockMining: AsteroidRockMining
+#MountainRock: AsteroidRock # Pirate
+#MountainRockMining: AsteroidRockMining # Pirate
 
 # 2023-08-08
 WindowTintedDirectional: WindowFrostedDirectional
@@ -747,7 +747,7 @@ FoodMeatFiestaKebab: FoodKebabSkewer
 ClothingBeltSuspenders: ClothingBeltSuspendersRed
 
 # 2024-08-19
-ClothingNeckShockCollar: ClothingBackpackElectropack
+#ClothingNeckShockCollar: ClothingBackpackElectropack # Pirate
 
 # 2024-08-28
 ClothingBackpackDuffelSyndicateCostumeCentcom: null
@@ -831,43 +831,45 @@ FloraGreyStalagmite3: FloraGreyStalagmite
 FloraGreyStalagmite4: FloraGreyStalagmite
 FloraGreyStalagmite5: FloraGreyStalagmite
 FloraGreyStalagmite6: FloraGreyStalagmite
-FloraTree01: FloraTree
-FloraTree02: FloraTree
-FloraTree03: FloraTree
-FloraTree04: FloraTree
-FloraTree05: FloraTree
-FloraTree06: FloraTree
-FloraTreeSnow01: FloraTreeSnow
-FloraTreeSnow02: FloraTreeSnow
-FloraTreeSnow03: FloraTreeSnow
-FloraTreeSnow04: FloraTreeSnow
-FloraTreeSnow05: FloraTreeSnow
-FloraTreeSnow06: FloraTreeSnow
-FloraTreeLarge01: FloraTreeLarge
-FloraTreeLarge02: FloraTreeLarge
-FloraTreeLarge03: FloraTreeLarge
-FloraTreeLarge04: FloraTreeLarge
-FloraTreeLarge05: FloraTreeLarge
-FloraTreeLarge06: FloraTreeLarge
-FloraTreeConifer01: FloraTreeConifer
-FloraTreeConifer02: FloraTreeConifer
-FloraTreeConifer03: FloraTreeConifer
-ShadowTree01: ShadowTree
-ShadowTree02: ShadowTree
-ShadowTree03: ShadowTree
-ShadowTree04: ShadowTree
-ShadowTree05: ShadowTree
-ShadowTree06: ShadowTree
-LightTree01: LightTree
-LightTree02: LightTree
-LightTree03: LightTree
-LightTree04: LightTree
-LightTree05: LightTree
-LightTree06: LightTree
+### Pirate edit start VVV
+#FloraTree01: FloraTree
+#FloraTree02: FloraTree
+#FloraTree03: FloraTree
+#FloraTree04: FloraTree
+#FloraTree05: FloraTree
+#FloraTree06: FloraTree
+#FloraTreeSnow01: FloraTreeSnow
+#FloraTreeSnow02: FloraTreeSnow
+#FloraTreeSnow03: FloraTreeSnow
+#FloraTreeSnow04: FloraTreeSnow
+#FloraTreeSnow05: FloraTreeSnow
+#FloraTreeSnow06: FloraTreeSnow
+#FloraTreeLarge01: FloraTreeLarge
+#FloraTreeLarge02: FloraTreeLarge
+#FloraTreeLarge03: FloraTreeLarge
+#FloraTreeLarge04: FloraTreeLarge
+#FloraTreeLarge05: FloraTreeLarge
+#FloraTreeLarge06: FloraTreeLarge
+#FloraTreeConifer01: FloraTreeConifer
+#FloraTreeConifer02: FloraTreeConifer
+#FloraTreeConifer03: FloraTreeConifer
+#ShadowTree01: ShadowTree
+#ShadowTree02: ShadowTree
+#ShadowTree03: ShadowTree
+#ShadowTree04: ShadowTree
+#ShadowTree05: ShadowTree
+#ShadowTree06: ShadowTree
+#LightTree01: LightTree
+#LightTree02: LightTree
+#LightTree03: LightTree
+#LightTree04: LightTree
+#LightTree05: LightTree
+#LightTree06: LightTree
+### Pirate edit end ^^^
 
 # 2024-12-22 # Lavaland Change: Migrations
 VendingMachineRestockSalvageEquipment: null
-ComputerSalvageExpedition: ComputerShuttleMiningLavaland
+#ComputerSalvageExpedition: ComputerShuttleMiningLavaland
 SalvageExpeditionsComputerCircuitboard: LavalandShuttleConsoleCircuitboard
 
 # 2025-01-06
@@ -1061,3 +1063,9 @@ DVSmartFridgeMedical: SmartFridgeMedical
 
 # 2026-01-10 Goobstation Change Mapped Chem to Energy Chem by default
 ChemDispenser: EnergyChemDispenser
+
+# PIRATE START
+PosterContrabandCommunistState: PosterContrabandSolAlliance
+MagazinePistolMindbreaker: MagazinePistolCryptobiolin
+SpawnMobGoidaBot: SpawnMobPotyzhnobot
+# PIRATE END

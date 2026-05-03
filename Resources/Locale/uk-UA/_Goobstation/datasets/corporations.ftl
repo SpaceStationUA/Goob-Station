@@ -1,0 +1,12 @@
+traitor-corporations-flavor-dataset-1 = Терорист ARC
+traitor-corporations-flavor-dataset-2 = Фронт Визволення Бджіл
+traitor-corporations-flavor-dataset-3 = Cybersun Industries
+traitor-corporations-flavor-dataset-4 = Мародери Горлекс
+traitor-corporations-flavor-dataset-5 = Корпоративний Кар'єрист
+traitor-corporations-flavor-dataset-6 = Корпорація Донк
+traitor-corporations-flavor-dataset-7 = Проблеми з Законом
+traitor-corporations-flavor-dataset-8 = MI13
+traitor-corporations-flavor-dataset-9 = Кооператив "Тигр
+traitor-corporations-flavor-dataset-10 = Корпорація "Вафля
+traitor-corporations-flavor-dataset-11 = Терорист Корпорації "Вафля
+traitor-corporations-flavor-dataset-12 = Провидець Федерації Нойлітів

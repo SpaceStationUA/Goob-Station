@@ -160,6 +160,10 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: fill
+  # Pirate banking start
+  - type: StaticPrice
+    price: 8
+  # Pirate banking end
 
 - type: entity
   parent: DrinkGlassBase

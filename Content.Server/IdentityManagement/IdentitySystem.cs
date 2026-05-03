@@ -29,6 +29,7 @@ using Content.Goobstation.Common.Identity;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.CriminalRecords.Systems;
+using Content.Server.PsionicsRecords.Systems; // Pirate from EE
 using Content.Server.Humanoid;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
@@ -47,7 +48,7 @@ namespace Content.Server.IdentityManagement;
 /// <summary>
 ///     Responsible for updating the identity of an entity on init or clothing equip/unequip.
 /// </summary>
-public sealed class IdentitySystem : SharedIdentitySystem
+public sealed partial class IdentitySystem : SharedIdentitySystem // DOWNSTREAM-TPirates: face mutilation
 {
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
@@ -55,6 +56,7 @@ public sealed class IdentitySystem : SharedIdentitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
+    [Dependency] private readonly PsionicsRecordsConsoleSystem _psionicsRecordsConsole = default!; // Pirate from Einstein Engines
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!; // Goobstation - Update component state on component toggle
 
@@ -74,6 +76,7 @@ public sealed class IdentitySystem : SharedIdentitySystem
 
         SubscribeLocalEvent<IdentityBlockerComponent, ComponentInit>(BlockerUpdateIdentity); // Goobstation - Update component state on component toggle
         SubscribeLocalEvent<IdentityBlockerComponent, ComponentRemove>(BlockerUpdateIdentity); // Goobstation - Update component state on component toggle
+        InitializePirateFaceMutilation(); // DOWNSTREAM-TPirates: face mutilation
     }
 
     public override void Update(float frameTime)
@@ -158,7 +161,7 @@ public sealed class IdentitySystem : SharedIdentitySystem
         _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(uid)} changed identity to {name}");
         var identityChangedEvent = new IdentityChangedEvent(uid, ident);
         RaiseLocalEvent(uid, ref identityChangedEvent);
-        SetIdentityCriminalIcon(uid);
+        SetIdentityRecordsIcon(uid);
     }
 
     private string GetIdentityName(EntityUid target, IdentityRepresentation representation)
@@ -166,18 +169,30 @@ public sealed class IdentitySystem : SharedIdentitySystem
         var ev = new SeeIdentityAttemptEvent();
 
         RaiseLocalEvent(target, ev);
-        return representation.ToStringKnown(!ev.Cancelled);
+        #region DOWNSTREAM-TPirates: face mutilation
+        var knownIdentity = representation.ToStringKnown(!ev.Cancelled);
+        // Preserve SeeIdentityAttemptEvent and ID-card identity rules first, then apply face mutilation identity only when identity is visible and not ID-based.
+        if (!ev.Cancelled
+            && representation.PresumedName == null
+            && TryGetPirateFaceMutilationIdentity(target, representation, out var pirateIdentity))
+            return pirateIdentity;
+        return knownIdentity;
+        #endregion
     }
 
     /// <summary>
-    ///     When the identity of a person is changed, searches the criminal records to see if the name of the new identity
-    ///     has a record. If the new name has a criminal status attached to it, the person will get the criminal status
-    ///     until they change identity again.
+    ///     When the identity of a person is changed, searches the criminal records and psionics records to see if the name
+    ///     of the new identity has a record. If the new name has a criminal status or psionics status attached to it, the
+    ///     person will get the criminal status and/or psionics status until they change identity again.
     /// </summary>
-    private void SetIdentityCriminalIcon(EntityUid uid)
+    private void SetIdentityRecordsIcon(EntityUid uid)
     {
         _criminalRecordsConsole.CheckNewIdentity(uid);
+        _psionicsRecordsConsole.CheckNewIdentity(uid);
     }
+
+    private partial void InitializePirateFaceMutilation(); // DOWNSTREAM-TPirates: face mutilation
+    private partial bool TryGetPirateFaceMutilationIdentity(EntityUid target, IdentityRepresentation representation, out string identity); // DOWNSTREAM-TPirates: face mutilation
 
     /// <summary>
     ///     Gets an 'identity representation' of an entity, with their true name being the entity name

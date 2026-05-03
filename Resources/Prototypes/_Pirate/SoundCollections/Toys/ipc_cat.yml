@@ -1,0 +1,9 @@
+- type: soundCollection
+  id: IPCCat
+  files:
+  - /Audio/_Pirate/Items/Plush/IPCCat/ipc_meow.ogg
+  - /Audio/_Pirate/Items/Plush/IPCCat/ipc_meow2.ogg
+  - /Audio/_Pirate/Items/Plush/IPCCat/ipc_mew1.ogg
+  - /Audio/_Pirate/Items/Plush/IPCCat/ipc_mew2.ogg
+  - /Audio/_Pirate/Items/Plush/IPCCat/ipc_purr1.ogg
+  - /Audio/_Pirate/Items/Plush/IPCCat/ipc_purr2.ogg

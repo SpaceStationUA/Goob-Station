@@ -66,6 +66,4 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> SpeechBubbleBackgroundOpacity =
         CVarDef.Create("accessibility.speech_bubble_background_opacity", 0.75f, CVar.CLIENTONLY | CVar.ARCHIVE);
-
-
 }

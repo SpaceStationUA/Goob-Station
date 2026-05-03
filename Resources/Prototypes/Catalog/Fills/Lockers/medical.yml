@@ -97,6 +97,7 @@
       - id: UniformScrubsColorPurple
         weight: 0.05
     - id: ClothingMaskSterile
+    - id: Eftpos #Pirate banking
 
 - type: entity
   parent: LockerMedical
@@ -138,6 +139,7 @@
     - id: portableChemicalMixer # Goob, until chemmaster rework
     - id: HandLabeler
       prob: 0.5
+    - id: Eftpos #Pirate banking
 
 - type: entity
   parent: LockerChemistry
@@ -168,6 +170,7 @@
     - id: HandheldGPSBasic
     - id: MedkitFilled
       prob: 0.3
+    - id: Eftpos #Pirate banking
 
 - type: entity
   parent: LockerParamedic
@@ -191,3 +194,4 @@
       - id: HandheldGPSBasic
       - id: MedkitFilled
         prob: 0.3
+      - id: Eftpos #Pirate banking

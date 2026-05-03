@@ -23,6 +23,9 @@ public record struct GrabAttemptReleaseEvent(
 public record struct CheckGrabbedEvent(bool IsGrabbed = false);
 
 [ByRefEvent]
+public record struct GetGrabStageEvent(GrabStage Stage = GrabStage.No);
+
+[ByRefEvent]
 public record struct RaiseGrabModifierEventEvent(
     EntityUid User,
     int Stage,

@@ -70,7 +70,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockBoozeFilled
-  cost: 3500
+  cost: 8000 # Pirate
   category: cargoproduct-category-name-service
   group: market
 
@@ -90,7 +90,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockClothesFilled
-  cost: 5300
+  cost: 9500 # Pirate
   category: cargoproduct-category-name-service
   group: market
 
@@ -120,7 +120,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockCondimentStationFilled
-  cost: 300
+  cost: 1000 # Pirate
   category: cargoproduct-category-name-service
   group: market
 
@@ -140,7 +140,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockGamesFilled
-  cost: 750
+  cost: 1250 # Pirate
   category: cargoproduct-category-name-service
   group: market
 
@@ -240,7 +240,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockSmokesFilled
-  cost: 1200
+  cost: 2560 # Pirate
   category: cargoproduct-category-name-service
   group: market
 

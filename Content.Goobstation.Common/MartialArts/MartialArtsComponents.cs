@@ -32,7 +32,8 @@ public abstract partial class GrabStagesOverrideComponent : Component
 
 [RegisterComponent]
 [NetworkedComponent]
-[AutoGenerateComponentState]
+//[AutoGenerateComponentState] //Original
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true)] //Pirate Changes
 public sealed partial class MartialArtsKnowledgeComponent : GrabStagesOverrideComponent
 {
     [DataField]
@@ -62,4 +63,5 @@ public enum MartialArtsForms
     KungFuDragon,
     Ninjutsu,
     HellRip,
+    LegendaryCloseQuartersCombat, //Pirate Changes
 }

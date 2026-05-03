@@ -1,0 +1,76 @@
+- type: entity
+  abstract: true
+  id: ClothingBeltCombatSurgeryFilled
+  parent: ClothingBeltCombatSurgeryBase
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Scalpel
+      - id: Retractor
+      - id: Hemostat
+      - id: Cautery
+      - id: MedicatedSuture
+      - id: RegenerativeMesh
+      - id: Bloodpack
+      
+- type: entity
+  id: ClothingBeltCombatSurgeryFilledRed
+  parent: [ ClothingBeltCombatSurgeryFilled, ClothingBeltCombatSurgery ]
+
+- type: entity
+  id: ClothingBeltCombatSurgeryFilledBlue
+  parent: [ ClothingBeltCombatSurgeryFilled, ClothingBeltCombatSurgeryBlue ]
+  
+- type: entity
+  id: ClothingBeltCombatSurgeryFilledGreen
+  parent: [ ClothingBeltCombatSurgeryFilled, ClothingBeltCombatSurgeryGreen ]
+
+#Advanced
+- type: entity
+  abstract: true
+  id: ClothingBeltCombatSurgeryAdvancedFilled
+  parent: ClothingBeltCombatSurgeryBase
+  suffix: Filled, Advanced
+  components:
+  - type: StorageFill
+    contents:
+      - id: EnergyScalpel
+      - id: AdvancedRetractor
+      - id: EnergyCautery
+      - id: MedicatedSuture
+      - id: RegenerativeMesh
+      - id: Bloodpack
+      - id: DefibrillatorCompact
+      
+- type: entity
+  id: ClothingBeltCombatSurgeryAdvancedFilledRed
+  parent: [ ClothingBeltCombatSurgeryAdvancedFilled, ClothingBeltCombatSurgery ]
+
+- type: entity
+  id: ClothingBeltCombatSurgeryAdvancedFilledBlue
+  parent: [ ClothingBeltCombatSurgeryAdvancedFilled, ClothingBeltCombatSurgeryBlue ]
+  
+- type: entity
+  id: ClothingBeltCombatSurgeryAdvancedFilledGreen
+  parent: [ ClothingBeltCombatSurgeryAdvancedFilled, ClothingBeltCombatSurgeryGreen ]
+  
+- type: entity
+  abstract: true
+  id: ClothingBeltCombatSurgeryAdvancedFilledInterdyne
+  parent: ClothingBeltCombatSurgeryBase
+  suffix: Filled, Interdyne
+  components:
+  - type: StorageFill
+    contents:
+      - id: EnergyScalpel
+      - id: AdvancedRetractor
+      - id: EnergyCautery
+      - id: MedicatedSuture
+      - id: RegenerativeMesh
+      - id: Bloodpack
+      - id: DefibrillatorSyndicate
+      
+- type: entity
+  id: ClothingBeltCombatSurgeryAdvancedFilledInterdyneGreen
+  parent: [ ClothingBeltCombatSurgeryAdvancedFilledInterdyne, ClothingBeltCombatSurgeryGreen ]

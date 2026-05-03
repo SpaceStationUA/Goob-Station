@@ -44,6 +44,7 @@
         - Impassable
         layer:
         - MidImpassable
+        - BulletImpassable # Pirate - port EE allow crawling entities to go under tables
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
@@ -51,7 +52,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -88,6 +89,7 @@
         layer:
         - Opaque
         - MidImpassable
+        - BulletImpassable # Pirate - port EE allow crawling entities to go under tables
   - type: Occluder
   - type: Construction
     graph: PlasticFlapsGraph
@@ -104,7 +106,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 75
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -123,7 +125,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 75
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]

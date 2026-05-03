@@ -16,6 +16,9 @@ using Content.Shared.Gibbing.Components;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mind;
 using Content.Shared.Whitelist;
+using Content.Server.Objectives.Systems; // Pirate edit
+using Content.Shared.Objectives.Systems; // Pirate edit
+using Content.Shared.Objectives.Components; // Pirate edit
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
@@ -28,6 +31,8 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
     [Dependency] private readonly CloningSystem _cloning = default!;
     [Dependency] private readonly SuitSensorSystem _sensor = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // Goobstation
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!; // Pirate edit
+    [Dependency] private readonly TargetObjectiveSystem _targetObjective = default!; // Pirate edit
 
     public override void Initialize()
     {
@@ -51,6 +56,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
             ForceEndSelf(uid, gameRule);
         }
     }
+
 
     // we have to do the spawning here so we can transfer the mind to the correct entity and can assign the objectives correctly
     private void OnAntagSelectEntity(Entity<ParadoxCloneRuleComponent> ent, ref AntagSelectEntityEvent args)
@@ -93,12 +99,14 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
             return;
         }
 
-        var targetComp = EnsureComp<TargetOverrideComponent>(clone.Value);
-        targetComp.Target = ent.Comp.OriginalMind; // set the kill target
+        // Pirate edit start VVV
+        var targetOverride = EnsureComp<TargetOverrideComponent>(clone.Value);
+        targetOverride.Target = ent.Comp.OriginalMind;
 
-        var gibComp = EnsureComp<GibOnRoundEndComponent>(clone.Value);
-        gibComp.SpawnProto = ent.Comp.GibProto;
-        gibComp.PreventGibbingObjectives = new() { "ParadoxCloneKillObjective" }; // don't gib them if they killed the original.
+        var syncComp = EnsureComp<ParadoxSyncComponent>(clone.Value);
+        syncComp.Target = ent.Comp.OriginalBody.Value;
+        syncComp.EffectProto = ent.Comp.GibProto;
+        // Pirate edit end ^^^
 
         // turn their suit sensors off so they don't immediately get noticed
         _sensor.SetAllSensors(clone.Value, SuitSensorMode.SensorOff);
@@ -115,5 +123,14 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
             return;
 
         _mind.CopyObjectives(ent.Comp.OriginalMind.Value, (cloneMindId, cloneMindComp), ent.Comp.ObjectiveWhitelist, ent.Comp.ObjectiveBlacklist);
+
+        // Pirate edit start VVV
+        if (_objectives.TryCreateObjective((cloneMindId, cloneMindComp), "ParadoxCloneFriendObjective", out var objective))
+        {
+            _targetObjective.SetTarget(objective.Value, ent.Comp.OriginalMind.Value);
+            
+            _mind.AddObjective(cloneMindId, cloneMindComp, objective.Value);
+        }
+        // Pirate edit end ^^^
     }
 }

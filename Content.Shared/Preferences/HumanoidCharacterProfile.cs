@@ -51,6 +51,7 @@
 
 using System.Linq;
 using System.Text.RegularExpressions;
+using Content.Pirate.Common.AlternativeJobs; // Pirate - Alternative Jobs
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
@@ -61,6 +62,7 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Goobstation.Common.Barks; // Goob Station - Barks
 using Content.Shared.Traits;
+using Content.Shared._Pirate.CCVars; // Pirate - traits rework
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -79,7 +81,7 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public sealed partial class HumanoidCharacterProfile : ICharacterProfile
     {
-        private static readonly Regex RestrictedNameRegex = new(@"[^A-Za-z0-9 '\-]");
+        private static readonly Regex RestrictedNameRegex = new(@"[^\u0030-\u0039\u0041-\u005A\u0061-\u007A\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F '\-]");
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
 
         /// <summary>
@@ -92,6 +94,7 @@ namespace Content.Shared.Preferences
                 SharedGameTicker.FallbackOverflowJob, JobPriority.High
             }
         };
+        [DataField] private Dictionary<ProtoId<JobPrototype>, ProtoId<AlternativeJobPrototype>> _jobAlternatives = new(); // Pirate - Alternative Jobs
 
         /// <summary>
         /// Antags we have opted in to.
@@ -100,7 +103,7 @@ namespace Content.Shared.Preferences
         private HashSet<ProtoId<AntagPrototype>> _antagPreferences = new();
 
         /// <summary>
-        /// Enabled traits.
+        /// Enabled traits. // Pirate: port and modified DV traits system
         /// </summary>
         [DataField]
         private HashSet<ProtoId<TraitPrototype>> _traitPreferences = new();
@@ -140,6 +143,31 @@ namespace Content.Shared.Preferences
         [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
 
+        // Pirate edit start - port EE contractors
+        [DataField]
+        public string Nationality { get; set; } = SharedHumanoidAppearanceSystem.DefaultNationality;
+
+        [DataField]
+        public string Employer { get; set; } = SharedHumanoidAppearanceSystem.DefaultEmployer;
+        // Pirate edit end - port EE contractors
+        // Pirate start: port and modified DV traits system
+        public HumanoidCharacterProfile WithoutAllTraitPreferences()
+        {
+            return new(this)
+            {
+                _traitPreferences = new HashSet<ProtoId<TraitPrototype>>(),
+            };
+        }
+
+        public HumanoidCharacterProfile WithTraitPreferences(IEnumerable<ProtoId<TraitPrototype>> traitPreferences)
+        {
+            return new(this)
+            {
+                _traitPreferences = new(traitPreferences),
+            };
+        }
+        // Pirate end: port and modified DV traits system
+
         // begin Goobstation: port EE height/width sliders
         [DataField]
         public float Height { get; private set; }
@@ -170,13 +198,18 @@ namespace Content.Shared.Preferences
         /// </summary>
         public IReadOnlyDictionary<ProtoId<JobPrototype>, JobPriority> JobPriorities => _jobPriorities;
 
+        /// <summary> 
+        /// <see cref="_jobAlternatives"/>
+        /// </summary>
+        public IReadOnlyDictionary<ProtoId<JobPrototype>, ProtoId<AlternativeJobPrototype>> JobAlternatives => _jobAlternatives; // Pirate - Alternative Jobs
+
         /// <summary>
         /// <see cref="_antagPreferences"/>
         /// </summary>
         public IReadOnlySet<ProtoId<AntagPrototype>> AntagPreferences => _antagPreferences;
 
         /// <summary>
-        /// <see cref="_traitPreferences"/>
+        /// <see cref="_traitPreferences"/> // Pirate: port and modified DV traits system
         /// </summary>
         public IReadOnlySet<ProtoId<TraitPrototype>> TraitPreferences => _traitPreferences;
 
@@ -190,6 +223,8 @@ namespace Content.Shared.Preferences
             string name,
             string flavortext,
             string species,
+            string nationality, // Pirate - port EE contractors
+            string employer, // Pirate - port EE contractors
             float height, // Goobstation: port EE height/width sliders
             float width, // Goobstation: port EE height/width sliders
             int age,
@@ -198,15 +233,18 @@ namespace Content.Shared.Preferences
             HumanoidCharacterAppearance appearance,
             SpawnPriorityPreference spawnPriority,
             Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities,
+            Dictionary<ProtoId<JobPrototype>, ProtoId<AlternativeJobPrototype>> jobAlternatives, // Pirate - Alternative Jobs
             PreferenceUnavailableMode preferenceUnavailable,
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
-            HashSet<ProtoId<TraitPrototype>> traitPreferences,
+            HashSet<ProtoId<TraitPrototype>> traitPreferences, // Pirate: port and modified DV traits system
             Dictionary<string, RoleLoadout> loadouts,
             ProtoId<BarkPrototype> barkVoice) // Goob Station - Barks
         {
             Name = name;
             FlavorText = flavortext;
             Species = species;
+            Nationality = nationality; // Pirate - port EE contractors
+            Employer = employer; // Pirate - port EE contractors
             Height = height; // Goobstation: port EE height/width sliders
             Width = width; // Goobstation: port EE height/width sliders
             Age = age;
@@ -215,6 +253,7 @@ namespace Content.Shared.Preferences
             Appearance = appearance;
             SpawnPriority = spawnPriority;
             _jobPriorities = jobPriorities;
+            _jobAlternatives = jobAlternatives; // Pirate - Alternative Jobs
             PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
@@ -241,6 +280,8 @@ namespace Content.Shared.Preferences
             : this(other.Name,
                 other.FlavorText,
                 other.Species,
+                other.Nationality, // Pirate - port EE contractors
+                other.Employer, // Pirate - port EE contractors
                 other.Height, // Goobstation: port EE height/width sliders
                 other.Width, // Goobstation: port EE height/width sliders
                 other.Age,
@@ -249,6 +290,7 @@ namespace Content.Shared.Preferences
                 other.Appearance.Clone(),
                 other.SpawnPriority,
                 new Dictionary<ProtoId<JobPrototype>, JobPriority>(other.JobPriorities),
+                new Dictionary<ProtoId<JobPrototype>, ProtoId<AlternativeJobPrototype>>(other.JobAlternatives), // Pirate - Alternative Jobs
                 other.PreferenceUnavailable,
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
@@ -278,6 +320,8 @@ namespace Content.Shared.Preferences
             return new()
             {
                 Species = species,
+                Nationality = SharedHumanoidAppearanceSystem.DefaultNationality, // Pirate - port EE contractors
+                Employer = SharedHumanoidAppearanceSystem.DefaultEmployer, // Pirate - port EE contractors
             };
         }
 
@@ -349,6 +393,8 @@ namespace Content.Shared.Preferences
                 Height = height, // Goobstation: port EE height/width sliders
                 Appearance = HumanoidCharacterAppearance.Random(species, sex),
                 BarkVoice = barkvoiceId, // Goob Station - Barks
+                Nationality = SharedHumanoidAppearanceSystem.DefaultNationality, // Pirate - port EE contractors
+                Employer = SharedHumanoidAppearanceSystem.DefaultEmployer, // Pirate - port EE contractors
             };
         }
 
@@ -366,6 +412,17 @@ namespace Content.Shared.Preferences
         {
             return new(this) { Age = age };
         }
+
+        // Pirate edit start - port EE contractors
+        public HumanoidCharacterProfile WithNationality(string nationality)
+        {
+            return new(this) { Nationality = nationality };
+        }
+        public HumanoidCharacterProfile WithEmployer(string employer)
+        {
+            return new(this) { Employer = employer };
+        }
+        // Pirate edit end - port EE contractors
 
         public HumanoidCharacterProfile WithSex(Sex sex)
         {
@@ -433,6 +490,24 @@ namespace Content.Shared.Preferences
                 _jobPriorities = dictionary
             };
         }
+
+        public HumanoidCharacterProfile WithJobAlternative(KeyValuePair<ProtoId<JobPrototype>, ProtoId<AlternativeJobPrototype>> jobAlternative) // Pirate start - Alternative Jobs
+        {
+            var dictionary = new Dictionary<ProtoId<JobPrototype>, ProtoId<AlternativeJobPrototype>>(_jobAlternatives);
+
+            // If no alternative is selected for this job, add it.
+            if (!dictionary.ContainsKey(jobAlternative.Key))
+                dictionary.Add(jobAlternative.Key, jobAlternative.Value);
+
+            // If there is an alternative selected, but it's not the one we want, change it.
+            else if (dictionary[jobAlternative.Key] != jobAlternative.Value)
+                dictionary[jobAlternative.Key] = jobAlternative.Value;
+
+            return new(this)
+            {
+                _jobAlternatives = dictionary,
+            };
+        } // Pirate end - Alternative Jobs
 
         public HumanoidCharacterProfile WithJobPriority(ProtoId<JobPrototype> jobId, JobPriority priority)
         {
@@ -572,11 +647,13 @@ namespace Content.Shared.Preferences
             if (Height != other.Height) return false; // Goobstation: port EE height/width sliders
             if (Width != other.Width) return false; // Goobstation: port EE height/width sliders
             if (BarkVoice != other.BarkVoice) return false; // Goob Station - Barks
+            if (Nationality != other.Nationality) return false; // Pirate - port EE contractors
+            if (Employer != other.Employer) return false; // Pirate - port EE contractors
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
-            if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
+            if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false; // Pirate: port and modified DV traits system
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
@@ -662,6 +739,28 @@ namespace Content.Shared.Preferences
                 flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText);
             }
 
+            // Pirate edit start - port EE contractors
+            string nationality;
+            if (Nationality.Length > maxFlavorTextLength)
+            {
+                nationality = FormattedMessage.RemoveMarkupOrThrow(Nationality)[..maxFlavorTextLength];
+            }
+            else
+            {
+                nationality = FormattedMessage.RemoveMarkupOrThrow(Nationality);
+            }
+
+            string employer;
+            if (Employer.Length > maxFlavorTextLength)
+            {
+                employer = FormattedMessage.RemoveMarkupOrThrow(Employer)[..maxFlavorTextLength];
+            }
+            else
+            {
+                employer = FormattedMessage.RemoveMarkupOrThrow(Employer);
+            }
+            // Pirate edit end - port EE contractors
+
             // begin Goobstation: port EE height/width sliders
             var height = Height;
             if (speciesPrototype != null)
@@ -721,6 +820,8 @@ namespace Content.Shared.Preferences
             Name = name;
             FlavorText = flavortext;
             Age = age;
+            Nationality = nationality; // Pirate - port EE contractors
+            Employer = employer; // Pirate - port EE contractors
             Height = height; // Goobstation: port EE height/width sliders
             Width = width; // Goobstation: port EE height/width sliders
             Sex = sex;
@@ -740,8 +841,12 @@ namespace Content.Shared.Preferences
             _antagPreferences.Clear();
             _antagPreferences.UnionWith(antags);
 
-            _traitPreferences.Clear();
-            _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
+            _traitPreferences.Clear(); // Pirate: port and modified DV traits system
+            // Pirate start - traits rework
+            var maxPoints = configManager.GetCVar(PirateVars.MaxTraitPoints);
+            var maxCount = configManager.GetCVar(PirateVars.MaxTraitCount);
+            _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager, maxPoints, maxCount));
+            // Pirate end - traits rework
 
             // Checks prototypes exist for all loadouts and dump / set to default if not.
             var toRemove = new ValueList<string>();
@@ -767,21 +872,40 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Takes in an IEnumerable of traits and returns a List of the valid traits.
         /// </summary>
-        public List<ProtoId<TraitPrototype>> GetValidTraits(IEnumerable<ProtoId<TraitPrototype>> traits, IPrototypeManager protoManager)
+        // Pirate start: port and modified DV traits system
+        public List<ProtoId<TraitPrototype>> GetValidTraits(
+            IEnumerable<ProtoId<TraitPrototype>> traits,
+            IPrototypeManager protoManager,
+            int maxGlobalPoints,
+            int maxGlobalCount)
         {
             // Track points count for each group.
             var groups = new Dictionary<string, int>();
+            var counts = new Dictionary<string, int>();
             var result = new List<ProtoId<TraitPrototype>>();
+            var totalPoints = 0;
+            var totalCount = 0;
 
-            foreach (var trait in traits)
+            var sortedTraits = traits
+                .Where(protoManager.HasIndex)
+                .OrderBy(id => protoManager.Index(id).Cost);
+
+            foreach (var traitId in sortedTraits)
             {
-                if (!protoManager.TryIndex(trait, out var traitProto))
+                if (!protoManager.TryIndex(traitId, out var traitProto))
                     continue;
 
-                // Always valid.
+                if (totalCount + 1 > maxGlobalCount)
+                    continue;
+
+                if (totalPoints + traitProto.Cost > maxGlobalPoints)
+                    continue;
+
                 if (traitProto.Category == null)
                 {
-                    result.Add(trait);
+                    result.Add(traitId);
+                    totalPoints += traitProto.Cost;
+                    totalCount++;
                     continue;
                 }
 
@@ -789,19 +913,28 @@ namespace Content.Shared.Preferences
                 if (!protoManager.TryIndex(traitProto.Category, out var category))
                     continue;
 
-                var existing = groups.GetOrNew(category.ID);
-                existing += traitProto.Cost;
+                var existingPoints = groups.GetValueOrDefault(category.ID, 0);
+                var existingCount = counts.GetValueOrDefault(category.ID, 0);
 
-                // Too expensive.
-                if (existing > category.MaxTraitPoints)
+                var maxCatPoints = category.MaxPoints ?? category.MaxTraitPoints;
+
+                if (maxCatPoints.HasValue && existingPoints + traitProto.Cost > maxCatPoints.Value)
                     continue;
 
-                groups[category.ID] = existing;
-                result.Add(trait);
+                // Too expensive.
+                if (category.MaxTraits.HasValue && existingCount + 1 > category.MaxTraits.Value)
+                    continue;
+
+                groups[category.ID] = existingPoints + traitProto.Cost;
+                counts[category.ID] = existingCount + 1;
+                result.Add(traitId);
+                totalPoints += traitProto.Cost;
+                totalCount++;
             }
 
             return result;
         }
+        // Pirate end: port and modified DV traits system
 
         public ICharacterProfile Validated(ICommonSession session, IDependencyCollection collection)
         {
@@ -835,13 +968,15 @@ namespace Content.Shared.Preferences
             var hashCode = new HashCode();
             hashCode.Add(_jobPriorities);
             hashCode.Add(_antagPreferences);
-            hashCode.Add(_traitPreferences);
+            hashCode.Add(_traitPreferences); // Pirate: port and modified DV traits system
             hashCode.Add(_loadouts);
             hashCode.Add(Name);
             hashCode.Add(FlavorText);
             hashCode.Add(Species);
             hashCode.Add(Height); // Goobstation: port EE height/width sliders
             hashCode.Add(Width); // Goobstation: port EE height/width sliders
+            hashCode.Add(Employer); // Pirate - port EE contractors
+            hashCode.Add(Nationality); // Pirate - port EE contractors
             hashCode.Add(Age);
             hashCode.Add((int) Sex);
             hashCode.Add((int) Gender);

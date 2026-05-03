@@ -35,6 +35,7 @@
   id: MobArachnidSprites
   sprites:
     Head: MobArachnidHead
+    Face: MobHumanoidAnyMarking #Pirate Changes
     Snout: MobHumanoidAnyMarking
     Underwear: MobHumanoidAnyMarking
     Undershirt: MobHumanoidAnyMarking
@@ -111,6 +112,11 @@
     LeftHand:
       points: 3
       required: false
+    # PIRATE START
+    Face:
+      points: 3
+      required: false
+    # PIRATE END
 
 - type: humanoidBaseSprite
   id: MobArachnidHead

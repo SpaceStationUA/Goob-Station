@@ -1,0 +1,15 @@
+- type: tokenListing
+  id: MajorTierAntagToken
+  name: gs-balanceui-shop-buy-major-token-antag
+  label: gs-balanceui-shop-major-token-antag
+  description: gs-balanceui-shop-buy-major-token-antag-desc
+  price: 2000
+  adminNote: gs-balanceui-remark-major-token-antag
+  
+- type: tokenListing
+  id: MinorTierAntagToken
+  name: gs-balanceui-shop-buy-minor-token-antag
+  label: gs-balanceui-shop-minor-token-antag
+  description: gs-balanceui-shop-buy-minor-token-antag-desc
+  price: 1000
+  adminNote: gs-balanceui-remark-minor-token-antag

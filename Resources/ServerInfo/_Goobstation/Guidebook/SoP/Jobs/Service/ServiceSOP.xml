@@ -6,20 +6,20 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-# Service Department SOP
-These are the list of SOPs that Service Personnel should follow. These are, as stated before, [bold]not checklists[/bold] and should be treated as guidelines.
+# СОП Сервісного Відділу
+Нижче наведено перелік СОП, яких має дотримуватися сервісний персонал. Як і зазначено раніше, це [bold]не чеклісти[/bold], а настанови.
 
-Furthermore, these listings do not necessarily coincide with one another, and are separated by Job unless otherwise stated.
+Крім того, ці записи не обов'язково збігаються між собою й поділені за посадами, якщо не зазначено інакше.
 
-The following jobs have entries in this Department, the [color=#1b67a5][bold]Head of Personnel[/bold][/color] being the Head of Staff:
-- [textlink="Head of Personnel" link="HeadOfPersonnelSOP"]
-- [textlink="Bartender" link="BartenderSOP"]
-- [textlink="Botanist" link="BotanistSOP"]
-- [textlink="Chef" link="ChefSOP"]
-- [textlink="Clown" link="ClownSOP"]
-- [textlink="Janitor" link="JanitorSOP"]
-- [textlink="Librarian" link="LibrarianSOP"]
-- [textlink="Mime" link="MimeSOP"]
-- [textlink="Reporter" link="ReporterSOP"]
+Для наступних посад є записи в цьому розділі, а [color=#1b67a5][bold]Голова Персоналу[/bold][/color] є керівником відділу:
+- [textlink="Голова Персоналу" link="HeadOfPersonnelSOP"]
+- [textlink="Бармен" link="BartenderSOP"]
+- [textlink="Ботанік" link="BotanistSOP"]
+- [textlink="Кухар" link="ChefSOP"]
+- [textlink="Клоун" link="ClownSOP"]
+- [textlink="Прибиральник" link="JanitorSOP"]
+- [textlink="Бібліотекар" link="LibrarianSOP"]
+- [textlink="Мім" link="MimeSOP"]
+- [textlink="Репортер" link="ReporterSOP"]
 
 </Document>

@@ -9,11 +9,11 @@ SPDX-License-Identifier: MIT
 -->
 
 <Document>
-# Janitorial
+# Прибирання
 
-You keep things clean, it's a rough job sometimes, but someone's gotta do it. This will walk you through the tools of the trade, and how they're used.
+Ви підтримуєте чистоту, це іноді важка робота, але хтось мусить її робити. Цей посібник ознайомить вас з інструментами та їх використанням.
 
-## Basic Equipment
+## Базове обладнання
 <Box>
 <GuideEntityEmbed Entity="MopItem"/>
 <GuideEntityEmbed Entity="JanitorialTrolley"/>
@@ -28,54 +28,54 @@ You keep things clean, it's a rough job sometimes, but someone's gotta do it. Th
 <GuideEntityEmbed Entity="Mousetrap"/>
 </Box>
 
-## Additional Equipment
+## Додаткове обладнання
 <Box>
 <GuideEntityEmbed Entity="WetFloorSign"/>
-<GuideEntityEmbed Entity="Holoprojector" Caption="holosign projector"/>
+<GuideEntityEmbed Entity="Holoprojector" Caption="проектор голографічного знака"/>
 <GuideEntityEmbed Entity="LightReplacer"/>
 <GuideEntityEmbed Entity="WireBrush"/>
 </Box>
 <Box>
-<GuideEntityEmbed Entity="AdvMopItem" Caption="Advanced mop, ask in R&D"/>
+<GuideEntityEmbed Entity="AdvMopItem" Caption="Розширена швабра, запитайте в R&D"/>
 </Box>
 
-## Fluid Acquisition and Disposal
+## Придбання та утилізація рідин
 <Box>
 <GuideEntityEmbed Entity="WaterTankFull"/>
 <GuideEntityEmbed Entity="Sink"/>
 <GuideEntityEmbed Entity="FloorDrain"/>
 </Box>
 
-## Tidying up.
-Now, onto the (figurative) meat and potatoes. We're here to clean, right? Lets keep it simple. The main tools you'll be putting to use are the trusty mop, a trash bag, space cleaner, and one of the three different buckets.
+## Прибирання.
+Тепер до (образного) суті справи. Ми тут, щоб прибирати, чи не так? Давайте спростимо. Основними інструментами, які ви будете використовувати, є надійна швабра, мішок для сміття, космічний очищувач та одне з трьох різних відер.
 
-Mopping: Fill your cart up with water, then, find some puddles! Wet your mop, and wipe them up, the resulting water puddle will dry after a short time. Don't forget the wet floor signs!
-- To drain your cart, drag it (with your cursor) onto a floor drain. This will dump all the fluids inside! Floor drains can usually be found somewhere in medical, the kitchen freezer, and of course, the janitor closet.
+Прибирання шваброю: Наповніть свою візок водою, потім знайдіть калюжі! Змочіть швабру і витріть їх, утворена водяна калюжа висохне за короткий час. Не забувайте знаки «мокра підлога»!
+- Щоб злити рідину з візка, перетягніть його (курсором) на зливну решітку. Це виллє всю рідину всередині! Зливні решітки зазвичай можна знайти десь у медичному відсіку, морозильній камері кухні та, звичайно, у шафі прибиральника.
 
-Trash: Place it in the bag directly, or hold it in your hand. Click -near- trash to scoop -all- nearby junk up, or click on each piece individually. Using the bag on a disposal will empty it.
-- Cargo might want some of your trash, it might be worthwhile to check in from time to time!
+Сміття: Покладіть його в мішок безпосередньо або тримайте в руці. Клацніть -біля- сміття, щоб зібрати -все- сміття поблизу, або клацніть на кожен предмет окремо. Використання мішка на утилізаторі спорожнить його.
+- Карго може захотіти частину вашого сміття, час від часу варто перевіряти!
 
-Space Cleaner: This miracle spray can do two things, clean graffiti, and in a pinch, clean up puddles!
-- You might be able to get more of this from chemistry.
+Космічний очищувач: Цей чудодійний спрей може робити дві речі: чистити графіті та, в крайньому разі, прибирати калюжі!
+- Можливо, ви зможете отримати більше цього з хімії.
 
-Light Replacer: Just point at broken bulbs and click!
-- Replace enough broken ones, get a bulb for free!
+Замінник лампочок: Просто наведіть на зламані лампочки і натисніть!
+- Замініть достатньо зламаних, отримайте лампочку безкоштовно!
 
-Janitorial Keyring: Your trusty keys, hundreds of them on a single ring. If only you could remember which goes where...
-- At the start of the round, the keyring will spawn with a few randomized access levels. It could open cargo, it could open medical, who knows?
+Ключі прибиральника: Ваші надійні ключі, сотні з них на одному кільці. Якби тільки ви могли запам'ятати, який куди...
+- На початку раунду ключі з'являться з кількома випадковими рівнями доступу. Це може бути вантажний відсік, медичний відсік, хто знає?
 
-## Dealing with footprints and trails.
-It gets a little tedious cleaning [italic]every[/italic] little footprint left behind by those pesky doctors.
-The solution? A little bit of elbow grease!
+## Боротьба зі слідами та доріжками.
+Стає трохи нудно чистити [italic]кожний[/italic] маленький слід, залишений цими надокучливими лікарями.
+Рішення? Трохи докласти зусиль!
 
-There's two ways of going about this:
-- Using a mop on the floor near footprints will scrub the area of footprints and trails. [bold]Although slow, this has the benefit of not gunking up your mop.[/bold]
-- You can use a bar of soap or a damp rag for the same effect, albeit worse.
+Є два способи зробити це:
+- Використання швабри на підлозі біля слідів очистить цю ділянку від слідів та доріжок. [bold]Хоча це повільно, це має перевагу в тому, що не забруднює вашу швабру.[/bold]
+- Ви можете використовувати шматок мила або вологу ганчірку для того ж ефекту, хоча й гіршого.
 
-## Extra Duties
-A good janitor is always on the lookout for a bit more to do, and there are plenty of tools at your disposal. Keep an eye out for broken lights, help the chef take care of mice in the kitchen, and if you're feeling -really- generous, try to restock the vending machines and emergency closets around the station!
+## Додаткові обов'язки
+Хороший прибиральник завжди шукає додаткову роботу, і у вашому розпорядженні є багато інструментів. Слідкуйте за зламаними лампочками, допоможіть кухареві впоратися з мишами на кухні, і якщо ви відчуваєте себе -дійсно- щедрим, спробуйте поповнити запаси торгових автоматів та аварійних шаф по всій станції!
 
-##Additional Information:
+##Додаткова інформація:
 <GuideReagentEmbed Reagent="SpaceCleaner"/>
 <GuideReagentEmbed Reagent="Ammonia"/>
 

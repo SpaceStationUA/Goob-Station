@@ -1,0 +1,53 @@
+- type: entity
+  parent: OreBase
+  id: TitaniumOre
+  name: титанова руда
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: TitaniumOre
+  - type: Sprite
+    sprite: _Pirate/Objects/Materials/ore.rsi
+    state: titanium
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      RawTitanium: 50
+  - type: Extractable
+    grindableSolutionName: titaniumore
+  - type: Item
+    heldPrefix: titanium
+  - type: Tag
+    tags:
+    - Ore
+    - OreTitanium
+
+- type: entity
+  parent: TitaniumOre
+  id: TitaniumOre1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+# Lavaland
+- type: entity
+  parent: TitaniumOre
+  id: TitaniumOreUnprocessed
+  name: необроблена титанова руда
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: TitaniumOreUnprocessed
+  - type: UnclaimedOre
+    miningPoints: 25
+
+- type: entity
+  parent: TitaniumOreUnprocessed
+  id: TitaniumOre1Unprocessed
+  name: необроблена титанова руда
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+    

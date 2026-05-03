@@ -7,26 +7,26 @@ SPDX-License-Identifier: MIT
 -->
 
 <Document>
-## Anomaly Scanner
+## Сканер аномалій
 
-The Anomaly Scanner is used to gather various information on anomalies. They can be found inside the lockers in the science department.
+Сканер аномалій використовується для збору різноманітної інформації про аномалії. Їх можна знайти в шафах у науковому відділі.
 
 <Box>
 <GuideEntityEmbed Entity="AnomalyScanner"/>
 </Box>
 
-Scanning an anomaly shows the severity, general stability, approximate point output, reactions with particle types, and time until the next pulse. The reaction types, specifically, can be used in conjunction with the A.P.E. to manipulate anomalies.
+Сканування аномалії показує її серйозність, загальну стабільність, приблизний вихід точок, реакції з типами частинок та час до наступного імпульсу. Типи реакцій, зокрема, можна використовувати разом з A.P.E. для маніпулювання аномаліями.
 
-## Anomaly Vessel
+## Судно для аномалій
 
-The anomaly vessel is a machine that generates points from anomalies. Use the anomaly scanner on an empty vessel, and the anomaly that was last scanned will be synced with the vessel.
+Судно для аномалій — це машина, яка генерує точки з аномалій. Використовуйте сканер аномалій на порожньому судні, і остання відсканована аномалія буде синхронізована з судном.
 
 <Box>
 <GuideEntityEmbed Entity="MachineAnomalyVessel"/>
 </Box>
 
-The amount of points a vessel generates per second is based on the severity, stability, and health of an anomaly. The higher each of these values, the higher the point output will be.
+Кількість точок, яку генерує судно за секунду, залежить від серйозності, стабільності та здоров'я аномалії. Чим вищі ці значення, тим вищим буде вихід точок.
 
-Be careful: if an anomaly goes [color=#a4885c]supercritical[/color], the vessel it is linked to will explode. This may damage the station and nearby equipment.
+Будьте обережні: якщо аномалія стане [color=#a4885c]надкритичною[/color], судно, до якого вона прив'язана, вибухне. Це може пошкодити станцію та сусіднє обладнання.
 
 </Document>

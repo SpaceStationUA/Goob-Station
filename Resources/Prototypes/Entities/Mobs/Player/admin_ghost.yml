@@ -157,6 +157,7 @@
     - SilentStorageUser
     - PreventAccessLogging
     - AllowBiomeLoading
+    - IgnoreBalanceChecks # Pirate banking
   - type: Input
     context: "aghost"
   - type: Ghost
@@ -263,6 +264,7 @@
       - EldritchInfluence
       - EldritchInfluenceSpent
       - Admin
+      - TargetingGhost # Pirate, so they can see
   - type: OwnInteractionVerbs
     allowedVerbs: []
   - type: ExplosionResistance

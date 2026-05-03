@@ -243,11 +243,48 @@ public sealed partial class FaxPrintout
     [DataField]
     public bool Locked { get; private set; }
 
+    #region Pirate: camera
+    [DataField("entityUid")]
+    public EntityUid? PhotoSourceEntityUid { get; private set; }
+
+    [DataField]
+    public byte[]? PhotoImageData { get; private set; }
+
+    [DataField]
+    public byte[]? PhotoPreviewData { get; private set; }
+
+    [DataField]
+    public string? PhotoCustomName { get; private set; }
+
+    [DataField]
+    public string? PhotoCustomDescription { get; private set; }
+
+    [DataField]
+    public string? PhotoCaption { get; private set; }
+
+    [DataField]
+    public string? PhotoEntityDescription { get; private set; }
+    #endregion
+
     private FaxPrintout()
     {
     }
 
-    public FaxPrintout(string content, string name, string? label = null, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, bool locked = false)
+    public FaxPrintout( // Pirate: camera
+        string content,
+        string name,
+        string? label = null,
+        string? prototypeId = null,
+        string? stampState = null,
+        List<StampDisplayInfo>? stampedBy = null,
+        bool locked = false,
+        EntityUid? photoSourceEntityUid = null,
+        byte[]? photoImageData = null,
+        byte[]? photoPreviewData = null,
+        string? photoCustomName = null,
+        string? photoCustomDescription = null,
+        string? photoCaption = null,
+        string? photoEntityDescription = null) 
     {
         Content = content;
         Name = name;
@@ -256,5 +293,14 @@ public sealed partial class FaxPrintout
         StampState = stampState;
         StampedBy = stampedBy ?? new List<StampDisplayInfo>();
         Locked = locked;
+        #region Pirate: camera
+        PhotoSourceEntityUid = photoSourceEntityUid;
+        PhotoImageData = photoImageData is null ? null : (byte[]) photoImageData.Clone();
+        PhotoPreviewData = photoPreviewData is null ? null : (byte[]) photoPreviewData.Clone();
+        PhotoCustomName = photoCustomName;
+        PhotoCustomDescription = photoCustomDescription;
+        PhotoCaption = photoCaption;
+        PhotoEntityDescription = photoEntityDescription;
+        #endregion
     }
 }

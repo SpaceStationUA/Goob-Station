@@ -184,6 +184,10 @@
   - type: Tag #Goobstation - whitelisted cig pack strorage (added new tag)
     tags:
     - Lighter
+  # Pirate banking start
+  - type: StaticPrice
+    price: 60
+  # Pirate banking end
 
 - type: entity
   name: cheap lighter
@@ -213,6 +217,10 @@
         - ReagentId: WeldingFuel
           Quantity: 4
         maxVol: 4 #uses less fuel than a welder, so this isnt as bad as it looks
+  # Pirate banking start
+  - type: StaticPrice
+    price: 30
+  # Pirate banking end
 
 - type: entity
   name: flippo lighter
@@ -310,6 +318,10 @@
   - type: Tag
     tags:
       - Lighter #Goobstation - whitelisted cig pack strorage (added tag)
+  # Pirate banking start
+  - type: StaticPrice
+    price: 120
+  # Pirate banking end
 
 - type: entity
   name: flippo engraved lighter

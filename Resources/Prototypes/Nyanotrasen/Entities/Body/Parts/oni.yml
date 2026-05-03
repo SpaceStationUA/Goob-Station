@@ -8,6 +8,8 @@
   parent: PartHuman
   abstract: true
   components:
+  - type: Damageable # Pirate op Oni
+    damageModifierSet: Oni
   - type: BodyPart
     species: Oni
 

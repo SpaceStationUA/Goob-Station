@@ -68,6 +68,18 @@
   name: job-name-librarian
   description: job-description-librarian
   playTimeTracker: JobLibrarian
+  # Pirate contractor start
+  requirements:
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
+  # Pirate contractor end
+    - !type:SpeciesRequirement # Pirate no ipc psionics
+      inverted: true
+      species:
+        - IPC # Pirate end
   startingGear: LibrarianGear
   icon: "JobIconLibrarian"
   supervisors: job-supervisors-hop
@@ -78,6 +90,20 @@
   special: # Goobstation start - Librarian should speak most languages.
   - !type:AddImplantSpecial
     implants: [ LibrarianTranslatorImplant ] # Goobstation end
+  # PIRATE vvv
+  - !type:AddComponentSpecial
+    components:
+    - type: Psionic
+      baselinePowerCost: 75
+      nextPowerCost: 75
+      removable: false
+      powerPool: RandomPsionicPowerPool
+    - type: InnatePsionicPowers
+      powersToAdd:
+        - TelepathyPower
+        - AssayPower
+    - type: Telepathy
+  # PIRATE ^^^
 
 - type: startingGear
   id: LibrarianGear

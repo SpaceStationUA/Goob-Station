@@ -43,7 +43,7 @@
     idleState: icon
     runningState: icon
     staticPacks:
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - EngineeringBoardsStatic
     - CircuitFloorsStatic
     - ToolsStatic
@@ -58,6 +58,11 @@
     - MiscSignallersStatic
     - NailgunStatic
     - NailsStatic
+    - ServiceBoardsStatic # Pirate start - tweak fab recepies | Add more circuits to engi fab
+    - CargoBoardsStatic
+    - MedicalBoardsStaticGoob
+    - SecurityBoardsStaticGoob
+    - ServiceBoardsStaticGoob # Pirate end
     dynamicPacks:
     - ConstructionBagOfHolding
     - AdvancedTools
@@ -75,6 +80,9 @@
     - BluespaceTheory
     - ScienceClothing
     - UpgradeKits
+    - CargoBoards # Pirate start - tweak fab recepies | Add more circuits to engi fab
+    - MedicalBoards
+    - ServiceBoards # Pirate end
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NailgunEvilStatic
@@ -114,7 +122,7 @@
     runningState: icon
     staticPacks:
     - ToolsStatic
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - CargoBoardsStatic
     - CablesStatic
     - PartsStatic
@@ -179,7 +187,7 @@
     idleState: icon
     runningState: icon
     staticPacks:
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - EngineeringBoardsStatic
     - CircuitFloorsStatic
     - MedicalBoardsStatic

@@ -1,0 +1,9 @@
+- type: marking
+  id: OniBloodhornsDouble
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: false
+  speciesRestriction: [Oni]
+  sprites:
+  - sprite: _Pirate/Mobs/Customization/horns.rsi
+    state: bloodhorns

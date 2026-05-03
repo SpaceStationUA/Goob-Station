@@ -1,22 +1,22 @@
 <Document>
-  # Shadowkin
+  # Тіньовик
 
   <Box>
     <GuideEntityEmbed Entity="MobShadowkinDummy" Caption=""/>
   </Box>
 
-  These are highly intellectual beings of unknown origin, possessing a quite unique physiology unlike previously seen. Their natural tongue is Marish.
+  Тіньовики — це високоінтелектуальні істоти невідомого походження, що мають унікальну фізіологію, не схожу на жодну з раніше відомих. Їхня рідна мова — Маріш.
 
-  ##Physiology
+  ## Фізіологія
 
-  They appear to have a certain affinity to darkness, being rumored to be able to [color=#1e90ff]see in complete darkness[/color], unlike other species. Furthermore, they have been observed to [color=#1e90ff]sustain a telepathic link[/color] with other Shadowkin, being able to communicate through a hivemind.
+  Здається, вони мають певну спорідненість із темрявою: за чутками, на відміну від інших видів, вони здатні [color=#1e90ff]бачити в абсолютній темряві[/color]. Крім того, було помічено, що вони [color=#1e90ff]підтримують телепатичний зв'язок[/color] з іншими тіньовиками, завдяки чому можуть спілкуватися через колективний розум.
 
-  When exposed to fire, they seem to be less resistant than other species, [color=#ec3a3a]taking 50% more heat damage[/color], while being [color=Yellow]slightly more tolerant of cold than heated environments[/color].
-  Regarding their anatomy, they possess large ears, [color=#1e90ff]very sensitive eyes[/color], and a tail for balance. It is also worth noting that their blood has a much higher concentration of iron in it when compared to other species. This biological trait significantly reduces their oxygen consumption and allows them to survive without it for much more prolonged periods of time.
+  Під впливом вогню вони, здається, менш стійкі, ніж інші види, [color=#ec3a3a]отримуючи на 50% більше теплової шкоди[/color], водночас [color=Yellow]дещо краще переносять холод, ніж спеку[/color].
+  Щодо анатомії: вони мають великі вуха, [color=#1e90ff]дуже чутливі очі[/color] та хвіст для рівноваги. Також варто зазначити, що в їхній крові значно вища концентрація заліза, ніж у інших видів. Ця біологічна особливість суттєво зменшує споживання кисню та дозволяє їм значно довше виживати без нього.
 
-  ## Other Characteristics
+  ## Інші особливості
 
-  Their unarmed attacks deal [color=#ec3a3a]5 slash[/color]. And their [color=#1e90ff]speed is slightly faster than humans[/color] due to their decreased bone density and superior agility.
-  Another interesting quirk is their ability to survive in space for surprisingly longer than expected, having shown [color=#1e90ff]exceptional resilience to barotrauma[/color].
+  Їхні беззбройні атаки завдають [color=#ec3a3a]5 ріжучої шкоди[/color]. А їхня [color=#1e90ff]швидкість трохи вища, ніж у людей[/color] завдяки зниженій щільності кісток та кращій спритності.
+  Ще одна цікава риса — їхня здатність виживати в космосі напрочуд довше, ніж очікувалося: вони демонструють [color=#1e90ff]виняткову стійкість до баротравми[/color].
 
 </Document>

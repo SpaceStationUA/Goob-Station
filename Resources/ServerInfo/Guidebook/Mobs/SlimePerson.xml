@@ -14,27 +14,27 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-  # Slime People
+  # Слаймолюди
 
   <Box>
     <GuideEntityEmbed Entity="MobSlimePerson" Caption=""/>
   </Box>
 
-  They breathe nitrogen instead of oxygen, which is abundant in the station air, but harder to find compressed into gas tanks. They take significant damage if they are sprayed or splashed with water, but can
-  (and like other species, need to) drink it safely to stay hydrated.
-  They exhale nitrous oxide and are unaffected by it.
-  Their body processes only two toxins at a time compared to three.
+  Вони дихають азотом замість кисню, якого вдосталь у повітрі станції, але важче знайти стиснутим у балонах. Вони отримують значні пошкодження, якщо їх облити водою, але можуть
+  (і, як і інші види, повинні) безпечно пити її для гідратації.
+  Вони видихають оксид азоту і не піддаються його впливу.
+  Їхній організм переробляє лише два токсини одночасно, замість трьох.
 
-  Slimepeople have an [bold]internal 2x3 storage inventory[/bold] inside of their slime membrane. Anyone can see what's inside and take it out of you without asking,
-  so be careful.
+  Слаймолюди мають [bold]внутрішнє сховище 2x3[/bold] всередині своєї слаймової оболонки. Будь-хто може побачити, що всередині, і витягнути це з вас без дозволу,
+  тому будьте обережні.
 
-  Slimepeople have accelerated regeneration compared to other humanoids.
+  Слаймолюди мають прискорену регенерацію порівняно з іншими гуманоїдами.
 
-  Slime people have no bones and their limbs come off easier.
+  Слаймолюди не мають кісток, і їхні кінцівки легше відриваються.
 
-  Slime Blood is technically a source of moderately filling food for other species, although drinking the blood of your coworkers is usually frowned upon.
-  They suffocate 80% slower, but take pressure damage 9% faster. This makes them by far the species most capable to survive in hard vacuum. For a while.
+  Слиз (кров слаймолюдей) технічно є джерелом помірно ситної їжі для інших видів, хоча пити кров своїх колег зазвичай не вітається.
+  Вони задихаються на 80% повільніше, але отримують ушкодження від тиску на 9% швидше. Це робить їх видом, найбільш пристосованим до виживання у вакуумі. Деякий час.
 
-  They take [color=#1e90ff]40% less Blunt damage and 20% less Poison damage[/color], but [color=#ffa500]50% more Cold damage, 15% more Slash damage and 15% more Piercing damage[/color].
+  Вони отримують [color=#1e90ff]на 40% менше ушкоджень від тупих предметів та на 20% менше ушкоджень від отрути[/color], але [color=#ffa500]на 50% більше ушкоджень від холоду, на 15% більше ріжучих ушкоджень та на 15% більше колючих ушкоджень[/color].
 
 </Document>

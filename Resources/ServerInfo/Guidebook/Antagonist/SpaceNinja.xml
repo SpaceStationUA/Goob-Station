@@ -10,94 +10,94 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-  # Space Ninja
+  # Космічний Ніндзя
 
   <Box>
-    [color=#999999][italic]"Spider of the night, silent is my bite."[/italic][/color]
+    [color=#999999][italic]"Павук ночі, мій укус беззвучний."[/italic][/color]
   </Box>
 
-  You are an elite mercenary that [color=#66FF00]The Spider Clan[/color] has sent to wreak all kinds of havoc on the station. You are equipped to keep it silent-but-deadly.
+  Ви — елітний найманець, якого [color=#66FF00]Клан Павука[/color] відправив, щоб сіяти хаос на станції. Ви екіпіровані для тихої, але смертельної роботи.
 
-  Whether you get bloody or stay out of trouble, your discipline has taught you that [italic]your objectives must be at least attempted[/italic]. For honor!
+  Незалежно від того, чи проллєте ви кров, чи уникнете неприємностей, ваша дисципліна навчила вас, що [italic]ви повинні принаймні спробувати виконати свої завдання[/italic]. За честь!
 
-  ## Standard Equipment
-  You begin implanted with a [color=cyan]death acidifier[/color], so if you are captured or KIA all your precious equipment is kept out of enemy hands.
+  ## Стандартне спорядження
+  Ви починаєте з імплантованим [color=cyan]смертельним кислотним розчинником[/color], тож якщо вас захоплять або вб'ють, усе ваше дорогоцінне спорядження не потрапить до рук ворога.
 
-  Your bag is full of [bold]tools[/bold] and a [bold]survival box[/bold]. You also carry a [color=cyan]jetpack[/color] and a [color=cyan]pinpointer[/color] that will lead you to the station.
+  Ваша сумка повна [bold]інструментів[/bold] та [bold]набору для виживання[/bold]. Ви також маєте [color=cyan]джетпак[/color] та [color=cyan]пінпоінтер[/color], який приведе вас до станції.
 
   <Box>
     <GuideEntityEmbed Entity="JetpackBlack"/>
     <GuideEntityEmbed Entity="PinpointerStation"/>
   </Box>
 
-  ## Your Suit
+  ## Ваш Костюм
 
   <Box>
-    <GuideEntityEmbed Entity="ClothingEyesVisorNinja" Caption="your visor"/>
-    <GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Caption="your suit"/>
-    <GuideEntityEmbed Entity="ClothingShoesSpaceNinja" Caption="your boots"/>
+    <GuideEntityEmbed Entity="ClothingEyesVisorNinja" Caption="ваш візор"/>
+    <GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Caption="ваш костюм"/>
+    <GuideEntityEmbed Entity="ClothingShoesSpaceNinja" Caption="ваші черевики"/>
   </Box>
 
-  Your single most important item is [color=cyan]your suit[/color], without it none of your abilities would work.
-  Your suit requires power to function, which is supplied by its [bold]internal battery[/bold]. It can be replaced, and [italic]high capacity batteries[/italic] mean a [italic]highly effective ninja[/italic].
+  Ваш найважливіший предмет — це [color=cyan]ваш костюм[/color], без нього жодна з ваших здібностей не працюватиме.
+  Для функціонування вашому костюму потрібна енергія, яку забезпечує його [bold]внутрішній акумулятор[/bold]. Його можна замінити, а [italic]акумулятори високої ємності[/italic] означають [italic]високоефективного ніндзя[/italic].
 
-  [bold]You can recharge your internal battery directly[/bold] by using [color=cyan]your gloves[/color]. You can see the current charge by examining the suit or checking the nifty battery alert on your screen.
+  [bold]Ви можете заряджати свій внутрішній акумулятор напряму[/bold], використовуючи [color=cyan]ваші рукавиці[/color]. Ви можете побачити поточний заряд, оглянувши костюм або перевіривши зручне сповіщення про стан батареї на вашому екрані.
 
-  Your outfit also includes [color=cyan]special boots[/color] that keep you agile, upright and grounded without using energy. You've also got flash protection thanks to your [color=cyan]visor[/color].
+  Ваше спорядження також включає [color=cyan]спеціальні черевики[/color], які роблять вас спритним, стійким та заземленим без використання енергії. Ви також маєте захист від спалахів завдяки вашому [color=cyan]візору[/color].
 
-  ## Ninja Gloves
+  ## Рукавиці Ніндзя
 
   <Box>
-    <GuideEntityEmbed Entity="ClothingHandsGlovesSpaceNinja" Caption="your gloves"/>
+    <GuideEntityEmbed Entity="ClothingHandsGlovesSpaceNinja" Caption="ваші рукавиці"/>
   </Box>
 
-  [color=#66FF00]These bad boys are your bread and butter.[/color] They are made from [bold]insulated nanomachines[/bold] to allow you to gracefully break into restricted areas without leaving behind fingerprints.
+  [color=#66FF00]Ці круті штуки — ваш хліб з маслом.[/color] Вони зроблені з [bold]ізольованих наномашин[/bold], що дозволяє вам витончено проникати в зони з обмеженим доступом, не залишаючи відбитків пальців.
 
-  You have an action to toggle gloves. When the gloves are turned on, they allow you to use [bold]special abilities[/bold], which are triggered by interacting with things with an empty hand and with combat mode disabled.
+  У вас є дія для перемикання рукавиць. Коли рукавиці увімкнені, вони дозволяють вам використовувати [bold]особливі здібності[/bold], які активуються при взаємодії з об'єктами порожньою рукою та з вимкненим бойовим режимом.
 
-  Your glove abilities include:
-  - Emagging doors and airlocks.
-  - Draining power from [bold]transformers[/bold] such as APCs, substations, or SMESes (higher voltage transformers drain more efficiently).
-  - Tampering with [bold]station equipment[/bold] to complete [color=#66FF00]objectives[/color].
+  Ваші здібності рукавиць включають:
+  - Емаг дверей та шлюзів.
+  - Висмоктування енергії з [bold]трансформаторів[/bold], таких як АПК, підстанції або СМЕС (трансформатори з вищою напругою висмоктують енергію ефективніше).
+  - Втручання в роботу [bold]обладнання станції[/bold] для виконання [color=#66FF00]завдань[/color].
 
-  ## Energy Katana
+  ## Енергетична Катана
 
   <Box>
     <GuideEntityEmbed Entity="EnergyKatana"/>
   </Box>
 
-  [bold]You have sworn yourself to the sword and refuse to use firearms.[/bold] Luckily, you've got a pretty cool sword.
+  [bold]Ви присягнули мечу і відмовляєтеся використовувати вогнепальну зброю.[/bold] На щастя, у вас є досить крутий меч.
 
-  Your [color=cyan]energy katana[/color] hurts plenty and can be [bold]recalled at will[/bold] at the cost of suit power. The farther away it is from you, the more energy required to recall it.
+  Ваша [color=cyan]енергетична катана[/color] завдає значної шкоди і може бути [bold]повернена за бажанням[/bold] за рахунок енергії костюма. Чим далі вона від вас, тим більше енергії потрібно для її повернення.
 
-  While in hand you may also [color=cyan]teleport[/color] to anywhere that you can see, [bold]including through windows[/bold]. The charges required to do this regenerate slowly, so keep a charge or two spare in case you need a quick getaway.
+  Тримаючи її в руці, ви також можете [color=cyan]телепортуватися[/color] в будь-яке місце, яке бачите, [bold]включаючи телепортацію крізь вікна[/bold]. Заряди для цього відновлюються повільно, тому тримайте один-два заряди про запас на випадок, якщо знадобиться швидко втекти.
 
-  ## Spider Clan Charge
+  ## Заряд Клану Павука
 
   <Box>
     <GuideEntityEmbed Entity="SpiderCharge"/>
   </Box>
 
-  This is a [color=cyan]modified C-4 explosive[/color] which can be found in your pocket. Creates a large explosion but [bold]must be armed in your target area[/bold] as it is one of your objectives.
+  Це [color=cyan]модифікована вибухівка C-4[/color], яку можна знайти у вашій кишені. Створює великий вибух, але [bold]має бути активована у вашій цільовій зоні[/bold], оскільки це одне з ваших завдань.
 
-  It can't be activated manually, so simply plant it on a wall or some furniture that does not spark joy. Choose wisely, it can't be unstuck once planted.
+  Її не можна активувати вручну, тож просто встановіть її на стіну або якийсь предмет меблів, що не викликає у вас радості. Вибирайте мудро, її неможливо зняти після встановлення.
 
-  ## Ninjutsu
+  ## Ніндзюцу
 
   <Box>
     <GuideEntityEmbed Entity="NinjutsuScroll"/>
   </Box>
 
-  As a true warrior of the Spider Clan, you are a master of [textlink="Ninjutsu" link="Ninjutsu"], a martial art honed over centuries by your teachers.
-  The art is not simply about strength or speed; it is about becoming one with the shadows and striking with deadly precision.
+  Як справжній воїн Клану Павука, ви є майстром [textlink="Ніндзюцу" link="Ninjutsu"], бойового мистецтва, відточеного століттями вашими вчителями.
+  Це мистецтво не лише про силу чи швидкість; воно про те, щоб стати єдиним цілим з тінями та завдавати ударів зі смертельною точністю.
 
-  ## Objectives
+  ## Завдання
 
-  - Download \[9-13\] research nodes: Use your gloves on an R&D server with a number of unlocked technologies. You may have to unlock technologies yourself if there aren't enough to steal already.
-  - Doorjack \[15-40\] doors on the station: Use your gloves to emag a number of doors.
-  - Detonate the spider clan charge: Plant your spider clan charge at the specified location and watch it go boom!
-  - Call in a [textlink="threat" link="MinorAntagonists"]: Use your gloves on a communications console.
-  - Set everyone to wanted: Use your gloves on a criminal records console.
-  - Survive: Don't die.
+  - Завантажити \[9-13\] дослідницьких вузлів: Використовуйте свої рукавиці на сервері НДД з певною кількістю розблокованих технологій. Можливо, вам доведеться розблоковувати технології самостійно, якщо їх недостатньо для крадіжки.
+  - Емагнути \[15-40\] дверей на станції: Використовуйте свої рукавиці, щоб емагнути певну кількість дверей.
+  - Підірвати заряд Клану Павука: Встановіть ваш заряд Клану Павука у вказаному місці та спостерігайте, як він вибухне!
+  - Викликати [textlink="загрозу" link="MinorAntagonists"]: Використовуйте свої рукавиці на консолі зв'язку.
+  - Оголосити всіх у розшук: Використовуйте свої рукавиці на консолі кримінальних записів.
+  - Вижити: Не помирайте.
 
 </Document>

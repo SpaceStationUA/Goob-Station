@@ -135,6 +135,7 @@
   name: job-name-cmo
   description: job-description-cmo
   playTimeTracker: JobChiefMedicalOfficer
+  whitelisted: true # Pirate
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist
@@ -145,10 +146,26 @@
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 36000 #10 hrs
-    - !type:SpeciesRequirement # Goob - None Felinid
+    - !type:TraitsRequirement # Pirate
+      inverted: true
+      traits:
+      - DeafTrait
+      - Blindness
+      - Narcolepsy
+      - Muted
+      - WheelchairBound # Pirate end
+    - !type:SpeciesRequirement # Pirate edit
       inverted: true
       species:
-      - Felinid
+      #- Felinid
+      - Hydrakin
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - ZengHuPharmaceuticals
+      - Interdyne
+    # Pirate contractor end
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
   supervisors: job-supervisors-captain
@@ -190,10 +207,10 @@
     ears: ClothingHeadsetAltMedical # Goobstation
     eyes: ClothingEyesGlassesMedChemFlash #Omu
     belt: ClothingBeltMedicalFilled
-  storage:
-    back:
-    - Flash
-    - TelescopicBaton # Goobstation
+  #storage: # Pirate
+    #back: # Pirate
+    #- Flash # Pirate
+    #- TelescopicBaton # Goobstation # PIRATE, moved to loadouts
 
 - type: chameleonOutfit
   id: ChiefMedicalOfficerChameleonOutfit

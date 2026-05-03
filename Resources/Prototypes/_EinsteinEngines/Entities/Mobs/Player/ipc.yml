@@ -45,6 +45,7 @@
   - type: SwappableInstrument
     instrumentList:
       "Daw": { 0: 0 }
+  - type: ScreenSaver # DOWNSTREAM-TPirates: IPC screens
   - type: UserInterface
     interfaces:
       enum.InstrumentUiKey.Key:

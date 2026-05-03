@@ -1,0 +1,274 @@
+## Other
+- type: loadout
+  id: WardrobeHetmanHat
+  equipment:
+    head: ClothingHeadHatHetmanHat
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobePaperSackSmile
+  equipment:
+    head: ClothingHeadPaperSackSmile
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobePaperSack
+  equipment:
+    head: ClothingHeadPaperSack
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobePwig
+  equipment:
+    head: ClothingHeadHatPwig
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobePoppy
+  equipment:
+    head: FoodPoppy
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeSombrero
+  equipment:
+    head: ClothingHeadHatSombrero
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeCasa
+  equipment:
+    head: ClothingHeadHatCasa
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeSanabi
+  equipment:
+    head: ClothingHeadSanabi
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeTophat
+  equipment:
+    head: ClothingHeadHatTophat
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeCowboyBlack
+  equipment:
+    head: ClothingHeadHatCowboyBlack
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeCowboyGrey
+  equipment:
+    head: ClothingHeadHatCowboyGrey
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeCowboyWhite
+  equipment:
+    head: ClothingHeadHatCowboyWhite
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeCowboyBrown
+  equipment:
+    head: ClothingHeadHatCowboyBrown
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeHatBeret
+  equipment:
+    head: ClothingHeadHatBeret
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeBunnyEars
+  equipment:
+    head: ClothingHeadHatBunny
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeBlackCatHat
+  equipment:
+    head: ClothingHeadHatAnimalCatBlack
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeCakeHat
+  equipment:
+    head: ClothingHeadHatCake
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeHatFez
+  equipment:
+    head: ClothingHeadHatFez
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeHatMagician
+  equipment:
+    head: ClothingHeadHatMagician
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeSolidHeadband
+  equipment:
+    head: ClothingHeadHatSolidHeadband
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeShrineMaidenWig
+  equipment:
+    head: ClothingHeadHatShrineMaidenWig
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id: WardrobeSantahat
+  equipment:
+    head: ClothingHeadHatSantahat
+  groupBy: "HeadOther"
+
+
+- type: loadout
+  id:  WardrobeRichard
+  equipment:
+    head: ClothingHeadHatRichard
+  groupBy: "HeadOther"
+
+
+## Caps
+- type: loadout
+  id: WardrobeFishCap
+  equipment:
+    head: ClothingHeadFishCap
+  groupBy: "HeadCap"
+
+
+- type: loadout
+  id: WardrobeCorpsoft
+  equipment:
+    head: ClothingHeadHatCorpsoft
+  groupBy: "HeadCap"
+
+
+- type: loadout
+  id: WardrobePurplesoft
+  equipment:
+    head: ClothingHeadHatPurplesoft
+  groupBy: "HeadCap"
+
+
+- type: loadout
+  id: WardrobeBlacksoft
+  equipment:
+    head: ClothingHeadHatBlacksoft
+  groupBy: "HeadCap"
+
+
+- type: loadout
+  id: WardrobeRedsoft
+  equipment:
+    head: ClothingHeadHatRedsoft
+  groupBy: "HeadCap"
+
+
+- type: loadout
+  id: WardrobeOrangesoft
+  equipment:
+    head: ClothingHeadHatOrangesoft
+  groupBy: "HeadCap"
+
+
+- type: loadout
+  id: WardrobeGreensoft
+  equipment:
+    head: ClothingHeadHatGreensoft
+  groupBy: "HeadCap"
+
+
+- type: loadout
+  id: WardrobeYellowsoft
+  equipment:
+    head: ClothingHeadHatYellowsoft
+  groupBy: "HeadCap"
+
+
+- type: loadout
+  id: WardrobeBluesoft
+  equipment:
+    head: ClothingHeadHatBluesoft
+  groupBy: "HeadCap"
+
+
+- type: loadout
+  id: WardrobeMimesoft
+  equipment:
+    head: ClothingHeadHatMimesoft
+  groupBy: "HeadCap"
+
+
+- type: loadout
+  id: WardrobeGreysoft
+  equipment:
+    head: ClothingHeadHatGreysoft
+  groupBy: "HeadCap"
+
+
+## Bands
+- type: loadout
+  id: WardrobeBandSkull
+  equipment:
+    head: ClothingHeadBandSkull
+  groupBy: "HeadBand"
+
+
+- type: loadout
+  id: WardrobeBandRed
+  equipment:
+    head: ClothingHeadBandRed
+  groupBy: "HeadBand"
+
+
+- type: loadout
+  id: WardrobeBandGreen
+  equipment:
+    head: ClothingHeadBandGreen
+  groupBy: "HeadBand"
+
+
+- type: loadout
+  id: WardrobeBandBlue
+  equipment:
+    head: ClothingHeadBandBlue
+  groupBy: "HeadBand"
+
+
+- type: loadout
+  id: WardrobeBandBlack
+  equipment:
+    head: ClothingHeadBandBlack
+  groupBy: "HeadBand"

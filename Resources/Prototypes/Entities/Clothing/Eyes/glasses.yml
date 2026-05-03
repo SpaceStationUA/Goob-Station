@@ -245,6 +245,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/jamjar.rsi
   - type: VisionCorrection
+    visionBonus: -3.5 #Pirate
   - type: Tag
     tags:
     - HamsterWearable

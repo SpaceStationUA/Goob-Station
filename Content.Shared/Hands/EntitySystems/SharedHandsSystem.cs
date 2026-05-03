@@ -516,4 +516,24 @@ public abstract partial class SharedHandsSystem
 
         handsComp.SortedHands.Insert(index, handName);
     }
+
+    #region DOWNSTREAM-TPirates: combat actions
+    /// <summary>
+    /// Attempts to retrieve a held item, preferring the active hand.
+    /// </summary>
+    public bool TryGetHeldItem(Entity<HandsComponent?> entity, [NotNullWhen(true)] out EntityUid? item)
+    {
+        item = null;
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
+
+        foreach (var held in EnumerateHeld(entity))
+        {
+            item = held;
+            return true;
+        }
+
+        return false;
+    }
+    #endregion
 }

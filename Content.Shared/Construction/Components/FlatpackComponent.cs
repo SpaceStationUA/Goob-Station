@@ -36,6 +36,14 @@ public sealed partial class FlatpackComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public SoundSpecifier UnpackSound = new SoundPathSpecifier("/Audio/Effects/unwrap.ogg");
 
+    #region Pirate: coffeemaker
+    /// <summary>
+    /// Whether the unpack action should fail if the target tile already has intersecting entities on it.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool CheckObstruction = true;
+    #endregion
+
     /// <summary>
     /// A dictionary relating a machine board sprite state to a color used for the overlay.
     /// Kinda shitty but it gets the job done.

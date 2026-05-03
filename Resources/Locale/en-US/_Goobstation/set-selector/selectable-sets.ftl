@@ -148,6 +148,13 @@ selectable-set-blueshield-dragon-description =
     Includes: A book capable of teaching the user
     advanced kung fu martial art.
 
+#region Pirate: katana
+selectable-set-blueshield-kendo-name = kendo set
+selectable-set-blueshield-kendo-description =
+    A swordsman's set focused on patience and defense. The blade can block and deflect attacks, then answer with stronger strikes as its power grows.
+    Includes: a sheath and uchigatana.
+#endregion Pirate: katana
+
 selectable-set-blueshield-chester-name = chester set
 selectable-set-blueshield-chester-description =
     Ready to go hunting?

@@ -8,284 +8,284 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <Document>
-  # Space Law
-  Goob Station operates under abbreviated space law. All crew, passengers, and visitors aboard the station are expected to know and follow these laws.
+  # Космічний Закон
+  Goob Station працює за скороченим космічним законом. Всі члени екіпажу, пасажири та відвідувачі станції повинні знати та дотримуватися цих законів.
 
-  - [color=red][bold]Head of Security[/bold][/color] and especially [color=red][bold]Warden[/bold][/color] should be very familiar with space law.
-  - Security players should strive to fully comprehend Space Law.
-  - [bold]Ignoring or misuse of Space Law may be subject to punishment under incompetence. Do not play security if you do not plan to follow the rules[/bold]
-  
-  ## Treatment Of Prisoners
+  - [color=red][bold]Голова Служби Безпеки[/bold][/color] і особливо [color=red][bold]Начальник Охорони[/bold][/color] повинні дуже добре знати космічний закон.
+  - Гравці охорони повинні прагнути повністю розуміти Космічний Закон.
+  - [bold]Ігнорування або зловживання Космічним Законом може бути покаране за некомпетентність. Не грайте за охорону, якщо не плануєте дотримуватися правил[/bold]
 
-  Prisoners still have rights that must be upheld by law enforcement:
+  ## Поводження з В'язнями
 
-  - Prisoners must be granted adequate medical care. They should also be provided psychiatric and spiritual counselling if requested.
-  - Prisoners must be allowed access to communications equipment (Radios) so long as they are not abused.
-  - Prisoners must be granted clothing, food, water, shelter and safety. If the brig is no longer safe, confinement must be established in another location.
-  - Prisoners must be given access to legal counsel during an interrogation if requested and available.
-  - Prisoners must be given their shift mandated PDA during confinement. Unless there is solid proof of PDA tampering, in which case the PDA is to be secured and replaced with a fresh one
-  - Prisoners must be granted freedom of movement, and should not be restrained with handcuffs or other devices after incarceration unless there is an undue risk to life and limb. Similarly, any prisoners held for extended or permanent confinement should be held in the communal brig, and should not be confined to a solitary cell unless they pose a risk to life and limb.
+  В'язні все ще мають права, які повинні дотримуватися правоохоронними органами:
 
-  ## Searches
+  - В'язням повинна бути надана належна медична допомога. Їм також повинна бути надана психіатрична та духовна консультація на їхню вимогу.
+  - В'язням повинен бути дозволений доступ до засобів зв'язку (Радіо), якщо вони не зловживають ними.
+  - В'язням повинен бути наданий одяг, їжа, вода, притулок та безпека. Якщо бриг більше не є безпечним, ув'язнення повинно бути організоване в іншому місці.
+  - В'язням повинен бути наданий доступ до юридичної консультації під час допиту на їхню вимогу та за наявності.
+  - В'язням повинен бути наданий їхній змінний КПК під час ув'язнення. Якщо немає вагомих доказів втручання в КПК, у такому випадку КПК має бути вилучений та замінений на новий.
+  - В'язням повинна бути надана свобода пересування, і вони не повинні бути обмежені наручниками або іншими пристроями після ув'язнення, якщо немає надмірного ризику для життя та здоров'я. Аналогічно, будь-які в'язні, які утримуються для тривалого або постійного ув'язнення, повинні утримуватися в загальній камері, а не в одиночній, якщо вони не становлять загрозу життю та здоров'ю.
 
-  - A personnel search is a seizure of the objects in a person's backpack, hands, coat, belt, pockets, and hat. If any contraband is found during a search the officer may choose to further the search into a detainment or simply confiscate the restricted items. After the search is conducted all legal items are to be returned to the person.
+  ## Обшуки
 
-  - A crewmate may legally decline any search conducted without a warrant while the alert level is green. Should be noted that if the alert level is blue or above all personnel searches are legal and no longer require a warrant.
+  - Особистий обшук - це вилучення предметів з рюкзака, рук, пальта, пояса, кишень та головного убору особи. Якщо під час обшуку виявлено контрабанду, офіцер може вирішити продовжити обшук до затримання або просто конфіскувати заборонені предмети. Після обшуку всі легальні предмети повинні бути повернуті особі.
 
-  ## Implantation
+  - Член екіпажу може законно відмовитися від будь-якого обшуку, проведеного без ордера, поки рівень тривоги зелений. Слід зазначити, що якщо рівень тривоги синій або вище, всі особисті обшуки є законними і більше не потребують ордера.
 
-  - Any prisoner in custody can be subjected to implantation or implant removal procedures, so long as there's proof, or reasonable suspicion of an implant. The process of removing an implant should be done quickly, not holding the detainee for longer than their stated sentence. A prisoner can still be subject to receive an implant/removal if there has been clear permission given.
+  ## Імплантація
 
-  - [bold]Mind Shields[/bold]: Shields can be administered to any inmate who has been clearly mind controlled, lost control of themselves, or a suspect charged with unlawful control. Unlike standard implantation you may hold a prisoner until you finish issuing Mind Shields, so long as it's done in a timely fashion. If a suspect refuses cooperate or the implant fails to function they can be charged with Refusal of Mental Shielding.
+  - Будь-який в'язень під вартою може бути підданий процедурам імплантації або видалення імплантів, якщо є докази або обґрунтована підозра наявності імпланту. Процес видалення імпланту повинен бути проведений швидко, не утримуючи затриманого довше, ніж зазначений термін. В'язень все ще може бути підданий імплантації/видаленню, якщо було надано чіткий дозвіл.
 
-  # Removal
+  - [bold]Ментальні Щити[/bold]: Щити можуть бути застосовані до будь-якого ув'язненого, який явно знаходився під контролем розуму, втратив контроль над собою або є підозрюваним, обвинуваченим у незаконному контролі. На відміну від стандартної імплантації, ви можете утримувати в'язня, поки не завершите встановлення Ментальних Щитів, за умови своєчасного виконання. Якщо підозрюваний відмовляється співпрацювати або імплант не працює, йому може бути пред'явлено звинувачення у Відмові від Ментального Екранування.
 
-  - A suspect can be forced to receive implant removal if there is strong reasonable proof that they have been implanted, such as an officer seeing them use one or their prints being on a discarded injector. Unlike implantation procedure a prisoner can have their sentence entirely delayed or extended until they comply with the procedure, as long as security are actively making attempts to preform it. Akin to implanting, if an inmate gives their clear permission, implant removal can proceed without proof.
+  # Видалення
 
-  ## Sentencing
-  - All sentencing is to be handled by the Warden, if no Warden is available the HoS is to take over that duty, if there's no HoS it falls onto the highest ranking security member.
+  - Підозрюваний може бути примусово підданий видаленню імпланту, якщо є вагомі докази того, що він був імплантований, наприклад, офіцер бачив, як він його використовував, або його відбитки пальців на викинутому інжекторі. На відміну від процедури імплантації, термін ув'язнення в'язня може бути повністю відкладений або продовжений, поки він не погодиться на процедуру, за умови, що охорона активно намагається її провести. Аналогічно імплантації, якщо ув'язнений дає чіткий дозвіл, видалення імпланту може бути проведено без доказів.
 
-  - Use common sense and humanity when issuing punishments. You should not always seek out the highest punishment you can, you don't have to always give the maximum time or always look to demote someone. Always take in account the severity and only charge for what is needed for someone to learn their lesson.
+  ## Винесення Вироків
+  - Усі вироки повинен виносити Начальник Охорони, якщо немає Начальника Охорони, цей обов'язок бере на себе ГСБ, якщо немає ГСБ, це покладається на найстаршого за рангом члена охорони.
 
-  - [bold]Accessory, Attempting, And Intention:[/bold] If someone intentionally, knowingly and substantially assists someone in enacting a crime they can be charged with the relevant crimes, such as an engineer giving someone tools, who says they are going to break into an area. Same goes for a clear and solid attempt at a crime, or a person who shows clear intent to act out a crime, such as a syndicate nuclear operative arming a nuke but getting arrested before it goes off, they can still be charged with terrorism. Does not apply to crimes that have an attempted listing already, like attempted murder.
+  - Використовуйте здоровий глузд та гуманність при винесенні покарань. Ви не повинні завжди шукати найвище покарання, не завжди потрібно давати максимальний час або завжди прагнути когось понизити. Завжди враховуйте серйозність і виносьте звинувачення лише за те, що необхідно для того, щоб хтось засвоїв урок.
 
-  - [bold]Stackable Crimes:[/bold] Crimes are to be considered 'stackable' in the sense that if you charge someone with two or more different crimes, you should combine the times you would give them for each crime.
+  - [bold]Співучасть, Спроба та Намір:[/bold] Якщо хтось навмисно, свідомо та суттєво допомагає комусь у вчиненні злочину, йому може бути пред'явлено звинувачення у відповідних злочинах, наприклад, інженер дає комусь інструменти, хто каже, що збирається зламати територію. Те саме стосується чіткої та явної спроби злочину, або особи, яка виявляє явний намір вчинити злочин, наприклад, ядерний оперативник Синдикату озброює бомбу, але його заарештовують до того, як вона вибухне, йому все одно може бути пред'явлено звинувачення в тероризмі. Не застосовується до злочинів, які вже мають окреме формулювання спроби, як, наприклад, замах на вбивство.
 
-  # [color=red][bold]"YOU MAY NOT EXCEED 10 MINUTES AS A BRIG TIME"[/bold][/color]
+  - [bold]Сумовні Злочини:[/bold] Злочини слід вважати «сумовними» в тому сенсі, що якщо ви звинувачуєте когось у двох або більше різних злочинах, ви повинні об'єднати терміни, які ви б дали їм за кожен злочин.
 
-  # Any total brig time that adds up to above 10 minutes will be shortened to meet this limit.
+  # [color=red][bold]«ВИ НЕ МОЖЕТЕ ПЕРЕВИЩИТИ 10 ХВИЛИН ЯК ЧАС БРИГА»[/bold][/color]
 
-  # If it goes above 20 minutes, you may perma the person.
+  # Будь-який загальний час брига, який перевищує 10 хвилин, буде скорочений до цієї межі.
 
+  # Якщо він перевищує 20 хвилин, ви можете довічно ув'язнити особу.
 
 
-  # Crimes
 
-  # I Degree
+  # Злочини
 
-  For minor crimes, fix the issue then warn the person to not attempt the crime again, if they still proceed to do it at a later date, a brig time may be better.
+  # I Ступінь
 
-  ## Disturbance
+  За незначні злочини усуньте проблему, потім попередьте особу не повторювати злочин, якщо вона все одно продовжує це робити пізніше, час брига може бути кращим варіантом.
 
-  [bold]Description[/bold]: To cause a public disturbance.
+  ## Порушення Порядку
 
-  [bold]Maximum Punishment:[/bold] 2:00
+  [bold]Опис[/bold]: Спричинення публічного безладу.
 
-  [bold]Notes:[/bold] Sometimes referred to as hooliganism. The catch-all for obnoxious crewmates. Covers things such as public nudity, needless insults, obstructing authorities, and inciting crime or violence.
+  [bold]Максимальне Покарання:[/bold] 2:00
 
-  ## Petty Theft
+  [bold]Примітки:[/bold] Іноді називається хуліганством. Загальна стаття для надокучливих членів екіпажу. Охоплює такі речі, як публічна нагота, безпідставні образи, перешкоджання владі та підбурювання до злочину чи насильства.
 
-  [bold]Description[/bold]: To take non-vital or inexpensive property of another individual, organization, or common property, without consent.
+  ## Дрібна Крадіжка
 
-  [bold]Maximum Punishment:[/bold] 3:00
+  [bold]Опис[/bold]: Привласнення неважливого або недорогого майна іншої особи, організації або спільного майна без згоди.
 
-  [bold]Notes:[/bold] The difference between petty theft and grand theft is based on how crucial the stolen item is, things like instruments, clothing and tools fall under petty theft. In most cases all you need to do is detain the thief, return the stolen item and let them go with a warning.
+  [bold]Максимальне Покарання:[/bold] 3:00
 
-  ## Possession/Use of Illegal Substances
+  [bold]Примітки:[/bold] Різниця між дрібною крадіжкою та великою крадіжкою базується на тому, наскільки важливим є вкрадений предмет, такі речі як інструменти, одяг та інструменти потрапляють під дрібну крадіжку. У більшості випадків все, що вам потрібно зробити, це затримати злодія, повернути вкрадений предмет і відпустити його з попередженням.
 
-  [bold]Description[/bold]: To make, hold, or abuse restricted drugs or chemicals.
+  ## Зберігання/Вживання Заборонених Речовин
 
-  [bold]Maximum Punishment:[/bold] 3:00
+  [bold]Опис[/bold]: Виготовлення, зберігання або зловживання забороненими наркотиками чи хімікатами.
 
-  [bold]Notes: This is to be followed in accordance with Standard Operating Procedure. If anything questionable is not brought up in SOP the captain or highest standing command staff may publicly restrict it.[/bold]
+  [bold]Максимальне Покарання:[/bold] 3:00
 
-  ## Tresspass
+  [bold]Примітки: Це слід виконувати відповідно до Стандартних Операційних Процедур. Якщо щось сумнівне не згадано в СОП, капітан або найстарший командний склад може публічно обмежити це.[/bold]
 
-  [bold]Description[/bold]: To enter a non-secured area without permission.
+  ## Проникнення
 
-  [bold]Maximum Punishment:[/bold] 2:00
+  [bold]Опис[/bold]: Вхід на незахищену територію без дозволу.
 
-  [bold]Notes:[/bold] It's best to just remove them from the area unless this is a repeated crime.
+  [bold]Максимальне Покарання:[/bold] 2:00
 
-  ## Vandalism
+  [bold]Примітки:[/bold] Найкраще просто вивести їх з території, якщо це не повторний злочин.
 
-  [bold]Description[/bold]: To intentionally deface or superficially damage public or private property.
+  ## Вандалізм
 
-  [bold]Maximum Punishment:[/bold] 2:00
+  [bold]Опис[/bold]: Навмисне псування або поверхневе пошкодження державного чи приватного майна.
 
-  [bold]Notes:[/bold] Painting graffiti, smashing bar glasses, and cracking internal windows is vandalism, breaking a window into space or secure areas is not.
+  [bold]Максимальне Покарання:[/bold] 2:00
 
+  [bold]Примітки:[/bold] Малювання графіті, розбивання барних склянок та тріщини у внутрішніх вікнах — це вандалізм, розбивання вікна у космос або в захищені зони — ні.
 
 
-  # II Degree
 
-  ## Animal Cruelty
+  # II Ступінь
 
-  [bold]Description[/bold]: To inflict unnecessary suffering or harm on a non-sapient being with malicious intent.
+  ## Жорстоке Поводження з Тваринами
 
-  [bold]Maximum Punishment:[/bold] 3:00
+  [bold]Опис[/bold]: Завдання непотрібних страждань або шкоди нерозумній істоті зі злим наміром.
 
-  [bold]Notes:[/bold] This doesn't include legitimate and authorized animal testing and usually doesn't extend to vermin or creatures that could pose a threat to the station.
+  [bold]Максимальне Покарання:[/bold] 3:00
 
-  ## Damage/Destruction of Property
+  [bold]Примітки:[/bold] Це не включає законні та дозволені випробування на тваринах і зазвичай не поширюється на паразитів або істот, які можуть становити загрозу для станції.
 
-  [bold]Description[/bold]: To maliciously damage or deface public or private property or equipment.
+  ## Пошкодження/Знищення Майна
 
-  [bold]Maximum Punishment:[/bold] 4:00
+  [bold]Опис[/bold]: Зловмисне пошкодження або псування державного чи приватного майна або обладнання.
 
-  [bold]Notes:[/bold] Step up from vandalism but a step down from mass destruction.
+  [bold]Максимальне Покарання:[/bold] 4:00
 
-  ## Endangerment
+  [bold]Примітки:[/bold] Крок вище від вандалізму, але крок нижче від масового знищення.
 
-  [bold]Description[/bold]: To recklessly put yourself or others in danger, either through direct action, or failure to act.
+  ## Створення Загрози
 
-  [bold]Maximum Punishment:[/bold] 4:00
+  [bold]Опис[/bold]: Необережно піддавати себе або інших небезпеці, через пряму дію або бездіяльність.
 
-  [bold]Notes:[/bold] Covers industrial accidents, industrial negligence, self-experimentation, or even medical malpractice.
+  [bold]Максимальне Покарання:[/bold] 4:00
 
-  ## Failure to Comply
+  [bold]Примітки:[/bold] Охоплює виробничі аварії, виробничу недбалість, самоексперименти або навіть медичну халатність.
 
-  [bold]Description[/bold]: To resist reasonable orders given by an authority. This extends to warrants and authorized searches.
+  ## Непідкорення
 
-  [bold]Maximum Punishment:[/bold] 2:00
+  [bold]Опис[/bold]: Опір розумним наказам влади. Це поширюється на ордери та дозволені обшуки.
 
-  [bold]Notes:[/bold] The order has to be reasonable and the person has to receive a good amount of warning before the arrest is issued.
+  [bold]Максимальне Покарання:[/bold] 2:00
 
-  ## Posession of Restricted Gear
+  [bold]Примітки:[/bold] Наказ має бути розумним, і особа повинна отримати достатнє попередження перед арештом.
 
-  [bold]Description[/bold]: To hold or use non-lethal items or objects that are restricted or illegal.
+  ## Зберігання Обмеженого Спорядження
 
-  [bold]Maximum Punishment:[/bold] 5:00
+  [bold]Опис[/bold]: Зберігання або використання несмертельних предметів або об'єктів, які є обмеженими або незаконними.
 
-  [bold]Notes:[/bold] This is mostly for syndicate contraband; EMAGs, syndicate gas masks, bloodred hardsuits, hijacked PDAs, or implants, however can sometimes extend to things the individual shouldn't possess like kevlar vests and security gear.
+  [bold]Максимальне Покарання:[/bold] 5:00
 
-  ## Rioting
+  [bold]Примітки:[/bold] Здебільшого це стосується контрабанди Синдикату; ЕМАГи, протигази Синдикату, кров'яно-червоні скафандри, зламані КПК або імпланти, однак іноді може поширюватися на речі, якими особа не повинна володіти, як кевларові жилети та спорядження охорони.
 
-  [bold]Description[/bold]: To take part in a large group of personnel creating an unlawful public disturbance.
+  ## Бунт
 
-  [bold]Maximum Punishment:[/bold] 4:00
+  [bold]Опис[/bold]: Участь у великій групі персоналу, що створює незаконний публічний безлад.
 
-  [bold]Notes:[/bold] Crimes like damage of property or battery are expected to be thrown on top of this charge. Leaders of a riot can be charged with all crimes that happen under their lead.
+  [bold]Максимальне Покарання:[/bold] 4:00
 
+  [bold]Примітки:[/bold] Очікується, що такі злочини, як пошкодження майна або побиття, будуть додані до цього звинувачення. Лідерам бунту може бути пред'явлено звинувачення у всіх злочинах, що сталися під їхнім керівництвом.
 
 
-  # III Degree
 
-  ## Assault/Battery
+  # III Ступінь
 
-  [bold]Description[/bold]: To threaten to or to use physical force against someone without the intent to kill.
+  ## Напад/Побиття
 
-  [bold]Maximum Punishment:[/bold] 6:00
+  [bold]Опис[/bold]: Погроза застосування або застосування фізичної сили проти когось без наміру вбити.
 
-  [bold]Notes:[/bold] Attempted murder and battery are different, make sure you've got it right.
+  [bold]Максимальне Покарання:[/bold] 6:00
 
-  ## Breach of Arrest
+  [bold]Примітки:[/bold] Замах на вбивство та побиття — це різні речі, переконайтеся, що ви правильно визначили.
 
-  [bold]Description[/bold]: To intentionally resist and flee arrest or detainment by an authorized staff.
+  ## Порушення Арешту
 
-  [bold]Maximum Punishment:[/bold] 4:00
+  [bold]Опис[/bold]: Навмисний опір та втеча від арешту або затримання уповноваженим персоналом.
 
-  [bold]Notes:[/bold] This only applies if the person is actively being physically arrested. Includes people uncuffing or assisting others out of an arrest. Breach of custody is a separate crime.
+  [bold]Максимальне Покарання:[/bold] 4:00
 
-  ## Grand Theft
+  [bold]Примітки:[/bold] Це застосовується лише якщо особу активно фізично арештовують. Включає людей, які знімають наручники або допомагають іншим уникнути арешту. Втеча з-під варти — це окремий злочин.
 
-  [bold]Description[/bold]: To take critical or unreplaceable property of another individual or organization without consent.
+  ## Велика Крадіжка
 
-  [bold]Maximum Punishment:[/bold] 6:00
+  [bold]Опис[/bold]: Привласнення критично важливого або незамінного майна іншої особи або організації без згоди.
 
-  [bold]Notes:[/bold] The difference between petty theft and grand theft is based on how crucial the stolen item is, this mostly is used for the theft of command staff items, things like door remotes, hardsuits, jetpacks, and unreplaceable machine parts.
+  [bold]Максимальне Покарання:[/bold] 6:00
 
-  ## Manslaughter
+  [bold]Примітки:[/bold] Різниця між дрібною крадіжкою та великою крадіжкою базується на тому, наскільки важливим є вкрадений предмет, здебільшого використовується для крадіжки предметів командного складу, таких як пульти дверей, скафандри, джетпаки та незамінні частини машин.
 
-  [bold]Description[/bold]: To incidentally kill a sapient being without intent.
+  ## Ненавмисне Вбивство
 
-  [bold]Maximum Punishment:[/bold] 8:00
+  [bold]Опис[/bold]: Випадкове вбивство розумної істоти без наміру.
 
-  [bold]Notes:[/bold] Includes manslaughter in self-defense and negligent manslaughter.
+  [bold]Максимальне Покарання:[/bold] 8:00
 
-  ## Mass Destruction
+  [bold]Примітки:[/bold] Включає ненавмисне вбивство при самообороні та ненавмисне вбивство через недбалість.
 
-  [bold]Description[/bold]: To cause massive damage to an area or major station system.
+  ## Масове Знищення
 
-  [bold]Maximum Punishment:[/bold] 10:00
+  [bold]Опис[/bold]: Завдання масових пошкоджень території або основній системі станції.
 
-  [bold]Notes:[/bold] This is mostly used for deadly bombings or sabotage of major station systems such as power production, cloning, substations, or atmos.
+  [bold]Максимальне Покарання:[/bold] 10:00
 
-  ## Posession of Restricted Weaponry
+  [bold]Примітки:[/bold] Здебільшого використовується для смертоносних вибухів або саботажу основних систем станції, таких як виробництво енергії, клонування, підстанції або атмосферіка.
 
-  [bold]Description[/bold]: To hold or use a weapon that is unlawful or contraband.
+  ## Зберігання Забороненої Зброї
 
-  [bold]Maximum Punishment:[/bold] 6:00
+  [bold]Опис[/bold]: Зберігання або використання зброї, яка є незаконною або контрабандою.
 
-  [bold]Notes:[/bold] Everything from guns without a permit, deadly blades, explosives, syndicate firearms to explosive implants.
+  [bold]Максимальне Покарання:[/bold] 6:00
 
-  ## Secure Tresspass
+  [bold]Примітки:[/bold] Все від вогнепальної зброї без дозволу, смертельних клинків, вибухівки, вогнепальної зброї Синдикату до вибухових імплантів.
 
-  [bold]Description[/bold]: To enter a secured area without permission.
+  ## Проникнення на Захищену Територію
 
-  [bold]Maximum Punishment:[/bold] 6:00
+  [bold]Опис[/bold]: Вхід на захищену територію без дозволу.
 
-  [bold]Notes:[/bold] This covers places like telecomms, head offices, security zones, command areas, the vault and armory.
+  [bold]Максимальне Покарання:[/bold] 6:00
 
-  ## Breach of Custody
+  [bold]Примітки:[/bold] Охоплює такі місця, як телекомунікації, кабінети глав, зони охорони, командні зони, сховище та арсенал.
 
-  [bold]Description[/bold]: To break out of a cell or custody with the intention of escaping.
+  ## Втеча з-під Варти
 
-  [bold]Maximum Punishment:[/bold] 5:00
+  [bold]Опис[/bold]: Втеча з камери або з-під варти з наміром втекти.
 
-  [bold]Notes:[/bold] This time should be added on top of a prisoners current brig time. While rare, this charge can be bumped to permanent brig if the suspect has repeatedly attempted to break out of the permanent brig. Includes people breaking others out.
+  [bold]Максимальне Покарання:[/bold] 5:00
 
+  [bold]Примітки:[/bold] Цей час повинен бути доданий до поточного часу брига в'язня. Хоча рідко, це звинувачення може бути підвищено до довічного ув'язнення, якщо підозрюваний неодноразово намагався втекти з довічного брига. Включає людей, які звільняють інших.
 
 
-  # IV Degree
 
-  ## Attempted Murder
+  # IV Ступінь
 
-  [bold]Description[/bold]: To make an attempt to use physical force against someone with the clear intent to kill.
+  ## Замах на Вбивство
 
-  [bold]Maximum Punishment:[/bold] 10:00
+  [bold]Опис[/bold]: Спроба застосування фізичної сили проти когось з явним наміром вбити.
 
-  [bold]Notes:[/bold] Make sure you've got the proof to back up the intention claims.
+  [bold]Максимальне Покарання:[/bold] 10:00
 
-  ## Unlawful Control/Kidnapping/Hostage Taking
+  [bold]Примітки:[/bold] Переконайтеся, що у вас є докази для підтвердження заяв про намір.
 
-  [bold]Description[/bold]: To unlawfully restrain, transport, control or confine a sapient being against that individual's will.
+  ## Незаконний Контроль/Викрадення/Захоплення Заручників
 
-  [bold]Maximum Punishment:[/bold] 10:00
+  [bold]Опис[/bold]: Незаконно утримувати, транспортувати, контролювати або обмежувати свободу розумної істоти проти її волі.
 
-  [bold]Notes:[/bold] A large range of things, used mostly as a catch all when dealing with unlawful control of another being.
+  [bold]Максимальне Покарання:[/bold] 10:00
 
-  ## Murder
+  [bold]Примітки:[/bold] Широкий спектр речей, використовується здебільшого як загальна стаття при роботі з незаконним контролем над іншою істотою.
 
-  [bold]Description[/bold]: To kill a sapient being with malicious intent.
+  ## Вбивство
 
-  [bold]Maximum Punishment:[/bold] 10:00
+  [bold]Опис[/bold]: Вбивство розумної істоти зі злим наміром.
 
-  [bold]Notes:[/bold] This only changes from attempted to full on murder if the victim enters a state of being deceased, having to be resurrected.
+  [bold]Максимальне Покарання:[/bold] 10:00
 
+  [bold]Примітки:[/bold] Це змінюється зі спроби на повноцінне вбивство, лише якщо жертва переходить у стан смерті, потребуючи воскресіння.
 
 
-  # V Degree
 
-  ## Mass Murder
+  # V Ступінь
 
-  [bold]Description[/bold]: To kill three or more sapient beings with malicious intent.
+  ## Масове Вбивство
 
-  [bold]Maximum Punishment:[/bold] Permanent
+  [bold]Опис[/bold]: Вбивство трьох або більше розумних істот зі злим наміром.
 
-  [bold]Notes:[/bold] Only applies when there have been multiple killings with intention.
+  [bold]Максимальне Покарання:[/bold] Довічне
 
-  ## Prevention of Revival
+  [bold]Примітки:[/bold] Застосовується лише коли було кілька навмисних вбивств.
 
-  [bold]Description[/bold]: To render a body unresurrectable.
+  ## Запобігання Воскресінню
 
-  [bold]Maximum Punishment:[/bold] Permanent
+  [bold]Опис[/bold]: Зробити тіло нездатним до воскресіння.
 
-  [bold]Notes:[/bold] This covers gibbing, spacing, intentionally hiding a body leading to it rotting, or other ways of preventing a body with a soul from being resurrected.
+  [bold]Максимальне Покарання:[/bold] Довічне
 
-  ## Refusal of Mental Shielding
+  [bold]Примітки:[/bold] Охоплює подрібнення, викидання в космос, навмисне приховування тіла, що призводить до його гниття, або інші способи запобігання воскресінню тіла з душею.
 
-  [bold]Description[/bold]: To refuse to comply with a reasonable Mind Shielding procedure.
+  ## Відмова від Ментального Екранування
 
-  [bold]Maximum Punishment:[/bold] Permanent
+  [bold]Опис[/bold]: Відмова погодитися на розумну процедуру Ментального Екранування.
 
-  [bold]Notes:[/bold] Applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner already being too far gone. If the implant fails the maximum punishment is upped to Expedited Execution.
+  [bold]Максимальне Покарання:[/bold] Довічне
 
-  ## Terrorism
+  [bold]Примітки:[/bold] Застосовується, якщо підозрюваний надмірно відмовляється співпрацювати або імплант не працює через те, що психічний стан в'язня вже занадто зіпсований. Якщо імплант не працює, максимальне покарання підвищується до Прискореної Страти.
 
-  [bold]Description[/bold]: To engage in maliciously destructive actions which threaten to destroy, or successfully destroy a vessel or habitat.
+  ## Тероризм
 
-  [bold]Maximum Punishment:[/bold] Execution
+  [bold]Опис[/bold]: Участь у зловмисних руйнівних діях, які загрожують знищити або успішно знищують судно чи оселю.
 
-  [bold]Notes:[/bold] Summed up; extreme sabotage of station systems or setting off self-destruction systems.
+  [bold]Максимальне Покарання:[/bold] Страта
+
+  [bold]Примітки:[/bold] Підсумовуючи: екстремальний саботаж систем станції або активація систем самознищення.
 </Document>

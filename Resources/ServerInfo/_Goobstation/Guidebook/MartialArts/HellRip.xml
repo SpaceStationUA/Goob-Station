@@ -1,23 +1,23 @@
 <Document>
 
-  # Hell Ripte
+  # Пекельний розрив
 
   <Box>
     <GuideEntityEmbed Entity="LegionnaireBonfire" Caption=""/>
   </Box>
 
-  Hell Ripte, is a [textlink="martial art" link="MartialArts"] that focuses on ripping through crowds of demons with
-  brutal efficiency. This art can only be mastered by the slaughter demons of hell, as it requires an enormous amount of raw strength and power to master,
-  yet Space Wizards may also unravel its secrets.
-  A full understanding of this art will allow you to paint the station red. None will be safe from your carnage.
+  «Пекельний розрив» — це [textlink="бойове мистецтво" link="MartialArts"], що зосереджується на розриванні натовпів демонів із
+  жорстокою ефективністю. Оволодіти цим мистецтвом можуть лише демони різанини пекла, адже для нього потрібна величезна сирцева сила,
+  однак і Космічні Чарівники здатні розкрити його таємниці.
+  Повне розуміння цього мистецтва дозволить залити станцію кров’ю. Ніхто не буде у безпеці від вашої різанини.
 
-  ## Special abilities
+  ## Особливі здібності
 
-  Hell Ripte masters do extreme amounts of damage in short windows, making them unmatched in hand to hand combat.
+  Майстри Пекельного розриву завдають надзвичайних обсягів шкоди у короткі проміжки, що робить їх неперевершеними у рукопашному бою.
 
-  ## Combo attacks
+  ## Комбо-атаки
 
-  ### Tear Down
+  ### Роздирання
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
@@ -25,9 +25,9 @@
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
   </Box>
 
-  Deals massive slashing damage and bleeds the target.
+  Завдає величезної рубальної шкоди й спричиняє кровотечу цілі.
 
-  ### Head Rip
+  ### Виривання голови
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
@@ -36,24 +36,24 @@
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
   </Box>
 
-  Rip off the head of an opponent who is dead, very lethal. Cannot be done while target is alive.
+  Зриває голову з уже мертвого супротивника; украй смертоносно. Неможливо виконати, якщо ціль жива.
 
-  ### Hellish Slam
+  ### Пекельний удар
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
   </Box>
 
-  Knocks an opponent down and deals heavy stamina damage. If you are downed you pull yourself up.
+  Збиває супротивника з ніг і завдає великої шкоди витривалості. Якщо ви повалені — піднімаєтеся на ноги.
 
-  ### Drop Kick
+  ### Дроп-кік
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
   </Box>
 
-  Launch a downed opponent. Great for painting. Cannot be done while on the ground.
+  Підкидає лежачого супротивника. Чудово для «фарбування». Неможливо виконати, коли ви на землі.
 
 </Document>

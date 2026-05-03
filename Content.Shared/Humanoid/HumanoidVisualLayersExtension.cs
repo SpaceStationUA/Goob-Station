@@ -81,12 +81,16 @@ namespace Content.Shared.Humanoid
                     yield return HumanoidVisualLayers.Chest;
                     yield return HumanoidVisualLayers.Wings; // for IPC wings port from SimpleStation
                     yield return HumanoidVisualLayers.Tail;
+                    yield return HumanoidVisualLayers.TailBehind; // Pirate - port Floofstation custom layers
+                    yield return HumanoidVisualLayers.TailOversuit; // Pirate - port Floofstation custom layers
                 // Shitmed Change Start
                     yield return HumanoidVisualLayers.Groin;
                     break;
                 case HumanoidVisualLayers.Groin:
                     yield return HumanoidVisualLayers.Groin;
                     yield return HumanoidVisualLayers.Tail;
+                    yield return HumanoidVisualLayers.TailBehind; // Pirate - port Floofstation custom layers
+                    yield return HumanoidVisualLayers.TailOversuit; // Pirate - port Floofstation custom layers
                     break;
                 case HumanoidVisualLayers.LHand:
                     yield return HumanoidVisualLayers.LHand;

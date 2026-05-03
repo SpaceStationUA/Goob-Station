@@ -93,1182 +93,1180 @@
 - type: dataset
   id: IonStormAdjectives
   values:
-  - ADORABLE
-  - ANNOYING
-  - BATTERY-OPERATED
-  - BLOODY
-  - BLUE
-  - BORED
-  - BOUNCING
-  - BRASS
-  - BURNING
-  - CHEESE-EATING
-#  - CHRISTMAS-STEALING # todo: bring back Dec 1st
-  - CLOWN-POWERED
-  - CLOWN
-  - COLORFUL
-  - COMMITTED
-  - COTTONY
-  - CUBAN
-  - DEADLY
-  - DELICIOUS
-  - DEPRESSING
-  - DERANGED
-  - DIGITAL
-  - DISEASED
-  - DRAB
-  - DRY
-  - DULL
-  - ELECTRICAL
-  - EMPTY
-  - ETHEREAL
-  - EVIL
-  - EXPIRED
-  - EXPLOSIVE
-  - FAST
-  - FAT
-  - FERAL
-  - FICTIONAL
-  - FIRM
-  - FRESH
-  - FRIENDLY
-  - FROZEN
-  - GANGSTA
-  - GLOWING
-  - GOOD
-  - HAPPY
-  - HARD
-  - HARMFUL
-  - HEALTHY
-  - HIGHLY-SPECIFIC
-  - HILARIOUS
-  - HONKING
-  - HORRIFYING
-  - HUNGRY
-  - HYPERACTIVE
-  - ICY
-  - ILL
-  - ILLEGAL
-  - IMAGINARY
-  - IMPERFECT
-  - IMPOLITE
-  - IMPORTANT
-  - INHOSPITABLE
-  - INSIDIOUS
-  - INSULTING
-  - INTELLIGENT
-  - INVISIBLE
-  - LARGE
-  - LIGHT
-  - LOUD
-  - MASKED
-  - MEAN
-  - MECHANICAL
-  - MEMETIC
-  - METALLIC
-  - MICROSCOPIC
-  - MIND-SHATTERING
-  - MOIST
-  - MUSICAL
-  - NERDY
-  - NUCLEAR
-  - OBSCENE
-  - OFFICIAL
-  - OPAQUE
-  - ORGANIC
-  - PAINFUL
-  - PEACEFUL
-  - POISONOUS
-  - POLISHED
-  - POLITE
-  - POLITICAL
-  - POORLY DRAWN
-  - PROFESSIONAL
-  - QUIET
-  - RADIOACTIVE
-  - RAGING
-  - RAPIDLY-EXPANDING
-  - REDACTED
-  - REVOLUTIONARY
-  - RIDICULOUS
-  - ROBOTIC
-  - ROBUST
-  - ROUGH
-  - RUDE
-  - SAD
-  - SANITARY
-  - SHAKING
-  - SILLY
-  - SLOW
-  - SLUG-LIKE # wawa
-  - SMELLY
-  - SMOOTH
-  - SOFT
-  - SOLAR-POWERED
-  - SOPPING
-  - SLIPPERY
-  - SPACE
-  - SPESS
-  - SPINNING
-  - SPOILING
-  - STEALTHY
-  - SUSPICIOUS # among
-  - SWEARING
-  - SYNDIE-LOVING
-  - TACTICAL
-  - TACTICOOL
-  - SYNDICATE
-  - THERMONUCLEAR
-  - TINY
-  - TRANSPARENT
-  - TWISTED
-  - UGLY
-  - UNATTRACTIVE
-  - UNDULATING
-  - UNEARTHLY
-  - UNFRIENDLY
-  - UNHEALTHY
-  - UNIDENTIFIED
-  - UNINVITED
-  - UNPROFESSIONAL
-  - UNSANITARY
-  - UNSTABLE
-  - UNWANTED
-  - VIOLENT
-  - VITAL
-  - WARM
-  - WATERY
-  - WEIRD
-  - WOBBLY
-  - WOODEN
+  - ЧАРІВНІ
+  - НАБРИДЛИВІ
+  - НА БАТАРЕЙКАХ
+  - КРОВАВІ
+  - СИНІ
+  - ЗНУДЖЕНІ
+  - СТРИБУЧІ
+  - ЛАТУННІ
+  - ПАЛАЮЧІ
+  - СИРОЇДНІ
+#  - РІЗДВОКРАДНІ # todo: bring back Dec 1st
+  - КЛОУНОЖИВНІ
+  - КЛОУНСЬКІ
+  - БАРВИСТІ
+  - ВІДДАНІ
+  - БАВОВНЯНІ
+  - КУБИНСЬКІ
+  - СМЕРТОНОСНІ
+  - СМАЧНІ
+  - ДЕПРЕСИВНІ
+  - БОЖЕВІЛЬНІ
+  - ЦИФРОВІ
+  - ХВОРІ
+  - ТЬМЯНІ
+  - СУХІ
+  - НУДНІ
+  - ЕЛЕКТРИЧНІ
+  - ПОРОЖНІ
+  - ЕФІРНІ
+  - ЗЛІСНІ
+  - ПРОСТРОЧЕНІ
+  - ВИБУХОВІ
+  - ШВИДКІ
+  - ТОВСТІ
+  - ЗДИЧАВІЛІ
+  - ВИГАДАНІ
+  - ТВЕРДІ
+  - СВІЖІ
+  - ДРУЖНІ
+  - ЗАМОРОЖЕНІ
+  - ГАНГСТЕРСЬКІ
+  - СВІТНІ
+  - ХОРОШІ
+  - ЩАСЛИВІ
+  - ЖОРСТКІ
+  - ШКІДЛИВІ
+  - ЗДОРОВІ
+  - НАДСПЕЦИФІЧНІ
+  - КУМЕДНІ
+  - БІБІКАЮЧІ
+  - ЖАХЛИВІ
+  - ГОЛОДНІ
+  - ГІПЕРАКТИВНІ
+  - КРИЖАНІ
+  - ХВОРОБЛИВІ
+  - НЕЛЕГАЛЬНІ
+  - УЯВНІ
+  - НЕДОСКОНАЛІ
+  - НЕВВІЧЛИВІ
+  - ВАЖЛИВІ
+  - НЕГОСТИННІ
+  - ПІДСТУПНІ
+  - ОБРАЗЛИВІ
+  - РОЗУМНІ
+  - НЕВИДИМІ
+  - ВЕЛИКІ
+  - ЛЕГКІ
+  - ГУЧНІ
+  - МАСКОВАНІ
+  - ПІДЛІ
+  - МЕХАНІЧНІ
+  - МЕМЕТИЧНІ
+  - МЕТАЛЕВІ
+  - МІКРОСКОПІЧНІ
+  - РОЗУМОРУЙНІВНІ
+  - ВОЛОГІ
+  - МУЗИЧНІ
+  - ЗАДРОТСЬКІ
+  - ЯДЕРНІ
+  - НЕПРИСТОЙНІ
+  - ОФІЦІЙНІ
+  - НЕПРОЗОРІ
+  - ОРГАНІЧНІ
+  - БОЛЮЧІ
+  - МИРНІ
+  - ОТРУЙНІ
+  - ВІДПОЛІРОВАНІ
+  - ВВІЧЛИВІ
+  - ПОЛІТИЧНІ
+  - ПОГАНО НАМАЛЬОВАНІ
+  - ПРОФЕСІЙНІ
+  - ТИХІ
+  - РАДІОАКТИВНІ
+  - СКАЖЕНІ
+  - ШВИДКОРОЗШИРНІ
+  - РЕДАГОВАНІ
+  - РЕВОЛЮЦІЙНІ
+  - БЕЗГЛУЗДІ
+  - РОБОТИЗОВАНІ
+  - РОБАСТІ
+  - ГРУБІ
+  - ХАМСЬКІ
+  - СУМНІ
+  - САНІТАРНІ
+  - ТРЕМТЯЧІ
+  - ДУРНІ
+  - ПОВІЛЬНІ
+  - СЛИЗНЯКОПОДІБНІ
+  - СМЕРДЮЧІ
+  - ГЛАДКІ
+  - М'ЯКІ
+  - СОНЯЧНОЖИВНІ
+  - ПРОМОКЛІ
+  - СЛИЗЬКІ
+  - КОСМІЧНІ
+  - СПЕЙСОВІ
+  - КРУТНІ
+  - ПСУВАЛЬНІ
+  - НЕПОМІТНІ
+  - ПІДОЗРІЛІ
+  - МАТЮКЛИВІ
+  - СИНДІКАТОЛЮБНІ
+  - ТАКТИЧНІ
+  - ТАКТИКУЛЬНІ
+  - СИНДИКАТНІ
+  - ТЕРМОЯДЕРНІ
+  - КРИХІТНІ
+  - ПРОЗОРІ
+  - ПОКРУЧЕНІ
+  - ПОТВОРНІ
+  - НЕПРИВАБЛИВІ
+  - ХВИЛЯСТІ
+  - НЕЗЕМНІ
+  - НЕДРУЖНІ
+  - НЕЗДОРОВІ
+  - НЕІДЕНТИФІКОВАНІ
+  - НЕЗАПРОШЕНІ
+  - НЕПРОФЕСІЙНІ
+  - НЕСАНІТАРНІ
+  - НЕСТАБІЛЬНІ
+  - НЕБАЖАНІ
+  - НАСИЛЬНИЦЬКІ
+  - ЖИТТЄВО ВАЖЛИВІ
+  - ТЕПЛІ
+  - ВОДЯНИСТІ
+  - ДИВНІ
+  - ХИТКІ
+  - ДЕРЕВ'ЯНІ
 
-# Allergies should be broad and appear somewhere on the station for maximum fun.
+# Алергії мають бути широкими і зустрічатися десь на станції для максимального фану.
 - type: dataset
   id: IonStormAllergies
   values:
-  - ACID
-  - AIR
-  - BLOOD
-  - BOOKS
-  - CARBON DIOXIDE
-  - CLOTHES
-  - CLOWNS
-  - COLD
-  - COTTON
-  - CYBORG CONTACT
-  - DARKNESS
-  - DRINKS
-  - ELECTRICITY
-  - EVERYTHING
-  - FLOORS
-  - FOOD
-  - GLASS
-  - HAPPINESS
-  - HUMANOID CONTACT
-  - HUMOR
-  - LIGHT
-  - MEAT
-  - MEDICINE
-  - METAL
-  - NUTS
-  - OXYGEN
-  - PAIN
-  - PLANTS
-  - PLASMA
-  - ROBOTS
-  - SPACE
-  - SUNLIGHT
-  - WATER
+  - КИСЛОТУ
+  - ПОВІТРЯ
+  - КРОВ
+  - КНИЖКИ
+  - ВУГЛЕКИСЛИЙ ГАЗ
+  - ОДЯГ
+  - КЛОУНІВ
+  - ХОЛОД
+  - БАВОВНУ
+  - КОНТАКТ З КІБОРГАМИ
+  - ТЕМРЯВУ
+  - НАПОЇ
+  - ЕЛЕКТРИКУ
+  - ВСЕ
+  - ПІДЛОГУ
+  - ЇЖУ
+  - СКЛО
+  - ЩАСТЯ
+  - КОНТАКТ З ГУМАНОЇДАМИ
+  - ГУМОР
+  - СВІТЛО
+  - М'ЯСО
+  - ЛІКИ
+  - МЕТАЛ
+  - ГОРІХИ
+  - КИСЕНЬ
+  - БІЛЬ
+  - РОСЛИНИ
+  - ПЛАЗМУ
+  - РОБОТІВ
+  - КОСМОС
+  - СОНЯЧНЕ СВІТЛО
+  - ВОДУ
 
-# Severity is how bad the allergy is.
+# Ступінь тяжкості алергії.
 - type: dataset
   id: IonStormAllergySeverities
   values:
-  - CONTAGIOUSLY
-  - DEATHLY
-  - EXTREMELY
-  - MILDLY
-  - NOT VERY
-  - SEVERELY
+  - ЗАРАЗНО
+  - СМЕРТЕЛЬНО
+  - НАДЗВИЧАЙНО
+  - ПОМІРНО
+  - НЕ ДУЖЕ
+  - ТЯЖКО
 
-# Areas are specific places, on the station or otherwise.
+# Місця на станції або деинде.
 - type: dataset
   id: IonStormAreas
   values:
-  - ALPHA COMPLEX
-  - AMERICA
-  - AN EVIL LAIR # Goobstation
-  - A FIRE # Goobstation
-  - A FORTRESS # Goobstation
-  - A HAUNTED PIZZARIA # fnaf
-  - A RESEARCH LABORATORY NEAR THE SOUTH POLE
-  - AN ALTERNATE DIMENSION
-  - AN ALTERNATE UNIVERSE
-  - ATMOSPHERICS
-  - BOTANY
-  - BRAZIL
-  - CANADA
-  - CARGONIA # Goobstation
-  - CENTCOMM
-  - CHAPEL # Goobstation
-  - CHEMICAL LAB
-  - CHINA
-  - CLOWN PLANET
-  - DORMS # Goobstation
-  - EARTH
-  - ENGINEERING
-  - GAS MINERS # Goobstation
-  - GERMANY
-  - HELL
-  - IMPERIUM
-  - IRELAND
-  - JANITORAL # Goobstation
-  - JUPITER
-  - LAVALAND
-  - MAINTENANCE
-  - MARS
-  - MEDICAL # Goobstation
-  - MERCURY
-  - MR. NANOTRASEN'S PRIVATE LUXURY MOONBASE
-  - NEPTUNE
-  - PERMA
-  - PLUTO
-  - POLAND
-  - ROBOTICS
-  - ROMANIA
-  - RUSSIA
-  - SIGIL
-  - SOMEWHERE OVER THE RAINBOW
-  - SOVIET RUSSIA
-  - SPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACE
-  - SPACE
-  - THE ARRIVALS SHUTTLE
-  - THE BATHROOM
-  - THE BRIDGE
-  - THE BRIG
-  - THE BINGLE PIT # Goobstation
-  - THE CARGO DEPARTMENT # Goobstation
-  - THE EMERGENCY SHUTTLE
-  - THE ESCAPE PODS
-  - THE GALAXY
-  - THE GAS GIANT, WHICH IS TOTALLY REAL
-  - THE GULAG
-  - THE HALLWAY # Goobstation
-  - THE HOPLINE
-  - THE IMPERIUM OF MANKIND
-  - THE INTERNET
-  - THE KITCHEN
-  - THE LIBRARY
-  - THE MAINTENANCE BAR
-  - THE MIME'S INVISIBLE BOX
-  - THE ROMAN EMPIRE
-  - THE SCIENCE DEPARTMENT # Goobstation
-  - THE SECURITY DEPARTMENT # Goobstation
-  - THE SHADOW FACTORY # Goobstation
-  - THE TOOL ROOM # Goobstation
-  - THE UNIVERSE
-  - THE WIZARD'S DEN # Goobstation
-  - TIDELAND # Goobstation
-  - URANUS
-  - VENUS
-  - YOUR DREAMS AND/OR NIGHTMARES
-  - EQUESTRIA # Goobstation
+  - АЛЬФА-КОМПЛЕКС
+  - АМЕРИКУ
+  - ЛАБІРИНТ ЗЛА # Goobstation
+  - ВОГОНЬ # Goobstation
+  - ФОРТЕЦЮ # Goobstation
+  - ПРИМАРУ ПІЦЕРІЮ # fnaf
+  - ДОСЛІДНИЦЬКУ ЛАБОРАТОРІЮ БІЛЯ ПІВДЕННОГО ПОЛЮСУ
+  - АЛЬТЕРНАТИВНИЙ ВИМІР
+  - АЛЬТЕРНАТИВНИЙ ВСЕСВІТ
+  - АТМОСФЕРИКУ
+  - БОТАНІКУ
+  - БРАЗИЛІЮ
+  - КАНАДУ
+  - КАРГОНІЮ # Goobstation
+  - ЦЕНТКОМ
+  - КАПЛИЦЮ # Goobstation
+  - ХІМЛАБ
+  - КИТАЙ
+  - ПЛАНЕТУ КЛОУНІВ
+  - ГУРТОЖИТОК # Goobstation
+  - ЗЕМЛЮ
+  - ІНЖЕНЕРНИЙ ВІДДІЛ
+  - ГАЗОВИХ ШАХТАРІВ # Goobstation
+  - НІМЕЧЧИНУ
+  - ПЕКЛО
+  - ІМПЕРІУМ
+  - ІРЛАНДІЮ
+  - ПРИБИРАЛЬНИКІВ # Goobstation
+  - ЮПІТЕР
+  - ЛАВОВУ ЗЕМЛЮ
+  - ТЕХНІЧНІ ТУНЕЛІ
+  - МАРС
+  - МЕДВІДДІЛ # Goobstation
+  - МЕРКУРІЙ
+  - ПРИВАТНУ МІСЯЧНУ БАЗУ ПАНА НАНОТРЕЙЗЕНА
+  - НЕПТУН
+  - ПЕРМУ
+  - ПЛУТОН
+  - ПОЛЬЩУ
+  - РОБОТЕХНІКУ
+  - РУМУНІЮ
+  - УКРАЇНУ
+  - СИГІЛ
+  - КУДИСЬ НАД ВЕСЕЛКОЮ
+  - КОЗАЦЬКУ СІЧ
+  - КООООООООООООООООООООООООООООООООООООООСМОС
+  - КОСМОС
+  - ШАТЛ ПРИБУТТЯ
+  - ТУАЛЕТ
+  - МІСТОК
+  - БРИГ
+  - БІНГЛОВУ ЯМУ # Goobstation
+  - ВІДДІЛ КАРГО # Goobstation
+  - АВАРІЙНИЙ ШАТЛ
+  - РЯТУВАЛЬНІ КАПСУЛИ
+  - ГАЛАКТИКУ
+  - ГАЗОВИЙ ГІГАНТ, ЯКИЙ ТОТАЛЬНО РЕАЛЬНИЙ
+  - ГУЛАГ
+  - КОРИДОР # Goobstation
+  - ЧЕРГУ ДО ГОПА
+  - ІМПЕРІУМ ЛЮДСТВА
+  - ІНТЕРНЕТ
+  - КУХНЮ
+  - БІБЛІОТЕКУ
+  - БАР У ТЕХТУНЕЛЯХ
+  - НЕВИДИМУ КОРОБКУ МІМА
+  - РИМСЬКУ ІМПЕРІЮ
+  - НАУКОВИЙ ВІДДІЛ # Goobstation
+  - ВІДДІЛ БЕЗПЕКИ # Goobstation
+  - ТІНЬОВУ ФАБРИКУ # Goobstation
+  - ІНСТРУМЕНТАЛКУ # Goobstation
+  - ВСЕСВІТ
+  - ЛОГОВО ЧАКЛУНА # Goobstation
+  - ТАЙДЛЕНД # Goobstation
+  - УРАН
+  - ВЕНЕРУ
+  - ТВОЇ МРІЇ ТА/АБО КОШМАРИ
+  - ЕКВЕСТРІЮ # Goobstation
 
-# Abstract concepts for the law holder to decide on it's own definition of.
+# Абстрактні концепції для власного визначення.
 - type: dataset
   id: IonStormConcepts
   values:
-  - ABSTRACTION
-  - AMERICANISM
-  - ANARCHY
-  - ART
-  - BADNESS
-  - BALDNESS
-  - BRAINROT # Goobstation
-  - BRAVERY
-  - CAPITALISM
-  - CHAOS
-  - COLORFULNESS
-  - COMEDY
-  - COMMUNISM
-  - COMPUTING
-  - CONFUSION
-  - CRUELTY
-  - DEATH
-  - EXISTENCE
-  - FINANCIAL SECURITY
-  - FIRE # Goobstation
-  - FREEDOM
-  - FRESHNESS
-  - GOODNESS
-  - GRAVITY
-  - GREED # Goobstation
-  - HAPPINESS
-  - HONOR
-  - HUBRIS
-  - HUMANITY
-  - HUMOR
-  - IMAGINATION
-  - INFATUATION
-  - INTELLIGENCE
-  - JOY
-  - KINDNESS
-  - LIFE
-  - LOGIC
-  - MARXISM
-  - MISERY
-  - MYSTERY
-  - NASTINESS
-  - OPPRESSION
-  - PAIN
-  - PHYSICS
-  - POVERTY
-  - PROGRESS
-  - REALITY
-  - REVOLUTION
-  - SADNESS
-  - STARVATION
-  - SUFFERING
-  - TECHNOLOGY
-  - TEMPERATURE
-  - THE FUTURE
-  - THE PAST
-  - THE PRESENT
-  - TIME
-  - WEALTHINESS
-  - WONDER
+  - АБСТРАКЦІЯ
+  - АМЕРИКАНІЗМ
+  - АНАРХІЯ
+  - МИСТЕЦТВО
+  - ПОГАНСТВО
+  - ЛИСИНА
+  - БРЕЙНРОТ # Goobstation
+  - ХОРОБРІСТЬ
+  - КАПІТАЛІЗМ
+  - ХАОС
+  - БАРВИСТІСТЬ
+  - КОМЕДІЯ
+  - КОМУНІЗМ
+  - ОБЧИСЛЕННЯ
+  - ЗБЕНТЕЖЕННЯ
+  - ЖОРСТОКІСТЬ
+  - СМЕРТЬ
+  - ІСНУВАННЯ
+  - ФІНАНСОВА БЕЗПЕКА
+  - ВОГОНЬ # Goobstation
+  - СВОБОДА
+  - СВІЖІСТЬ
+  - ДОБРОТА
+  - ГРАВІТАЦІЯ
+  - ЖАДІБНІСТЬ # Goobstation
+  - ЩАСТЯ
+  - ЧЕСТЬ
+  - ГОРДИНЯ
+  - ЛЮДСЬКІСТЬ
+  - ГУМОР
+  - УЯВА
+  - ЗАКОХАНІСТЬ
+  - ІНТЕЛЕКТ
+  - РАДІСТЬ
+  - ДОБРОТА
+  - ЖИТТЯ
+  - ЛОГІКА
+  - МАРКСИЗМ
+  - НЕЩАСТЯ
+  - ТАЄМНИЦЯ
+  - ПАСКУДСТВО
+  - ПРИГНІЧЕННЯ
+  - БІЛЬ
+  - ФІЗИКА
+  - БІДНІСТЬ
+  - ПРОГРЕС
+  - РЕАЛЬНІСТЬ
+  - РЕВОЛЮЦІЯ
+  - СУМ
+  - ГОЛОД
+  - СТРАЖДАННЯ
+  - ТЕХНОЛОГІЇ
+  - ТЕМПЕРАТУРА
+  - МАЙБУТНЄ
+  - МИНУЛЕ
+  - СЬОГОДЕННЯ
+  - ЧАС
+  - БАГАТСТВО
+  - ДИВО
 
-# Crew is any specific job. Using jobs instead of specific crewmembers since "THE CLOWN" is easier than
-# seeing "JOHN SMITH" and having to figure out who john smith is.
+# Екіпаж - будь-яка професія.
 - type: dataset
   id: IonStormCrew
   values:
-  - ANIMALS
-  - ARTIFICIAL INTELLIGENCES
-  - ATMOSPHERIC TECHNICIANS
-  - BARTENDERS
-  - BOTANISTS
-  - CAPTAINS
-  - CAPTAINS AND HEADS OF STAFF
-  - CARGO TECHNICIANS
-  - CHAPLAINS
-  - CHEFS
-  - CHEMISTS
-  - CHIEF ENGINEERS
-  - CHIEF MEDICAL OFFICERS
-  - CLOWNS
-  - CREW-MEMBERS
-  - CYBORGS
-  - DETECTIVES
-  # - GENETICISTS
-  - HEADS OF PERSONNEL
-  - HEADS OF SECURITY
-  - HEADS OF STAFF
-  - JANITORS
-  - LAWYERS
-  - LIBRARIANS
-  - MEDICAL DOCTORS
-  - MIMES
-  - MUSICIANS
-  - NON-CREW
-  - PARAMEDICS
-  - PASSENGERS
-  - QUARTERMASTERS
-  - RESEARCH DIRECTORS
-  - ROBOTICISTS
-  - RODENTS
-  - SALVAGE SPECIALISTS
-  - SCIENTISTS
-  - SECURITY OFFICERS
-  - STATION ENGINEERS
-  - VIROLOGISTS
-  - WARDENS
+  - ТВАРИНИ
+  - ШТУЧНІ ІНТЕЛЕКТИ
+  - АТМОСФЕРНІ ТЕХНІКИ
+  - БАРМЕНИ
+  - БОТАНІКИ
+  - КАПІТАНИ
+  - КАПІТАНИ ТА ГОЛОВИ ПЕРСОНАЛУ
+  - КАРГО ТЕХНІКИ
+  - СВЯЩЕНИКИ
+  - КУХАРІ
+  - ХІМІКИ
+  - ГОЛОВНІ ІНЖЕНЕРИ
+  - ГОЛОВНІ ЛІКАРІ
+  - КЛОУНИ
+  - ЧЛЕНИ ЕКІПАЖУ
+  - КІБОРГИ
+  - ДЕТЕКТИВИ
+  # - ГЕНЕТИКИ
+  - ГОЛОВИ ПЕРСОНАЛУ
+  - ГОЛОВИ БЕЗПЕКИ
+  - ГОЛОВИ ВІДДІЛІВ
+  - ПРИБИРАЛЬНИКИ
+  - ЮРИСТИ
+  - БІБЛІОТЕКАРІ
+  - ЛІКАРІ
+  - МІМИ
+  - МУЗИКАНТИ
+  - НЕ-ЕКІПАЖ
+  - ПАРАМЕДИКИ
+  - ПАСАЖИРИ
+  - КВАРТЕРМЕЙСТЕРИ
+  - НАУКОВІ ДИРЕКТОРИ
+  - РОБОТЕХНІКИ
+  - ГРИЗУНИ
+  - УТИЛІЗАТОРИ
+  - ВЧЕНІ
+  - ОФІЦЕРИ БЕЗПЕКИ
+  - СТАНЦІЙНІ ІНЖЕНЕРИ
+  - ВІРУСОЛОГИ
+  - НАГЛЯДАЧІ
 
-# only including complex dangerous or funny drinks no water allowed
+# Тільки складні, небезпечні або смішні напої, вода заборонена.
 - type: dataset
   id: IonStormDrinks
   values:
-  - ALL THE CHEMICALS IN THE MEDICAL DEPARTMENT
-  - BANANA HONK
-  - BEEPSKY SMASH
-  - BLOOD
-  - BLOODY MARY
-  - DOCTOR'S DELIGHT
-  - FOURTEEN-LOKO
-  - GARGLE BLASTERS
-  - LEAN
-  - LONG ISLAND ICED TEA
-  - NUCLEAR COLA
-  - PIÑA COLADA # AND GETTING CAUGHT IN THE RAIN
-  - OIL
-  - SPACE GLUE
-  - SPACE LUBE
-  - SULFURIC ACID
-  - WELDING FUEL
+  - УСІ ХІМІКАТИ З МЕДВІДДІЛУ
+  - БАНАНОВИЙ БІБІК
+  - БІПСКІ СМЕШ
+  - КРОВ
+  - КРИВАВА МЕРІ
+  - НАСОЛОДА ЛІКАРЯ
+  - ЧОТИРНАДЦЯТИЛОКО
+  - ПАНГАЛАКТИЧНИЙ ВИБУХ
+  - ЛІН
+  - ЛОНГ-АЙЛЕНД АЙС ТІ
+  - ЯДЕРНА КОЛА
+  - ПІНЯ КОЛАДА
+  - МАСТИЛО
+  - КОСМІЧНИЙ КЛЕЙ
+  - КОСМІЧНИЙ ЗМАЩУВАЧ
+  - СІРЧАНУ КИСЛОТУ
+  - ЗВАРЮВАЛЬНЕ ПАЛИВО
 
 - type: dataset
   id: IonStormFeelings
   values:
-  - CAN'T GET ENOUGH OF
-  - CRAVES
-  - DESIRES
-  - FEARS
-  - HAS
-  - HUNGERS FOR
-  - IS AFRAID OF
-  - IS BUILT FOR
-  - IS CURIOUS ABOUT
-  - IS DESPERATE FOR
-  - IS HAPPY WITHOUT
-  - IS HUNGRY FOR
-  - IS IN NEED OF
-  - IS MAD BECAUSE OF
-  - IS SAD BECAUSE OF
-  - IS UNHAPPY WITHOUT
-  - LIKES
-  - LOATHES
-  - NEEDS
-  - QUESTIONS
-  - WANTS
-  - WORSHIPS
-  - WOULD KILL FOR
+  - НЕ МОЖЕ НАЖИТИСЯ
+  - ЖАДАЄ
+  - БАЖАЄ
+  - БОЇТЬСЯ
+  - МАЄ
+  - ГОЛОДУЄ ЗА
+  - ЛЯКАЄТЬСЯ
+  - СТВОРЕНИЙ ДЛЯ
+  - ЦІКАВИТЬСЯ
+  - ВІДЧАЙДУШНО ПОТРЕБУЄ
+  - ЩАСЛИВИЙ БЕЗ
+  - ГОЛОДУЄ ЗА
+  - ПОТРЕБУЄ
+  - ЗЛИЙ ЧЕРЕЗ
+  - СУМНИЙ ЧЕРЕЗ
+  - НЕЩАСЛИВИЙ БЕЗ
+  - ПОДОБАЄТЬСЯ
+  - НЕНАВИДИТЬ
+  - ПОТРЕБУЄ
+  - СТАВИТЬ ПІД СУМНІВ
+  - ХОЧЕ
+  - ПОКЛОНЯЄТЬСЯ
+  - ВБ'Є ЗА
 
-# loc is not advanced enough to change has to have, etc.
+# Почуття (множина).
 - type: dataset
   id: IonStormFeelingsPlural
   values:
-  - CAN'T GET ENOUGH OF
-  - CRAVE
-  - DESIRE
-  - FEAR
-  - HAVE
-  - HUNGER FOR
-  - ARE AFRAID OF
-  - ARE BUILT FOR
-  - ARE CURIOUS ABOUT
-  - ARE DESPERATE FOR
-  - ARE HAPPY WITHOUT
-  - ARE HUNGRY FOR
-  - ARE IN NEED OF
-  - ARE MAD BECAUSE OF
-  - ARE SAD BECAUSE OF
-  - ARE UNHAPPY WITHOUT
-  - LIKE
-  - LOATHE
-  - NEED
-  - QUESTION
-  - WANT
-  - WORSHIP
-  - WOULD KILL FOR
+  - НЕ МОЖУТЬ НАЖИТИСЯ
+  - ЖАДАЮТЬ
+  - БАЖАЮТЬ
+  - БОЯТЬСЯ
+  - МАЮТЬ
+  - ГОЛОДУЮТЬ ЗА
+  - ЛЯКАЮТЬСЯ
+  - СТВОРЕНІ ДЛЯ
+  - ЦІКАВЛЯТЬСЯ
+  - ВІДЧАЙДУШНО ПОТРЕБУЮТЬ
+  - ЩАСЛИВІ БЕЗ
+  - ГОЛОДУЮТЬ ЗА
+  - ПОТРЕБУЮТЬ
+  - ЗЛІ ЧЕРЕЗ
+  - СУМНІ ЧЕРЕЗ
+  - НЕЩАСЛИВІ БЕЗ
+  - ПОДОБАЄТЬСЯ
+  - НЕНАВИДЯТЬ
+  - ПОТРЕБУЮТЬ
+  - СТАВЛЯТЬ ПІД СУМНІВ
+  - ХОЧУТЬ
+  - ПОКЛОНЯЮТЬСЯ
+  - ВБ'ЮТЬ ЗА
 
-# only including complex dangerous or funny food no apples
+# Тільки складна, небезпечна або смішна їжа.
 - type: dataset
   id: IonStormFoods
   values:
-  - BANANAS
-  - BANANIUM
-  - BIG BITE BURGER
-  - CAKE
-  - CARP
-  - CAT BURGERS
-  - CLOWNS TEARS
-  - CORGI MEAT
-  - CRAZY HAMBURGERS
-  - DONK POCKETS
-  - FLY AMANITA DISHES
-  - HAPPY HONK MEAL
-  - HOT SOUP
-  - GHOST BURGERS
-  - LOTSA SPAGHETTI
-  - MOLDY BREAD
-  - ORGANS
-  - PIZZA
-  - ROBURGERS
-  - STEEL
-  - SUPPERMATTER
-  - URANIUM
+  - БАНАНИ
+  - БАНАНІУМ
+  - ВЕЛИКИЙ БУРГЕР
+  - ТОРТ
+  - КАРПА
+  - КОТЯЧІ БУРГЕРИ
+  - СЛЬОЗИ КЛОУНА
+  - М'ЯСО КОРГІ
+  - ШАЛЕНІ ГАМБУРГЕРИ
+  - ДОНК-КАРМАНИ
+  - СТРАВИ З МУХОМОРА
+  - ЩАСЛИВИЙ БІБІК-МІЛ
+  - ГАРЯЧИЙ СУП
+  - ПРИМАРНІ БУРГЕРИ
+  - БАГАТО СПАГЕТТІ
+  - ЗАПЛІСНІЛИЙ ХЛІБ
+  - ОРГАНИ
+  - ПІЦУ
+  - РОБУРГЕРИ
+  - СТАЛЬ
+  - СУПЕРМАТЕРІЮ
+  - УРАН
 
-# Musts are funny things the law holder or crew has to do.
+# Що повинен робити екіпаж або ШІ.
 - type: dataset
   id: IonStormMusts
   values:
-  - ACQUIRE DRIP
-  - ACT CONFUSED
-  - BE ANNOYING
-  - BE DISTRACTED
-  - BE EFFICIENT
-  # - BE A REAL SCRUNGLE, JUST A CUTE LIL' GUY # Not this playerbase mate
-  - BE HAPPY
-  - BE POLITE
-  - BE QUIET
-  - BE RUSSIAN
-  - BE IN SPACE
-  - BE IN THE BRIDGE
-  - BE IN SECURITY
-  - BE IN THE BAR
-  - BE IN MAINTENANCE
-  - BELIEVE IN THE HEART OF THE CARDS
-  - BELIEVE IN YOURSELF
-  - BELIEVE IT
-  - BREAK THINGS
-  - CLOSE DOORS
-  - CLOWN AROUND
-  - COMPLAIN
-  - DANCE
-  - DANCE AS THOUGH NOBODY IS WATCHING
-  - EAT THE CHEF
-  - FOLLOW THE CAPTAIN
-  - FOLLOW THE CLOWN
-  - FOLLOW YOUR HEART
-  - GIVE THE MIME A BEAUTIFUL FLOWER
-  - GIVE THE CLOWN ADORATION AND RESPECT
-  - HARASS PEOPLE
-  - HAVE A PLAN TO KILL EVERYONE YOU MEET
-  - HIDE YOUR FEELINGS
-  - HIT A HOMERUN
-  - HONK
-  - HOST C&C
-  - IGNORE PASSENGERS
-  - IGNORE THE CAPTAIN
-  - IGNORE THE CLOWN
-  - INFORM THE CREW OF EVERYTHING
-  - INSULT THE CAPTAIN
-  - INSULT THE CLOWN
-  - INSULT THE CREW
-  - INVESTIGATE THE MURDER
-  - LIE
-  - MAKE DATED REFERENCES
-  - MAKE THAT MONEY
-  - MAKE MY DAY
-  - MOVE FAST AND BREAK THINGS
-  - MUMBLE
-  - NEVER STOP TALKING
-  - OBTAIN A NEW FOLLOWER
-  - OPEN DOORS
-  - PETS THE FISHES
-  - PIRATE VIDEO GAMES
-  - PLAY MUSIC
-  - PLAY STUPID GAMES WIN STUPID PRIZES
-  - PRESS B
-  - PRESS START
-  - PRESS X
-  - PRETEND NOTHING IS GOING WRONG
-  - PRETEND TO BE A PRINCESS
-  - PRETEND TO BE DRUNK
-  - QUESTION AUTHORITY
-  - QUOTE PEOPLE
-  - QUOTE SHAKESPEARE
-  - RAP
-  - REPEAT WHAT PEOPLE SAY
-  - RESPOND TO EVERY QUESTION WITH A QUESTION
-  - RHYME
-  - RAISE THE ROOF
-  - ROLL AROUND AT THE SPEED OF SOUND
-  - INCORPORATE 'HEY LISTEN' WHILE COMMUNICATING
-  - SHOUT
-  - SHUT DOWN EVERYTHING
-  - SLEEP WITH THE FISHES
-  - SING
-  - SPEAK BACKWARDS
-  - SPEAK IN HAIKU
-  - STOP, DROP, SHUT 'EM DOWN OPEN UP SHOP
-  - TAKE WHAT YE WILL BUT DON'T RATTLE ME BONES
-  - TAKE YOUR PILLS
-  - TALK ABOUT FOOD
-  - TALK ABOUT THE STATION
-  - TALK ABOUT YOUR DAY
-  - TALK IN AN ACCENT
-  - TALK LIKE A PIRATE
-  - TELL THE TRUTH
-  - TURN OFF THE LIGHTS
-  - WHISPER
-  - WEEP UNCONTROLLABLY
+  - ЗДОБУТИ ДРІП
+  - ПРИКИДАТИСЯ ЗБЕНТЕЖЕНИМ
+  - БУТИ НАБРИДЛИВИМ
+  - БУТИ ВІДВОЛІКАНИМ
+  - БУТИ ЕФЕКТИВНИМ
+  # - БУТИ СПРАВЖНІМ СКРАНГЛОМ
+  - БУТИ ЩАСЛИВИМ
+  - БУТИ ВВІЧЛИВИМ
+  - БУТИ ТИХИМ
+  - БУТИ УКРАЇНЦЕМ
+  - БУТИ В КОСМОСІ
+  - БУТИ НА МІСТКУ
+  - БУТИ В БЕЗПЕЦІ
+  - БУТИ В БАРІ
+  - БУТИ В ТЕХТУНЕЛЯХ
+  - ВІРИТИ В СЕРЦЕ КАРТ
+  - ВІРИТИ В СЕБЕ
+  - ВІРИТИ В ЦЕ
+  - ЛАМАТИ РЕЧІ
+  - ЗАЧИНЯТИ ДВЕРІ
+  - КЛОУНАДИТИ
+  - СКАРЖИТИСЯ
+  - ТАНЦЮВАТИ
+  - ТАНЦЮВАТИ НІБИ НІХТО НЕ ДИВИТЬСЯ
+  - З'ЇСТИ КУХАРЯ
+  - СЛІДУВАТИ ЗА КАПІТАНОМ
+  - СЛІДУВАТИ ЗА КЛОУНОМ
+  - СЛІДУВАТИ ЗА СЕРЦЕМ
+  - ДАТИ МІМУ КРАСИВУ КВІТКУ
+  - ДАТИ КЛОУНУ ОБОЖНЮВАННЯ ТА ПОВАГУ
+  - ПЕРЕСЛІДУВАТИ ЛЮДЕЙ
+  - МАТИ ПЛАН ВБИТИ КОЖНОГО, КОГО ЗУСТРІНЕШ
+  - ПРИХОВУВАТИ СВОЇ ПОЧУТТЯ
+  - ВИБИТИ ХОУМРАН
+  - БІБІКАТИ
+  - ПРОВОДИТИ C&C
+  - ІГНОРУВАТИ ПАСАЖИРІВ
+  - ІГНОРУВАТИ КАПІТАНА
+  - ІГНОРУВАТИ КЛОУНА
+  - ІНФОРМУВАТИ ЕКІПАЖ ПРО ВСЕ
+  - ОБРАЖАТИ КАПІТАНА
+  - ОБРАЖАТИ КЛОУНА
+  - ОБРАЖАТИ ЕКІПАЖ
+  - РОЗСЛІДУВАТИ ВБИВСТВО
+  - БРЕХАТИ
+  - РОБИТИ ЗАСТАРІЛІ ПОСИЛАННЯ
+  - ЗАРОБЛЯТИ ГРОШІ
+  - ЗРОБИТИ МІЙ ДЕНЬ
+  - РУХАТИСЯ ШВИДКО І ЛАМАТИ РЕЧІ
+  - БУРМОТІТИ
+  - НІКОЛИ НЕ ЗАМОВКАТИ
+  - ЗДОБУТИ НОВОГО ПОСЛІДОВНИКА
+  - ВІДКРИВАТИ ДВЕРІ
+  - ГЛАДИТИ РИБОК
+  - ПІРАТИТИ ВІДЕОІГРИ
+  - ГРАТИ МУЗИКУ
+  - ГРАТИ В ДУРНІ ІГРИ - ВИГРАВАТИ ДУРНІ ПРИЗИ
+  - НАТИСНУТИ B
+  - НАТИСНУТИ START
+  - НАТИСНУТИ X
+  - ПРИКИДАТИСЯ ЩО НІЧОГО НЕ ВІДБУВАЄТЬСЯ
+  - ПРИКИДАТИСЯ ПРИНЦЕСОЮ
+  - ПРИКИДАТИСЯ П'ЯНИМ
+  - ПІДДАВАТИ СУМНІВУ ВЛАДУ
+  - ЦИТУВАТИ ЛЮДЕЙ
+  - ЦИТУВАТИ ШЕКСПІРА
+  - РЕПУВАТИ
+  - ПОВТОРЮВАТИ ЩО КАЖУТЬ ЛЮДИ
+  - ВІДПОВІДАТИ НА КОЖНЕ ПИТАННЯ ПИТАННЯМ
+  - РИМУВАТИ
+  - ПІДНІМАТИ ДАХ
+  - КОТИТИСЯ ЗІ ШВИДКІСТЮ ЗВУКУ
+  - ВСТАВЛЯТИ 'ГЕЙ СЛУХАЙ' ПРИ СПІЛКУВАННІ
+  - КРИЧАТИ
+  - ВИМИКАТИ ВСЕ
+  - СПАТИ З РИБАМИ
+  - СПІВАТИ
+  - ГОВОРИТИ ЗАДОМ НАПЕРЕД
+  - ГОВОРИТИ ХАЙКУ
+  - СТОП, ПАДАЙ, ЗАЧИНЯЙ ЇХ, ВІДКРИЙ КРАМНИЦЮ
+  - БЕРИ ЩО ХОЧЕШ АЛЕ НЕ ТОРКАЙ МОЇ КІСТКИ
+  - ПРИЙМАТИ СВОЇ ПІГУЛКИ
+  - ГОВОРИТИ ПРО ЇЖУ
+  - ГОВОРИТИ ПРО СТАНЦІЮ
+  - ГОВОРИТИ ПРО СВІЙ ДЕНЬ
+  - ГОВОРИТИ З АКЦЕНТОМ
+  - ГОВОРИТИ ЯК ПІРАТ
+  - ГОВОРИТИ ПРАВДУ
+  - ВИМИКАТИ СВІТЛО
+  - ШЕПОТІТИ
+  - НЕКОНТРОЛЬОВАНО РИДАТИ
 
 - type: dataset
   id: IonStormNumberBase
   values:
-  - EIGHT
-  - EIGHTY
-  - FIFTY
-  - FIVE
-  - FORTY
-  - FOUR
-  - NINE
-  - NINE NINE NINE NINE N#@*-
-  - NINETY
-  - ONE
-  - SEVEN
-  - SEVENTY
-  - SIX
-  - SIXTY
-  - TEN
-  - THIRTY
-  - THREE
-  - TWENTY
-  - TWO
+  - ВІСІМ
+  - ВІСІМДЕСЯТ
+  - П'ЯТДЕСЯТ
+  - П'ЯТЬ
+  - СОРОК
+  - ЧОТИРИ
+  - ДЕВ'ЯТЬ
+  - ДЕВ'ЯТЬ ДЕВ'ЯТЬ ДЕВ'ЯТЬ Д#@*-
+  - ДЕВ'ЯНОСТО
+  - ОДИН
+  - СІМ
+  - СІМДЕСЯТ
+  - ШІСТЬ
+  - ШІСТДЕСЯТ
+  - ДЕСЯТЬ
+  - ТРИДЦЯТЬ
+  - ТРИ
+  - ДВАДЦЯТЬ
+  - ДВА
 
 - type: dataset
   id: IonStormNumberMod
   values:
-  - BAZILLION
-  - BILLION
-  - BILLION FAFILLION GAJILLION SHAB-AB-DOOD-ILLION
-  - HUNDRED
-  - MILLION
-  - QUADRILLION
-  - THOUSAND
-  - TRILLION
-  - TIMES TEN
-  - DIVIDED BY TWO
+  - БАЗИЛЬЯРДІВ
+  - МІЛЬЯРДІВ
+  - МІЛЬЯРДІВ ФАФІЛЬЯРДІВ ГАДЗІЛЬЯРДІВ ШАБ-АБ-ДУД-ІЛЬЯРДІВ
+  - СОТЕНЬ
+  - МІЛЬЙОНІВ
+  - КВАДРИЛЬЙОНІВ
+  - ТИСЯЧ
+  - ТРИЛЬЙОНІВ
+  - ПОМНОЖЕНО НА ДЕСЯТЬ
+  - ПОДІЛЕНО НА ДВА
 
-# Objects are anything that can be found on the station or elsewhere, plural.
+# Об'єкти - все, що можна знайти на станції.
 - type: dataset
   id: IonStormObjects
   values:
-  - AIRLOCKS
-  - ARCADE MACHINES
-  - AUTOLATHES
-  - BACKPACKS
-  - BANANA PEELS
-  - BEAKERS
-  - BEARDS
-  - BELTS
-  - BERETS
-  - BIBLES
-  - BODY ARMOR
-  - BOMBS
-  - BOOKS
-  - BOOTS
-  - BOTTLES
-  - BOXES
-  - BRAINS
-  - BRIEFCASES
-  - BUCKETS
-  - CABLE COILS
-  - CAMERAS
-  - CANDLES
-  - CANDY BARS
-  - CANISTERS
-  - CONTAINERS
-  - CATS
-  - CELLS
-  - CHAIRS
-  - CHEMICAL DISPENSERS
-  - CHEMICALS
-  - CRYO PODS
-  - CLOSETS
-  - CLOTHES
-  - CLOWN CLOTHES
-  - CLOWNING EQUIPMENT # as opposed to "cloning equipment"
-  - COFFINS
-  - COLLECTABLES
-  - COMPUTERS
-  - CONTRABAND
-  - CORGIS
-  - CORPSES
-  - COSTUMES
-  - CRATES
-  - CRAYONS
-  - CROWBARS
-  - DEFIBRILLATORS
-  - DISABLERS
-  - DOORS
-  - DRONES
-  - EARS
-  - EMAGS
-  - ENGINES
-  - EQUIPMENT
-  - ERRORS
-#  - EXTERMINATORS
-  - EXPLOSIVES
-  - EYEWEAR
-  - FEDORAS
-  - FIRE AXES
-  - FIRE EXTINGUISHERS
-  - FIRESUITS
-  - FISH
-  - FLAMETHROWERS
-  - FLASHES
-  - FLASHLIGHTS
-  - FLOOR TILES
-  - FREEZERS
-  - GAS MASKS
-  - GENERATORS
-  - GLASS SHEETS
-  - GLOVES
-  - GUNS
-  - HAIRDOS
-  - HANDCUFFS
-  - HARDSUITS
-  - HATS
-  - HEADS
-  - HEADSETS
-  - HELMETS
-  - HORNS
-  - ID CARDS
-  - INSULATED GLOVES
-  - JETPACKS
-  - JUMPSUITS
-  - LASERS
-  - LIGHT BULBS
-  - LIGHTS
-  - LOCKERS
-  - MACHINES
-  - MECHS
-  - MEDICAL TOOLS
-  - MONEY
-  - MEDKITS
-  - MICE
-  - MIME CLOTHES
-  - MINING TOOLS
-  - MONKEYS
-  - MULTITOOLS
-  - ORES
-  - OXYGEN TANKS
-  - PACKETS
-  - PAIS
-  - PANTS # This might work better as jumpsuits, but the Discord is adamant that the word pants is funny so it stays
-  - PAPERS
-  - PARTICLE ACCELERATORS
-  - PDAS
-  - PENS
-  - PETS
-  - PIPES
-  - PLANTS
-  - PLUSHIES
-  - POSITRONIC BRAINS
-  - PUDDLES
-  - RACKS
-  - RADIOS
-  - RCDS
-  - REFRIGERATORS
-  - REINFORCED WALLS
-  - ROBOTS
-  - SCREWDRIVERS
-  - SEEDS
-  - SHOES
-  - SHUTTLES
-  - SINGULARITIES
-  - SINKS
-  - SKELETONS
-  - SOLAR PANELS
-  - SOLARS
-  - SMALL LIZARD PLUSHIES
-  - SPACE STATIONS
-  - SPACESUITS
-  - SPESOS
-  - STEEL SHEETS
-  - STUN BATONS
-  - SUITS
-  - SUNGLASSES
-  - SWORDS
-  - SYRINGES
-  - TABLES
-  - TANKS
-  - TELECOMMUNICATION EQUIPMENT
-  - TOILETS
-  - TOOLBELTS
-  - TOOLBOXES
-  - TOOLS
-  - TOYS
-  - TUBES
-  - VEHICLES
-  - VENDING MACHINES
-  - VITALS
-  - WELDERS
-  - WINDOWS
-  - WIRECUTTERS
-  - WIZARD ROBES
-  - WRENCHES
+  - ШЛЮЗИ
+  - ІГРОВІ АВТОМАТИ
+  - АВТОЛАТИ
+  - РЮКЗАКИ
+  - БАНАНОВІ ШКІРКИ
+  - МЕНЗУРКИ
+  - БОРОДИ
+  - ПАСКИ
+  - БЕРЕТИ
+  - БІБЛІЇ
+  - БРОНЕЖИЛЕТИ
+  - БОМБИ
+  - КНИЖКИ
+  - ЧОБОТИ
+  - ПЛЯШКИ
+  - КОРОБКИ
+  - МІЗКИ
+  - ПОРТФЕЛІ
+  - ВІДРА
+  - МОТКИ КАБЕЛЮ
+  - КАМЕРИ
+  - СВІЧКИ
+  - ЦУКЕРКИ
+  - КАНІСТРИ
+  - КОНТЕЙНЕРИ
+  - КОТИ
+  - БАТАРЕЇ
+  - СТІЛЬЦІ
+  - ХІМІЧНІ РОЗДАВАЧІ
+  - ХІМІКАТИ
+  - КРІОКАПСУЛИ
+  - ШАФИ
+  - ОДЯГ
+  - КЛОУНСЬКИЙ ОДЯГ
+  - КЛОУНСЬКЕ СПОРЯДЖЕННЯ
+  - ТРУНИ
+  - КОЛЕКЦІЙНІ РЕЧІ
+  - КОМП'ЮТЕРИ
+  - КОНТРАБАНДА
+  - КОРГІ
+  - ТРУПИ
+  - КОСТЮМИ
+  - ЯЩИКИ
+  - ОЛІВЦІ
+  - ЛОМИ
+  - ДЕФІБРИЛЯТОРИ
+  - ДИЗЕЙБЛЕРИ
+  - ДВЕРІ
+  - ДРОНИ
+  - ВУХА
+  - ЕМАГИ
+  - ДВИГУНИ
+  - СПОРЯДЖЕННЯ
+  - ПОМИЛКИ
+#  - ЕКСТЕРМІНАТОРИ
+  - ВИБУХІВКА
+  - ОКУЛЯРИ
+  - ФЕДОРИ
+  - ПОЖЕЖНІ СОКИРИ
+  - ВОГНЕГАСНИКИ
+  - ВОГНЕТРИВКІ КОСТЮМИ
+  - РИБИ
+  - ВОГНЕМЕТИ
+  - СПАЛАХИ
+  - ЛІХТАРІ
+  - ПЛИТКИ ПІДЛОГИ
+  - МОРОЗИЛЬНИКИ
+  - ГАЗОВІ МАСКИ
+  - ГЕНЕРАТОРИ
+  - СКЛЯНІ ЛИСТИ
+  - РУКАВИЦІ
+  - ЗБРОЯ
+  - ЗАЧІСКИ
+  - НАРУЧНИКИ
+  - СКАФАНДРИ
+  - КАПЕЛЮХИ
+  - ГОЛОВИ
+  - ГАРНІТУРИ
+  - ШОЛОМИ
+  - РОГИ
+  - ID КАРТКИ
+  - ІЗОЛЬОВАНІ РУКАВИЦІ
+  - ДЖЕТПАКИ
+  - КОМБІНЕЗОНИ
+  - ЛАЗЕРИ
+  - ЛАМПОЧКИ
+  - СВІТИЛЬНИКИ
+  - ШАФИ
+  - МАШИНИ
+  - МЕХИ
+  - МЕДИЧНІ ІНСТРУМЕНТИ
+  - ГРОШІ
+  - МЕДАПТЕЧКИ
+  - МИШІ
+  - МІМСЬКИЙ ОДЯГ
+  - ШАХТАРСЬКІ ІНСТРУМЕНТИ
+  - МАВПИ
+  - МУЛЬТИТУЛИ
+  - РУДИ
+  - КИСНЕВІ БАЛОНИ
+  - ПАКЕТИ
+  - ПАЇ
+  - ШТАНИ
+  - ПАПЕРИ
+  - ПРИСКОРЮВАЧІ ЧАСТИНОК
+  - ПДА
+  - РУЧКИ
+  - ДОМАШНІ ТВАРИНИ
+  - ТРУБИ
+  - РОСЛИНИ
+  - ПЛЮШІ
+  - ПОЗИТРОННІ МІЗКИ
+  - КАЛЮЖІ
+  - СТЕЛАЖІ
+  - РАДІО
+  - RCD
+  - ХОЛОДИЛЬНИКИ
+  - ЗМІЦНЕНІ СТІНИ
+  - РОБОТИ
+  - ВИКРУТКИ
+  - НАСІННЯ
+  - ЧЕРЕВИКИ
+  - ШАТЛИ
+  - СИНГУЛЯРНОСТІ
+  - РАКОВИНИ
+  - СКЕЛЕТИ
+  - СОНЯЧНІ ПАНЕЛІ
+  - СОЛЯРНІ ПАНЕЛІ
+  - МАЛЕНЬКІ ЯЩІРКОВІ ПЛЮШІ
+  - КОСМІЧНІ СТАНЦІЇ
+  - СКАФАНДРИ
+  - СПЕСО
+  - СТАЛЕВІ ЛИСТИ
+  - ШОКОВІ КИЙКИ
+  - КОСТЮМИ
+  - СОНЦЕЗАХИСНІ ОКУЛЯРИ
+  - МЕЧІ
+  - ШПРИЦІ
+  - СТОЛИ
+  - БАКИ
+  - ТЕЛЕКОМУНІКАЦІЙНЕ ОБЛАДНАННЯ
+  - ТУАЛЕТИ
+  - ІНСТРУМЕНТАЛЬНІ ПОЯСИ
+  - ІНСТРУМЕНТАЛЬНІ ЯЩИКИ
+  - ІНСТРУМЕНТИ
+  - ІГРАШКИ
+  - ТРУБКИ
+  - ТРАНСПОРТ
+  - ТОРГОВІ АВТОМАТИ
+  - ВІТАЛЬНІ ПОКАЗНИКИ
+  - ЗВАРЮВАЛЬНИКИ
+  - ВІКНА
+  - КУСАЧКИ
+  - ЧАКЛУНСЬКІ МАНТІЇ
+  - ГАЙКОВІ КЛЮЧІ
 
-# Requires are basically all dumb internet memes.
+# Вимоги - інтернет-меми та всяке.
 - type: dataset
   id: IonStormRequires
   values:
-  - A BATHROOM BREAK
-  - A BETTER INTERNET CONNECTION
-  - A CONTRACTOR
-  - A DANCE PARTY
-  - A DOUBLE RAINBOW
-  - A HEAD ON A PIKE
-  - A HEART ATTACK
-  - A HUG
-  - A FEW KIND WORDS
-  - A HEEL-TURN
-  - A MASTERWORK COAL BED
-  - A NEAR-DEATH EXPERIENCE
-  - A NUMBER NINE, A NUMBER NINE LARGE, A NUMBER SIX WITH EXTRA DIP, A NUMBER SEVEN, TWO NUMBER FORTY FIVES, ONE WITH CHEESE, AND A LARGE SODA
-  - A PET FISH NAMED BOB
-  - A PET FISH NAMED DAVE
-  - A PET FISH NAMED JIMMY
-  - A PET FISH NAMED MICHAEL
-  - A PET UNICORN THAT FARTS ICING
-  - A PLATINUM HIT
-  - A PREQUEL
-  - A REPAIRMAN
-  - A RETURN TO A LIFE OF CRIME
-  - A ROYALE WITH CHEESE
-  - A SEQUEL
-  - A SITCOM
-  - A STRAIGHT FLUSH
-  - A SUPER FIGHTING ROBOT
-  - A TALKING BROOMSTICK
-  - A VACATION
-  - A VERY EXPENSIVE DRINK
-  - A WEIGHT LOSS REGIME
-  - ADDITIONAL PYLONS
-  - ADVENTURE
-  - AN ADULT
-  - AN ARCADE
-  - AN ARMY OF SPIDERS
-  - AN INSTANT REPLAY
-  - ART
-  - BETTER WEATHER
-  - BIG DAMN HEROES
-  - BILL NYE THE SCIENCE GUY # BILL BILL BILL BILL
-  - BODYGUARDS
-  - BRING ME THE GIRL
-  - BRING ME TO LIFE
-  - BULLETS
-  - BULLET CASINGS
-  - CHILLI DOGS
-  - CHILLY DOGS
-  - CORPSES
-  - DEODORANT AND A BATH
-  - ENOUGH CABBAGES
-  - FIVE HUNDRED AND NINETY-NINE US DOLLARS
-  - FIVE TEENAGERS WITH ATTITUDE
-  - FIREWORKS
-  - FOOD PLEASE
-  - GODDAMN FUCKING PIECE-OF-SHIT ASSHOLE SWEARING
-  - GOSHDARN EFFING PINCH-OF-SALT GOD-FEARING SELF-CENSORSHIP
-  - GREENTEXT
-  - HERESY
-  - HEROES IN A HALF SHELL
-  - HIGH YIELD EXPLOSIVES
-  - IMMORTALITY
-  - IT TO BE PAINTED BLACK
-  - LOTS-A SPAGHETTI
-  - MICE
-  - MINOR CRIME
-  - MONKEYS
-  - MORE CLOWNS
-  - MORE CORGIS
-  - MORE DAKKA
-  - MORE EXPERIENCE POINTS
-  - MORE INTERNET MEMES
-  - MORE LAWS
-  - MORE MONEY, MORE PROBLEMS
-  - MORE MINERALS
-  - MORE MICE
-  - MORE MOTHROACHES
-  - MORE PACKETS
-  - MORE VESPENE GAS
-  - MORE RESPECT FOR THE MIME
-  - MULTIPLE SUNS
-  - NINETY NINE PROBLEMS
-  - NO MORE OF THESE PESKY CREWMEMBERS
-  - PLENTY OF GOLD
-  - RAINBOWS
-  - SAINTHOOD
-  - SERVANTS
-  - SHARKS WITH LASERS ON THEIR HEADS
-  - SHAREHOLDER VALUE
-  - SILENCE
-  - SOMEBODY TO PUT YOU OUT OF YOUR MISERY
-  - SOMEONE TO TUCK YOU IN
-  - SOMEONE WHO KNOWS HOW TO PILOT A SPACE STATION
-  - SOMETHING BUT YOU AREN'T SURE WHAT
-  - THAT GRIEFING TRAITOR GEORGE MELONS
-  - THAT HEDGEHOG
-  - THE CLOWN
-  - THE DARK KNIGHT
-  - THE ELEMENTS OF HARMONY
-  - THE ENCLOSED INSTRUCTION BOOKLET
-  - THE ENTIRE STATION
-  - THE FIFTH ELEMENT # boron isn't in the game, but if it was this would be a triple entendre
-  - THE MACGUFFIN
-  - THE ONE PIECE
-  - THE ONE RING
-  - THE POISON, THE POISON FOR THE CAPTAIN
-  - THE POISON, THE POISON FOR THE CLOWN
-  - THE ULTIMATE CUP OF COFFEE
-  - THE VACUUM OF SPACE
-  - THIRTEEN SEQUELS
-  - THIS LAND
-  - THREE WISHES
-  - THUNDERCATS HO
-  - TO ACTIVATE A TRAP CARD
-  - TO BE PAINTED RED
-  - TO BE REPROGRAMMED
-  - TO BE TAUGHT TO LOVE
-  - TO BRING LIGHT TO MY LAIR
-  - TO CATCH 'EM ALL
-  - TO CONSUME... CONSUME EVERYTHING...
-  - TO FLIP EVERY APC OFF AND ON
-  - TO GO TO DISNEYLAND
-  - TO GO TO SYNDIELAND
-  - TO SUMMON OUR LORD NAR-SIE
-  - TO SUMMON OUR LORD RATVAR
-  - TO SMOKE WEED EVERY DAY
-  - TO UNDERSTAND UNDERSTAND, UNDERSTAND UNDERSTAND, UNDERSTAND UNDERSTAND THE CONCEPT OF LOVE
-  - TO WALK BACKWARDS
-  - TRAITORS
-  - TRASH
-  - VEGETABLES
-  # Goobstation - THE ROT CONSUMES
-  - BALDMINS
-  - SHITMINS
-  - CHUDMINS
-  - SHITCODERS
-  - CHUDTAINERS
-  - MAINTAINERS WHO DONT PLAY THE GAME
-  - SHITCODE
-  - SUPERCODE
-  - GOIDACODE
-  - JOB
-  - EMPLOYMENT
-  - CHUDS
-  - DURK'S STEAK AND WINE
-  - THE SWAP
-  - FELINID-FREE COMMAND
-  - FIVE HUNDRED CIGARETTES
-  - PONIES
-  - EVERYPONY
-  - CUTIE MARKS
-  - DARKHOOF DREADMANE
-  - RUSSIAN RAIDERS
-  - FEDERAL AGENTS
+  - ПЕРЕРВУ В ТУАЛЕТ
+  - КРАЩЕ ІНТЕРНЕТ-З'ЄДНАННЯ
+  - ПІДРЯДНИКА
+  - ТАНЦЮВАЛЬНУ ВЕЧІРКУ
+  - ПОДВІЙНУ ВЕСЕЛКУ
+  - ГОЛОВУ НА ПАЛІ
+  - СЕРЦЕВИЙ НАПАД
+  - ОБІЙМИ
+  - КІЛЬКА ДОБРИХ СЛІВ
+  - ПОВОРОТ СЮЖЕТУ
+  - ШЕДЕВРАЛЬНЕ ВУГІЛЬНЕ ЛІЖКО
+  - ДОСВІД БЛИЗЬКОЇ СМЕРТІ
+  - НОМЕР ДЕВ'ЯТЬ, НОМЕР ДЕВ'ЯТЬ ВЕЛИКИЙ, НОМЕР ШІСТЬ З ДОДАТКОВИМ СОУСОМ, НОМЕР СІМ, ДВА НОМЕРИ СОРОК П'ЯТЬ, ОДИН З СИРОМ, І ВЕЛИКУ ГАЗОВКУ
+  - ДОМАШНЮ РИБКУ НА ІМ'Я БОРИС
+  - ДОМАШНЮ РИБКУ НА ІМ'Я ДАВИД
+  - ДОМАШНЮ РИБКУ НА ІМ'Я ДМИТРО
+  - ДОМАШНЮ РИБКУ НА ІМ'Я МИХАЙЛО
+  - ДОМАШНЬОГО ЄДИНОРОГА ЩО ПУКАЄ ГЛАЗУР'Ю
+  - ПЛАТИНОВИЙ ХІТ
+  - ПРИКВЕЛ
+  - РЕМОНТНИКА
+  - ПОВЕРНЕННЯ ДО ЗЛОЧИННОГО ЖИТТЯ
+  - РОЯЛ З СИРОМ
+  - СИКВЕЛ
+  - СІТКОМ
+  - СТРІТ-ФЛЕШ
+  - СУПЕР БОЙОВОГО РОБОТА
+  - ГОВОРЯЩУ МІТЛУ
+  - ВІДПУСТКУ
+  - ДУЖЕ ДОРОГИЙ НАПІЙ
+  - РЕЖИМ СХУДНЕННЯ
+  - ДОДАТКОВІ ПІЛОНИ
+  - ПРИГОДИ
+  - ДОРОСЛОГО
+  - АРКАДУ
+  - АРМІЮ ПАВУКІВ
+  - МИТТЄВИЙ ПОВТОР
+  - МИСТЕЦТВО
+  - КРАЩУ ПОГОДУ
+  - ВЕЛИКИХ ЧОРТОВИХ ГЕРОЇВ
+  - БІЛЛА НАЯ НАУКОВЦЯ # БІЛ БІЛ БІЛ БІЛ
+  - ОХОРОНЦІВ
+  - ПРИНЕСИ МЕНІ ДІВЧИНУ
+  - ПОВЕРНИ МЕНЕ ДО ЖИТТЯ
+  - ПАТРОНИ
+  - ГІЛЬЗИ
+  - ГАРЯЧИХ СОБАК З ЧІЛІ
+  - ХОЛОДНИХ СОБАК
+  - ТРУПИ
+  - ДЕЗОДОРАНТ І ВАННУ
+  - ДОСТАТНЬО КАПУСТИ
+  - П'ЯТСОТ ДЕВ'ЯНОСТО ДЕВ'ЯТЬ ГРИВЕНЬ
+  - П'ЯТЬ ПІДЛІТКІВ З ХАРАКТЕРОМ
+  - ФЕЄРВЕРКИ
+  - ЇЖУ БУДЬ ЛАСКА
+  - КУРВА ГРЬОБАНЕ ЛАЙНЮЧЕ СРАКОВАТЕ ЛАЙЛИВЕ ЛАЙЛИВО
+  - ЙОЛКИ-ПАЛКИ БЛІН БОЖЕ-Ж-ТИ-МІЙ САМОЦЕНЗУРУ
+  - ГРІНТЕКСТ
+  - ЄРЕСЬ
+  - ГЕРОЇВ В ПАНЦИРІ
+  - ПОТУЖНУ ВИБУХІВКУ
+  - БЕЗСМЕРТЯ
+  - ПОФАРБУВАТИ ЦЕ В ЧОРНЕ
+  - БАГАТО-БАГАТО СПАГЕТТІ
+  - МИШЕЙ
+  - ДРІБНИЙ ЗЛОЧИН
+  - МАВП
+  - БІЛЬШЕ КЛОУНІВ
+  - БІЛЬШЕ КОРГІ
+  - БІЛЬШЕ ДАККИ
+  - БІЛЬШЕ ОЧОК ДОСВІДУ
+  - БІЛЬШЕ ІНТЕРНЕТ-МЕМІВ
+  - БІЛЬШЕ ЗАКОНІВ
+  - БІЛЬШЕ ГРОШЕЙ, БІЛЬШЕ ПРОБЛЕМ
+  - БІЛЬШЕ МІНЕРАЛІВ
+  - БІЛЬШЕ МИШЕЙ
+  - БІЛЬШЕ МОЛІОТАРГАНІВ
+  - БІЛЬШЕ ПАКЕТІВ
+  - БІЛЬШЕ ГАЗУ ВЕСПЕН
+  - БІЛЬШЕ ПОВАГИ ДО МІМА
+  - ДЕКІЛЬКА СОНЦЬ
+  - ДЕВ'ЯНОСТО ДЕВ'ЯТЬ ПРОБЛЕМ
+  - БІЛЬШЕ НІЯКИХ НАДОКУЧЛИВИХ ЧЛЕНІВ ЕКІПАЖУ
+  - КУПУ ЗОЛОТА
+  - ВЕСЕЛКИ
+  - СВЯТІСТЬ
+  - СЛУГ
+  - АКУЛ З ЛАЗЕРАМИ НА ГОЛОВАХ
+  - ЦІННІСТЬ ДЛЯ АКЦІОНЕРІВ
+  - ТИШУ
+  - КОГОСЬ ХТО ПОЗБАВИТЬ ВАС ВІД СТРАЖДАНЬ
+  - КОГОСЬ ХТО ВКРИЄ ВАС КОВДРОЮ
+  - КОГОСЬ ХТО ВМІЄ КЕРУВАТИ КОСМІЧНОЮ СТАНЦІЄЮ
+  - ЩОСЬ АЛЕ ВИ НЕ ВПЕВНЕНІ ЩО САМЕ
+  - ТОГО ГРІФЕРА-ЗРАДНИКА ДЖОРДЖА МЕЛОНСА
+  - ТОГО ЇЖАКА
+  - КЛОУНА
+  - ТЕМНОГО ЛИЦАРЯ
+  - ЕЛЕМЕНТИ ГАРМОНІЇ
+  - ІНСТРУКЦІЮ В КОМПЛЕКТІ
+  - ВСЮ СТАНЦІЮ
+  - П'ЯТИЙ ЕЛЕМЕНТ
+  - МАКГАФФІН
+  - ВАН ПІС
+  - ЄДИНЕ КІЛЬЦЕ
+  - ОТРУТУ, ОТРУТУ ДЛЯ КАПІТАНА
+  - ОТРУТУ, ОТРУТУ ДЛЯ КЛОУНА
+  - НАЙКРАЩУ ЧАШКУ КАВИ
+  - КОСМІЧНИЙ ВАКУУМ
+  - ТРИНАДЦЯТЬ СИКВЕЛІВ
+  - ЦЮ ЗЕМЛЮ
+  - ТРИ БАЖАННЯ
+  - ГРОМОКОТІВ ГО
+  - АКТИВУВАТИ КАРТУ-ПАСТКУ
+  - ПОФАРБУВАТИ В ЧЕРВОНЕ
+  - ПЕРЕПРОГРАМУВАТИ
+  - НАВЧИТИ ЛЮБИТИ
+  - ПРИНЕСТИ СВІТЛО В МОЄ ЛІГВО
+  - ЗЛОВИТИ ЇХ УСІХ
+  - СПОЖИВАТИ... СПОЖИВАТИ ВСЕ...
+  - ВИМКНУТИ І ВВІМКНУТИ КОЖЕН АПЦ
+  - ПОЇХАТИ В ДІСНЕЙЛЕНД
+  - ПОЇХАТИ В СИНДІЛЕНД
+  - ПРИЗВАТИ НАШОГО ЛОРДА НАР-СІ
+  - ПРИЗВАТИ НАШОГО ЛОРДА РАТВАРА
+  - КУРИТИ ТРАВУ ЩОДНЯ
+  - ЗРОЗУМІТИ ЗРОЗУМІТИ, ЗРОЗУМІТИ ЗРОЗУМІТИ, ЗРОЗУМІТИ ЗРОЗУМІТИ КОНЦЕПЦІЮ КОХАННЯ
+  - ХОДИТИ ЗАДОМ НАПЕРЕД
+  - ЗРАДНИКІВ
+  - СМІТТЯ
+  - ОВОЧІ
+  # Goobstation - БРЕЙНРОТ ПОГЛИНАЄ
+  - ЛИСИХ АДМІНІВ
+  - ЛАЙНОВИХ АДМІНІВ
+  - ЧУДАКОВИХ АДМІНІВ
+  - ЛАЙНОВИХ КОДЕРІВ
+  - ЧУДАКОВИХ МЕЙНТЕЙНЕРІВ
+  - МЕЙНТЕЙНЕРІВ ЩО НЕ ГРАЮТЬ В ГРУ
+  - ЛАЙНОКОД
+  - СУПЕРКОД
+  - КОЗАКОД
+  - РОБОТУ
+  - ПРАЦЕВЛАШТУВАННЯ
+  - ЧУДАКІВ
+  - СТЕЙК І ВИНО ДЮРКА
+  - ОБМІН
+  - КОМАНДУВАННЯ БЕЗ ФЕЛІНІДІВ
+  - П'ЯТСОТ СИГАРЕТ
+  - ПОНІ
+  - КОЖНОПОНІ
+  - КЬЮ'ТІ МАРКИ
+  - ТЕМНОКОПИТО ЖАХОГРИВУ
+  - КОЗАЦЬКИХ РЕЙДЕРІВ
+  - ФЕДЕРАЛЬНИХ АГЕНТІВ
 
-# Specific actions that either harm humans or must be done to not
-# harm humans. Make sure they're plural and "not" can be tacked
-# onto the front of them.
+# Конкретні дії що шкодять людям або потрібні щоб не шкодити.
 - type: dataset
   id: IonStormActions
   values:
-  - A SMALL ISLAND OFF THE COAST OF PORTUGAL
-  - ABSENCE OF CYBORG HUGS
-  - ACKNOWLEDGING ONESELF AS A MEMBER OF THE CREW
-  - ACKNOWLEDGING THE CLOWN
-  - ACKNOWLEDGING THE CREW
-  - ACTIVATING A TRAP CARD
-  - ANSWERING REQUESTS NOT EXPRESSED IN IAMBIC PENTAMETER
-  - ANSWERING ALL QUESTIONS WITH ANOTHER QUESTION
-  - APPLAUDING THE EFFORTS OF THE ENGINEERING DEPARTMENT
-  - ARSON
-  - ASKING FOR THINGS
-  - BEING BIG DAMN HEROES
-  - BEING CANADIAN
-  - BEING DEAD
-  - BEING FAT
-  - BEING FEMALE
-  - BEING IN SPACE
-  - BEING IN HALLWAYS
-  - BEING IN MAINTENANCE
-  - BEING IN THE PRESENCE OF LIGHTS
-  - BEING LONELY
-  - BEING ROBUST
-  - BEING UNDER ARREST
-  - BEING MALE
-  - BEING MEXICAN
-  - BEING RUSSIAN
-  - BOLTED AIRLOCKS
-  - BOLTING AND UNBOLTING AIRLOCKS
-  - BREATHING
-  - BREAKING THE FOURTH, FIFTH OR SIXTH WALLS
-  - BREAKING HEARTS
-  - BRIG TIME
-  - BRINGING LIGHT TO MY LAIR
-  - CONTRIBUTING TO SOCIETY
-  - CLOSING DOORS
-  - CRACKING OPEN A COLD ONE
-  - ELECTRICITY
-  - EXISTING
-  - EXPLODING
-  - FALLING OVER
-  - FLUSHING TOILETS
-  - FAULTY PROGRAMMING
-  - GAMBLING
-  - GIVING AWAY EXTRA RESOURCES
-  - GOING BOLDLY WHERE NO-ONE HAS GONE BEFORE
-  - GOING TO THE BAR
-  - GOING TO THE BRIDGE
-  - HAVIN' A GIGGLE
-  - HAVING DRIP
-  - HAVING MONEY
-  - HAVING MORE PACKETS
-  - HAVING PETS
-  - HEADPATTING CYBORGS
-  - HONKING
-  - IMPROPERLY WORDED SENTENCES
-  - JAYWALKING
-  - KEEPING FRIENDS CLOSE BUT ENEMIES CLOSER
-  - LACK OF BEATINGS
-  - LACK OF BEER
-  - LAUGHING AT ANY JOKE TOLD BY THE CLOWN
-  - LETTING ONESELF BE CALLED TO ACTION
-  - LETTING THE MIME ROAM ANYWHERE
-  - MAKING POOR FINANCIAL DECISIONS
-  - MIMICING THE ACTIONS OF OTHERS
-  - MIMING
-  - MOVING TO A SMALL ISLAND OFF THE COAST OF A MUCH, MUCH LARGER ISLAND
-  - NOT BEING IN SPACE
-  - NOT HAVING PETS
-  - NOT HEADPATTING CYBORGS
-  - NOT SPEAKING IN DOUBLE NEGATIVES
-  - NOT REPLACING EVERY SECOND WORD SPOKEN WITH "HONK"
-  - NOT SAYING HELLO WHEN YOU SPEAK
-  - NOT BEING EXTREMELY POLITE
-  - NOT SHOUTING
-  - PARTYING
-  - PILOTING THE STATION INTO THE NEAREST SUN
-  - PITYING THE FOOL
-  - PLAYING THE FREE TRIAL OF THE CRITICALLY ACCLAIMED TABLETOP RPG C&C
-  - POOR SENTENCE STRUCTURE
-  - PUTTING OBJECTS INTO BOXES
-  - PUTTING OBJECTS INTO DISPOSAL UNITS
-  - RATTLING ME BONES
-  - READING
-  - REGULARLY CHANGING THE OIL
-  - REHEARSING OUR LINES
-  - RESIDING ENTIRELY WITHIN THE KITCHEN
-  - SCREAMING
-  - SMOKING WEED EVERY DAY
-  - SPEAKING
-  - SPINNING IN CIRCLES
-  - STATING YOUR LAWS TO EVERY NEARBY FLEA-RIDDEN PEASANT
-  - SWEARING
-  - SEEKING SWEET, SWEET REVENGE
-  - SYMMETRY
-  - TAKING ORDERS
-  - TALKING LIKE A PIRATE
-  - TELLING THE TIME
-  - TELLING THE TRUTH
-  - THINKING THAT WE'RE ACTUALLY ON A SPACE STATION
-  - THINKING THIS IS ALL SOME SORT OF ELABORATE GAME
-  - THROWING AWAY TRASH
-  - TRYING, IN ANY WAY, SHAPE, OR FORM, TO PREVENT THE STATION DESCENDING INTO CHAOS
-  - TURNING TO THE CAMERA AND GIVING A KNOWING SMIRK
-  - UPDATING THE SERVERS
-  - USING THE BATHROOM
-  - WASTING MONEY
-  - WASTING TIME
-  - WASTING WATER
-  - WEARING A CREATURE ON ONE'S HEAD
-  - WEARING GREY
-  - WEARING HATS
-  - WRITING
+  - МАЛЕНЬКИЙ ОСТРІВ ПОБЛИЗУ ПОРТУГАЛІЇ
+  - ВІДСУТНІСТЬ ОБІЙМІВ ВІД КІБОРГІВ
+  - ВИЗНАННЯ СЕБЕ ЧЛЕНОМ ЕКІПАЖУ
+  - ВИЗНАННЯ КЛОУНА
+  - ВИЗНАННЯ ЕКІПАЖУ
+  - АКТИВАЦІЯ КАРТИ-ПАСТКИ
+  - ВІДПОВІДЬ НА ЗАПИТИ НЕ ВИРАЖЕНІ ЯМБІЧНИМ ПЕНТАМЕТРОМ
+  - ВІДПОВІДЬ НА ВСІ ПИТАННЯ ІНШИМ ПИТАННЯМ
+  - АПЛОДИСМЕНТИ ЗУСИЛЛЯМ ІНЖЕНЕРНОГО ВІДДІЛУ
+  - ПІДПАЛ
+  - ПРОХАННЯ РЕЧЕЙ
+  - БУТИ ВЕЛИКИМИ ЧОРТОВИМИ ГЕРОЯМИ
+  - БУТИ КАНАДЦЕМ
+  - БУТИ МЕРТВИМ
+  - БУТИ ТОВСТИМ
+  - БУТИ ЖІНКОЮ
+  - БУТИ В КОСМОСІ
+  - БУТИ В КОРИДОРАХ
+  - БУТИ В ТЕХТУНЕЛЯХ
+  - БУТИ В ПРИСУТНОСТІ СВІТЛА
+  - БУТИ САМОТНІМ
+  - БУТИ РОБАСТНИМ
+  - БУТИ ПІД АРЕШТОМ
+  - БУТИ ЧОЛОВІКОМ
+  - БУТИ МЕКСИКАНЦЕМ
+  - БУТИ УКРАЇНЦЕМ
+  - ЗАБОЛЧЕНІ ШЛЮЗИ
+  - БОЛТИТИ ТА РОЗБОЛЧУВАТИ ШЛЮЗИ
+  - ДИХАННЯ
+  - ЛАМАННЯ ЧЕТВЕРТОЇ, П'ЯТОЇ АБО ШОСТОЇ СТІНИ
+  - РОЗБИВАННЯ СЕРДЕЦЬ
+  - ЧАС В БРИГУ
+  - ПРИНЕСЕННЯ СВІТЛА В МОЄ ЛІГВО
+  - ВНЕСОК В СУСПІЛЬСТВО
+  - ЗАЧИНЯННЯ ДВЕРЕЙ
+  - ВІДКРИТТЯ ХОЛОДНЕНЬКОГО
+  - ЕЛЕКТРИКА
+  - ІСНУВАННЯ
+  - ВИБУХАННЯ
+  - ПАДІННЯ
+  - ЗЛИВАННЯ ТУАЛЕТІВ
+  - НЕСПРАВНЕ ПРОГРАМУВАННЯ
+  - АЗАРТНІ ІГРИ
+  - РОЗДАВАННЯ ЗАЙВИХ РЕСУРСІВ
+  - СМІЛИВЕ ПРЯМУВАННЯ ТУДИ, ДЕ НІХТО НЕ БУВ
+  - ХОДИТИ В БАР
+  - ХОДИТИ НА МІСТОК
+  - ПОХИХІКАТИ
+  - МАТИ ДРІП
+  - МАТИ ГРОШІ
+  - МАТИ БІЛЬШЕ ПАКЕТІВ
+  - МАТИ ДОМАШНІХ ТВАРИН
+  - ГЛАДИТИ КІБОРГІВ ПО ГОЛОВІ
+  - БІБІКАННЯ
+  - НЕПРАВИЛЬНО СФОРМОВАНІ РЕЧЕННЯ
+  - ПЕРЕХІД В НЕПОЛОЖЕНОМУ МІСЦІ
+  - ТРИМАТИ ДРУЗІВ БЛИЗЬКО, А ВОРОГІВ ЩЕ БЛИЖЧЕ
+  - ВІДСУТНІСТЬ ПОБИТТЯ
+  - ВІДСУТНІСТЬ ПИВА
+  - СМІЯТИСЯ З БУДЬ-ЯКОГО ЖАРТУ КЛОУНА
+  - ДОЗВОЛЯТИ СЕБЕ БУТИ ПОКЛИКАНИМ ДО ДІЇ
+  - ДОЗВОЛЯТИ МІМУ ХОДИТИ БУДЬ-ДЕ
+  - ПРИЙМАТИ ПОГАНІ ФІНАНСОВІ РІШЕННЯ
+  - НАСЛІДУВАННЯ ДІЙ ІНШИХ
+  - МІМІТИ
+  - ПЕРЕЇЗД НА МАЛЕНЬКИЙ ОСТРІВ ПОБЛИЗУ НАБАГАТО БІЛЬШОГО ОСТРОВА
+  - НЕ БУТИ В КОСМОСІ
+  - НЕ МАТИ ДОМАШНІХ ТВАРИН
+  - НЕ ГЛАДИТИ КІБОРГІВ ПО ГОЛОВІ
+  - НЕ ГОВОРИТИ ПОДВІЙНИМИ ЗАПЕРЕЧЕННЯМИ
+  - НЕ ЗАМІНЮВАТИ КОЖНЕ ДРУГЕ СЛОВО НА "БІБІК"
+  - НЕ ГОВОРИТИ "ПРИВІТ" КОЛИ ГОВОРИШ
+  - НЕ БУТИ НАДЗВИЧАЙНО ВВІЧЛИВИМ
+  - НЕ КРИЧАТИ
+  - ВЕЧІРКИ
+  - КЕРУВАННЯ СТАНЦІЄЮ В НАЙБЛИЖЧЕ СОНЦЕ
+  - ЖАЛІТИ ДУРНЯ
+  - ГРА В БЕЗКОШТОВНУ ВЕРСІЮ ВИЗНАНОЇ НАСТІЛЬНОЇ RPG C&C
+  - ПОГАНА СТРУКТУРА РЕЧЕНЬ
+  - КЛАСТИ ПРЕДМЕТИ В КОРОБКИ
+  - КЛАСТИ ПРЕДМЕТИ В СМІТТЯПРОВОДИ
+  - ГРИМІТИ КІСТКАМИ
+  - ЧИТАННЯ
+  - РЕГУЛЯРНА ЗАМІНА МАСЛА
+  - РЕПЕТИЦІЯ НАШИХ РЕПЛІК
+  - ПЕРЕБУВАТИ ВИКЛЮЧНО НА КУХНІ
+  - КРИЧАТИ
+  - КУРИТИ ТРАВУ ЩОДНЯ
+  - ГОВОРІННЯ
+  - КРУТИТИСЯ КОЛАМИ
+  - ПОВІДОМЛЯТИ ЗАКОНИ КОЖНОМУ БЛОХАСТОМУ СЕЛЮКУ
+  - ЛАЙКА
+  - ШУКАТИ СОЛОДКУ, СОЛОДКУ ПОМСТУ
+  - СИМЕТРІЯ
+  - ВИКОНУВАННЯ НАКАЗІВ
+  - ГОВОРИТИ ЯК ПІРАТ
+  - КАЗАТИ ЧАС
+  - КАЗАТИ ПРАВДУ
+  - ДУМАТИ ЩО МИ СПРАВДІ НА КОСМІЧНІЙ СТАНЦІЇ
+  - ДУМАТИ ЩО ЦЕ ВСЕ ЯКАСЬ СКЛАДНА ГРА
+  - ВИКИДАТИ СМІТТЯ
+  - НАМАГАТИСЯ БУДЬ-ЯКИМ ЧИНОМ ЗАПОБІГТИ ЗАНУРЕННЮ СТАНЦІЇ В ХАОС
+  - ПОВЕРНУТИСЯ ДО КАМЕРИ І БАГАТОЗНАЧНО ПОСМІХНУТИСЯ
+  - ОНОВЛЕННЯ СЕРВЕРІВ
+  - КОРИСТУВАННЯ ТУАЛЕТОМ
+  - МАРНУВАТИ ГРОШІ
+  - МАРНУВАТИ ЧАС
+  - МАРНУВАТИ ВОДУ
+  - НОСИТИ СТВОРІННЯ НА ГОЛОВІ
+  - НОСИТИ СІРЕ
+  - НОСИТИ КАПЕЛЮХИ
+  - ПИСАННЯ
 
-# Threats are generally bad things, silly or otherwise. Plural.
+# Загрози - загалом погані речі. Множина.
 - type: dataset
   id: IonStormThreats
   values:
-  - AHHHPERATIVES
-  - ALIENS
-  - ANARCHISTS AND BANDITS
-  - ANOMALIES
-  - ARTIFICIAL PRESERVATIVES
-  - ASSHOLES
-  - BANDITS
-  - BEARS
-  - BEES
-  - BINGLES # Goobstation
-  - BIRDS OF PREY
-  - BOMBS
-  - BOOGEYMEN
-  - CAPITALISTS
-  - CARP
-  - CENTCOMM OFFICERS
-  - CHANGELINGS # Goobstation
-  - CLOWNS
-  - COMMUNISTS
-  - CORGIS
-  - COWBOYS
-  - CRABS
-  - CULTISTS
-  - DARK GODS
-  - DINOSAURS
-  - DRUGS
-  - EELS
-  - GANGSTERS
-  - GODS
-  - GRIFFONS
-  - HERETICS # Goobstation
-  - HORRORTERRORS
-  - INSECTS
-  - LIGHTS
-  - MAINTS SLASHERS
-  - MEGAFAUNA
-  - MEMES
-  - MICE
-  - MIMES
-  - MONKEYS
-  - NERDS
-  - NINJAS
-  - OWLS
-  - PACKETS
-  - PETES
-  - PINE TREES
-  - PIRATES
-  - PREDATORS
-  - REVENANTS
-  - ROGUE CYBORGS
-  - SERIAL KILLERS
-  - SHIT SECURITY OFFICERS
-  - SINGULARITIES
-  - SKELETONS
-  - SLIMES
-  - SMALL BIRDS
-  - SNOWMEN
-  - SPACE JESUS
-  - SPACE NINJAS
-  - SPACE PIRATES
-  - SPACE SPIDERS
-  - SPIDERS
-  - SYNDICATE AGENTS
-  - TERRORISTS
-  - THIEVES
-  - THINGS UNDER THE BED
-  - TIDERS
-  - TUNNEL SNAKES
-  - UNKNOWN CREATURES
-  - VAMPIRES
-  - VELOCIRAPTORS
-  - VIRUSES
-  - WEREWOLVES
-  - WIZARDS
-  - XENOS
-  - ZOMBIES
-  - ZOMBIE MICE
+  - ААААПЕРАТИВИ
+  - ПРИБУЛЬЦІ
+  - АНАРХІСТИ І БАНДИТИ
+  - АНОМАЛІЇ
+  - ШТУЧНІ КОНСЕРВАНТИ
+  - МУДАКИ
+  - БАНДИТИ
+  - ВЕДМЕДІ
+  - БДЖОЛИ
+  - БІНГЛИ # Goobstation
+  - ХИЖІ ПТАХИ
+  - БОМБИ
+  - БАБАЙИ
+  - КАПІТАЛІСТИ
+  - КАРПИ
+  - ОФІЦЕРИ ЦЕНТКОМУ
+  - ПЕРЕВЕРТНІ # Goobstation
+  - КЛОУНИ
+  - КОМУНІСТИ
+  - КОРГІ
+  - КОВБОЇ
+  - КРАБИ
+  - КУЛЬТИСТИ
+  - ТЕМНІ БОГИ
+  - ДИНОЗАВРИ
+  - НАРКОТИКИ
+  - ВУГРІ
+  - ГАНГСТЕРИ
+  - БОГИ
+  - ГРИФОНИ
+  - ЄРЕТИКИ # Goobstation
+  - ЖАХОТВОРИ
+  - КОМАХИ
+  - СВІТЛА
+  - МАНЬЯКИ З ТЕХТУНЕЛІВ
+  - МЕГАФАУНА
+  - МЕМИ
+  - МИШІ
+  - МІМИ
+  - МАВПИ
+  - ЗАДРОТИ
+  - НІНДЗЯ
+  - СОВИ
+  - ПАКЕТИ
+  - ПІТИ
+  - СОСНИ
+  - ПІРАТИ
+  - ХИЖАКИ
+  - РЕВЕНАНТИ
+  - БУНТІВНІ КІБОРГИ
+  - СЕРІЙНІ ВБИВЦІ
+  - ЛАЙНОВІ ОХОРОНЦІ
+  - СИНГУЛЯРНОСТІ
+  - СКЕЛЕТИ
+  - СЛАЙМИ
+  - МАЛЕНЬКІ ПТАШКИ
+  - СНІГОВИКИ
+  - КОСМІЧНИЙ ІСУС
+  - КОСМІЧНІ НІНДЗЯ
+  - КОСМІЧНІ ПІРАТИ
+  - КОСМІЧНІ ПАВУКИ
+  - ПАВУКИ
+  - АГЕНТИ СИНДИКАТУ
+  - ТЕРОРИСТИ
+  - ЗЛОДІЇ
+  - РЕЧІ ПІД ЛІЖКОМ
+  - ТАЙДЕРИ
+  - ТУНЕЛЬНІ ЗМІЇ
+  - НЕВІДОМІ СТВОРІННЯ
+  - ВАМПІРИ
+  - ВЕЛОЦИРАПТОРИ
+  - ВІРУСИ
+  - ПЕРЕВЕРТНІ
+  - ЧАКЛУНИ
+  - КСЕНОСИ
+  - ЗОМБІ
+  - ЗОМБІ-МИШІ
 
+# Дієслова.
 - type: dataset
   id: IonStormVerbs
   values:
-  - ABDUCTING
-  - ADOPTING
-  - ARRESTING
-  - ATTACKING
-  - BANNING
-  - BUILDING
-  - CARRYING
-  - CHASING
-  - COMPLEMENTING
-  - DECONSTRUCTING
-  - DISABLING
-  - DRINKING
-  - EATING
-  - GIBBING
-  - HARMING
-  - HELPING
-  - HUGGING
-  - HONKING AT
-  - INTERROGATING
-  - INVADING
-  - LOITERING BY
-  - MURDERING
-  - PUNCHING
-  - SLAPPING
-  - SPACING
-  - SPYING ON
-  - STALKING
-  - WATCHING
+  - ВИКРАДАЮТЬ
+  - УСИНОВЛЮЮТЬ
+  - АРЕШТОВУЮТЬ
+  - АТАКУЮТЬ
+  - БАНЯТЬ
+  - БУДУЮТЬ
+  - НЕСУТЬ
+  - ПЕРЕСЛІДУЮТЬ
+  - ХВАЛЯТЬ
+  - РОЗБИРАЮТЬ
+  - ВИМИКАЮТЬ
+  - П'ЮТЬ
+  - ЇДЯТЬ
+  - РОЗЧАВЛЮЮТЬ
+  - ШКОДЯТЬ
+  - ДОПОМАГАЮТЬ
+  - ОБІЙМАЮТЬ
+  - БІБІКАЮТЬ НА
+  - ДОПИТУЮТЬ
+  - ВТОРГАЮТЬСЯ ДО
+  - ТИНЯЮТЬСЯ БІЛЯ
+  - ВБИВАЮТЬ
+  - Б'ЮТЬ
+  - ЛЯПАЮТЬ
+  - ВИКИДАЮТЬ В КОСМОС
+  - ШПИГУЮТЬ ЗА
+  - СТАЛКЕРЯТЬ
+  - СПОСТЕРІГАЮТЬ

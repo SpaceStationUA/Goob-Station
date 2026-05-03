@@ -539,6 +539,10 @@
   result: MagazineBoxCaselessRifle
   materials:
     Steel: 720
+    # Pirate Edit VVV
+    Plastic: 180
+    Glass: 180
+    # Pirate Edit ^^^
 
 - type: latheRecipe
   parent: BaseEmptyAmmoRecipe
@@ -593,6 +597,9 @@
   parent: BaseEmptyAmmoRecipe
   id: MagazineShotgunLeverRifleEmpty
   result: MagazineShotgunLeverRifleEmpty
+  icon: # Pirate start - tweak recipes | Add proper sprite to empty BSO rifle magazine.
+    sprite: _Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/lever_rifle_mags.rsi
+    state: base # Pirate end
   materials:
     Steel: 25
 
@@ -669,6 +676,10 @@
   result: MagazineCaselessRifle
   materials:
     Steel: 400
+    # Pirate Edit VVV
+    Plastic: 90
+    Glass: 90
+    # Pirate Edit ^^^
 
 - type: latheRecipe
   parent: BaseAmmoRecipe

@@ -1,0 +1,15 @@
+- type: entity
+  id: TurnstileGenpopEnterSyndicate
+  parent: Turnstile
+  suffix: Genpop Enter, Syndicate
+  components:
+  - type: AccessReader
+    access: [["GenpopEnter"], ["SyndicateAgent"]]
+
+- type: entity
+  id: TurnstileGenpopLeaveSyndicate
+  parent: Turnstile
+  suffix: Genpop Leave, Syndicate
+  components:
+  - type: AccessReader
+    access: [["GenpopLeave"], ["SyndicateAgent"]]

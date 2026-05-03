@@ -440,6 +440,8 @@
     - GrenadeTriggersStatic
     - TapeRecorderStatic
     - MiscSignallersStatic
+    dynamicPacks: # Pirate - tweak fab recepies | Add advanced power cells to each fab
+    - PowerCells  # Pirate - tweak fab recepies | Add advanced power cells to each fab
   - type: EmagLatheRecipes
     emagStaticPacks:
     - SecurityWeaponsStatic
@@ -586,7 +588,7 @@
     #- EngineeringBoardsStatic - Goobstation - Moved to Scifab and Engifab
     - CircuitFloorsStatic
     # Goobstation Packs
-    - SharedBoardsStatic
+    #- SharedBoardsStatic Pirate removed
     - MedicalBoardsStaticGoob
     - SecurityBoardsStaticGoob
     - ServiceBoardsStaticGoob
@@ -768,6 +770,9 @@
     - ScienceExplosives
     - GrenadeTriggersStatic
     - SecurityWeaponsStaticGoob
+    # Pirate Packs
+    - SecurityAmmoStaticPirate
+    - PirateStraightjacketLatheRecipePackStatic # Pirate - tweak recipes | Add straint-jacket to med and sec fabs.
     dynamicPacks:
     - SalvageSecurityBoards
     - SalvageSecurityWeapons
@@ -788,6 +793,8 @@
     # - ServiceWeapons
     - SpecOpsGoogles
     - PowerCells
+    # Pirate Packs
+    - SecurityAmmoPirate
   - type: EmagLatheRecipes # Goobstation
     emagStaticPacks:
     - SyndicateAmmoLightStatic
@@ -827,6 +834,11 @@
       - SecurityAmmoStatic
       # Goobstation Packs
       - SecurityAmmoStaticGoob
+      # Pirate Packs
+      - SecurityAmmoStaticPirate
+      dynamicPacks:
+      # Pirate Packs
+      - SecurityAmmoPirate
     - type: EmagLatheRecipes # Goobstation Packs
       emagStaticPacks:
       - SyndicateAmmoLightStatic
@@ -879,6 +891,7 @@
     - GrenadeTriggersStatic
     # Einstein Engines Packs
     - SyringeCase
+    - PirateStraightjacketLatheRecipePackStatic # Pirate - tweak recipes | Add straint-jacket to med and sec fabs.
     dynamicPacks:
     - Chemistry
     # Goobstation Packs
@@ -895,6 +908,10 @@
     # Einstein Engines Packs
     - Translators # Language
     - TranslatorImplanters # Language
+    # Pirate start - add cybernetic limbs and organs to medfab
+    - BasicCybernetics
+    - AdvancedCybernetics
+    # Pirate end - add cybernetic limbs and organs to medfab
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: EmagLatheRecipes # Goobstation Packs

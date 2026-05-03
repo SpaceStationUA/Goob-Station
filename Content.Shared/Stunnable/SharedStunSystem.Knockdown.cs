@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Content.Shared._Pirate.Stunnable; // Pirate
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
@@ -423,6 +424,7 @@ public abstract partial class SharedStunSystem
 
         _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), entity, entity);
         _audio.PlayPredicted(entity.Comp.ForceStandSuccessSound, entity.Owner, entity.Owner, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+        RaiseLocalEvent(entity.Owner, new ForcedStandSucceededEvent(), false); // Pirate
 
         return true;
     }

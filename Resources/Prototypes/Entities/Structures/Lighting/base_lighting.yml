@@ -795,7 +795,7 @@
     radius: 8
     energy: 1
     softness: 0.5
-    color: "#363636"
+    color: "#800080"
   - type: DamageOnInteract
     damage:
       types:
@@ -811,7 +811,7 @@
     radius: 8
     energy: 1
     softness: 0.5
-    color: "#363636"
+    color: "#800080"
 
 - type: entity
   id: PoweredlightRed

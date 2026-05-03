@@ -11,6 +11,9 @@
   - type: ForeignerTrait
     cantUnderstand: false
     baseTranslator: TranslatorForeigner
+  conflicts: # Pirate
+    - Foreigner
+    - SignLanguage
 
 - type: trait
   id: Foreigner
@@ -21,6 +24,9 @@
   components:
   - type: ForeignerTrait
     baseTranslator: TranslatorForeigner
+  conflicts: # Pirate
+    - ForeignerLight
+    - SignLanguage
 
 - type: trait
   id: SignLanguage
@@ -34,6 +40,9 @@
     - Sign
   languagesUnderstood:
     - Sign
+  conflicts: # Pirate
+    - ForeignerLight
+    - Foreigner
 
 # Not commented since this is another general-ish language.
 - type: trait

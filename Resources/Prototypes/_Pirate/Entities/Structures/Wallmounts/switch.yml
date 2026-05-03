@@ -1,0 +1,15 @@
+- type: entity
+  id: LockableButtonInterdyne
+  suffix: Interdyne
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["Interdyne"]]
+
+- type: entity
+  id: LockableButtonInterdyneOfficer
+  suffix: InterdyneOfficer
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["InterdyneOfficer"]]

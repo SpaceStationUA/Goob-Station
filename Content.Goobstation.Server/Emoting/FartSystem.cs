@@ -67,11 +67,11 @@ public sealed partial class FartSystem : SharedFartSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FartComponent, EmoteEvent>(OnEmote);
-        SubscribeLocalEvent<FartComponent, PostFartEvent>(OnBibleFart);
+        //SubscribeLocalEvent<FartComponent, EmoteEvent>(OnEmote);
+        //SubscribeLocalEvent<FartComponent, PostFartEvent>(OnBibleFart);
     }
 
-    private void OnEmote(EntityUid uid, FartComponent component, ref EmoteEvent args)
+    /*private void OnEmote(EntityUid uid, FartComponent component, ref EmoteEvent args)
     {
         if (args.Handled)
             return;
@@ -245,5 +245,5 @@ public sealed partial class FartSystem : SharedFartSystem
             CameraShake(10f, xformSystem.GetMapCoordinates(near), 1.5f);
             return;
         }
-    }
+    } */
 }

@@ -43,6 +43,11 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("followSkinColor")]
         public bool FollowSkinColor { get; private set; } = false;
 
+        //Pirate changes start
+        [DataField("playerRestriction")]
+        public List<string>? PlayerRestrictions { get; private set; }
+        //Pirate changes end
+
         [DataField("forcedColoring")]
         public bool ForcedColoring { get; private set; } = false;
 
@@ -64,6 +69,14 @@ namespace Content.Shared.Humanoid.Markings
 
         public string? Shader { get; private set; } = null;
         /// Impstation end
+
+        // Pirate start - port Floofstation custom layers
+        [DataField("layering")]
+        public Dictionary<string, string?>? Layering { get; private set; }
+
+        [DataField("colorLinks")]
+        public Dictionary<string, string?>? ColorLinks { get; private set; }
+        // Pirate end - port Floofstation custom layers
 
         public Marking AsMarking()
         {

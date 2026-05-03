@@ -31,7 +31,8 @@ namespace Content.Shared.Localizations
         [Dependency] private readonly ILocalizationManager _loc = default!;
 
         // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
+        private const string Culture = "uk-UA"; // Ukrainian translation
+        private const string FallbackCulture = "en-US"; // dunno what it does but probably needed
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
@@ -48,7 +49,11 @@ namespace Content.Shared.Localizations
         {
             var culture = new CultureInfo(Culture);
 
+            var fallbackCulture = new CultureInfo(FallbackCulture); // Ukrainian translation
+
             _loc.LoadCulture(culture);
+            _loc.LoadCulture(fallbackCulture); // Ukrainian translation
+            _loc.SetFallbackCluture(fallbackCulture); // Ukrainian translation
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
             _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
             _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
@@ -68,9 +73,33 @@ namespace Content.Shared.Localizations
              * This ensures the english translations continue to work as expected when fallbacks are needed.
              */
             var cultureEn = new CultureInfo("en-US");
+            var cultureUa = new CultureInfo("uk-UA"); // Ukrainian translation
 
             _loc.AddFunction(cultureEn, "MAKEPLURAL", FormatMakePlural);
             _loc.AddFunction(cultureEn, "MANY", FormatMany);
+            _loc.AddFunction(cultureEn, "PRESSURE", FormatPressure);
+            _loc.AddFunction(cultureEn, "POWERWATTS", FormatPowerWatts);
+            _loc.AddFunction(cultureEn, "POWERJOULES", FormatPowerJoules);
+            _loc.AddFunction(cultureEn, "UNITS", FormatUnits);
+            _loc.AddFunction(cultureEn, "TOSTRING", args => FormatToString(cultureEn, args));
+            _loc.AddFunction(cultureEn, "LOC", FormatLoc);
+            _loc.AddFunction(cultureEn, "NATURALFIXED", FormatNaturalFixed);
+            _loc.AddFunction(cultureEn, "NATURALPERCENT", FormatNaturalPercent);
+            _loc.AddFunction(cultureEn, "PLAYTIME", FormatPlaytime);
+            _loc.AddFunction(cultureUa, "MAKEPLURAL", FormatMakePlural); // Ukrainian translation
+            _loc.AddFunction(cultureUa, "MANY", FormatMany); // Ukrainian translation
+
+            // Pirate - Localization should not affect data/prototype parsing.
+            // Robust localization sets CultureInfo.CurrentCulture to the UI culture (e.g. uk-UA),
+            // but content YAML/prototype numbers always use '.' as the decimal separator.
+            // Some serializers use TryParse without CultureInfo.InvariantCulture, which can make values like "0.0"
+            // fail to parse and even crash the YAML linter via recursive fallbacks.
+            //
+            // Keep UI culture for localization, but force numeric culture to be invariant for deterministic parsing.
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            CultureInfo.CurrentUICulture = culture;
         }
 
         private ILocValue FormatMany(LocArgs args)
