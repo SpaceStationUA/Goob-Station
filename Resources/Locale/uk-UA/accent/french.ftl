@@ -1,0 +1,446 @@
+accent-french-words-1 = так
+accent-french-words-replace-1 = уи́
+
+accent-french-words-2 = ні
+accent-french-words-replace-2 = но́н
+
+accent-french-words-3 = я
+accent-french-words-replace-3 = жьо́
+
+accent-french-words-4 = ти
+accent-french-words-replace-4 = тю́
+
+accent-french-words-5 = ми
+accent-french-words-replace-5 = нуу́
+
+accent-french-words-6 = ви
+accent-french-words-replace-6 = ву́
+
+accent-french-words-7 = тут
+accent-french-words-replace-7 = ісі́
+
+accent-french-words-8 = там
+accent-french-words-replace-8 = ла́
+
+accent-french-words-9 = добре
+accent-french-words-replace-9 = дако́р
+
+accent-french-words-10 = дякую
+accent-french-words-replace-10 = мерсі́
+
+accent-french-words-11 = будь ласка
+accent-french-words-replace-11 = сіль ву пле́
+
+accent-french-words-12 = вибач
+accent-french-words-replace-12 = дезолé
+
+accent-french-words-13 = привіт
+accent-french-words-replace-13 = бонжу́р
+
+accent-french-words-14 = бувай
+accent-french-words-replace-14 = о ревуа́р
+
+accent-french-words-15 = дивись
+accent-french-words-replace-15 = рьогáрд
+
+accent-french-words-16 = слухай
+accent-french-words-replace-16 = екýт
+
+accent-french-words-17 = обережно
+accent-french-words-replace-17 = атансьо́н
+
+accent-french-words-18 = зараз
+accent-french-words-replace-18 = ментенáн
+
+accent-french-words-19 = завжди
+accent-french-words-replace-19 = тужу́р
+
+accent-french-words-20 = ніколи
+accent-french-words-replace-20 = жаме́
+
+accent-french-words-21 = можливо
+accent-french-words-replace-21 = пёт-етр
+
+accent-french-words-22 = не знаю
+accent-french-words-replace-22 = жьо не се па́
+
+accent-french-words-23 = знаю
+accent-french-words-replace-23 = се́
+
+accent-french-words-24 = не хочу
+accent-french-words-replace-24 = не вьо па́
+
+accent-french-words-25 = хочу
+accent-french-words-replace-25 = вьо́
+
+accent-french-words-26 = людина
+accent-french-words-replace-26 = пе́рс
+
+accent-french-words-27 = чоловік
+accent-french-words-replace-27 = о́м
+
+accent-french-words-28 = жінка
+accent-french-words-replace-28 = фа́м
+
+accent-french-words-29 = любов
+accent-french-words-replace-29 = аму́р
+
+accent-french-words-30 = серце
+accent-french-words-replace-30 = кёр
+
+accent-french-words-31 = життя
+accent-french-words-replace-31 = ві
+
+accent-french-words-32 = смерть
+accent-french-words-replace-32 = мор
+
+accent-french-words-33 = душа
+accent-french-words-replace-33 = а́ме
+
+accent-french-words-34 = надія
+accent-french-words-replace-34 = еспуа́р
+
+accent-french-words-35 = правда
+accent-french-words-replace-35 = вре́
+
+accent-french-words-36 = мрія
+accent-french-words-replace-36 = ре́в
+
+accent-french-words-37 = світло
+accent-french-words-replace-37 = люм’є́р
+
+accent-french-words-38 = темрява
+accent-french-words-replace-38 = нуáр
+
+accent-french-words-39 = тиша
+accent-french-words-replace-39 = сіле́нс
+
+accent-french-words-40 = спокій
+accent-french-words-replace-40 = тра́нкіл
+
+accent-french-words-42 = вітаю
+accent-french-words-replace-42 = бонжу́р
+
+accent-french-words-43 = здоров
+accent-french-words-replace-43 = салю́
+
+accent-french-words-44 = здрастуй
+accent-french-words-replace-44 = бонжу́р
+
+accent-french-words-45 = здрастуйте
+accent-french-words-replace-45 = бонжу́р
+
+accent-french-words-46 = пока
+accent-french-words-replace-46 = о ревуа́р
+
+accent-french-words-47 = прощавай
+accent-french-words-replace-47 = о ревуа́р
+
+accent-french-words-48 = прощавайте
+accent-french-words-replace-48 = о ревуа́р
+
+accent-french-words-49 = дяка
+accent-french-words-replace-49 = мерсі́
+
+accent-french-words-50 = спасибі
+accent-french-words-replace-50 = мерсі́
+
+accent-french-words-51 = перепрошую
+accent-french-words-replace-51 = дезоле́
+
+accent-french-words-52 = вибачте
+accent-french-words-replace-52 = дезоле́
+
+accent-french-words-53 = даруйте
+accent-french-words-replace-53 = пардо́н
+
+accent-french-words-54 = глянь
+accent-french-words-replace-54 = рьогáрд
+
+accent-french-words-55 = гляньте
+accent-french-words-replace-55 = рьогáрд
+
+accent-french-words-56 = подивись
+accent-french-words-replace-56 = рьогáрд
+
+accent-french-words-57 = подивіться
+accent-french-words-replace-57 = рьогáрд
+
+accent-french-words-58 = слухайте
+accent-french-words-replace-58 = екýт
+
+accent-french-words-59 = чуєш
+accent-french-words-replace-59 = екýт
+
+accent-french-words-60 = чуєте
+accent-french-words-replace-60 = екýт
+
+accent-french-words-61 = люди
+accent-french-words-replace-61 = пе́рсон
+
+accent-french-words-62 = людини
+accent-french-words-replace-62 = де ла перс
+
+accent-french-words-63 = людину
+accent-french-words-replace-63 = ла перс
+
+accent-french-words-64 = людині
+accent-french-words-replace-64 = а ла перс
+
+accent-french-words-65 = людиною
+accent-french-words-replace-65 = авек ла перс
+
+accent-french-words-66 = чоловіка
+accent-french-words-replace-66 = де льо́м
+
+accent-french-words-67 = чоловіку
+accent-french-words-replace-67 = а льо́м
+
+accent-french-words-68 = чоловіком
+accent-french-words-replace-68 = авек льо́м
+
+accent-french-words-69 = жінки
+accent-french-words-replace-69 = де ла фа́м
+
+accent-french-words-70 = жінку
+accent-french-words-replace-70 = ла фа́м
+
+accent-french-words-71 = жінці
+accent-french-words-replace-71 = а ла фа́м
+
+accent-french-words-72 = жінкою
+accent-french-words-replace-72 = авек ла фа́м
+
+accent-french-words-73 = серця
+accent-french-words-replace-73 = дю кёр
+
+accent-french-words-74 = серцю
+accent-french-words-replace-74 = о кёр
+
+accent-french-words-75 = серцем
+accent-french-words-replace-75 = авек кёр
+
+accent-french-words-76 = душі
+accent-french-words-replace-76 = де лам
+
+accent-french-words-77 = душу
+accent-french-words-replace-77 = лам
+
+accent-french-words-78 = душею
+accent-french-words-replace-78 = авек лам
+
+accent-french-words-79 = життям
+accent-french-words-replace-79 = авек ві
+
+accent-french-words-80 = смерті
+accent-french-words-replace-80 = де ла мор
+
+accent-french-words-81 = смертью
+accent-french-words-replace-81 = авек ла мор
+
+accent-french-words-82 = правди
+accent-french-words-replace-82 = де вре́
+
+accent-french-words-83 = правду
+accent-french-words-replace-83 = вре́
+
+accent-french-words-84 = мрії
+accent-french-words-replace-84 = де рев
+
+accent-french-words-85 = мрію
+accent-french-words-replace-85 = рев
+
+accent-french-words-86 = світла
+accent-french-words-replace-86 = де люм’є́р
+
+accent-french-words-87 = світлу
+accent-french-words-replace-87 = а люм’є́р
+
+accent-french-words-88 = темряви
+accent-french-words-replace-88 = де нуáр
+
+accent-french-words-89 = темряву
+accent-french-words-replace-89 = нуáр
+
+accent-french-words-90 = тиші
+accent-french-words-replace-90 = де сіле́нс
+
+accent-french-words-91 = тишу
+accent-french-words-replace-91 = сіле́нс
+
+accent-french-words-92 = спокою
+accent-french-words-replace-92 = де тра́нкіл
+
+accent-french-words-93 = спокоєм
+accent-french-words-replace-93 = авек тра́нкіл
+
+accent-french-words-94 = страху
+accent-french-words-replace-94 = де пьо́р
+
+accent-french-words-95 = страхом
+accent-french-words-replace-95 = авек пьо́р
+
+accent-french-words-96 = франція
+accent-french-words-replace-96 = франс
+
+accent-french-words-97 = французький
+accent-french-words-replace-97 = франсе́
+
+accent-french-words-98 = французька
+accent-french-words-replace-98 = франсе́з
+
+accent-french-words-99 = француз
+accent-french-words-replace-99 = франсуа́
+
+accent-french-words-100 = француженка
+accent-french-words-replace-100 = франсе́з
+
+accent-french-words-101 = париж
+accent-french-words-replace-101 = парі́
+
+accent-french-words-102 = паризький
+accent-french-words-replace-102 = парізья́н
+
+accent-french-words-103 = башта
+accent-french-words-replace-103 = тур
+
+accent-french-words-104 = вежа
+accent-french-words-replace-104 = тур
+
+accent-french-words-105 = ейфелева вежа
+accent-french-words-replace-105 = тур е́фель
+
+accent-french-words-106 = ейфелева башта
+accent-french-words-replace-106 = тур е́фель
+
+accent-french-words-107 = круасан
+accent-french-words-replace-107 = круаса́н
+
+accent-french-words-108 = круасани
+accent-french-words-replace-108 = круаса́ни
+
+accent-french-words-109 = багет
+accent-french-words-replace-109 = баге́т
+
+accent-french-words-110 = багети
+accent-french-words-replace-110 = баге́ти
+
+accent-french-words-111 = сир
+accent-french-words-replace-111 = фрома́ж
+
+accent-french-words-112 = сири
+accent-french-words-replace-112 = фрома́жі
+
+accent-french-words-113 = вино
+accent-french-words-replace-113 = вен
+
+accent-french-words-114 = кава
+accent-french-words-replace-114 = кафе́
+
+accent-french-words-115 = ресторан
+accent-french-words-replace-115 = ресто́
+
+accent-french-words-116 = кухня
+accent-french-words-replace-116 = кюзі́н
+
+accent-french-words-117 = мода
+accent-french-words-replace-117 = мод
+
+accent-french-words-118 = стиль
+accent-french-words-replace-118 = ші́к
+
+accent-french-words-119 = красивий
+accent-french-words-replace-119 = бель
+
+accent-french-words-120 = красива
+accent-french-words-replace-120 = бель
+
+accent-french-words-121 = прекрасно
+accent-french-words-replace-121 = маніфі́к
+
+accent-french-words-122 = чудово
+accent-french-words-replace-122 = маніфі́к
+
+accent-french-words-123 = романтика
+accent-french-words-replace-123 = романс
+
+accent-french-words-124 = романтичний
+accent-french-words-replace-124 = романті́к
+
+accent-french-words-125 = поцілунок
+accent-french-words-replace-125 = бізу́
+
+accent-french-words-126 = поцілунки
+accent-french-words-replace-126 = бізу́
+
+accent-french-words-127 = мистецтво
+accent-french-words-replace-127 = ар
+
+accent-french-words-128 = художник
+accent-french-words-replace-128 = арти́ст
+
+accent-french-words-129 = художниця
+accent-french-words-replace-129 = арти́ст
+
+accent-french-words-130 = музика
+accent-french-words-replace-130 = мюзі́к
+
+accent-french-words-131 = пісня
+accent-french-words-replace-131 = шансо́н
+
+accent-french-words-132 = опера
+accent-french-words-replace-132 = опера́
+
+accent-french-words-133 = танець
+accent-french-words-replace-133 = данс
+
+accent-french-words-134 = балет
+accent-french-words-replace-134 = бале́
+
+accent-french-words-135 = парфум
+accent-french-words-replace-135 = парфе́н
+
+accent-french-words-136 = парфуми
+accent-french-words-replace-136 = парфе́н
+
+accent-french-words-137 = леді
+accent-french-words-replace-137 = мада́м
+
+accent-french-words-138 = пані
+accent-french-words-replace-138 = мада́м
+
+accent-french-words-139 = пан
+accent-french-words-replace-139 = месьє́
+
+accent-french-words-140 = добродій
+accent-french-words-replace-140 = месьє́
+
+accent-french-words-141 = міс
+accent-french-words-replace-141 = мадмуазе́ль
+
+accent-french-words-142 = столиця
+accent-french-words-replace-142 = капіта́ль
+
+accent-french-words-143 = держава
+accent-french-words-replace-143 = ета́
+
+accent-french-words-144 = країна
+accent-french-words-replace-144 = пеї́
+
+accent-french-words-145 = прапор
+accent-french-words-replace-145 = дрaпо́
+
+accent-french-words-146 = революція
+accent-french-words-replace-146 = революсьо́н
+
+accent-french-words-147 = свобода
+accent-french-words-replace-147 = ліберте́
+
+accent-french-words-148 = братерство
+accent-french-words-replace-148 = фратерніте́
+
+accent-french-words-149 = рівність
+accent-french-words-replace-149 = егаліте́
+
+accent-french-words-150 = ельфова башта
+accent-french-words-replace-150 = тур ельфі́к
