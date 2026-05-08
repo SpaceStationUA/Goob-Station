@@ -69,7 +69,7 @@ public sealed class ChargeHolosignSystem : EntitySystem
             ent.Comp.Signs.Add(signUid.Value);
         }
 
-        DirtyField(ent, ent.Comp, nameof(ChargeHolosignProjectorComponent.Signs));
+        Dirty(ent, ent.Comp); // Pirate: engine update (tests fix)
     }
 
     private void OnBeforeInteract(Entity<ChargeHolosignProjectorComponent> ent, ref BeforeRangedInteractEvent args)
@@ -140,7 +140,7 @@ public sealed class ChargeHolosignSystem : EntitySystem
             ent.Comp.Signs.Add(signUid.Value);
         }
 
-        DirtyField(ent, ent.Comp, nameof(ChargeHolosignProjectorComponent.Signs));
+        Dirty(ent, ent.Comp); // Pirate: audio muffle
     }
 
     public bool TryPlaceSign(Entity<ChargeHolosignProjectorComponent?, LimitedChargesComponent?> ent, EntityCoordinates coords, EntityUid user)
