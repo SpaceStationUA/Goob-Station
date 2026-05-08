@@ -45,7 +45,7 @@
   - LanguageKnowledge
   # Einstein Engines - Language end
   eventComponents:
-  - PhysicalPotential # Pirate
+  - Trainability # Pirate
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit

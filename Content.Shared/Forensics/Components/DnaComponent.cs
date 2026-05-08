@@ -15,4 +15,12 @@ public sealed partial class DnaComponent : Component
 {
     [DataField("dna"), AutoNetworkedField]
     public string? DNA;
+
+    /// <summary>
+    /// Pirate.
+    /// Whether this entity's blood contains vampire toxin.
+    /// Set when the entity has vampirism trait or vampire role.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool VampireToxin = false;
 }

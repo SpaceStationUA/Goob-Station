@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Server.Pirate.Blood.Events;
 using Content.Shared.Body.Components;
@@ -76,7 +77,9 @@ public sealed class BloodRegenerationPirateSystem : EntitySystem
         if (usedThirst > FixedPoint2.Zero && thirstComp is not null)
             _thirst.ModifyThirst(ent, thirstComp, (float)-usedThirst);
         if (amount > FixedPoint2.Zero)
+        {
             return _bloodstream.TryModifyBloodLevel(ent.AsNullable(), amount);
+        }
 
         // If we do it by _bloodstream.TryModifyBloodLevel, it will create blood puddles, soo we do it manually
         if (amount < FixedPoint2.Zero)

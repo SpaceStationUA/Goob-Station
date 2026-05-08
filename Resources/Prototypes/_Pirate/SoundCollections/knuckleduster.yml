@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: KnuckleDuster
+  files:
+    - /Audio/_Pirate/Weapons/Melee/punch.ogg
+    - /Audio/_Pirate/Weapons/Melee/hit.ogg

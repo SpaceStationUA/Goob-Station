@@ -10,8 +10,10 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Pirate.Shared.Vampirism.Events;
 using Content.Pirate.Server.Vampirism.Components;
+using Content.Pirate.Server.Traits.Vampirism.Components;
 //using Content.Shared.Cocoon;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
@@ -145,6 +147,12 @@ namespace Content.Pirate.Server.Vampirism.Systems
                     _popups.PopupEntity(Loc.GetString("vampire-blooddrink-rotted"), victim, bloodsucker, PopupType.Medium);
                     return;
                 }
+
+                // Warn if the victim is another vampire
+                if (HasComp<VampireComponent>(victim) || HasComp<VampirismComponent>(victim))
+                {
+                    _popups.PopupEntity(Loc.GetString("bloodsucker-victim-is-vampire"), victim, bloodsucker, PopupType.MediumCaution);
+                }
             }
 
             if (stream.BloodReagent != "Blood")
@@ -218,12 +226,6 @@ namespace Content.Pirate.Server.Vampirism.Systems
 
             var temp = _solutionSystem.SplitSolution(bloodstream.BloodSolution.Value, bloodsuckerComp.UnitsToSucc);
             _stomachSystem.TryTransferSolution(stomachList[0].Comp2.Owner, temp, stomachList[0].Comp1);
-
-            if (TryComp<HungerComponent>(bloodsucker, out var hungerComp))
-            {
-                var hungerRestored = (float)temp.Volume * 1.0f;
-                _hunger.ModifyHunger(bloodsucker, hungerRestored, hungerComp);
-            }
 
             // Add a little pierce
             DamageSpecifier damage = new();

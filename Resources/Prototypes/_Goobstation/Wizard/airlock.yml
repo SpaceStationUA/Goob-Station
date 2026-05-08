@@ -18,7 +18,7 @@
   suffix: Uranium
   components:
   - type: Sprite
-    sprite: _Goobstation/Wizard/Structures/Airlocks/Standard/uranium.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/material/uranium.rsi # Pirate changes
   - type: Construction
     graph: AirlockUranium
     node: airlock
@@ -33,7 +33,7 @@
   suffix: Uranium, Glass
   components:
   - type: Sprite
-    sprite: _Goobstation/Wizard/Structures/Airlocks/Glass/uranium.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/material/uranium.rsi # Pirate changes
   - type: Construction
     graph: AirlockUranium
     node: glassAirlock
@@ -69,7 +69,7 @@
   parent: AirlockAssembly
   components:
   - type: Sprite
-    sprite: _Goobstation/Wizard/Structures/Airlocks/Standard/uranium.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/material/uranium.rsi # Pirate changes
     state: "assembly"
   - type: Construction
     graph: AirlockUranium
@@ -83,7 +83,7 @@
   suffix: Uranium, Glass
   components:
   - type: Sprite
-    sprite: _Goobstation/Wizard/Structures/Airlocks/Glass/uranium.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/material/uranium.rsi # Pirate changes
     state: "assembly"
 
 # Recipes
