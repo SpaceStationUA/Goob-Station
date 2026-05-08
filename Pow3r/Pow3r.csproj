@@ -19,6 +19,7 @@ SPDX-License-Identifier: MIT
     <ItemGroup>
       <PackageReference Include="ImGui.NET" />
       <PackageReference Include="OpenTK" />
+      <PackageReference Include="OpenTK.Mathematics" /> <!-- Pirate: engine update -->
       <PackageReference Include="Veldrid" />
       <PackageReference Include="Veldrid.SPIRV" />
     </ItemGroup>

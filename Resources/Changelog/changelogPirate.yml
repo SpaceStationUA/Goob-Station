@@ -1255,3 +1255,9 @@ Entries:
         від Секрет ТП.
   id: 106
   time: '2026-05-08T12:07:17.0000000+00:00'
+- author: CyberLanos
+  changes:
+    - type: Tweak
+      message: апдейт RobustToolbox v266.0.0 => v268.1.0
+  id: 107
+  time: '2026-05-08T19:32:46.0000000+00:00'
