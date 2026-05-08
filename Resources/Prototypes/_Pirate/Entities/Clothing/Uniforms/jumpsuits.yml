@@ -19,3 +19,25 @@
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/security_cadet.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/security_cadet.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitJeansGreen
+  name: green sweater with jeans
+  description: A green sweater with blue jeans. This one has the recessive jeans.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/jeans_green.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/jeans_green.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitJeansBrown
+  name: brown sweater with jeans
+  description: A brown sweater with blue jeans.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/jeans_brown.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/jeans_brown.rsi

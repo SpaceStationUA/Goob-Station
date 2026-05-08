@@ -562,16 +562,16 @@
   id: ContractorSpawnMidround
   components:
   - type: GameRule
-    chaosScore: 300 # Pirate
+    chaosScore: 400
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/_Goobstation/Shuttles/ShuttleEvent/Legionnaire.yml
   - type: StationEvent
     startAnnouncement: null
-    weight: 2 # Pirate
+    weight: 1
     duration: null
-    earliestStart: 20 # Pirate
-    minimumPlayers: 25 # Pirate
+    earliestStart: 30
+    minimumPlayers: 30
     chaos:
       Hostile: 40
       Combat: 40

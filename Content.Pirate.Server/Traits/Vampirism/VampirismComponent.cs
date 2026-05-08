@@ -15,12 +15,6 @@ public sealed partial class VampirismComponent : Component
     [DataField]
     public HashSet<ProtoId<MetabolizerTypePrototype>> MetabolizerPrototypes = new() { "Vampiric", "Animal" };
 
-    /// <summary>
-    ///     A whitelist for what special-digestible-required foods the vampire's stomach is capable of eating.
-    /// </summary>
-    [DataField]
-    public EntityWhitelist? SpecialDigestible = null;
-
     [DataField]
     public TimeSpan SuccDelay = TimeSpan.FromSeconds(1);
 

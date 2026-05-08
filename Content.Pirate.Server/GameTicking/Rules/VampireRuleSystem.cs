@@ -27,11 +27,17 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Forensics.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Text;
+using System.Linq;
 
 namespace Content.Pirate.Server.GameTicking.Rules;
 
@@ -47,6 +53,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
     [Dependency] private readonly VampireSystem _vampire = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Pirate/Ambience/Antag/vampire_start.ogg");
 
@@ -130,6 +137,29 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
 
         EnsureComp<BloodSuckerComponent>(vampire);
         EnsureComp<WeakToHolyComponent>(vampire).AlwaysTakeHoly = true;
+
+        // Mark vampire blood with VampireToxin so other vampires get no benefit from drinking it
+        if (TryComp<BloodstreamComponent>(target, out var bloodstream))
+        {
+            if (_solutionContainer.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var solution))
+            {
+                foreach (var reagent in solution.Contents)
+                {
+                    var dnaDataList = reagent.Reagent.EnsureReagentData().OfType<DnaData>().ToList();
+                    foreach (var dnaData in dnaDataList)
+                    {
+                        dnaData.VampireToxin = true;
+                    }
+                }
+            }
+        }
+
+        // Mark the DnaComponent so future blood generation also includes the toxin.
+        if (TryComp<DnaComponent>(target, out var dnaComp))
+        {
+            dnaComp.VampireToxin = true;
+        }
+
         _vampire.AddStartingAbilities(vampire);
         _vampire.MakeVulnerableToHoly(vampire);
         _alerts.ShowAlert(vampire, vampireAlertComponent.BloodAlert);
@@ -240,25 +270,21 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         if (!ent.Comp.HadPressureImmunityComponent)
             RemComp<PressureImmunityComponent>(uid);
 
-        // Restore diet restrictions - either trait-specific or species-specific
-        if (TryComp<BodyComponent>(uid, out var body))
+        if (!HasComp<VampirismComponent>(uid))
         {
-            foreach (var organ in _body.GetBodyOrgans(uid, body))
+            // Remove VampireToxin marker from DnaComponent so future blood generation is clean.
+            if (TryComp<DnaComponent>(uid, out var dnaComp))
+                dnaComp.VampireToxin = false; // Remove VampireToxin marker from DnaComponent so future blood generation is clean.
+
+            // Remove VampireToxin from existing blood in the bloodstream.
+            if (TryComp<BloodstreamComponent>(uid, out var bloodstream)
+                && _solutionContainer.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var solution))
             {
-                if (TryComp<StomachComponent>(organ.Id, out var stomach))
+                foreach (var reagent in solution.Contents)
                 {
-                    // If the entity has the vampirism trait, restore the trait's diet instead of species diet
-                    if (TryComp<VampirismComponent>(uid, out var vampirismComp))
+                    foreach (var dnaData in reagent.Reagent.EnsureReagentData().OfType<DnaData>())
                     {
-                        // Restore the vampirism trait's special diet (Pills, Crayons, Paper)
-                        if (vampirismComp.SpecialDigestible is {} traitWhitelist)
-                            stomach.SpecialDigestible = traitWhitelist;
-                    }
-                    else
-                    {
-                        // Restore the original species-specific diet settings that were saved when becoming a vampire
-                        stomach.SpecialDigestible = ent.Comp.OriginalSpecialDigestible;
-                        stomach.IsSpecialDigestibleExclusive = ent.Comp.OriginalIsSpecialDigestibleExclusive;
+                        dnaData.VampireToxin = false;
                     }
                 }
             }

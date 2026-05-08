@@ -1,4 +1,5 @@
 using Content.Pirate.Shared.Vampire;
+using Content.Pirate.Server.Traits.Vampirism.Components;
 using Content.Pirate.Shared.Vampire.Components;
 using Content.Goobstation.Maths.FixedPoint;
 using Robust.Shared.GameObjects;
@@ -45,6 +46,7 @@ namespace Content.Pirate.Server.Vampire
         public static bool AddBloodEssenceFromSucking(IEntityManager entityManager, EntityUid vampire, EntityUid victim, FixedPoint2 bloodVolume, float conversionRate = 1f)
         {
             var essenceAmount = bloodVolume * conversionRate;
+
             return AddBloodEssence(entityManager, vampire, essenceAmount, victim);
         }
     }

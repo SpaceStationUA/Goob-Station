@@ -39,11 +39,6 @@ public sealed partial class VampireComponent : Component
         VampireMutationsType.Bestia,
         VampireMutationsType.Sire
     };
-
-    public static readonly EntityWhitelist AcceptableFoods = new()
-    {
-        Tags = new() { "Pill" }
-    };
     [ValidatePrototypeId<MetabolizerTypePrototype>]
     public static readonly string MetabolizerVampire = "Vampiric";
     [ValidatePrototypeId<MetabolizerTypePrototype>]
@@ -69,8 +64,6 @@ public sealed partial class VampireComponent : Component
         "ActionVampireHypnotise"
     };
 
-    //public static readonly ProtoId<VampirePowerProtype> DrinkBloodPrototype = "DrinkBlood";
-
     /// <summary>
     /// Total blood drank, counter for end of round screen
     /// </summary>
@@ -89,20 +82,6 @@ public sealed partial class VampireComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public bool HadPressureImmunityComponent;
-
-    /// <summary>
-    /// Stores the original SpecialDigestible whitelist from the stomach before becoming a vampire.
-    /// Used to restore the species-specific diet when curing vampirism.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public EntityWhitelist? OriginalSpecialDigestible;
-
-    /// <summary>
-    /// Stores the original IsSpecialDigestibleExclusive value from the stomach before becoming a vampire.
-    /// Used to restore the species-specific diet behavior when curing vampirism.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool OriginalIsSpecialDigestibleExclusive;
 
     /// <summary>
     /// All unlocked abilities

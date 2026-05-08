@@ -16,6 +16,7 @@ vampire-full-stomach = Ти роздутий від крові
 vampire-deathsembrace-bind = Відчувається як вдома
 
 vampire-ingest-holyblood = Твій рот пече!
+bloodsucker-victim-is-vampire = Ця кров належить іншому вампіру, вона не дає тобі нічого.
 
 vampire-cloak-enable = Ти огортаєш свою форму тінями
 vampire-cloak-disable = Ти відпускаєш свою хватку на тінях
