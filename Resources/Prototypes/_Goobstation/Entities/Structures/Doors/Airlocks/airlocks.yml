@@ -41,7 +41,7 @@
     containers:
       board: [ DoorElectronicsAtmospherics ]
   - type: Sprite
-    sprite: _Goobstation/Structures/Doors/Airlocks/Glass/atmossealed.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/atmossealed.rsi # Pirate Changes
   - type: Fixtures
     fixtures:
       fix1:
@@ -69,7 +69,7 @@
     containers:
       board: [ DoorElectronicsRobotics ]
   - type: Sprite
-    sprite: _Pirate/Structures/Doors/Airlocks/Glass/robotics.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/robotics.rsi # Pirate Changes
   - type: PaintableAirlock
     department: Science
     group: Glass

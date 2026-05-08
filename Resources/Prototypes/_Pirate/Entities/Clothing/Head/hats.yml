@@ -23,9 +23,9 @@
         Slash: 0.7
         Piercing: 0.7
         Heat: 0.8
-    
+
 - type: entity
-  abstract: true # Спрощення файлу абстракцією, щоб не треба було лишній раз копіювати відповідні характеристики 
+  abstract: true # Спрощення файлу абстракцією, щоб не треба було лишній раз копіювати відповідні характеристики
   parent: [ClothingHeadBase, BaseInterdyneContraband]
   id: ClothingHeadHatInterdyneOfficerBase
   components:
@@ -81,3 +81,30 @@
     sprite: _Pirate/Clothing/Head/Hats/beret_security_officer.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Head/Hats/beret_security_officer.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTony
+  name: tony
+  description: 'Man, this party stinks, I fucking hate these people.'
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Misc/tony.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Misc/tony.rsi
+    equipSound:
+      path: /Audio/_Pirate/Weapons/Melee/pickupweapon.ogg
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: EmitSoundOnPickup
+    sound: /Audio/_Pirate/Weapons/Melee/pickupweapon.ogg
+  - type: AmbientSound
+    range: 5
+    volume: -4
+    sound: /Audio/_Pirate/Misc/miami_music.ogg
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1.2
+  - type: Tag
+    tags:
+    - HidesHair

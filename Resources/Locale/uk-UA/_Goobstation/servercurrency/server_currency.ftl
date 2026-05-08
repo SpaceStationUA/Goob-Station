@@ -5,8 +5,8 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-server-currency-name-singular = Губкоїн
-server-currency-name-plural = Губкоїни
+server-currency-name-singular = Войдкоїн
+server-currency-name-plural = Войдкоїни
 
 ## Команди
 

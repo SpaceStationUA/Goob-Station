@@ -99638,18 +99638,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: PinkHandcuffs
-  entities:
-  - uid: 13837
-    components:
-    - type: Transform
-      pos: 61.728977,-25.317972
-      parent: 2
-  - uid: 13838
-    components:
-    - type: Transform
-      pos: -18.666239,45.2039
-      parent: 2
 - proto: PlantBag
   entities:
   - uid: 13839

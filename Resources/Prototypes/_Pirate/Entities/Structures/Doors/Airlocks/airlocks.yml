@@ -9,7 +9,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockInterdyneGlass
-  suffix: Interdyne
+  suffix: Interdyne, Glass
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Doors/Airlocks/Glass/interdyne.rsi
@@ -25,7 +25,7 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockMedicalGlassAlt
-  suffix: Medical, Alternative
+  suffix: Medical, Alternative, Glass
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Doors/Airlocks/Glass/alternativemedical.rsi
@@ -37,3 +37,53 @@
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Doors/Airlocks/Standard/bathroom.rsi
+
+# Material doors
+- type: entity
+  parent: Airlock
+  id: AirlockSilver
+  suffix: Silver
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/material/silver.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockSandstone
+  suffix: Sandstone
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/material/sandstone.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockSilverGlass
+  suffix: Silver, Glass
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/material/silver.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockSandstoneGlass
+  suffix: Sandstone, Glass
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/material/sandstone.rsi
+
+# Corporate
+- type: entity
+  parent: AirlockGlass
+  id: AirlockCorporateGlass
+  suffix: Corporate, Glass
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Glass/corporate.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockCorporate
+  suffix: Corporate
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/corporate.rsi

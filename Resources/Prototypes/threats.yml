@@ -14,7 +14,7 @@
     SlaughterDemon: 1 # Goobstation begin
     # Wraith: 1
     LoneOperative: 1
-    Slasher: 1
+    # Slasher: 1 # Pirate disable
     # Goobstation end
 
 - type: ninjaHackingThreat

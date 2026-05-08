@@ -472,7 +472,9 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
         //  SHITMED CHANGE: We dont really care if the reagent was added in its entirety, just whether or not it could take more blood.
         if (amount >= 0)
         {
-            SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount, out var acceptedAmount, null, GetEntityBloodData(ent.Owner));
+            var bloodData = GetEntityBloodData(ent.Owner); // Pirate
+
+            SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount, out var acceptedAmount, null, bloodData); // Pirate end
             return acceptedAmount > 0;
         }
 
@@ -620,9 +622,13 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
         var bloodData = new List<ReagentData>();
         var dnaData = new DnaData();
 
-        if (TryComp<DnaComponent>(uid, out var donorComp) && donorComp.DNA != null)
+        if (TryComp<DnaComponent>(uid, out var donorComp))
         {
-            dnaData.DNA = donorComp.DNA;
+            dnaData.VampireToxin = donorComp.VampireToxin; // Pirate
+            if (donorComp.DNA != null)
+                dnaData.DNA = donorComp.DNA;
+            else
+                dnaData.DNA = Loc.GetString("forensics-dna-unknown");
         }
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");

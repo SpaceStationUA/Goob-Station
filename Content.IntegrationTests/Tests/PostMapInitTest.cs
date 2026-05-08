@@ -240,7 +240,8 @@ namespace Content.IntegrationTests.Tests
             //  "Reach",
             //  "Saltern",
             //  "Serpentcrest",
-            //  "Submarine"
+            //  "Submarine",
+              "PerditionTP" // Pirate 
             // Goob end
         };
         // Goobstation edit start, yeah i know, but this is easier and less load than loading protoman or something.
@@ -289,6 +290,7 @@ namespace Content.IntegrationTests.Tests
               "OmegaTP", // Pirate
               "KettleTP", // Pirate
               "GateTP", // Pirate
+              "PerditionTP", // Pirate
         };
         // Goobstation edit end
 
