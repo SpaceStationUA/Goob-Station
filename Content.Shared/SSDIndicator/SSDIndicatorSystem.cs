@@ -56,10 +56,14 @@ public sealed class SSDIndicatorSystem : EntitySystem
     {
         component.IsSSD = true;
 
-        // Sets the time when the entity should fall asleep
-        if (_icSsdSleep)
+        // _Pirate: Don't force NPCs to sleep via SSD
+        if (!HasComp<NOSSDSleepComponent>(uid))
         {
-            component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
+            // Sets the time when the entity should fall asleep
+            if (_icSsdSleep)
+            {
+                component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
+            }
         }
 
         Dirty(uid, component);
@@ -69,6 +73,10 @@ public sealed class SSDIndicatorSystem : EntitySystem
     private void OnMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
     {
         if (!_icSsdSleep || !component.IsSSD)
+            return;
+
+        // _Pirate: Don't force NPCs to sleep via SSD
+        if (HasComp<NOSSDSleepComponent>(uid))
             return;
 
         component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
@@ -88,6 +96,10 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var ssd))
         {
+            // _Pirate: Don't force NPCs to sleep via SSD
+            if (HasComp<NOSSDSleepComponent>(uid))
+                continue;
+
             // Forces the entity to sleep when the time has come
             if (!ssd.IsSSD
                 || ssd.NextUpdate > curTime

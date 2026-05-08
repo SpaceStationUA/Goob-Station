@@ -1,0 +1,26 @@
+- type: alert
+  id: Trainability
+  icons:
+  - sprite: /Textures/_Pirate/Interface/Alerts/trainability.rsi
+    state: powerLevel0
+  - sprite: /Textures/_Pirate/Interface/Alerts/trainability.rsi
+    state: powerLevel1
+  - sprite: /Textures/_Pirate/Interface/Alerts/trainability.rsi
+    state: powerLevel2
+  - sprite: /Textures/_Pirate/Interface/Alerts/trainability.rsi
+    state: powerLevel3
+  - sprite: /Textures/_Pirate/Interface/Alerts/trainability.rsi
+    state: powerLevel4
+  - sprite: /Textures/_Pirate/Interface/Alerts/trainability.rsi
+    state: powerLevel5
+  - sprite: /Textures/_Pirate/Interface/Alerts/trainability.rsi
+    state: powerLevel6
+  - sprite: /Textures/_Pirate/Interface/Alerts/trainability.rsi
+    state: powerLevel7
+  - sprite: /Textures/_Pirate/Interface/Alerts/trainability.rsi
+    state: powerLevel8
+  - sprite: /Textures/_Pirate/Interface/Alerts/trainability.rsi
+    state: powerLevel9
+  name: alerts-trainability-name
+  minSeverity: 0
+  maxSeverity: 9

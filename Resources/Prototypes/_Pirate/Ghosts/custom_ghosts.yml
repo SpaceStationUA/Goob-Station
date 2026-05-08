@@ -356,3 +356,12 @@
   alpha: 1
   ghostName: Tony [Zubr]
   ghostDescription: I fucking hate these people. This party sucks.
+
+- type: customGhost
+  id: question-ghost
+  ckey: The_Question
+  sprite:
+    - _Pirate/Ghosts/The_Question.rsi
+  alpha: 1
+  ghostName: The_Question
+  ghostDescription: I have a questions

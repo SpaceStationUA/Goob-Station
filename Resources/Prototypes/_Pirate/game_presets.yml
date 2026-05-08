@@ -1,16 +1,29 @@
+# SPDX-FileCopyrightText: 2026 Vareniko <213822582+Vareniko@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 - type: gamePreset
-  id: PirateSecret
+  id: SecretTP
   alias:
-    - secret
-    - sekrit
-  name: "Секерет"
-  showInVote: true # Goob - Game Director
-  description: "Експериментальна версія секрету.Чесно я сам не впевнений, як воно працює..."
+    - secrettp
+    - stp
+  name: secrettp-title
+  description: secrettp-description
+  showInVote: true
   rules:
-    - Secret
+    - SecretTP
+    - PsionicEventsScheduler
+
+- type: gamePreset
+  id: SecretSalt
+  alias:
+    - secretsalt
+    - saltsecret
+  name: secretsalt-title
+  description: secretsalt-description
+  showInVote: true
+  rules:
+    - SecretSalt
     - PsionicEventsScheduler # Pirate
-    - SpaceTrafficControlFriendlyEventScheduler
-    - BasicRoundstartVariation
 
 - type: gamePreset
   id: PirateGreenshift
@@ -24,4 +37,3 @@
   - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
   - PsionicEventsScheduler # Pirate
-  

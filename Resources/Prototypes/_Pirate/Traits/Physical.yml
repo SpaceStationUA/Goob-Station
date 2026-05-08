@@ -192,14 +192,13 @@
   - type: Snoring
 
 - type: trait
-  id: PhysicalPotential
-  name: "trait-physical-potential-name"
-  description: "trait-physical-potential-desc"
+  id: Trainability
+  name: "trait-trainability-name"
+  description: "trait-trainability-desc"
   category: Physical
   blacklist:
     components:
      - BorgChassis
   components:
-    - type: PhysicalPotential
-      trainingEffectiveness: 1
+    - type: Trainability
 #endregion

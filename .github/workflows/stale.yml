@@ -10,9 +10,8 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     permissions:
-      # Currently we are not planning on marking issues as stale, so this permission is read only.
-      # Just gonna leave this in here in case we need it in the future.
-      issues: read
+      # Required for PR labels and PR comments, which use issue APIs.
+      issues: write
       pull-requests: write # Required to add labels, comment, close PRs.
 
     steps:
