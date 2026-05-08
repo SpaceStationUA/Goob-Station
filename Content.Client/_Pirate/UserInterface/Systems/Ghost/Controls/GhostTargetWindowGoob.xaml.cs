@@ -15,6 +15,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using PirateWrapContainer = Content.Client._Pirate.UserInterface.Controls.WrapContainer;
 
 namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
 {
@@ -189,7 +190,7 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
             {
                 var titleKey = SectionTitleKeys[(int) type];
                 var count = _warps.Count(w => w.Type == type);
-                var wrap = new WrapContainer { SeparationOverride = 6, HorizontalExpand = true };
+                var wrap = new PirateWrapContainer { SeparationOverride = 6, HorizontalExpand = true };
 
                 var headingText = $"{Loc.GetString(titleKey)} - ({count})";
                 var section = new FramedCollapsible(headingText)

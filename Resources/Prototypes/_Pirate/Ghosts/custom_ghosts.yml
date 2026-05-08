@@ -227,7 +227,7 @@
     - _Pirate/Ghosts/luciusGG.rsi
   alpha: 1
   ghostName: luciusGG
-  ghostDescription: "Чи немає в тобі жаги до справедливості?"
+  ghostDescription: Це приватний опис. Ну серйозно, не соромно це читати? Відвернися, йди звідси й зроби вигляд, що ти цього не бачив :<
 
 - type: customGhost
   id: hattratt-ghost
