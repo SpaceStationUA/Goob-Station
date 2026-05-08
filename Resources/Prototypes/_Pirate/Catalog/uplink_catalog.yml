@@ -114,3 +114,23 @@
     Telecrystal: 10
   categories:
     - UplinkAmmo
+
+- type: listing
+  id: UplinkMiamiBundle
+  name: uplink-miami-name
+  description: uplink-miami-desc
+  productEntity: CrateSyndicateMiamiBundle
+  icon: { sprite: _Pirate/Clothing/Head/Misc/tony.rsi, state: icon }
+  cost:
+    Telecrystal: 50
+  categories:
+    - UplinkDeception
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+        - SurplusBundle

@@ -1268,7 +1268,7 @@
         maxAmount: 5
         maxRange: 5
       spawns:
-      - PresentRandomUnsafe
+      #- PresentRandomUnsafe # Pirate disable
       - PresentRandom
       - PresentRandomCoal
       - PresentRandomCash

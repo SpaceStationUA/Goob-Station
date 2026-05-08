@@ -12,7 +12,8 @@ on:
 
 env:
   #GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }} # Pirates use the automatically provided GITHUB_TOKEN instead of an undefined BOT_TOKEN
-  CHANGELOG_DIR: ${{ vars.CHANGELOG_DIR }}
+  CHANGELOG_DIR: ${{ vars.CHANGELOG_DIR || 'Resources/Changelog' }} # Pirate
+  CHANGELOG_BRANCH: ${{ vars.CHANGELOG_BRANCH || 'master' }} # Pirate
   PR_NUMBER: ${{ github.event.number }}
 
 jobs:
@@ -26,7 +27,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }} # Pirate
-          ref: "${{ vars.CHANGELOG_BRANCH }}"
+          ref: "${{ env.CHANGELOG_BRANCH }}"
 
       # Pirate add
       - name: Setup Git
@@ -54,20 +55,46 @@ jobs:
           cd "Tools/changelog"
           npm install
         shell: bash
-        continue-on-error: true
 
       - name: Generate Changelog
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Pirate
         run: |
           cd "Tools/changelog"
           node changelog.js
         shell: bash
-        continue-on-error: true
 
       # Pirate change commit summary
       - name: Commit Changelog
         run: |
-          git add *.yml
-          git commit -m "Automated changelog - (#${{ env.PR_NUMBER }})"
-          git push
+          set -euo pipefail
+
+          for attempt in 1 2 3; do
+            git add -A -- "${{ env.CHANGELOG_DIR }}/*.yml"
+
+            if git diff --cached --quiet -- "${{ env.CHANGELOG_DIR }}/*.yml"; then
+              echo "No staged changelog changes to commit."
+              exit 0
+            fi
+
+            git commit -m "Automated changelog - (#${{ env.PR_NUMBER }})"
+
+            if git push origin "HEAD:${{ env.CHANGELOG_BRANCH }}"; then
+              exit 0
+            fi
+
+            if [ "$attempt" -eq 3 ]; then
+              echo "Failed to push changelog commit after ${attempt} attempts."
+              exit 1
+            fi
+
+            echo "Push was rejected, refreshing ${{ env.CHANGELOG_BRANCH }} and regenerating changelog."
+            git fetch --no-tags origin "${{ env.CHANGELOG_BRANCH }}"
+            git reset --hard "origin/${{ env.CHANGELOG_BRANCH }}"
+
+            (
+              cd "Tools/changelog"
+              GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}" node changelog.js
+            )
+          done
         shell: bash
-        continue-on-error: true

@@ -67,11 +67,6 @@
   components:
   - type: Vampirism
     succDelay: 3
-    specialDigestible:
-      tags:
-      - Pill
-      - Crayon
-      - Paper
   - type: WeakToHoly
     alwaysTakeHoly: true
 #endregion

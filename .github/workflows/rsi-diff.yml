@@ -43,7 +43,9 @@ on:
       - '**.rsi/**.png'
 
 permissions:
+  contents: read
   pull-requests: write
+  issues: write
 
 jobs:
   diff:

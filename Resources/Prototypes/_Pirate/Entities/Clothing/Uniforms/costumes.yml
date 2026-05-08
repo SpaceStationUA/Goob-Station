@@ -76,3 +76,14 @@
     sprite: _Pirate/Clothing/Misc/tracksuit.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Misc/tracksuit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformRat
+  name: rat king fan outfit
+  description: Declare your allegiance to the rodent monarch, as well as your desire to see the station burn *at the same time!*
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Costume/rat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Costume/rat.rsi
