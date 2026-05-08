@@ -30,6 +30,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Systems;
+using Content.Shared.SSDIndicator; // Pirate
 using Prometheus;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -88,7 +89,7 @@ namespace Content.Server.NPC.Systems
         public void OnNPCMapInit(EntityUid uid, HTNComponent component, MapInitEvent args)
         {
             component.Blackboard.SetValue(NPCBlackboard.Owner, uid);
-            WakeNPC(uid, component);
+            WakeNPC(uid, component);;
         }
 
         public void OnNPCShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)

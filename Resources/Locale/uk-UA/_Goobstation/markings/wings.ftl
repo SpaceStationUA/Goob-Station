@@ -9,3 +9,5 @@ markings-category-Wings = Крила
 
 marking-WingsRobotic = Роботизовані крила
 marking-WingsRoboticMerciful = Милосердні роботизовані крила
+
+marking-WingsMinimalistic = Мінімалістичні крила

@@ -1,8 +1,8 @@
 using Content.Shared.Abilities.Psionics;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Actions.Events;
+using Content.Shared.Atmos.Components;
 
 namespace Content.Server.Abilities.Psionics
 {

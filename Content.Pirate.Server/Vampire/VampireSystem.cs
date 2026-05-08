@@ -37,6 +37,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Charges.Systems;
 using Content.Pirate.Shared.Vampire;
 using Content.Pirate.Shared.Vampire.Components;
+using Content.Pirate.Server.Traits.Vampirism.Components;
 using Content.Goobstation.Shared.Bible;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -233,12 +234,16 @@ public sealed partial class VampireSystem : EntitySystem
     private void OnVampireAddBloodEssence(EntityUid uid, VampireComponent component, VampireAddBloodEssenceEvent args)
     {
         var vampire = new Entity<VampireComponent>(uid, component);
-        AddBloodEssence(vampire, args.Amount);
+        AddBloodEssence(vampire, args.Amount, args.Source);
     }
-    private bool AddBloodEssence(Entity<VampireComponent> vampire, FixedPoint2 quantity)
+    private bool AddBloodEssence(Entity<VampireComponent> vampire, FixedPoint2 quantity, EntityUid? source = null)
     {
         if (quantity < 0)
             return false;
+
+        // Drinking vampire blood gives no essence.
+        if (source != null && (HasComp<VampireComponent>(source.Value) || HasComp<VampirismComponent>(source.Value)))
+            quantity = 0;
 
         vampire.Comp.TotalBloodDrank += quantity.Float();
         vampire.Comp.Balance[VampireComponent.CurrencyProto] += quantity;
