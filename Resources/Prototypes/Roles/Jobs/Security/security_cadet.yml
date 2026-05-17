@@ -151,7 +151,7 @@
   id: SecurityCadetGear
   equipment:
     eyes: ClothingEyesGlassesSecurity #Goobstation
-    shoes: ClothingShoesBootsSecurityJack # Pirate: jackboots step sounds
+    shoes: ClothingShoesBootsJack # Goobstation edit
     #outerClothing: ClothingOuterArmorBasic # Goobstation
     id: SecurityCadetPDA
     ears: ClothingHeadsetAltSecurityRegular # Goobstation

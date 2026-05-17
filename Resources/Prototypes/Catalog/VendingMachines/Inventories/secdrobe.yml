@@ -42,7 +42,7 @@
     ClothingBackpackMessengerSecurity: 3 # Frontier
     ClothingUniformJumpsuitCadet: 3 # Pirate
     ClothingUniformJumpsuitSec: 3
-    ClothingShoesBootsSecurityJack: 3 # Pirate: jackboots step sounds
+    ClothingShoesBootsJack: 3
     ClothingHeadHatBeretSecurity: 3
     ClothingHeadHatSecsoft: 3
     #ClothingHeadBandRed: 3 # Pirate

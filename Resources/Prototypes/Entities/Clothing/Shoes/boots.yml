@@ -162,9 +162,6 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/combatboots.rsi
-  - type: FootstepModifier # Pirate: jackboots step sounds
-    footstepSoundCollection: # Pirate: jackboots step sounds
-      collection: FootstepHeavy # Pirate: jackboots step sounds
 
 - type: entity
   parent: ClothingShoesMilitaryBase
@@ -197,9 +194,6 @@
     sprite: Clothing/Shoes/Boots/mercboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/mercboots.rsi
-  - type: FootstepModifier # Pirate: jackboots step sounds
-    footstepSoundCollection: # Pirate: jackboots step sounds
-      collection: FootstepHeavy # Pirate: jackboots step sounds
 
 - type: entity
   parent: ClothingShoesBaseButcherable

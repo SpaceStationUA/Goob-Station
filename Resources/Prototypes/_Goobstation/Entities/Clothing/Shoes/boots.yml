@@ -206,7 +206,7 @@
     sprite: _Goobstation/Clothing/Shoes/Boots/advanced_jackboots.rsi
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: FootstepHeavy # Pirate: jackboots step sounds
+      collection: StepHeavyBoots
 
 - type: entity
   parent: [ClothingShoesBootsMagBase, BaseMajorContraband]
@@ -289,9 +289,6 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
-  - type: FootstepModifier # Pirate: jackboots step sounds
-    footstepSoundCollection: # Pirate: jackboots step sounds
-      collection: FootstepHeavy # Pirate: jackboots step sounds
 
 - type: entity
   parent: ClothingShoesColorBlack

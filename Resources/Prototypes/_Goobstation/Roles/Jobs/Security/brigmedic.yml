@@ -61,5 +61,5 @@
     jumpsuit: ClothingUniformJumpsuitBrigmedic
     id: BrigmedicPDA
     back: ClothingBackpackBrigmedic
-    shoes: ClothingShoesBootsSecurityJack # Pirate: jackboots step sounds
+    shoes: ClothingShoesBootsJack
     head: ClothingHeadHatBeretBrigmedic

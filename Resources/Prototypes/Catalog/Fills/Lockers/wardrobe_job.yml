@@ -305,7 +305,7 @@
     children:
     - id: ClothingUniformJumpsuitSec
     - id: ClothingBackpackSecurity
-    - id: ClothingShoesBootsSecurityJack # Pirate: jackboots step sounds
+    - id: ClothingShoesBootsJack
     - id: ClothingEyesGlassesSunglasses
     - id: ClothingHeadHelmetBasic
     - id: ClothingOuterArmorBasic

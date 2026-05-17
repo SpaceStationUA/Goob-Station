@@ -110,7 +110,7 @@
     - id: Flash
     - id: ClothingEyesGlassesSecurity
     - id: ClothingHandsGlovesCombat
-    - id: ClothingShoesBootsSecurityJack # Pirate: jackboots step sounds
+    - id: ClothingShoesBootsJack
     - id: ClothingOuterCoatWarden
     - id: ClothingOuterWinterWarden
     - id: RubberStampWarden
@@ -168,7 +168,7 @@
     - id: ClothingEyesGlassesSecurity
     # - id: ClothingHeadsetSecurity, Goob, over ear headsets
     - id: ClothingHandsGlovesColorBlack
-    - id: ClothingShoesBootsSecurityJack # Pirate: jackboots step sounds
+    - id: ClothingShoesBootsJack
     - id: WeaponMeleeNeedle
       prob: 0.1
     #- id: HoloprojectorSecurity, Goobstation, it's in every belt
