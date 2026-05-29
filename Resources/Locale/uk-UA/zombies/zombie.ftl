@@ -8,4 +8,9 @@ zombie-role-rules = Ви — [color={role-type-team-antagonist-color}][bold]{rol
 
 zombie-permadeath = Цього разу ти справді помер.
 
-zombification-resistance-coefficient-value = - [color=violet]Зараження[/color] шанс знижено на [color=lightblue]{$value}%[/color].
+zombification-resistance-coefficient-value = - [color=violet]Зараження[/color] шанс зменшено на [color=lightblue]{$value}%[/color].
+
+# Goob
+
+zombie-cured-popup = Зомбі-інфекція зникає безслідно!
+zombie-cure-failed-popup = Ліки не діють!

@@ -13,3 +13,5 @@ survivalplus-title = Виживання+
 survivalplus-description = Починається досить спокійно. Закінчується не зовсім так.
 hermitplus-title = Відлюдник
 hermitplus-description = Режим гри, що зосереджується на внутрішніх загрозах, а не зовнішніх.
+secretplus-lowpop-title = Секрет+ Лоупоп
+secretplus-lowpop-description = Активніше та менш загрозливо. Для малих екіпажів.

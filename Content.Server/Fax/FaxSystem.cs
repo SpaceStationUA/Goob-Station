@@ -887,7 +887,7 @@ public sealed class FaxSystem : EntitySystem
 
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
-        if (args.Actor.IsValid()) // Pirate: audit player-triggered fax sends
+        if (args.Actor.IsValid()) // Pirate: audit player-triggered fax sends; Goobstation - no log for automation
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
                 $"{ToPrettyString(args.Actor):actor} " +

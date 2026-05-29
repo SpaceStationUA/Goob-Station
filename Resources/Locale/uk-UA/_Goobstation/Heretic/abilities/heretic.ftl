@@ -97,3 +97,4 @@ heretic-speech-shapeshft = ЗМ'ІН'Ю
 heretic-blade-break-fail-acended-message = Ви не можете ламати леза після вознесіння!
 heretic-speech-void-prison = ТЮР'МА П'СТКТ!
 heretic-speech-void-conduit = ПР'ЙМ' П'СТК'!
+heretic-ability-lose-focus-shadow-cloak = Втрачаючи концентрацію, ви виходите з тіней!
