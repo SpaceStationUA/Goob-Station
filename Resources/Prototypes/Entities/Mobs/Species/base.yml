@@ -463,8 +463,6 @@
         type: VampireClassBui # Pirate
       enum.VampireLocateUiKey.Key:
         type: VampireLocateBui # Pirate
-      enum.SetPsionicsVerbMenu.Key: # Pirate-PsionicsMenu
-        type: PsionicsMenuBoundUserInterface
   - type: Puller
   - type: Speech
     speechSounds: Alto

@@ -12,8 +12,6 @@
   - ClothingHeadCage
   - MagazineBoxPistolCryptobiolin
   - MagazinePistolCryptobiolin
-  - ShellSoulbreaker
-  - BoxShellSoulbreaker
   position: -2,-3
   technologyPrerequisites:
   - BasicRobotics

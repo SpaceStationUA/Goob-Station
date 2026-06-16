@@ -142,8 +142,6 @@
   - SpeedLoaderMagnumUranium
   - MagazinePistolCryptobiolin # PIRATE psionic
   - MagazineBoxPistolCryptobiolin # PIRATE psionic
-  - ShellSoulbreaker # PIRATE psionic
-  - BoxShellSoulbreaker # PIRATE psionic
 
 - type: latheRecipePack
   id: SecurityWeapons

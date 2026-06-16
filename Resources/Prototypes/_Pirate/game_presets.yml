@@ -11,7 +11,7 @@
   showInVote: true
   rules:
     - SecretTP
-    - PsionicEventsScheduler
+    - GlimmerEventScheduler
 
 - type: gamePreset
   id: SecretSalt
@@ -23,7 +23,7 @@
   showInVote: true
   rules:
     - SecretSalt
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: PirateGreenshift
@@ -36,7 +36,7 @@
   rules:
   - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
   
 - type: gamePreset
   id: PirateRelaxed
@@ -51,7 +51,7 @@
   - PirateRelaxedEventScheduler
   - PirateRelaxedSubGamemodesRule
   - BasicRoundstartVariation
-  - PsionicEventsScheduler
+  - GlimmerEventScheduler
 
 - type: entityTable
   id: PirateRelaxedEventsTable

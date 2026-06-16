@@ -54,7 +54,4 @@
       component: BorgChassis
   components:
     - type: Psionic
-    - type: InnatePsionicPowers
-      powersToAdd:
-        - TelepathyPower
 #endregion

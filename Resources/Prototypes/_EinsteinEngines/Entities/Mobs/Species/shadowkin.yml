@@ -234,14 +234,7 @@
     saturationLoss: 0.2
     maxSaturation: 30
     saturation: 30 #Goob Edit end
-  - type: Shadowkin # Pirate psionic start
-  - type: Psionic
-    mindbreakingFeedback: shadowkin-blackeye
-  - type: InnatePsionicPowers
-    powersToAdd:
-      - TelepathyPower
-  - type: PotentiaModifier
-    potentiaMultiplier: 1.25 # Pirate psionic end
+  - type: Shadowkin # Pirate
 
 - type: entity
   save: false

@@ -8,11 +8,10 @@ using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Psionics;
+using Content.Shared._DV.Psionics.Events;
 using Content.Shared.Mobs;
 using Content.Pirate.Common.CCVar;
 using Robust.Shared.Configuration;
-using Content.Shared.Abilities.Psionics;
 using Content.Shared.Tag;
 
 
@@ -34,10 +33,10 @@ public abstract class SharedEtherealSystem : EntitySystem
         SubscribeLocalEvent<EtherealComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<EtherealComponent, InteractionAttemptEvent>(OnInteractionAttempt);
         SubscribeLocalEvent<EtherealComponent, BeforeThrowEvent>(OnBeforeThrow);
-        SubscribeLocalEvent<EtherealComponent, OnAttemptPowerUseEvent>(OnAttemptPowerUse);
+        SubscribeLocalEvent<EtherealComponent, PsionicPowerUseAttemptEvent>(OnAttemptPowerUse);
         SubscribeLocalEvent<EtherealComponent, AttackAttemptEvent>(OnAttackAttempt);
         SubscribeLocalEvent<EtherealComponent, ShotAttemptedEvent>(OnShootAttempt);
-        SubscribeLocalEvent<EtherealComponent, OnMindbreakEvent>(OnMindbreak);
+        SubscribeLocalEvent<EtherealComponent, PsionicMindBrokenEvent>(OnMindbreak);
         SubscribeLocalEvent<EtherealComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
@@ -81,7 +80,7 @@ public abstract class SharedEtherealSystem : EntitySystem
                 _tag.AddTag(uid, "DoorBumpOpener");
     }
 
-    private void OnMindbreak(EntityUid uid, EtherealComponent component, ref OnMindbreakEvent args)
+    private void OnMindbreak(EntityUid uid, EtherealComponent component, ref PsionicMindBrokenEvent args)
     {
         SpawnAtPosition("ShadowkinShadow", Transform(uid).Coordinates);
         SpawnAtPosition("EffectFlashShadowkinDarkSwapOff", Transform(uid).Coordinates);
@@ -139,11 +138,8 @@ public abstract class SharedEtherealSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("ethereal-pickup-fail"), args.Target.Value, uid);
     }
 
-    private void OnAttemptPowerUse(EntityUid uid, EtherealComponent component, OnAttemptPowerUseEvent args)
+    private void OnAttemptPowerUse(EntityUid uid, EtherealComponent component, ref PsionicPowerUseAttemptEvent args)
     {
-        if (args.Power == "DarkSwap")
-            return;
-
-        args.Cancel();
+        args.CanUsePower = false;
     }
 }

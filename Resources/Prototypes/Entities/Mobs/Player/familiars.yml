@@ -109,7 +109,6 @@
     understands:
     - Mouse
     - TauCetiBasic
-#Pirate psionics VVV
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Effects/bite.ogg
@@ -118,12 +117,6 @@
     damage:
       types:
         Piercing: 5
-  - type: InnatePsionicPowers
-    powersToAdd:
-      - TelepathyPower
-  - type: PsionicFamiliar
-    inheritMasterFactions: false
-#Pirate psionics ^^^
 
 - type: entity
   name: Cerberus

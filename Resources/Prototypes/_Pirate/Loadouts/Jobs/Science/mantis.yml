@@ -59,14 +59,6 @@
   id: EtherealGlasses
   equipment:
     eyes: ClothingEyesGlassesEthereal
-- type: loadout
-  id: EpiHud
-  equipment:
-    eyes: ClothingEyesHudEpistemics
-- type: loadout
-  id: EpiHudGlasses
-  equipment:
-    eyes: ClothingEyesGlassesEpistemics
 # Belt
 - type: loadout
   id: MantisBelt

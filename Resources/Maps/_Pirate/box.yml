@@ -77414,13 +77414,6 @@ entities:
     - type: Transform
       pos: -12.483962,13.826879
       parent: 2
-- proto: ClothingEyesHudEpistemics
-  entities:
-  - uid: 11158
-    components:
-    - type: Transform
-      pos: 53.52688,-45.145973
-      parent: 2
 - proto: ClothingEyesHudMedical
   entities:
   - uid: 11159
@@ -79464,13 +79457,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 19.5,-65.5
-      parent: 2
-- proto: ComputerPsionicsRecords
-  entities:
-  - uid: 11445
-    components:
-    - type: Transform
-      pos: 51.5,-43.5
       parent: 2
 - proto: ComputerRadar
   entities:

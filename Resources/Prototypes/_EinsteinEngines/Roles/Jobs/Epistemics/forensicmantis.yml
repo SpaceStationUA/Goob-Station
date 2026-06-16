@@ -32,25 +32,13 @@
   - !type:AddComponentSpecial
     components:
       - type: CanEnchant
-      - type: Psionic
-        powerSlots: 2
-        powerRollMultiplier: 3
-        baselinePowerCost: 75
-        nextPowerCost: 75
-        removable: false
-      - type: InnatePsionicPowers
-        powersToAdd:
-          - MetapsionicPower
-          - TelepathyPower
-          - MantisSummonBlackBlade
-          - AssayPower
-      - type: Telepathy
+      - type: MetapsionicPulsePower # DeltaV
 
 - type: startingGear
   id: ForensicMantisGear
   equipment:
     ears: ClothingHeadsetScience
-    id: ForensicMantisPDA
+    id: PsionicMantisPDA
 
 - type: chameleonOutfit
   id: ForensicMantisChameleonOutfit

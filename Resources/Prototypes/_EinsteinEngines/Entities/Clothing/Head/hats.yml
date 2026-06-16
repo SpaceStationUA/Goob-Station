@@ -8,7 +8,7 @@
     sprite: _EinsteinEngines/Clothing/Head/Hats/tinfoil.rsi
   - type: Clothing
     sprite: _EinsteinEngines/Clothing/Head/Hats/tinfoil.rsi
-  - type: TinfoilHat
+  - type: PsionicallyInsulative
   - type: Armor
     coverage:
     - Head
@@ -19,7 +19,7 @@
     graph: TinfoilHat
     node: tinfoilhat
   - type: GuideHelp
-    guides: [ PsionicInsulation ]
+    guides: [ Psionics ]
 
 - type: entity
   parent: ClothingHeadTinfoil
@@ -33,7 +33,7 @@
     sprite: _EinsteinEngines/Clothing/Head/Hats/cage.rsi
     equipDelay: 0.5
     unequipDelay: 6
-  - type: HeadCage
+  - type: PsionicallyInsulative
   - type: Tag
     tags:
     - ForensicBeltEquip
@@ -58,7 +58,7 @@
         Piercing: 0.95
         Radiation: 0.95
   - type: GuideHelp
-    guides: [ PsionicInsulation ]
+    guides: [ Psionics ]
 
 - type: entity
   parent: ClothingHeadBase

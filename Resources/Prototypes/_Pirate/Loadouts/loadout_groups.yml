@@ -799,9 +799,7 @@
   id: MantisEyes
   name: loadout-group-mantis-Eyes
   loadouts:
-  - EpiHudGlasses
   - EtherealGlasses
-  - EpiHud
 
 - type: loadoutGroup
   id: MantisBelt

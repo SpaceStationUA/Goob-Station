@@ -29,7 +29,6 @@ using Content.Goobstation.Common.Identity;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.CriminalRecords.Systems;
-using Content.Server.PsionicsRecords.Systems; // Pirate from EE
 using Content.Server.Humanoid;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
@@ -56,7 +55,6 @@ public sealed partial class IdentitySystem : SharedIdentitySystem // DOWNSTREAM-
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
-    [Dependency] private readonly PsionicsRecordsConsoleSystem _psionicsRecordsConsole = default!; // Pirate from Einstein Engines
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!; // Goobstation - Update component state on component toggle
 
@@ -181,14 +179,13 @@ public sealed partial class IdentitySystem : SharedIdentitySystem // DOWNSTREAM-
     }
 
     /// <summary>
-    ///     When the identity of a person is changed, searches the criminal records and psionics records to see if the name
-    ///     of the new identity has a record. If the new name has a criminal status or psionics status attached to it, the
-    ///     person will get the criminal status and/or psionics status until they change identity again.
+    ///     When the identity of a person is changed, searches the criminal records to see if the name
+    ///     of the new identity has a record. If the new name has a criminal status attached to it, the
+    ///     person will get the criminal status until they change identity again.
     /// </summary>
     private void SetIdentityRecordsIcon(EntityUid uid)
     {
         _criminalRecordsConsole.CheckNewIdentity(uid);
-        _psionicsRecordsConsole.CheckNewIdentity(uid);
     }
 
     private partial void InitializePirateFaceMutilation(); // DOWNSTREAM-TPirates: face mutilation

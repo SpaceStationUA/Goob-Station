@@ -112,14 +112,12 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: ScrambledAccent
-      - !type:GenericStatusEffect
-        key: PsionicallyInsulated
-        component: PsionicInsulation
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectShieldedFromPsionics
         type: Add
         time: 900
-      - !type:GenericStatusEffect
-        key: PsionicsDisabled
-        component: PsionicsDisabled
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectPsionicsDisabled
         type: Add
         time: 900
       - !type:Drunk

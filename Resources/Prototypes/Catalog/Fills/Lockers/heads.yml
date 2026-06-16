@@ -493,9 +493,6 @@
     - id: XenobiologyBountyComputerCircuitboard # Goobstation
     - id: MMI # Goobstation
     - id: PrinterDocFlatpack  # Pirate document printer
-    - id: ClothingEyesGlassesEpistemics
-    - id: ClothingEyesHudEpistemics
-      amount: 3
     - id: PhotoAlbumDepartmentScience
 
 # Hardsuit table, used for suit storage as well

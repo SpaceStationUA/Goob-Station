@@ -90,20 +90,6 @@
   special: # Goobstation start - Librarian should speak most languages.
   - !type:AddImplantSpecial
     implants: [ LibrarianTranslatorImplant ] # Goobstation end
-  # PIRATE vvv
-  - !type:AddComponentSpecial
-    components:
-    - type: Psionic
-      baselinePowerCost: 75
-      nextPowerCost: 75
-      removable: false
-      powerPool: RandomPsionicPowerPool
-    - type: InnatePsionicPowers
-      powersToAdd:
-        - TelepathyPower
-        - AssayPower
-    - type: Telepathy
-  # PIRATE ^^^
 
 - type: startingGear
   id: LibrarianGear

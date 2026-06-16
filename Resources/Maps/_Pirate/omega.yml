@@ -33634,13 +33634,6 @@ entities:
       inSlot: eyes
     - type: Physics
       canCollide: False
-- proto: ClothingEyesGlassesEpistemics
-  entities:
-  - uid: 6341
-    components:
-    - type: Transform
-      pos: 17.496006,-36.63473
-      parent: 2
 - proto: ClothingEyesGlassesSunglasses
   entities:
   - uid: 5028
@@ -34911,13 +34904,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -61.5,-8.5
-      parent: 2
-- proto: ComputerPsionicsRecords
-  entities:
-  - uid: 10265
-    components:
-    - type: Transform
-      pos: 17.5,-36.5
       parent: 2
 - proto: ComputerRadar
   entities:

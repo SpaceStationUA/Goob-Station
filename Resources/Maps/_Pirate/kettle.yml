@@ -69820,13 +69820,6 @@ entities:
     - type: Transform
       pos: -50.499474,-24.3037
       parent: 2
-- proto: ClothingEyesHudEpistemics
-  entities:
-  - uid: 10353
-    components:
-    - type: Transform
-      pos: 27.512644,71.53091
-      parent: 2
 - proto: ClothingHandsGlovesColorPurple
   entities:
   - uid: 10356
@@ -71454,13 +71447,6 @@ entities:
     components:
     - type: Transform
       pos: -25.5,45.5
-      parent: 2
-- proto: ComputerPsionicsRecords
-  entities:
-  - uid: 10580
-    components:
-    - type: Transform
-      pos: 26.5,71.5
       parent: 2
 - proto: ComputerRadar
   entities:

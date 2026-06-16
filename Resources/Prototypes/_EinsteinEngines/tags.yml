@@ -11,7 +11,4 @@
   id: ForensicBeltEquip
 
 - type: Tag
-  id: NormalityCrystal
-
-- type: Tag
   id: FoodBowlBig

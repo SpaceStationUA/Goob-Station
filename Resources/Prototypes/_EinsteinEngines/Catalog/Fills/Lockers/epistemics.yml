@@ -29,6 +29,3 @@
       - id: ClothingHeadCage
         amount: 2
       - id: ClothingEyesGlassesEthereal
-      - id: ClothingEyesGlassesEpistemics
-      - id: ClothingEyesHudEpistemics
-        amount: 3
