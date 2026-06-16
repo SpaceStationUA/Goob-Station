@@ -3,6 +3,7 @@ using Content.Shared._DV.Psionics.Components.PsionicPowers;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared._DV.Psionics.Events.PowerActionEvents;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;

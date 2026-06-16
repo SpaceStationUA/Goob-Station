@@ -2,14 +2,13 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared._DV.Projectiles;
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
+using Content.Shared._DV.Psionics.Events;
 using Content.Shared._DV.Psionics.Events.PowerActionEvents;
 using Content.Shared.Coordinates;
 using Content.Shared.Light.Components;
-using Content.Shared.Light.EntitySystems;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 
@@ -21,11 +20,9 @@ namespace Content.Shared._DV.Psionics.Systems.PsionicPowers;
 public sealed class PsychokineticScreamPowerSystem : BasePsionicPowerSystem<PsychokineticScreamPowerComponent, PsychokineticScreamPowerActionEvent>
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPoweredLightSystem _light = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     protected override void OnPowerUsed(Entity<PsychokineticScreamPowerComponent> psionic, ref PsychokineticScreamPowerActionEvent args)
     {
@@ -72,7 +69,8 @@ public sealed class PsychokineticScreamPowerSystem : BasePsionicPowerSystem<Psyc
             }
 
             // If we reach here, the light is unobstructed and within range, break it.
-            _light.TryDestroyBulb(light, light.Comp, source);
+            var ev = new PsychokineticScreamShatterLightEvent(source);
+            RaiseLocalEvent(light, ref ev);
         }
 
         // Gets all all flare gun pellets in a radius and deletes them.

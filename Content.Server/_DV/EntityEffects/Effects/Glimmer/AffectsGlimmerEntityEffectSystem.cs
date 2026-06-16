@@ -7,11 +7,17 @@ namespace Content.Server._DV.EntityEffects.Effects.Glimmer;
 /// <summary>
 ///     Changes glimmer when reaction happens.
 /// </summary>
-/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
-public sealed partial class AffectsGlimmerEntityEffectSystem : EntityEffectSystem<MetaDataComponent, AffectsGlimmer>
+public sealed partial class AffectsGlimmerEntityEffectSystem : EntitySystem
 {
     [Dependency] private readonly GlimmerSystem _glimmer = default!;
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<AffectsGlimmer> args)
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<AffectsGlimmer>>(OnExecute);
+    }
+
+    private void OnExecute(ref ExecuteEntityEffectEvent<AffectsGlimmer> args)
     {
         _glimmer.Glimmer += args.Effect.Amount;
     }

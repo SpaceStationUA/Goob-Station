@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._DV.EntityEffects.Effects.Glimmer;
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AffectsGlimmer : EntityEffectBase<AffectsGlimmer>
+public sealed partial class AffectsGlimmer : EventEntityEffect<AffectsGlimmer>
 {
     /// <summary>
     ///     Amount that is added or subtracted from glimmer.
@@ -12,7 +12,7 @@ public sealed partial class AffectsGlimmer : EntityEffectBase<AffectsGlimmer>
     [DataField]
     public int Amount = 1;
 
-    public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-change-glimmer-reaction-effect", ("chance", Probability),
             ("amount", Amount));
 }

@@ -8,12 +8,21 @@ namespace Content.Server._DV.EntityEffects.Effects.Psionics;
 /// <summary>
 /// Rolls for a new psionic power.
 /// </summary>
-/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
-public sealed partial class RollPsionicAbilityEntityEffectSystem : EntityEffectSystem<PotentialPsionicComponent, RollPsionicAbility>
+public sealed partial class RollPsionicAbilityEntityEffectSystem : EntitySystem
 {
     [Dependency] private readonly PsionicSystem _psionic = default!;
-    protected override void Effect(Entity<PotentialPsionicComponent> psionic, ref EntityEffectEvent<RollPsionicAbility> args)
+
+    public override void Initialize()
     {
-        _psionic.TryRollPsionic(psionic, args.Effect.BonusMultiplier);
+        base.Initialize();
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<RollPsionicAbility>>(OnExecute);
+    }
+
+    private void OnExecute(ref ExecuteEntityEffectEvent<RollPsionicAbility> args)
+    {
+        if (!TryComp<PotentialPsionicComponent>(args.Args.TargetEntity, out var potential))
+            return;
+
+        _psionic.TryRollPsionic((args.Args.TargetEntity, potential), args.Effect.BonusMultiplier);
     }
 }

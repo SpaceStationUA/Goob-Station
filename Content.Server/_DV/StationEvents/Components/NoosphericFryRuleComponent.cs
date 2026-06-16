@@ -1,6 +1,6 @@
 using Content.Server._DV.StationEvents.GameRules;
+using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 
 namespace Content.Server._DV.StationEvents.Components;
 
