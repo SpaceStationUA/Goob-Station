@@ -27,4 +27,10 @@ public sealed partial class PirateVars
     /// </summary>
     public static readonly CVarDef<bool> SkipDisabledTraitsPopup =
         CVarDef.Create("traits.pirate.skip_disabled_traits_popup", false, CVar.CLIENT | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Allow ethereal shadowkin entities to pass through walls and objects while ethereal.
+    /// </summary>
+    public static readonly CVarDef<bool> EtherealPassThrough =
+        CVarDef.Create("ic.EtherealPassThrough", false, CVar.SERVER);
 }

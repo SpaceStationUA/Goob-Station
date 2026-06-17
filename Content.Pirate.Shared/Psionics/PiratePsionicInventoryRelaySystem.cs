@@ -38,8 +38,8 @@ public sealed class PiratePsionicInventoryRelaySystem : EntitySystem
         _inventory.RelayEvent(inventory, ref args);
     }
 
-    private void OnDispelled(Entity<InventoryComponent> inventory, DispelledEvent args)
+    private void OnDispelled(Entity<InventoryComponent> inventory, ref DispelledEvent args)
     {
-        _inventory.RelayEvent(inventory, args);
+        _inventory.RelayEvent(inventory, ref args);
     }
 }

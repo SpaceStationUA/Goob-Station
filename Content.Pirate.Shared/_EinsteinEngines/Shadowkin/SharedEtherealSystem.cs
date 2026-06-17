@@ -8,9 +8,9 @@ using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared._Pirate.CCVars;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared.Mobs;
-using Content.Pirate.Common.CCVar;
 using Robust.Shared.Configuration;
 using Content.Shared.Tag;
 
@@ -50,7 +50,7 @@ public abstract class SharedEtherealSystem : EntitySystem
         component.OldMobMask = fixture.Value.CollisionMask;
         component.OldMobLayer = fixture.Value.CollisionLayer;
 
-        if (_cfg.GetCVar(CCVars.EtherealPassThrough))
+        if (_cfg.GetCVar(PirateVars.EtherealPassThrough))
         {
             _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int) CollisionGroup.GhostImpassable, fixtures);
             _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, 0, fixtures);
@@ -75,7 +75,7 @@ public abstract class SharedEtherealSystem : EntitySystem
         _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, component.OldMobMask, fixtures);
         _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, component.OldMobLayer, fixtures);
 
-        if (_cfg.GetCVar(CCVars.EtherealPassThrough))
+        if (_cfg.GetCVar(PirateVars.EtherealPassThrough))
             if (component.HasDoorBumpTag)
                 _tag.AddTag(uid, "DoorBumpOpener");
     }
