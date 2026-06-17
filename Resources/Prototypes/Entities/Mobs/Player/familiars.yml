@@ -71,7 +71,7 @@
 
 - type: entity
   name: Remilia
-  parent: BaseMobPsionicFamiliar # Pirate psionics
+  parent: MobBat
   id: MobBatRemilia
   description: The chaplain's familiar. Likes fruit.
   components:
