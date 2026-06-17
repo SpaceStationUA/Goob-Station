@@ -208,5 +208,7 @@
   components:
   - type: HumanoidAppearance
     species: IPC
+  # Pirate: keep character setup IPC dummy aligned with real IPC psionic insulation.
+  - type: PsionicallyInsulative
   - type: Inventory
     templateId: ipc

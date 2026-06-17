@@ -1,15 +1,15 @@
 using Content.Shared._DV.Psionics.Components;
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
 using Content.Shared._DV.Psionics.Events.PowerActionEvents;
-using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
+using Content.Pirate.Shared.Psionics;
 using Content.Shared.StatusEffectNew.Components;
 
 namespace Content.Shared._DV.Psionics.Systems.PsionicPowers;
 
 public abstract class SharedMassSleepPowerSystem : BasePsionicPowerSystem<MassSleepPowerComponent, MassSleepPowerActionEvent>
 {
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private readonly PiratePsionicBloodstreamSystem _bloodstreamSystem = default!;
 
     public override void Update(float frameTime)
     {

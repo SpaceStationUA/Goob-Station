@@ -1,10 +1,10 @@
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
 using Content.Shared._DV.Psionics.Events.PowerActionEvents;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Pirate.Shared.Psionics;
 using Content.Shared.Popups;
 using Content.Shared.Psionics.Events;
 using Robust.Shared.Audio;
@@ -15,7 +15,7 @@ namespace Content.Shared._DV.Psionics.Systems.PsionicPowers;
 public sealed class PsionicRegenerationPowerSystem : BasePsionicPowerSystem<PsionicRegenerationPowerComponent, PsionicRegenerationPowerActionEvent>
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private readonly PiratePsionicBloodstreamSystem _bloodstreamSystem = default!;
 
     public override void Initialize()
     {
