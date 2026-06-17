@@ -39,12 +39,12 @@
             Bloodloss: -3
       - !type:CureZombieInfection
         conditions:
-        - !type:ReagentCondition
+        - !type:ReagentThreshold
           reagent: Prometheum
           min: 20
       - !type:EyeDamage
         conditions:
-        - !type:ReagentCondition
+        - !type:ReagentThreshold
           reagent: Prometheum
           min: 10
 
@@ -69,7 +69,7 @@
             Toxin: 2
       - !type:RemovePsionicAbilities
         conditions:
-        - !type:ReagentCondition
+        - !type:ReagentThreshold
           reagent: SoulbreakerToxin
           min: 5
 
