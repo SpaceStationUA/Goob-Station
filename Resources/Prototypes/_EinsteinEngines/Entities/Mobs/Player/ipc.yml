@@ -172,6 +172,8 @@
   #     layoutId: IPC
   - type: EmitBuzzWhileDamaged
   - type: CanHostGuardian
+  # Pirate: IPCs are psionically insulated and cannot receive psionic powers.
+  - type: PsionicallyInsulative
   - type: Repairable #Goob edit
     fuelCost: 5
     doAfterDelay: 3

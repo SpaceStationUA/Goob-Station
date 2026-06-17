@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared._DV.Psionics.Components;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared._DV.Psionics.Systems.PsionicPowers;
@@ -115,7 +114,7 @@ public abstract partial class SharedPsionicSystem
 
     private void OnAntiPsionicStamHit(Entity<AntiPsionicWeaponComponent> weapon, ref StaminaMeleeHitEvent args)
     {
-        if (args.HitList.Any(targetStamina => HasComp<PsionicComponent>(targetStamina.Entity)))
+        if (HasComp<PsionicComponent>(args.Target))
         {
             args.Multiplier *= weapon.Comp.StaminaDamageMultiplier;
         }

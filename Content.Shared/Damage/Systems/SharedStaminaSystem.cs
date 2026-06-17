@@ -260,7 +260,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         foreach (var (ent, comp) in toHit)
         {
             // Pirate: Starlight terror spiders use this to modify incoming melee stamina damage while web-stealthed.
-            var staminaMeleeHitEvent = new StaminaMeleeHitEvent(args.User, args.Weapon, args.Direction);
+            var staminaMeleeHitEvent = new StaminaMeleeHitEvent(args.User, args.Weapon, ent, args.Direction);
             RaiseLocalEvent(ent, staminaMeleeHitEvent);
 
             var hitEvent = new BeforeStaminaDamageEvent(1f);

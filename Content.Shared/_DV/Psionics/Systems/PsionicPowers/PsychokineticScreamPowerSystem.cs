@@ -1,16 +1,10 @@
-using System.Linq;
-using System.Numerics;
 using Content.Shared._DV.Projectiles;
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared._DV.Psionics.Events.PowerActionEvents;
 using Content.Shared.Coordinates;
-using Content.Shared.Light.Components;
-using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared._DV.Psionics.Systems.PsionicPowers;
 
@@ -21,8 +15,6 @@ public sealed class PsychokineticScreamPowerSystem : BasePsionicPowerSystem<Psyc
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     protected override void OnPowerUsed(Entity<PsychokineticScreamPowerComponent> psionic, ref PsychokineticScreamPowerActionEvent args)
     {
@@ -46,32 +38,8 @@ public sealed class PsychokineticScreamPowerSystem : BasePsionicPowerSystem<Psyc
     [PublicAPI]
     public void ShatterLightsAround(EntityUid source, float range, bool lineOfSight, float penetratingRadius = 0f)
     {
-        var pos = _transform.GetWorldPosition(source);
-
-        // Get all light entities within the specified radius
-        HashSet<Entity<PoweredLightComponent>> lightsInRange = [];
-        _lookup.GetEntitiesInRange(Transform(source).Coordinates, range, lightsInRange);
-
-        foreach (var light in lightsInRange)
-        {
-            if (lineOfSight) // If LoS is required, test it.
-            {
-                var lightPos = _transform.GetWorldPosition(light);
-                var sqrDistance = Vector2.DistanceSquared(pos, lightPos);
-                if (sqrDistance > penetratingRadius * penetratingRadius)
-                {
-                    // If the light is outside the penetrating radius, do a LoS check.
-                    var ray = new CollisionRay(pos, (lightPos - pos).Normalized(), (int)CollisionGroup.Opaque);
-                    var hit = _physics.IntersectRay(_transform.GetMapId(source), ray, MathF.Sqrt(sqrDistance) - 0.5f, returnOnFirstHit: true);
-                    if (hit.Any() && hit.First().Distance != 0)
-                        continue;
-                }
-            }
-
-            // If we reach here, the light is unobstructed and within range, break it.
-            var ev = new PsychokineticScreamShatterLightEvent(source);
-            RaiseLocalEvent(light, ref ev);
-        }
+        var ev = new PsychokineticScreamShatterLightEvent(source, range, lineOfSight, penetratingRadius);
+        RaiseLocalEvent(ref ev);
 
         // Gets all all flare gun pellets in a radius and deletes them.
         HashSet<Entity<FlareGunPelletComponent>> flaresInRange = [];

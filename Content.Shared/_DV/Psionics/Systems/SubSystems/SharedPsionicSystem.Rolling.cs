@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared._DV.Psionics.Components;
+using Content.Shared._DV.Psionics.Events;
 using Content.Shared.EntityTable;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
@@ -30,8 +31,20 @@ public abstract partial class SharedPsionicSystem
         return true;
     }
 
+    public bool CanRollPsionic(EntityUid uid)
+    {
+        // Pirate: lets downstream insulation rules block psionic awakening without forking DV roll callers.
+        var ev = new PsionicRollAttemptEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        return ev.CanRoll;
+    }
+
     protected bool RollChance(Entity<PotentialPsionicComponent> potPsionic, float multiplier = 1.0f)
     {
+        if (!CanRollPsionic(potPsionic))
+            return false;
+
         var chance = potPsionic.Comp.BaseChance;
         // Jobs like Command and Chaplains get a bonus on their roll.
         chance += potPsionic.Comp.JobBonusChance;
@@ -47,6 +60,9 @@ public abstract partial class SharedPsionicSystem
 
     public void AddRandomPsionicPower(Entity<PotentialPsionicComponent> psionic, bool midRound)
     {
+        if (!CanRollPsionic(psionic))
+            return;
+
         if (!_prototypeManager.Resolve(psionic.Comp.PsionicPowerTableId, out var powerTable))
             return;
 

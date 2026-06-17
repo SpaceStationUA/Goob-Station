@@ -440,6 +440,22 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
     }
 
     /// <summary>
+    /// Attempt to transfer a provided solution to the bloodstream solution.
+    /// </summary>
+    // Pirate: Delta-V psionics compatibility helper for blood-regeneration effects.
+    public bool TryAddToBloodstream(Entity<BloodstreamComponent?> ent, Solution solution)
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false)
+            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
+            return false;
+
+        if (SolutionContainer.TryAddSolution(ent.Comp.BloodSolution.Value, solution))
+            return true;
+
+        return false;
+    }
+
+    /// <summary>
     /// Removes a certain amount of all reagents except of a single excluded one from the bloodstream.
     /// </summary>
     public bool FlushChemicals(Entity<BloodstreamComponent?> ent, ProtoId<ReagentPrototype>? excludedReagentID, FixedPoint2 quantity)

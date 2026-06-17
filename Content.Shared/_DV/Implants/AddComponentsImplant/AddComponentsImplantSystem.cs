@@ -1,5 +1,6 @@
 using Content.Shared.Implants;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._DV.Implants.AddComponentsImplant;
 
@@ -14,7 +15,11 @@ public sealed class AddComponentsImplantSystem : EntitySystem
 
     private void OnImplantImplantedEvent(Entity<AddComponentsImplantComponent> ent, ref ImplantImplantedEvent args)
     {
-        var target = args.Implanted;
+        if (args.Implanted is not { } target)
+            return;
+
+        // Pirate: local EntityManager adds registry entries in bulk, not raw component instances.
+        var added = new ComponentRegistry();
 
         foreach (var component in ent.Comp.ComponentsToAdd)
         {
@@ -22,7 +27,13 @@ public sealed class AddComponentsImplantSystem : EntitySystem
             if (EntityManager.HasComponent(target, component.Value.Component.GetType()))
                 continue;
 
-            EntityManager.AddComponent(target, component.Value);
+            added.Add(component.Key, component.Value);
+        }
+
+        EntityManager.AddComponents(target, added);
+
+        foreach (var component in added)
+        {
             ent.Comp.AddedComponents.Add(component.Key, component.Value);
         }
     }
