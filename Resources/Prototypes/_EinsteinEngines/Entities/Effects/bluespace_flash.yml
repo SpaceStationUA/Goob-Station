@@ -17,9 +17,9 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      sprite: _EinsteinEngines/Interface/Actions/psionics.rsi
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
       visible: false
-      state: pyrokinetic_flare
+      state: pyrokinesis
     - type: TriggerOnSpawn
     - type: PointLight
       radius: 5
