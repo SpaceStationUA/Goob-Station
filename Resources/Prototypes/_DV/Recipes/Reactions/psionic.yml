@@ -30,7 +30,8 @@
       amount: 5
       catalyst: true
   effects:
-    - !type:SpawnEntity
+    # Pirate: local equivalent of Delta-V SpawnEntity reaction effect.
+    - !type:CreateEntityReactionEffect
       entity: CrystalNormality
     - !type:AffectsGlimmer
       amount: -10
@@ -56,7 +57,7 @@
     Insuzine:
       amount: 25
   effects:
-  - !type:SpawnEntity
+  - !type:CreateEntityReactionEffect
     entity: PsionCrystalZap
   - !type:AffectsGlimmer
     amount: -3
@@ -72,7 +73,7 @@
     Oculine:
       amount: 25
   effects:
-  - !type:SpawnEntity
+  - !type:CreateEntityReactionEffect
     entity: PsionCrystalTeleg
   - !type:AffectsGlimmer
     amount: -3
@@ -88,7 +89,7 @@
     Agonolexyne:
       amount: 25
   effects:
-  - !type:SpawnEntity
+  - !type:CreateEntityReactionEffect
     entity: PsionCrystalPrecog
   - !type:AffectsGlimmer
     amount: -3
@@ -104,7 +105,7 @@
     Blissifylovene:
       amount: 25
   effects:
-  - !type:SpawnEntity
+  - !type:CreateEntityReactionEffect
     entity: PsionCrystalScream
   - !type:AffectsGlimmer
     amount: -3
@@ -120,7 +121,7 @@
     Charcoal:
       amount: 25
   effects:
-  - !type:SpawnEntity
+  - !type:CreateEntityReactionEffect
     entity: PsionCrystalDispel
   - !type:AffectsGlimmer
     amount: -3
@@ -136,7 +137,7 @@
     Mercury:
       amount: 25
   effects:
-  - !type:SpawnEntity
+  - !type:CreateEntityReactionEffect
     entity: PsionCrystalPulse
   - !type:AffectsGlimmer
     amount: -3
@@ -152,7 +153,7 @@
     Arcryox:
       amount: 25
   effects:
-  - !type:SpawnEntity
+  - !type:CreateEntityReactionEffect
     entity: PsionCrystalRegen
   - !type:AffectsGlimmer
     amount: -3
@@ -168,7 +169,7 @@
     Phlogiston:
       amount: 25
   effects:
-  - !type:SpawnEntity
+  - !type:CreateEntityReactionEffect
     entity: PsionCrystalPyro
   - !type:AffectsGlimmer
     amount: -3
