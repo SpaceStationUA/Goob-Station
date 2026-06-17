@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.Configuration;
-using Content.Shared._DV.CCVars;
+using Content.Shared._Pirate.CCVars;
 using Content.Shared.GameTicking;
 
 namespace Content.Shared.Psionics.Glimmer
@@ -30,8 +30,8 @@ namespace Content.Shared.Psionics.Glimmer
         {
             base.Initialize();
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            _enabled = _cfg.GetCVar(DCCVars.GlimmerEnabled);
-            _cfg.OnValueChanged(DCCVars.GlimmerEnabled, value => _enabled = value, true);
+            _enabled = _cfg.GetCVar(PirateVars.GlimmerEnabled);
+            _cfg.OnValueChanged(PirateVars.GlimmerEnabled, value => _enabled = value, true);
         }
 
         private void Reset(RoundRestartCleanupEvent args)
