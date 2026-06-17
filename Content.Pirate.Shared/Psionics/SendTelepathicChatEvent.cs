@@ -11,3 +11,8 @@ public sealed class SendTelepathicChatEvent(EntityUid source, string message, st
     public string SenderName { get; } = senderName;
     public bool HideChat { get; } = hideChat;
 }
+
+public struct GetTelepathicChatPermissionsEvent
+{
+    public bool CanUse;
+}

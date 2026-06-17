@@ -29,7 +29,6 @@ guide-entry-justice = Justice
 guide-entry-whitelist = Whitelist
 
 guide-entry-glimmer-creatures = Glimmer Creatures
-guide-entry-altars = Altars
 guide-entry-psionics = Psionics
 guide-entry-mantis = Psionic Mantis
 

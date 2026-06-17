@@ -1,4 +1,5 @@
 using Content.Client.Chat.Managers;
+using Content.Pirate.Shared.Psionics;
 using Content.Shared._DV.Psionics.Components;
 using Robust.Client.Player;
 
@@ -14,6 +15,7 @@ namespace Content.Client.Nyanotrasen.Chat
             base.Initialize();
             SubscribeLocalEvent<PsionicComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<PsionicComponent, ComponentRemove>(OnRemove);
+            SubscribeLocalEvent<PsionicComponent, GetTelepathicChatPermissionsEvent>(OnGetTelepathicChatPermissions);
         }
 
         public PsionicComponent? Player => CompOrNull<PsionicComponent>(_playerManager.LocalPlayer?.ControlledEntity);
@@ -27,6 +29,11 @@ namespace Content.Client.Nyanotrasen.Chat
         private void OnRemove(EntityUid uid, PsionicComponent component, ComponentRemove args)
         {
             _chatManager.UpdatePermissions();
+        }
+
+        private void OnGetTelepathicChatPermissions(Entity<PsionicComponent> ent, ref GetTelepathicChatPermissionsEvent args)
+        {
+            args.CanUse = true;
         }
     }
 }
