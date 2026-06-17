@@ -23,7 +23,7 @@
         factor: -3
       - !type:SatiateHunger
         factor: -3
-      - !type:ModifyBleed
+      - !type:ModifyBleedAmount
         amount: -1
       - !type:ModifyBloodLevel
         amount: 2
@@ -42,7 +42,7 @@
         - !type:ReagentThreshold
           reagent: Prometheum
           min: 20
-      - !type:EyeDamage
+      - !type:ChemHealEyeDamage
         conditions:
         - !type:ReagentThreshold
           reagent: Prometheum
