@@ -12,7 +12,6 @@
     - id: GlimmerRevenantSpawn
     - id: GlimmerMiteSpawn
     - id: GlimmerRandomSentience
-    - id: GlimmerRandomAnimation
     #- id: LockProbers
     - id: PsionicNosebleedEvent
     - id: MinorMassMindSwap # Delta V
@@ -164,14 +163,6 @@
     glimmerBurnLower: 20
     glimmerBurnUpper: 60
   - type: RandomSentienceRule
-
-- type: entity
-  parent: BaseGlimmerSignaturesEvent
-  id: GlimmerRandomAnimation
-  components:
-  - type: GlimmerEvent
-    minimumGlimmer: 500
-  - type: RandomAnimationRule
 
 #- type: entity
 #  parent: BaseGlimmerEvent

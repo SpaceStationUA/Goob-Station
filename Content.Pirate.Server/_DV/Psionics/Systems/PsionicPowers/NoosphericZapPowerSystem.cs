@@ -1,13 +1,14 @@
 using Content.Server.Electrocution;
 using Content.Server.Lightning;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.PowerCell;
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared._DV.Psionics.Events.PowerActionEvents;
 using Content.Shared._DV.Psionics.Systems.PsionicPowers;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
-using Content.Shared.Power.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 
@@ -52,23 +53,23 @@ public sealed class NoosphericZapPowerSystem : SharedNoosphericZapPowerSystem
 
     private void OnBatterySlotZapped(Entity<PowerCellSlotComponent> batterySlot, ref NoosphericallyZappedEvent args)
     {
-        if (!_powerCell.TryGetBatteryFromEntityOrSlot(batterySlot.Owner, out var battery))
+        if (!_powerCell.TryGetBatteryFromSlot(batterySlot.Owner, out var batteryUid, out var battery, batterySlot.Comp))
             return;
 
-        ChargeBattery(battery.Value.AsNullable(), args.RechargeAmount, batterySlot);
+        ChargeBattery(batteryUid.Value, battery, args.RechargeAmount, batterySlot);
         args.CanZap = true;
     }
 
     private void OnBatteryZapped(Entity<BatteryComponent> battery, ref NoosphericallyZappedEvent args)
     {
-        ChargeBattery(battery.AsNullable(), args.RechargeAmount, battery);
+        ChargeBattery(battery.Owner, battery.Comp, args.RechargeAmount, battery);
         args.CanZap = true;
     }
 
-    private void ChargeBattery(Entity<BatteryComponent?> battery, float amount, EntityUid container)
+    private void ChargeBattery(EntityUid battery, BatteryComponent batteryComp, float amount, EntityUid container)
     {
         var message = Loc.GetString("psionic-power-noospheric-zap-battery", ("battery", Identity.Entity(container, EntityManager)));
         Popup.PopupEntity(message, battery, PopupType.Medium);
-        _battery.ChangeCharge(battery, amount);
+        _battery.ChangeCharge(battery, amount, batteryComp);
     }
 }

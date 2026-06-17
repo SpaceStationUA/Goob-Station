@@ -1,4 +1,4 @@
-using Content.Client._DV.Abilities.Psionics;
+using Content.Pirate.Client._DV.Abilities.Psionics;
 using Content.Client.Eui;
 using JetBrains.Annotations;
 

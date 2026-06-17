@@ -1,5 +1,5 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Damage.Systems;
+using Content.Shared.Damage;
 using Content.Shared._DV.Carrying;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -35,7 +35,7 @@ public sealed class LifeDrainerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LifeDrainerComponent, GetVerbsEvent<InnateVerb>>(OnGetVerbs);
-        SubscribeLocalEvent<LifeDrainerComponent, LifeDrainDoAfterEvent>(OnDrain);
+        SubscribeLocalEvent<LifeDrainerComponent, GlimmerWispDrainDoAfterEvent>(OnDrain);
     }
 
     private void OnGetVerbs(Entity<LifeDrainerComponent> ent, ref GetVerbsEvent<InnateVerb> args)
@@ -57,7 +57,7 @@ public sealed class LifeDrainerSystem : EntitySystem
         });
     }
 
-    private void OnDrain(Entity<LifeDrainerComponent> ent, ref LifeDrainDoAfterEvent args)
+    private void OnDrain(Entity<LifeDrainerComponent> ent, ref GlimmerWispDrainDoAfterEvent args)
     {
         var (uid, comp) = ent;
         CancelDrain(comp);
@@ -120,7 +120,7 @@ public sealed class LifeDrainerSystem : EntitySystem
         if (_audio.PlayPvs(comp.DrainSound, target) is {} stream)
             comp.DrainStream = stream.Item1;
 
-        var ev = new LifeDrainDoAfterEvent();
+        var ev = new GlimmerWispDrainDoAfterEvent();
         var args = new DoAfterArgs(EntityManager, uid, comp.Delay, ev, target: target, eventTarget: uid)
         {
             BreakOnMove = true,
