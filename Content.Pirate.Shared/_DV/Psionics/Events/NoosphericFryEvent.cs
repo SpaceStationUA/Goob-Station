@@ -9,10 +9,11 @@ namespace Content.Shared._DV.Psionics.Events;
 /// <param name="damage">The damage dealt to every entity wearing insulative gear.</param>
 /// <param name="fireStacks">The firestacks added to each </param>
 [ByRefEvent]
-public readonly struct NoosphericFryEvent(DamageSpecifier damage, int fireStacks) : IInventoryRelayEvent
+public struct NoosphericFryEvent(DamageSpecifier damage, int fireStacks) : IInventoryRelayEvent
 {
     public readonly DamageSpecifier Damage = damage;
     public readonly int FireStacks = fireStacks;
+    public EntityUid Target = EntityUid.Invalid;
 
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
 };

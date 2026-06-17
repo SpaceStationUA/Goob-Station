@@ -27,7 +27,8 @@ public sealed class GlimmerMobRule : StationEventSystem<GlimmerMobRuleComponent>
 
         var glimmerSources = GetCoords<GlimmerSourceComponent>(station.Value);
         var normalSpawns = GetCoords<VentCritterSpawnLocationComponent>(station.Value);
-        var hiddenSpawns = GetCoords<MidRoundAntagSpawnLocationComponent>(station.Value);
+        // Pirate: this fork has no MidRoundAntagSpawnLocationComponent marker.
+        var hiddenSpawns = new List<EntityCoordinates>();
 
         var psionics = EntityQuery<PsionicComponent, NpcFactionMemberComponent>().Count();
         var baseCount = Math.Max(1, psionics / comp.MobsPerPsionic);

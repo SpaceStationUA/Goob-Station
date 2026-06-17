@@ -1,3 +1,4 @@
+using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.EUI;
 using Content.Server.Explosion.EntitySystems;
@@ -9,8 +10,6 @@ using Content.Shared._DV.Psionics.Events.PowerDoAfterEvents;
 using Content.Shared._DV.Psionics.Systems.PsionicPowers;
 using Content.Shared.Body.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.Gibbing;
-using Content.Shared.Gibbing.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Psionics.Glimmer;
 using Robust.Server.Audio;
@@ -29,7 +28,7 @@ public sealed class PsionicEruptionSystem : BasePsionicPowerSystem<PsionicErupti
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly EuiManager _eui = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
+    [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly GlimmerSystem _glimmer = default!;
     [Dependency] private readonly JitteringSystem _jittering = default!;
     [Dependency] private readonly LightningSystem _lightning = default!;
@@ -178,7 +177,7 @@ public sealed class PsionicEruptionSystem : BasePsionicPowerSystem<PsionicErupti
             return;
 
         var pos = _transform.GetMapCoordinates(args.User);
-        _gibbing.Gib(args.User, user: args.User);
+        _body.GibBody(args.User, body: body);
 
         int boom = _glimmer.GetGlimmerTier(_glimmer.Glimmer) switch
         {

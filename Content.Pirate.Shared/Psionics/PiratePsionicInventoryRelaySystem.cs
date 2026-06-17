@@ -35,6 +35,7 @@ public sealed class PiratePsionicInventoryRelaySystem : EntitySystem
 
     private void OnNoosphericFry(Entity<InventoryComponent> inventory, ref NoosphericFryEvent args)
     {
+        args.Target = inventory.Owner;
         _inventory.RelayEvent(inventory, ref args);
     }
 

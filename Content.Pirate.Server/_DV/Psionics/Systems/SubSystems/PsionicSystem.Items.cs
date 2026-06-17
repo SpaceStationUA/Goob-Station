@@ -33,12 +33,16 @@ public sealed partial class PsionicSystem
             Audio.PlayEntity(gear.Comp.FrySound, gear, gear);
         }
 
-        _damageable.TryChangeDamage(args.Owner, args.Args.Damage);
-
-        if (!TryComp<FlammableComponent>(args.Owner, out var flammable))
+        var target = args.Args.Target;
+        if (target == EntityUid.Invalid)
             return;
 
-        _flammable.AdjustFireStacks(args.Owner, args.Args.FireStacks, flammable);
-        _flammable.Ignite(args.Owner, gear, flammable);
+        _damageable.TryChangeDamage(target, args.Args.Damage);
+
+        if (!TryComp<FlammableComponent>(target, out var flammable))
+            return;
+
+        _flammable.AdjustFireStacks(target, args.Args.FireStacks, flammable);
+        _flammable.Ignite(target, gear, flammable);
     }
 }

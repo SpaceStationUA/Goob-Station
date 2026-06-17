@@ -1,5 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Radio.Components;
 using Content.Shared.Chat;
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
 using Content.Shared._DV.StationEvents.Events;
@@ -35,7 +36,7 @@ public sealed partial class SophicScribeSystem : EntitySystem
             if (curTime < scribeComponent.NextAnnounceTime)
                 continue;
 
-            if (!TryComp<IntrinsicRadioTransmitterComponent>(scribe, out var radio))
+            if (!HasComp<IntrinsicRadioTransmitterComponent>(scribe))
                 continue;
 
             var message = Loc.GetString("glimmer-report", ("level", _glimmerSystem.Glimmer));
@@ -70,7 +71,8 @@ public sealed partial class SophicScribeSystem : EntitySystem
         var query = EntityQueryEnumerator<SophicScribeComponent>();
         while (query.MoveNext(out var scribe, out _))
         {
-            if (!TryComp<IntrinsicRadioTransmitterComponent>(scribe, out var radio)) return;
+            if (!HasComp<IntrinsicRadioTransmitterComponent>(scribe))
+                return;
 
             // mind entities when...
             var speaker = scribe;
