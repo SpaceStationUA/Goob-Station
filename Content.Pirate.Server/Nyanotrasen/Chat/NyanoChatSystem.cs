@@ -15,6 +15,7 @@ using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
 using Content.Server._DV.Psionics.Systems;
+using Content.Pirate.Shared.Psionics;
 using Content.Shared._DV.Chat.Components;
 using Content.Shared._DV.Psionics.Components;
 
@@ -33,6 +34,18 @@ public sealed class NyanoChatSystem : EntitySystem
     [Dependency] private readonly GlimmerSystem _glimmerSystem = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly PsionicSystem _psionicSystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<SendTelepathicChatEvent>(OnSendTelepathicChat);
+    }
+
+    private void OnSendTelepathicChat(SendTelepathicChatEvent args)
+    {
+        SendTelepathicChat(args.Source, args.Message, args.HideChat);
+    }
 
     private IEnumerable<INetChannel> GetPsionicChatClients()
     {
