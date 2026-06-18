@@ -2,7 +2,7 @@
   id: PsionicCountermeasures
   name: research-technology-psionic-countermeasures
   icon:
-    sprite: _EinsteinEngines/Clothing/Head/Helmets/insulative_skullcap.rsi # DeltaV - Change the icon to the insulative skullcap
+    sprite: Nyanotrasen/Clothing/Head/Helmets/insulative_skullcap.rsi # DeltaV - Change the icon to the insulative skullcap
     state: icon
   discipline: Experimental
   tier: 2
@@ -10,8 +10,6 @@
   recipeUnlocks:
   - ClothingHeadHelmetInsulated
   - ClothingHeadCage
-  - MagazineBoxPistolCryptobiolin
-  - MagazinePistolCryptobiolin
   position: -2,-3
   technologyPrerequisites:
   - BasicRobotics

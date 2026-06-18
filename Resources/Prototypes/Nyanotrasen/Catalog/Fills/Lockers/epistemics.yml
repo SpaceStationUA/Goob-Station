@@ -9,11 +9,10 @@
       # - id: FlashlightSeclite # Deltav - Detective is in charge of investigating crimes.
       # - id: ForensicScanner
       # - id: BoxForensicPad
-      - id: AntiMindControlDevice
       - id: AntiPsychicKnife
       - id: FlashlightLantern # DeltaV - To replace their lost flashlight
       - id: BoxZiptie # DeltaV - Give the mantis some zipties
-      - id: WeaponPistolPsiBreaker # DeltaV - Mantis mindbreaker pistol, see Resources/Prototypes/DeltaV/Entities?Objects/Weapons/Guns/Pistols/pistols.yml
+      - id: WeaponPistolPsiBreaker # DeltaV - Mantis mindbreaker pistol.
       # Spare change of clothes
       # - id: ClothingUniformJumpsuitMantis
       # - id: ClothingUniformSkirtMantis
@@ -24,8 +23,9 @@
       # - id: ClothingOuterCoatMantis
       - id: ClothingOuterWinterCoatMantis
       # - id: ClothingEyesGlassesSunglasses
+      - id: PillMindbreakerToxin # DeltaV - non-loadout mindbreaker available
+        amount: 2
       # Insulative headgear
       - id: ClothingHeadTinfoil
       - id: ClothingHeadCage
         amount: 2
-      - id: ClothingEyesGlassesEthereal

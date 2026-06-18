@@ -5,13 +5,12 @@
   description: Protects you from all manner of psionic assaults.
   components:
   - type: Sprite
-    sprite: _EinsteinEngines/Clothing/Head/Hats/tinfoil.rsi
+    sprite: Nyanotrasen/Clothing/Head/Hats/tinfoil.rsi
   - type: Clothing
-    sprite: _EinsteinEngines/Clothing/Head/Hats/tinfoil.rsi
+    sprite: Nyanotrasen/Clothing/Head/Hats/tinfoil.rsi
   - type: PsionicallyInsulative
+    canBeFried: true
   - type: Armor
-    coverage:
-    - Head
     modifiers:
       coefficients:
         Radiation: 0.95
@@ -22,35 +21,41 @@
     guides: [ Psionics ]
 
 - type: entity
-  parent: ClothingHeadTinfoil
+  parent: ClothingHeadBase
   id: ClothingHeadCage
   name: insulative headcage
+  suffix: SelfUnremovable
   description: Psionically insulates whoevers head is inside it. It takes time to resist out of.
   components:
   - type: Sprite
-    sprite: _EinsteinEngines/Clothing/Head/Hats/cage.rsi
+    sprite: Nyanotrasen/Clothing/Head/Hats/cage.rsi
   - type: Clothing
-    sprite: _EinsteinEngines/Clothing/Head/Hats/cage.rsi
-    equipDelay: 0.5
-    unequipDelay: 6
+    stripDelay: 10
+    equipDelay: 5
+    sprite: Nyanotrasen/Clothing/Head/Hats/cage.rsi
+  - type: SelfUnremovableClothing
   - type: PsionicallyInsulative
+    shieldsFromPsionics: false
+    canBeFried: true
+  - type: GuideHelp
+    guides:
+    - Psionics
   - type: Tag
     tags:
     - ForensicBeltEquip
 
 - type: entity
-  parent: ClothingHeadTinfoil
+  parent: ClothingHeadBase
   id: ClothingHeadHelmetInsulated
   name: insulative skullcap
   description: Psionically insulates whoevers head is inside it. It has some protection from physical damage.
   components:
   - type: Sprite
-    sprite: _EinsteinEngines/Clothing/Head/Helmets/insulative_skullcap.rsi
+    sprite: Nyanotrasen/Clothing/Head/Helmets/insulative_skullcap.rsi
   - type: Clothing
-    sprite: _EinsteinEngines/Clothing/Head/Helmets/insulative_skullcap.rsi
+    sprite: Nyanotrasen/Clothing/Head/Helmets/insulative_skullcap.rsi
+  - type: PsionicallyInsulative
   - type: Armor
-    coverage:
-    - Head
     modifiers:
       coefficients:
         Blunt: 0.85
@@ -67,9 +72,9 @@
   description: A fine red fez with a gold tassel.
   components:
   - type: Sprite
-    sprite: _EinsteinEngines/Clothing/Head/Hats/mantis_fez.rsi
+    sprite: Nyanotrasen/Clothing/Head/Hats/mantis_fez.rsi
   - type: Clothing
-    sprite: _EinsteinEngines/Clothing/Head/Hats/mantis_fez.rsi
+    sprite: Nyanotrasen/Clothing/Head/Hats/mantis_fez.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -78,6 +83,6 @@
   description: A purple beret with a blue epistemics emblem. Mystical and stylish.
   components:
   - type: Sprite
-    sprite: _EinsteinEngines/Clothing/Head/Hats/beret_mysta.rsi
+    sprite: Nyanotrasen/Clothing/Head/Hats/beret_mysta.rsi
   - type: Clothing
-    sprite: _EinsteinEngines/Clothing/Head/Hats/beret_mysta.rsi
+    sprite: Nyanotrasen/Clothing/Head/Hats/beret_mysta.rsi

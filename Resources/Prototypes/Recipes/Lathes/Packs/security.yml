@@ -140,8 +140,6 @@
   - MagazineShotgunIncendiary
   - SpeedLoaderMagnumIncendiary
   - SpeedLoaderMagnumUranium
-  - MagazinePistolCryptobiolin # PIRATE psionic
-  - MagazineBoxPistolCryptobiolin # PIRATE psionic
 
 - type: latheRecipePack
   id: SecurityWeapons

@@ -20,13 +20,14 @@
         Piercing: 1.2
         Holy: 1.2
   - type: Sprite
-    sprite: _EinsteinEngines/Objects/Weapons/Melee/anti_psychic_knife.rsi
+    sprite: Nyanotrasen/Objects/Weapons/Melee/anti_psychic_knife.rsi
     state: icon
   - type: Item
-    sprite: _EinsteinEngines/Objects/Weapons/Melee/anti_psychic_knife.rsi
+    sprite: Nyanotrasen/Objects/Weapons/Melee/anti_psychic_knife.rsi
     storedSprite:
       state: icon
-      sprite: _EinsteinEngines/Objects/Weapons/Melee/anti_psychic_knife.rsi
+      sprite: Nyanotrasen/Objects/Weapons/Melee/anti_psychic_knife.rsi
   - type: Tag
     tags:
     - ForensicBeltEquip
+    - HighRiskItem
