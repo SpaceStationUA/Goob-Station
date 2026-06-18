@@ -48,18 +48,18 @@
       effects:
       - !type:EvenHealthChange
         conditions:
-        - !type:TemperatureCondition
+        - !type:Temperature
           max: 213.0
-        - !type:TotalDamageCondition
+        - !type:TotalDamage
           min: 199.9
         damage:
           Brute: -2
           Burn: -2
       - !type:EvenHealthChange
         conditions:
-        - !type:TemperatureCondition
+        - !type:Temperature
           max: 213.0
-        - !type:TotalDamageCondition
+        - !type:TotalDamage
           min: 500
         damage:
           Brute: -4
