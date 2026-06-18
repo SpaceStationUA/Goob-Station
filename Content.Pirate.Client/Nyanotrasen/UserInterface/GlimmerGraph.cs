@@ -1,10 +1,10 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.Resources;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.UserInterface;
+namespace Content.Client.Nyanotrasen.UserInterface;
 
 public sealed class GlimmerGraph : Control
 {
@@ -28,7 +28,8 @@ public sealed class GlimmerGraph : Control
         base.Draw(handle);
         var box = new UIBox2(new Vector2(XOffset, YOffset), new Vector2(XOffset + Length, YOffsetTop));
         handle.DrawRect(box, Color.FromHex("#424245"));
-        var texture = _resourceCache.GetTexture("/Textures/_EinsteinEngines/Interface/glimmerGraph.png");
+        // Pirate: keep the ported DeltaV texture under _DV instead of the root Interface path.
+        var texture = _resourceCache.GetTexture("/Textures/_DV/Interface/glimmerGraph.png");
         handle.DrawTexture(texture, new Vector2(XOffset, YOffsetTop));
 
         if (_glimmer.Count < 2)
@@ -49,4 +50,3 @@ public sealed class GlimmerGraph : Control
         }
     }
 }
-
