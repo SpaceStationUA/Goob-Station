@@ -60,7 +60,6 @@
         volume: -4
   - type: PowerCellDraw
     drawRate: 24
-    useCharge: 0
   - type: ToggleCellDraw
   - type: PowerCellSlot
     cellSlotId: cell_slot

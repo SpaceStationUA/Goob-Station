@@ -6,3 +6,5 @@ reagent-physical-desc-diluted = diluted
 reagent-physical-desc-bittersweet = bittersweet
 reagent-physical-desc-pure = pure
 reagent-physical-desc-clarifying = elucidating
+reagent-physical-desc-bending = light bending
+reagent-physical-desc-arcryox = icy blue

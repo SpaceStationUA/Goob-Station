@@ -31,6 +31,7 @@ guide-entry-whitelist = Whitelist
 guide-entry-glimmer-creatures = Glimmer Creatures
 guide-entry-psionics = Psionics
 guide-entry-mantis = Psionic Mantis
+guide-entry-altars-golemancy = Golemancy
 
 guide-entry-trade-station = Trade Station
 

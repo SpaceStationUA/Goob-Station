@@ -1,0 +1,33 @@
+- type: entity
+  parent: [ Incorporeal, BaseMob ]
+  id: MobObserverTelegnostic
+  name: telegnostic projection
+  description: Ominous.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DV/Mobs/Ghosts/telegnosis.rsi
+    color: "#90EE90"
+    layers:
+    - state: telegnosis
+      shader: unshaded
+  - type: Psionic
+  - type: Physics
+    fixedRotation: true
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 6
+    baseWalkSpeed: 4
+  - type: PsionicallyInvisible
+  - type: Eye
+    drawFov: false
+    visMask:
+    - Normal
+    - PsionicInvisibility
+  - type: Input
+    context: "ghost"
+  - type: TelegnosticProjection
+  - type: Stealth
+    lastVisibility: 0.66
+  - type: Visibility
+    layer: 4
+  - type: NoNormalInteraction

@@ -7,3 +7,13 @@
   id: BeastBlood
   flavorType: Complex
   description: flavor-complex-beast-blood
+
+- type: flavor
+  id: Pure
+  flavorType: Complex
+  description: flavor-complex-pure
+
+- type: flavor
+  id: Clarifying
+  flavorType: Complex
+  description: flavor-complex-clarifying

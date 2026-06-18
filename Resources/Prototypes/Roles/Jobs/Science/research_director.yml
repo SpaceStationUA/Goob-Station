@@ -146,10 +146,6 @@
   - !type:DepartmentTimeRequirement
     department: Science
     time: 36000 #10 hrs
-  - !type:SpeciesRequirement # Pirate no ipc psionics
-      inverted: true
-      species:
-        - IPC
   - !type:TraitsRequirement
       inverted: true
       traits:
@@ -196,6 +192,8 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
+  - !type:AddPsionicComponentSpecial # Pirate: IPC insulation blocks direct-start psionics without banning the job.
+    components:
       - type: Psionic # DeltaV - They start with telepathic chat.
       - type: DispelPower # DeltaV - They get the Dispel psionic power on spawn.
 
