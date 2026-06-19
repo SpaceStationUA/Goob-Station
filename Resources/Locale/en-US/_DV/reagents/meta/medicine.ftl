@@ -13,6 +13,9 @@ reagent-desc-claridisol = A psionically charged chemical that is almost useless 
 reagent-name-arcryox = arcryox
 reagent-desc-arcryox = A sickeningly blue cryogenics chemical that is able to heal extreme wounds even on the dead. It has trouble stabilizing patients however.
 
+reagent-name-sanctussal = sanctus sal
+reagent-desc-sanctussal = A primitive mixture that wards off noöspheric influences. Historically a scam, but sourcing the holy water from a divine source yields factual results.
+
 reagent-name-blissifylovene = Blissifylovene
 reagent-desc-blissifylovene = A military-grade antidepressant with a very low dosage. Very powerful, though it is often considered a last resort due to its interactions with other medications and psychosis-inducing overdoses. Addictive in all but the smallest of doses.
 

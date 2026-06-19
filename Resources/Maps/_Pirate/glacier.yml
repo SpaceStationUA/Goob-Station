@@ -99570,7 +99570,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: PillCryptobiolin
+- proto: PillSanctusSal
   entities:
   - uid: 11956
     components:

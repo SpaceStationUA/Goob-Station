@@ -65,6 +65,27 @@
           Brute: -4
           Burn: -4
 
+- type: reagent
+  id: SanctusSal
+  name: reagent-name-sanctussal
+  group: Medicine
+  desc: reagent-desc-sanctussal
+  physicalDesc: reagent-physical-desc-salty
+  flavor: medicine
+  color: "#91C3F7"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.5
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectShieldedFromPsionics
+        type: Add
+        time: 60
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectPsionicsDisabled
+        type: Add
+        time: 60
+
 # Pirate: these Delta-V recipe ingredients depend on CD pain/addiction systems for their full effects.
 - type: reagent
   id: Blissifylovene
