@@ -6,8 +6,6 @@
   components:
   - type: Label
     currentLabel: holopad-epistemics-mantis
-  - type: PageSender
-    autoLinkJobs: [ForensicMantis]
 
 - type: entity
   # Pirate: Epistemics is not a local department, so keep the Oracle pad on the base holopad.
