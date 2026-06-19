@@ -1,28 +1,22 @@
 - type: entity
   id: LockerForensicMantis
-  parent: LockerDetective
+  parent: LockerBooze
+  name: psionic mantis' cabinet
   suffix: Empty
-  name: mantis' cabinet
   description: You'll never know what's inside until you collapse the quantum superposition of all possible mysteries.
   components:
-  # Because it holds a traitor objective, StrongMetallic,
-  # but not as much HP as LockerBaseSecure, because it's not a Head's locker.
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
   - type: AccessReader
     access: [["Mantis"]]
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalBreak
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
