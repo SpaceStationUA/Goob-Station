@@ -89,11 +89,12 @@ public abstract partial class SharedPsionicSystem
         if (!_prototypeManager.Resolve(entProtoId, out var powerEntity))
             return false;
         // If the psionic already has that power, do not add it again.
-        if (powerEntity.Components.Any(psionicComponent =>
-                EntityManager.HasComponent(psionic, psionicComponent.Value.Component.GetType())))
+        if (powerEntity.Components.Values
+            .Where(component => component.Component is Components.PsionicPowers.BasePsionicPowerComponent)
+            .Any(component => EntityManager.HasComponent(psionic, component.Component.GetType())))
             return false;
         // If they don't have it already, add it.
-        EntityManager.AddComponents(psionic, powerEntity);
+        EntityManager.AddComponents(psionic, powerEntity, removeExisting: false);
 
         if (!midRound)
             return true;

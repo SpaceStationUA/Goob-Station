@@ -4,27 +4,25 @@ namespace Content.Server.Psionics.Glimmer;
 public sealed partial class GlimmerEventComponent : Component
 {
     /// <summary>
-    ///     Minimum glimmer value for event to be eligible. (Should be 100 at lowest.)
+    /// Minimum glimmer value for event to be eligible.
     /// </summary>
     [DataField]
     public int MinimumGlimmer = 100;
 
     /// <summary>
-    ///     Maximum glimmer value for event to be eligible. (Remember 1000 is max glimmer period.)
+    /// Maximum glimmer value for event to be eligible.
     /// </summary>
     [DataField]
     public int MaximumGlimmer = 1000;
 
     /// <summary>
-    ///     Will be used for _random.Next and subtracted from glimmer.
-    ///     Lower bound.
+    /// Lower bound used when subtracting glimmer after the event.
     /// </summary>
     [DataField]
     public int GlimmerBurnLower = 25;
 
     /// <summary>
-    ///     Will be used for _random.Next and subtracted from glimmer.
-    ///     Upper bound.
+    /// Upper bound used when subtracting glimmer after the event.
     /// </summary>
     [DataField]
     public int GlimmerBurnUpper = 70;

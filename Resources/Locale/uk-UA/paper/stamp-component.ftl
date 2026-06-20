@@ -21,3 +21,4 @@ stamp-component-stamped-name-greytide = Грейтайд
 stamp-component-stamped-name-psychologist = Психолог
 
 stamp-component-stamped-name-wizard = Чарівник
+stamp-component-stamped-name-mantis = Псіо-Екстрасенс

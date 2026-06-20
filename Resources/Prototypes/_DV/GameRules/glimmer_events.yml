@@ -15,6 +15,7 @@
     #- id: LockProbers
     - id: PsionicNosebleedEvent
     - id: MinorMassMindSwap # Delta V
+    - id: NoosphericStorm
     - id: GlimmerFoxfireSpawn
     - id: GlimmerRestyle
 
@@ -99,6 +100,14 @@
     glimmerBurnUpper: 80
   - type: MinorMassMindSwapRule
     isTemporary: true
+
+- type: entity
+  id: NoosphericStorm
+  parent: BaseGlimmerEvent
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 200
+  - type: NoosphericStormRule
 
 - type: entity
   abstract: true

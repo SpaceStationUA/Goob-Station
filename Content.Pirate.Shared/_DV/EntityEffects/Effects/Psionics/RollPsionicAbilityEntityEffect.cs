@@ -13,5 +13,5 @@ public sealed partial class RollPsionicAbility : EventEntityEffect<RollPsionicAb
     public float BonusMultiplier = 1f;
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-chem-roll-psionic", ("multiplier", BonusMultiplier));
+        => Loc.GetString("reagent-effect-guidebook-chem-roll-psionic", ("chance", Probability), ("multiplier", BonusMultiplier));
 }

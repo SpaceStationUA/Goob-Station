@@ -40,9 +40,9 @@ internal sealed class NoosphericStormRule : StationEventSystem<NoosphericStormRu
         var keyList = validList.Keys.ToList();
         _robustRandom.Shuffle(keyList);
 
-        var toAwaken = RobustRandom.Next(1, component.MaxAwaken);
+        var toAwaken = _robustRandom.Next(component.MinAwaken, component.MaxAwaken + 1);
         var additional = _glimmerSystem.Glimmer / component.AdditionalAwokenPerGlimmer;
-        toAwaken = (int) MathF.Round(toAwaken, 0, MidpointRounding.ToZero);
+        toAwaken += (int) MathF.Round(additional, 0, MidpointRounding.ToZero);
 
         foreach (var target in keyList.TakeWhile(_ => toAwaken-- != 0))
         {

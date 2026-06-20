@@ -71,9 +71,6 @@ Probers should be turned off before glimmer exceeds 500 mΨ.
 <GuideEntityEmbed Entity="GlimmerDrain"/>
 Glimmer drains are quite effective at draining glimmer, taking it out as fast as a prober can put it in.
 
-<GuideEntityEmbed Entity="AltarNanotrasen" />
-Sacrificing psychics will reduce glimmer instantly by a decent amount.
-
 <GuideEntityEmbed Entity="PillMindbreakerToxin" />
 Metabolizing 20u or more of [color=#a4885c]mindbreaker[/color] will remove psionics from a person, meaning they will not generate any more glimmer.
 

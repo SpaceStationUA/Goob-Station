@@ -4,6 +4,7 @@ using Content.Shared.Jittering;
 using Content.Shared.Popups;
 using Content.Shared.Psionics.Glimmer;
 using Content.Shared.Speech.EntitySystems;
+using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
@@ -70,7 +71,7 @@ public abstract partial class SharedPsionicSystem : EntitySystem
         // If all were removed, remove the psionic component.
         if (!ev.AllRemoved)
         {
-            Popup.PopupClient(Loc.GetString("psionic-partly-mindbrokenpsionic-partly-mindbroken"), psionic, PopupType.Medium);
+            Popup.PopupClient(Loc.GetString("psionic-partly-mindbroken"), psionic, PopupType.Medium);
             return;
         }
 
@@ -100,6 +101,8 @@ public abstract partial class SharedPsionicSystem : EntitySystem
 
         var ev = new TargetedByPsionicPowerEvent();
         RaiseLocalEvent(target, ref ev);
+        if (TryComp<StatusEffectContainerComponent>(target, out var statusEffect))
+            _statusEffects.RelayEvent((target, statusEffect), ref ev);
 
         if (!showPopup || !ev.IsShielded)
             return !ev.IsShielded;
@@ -124,6 +127,8 @@ public abstract partial class SharedPsionicSystem : EntitySystem
     {
         var ev = new PsionicPowerUseAttemptEvent();
         RaiseLocalEvent(psionic, ref ev);
+        if (TryComp<StatusEffectContainerComponent>(psionic, out var statusEffect))
+            _statusEffects.RelayEvent((psionic, statusEffect), ref ev);
 
         return ev.CanUsePower;
     }

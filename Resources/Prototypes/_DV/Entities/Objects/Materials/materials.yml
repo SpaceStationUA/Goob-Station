@@ -118,19 +118,6 @@
 
 - type: entity
   parent: BasePsionCrystal
-  id: PsionCrystalPrecog
-  name: precognition crystal
-  description: A small psionic crystal. It makes you feel as if your foresight is clearer.
-  components:
-  - type: Sprite
-    color: "#3e81a0"
-  - type: AddComponentsImplant
-    componentsToAdd:
-    - type: PrecognitionPower
-    - type: Psionic
-
-- type: entity
-  parent: BasePsionCrystal
   id: PsionCrystalScream
   name: scream crystal
   description: A small psionic crystal. Holding it makes you feel like screaming out all your emotion.

@@ -25,6 +25,7 @@ public sealed class PsychokineticScreamPowerSystem : BasePsionicPowerSystem<Psyc
 
         SpawnAttachedTo(psionic.Comp.Effect, psionic.Owner.ToCoordinates());
         args.Handled = true;
+        AfterPowerUsed(psionic, args.Performer);
     }
 
     /// <summary>

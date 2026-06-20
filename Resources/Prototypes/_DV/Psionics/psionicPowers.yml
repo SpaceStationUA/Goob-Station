@@ -5,8 +5,6 @@
     children:
     - id: DispelPowerEntity
       weight: 1
-    - id: PrecognitionPowerEntity
-      weight: 1
     - id: PsionicRegenerationPowerEntity
       weight: 1
     - id: PsychokineticScreamPowerEntity
@@ -48,12 +46,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: PsychokineticScreamPower
-
-- type: entity
-  id: PrecognitionPowerEntity
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: PrecognitionPower
 
 - type: entity
   id: MassSleepPowerEntity

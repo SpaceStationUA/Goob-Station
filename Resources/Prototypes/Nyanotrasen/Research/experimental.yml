@@ -10,6 +10,8 @@
   recipeUnlocks:
   - ClothingHeadHelmetInsulated
   - ClothingHeadCage
+  - MagazineBoxPistolCryptobiolin
+  - MagazinePistolCryptobiolin
   position: -2,-3
   technologyPrerequisites:
   - BasicRobotics

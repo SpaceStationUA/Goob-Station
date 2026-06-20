@@ -25,7 +25,9 @@ public abstract class SharedMindSwapPowerSystem : BasePsionicPowerSystem<MindSwa
 
     protected override void OnPowerUsed(Entity<MindSwapPowerComponent> psionic, ref MindSwapPowerActionEvent args)
     {
-        SwapMinds(args.Performer, args.Target);
+        if (!SwapMinds(args.Performer, args.Target))
+            return;
+
         AfterPowerUsed(psionic, args.Performer);
     }
 

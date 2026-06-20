@@ -39,7 +39,7 @@ internal sealed class FreeProberRule : StationEventSystem<FreeProberRuleComponen
         if (PossibleSpawns.Count == 0 || _glimmerSystem.Glimmer >= 500 || _robustRandom.Prob(0.25f))
         {
             var queryBattery = EntityQueryEnumerator<PowerNetworkBatteryComponent>();
-            while (query.MoveNext(out var battery, out var _))
+            while (queryBattery.MoveNext(out var battery, out var _))
             {
                 PossibleSpawns.Add(battery);
             }

@@ -43,6 +43,10 @@ glimmer-event-report-generic = Виявлено ноосферний розря�
 glimmer-event-report-signatures = Виявлено нові псіонічні сигнатури. Рівень Мерехтіння зменшився на {$decrease} до {$level}Ψ.
 glimmer-event-awakened-prefix = пробуджено {$entity}
 
+psionic-roll-failed = Ноосферний вплив не залишає сліду у вашій свідомості...
+psionic-partly-mindbroken = Псіонічний вплив на вашу свідомість слабшає...
+psionic-mindbroken = Ваша свідомість відступає від абстракції до реальності.
+
 noospheric-zap-seize = У тебе судоми!
 noospheric-zap-seize-potential-regained = Ану схопися! Здається, якийсь ментальний блок теж розвіявся.
 
