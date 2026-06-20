@@ -1,7 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared._DV.Psionics.Components;
 using Content.Shared.Administration;
-using Content.Shared.Abilities.Psionics;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Console;
 using Robust.Server.GameObjects;
