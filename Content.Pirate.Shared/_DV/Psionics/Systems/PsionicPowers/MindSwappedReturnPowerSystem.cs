@@ -51,6 +51,16 @@ public sealed class MindSwappedReturnPowerSystem : BasePsionicPowerSystem<MindSw
         _mindSwap.SwapMinds(psionic, psionic.Comp.OriginalEntity, false);
     }
 
+    public void EnsureReturnAction(Entity<MindSwappedReturnPowerComponent> psionic)
+    {
+        if (Action.GetAction(psionic.Comp.ActionEntity) is null)
+            Action.AddAction(psionic, ref psionic.Comp.ActionEntity, psionic.Comp.ActionProtoId);
+
+        var psionicComp = EnsureComp<PsionicComponent>(psionic);
+        psionicComp.PsionicPowersActionEntities.Add(psionic.Comp.ActionEntity);
+        Dirty(psionic);
+    }
+
     public void RemoveLink(Entity<MindSwappedReturnPowerComponent?> victim, bool showPopup = true)
     {
         // Sometimes people lose their link without having the component - MassMindSwap for example is a situation like that.

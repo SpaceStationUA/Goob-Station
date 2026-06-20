@@ -162,6 +162,10 @@ public abstract class SharedMindSwapPowerSystem : BasePsionicPowerSystem<MindSwa
         perfComp.OriginalEntity = target;
         targetComp.OriginalEntity = performer;
 
+        // Pirate: these components are added at runtime, so MapInit will not grant the return action.
+        _mindSwapped.EnsureReturnAction((performer, perfComp));
+        _mindSwapped.EnsureReturnAction((target, targetComp));
+
         Dirty(performer, perfComp);
         Dirty(target, targetComp);
         return true;
