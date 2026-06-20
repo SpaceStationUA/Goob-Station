@@ -86,6 +86,9 @@
     sprite: _DV/Objects/Materials/psicrystal.rsi
     state: psicrystal
   - type: SubdermalImplant
+  - type: Tag
+    tags:
+    - SubdermalImplant
   - type: DVInsertableImplant
     implanterName: psion-crystal-implanter-name
     implanterDescription: psion-crystal-implanter-description
