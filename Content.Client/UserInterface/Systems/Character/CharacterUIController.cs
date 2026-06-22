@@ -145,7 +145,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         }
 
         CharacterButton.Pressed = false;
-        _window?.DetailExaminableSubmitButton.Disabled = true; // Pirate: in-round flavor text edits
+        if (_window != null)
+            _window.DetailExaminableSubmitButton.Disabled = true; // Pirate: in-round flavor text edits
     }
 
     private void ActivateButton()
