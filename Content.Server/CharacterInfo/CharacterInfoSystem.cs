@@ -110,7 +110,7 @@ public sealed class CharacterInfoSystem : EntitySystem
             return;
 
         var maxFlavorTextLength = _cfg.GetCVar(CCVars.MaxFlavorTextLength);
-        var newContent = FormattedMessage.RemoveMarkupOrThrow(msg.Content);
+        var newContent = FormattedMessage.RemoveMarkupPermissive(msg.Content);
         if (newContent.Length > maxFlavorTextLength)
             newContent = newContent[..maxFlavorTextLength];
 
