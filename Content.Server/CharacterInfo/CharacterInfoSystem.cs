@@ -16,20 +16,31 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server.Administration.Logs;
 using Content.Server.Mind;
+using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
+using Content.Shared.CCVar;
 using Content.Shared.CharacterInfo;
+using Content.Shared.Database;
+using Content.Shared.DetailExaminable;
 using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.Preferences;
+using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 
 namespace Content.Server.CharacterInfo;
 
 public sealed class CharacterInfoSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _log = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
 
@@ -38,6 +49,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         base.Initialize();
 
         SubscribeNetworkEvent<RequestCharacterInfoEvent>(OnRequestCharacterInfoEvent);
+        SubscribeNetworkEvent<UpdateDetailExaminableEvent>(OnUpdateDetailExaminableEvent);
     }
 
     private void OnRequestCharacterInfoEvent(RequestCharacterInfoEvent msg, EntitySessionEventArgs args)
@@ -83,6 +95,36 @@ public sealed class CharacterInfoSystem : EntitySystem
             //Pirate banking end
         }
 
-        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing, memories), args.SenderSession); //Pirate banking
+        string? detailExaminable = null; // Pirate: in-round flavor text edits
+        if (_cfg.GetCVar(CCVars.FlavorText))
+            detailExaminable = TryComp<DetailExaminableComponent>(entity, out var detail) ? detail.Content : string.Empty;
+
+        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing, detailExaminable, memories), args.SenderSession); //Pirate banking
+    }
+
+    // Pirate: in-round flavor text edits
+    private void OnUpdateDetailExaminableEvent(UpdateDetailExaminableEvent msg, EntitySessionEventArgs args)
+    {
+        if (!_cfg.GetCVar(CCVars.FlavorText)
+            || args.SenderSession.AttachedEntity is not { } entity)
+            return;
+
+        var maxFlavorTextLength = _cfg.GetCVar(CCVars.MaxFlavorTextLength);
+        var newContent = FormattedMessage.RemoveMarkupOrThrow(msg.Content);
+        if (newContent.Length > maxFlavorTextLength)
+            newContent = newContent[..maxFlavorTextLength];
+
+        var detail = EnsureComp<DetailExaminableComponent>(entity);
+        detail.Content = newContent;
+        Dirty(entity, detail);
+
+        var preferences = _preferencesManager.GetPreferences(args.SenderSession.UserId);
+        if (preferences.SelectedCharacter is HumanoidCharacterProfile profile)
+        {
+            var updatedProfile = profile.WithFlavorText(newContent);
+            _ = _preferencesManager.SetProfile(args.SenderSession.UserId, preferences.SelectedCharacterIndex, updatedProfile);
+        }
+
+        _log.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(entity):user} updated their flavor text");
     }
 }

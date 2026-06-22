@@ -79,6 +79,10 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         _window.OnClose += DeactivateButton;
         _window.OnOpen += ActivateButton;
+        _window.DetailExaminableContainer.Visible = false; // Pirate: in-round flavor text edits
+        _window.DetailExaminableTextEdit.Placeholder = new Rope.Leaf(Loc.GetString("flavor-text-placeholder"));
+        _window.DetailExaminableTextEdit.OnTextChanged += OnDetailExaminableChanged; // Pirate: in-round flavor text edits
+        _window.DetailExaminableSubmitButton.OnPressed += OnDetailExaminableSubmit; // Pirate: in-round flavor text edits
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
@@ -90,6 +94,10 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     {
         if (_window != null)
         {
+            _window.OnClose -= DeactivateButton;
+            _window.OnOpen -= ActivateButton;
+            _window.DetailExaminableTextEdit.OnTextChanged -= OnDetailExaminableChanged; // Pirate: in-round flavor text edits
+            _window.DetailExaminableSubmitButton.OnPressed -= OnDetailExaminableSubmit; // Pirate: in-round flavor text edits
             _window.Close();
             _window = null;
         }
@@ -137,6 +145,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         }
 
         CharacterButton.Pressed = false;
+        _window?.DetailExaminableSubmitButton.Disabled = true; // Pirate: in-round flavor text edits
     }
 
     private void ActivateButton()
@@ -156,7 +165,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             return;
         }
 
-        var (entity, job, objectives, briefing, entityName, memories) = data; // Pirate banking
+        var (entity, job, objectives, briefing, detailExaminable, entityName, memories) = data; // Pirate banking
 
         _window.SpriteView.SetEntity(entity);
 
@@ -167,6 +176,13 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _window.Objectives.RemoveAllChildren();
         _window.ObjectivesLabel.Visible = objectives.Any();
         _window.Memories.RemoveAllChildren(); //Pirate banking
+        _window.DetailExaminableContainer.Visible = detailExaminable != null; // Pirate: in-round flavor text edits
+
+        if (detailExaminable != null)
+        {
+            _window.DetailExaminableTextEdit.TextRope = new Rope.Leaf(detailExaminable);
+            _window.DetailExaminableSubmitButton.Disabled = true;
+        }
 
         foreach (var (groupId, conditions) in objectives)
         {
@@ -301,5 +317,25 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             _characterInfo.RequestCharacterInfo();
             _window.Open();
         }
+    }
+
+    // Pirate: in-round flavor text edits
+    private void OnDetailExaminableSubmit(ButtonEventArgs args)
+    {
+        if (_window == null)
+            return;
+
+        var text = Rope.Collapse(_window.DetailExaminableTextEdit.TextRope).Trim();
+        _window.DetailExaminableSubmitButton.Disabled = true;
+        _characterInfo.UpdateDetailExaminable(text);
+    }
+
+    // Pirate: in-round flavor text edits
+    private void OnDetailExaminableChanged(TextEdit.TextEditEventArgs args)
+    {
+        if (_window == null)
+            return;
+
+        _window.DetailExaminableSubmitButton.Disabled = false;
     }
 }
