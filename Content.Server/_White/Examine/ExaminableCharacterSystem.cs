@@ -11,6 +11,7 @@ using Content.Goobstation.Common.CCVar; // Goobstation Change
 using Content.Shared._Goobstation.Heretic.Components; // Goobstation Change
 using Content.Shared.Chat;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared._White.Examine;
 using Content.Shared.Inventory;
 using Robust.Shared.Configuration;
@@ -89,12 +90,13 @@ public sealed class ExaminableCharacterSystem : EntitySystem
             if (!_inventorySystem.TryGetSlotEntity(uid, slotName, out var slotEntity))
                 continue;
 
-            if (_entityManager.TryGetComponent<MetaDataComponent>(slotEntity, out var metaData)
-                && !HasComp<StripMenuInvisibleComponent>(slotEntity))
+            if (!HasComp<StripMenuInvisibleComponent>(slotEntity))
             {
-                var itemTex = Loc.GetString(slotLabel, ("item", metaData.EntityName), ("ent", uid), ("id", GetNetEntity(slotEntity.Value).Id), ("size", 14));
+                // Pirate: keep worn clothing names aligned with visible identity, including chameleon disguises.
+                var itemName = Identity.Name(slotEntity.Value, _entityManager, args.Examiner);
+                var itemTex = Loc.GetString(slotLabel, ("item", itemName), ("ent", uid), ("id", GetNetEntity(slotEntity.Value).Id), ("size", 14));
                 if (showExamine)
-                    args.PushMarkup($"[font size=10]{Loc.GetString(slotLabel, ("item", metaData.EntityName), ("ent", uid), ("id", "empty"))}[/font]", priority);
+                    args.PushMarkup($"[font size=10]{Loc.GetString(slotLabel, ("item", itemName), ("ent", uid), ("id", "empty"))}[/font]", priority);
                 logLines.Add($"[color=DarkGray][font size=10]{itemTex}[/font][/color]");
                 priority--;
             }
