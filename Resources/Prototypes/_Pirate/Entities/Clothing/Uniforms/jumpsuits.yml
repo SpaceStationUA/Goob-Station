@@ -51,3 +51,13 @@
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/correction_officer.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/correction_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSecurityMaid
+  name: security maid suit
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/maid.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/maid.rsi

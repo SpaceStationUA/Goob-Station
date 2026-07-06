@@ -30,5 +30,6 @@
     ClothingHeadsetMedical: 2
     ClothingOuterWinterChem: 2
     Eftpos: 4 #Pirate banking
+    ClothingHeadHatBunnyearsChem: 2 # Pirate
   contrabandInventory:
     ToyFigurineChemist: 1

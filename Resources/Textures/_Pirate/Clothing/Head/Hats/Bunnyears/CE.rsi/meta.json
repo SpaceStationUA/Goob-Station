@@ -13,6 +13,7 @@
     {
       "name": "equipped-HELMET",
       "directions": 4
+<<<<<<< HEAD:Resources/Textures/_Pirate/Clothing/Head/Hats/bunnyears.rsi/meta.json
     },
     {
       "name": "dark"
@@ -20,6 +21,8 @@
     {
       "name": "dark-equipped-HELMET",
       "directions": 4
+=======
+>>>>>>> parent of d112408515 (Bunnyears + secmaid):Resources/Textures/_Pirate/Clothing/Head/Hats/Bunnyears/CE.rsi/meta.json
     }
   ]
 }
