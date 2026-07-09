@@ -1,0 +1,26 @@
+- type: body
+  id: TerrorSpiderHemocyanin
+  name: "terror spider hemocyanin"
+  root: chest
+  slots:
+    chest:
+      part: ChestAnimal
+      connections:
+      - groin
+      organs:
+        lungs: OrganTerrorSpiderLungs
+        heart: OrganArachnidHeart
+    groin:
+      part: GroinAnimal
+      connections:
+      - legs
+      organs:
+        stomach: OrganAnimalStomach
+        liver: OrganAnimalLiver
+        kidneys: OrganAnimalKidneys
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal

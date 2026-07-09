@@ -106,6 +106,7 @@
   - SurveillanceWirelessCameraMonitorCircuitboard
   - TelecomServerCircuitboard
   - HolopadMachineCircuitboard
+  - BladeServerRackMachineCircuitboard # Pirate
   # Goobstation R&D Console rework start
   position: 1,4
   technologyPrerequisites:

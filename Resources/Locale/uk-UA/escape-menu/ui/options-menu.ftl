@@ -6,13 +6,11 @@ ui-options-tab-controls = Керування
 ui-options-tab-audio = Аудіо
 ui-options-tab-network = Мережа
 ui-options-tab-misc = Загальне
-
 ui-options-apply = Застосувати
 ui-options-reset-all = Скинути все
 ui-options-default = За замовчуванням
 
 # Misc/General menu
-
 ui-options-discordrich = Увімкнути Discord Rich Presence
 ui-options-general-ui-style = Стиль UI
 ui-options-general-discord = Discord
@@ -22,7 +20,6 @@ ui-options-general-storage = Сховище
 ui-options-general-accessibility = Доступність
 
 ## Audio menu
-
 ui-options-master-volume = Основна гучність:
 ui-options-midi-volume = Гучність MIDI (Інструментів):
 ui-options-ambient-music-volume = Гучність атмосферної музики:
@@ -38,7 +35,6 @@ ui-options-volume-label = Гучність
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ## Графічне меню
-
 ui-options-show-held-item = Показувати утримуваний елемент поруч з курсором?
 ui-options-show-combat-mode-indicators = Показувати індикатори бойового режиму при наведенні курсору?
 ui-options-opaque-storage-window = Увімкнути непрозоре вікно зберігання
@@ -48,6 +44,7 @@ ui-options-fancy-name-background = Додати фон до назв сплив�
 ui-options-enable-color-name = Додати кольори до імен персонажів
 ui-options-colorblind-friendly = Дружній режим для дальтоніків
 ui-options-reduced-motion = Зменшити рух візуальних ефектів
+ui-options-arachnophobia = Режим арахнофобії
 ui-options-screen-shake-intensity = Інтенсивність тремтіння екрана
 ui-options-screen-shake-percent = { TOSTRING($intensity, "P0") }
 ui-options-vsync = Вертикальна синхронізація
@@ -88,13 +85,11 @@ ui-options-vp-width = Ширина вікна:
 ui-options-hud-layout = Схема HUD:
 
 ## Controls menu
-
 ui-options-binds-reset-all = Скинути ВСІ сполучення клавіш
 ui-options-binds-explanation = Натисніть, щоб змінити кнопку, ПКМ - щоб очистити
 ui-options-unbound = Вільний
 ui-options-bind-reset = Скинути
 ui-options-key-prompt = Натисніть клавішу...
-
 ui-options-header-movement = Переміщення
 ui-options-header-camera = Камера
 ui-options-header-interaction-basic = Базова Взаємодія
@@ -106,23 +101,19 @@ ui-options-header-shuttle = Шатл
 ui-options-header-map-editor = Редактор Карт
 ui-options-header-dev = Розробка
 ui-options-header-general = Загальні
-
 ui-options-hotkey-keymap = Використовувати клавіші QWERTY (США)
 ui-options-hotkey-toggle-walk = Перемкнути Ходьбу
-
 ui-options-function-move-up = Рухатися Вгору
 ui-options-function-move-left = Рухатися Ліворуч
 ui-options-function-move-down = Рухатися Вниз
 ui-options-function-move-right = Рухатися Праворуч
 ui-options-function-walk = Ходьба
-
 ui-options-function-camera-rotate-left = Повернути Ліворуч
 ui-options-function-camera-rotate-right = Повернути Праворуч
 ui-options-function-camera-reset = Скинути
 ui-options-function-zoom-in = Збільшити Масштаб
 ui-options-function-zoom-out = Зменшити Масштаб
 ui-options-function-reset-zoom = Скинути Масштаб
-
 ui-options-function-use = Використовувати
 ui-options-function-use-secondary = Використовувати (вторинний)
 ui-options-function-alt-use = Альтернативне використання
@@ -137,7 +128,6 @@ ui-options-function-swap-hands = Поміняти руку
 ui-options-function-move-stored-item = Перемістити збережений елемент
 ui-options-function-rotate-stored-item = Обернути збережений елемент
 ui-options-static-storage-ui = Інтерфейс статичного сховища
-
 ui-options-function-smart-equip-backpack = Розумне екіпірування в рюкзак
 ui-options-function-smart-equip-belt = Розумне екіпірування на пояс
 ui-options-function-open-backpack = Відкрити наплічник
@@ -147,7 +137,6 @@ ui-options-function-try-pull-object = Тягнути предмет
 ui-options-function-move-pulled-object = Тягнути предмет убік
 ui-options-function-release-pulled-object = Припинити тягнути предмет
 ui-options-function-point = Вказати на щось
-
 ui-options-function-focus-chat-input-window = Писати в чат
 ui-options-function-focus-local-chat-window = Писати в чат (IC)
 ui-options-function-focus-emote = Писати в чат (Емоції)
@@ -176,11 +165,9 @@ ui-options-function-window-close-all = Закрити всі вікна
 ui-options-function-window-close-recent = Закрити поточне вікно
 ui-options-function-show-escape-menu = Перемкнути меню гри
 ui-options-function-escape-context = Закрити останнє вікно або перемкнути меню гри
-
 ui-options-function-take-screenshot = Зробити знімок екрану
 ui-options-function-take-screenshot-no-ui = Зробити знімок екрана (без інтерфейсу)
 ui-options-function-toggle-fullscreen = Перемкнути повноекранний режим
-
 ui-options-function-editor-place-object = Розмістити об'єкт
 ui-options-function-editor-cancel-place = Скасувати розміщення
 ui-options-function-editor-grid-place = Розмістити в сітці
@@ -188,12 +175,10 @@ ui-options-function-editor-line-place = Розмістити в лінію
 ui-options-function-editor-rotate-object = Повернути
 ui-options-function-editor-flip-object = Розвернути
 ui-options-function-editor-copy-object = Копіювати
-
 ui-options-function-show-debug-console = Відкрити консоль
 ui-options-function-show-debug-monitors = Показати дебаг-інформацію
 ui-options-function-inspect-entity = Оглянути сутність
 ui-options-function-hide-ui = Приховати UI
-
 ui-options-function-hotbar1 = 1 слот hotbar
 ui-options-function-hotbar2 = 2 слот hotbar
 ui-options-function-hotbar3 = 3 слот hotbar
@@ -214,7 +199,6 @@ ui-options-function-loadout7 = 7 сторінка hotbar
 ui-options-function-loadout8 = 8 сторінка hotbar
 ui-options-function-loadout9 = 9 сторінка hotbar
 ui-options-function-loadout0 = 0 сторінка hotbar
-
 ui-options-function-shuttle-strafe-up = Стрейф вгору
 ui-options-function-shuttle-strafe-right = Стрейф вправо
 ui-options-function-shuttle-strafe-left = Стрейф вліво
@@ -224,30 +208,24 @@ ui-options-function-shuttle-rotate-right = Повернути праворуч
 ui-options-function-shuttle-brake = Гальмування
 
 ## Network menu
-
 ui-options-net-predict = Припущення на стороні клієнта
-
 ui-options-net-interp-ratio = Мережеве згладжування
 ui-options-net-interp-ratio-tooltip = Збільшення цього параметра, як правило, зробить гру більш стійкою
                                       до втрати пакетів сервер->клієнт, проте при цьому це так само
                                       додає трохи більшу затримку та вимагає від клієнта передбачати
                                       більше майбутніх тактів.
-
 ui-options-net-predict-tick-bias = Похибка тиків вгадування
 ui-options-net-predict-tick-bias-tooltip = Збільшення цього параметра, як правило, зробить гру більш стійкою
                                            до втрати пакетів клієнт->сервер, проте при цьому трохи зростає
                                            затримка і клієнту потрібно передбачати більше майбутніх тактів.
-
 ui-options-net-pvs-spawn = Ліміт появи PVS сутностей
 ui-options-net-pvs-spawn-tooltip = Обмежує частоту, з якою сервер надсилатиме щойно створені сутності
                                    клієнту. Зниження цього параметра може допомогти зменшити "заїкання"
                                    викликані створенням сутності, але може призвести до їх різкої появи.
-
 ui-options-net-pvs-entry = Ліміт PVS сутностей
 ui-options-net-pvs-entry-tooltip = Обмежує частоту, з якою сервер надсилатиме нові видимі сутності
                                    клієнту. Зниження цього параметра може допомогти зменшити "заїкання"
                                    викликані створенням сутності, але може призвести до їх різкої появи.
-
 ui-options-net-pvs-leave = Частота видалення PVS
 ui-options-net-pvs-leave-tooltip = Обмежує частоту, з якою клієнт видалятиме об’єкти, які не видно.
                                    Зниження цього параметра може допомогти зменшити заїкання під час ходьби,
@@ -256,7 +234,6 @@ ui-options-net-pvs-leave-tooltip = Обмежує частоту, з якою к
 ## Toggle window console command
 cmd-options-desc = Відкриває меню опцій, опціонально з конкретно обраною вкладкою
 cmd-options-help = Використання: options [tab]
-
 ui-options-show-offer-mode-indicators = Показувати індикатори режиму пропозиції курсором
 ui-options-function-offer-item = Запропонуйте щось
 ui-options-announcer-volume = Гучність диктора:
@@ -267,12 +244,10 @@ ui-options-chat-window-opacity-percent = { TOSTRING($opacity, "P0") }
 ui-options-function-save-item-location = Зберегти розташування елемента
 ui-options-announcer-disable-multiple-sounds = Вимкнути звуки диктора, що накладаються один на одного
 ui-options-announcer-disable-multiple-sounds-tooltip = Деякі оголошення будуть звучати неправильно, це налаштування не рекомендується
-
 ui-options-hotkey-default-walk = Ходити за замовчуванням
 ui-options-no-filters = Вимкнути расові візуальні фільтри
 ui-options-function-look-up = Подивіться вгору/Цільтеся
 ui-options-function-hold-look-up = Утримуйте клавішу, щоб прицілитися
-
 ui-options-vp-vertical-fit = Вертикальне кріплення оглядового вікна
 ui-options-vp-vertical-fit-tooltip = Якщо увімкнено, головне вікно перегляду повністю ігноруватиме горизонтальну вісь під час
                                      під час підгонки під ваш екран. Якщо ваш екран менший за область перегляду, це
@@ -286,7 +261,6 @@ ui-options-function-target-left-arm = Ціль: ліва рука
 ui-options-function-target-right-arm = Ціль: права рука
 ui-options-function-target-left-leg = Ціль: ліва нога
 ui-options-function-target-right-leg = Ціль: права нога
-
 ui-options-chatstack = Автоматично об'єднувати однакові повідомлення чату
 ui-options-chatstack-off = Вимкнено
 ui-options-chatstack-single = Тільки останнє повідомлення
@@ -297,8 +271,8 @@ ui-options-function-mapping-enable-decal-pick = Виберіть наклейк�
 ui-options-function-mapping-enable-delete = Видалити об'єкт
 ui-options-general-other = Інше
 ui-options-modern-progress-bar = Сучасний індикатор виконання
-ui-options-mood-visual-effects = Увімкніть візуальні ефекти системи настрою
-
+# Pirate: mood color grading tweaks
+ui-options-mood-visual-effects = Кольорокорекція настрою
 ui-options-function-smart-equip-back = Автоматично екіпірувати в слот спини
 ui-options-binds-search = Пошук
 ui-options-tab-accessibility = Доступність
@@ -391,7 +365,6 @@ ui-options-admin-enable-overlay-starting-job = Показувати початк
 ui-options-admin-overlay-merge-distance = Відстань об'єднання стопок
 ui-options-admin-overlay-ghost-fade-distance = Відстань згасання оверлею привида від миші
 ui-options-admin-overlay-ghost-hide-distance = Відстань приховування оверлею привида від миші
-
 ui-options-function-swap-hands-reverse = Поміняти руки (інший напрямок)
 ui-options-function-hotbar-shift1 = Слот швидкого доступу Shift+1
 ui-options-function-hotbar-shift2 = Слот швидкого доступу Shift+2
@@ -406,7 +379,6 @@ ui-options-function-hotbar-shift0 = Слот швидкого доступу Shi
 ui-options-auto-fill-highlights = Автоматично заповнювати підсвічування інформацією про персонажа
 ui-options-highlights-color = Колір підсвічування:
 ui-options-highlights-color-example = Це підсвічений текст!
-
 ui-options-ambient-occlusion = Показувати Ambient Occlusion
 ui-options-highlight-volume = Гучність сигналу підсвічування чату:
 ui-options-highlight-sound = Відтворювати звук під час підсвічування

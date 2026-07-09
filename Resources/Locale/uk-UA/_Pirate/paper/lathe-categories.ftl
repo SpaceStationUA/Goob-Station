@@ -10,7 +10,6 @@ lathe-category-conclusions-and-decisions = Висновки та Рішення
 lathe-category-error = Помилка
 
 # Нове
-
 lathe-category-external-bureaucracy = Зовнішня бюрократія
 lathe-category-top-bureaucracy = Вища бюрократія
 lathe-category-security-bureaucracy = Охоронна бюрократія

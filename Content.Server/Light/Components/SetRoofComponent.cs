@@ -14,4 +14,7 @@ public sealed partial class SetRoofComponent : Component
 {
     [DataField(required: true)]
     public bool Value;
+
+    [DataField]
+    public bool BlockWeather = true;
 }

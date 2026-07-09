@@ -11,7 +11,6 @@ marking-VoxHairRuffhawk = Пір'я Вокса (Жорсткий Могавк)
 marking-VoxHairRows = Пір'я Вокса (Ряди)
 marking-VoxHairMange = Пір'я Вокса (Манж)
 marking-VoxHairPony = Пір'я Вокса (Поні)
-
 marking-VoxHairBraids = Коси Vox
 marking-VoxHairCrestedQuills = Vox Creeded Quills
 marking-VoxHairEmperorQuills = Vox Emperor Квілс

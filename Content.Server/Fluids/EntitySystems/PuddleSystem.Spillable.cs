@@ -61,6 +61,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry;
 using Content.Shared.Database;
+using Content.Shared._Pirate.Fluids; // Pirate: stains
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Content.Shared.IdentityManagement;
@@ -148,6 +149,7 @@ public sealed partial class PuddleSystem
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
 
             _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SharedSolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
+            RaiseLocalEvent(hit, new SpilledOnEvent(entity.Owner, splitSolution.Clone())); // Pirate: stains
             _reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
 
             _popups.PopupEntity(

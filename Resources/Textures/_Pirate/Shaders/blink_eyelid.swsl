@@ -1,0 +1,24 @@
+uniform highp float Coverage;
+uniform highp float WipeDirection;
+
+void fragment()
+{
+    highp float coverage = clamp(Coverage, 0.0, 1.0);
+    highp vec4 mask = zTexture(UV);
+
+    if (mask.a <= 0.0)
+        discard;
+
+    if (WipeDirection < 0.5)
+    {
+        if (UV2.y < 1.0 - coverage)
+            discard;
+    }
+    else
+    {
+        if (UV2.y > coverage)
+            discard;
+    }
+
+    COLOR = vec4(1.0, 1.0, 1.0, mask.a);
+}

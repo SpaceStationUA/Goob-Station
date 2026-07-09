@@ -90,6 +90,7 @@
       Death: 400
     eventType: HostilesSpawn
   - type: GameRule
+    minPlayers: 40 # Pirate - keep direct BlobMidround starts off lowpop.
     chaosScore: 1100
   - type: BlobSpawnRule
     carrierBlobProtos:

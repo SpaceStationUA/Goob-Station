@@ -151,6 +151,9 @@
   - type: Sprite
     drawdepth: Items
     noRot: false
+  #region Pirate: stains
+  - type: Stainable
+  #endregion Pirate: stains
   - type: Pullable
   - type: DamageExaminable
 

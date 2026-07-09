@@ -59,6 +59,10 @@
     requiredLegs: 2 # It would be funny if arachnids could use their little back limbs to move around once they lose their legs, but just something to consider post-woundmed
   - type: HumanoidAppearance
     species: Arachnid
+  #region Pirate: blinking
+  - type: Blinking
+    enabled: false
+  #endregion Pirate: blinking
   - type: Hunger
   - type: Thirst
   - type: Sericulture
@@ -149,6 +153,11 @@
       - map: [ "shoes" ]
       - map: [ "id" ]
       - map: [ "outerClothing" ]
+      - map: [ "culteyes" ] # Pirate - Blood Cult
+        sprite: "_Pirate/BloodCult/Effects/culteyes.rsi"
+        state: "arachnid"
+        shader: unshaded
+        visible: false
       - map: [ "belt" ] #Goobedit - Belts over outerwear
       - map: [ "enum.HumanoidVisualLayers.Tail" ] # Mentioned in moth code: This needs renaming lol.
       - map: [ "back" ]
@@ -172,6 +181,11 @@
       - map: [ "clownedon" ] # Dynamically generated
         sprite: "Effects/creampie.rsi"
         state: "creampie_arachnid"
+        visible: false
+      - map: [ "culthalo" ] # Pirate - Blood Cult
+        sprite: "_Pirate/BloodCult/Effects/halo.rsi"
+        state: "halo"
+        shader: unshaded
         visible: false
   - type: Inventory
     templateId: arachnid

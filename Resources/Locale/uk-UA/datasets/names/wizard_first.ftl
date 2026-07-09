@@ -28,7 +28,6 @@ names-wizard-first-dataset-27 = Вехумет
 names-wizard-first-dataset-28 = Ксом
 names-wizard-first-dataset-29 = Іределемнул
 names-wizard-first-dataset-30 = Зін
-
 names-wizard-first-dataset-31 = Сіф
 names-wizard-first-dataset-32 = Спеллберг
 names-wizard-first-dataset-33 = Трог

@@ -25,6 +25,7 @@ public sealed partial class FlyBySoundComponent : Component
     /// Probability that the sound plays
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("prob")]
+    [AutoNetworkedField] // Pirate: FPV drones toggle fly-by probability while controlled.
     public float Prob = 0.10f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]

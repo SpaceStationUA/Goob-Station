@@ -1,0 +1,24 @@
+- type: entity
+  parent: BookBase
+  id: BookSparotBook
+  name: the sparot book
+  description: A hefty tome detailing how to conduct a reading with a deck of Sparot cards.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#112530"
+    - state: decor_spine
+      color: "#be5232"
+    - state: detail_bookmark
+      color: "#F097788c"
+    - state: detail_rivets
+      color: "#F0a58c"
+    - state: decor_wingette_circle
+      color: "#F0a58c"
+    - state: icon_sparot
+  - type: Paper
+    contentSize: 24000
+    content: book-text-sparot-book

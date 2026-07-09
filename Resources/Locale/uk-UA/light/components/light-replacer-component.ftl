@@ -14,7 +14,6 @@ comp-light-replacer-insert-broken-light = Не можна вставляти р�
 comp-light-replacer-refill-from-storage = Ви заправили {THE($light-replacer)}.
 
 ### Вивчити
-
 comp-light-replacer-no-lights = Він порожній.
 comp-light-replacer-has-lights = Він містить наступне:
 comp-light-replacer-light-listing = {$amount ->

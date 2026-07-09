@@ -1,0 +1,1 @@
+obvious-x-pin-novice = [color=#F4EE12]значок[/color] [color=#1CAC99]новачка[/color], що позначає [color=#efefef]недосвідченість[/color]. [color=#1CAC99][italic]Будьте терплячі та уважні до { OBJECT($wearer) }[/italic][/color]

@@ -82,11 +82,13 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 // Starlight-start
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
@@ -109,6 +111,8 @@ namespace Content.Shared.Paper;
 public sealed class PaperSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -144,6 +148,8 @@ public sealed class PaperSystem : EntitySystem
         SubscribeLocalEvent<PaperComponent, PaperMacroMenuUsedMessage>(OnMacroMenuUsedMessage); // Pirate: paperwork tags
         SubscribeLocalEvent<PaperComponent, PaperSignatureRequestMessage>(OnSignatureRequest); // Starlight-edit
 
+        SubscribeLocalEvent<RandomPaperContentComponent, MapInitEvent>(OnRandomPaperContentMapInit);
+
         SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnPaperWrite);
     }
 
@@ -153,6 +159,30 @@ public sealed class PaperSystem : EntitySystem
         {
             SetContent(entity, Loc.GetString(entity.Comp.Content));
         }
+    }
+
+    private void OnRandomPaperContentMapInit(Entity<RandomPaperContentComponent> ent, ref MapInitEvent args)
+    {
+        if (!TryComp<PaperComponent>(ent, out var paperComp))
+        {
+            Log.Warning($"{ToPrettyString(ent)} has a {nameof(RandomPaperContentComponent)} but no {nameof(PaperComponent)}!");
+            RemCompDeferred(ent, ent.Comp);
+            return;
+        }
+        var dataset = _protoMan.Index(ent.Comp.Dataset);
+        // Intentionally not using the Pick overload that directly takes a LocalizedDataset,
+        // because we want to get multiple attributes from the same pick.
+        var pick = _random.Pick(dataset.Values);
+
+        // Name
+        _metaSystem.SetEntityName(ent, Loc.GetString(pick));
+        // Description
+        _metaSystem.SetEntityDescription(ent, Loc.GetString($"{pick}.desc"));
+        // Content
+        SetContent((ent, paperComp), Loc.GetString($"{pick}.content"));
+
+        // Our work here is done
+        RemCompDeferred(ent, ent.Comp);
     }
 
     private void OnInit(Entity<PaperComponent> entity, ref ComponentInit args)

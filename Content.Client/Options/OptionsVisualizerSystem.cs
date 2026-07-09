@@ -19,6 +19,8 @@ public sealed class OptionsVisualizerSystem : EntitySystem
     {
         (OptionVisualizerOptions.Test, CCVars.DebugOptionVisualizerTest),
         (OptionVisualizerOptions.ReducedMotion, CCVars.ReducedMotion),
+        // Pirate - Starlight arachnophobia sprite alternatives.
+        (OptionVisualizerOptions.Arachnophobia, CCVars.ArachnophobiaMode),
     };
 
     [Dependency] private readonly IConfigurationManager _cfg = default!;

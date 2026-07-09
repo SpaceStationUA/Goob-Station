@@ -59,6 +59,9 @@
   - WeaponCapacitorRechargerCircuitboard
   - FreezerElectronics
   - CameraElectronics # goob
+  # Pirate: mass driver port.
+  - MassDriverCircuitboard
+  - MassDriverComputerCircuitboard
 
 - type: latheRecipePack
   id: EngineeringBoardsStatic
@@ -74,6 +77,8 @@
   - PowerDrill
   - WelderExperimental
   - JawsOfLife
+  # Pirate: chem plumbing
+  - RPLD # Pirate: chem plumbing
 
 - type: latheRecipePack
   id: AtmosTools
@@ -101,6 +106,7 @@
   - PortableGeneratorJrPacmanMachineCircuitboard
   - EmitterCircuitboard
   - TelecomServerCircuitboard
+  - BladeServerRackMachineCircuitboard # Pirate
   - SMESAdvancedMachineCircuitboard
   - HolopadMachineCircuitboard
   - TeslaCoilCircuitboard

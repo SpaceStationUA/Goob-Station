@@ -9,24 +9,20 @@ whitelist-playercount-invalid = {$min ->
     }
 }
 whitelist-not-whitelisted-rp = Ви не у вайтлісті. Якщо ви досвідчений гравець, щоб вас додали у вайтліст, зайдіть у наш Дискорд (посилання в лаунчері) та створіть тікет.
-
 cmd-whitelistadd-desc = Додає гравця з зазначеним ніком до вайтліста.
 cmd-whitelistadd-help = whitelistadd <нік>
 cmd-whitelistadd-existing = {$username} вже у вайтлісті!
 cmd-whitelistadd-added = {$username} додано у вайтліст
 cmd-whitelistadd-not-found = Не вийшло знайти '{$username}'
 cmd-whitelistadd-arg-player = [гравець]
-
 cmd-whitelistremove-description = Видалити гравця з таким ніком з вайтлісту.
 cmd-whitelistremove-help = whitelistremove <нік>
 cmd-whitelistremove-existing = {$username} не у вайтлісті!
 cmd-whitelistremove-removed = {$username} видалено з вайтліста
 cmd-whitelistremove-not-found = Неможливо знайти '{$username}'
 cmd-whitelistremove-arg-player = [гравець]
-
 cmd-kicknonwhitelisted-description = Кікнути всіх гравців не у вайтлісті з сервера.
 cmd-kicknonwhitelisted-help = Використання: kicknonwhitelisted
-
 ban-banned-permanent = Цього бану можна позбавитись лише оскарежнням.
 ban-banned-permanent-appeal = Цього бану можна позбутись лише поданням апеляції. Ви можете подати апеляцію в {$link}
 ban-expires = Цей бан триватиме {$duration} хвилин і він скінчиться в {$time} UTC (час Лондона).
@@ -34,13 +30,11 @@ ban-banned-1 = Ви або інший користувач цього прист
 ban-banned-2 = Адміністратор: "{$adminName}"
 ban-banned-3 = Причина бану: "{$reason}"
 ban-banned-4 = Спроба обійти бан, наприклад створенням нового профіля, буде записана
-
 soft-player-cap-full = Сервер повний!
 panic-bunker-account-denied = Сервер у режимі панічного бункера. Нові підключення не будуть прийняті. Спробуйте пізніше
 panic-bunker-account-denied-reason = Сервер у режимі панічного бункера, вас не підключило. Причина: "{$reason}"
 panic-bunker-account-reason-account = Акаунт SS14 має бути старшим за {$minutes} хвилин
 panic-bunker-account-reason-overall = Кількість награних годин має бути {$hours} годин
-
 cmd-whitelistremove-desc = Видаляє гравця з вказаним іменем користувача з білого списку сервера.
 cmd-kicknonwhitelisted-desc = Виганяє з сервера всіх гравців, які не входять до білого списку.
 whitelist-playtime = У вас недостатньо ігрового часу, щоб приєднатися до цього серверу. Вам потрібно щонайменше {$hours} хвилин ігрового часу, щоб приєднатися до цього серверу.

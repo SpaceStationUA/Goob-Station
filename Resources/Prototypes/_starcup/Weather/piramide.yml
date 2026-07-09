@@ -1,0 +1,18 @@
+- type: weatherScheduler
+  id: WeatherPiramide
+  states:
+    WeatherClear:
+      transitions:
+        WeatherClear: 100
+        Sandstorm: 20
+        SandstormHeavy: 5
+    Sandstorm:
+      transitions:
+        WeatherClear: 20
+        Sandstorm: 100
+        SandstormHeavy: 20
+    SandstormHeavy:
+      transitions:
+        WeatherClear: 5
+        Sandstorm: 40
+        SandstormHeavy: 100

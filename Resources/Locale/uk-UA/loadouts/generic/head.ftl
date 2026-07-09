@@ -1,6 +1,5 @@
 loadout-description-LoadoutHeadBeaverHat = Джентельмен.
 loadout-description-LoadoutHeadTophat = Стильний чорний циліндр.
-
 loadout-name-LoadoutHeadFedoraWhite = капелюх (кольоровий)
 loadout-name-LoadoutHeadHatCowboyWhite = ковбойський капелюх (кольоровий)
 loadout-name-LoadoutHeadHatMimesoft = бейсболка (кольорова)

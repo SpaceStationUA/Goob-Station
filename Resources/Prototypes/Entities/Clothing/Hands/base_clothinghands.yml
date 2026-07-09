@@ -113,10 +113,33 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
+      #region Pirate: stains
+      stain:
+        maxVol: 5
+      #endregion Pirate: stains
   - type: Tag
     tags:
     - ClothMade
     - WhitelistChameleon
+  #region Pirate: stains
+  - type: Appearance
+  - type: Stainable
+    clothingVisuals:
+      gloves:
+      - sprite: _Pirate/Effects/blood.rsi
+        state: gloveblood
+    iconVisuals:
+    - sprite: _Pirate/Effects/blood.rsi
+      state: glovebloodicon
+  #endregion Pirate: stains
+  #region Pirate: wetness
+  - type: Wettable
+  # Sealed gloves (deployed modsuit gauntlets) are watertight. Plain gloves have no SealableClothing
+  # so this blocker is skipped for them and they still get wet normally.
+  - type: WetnessBlocker
+    slots: [GLOVES]
+    requiresSealed: true
+  #endregion Pirate: wetness
   - type: DamageOnInteractProtection
     damageProtection:
       flatReductions:

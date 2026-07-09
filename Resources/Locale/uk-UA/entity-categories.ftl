@@ -1,5 +1,4 @@
 entity-category-name-actions = Дії
-
 entity-category-name-game-rules = Правила гри
 entity-category-name-objectives = Цілі
 entity-category-name-roles = Ролі розуму

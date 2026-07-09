@@ -1,11 +1,37 @@
 - type: factionIcon
   id: VampireFaction
+  isShaded: true
   priority: 11
-  locationPreference: Left
   showTo:
     components:
       - ShowAntagIcons
-      - VampireIcon
+      - Vampire
+      - VampireThrall
   icon:
-    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
-    state: vampire
+    sprite: /Textures/_Pirate/Vampire/hud_icons.rsi
+    state: hudvampire
+
+- type: factionIcon
+  id: VampireThrallIcon
+  priority: 1
+  showTo:
+    components:
+      - VampireThrall
+      - Vampire
+  isShaded: true
+  icon:
+    sprite: /Textures/_Pirate/Vampire/hud_icons.rsi
+    state: hudvampirethrall
+
+- type: factionIcon
+  id: BloodCultFaction
+  isShaded: true
+  priority: 11
+  showTo:
+    components:
+      - ShowAntagIcons
+      - BloodCultist
+      - BloodCultConstruct
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/cult_job_icons.rsi
+    state: Cultist

@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: DMRFire
+  files:
+  - /Audio/_Pirate/Weapons/Guns/Gunshots/dmr_fire1.ogg
+  - /Audio/_Pirate/Weapons/Guns/Gunshots/dmr_fire2.ogg
+  - /Audio/_Pirate/Weapons/Guns/Gunshots/dmr_fire3.ogg

@@ -11,4 +11,3 @@ mapping-visibility-subfloor = Підлога
 mapping-visibility-cables = Кабелі
 mapping-visibility-disposal = Утилізація
 mapping-visibility-atmos = Атмос
-

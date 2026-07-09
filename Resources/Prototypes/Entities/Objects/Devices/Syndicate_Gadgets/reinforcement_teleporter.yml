@@ -185,6 +185,8 @@
     prototype: MobCatSyndy
   - type: EmitSoundOnUse
     sound: /Audio/Animals/cat_meow.ogg
+  - type: UseDelay # Pirate: Syndicat reject port
+    delay: 2
 
 - type: entity
   parent: ReinforcementRadio

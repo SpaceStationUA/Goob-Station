@@ -70,11 +70,36 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
+      #region Pirate: stains
+      stain:
+        maxVol: 5
+      #endregion Pirate: stains
   - type: Tag
     tags:
     - ClothMade
     - Recyclable
     - WhitelistChameleon
+  #region Pirate: stains
+  - type: Appearance
+  - type: Stainable
+    clothingVisuals:
+      shoes:
+      - sprite: _Pirate/Effects/blood.rsi
+        state: shoeblood
+    iconVisuals:
+    - sprite: _Pirate/Effects/blood.rsi
+      state: shoebloodicon
+  #endregion Pirate: stains
+  #region Pirate: wetness
+  - type: Wettable
+  # Wet shoes override footstep sound.
+  - type: WetFootstep
+  # Sealed footwear (deployed modsuit boots) is watertight. Plain shoes have no SealableClothing so
+  # this blocker is skipped for them and they still get wet normally.
+  - type: WetnessBlocker
+    slots: [FEET]
+    requiresSealed: true
+  #endregion Pirate: wetness
   - type: ProtectedFromStepTriggers
   - type: Armor # provide minimal covering to your feet
     coverage:

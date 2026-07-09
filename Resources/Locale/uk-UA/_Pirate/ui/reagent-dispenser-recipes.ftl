@@ -1,5 +1,4 @@
 reagent-dispenser-component-slot-name-disk = диск рецептів
-
 reagent-dispenser-window-recipes-title = Збережені рецепти
 reagent-dispenser-window-recipes-name-placeholder = Назва рецепта
 reagent-dispenser-window-recipes-record-button = Запис

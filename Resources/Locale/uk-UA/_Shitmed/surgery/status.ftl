@@ -9,7 +9,6 @@ inspect-part-status-conjunction = схоже, що{" "}
 inspect-part-status-comma = ,{" "}
 inspect-part-status-you = Ваш(а/е)
 inspect-part-status-their = Його/її
-
 inspect-part-status-conjunction2 = . Також{" "}
 inspect-part-status-conjunction3 = Це{" "}
 inspect-part-status-and = і{" "}

@@ -127,6 +127,7 @@ using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Common.MartialArts;
 using Content.Goobstation.Common.Weapons; // Goobstation - Martial Arts
 using Content.Shared._EinsteinEngines.Contests;
+using Content.Shared._Pirate.Weapons.Melee.Events;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Events;
 using Content.Shared.Administration.Components;
@@ -826,6 +827,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         {
             DoDamageEffect(targets, user, targetXform);
         }
+
+        // Pirate: Starlight post-hit event for features that need actually applied melee damage.
+        if (damageResult != null)
+        {
+            var afterHitEvent = new AfterMeleeHitEvent(targets, user, meleeUid, damageResult, null);
+            RaiseLocalEvent(meleeUid, afterHitEvent);
+        }
     }
 
     protected abstract void DoDamageEffect(List<EntityUid> targets, EntityUid? user,  TransformComponent targetXform);
@@ -1012,6 +1020,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (appliedDamage.GetTotal() > FixedPoint2.Zero)
         {
             DoDamageEffect(targets, user, Transform(targets[0]));
+        }
+
+        // Pirate: Starlight post-hit event for features that need actually applied melee damage.
+        if (appliedDamage.GetTotal() > FixedPoint2.Zero)
+        {
+            var afterHitEvent = new AfterMeleeHitEvent(targets, user, meleeUid, appliedDamage, direction);
+            RaiseLocalEvent(meleeUid, afterHitEvent);
         }
 
         // goob edit - stunmeta

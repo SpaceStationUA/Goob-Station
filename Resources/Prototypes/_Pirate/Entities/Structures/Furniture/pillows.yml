@@ -1,0 +1,133 @@
+# starcup - Emergency Comfort Deployment Units adapted from The Den.
+
+- type: entity
+  parent: BaseItem
+  id: PillowBaseWrapped
+  name: wrapped pillow
+  description: The Emergency Deployment Comfort Unit, to be deployed in case of comfort crisis. Use plastic sheets to wrap the pillow and keep it clean until needed.
+  components:
+  - type: Sprite
+    sprite: /Textures/_pirate/Structures/Furniture/pillows.rsi
+    state: base-wrapped
+  - type: Item
+    size: Normal
+  - type: SpawnItemsOnUse
+    items:
+    - id: PillowBaseUnwrapped
+    sound:
+      path: /Audio/Misc/zip.ogg
+  - type: Construction
+    graph: Pillow
+    node: pillowbasewrapped
+
+- type: entity
+  parent: SeatBase
+  id: PillowBaseUnwrapped
+  name: pillow
+  description: The Emergency Deployment Comfort Unit, optimized for maximum fluffiness in conditions of zero-gravity.
+  components:
+  - type: Sprite
+    sprite: /Textures/_pirate/Structures/Furniture/pillows.rsi
+    state: base-unwrapped
+  - type: Construction
+    graph: Pillow
+    node: pillowbaseunwrapped
+
+- type: entity
+  parent: PillowBaseWrapped
+  id: PillowCommandWrapped
+  name: wrapped command pillow
+  description: Contains a soft velvet cushion, perfect for resting those heads weary with the weight of authority. Deploy as needed.
+  components:
+  - type: Sprite
+    sprite: /Textures/_pirate/Structures/Furniture/pillows.rsi
+    state: command-wrapped
+  - type: Item
+    size: Normal
+  - type: SpawnItemsOnUse
+    items:
+      - id: PillowCommandUnwrapped
+    sound:
+      path: /Audio/Misc/zip.ogg
+  - type: Construction
+    graph: Pillow
+    node: pillowcommandwrapped
+
+- type: entity
+  parent: PillowBaseUnwrapped
+  id: PillowCommandUnwrapped
+  name: command pillow
+  description: A soft velvet cushion, perfect for resting those heads weary with the weight of authority for the rare occasions Renault isn't already sleeping on it.
+  components:
+  - type: Sprite
+    sprite: /Textures/_pirate/Structures/Furniture/pillows.rsi
+    state: command-unwrapped
+  - type: Construction
+    graph: Pillow
+    node: pillowcommandunwrapped
+
+- type: entity
+  parent: PillowBaseWrapped
+  id: PillowEngineeringWrapped
+  name: wrapped engineering pillow
+  description: A pillow sewn into a sturdy flame-resistant case. Not Tesla-proof. Deploy as needed.
+  components:
+  - type: Sprite
+    sprite: /Textures/_pirate/Structures/Furniture/pillows.rsi
+    state: engineering-wrapped
+  - type: Item
+    size: Normal
+  - type: SpawnItemsOnUse
+    items:
+    - id: PillowEngineeringUnwrapped
+    sound:
+      path: /Audio/Misc/zip.ogg
+  - type: Construction
+    graph: Pillow
+    node: pillowengineeringwrapped
+
+- type: entity
+  parent: PillowBaseUnwrapped
+  id: PillowEngineeringUnwrapped
+  name: engineering pillow
+  description: A pillow sewn into a sturdy flame-resistant case. Not Tesla-proof.
+  components:
+  - type: Sprite
+    sprite: /Textures/_pirate/Structures/Furniture/pillows.rsi
+    state: engineering-unwrapped
+  - type: Construction
+    graph: Pillow
+    node: pillowengineeringunwrapped
+
+- type: entity
+  parent: PillowBaseWrapped
+  id: PillowMedicalWrapped
+  name: wrapped medical pillow
+  description: A pillow sewn into a soft antimicrobial case, for the comfort of patients and overworked professionals alike. Deploy as needed.
+  components:
+  - type: Sprite
+    sprite: /Textures/_pirate/Structures/Furniture/pillows.rsi
+    state: medical-wrapped
+  - type: Item
+    size: Normal
+  - type: SpawnItemsOnUse
+    items:
+    - id: PillowMedicalUnwrapped
+    sound:
+      path: /Audio/Misc/zip.ogg
+  - type: Construction
+    graph: Pillow
+    node: pillowmedicalwrapped
+
+- type: entity
+  parent: PillowBaseUnwrapped
+  id: PillowMedicalUnwrapped
+  name: medical pillow
+  description: A pillow sewn into a soft antimicrobial case, for the comfort of patients and overworked professionals alike.
+  components:
+  - type: Sprite
+    sprite: /Textures/_pirate/Structures/Furniture/pillows.rsi
+    state: medical-unwrapped
+  - type: Construction
+    graph: Pillow
+    node: pillowmedicalunwrapped

@@ -48,7 +48,6 @@ gun-revolver-insert = Вкладено
 gun-revolver-spin = Прокрутити револьвер
 gun-revolver-spun = Прокручено
 gun-speedloader-empty = Швидкозарядник пустий
-
 gun-burst-fire-rate-examine = Скорострільність - [color={$color}]{$fireRate}[/color] пострілів на хвилину.
 gun-burst-fire-burst-count = Стріляє серіями по [color={$color}]{$burstcount}[/color] куль.
 gun-damage-modifier-examine = Її постріли завдають [color={$color}]{$damage}x[/color] шкоди.

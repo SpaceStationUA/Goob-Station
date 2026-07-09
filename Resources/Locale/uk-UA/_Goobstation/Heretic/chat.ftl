@@ -1,7 +1,6 @@
 # influence gain and fracture examine messages must have newlimes because otherwise they wouldn't fit
 
 influence-base-message = [textshader="{$text}" font="DefaultBold" size={$size} shader="Eldritch"]
-
 influence-gain-message-1 = МЕРЕХТІННЯ...
     ПОТЕНЦІАЛ...
     СИЛА.
@@ -29,7 +28,6 @@ influence-gain-message-14 = ЇХНЯ РУКА ПРИ МОЄМУ БОЦІ.
 influence-gain-message-15 = ВОНИ ХОДЯТЬ СВІТОМ.
     НЕПОМІЧЕНІ.
 influence-gain-message-16 = ХОДИТИ МІЖ ПЛАНАМИ
-
 fracture-examine-message-1 = Невже наша реальність така крихка?
 fracture-examine-message-2 = Що я побачив
     по той бік?

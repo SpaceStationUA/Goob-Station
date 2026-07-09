@@ -220,10 +220,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                             </PanelContainer>
                             <TextureRect Name="NoDataTex"
                                         Access="Public"
-                                        SetSize="64 64"
+                                        SetSize="96 96"
                                         Visible="false"
                                         Stretch="KeepAspectCentered"
-                                        TexturePath="/Textures/Interface/Misc/health_analyzer_out_of_range.png"/>
+                                        TexturePath="/Textures/Interface/Misc/health_analyzer_out_of_range.png"/> <!-- Pirate: Match Shitmed preview size. -->
                             <BoxContainer Margin="5 0 0 0"
                                         Orientation="Vertical"
                                         VerticalAlignment="Top">

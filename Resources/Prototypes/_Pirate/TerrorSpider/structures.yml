@@ -1,0 +1,282 @@
+- type: entity
+  id: WebEntityBeacon
+  placement:
+    mode: SnapgridCenter
+  name: web pole
+  description: A strange web pole.
+  components:
+  - type: Appearance
+  - type: Clickable
+  - type: Physics
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Temperature
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    coldDamageThreshold: 0
+  - type: TemperatureDamage
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    coldDamageThreshold: 0
+  - type: Flammable
+    fireSpread: true
+    damage:
+      types:
+        Heat: 5
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: SpiderWebObject
+  - type: EntityBeacon
+    entitiesToSpawn:
+    - SpiderWeb
+    rangeLimit: 4
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _Pirate/Structures/Specific/TerrorSpiders/buildings_48.rsi
+    color: "#ffffffdd"
+    layers:
+    - state: pole
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 50
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 1
+            max: 5
+
+- type: entity
+  # Pirate - Starlight WebCocoon conflicts with existing _NF handcuffs prototype id.
+  id: TerrorWebCocoon
+  placement:
+    mode: SnapgridCenter
+  name: web cocoon
+  description: A strange web cocoon.
+  components:
+  - type: Appearance
+  - type: Clickable
+  - type: Physics
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Temperature
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    coldDamageThreshold: 0
+  - type: TemperatureDamage
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    coldDamageThreshold: 0
+  - type: Flammable
+    fireSpread: true
+    damage:
+      types:
+        Heat: 5
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: SpiderWebObject
+  - type: Strap
+    position: Stand
+    needsHands: false
+    setVisible: true
+    whitelist:
+      components:
+      - Spider
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _Pirate/Structures/Specific/TerrorSpiders/buildings.rsi
+    drawdepth: OverMobs
+    layers:
+    - state: cocoon
+    - state: cocoon_open
+      map: ["buckledLayer"]
+  - type: GenericVisualizer
+    visuals:
+      enum.StrapVisuals.State:
+        buckledLayer:
+          True: { visible: false }
+          False: { visible: true }
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 50
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 1
+            max: 5
+  - type: HealOnBuckle
+    damage:
+      types:
+        Bloodloss: -0.1
+      groups:
+        Brute: -0.1
+        Burn: -0.1
+        Toxin: -0.1
+
+- type: entity
+  id: AmmoniaEggGenerator
+  placement:
+    mode: SnapgridCenter
+  name: ammonia egg
+  description: A strange egg which produces ammonia.
+  components:
+  - type: Appearance
+  - type: Clickable
+  - type: Physics
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Temperature
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    coldDamageThreshold: 0
+  - type: TemperatureDamage
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    coldDamageThreshold: 0
+  - type: Flammable
+    fireSpread: true
+    damage:
+      types:
+        Heat: 5
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: SpiderWebObject
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _Pirate/Structures/Specific/TerrorSpiders/buildings.rsi
+    drawdepth: OverMobs
+    layers:
+    - state: ammonia_gen
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 50
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: GasMiner
+    spawnGas: Ammonia
+    maxExternalAmount: 101
+    spawnAmount: 20
+    # Pirate - local GasMiner does not support Starlight showInfoOnExamine.
+  - type: AtmosDevice
+  - type: ReplaceFloorOnSpawn
+    # Pirate - GasMiner disables itself on space tiles, so give the egg a valid turf when spawned in breaches.
+    replaceableTiles:
+    - Plating
+    - Lattice
+    - TrainLattice
+    replacementTiles:
+    - Plating
+    offsets:
+    - 0,0
+
+- type: entity
+  id: EffectTerrorCocoon
+  categories: [ HideSpawnMenu ]
+  # Pirate - local "cocoon" locale id conflicts with prototype localization validation.
+  name: terror cocoon
+  description: Web cocoon with people inside!
+  components:
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Sprite
+    noRot: true
+    drawdepth: BelowMobs
+    sprite: /Textures/_Pirate/Effects/cocoon.rsi
+    layers:
+    - state: large1
+  - type: RandomSprite
+    available:
+    - 0:
+        large1: ""
+        large2: ""
+        large3: ""
+  - type: ContainerContainer
+    containers:
+      entity: !type:Container
+  - type: WrapEntityHolder

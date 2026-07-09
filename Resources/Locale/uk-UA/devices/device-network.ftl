@@ -35,9 +35,7 @@ device-address-prefix-smes = СМС-
 device-address-prefix-console = КОН-
 device-address-prefix-fire-alarm = ППО-
 device-address-prefix-air-alarm = ТНА-
-
 device-address-prefix-sensor-monitor = МОН-
-
 device-address-examine-message = Адреса пристрою - {$address}.
 
 # Імена мережевих ідентифікаторів пристроїв
@@ -47,8 +45,6 @@ device-net-id-wireless = Бездротова
 device-net-id-apc = АПЦ
 device-net-id-atmos-devices = Пристрої Атмосу
 device-net-id-reserved = Зарезервоване
-
-
 device-frequency-prototype-name-cyborg-control = Кіборг-контроль
 device-frequency-prototype-name-robotics-console = Консоль робототехніки
 

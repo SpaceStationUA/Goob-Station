@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Scorpion made by Entings (github), Curled and Short made by PixelTheKermit (github) and edited by Sha-Seng (github). Futher edited by SalamanderSkies (github) to fit slimes.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "slime-curled",
+      "directions": 4
+    },
+    {
+      "name": "slime-scorpion",
+      "directions": 4
+    },
+    {
+      "name": "slime-short",
+      "directions": 4
+    }
+  ]
+}

@@ -89,6 +89,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
         if (!IsTileBlockedByWeb(coords))
         {
             Spawn(ent.Comp.WebPrototype, coords);
+            RaiseLocalEvent(ent.Owner, new SpiderWebSpawnedEvent());
             result = true;
         }
 
@@ -102,6 +103,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
                 continue;
 
             Spawn(ent.Comp.WebPrototype, outerSpawnCoordinates);
+            RaiseLocalEvent(ent.Owner, new SpiderWebSpawnedEvent());
             result = true;
         }
 

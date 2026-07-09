@@ -11,7 +11,6 @@ cmd-jobwhitelistget-help = Використання: jobwhitelistadd <ім'я к
 cmd-jobwhitelistget-whitelisted-none = Гравця {$player} не внесено до білого списку на жодній роботі.
 cmd-jobwhitelistget-whitelisted-for = "Гравець {$player} внесений до білого списку за:
 {$jobs}"
-
 cmd-jobwhitelistremove-desc = Видаляє можливість гравця виконувати роботу з білого списку.
 cmd-jobwhitelistremove-help = Використання: jobwhitelistadd <ім'я користувача> <посада>
 cmd-jobwhitelistremove-was-not-whitelisted = {$player} не було внесено до білого списку, щоб грати як {$jobId} ({$jobName}).

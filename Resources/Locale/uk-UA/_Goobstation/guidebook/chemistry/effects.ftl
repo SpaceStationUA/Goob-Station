@@ -18,7 +18,6 @@ reagent-effect-guidebook-deal-stamina-damage = { $chance ->
                     [true] миттєвої
                     *[false] поступової
                   } шкоди витривалості
-
 reagent-effect-guidebook-immunity-modifier = { $chance ->
         [1] Змінює
         *[other] змінюють

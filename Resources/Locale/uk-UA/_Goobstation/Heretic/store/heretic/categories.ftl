@@ -12,5 +12,4 @@ store-heretic-path-void = Шлях Порожнечі
 store-heretic-path-rust = Іржавий Шлях
 store-heretic-path-blade = Шлях Клинка
 store-heretic-path-side = Побічні знання
-
 store-heretic-path-cosmos = Шлях Космосу

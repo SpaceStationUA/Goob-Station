@@ -43,7 +43,6 @@ units-pascal = Па
 units-k-pascal = кПа
 units-m-pascal = МПа
 units-g-pascal = ГПа
-
 units-u--pascal-long = Мікропаскаль
 units-m--pascal-long = Міліпаскаль
 units-pascal-long = Паскаль
@@ -58,7 +57,6 @@ units-watt = Вт
 units-k-watt = кВт
 units-m-watt = МВт
 units-g-watt = ГВт
-
 units-u--watt-long = Мікроват
 units-m--watt-long = Міліват
 units-watt-long = Ват
@@ -72,7 +70,6 @@ units-m--joule = мДж
 units-joule = Дж
 units-k-joule = кДж
 units-m-joule = МДж
-
 units-u--joule-long = Мікроджоуль
 units-m--joule-long = Міліджоуль
 units-joule-long = Джоуль
@@ -86,7 +83,6 @@ units-kelvin = К
 units-k-kelvin = кК
 units-m-kelvin = МК
 units-g-kelvin = ГК
-
 units-u--kelvin-long = Мікрокельвін
 units-m--kelvin-long = Мілікельвін
 units-kelvin-long = Кельвін

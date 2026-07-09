@@ -12,6 +12,7 @@
   components:
   - type: SetRoof
     value: true
+    blockWeather: true
   - type: Sprite
     layers:
     - state: green
@@ -25,6 +26,7 @@
   components:
   - type: SetRoof
     value: false
+    blockWeather: false
   - type: Sprite
     layers:
     - state: red

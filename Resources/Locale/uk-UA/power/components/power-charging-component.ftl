@@ -11,6 +11,5 @@ power-charge-window-status-discharging = Розрядка
 power-charge-window-power-on = На
 power-charge-window-power-off = Вимкнено
 power-charge-window-power-label = { $draw } / { $max } W
-
 power-charge-window-eta-none = Н/Д
 power-charge-window-eta-value = { TOSTRING($left, "m\\:ss") }

@@ -32,6 +32,8 @@
   text: "/ServerInfo/Guidebook/Antagonist/Antagonists.xml"
   children:
   - Traitors
+  - BloodBrothers # Pirate
+  - BloodCult # Pirate
   - CorporateAgents # Goobstation - Corporate Agents
   - Changelings # Goobstation - changelings
   - Heretics # Goobstation - heretics

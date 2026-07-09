@@ -95,6 +95,9 @@
     LeftHand:
       points: 2
       required: false
+    Tail:
+      points: 1
+      required: false
     # PIRATE START
     Face:
       points: 3

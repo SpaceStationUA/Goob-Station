@@ -9,4 +9,3 @@ advertisement-magivend-8 = Знищити станцію!
 advertisement-magivend-9 = Обладнання для згинання простору-часу!
 advertisement-magivend-10 = 1234 БОЖЕВІЛЬНИХ LOL!
 advertisement-magivend-11 = НАР'СІ, ВСТАВАЙ!!!
-

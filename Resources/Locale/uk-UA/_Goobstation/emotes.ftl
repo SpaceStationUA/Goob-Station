@@ -10,22 +10,18 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 emote-menu-category-farts = Пуки
-
 chat-emote-name-flip = Зробити сальто
 chat-emote-name-spin = Крутитися
 chat-emote-name-jump = Стрибнути
 chat-emote-name-tweak = Дьоргатись
 chat-emote-name-flex = Грати м'язами
-
 chat-emote-msg-flip = робить сальто!
 chat-emote-msg-spin = крутиться!
 chat-emote-msg-jump = стрибає!
 chat-emote-msg-tweak = починає дьоргатись!
 chat-emote-msg-flex = грає своїми м'язами.
-
 chat-emote-name-gulp = Ковть
 chat-emote-msg-gulp = ковтає.
-
 chat-emote-name-surprised = виглядати здивованим
 chat-emote-msg-surprised = виглядає здивованим.
 chat-emote-name-bagawk = Кудкудак

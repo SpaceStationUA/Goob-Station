@@ -36,11 +36,11 @@
     ClothingOuterArmoredJacketCentralCommand: 2
     ClothingNeckScarfStripedCentcom: 3
     ClothingNeckCloakCentcom: 3
-    ClothingHeadHatBunnyearsCentcom: 3
     ClothingNeckCloakHighCommand: 3
     ClothingNeckCloakHighCommandCape: 2
     ClothingNeckCloakCentComPoncho: 3
     ClothingNeckMantleEpaulettes: 1
+    CardBoxNanotrasen: 2 # GoobStation
   contrabandInventory:
     ClothingUniformJumpsuitGoldenLiaison: 2
     ClothingNeckCloakGoldenCentComm: 2

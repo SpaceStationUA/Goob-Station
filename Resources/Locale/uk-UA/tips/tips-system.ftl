@@ -1,1 +1,1 @@
-﻿tips-system-chat-message-wrap = Порада: {$tip}
+tips-system-chat-message-wrap = Порада: {$tip}

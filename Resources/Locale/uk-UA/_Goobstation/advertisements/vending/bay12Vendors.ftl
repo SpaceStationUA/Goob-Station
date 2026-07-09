@@ -8,16 +8,13 @@ advertisement-solsnack-1 = Ми прибрали всю бюрократію, щ
 advertisement-solsnack-2 = Стандарти безпеки харчових продуктів - це лише рекомендація, якщо ви знаєте потрібних людей!
 advertisement-solsnack-3 = Закуски з дому, корупція включена!
 advertisement-solsnack-4 = Смак дому!
-
 advertisement-weebvend-1 = Konnichiwa gaijin senpai!
 advertisement-weebvend-2 = Поміть мене, семпай!
 advertisement-weebvend-3 = Kawaii-desu!
-
 advertisement-hotfood-1 = Отримайте свою черству, розсипчасту їжу тут! Національна страва Сола ще ніколи не смакувала краще!
 advertisement-hotfood-2 = Якщо це та їжа, що чекає на вас вдома, не дивно, що ви ховаєтеся тут.
 advertisement-hotfood-3 = Продукти Соларіан, як завжди, подаються з діареєю на гарнір!
 advertisement-hotfood-4 = Помста - це страва, яку найкраще подавати теплою.
-
 advertisement-fitness-1 = ПотоМАКС, стань дужим!
 advertisement-fitness-2 = Біль - це просто слабкість, що покидає тіло!
 advertisement-fitness-3 = Біжи! Твій жир наздоганяє тебе!

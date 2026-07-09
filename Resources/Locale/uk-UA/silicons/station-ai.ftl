@@ -5,12 +5,9 @@ wire-name-ai-act-light = АІА
 station-ai-takeover = Захоплення ШІ
 ai-open = Відкрити дії
 ai-close = Закрити дії
-
 bolt-close = Закрити болт
 bolt-open = Відкрити болт
-
 toggle-light = Перемкнути світло
-
 emergency-access-on = Увімкнути аварійний доступ
 emergency-access-off = Вимкнути аварійний доступ
 electrify-door-on = Увімкнути перезарядку
@@ -35,5 +32,4 @@ station-ai-icon-smiley = Суцільні посмішки
 station-ai-hologram-female = Жіноча зовнішність
 station-ai-hologram-male = Чоловіча зовнішність
 station-ai-hologram-face = Безтілесна голова
-
 station-ai-eye-name = Око ШІ - {$name}

@@ -1,0 +1,84 @@
+- type: entity
+  id: TerrorSpidersSpawn
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 50
+    # Pirate - Starlight DynamicRuleCost is unavailable; keep its cost as local chaos score.
+    chaosScore: 200
+    delay:
+      min: 240
+      max: 420
+  - type: VentSpawnRule
+  - type: AntagSpawner
+    prototype: MobTerrorPrincess
+  - type: TerrorSpiderRule
+  - type: AntagSelection
+    agentName: terror-princess-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostTerrorPrincess
+      min: 1
+      max: 3
+      playerRatio: 50
+      pickPlayer: false
+      mindRoles:
+      - MindRoleTerrorPrincess
+
+- type: gamePreset
+  id: TerrorSpiders
+  alias:
+  - spiders
+  - terror
+  - terrors
+  - spider
+  name: terrorspiders-gamemode-title
+  description: terrorspiders-gamemode-description
+  showInVote: true
+  minPlayers: 50
+  rules:
+  - TerrorSpidersSpawn
+  # Pirate - Starlight SubGamemodesRuleNoChangelings/RailroadingMinor are unavailable here.
+  - SubGamemodesRule
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: antag
+  id: TerrorPrincess
+  name: roles-antag-terror-princess-name
+  antagonist: true
+  objective: roles-antag-terror-princess-description
+  guides: [ TerrorSpiders ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 172800 # Pirate - local role requirements use seconds; Starlight value was 48h.
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleTerrorPrincess
+  name: Terror Princess Role
+  components:
+  - type: MindRole
+    exclusiveAntag: true
+    antagPrototype: TerrorPrincess
+
+- type: playTimeTracker
+  id: AntagTerrorPrincess
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostTerrorPrincess
+  components:
+  - type: GhostRole
+    name: ghost-role-information-terror-princess-name
+    description: ghost-role-information-terror-princess-description
+    rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleTerrorPrincess
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: _Pirate/Mobs/Animals/Spiders/terror_princess.rsi
+      state: 1-alive

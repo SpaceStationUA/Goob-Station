@@ -183,7 +183,6 @@
   icon: "JobIconHeadOfSecurity"
   supervisors: job-supervisors-captain
   canBeAntag: false
-  whitelisted: true # Pirate
   guides: # goobstation
   - Security
   - SpaceLaw

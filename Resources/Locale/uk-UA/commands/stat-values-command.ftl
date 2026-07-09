@@ -16,7 +16,6 @@ stat-lathe-sell = Ціна продажу
 stat-item-values = Розміри виробів
 stat-item-id = ІДЕНТИФІКАТОР
 stat-item-price = Розмір
-
 stat-drawrate-values = Рівень споживання АРС
 stat-drawrate-id = ID
 stat-drawrate-rate = Споживання (Вт)

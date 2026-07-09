@@ -17,7 +17,6 @@ particle-accelerator-control-menu-draw-value = [font="Monospace"]{$watts}/{$last
 particle-accelerator-control-menu-draw-not-available = [font="Monospace"][color=gray]Н/Д[/color][/font]
 particle-accelerator-control-menu-flavor-left = Будь ласка, тримайте клоуна подалі від цієї консолі!
 particle-accelerator-control-menu-flavor-right = v 1.6
-
 particle-accelerator-radio-message-on = Живлення ПЧ увімкнено.
 particle-accelerator-radio-message-off = Живлення ПЧ вимкнено.
 particle-accelerator-radio-message-num = Потужність ПЧ встановлено на рівень {$level}.

@@ -13,3 +13,13 @@ construction-recipe-table-fancy-purple = вишуканий стіл (фіоле
 construction-recipe-table-fancy-pink = вишуканий стіл (рожевий)
 construction-recipe-table-fancy-red = вишуканий стіл (червоний)
 construction-recipe-table-fancy-white = вишуканий стіл (білий)
+
+# Pirate - Pillows
+construction-recipe-pillow-base-wrapped = загорнута подушка
+construction-recipe-pillow-base-unwrapped = подушка
+construction-recipe-pillow-command-wrapped = загорнута командна подушка
+construction-recipe-pillow-command-unwrapped = командна подушка
+construction-recipe-pillow-engineering-wrapped = загорнута інженерна подушка
+construction-recipe-pillow-engineering-unwrapped = інженерна подушка
+construction-recipe-pillow-medical-wrapped = загорнута медична подушка
+construction-recipe-pillow-medical-unwrapped = медична подушка

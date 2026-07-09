@@ -8,7 +8,6 @@ verb-self-target-pronoun = Ти сам.
 
 
 # дієслівні категорії та загальні дієслова. Вони з'являються в різних системах, тому їх також можна розмістити тут.
-
 verb-categories-admin = Адмін
 verb-categories-debug = Дебаг
 verb-categories-examine = Оглянути
@@ -28,16 +27,13 @@ verb-categories-timer = Встановити Затримку
 verb-categories-lever = Важіль
 verb-categories-select-type = Оберіть Тип
 verb-categories-fax = Встановити Місцепризначення
-
 verb-common-toggle-light = Перемкнути Світло
 verb-common-close = Зачинити
 verb-common-open = Відчинити
 verb-common-close-ui = Закрити UI
 verb-common-open-ui = Відкрити UI
-
 verb-categories-interaction = Взаємодія
 verb-categories-power-level = Рівень потужності
-verb-categories-blood-cult = Культ крові
 verb-categories-select-faction = Обрати фракцію
 verb-categories-rename = Перейменувати
 verb-categories-adjust = Налаштувати

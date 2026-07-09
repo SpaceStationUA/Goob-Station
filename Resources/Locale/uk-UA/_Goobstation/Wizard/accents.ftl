@@ -9,7 +9,6 @@ accent-words-frog-1 = Рііі!!
 accent-words-frog-2 = Ріііі!!
 accent-words-frog-3 = РІІІІ!!
 accent-words-frog-4 = РІІІІІІ!!
-
 accent-words-alt-frog-1 = ХУУУУУУ!!
 accent-words-alt-frog-2 = СМАЛЕЕЕЕЦЬ!!
 accent-words-alt-frog-3 = Привіт, моя крихітко, приві, моя люба, привіт, моя гаряча крихітко.
@@ -58,7 +57,6 @@ accent-words-bear-4 = Гарчання!
 accent-words-raven-1 = КАР!
 accent-words-raven-2 = К-КАРР!
 accent-words-raven-3 = Квок!
-
 accent-words-alt-raven-1 = Ніколи більше...
 
 # Шакал

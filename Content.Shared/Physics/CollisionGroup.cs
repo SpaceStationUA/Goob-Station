@@ -106,6 +106,8 @@ public enum CollisionGroup
     // Y dis door passable when all the others impassable / collision.
     DoorPassable       = 1 << 8, // 256 Allows door to close over top, Like blast doors over conveyors for disposals rooms/cargo.
     BlobImpassable     = 1 << 9, // 512 Blob Tiles Goobstation - Blob
+    // Pirate - Starlight uses 1 << 9, but Goob already uses that for blobs.
+    SpiderlingImpassable = 1 << 10, // 1024 Terror spiders
 
     MapGrid = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 

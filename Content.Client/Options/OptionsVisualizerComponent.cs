@@ -86,4 +86,9 @@ public enum OptionVisualizerOptions
     /// Corresponds to the <see cref="CCVars.ReducedMotion"/> CVar being set.
     /// </summary>
     ReducedMotion = 1 << 1,
+
+    /// <summary>
+    /// Pirate - corresponds to Starlight arachnophobia sprite alternatives.
+    /// </summary>
+    Arachnophobia = 1 << 2,
 }

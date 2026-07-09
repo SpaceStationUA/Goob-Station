@@ -1,0 +1,15 @@
+- type: entity
+  parent: BaseAction
+  id: ActionSonicBoom
+  name: Sonic Boom
+  description: Emit a shockwave which flings everything around you.
+  components:
+  - type: Action
+    checkCanInteract: false
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_mothroach.rsi
+      state: shockwave
+    itemIconStyle: BigAction
+    useDelay: 10.0 # Pirate: requested cooldown
+  - type: InstantAction
+    event: !type:AbilitySonicBoomEvent

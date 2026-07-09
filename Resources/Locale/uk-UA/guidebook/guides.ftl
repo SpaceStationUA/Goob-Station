@@ -51,7 +51,6 @@ guide-entry-forensics = Криміналістика
 guide-entry-defusal = Знешкодження бомби
 guide-entry-criminal-records = Кримінальні записи
 guide-entry-species = Раси
-
 guide-entry-antagonists = Антагоністи
 guide-entry-nuclear-operatives = Ядерні Оперативники
 guide-entry-traitors = Зрадники
@@ -59,10 +58,8 @@ guide-entry-zombies = Зомбі
 guide-entry-revolutionaries = Революціонери
 guide-entry-minor-antagonists = Малі антагоністи
 guide-entry-space-ninja = Космічний Ніндзя
-
 guide-entry-writing = Написання
 guide-entry-glossary = Глосарій
-
 guide-entry-elements = Елементи
 guide-entry-narcotics = Наркотики
 guide-entry-pyrotechnics = Піротехніка
@@ -74,7 +71,6 @@ guide-entry-botanical = Ботанічні препарати
 guide-entry-altars-golemancy = Вівтарі та Големанство
 guide-entry-reverse-engineering = Реінжиніринг
 guide-entry-glimmer-creatures = Мерехтливі істоти
-
 guide-entry-rules = Правила сервера
 guide-entry-rules-core-only = Тільки основний набір правил
 guide-entry-rules-lrp = Стандартний набір правил
@@ -132,8 +128,6 @@ guide-entry-rules-ban-durations = Тривалість банів
 guide-entry-loadout-info = Гардероб
 guide-entry-loadout-eyes-eyepatch = Пов'язка на око
 guide-entry-blood-cult = Культ крові
-
-
 guide-entry-Psionic-Mantis = Псіонічний богомол
 guide-entry-vampires = Вампіри
 guide-entry-expandingrepairingstation = Розширення та ремонт станції
@@ -212,6 +206,5 @@ guide-entry-rules-r19 = П19
 guide-entry-rules-r20 = П20
 guide-entry-rules-mrp-m0 = Правила MRP
 guide-entry-rules-m1 = M1
-
 guide-entry-plastic = Виробництво пластикових листів
 guide-entry-ressureregulator = Регулятор тиску

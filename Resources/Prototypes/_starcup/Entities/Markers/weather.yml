@@ -1,0 +1,12 @@
+- type: entity
+  name: Block Weather
+  id: WeatherBlockMarker
+  description: "Prevents weather from affecting a tile."
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - sprite: _starcup/Entities/Markers/markers.rsi
+      state: block_weather
+      shader: unshaded
+  - type: BlockWeather

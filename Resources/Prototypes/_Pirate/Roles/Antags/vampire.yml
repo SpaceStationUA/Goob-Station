@@ -11,3 +11,10 @@
     - IPC
     - Plasmaman
 #  guides: [ Changelings ]
+
+- type: antag
+  id: VampireThrall
+  name: roles-antag-vampire-thrall-name
+  antagonist: true
+  setPreference: false
+  objective: roles-antag-vampire-thrall-description

@@ -8,6 +8,5 @@ comp-storage-cant-drop = Ви не можете відпустити { THE($enti
 comp-storage-window-title = Зберігти Предмет
 comp-storage-window-weight = { $weight }/{ $maxWeight }, Макс. розмір: {$size}
 comp-storage-window-slots = Слоти: { $itemCount }/{ $maxCount }, Макс. розмір: {$size}
-
 comp-storage-verb-open-storage = Відкрити сховище
 comp-storage-verb-close-storage = Закрити сховище

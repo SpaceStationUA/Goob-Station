@@ -19,8 +19,6 @@ time-transfer-panel-warning-transfer-process = Передача часу в пр
 time-transfer-panel-checkbox-group = Група
 time-transfer-overall-checkbox = Загальний
 time-transfer-panel-search-placeholder = Пошук посад
-
-
 cmd-timetransferpanel-desc = Відкриває меню передачі часу
 admin-player-actions-window-time-transfer = Передача часу
 time-transfer-panel-no-player-database-message = Гравця не знайдено в базі даних

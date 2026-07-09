@@ -34,7 +34,6 @@ names-scurret-first-dataset-33 = Мудрий
 names-scurret-first-dataset-34 = Пильний
 names-scurret-first-dataset-35 = Підбадьорливий
 names-scurret-first-dataset-36 = Тактовний
-
 names-scurret-first-dataset-37 = Виживаючий
 names-scurret-first-dataset-38 = Медитуючий
 names-scurret-first-dataset-39 = Полюючий

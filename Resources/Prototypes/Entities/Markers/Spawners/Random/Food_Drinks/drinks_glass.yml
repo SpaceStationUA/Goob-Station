@@ -29,8 +29,8 @@
       - sprite: Objects/Consumable/Drinks/beerglass.rsi
         state: icon
   - type: RandomSpawner
-  #small item
     prototypes:
+      - BudgetInsulsDrinkGlass
       - DrinkAbsintheGlass
       - DrinkAleGlass
       - DrinkAlienBrainHemorrhage
@@ -45,68 +45,90 @@
       - DrinkBeerglass
       - DrinkBerryJuice
       - DrinkBlackRussianGlass
+      - DrinkBloodyJaegerGlass
+      - DrinkBloodyMaryGlass
       - DrinkBlueCuracaoGlass
       - DrinkBlueHawaiianGlass
-      - DrinkBloodyMaryGlass
       - DrinkBooger
       - DrinkBraveBullGlass
+      - DrinkBreathofFreshAirGlass
       - DrinkBronxGlass
-      - BudgetInsulsDrinkGlass
+      - DrinkBumWineGlass
+      - DrinkBurnchamberGlass
       - DrinkCarrotJuice
-      - DrinkCoconutRum
+      - DrinkCafeCocktailGlass
+      - DrinkChartruseGlass
       - DrinkChocolateGlass
+      - DrinkCinnamonCookieGlass
+      - DrinkCoconutRum
       - DrinkCognacGlass
       - DrinkCosmopolitan
+      - DrinkCottonBoolGlass
       - DrinkCrushDepthGlass
       - DrinkCubaLibreGlass
       - DrinkDarkandStormyGlass
       - DrinkDeadRumGlass
+      - DrinkDeathFlipGlass
       - DrinkDevilsKiss
-      - DrinkDriestMartiniGlass
+      - DrinkDontTellGlass
       - DrinkDrGibbGlass
+      - DrinkDriestMartiniGlass
       - DrinkElectricSharkGlass
       - DrinkErikaSurprise
+      - DrinkFizzballFloatGlass
+      - DrinkFizzballGlass
       - DrinkFourteenLokoGlass
       - DrinkGargleBlasterGlass
+      - DrinkGildlagerGlass
       - DrinkGinFizzGlass
       - DrinkGinGlass
       - DrinkGinTonicglass
-      - DrinkGildlagerGlass
       - DrinkGrapeJuice
       - DrinkGreenTeaGlass
       - DrinkGrogGlass
       - DrinkHippiesDelightGlass
+      - DrinkHummingBirdGlass
+      - DrinkIceCreamGlass
+      - DrinkIcedBeerGlass
       - DrinkIcedCoffeeGlass
       - DrinkIcedGreenTeaGlass
-      - DrinkIcedBeerGlass
-      - DrinkIceCreamGlass
-      - IrishBoolGlass
+      - DrinkInsideScoopGlass
       - DrinkIrishCarBomb
       - DrinkIrishCoffeeGlass
-      - DrinkLemonadeGlass
       - DrinkJackRoseGlass
+      - DrinkJaegeritaGlass
       - DrinkJungleBirdGlass
       - DrinkKalimotxoGlass
       - DrinkKiraSpecial
+      - DrinkLemonadeGlass
       - DrinkLongIslandIcedTeaGlass
+      - DrinkLovePotionGlass
+      - DrinkLoveTapGlass
+      - DrinkLungCloggerGlass
       - DrinkManhattanGlass
       - DrinkManlyDorfGlass
       - DrinkMargaritaGlass
       - DrinkMartiniGlass
       - DrinkMeadGlass
       - DrinkMilkshake
+      - DrinkMinotaursLamentGlass
       - DrinkMojito
       - DrinkMonkeyBusinessGlass
+      - DrinkMoonrise
+      - DrinkMoonshineGlass
       - DrinkNTCahors
+      - DrinkOrangeCoffeeGlass
       - DrinkPainkillerGlass
       - DrinkPatronGlass
       - DrinkPinaColadaGlass
+      - DrinkPopQuizGlass
       - DrinkPoscaGlass
       - DrinkRadlerGlass
+      - DrinkRaktaccinoGlass
       - DrinkRedMeadGlass
       - DrinkRewriter
-      - DrinkRoyRogersGlass
       - DrinkRootBeerFloatGlass
+      - DrinkRoyRogersGlass
       - RubberneckGlass
       - DrinkRumGlass
       - DrinkSakeGlass
@@ -116,15 +138,24 @@
       - DrinkSuiDreamGlass
       - DrinkSingulo
       - DrinkSoyLatte
+      - DrinkStarryNightGlass
+      - DrinkSupermixerGlass
+      - DrinkSupermixerpsychGlass
+      - DrinkSurferGlass
       - DrinkSyndicatebomb
       - DrinkTequilaSunriseGlass
+      - DrinkThavenBadGlass
+      - DrinkTheMartinez
       - DrinkThreeMileIslandGlass
+      - DrinkThumperGlass
       - DrinkTortugaGlass
       - DrinkToxinsSpecialGlass
+      - DrinkTuxedoSunsetGlass
       - DrinkVampiroGlass
       - DrinkVodkaMartiniGlass
       - DrinkVodkaRedBool
       - DrinkVodkaTonicGlass
+      - DrinkVoxRocksGlass
       - DrinkWatermelonJuice
       - DrinkWatermelonWakeup
       - DrinkWhiskeyColaGlass
@@ -132,26 +163,33 @@
       - DrinkWhiteRussianGlass
       - DrinkWineGlass
       - XenoBasherGlass
+      - IrishBoolGlass
       - DrinkShakeBlue
       - DrinkShakeWhite
-      - DrinkTheMartinez
-      - DrinkMoonshineGlass
     chance: 0.8
     offset: 0.0
-    #rare
     rarePrototypes:
       - DrinkAcidSpitGlass
       - DrinkAlliesCocktail
       - DrinkAmasecGlass
       - DrinkAtomicBombGlass
+      - DrinkBeepskySmashGlass
+      - DrinkBloodierMaryGlass
       - DrinkDemonsBlood
       - DrinkDoctorsDelightGlass
+      - DrinkHoochGlass
+      - DrinkJungleJuiceGlass
+      - DrinkKingSodaGlass
+      - DrinkLiquidLunchGlass
       - DrinkNeurotoxinGlass
       - DrinkNuclearColaGlass
-      - DrinkSilencerGlass
+      - DrinkPoorMansFrezonGlass
+      - DrinkReaganomicsGlass
+      - DrinkSalvagersSootheGlass
       - DrinkShakeMeat
       - DrinkShakeRobo
-      - DrinkHoochGlass
-      - DrinkBeepskySmashGlass
+      - DrinkSilencerGlass
+      - DrinkTheDrinkGlass
+      - DrinkZombieSlushieGlass
       - DrinkBacchusBlessing
     rareChance: 0.05

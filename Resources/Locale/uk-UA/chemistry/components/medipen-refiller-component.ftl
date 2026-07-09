@@ -16,5 +16,3 @@ medipen-refiller-window-container-name = {$name}:
 medipen-refiller-window-container-volume = {$amount}/{$volume}u
 medipen-refiller-window-reagent-name = {$name}:
 medipen-refiller-window-reagent-amount = {$amount}u
-
-

@@ -2,11 +2,8 @@ bloodstream-component-looks-pale = [color=bisque]{CAPITALIZE(SUBJECT($target))} 
 bloodstream-component-slight-bleeding = [color=#893843]{CAPITALIZE(SUBJECT($target))} має незначну кровотечу.[/color]
 bloodstream-component-bleeding = Рани [color=red]{CAPITALIZE(SUBJECT($target))} кровоточать.[/color]
 bloodstream-component-profusely-bleeding = Рани [color=crimson]{CAPITALIZE(SUBJECT($target))} сильно кровоточать![/color]
-
 bloodstream-component-wounds-cauterized = Ти відчуваєш як твої рани болюче закриваються!
-
 bloodstream-component-selfaware-looks-pale = [color=bisque]Ви відчуваєте запаморочення від втрати крові.[/color]
 bloodstream-component-selfaware-bleeding = [color=red]У тебе кров.[/color]
 bloodstream-component-selfaware-profusely-bleeding = [color=crimson]У вас сильна кровотеча![/color]
-
 bloodstream-component-massive-bleeding = [color=#420000]{CAPITALIZE(SUBJECT($target))} {CONJUGATE-BE($target)} у стані масивної кровотечі.[/color]

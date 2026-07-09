@@ -19,3 +19,16 @@ loadout-group-generic-shoes = Shoes
 loadout-group-generic-outerclothing = Outer clothing
 loadout-group-belt = Belt
 loadout-group-gloves = Gloves
+
+# Mantis loadout groups
+loadout-group-mantis-head = Mantis headwear
+loadout-group-mantis-Jumpsuit = Mantis uniform
+loadout-group-mantis-Back = Mantis backpack
+loadout-group-mantis-OuterClothing = Mantis outerwear
+loadout-group-mantis-Gloves = Mantis gloves
+loadout-group-mantis-Shoes = Mantis shoes
+loadout-group-mantis-Belt = Mantis belt
+loadout-group-mantis-Eyes = Mantis eyewear
+loadout-group-mantis-Neck = Mantis neckwear
+loadout-group-mantis-Ears = Mantis headset
+loadout-group-mantis-Mask = Mantis mask

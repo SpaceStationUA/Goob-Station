@@ -34,7 +34,6 @@ materials-raw-titanium = сирий титан
 materials-raw-uranium = сирий уран
 materials-raw-bananium = сирий бананіуміум
 materials-raw-salt = неочищена сіль
-
 material-reclaimer-upgrade-process-rate = швидкість процесу
 materials-bluespace = блюспейс
 materials-normality = нормальність

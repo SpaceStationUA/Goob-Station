@@ -20,8 +20,6 @@ mail-penalty-fragile = ЦІЛІСНІСТЬ ПОРУШЕНО. БАНКІВСЬК
 mail-penalty-expired = ТЕРМІН ДОСТАВКИ ПРОСТРОЧЕНО. БАНКІВСЬКИЙ РАХУНОК ЛОГІСТИКИ ОШТРАФОВАНО НА {$credits} СПЕСО.
 mail-item-name-unaddressed = пошта
 mail-item-name-addressed = пошта ({$recipient})
-
-
 command-mailto-description = Поставити посилку в чергу на доставку до об'єкта. Приклад використання: `mailto 1234 5678 false false`. Вміст цільового контейнера буде переміщено до справжньої поштової посилки.
 ### Frontier: додати опис is-large
 command-mailto-help = Використання: {$command} <ID_сутності_отримувача> <ID_сутності_контейнера> [крихке: true або false] [пріоритетне: true або false] [велике: true або false, необов'язково]

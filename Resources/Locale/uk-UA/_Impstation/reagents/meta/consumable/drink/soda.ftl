@@ -1,0 +1,12 @@
+reagent-name-kingsoda = королівська сода
+reagent-desc-kingsoda = Напій, гідний короля. Або семирічки.
+reagent-name-hummingbird = насолода колібрі
+reagent-desc-hummingbird = Улюблений напій підлітків-воксів скрізь.
+reagent-name-zombieslushie = зомбі-слеші
+reagent-desc-zombieslushie = Лід, вершки та сире м'ясо об'єднуються, щоб створити... це?
+reagent-name-supermixer = суперміксер
+reagent-desc-supermixer = Простий, солодкий міксер. Сам по собі залишає бажати кращого. Не пити залпом!
+reagent-name-supermixerpsych = суперміксер
+reagent-desc-supermixerpsych = Домішка самопізнання, щоб вгамувати спеку!
+reagent-name-moonrise = Місячна Суміш
+reagent-desc-moonrise = Літня класика з планети Цернуннос, цей морозний делікатес ідеальний для зустрічі заходу.

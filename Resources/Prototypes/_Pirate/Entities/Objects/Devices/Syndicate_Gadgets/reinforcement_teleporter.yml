@@ -1,0 +1,53 @@
+- type: entity
+  parent: ReinforcementRadio
+  id: ReinforcementRadioSyndicateSyndiCatReject
+  name: syndicat reject reinforcement radio
+  description: Calls in an untrained syndicat.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/syndicatyarn.rsi
+    layers:
+    - state: syndicat-yarn
+  - type: GhostRole
+    name: ghost-role-information-SyndiCat-Reject-name
+    description: ghost-role-information-SyndiCat-Reject-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
+    raffle:
+      settings: default
+    requirements: # Pirate: match local callable ally ghost-role gating.
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hours
+  - type: GhostRoleMobSpawner
+    prototype: MobCatSyndyReject
+  - type: EmitSoundOnUse
+    sound: /Audio/Animals/cat_meow.ogg
+  - type: UseDelay
+    delay: 2
+
+- type: entity
+  parent: ReinforcementRadio
+  id: ReinforcementRadioSyndicateMothroachSyndicate
+  name: syndicate mothroach reinforcement radio
+  description: Calls in what might be the most devastating thing this side of the galaxy, a mothroach.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/communication.rsi
+    layers:
+    - state: old-radio-syndicate-mothroach
+  - type: GhostRole
+    name: ghost-role-information-syndicate-mothroach-name
+    description: ghost-role-information-syndicate-mothroach-description
+    rules: ghost-role-information-syndicate-reinforcement-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hours
+  - type: GhostRoleMobSpawner
+    prototype: MobMothroachSyndicate
+  - type: EmitSoundOnUse
+    sound: /Audio/Voice/Moth/moth_chitter.ogg

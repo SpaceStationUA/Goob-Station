@@ -14,7 +14,8 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Provides API for other components, handles picking the count and setting the title and description.
 /// </summary>
-public sealed class NumberObjectiveSystem : EntitySystem
+// Pirate: partial for downstream objective setup helpers.
+public sealed partial class NumberObjectiveSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;

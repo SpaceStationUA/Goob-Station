@@ -1,6 +1,7 @@
 using Content.Shared.Damage;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Weather;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map.Components;
@@ -10,7 +11,7 @@ using Robust.Shared.Timing;
 namespace Content.Server._DV.Weather;
 
 /// <summary>
-/// Handles weather damage for exposed entities.
+/// Handles weather damage and status effects for exposed entities.
 /// </summary>
 public sealed partial class WeatherEffectsSystem : EntitySystem
 {
@@ -20,6 +21,7 @@ public sealed partial class WeatherEffectsSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedWeatherSystem _weather = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     private EntityQuery<MapGridComponent> _gridQuery;
 
@@ -57,7 +59,12 @@ public sealed partial class WeatherEffectsSystem : EntitySystem
     private void UpdateDamage(EntityUid map, ProtoId<WeatherPrototype> id)
     {
         var weather = _proto.Index(id);
-        if (weather.Damage is not {} damage)
+        var damage = weather.Damage;
+        var hasDamage = damage != null;
+        var statusEffect = weather.StatusEffect;
+        var hasStatusEffect = statusEffect != null;
+
+        if (!hasDamage && !hasStatusEffect)
             return;
 
         var query = EntityQueryEnumerator<MobStateComponent, TransformComponent>();
@@ -75,8 +82,16 @@ public sealed partial class WeatherEffectsSystem : EntitySystem
                     continue;
             }
 
-            if (_whitelist.IsBlacklistFailOrNull(weather.DamageBlacklist, uid))
-                _damageable.TryChangeDamage(uid, damage, interruptsDoAfters: false);
+            if (hasDamage && _whitelist.IsBlacklistFailOrNull(weather.DamageBlacklist, uid))
+                _damageable.TryChangeDamage(uid, damage!, interruptsDoAfters: false);
+
+            if (hasStatusEffect)
+            {
+                if (weather.Refresh)
+                    _statusEffects.TryUpdateStatusEffectDuration(uid, statusEffect!.Value, TimeSpan.FromSeconds(10));
+                else
+                    _statusEffects.TryAddStatusEffectDuration(uid, statusEffect!.Value, TimeSpan.FromSeconds(10));
+            }
         }
     }
 }

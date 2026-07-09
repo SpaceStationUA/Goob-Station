@@ -1,0 +1,71 @@
+- type: entity
+  name: space pike
+  id: MobPike
+  parent: BaseMobCarp
+  description: A ferocious killer fish from outer space.
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    sprite: _starcup/Mobs/Aliens/Pikes/space_pike.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      82: Dead
+  - type: Stamina
+    critThreshold: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatFish
+      amount: 3
+    - id: MaterialToothSharkminnow1
+      amount: 3
+  - type: MeleeWeapon
+    attackRate: 1.15
+    damage:
+      types:
+        Piercing: 12
+  # starcup TODO: Speech/Vocal/AutoEmote components removed - depends on starcup creature voice system
+  # (SharkminnowSpeechSounds, SharkminnowSpeechEmotes, CreatureGrowl, ActionEmitSound, GrowlAutoEmote)
+  # Re-add when pulling starcup Voice/ and Actions/ prototype files + associated audio/sprite assets
+
+- type: entity
+  id: MobDunklosteus
+  parent: MobPike
+  name: space dunkleosteus
+  description: Slightly larger and tougher than other space pike species, with a tough, bony head.
+  components:
+  - type: Sprite
+    sprite: _starcup/Mobs/Aliens/Pikes/dunklosteus.rsi
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      124: Dead
+
+- type: entity
+  id: MobPikeSalvage
+  parent: MobPike
+  suffix: "Salvage Ruleset"
+  components:
+  - type: SalvageMobRestrictions

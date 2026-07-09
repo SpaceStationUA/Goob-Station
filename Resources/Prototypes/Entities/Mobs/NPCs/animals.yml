@@ -1639,6 +1639,7 @@
   description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
   abstract: true
   components:
+  - type: Blindable # monkeys can be blind while sleeping!
   - type: VentCrawler # goobstation - Ventcrawl
     allowInventory: false
   - type: CombatMode
@@ -3619,7 +3620,7 @@
   name: syndicat
   id: MobCatSyndy
   parent: MobCatSpace
-  description: Explosive kitten.
+  description: Feline pet in a tactical suit. Around their neck is a collar with a name tag. # Pirate: Syndicat reject port
   components:
   - type: Sprite
     layers:
@@ -3649,6 +3650,16 @@
     - MicroBombImplant
   - type: ExplosionResistance
     damageCoefficient: 0.2
+  # Pirate: Syndicat reject port
+  - type: RandomMetadata
+    nameSegments: [NamesSyndiReject]
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-syndicat
+    interactFailureString: petting-failure-syndicat
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
   - type: NpcFactionMember
     factions:
     - Syndicate

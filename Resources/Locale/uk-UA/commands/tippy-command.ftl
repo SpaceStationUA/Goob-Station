@@ -8,5 +8,4 @@ cmd-tippy-auto-5 = час показу слайдів, у секундах
 cmd-tippy-auto-6 = інтервал ковзання, в секундах
 cmd-tippy-error-no-user = Користувача не знайдено.
 cmd-tippy-error-no-prototype = Прототип не знайдено: {$proto}
-
 cmd-tip-desc = Згенеруйте випадкову підказку для гри.

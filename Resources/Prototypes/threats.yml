@@ -14,6 +14,7 @@
     SlaughterDemon: 1 # Goobstation begin
     # Wraith: 1
     LoneOperative: 1
+    TerrorSpider: 0.5 # Pirate - Starlight terror spider threat
     # Slasher: 1 # Pirate disable
     # Goobstation end
 
@@ -27,3 +28,8 @@
 #  id: Revenant
 #  announcement: terror-revenant
 #  rule: RevenantSpawn
+
+- type: ninjaHackingThreat
+  id: TerrorSpider
+  announcement: terror-spider
+  rule: TerrorSpidersSpawn

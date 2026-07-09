@@ -151,6 +151,15 @@ entities:
         - 0
     - type: Broadphase
     - type: OccluderTree
+    - type: LightCycle
+      minLevel: '#FFFFFFFF'
+      clipLevel: '#FFFFFFFF'
+      clipLight: 2.25
+      minLightLevel: 0.2
+      duration: 3600
+      originalColor: '#575C94FF'
+    - type: DynamicWeather
+      scheduler: WeatherGlacier
   - uid: 2
     components:
     - type: MetaData

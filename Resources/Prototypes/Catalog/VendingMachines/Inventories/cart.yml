@@ -30,6 +30,7 @@
     ClearPDA: 5
     PassengerIDCard: 5
     ClothingHeadsetGrey: 5
+    ClothingNeckNoviceMark: 5 # Pirate: novice mark
     RubberStampApproved: 1
     RubberStampDenied: 1
     Paper: 10

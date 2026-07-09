@@ -30,6 +30,35 @@
   - does a flip!
   event: !type:AnimationFlipEmoteEvent
 
+#region Pirate: blinking
+- type: emote
+  id: Blink
+  name: chat-emote-name-blink
+  category: General
+  icon: _Pirate/Interface/Emotes/blink.png
+  whitelist:
+    components:
+    - Blinking
+  chatMessages: ["chat-emote-msg-blink"]
+  chatTriggers:
+  - blink
+  - blinks
+  - blinking
+
+- type: emote
+  id: BlinkRapid
+  name: chat-emote-name-blink-rapid
+  category: General
+  icon: _Pirate/Interface/Emotes/blink-r.png
+  whitelist:
+    components:
+    - Blinking
+  chatMessages: ["chat-emote-msg-blink-rapid"]
+  chatTriggers:
+  - blinks rapidly
+  - blink rapidly
+#endregion Pirate: blinking
+
 - type: emote
   id: Tweak
   name: chat-emote-name-tweak

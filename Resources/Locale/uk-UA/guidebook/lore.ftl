@@ -1,9 +1,7 @@
 guide-entry-setting-lore = Лор
-
 guide-entry-nations = Нації
 guide-entry-sol-alliance = Солоріанський Альянс
 guide-entry-izweski-hegemony = Гегемонія Ізвескі
-
 guide-entry-corporations = Корпорації
 guide-entry-einstein-engines = Двигуни Ейнштейна
 guide-entry-hephaestus-industries = Гефест Індастріз
@@ -14,5 +12,4 @@ guide-entry-private-military-contracting-group = Приватна військо
 guide-entry-stellar-corporate-conglomerate = Зоряний корпоративний конгломерат
 guide-entry-zavodskoi-interstellar = Заводський Інтерстеллар
 guide-entry-zeng-hu-pharmaceuticals = Зенг-Ху Фармасьютікалс
-
 guide-entry-loadout-info-security-weapons = Зброя безпеки

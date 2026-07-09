@@ -32,8 +32,6 @@ news-write-ui-richtext-tooltip = Статті новин підтримують 
     {"[bullet/]bolditalic"}
     {"[bullet/]color"}
     {"[bullet/]bullet[/color]"}
-
 news-pda-notification-header = Нова стаття в новинах
-
 news-write-ui-save-text = Зберегти
 news-publish-admin-announcement = {$actor} опублікував новинну статтю "{$title}" автора {$author}

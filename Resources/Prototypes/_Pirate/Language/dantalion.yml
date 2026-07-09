@@ -1,0 +1,15 @@
+- type: language
+  id: Dantalion
+  speech:
+    allowRadio: false
+    chatTypeOverride: CollectiveMind
+    requireSpeech: false
+    color: "#066338"
+    speechVerbOverrides:
+    - chat-speech-verb-hivemind-1
+    - chat-speech-verb-hivemind-2
+    - chat-speech-verb-hivemind-3
+    - chat-speech-verb-hivemind-4
+    - chat-speech-verb-hivemind-5
+    - chat-speech-verb-hivemind-6
+    - chat-speech-verb-hivemind-7

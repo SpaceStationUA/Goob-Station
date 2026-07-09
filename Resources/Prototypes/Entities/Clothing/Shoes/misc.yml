@@ -143,6 +143,10 @@
           Quantity: 20
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 20
+      #region Pirate: stains
+      stain:
+        maxVol: 5
+      #endregion Pirate: stains
 
 - type: entity
   parent: ClothingShoesBaseButcherable

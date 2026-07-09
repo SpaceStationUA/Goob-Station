@@ -1,0 +1,101 @@
+- type: alert
+  id: Wrapped
+  icons:
+  - sprite: /Textures/_Pirate/Interface/Alerts/wrapped.rsi
+    state: icon
+  clickEvent: !type:UnWrapAlertEvent
+  name: alerts-wrapped-name
+  description: alerts-wrapped-desc
+
+- type: damageModifierSet
+  id: TerrorSpider
+  coefficients:
+    Blunt: 0.4
+    Slash: 1.1
+    Piercing: 0.9
+    Heat: 1.6
+
+# Pirate - Starlight uses a newer hitscan entity schema; this preserves its acid spit damage/visuals on local hitscan prototypes.
+- type: hitscan
+  id: BulletAcidHitscan
+  damage:
+    types:
+      Caustic: 8
+  collisionMask: 64 # BulletImpassable
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
+    state: xeno_toxic
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
+    state: xeno_toxic
+
+- type: reagent
+  id: RoyalJelly
+  name: reagent-name-royaljelly
+  desc: reagent-desc-royaljelly
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: "#9d42d5"
+  metabolisms:
+    Food:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -2
+            Burn: -2
+            Toxin: -2
+            Genetic: -2
+
+- type: entity
+  parent: FoodBase
+  id: SpiderJelly
+  name: Royal Jelly
+  description: A strange jelly created by spiders possesses unreal regenerative powers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Consumable/Food/spiderjelly.rsi
+    layers:
+    - state: icon
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: RoyalJelly
+          Quantity: 10
+  - type: Item
+    size: Tiny
+  - type: FlavorProfile
+    flavors:
+    - medicine
+  - type: Edible
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseTerrorSpiderObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-mind
+
+- type: entity
+  parent: BaseTerrorSpiderObjective
+  id: EvolveObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: _Pirate/Interface/Actions/actions_spider.rsi
+      state: evolve
+  - type: NumberObjective
+    min: 0
+    max: 99
+    title: objective-condition-evolve-title
+    description: objective-condition-evolve-description
+  - type: EvolveCondition
+
+- type: guideEntry
+  id: TerrorSpiders
+  name: guide-entry-terror-spiders
+  text: "/ServerInfo/_Pirate/Guidebook/Antagonist/TerrorSpider.xml"

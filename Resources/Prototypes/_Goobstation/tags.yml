@@ -806,3 +806,10 @@
 
 - type: Tag
   id: ContractorUplink
+
+# Mantis gear tags
+- type: Tag
+  id: MantisBeltStorable
+
+- type: Tag
+  id: MantisBoxRestraintsStorable

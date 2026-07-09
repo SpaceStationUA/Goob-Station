@@ -448,9 +448,27 @@
       children:
       - !type:AllSelector
         children:
-        - id: MobSharkSalvage
-        - id: MobCarpSalvage
-          amount: 2
+        # begin starcup: expanded carp and sharkminnows
+        - !type:GroupSelector
+          children:
+          - id: MobSharkSalvage
+          - id: MobSharkSalvageBlue
+          - id: MobSharkSalvageBrown
+          - id: MobSharkSalvageGreen
+          - id: MobSharkSalvageShelled
+          - id: MobSharkSalvageShelledBlue
+          - id: MobSharkSalvageShelledBrown
+          - id: MobSharkSalvageShelledGreen
+          - id: MobPikeSalvage
+        - !type:GroupSelector
+          children:
+          - id: MobCarpSalvage
+          - id: MobCarpSalvageSplitfin
+          - id: MobCarpSalvageVampire
+          - id: MobCarpSalvageQueen
+          rolls: !type:RangeNumberSelector
+            range: 1, 3
+           # end starcup: expanded carp and sharkminnows
         - !type:NestedSelector
           rolls: 1, 3
           tableId: SalvageTreasureSpawnerValuable
@@ -545,9 +563,28 @@
   - type: EntityTableSpawner
     table: !type:AllSelector
       children:
-      - id: MobSharkSalvage
-      - id: MobCarpSalvage
-        amount: 3
+      # begin starcup: expanded carp and sharkminnows
+      - !type:GroupSelector
+        children:
+        - id: MobSharkSalvage
+        - id: MobSharkSalvageBlue
+        - id: MobSharkSalvageBrown
+        - id: MobSharkSalvageGreen
+        - id: MobSharkSalvageShelled
+        - id: MobSharkSalvageShelledBlue
+        - id: MobSharkSalvageShelledBrown
+        - id: MobSharkSalvageShelledGreen
+        - id: MobSharkSalvageAbyssal
+        - id: MobSharkSalvageVampire
+      - !type:GroupSelector
+        children:
+        - id: MobCarpSalvage
+        - id: MobCarpSalvageSplitfin
+        - id: MobCarpSalvageVampire
+        - id: MobCarpSalvageQueen
+        rolls: !type:RangeNumberSelector
+          range: 3, 4
+      # end starcup: expanded carp and sharkminnows
 
 - type: entity
   parent: MarkerBase

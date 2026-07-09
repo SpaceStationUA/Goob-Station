@@ -35,12 +35,10 @@ marking-EarsShadekinBull = Прямі вуха
 marking-EarsShadekinBullSmooth = Прямі вуха, Контурні
 marking-EarsShadekinAqua = Водяні вуха
 marking-EarsShadekinAquaIncolor = Водяні вуха, Кольорові
-
 marking-TailShadekinShorter = Короткий хвіст
 marking-TailShadekinShorterBrush = Короткий хвіст, Пухнастий
 marking-TailShadekinMedium = Середній хвіст
 marking-TailShadekinMediumTwoColored = Середній хвіст, Двоколірний
-
 marking-BodyShadekinArrow = Мітка Стріла
 marking-BodyShadekinBlackHole = Мітка Чорна діра
 marking-BodyShadekinBrace = Мітка Браслет

@@ -140,6 +140,13 @@
     - Snout
 #    - HeadTop # WWDP - Because visible horns its cool
     - HeadSide
+  #region Pirate: blinking
+  - type: Blinking
+    asynchronous: true
+    eyelidRsi: _Pirate/Mobs/Customization/eyes_split.rsi
+    eyelidStateLeft: eyes_l
+    eyelidStateRight: eyes_r
+  #endregion Pirate: blinking
   - type: Hunger
   - type: Puller
     needsHands: false

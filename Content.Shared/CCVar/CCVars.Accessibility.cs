@@ -26,6 +26,10 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool> ReducedMotion =
         CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+    // Pirate - Starlight arachnophobia sprite alternatives.
+    public static readonly CVarDef<bool> ArachnophobiaMode =
+        CVarDef.Create("accessibility.arachnophobia", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
     public static readonly CVarDef<bool> ChatEnableColorName =
         CVarDef.Create("accessibility.enable_color_name",
             true,

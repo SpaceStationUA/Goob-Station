@@ -43,6 +43,13 @@ public sealed class BlobSpawnRule : StationEventSystem<BlobSpawnRuleComponent>
     {
         base.Started(uid, component, gameRule, args);
 
+        // Pirate - Blob should never appear automatically on lowpop, even if the rule is started directly.
+        if (_playerSystem.PlayerCount < gameRule.MinPlayers)
+        {
+            GameTicker.EndGameRule(uid, gameRule);
+            return;
+        }
+
         if (!TryGetRandomStation(out var station))
         {
             return;

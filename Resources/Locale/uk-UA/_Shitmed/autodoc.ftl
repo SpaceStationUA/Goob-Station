@@ -15,12 +15,10 @@ autodoc-item-part = Частина тіла
 autodoc-program-step-store-item = зберегти предмет
 autodoc-program-step-set-label = встановити мітку: '{$label}'
 autodoc-program-step-wait = чекати {$length} секунд
-
 autodoc-program-completed = ПРОГРАМУ ЗАВЕРШЕНО
 autodoc-error = ПОМИЛКА: {$error}
 autodoc-fatal-error = ФАТАЛЬНА ПОМИЛКА: {$error}
 autodoc-waiting = ПРОГРАМА ОЧІКУЄ
-
 autodoc-error-missing-patient = ПАЦІЄНТ ВІДСУТНІЙ
 autodoc-error-body-part = ЧАСТИНУ ТІЛА НЕ ВИЯВЛЕНО
 autodoc-error-surgery-impossible = ОБРАНА ОПЕРАЦІЯ НЕМОЖЛИВА
@@ -80,7 +78,6 @@ autodoc-add-step-set-label-prompt = Мітка
 # Китайський текст приблизно перекладається як "Чекати" це, ймовірно, найнечемніший спосіб сказати це, але я дурний і це все, що я знаю :)
 autodoc-add-step-wait = ЧЕКАТИ
 autodoc-add-step-wait-prompt = Кількість секунд для очікування
-
 autodoc-body-part-Other = Інше
 autodoc-body-part-Torso = Торс
 autodoc-body-part-Chest = Груди
@@ -91,14 +88,11 @@ autodoc-body-part-Hand = Кисть
 autodoc-body-part-Leg = Нога
 autodoc-body-part-Foot = Стопа
 autodoc-body-part-Tail = Хвіст
-
 autodoc-body-symmetry-ignored = Будь-який
 autodoc-body-symmetry-None = Немає
 autodoc-body-symmetry-Left = Ліва
 autodoc-body-symmetry-Right = Права
-
 autodoc-submit = Підтвердити
-
 autodoc-error-reality-breaking = ПОРУШЕННЯ РЕАЛЬНОСТІ
 autodoc-error-step-invalid-None = ОБРАНИЙ КРОК НЕМОЖЛИВИЙ
 autodoc-error-step-invalid-MissingSkills = У ПРИСТРОЮ ВІДСУТНІ НАВИЧКИ

@@ -154,6 +154,7 @@
     shoes: ClothingShoesBootsJack # Goobstation edit
     #outerClothing: ClothingOuterArmorBasic # Goobstation
     id: SecurityCadetPDA
+    neck: ClothingNeckNoviceMark # Pirate: novice mark
     ears: ClothingHeadsetAltSecurityRegular # Goobstation
     belt: ClothingBeltSecurityFilled
     #pocket1: WeaponDisabler #Goobstation (Disablers in belts)

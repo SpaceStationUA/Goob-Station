@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Lizard (Smooth, originally) from https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, Snake taken from https://github.com/Bubberstation/Bubberstation/commit/e9e0683c6e34512c125cef1a4c69976258ebfdce and adjusted by KittenColony (github / discord), again modified by alzore_ (discord). Futher edited by SalamanderSkies (github) to fit slimes.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "slime-lizard",
+      "directions": 4
+    },
+    {
+      "name": "slime-snake",
+      "directions": 4
+    }
+  ]
+}

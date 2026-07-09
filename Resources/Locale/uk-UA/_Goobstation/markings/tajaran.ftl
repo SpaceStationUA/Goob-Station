@@ -11,7 +11,6 @@ marking-TajaranTorsoCrest = Хутро на грудях (Гребінь)
 marking-TajaranTorsoCrest-crest = Хутро
 marking-TajaranTorsoFullBelly = Хутро на грудях (Повне)
 marking-TajaranTorsoFullBelly-fullbelly = Хутро
-
 marking-TajaranHeadMuzzle = Морда
 marking-TajaranHeadMuzzle-muzzle = Морда
 marking-TajaranHeadMuzzleLarge = Морда (Велика)
@@ -26,7 +25,6 @@ marking-TajaranHeadTiger = Тигр
 marking-TajaranHeadTiger-tiger_face = Смуги
 marking-TajaranHeadTigerAlt = Тигр (Альтернативний)
 marking-TajaranHeadTigerAlt-tiger_head = Смуги
-
 marking-TajaranEarsRetro = Класичні вуха
 marking-TajaranEarsRetro-ears = Вуха
 marking-TajaranEarsRetroNear = Класичні вуха (Альтернативні)
@@ -37,7 +35,6 @@ marking-TajaranEarsSeparate-inears = Внутрішні
 marking-TajaranEarsSeparateNear = Класичні вуха (Альтернативні, Розділені)
 marking-TajaranEarsSeparateNear-outears_near = Зовнішні
 marking-TajaranEarsSeparateNear-inears_near = Внутрішні
-
 marking-TajaranTailAnim = Класичний хвіст (Анімований)
 marking-TajaranTailAnim-tail_anim = Хвіст
 marking-TajaranTailAnimRings = Класичний хвіст (Анімований, Кільця)
@@ -48,41 +45,32 @@ marking-TajaranTailRetro-tail = Хвіст
 marking-TajaranTailRetroRings = Класичний хвіст (Кільця)
 marking-TajaranTailRetroRings-tail = Хвіст
 marking-TajaranTailRetroRings-tail_rings = Кільця
-
 marking-TajaranOverlayPatch = Плями
 marking-TajaranOverlayPatch-patch = Плями
 marking-TajaranOverlayPoints = Кінчики
 marking-TajaranOverlayPoints-points = Кінчики
-
 marking-TajaranEarsBasic = Звичайні вуха
 marking-TajaranEarsBasic-basic_outer = Зовнішнє вухо
 marking-TajaranEarsBasic-basic_inner = Внутрішнє вухо
-
 marking-TajaranEarsCurled = Завиті вуха
 marking-TajaranEarsCurled-curled_outer = Зовнішнє вухо
 marking-TajaranEarsCurled-curled_inner = Внутрішнє вухо
-
 marking-TajaranEarsDroopy = Обвислі вуха
 marking-TajaranEarsDroopy-droopy_outer = Зовнішнє вухо
 marking-TajaranEarsDroopy-droopy_inner = Внутрішнє вухо
-
 marking-TajaranEarsFuzzy = Пухнасті вуха
 marking-TajaranEarsFuzzy-basic_outer = Зовнішнє вухо
 marking-TajaranEarsFuzzy-fuzzy_inner = Пух у вухах
-
 marking-TajaranEarsStubby = Короткі вуха
 marking-TajaranEarsStubby-stubby_outer = Зовнішнє вухо
 marking-TajaranEarsStubby-stubby_inner = Внутрішнє вухо
-
 marking-TajaranEarsTall = Високі вуха
 marking-TajaranEarsTall-tall_outer = Зовнішнє вухо
 marking-TajaranEarsTall-tall_inner = Внутрішнє вухо
 marking-TajaranEarsTall-tall_fuzz = Пух у вухах
-
 marking-TajaranEarsTorn = Розірвані вуха
 marking-TajaranEarsTorn-torn_outer = Зовнішнє вухо
 marking-TajaranEarsTorn-torn_inner = Внутрішнє вухо
-
 marking-TajaranEarsWide = Широкі вуха
 marking-TajaranEarsWide-wide_outer = Зовнішнє вухо
 marking-TajaranEarsWide-wide_inner = Внутрішнє вухо

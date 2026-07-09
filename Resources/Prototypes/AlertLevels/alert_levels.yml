@@ -129,7 +129,7 @@
       color: PaleVioletRed
       emergencyLightColor: PaleVioletRed
       forceEnableEmergencyLights: true
-      shuttleTime: 600
+      shuttleTime: 1200
     delta:
       announcement: alert-level-delta-announcement
       selectable: false
@@ -182,4 +182,11 @@
       sound: /Audio/_Pirate/Announcements/Alerts/code_white.ogg
       emergencyLightColor: "#F6CCF6"
       color: White
+      shuttleTime: 600
+    amber:
+      announcement: alert-level-amber-announcement
+      sound: /Audio/_Goobstation/Announcements/amberalarm.ogg
+      color: "#8A3324"
+      emergencyLightColor: "#8A3324"
+      forceEnableEmergencyLights: true
       shuttleTime: 600

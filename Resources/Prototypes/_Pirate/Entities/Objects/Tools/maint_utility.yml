@@ -1,0 +1,64 @@
+- type: entity
+  parent: BaseItem
+  id: ESDoorJammer
+  name: door jammer
+  description: A jury-rigged screwdriver capable of bolting any airlock it's thrown at.
+  suffix: ES
+  components:
+  - type: PirateDoorJammer
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/door_jammer.rsi
+    state: icon
+  - type: Item
+    size: Small
+    sprite: _Pirate/Objects/Tools/door_jammer.rsi
+    storedRotation: -90
+    storedSprite:
+      state: storage
+      sprite: _Pirate/Objects/Tools/door_jammer.rsi
+  - type: Tool
+    qualities:
+    - Screwing
+    useSound:
+      collection: Screwdriver
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    offset: 0.05,0.0
+    removalTime: 4
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 12
+  - type: ThrowingAngle
+    angle: 315
+  - type: LandAtCursor
+  - type: MeleeWeapon
+    wideAnimationRotation: -45
+    wideAnimation: WeaponArcThrust
+    attackRate: 1
+    damage:
+      types:
+        Piercing: 6
+    soundHit:
+      path: "/Audio/Weapons/bladeslice.ogg"
+
+- type: entity
+  parent: BaseItem
+  id: ESNet
+  name: net
+  description: Used equally for spacefishing and yoinking items out of occupied hands with a simple toss. Remarkably useful, even when it can be grabbed out of the air just as easily.
+  suffix: ES
+  components:
+  - type: PirateNet
+    sound: /Audio/Effects/thudswoosh.ogg
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/net.rsi
+    state: icon
+    drawdepth: BelowMobs
+  - type: Item
+    size: Normal
+    sprite: _Pirate/Objects/Tools/net.rsi
+  - type: LandAtCursor
+  - type: Catchable
+  - type: Transform
+    noRot: true

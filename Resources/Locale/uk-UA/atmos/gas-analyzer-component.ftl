@@ -4,7 +4,6 @@ gas-analyzer-component-player-cannot-reach-message = Ви не можете ту
 gas-analyzer-shutoff = Газоаналізатор вимкнено.
 
 ## UI
-
 gas-analyzer-window-name = Газовий аналізатор
 gas-analyzer-window-environment-tab-label = Навколишнє середовище
 gas-analyzer-window-tab-title-capitalized = {CAPITALIZE($title)}
@@ -30,7 +29,6 @@ gas-entry-info = {$gasName}: {$gasAmount} моль
 gas-analyzer-window-text-inlet = Вхідний отвір
 gas-analyzer-window-text-outlet = Вихідний отвір
 gas-analyzer-window-text-filter = Фільтр
-
 gas-analyzer-window-volume-text = Обсяг:
 gas-analyzer-window-volume-val-text = {$volume} L
 gas-analyzer-object-out-of-range = Об'єкт вийшов за межі діапазону.

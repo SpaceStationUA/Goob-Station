@@ -9,3 +9,15 @@
     roleType: SoloAntagonist
     subtype: vampire-roundend-name
   - type: VampireRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleVampireThrall
+  name: Vampire Thrall Role
+  components:
+  - type: MindRole
+    antagPrototype: VampireThrall
+    exclusiveAntag: true
+    roleType: TeamAntagonist
+    subtype: roles-antag-vampire-thrall-name
+  - type: VampireThrall

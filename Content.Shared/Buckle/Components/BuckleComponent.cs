@@ -111,7 +111,8 @@ namespace Content.Shared.Buckle.Components;
 /// <summary>
 /// This component allows an entity to be buckled to an entity with a <see cref="StrapComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+// Pirate: client-only hidden sprite state needs a post-state hook for remote unbuckles.
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 [Access(typeof(SharedBuckleSystem))]
 public sealed partial class BuckleComponent : Component
 {
@@ -171,6 +172,11 @@ public sealed partial class BuckleComponent : Component
     /// Used for client rendering
     /// </summary>
     [ViewVariables] public int? OriginalDrawDepth;
+
+    /// <summary>
+    /// Pirate/Starlight: original sprite visibility before a strap hid this entity.
+    /// </summary>
+    [ViewVariables] public bool? OriginalVisible;
 }
 
 public sealed partial class UnbuckleAlertEvent : BaseAlertEvent;

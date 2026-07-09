@@ -32,15 +32,12 @@ player-first-join-message = Гравець {$name} приєднався ВПЕР
 
 # Displayed in chat to admins when a player leaves
 player-leave-message = Гравець {$name} вийшов!
-
 latejoin-arrival-announcement = {$character} ({$job}) прибув на станцію!
 latejoin-arrival-sender = Станція
 latejoin-arrivals-direction = Трансфер до вашої станції прибуде незабаром.
 latejoin-arrivals-direction-time = Шатл який перевозить вас на станцію прибуде через {$time}.
-
 preset-not-enough-ready-players = Не вдається запустити {$presetName}. Потрібно {$minimumPlayers} гравців, але у нас є {$readyPlayersCount}.
 preset-no-one-ready = Не вдається запустити {$presetName}. Жоден гравець не готовий.
-
 game-ticker-welcome-to-the-station = Ласкаво просимо до команди станції, приємного перебування!
 
 # Відображається в чаті адміністраторам, коли гравець приєднується

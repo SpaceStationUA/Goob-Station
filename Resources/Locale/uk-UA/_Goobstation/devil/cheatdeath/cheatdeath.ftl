@@ -4,13 +4,9 @@ cheat-death-component-remaining-revives = { $amount ->
 [one] У вас залишилося одне відродження.
 *[other] У вас залишилося {$amount} відроджень.
 }
-
 cheat-death-component-remaining-revives-unlimited = У вас нескінченна кількість відроджень. Хіба це не весело?
-
 action-cheat-death-fail-no-lives = Цього разу ти не вислизнеш...
 action-cheat-death-fail-not-dead = Неможливо обдурити смерть, будучи живим!
-
 action-cheated-death-dead = {$name} різко прокидається. Кістки зрослися, рани зашиті, органи розташовані ідеально.
 action-cheated-death-alive = {$name} сильно трясе, усілякі рани зникають у спалаху полум'я.
-
 action-cheat-death-holy-damage = Божественне втручання перешкоджає вашому відродженню.

@@ -6,6 +6,17 @@
     minPlayers: 10
     chaosScore: 100
   - type: VampireRule
+  - type: AntagObjectives
+    objectives:
+    - VampireKillRandomPersonObjective
+    - VampireDrainObjective
+  - type: AntagRandomObjectives
+    sets:
+    - groups: VampireObjectiveGroupsStateOnly
+      maxPicks: 1
+    - groups: VampireObjectiveGroupsStealOnly
+      maxPicks: 1
+    maxDifficulty: 10
   - type: AntagSelection
     selectionTime: IntraPlayerSpawn
     agentName: vampire-roundend-name

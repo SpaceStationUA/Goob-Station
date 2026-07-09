@@ -12,7 +12,6 @@ job-alternative-name-maid = Покоївка
 # Юрист
 
 # Прокурор
-
 job-alternative-name-archivist = Архіваріус
 job-description-archivist = Сторож знань і пилу. Зберігайте документи, книги та секрети станції. Іноді здається, що тільки ви ще пам’ятаєте, як читати.
 

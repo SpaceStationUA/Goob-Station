@@ -137,6 +137,7 @@
       knockdownTime: 5.0 # omegaslop
       launchForwardsMultiplier: 3.0
   - type: CleansForensics
+  - type: StainCleaner # Pirate: stains
   - type: FloorCleaner
     cleanDelay: 3 # goida soap
 

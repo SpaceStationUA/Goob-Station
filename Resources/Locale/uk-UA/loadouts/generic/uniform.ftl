@@ -1,5 +1,4 @@
 loadout-description-LoadoutUniformAncientJumpsuit = Легенда про Грейтайда.
-
 loadout-name-LoadoutUniformJumpsuitColorWhite = комбінезон (кольоровий)
 loadout-name-LoadoutUniformJumpskirtColorWhite = спідниця-комбінезон (кольорова)
 loadout-name-LoadoutUniformMartialGi = gi (кольоровий)
@@ -10,7 +9,6 @@ loadout-name-LoadoutClothingMNKGymBra = Спортивний бюстгальт�
 loadout-name-LoadoutClothingJumpsuitSuitWhite = діловий костюм (кольоровий)
 loadout-name-LoadoutClothingJumpsuitSuitWhiteAlt = діловий костюм (альтернативний, кольоровий)
 loadout-name-LoadoutClothingJumpsuitSuitWhiteMob = костюм мафії (кольоровий)
-
 loadout-name-LoadoutClothingJumpsuitSuitBlack = чорний костюм (може бути кольоровим)
 loadout-name-LoadoutUniformJumpsuitBartender = комбінезон бармена (різнокольоровий)
 loadout-name-LoadoutUniformJumpskirtBartender = форма бармена зі спідницею (різнокольорова)

@@ -6,9 +6,7 @@
 
 reagent-name-milk-choco = шоколадне молоко
 reagent-desc-milk-choco = Молочний напій зі смаком шоколаду.
-
 reagent-name-tramadol = трамадол
 reagent-desc-tramadol = Потужний бойовий знеболювальний засіб. Не вживайте з алкоголем.
-
 reagent-name-oxycodone = оксикодон
 reagent-desc-oxycodone = Дуже потужний знеболювальний, що практично усуває весь біль, але має жорстоке передозування. Не вживайте з алкоголем.

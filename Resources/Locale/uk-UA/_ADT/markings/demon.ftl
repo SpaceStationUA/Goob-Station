@@ -22,7 +22,6 @@ marking-DemonChestTreeLines = Лінії Дерева
 marking-DemonChestTreeLines-tree_lines = Лінії Дерева
 marking-DemonChestTrinitySpots = Плями Трійці
 marking-DemonChestTrinitySpots-trinity_spots = Плями Трійці
-
 marking-DemonCowHorns = Коров'ячі Роги
 marking-DemonCowHorns-cow_horns = Коров'ячі Роги
 marking-DemonHornsDeer = Оленячі Роги

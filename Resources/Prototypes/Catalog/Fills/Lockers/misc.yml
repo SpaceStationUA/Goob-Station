@@ -272,6 +272,8 @@
     children:
     - id: StrangePill
       prob: 0.15
+    - id: TippyTrumpMysteryPack # GoobStation
+      prob: 0.10
     # Tools
     - !type:NestedSelector
       tableId: MaintToolsTable

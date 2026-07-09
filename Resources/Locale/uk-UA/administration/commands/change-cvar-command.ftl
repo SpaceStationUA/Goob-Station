@@ -13,9 +13,7 @@ cmd-changecvar-help = Використання: changecvar <cvar | ? | search> <
 cmd-changecvar-available-cvars = Список доступних cvar:
 cmd-changecvar-no-cvars = Не знайдено cvar, які ви можете змінити.
 cmd-changecvar-success = CVar {$cvar} змінено з "{$old}" на "{$value}".
-
 cmd-changecvar-search-no-arguments = Ви повинні вказати термін для пошуку.
 cmd-changecvar-search-no-matches = Не знайдено cvar, що відповідають терміну пошуку.
 cmd-changecvar-search-matches = Знайдено {$count} cvar, що відповідають терміну пошуку:
-
 cmd-changecvar-arg-name = <назва | ? | пошук>

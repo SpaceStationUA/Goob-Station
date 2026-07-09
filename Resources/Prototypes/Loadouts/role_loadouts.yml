@@ -126,6 +126,7 @@
   - CaptainBackpack
   - CaptainOuterClothing
   - CommandSelfDefense # Pirate
+  - TrinketsCommand # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -147,6 +148,7 @@
   - HoPOuterClothing
  #- Glasses # Pirate
   - CommandSelfDefense # Pirate
+  - TrinketsCommand # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -218,6 +220,7 @@
   id: JobServiceWorker
   groups:
   - GroupTankHarness
+  - ServiceWorkerHead # Pirate
   - BartenderJumpsuit
   - CommonBackpack
   - Glasses
@@ -411,6 +414,7 @@
   - QuartermasterShoes
   - Glasses
   - CommandSelfDefense # Pirate
+  - TrinketsCommand # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -470,6 +474,8 @@
   - ChiefEngineerOuterClothing
   - ChiefEngineerShoes
   - CommandSelfDefense # Pirate
+  - TrinketsCommand # Pirate
+  - TrinketsEngineering # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -486,6 +492,7 @@
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
   - TechnicalAssistantEquipment # Pirate
+  - TrinketsEngineering # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -506,6 +513,7 @@
   - StationEngineerShoes
   - StationEngineerID
   - StationEngineerEquipment # Pirate
+  - TrinketsEngineering # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -525,6 +533,7 @@
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
   - StationEngineerEquipment # Pirate
+  - TrinketsEngineering # Pirate
   - SurvivalExtended
   - Trinkets
   - Animals
@@ -548,6 +557,7 @@
   - ResearchDirectorShoes
   - MantisEyes
   - CommandSelfDefense # Pirate
+  - TrinketsCommand # Pirate
   - Survival
   - Trinkets
   - Animals
@@ -610,6 +620,7 @@
   - HeadofSecurityShoes # Goobstation edit
   - SurvivalSecurity
   - Trinkets
+  - TrinketsCommand
   - SecurityStar
   - Animals
   - GroupSpeciesBreathToolSecurity
@@ -719,6 +730,8 @@
   - ChiefMedicalOfficerShoes
   - MedicalEyewear
   - CommandSelfDefense # Pirate
+  - TrinketsCommand # Pirate
+  - TrinketsMedical # Pirate
   - SurvivalMedical
   - Trinkets
   - Animals
@@ -743,6 +756,7 @@
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - TrinketsMedical # Pirate
   - Animals
   - GroupSpeciesBreathToolMedical
   # Goobstation - EE Plasmeme Change.
@@ -759,6 +773,7 @@
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - TrinketsMedical # Pirate
   - Animals
   - GroupSpeciesBreathToolMedical
   # Goobstation - EE Plasmeme Change.
@@ -779,6 +794,7 @@
   - MedicalShoes
   - SurvivalMedical
   - Trinkets
+  - TrinketsMedical # Pirate
   - Animals
   - GroupSpeciesBreathToolMedical
   # Goobstation - EE Plasmeme Change.
@@ -800,6 +816,7 @@
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
+  - TrinketsMedical # Pirate
   - Animals
   - GroupSpeciesBreathToolMedical
   # Goobstation - EE Plasmeme Change.
@@ -851,6 +868,7 @@
   - Glasses
   - Survival
   - Trinkets
+  - TrinketsMedical # Pirate
   - Animals
   - GroupSpeciesBreathTool
   # Goobstation - EE Plasmeme Change.

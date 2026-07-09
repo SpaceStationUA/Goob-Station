@@ -3,16 +3,12 @@ accent-british-prefix-2 = гей, друже
 accent-british-prefix-3 = гей, мудило
 accent-british-prefix-4 = гей
 accent-british-prefix-5 = гей, дрочило
-
-
 accent-british-suffix-1 = , ти дрочило
 accent-british-suffix-2 = , ти залупа
 accent-british-suffix-3 = , ти пиздо
 accent-british-suffix-4 = , ти гівноїд
 accent-british-suffix-5 = , ти нахабний виродку
 accent-british-suffix-6 = , друже
-
-
 accent-british-words-1 = охорона
 accent-british-words-replace-1 = боббі
 accent-british-words-2 = охорона
@@ -171,13 +167,13 @@ accent-british-words-78 = реви
 accent-british-words-replace-78 = комуняки
 accent-british-words-79 = голова ревів
 accent-british-words-replace-79 = карл Маркс
-accent-british-words-80 = літак 
+accent-british-words-80 = літак
 accent-british-words-replace-80 = крути-верти машина
-accent-british-words-81 = винищувач 
+accent-british-words-81 = винищувач
 accent-british-words-replace-81 = спітфайр
 accent-british-words-82 = реактивний винищувач
 accent-british-words-replace-82 = харрієр
-accent-british-words-83 = фолкленд 
+accent-british-words-83 = фолкленд
 accent-british-words-replace-83 = британська територія біля Аргентини
 accent-british-words-84 = фолклендські острови
 accent-british-words-replace-84 = британська територія біля Аргентини
@@ -186,7 +182,7 @@ accent-british-words-replace-85 = маленький синій мудак
 accent-british-words-86 = бінгли
 accent-british-words-replace-86 = маленькі сині мудаки
 accent-british-words-87 = листоноша
-accent-british-words-replace-87 = поштар 
+accent-british-words-replace-87 = поштар
 accent-british-words-88 = печиво
 accent-british-words-replace-88 = бісквіт
 accent-british-words-89 = зомбі

@@ -203,6 +203,7 @@
     - id: SlaughterDemonMidround # Goobstation - Slaughter Demon
     - id: XenomorphsInfestation # WD EDIT
     - id: SlasherSpawn # Goobstation - The Slasher
+    - id: TerrorSpidersSpawn # Pirate - Starlight terror spiders
     - id: SpacePirates # Goobstation - you probably can read whom this rule spawns
     - id: SingulothKnightsMidround # Goobstation - New Midrounds
     #- id: DarkLordMidround # Goobstation - New Midrounds

@@ -9,7 +9,6 @@ role-type-SAN-antagonist-name = Дезертир
 roles-antag-shadowling-name = Тіньовик
 roles-antag-shadowling-description = Поневолюйте екіпаж, вознесіться і станьте подібними до бога.
 roles-antag-shadowling-objective = Вознесіться.
-
 roles-antag-thrall-name = Трал
 roles-antag-thrall-description = Працюйте зі своїм тіньовиком, щоб забезпечити його вознесіння.
 roles-antag-thrall-objective = Допоможіть вашому тіньовику вознестися.

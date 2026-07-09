@@ -12,7 +12,6 @@ marking-slot-add = Додати
 marking-slot-remove = Видалити
 
 # Категорії
-
 markings-category-Hair = Волосся
 markings-category-FacialHair = Волосся на обличчі
 markings-category-Head = Голова
@@ -20,10 +19,8 @@ markings-category-HeadTop = Голова (зверху)
 markings-category-HeadSide = Голова (збоку)
 markings-category-Snout = Морда
 markings-category-Chest = Тулуб
-
 markings-category-Tail = Хвіст
 markings-category-Overlay = Накладення
-
 marking-slot = Слот {$number}
 
 # Категорії

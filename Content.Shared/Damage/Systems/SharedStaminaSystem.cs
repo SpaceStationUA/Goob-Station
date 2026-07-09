@@ -259,6 +259,10 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         // goobstation
         foreach (var (ent, comp) in toHit)
         {
+            // Pirate: Starlight terror spiders use this to modify incoming melee stamina damage while web-stealthed.
+            var staminaMeleeHitEvent = new StaminaMeleeHitEvent(args.User, args.Weapon, args.Direction);
+            RaiseLocalEvent(ent, staminaMeleeHitEvent);
+
             var hitEvent = new BeforeStaminaDamageEvent(1f);
             // raise event for each entity hit
             RaiseLocalEvent(ent, ref hitEvent);
@@ -270,8 +274,8 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
             var damageImmediate = component.Damage;
             var damageOvertime = component.Overtime;
-            damageImmediate *= hitEvent.Value * outgoingModifier.Value;
-            damageOvertime *= hitEvent.Value * outgoingModifier.Value;
+            damageImmediate *= hitEvent.Value * outgoingModifier.Value * staminaMeleeHitEvent.Multiplier;
+            damageOvertime *= hitEvent.Value * outgoingModifier.Value * staminaMeleeHitEvent.Multiplier;
             // Goobstation EDIT END
             if (args.Direction == null)
             {

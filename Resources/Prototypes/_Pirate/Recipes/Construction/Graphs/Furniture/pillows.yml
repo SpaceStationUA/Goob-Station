@@ -1,0 +1,77 @@
+- type: constructionGraph
+  id: Pillow
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: pillowbaseunwrapped
+      steps:
+      - material: Cloth
+        amount: 2
+        doAfter: 3
+
+  - node: pillowbaseunwrapped
+    entity: PillowBaseUnwrapped
+    edges:
+    - to: pillowbasewrapped
+      steps:
+      - material: Plastic
+        amount: 1
+        doAfter: 1
+    - to: pillowcommandunwrapped
+      steps:
+      - material: FloorCarpetPurple
+        amount: 1
+        doAfter: 2
+      - material: Gold
+        amount: 1
+        doAfter: 3
+    - to: pillowengineeringunwrapped
+      steps:
+      - material: FloorCarpetOrange
+        amount: 1
+        doAfter: 2
+    - to: pillowmedicalunwrapped
+      steps:
+      - material: FloorCarpetSkyBlue
+        amount: 1
+        doAfter: 2
+
+  - node: pillowcommandunwrapped
+    entity: PillowCommandUnwrapped
+    edges:
+    - to: pillowcommandwrapped
+      steps:
+      - material: Plastic
+        amount: 1
+        doAfter: 1
+
+  - node: pillowengineeringunwrapped
+    entity: PillowEngineeringUnwrapped
+    edges:
+    - to: pillowengineeringwrapped
+      steps:
+      - material: Plastic
+        amount: 1
+        doAfter: 1
+
+  - node: pillowmedicalunwrapped
+    entity: PillowMedicalUnwrapped
+    edges:
+    - to: pillowmedicalwrapped
+      steps:
+      - material: Plastic
+        amount: 1
+        doAfter: 1
+
+  - node: pillowbasewrapped
+    entity: PillowBaseWrapped
+
+  - node: pillowcommandwrapped
+    entity: PillowCommandWrapped
+
+  - node: pillowengineeringwrapped
+    entity: PillowEngineeringWrapped
+
+  - node: pillowmedicalwrapped
+    entity: PillowMedicalWrapped

@@ -319,6 +319,8 @@
     prototype: ResearchAndDevelopmentServer
     stackRequirements:
       Plasma: 5
+  - type: BladeServerBoard # Pirate
+    prototype: ResearchAndDevelopmentBladeServer
 
 - type: entity
   id: BiogeneratorMachineCircuitboard
@@ -630,6 +632,8 @@
       stackRequirements:
         Steel: 1
         Cable: 2
+    - type: BladeServerBoard # Pirate
+      prototype: CrewMonitoringBladeServer
 
 - type: entity
   id: CryoPodMachineCircuitboard

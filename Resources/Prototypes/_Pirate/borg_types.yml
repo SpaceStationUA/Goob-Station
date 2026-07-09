@@ -1,0 +1,114 @@
+# Pirate: ported from https://github.com/lagrange14/substations/pull/560
+
+# Salvage quadborg
+- type: borgType
+  id: quadmining
+  dummyPrototype: QuadChassisMining
+  extraModuleCount: 3
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleCargo
+  defaultModules:
+  - BorgModuleTool
+  - BorgModuleMining
+  - BorgModuleTraversal
+  - BorgModuleAppraisal
+  - BorgModulePKA # Goobstation
+  lawset: Salvage
+  radioChannels:
+  - Supply
+  - Science
+  addComponents:
+  - type: NoWieldNeeded
+  - type: SlavedBorg # Goobstation: keep salvage borg AI labeling parity.
+    law: ObeyAI
+  - type: Crawler
+  inventoryTemplateId: borgShort
+  spriteBodyState: quadsalv
+  spriteBodyMovementState: quadsalv_m
+  spriteHasMindState: quadsalv_e_r
+  spriteNoMindState: quadsalv_e_r
+  spriteToggleLightState: quadsalv_l
+  spriteScale: 0.7, 0.7
+  spriteNoRotation: true
+  petSuccessString: petting-success-salvage-cyborg
+  petFailureString: petting-failure-salvage-cyborg
+
+# Medical quadborg
+- type: borgType
+  id: quadmedical
+  dummyPrototype: QuadChassisMedical
+  extraModuleCount: 3
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleMedical
+  defaultModules:
+  - BorgModuleTool
+  - BorgModuleChemical
+  - BorgModuleTopicals
+  - BorgModuleRescue
+  - BorgModuleSurgery
+  - BorgModuleLollypop # Goobstation
+  lawset: Medical
+  radioChannels:
+  - Science
+  - Medical
+  addComponents:
+  - type: SolutionScanner
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+  - type: Sanitized # Shitmed
+  - type: SurgeryTarget # Shitmed
+  - type: SurgeryIgnoreClothing
+  - type: SurgerySpeedModifier
+    speedModifier: 1.5
+  - type: Crawler
+  inventoryTemplateId: borgShort
+  spriteBodyState: quadmed
+  spriteBodyMovementState: quadmed_m
+  spriteHasMindState: quadmed_e_r
+  spriteNoMindState: quadmed_e_r
+  spriteToggleLightState: quadmed_l
+  spriteScale: 0.7, 0.7
+  spriteNoRotation: true
+  petSuccessString: petting-success-medical-cyborg
+  petFailureString: petting-failure-medical-cyborg
+
+# Service quadborg
+- type: borgType
+  id: quadservice
+  dummyPrototype: QuadChassisService
+  extraModuleCount: 3
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleService
+  defaultModules:
+  - BorgModuleTool
+  - BorgModuleMusique
+  - BorgModuleService
+  - BorgModuleGardening
+  - BorgModuleHarvesting
+  - BorgModuleLollypop # Goobstation
+  lawset: Clown
+  radioChannels:
+  - Science
+  - Service
+  addComponents:
+  - type: Crawler
+  inventoryTemplateId: borgShort
+  spriteBodyState: quadserv
+  spriteBodyMovementState: quadserv_m
+  spriteHasMindState: quadserv_e_r
+  spriteNoMindState: quadserv_e_r
+  spriteToggleLightState: quadserv_l
+  spriteScale: 0.7, 0.7
+  spriteNoRotation: true
+  petSuccessString: petting-success-service-cyborg
+  petFailureString: petting-failure-service-cyborg

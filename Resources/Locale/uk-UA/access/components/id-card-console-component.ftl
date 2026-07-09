@@ -6,7 +6,6 @@ id-card-console-window-job-title-label = Посада:
 id-card-console-window-eject-button = Вийняти
 id-card-console-window-insert-button = Вставити
 id-card-console-window-job-selection-label = Посадові налаштування (задає відділ і піктограму посади):
-
 access-id-card-console-component-no-hands-error = У вас немає рук.
 id-card-console-privileged-id = Привілейоване ID
 id-card-console-target-id = Змінене ID

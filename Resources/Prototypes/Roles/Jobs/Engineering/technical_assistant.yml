@@ -73,7 +73,6 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - EinsteinEngines
       - ZavodskiyInterstellar
       - HephaestusIndustries
     # Pirate contractor end
@@ -99,6 +98,7 @@
   equipment:
     shoes: ClothingShoesBootsWork
     id: TechnicalAssistantPDA
+    neck: ClothingNeckNoviceMark # Pirate: novice mark
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
     pocket2: BookEngineersHandbook

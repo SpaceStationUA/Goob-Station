@@ -55,7 +55,6 @@ steal-target-groups-wanted-list-cartridge = картридж зі списком
 steal-target-groups-teg = частина генератора ТЕГ
 steal-target-groups-freezer-heater = морозильник або нагрівач
 steal-target-groups-altar-nanotrasen = вівтар Nanotrasen (будь-який)
-
 steal-target-groups-nuclear-bomb = ядерний вибуховий пристрій
 steal-target-groups-fax-machine-captain = далекобійний факс капітана
 steal-target-groups-chem-dispenser = хімічний дозатор
@@ -66,7 +65,6 @@ steal-target-groups-toilet-golden-dirty-water = золотий унітаз
 
 # Тварина злодія
 steal-target-groups-animal-named-cat = Кіт ГМЛ
-
 steal-target-groups-animal-ian = Іан
 steal-target-groups-animal-mc-griff = МакГріфф
 steal-target-groups-animal-walter = Волтер

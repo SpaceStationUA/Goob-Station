@@ -128,6 +128,8 @@ ui-options-lighting-very-low = Very Low
 ui-options-lighting-low = Low
 ui-options-lighting-medium = Medium
 ui-options-lighting-high = High
+# Pirate: mood color grading tweaks
+ui-options-mood-visual-effects = Mood color grading
 ui-options-scale-label = UI Scale:
 ui-options-scale-auto = Automatic ({ TOSTRING($scale, "P0") })
 ui-options-scale-75 = 75%
@@ -375,6 +377,7 @@ cmd-options-help = Usage: options [tab]
 ui-options-enable-color-name = Add colors to character names
 ui-options-colorblind-friendly = Colorblind friendly mode
 ui-options-reduced-motion = Reduce motion of visual effects
+ui-options-arachnophobia = Arachnophobia Mode
 ui-options-screen-shake-intensity = Screen shake intensity
 ui-options-chat-window-opacity = Chat window opacity
 ui-options-speech-bubble-text-opacity = Speech bubble text opacity

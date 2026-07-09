@@ -19,11 +19,11 @@
         - Pill
         - Syringe
         - MagazinePistol
+        - PillCanister
       components:
         - AnomalyScanner
         - NodeScanner
         - Flash
         - HandLabeler
         - TinfoilHat
-        - PillCanister
         - Handcuff

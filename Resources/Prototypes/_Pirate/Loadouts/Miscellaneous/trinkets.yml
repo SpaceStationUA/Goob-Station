@@ -1,4 +1,4 @@
-# Additional accessories / Додаткові аксесуари 
+# Additional accessories / Додаткові аксесуари
 - type: loadout
   id: TrinketsClothingHeadPaperSack
   storage:
@@ -19,6 +19,37 @@
   effects:
   - !type:PointsCostLoadoutEffect
     cost: 1
+
+- type: loadout
+  id: NoviceMark
+  storage:
+    back:
+    - ClothingNeckNoviceMark
+
+# Pillows
+- type: loadout
+  id: Pillow
+  storage:
+    back:
+    - PillowBaseWrapped
+
+- type: loadout
+  id: PillowCommand
+  storage:
+    back:
+    - PillowCommandWrapped
+
+- type: loadout
+  id: PillowEngineering
+  storage:
+    back:
+    - PillowEngineeringWrapped
+
+- type: loadout
+  id: PillowMedical
+  storage:
+    back:
+    - PillowMedicalWrapped
 
 # Toys / Іграшки
 - type: loadout
@@ -90,3 +121,53 @@
     back:
     - PlushiePocketAssistant
   groupBy: "Plushie"
+
+# Gambling / Азартні ігри
+- type: loadout
+  id: CardBoxBlack
+  storage:
+    back:
+    - CardBoxBlack
+  groupBy: "Gambling"
+
+- type: loadout
+  id: CardBoxNanotrasen
+  storage:
+    back:
+    - CardBoxNanotrasen
+  groupBy: "Gambling"
+
+- type: loadout
+  id: CardBoxTarot
+  storage:
+    back:
+    - CardBoxTarot
+  groupBy: "Gambling"
+
+- type: loadout
+  id: CardBoxSparot
+  storage:
+    back:
+    - CardBoxSparot
+  groupBy: "Gambling"
+
+- type: loadout
+  id: CardBoxTippyTrump
+  storage:
+    back:
+    - CardBoxTippyTrump
+  groupBy: "Gambling"
+
+- type: loadout
+  id: TippyTrumpMysteryPack
+  storage:
+    back:
+    - TippyTrumpMysteryPack
+  groupBy: "Gambling"
+
+- type: loadout
+  id: CardBoxNuno
+  storage:
+    back:
+    - CardBoxNuno
+  groupBy: "Gambling"

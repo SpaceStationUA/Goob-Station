@@ -72,7 +72,6 @@
   - !type:CharacterEmployerRequirement
     employers:
     - NanoTrasen
-    - EinsteinEngines
     - ZavodskiyInterstellar
     - HephaestusIndustries
   # Pirate contractor end

@@ -118,7 +118,7 @@
   name: space carp
   id: BaseMobCarp
   parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
-  description: It's a space carp.
+  description: A ravenous, dangerous fish from outer space. # starcup: expanded carp & sharkminnows
   abstract: true
   components:
     - type: WeatherImmune # Lavaland Change

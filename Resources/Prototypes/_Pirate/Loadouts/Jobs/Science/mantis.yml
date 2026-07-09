@@ -12,47 +12,143 @@
   equipment:
     head: ClothingHeadHatFezMantis
 - type: loadout
+  id: MantisFezInsulative
+  equipment:
+    head: ClothingHeadHatFezMantisInsulative
+- type: loadout
+  id: MantisFezAiry
+  equipment:
+    head: ClothingHeadHatFezMantisAiry
+- type: loadout
+  id: MantisFezOrnate
+  equipment:
+    head: ClothingHeadHatFezMantisOrnate
+- type: loadout
+  id: MantisHoodDark
+  equipment:
+    head: ClothingHeadHoodMantisDark
+- type: loadout
   id: MantisBeret
   equipment:
     head: ClothingHeadHatBeretMysta
 # Neck
+- type: loadout
+  id: MantisCloakDark
+  equipment:
+    neck: ClothingNeckCloakMantisDark
+- type: loadout
+  id: MantisMantleOrnate
+  equipment:
+    neck: ClothingNeckMantleMantisOrnate
+- type: loadout
+  id: MantisShackles
+  equipment:
+    neck: ClothingNeckMantisShackles
+- type: loadout
+  id: MantisPendulum
+  equipment:
+    neck: ClothingNeckMantisPendulum
 # Jumpsuit
 - type: loadout
   id: MantisSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitMantis
 - type: loadout
+  id: MantisSuitDark
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMantisDark
+- type: loadout
   id: MantisSkirt
   equipment:
     jumpsuit: ClothingUniformSkirtMantis
+- type: loadout
+  id: MantisSkirtAiry
+  equipment:
+    jumpsuit: ClothingUniformSkirtMantisAiry
+- type: loadout
+  id: MantisSkirtOrnate
+  equipment:
+    jumpsuit: ClothingUniformSkirtMantisOrnate
 # Back
 - type: loadout
   id: MantisBackpack
   equipment:
     back: ClothingBackpackMantisFilled
 - type: loadout
+  id: MantisBackpackDEN
+  equipment:
+    back: ClothingBackpackMantisFilledDEN
+- type: loadout
   id: MantisSatchel
   equipment:
     back: ClothingBackpackSatchelMantisFilled
 - type: loadout
+  id: MantisSatchelDEN
+  equipment:
+    back: ClothingBackpackSatchelMantisFilledDEN
+- type: loadout
   id: MantisDuffel
   equipment:
     back: ClothingBackpackDuffelMantisFilled
+- type: loadout
+  id: MantisDuffelDEN
+  equipment:
+    back: ClothingBackpackDuffelMantisFilledDEN
+- type: loadout
+  id: MantisPurse
+  equipment:
+    back: ClothingBackpackSatchelMantisPurseFilled
+- type: loadout
+  id: MantisMessenger
+  equipment:
+    back: ClothingBackpackMessengerMantisFilled
 # OuterClothing
 - type: loadout
   id: MantisCoat
   equipment:
     outerClothing: ClothingOuterCoatMantis
 - type: loadout
+  id: MantisCoatAiry
+  equipment:
+    outerClothing: ClothingOuterCoatMantisAiry
+- type: loadout
+  id: MantisCoatOrnate
+  equipment:
+    outerClothing: ClothingOuterCoatMantisOrnate
+- type: loadout
   id: MantisCoatWinter
   equipment:
     outerClothing: ClothingOuterWinterCoatMantis
+- type: loadout
+  id: MantisCoatWinterDark
+  equipment:
+    outerClothing: ClothingOuterWinterCoatMantisDark
 # Gloves
+- type: loadout
+  id: MantisGloves
+  equipment:
+    gloves: ClothingHandsGlovesMantis
+- type: loadout
+  id: MantisGlovesAiry
+  equipment:
+    gloves: ClothingHandsGlovesMantisAiry
 # Shoes
 - type: loadout
   id: MantisBoots
   equipment:
     shoes: ClothingShoesBootsMantis
+- type: loadout
+  id: MantisSandalsAiry
+  equipment:
+    shoes: ClothingShoesSandalsMantisAiry
+- type: loadout
+  id: MantisSandalsDark
+  equipment:
+    shoes: ClothingShoesSandalsMantisDark
+- type: loadout
+  id: MantisSandalsOrnate
+  equipment:
+    shoes: ClothingShoesSandalsMantisOrnate
 # ID
 # Eyes
 - type: loadout
@@ -67,8 +163,54 @@
   id: EpiHudGlasses
   equipment:
     eyes: ClothingEyesGlassesEpistemics
+- type: loadout
+  id: MantisGlasses
+  equipment:
+    eyes: ClothingEyesGlassesEpistemicsMantis
+- type: loadout
+  id: MantisGlassesTinted
+  equipment:
+    eyes: ClothingEyesGlassesEpistemicsMantisTinted
+- type: loadout
+  id: MantisGlassesVeil
+  equipment:
+    eyes: ClothingEyesGlassesEpistemicsMantisVeil
+- type: loadout
+  id: MantisGlassesMirrored
+  equipment:
+    eyes: ClothingEyesGlassesEpistemicsMantisMirrored
 # Belt
 - type: loadout
   id: MantisBelt
   equipment:
     belt: ClothingBeltMantis
+- type: loadout
+  id: MantisBeltAiry
+  equipment:
+    belt: ClothingBeltMantisAiry
+- type: loadout
+  id: MantisBeltDark
+  equipment:
+    belt: ClothingBeltMantisDark
+- type: loadout
+  id: MantisBeltOrnate
+  equipment:
+    belt: ClothingBeltMantisOrnate
+# Ears
+- type: loadout
+  id: MantisHeadset
+  equipment:
+    ears: ClothingHeadsetMantis
+- type: loadout
+  id: MantisHeadsetAlt
+  equipment:
+    ears: ClothingHeadsetAltMantis
+# Mask
+- type: loadout
+  id: MantisMaskVeil
+  equipment:
+    mask: ClothingMaskMantisVeil
+- type: loadout
+  id: MantisMaskRitual
+  equipment:
+    mask: ClothingMaskMantisRitual

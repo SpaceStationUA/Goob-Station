@@ -33,9 +33,9 @@
       employers:
       - PMCG
       - HephaestusIndustries
-      - ZavodskiyInterstellar
       - IdrisIncorporated
       - ZengHuPharmaceuticals
+      - EinsteinEngines
     - !type:SpeciesRequirement
       inverted: true
       species:
@@ -43,7 +43,7 @@
         - IPC
   languages:
     - Tradeband
-  passportPrototype: EridanPassport
+  passportPrototype: EridanCorpID
 
 - type: nationality
   id: Adhomai
@@ -74,12 +74,3 @@
       species:
         - IPC
   passportPrototype: GoldenDeepPassport
-
-- type: nationality
-  id: Flock
-  nameKey: nationality_name_flock
-  requirements:
-    - !type:SpeciesRequirement
-      species:
-        - Vox
-  passportPrototype: VoxWallet

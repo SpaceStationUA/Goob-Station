@@ -28,6 +28,18 @@ public sealed partial class SpiderComponent : Component
 
     [DataField] public EntityUid? Action;
 
+    // Pirate: Starlight terror spider building action support.
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public bool HasBuilding;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("buildingActionProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string BuildingActionProto = "ActionSpiderBuildingPole";
+
+    [DataField]
+    public EntityUid? BuildingAction;
+
     /// <summary>
     /// Whether the spider will spawn webs when not controlled by a player.
     /// </summary>
@@ -48,3 +60,6 @@ public sealed partial class SpiderComponent : Component
 }
 
 public sealed partial class SpiderWebActionEvent : InstantActionEvent { }
+
+// Pirate: raised after a spider successfully creates a web tile.
+public sealed class SpiderWebSpawnedEvent : EntityEventArgs;

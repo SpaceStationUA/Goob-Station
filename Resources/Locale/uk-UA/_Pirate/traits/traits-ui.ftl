@@ -48,7 +48,9 @@ trait-condition-any-of = Будь-що з наступного має бути �
 
 ## Species conditions
 trait-condition-species-is = Ви повинні бути [color=yellow]{$species}[/color].
-trait-condition-species-not = Ви не повинні бути [color=yellow]{$species}[/color].
+trait-condition-species-not = Ви не повинні бути [color=yellow]{$species}[/color]
+trait-condition-nationality-is = Ви повинні мати національність [color=yellow]{$nationalities}[/color].
+trait-condition-nationality-not = Ви не повинні мати національність [color=yellow]{$nationalities}[/color].
 
 ## Job conditions
 trait-condition-job-is = Ваша посада має бути [color={$color}]{$job}[/color].

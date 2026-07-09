@@ -205,6 +205,18 @@ public sealed partial class StrapComponent : Component
     [DataField]
     public bool BuckleOnInteractHand = true;
 
+    /// <summary>
+    /// Pirate/Starlight: whether the user needs hands to buckle to this strap.
+    /// </summary>
+    [DataField]
+    public bool NeedsHands = true;
+
+    /// <summary>
+    /// Pirate/Starlight: hide the buckled entity while strapped.
+    /// </summary>
+    [DataField]
+    public bool SetVisible = false;
+
     // <Goobstation>
     /// <summary>
     /// adds bverb for bucle

@@ -1,6 +1,5 @@
 reagent-name-korta-nectar-pirate = сироп корта
 reagent-desc-korta-nectar-pirate = Солодкий сироп із подрібнених горіхів корта.
-
 ent-FoodCondimentBottleCaramelSyrupPirate = пляшка карамельного сиропу
     .desc = Пляшка з дозатором, наповнена карамеллю. Не лижіть.
 ent-FoodCondimentBottleCoffeeLiqueurSyrupPirate = пляшка сиропу з кавовим лікером

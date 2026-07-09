@@ -1,0 +1,6 @@
+- type: latheRecipe
+  id: IVBloodPack
+  result: IVBloodPack
+  completetime: 4
+  materials:
+    Plastic: 32 # Pirate: converted from RMCPlastic to local material units.

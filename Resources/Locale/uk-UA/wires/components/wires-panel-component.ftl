@@ -1,6 +1,5 @@
 wires-panel-component-on-examine-open = [color=lightgray]Панель обслуговування[/color] [color=red]відкрита[/color].
 wires-panel-component-on-examine-closed = [color=lightgray]Сервісна панель[/color] [color=darkgreen]закрита[/color]
-
 wire-name-color-red = Червоний
 wire-name-color-blue = Синій
 wire-name-color-green = Зелений

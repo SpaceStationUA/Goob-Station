@@ -1,4 +1,4 @@
-using Content.Pirate.Server.Vampire;
+using Content.Pirate.Server.Vampire.Systems;
 using Content.Server.Objectives.Systems;
 
 namespace Content.Pirate.Server.Objectives.Components;

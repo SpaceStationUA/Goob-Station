@@ -52,6 +52,8 @@
       quickEquip: false
       slots:
         - Belt
+    - type: StealTarget # Pirate: Blood Bound steal objective.
+      stealGroup: AccessConfigurator
     - type: AccessOverrider
       accessLevels:
       - Armory

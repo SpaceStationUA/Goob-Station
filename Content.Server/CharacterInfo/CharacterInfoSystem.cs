@@ -16,20 +16,31 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server.Administration.Logs;
 using Content.Server.Mind;
+using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
+using Content.Shared.CCVar;
 using Content.Shared.CharacterInfo;
+using Content.Shared.Database;
+using Content.Shared.DetailExaminable;
 using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.Preferences;
+using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 
 namespace Content.Server.CharacterInfo;
 
 public sealed class CharacterInfoSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private readonly IServerPreferencesManager _preferences = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
 
@@ -38,6 +49,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         base.Initialize();
 
         SubscribeNetworkEvent<RequestCharacterInfoEvent>(OnRequestCharacterInfoEvent);
+        SubscribeNetworkEvent<UpdateDetailExaminableEvent>(OnUpdateDetailExaminableEvent);
     }
 
     private void OnRequestCharacterInfoEvent(RequestCharacterInfoEvent msg, EntitySessionEventArgs args)
@@ -83,6 +95,33 @@ public sealed class CharacterInfoSystem : EntitySystem
             //Pirate banking end
         }
 
-        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing, memories), args.SenderSession); //Pirate banking
+        var detailExaminable = TryComp<DetailExaminableComponent>(entity, out var detail)
+            ? detail.Content
+            : Loc.GetString("flavor-text-placeholder");
+
+        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing, detailExaminable, memories), args.SenderSession); //Pirate banking
+    }
+
+    // Pirate: allow editing the round description in-game.
+    private void OnUpdateDetailExaminableEvent(UpdateDetailExaminableEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { } entity)
+            return;
+
+        var newContent = FormattedMessage.RemoveMarkupOrThrow(msg.Content);
+        var maxFlavorTextLength = _cfg.GetCVar(CCVars.MaxFlavorTextLength);
+        if (newContent.Length > maxFlavorTextLength)
+            newContent = newContent[..maxFlavorTextLength];
+
+        var detail = EnsureComp<DetailExaminableComponent>(entity);
+        detail.Content = newContent;
+
+        var preferences = _preferences.GetPreferences(args.SenderSession.UserId);
+        if (preferences.SelectedCharacter is HumanoidCharacterProfile profile)
+            _ = _preferences.SetProfile(args.SenderSession.UserId, preferences.SelectedCharacterIndex, profile.WithFlavorText(newContent));
+
+        _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(entity):user} updated their round description");
+
+        Dirty(entity, detail);
     }
 }

@@ -390,6 +390,10 @@
       - id: Soap
       - id: Wirecutter
       - id: Screwdriver
+      - id: ESDoorJammer # Pirate
+        weight: 3
+      - id: ESNet # Pirate
+        weight: 3
       - id: Wrench
       - id: Crowbar
       - id: Multitool

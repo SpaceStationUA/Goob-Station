@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.BladeServer;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
 using JetBrains.Annotations;
@@ -34,6 +35,11 @@ public sealed partial class BoardNodeEntity : IGraphNodeEntity
             return null;
 
         var board = container.ContainedEntities[0];
+
+        // Pirate: blade server construction uses machine boards with an extra blade target.
+        if (args.EntityManager.HasComponent<BladeServerFrameComponent>(uid) &&
+            args.EntityManager.TryGetComponent<BladeServerBoardComponent>(board, out var bladeServer))
+            return bladeServer.Prototype;
 
         // There should not be a case where both of these components exist on the same entity...
         if (args.EntityManager.TryGetComponent(board, out MachineBoardComponent? machine))

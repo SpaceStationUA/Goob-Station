@@ -29,8 +29,12 @@
     GrassBattlemap: 1
     PaperCNCSheet: 6
     MysteryFigureBox: 2
+    BookSparotBook: 1 # GoobStation
     BooksBag: 3
     CardBoxBlack: 3 # GoobStation
+    CardBoxSparot: 1 # GoobStation
+    CardBoxTarot: 2 # GoobStation
+    CardBoxNuno: 1 # GoobStation
     PokerChips100: 6 # GoobStation
   contrabandInventory:
     Basketball: 1

@@ -8,6 +8,5 @@ cmd-forcepreset-success = Примусово встановлено ігрови
 cmd-forcepreset-cleared = Налаштування примусового пресету очищено.
 cmd-forcepreset-preset-not-found = Не існує пресету з назвою { $preset }.
 cmd-forcepreset-hint = <ID пресету>
-
 cmd-forcepreset-preround-lobby-only = Це можна виконати лише тоді, коли гра знаходиться в лобі перед раундом.
 cmd-forcepreset-no-preset-found = Не існує пресету з назвою {$preset}.

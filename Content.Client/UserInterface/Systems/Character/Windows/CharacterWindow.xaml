@@ -35,6 +35,21 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <Label Name="ObjectivesLabel" Access="Public" Text="{Loc 'character-info-objectives-label'}" HorizontalAlignment="Center"/>
             <BoxContainer Orientation="Vertical" Name="Objectives" Access="Public"/>
             <cc:Placeholder Name="RolePlaceholder" Access="Public" PlaceholderText="{Loc 'character-info-roles-antagonist-text'}"/>
+            <PanelContainer StyleClasses="PanelLight" Margin="0 4 0 0">
+                <!-- Pirate: allow editing the round description in-game. -->
+                <BoxContainer Orientation="Vertical" Name="DetailExaminableContainer" Access="Public" Margin="10 2 10 0">
+                    <BoxContainer Orientation="Horizontal">
+                        <Label Text="{Loc 'character-info-detail-examinable-label'}" StyleClasses="LabelKeyText" VerticalAlignment="Bottom"/>
+                    </BoxContainer>
+                    <PanelContainer StyleClasses="PanelDark" Margin="0 0 0 6">
+                        <TextEdit Name="DetailExaminableTextEdit" Access="Public" MinHeight="200" Margin="5 5" VerticalExpand="True"/>
+                    </PanelContainer>
+                    <BoxContainer Orientation="Horizontal">
+                        <Control HorizontalExpand="True"/>
+                        <Button Name="DetailExaminableSubmitButton" Text="{Loc 'character-info-detail-examinable-submit'}" Disabled="True" Access="Public" HorizontalAlignment="Right"/>
+                    </BoxContainer>
+                </BoxContainer>
+            </PanelContainer>
         </BoxContainer>
     </ScrollContainer>
 </windows:CharacterWindow>

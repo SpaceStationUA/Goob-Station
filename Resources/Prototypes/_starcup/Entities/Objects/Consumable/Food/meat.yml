@@ -1,0 +1,61 @@
+- type: entity
+  name: raw abyssal carp fillet
+  parent: FoodMeatFish
+  id: FoodMeatAbyssalFish
+  description: Darker, richer... with an oddly enticing color.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bitter
+      - salty
+  - type: Sprite
+    sprite: _starcup/Objects/Consumable/Food/meat.rsi
+    state: abyssalfish
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 8
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 8
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: abyssal-inhand-left
+      right:
+      - state: abyssal-inhand-right
+
+- type: entity
+  name: raw bad carp fillet
+  parent: FoodMeatFish
+  id: FoodMeatBadFish
+  description: Pale, dry, and musty.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bland
+    - salty
+  - type: Sprite
+    sprite: _starcup/Objects/Consumable/Food/meat.rsi
+    state: badfish
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 2
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bad-pink-inhand-left
+      right:
+      - state: bad-pink-inhand-right

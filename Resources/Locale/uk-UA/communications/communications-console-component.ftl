@@ -19,7 +19,6 @@ comms-console-announcement-title-station = Комунікаційна Консо
 comms-console-announcement-title-centcom = Центральне Командування
 comms-console-announcement-title-nukie = Ядерні Оперативники 'СИНДИКАТ'
 comms-console-announcement-title-SAN = Соляріанського Флоту
-
 comms-console-message-too-long = Повідомлення занадто довге
 
 # Значення-заповнювачі

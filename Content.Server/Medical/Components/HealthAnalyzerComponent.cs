@@ -88,6 +88,12 @@ public sealed partial class HealthAnalyzerComponent : Component
     public SoundSpecifier ScanningEndSound = new SoundPathSpecifier("/Audio/Items/Medical/healthscanner.ogg");
 
     /// <summary>
+    /// Pirate: Whether the analyzer last sent an active scan update.
+    /// </summary>
+    [DataField]
+    public bool IsAnalyzerActive;
+
+    /// <summary>
     /// Whether to show up the popup
     /// </summary>
     [DataField]

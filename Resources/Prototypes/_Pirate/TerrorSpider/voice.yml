@@ -1,0 +1,14 @@
+- type: emote
+  id: Hisses
+  name: chat-emote-name-hiss
+  category: Vocal
+  available: false
+  icon: { sprite: _Starlight/Actions/felionoid.rsi, state: cat_print }
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-hiss"]
+  # Pirate - local Hiss already owns Starlight's trigger words; this ID is for allowedEmotes wiring.

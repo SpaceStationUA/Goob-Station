@@ -11,7 +11,6 @@ advertisement-block-game-10 = Аркада від Гарно - це те, чим
 advertisement-block-game-11 = Тепер з вибуховою обробкою!
 advertisement-block-game-12 = Наші юристи чекають на вас!
 advertisement-block-game-13 = Бачиш пікселі? а їх нема
-
 thankyou-block-game-1 = Скоро знову гратимемо!
 thankyou-block-game-2 = Молодець!
 thankyou-block-game-3 = Ще одну гру?

@@ -166,6 +166,16 @@
     sprite: Clothing/OuterClothing/Armor/security.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/security.rsi
+  #region Pirate: stains
+  - type: Stainable
+    clothingVisuals:
+      outerClothing:
+      - sprite: _Pirate/Effects/blood.rsi
+        state: armorblood
+    iconVisuals:
+    - sprite: _Pirate/Effects/blood.rsi
+      state: armorbloodicon
+  #endregion Pirate: stains
   - type: Armor
     coverage:
     - Chest

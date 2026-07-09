@@ -1,11 +1,9 @@
 ## UI
 
 ui-disposal-unit-title = Смітник
-
 ui-disposal-unit-label-state = Статус:
 ui-disposal-unit-label-pressure = Тиск:
 ui-disposal-unit-label-status = Готово
-
 ui-disposal-unit-button-flush = Змити
 ui-disposal-unit-button-eject = Вийняти Вміст
 ui-disposal-unit-button-power = Живлення

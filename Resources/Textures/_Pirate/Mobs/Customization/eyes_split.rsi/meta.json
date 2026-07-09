@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Left/right halves auto-derived from Mobs/Customization/eyes.rsi (human_eyes by DrSmugleaf, from tgstation) for asynchronous per-eye blinking.",
+  "size": {"x": 32, "y": 32},
+  "states": [
+    {"name": "eyes_l", "directions": 4},
+    {"name": "eyes_r", "directions": 4}
+  ]
+}

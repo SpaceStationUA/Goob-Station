@@ -2,7 +2,6 @@ flatpack-unpack-no-room = Немає місця для розпакування!
 flatpack-examine = Розпакуйте його за допомогою [color=yellow]мультитула[/color].
 flatpack-entity-name = флетпак {$name}
 flatpack-entity-description = Флетпак, який використовується для побудови {$name}.
-
 flatpacker-item-slot-name = Слот для машинної плати
 flatpacker-ui-title = Флетпакер 1001
 flatpacker-ui-materials-label = Матеріали

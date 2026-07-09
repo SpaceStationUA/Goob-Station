@@ -50,7 +50,6 @@ bounty-item-warm-cloth = Теплий одяг
 bounty-item-battery = Батарейка
 bounty-lasergun = Лазерна зброя
 bounty-food = Мʼясна їжа
-
 bounty-description-artifact = Для NanoTrasen потрібен інопланетний артефакт для своїх наукових вивчень.
 bounty-description-baseball-bat = У CentCom триває бейсбольна лихоманка! Вони будуть вам вдячні якщо надішлете їм кілька бейсбольних бит.
 bounty-description-box-hugs = Кілька високопосадовців зазнали серйозних бо-бо :( Терміново потрібна коробка обіймів, щоб допомогти їм одужати.

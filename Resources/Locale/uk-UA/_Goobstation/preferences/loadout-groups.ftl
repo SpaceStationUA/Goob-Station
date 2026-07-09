@@ -16,7 +16,6 @@ loadout-group-ntr-neck = Аксесуар на шию представника N
 loadout-group-ntr-jumpsuit = Комбінезон представника NT
 loadout-group-ntr-belt = Пояс представника NT
 loadout-group-ntr-shoes = Взуття представника NT
-
 loadout-group-bso-head = Головний убір офіцера СЩ
 loadout-group-bso-backpack = Рюкзак офіцера СЩ
 loadout-group-bso-jumpsuit = Комбінезон офіцера СЩ
@@ -24,7 +23,6 @@ loadout-group-bso-mask = Маска офіцера СЩ
 loadout-group-bso-outer = Броня офіцера СЩ
 loadout-group-bso-neck = Аксесуар на шию офіцера СЩ
 loadout-group-bso-shoes = Взуття офіцера СЩ
-
 loadout-group-nct-head = Головний убір кар'єрного тренера NT
 loadout-group-nct-backpack = Рюкзак кар'єрного тренера NT
 loadout-group-nct-jumpsuit = Комбінезон кар'єрного тренера NT
@@ -32,26 +30,17 @@ loadout-group-nct-outerclothing = Верхній одяг кар'єрного т
 loadout-group-nct-belt = Пояс кар'єрного тренера NT
 loadout-group-nct-gloves = Рукавиці кар'єрного тренера NT
 loadout-group-nct-shoes = Взуття кар'єрного тренера NT
-
 loadout-group-reporter-outerclothing = Верхній одяг репортера
-
 loadout-group-security-neck = Аксесуар на шию служби безпеки
-
 loadout-group-captain-mask = Маска капітана
-
 loadout-group-salvage-specialist-neck = Аксесуар на шию спеціаліста з утилізації
-
 loadout-group-chemist-head = Головний убір хіміка
-
 loadout-group-hos-shoes = Взуття Голови служби безпеки
-
 loadout-group-brigmedic-jumpsuit = Комбінезон бригмедика
 loadout-group-brigmedic-head = Головний убір бригмедика
 loadout-group-brigmedic-outer = Верхній одяг бригмедика
 loadout-group-brigmedic-backpack = Рюкзак бригмедика
-
 loadout-group-security-melee = Холодна зброя служби безпеки
-
 loadout-group-animals = Тварини
 loadout-group-roboticist-head = Головний убір робототехніка
 loadout-group-roboticist-jumpsuit = Комбінезон робототехніка

@@ -1,29 +1,29 @@
 <Document>
-  # Hydrakin
+  # Гідракіни
 
   <Box>
     <GuideEntityEmbed Entity="MobHydrakin" Caption=""/>
   </Box>
-  ## Food
+  ## Їжа
 
-  - Hydrakins mostly prefer raw food. Onions and theobromine-containing food are [color=#FFA500]highly toxic to them[/color].
+  - Гідракіни переважно полюбляють сиру їжу. Цибуля та їжа з теоброміном [color=#FFA500]дуже токсичні для них[/color].
 
-  ## Physical properties
+  ## Фізичні властивості
 
-  - They are [color=#4169E1]10% more resistant to blunt damage[/color].
-  - They take [color=#FFA500]25% more heat damage and 15% more slash damage[/color].
-  - Wearing glasses is [color=#FFA500]not possible[/color] due to the head anatomy.
+  - Вони [color=#4169E1]на 10% стійкіші до тупих ушкоджень[/color].
+  - Вони отримують [color=#FFA500]на 25% більше теплових ушкоджень і на 15% більше різаних ушкоджень[/color].
+  - Носити окуляри [color=#FFA500]неможливо[/color] через анатомію голови.
 
-  ## Temperature
+  ## Температура
 
-  - Hydrakin bodies are [color=#FFA500]constantly heating up[/color]. They can tolerate heat without any insulation, but wearing hardsuits or coats will immediatly start [color=#FFA500]heating them up to 67C[/color].
-  - Leporazine and Peranol have [color=#4169E1]amplified[/color] cooling effect on their body.
-  - However, using any type of cryo chemicals will make hydrakins [color=#FFA500]fall asleep[/color] if their body temperature is low enough to activate it.
-  - As well, Hydrakin's thermal regulation entirely fails in critical condition as while as being dead.
+  - Тіла гідракінів [color=#FFA500]постійно нагріваються[/color]. Вони можуть переносити тепло без ізоляції, але носіння скафандрів або пальт одразу почне [color=#FFA500]нагрівати їх до 67°C[/color].
+  - Лепоразин і перанол мають [color=#4169E1]посилений[/color] охолоджувальний ефект на їхнє тіло.
+  - Однак будь-які кріохімікати змусять гідракінів [color=#FFA500]заснути[/color], якщо температура їхнього тіла достатньо низька для активації.
+  - Також терморегуляція гідракінів повністю відмовляє в критичному стані та після смерті.
 
-  ## Atmospherics
+  ## Атмосферика
 
-  - Hydrakins are capable of breathing all gases, with carbon dioxide and water vapor being an exception.
-  - Unique gases (Such as Plasma, Tritium, Frezon, Nitrium, Healium and etc.) have mostly [color=#4169E1]positive[/color] effect on them, described in the "Chemicals" guideebook entry.
+  - Гідракіни здатні дихати всіма газами, за винятком вуглекислого газу та водяної пари.
+  - Унікальні гази (такі як плазма, тритій, фрезон, нітріум, гелій тощо) здебільшого мають [color=#4169E1]позитивний[/color] ефект на них, описаний у статті довідника "Хімікати".
 
 </Document>

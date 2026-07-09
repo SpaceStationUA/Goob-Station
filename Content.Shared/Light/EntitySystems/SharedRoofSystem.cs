@@ -91,46 +91,61 @@ public abstract class SharedRoofSystem : EntitySystem
         return null;
     }
 
-    public void SetRoof(Entity<MapGridComponent?, RoofComponent?> grid, Vector2i index, bool value)
+    [Pure]
+    public bool IsWeatherOccluded(Entity<MapGridComponent, RoofComponent> grid, Vector2i index)
+    {
+        if (IsRooved(grid, index))
+            return true;
+
+        var roof = grid.Comp2;
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(index, RoofComponent.ChunkSize);
+
+        if (roof.WeatherOcclusionData.TryGetValue(chunkOrigin, out var bitMask))
+        {
+            var chunkRelative = SharedMapSystem.GetChunkRelative(index, RoofComponent.ChunkSize);
+            var bitFlag = (ulong) 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
+
+            if ((bitMask & bitFlag) == bitFlag)
+                return true;
+        }
+
+        return false;
+    }
+
+    public void SetRoof(Entity<MapGridComponent?, RoofComponent?> grid, Vector2i index, bool value, bool occludeWeather = true)
     {
         if (!Resolve(grid, ref grid.Comp1, ref grid.Comp2, false))
             return;
 
         var chunkOrigin = SharedMapSystem.GetChunkIndices(index, RoofComponent.ChunkSize);
         var roof = grid.Comp2;
-
-        if (!roof.Data.TryGetValue(chunkOrigin, out var chunkData))
-        {
-            // No value to remove so leave it.
-            if (!value)
-            {
-                return;
-            }
-
-            chunkData = 0;
-        }
-
         var chunkRelative = SharedMapSystem.GetChunkRelative(index, RoofComponent.ChunkSize);
         var bitFlag = (ulong) 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
+        var weatherOcclusionFlag = (ulong) 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
+
+        roof.WeatherOcclusionData.TryGetValue(chunkOrigin, out var weatherChunkData);
+
+        if (occludeWeather)
+            weatherChunkData |= weatherOcclusionFlag;
+        else
+            weatherChunkData &= ~weatherOcclusionFlag;
+
+        roof.WeatherOcclusionData[chunkOrigin] = weatherChunkData;
+
+        var hadData = roof.Data.TryGetValue(chunkOrigin, out var chunkData);
 
         if (value)
         {
-            // Already set
-            if ((chunkData & bitFlag) == bitFlag)
-                return;
-
             chunkData |= bitFlag;
         }
         else
         {
-            // Not already set
-            if ((chunkData & bitFlag) == 0x0)
-                return;
-
             chunkData &= ~bitFlag;
         }
 
-        roof.Data[chunkOrigin] = chunkData;
+        if (hadData || chunkData != 0)
+            roof.Data[chunkOrigin] = chunkData;
+
         Dirty(grid.Owner, roof);
     }
 }

@@ -29,7 +29,8 @@ public sealed class EscapeShuttleConditionSystem : EntitySystem
         args.Progress = GetProgress(args.MindId, args.Mind);
     }
 
-    private float GetProgress(EntityUid mindId, MindComponent mind)
+    // Pirate: Blood Bound pair objectives reuse the regular shuttle escape progress.
+    public float GetProgress(EntityUid mindId, MindComponent mind)
     {
         // not escaping alive if you're deleted/dead
         if (mind.OwnedEntity == null || _mind.IsCharacterDeadIc(mind))

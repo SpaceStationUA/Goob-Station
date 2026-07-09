@@ -608,6 +608,11 @@
           conditions:
             - !type:ReagentThreshold
               min: 5
+        - !type:ChemAddMoodlet # Pirate - port EE mood system
+          moodPrototype: RomerolEffect
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
 
 - type: reagent
   id: UncookedAnimalProteins
@@ -624,6 +629,9 @@
         conditions:
           - !type:OrganType
             type: Animal
+            shouldHave: false
+          - !type:OrganType # Mono - Hydrakin
+            type: Hydrakin
             shouldHave: false
           - !type:OrganType
             type: Vox
@@ -647,6 +655,9 @@
           - !type:OrganType
             type: Animal
             shouldHave: false
+          - !type:OrganType # Mono - Hydrakin
+            type: Hydrakin
+            shouldHave: false
           - !type:OrganType
             type: Vox
             shouldHave: false
@@ -663,6 +674,9 @@
         conditions:
         - !type:OrganType
           type: Animal
+          shouldHave: false
+        - !type:OrganType # Mono - Hydrakin
+          type: Hydrakin
           shouldHave: false
         - !type:OrganType
           type: Vox
@@ -689,6 +703,12 @@
         conditions:
         - !type:OrganType
           type: XenobioSlime
+        reagent: Protein
+        amount: 0.5
+      - !type:AdjustReagent # Mono - Hydrakin
+        conditions:
+        - !type:OrganType
+          type: Hydrakin
         reagent: Protein
         amount: 0.5
       - !type:AdjustReagent
@@ -745,6 +765,8 @@
         gainRateModifier: -0.00111111111111 #double spaceacilin penalty
         strengthModifier: -0.0088888888888 #ditto
         statusLifetime: 1.5 # 1.5s per 1u
+      - !type:ChemAddMoodlet # Pirate - port EE mood system
+        moodPrototype: PaxEffect
 
 - type: reagent
   id: Honk

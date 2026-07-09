@@ -215,11 +215,12 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             var patientCoordinates = Transform(patient).Coordinates;
             if (component.MaxScanRange != null && !_transformSystem.InRange(patientCoordinates, transform.Coordinates, component.MaxScanRange.Value))
             {
-                //Range too far, disable updates
-                StopAnalyzingEntity((uid, component), patient);
+                // Pirate: Pause the scanner UI until the target returns to range.
+                PauseAnalyzingEntity((uid, component), patient);
                 continue;
             }
 
+            component.IsAnalyzerActive = true; // Pirate: Analyzer reactivation.
             UpdateScannedUser(uid, patient, true, component.CurrentMode, component.CurrentBodyPart); // Shitmed Change
         }
     }
@@ -306,6 +307,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         //Link the health analyzer to the scanned entity
         healthAnalyzer.Comp.ScannedEntity = target;
         healthAnalyzer.Comp.CurrentBodyPart = part; // Shitmed Change
+        healthAnalyzer.Comp.IsAnalyzerActive = true; // Pirate: Analyzer reactivation.
 
         _toggle.TryActivate(healthAnalyzer.Owner);
 
@@ -322,9 +324,24 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         //Unlink the analyzer
         healthAnalyzer.Comp.ScannedEntity = null;
         healthAnalyzer.Comp.CurrentBodyPart = null; // Shitmed Change
+        healthAnalyzer.Comp.IsAnalyzerActive = false; // Pirate: Analyzer reactivation.
         _toggle.TryDeactivate(healthAnalyzer.Owner);
 
         UpdateScannedUser(healthAnalyzer, target, false, healthAnalyzer.Comp.CurrentMode);
+    }
+
+    /// <summary>
+    /// Pirate: Send one inactive update while keeping the scan linked so it can resume when back in range.
+    /// </summary>
+    /// <param name="healthAnalyzer">The health analyzer that's receiving the updates</param>
+    /// <param name="target">The entity to analyze</param>
+    private void PauseAnalyzingEntity(Entity<HealthAnalyzerComponent> healthAnalyzer, EntityUid target)
+    {
+        if (!healthAnalyzer.Comp.IsAnalyzerActive)
+            return;
+
+        UpdateScannedUser(healthAnalyzer, target, false, healthAnalyzer.Comp.CurrentMode, healthAnalyzer.Comp.CurrentBodyPart);
+        healthAnalyzer.Comp.IsAnalyzerActive = false;
     }
 
     // Shitmed Change Start
@@ -385,11 +402,15 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             bodyTemperature = temp.CurrentTemperature;
 
         var bloodAmount = float.NaN;
+        var bloodLow = false; // Goobstation
 
         if (TryComp<BloodstreamComponent>(target, out var bloodstream) &&
             _solutionContainerSystem.ResolveSolution(target, bloodstream.BloodSolutionName,
                 ref bloodstream.BloodSolution, out var bloodSolution))
+        {
             bloodAmount = bloodSolution.FillFraction;
+            bloodLow = bloodAmount < bloodstream.BloodlossThreshold; // Goobstation
+        }
 
         var bodyStatus = _woundSystem.GetDamageableStatesOnBody(target);
         Dictionary<TargetBodyPart, bool> bleeding; // Goobstation - removed unnecessary allocation
@@ -419,6 +440,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
                     vitalDamage, // Goobstation
                     traumas,
                     pain,
+                    bloodLow, // Goobstation
                     part != null ? GetNetEntity(part) : null
                 ));
                 break;

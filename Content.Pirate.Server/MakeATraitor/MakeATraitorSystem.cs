@@ -120,7 +120,7 @@ namespace Content.Pirate.Server.MakeATraitor
         // Pirate start
         private void MakeVampire(ICommonSession? target)
         {
-            _antag.ForceMakeAntag<Content.Server._Pirate.GameTicking.Rules.Components.VampireRuleComponent>(
+            _antag.ForceMakeAntag<Content.Pirate.Server.GameTicking.Rules.Components.VampireRuleComponent>(
                 target,
                 DefaultVampireRule);
         }

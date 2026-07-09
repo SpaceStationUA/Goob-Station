@@ -1,0 +1,3 @@
+marking-TajaranTailLeopardAnimated = Леопардовий хвіст (анімований)
+marking-TajaranTailLeopardAnimated-m_tail_leopard_primary_wag = Хвіст
+marking-TajaranTailLeopardAnimated-m_tail_leopard_tertiary_wag = Плями

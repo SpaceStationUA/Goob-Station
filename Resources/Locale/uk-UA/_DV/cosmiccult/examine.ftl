@@ -15,7 +15,6 @@ cosmic-examine-glyph-cultcount = {$COUNT ->
     [1] [color=#4cabb3]Потребує лише одного культиста для активації.[/color]
     *[other] [color=#4cabb3]Потребує {$COUNT} культистів для активації.[/color]
 }
-
 cosmic-examine-glyph-truth = [color=#4cabb3]Прищеплює чисту, незгладиму істину. Здатний навернути абсолютно будь-кого до наших лав.[/color]
 cosmic-examine-glyph-knowledge = [color=#4cabb3]Прищеплює іскру незгладимого знання. Здатний навернути більшість до наших лав.[/color]
 cosmic-examine-glyph-cessation = [color=#4cabb3]Перетворює портативний атмосферний скрубер на Порожній Шпиль для нашого використання.[/color]

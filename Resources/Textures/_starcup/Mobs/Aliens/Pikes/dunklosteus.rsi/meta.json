@@ -1,0 +1,51 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Modified by Psymbiote from files taken from CEV-Eris. https://github.com/discordia-space/CEV-Eris",
+    "size": {
+        "x": 64,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "alive",
+            "directions": 4,
+            "delays": [
+                [
+                    0.3,
+                    0.4,
+                    0.3,
+                    0.4,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.4,
+                    0.3,
+                    0.4,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.4,
+                    0.3,
+                    0.4,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.4,
+                    0.3,
+                    0.4,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "dead"
+        }
+    ]
+}

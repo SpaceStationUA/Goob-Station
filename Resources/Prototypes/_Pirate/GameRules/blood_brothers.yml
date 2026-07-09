@@ -1,0 +1,63 @@
+- type: entity
+  parent: BaseGameRule
+  id: BloodBrothers
+  components:
+  - type: GameRule
+    minPlayers: 10
+    cancelPresetOnTooFewPlayers: false
+    delay:
+      min: 240
+      max: 420
+  - type: BloodBrotherRule
+  - type: AntagRandomObjectives
+    sets:
+    - groups: BloodBrotherObjectiveGroups
+    maxDifficulty: 7.5
+  - type: AntagSelection
+    agentName: blood-brothers-round-end-agent-name
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ BloodBrother ]
+      min: 1
+      max: 1
+      playerRatio: 10
+      # Pirate: local equivalent of Harmony RestrictedAntag.
+      jobBlacklist:
+      - CentralCommandOfficial
+      - DeathSquad
+      - ERTLeader
+      - ERTChaplain
+      - ERTEngineer
+      - ERTSecurity
+      - ERTMedical
+      - ERTJanitor
+      - CBURN
+      - Captain
+      - HeadOfPersonnel
+      - HeadOfSecurity
+      - ChiefMedicalOfficer
+      - ResearchDirector
+      - ChiefEngineer
+      - Quartermaster
+      - StationAi
+      - Borg
+      - SecurityCadet
+      - MedicalIntern
+      - ResearchAssistant
+      - TechnicalAssistant
+      - Visitor
+      - Warden
+      - Detective
+      - SecurityOfficer
+      blacklist:
+        components:
+        - AntagImmune
+      briefing:
+        text: blood-brother-initial-role-greeting
+        color: MediumVioletRed
+        sound: /Audio/_Pirate/Misc/blood_brother_greeting.ogg
+      components:
+      - type: BloodBrother
+      - type: InitialBloodBrother
+      mindRoles:
+      - MindRoleBloodBrother

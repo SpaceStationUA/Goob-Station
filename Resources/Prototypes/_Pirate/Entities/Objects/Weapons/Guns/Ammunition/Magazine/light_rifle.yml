@@ -1,0 +1,21 @@
+- type: entity
+  parent: BaseMagazineLightRifle
+  id: MagazineLightRifleCaseless
+  name: магазин (.30 безгільзовий гвинтівковий)
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeLightRifleCaseless
+    capacity: 15
+    proto: CartridgeLightRifleCaseless
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/dmr_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Tag
+    tags:
+    - MagazineLightRifleCaseless

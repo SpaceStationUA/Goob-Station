@@ -70,6 +70,8 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         SubscribeLocalEvent<StrapComponent, MoveEvent>(OnStrapMoveEvent);
         SubscribeLocalEvent<BuckleComponent, BuckledEvent>(OnBuckledEvent);
         SubscribeLocalEvent<BuckleComponent, UnbuckledEvent>(OnUnbuckledEvent);
+        SubscribeLocalEvent<BuckleComponent, ComponentRemove>(OnBuckleRemove);
+        SubscribeLocalEvent<BuckleComponent, AfterAutoHandleStateEvent>(OnAfterBuckleState);
         SubscribeLocalEvent<BuckleComponent, AttemptMobCollideEvent>(OnMobCollide);
     }
 
@@ -139,10 +141,19 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         if (!TryComp<SpriteComponent>(args.Strap, out var strapSprite))
             return;
 
+        var strapComp = args.Strap.Comp;
+
         if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
 
         // Goobstation - Start
+        if (strapComp.SetVisible)
+        {
+            // Pirate: predicted buckles can run more than once; keep the real pre-hide value.
+            ent.Comp.OriginalVisible ??= buckledSprite.Visible;
+            _sprite.SetVisible((ent.Owner, buckledSprite), false);
+        }
+
         var angle = _xformSystem.GetWorldRotation(args.Strap) + _eye.CurrentEye.Rotation;
         var isNorth = angle.GetCardinalDir() == Direction.North;
         UpdateChairStrapDepth(args.Strap, strapSprite, isNorth, true); // DOWNSTREAM-TPirates: vehicle overlay fix (and chairs)
@@ -171,10 +182,48 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
 
-        if (!ent.Comp.OriginalDrawDepth.HasValue)
+        if (args.Strap.Comp.SetVisible)
+            RestoreHiddenSprite(ent, buckledSprite);
+
+        RestoreDrawDepth(ent, buckledSprite);
+    }
+
+    private void OnBuckleRemove(Entity<BuckleComponent> ent, ref ComponentRemove args)
+    {
+        RestoreHiddenSprite(ent);
+        RestoreDrawDepth(ent);
+    }
+
+    private void OnAfterBuckleState(Entity<BuckleComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        if (ent.Comp.Buckled)
             return;
 
-        _sprite.SetDrawDepth((ent.Owner, buckledSprite), ent.Comp.OriginalDrawDepth.Value);
+        RestoreHiddenSprite(ent);
+        RestoreDrawDepth(ent);
+    }
+
+    private void RestoreHiddenSprite(Entity<BuckleComponent> ent, SpriteComponent? sprite = null)
+    {
+        if (ent.Comp.OriginalVisible is not { } originalVisible)
+            return;
+
+        if (!Resolve(ent.Owner, ref sprite, false))
+            return;
+
+        _sprite.SetVisible((ent.Owner, sprite), originalVisible);
+        ent.Comp.OriginalVisible = null;
+    }
+
+    private void RestoreDrawDepth(Entity<BuckleComponent> ent, SpriteComponent? sprite = null)
+    {
+        if (ent.Comp.OriginalDrawDepth is not { } originalDrawDepth)
+            return;
+
+        if (!Resolve(ent.Owner, ref sprite, false))
+            return;
+
+        _sprite.SetDrawDepth((ent.Owner, sprite), originalDrawDepth);
         ent.Comp.OriginalDrawDepth = null;
     }
 

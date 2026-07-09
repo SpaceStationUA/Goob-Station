@@ -7,5 +7,4 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 admin-verb-make-heretic = Зробити ціль єретиком.
-
 admin-verb-text-make-heretic = Зробити єретиком

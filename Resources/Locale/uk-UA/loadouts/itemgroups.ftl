@@ -64,7 +64,6 @@ character-item-group-LoadoutBartenderWeapon = Зброя бармена
 
 # Послуга - Музикант
 character-item-group-LoadoutMusicianInstruments = Музичні інструменти
-
 character-item-group-TraitsLanguagesBasic = Основні мови
 character-item-group-TraitsAccents = Акценти
 character-item-group-LoadoutBackpacks = Цивільні рюкзаки
@@ -751,7 +750,6 @@ character-item-group-LoadoutReporterShoes = Взуття для репортер
 character-item-group-LoadoutReporterUniforms = Репортерська уніформа
 character-item-group-LoadoutSalvageSpecialistWeapons = Шахтар Зброя
 character-item-group-LoadoutPets = Домашні тварини
-
 character-item-group-LoadoutBelt = Цивільні ремені
 character-item-group-LoadoutBlueshieldOfficerBackpacks = Офіцерські рюкзаки Blueshield
 character-item-group-LoadoutBlueshieldOfficerVests = Офіцерські жилети Blueshield

@@ -6,9 +6,7 @@
 ui-options-function-resist-grab = Протистояти захопленню
 ui-options-coalesce-identical-messages = Об'єднувати однакові повідомлення в чаті
 ui-options-detailed-examine = Показувати детальний текст огляду
-
 ui-options-hud-theme-coscult = Космічний Культ
-
 ui-options-preferences = Налаштування
 ui-options-auto-focus-search-on-build-menu = Автоматично фокусувати поле пошуку при відкритті меню будівництва
 ui-options-admin-notifications-title = Адмін сповіщення

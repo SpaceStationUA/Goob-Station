@@ -83,5 +83,4 @@ chat-emote-msg-thump = стукає {POSS-ADJ($entity)} хвостом.
 chat-emote-msg-gasp = зойкає.
 chat-emote-msg-weh = векає!
 chat-emote-msg-hew = хрумтить!
-
 chat-emote-msg-deathgasp-scurret = випускає останнє "ва" і затихає...

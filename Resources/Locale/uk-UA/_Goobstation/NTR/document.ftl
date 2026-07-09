@@ -33,27 +33,22 @@ ntr-document-service-document-text = {$start}
     Корпорація хоче, щоб ви знали, що ви не {$text1} {$text2}
     Корпорація була б задоволена, якби ви {$text3}
     Печатки нижче підтверджують, що {$text4}
-
 ntr-document-security-document-text = {$start}
     Корпорація хоче, щоб ви перевірили деякі речі перед тим, як поставити печатку на цей документ, переконайтеся, що {$text1} {$text2}
     {$text3}
     {$text4}
-
 ntr-document-cargo-document-text = {$start}
     {$text1}
     {$text2}
     Ставлячи тут печатку, ви {$text3}
-
 ntr-document-medical-document-text = {$start}
     {$text1} {$text2}
     {$text3}
     Ставлячи тут печатку, ви {$text4}
-
 ntr-document-engineering-document-text = {$start}
     {$text1} {$text2}
     {$text3}
     Ставлячи тут печатку, ви {$text4}
-
 ntr-document-science-document-text = {$start}
     Ми уважно стежили за дослідницьким відділом. {$text1} {$text2}
     через все вищесказане, ми хочемо, щоб ви забезпечили {$text3}

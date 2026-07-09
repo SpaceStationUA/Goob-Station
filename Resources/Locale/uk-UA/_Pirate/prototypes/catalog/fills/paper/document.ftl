@@ -198,7 +198,6 @@ ent-PrintedDocumentOrderToDismissDirector = Наказ про звільненн
 # ent-PrintedDocumentReportOnEliminationOfViolations = Звіт про усунення порушень
 #     .desc = { ent-PrintedDocument.desc }
 #
-
 ent-PrintedDocumentErrorLoadingFormHeader = ПОМИЛКА завантаження заголовка форми
     .desc = { ent-PrintedDocument.desc }
 ent-PrintedDocumentNoticeOfLiquidation = ПОВІДОМЛЕННЯ ПРО ЛІКВІДАЦІЮ
@@ -209,7 +208,6 @@ ent-PrintedDocumentNoteBeginningMilitaryActions = НОТА ПРО ПОЧАТОК
     .desc = { ent-PrintedDocument.desc }
 ent-PrintedDocumentReportAccomplishmentGoals = ЗВІТ ПРО ВИКОНАННЯ ЦІЛЕЙ
     .desc = { ent-PrintedDocument.desc }
-
 ent-PrintedDocumentReportOnEliminationOfViolations = Звіт про усунення порушень
     .desc = { ent-PrintedDocument.desc }
 ent-PrintedDocumentReportDepartment = Звіт про роботу відділу

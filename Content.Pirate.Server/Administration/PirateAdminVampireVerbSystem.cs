@@ -2,7 +2,7 @@
 
 using Content.Server.Antag;
 using Content.Server.Administration.Managers;
-using Content.Server._Pirate.GameTicking.Rules.Components;
+using Content.Pirate.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Mind.Components;
@@ -40,7 +40,7 @@ public sealed class PirateAdminVampireVerbSystem : EntitySystem
         {
             Text = Loc.GetString("admin-verb-text-make-vampire"),
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/_Pirate/Interface/Actions/actions_vampire.rsi"), "unholystrength"),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/_Pirate/Vampire/actions_vampire.rsi"), "fangs_extended"),
             Act = () =>
             {
                 _antag.ForceMakeAntag<VampireRuleComponent>(targetActor.PlayerSession, "Vampire");

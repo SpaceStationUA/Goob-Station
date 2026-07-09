@@ -44,4 +44,16 @@ public sealed partial class WeatherPrototype : IPrototype
     /// </summary>
     [DataField]
     public EntityWhitelist? DamageBlacklist;
+
+    /// <summary>
+    /// starcup: Status effect entity to apply to exposed mobs while this weather is running.
+    /// </summary>
+    [DataField]
+    public EntProtoId? StatusEffect;
+
+    /// <summary>
+    /// starcup: If true, refresh the status effect duration; otherwise accumulate it.
+    /// </summary>
+    [DataField]
+    public bool Refresh = true;
 }

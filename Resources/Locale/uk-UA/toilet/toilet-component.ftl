@@ -7,5 +7,4 @@ toilet-component-suicide-message-others = {CAPITALIZE(THE($victim))} б'є се�
 toilet-component-suicide-message = Ви б'єте себе об {THE($owner)}!
 toilet-seat-close = Закрити Кришку
 toilet-seat-open = Відкрити Кришку
-
 plunger-unblock = Ви розблоковуєте {THE($target)}!

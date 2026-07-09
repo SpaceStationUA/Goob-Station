@@ -1,5 +1,4 @@
 magic-mirror-component-activate-user-has-no-hair = Ви не можете мати зачіску!
-
 magic-mirror-window-title = Магічне дзеркало
 magic-mirror-add-slot-self = Ви додаєте собі волосся.
 magic-mirror-remove-slot-self = Ви видаляєте частину свого волосся.

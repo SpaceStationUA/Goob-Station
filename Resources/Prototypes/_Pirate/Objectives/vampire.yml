@@ -102,7 +102,7 @@
   components:
   - type: Objective
     icon:
-      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
+      sprite: _Pirate/Vampire/actions_vampire.rsi
       state: survive_icon
 
 - type: entity
@@ -142,11 +142,57 @@
   components:
   - type: Objective
     icon:
-      sprite: _Pirate/Interface/Actions/actions_vampire.rsi
-      state: blood_drain_icon
+      sprite: _Pirate/Vampire/actions_vampire.rsi
+      state: blood_objective
   - type: NumberObjective
     min: 100
     max: 500
     title: objective-condition-drain-title
     description: objective-condition-drain-description
   - type: BloodDrainCondition
+
+# Thrall
+
+- type: entity
+  parent: BaseObjective
+  id: VampireThrallObeyMasterObjective
+  name: Obey your master
+  description: You are enthralled. Follow your master's commands.
+  components:
+  - type: Objective
+    issuer: objective-issuer-vampire
+    difficulty: 0.1
+    unique: false
+    icon:
+      sprite: _Pirate/Vampire/Dantalion.rsi
+      state: thralls_up
+  - type: TargetObjective
+    title: objective-vampire-thrall-obey-master-title
+
+# Groups
+
+- type: weightedRandom
+  id: VampireObjectiveGroupsStealOnly
+  weights:
+    VampireObjectiveGroupSteal: 1
+
+- type: weightedRandom
+  id: VampireObjectiveGroupsStateOnly
+  weights:
+    VampireObjectiveGroupState: 1
+
+- type: weightedRandom
+  id: VampireObjectiveGroupSteal
+  weights:
+    CMOHyposprayVampireStealObjective: 1
+    RDHardsuitVampireStealObjective: 1
+    MagbootsVampireStealObjective: 1
+    ClipboardVampireStealObjective: 1
+    CaptainIDVampireStealObjective: 1
+    CaptainJetpackVampireStealObjective: 1
+
+- type: weightedRandom
+  id: VampireObjectiveGroupState
+  weights:
+    VampireSurviveObjective: 1
+    VampireEscapeObjective: 1

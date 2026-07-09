@@ -3,7 +3,6 @@
 holiday-greet = Щасливого {$holidayName}!
 
 ## Holiday Names
-
 holiday-name-new-year = Нового Року
 holiday-name-mister-lizard = Дня Народження Містера Лізарда
 holiday-name-chinese-new-year = Китайського Нового Року
@@ -71,7 +70,6 @@ holiday-name-friday-thirteenth = Дня П'ятниці 13-того
 holiday-name-national-coming-out-day = Національного Дня Камінг-Ауту
 
 ## Custom congrats
-
 holiday-custom-cosmonautics-day = У цей день понад 600 років тому, українець вперше відправився у космос замість собаки росіянина
 holiday-custom-mothers-day = З Днем матері! Не забудьте зателефонувати своїй матусі!
 holiday-custom-bastille-day = Чуєте, як співають люди?
@@ -81,7 +79,6 @@ holiday-custom-halloween = Бажаю вам моторошного Хеллов
 holiday-custom-kindness-day = Зробіть якийсь випадковий акт доброти для незнайомця!
 holiday-custom-christmas = Бажаю вам веселого Різдва! Не забудьте про кутю!
 holiday-custom-festive-season = Бажаю вам гарного святкового сезону!
-
 holiday-name-pride-month = Місяць гордості
 
 ## Власні привітання

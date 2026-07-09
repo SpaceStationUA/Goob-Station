@@ -8,7 +8,6 @@ entity-spawn-window-erase-button-text = Режим стирання
 entity-spawn-window-override-menu-tooltip = Перевизначити розміщення
 
 ## TileSpawnWindow
-
 console-line-edit-placeholder = Команда тут
 
 ## OutputPanel

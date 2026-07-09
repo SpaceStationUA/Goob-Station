@@ -427,6 +427,21 @@
         reagents:
         - ReagentId: Water
           Quantity: 2
+      #region Pirate: stains
+      stain:
+        maxVol: 5
+      #endregion Pirate: stains
+  #region Pirate: stains
+  - type: Appearance
+  - type: Stainable
+    clothingVisuals:
+      head:
+      - sprite: _Pirate/Effects/blood.rsi
+        state: helmetblood
+    iconVisuals:
+    - sprite: _Pirate/Effects/blood.rsi
+      state: helmetbloodicon
+  #endregion Pirate: stains
   - type: DamageOnHighSpeedImpact
     minimumSpeed: 0.1
     damage:

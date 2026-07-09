@@ -100,6 +100,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Pirate.Shared.Stains.Components; // Pirate: stains
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.TileReactions;
 using Content.Server.DoAfter;
@@ -107,6 +108,7 @@ using Content.Server.Fluids.Components;
 using Content.Server.Spreader;
 using Content.Goobstation.Common.Footprints;
 using Content.Shared.ActionBlocker;
+using Content.Shared._Pirate.Fluids; // Pirate: stains
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -120,11 +122,13 @@ using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Friction;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory; // Pirate: stains
 using Content.Shared.Maps;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Slippery;
+using Content.Shared.Standing; // Pirate: stains
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.Audio;
@@ -132,6 +136,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Physics.Events; // Pirate: stains
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -202,6 +207,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
         SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
+        SubscribeLocalEvent<PuddleComponent, StartCollideEvent>(OnPuddleStartCollide); // Pirate: stains
 
         SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
@@ -429,6 +435,46 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         // </Goobstation>
     }
 
+#region Pirate: stains
+    private void OnPuddleStartCollide(Entity<PuddleComponent> entity, ref StartCollideEvent args)
+    {
+        if (!args.OtherFixture.Hard)
+            return;
+
+        var hasFootprints = HasComp<FootprintOwnerComponent>(args.OtherEntity);
+        var isDirectlyStainable = HasComp<StainableComponent>(args.OtherEntity);
+        if (!hasFootprints && !isDirectlyStainable)
+            return;
+
+        if (!_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution) ||
+            solution.Volume <= 0)
+        {
+            return;
+        }
+
+        // Split a real sample so rejected stain fluid can be returned to the puddle.
+        var splitSol = _solutionContainerSystem.SplitSolution(entity.Comp.Solution.Value, FixedPoint2.Min(solution.Volume, 0.5f));
+        if (splitSol.Volume <= 0)
+            return;
+
+        if (hasFootprints)
+        {
+            var targetSlots = SlotFlags.FEET;
+            if (TryComp<StandingStateComponent>(args.OtherEntity, out var standing) && !standing.Standing)
+                targetSlots |= SpilledOnEvent.DefaultTargetSlots;
+
+            RaiseLocalEvent(args.OtherEntity, new SpilledOnEvent(entity.Owner, splitSol, targetSlots));
+        }
+        else
+        {
+            RaiseLocalEvent(args.OtherEntity, new SpilledOnEvent(entity.Owner, splitSol, SlotFlags.NONE));
+        }
+
+        // Pirate: stains - spill handlers may delete this puddle.
+        if (splitSol.Volume > 0 && entity.Comp.Solution is { } puddleSolution) // Pirate: stains
+            _solutionContainerSystem.TryAddSolution(puddleSolution, splitSol); // Pirate: stains
+    }
+#endregion Pirate: stains
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {

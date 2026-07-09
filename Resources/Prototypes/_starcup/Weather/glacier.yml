@@ -1,0 +1,24 @@
+## Basic settings, most of the time weather should be normal, transitions are rare
+- type: weatherScheduler
+  id: WeatherGlacier
+  states:
+    WeatherClear:
+      transitions:
+        WeatherClear: 100
+        SnowfallLight: 10
+        SnowfallHeavy: 0.05
+    SnowfallLight:
+      transitions:
+        WeatherClear: 10
+        SnowfallLight: 100
+        SnowfallMedium: 10
+    SnowfallMedium:
+      transitions:
+        SnowfallLight: 30
+        SnowfallMedium: 100
+        SnowfallHeavy: 10
+    SnowfallHeavy:
+      transitions:
+        SnowfallLight: 10
+        SnowfallMedium: 30
+        SnowfallHeavy: 100

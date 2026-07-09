@@ -127,7 +127,6 @@
   startingGear: ClownGear
   icon: "JobIconClown"
   supervisors: job-supervisors-hop
-  whitelisted: true # Pirate
   goobcoins: 15 #Goob content
   access:
   - Theatre

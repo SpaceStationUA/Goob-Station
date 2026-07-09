@@ -35,28 +35,20 @@ spell-fail-mindswap-ghoul = Ви не можете обмінятися розу
 spell-fail-mindswap-ghost = Ви не можете обмінятися розумом з привидом!
 spell-fail-mindswap-temporary = Ви не можете обмінятися розумом з тимчасовими істотами!
 spell-fail-mindswap-dead = Ви не дуже хочете бути мертвим!
-
 spell-requirements-failed-clothes = Не виконано вимог для цього закляття! Ви повинні носити мантію та капелюх чарівника.
 spell-requirements-failed-speech = Не виконано вимог для цього закляття! Ви не можете говорити.
-
 instant-summons-item-marked = Успішно позначено {$item}.
 instant-summons-confirm-popup = Ця дія видалить поточну позначку! Використайте ще раз для підтвердження.
-
 chuuni-invocation-confirm-popup = Ця дія змусить вас носити пов'язку на оці, яку неможливо зняти! Використайте ще раз, щоб підтвердити.
-
 spell-soul-tap-dead-message-others = {CAPITALIZE($uid)} раптово помирає!
 spell-soul-tap-dead-message-user = Ваша ослаблена душа повністю поглинута!
 spell-soul-tap-almost-dead-message = Ваше тіло неймовірно виснажене, а пекучий біль важко ігнорувати!
 spell-soul-tap-message = Ваше тіло виснажене, і ви відчуваєте пекучий біль у грудях.
-
 spell-charge-spells-charged-pulled = Ви відчуваєте, як крізь вас тече чиста магія. Це приємно!
 spell-charge-no-spells-to-charge-pulled = На мить ви відчуваєте себе дуже дивно, але потім це минає.
 spell-charge-spells-charged-entity = {CAPITALIZE($entity)} раптом відчуває сильне тепло!
-
 spell-summon-simians-maxed-out-message = Ваша мавпяча сила досягла максимальної межі! Тепер ви можете використовувати це заклинання без одягу, а також отримали закляття перетворення на горилу!
-
 ghosts-summoned-message = Привидів було викликано!
 dimension-shift-message = Виміри зміщуються!
 global-tile-movement-message = Починає грати зловісний ритм!
-
 spell-rathen-gut-popup = У вас немає апендикса, але щось таки мусило постраждати!

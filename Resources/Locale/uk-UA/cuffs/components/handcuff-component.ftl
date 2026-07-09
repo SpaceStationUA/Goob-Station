@@ -15,7 +15,6 @@ handcuff-component-cuff-interrupt-other-message = Ви завадили {$otherN
 handcuff-component-cuff-interrupt-self-message = Вам завадили затримати себе.
 handcuff-component-cuff-interrupt-buckled-message = Ви не можете пристібнутись коли затримані!
 handcuff-component-cuff-interrupt-unbuckled-message = Ви не можете відстібнутись коли затримані!
-
 handcuff-component-start-cuffing-self-observer = {$user} починає надягати наручники на {REFLEXIVE($target)}.
 handcuff-component-cuff-self-observer-success-message = {$user} надягає наручники на {REFLEXIVE($target)}.
 handcuff-component-cannot-drop-cuffs = Ви не можете надіти наручники на {$target}

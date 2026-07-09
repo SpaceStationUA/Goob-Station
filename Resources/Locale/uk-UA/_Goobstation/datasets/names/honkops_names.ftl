@@ -1,5 +1,4 @@
 names-honkops-prefix-dataset-1 = Хонкератив
-
 names-honkops-elite-dataset-1 = Хонкмен
 names-honkops-elite-dataset-2 = Бонкмен
 names-honkops-elite-dataset-3 = Жартівник

@@ -406,7 +406,8 @@ public abstract partial class SharedBuckleSystem
         if (!_container.IsInSameOrNoContainer((buckleUid, null, null), (strapUid, null, null)))
             return false;
 
-        if (user != null && !HasComp<HandsComponent>(user))
+        // Pirate/Starlight: some non-humanoid straps allow buckling without hands.
+        if (strapComp.NeedsHands && user != null && !HasComp<HandsComponent>(user))
         {
             if (popup)
                 _popup.PopupClient(Loc.GetString("buckle-component-no-hands-message"), user);

@@ -13,12 +13,10 @@ microwave-component-interact-full = Вона повна.
 microwave-component-interact-item-too-big = { CAPITALIZE(THE($item)) } занадто велике, щоб поміститися в мікрохвильову піч!
 
 ## Bound UI
-
 microwave-bound-user-interface-instant-button = МИТТЄВО
 microwave-bound-user-interface-cook-time-label = ЧАС ГОТУВАННЯ: {$time}
 
 ## ІНТЕРФЕЙС
-
 microwave-menu-title = Мікрохвильовка
 microwave-menu-start-button = Почати
 microwave-menu-eject-all-text = Вийняти вміст
@@ -26,5 +24,4 @@ microwave-menu-eject-all-tooltip = Випаровує всі реагенти, �
 microwave-menu-instant-button = МИТТЄВО
 microwave-menu-footer-flavor-left = Не вставляйте електронні, металеві або живі предмети.
 microwave-menu-footer-flavor-right = v1.5
-
 microwave-component-upgrade-cook-time = час приготування

@@ -19,12 +19,8 @@ forensic-scanner-match-none = Збігів не знайдено!
 forensic-scanner-printer-not-ready = Принтер ще не готовий.
 forensic-scanner-verb-text = Сканувати
 forensic-scanner-verb-message = Виконати криміналістичне сканування
-
-
-
 forensic-pad-fingerprint-name = відбитки пальців {$entity}
 forensic-pad-gloves-name = волокна з {$entity}
-
 forensics-cleaning = Ви починаєте видаляти докази з {THE($target)}...
 forensics-dna-unknown = невідома ДНК
 forensics-verb-text = Видалити докази

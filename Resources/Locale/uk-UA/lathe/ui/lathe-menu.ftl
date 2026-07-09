@@ -17,12 +17,10 @@ lathe-menu-no-materials-message = Матеріали не завантажені
 lathe-menu-fabricating-message = Виготовлення...
 lathe-menu-materials-title = Матеріали
 lathe-menu-queue-title = Черга виготовлення
-
 lathe-menu-material-amount-missing = { $amount ->
     [1] {NATURALFIXED($amount, 2)} {$unit} з {$material} ([color=red]{NATURALFIXED($missingAmount, 2)} {$unit} відсутній[/color])
     *[other] {NATURALFIXED($amount, 2)} {$unit}ів з {$material} ([color=red]{NATURALFIXED($missingAmount, 2)} {$unit}ів відсутні[/color])
 }
-
 lathe-menu-reagent-slot-examine = Збоку є гніздо для мензурки.
 lathe-reagent-dispense-no-container = Рідина виливається з {THE($name)} на підлогу!
 lathe-menu-result-reagent-display = {$reagent} ({$amount}u)

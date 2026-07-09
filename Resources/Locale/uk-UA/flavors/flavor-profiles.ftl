@@ -7,7 +7,6 @@ flavor-profile-unknown = Смакує невимовно.
 # of other flavors. When the flavors are processed, these
 # will go in front so you don't get this like "Tastes like tomatoes, sweet and spicy",
 # instead, you get "Tastes sweet, spicy and like tomatoes".
-
 flavor-base-savory = пахуче
 flavor-base-sweet = солодко
 flavor-base-salty = солоно
@@ -53,12 +52,10 @@ flavor-base-mindful = уважно
 
 # Складні ароматизатори. Додайте сюди ароматизатор, якщо хочете чогось більш
 # специфічного
-
 flavor-complex-nothing = як ніщо
 flavor-complex-honey = як солодкий мед
 
 # Condiments
-
 flavor-complex-ketchunaise = як помідори та майонез
 flavor-complex-mayonnaise = як майонез
 flavor-complex-mustard = як гірчиця.
@@ -126,7 +123,6 @@ flavor-complex-vegetables = як овочі
 # use it when there multiple types of veggies
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
-
 flavor-complex-pink = рожево
 flavor-complex-curry = як каррі
 flavor-complex-borsch-1 = як борщ
@@ -246,14 +242,12 @@ flavor-complex-pilk = як тепле молоко
 
 ## Generic flavors.
 flavor-complex-medicine = наче хімік спеціально зробив ліки гіркими
-
 flavor-complex-carpet = як шматок хутра
 flavor-complex-bee = необджілковно
 flavor-complex-sax = як джазмени непомнітного бару
 flavor-complex-bottledlightning = як блискавка в банці
 flavor-complex-punishment = як покарання
 flavor-weh = як, наприклад
-
 flavor-complex-ginger-soda = як імбир
 flavor-complex-coconut-rum = як горіховий ферментований цукор
 flavor-complex-arnold-palmer = як влучити в яблучко
@@ -357,7 +351,6 @@ flavor-complex-eggnog = як розтоплений заварний крем
 flavor-complex-dark-and-stormy = як імбирний ель з ромом
 flavor-complex-radler = як лимонад з алкоголем
 flavor-base-trashy = сміттєвий
-
 flavor-complex-dog-food = як собачий корм
 
 # Специфічні смаки напоїв.

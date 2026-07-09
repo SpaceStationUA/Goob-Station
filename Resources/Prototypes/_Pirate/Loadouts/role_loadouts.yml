@@ -27,14 +27,16 @@
   groups:
   - GroupTankHarness
   - MantisHead
-  - ScientistNeck
+  - MantisNeck
   - MantisJumpsuit
   - MantisBack
   - MantisOuterClothing
-  - ScientistGloves
+  - MantisGloves
   - MantisShoes
   - MantisBelt
   - MantisEyes
+  - MantisEars
+  - MantisMask
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool

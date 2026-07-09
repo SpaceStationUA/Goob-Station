@@ -11,7 +11,6 @@ crayon-interact-invalid-location = Неможливо дотягнутись!
 
 ## UI
 crayon-window-title = Крейда
-
 crayon-window-placeholder = Пошук або впорядкування списку імен, розділених комами
 crayon-category-1-brushes = Щітки
 crayon-category-2-alphanum = Цифри та літери

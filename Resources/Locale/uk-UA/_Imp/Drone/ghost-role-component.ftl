@@ -7,7 +7,6 @@
 
 ghost-role-information-onestar-mecha-name = Мех «ОднаЗірка»
 ghost-role-information-onestar-mecha-description = Ти - кінець цієї станції.
-
 ghost-role-information-drone-name = Дрон техобслуговування
 # Goobstation
 ghost-role-information-drone-description = Обслуговуйте станцію. Ви можете взаємодіяти з іншими, якщо не заважаєте їм і не створюєте проблем. Можете просити про допомогу та виконувати доречні накази. Використовуйте +/+d, щоб говорити в Розумі дрона.

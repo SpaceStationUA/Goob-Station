@@ -6,8 +6,12 @@
   - TrinketsClothingHeadPaperSack
   - TrinketsPhotoAlbum
   - TrinketsPhotoCameraFilled
+  - NoviceMark
+  - Pillow
   subgroups:
   - PiratePlushies
+  - PirateGambling
+
 
 - type: loadoutGroup
   id: PiratePlushies
@@ -23,6 +27,18 @@
   - PlushieSkeleton
   - PlushieTayler
   - PlushiePocketAssistant
+
+- type: loadoutGroup
+  id: PirateGambling
+  name: loadout-group-trinkets
+  loadouts:
+  - CardBoxBlack
+  - CardBoxNanotrasen
+  - CardBoxTarot
+  - CardBoxSparot
+  - CardBoxTippyTrump
+  - TippyTrumpMysteryPack
+  - CardBoxNuno
 
 - type: loadoutGroup
   id: PirateEEGenericItems
@@ -244,6 +260,7 @@
   - LoadoutUniformJumpsuitSuitVictorianRedVest
   - LoadoutUniformJumpsuitSuitVictorianVest
   - LoadoutUniformJumpsuitWaiter
+  - LoadoutUniformJumpsuitWaitstaffFormal
   - LoadoutUniformJumpsuitYogaGymBra
   - LoadoutUniformJumpsuitBlackTurtleneck
   - LoadoutUniformJumpsuitBlackTurtleneckFlipped
@@ -714,6 +731,16 @@
   subgroups:
   - PiratePassengerOuterClothing
 
+# Сервісний працівник
+- type: loadoutGroup
+  id: ServiceWorkerHead
+  name: loadout-group-service-worker-head
+  minLimit: 0
+  loadouts:
+  - Bunnyears
+  - BunnyearsDark
+  subgroups:
+  - BartenderHead
 
 
 ## Cargo - Карго
@@ -764,34 +791,60 @@
   - MantisTinfoil
   - MantisHelmet
   - MantisFez
+  - MantisFezInsulative
+  - MantisFezAiry
+  - MantisFezOrnate
+  - MantisHoodDark
+  - MantisBeret
 
 - type: loadoutGroup
   id: MantisJumpsuit
   name: loadout-group-mantis-Jumpsuit
   loadouts:
   - MantisSuit
+  - MantisSuitDark
   - MantisSkirt
+  - MantisSkirtAiry
+  - MantisSkirtOrnate
 
 - type: loadoutGroup
   id: MantisBack
   name: loadout-group-mantis-Back
   loadouts:
   - MantisBackpack
+  - MantisBackpackDEN
   - MantisSatchel
+  - MantisSatchelDEN
   - MantisDuffel
+  - MantisDuffelDEN
+  - MantisPurse
+  - MantisMessenger
 
 - type: loadoutGroup
   id: MantisOuterClothing
   name: loadout-group-mantis-OuterClothing
   loadouts:
   - MantisCoat
+  - MantisCoatAiry
+  - MantisCoatOrnate
   - MantisCoatWinter
+  - MantisCoatWinterDark
+
+- type: loadoutGroup
+  id: MantisGloves
+  name: loadout-group-mantis-Gloves
+  loadouts:
+  - MantisGloves
+  - MantisGlovesAiry
 
 - type: loadoutGroup
   id: MantisShoes
   name: loadout-group-mantis-Shoes
   loadouts:
   - MantisBoots
+  - MantisSandalsAiry
+  - MantisSandalsDark
+  - MantisSandalsOrnate
 
 - type: loadoutGroup
   id: MantisEyes
@@ -800,11 +853,42 @@
   - EpiHudGlasses
   - EtherealGlasses
   - EpiHud
+  - MantisGlasses
+  - MantisGlassesTinted
+  - MantisGlassesVeil
+  - MantisGlassesMirrored
 
 - type: loadoutGroup
   id: MantisBelt
   name: loadout-group-mantis-Belt
   loadouts:
+  - MantisBelt
+  - MantisBeltAiry
+  - MantisBeltDark
+  - MantisBeltOrnate
+
+- type: loadoutGroup
+  id: MantisNeck
+  name: loadout-group-mantis-Neck
+  loadouts:
+  - MantisCloakDark
+  - MantisMantleOrnate
+  - MantisShackles
+  - MantisPendulum
+
+- type: loadoutGroup
+  id: MantisEars
+  name: loadout-group-mantis-Ears
+  loadouts:
+  - MantisHeadset
+  - MantisHeadsetAlt
+
+- type: loadoutGroup
+  id: MantisMask
+  name: loadout-group-mantis-Mask
+  loadouts:
+  - MantisMaskVeil
+  - MantisMaskRitual
   - MantisBelt
 
 
@@ -971,3 +1055,29 @@
   loadouts:
   - LoadoutJumpsuitOperative
   - LoadoutJumpskirtOperative
+
+
+# Дрібнички для професій
+- type: loadoutGroup
+  id: TrinketsCommand
+  name: loadout-group-command-trinkets
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - PillowCommand
+
+- type: loadoutGroup
+  id: TrinketsMedical
+  name: loadout-group-medical-trinkets
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - PillowMedical
+
+- type: loadoutGroup
+  id: TrinketsEngineering
+  name: loadout-group-engineering-trinkets
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - PillowEngineering

@@ -7,7 +7,6 @@ loadout-category-Uncategorized = Без категорії
 loadout-category-Uniform = Уніформа
 loadout-category-Neck = Шия
 loadout-category-Shoes = Взуття
-
 loadout-category-Eyes = Очі
 loadout-category-Hands = Руки
 loadout-category-Head = Голова
@@ -80,7 +79,6 @@ loadout-category-JobsServiceClown = Клоун
 loadout-category-JobsServiceLawyer = Адвокат
 loadout-category-JobsServiceMime = Пантоміма
 loadout-category-JobsServiceReporter = Репортер
-
 loadout-category-JobsCommandAdminAssistant = Адміністративний асистент
 loadout-category-JobsCommandBlueshieldOfficer = Офіцер Блакитного Щита
 loadout-category-JobsCommandNanorep = Представник Nanotrasen

@@ -85,6 +85,7 @@
   boilingPoint: 147.0 # Made this up, loosely based on bleach
   meltingPoint: -11.0
   tileReactions:
+    - !type:CleanStainsTileReaction {} # Pirate: stains
     - !type:CleanTileReaction {}
     - !type:CleanDecalsReaction {}
 

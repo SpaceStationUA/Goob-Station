@@ -16,7 +16,6 @@ view-variable-instance-entity-add-window-client-components = Додати ком
 vv-sound-none = Нічого
 vv-sound-path = Шлях
 vv-sound-collection = Колекція
-
 vv-sound-volume = гучність
 vv-sound-pitch = Висота тону
 vv-sound-max-distance = Максимальна відстань

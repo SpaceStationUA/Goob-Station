@@ -99,6 +99,7 @@
   equipment:
     shoes: ClothingShoesColorWhite
     id: MedicalInternPDA
+    neck: ClothingNeckNoviceMark # Pirate: novice mark
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
     pocket2: BookMedicalReferenceBook

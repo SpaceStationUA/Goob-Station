@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/5781addfa1193c2811408f64d15176139395d670",
+  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/tree/5781addfa1193c2811408f64d15176139395d670, charonhush made and oilfall adapted from rain.png by KoboldCatgirl (Github) for starcup",
   "license": "CC-BY-SA-3.0",
   "size": {
     "x": 32,
@@ -335,6 +335,52 @@
           0.02,
           0.02,
           0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02
+        ]
+      ]
+    },
+    {
+      "name": "oilfall",
+      "delays": [
+        [
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02,
+          0.02
+        ]
+      ]
+    },
+    {
+      "name": "charonhush",
+      "delays": [
+        [
           0.02,
           0.02,
           0.02,

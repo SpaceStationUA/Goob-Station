@@ -1,0 +1,73 @@
+# Stable stain mask variants.
+
+- type: shader
+  id: StainItemMask0
+  kind: source
+  path: "/Textures/_Pirate/Shaders/stain_mask.swsl"
+  params:
+    stainOffsetX: 0.0
+    stainOffsetY: 0.0
+    stainAngle: 0.0
+
+- type: shader
+  id: StainItemMask1
+  kind: source
+  path: "/Textures/_Pirate/Shaders/stain_mask.swsl"
+  params:
+    stainOffsetX: 2.0
+    stainOffsetY: -1.0
+    stainAngle: 0.21
+
+- type: shader
+  id: StainItemMask2
+  kind: source
+  path: "/Textures/_Pirate/Shaders/stain_mask.swsl"
+  params:
+    stainOffsetX: -2.0
+    stainOffsetY: 2.0
+    stainAngle: -0.26
+
+- type: shader
+  id: StainItemMask3
+  kind: source
+  path: "/Textures/_Pirate/Shaders/stain_mask.swsl"
+  params:
+    stainOffsetX: 1.0
+    stainOffsetY: 3.0
+    stainAngle: 0.12
+
+- type: shader
+  id: StainItemMask4
+  kind: source
+  path: "/Textures/_Pirate/Shaders/stain_mask.swsl"
+  params:
+    stainOffsetX: -3.0
+    stainOffsetY: -2.0
+    stainAngle: 0.31
+
+- type: shader
+  id: StainItemMask5
+  kind: source
+  path: "/Textures/_Pirate/Shaders/stain_mask.swsl"
+  params:
+    stainOffsetX: 3.0
+    stainOffsetY: 1.0
+    stainAngle: -0.17
+
+- type: shader
+  id: StainItemMask6
+  kind: source
+  path: "/Textures/_Pirate/Shaders/stain_mask.swsl"
+  params:
+    stainOffsetX: -1.0
+    stainOffsetY: -3.0
+    stainAngle: 0.24
+
+- type: shader
+  id: StainItemMask7
+  kind: source
+  path: "/Textures/_Pirate/Shaders/stain_mask.swsl"
+  params:
+    stainOffsetX: 2.0
+    stainOffsetY: 2.0
+    stainAngle: -0.30

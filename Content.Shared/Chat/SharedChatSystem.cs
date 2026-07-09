@@ -246,12 +246,21 @@ public abstract class SharedChatSystem : EntitySystem
         if (input.Length == 0)
             return false;
 
-        if (!input.StartsWith(CollectiveMindPrefix))
-            return false;
-
         ProtoId<CollectiveMindPrototype>? defaultChannel = null;
         if (TryComp<CollectiveMindComponent>(source, out var mind))
             defaultChannel = mind.DefaultChannel;
+
+        // Pirate: allow callers that explicitly selected CollectiveMind, or language overrides,
+        // to send to their default collective channel without a +key prefix.
+        if (!input.StartsWith(CollectiveMindPrefix))
+        {
+            if (defaultChannel == null)
+                return false;
+
+            output = SanitizeMessageCapital(input.TrimStart());
+            channel = _prototypeManager.Index<CollectiveMindPrototype>(defaultChannel.Value);
+            return true;
+        }
 
         if (input.Length < 2 || (char.IsWhiteSpace(input[1]) && defaultChannel == null))
         {

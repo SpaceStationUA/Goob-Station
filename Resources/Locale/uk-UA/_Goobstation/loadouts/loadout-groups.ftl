@@ -218,7 +218,6 @@ loadout-group-boxer-envirosuit = Еко-костюм боксера
 loadout-group-plasma-tank = Плазмовий балон
 
 # Спеціаліст з утилізації/Шахтар
-
 loadout-group-virology-envirohelm = Шолом ізолювального костюма вірусолога
 loadout-group-virology-envirosuit = Ізолювальний костюм вірусолога
 loadout-group-virology-envirogloves = Рукавиці ізолювального костюма вірусолога

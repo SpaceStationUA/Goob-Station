@@ -56,6 +56,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.Fluids; // Pirate: stains
 using Content.Shared.Armor;
 using Content.Shared.Atmos;
 using Content.Shared._Pirate.Clothing.Events; // Pirate: gear step sounds
@@ -101,7 +102,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshMovementSpeedModifiersEvent>(RelayInventoryEvent);
-        SubscribeLocalEvent<InventoryComponent, PirateMakeFootstepSoundEvent>(RelayInventoryEvent); // Pirate: gear step sounds
+        SubscribeLocalEvent<InventoryComponent, PirateMakeFootstepSoundEvent>(RefRelayInventoryEvent); // Pirate: gear step sounds (ref so wet shoes can suppress the base footstep)
         SubscribeLocalEvent<InventoryComponent, BeforeStripEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SeeIdentityAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
@@ -160,7 +161,8 @@ public partial class InventorySystem
 
         SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetEquipmentVerbs);
         SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<InnateVerb>>(OnGetInnateVerbs);
-
+        // Pirate: stains - SpilledOnEvent is handled centrally on the mob by SharedStainSystem
+        // (it distributes the spill across worn items itself), so it is no longer relayed here.
     }
 
     protected void RefRelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, ref T args) where T : IInventoryRelayEvent

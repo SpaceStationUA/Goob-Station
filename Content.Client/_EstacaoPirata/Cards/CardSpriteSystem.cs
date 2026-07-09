@@ -8,6 +8,7 @@
 using System.Linq;
 using Content.Shared._EstacaoPirata.Cards.Stack;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client._EstacaoPirata.Cards;
 
@@ -83,8 +84,24 @@ public sealed class CardSpriteSystem : EntitySystem
         {
             var (cardIndex, layer) = obj;
             sprite.LayerSetVisible(j, true);
-            sprite.LayerSetTexture(j, layer.Texture);
-            sprite.LayerSetState(j, layer.RsiState.Name);
+
+            // Use the card layer's RSI (or the card's base RSI) so states from different card RSIs resolve correctly.
+            var card = stack.Cards.ElementAt(cardIndex);
+            if (TryComp(card, out SpriteComponent? cardSprite) && layer.RsiState.Name != null)
+            {
+                var rsi = layer.Rsi ?? cardSprite.BaseRSI;
+                if (rsi != null)
+                {
+                    var specifier = new SpriteSpecifier.Rsi(rsi.Path, layer.RsiState.Name);
+                    sprite.LayerSetSprite(j, specifier);
+                }
+            }
+            else
+            {
+                sprite.LayerSetTexture(j, layer.Texture);
+                sprite.LayerSetState(j, layer.RsiState.Name);
+            }
+
             layerFunc.Invoke((uid, sprite), cardIndex, j);
             j++;
         }

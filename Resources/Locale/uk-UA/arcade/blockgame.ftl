@@ -11,7 +11,6 @@ blockgame-menu-label-level = Рівень: {$level}
 blockgame-menu-gameover-info = Глобальний: {$global}
     Локальний: {$local}
     Бали: {$points}
-
 blockgame-menu-title = НТетріс
 blockgame-menu-button-new-game = Нова Гра
 blockgame-menu-button-scoreboard = Табло

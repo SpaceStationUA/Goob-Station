@@ -1,0 +1,94 @@
+- type: construction
+  id: PillowBaseWrapped
+  name: construction-recipe-pillow-base-wrapped
+  graph: Pillow
+  startNode: start
+  targetNode: pillowbasewrapped
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: PillowBaseUnwrapped
+  name: construction-recipe-pillow-base-unwrapped
+  graph: Pillow
+  startNode: start
+  targetNode: pillowbaseunwrapped
+  category: construction-category-misc
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+# Command
+- type: construction
+  id: PillowCommandWrapped
+  name: construction-recipe-pillow-command-wrapped
+  graph: Pillow
+  startNode: start
+  targetNode: pillowcommandwrapped
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: PillowCommandUnwrapped
+  name: construction-recipe-pillow-command-unwrapped
+  graph: Pillow
+  startNode: start
+  targetNode: pillowcommandunwrapped
+  category: construction-category-misc
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+# Engineering
+- type: construction
+  id: PillowEngineeringWrapped
+  name: construction-recipe-pillow-engineering-wrapped
+  graph: Pillow
+  startNode: start
+  targetNode: pillowengineeringwrapped
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: PillowEngineeringUnwrapped
+  name: construction-recipe-pillow-engineering-unwrapped
+  graph: Pillow
+  startNode: start
+  targetNode: pillowengineeringunwrapped
+  category: construction-category-misc
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+# Medical
+- type: construction
+  id: PillowMedicalWrapped
+  name: construction-recipe-pillow-medical-wrapped
+  graph: Pillow
+  startNode: start
+  targetNode: pillowmedicalwrapped
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: PillowMedicalUnwrapped
+  name: construction-recipe-pillow-medical-unwrapped
+  graph: Pillow
+  startNode: start
+  targetNode: pillowmedicalunwrapped
+  category: construction-category-misc
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked

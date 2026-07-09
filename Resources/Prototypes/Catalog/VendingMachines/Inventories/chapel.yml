@@ -54,14 +54,15 @@
     ClothingOuterPlagueSuit: 1
     ClothingMaskPlague: 1
     ClothingHeadsetService: 2
+    CardBoxTarot: 2 # GoobStation
     BoxCandle: 2
     BoxCandleSmall: 2
     Urn: 5
+    CardBoxSparot: 1 # GoobStation
     SpectralLocator: 1
     ClothingHeadHelmetTemplar: 1 #goob
     ClothingHeadHatImam: 1 #goob
     HeadSkeleton: 1 #goob
-    ClothingHeadHatBunnyearsChaplain: 1 # Pirate, тут бога нема
   contrabandInventory:
     FoodBakedBunHotX: 2
     DrinkWineBottleFull: 1

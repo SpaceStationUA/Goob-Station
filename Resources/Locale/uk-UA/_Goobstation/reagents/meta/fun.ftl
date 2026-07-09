@@ -12,11 +12,9 @@
 reagent-name-tranquility = спокій
 reagent-desc-tranquility = Ви відчуваєте дивний спокій...
 reagent-popup-tranquility = Ви відчуваєте дивний спокій...
-
 reagent-name-binglejuice = бінгл-джус
 reagent-desc-binglejuice = Бінг-бонг.
 reagent-popup-binglejuice = Вам, мабуть, спадало на думку, що ви зайшли занадто далеко. Що це квиток в один кінець. Тож навіщо боротися з неминучим? Прийміть це. Просто ляжте й відпочиньте. У цій темряві є краса, яку можна приборкати, щоб започаткувати щось нове.
-
 reagent-name-carpolin = карполін
 reagent-desc-carpolin = Змушує того, хто його вживає, перетворитися на вищу форму життя.
 reagent-popup-carpolin = Ви відчуваєте... себе дивно.
@@ -28,7 +26,6 @@ reagent-popup-carpolin = Ви відчуваєте... себе дивно.
 reagent-name-profanol = профанол
 reagent-desc-profanol = Хімічна сполука, відома тим, що змушує людей нестримно лаятися. Руйнівник незліченних сімейних зустрічей та похоронів.
 # END OF MIT-LICENSED CODE
-
 reagent-name-copium = копіум
 reagent-desc-copium = Для тих випадків, коли вам потрібен заряд бадьорості.
 reagent-popup-copium-1 = Ви почуваєтесь дуже міцним.
@@ -43,15 +40,11 @@ reagent-popup-copium-9 = Ви маєте бути капітаном.
 reagent-popup-copium-10 = Ви керуєте цією станцією.
 reagent-popup-copium-11 = Ви знаєте, як краще.
 reagent-popup-copium-12 = Ви могли б його здолати.
-
 reagent-name-cat-drugs = котячий наркотик
 reagent-desc-cat-drugs = Котячі наркотики? Наркотики для котів? Наркотики з котів? Краще не питати.
-
 reagent-name-nostalgia = ностальгія
 reagent-desc-nostalgia = Чому це тут?
-
 reagent-name-tilenol = тіленол
 reagent-desc-tilenol = Ви відчуваєте, як стаєте витривалішим, просто тримаючи це.
-
 reagent-name-crapotoxin = крапотоксин
 reagent-desc-crapotoxin = Змушує метаболізатор неконтрольовано пускати гази.

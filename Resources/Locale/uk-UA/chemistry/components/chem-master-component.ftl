@@ -7,7 +7,6 @@ chem-master-component-cannot-put-entity-message = Ви не можете пок�
 chem-master-bound-user-interface-title = ChemMaster 4000
 
 ## ІНТЕРФЕЙС КОРИСТУВАЧА
-
 chem-master-window-input-tab = Вхід
 chem-master-window-output-tab = Вихід
 chem-master-window-container-label = Резервуар
@@ -29,7 +28,6 @@ chem-master-window-dose-label = Доза (u):
 chem-master-window-create-button = Створити
 chem-master-window-bottles-label = Пляшки:
 chem-master-window-unknown-reagent-text = Невідомий реагент
-
 chem-master-window-amount-placeholder = Сума переказу
 chem-master-window-sort-method-tooltip = Виберіть метод сортування буфера.
 chem-master-window-sort-method-Time-text = Останнє додавання

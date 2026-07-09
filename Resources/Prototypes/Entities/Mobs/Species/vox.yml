@@ -167,6 +167,7 @@
   - type: PassiveDamage
     # Augment normal health regen to be able to tank some Poison damage
     # This allows Vox to take their mask off temporarily to eat something without needing a trip to medbay afterwards.
+    splitBehavior: SplitEnsureAllDamagedAndOrganic # Goob
     allowedStates:
     - Alive
     damageCap: 20
@@ -212,6 +213,11 @@
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
+    - map: [ "culteyes" ] # Pirate - Blood Cult
+      sprite: "_Pirate/BloodCult/Effects/culteyes.rsi"
+      state: "vox"
+      shader: unshaded
+      visible: false
     - map: [ "eyes" ]
     - map: [ "id" ]
     - map: [ "outerClothing" ]
@@ -238,6 +244,11 @@
     - map: [ "clownedon" ]
       sprite: "Effects/creampie.rsi"
       state: "creampie_vox" # Not default
+      visible: false
+    - map: [ "culthalo" ] # Pirate - Blood Cult
+      sprite: "_Pirate/BloodCult/Effects/halo.rsi"
+      state: "halo"
+      shader: unshaded
       visible: false
   - type: HumanoidAppearance
     species: Vox
@@ -290,7 +301,7 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: shoes
-      outerClothing: # Goob 
+      outerClothing: # Goob
         sizeMaps:
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
@@ -349,7 +360,7 @@
   - type: Carriable # Goobstation
   - type: CPRTraining # Goobstation - Just give to everyone! This ain't MRP.
   - type: GrabIntent # wilted rose
-  - type: Grabbable 
+  - type: Grabbable
   # Goobstation end
   - type: Hands
     leftHandDisplacement:

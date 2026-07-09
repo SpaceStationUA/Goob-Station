@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# base area prototype
+# this is like markerbase without marker, clickable and interaction outline to not make mapping very annoying
+- type: entity
+  abstract: true
+  save: false # areas use custom serialization in MapAreaSystem
+  id: BaseArea
+  suffix: Area # to avoid adding area to every entity name
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+    noRot: true
+    gridTraversal: false # waste of processing
+  # Pirate: area markers are networked for client-side ambience lookup, but their sprites
+  # should only show through the normal mapping/admin marker visibility toggle.
+  - type: Marker
+  - type: Sprite
+    noRot: true
+    drawdepth: Overdoors
+    sprite: _Pirate/Markers/Areas/station.rsi
+    state: error
+  # Pirate: keep these queryable for the area ambience fallback lookup.
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      area:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+  - type: PlacementReplacement
+    key: areas
+  - type: Area
+
+- type: entity
+  abstract: true
+  parent: BaseArea
+  id: BaseAreaStation
+  components:
+  - type: Sprite
+    state: station
+  - type: StationArea

@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: FunTippyTrumpBox
+  icon:
+    sprite: EstacaoPirata/Objects/Misc/cards.rsi
+    state: tt_boxclosed
+  product: CardBoxTippyTrump
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: market

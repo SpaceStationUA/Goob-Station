@@ -1,4 +1,4 @@
-﻿accent-scrambled-words-1 = Хто?
+accent-scrambled-words-1 = Хто?
 accent-scrambled-words-2 = Що?
 accent-scrambled-words-3 = Коли?
 accent-scrambled-words-4 = Де?

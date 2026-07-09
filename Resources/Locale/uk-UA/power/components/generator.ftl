@@ -1,5 +1,4 @@
 generator-clogged = {$generator} раптово вимкнувся!
-
 portable-generator-verb-start = Запустити генератор
 portable-generator-verb-start-msg-unreliable = Запустити генератор. На це може знадобитися декілька спроб.
 portable-generator-verb-start-msg-reliable = Запустити генератор.
@@ -7,7 +6,6 @@ portable-generator-verb-start-msg-unanchored = Спочатку генерато
 portable-generator-verb-stop = Зупинити генератор
 portable-generator-start-fail = Ви потягнули за шнур, але генератор не запустився.
 portable-generator-start-success = Ви смикаєте за шнур, і генератор починає дзижчати.
-
 portable-generator-ui-title = Портативний Генератор
 portable-generator-ui-status-stopped = Зупинено:
 portable-generator-ui-status-starting = Запускається:
@@ -26,15 +24,12 @@ portable-generator-ui-current-output = Поточний вихід: {$voltage}
 portable-generator-ui-network-stats = Мережа:
 portable-generator-ui-network-stats-value = { POWERWATTS($supply) } / { POWERWATTS($load) }
 portable-generator-ui-network-stats-not-connected = Не підключений
-
 power-switchable-generator-examine = Вихід енергії встановлено на {$voltage}.
 power-switchable-generator-switched = Вихід змінено на {$voltage}!
-
 power-switchable-voltage = { $voltage ->
     [HV] [color=orange]Висока напруга[/color]
     [MV] [color=yellow]Середня напруга[/color]
     *[LV] [color=green]Низька напруга[/color]
 }
 power-switchable-switch-voltage = Перемкнути на {$voltage}
-
 fuel-generator-verb-disable-on = Спочатку треба зупитини генератор!

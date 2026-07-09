@@ -133,7 +133,6 @@
   id: Warden
   name: job-name-warden
   description: job-description-warden
-  whitelisted: true # Pirate
   playTimeTracker: JobWarden
   requirements:
     - !type:RoleTimeRequirement

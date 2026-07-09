@@ -17,6 +17,7 @@
 
 using Content.Server.Construction.Components;
 using Content.Server.Stack;
+using Content.Shared._Pirate.BladeServer;
 using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -59,7 +60,9 @@ public sealed class MachineFrameSystem : EntitySystem
         if (TryComp<ConstructionComponent>(uid, out var construction) && construction.TargetNode == null)
         {
             // Attempt to set pathfinding to the machine node...
-            _construction.SetPathfindingTarget(uid, "machine", construction);
+            // Pirate: blade server frames use the same machine frame system with a custom final node.
+            if (!_construction.SetPathfindingTarget(uid, "machine", construction))
+                _construction.SetPathfindingTarget(uid, "bladeServer", construction);
         }
     }
 
@@ -154,6 +157,10 @@ public sealed class MachineFrameSystem : EntitySystem
     private bool TryInsertBoard(EntityUid uid, EntityUid used, MachineFrameComponent component)
     {
         if (!TryComp<MachineBoardComponent>(used, out var machineBoard))
+            return false;
+
+        // Pirate: blade server frames only accept boards that explicitly declare a blade server variant.
+        if (HasComp<BladeServerFrameComponent>(uid) && !HasComp<BladeServerBoardComponent>(used))
             return false;
 
         if (!_container.TryRemoveFromContainer(used, false, out var wasInContainer) && wasInContainer) // Goobstation

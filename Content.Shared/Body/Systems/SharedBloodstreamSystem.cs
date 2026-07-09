@@ -585,6 +585,7 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
             SolutionContainer.RemoveAllSolution(ent.Comp.TemporarySolution.Value);
         }
 
+        // Gibbing only spills blood to the floor; bystanders get bloody from the puddle. // Pirate: stains
         _puddle.TrySpillAt(ent, tempSol, out _);
     }
 

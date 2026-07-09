@@ -6,6 +6,5 @@
 
 gamemode-dynamic-title = Динамічний
 gamemode-dynamic-description = Сучасний ігровий процес 3024 року.
-
 gamemode-dynamic-u-title = Непрощаючий Динамічний
-gamemode-dynamic-u-description = Боже, бережи нас усіх. 
+gamemode-dynamic-u-description = Боже, бережи нас усіх.

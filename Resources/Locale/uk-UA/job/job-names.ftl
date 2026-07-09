@@ -146,7 +146,6 @@ JobTechnicalAssistant = Технічний асистент
 JobVisitor = Відвідувач
 JobWarden = Наглядач
 JobZookeeper = Доглядач зоопарку
-
 job-name-cluwne = Клууня
 job-name-security-clown = Клоун безпеки
 job-name-command-maid = Покоївка командування

@@ -263,6 +263,14 @@
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 1
+        # Pirate - Starlight terror spiders ignore ammonia gas from their generator.
+        - !type:OrganType
+          type: TerrorSpider
+          shouldHave: false
+        - !type:HasComponentCondition
+          components:
+          - TerrorSpider
+          invert: true
         ignoreResistances: true
         damage:
           types:
@@ -279,9 +287,17 @@
         - !type:OrganType
           type: Vox
           shouldHave: false
+        # Pirate - Starlight terror spiders ignore ammonia gas from their generator.
+        - !type:OrganType
+          type: TerrorSpider
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 0.8
+        - !type:HasComponentCondition
+          components:
+          - TerrorSpider
+          invert: true
       - !type:PopupMessage
         type: Local
         visualType: Medium
@@ -311,6 +327,11 @@
         - !type:OrganType
           type: Vox
         factor: -4
+      # Pirate - terror spider lungs can breathe ammonia while still accepting normal oxygen.
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: TerrorSpider
 
 
 - type: reagent

@@ -67,6 +67,8 @@
   components:
   - type: Vampirism
     succDelay: 3
+  - type: VampireHolyWaterWeakness
+
   - type: WeakToHoly
     alwaysTakeHoly: true
 #endregion

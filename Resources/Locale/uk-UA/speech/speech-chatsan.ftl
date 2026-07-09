@@ -1,17 +1,13 @@
 chatsan-word-1 = пох
 chatsan-replacement-1 = начхати
-
 chatsan-word-2 = даун
 chatsan-replacement-2 = пришелепкуватий
-
 chatsan-word-3 = пж
 chatsan-replacement-3 = будь ласка
-
 chatsan-word-4 = аноми
 chatsan-replacement-4 = аномалії
 chatsan-word-5 = анома
 chatsan-replacement-5 = аномалія
-
 chatsan-word-6 = 6
 chatsan-replacement-6 = 6
 chatsan-word-7 = 7
@@ -42,12 +38,10 @@ chatsan-word-19 = 19
 chatsan-replacement-19 = 19
 chatsan-word-20 = 20
 chatsan-replacement-20 = 20
-
 chatsan-word-21 = 21
 chatsan-word-22 = 21
 chatsan-word-23 = 21
 chatsan-replacement-please = 21
-
 chatsan-word-24 = 24
 chatsan-replacement-24 = 24
 chatsan-word-25 = 25
@@ -78,11 +72,9 @@ chatsan-word-37 = 37
 chatsan-replacement-37 = 37
 chatsan-word-38 = 38
 chatsan-replacement-38 = 38
-
 chatsan-word-39 = 40
 chatsan-word-40 = 40
 chatsan-replacement-etcetera = 40
-
 chatsan-word-41 = 41
 chatsan-replacement-41 = 41
 chatsan-word-42 = 42

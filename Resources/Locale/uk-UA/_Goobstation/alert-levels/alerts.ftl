@@ -10,16 +10,12 @@
 
 alerts-stasis-name = [color=cyan]Часовий стазис[/color]
 alerts-stasis-desc = Ви перебуваєте в тимчасовому стазисі. Ви не можете взаємодіяти зі світом, і він з вами теж.
-
 alerts-knocked-down-name = [color=yellow]Збитий з ніг[/color]
 alerts-knocked-down-desc = [color=yellow]Збитий з ніг[/color]! Ви не можете піднятися.
-
 alerts-modsuit-power-name = [color=yellow]Живлення Modsuit[/color]
 alerts-modsuit-power-desc = Відображає поточний рівень заряду вашого Modsuit. Низький рівень заряду може вплинути на функціональність костюма.
-
 alerts-centered-name = Центрований
 alerts-centered-desc = Ви відчуваєте зв'язок зі своїм корінням. Зокрема з тим, що тримає вас по центру тайлів.
-
 alerts-minor-pain-name = Легкий біль
 alerts-minor-pain-desc = Ви відчуваєте легкий біль.
 alerts-moderate-pain-name = [color=yellow]Помірний біль[/color]

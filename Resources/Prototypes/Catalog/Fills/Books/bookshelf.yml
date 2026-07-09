@@ -80,6 +80,7 @@
     - id: BookTruth
     - id: BookWatched
     - id: BookWorld
+    - id: BookSparotBook # GoobStation
 
 - type: entityTable
   id: RandomGuidebookTable

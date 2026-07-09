@@ -9,7 +9,6 @@ loadout-description-LoadoutCommandCapHatCapcap = Капітанський каш
 loadout-description-LoadoutCommandCapHat = Капітанський берет, дуже гарний.
 loadout-description-LoadoutCommandCapMaskGas = Навіщо це капітану? Не знаю, але виглядає круто.
 loadout-description-LoadoutCommandCapItemDrinkFlask = Найкращі фляги для найкращих напоїв.
-
 loadout-description-LoadoutCommandCapHatBeret = Капітанський берет, дуже гарний.
 loadout-name-LoadoutCaptainDrinkFlask = фляга для напоїв капітана (кольорова)
 loadout-name-LoadoutCaptainGlovesInspection = оглядові рукавички (кольорові)

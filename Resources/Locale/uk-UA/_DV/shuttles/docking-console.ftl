@@ -7,12 +7,9 @@
 docking-console-no-shuttle = Шатл не виявлено
 docking-console-ftl = FTL
 docking-console-call = Викликати шатл
-
 mining-console-window-title = Консоль шахтарського шатла
-
 shuttle-destination-lavaland = Лаваленд
 shuttle-destination-glacier-surface = Поверхня льодовика
-
 docking-console-ftl-message-Unknown = Отримання стану FTL...
 docking-console-ftl-message-Ready = Усі системи готові.
 docking-console-ftl-message-NoSelection = Оберіть один із пунктів призначення.

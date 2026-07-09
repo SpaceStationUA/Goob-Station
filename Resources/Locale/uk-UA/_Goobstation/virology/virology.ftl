@@ -3,7 +3,6 @@ disease-swab-cant-swab = Ви не можете взяти мазок у {$targe
 disease-swab-swabbed = Ви берете пробу з {$target}.
 disease-swab-swabbed-by = {$user} бере у вас мазок.
 disease-swab-yourself = себе
-
 disease-analyzer-report-title = Звіт про аналіз захворювання
 disease-analyzer-report-genotype = Генотип: {$genotype}
 disease-analyzer-report-type = Тип: {$type}
@@ -13,5 +12,4 @@ disease-analyzer-report-mutation-rate = Швидкість мутації: {NATU
 disease-analyzer-report-complexity = Складність: {NATURALFIXED($complexity, 1)}
 disease-analyzer-report-effects-header = Виявлені ефекти:
 disease-analyzer-report-effect-line = - {$effect} (Тяжкість {NATURALFIXED($severity, 2)}): {$description}
-
 disease-analyzer-unknown-effect = Невідомо

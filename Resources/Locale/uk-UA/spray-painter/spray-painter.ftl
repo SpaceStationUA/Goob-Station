@@ -2,32 +2,24 @@
 spray-painter-ammo-on-examine = Він містить {$charges} зарядів.
 spray-painter-ammo-after-interact-full = Розпилювач фарби повний!
 spray-painter-ammo-after-interact-refilled = Ви заправляєте розпилювач фарби.
-
 spray-painter-interact-no-charges = Недостатньо фарби.
 spray-painter-interact-nothing-to-remove = Нема чого видаляти!
-
 spray-painter-on-examined-painted-message = Здається, його щойно пофарбували.
 spray-painter-style-not-available = Неможливо застосувати вибраний стиль до цього об'єкта.
-
 spray-painter-verb-toggle-decals = Переключити малювання наклейок
-
 spray-painter-item-status-label = Наклейки: {$mode}
 spray-painter-item-status-add = [color=green]Додати[/color]
 spray-painter-item-status-remove = [color=red]Видалити[/color]
 spray-painter-item-status-off = [color=gray]Вимкнено[/color]
 spray-painter-window-title = Розпилювач фарби
-
 spray-painter-selected-style = Вибраний стиль:
-
 spray-painter-selected-decals = Вибрана наклейка:
 spray-painter-use-custom-color = Використовувати власний колір
 spray-painter-use-snap-to-tile = Прив'язати до плитки
-
 spray-painter-angle-rotation = Обертання:
 spray-painter-angle-rotation-90-sub = -90°
 spray-painter-angle-rotation-reset = 0°
 spray-painter-angle-rotation-90-add = +90°
-
 spray-painter-selected-color = Вибраний колір:
 spray-painter-color-red = червоний
 spray-painter-color-yellow = жовтий
@@ -45,11 +37,9 @@ spray-painter-tab-category-pipes = Труби
 spray-painter-tab-category-decals = Наклейки
 spray-painter-tab-group-airlockstandard = Стандартні
 spray-painter-tab-group-airlockglass = Скляні
-
 spray-painter-tab-group-cratesteel = Сталеві
 spray-painter-tab-group-crateplastic = Пластикові
 spray-painter-tab-group-cratesecure = Захищені
-
 spray-painter-tab-group-closet = Відкриті
 spray-painter-tab-group-locker = Захищені
 spray-painter-tab-group-wallcloset = Відкриті (настінні)
@@ -68,7 +58,6 @@ spray-painter-style-airlockstandard-salvage = Утилізація
 spray-painter-style-airlockstandard-science = Науковий
 spray-painter-style-airlockstandard-security = Служба безпеки
 spray-painter-style-airlockstandard-virology = Вірусологія
-
 spray-painter-style-airlockglass-atmospherics = Атмосферний
 spray-painter-style-airlockglass-basic = Базовий
 spray-painter-style-airlockglass-cargo = Вантажний
@@ -107,7 +96,6 @@ spray-painter-style-locker-salvage = Утилізація
 spray-painter-style-locker-scientist = Вчений
 spray-painter-style-locker-security = Служба безпеки
 spray-painter-style-locker-welding = Зварювання
-
 spray-painter-style-closet-basic = Базовий
 spray-painter-style-closet-biohazard = Біозахист
 spray-painter-style-closet-biohazard-science = Біозахист (науковий)
@@ -124,7 +112,6 @@ spray-painter-style-closet-nitrogen = Внутрішнє (азот)
 spray-painter-style-closet-oxygen = Внутрішнє (кисень)
 spray-painter-style-closet-radiation = Радіаційний костюм
 spray-painter-style-closet-tool = Інструменти
-
 spray-painter-style-wallcloset-atmospherics = Атмосферний
 spray-painter-style-wallcloset-basic = Базовий
 spray-painter-style-wallcloset-black = Чорний
@@ -139,7 +126,6 @@ spray-painter-style-wallcloset-oxygen = Внутрішнє (кисень)
 spray-painter-style-wallcloset-pink = Рожевий
 spray-painter-style-wallcloset-white = Білий
 spray-painter-style-wallcloset-yellow = Жовтий
-
 spray-painter-style-walllocker-evac = Ремонт евакуації
 spray-painter-style-walllocker-medical = Медичний
 spray-painter-style-cratesteel-basic = Базовий
@@ -148,14 +134,12 @@ spray-painter-style-cratesteel-engineering = Інженерний
 spray-painter-style-cratesteel-radiation = Радіаційний
 spray-painter-style-cratesteel-science = Науковий
 spray-painter-style-cratesteel-surgery = Хірургічний
-
 spray-painter-style-crateplastic-basic = Базовий
 spray-painter-style-crateplastic-chemistry = Хімія
 spray-painter-style-crateplastic-command = Командний
 spray-painter-style-crateplastic-hydroponics = Гідропоніка
 spray-painter-style-crateplastic-medical = Медичний
 spray-painter-style-crateplastic-oxygen = Кисень
-
 spray-painter-style-cratesecure-basic = Базовий
 spray-painter-style-cratesecure-chemistry = Хімія
 spray-painter-style-cratesecure-command = Командний

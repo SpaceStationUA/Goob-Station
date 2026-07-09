@@ -1,0 +1,8 @@
+- type: entity
+  id: OrganTerrorSpiderLungs
+  parent: OrganAnimalLungs
+  suffix: Terror Spider
+  components:
+  - type: Metabolizer
+    # Pirate - terror spiders breathe normal oxygen and ammonia from their egg generators.
+    metabolizerTypes: [ Animal, TerrorSpider ]

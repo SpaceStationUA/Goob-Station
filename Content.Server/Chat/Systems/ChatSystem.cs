@@ -146,7 +146,6 @@ using Content.Shared.Radio;
 using Content.Shared.Station.Components;
 using Content.Shared.Whitelist;
 using Content.Goobstation.Common.Chat;
-using Content.Goobstation.Common.Traits;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -160,11 +159,6 @@ using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 using Content.Pirate.Common._EinsteinEngines.Chat;
 using Content.Shared._RMC14.CCVar;
-
-// Goob start - the blind dont see
-using Content.Shared.Eye.Blinding.Components;
-using Content.Shared.Traits.Assorted;
-// Goob end
 
 namespace Content.Server.Chat.Systems;
 
@@ -849,10 +843,12 @@ public sealed partial class ChatSystem : SharedChatSystem
                 continue; // Won't get logged to chat, and ghosts are too far away to see the pop-up, so we just won't send it to them.
 
             // Goob edit start
-            if (TryComp<DeafComponent>(listener, out var modifier) && language.SpeechOverride.RequireSpeech)
-                continue; // blocks anyone with the deaf component from hearing.
-            if (HasComp<PermanentBlindnessComponent>(listener) || HasComp<TemporaryBlindnessComponent>(listener))
-                continue; // block blind people from seeing subtle sign language gestures
+            // Raises an event for deaf and blind components.
+            // Pirate: use the same override path as spoken chat so PoorVision is not treated as full blindness.
+            var overrideEv = new ChatMessageOverrideInRange(language.SpeechOverride.RequireSpeech, language.SpeechOverride.RequireSight);
+            RaiseLocalEvent(listener, ref overrideEv);
+            if (overrideEv.Cancelled)
+                continue;
             // Goob edit end
 
             // Einstein Engines - Language begin

@@ -57,3 +57,13 @@
   cost: 5000
   category: cargoproduct-category-name-medical
   group: market
+
+- type: cargoProduct
+  id: MedicalIVDrip
+  icon:
+    sprite: _Pirate/Structures/Machines/Medical/iv_drip.rsi
+    state: unhooked
+  product: IVDrip
+  cost: 750
+  category: cargoproduct-category-name-medical
+  group: market

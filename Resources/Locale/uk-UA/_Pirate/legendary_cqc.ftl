@@ -1,7 +1,5 @@
 guide-entry-legendary-cqc = Легендарне CQC
-
 legendary-cqc-success-learned = Ви відчуваєте, як легендарні техніки CQC заповнюють ваш розум...
-
 legendary-cqc-action-toggle-helper-name = Перемкнути допомогу CQC
 legendary-cqc-action-toggle-helper-desc = Показує або ховає підказки по комбо CQC.
 legendary-cqc-saying-1 = Тримайся ближче.
@@ -9,7 +7,6 @@ legendary-cqc-saying-2 = Один рух і ти лежиш.
 legendary-cqc-saying-3 = Не смикайся.
 legendary-cqc-downed-saying-1 = Залишайся на землі.
 legendary-cqc-downed-saying-2 = Бій для тебе вже закінчився.
-
 legendary-cqc-takedown-name = CQC Повалення
 legendary-cqc-disarm-name = Тотальне Роззброєння
 legendary-cqc-throw-name = Кидок Через Плече
@@ -20,7 +17,6 @@ legendary-cqc-interrogation-name = Допит
 legendary-cqc-stealth-name = Скритне Повалення
 legendary-cqc-rush-name = CQC Штурм
 legendary-cqc-finisher-name = Завершальний Удар
-
 legendary-cqc-knowledge-gained = Ви отримали знання Легендарного CQC!
 legendary-cqc-popup-user = Легендарне CQC: {$combo}!
 legendary-cqc-popup-target = На вас застосовують Легендарне CQC: {$combo}!

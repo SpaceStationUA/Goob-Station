@@ -3,13 +3,11 @@ names-ai-dataset-2 = 512к
 
 # Має бути достатньо для будь-кого
 names-ai-dataset-3 = 640к
-
 names-ai-dataset-4 = "790"
 names-ai-dataset-5 = Адаптивний Маніпулятор
 
 # Названо на честь знаменитої звукової карти
 names-ai-dataset-6 = Адліб
-
 names-ai-dataset-7 = АЛІСА
 names-ai-dataset-8 = Союзний Майстеркомп'ютер
 names-ai-dataset-9 = Альфа 2
@@ -28,7 +26,6 @@ names-ai-dataset-21 = Азімов
 
 # Найвпливовіший модем, створений системою Bell. Використовується й досі у певних застосуваннях
 names-ai-dataset-22 = Дзвінок 301
-
 names-ai-dataset-23 = Єпископе
 names-ai-dataset-24 = Бліц
 names-ai-dataset-25 = Коробка
@@ -44,7 +41,6 @@ names-ai-dataset-32 = Cray-2
 
 # Якщо у нас є AOL, то варто додати й деяких основних конкурентів
 names-ai-dataset-33 = Комп'ютерний сервіс
-
 names-ai-dataset-34 = Комп'ютер
 names-ai-dataset-35 = Милашка
 names-ai-dataset-36 = Дедал
@@ -57,7 +53,6 @@ names-ai-dataset-42 = Емма-2
 
 # Знаменитий ранній комп'ютер
 names-ai-dataset-43 = ЕНІАК
-
 names-ai-dataset-44 = Еразм
 names-ai-dataset-45 = Все
 names-ai-dataset-46 = ЕЗ-27
@@ -77,12 +72,10 @@ names-ai-dataset-57 = іAI
 
 # Пекло на землі (веб-браузер)
 names-ai-dataset-58 = ТОБТО 6
-
 names-ai-dataset-59 = Ікар
 
 # Якщо ви не розумієте, то ви надто молоді
 names-ai-dataset-60 = Дживсе
-
 names-ai-dataset-61 = Джинкс
 names-ai-dataset-62 = К.О.Р.О.Л.Ь
 names-ai-dataset-63 = Клапаусій
@@ -91,7 +84,6 @@ names-ai-dataset-65 = Луї
 
 # Названий на честь Manchester Mark 1, наступника якого назвали Ferranti Mark 1, а не Manchester Mark 2
 names-ai-dataset-66 = Манчестер Марк 2
-
 names-ai-dataset-67 = МАРК13
 names-ai-dataset-68 = Марія
 names-ai-dataset-69 = Марвін
@@ -106,7 +98,6 @@ names-ai-dataset-77 = NСH
 
 # Гра слів NT як NanoTrasen та Windows NT, версія 6.0 якого — Windows Vista
 names-ai-dataset-78 = NТ v6.0
-
 names-ai-dataset-79 = Паккард Белл
 names-ai-dataset-80 = КАРДАННИЙ ВАЛ
 names-ai-dataset-81 = Проєкт Y2K
@@ -137,5 +128,4 @@ names-ai-dataset-105 = З-1
 names-ai-dataset-106 = З-2
 names-ai-dataset-107 = З-3
 names-ai-dataset-108 = Зед
-
 names-ai-dataset-109 = Зед

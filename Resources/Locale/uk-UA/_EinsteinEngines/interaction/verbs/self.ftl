@@ -9,7 +9,6 @@ interaction-PinchSelf-delayed-self-popup = Ви щипаєте себе...
 interaction-PinchSelf-message-1 = Ойй!!
 interaction-PinchSelf-message-2 = Аааа!!
 interaction-PinchSelf-message-3 = Ай!!
-
 interaction-MakeSleepSelf-name = Заснути
 interaction-MakeSleepSelf-description = Змусьте себе заснути.
 interaction-MakeSleepSelf-delayed-self-popup = Ви намагаєтеся заснути...

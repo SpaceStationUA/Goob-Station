@@ -1,0 +1,7 @@
+- type: shader
+  id: PirateBlinkEyelid
+  kind: source
+  path: "/Textures/_Pirate/Shaders/blink_eyelid.swsl"
+  params:
+    Coverage: 1.0
+    WipeDirection: 0.0

@@ -16,7 +16,6 @@ stack-reinforced-plasma-glass = армоване плазмове скло
 stack-reinforced-uranium-glass = армоване уранове скло
 stack-gunpowder = порох
 stack-cardboard = картон
-
 stack-bones = {$amount ->
     [1] кістка
     *[other] кістки
@@ -85,7 +84,6 @@ stack-ground-rainbow-cannabis = мелений райдужний канабіс
 stack-dried-tobacco-leaves = сушене листя тютюну
 stack-dried-cannabis-leaves = сушене листя канабісу
 stack-dried-rainbow-cannabis-leaves = сушене листя райдужного канабісу
-
 stack-cigarette-filter = {$amount ->
     [1] фільтр
     *[other] фільтри
@@ -94,7 +92,6 @@ stack-rolling-paper = {$amount ->
     [1] папір
     *[other] папери
 } для скручування
-
 stack-fulton = фултон
 stack-credit = спесо
 stack-plasma = плазма
@@ -234,7 +231,6 @@ stack-astro-snow-floor = астро-снігова підлога
 stack-large-wood-floor = велика дерев'яна підлога
 stack-red-circuit-floor = підлога з червоних схем
 stack-asteroid-astro-sand-floor = астро-піщана підлога астероїда
-
 stack-black-carpet-tile = чорна килимова плитка
 stack-techmaint-floor-dark = темна підлога техобслуговування
 stack-xeno-floor = ксенопідлога

@@ -1,0 +1,46 @@
+- type: entity
+  parent: ReagentContainerFlour
+  id: ReagentContainerSalt
+  name: table salt bag
+  description: A big bag of salt.
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: { state: "open" }
+          False: { state: "closed" }
+  - type: Sprite
+    layers:
+    - sprite: _Pirate/Objects/Consumable/Food/salt-bag.rsi
+      state: closed
+      map: [ "enum.OpenableVisuals.Layer" ]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        # Pirate: Match local flour bag volume.
+        maxVol: 50
+        reagents:
+        - ReagentId: TableSalt
+          Quantity: 50
+
+- type: entity
+  parent: ReagentContainerSalt
+  id: ReagentContainerPepper
+  name: black pepper bag
+  description: A big bag of ground pepper.
+  components:
+  - type: Sprite
+    layers:
+    - sprite: _Pirate/Objects/Consumable/Food/pepper-bag.rsi
+      state: closed
+      map: [ "enum.OpenableVisuals.Layer" ]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        # Pirate: Match local flour bag volume.
+        maxVol: 50
+        reagents:
+        - ReagentId: Blackpepper
+          Quantity: 50

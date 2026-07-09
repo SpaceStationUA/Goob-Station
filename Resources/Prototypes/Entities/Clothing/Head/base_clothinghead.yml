@@ -126,11 +126,29 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
+      #region Pirate: stains
+      stain:
+        maxVol: 5
+      #endregion Pirate: stains
   - type: Tag
     tags:
     - ClothMade
     - WhitelistChameleon
     - DroneUsable # Goobstation
+  #region Pirate: stains
+  - type: Appearance
+  - type: Stainable
+    clothingVisuals:
+      head:
+      - sprite: _Pirate/Effects/blood.rsi
+        state: helmetblood
+    iconVisuals:
+    - sprite: _Pirate/Effects/blood.rsi
+      state: helmetbloodicon
+  #endregion Pirate: stains
+  #region Pirate: wetness
+  - type: Wettable
+  #endregion Pirate: wetness
 
 - type: entity
   abstract: true
@@ -315,6 +333,22 @@
     - HeadTop
     - HeadSide
   - type: FaceHuggerBlocker # Goobstation
+  #region Pirate: stains
+  - type: Appearance
+  - type: Stainable
+    clothingVisuals:
+      head:
+      - sprite: _Pirate/Effects/blood.rsi
+        state: helmetblood
+    iconVisuals:
+    - sprite: _Pirate/Effects/blood.rsi
+      state: helmetbloodicon
+  #endregion Pirate: stains
+  #region Pirate: wetness
+  # Hardsuit helmets stay dry and protect face slots.
+  - type: WetnessBlocker
+    slots: [HEAD, MASK, EYES]
+  #endregion Pirate: wetness
 
 - type: entity
   abstract: true
@@ -402,3 +436,14 @@
     - Hair
     - HeadTop
     - HeadSide
+  #region Pirate: stains
+  - type: Appearance
+  - type: Stainable
+    clothingVisuals:
+      head:
+      - sprite: _Pirate/Effects/blood.rsi
+        state: helmetblood
+    iconVisuals:
+    - sprite: _Pirate/Effects/blood.rsi
+      state: helmetbloodicon
+  #endregion Pirate: stains

@@ -20,7 +20,6 @@ hud-chatbox-info = {$talk-key} щоб говорити, {$cycle-key} щоб пе
 hud-chatbox-info-talk = {$talk-key} щоб говорити.
 hud-chatbox-info-cycle = Натисніть тут, щоб поговорити, {$cycle-key}, щоб перемикати канали.
 hud-chatbox-info-unbound = Натисніть тут щоб говорити.
-
 hud-chatbox-select-name-prefixed = {$prefix} {$name}
 hud-chatbox-select-channel-Admin = Адмін
 hud-chatbox-select-channel-Console = Консоль
@@ -35,7 +34,6 @@ hud-chatbox-select-channel-Damage = Шкода
 hud-chatbox-select-channel-CollectiveMind = Колективний Розум
 hud-chatbox-select-channel-Visual = Дії
 hud-chatbox-select-channel-Radio = Радіо
-
 hud-chatbox-channel-Admin = Адмін Інше
 hud-chatbox-channel-AdminAlert = Адмін Сповіщення
 hud-chatbox-channel-AdminChat = Адмін Чат
@@ -57,7 +55,6 @@ hud-chatbox-channel-Unspecified = Невизначений
 #PIRATE START
 hud-chatbox-select-channel-Empathy = Емпатія
 hud-chatbox-channel-Empathy = Емпатія
-
 hud-chatbox-highlights = Підсвічування:
 hud-chatbox-highlights-button = Підтвердити
 hud-chatbox-highlights-tooltip = Слова мають бути розділені новим рядком,

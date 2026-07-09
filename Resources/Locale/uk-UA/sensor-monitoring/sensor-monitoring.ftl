@@ -1,5 +1,4 @@
-﻿sensor-monitoring-window-title = Консоль Моніторингу Сенсорів
-
+sensor-monitoring-window-title = Консоль Моніторингу Сенсорів
 sensor-monitoring-value-display = {$unit ->
     [PressureKpa] { PRESSURE($value) }
     [PowerW] { POWERWATTS($value) }

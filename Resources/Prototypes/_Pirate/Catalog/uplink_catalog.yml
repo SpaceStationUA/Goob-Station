@@ -1,4 +1,21 @@
 - type: listing
+  id: UplinkFpvDroneBundle
+  name: uplink-fpv-drone-bundle-name
+  description: uplink-fpv-drone-bundle-desc
+  icon: { sprite: _Pirate/Objects/Misc/fpv_drone.rsi, state: base }
+  productEntity: ClothingBackpackDuffelSyndicateFpvDroneBundle
+  cost:
+    Telecrystal: 15
+  categories:
+    - UplinkDisruption
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - ContractorUplink
+          - NukeOpsUplink
+
+- type: listing
   id: UplinkAdderBundle
   name: uplink-adder-name
   description: uplink-adder-desc
@@ -17,6 +34,17 @@
   productEntity: ClothingBackpackDuffelSyndicateFilledAkurra
   cost:
     Telecrystal: 50
+  categories:
+    - UplinkWeaponry
+
+- type: listing
+  id: UplinkRifleBandit
+  name: uplink-rifle-bandit-name
+  description: uplink-rifle-bandit-desc
+  productEntity: ClothingBackpackDuffelSyndicateFilledDMR
+  icon: { sprite: /Textures/_Pirate/Objects/Weapons/Guns/Rifles/bandit.rsi, state: icon }
+  cost:
+    Telecrystal: 18
   categories:
     - UplinkWeaponry
 
@@ -69,6 +97,17 @@
   productEntity: EchionSynth
   cost:
     Telecrystal: 40
+  categories:
+  - UplinkAmmo
+
+- type: listing
+  id: UplinkRifleDMRMagazine
+  name: uplink-rifle-magazine-bandit-name
+  description: uplink-rifle-magazine-bandit-desc
+  icon: { sprite: /Textures/_Pirate/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/dmr_mag.rsi, state: base }
+  productEntity: MagazineLightRifleCaseless
+  cost:
+    Telecrystal: 2
   categories:
   - UplinkAmmo
 
@@ -134,3 +173,40 @@
       blacklist:
         components:
         - SurplusBundle
+
+- type: listing
+  id: UplinkMobCatReject
+  name: uplink-mobcat-reject-name
+  description: uplink-mobcat-reject-desc
+  icon: { sprite: _Pirate/Objects/Devices/syndicatyarn.rsi, state: radio-syndicat }
+  productEntity: ReinforcementRadioSyndicateSyndiCatReject
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAllies
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+      - ContravendUplink # Pirate: follow local ally listing restrictions.
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: UplinkMobMothroachSyndicate
+  name: uplink-syndicate-mothroach-name
+  description: uplink-syndicate-mothroach-description
+  icon: { sprite: _Pirate/Objects/Devices/communication.rsi, state: old-radio-syndicate-mothroach }
+  productEntity: ReinforcementRadioSyndicateMothroachSyndicate
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkAllies
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - ContractorUplink
+      - NukeOpsUplink
+      - ContravendUplink

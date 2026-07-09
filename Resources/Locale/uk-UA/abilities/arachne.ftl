@@ -11,7 +11,6 @@ cocoon-start-third-person = {CAPITALIZE(THE($spider))} починає закут
 spun-web-second-person = Ти плетеш павутину.
 spun-web-third-person = {CAPITALIZE(THE($spider))} пряде павутину!
 cocoon = Кокон
-
 uncocoon-start-second-person = Ви починаєте відпускати {THE($target)}.
 uncocoon-start-third-person = {CAPITALIZE(THE($spider))} починає відпускати {THE($target)}.
 uncocoon = Вивільнити

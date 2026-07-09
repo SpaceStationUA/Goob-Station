@@ -79,6 +79,7 @@
   equipment:
     shoes: ClothingShoesColorWhite
     id: ResearchAssistantPDA
+    neck: ClothingNeckNoviceMark # Pirate: novice mark
     ears: ClothingHeadsetScience
     pocket2: BookScientistsGuidebook
   #storage:

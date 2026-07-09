@@ -13,7 +13,6 @@ badfeeling-artifact-12 = Світло ніби мерехтить.
 badfeeling-artifact-13 = Здається, що тіні подовжуються.
 badfeeling-artifact-14 = Стіни стають ближчими.
 badfeeling-artifact-15 = Щось не так.
-
 badfeeling-artifact-drastic-1 = Хтось намагається вбити вас!
 badfeeling-artifact-drastic-2 = Там щось є!
 badfeeling-artifact-drastic-3 = Що з тобою відбувається?

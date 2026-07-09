@@ -1,0 +1,1 @@
+pirate-net-grabbed-item = {CAPITALIZE(THE($net))} вихоплює {THE($item)} з рук {THE($user)}!

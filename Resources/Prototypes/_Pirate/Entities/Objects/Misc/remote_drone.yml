@@ -1,0 +1,206 @@
+## Device ports
+
+- type: sourcePort
+  id: RemoteDroneSender
+  name: signal-port-name-remote-drone-sender
+  description: signal-port-description-remote-drone-sender
+  defaultLinks: [ RemoteDroneReceiver ]
+
+- type: sourcePort
+  id: FpvDronePayloadDropSender
+  name: signal-port-name-fpv-drone-payload-drop-sender
+  description: signal-port-description-fpv-drone-payload-drop-sender
+  defaultLinks: [ FpvDroneTrigger ]
+
+- type: sinkPort
+  id: RemoteDroneReceiver
+  name: signal-port-name-remote-drone-receiver
+  description: signal-port-description-remote-drone-receiver
+
+- type: sinkPort
+  id: FpvDroneTrigger
+  name: signal-port-name-fpv-drone-trigger
+  description: signal-port-description-fpv-drone-trigger
+
+## Entities
+
+- type: entity
+  parent: BaseItem
+  id: RemoteDroneLaptop
+  name: drone control laptop
+  description: Controls drones. Must be linked to a drone to work.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/modular_laptop.rsi
+    layers:
+    - state: laptop
+      scale: 0.8, 0.8
+    - state: hostile
+      scale: 0.8, 0.8
+      shader: unshaded
+  - type: RemoteDroneController
+    sourcePort: RemoteDroneSender
+  - type: WirelessNetworkConnection
+    range: 150
+  - type: DeviceLinkSource
+    range: 150
+    ports:
+    - RemoteDroneSender
+    - FpvDronePayloadDropSender
+  - type: SurveillanceCameraMonitor
+    neverAutomaticallyHeartbeat: true
+
+  # UI
+  - type: ActivatableUI
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: ActivatableUIRequiresVision
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+
+- type: entity
+  parent: [ BaseMob, BaseStructureDynamic ]
+  id: RemoteDroneFpv
+  name: fpv drone
+  description: A relic of a historic war. Must be linked to a drone controller to work. Uses about 0.6 joules of energy per second when active.
+  components:
+  # Misc
+  - type: Sprite
+    noRot: false
+    sprite: _Pirate/Objects/Misc/fpv_drone.rsi
+    layers:
+    - state: base
+      scale: 0.5, 0.5
+    - state: prop_static
+      scale: 0.5, 0.5
+      map: ["propeller"]
+  - type: GenericVisualizer
+    visuals:
+      enum.FpvDroneVisuals.Active:
+        propeller:
+          False: { state: prop_static }
+          True: { state: prop_moving }
+  - type: FlyBySound
+    prob: 0
+    sound:
+      path: /Audio/_Pirate/Effects/fpv_drone_flyby.ogg
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 40
+    minimumSpeed: 3
+    speedDamageFactor: 2
+    soundHit:
+      collection: MetalThud
+    damageCooldown: 0.8
+
+  # Cell
+  - type: PowerCellDraw
+    drawRate: 0.6 # Pirate: ~30 min flight time on high cell (1080J)
+    enabled: false
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+      storagebase: !type:Container
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+        swap: false
+
+  # Storage
+  - type: Storage
+    grid:
+    - 0,0,3,1
+    maxItemSize: Normal
+    blacklist:
+      components:
+      - RemoteDroneController
+  - type: UserInterface
+    interfaces:
+     enum.StorageUiKey.Key:
+      type: StorageBoundUserInterface
+
+  # Mob
+  - type: Eye
+  - type: CanMoveInAir
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4.0
+    baseSprintSpeed: 8
+    baseAcceleration: 5
+    baseFriction: 5
+    baseWeightlessModifier: 0
+
+  # Other mob-related
+  - type: RequireProjectileTarget
+    active: True
+
+  # Device network
+  - type: WirelessNetworkConnection
+    range: 250
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: DeviceLinkSink
+    ports:
+    - RemoteDroneReceiver
+    - FpvDroneTrigger
+
+  # Drone
+  - type: RemoteDrone
+    sinkPort: RemoteDroneReceiver
+  - type: FpvDrone
+    flybySoundProbability: 0.65
+    audioSpecifier:
+      path: /Audio/_Pirate/Effects/fpv_drone_static.ogg
+      params:
+        loop: true
+        volume: -1
+    emptiedContainerId: storagebase
+    dropStoragePort: FpvDroneTrigger
+  - type: SurveillanceCamera
+    mobile: True # Pirate: FPV drone is a moving camera.
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,1,1
+
+  # Damage
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:EmptyContainersBehaviour
+        containers:
+        - cell_slot
+        - storagebase
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+  # Fixtures
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 45
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+      fly-by:
+        shape: !type:PhysShapeCircle
+          radius: 1
+        hard: False
+        layer:
+        - MobMask

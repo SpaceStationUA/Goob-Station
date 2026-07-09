@@ -5,5 +5,4 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 station-beacon-centcomm-office = Офіс Центкому
-
 station-beacon-radio-station = Радіостанція

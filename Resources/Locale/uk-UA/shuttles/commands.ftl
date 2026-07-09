@@ -7,7 +7,6 @@
 # FTLdiskburner
 cmd-ftldisk-desc = Створює диск з FTL-координатами для перельоту на карту, на якій знаходиться вказаний EntityID
 cmd-ftldisk-help = ftldisk [EntityID]
-
 cmd-ftldisk-no-transform = Сутність {$destination} не має компонента Transform!
 cmd-ftldisk-no-map = Сутність {$destination} не має карти!
 cmd-ftldisk-no-map-comp = Сутність {$destination} якимось чином знаходиться на карті {$map} без компонента карти.
@@ -16,5 +15,4 @@ cmd-ftldisk-map-paused = Сутність {$desintation} знаходиться 
 cmd-ftldisk-planet = Сутність {$desintation} знаходиться на карті планети {$map} і вимагатиме точки FTL. Вона може вже існувати.
 cmd-ftldisk-already-dest-not-enabled = Сутність {$destination} знаходиться на карті {$map}, яка вже має FTLDestinationComponent, але він не увімкнений! Встановіть це вручну для безпеки.
 cmd-ftldisk-requires-ftl-point = Сутність {$destination} знаходиться на карті {$map}, яка вимагає точки FTL для переміщення! Вона може вже існувати.
-
 cmd-ftldisk-hint = Мережевий ID карти

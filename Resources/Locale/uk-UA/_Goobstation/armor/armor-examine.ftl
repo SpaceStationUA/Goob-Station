@@ -7,9 +7,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 armor-examine-stamina = - Шкода [color=cyan]витривалості[/color] зменшена на [color=lightblue]{$num}%[/color].
-
 armor-examine-cancel-delayed-knockdown = - [color=green]Повністю скасовує[/color] відкладене оглушення від кийка.
-
 armor-examine-modify-delayed-knockdown-delay = - { $deltasign ->
           [1] [color=green]Збільшує[/color]
           *[-1] [color=red]Зменшує[/color]
@@ -17,7 +15,6 @@ armor-examine-modify-delayed-knockdown-delay = - { $deltasign ->
           [1] секунду
           *[other] секунди
       }[/color].
-
 armor-examine-modify-delayed-knockdown-time = - { $deltasign ->
           [1] [color=red]Збільшує[/color]
           *[-1] [color=green]Зменшує[/color]

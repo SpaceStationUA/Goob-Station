@@ -1,0 +1,193 @@
+- type: entity # The mantis backpacks are a bit smaller visually to show off their clothes
+  parent: [ClothingBackpack, BaseFoldable]
+  id: ClothingBackpackMantis
+  name: mantis backpack
+  description: "A low-profile backpack for the mantis, signified by the Greek psi in electrum. Designed with clips that fit your uniform perfectly, allowing the strap to be removed as desired."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Back/Backpacks/mantis.rsi
+    layers:
+    - state: icon
+      map: ["unfoldedLayer"]
+    - state: icon-flipped
+      map: ["foldedLayer"]
+      visible: false
+  - type: Appearance
+  - type: Foldable
+    canFoldInsideContainer: true
+    foldVerbText: fold-verb
+    unfoldVerbText: unfold-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: flipped
+
+
+- type: entity # So chameleon clothes can select the folded sprite
+  parent: ClothingBackpackMantis
+  id: ClothingBackpackMantisFlipped
+  suffix: Flipped
+  components:
+  - type: Foldable
+    folded: true
+  - type: Clothing
+    equippedPrefix: flipped
+
+
+- type: entity
+  parent: [ClothingBackpackDuffel, BaseFoldable]
+  id: ClothingBackpackDuffelMantis
+  name: mantis duffel bag
+  description: "A relatively low-profile duffel bag with a braided handle for the mantis. Designed with clips that fit your uniform perfectly, allowing the strap to be removed as desired."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Back/Duffels/mantis.rsi
+    layers:
+    - state: icon
+      map: ["unfoldedLayer"]
+    - state: icon-flipped
+      map: ["foldedLayer"]
+      visible: false
+  - type: Appearance
+  - type: Foldable
+    canFoldInsideContainer: true
+    foldVerbText: fold-verb
+    unfoldVerbText: unfold-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: flipped
+
+
+- type: entity # So chameleon clothes can select the folded sprite
+  parent: ClothingBackpackDuffelMantis
+  id: ClothingBackpackDuffelMantisFlipped
+  suffix: Flipped
+  components:
+  - type: Foldable
+    folded: true
+  - type: Clothing
+    equippedPrefix: flipped
+
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelMantis
+  name: mantis satchel
+  description: "A low-profile satchel for the mantis that hooks onto the back of your belt, bearing a Greek psi on the flap. Perhaps the only bag that won't get caught on the sleeves of your robes."
+  components: # Intentionally only visible when facing north, since multiple mantis gloves have big detached sleeves
+  - type: Sprite # Backpacks layer over gloves when facing east or west, so this is the only option that will never do that
+    sprite: _DEN/Clothing/Back/Satchels/mantis.rsi
+
+
+- type: entity
+  parent: [ClothingBackpackSatchel, BaseFoldable]
+  id: ClothingBackpackSatchelMantisPurse
+  name: mantis handbag
+  description: "A low-profile handbag for the mantis with a polished clasp. It can be worn on either shoulder, and it's easily hidden beneath a cloak."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Back/Satchels/mantispurse.rsi
+
+
+- type: entity # So chameleon clothes can select the folded sprite
+  parent: ClothingBackpackSatchelMantisPurse
+  id: ClothingBackpackSatchelMantisPurseFlipped
+  suffix: Flipped
+  components:
+  - type: Foldable
+    folded: true
+  - type: Clothing
+    equippedPrefix: flipped
+
+- type: entity
+  parent: [ClothingBackpackMessengerBase, BaseFoldable]
+  id: ClothingBackpackMessengerMantis
+  name: mantis messenger bag
+  description: "A low-profile messenger bag for the mantis, within an electrum shell shaped like a watchful eye. The strap can be flipped to the other side."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Back/Messenger/mantis.rsi
+    layers:
+    - state: icon
+      map: ["unfoldedLayer"]
+    - state: icon-flipped
+      map: ["foldedLayer"]
+      visible: false
+  - type: Appearance
+  - type: Foldable
+    canFoldInsideContainer: true
+    foldVerbText: fold-verb
+    unfoldVerbText: unfold-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: flipped
+
+
+- type: entity # So chameleon clothes can select the folded sprite
+  parent: ClothingBackpackMessengerMantis
+  id: ClothingBackpackMessengerMantisFlipped
+  suffix: Flipped
+  components:
+  - type: Foldable
+    folded: true
+  - type: Clothing
+    equippedPrefix: flipped
+
+# Sarcophagus entities commented out - ClothingBackpackNapsack parent not available
+
+# Filled variants for loadout
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: ClothingBackpackMantis
+  id: ClothingBackpackMantisFilledDEN
+  components:
+    - type: StorageFill
+      contents:
+      - id: HandLabeler
+      - id: PillMindbreakerToxin
+      - id: BoxFolderGrey
+      - id: RubberStampMantis
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: ClothingBackpackDuffelMantis
+  id: ClothingBackpackDuffelMantisFilledDEN
+  components:
+    - type: StorageFill
+      contents:
+      - id: HandLabeler
+      - id: PillMindbreakerToxin
+      - id: BoxFolderGrey
+      - id: RubberStampMantis
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: ClothingBackpackSatchelMantis
+  id: ClothingBackpackSatchelMantisFilledDEN
+  components:
+    - type: StorageFill
+      contents:
+      - id: HandLabeler
+      - id: PillMindbreakerToxin
+      - id: BoxFolderGrey
+      - id: RubberStampMantis
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: ClothingBackpackSatchelMantisPurse
+  id: ClothingBackpackSatchelMantisPurseFilled
+  components:
+    - type: StorageFill
+      contents:
+      - id: HandLabeler
+      - id: PillMindbreakerToxin
+      - id: BoxFolderGrey
+      - id: RubberStampMantis
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: ClothingBackpackMessengerMantis
+  id: ClothingBackpackMessengerMantisFilled
+  components:
+    - type: StorageFill
+      contents:
+      - id: HandLabeler
+      - id: PillMindbreakerToxin
+      - id: BoxFolderGrey
+      - id: RubberStampMantis

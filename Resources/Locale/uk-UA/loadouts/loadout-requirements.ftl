@@ -3,7 +3,6 @@ loadout-species-requirement = Ви маєте бути {$species}
 loadout-trait-requirement = Ви повинні мати ознаку {$trait}
 loadout-backpack-type-requirement = Ви повинні використовувати {$type} в якості сумки
 loadout-clothing-preference-requirement = Ви повинні носити {$type}
-
 loadout-job-requirement = Ви, мабуть, одна з цих робіт: {$job}
 loadout-timer-department-insufficient = Вам потрібно ще [color=yellow]{TOSTRING($time, "0")}[/color] хвилин(-и) ігрового часу у відділі [color={$departmentColor}]{$department}[/color]
 loadout-timer-department-too-high = Вам потрібно на [color=yellow]{TOSTRING($time, "0")}[/color] хвилин(-и) менше у відділі [color={$departmentColor}]{$department}[/color]

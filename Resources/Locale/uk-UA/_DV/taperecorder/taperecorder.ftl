@@ -11,7 +11,6 @@ tape-recorder-locked = Неможливо вийняти касету, поки 
 tape-recorder-voice-unknown = Невідомо
 tape-recorder-voice-unintelligible = Нерозбірливо
 tape-recorder-message-corruption = #
-
 tape-recorder-menu-title = Магнітофон
 tape-recorder-menu-controls-label = Керування:
 tape-recorder-menu-stopped-button = Пауза
@@ -21,7 +20,6 @@ tape-recorder-menu-rewinding-button = Перемотати
 tape-recorder-menu-print-button = Роздрукувати стенограму запису
 tape-recorder-menu-cassette-label = Касета: {$cassetteName}
 tape-recorder-menu-no-cassette-label = Касету не вставлено
-
 tape-recorder-print-start-text = [bold]Початок стенограми запису[/bold]
 tape-recorder-print-message-text = [bold][{$time}] {$source}: [/bold] {$message}
 tape-recorder-print-end-text = [bold]Кінець стенограми запису[/bold]

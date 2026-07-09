@@ -1,0 +1,8 @@
+- type: soundCollection
+  id: Knuckles
+  files:
+    - /Audio/_Pirate/Weapons/knuckle1.ogg
+    - /Audio/_Pirate/Weapons/knuckle2.ogg
+    - /Audio/_Pirate/Weapons/knuckle3.ogg
+    - /Audio/_Pirate/Weapons/knuckle4.ogg
+    - /Audio/_Pirate/Weapons/knuckle5.ogg

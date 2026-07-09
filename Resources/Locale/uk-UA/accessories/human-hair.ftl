@@ -190,14 +190,12 @@ marking-HumanHairVeryshortovereyealternate = Дуже Коротке (Над О�
 marking-HumanHairVlongfringe = Дуже Довге (Чубчик)
 marking-HumanHairVolaju = Волаю
 marking-HumanHairWisp = Клаптик
-
 marking-HumanHairSpookyLong = Моторошний Довгий
 marking-HumanHairClassicLong2 = Класичне довге волосся 2
 marking-HumanHairClassicLong3 = Класичне довге волосся 3
 marking-HumanHairLongBow = Довгий лук
 marking-HumanHairPulato = Пулато
 marking-HumanHairShaped = У формі
-
 marking-HumanHairBAlt = Зачіска Джинкс
 marking-HumanHairLongWithBangs = Довге з чубчиком
 marking-HumanHairNiko = Ніко

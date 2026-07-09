@@ -177,6 +177,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        var embeddedInto = component.EmbeddedIntoUid;
+
         if (component.EmbeddedIntoUid is not null)
         {
             if (TryComp<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value, out var embeddedContainer))
@@ -211,6 +213,13 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             projectile.ProjectileSpent = false;
 
             Dirty(uid, projectile);
+        }
+
+        // Pirate: let embedded utility items restore state on the entity they were removed from.
+        if (embeddedInto is { } embedded)
+        {
+            var embedDetachEv = new EmbedDetachEvent(user, embedded);
+            RaiseLocalEvent(uid, ref embedDetachEv);
         }
 
         if (user != null)

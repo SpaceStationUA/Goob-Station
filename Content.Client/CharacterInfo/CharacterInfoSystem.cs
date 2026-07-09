@@ -47,10 +47,18 @@ public sealed class CharacterInfoSystem : EntitySystem
         RaiseNetworkEvent(new RequestCharacterInfoEvent(GetNetEntity(entity.Value)));
     }
 
+    // Pirate: allow editing the round description in-game.
+    public void UpdateDetailExaminable(string content)
+    {
+        RaiseNetworkEvent(new UpdateDetailExaminableEvent(content));
+    }
+
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
     {
-        var entity = GetEntity(msg.NetEntity);
-        var data = new CharacterData(entity, msg.JobTitle, msg.Objectives, msg.Briefing, Name(entity), msg.Memory); // Pirate banking
+        if (!TryGetEntity(msg.NetEntity, out var entity))
+            return;
+
+        var data = new CharacterData(entity.Value, msg.JobTitle, msg.Objectives, msg.Briefing, msg.DetailExaminable, Name(entity.Value), msg.Memory); // Pirate banking
 
         OnCharacterUpdate?.Invoke(data);
     }
@@ -67,6 +75,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         string Job,
         Dictionary<string, List<ObjectiveInfo>> Objectives,
         string? Briefing,
+        string? DetailExaminable, // Pirate: allow editing the round description in-game.
         string EntityName,
         Dictionary<string, string> Memory //Pirate Banking
     );

@@ -5,7 +5,6 @@ petting-success-weldbot = Ви гладите {THE($target)} по {POSS-ADJ($tar
 petting-success-plantbot = Ви гладите {THE($target)} по {POSS-ADJ($target)} брудній металевій голові.
 petting-success-fillbot = Ви гладите {THE($target)} по {POSS-ADJ($target)} старанній металевій голові.
 petting-success-minebot = Ви гладите {THE($target)} по {POSS-ADJ($target)} загартованій металевій голові.
-
 petting-failure-gladiabot = Ви простягаєте руку, щоб погладити {THE($target)}, але {SUBJECT($target)} лише хоче битися!
 petting-failure-batonbot = Ви простягаєте руку, щоб погладити {THE($target)}, але {SUBJECT($target)} ледь не тицяє вас своєю палицею!
 petting-failure-disablerbot = Ви простягаєте руку, щоб погладити {THE($target)}, але {SUBJECT($target)} сердито махає на вас своєю зброєю!
