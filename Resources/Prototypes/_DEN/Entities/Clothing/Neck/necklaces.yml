@@ -1,0 +1,66 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckNecklaceGold
+  name: gold necklace
+  description: A piece of golden jewelry that goes around your neck.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Necklaces/gold.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Necklaces/gold.rsi
+  - type: Engraveable # starcup
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckNecklaceSilver
+  name: silver necklace
+  description: A piece of silver jewelry that goes around your neck.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Necklaces/silver.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Necklaces/silver.rsi
+  - type: Engraveable # starcup
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckNecklaceChainGold
+  name: gold chain necklace
+  description: A winding chain of golden links, fashioned into an exquisite necklace.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Necklaces/chain_gold.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Necklaces/chain_gold.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckNecklaceChainSilver
+  name: silver chain necklace
+  description: A winding chain of silver links, fashioned into an exquisite necklace.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Necklaces/chain_silver.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Necklaces/chain_silver.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckNecklacePendantGoldRuby # starcup - picked red for the pendant's color.
+  name: ruby pendant necklace # starcup - changed name
+  description: A heavy red gemstone tethered to a golden necklace by a chain. The gem is warm to the touch. # starcup - tweaked description
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Necklaces/pendant_gold.rsi
+    layers:
+    - state: icon
+    - state: pendant-icon
+      color: "#ef5348" # starcup - courage of the heart is very rare.
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Necklaces/pendant_gold.rsi
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+      - state: pendant-equipped-NECK
+        color: "#ef5348" # starcup
+  - type: Engraveable # starcup - the stone has a power when it's there.

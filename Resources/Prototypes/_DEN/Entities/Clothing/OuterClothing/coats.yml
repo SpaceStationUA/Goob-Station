@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatVictorian
+  name: old-fashioned black coat # starcup - removed anachronisms
+  description: A posh black coat with bright brass buttons. # starcup - removed anachronisms
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/OuterClothing/Coats/victorian_coat.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/OuterClothing/Coats/victorian_coat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterCoatVictorianRed
+  name: old-fashioned red coat # starcup - removed anachronisms
+  description: A posh red coat with bright brass buttons. # starcup - removed anachronisms
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/OuterClothing/Coats/victorian_coat_red.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/OuterClothing/Coats/victorian_coat_red.rsi

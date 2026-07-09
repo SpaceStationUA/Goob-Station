@@ -1,0 +1,57 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPin
+  name: hair pin
+  description: A nice hair pin.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Head/Accessories/pin.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Head/Accessories/pin.rsi
+  #    equipDelay: 0 - starcup
+  #    unequipDelay: 0
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPinClover
+  name: clover pin
+  description: A hair pin in the shape of a clover leaf. Smells of mischief.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Head/Accessories/pin_clover.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Head/Accessories/pin_clover.rsi
+  #    equipDelay: 0 - starcup
+  #    unequipDelay: 0
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPinButterfly
+  name: butterfly pin
+  description: A hair pin in the shape of a butterfly.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Head/Accessories/pin_butterfly.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Head/Accessories/pin_butterfly.rsi
+#    equipDelay: 0 - starcup
+#    unequipDelay: 0
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPinMagnetic
+  name: magnetic pin
+  description: A pair of weighty pins that affix to the head via magnetism. Not recommended for use by silicon crew. # starcup - tweaked description
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Head/Accessories/pin_magnetic.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Head/Accessories/pin_magnetic.rsi
+#    equipDelay: 0 - starcup
+#    unequipDelay: 0

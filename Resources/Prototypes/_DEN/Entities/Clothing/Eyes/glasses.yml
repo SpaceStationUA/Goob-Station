@@ -1,7 +1,17 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
-# Pirate: ported from starcup PR #983 (feat: Fashionable Headwear)
+# SPDX-FileCopyrightText: 2025 ASaltySeabass
+# SPDX-FileCopyrightText: 2025 Rosycup
+# SPDX-FileCopyrightText: 2025 Shaman
+# SPDX-FileCopyrightText: 2025 Sir Warock
+# SPDX-FileCopyrightText: 2025 Steven Higginbotham
+# SPDX-FileCopyrightText: 2025 sleepyyapril
+#
+# SPDX-License-Identifier: MIT AND AGPL-3.0-or-later
+#
+# Pirate: ported from starcup PRs #933/#983. ClothingEyesGlassesCheapSunglassesBig
+# and ClothingEyesGlassesHipster already exist in _Pirate/Entities/Clothing/ee_generic.yml
 
 - type: entity
+  parent: ClothingEyesGlasses # changed from ClothingEyesBase
   id: ClothingEyesGlassesRimless
   name: rimless glasses
   description: A pair of round, rimless glasses. Barely there.

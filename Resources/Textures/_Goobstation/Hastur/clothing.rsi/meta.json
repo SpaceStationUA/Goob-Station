@@ -1,7 +1,11 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
+<<<<<<<< HEAD:Resources/Textures/_Goobstation/Hastur/clothing.rsi/meta.json
     "copyright": "Made by OnsenCapy",
+========
+    "copyright": "Taken and recolored from Aurorastation at commit https://github.com/Aurorastation/Aurora.3/commit/e7aabb7e14aa3f9a16916f29e519d9ef84027d7c by KoboldCatgirl (github)",
+>>>>>>>> 810d56cc91c (feat: Ports a ton of Den cosmetics, plus adds a few new ones! (#933)):Resources/Textures/_starcup/Clothing/Neck/Ties/ribbon_black.rsi/meta.json
     "size": {
         "x": 32,
         "y": 32

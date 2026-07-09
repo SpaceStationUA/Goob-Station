@@ -165,11 +165,17 @@
         - id: ClothingNeckGenderfluidPin
         - id: ClothingNeckTransPin
         - id: ClothingNeckAutismPin
+        - id: ClothingNeckGoldAutismPin
         # starcup #983: maints loot
         - id: ClothingHeadHatCuteTiara
         # starcup #984: maints loot (belled collars)
         - id: ClothingNeckBellCollar
         - id: ClothingNeckCowBellCollar
+      # cheap jewelry # starcup #933 (hairpins as maints loot)
+      - !type:GroupSelector
+        children:
+        - id: ClothingHeadHatPinClover
+        - id: ClothingHeadHatPinButterfly
     # Rare Group
     - !type:GroupSelector
       weight: 2

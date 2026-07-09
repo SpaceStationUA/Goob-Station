@@ -43,10 +43,18 @@
     ClothingOuterSuitWitchRobes: 2
     ClothingHeadHatWitch1: 2
     Broomstick: 2 # Goobstation
+    ClothingMaskItalianMoustache: 2 # starcup
+    # begin starcup additions #933
+    ClothingUniformJumpskirtDressCheongsamBlue: 1
+    ClothingUniformJumpskirtDressCheongsamGreen: 1
+    ClothingUniformJumpskirtDressCheongsamPurple: 1
+    ClothingUniformJumpskirtDressCheongsamRed: 1
+    # end starcup additions
     ClothingHeadHatRedRacoon: 2
     ClothingOuterRedRacoon: 2
     ClothingHeadPaperSack: 2
     ClothingHeadPaperSackSmile: 2
+    ClothingHandsGlovesEvening: 1 # starcup #933
     ClothingEyesBlindfold: 1
     ClothingHeadRastaHat: 2
     ClothingUniformJumpsuitDameDane: 2
@@ -78,6 +86,11 @@
     ClothingOuterSuitTutu: 2 # Goob
     ClothingHeadHatTinfoilHat: 2 # Goobstation
     ClothingHeadHatBunnyearsClown: 1 # Pirate
+  # begin starcup additions #933
+    ClothingUniformJumpskirtDressSpider: 1
+    ClothingUniformJumpsuitCowboyBrown: 1
+    ClothingUniformJumpsuitCowboyGrey: 1
+  # end starcup additions
   contrabandInventory:
     ClothingHeadHatRichard: 1
     # starcup #983 additions (tiaras)

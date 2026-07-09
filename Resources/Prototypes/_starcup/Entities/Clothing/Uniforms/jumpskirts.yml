@@ -1,0 +1,128 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtAdminAssistant
+  name: administrative assistant's jumpskirt
+  description: A suit worn by the Administrative Assistant. Smells of burnt coffee.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/admin_assistant.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/admin_assistant.rsi
+
+- type: entity
+  parent: ClothingUniformJumpskirtHoP
+  id: ClothingUniformJumpskirtHoPSyndie
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/hop_syndi.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/hop_syndi.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHoPTurtle
+  name: head of personnel's turtleneck jumpskirt
+  description: A stately turtleneck for times where a Head of Personnel wants a subtler, more humble impression. Or just something less stiff.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/hop_turtle_syndi.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/hop_turtle_syndi.rsi
+
+- type: entity
+  parent: ClothingUniformJumpskirtCaptain
+  id: ClothingUniformJumpskirtCaptainSyndie
+  description: It's a Tyrian purple jumpskirt with some gold markings denoting the rank of "Captain".
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/captain_syndi.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/captain_syndi.rsi
+
+- type: entity
+  parent: ClothingUniformJumpskirtCapFormalDress
+  id: ClothingUniformJumpskirtCapFormalDressSyndie
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/capformaldress_syndi.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/capformaldress_syndi.rsi
+
+- type: entity
+  parent: [BaseNanotrasenContraband, ClothingUniformJumpskirtOperative, BaseExaminableClothing]
+  id: ClothingUniformJumpskirtOperativeNT
+  suffix: NanoTrasen
+  description: Uniform for elite NanoTrasen operatives performing tactical operations in deep space.
+  components:
+  - type: ExaminableClothing
+    examineText: clothing-nanotrasen-operative-jumpskirt
+
+- type: entity
+  parent: [ BaseNanotrasenContraband, ClothingUniformJumpskirtSyndieFormalDress, BaseExaminableClothing ]
+  id: ClothingUniformJumpskirtNTFormalDress
+  name: NanoTrasen formal dress
+  description: Combines sleek, upper-class elegance with NanoTrasen's signature aura of faint totalitarian menace.
+  components:
+    - type: Sprite
+      sprite: _starcup/Clothing/Uniforms/Jumpskirt/nanotrasenformaldress.rsi
+    - type: Clothing
+      sprite: _starcup/Clothing/Uniforms/Jumpskirt/nanotrasenformaldress.rsi
+    - type: ExaminableClothing
+      examineText: clothing-nanotrasen-formal-dress
+
+- type: entity
+  parent: [ClothingUniformJumpskirtCentcomFormalDress, BaseSyndCommContraband]
+  id: ClothingUniformJumpskirtSyndCommFormalDress
+  name: SyndComm formal dress
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/syndcommformaldress.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/syndcommformaldress.rsi
+
+- type: entity
+  parent: ClothingUniformJumpskirtCommandGeneric
+  id: ClothingUniformJumpskirtCommandGenericSyndie
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/commandgenericsyndie.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/commandgenericsyndie.rsi
+
+## FASHION
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPinstripeDress
+  name: pinstripe dress
+  description: With a capital P, and that rhymes with T, and that stands for 'twirl'!
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/pinstripe_dress.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/pinstripe_dress.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtDisheveled
+  name: disheveled suitskirt
+  description: Here, let me straighten your tie.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/disheveled_skirt.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/disheveled_skirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtRippedPunk
+  name: ripped punk skirt
+  description: A black ripped skirt and a fishnet top. Real punks always ignore the 'Dry Clean Only' tag.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/rippedpunk.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/rippedpunk.rsi

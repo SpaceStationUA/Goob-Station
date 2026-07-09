@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Headslot+icon and neck taken from Aurorastation at commit https://github.com/Aurorastation/Aurora.3/commit/8300e5fa0c4c594d4210fbcec17bc9eb6978914c and https://github.com/Aurorastation/Aurora.3/commit/e7aabb7e14aa3f9a16916f29e519d9ef84027d7c; recolored by KoboldCatgirl(github);",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "equipped-NECK",
+            "directions": 4
+        }
+    ]
+}
