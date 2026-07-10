@@ -1,0 +1,57 @@
+- type: entity
+  parent: [ EncryptionKey, BaseMagicalContraband ]
+  id: EncryptionKeyWinds
+  name: winds of magic encryption key
+  description: An encryption key that grants limited access to the Winds of Magic.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Winds
+    defaultChannel: Winds
+  - type: Sprite
+    layers:
+    - sprite: Objects/Devices/encryption_keys.rsi
+      state: crypt_silver
+    - state: com_label
+
+- type: entity
+  parent: EncryptionKeyWinds
+  id: EncryptionKeyWindsUnremovable
+  name: winds of magic encryption key
+  description: An encryption key that grants permanent access to the Winds of Magic.
+  suffix: Unremovable
+  components:
+  - type: Unremoveable
+
+- type: entity
+  parent: [ EncryptionKey, BaseMagicalContraband ]
+  id: EncryptionKeyWizardMaster
+  name: wizard encryption key
+  description: A magical encryption key used by members of the Space Wizards Federation.
+  components:
+  - type: EncryptionKey
+    channels:
+    # - Common
+    # - Command
+    # - Engineering
+    # - Medical
+    # - Science
+    # - Security
+    # - Service
+    # - Supply
+    - Winds
+    defaultChannel: Winds
+  - type: Sprite
+    layers:
+    - sprite: Objects/Devices/encryption_keys.rsi
+      state: crypt_silver
+    - state: cap_label
+
+- type: entity
+  parent: EncryptionKeyWizardMaster
+  id: EncryptionKeyWizardMasterUnremovable
+  name: wizard encryption key
+  description: A magical encryption key used by members of the Space Wizards Federation.
+  suffix: Unremovable
+  components:
+  - type: Unremoveable

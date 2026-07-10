@@ -1,0 +1,7 @@
+- type: radioChannel
+  id: Winds
+  name: chat-radio-winds
+  keycode: '0'
+  frequency: 11037
+  color: "#ff00ff"
+  longRange: true

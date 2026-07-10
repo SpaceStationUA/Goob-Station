@@ -1,0 +1,6 @@
+- type: roleLoadout
+  id: RoleSurvivalWizardDuelist
+  groups:
+  - SurvivalExtended
+  - GroupSpeciesBreathTool
+  - GroupTankHarness

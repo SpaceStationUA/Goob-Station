@@ -1,0 +1,76 @@
+- type: antag
+  id: WizardDuelist
+  name: roles-solo-antagonist-wizard-duelist-name
+  antagonist: true
+  setPreference: true
+  objective: roles-solo-antagonist-wizard-duelist-objective
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 35h
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 6h
+  guides: [ WizardDuel ]
+
+- type: startingGear
+  id: WizardDuelistBaseGear
+  parent: WizardGear
+  equipment:
+    # shoes: ClothingShoesWizard
+    # id: WizardPDA
+    # back: ClothingBackpack
+    ears: ClothingHeadsetAltWizard
+    # belt: ClothingBeltWand
+    # pocket1: ScrollTeleport
+    # pocket2: WizardsGrimoire
+  storage:
+    back:
+    - EncryptionKeyWinds
+
+- type: startingGear
+  parent: WizardDuelistBaseGear
+  id: WizardDuelistRedGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    head: ClothingHeadHatRedwizardReal
+    outerClothing: ClothingOuterWizardRedReal
+
+- type: startingGear
+  parent: WizardDuelistBaseGear
+  id: WizardDuelistBlueGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
+    head: ClothingHeadHatWizardReal
+    outerClothing: ClothingOuterWizardReal
+
+- type: startingGear
+  parent: WizardDuelistBaseGear
+  id: WizardDuelistPurpleGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+    head: ClothingHeadHatVioletwizardReal
+    outerClothing: ClothingOuterWizardVioletReal
+
+- type: startingGear
+  parent: WizardDuelistBaseGear
+  id: WizardDuelistYellowGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorYellow
+    head: ClothingHeadHatYellowwizardReal
+    outerClothing: ClothingOuterWizardYellowReal
+
+- type: startingGear
+  parent: WizardDuelistBaseGear
+  id: WizardDuelistGreenGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGreen
+    head: ClothingHeadHatWizardReal
+    outerClothing: ClothingOuterWizardReal
+
+- type: startingGear
+  parent: WizardDuelistBaseGear
+  id: WizardDuelistOrangeGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorOrange
+    head: ClothingHeadHatYellowwizardReal
+    outerClothing: ClothingOuterWizardYellowReal

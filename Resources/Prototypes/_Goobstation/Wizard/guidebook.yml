@@ -9,6 +9,7 @@
   text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/Wizard.xml"
   children:
   - WizardSpells
+  - WizardDuel
 
 - type: guideEntry
   id: WizardSpells

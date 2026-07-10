@@ -1,0 +1,166 @@
+- type: entity
+  parent: BaseGameRule
+  id: WizardDuel
+  components:
+  - type: LoadMapRule
+    mapPath: /Maps/_Goobstation/Nonstations/wizden.yml
+  - type: RuleGrids
+  - type: AntagLoadProfileRule
+  - type: GameRule
+    minPlayers: 35
+  - type: AntagObjectives
+    objectives:
+    - WizardDuelistMeetObjective
+    - WizardDuelistRelocateObjective
+    - WizardDuelistDemonstrateObjective
+  - type: AntagSelection
+    agentName: wizard-roundend-name
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ WizardDuelist ]
+      min: 1
+      max: 1
+      spawnerPrototype: SpawnPointGhostWizardDuelistRed
+      roleLoadout:
+      - RoleSurvivalWizardDuelist
+      briefing:
+        text: wizard-duelist-red-role-greeting
+        color: Turquoise
+      startingGear: WizardDuelistRedGear
+      components:
+      - type: UniversalLanguageSpeaker
+      - type: NpcFactionMember
+        factions:
+        - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - WizardFirst
+        - WizardLast
+        nameFormat: name-format-wizard
+      mindRoles:
+      - MindRoleWizardDuelistRed
+      tags:
+        - Wizard
+    - prefRoles: [ WizardDuelist ]
+      min: 1
+      max: 1
+      spawnerPrototype: SpawnPointGhostWizardDuelistBlue
+      roleLoadout:
+      - RoleSurvivalWizardDuelist
+      briefing:
+        text: wizard-duelist-blue-role-greeting
+        color: Turquoise
+      startingGear: WizardDuelistBlueGear
+      components:
+      - type: UniversalLanguageSpeaker
+      - type: NpcFactionMember
+        factions:
+        - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - WizardFirst
+        - WizardLast
+        nameFormat: name-format-wizard
+      mindRoles:
+      - MindRoleWizardDuelistBlue
+      tags:
+        - Wizard
+    - prefRoles: [ WizardDuelist ]
+      min: 0
+      max: 1
+      playerRatio: 90
+      spawnerPrototype: SpawnPointGhostWizardDuelistPurple
+      roleLoadout:
+      - RoleSurvivalWizardDuelist
+      briefing:
+        text: wizard-duelist-purple-role-greeting
+        color: Turquoise
+      startingGear: WizardDuelistPurpleGear
+      components:
+      - type: UniversalLanguageSpeaker
+      - type: NpcFactionMember
+        factions:
+        - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - WizardFirst
+        - WizardLast
+        nameFormat: name-format-wizard
+      mindRoles:
+      - MindRoleWizardDuelistPurple
+      tags:
+        - Wizard
+    - prefRoles: [ WizardDuelist ]
+      min: 1
+      max: 1
+      spawnerPrototype: SpawnPointGhostWizardDuelistYellow
+      roleLoadout:
+      - RoleSurvivalWizardDuelist
+      briefing:
+        text: wizard-duelist-yellow-role-greeting
+        color: Turquoise
+      startingGear: WizardDuelistYellowGear
+      components:
+      - type: UniversalLanguageSpeaker
+      - type: NpcFactionMember
+        factions:
+        - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - WizardFirst
+        - WizardLast
+        nameFormat: name-format-wizard
+      mindRoles:
+      - MindRoleWizardDuelistYellow
+      tags:
+        - Wizard
+    - prefRoles: [ WizardDuelist ]
+      min: 0
+      max: 1
+      playerRatio: 70
+      spawnerPrototype: SpawnPointGhostWizardDuelistGreen
+      roleLoadout:
+      - RoleSurvivalWizardDuelist
+      briefing:
+        text: wizard-duelist-green-role-greeting
+        color: Turquoise
+      startingGear: WizardDuelistGreenGear
+      components:
+      - type: UniversalLanguageSpeaker
+      - type: NpcFactionMember
+        factions:
+        - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - WizardFirst
+        - WizardLast
+        nameFormat: name-format-wizard
+      mindRoles:
+      - MindRoleWizardDuelistGreen
+      tags:
+        - Wizard
+    - prefRoles: [ WizardDuelist ]
+      min: 0
+      max: 1
+      playerRatio: 110
+      spawnerPrototype: SpawnPointGhostWizardDuelistOrange
+      roleLoadout:
+      - RoleSurvivalWizardDuelist
+      briefing:
+        text: wizard-duelist-orange-role-greeting
+        color: Turquoise
+      startingGear: WizardDuelistOrangeGear
+      components:
+      - type: UniversalLanguageSpeaker
+      - type: NpcFactionMember
+        factions:
+        - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - WizardFirst
+        - WizardLast
+        nameFormat: name-format-wizard
+      mindRoles:
+      - MindRoleWizardDuelistOrange
+      tags:
+        - Wizard
