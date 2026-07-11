@@ -41,6 +41,9 @@ public sealed partial class ScalingViewport
     private EntityQuery<TransformComponent>? _xformQuery;
     private EntityQuery<MapComponent>? _mapQuery;
     private IEye? _fallbackEye;
+    // Last linked grid the eye stood on. Reused to keep decks aligned while the eye
+    // hovers over gridless open space, instead of snapping back to raw world coords.
+    private EntityUid? _lastLinkedGrid;
     private readonly Dictionary<int, IRenderTexture> _zApertureTargets = new();
     private readonly HashSet<int> _zApertureValidTargets = new();
     private readonly Dictionary<int, EntityUid> _zApertureMapUids = new();
@@ -171,19 +174,71 @@ public sealed partial class ScalingViewport
         return false;
     }
 
-    // Reproject the eye into the peer grid's world space.
-    private MapCoordinates GetResolvedEyePosition(TransformComponent playerXform, EntityUid? peerGridUid, MapId targetMapId)
+    private Vector2 GetRawEyePosition(TransformComponent playerXform)
     {
         _transform ??= _entityManager.System<SharedTransformSystem>();
-        var rawEyePosition = _fallbackEye?.Position.Position ?? _eye?.Position.Position ?? _transform.GetWorldPosition(playerXform);
+        return _fallbackEye?.Position.Position ?? _eye?.Position.Position ?? _transform.GetWorldPosition(playerXform);
+    }
+
+    /// <summary>
+    /// Resolves the linked grid whose frame the eye should be reprojected through.
+    /// On a grid we use it directly; over gridless open space we fall back to the linked
+    /// grid under the eye, then to the last linked grid we stood on. This keeps the decks
+    /// below aligned instead of snapping to raw world coordinates the moment the eye
+    /// leaves the grid (the two linked decks sit at different world offsets, and only the
+    /// grid-frame reprojection compensates for that).
+    /// </summary>
+    private EntityUid? ResolveEffectiveGrid(TransformComponent playerXform)
+    {
+        // On a grid: use it directly and remember it for later gridless frames.
+        if (playerXform.GridUid is { } gridUid)
+        {
+            if (_entityManager.HasComponent<CEZLinkedGridComponent>(gridUid))
+                _lastLinkedGrid = gridUid;
+
+            return gridUid;
+        }
+
+        // Gridless: reproject through a linked grid directly under the eye, if any.
+        if (playerXform.MapUid is { } mapUid)
+        {
+            var eyeWorld = GetRawEyePosition(playerXform);
+            if (_mapManager.TryFindGridAt(mapUid, eyeWorld, out var foundGridUid, out _) &&
+                _entityManager.HasComponent<CEZLinkedGridComponent>(foundGridUid))
+            {
+                _lastLinkedGrid = foundGridUid;
+                return foundGridUid;
+            }
+        }
+
+        // Over open space: reuse the last linked grid we stood on so the transition off
+        // the edge stays continuous, as long as it still exists on the same map.
+        if (_lastLinkedGrid is { } cached &&
+            _entityManager.EntityExists(cached) &&
+            _xformQuery!.Value.TryComp(cached, out var cachedXform) &&
+            cachedXform.MapUid == playerXform.MapUid &&
+            _entityManager.HasComponent<CEZLinkedGridComponent>(cached))
+        {
+            return cached;
+        }
+
+        _lastLinkedGrid = null;
+        return null;
+    }
+
+    // Reproject the eye into the peer grid's world space.
+    private MapCoordinates GetResolvedEyePosition(TransformComponent playerXform, EntityUid? currentGridUid, EntityUid? peerGridUid, MapId targetMapId)
+    {
+        _transform ??= _entityManager.System<SharedTransformSystem>();
+        var rawEyePosition = GetRawEyePosition(playerXform);
 
         if (peerGridUid is not { } peerGrid ||
-            playerXform.GridUid is not { } currentGridUid)
+            currentGridUid is not { } currentGrid)
         {
             return new MapCoordinates(rawEyePosition, targetMapId);
         }
 
-        var currentGridMatrix = _transform.GetWorldMatrix(currentGridUid);
+        var currentGridMatrix = _transform.GetWorldMatrix(currentGrid);
         var peerGridMatrix = _transform.GetWorldMatrix(peerGrid);
 
         if (!Matrix3x2.Invert(currentGridMatrix, out var inverseCurrentGrid))
@@ -241,6 +296,9 @@ public sealed partial class ScalingViewport
             return;
         }
 
+        // Grid frame to reproject the eye/decks through, tolerant of gridless open space.
+        var effectiveGridUid = ResolveEffectiveGrid(playerXform);
+
         var visibleBelow = Math.Clamp(
             _cfg.GetCVar(CCVars.CEZLevelsVisibleBelow),
             0,
@@ -255,14 +313,14 @@ public sealed partial class ScalingViewport
         {
             if (i != 0)
             {
-                if (!TryResolveZMap(playerXform.MapUid.Value, playerXform.GridUid, i, out _))
+                if (!TryResolveZMap(playerXform.MapUid.Value, effectiveGridUid, i, out _))
                     continue;
             }
 
             lowestDepth = i;
         }
 
-        _zApertureCaptureThisFrame = HasZLevelAperturesInRenderedDepths(playerXform.MapUid.Value, playerXform.GridUid, lowestDepth, lookUp);
+        _zApertureCaptureThisFrame = HasZLevelAperturesInRenderedDepths(playerXform.MapUid.Value, effectiveGridUid, lowestDepth, lookUp);
 
         if (_zApertureCaptureThisFrame)
         {
@@ -298,13 +356,13 @@ public sealed partial class ScalingViewport
             }
             else
             {
-                if (!TryResolveZMapEntity(playerXform.MapUid.Value, playerXform.GridUid, depth, out renderedMapUid, out var targetMapId, out var peerGridUid))
+                if (!TryResolveZMapEntity(playerXform.MapUid.Value, effectiveGridUid, depth, out renderedMapUid, out var targetMapId, out var peerGridUid))
                     continue;
 
                 Angle rotation = _fallbackEye.Rotation * -1;
                 var offset = rotation.ToWorldVec() * CEClientZLevelsSystem.ZLevelOffset * depth;
-                // Peer-aware eye position keeps linked decks aligned.
-                var eyePosition = GetResolvedEyePosition(playerXform, peerGridUid, targetMapId);
+                // Peer-aware eye position keeps linked decks aligned, even off-grid.
+                var eyePosition = GetResolvedEyePosition(playerXform, effectiveGridUid, peerGridUid, targetMapId);
 
                 var eye = new ZEye(lowestDepth, depth, lookUp)
                 {

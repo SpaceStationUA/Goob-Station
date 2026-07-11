@@ -28,6 +28,16 @@ public sealed partial class CCVars
     public static readonly CVarDef<int>
         CEZLevelsVisibleBelow = CVarDef.Create("zlevels.ce_visible_below", 6, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+    /// <summary>
+    /// Parallax offset (in tiles) applied per depth step when rendering Z-levels above/below.
+    /// Each rendered deck is shifted by this * its depth, faking perspective. Also drives the
+    /// per-entity vertical eye offset for entities at a non-zero local Z position.
+    /// Set live from the console (<c>zlevels.ce_render_offset</c>) to preview values; 0 stacks
+    /// decks with no offset. Default 0.7.
+    /// </summary>
+    public static readonly CVarDef<float>
+        CEZLevelsRenderOffset = CVarDef.Create("zlevels.ce_render_offset", 0.3f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
     public static readonly CVarDef<bool>
         CEDebugMovement = CVarDef.Create("zlevels.ce_debug_movement", false, CVar.SERVERONLY | CVar.ARCHIVE);
 

@@ -9,10 +9,12 @@ using Content.Shared._DV.Carrying;
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Content.Shared.Camera;
+using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 
 namespace Content.Client._Pirate.ZLevels.Core;
 
@@ -28,8 +30,10 @@ public sealed partial class CEClientZLevelsSystem : CESharedZLevelsSystem
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    public static float ZLevelOffset = 0.7f;
+    // Live cache of the zlevels.ce_render_offset cvar; both render paths read this static.
+    public static float ZLevelOffset = 0.3f;
 
     public override void Initialize()
     {
@@ -40,6 +44,9 @@ public sealed partial class CEClientZLevelsSystem : CESharedZLevelsSystem
 
         _clientInitialized = true;
         _overlay.AddOverlay(new CEZLevelBlurOverlay());
+
+        // Keep the static offset in sync with the cvar so it can be tuned live from the console.
+        _cfg.OnValueChanged(CCVars.CEZLevelsRenderOffset, value => ZLevelOffset = value, invokeImmediately: true);
 
         SubscribeLocalEvent<CEZPhysicsComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<CEZPhysicsComponent, AfterAutoHandleStateEvent>(OnZPhysicsHandleState);
