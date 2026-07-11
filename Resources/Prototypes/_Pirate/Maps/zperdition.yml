@@ -1,0 +1,18 @@
+- type: gameMap
+  id: ZPerdition
+  mapName: ZPerdition
+  mapPath: /Maps/Test/ZPerdition0.yml
+  minPlayers: 0
+  stations:
+    Empty:
+      stationProto: StandardNanotrasenStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "ZPerdition"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+      - type: CEStationZLevels
+        mapsAbove:
+        - /Maps/Test/ZPerdition0.yml
+        - /Maps/Test/ZPerdition1.yml
