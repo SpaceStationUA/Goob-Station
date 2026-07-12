@@ -134,6 +134,28 @@ entities:
     - type: Parallax
       parallax: WaterSkyWhales
     - type: MapAtmosphere
+      space: False
+      mixture:
+        volume: 2500
+        immutable: True
+        temperature: 290
+        moles:
+        - 21.824879
+        - 82.10312
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
   - uid: 2
     components:
     - type: MetaData
@@ -11024,7 +11046,7 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
-- proto: Brutepack10Lingering
+- proto: Brutepack
   entities:
   - uid: 497
     components:
@@ -44335,7 +44357,7 @@ entities:
       parent: 457
     - type: Physics
       canCollide: False
-- proto: MaterialSilo
+- proto: MachineMaterialSilo
   entities:
   - uid: 5251
     components:

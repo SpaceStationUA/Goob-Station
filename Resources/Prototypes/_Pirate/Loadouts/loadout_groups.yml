@@ -8,9 +8,11 @@
   - TrinketsPhotoCameraFilled
   - NoviceMark
   - Pillow
+  - TrinketsTrainWhistle
   subgroups:
   - PiratePlushies
   - PirateGambling
+  - PirateCassettes
 
 
 - type: loadoutGroup
@@ -39,6 +41,23 @@
   - CardBoxTippyTrump
   - TippyTrumpMysteryPack
   - CardBoxNuno
+
+- type: loadoutGroup
+  id: PirateCassettes
+  name: loadout-group-pirate-cassettes
+  minLimit: 0
+  maxLimit: 3
+  loadouts:
+  - LoadoutRMCCassettePlayer
+  - LoadoutRMCCassetteTapeWigWoo1
+  - LoadoutRMCCassetteTapeMendax
+  - LoadoutRMCCassetteTapeNighty
+  - LoadoutRMCCassetteTapeGoodShowOldChap
+  - LoadoutRMCCassetteTapeRedQwesta
+  - LoadoutRMCCassetteTapeBolgarich
+  - LoadoutRMCCassetteTapeQwertyquerty
+  - LoadoutRMCCassetteTapePigeonBeans
+  - LoadoutRMCCassetteTapeCustom
 
 - type: loadoutGroup
   id: PirateEEGenericItems
@@ -120,7 +139,6 @@
   - LoadoutBeltWaist
   - LoadoutBeltWaistThin
   - LoadoutBeltWaistbagColor
-  - ClothingBeltTCAFWebbing
 
 - type: loadoutGroup
   id: PirateEEGenericHands
@@ -132,7 +150,6 @@
   - LoadoutHandsGlovesEnviroglovesEvening
   - LoadoutHandsClothWrap
   - ClothingHandsTacticalMaidGlovesLoadout
-  - ClothingHandsGlovesCombatTCAF
 
 - type: loadoutGroup
   id: PirateEEGenericMask
@@ -280,11 +297,6 @@
   - LoadoutUniformJumpsuitFlannelBlackJeans
   - LoadoutUniformJumpsuitFlannelKhakis
   - LoadoutUniformJumpsuitFlannelBlackKhakis
-  - ClothingUniformTCAFArmsman
-  - ClothingUniformTCFLLegate
-  - ClothingUniformTCFLPilot
-  - ClothingUniformTCFLSentinel
-  - ClothingUniformTCFLVolunteer
   subgroups:
   - PiratePassengerJumpsuit
 
@@ -475,6 +487,7 @@
   - WardrobeBandGreen
   - WardrobeBandBlue
   - WardrobeBandBlack
+  - WardrobeConductorHat
 
 
 - type: loadoutGroup
@@ -577,12 +590,6 @@
   - LoadoutHeadBowSmall
   - LoadoutHeadHatBeanieGreen
   - LoadoutHeadHatMountie
-  - ClothingHeadHatTCAFBeretDress
-  - ClothingHeadHatTCAFBeretField
-  - ClothingHeadHatTCFLBeretDress
-  - ClothingHeadHatTCFLBeretField
-  - ClothingHeadHatTCFLBeretSentinel
-  - ClothingHeadHatTCFLSoftCap
   subgroups:
   - PiratePassengerHead
 
@@ -727,10 +734,19 @@
   - LoadoutOuterCoatSubmarinerOpened
   - LoadoutOuterVestColorable
   - LoadoutOuterVestThick
-  - LoadoutOuterJacketTCAF
   subgroups:
   - PiratePassengerOuterClothing
 
+# Сервісний працівник
+- type: loadoutGroup
+  id: ServiceWorkerHead
+  name: loadout-group-service-worker-head
+  minLimit: 0
+  loadouts:
+  - Bunnyears
+  - BunnyearsDark
+  subgroups:
+  - BartenderHead
 
 
 ## Cargo - Карго
@@ -1008,7 +1024,7 @@
   - BlackShoes
   - CombatBoots
   - JackBoots
-  - NanotrasenRepresentativeBoots
+  - LaceupShoes # Pirate: upstream removed the duplicate NTR loadout.
 
 #Печатки
 - type: loadoutGroup

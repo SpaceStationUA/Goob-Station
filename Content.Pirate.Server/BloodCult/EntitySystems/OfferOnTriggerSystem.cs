@@ -92,6 +92,7 @@ namespace Content.Server.BloodCult.EntitySystems
 		[Dependency] private readonly SharedPhysicsSystem _physics = default!;
 		[Dependency] private readonly IRobustRandom _random = default!;
 		[Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+		[Dependency] private readonly BloodCultConstructSystem _constructSystem = default!;
 
 		private static readonly ProtoId<DamageTypePrototype> SlashDamageType = "Slash";
 
@@ -313,14 +314,18 @@ namespace Content.Server.BloodCult.EntitySystems
 				return;
 			}
 			// If humanoid and can bleed, convert
-			if (HasComp<HumanoidAppearanceComponent>(offerable) && HasComp<BloodstreamComponent>(offerable) && _CanBeConverted(offerable))
+			if (HasComp<HumanoidAppearanceComponent>(offerable) &&
+				TryComp<BloodstreamComponent>(offerable, out var offerableBloodstream) &&
+				_CanBeConverted(offerable))
 			{
 				_bloodCultist.UseConvertRune(offerable, user, uid, cultistsInRange);
 				
 				// Add blood to the ritual pool based on the victim's current blood level
 				// If they're at 50% blood, only add 50u instead of 100u
 				// Also account for blood already spilled from EdgeEssentia wounds
-				var bloodPercentage = _bloodstream.GetBloodLevelPercentage(offerable);
+				var bloodPercentage = offerableBloodstream.MaxVolumeModifier == 0f
+					? 0f
+					: _bloodstream.GetBloodLevel((offerable, offerableBloodstream)) / offerableBloodstream.MaxVolumeModifier;
 				var bloodFromConversion = 100.0 * bloodPercentage;
 				
 				// Check if this entity has already contributed blood via EdgeEssentia bleeding
@@ -671,7 +676,21 @@ namespace Content.Server.BloodCult.EntitySystems
 			if (TryComp<MindComponent>((EntityUid)soulstoneMind.Mind, out var mind))
 			{
 				var shade = Spawn("MobBloodCultShade", coordinates);
-				_mind.TransferTo((EntityUid)soulstoneMind.Mind, shade, mind: mind);
+				if (!TryComp<BloodCultConstructComponent>(shade, out var construct) ||
+					!_constructSystem.TrySetConstructSource(
+						(shade, construct),
+						soulstone,
+						BloodCultConstructSourceKind.SoulStone))
+				{
+					QueueDel(shade);
+					return false;
+				}
+
+				_mind.TransferTo(
+					(EntityUid) soulstoneMind.Mind,
+					shade,
+					ghostCheckOverride: true,
+					mind: mind);
 
 				var shadeCultist = EnsureComp<BloodCultistComponent>(shade);
 
@@ -683,9 +702,6 @@ namespace Content.Server.BloodCult.EntitySystems
 				}
 
 				_npcFaction.AddFaction(shade, BloodCultRuleSystem.BloodCultistFactionId);
-
-				if (TryComp<ShadeComponent>(shade, out var shadeComp))
-					shadeComp.SourceSoulstone = soulstone;
 
 				_audio.PlayPvs(new SoundPathSpecifier("/Audio/Magic/blink.ogg"), coordinates);
 			}
@@ -1018,7 +1034,12 @@ namespace Content.Server.BloodCult.EntitySystems
 		// Add blood to the ritual pool based on the victim's current blood level
 		// If they're at 50% blood, only add 50u instead of 100u
 		// Also account for blood already spilled from EdgeEssentia wounds
-		var bloodPercentage = _bloodstream.GetBloodLevelPercentage(victim);
+		var bloodPercentage = 0f;
+		if (TryComp<BloodstreamComponent>(victim, out var victimBloodstream) &&
+			victimBloodstream.MaxVolumeModifier != 0f)
+		{
+			bloodPercentage = _bloodstream.GetBloodLevel((victim, victimBloodstream)) / victimBloodstream.MaxVolumeModifier;
+		}
 		var bloodFromConversion = 100.0 * bloodPercentage;
 		
 		// Check if this entity has already contributed blood via EdgeEssentia bleeding

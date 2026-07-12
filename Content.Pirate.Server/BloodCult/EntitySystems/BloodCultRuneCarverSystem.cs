@@ -79,6 +79,10 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
 
 		SubscribeLocalEvent<BloodCultRuneCarverComponent, GotEquippedHandEvent>(OnEquipped);
 
+		// The blade now erases runes on click (TryRemoveRuneWithBlade), so cultists invoke runes by
+		// clicking them with an empty hand. Runs after EmpowerOnStandSystem so the empowering rune keeps its own handling.
+		SubscribeLocalEvent<BloodCultRuneComponent, InteractHandEvent>(OnRuneInteractHand, after: new[] { typeof(EmpowerOnStandSystem) });
+
 		_runeQuery = GetEntityQuery<BloodCultRuneComponent>();
 	}
 
@@ -155,6 +159,12 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
 		// Second, if clicking on a rune, trigger its normal interaction (same as clicking with open hand)
 		if (_runeQuery.HasComponent(target))
         {
+			if (TryRemoveRuneWithBlade(ent, args.User, target))
+			{
+				args.Handled = true;
+				return;
+			}
+
             // Raise InteractHandEvent to simulate clicking with an open hand
             var interactHandEvent = new InteractHandEvent(args.User, target);
             RaiseLocalEvent(target, interactHandEvent, true);
@@ -285,6 +295,54 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
 			);
 		_doAfter.TryStartDoAfter(dargs);
     }
+
+	private bool TryRemoveRuneWithBlade(Entity<BloodCultRuneCarverComponent> ent, EntityUid user, EntityUid target)
+	{
+		if (!HasComp<CleanableRuneComponent>(target))
+			return false;
+
+		// Mirror DeleteEntityEffect: the tear veil and final rift runes are major ritual runes and
+		// must not be scraped away with the blade. Returning false lets the click fall through to invocation.
+		if (HasComp<TearVeilComponent>(target) || HasComp<FinalSummoningRuneComponent>(target))
+			return false;
+
+		_popupSystem.PopupEntity(Loc.GetString("cult-rune-cleaned"), user, user, PopupType.MediumCaution);
+		_audioSystem.PlayPvs(ent.Comp.CarveSound, Transform(target).Coordinates);
+		QueueDel(target);
+		return true;
+	}
+
+	/// <summary>
+	/// Empty-hand invocation path. Because clicking a rune with the cult blade now erases it, cultists
+	/// invoke runes by clicking them with an empty hand instead. This mirrors the activation the blade
+	/// used to perform, firing the rune's trigger (offering, revive, summon, barrier, tear veil, ...).
+	/// </summary>
+	private void OnRuneInteractHand(Entity<BloodCultRuneComponent> rune, ref InteractHandEvent args)
+	{
+		// Skip if a more specific handler already dealt with it (e.g. the empowering rune's spell menu).
+		if (args.Handled)
+			return;
+
+		// Transient drawing runes (…Rune_drawing) inherit BloodCultRuneComponent but aren't finished
+		// runes yet - don't let them be activated mid-carve.
+		if (MetaData(rune).EntityPrototype?.ID.EndsWith("_drawing") == true)
+			return;
+
+		// Only cultists can invoke runes.
+		if (!HasComp<BloodCultistComponent>(args.User))
+			return;
+
+		_interaction.InteractionActivate(
+			args.User,
+			rune,
+			checkCanInteract: false,
+			checkUseDelay: true,
+			checkAccess: false,
+			complexInteractions: true,
+			checkDeletion: false
+		);
+		args.Handled = true;
+	}
 
 	/// <summary>
 	/// Starts drawing a rune at the specified location. Handles all validation, special cases, and DoAfter setup.
@@ -467,6 +525,8 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
 			{
 				var runeTransform = Transform(rune);
 				_transform.AnchorEntity((rune, runeTransform), ((EntityUid)gridUid, grid), targetTile.GridIndices);
+				var runeDrawn = new BloodCultRuneDrawnEvent(ent.Owner);
+				RaiseLocalEvent(rune, ref runeDrawn);
 				_damageableSystem.TryChangeDamage(ent, appliedDamageSpecifier, true, origin: ent);
 				_audioSystem.PlayPvs(ev.CarveSound, ent);
 				
@@ -557,6 +617,9 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
             case "BarrierRune":
                 drawingPrototype = "BarrierRune_drawing";
                 return true;
+            case "BloodBoilRune":
+                drawingPrototype = "BloodBoilRune_drawing";
+                return true;
             case "EmpoweringRune":
                 drawingPrototype = "EmpoweringRune_drawing";
                 return true;
@@ -566,11 +629,14 @@ public sealed partial class BloodCultRuneCarverSystem : EntitySystem
             case "ReviveRune":
                 drawingPrototype = "ReviveRune_drawing";
                 return true;
-		case "TearVeilRune":
-				drawingPrototype = "TearVeilRune_drawing";
+            case "TearVeilRune":
+                drawingPrototype = "TearVeilRune_drawing";
                 return true;
-		case "SummoningRune":
-				drawingPrototype = "SummoningRune_drawing";
+            case "SummoningRune":
+                drawingPrototype = "SummoningRune_drawing";
+                return true;
+            case "TeleportRune":
+                drawingPrototype = "TeleportRune_drawing";
                 return true;
             default:
                 drawingPrototype = null;

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Spatison <137375981+Spatison@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Client.Items.UI;
@@ -20,7 +16,7 @@ public sealed class BlinkStatusControl : PollingItemStatusControl<BlinkStatusCon
     public BlinkStatusControl(Entity<BlinkComponent> parent)
     {
         _parent = parent;
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } }; // Pirate: ui fixes (legacy style migration; prefer upstream on conflict)
         AddChild(_label);
 
         UpdateDraw();
