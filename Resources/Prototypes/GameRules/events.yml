@@ -43,6 +43,7 @@
     - id: ClosetSkeleton
     - id: KingRatMigration
     # - id: RevenantSpawn # Goob
+    - id: SyndicateDeadDrop
     - !type:NestedSelector
       tableId: DerelictBorgEventTable
 
