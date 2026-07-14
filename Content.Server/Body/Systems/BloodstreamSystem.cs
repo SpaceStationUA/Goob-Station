@@ -82,6 +82,8 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
         }
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
+
+        dnaData.TastyBlood = HasComp<TastyBloodComponent>(uid); // Pirate
         bloodData.Add(dnaData);
 
         return bloodData;

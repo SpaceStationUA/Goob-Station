@@ -32,12 +32,14 @@
           type: [ Vampiric ]
         - !type:HasVampireToxin
           invert: true
+        - !type:HasTastyBlood
       - !type:AdjustReagent
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Vampiric ]
         - !type:HasVampireToxin
           invert: true
+        - !type:HasTastyBlood
         reagent: Water
         amount: 0.5
       - !type:AdjustReagent
@@ -46,6 +48,7 @@
           type: [ Vampiric ]
         - !type:HasVampireToxin
           invert: true
+        - !type:HasTastyBlood
         reagent: Omnizine
         amount: 0.3
       - !type:ModifyBleed
@@ -55,13 +58,15 @@
           type: [ Vampiric ]
         - !type:HasVampireToxin
           invert: true
+        - !type:HasTastyBlood
       - !type:ModifyBloodLevel
         amount: 0.05
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Vampiric ]
         - !type:HasVampireToxin
-          invert: true # Pirate end
+          invert: true
+        - !type:HasTastyBlood # Pirate end
       - !type:ChemAddMoodlet # Pirate - port EE mood system
         moodPrototype: DrankBlood
         conditions:
@@ -74,6 +79,7 @@
           type: [ Vampiric ]
         - !type:HasVampireToxin
           invert: true
+        - !type:HasTastyBlood # Pirate
     Food:
       effects:
         - !type:AdjustReagent
@@ -90,7 +96,8 @@
           - !type:MetabolizerTypeCondition # Pirate
             type: [ Vampiric ]
           - !type:HasVampireToxin
-            invert: true # Pirate end
+            invert: true
+          - !type:HasTastyBlood # Pirate end
     Medicine:
       effects:
       - !type:HealthChange
