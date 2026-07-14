@@ -874,6 +874,7 @@
     - FloorConcreteTilesStatic
     - CircuitFloorsStatic
     - FloorMarbleTilesStatic
+    - DenFloorPoolTilesStatic # DEN
     dynamicPacks:
     - FauxTiles
   - type: MaterialStorage

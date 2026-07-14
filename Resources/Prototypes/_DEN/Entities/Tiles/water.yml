@@ -1,0 +1,32 @@
+- type: entity
+  parent: FloorWaterEntity
+  id: FloorWaterEntityPool
+  name: pool water
+  description: You do NOT want to drink this.
+  components:
+  - type: Sprite
+    sprite: _DEN/Tiles/Planet/water.rsi
+    layers:
+    - state: pool_water
+  - type: Solution
+    id: pool
+    solution:
+      maxVol: 10000
+      reagents:
+      - ReagentId: Water
+        Quantity: 9900
+      - ReagentId: Chlorine
+        Quantity: 100
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 99
+      - ReagentId: Chlorine
+        Quantity: 1
+  - type: Edible
+    edible: Drink
+    destroyOnEmpty: false
+    utensil: None
+    solution: pool
+    transferAmount: 1
