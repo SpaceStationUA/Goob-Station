@@ -1,0 +1,27 @@
+- type: latheRecipe
+  id: LeatherTentWall
+  result: LeatherTentWallStack1
+  completetime: 2
+  materials:
+    Cloth: 200
+    
+- type: latheRecipe
+  id: ClothTentWall
+  result: ClothTentWallStack1
+  completetime: 2
+  materials:
+    Cloth: 200
+        
+- type: latheRecipe
+  id: LeatherTentFlap
+  result: LeatherTentFlapStack1
+  completetime: 2
+  materials:
+    Cloth: 200
+        
+- type: latheRecipe
+  id: ClothTentFlap
+  result: ClothTentFlapStack1
+  completetime: 2
+  materials:
+    Cloth: 200
