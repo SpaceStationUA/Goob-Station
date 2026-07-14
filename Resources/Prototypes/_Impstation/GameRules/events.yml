@@ -1,0 +1,19 @@
+# eeeplet
+- type: entity
+  id: EeepEvent
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    weight: 3.5
+    earliestStart: 25
+    reoccurrenceDelay: 40
+    minimumPlayers: 20
+    duration: null
+  - type: GameRule
+    chaosScore: 40
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: MobEeeplet
+  - type: RandomSpawnRule
+    prototype: SpawnPointGhostEeeplet
