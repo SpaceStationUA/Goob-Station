@@ -12,6 +12,8 @@
     minimumPlayers: 10
     maxOccurrences: 3
     weight: 10
+  - type: GameRule
+    chaosScore: 40
   - type: RandomSpawnRule
     prototype: SyndieDeadDropSpawner
     radioMessage: {channel: Syndicate, message: "syndicate-dead-drop-announcement"}
