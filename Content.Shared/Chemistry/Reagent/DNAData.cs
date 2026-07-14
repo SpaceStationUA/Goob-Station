@@ -12,10 +12,7 @@ public sealed partial class DnaData : ReagentData
 
     public override ReagentData Clone()
     {
-        return new DnaData
-        {
-            DNA = DNA,
-        };
+        return new DnaData(this); //Pirate
     }
     [DataField] // Goobstation
     public TimeSpan Freshness = TimeSpan.Zero; // Goobstation
