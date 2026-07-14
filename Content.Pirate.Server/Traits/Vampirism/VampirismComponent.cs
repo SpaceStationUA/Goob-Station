@@ -14,7 +14,4 @@ public sealed partial class VampirismComponent : Component
 {
     [DataField]
     public HashSet<ProtoId<MetabolizerTypePrototype>> MetabolizerPrototypes = new() { "Vampiric", "Animal" };
-
-    [DataField]
-    public TimeSpan SuccDelay = TimeSpan.FromSeconds(1);
 }
