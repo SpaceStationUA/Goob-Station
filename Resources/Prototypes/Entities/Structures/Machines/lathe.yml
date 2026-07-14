@@ -163,6 +163,7 @@
     - ServiceStatic
     - PowerCellsStatic
     - ElectronicsStatic
+    - TentsStatic   #DEN
     # Goobstation
     - NailsStatic
     - LatheMiscStatic
@@ -681,6 +682,7 @@
     - Scarves
     - Carpets
     - Bedsheets
+    - TentsStatic   #DEN
     # Goobstation Packs
     - ClothingCasualJumpsuits
     - ClothingCommandSummer
