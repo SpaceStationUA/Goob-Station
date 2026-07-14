@@ -43,6 +43,7 @@
     - id: ClosetSkeleton
     - id: KingRatMigration
     # - id: RevenantSpawn # Goob
+    - id: EeepEvent # Harmony Eeep Port - imp
     - !type:NestedSelector
       tableId: DerelictBorgEventTable
 
