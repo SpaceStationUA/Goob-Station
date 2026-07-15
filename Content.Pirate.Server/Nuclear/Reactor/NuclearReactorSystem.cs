@@ -47,6 +47,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private ExplosionSystem _explosion = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private NuclearMachineSystem _machine = default!;
     [Dependency] private RadioSystem _radio = default!;
@@ -102,7 +103,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
     #region Prefab
     private void ApplyPrefab(Entity<NuclearReactorComponent> ent)
     {
-        var prefab = ent.Comp.Prefab is { } id ? ProtoMan.Index(id).Parts : GenerateRandomPrefab(ent.Comp);
+        var prefab = ent.Comp.Prefab is { } id ? _prototype.Index(id).Parts : GenerateRandomPrefab(ent.Comp);
         var container = ent.Comp.PartsContainerName;
         foreach (var (pos, partId) in prefab)
         {
@@ -122,7 +123,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
     private Dictionary<Vector2i, EntProtoId> GenerateRandomPrefab(NuclearReactorComponent comp)
     {
         var parts = new Dictionary<Vector2i, EntProtoId>();
-        var pool = ProtoMan.Index(NuclearReactorRandomParts);
+        var pool = _prototype.Index(NuclearReactorRandomParts);
         for (var x = 0; x < comp.GridWidth; x++)
         {
             for (var y = 0; y < comp.GridHeight; y++)
@@ -429,8 +430,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
         var coords = _transform.GetMapCoordinates(uid);
         for (var i = 0; i < _random.Next(10, 30); i++)
         {
-            _throwing.TryThrow(Spawn(NuclearDebrisChunk, coords), _random.NextAngle().ToVec().Normalized(), _random.NextFloat(8, 16),
-                uid, predicted: false);
+            _throwing.TryThrow(Spawn(NuclearDebrisChunk, coords), _random.NextAngle().ToVec().Normalized(), _random.NextFloat(8, 16), uid);
         }
 
         Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/metal_break5.ogg"), uid);
@@ -472,7 +472,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
         if (comp.Melted)
             return;
 
-        var engi = ProtoMan.Index(ent.Comp.AlertsChannel);
+        var engi = _prototype.Index(ent.Comp.AlertsChannel);
         if (comp.Temperature >= comp.ReactorOverheatTemp)
         {
             if (!comp.IsSmoking)
@@ -575,8 +575,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
                 item = Spawn(NuclearDebrisChunk, coords);
             }
 
-            _throwing.TryThrow(item, _random.NextAngle().ToVec(), _random.NextFloat(8, 16), ent,
-                predicted: false);
+            _throwing.TryThrow(item, _random.NextAngle().ToVec(), _random.NextFloat(8, 16), ent);
             var x = i % ent.Comp.GridWidth;
             var y = i / ent.Comp.GridWidth;
             AdminLog.Add(LogType.Action, $"Damage by {args.Origin:actor} removed {part:part} from position {x},{y} in {ent.Owner:reactor}");
