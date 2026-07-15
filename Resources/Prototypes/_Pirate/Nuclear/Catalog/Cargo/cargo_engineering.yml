@@ -1,0 +1,61 @@
+# Nuclear Reactor
+
+- type: cargoProduct
+  id: NuclearReactorFlatpack
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/cargo_icons.rsi
+    state: reactor
+  product: NuclearReactorFlatpack
+  cost: 15000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: GasTurbineFlatpack
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/cargo_icons.rsi
+    state: turbine
+  product: GasTurbineFlatpack
+  cost: 10000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: CerenkiteFuelRods
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_parts.rsi
+    state: default_rod
+  product: CrateCerenkiteFuelRod
+  cost: 4000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: BohrumReflectors
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_parts.rsi
+    state: default_rod
+  product: CrateBohrumReflector
+  cost: 2000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: SteelGasChannels
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_parts.rsi
+    state: default_rod
+  product: CrateSteelGasChannel
+  cost: 1000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: SteelHeatExhangers
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_parts.rsi
+    state: default_rod
+  product: CrateSteelHeatExhanger
+  cost: 1000
+  category: cargoproduct-category-name-engineering
+  group: market

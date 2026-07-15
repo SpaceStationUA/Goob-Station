@@ -19,6 +19,18 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     [color=#999999][italic]Пристрої, здатні до нескінченної енергії — і руйнівного потенціалу[italic][/color]
   </Box>
 
+  <!-- Pirate: Trauma Station nuclear reactor -->
+  <Box>
+    <GuideEntityEmbed Entity="NuclearReactorCrew" Caption=""/>
+    <GuideEntityEmbed Entity="Turbine" Caption=""/>
+  </Box>
+  <Box>
+    ## Ядерний генератор
+  </Box>
+  <Box>
+    [color=#999999][italic]Використовує енергію ядерного поділу для живлення станції.[italic][/color]
+  </Box>
+
   <Box>
     <GuideEntityEmbed Entity="AmeController" Caption=""/>
     <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>

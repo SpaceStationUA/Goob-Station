@@ -40,6 +40,7 @@
     - MiscSignallersStatic
     - NailgunStatic
     - NailsStatic
+    - ReactorPartsBasic # Pirate: Trauma Station nuclear reactor
     - ServiceBoardsStatic # Pirate start - tweak fab recepies | Add more circuits to engi fab
     - CargoBoardsStatic
     - MedicalBoardsStaticGoob
@@ -56,6 +57,7 @@
     - SpecOpsGoogles
     - EngineeringBoards
     - SharedBoards
+    - ReactorCircuitboards # Pirate: Trauma Station nuclear reactor
     - CameraBoards
     - ShuttleBoards
     - ShuttleBoardsGoob
