@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 07/15/2026 19:54:19
-  entityCount: 8600
+  time: 07/15/2026 22:12:51
+  entityCount: 8599
 maps:
 - 1
 grids:
@@ -5927,8 +5927,8 @@ entities:
           id: docking265304
           localAnchorB: 0,2.5
           localAnchorA: -6,61.5
-          damping: 130.10107
-          stiffness: 1167.7845
+          damping: 130.10158
+          stiffness: 1167.7891
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
@@ -7814,7 +7814,7 @@ entities:
       pos: -14.5,1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -156774.08
+      secondsUntilStateChange: -157578.05
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7826,7 +7826,7 @@ entities:
       pos: -13.5,6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -113932.81
+      secondsUntilStateChange: -114736.766
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8074,7 +8074,7 @@ entities:
       pos: 20.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -44467.664
+      secondsUntilStateChange: -45271.62
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8685,6 +8685,17 @@ entities:
     - type: Transform
       pos: 20.5,-1.5
       parent: 2
+- proto: AlwaysPoweredWallLight
+  entities:
+  - uid: 5191
+    components:
+    - type: Transform
+      anchored: False
+      rot: -1.5707963267948966 rad
+      pos: -4.000001,-0.99609137
+      parent: 1
+    - type: Physics
+      bodyType: Dynamic
 - proto: AnomalyScanner
   entities:
   - uid: 225
@@ -12083,12 +12094,12 @@ entities:
   - uid: 858
     components:
     - type: Transform
-      pos: -12.5,41.5
+      pos: -12.5,40.5
       parent: 2
   - uid: 859
     components:
     - type: Transform
-      pos: -11.5,41.5
+      pos: -1.5,-1.5
       parent: 2
   - uid: 860
     components:
@@ -12548,7 +12559,7 @@ entities:
   - uid: 951
     components:
     - type: Transform
-      pos: -10.5,41.5
+      pos: -2.5,-0.5
       parent: 2
   - uid: 952
     components:
@@ -25234,10 +25245,9 @@ entities:
       parent: 2
 - proto: ElevatorCallButton
   entities:
-  - uid: 313
+  - uid: 671
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: -5.5,0.5
       parent: 2
     - type: ElevatorCallButton
@@ -25256,10 +25266,9 @@ entities:
       fixtures: {}
 - proto: ElevatorIndicator
   entities:
-  - uid: 671
+  - uid: 313
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: -5.5,0.5
       parent: 2
     - type: ElevatorIndicator
@@ -44916,15 +44925,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 10.5,8.5
       parent: 2
-  - uid: 5964
-    components:
-    - type: Transform
-      anchored: False
-      rot: -1.5707963267948966 rad
-      pos: -4.000001,-0.99609137
-      parent: 1
-    - type: Physics
-      bodyType: Dynamic
   - uid: 7722
     components:
     - type: Transform
@@ -50727,15 +50727,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,8.5
       parent: 2
-  - uid: 6348
-    components:
-    - type: Transform
-      anchored: False
-      rot: -1.5707963267948966 rad
-      pos: -5.000001,0.003908634
-      parent: 1
-    - type: Physics
-      bodyType: Dynamic
   - uid: 6349
     components:
     - type: Transform
@@ -58964,7 +58955,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -1745.4471
+      secondsUntilStateChange: -2549.4058
       state: Opening
     - type: Airlock
       autoClose: False

@@ -14,5 +14,4 @@
           Passenger: [ -1, -1 ]
       - type: CEStationZLevels
         mapsAbove:
-        - /Maps/Test/ZPerdition0.yml
         - /Maps/Test/ZPerdition1.yml
