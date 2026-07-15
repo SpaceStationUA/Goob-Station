@@ -6,7 +6,6 @@
 using Content.Server.Shuttles.Systems;
 using Content.Shared._Mono.FireControl;
 using Content.Shared.Power;
-using Content.Shared.Shuttles.BUIStates;
 using Robust.Server.GameObjects;
 
 namespace Content.Server._Mono.FireControl;
@@ -109,7 +108,8 @@ public sealed partial class FireControlSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        NavInterfaceState navState = _shuttleConsoleSystem.GetNavState(uid, _shuttleConsoleSystem.GetAllDocks());
+        var navState = _shuttleConsoleSystem.GetNavState(uid);
+        var dockingPortStates = _shuttleConsoleSystem.GetDockingPortStates(); // Pirate - replay memory optimization.
 
         List<FireControllableEntry> controllables = new();
         if (component.ConnectedServer != null && TryComp<FireControlServerComponent>(component.ConnectedServer, out var server))
@@ -127,7 +127,11 @@ public sealed partial class FireControlSystem : EntitySystem
 
         var array = controllables.ToArray();
 
-        var state = new FireControlConsoleBoundInterfaceState(component.ConnectedServer != null, array, navState);
+        var state = new FireControlConsoleBoundInterfaceState(
+            component.ConnectedServer != null,
+            array,
+            navState,
+            dockingPortStates);
         _ui.SetUiState(uid, FireControlConsoleUiKey.Key, state);
     }
 }

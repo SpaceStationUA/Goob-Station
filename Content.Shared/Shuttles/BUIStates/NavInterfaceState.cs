@@ -21,8 +21,7 @@ public sealed class NavInterfaceState
     /// </summary>
     public Angle? Angle;
 
-    public Dictionary<NetEntity, List<DockingPortState>> Docks;
-
+    // Pirate - docking port data is sent separately to avoid replay duplication.
     public bool RotateWithEntity = true;
 
     // Frontier fields
@@ -53,14 +52,12 @@ public sealed class NavInterfaceState
         float maxRange,
         NetCoordinates? coordinates,
         Angle? angle,
-        Dictionary<NetEntity, List<DockingPortState>> docks,
         InertiaDampeningMode dampeningMode, // Frontier
         Dictionary<string, string>? networkPortNames = null)
     {
         MaxRange = maxRange;
         Coordinates = coordinates;
         Angle = angle;
-        Docks = docks;
         DampeningMode = dampeningMode; // Frontier
         NetworkPortNames = networkPortNames ?? new Dictionary<string, string>();
     }
