@@ -300,6 +300,11 @@
   - type: NpcFactionMember
     factions:
     - Passive
+  - type: Body # Pirate fix - Why did the chicken cross the road?
+    prototype: AnimalRuminant
+  - type: HTN
+    rootTask:
+      task: RuminantCompound # Pirate fix - To get to the other side!
 
 - type: entity
   parent: MobChicken
