@@ -603,7 +603,7 @@ public sealed class RCDSystem : EntitySystem
                 if (HasComp<AtmosPipeLayersComponent>(ent))     //Goob - check for pipe layers
                 {
                     var entPipeLayer = Comp<AtmosPipeLayersComponent>(ent).CurrentPipeLayer;
-                    if (entPipeLayer != AtmosPipeLayer.Primary)
+                    if (entPipeLayer != GetPlacementLayer(component, prototype)) // Pirate: respect the active RPD layer
                         isIdentical = false;
                 }
 
