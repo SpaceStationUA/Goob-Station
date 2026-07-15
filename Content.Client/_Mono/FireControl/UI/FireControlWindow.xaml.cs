@@ -158,7 +158,7 @@ public sealed partial class FireControlWindow : FancyWindow
 
     public void UpdateStatus(FireControlConsoleBoundInterfaceState state)
     {
-        NavRadar.UpdateState(state.NavState, state.DockingPortStates);
+        NavRadar.UpdateState(state.NavState);
 
         if (state.Connected)
         {

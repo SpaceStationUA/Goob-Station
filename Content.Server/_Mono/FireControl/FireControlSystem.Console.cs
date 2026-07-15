@@ -109,7 +109,6 @@ public sealed partial class FireControlSystem : EntitySystem
             return;
 
         var navState = _shuttleConsoleSystem.GetNavState(uid);
-        var dockingPortStates = _shuttleConsoleSystem.GetDockingPortStates(); // Pirate - replay memory optimization.
 
         List<FireControllableEntry> controllables = new();
         if (component.ConnectedServer != null && TryComp<FireControlServerComponent>(component.ConnectedServer, out var server))
@@ -127,11 +126,7 @@ public sealed partial class FireControlSystem : EntitySystem
 
         var array = controllables.ToArray();
 
-        var state = new FireControlConsoleBoundInterfaceState(
-            component.ConnectedServer != null,
-            array,
-            navState,
-            dockingPortStates);
+        var state = new FireControlConsoleBoundInterfaceState(component.ConnectedServer != null, array, navState);
         _ui.SetUiState(uid, FireControlConsoleUiKey.Key, state);
     }
 }

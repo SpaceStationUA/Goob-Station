@@ -1,6 +1,5 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.Map;
-using Content.Shared._Pirate.Shuttles.BUIStates; // Pirate - replay memory optimization.
 using Content.Shared.Shuttles.BUIStates;
 
 namespace Content.Shared._Mono.FireControl;
@@ -16,18 +15,12 @@ public sealed class FireControlConsoleBoundInterfaceState : BoundUserInterfaceSt
     public bool Connected;
     public FireControllableEntry[] FireControllables;
     public NavInterfaceState NavState;
-    public DockingPortStates DockingPortStates;
 
-    public FireControlConsoleBoundInterfaceState(
-        bool connected,
-        FireControllableEntry[] fireControllables,
-        NavInterfaceState navState,
-        DockingPortStates dockingPortStates)
+    public FireControlConsoleBoundInterfaceState(bool connected, FireControllableEntry[] fireControllables, NavInterfaceState navState)
     {
         Connected = connected;
         FireControllables = fireControllables;
         NavState = navState;
-        DockingPortStates = dockingPortStates;
     }
 }
 

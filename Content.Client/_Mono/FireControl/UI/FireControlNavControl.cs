@@ -4,7 +4,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Shuttles.UI;
 using Content.Shared._Mono.FireControl;
-using Content.Shared._Pirate.Shuttles.BUIStates; // Pirate - replay memory optimization.
 using Content.Shared.Physics;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -37,7 +36,6 @@ public sealed class FireControlNavControl : BaseShuttleControl
     private EntityCoordinates? _coordinates;
     private EntityUid? _consoleEntity;
     private Angle? _rotation;
-    private Dictionary<NetEntity, List<DockingPortState>> _docks = new();
 
     private EntityUid? _activeConsole;
     private FireControllableEntry[]? _controllables;
@@ -175,10 +173,9 @@ public sealed class FireControlNavControl : BaseShuttleControl
         _consoleEntity = consoleEntity;
     }
 
-    public void UpdateState(NavInterfaceState state, DockingPortStates dockingPortStates)
+    public void UpdateState(NavInterfaceState state)
     {
         SetMatrix(EntManager.GetCoordinates(state.Coordinates), state.Angle);
-        _docks = dockingPortStates.Docks;
         RotateWithEntity = state.RotateWithEntity;
     }
 
