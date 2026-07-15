@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Shared._Pirate.Shuttles.BUIStates; // Pirate - replay memory optimization.
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -41,20 +42,22 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
         if (_uiSystem.HasUi(uid, RadarConsoleUiKey.Key))
         {
             NavInterfaceState state;
-            var docks = _console.GetAllDocks();
+            var dockingPortStates = _console.GetDockingPortStates();
 
             if (coordinates != null && angle != null)
             {
-                state = _console.GetNavState(uid, docks, coordinates.Value, angle.Value);
+                state = _console.GetNavState(uid, coordinates.Value, angle.Value);
             }
             else
             {
-                state = _console.GetNavState(uid, docks);
+                state = _console.GetNavState(uid);
             }
 
             state.RotateWithEntity = !component.FollowEntity;
 
-            _uiSystem.SetUiState(uid, RadarConsoleUiKey.Key, new NavBoundUserInterfaceState(state));
+            _uiSystem.SetUiState(uid,
+                RadarConsoleUiKey.Key,
+                new NavBoundUserInterfaceState(state, dockingPortStates));
         }
     }
 }

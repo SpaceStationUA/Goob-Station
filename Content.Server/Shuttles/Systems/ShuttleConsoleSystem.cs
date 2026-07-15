@@ -5,6 +5,7 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Shared._NF.Shuttles.Events;
+using Content.Shared._Pirate.Shuttles.BUIStates; // Pirate - replay memory optimization.
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Popups;
@@ -119,10 +120,11 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         _consoles.Clear();
         _lookup.GetChildEntities(gridUid, _consoles);
         DockingInterfaceState? dockState = null;
+        DockingPortStates? dockingPortStates = null;
 
         foreach (var entity in _consoles)
         {
-            UpdateState(entity, ref dockState);
+            UpdateState(entity, ref dockState, ref dockingPortStates);
         }
 
         _dockingConsole.UpdateConsolesUsing(gridUid); // Lavaland Change: FTL
@@ -137,10 +139,11 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         GetExclusions(ref exclusions);
         var query = AllEntityQuery<ShuttleConsoleComponent>();
         DockingInterfaceState? dockState = null;
+        DockingPortStates? dockingPortStates = null;
 
         while (query.MoveNext(out var uid, out _))
         {
-            UpdateState(uid, ref dockState);
+            UpdateState(uid, ref dockState, ref dockingPortStates);
         }
     }
 
@@ -167,13 +170,15 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         ref AnchorStateChangedEvent args)
     {
         DockingInterfaceState? dockState = null;
-        UpdateState(uid, ref dockState);
+        DockingPortStates? dockingPortStates = null;
+        UpdateState(uid, ref dockState, ref dockingPortStates);
     }
 
     private void OnConsolePowerChange(EntityUid uid, ShuttleConsoleComponent component, ref PowerChangedEvent args)
     {
         DockingInterfaceState? dockState = null;
-        UpdateState(uid, ref dockState);
+        DockingPortStates? dockingPortStates = null;
+        UpdateState(uid, ref dockState, ref dockingPortStates);
         _shuttle.NfSetPowered(uid, component, args.Powered); // Frontier
     }
 
@@ -253,7 +258,10 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         return result;
     }
 
-    private void UpdateState(EntityUid consoleUid, ref DockingInterfaceState? dockState)
+    private void UpdateState(
+        EntityUid consoleUid,
+        ref DockingInterfaceState? dockState,
+        ref DockingPortStates? dockingPortStates)
     {
         EntityUid? entity = consoleUid;
 
@@ -271,15 +279,16 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         NavInterfaceState navState;
         ShuttleMapInterfaceState mapState;
         dockState ??= GetDockState();
+        dockingPortStates ??= GetDockingPortStates();
 
         if (shuttleGridUid != null && entity != null)
         {
-            navState = GetNavState(entity.Value, dockState.Docks);
+            navState = GetNavState(entity.Value);
             mapState = GetMapState(shuttleGridUid.Value);
         }
         else
         {
-            navState = new NavInterfaceState(0f, null, null, new Dictionary<NetEntity, List<DockingPortState>>(), InertiaDampeningMode.Dampen); // Frontier
+            navState = new NavInterfaceState(0f, null, null, InertiaDampeningMode.Dampen); // Frontier
             mapState = new ShuttleMapInterfaceState(
                 FTLState.Invalid,
                 default,
@@ -289,7 +298,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         if (_ui.HasUi(consoleUid, ShuttleConsoleUiKey.Key))
         {
-            _ui.SetUiState(consoleUid, ShuttleConsoleUiKey.Key, new ShuttleBoundUserInterfaceState(navState, mapState, dockState));
+            _ui.SetUiState(consoleUid,
+                ShuttleConsoleUiKey.Key,
+                new ShuttleBoundUserInterfaceState(navState, mapState, dockState, dockingPortStates));
         }
     }
 
@@ -391,34 +402,33 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// <summary>
     /// Specific for a particular shuttle.
     /// </summary>
-    public NavInterfaceState GetNavState(Entity<RadarConsoleComponent?, TransformComponent?> entity, Dictionary<NetEntity, List<DockingPortState>> docks)
+    public NavInterfaceState GetNavState(Entity<RadarConsoleComponent?, TransformComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
-            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, docks, InertiaDampeningMode.Dampen);
+            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, null, null, InertiaDampeningMode.Dampen);
 
         return GetNavState(
             entity,
-            docks,
             entity.Comp2.Coordinates,
             entity.Comp2.LocalRotation);
     }
 
     public NavInterfaceState GetNavState(
         Entity<RadarConsoleComponent?, TransformComponent?> entity,
-        Dictionary<NetEntity, List<DockingPortState>> docks,
         EntityCoordinates coordinates,
         Angle angle)
     {
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
-            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, GetNetCoordinates(coordinates), angle, docks, InertiaDampeningMode.Dampen);
+            return new NavInterfaceState(SharedRadarConsoleSystem.DefaultMaxRange, GetNetCoordinates(coordinates), angle, InertiaDampeningMode.Dampen);
 
         return new NavInterfaceState(
             entity.Comp1.MaxRange,
             GetNetCoordinates(coordinates),
             angle,
-            docks,
             _shuttle.NfGetInertiaDampeningMode(entity)); // Frontier
     }
+
+    public DockingPortStates GetDockingPortStates() => new(GetAllDocks()); // Pirate - replay memory optimization.
 
     /// <summary>
     /// Global for all shuttles.
@@ -426,8 +436,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// <returns></returns>
     public DockingInterfaceState GetDockState()
     {
-        var docks = GetAllDocks();
-        return new DockingInterfaceState(docks);
+        return new DockingInterfaceState(); // Pirate - docking data is sent through DockingPortStates.
     }
 
     /// <summary>
