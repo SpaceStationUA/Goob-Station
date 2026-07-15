@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Pirate.Shared.Nuclear.Reactor;
+using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
 namespace Content.Pirate.Client.Nuclear.Reactor;
 

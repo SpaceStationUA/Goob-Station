@@ -2,6 +2,7 @@
 
 using Content.Pirate.Shared.Nuclear.Monitor;
 using Content.Pirate.Shared.Nuclear.Turbine;
+using Robust.Client.UserInterface;
 
 namespace Content.Pirate.Client.Nuclear.Turbine.UI;
 

@@ -4,6 +4,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Repairable;
 using Content.Pirate.Shared.Nuclear.Turbine;
 using Robust.Client.Animations;
+using Robust.Client.GameObjects;
 
 namespace Content.Pirate.Client.Nuclear.Turbine;
 
