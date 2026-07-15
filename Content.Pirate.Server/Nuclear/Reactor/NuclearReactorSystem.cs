@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.AlertLevel;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
@@ -12,7 +13,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Damage.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
@@ -26,6 +27,7 @@ using Content.Pirate.Shared.Nuclear.Reactor;
 using Robust.Shared.Audio;
 using Robust.Shared.Collections;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -71,7 +73,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
 
         SubscribeLocalEvent<NuclearReactorComponent, MapInitEvent>(OnMapInit);
 
-        SubscribeLocalEvent<NuclearReactorComponent, DamageDealtEvent>(OnDamageDealt);
+        SubscribeLocalEvent<NuclearReactorComponent, DamageChangedEvent>(OnDamageChanged);
 
         // Atmos events
         SubscribeLocalEvent<NuclearReactorComponent, AtmosDeviceUpdateEvent>(OnUpdate);
@@ -546,11 +548,12 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
         AdminLog.Add(LogType.Action, $"{args.User:player} set control rod insertion of {ent.Owner:target} to {ent.Comp.ControlRodInsertion} using {args.Monitor:monitor}");
     }
 
-    private void OnDamageDealt(Entity<NuclearReactorComponent> ent, ref DamageDealtEvent args)
+    private void OnDamageChanged(Entity<NuclearReactorComponent> ent, ref DamageChangedEvent args)
     {
-        var damage = (float) args.Damage.GetTotal();
-        if (damage < 0f)
+        if (!args.DamageIncreased || args.DamageDelta is not { } damageDelta)
             return;
+
+        var damage = (float) damageDelta.GetTotal();
 
         var destruction = 100;
         var throwProb = Math.Clamp(damage / destruction, 0, 1);

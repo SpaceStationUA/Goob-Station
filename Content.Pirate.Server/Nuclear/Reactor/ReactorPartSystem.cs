@@ -13,6 +13,7 @@ using Content.Shared.Radiation.Components;
 using Content.Pirate.Shared.Nuclear;
 using Content.Pirate.Shared.Nuclear.Reactor;
 using Robust.Shared.Collections;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Pirate.Server.Nuclear.Reactor;

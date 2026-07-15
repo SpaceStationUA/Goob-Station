@@ -3,6 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
 using Content.Server.Audio;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Power.Components;
@@ -12,7 +13,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
-using Content.Shared.Damage.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Popups;
@@ -20,6 +21,7 @@ using Content.Pirate.Shared.Nuclear;
 using Content.Pirate.Shared.Nuclear.Turbine;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -45,7 +47,7 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
 
         SubscribeLocalEvent<TurbineComponent, MapInitEvent>(OnMapInit);
 
-        SubscribeLocalEvent<TurbineComponent, DamageDealtEvent>(OnDamageDealt);
+        SubscribeLocalEvent<TurbineComponent, DamageChangedEvent>(OnDamageChanged);
 
         SubscribeLocalEvent<TurbineComponent, AtmosDeviceUpdateEvent>(OnUpdate);
 
@@ -246,14 +248,15 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
             $"{args.User:player} changed turbine {ent.Owner:turbine} flow rate to {ent.Comp.FlowRate:rate} and stator load to {ent.Comp.StatorLoad:load} using {args.Monitor:monitor}");
     }
 
-    private void OnDamageDealt(Entity<TurbineComponent> ent, ref DamageDealtEvent args)
+    private void OnDamageChanged(Entity<TurbineComponent> ent, ref DamageChangedEvent args)
     {
         if (ent.Comp.Ruined)
             return;
 
-        var damage = (float)args.Damage.GetTotal();
-        if (damage < 0)
+        if (!args.DamageIncreased || args.DamageDelta is not { } damageDelta)
             return;
+
+        var damage = (float) damageDelta.GetTotal();
 
         var threshold = 50;
         var ratio = damage / threshold;
