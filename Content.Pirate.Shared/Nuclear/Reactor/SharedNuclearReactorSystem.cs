@@ -13,6 +13,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 
 namespace Content.Pirate.Shared.Nuclear.Reactor;
 

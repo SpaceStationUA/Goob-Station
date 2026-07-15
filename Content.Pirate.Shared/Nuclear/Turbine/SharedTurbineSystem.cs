@@ -3,8 +3,8 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
@@ -41,7 +41,7 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         SubscribeLocalEvent<TurbineComponent, ExaminedEvent>(OnExamined);
 
         SubscribeLocalEvent<TurbineComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<TurbineComponent, RepairDoAfterEvent>(OnRepairDoAfter);
+        SubscribeLocalEvent<TurbineComponent, RepairFinishedEvent>(OnRepairDoAfter);
 
         SubscribeLocalEvent<TurbineComponent, ItemSlotInsertAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<TurbineComponent, ItemSlotEjectAttemptEvent>(OnEjectAttempt);
@@ -140,10 +140,10 @@ public abstract partial class SharedTurbineSystem : EntitySystem
             return;
         }
 
-        _tool.UseTool(args.Used, user, uid, comp.RepairDelay, comp.RepairTool, new RepairDoAfterEvent(), comp.RepairFuelCost);
+        _tool.UseTool(args.Used, user, uid, comp.RepairDelay, comp.RepairTool, new RepairFinishedEvent(), comp.RepairFuelCost);
     }
 
-    private void OnRepairDoAfter(Entity<TurbineComponent> ent, ref RepairDoAfterEvent args)
+    private void OnRepairDoAfter(Entity<TurbineComponent> ent, ref RepairFinishedEvent args)
     {
         if (args.Cancelled)
             return;
