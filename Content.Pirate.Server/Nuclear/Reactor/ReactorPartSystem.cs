@@ -28,10 +28,10 @@ public sealed partial class ReactorPartSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private NuclearReactorSystem _reactor = default!;
     [Dependency] private SharedPointLightSystem _light = default!;
-    [Dependency] private EntityQuery<NuclearPropertiesComponent> _propsQuery = default!;
-    [Dependency] private EntityQuery<NuclearReactorComponent> _reactorQuery = default!;
-    [Dependency] private EntityQuery<ReactorControlRodComponent> _controlQuery = default!;
-    [Dependency] private EntityQuery<ReactorGasChannelComponent> _channelQuery = default!;
+    private EntityQuery<NuclearPropertiesComponent> _propsQuery = default!;
+    private EntityQuery<NuclearReactorComponent> _reactorQuery = default!;
+    private EntityQuery<ReactorControlRodComponent> _controlQuery = default!;
+    private EntityQuery<ReactorGasChannelComponent> _channelQuery = default!;
 
     private static readonly ProtoId<DamageTypePrototype> Heat = "Heat";
     private static readonly ProtoId<DamageTypePrototype> Radiation = "Radiation";
@@ -75,6 +75,11 @@ public sealed partial class ReactorPartSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        _propsQuery = GetEntityQuery<NuclearPropertiesComponent>();
+        _reactorQuery = GetEntityQuery<NuclearReactorComponent>();
+        _controlQuery = GetEntityQuery<ReactorControlRodComponent>();
+        _channelQuery = GetEntityQuery<ReactorGasChannelComponent>();
 
         SubscribeLocalEvent<NuclearPropertiesComponent, MapInitEvent>(OnMapInit);
 
@@ -262,16 +267,21 @@ public sealed partial class ReactorPartSystem : EntitySystem
 
         if (inGas != null && _atmos.GetThermalEnergy(inGas) > 0)
         {
-            channel.AirContents = inGas.RemoveVolume(channel.GasVolume);
-            channel.AirContents.Volume = channel.GasVolume;
+            var incoming = inGas.RemoveVolume(channel.GasVolume);
+            incoming.Volume = channel.GasVolume;
+            channel.AirContents = incoming;
 
-            if (channel.AirContents.TotalMoles < 1)
+            if (incoming.TotalMoles < 1)
             {
                 if (processedGas != null)
-                    _atmos.Merge(processedGas, channel.AirContents);
+                    _atmos.Merge(processedGas, incoming);
                 else
-                    processedGas = channel.AirContents;
-                channel.AirContents.Clear();
+                    processedGas = incoming;
+
+                channel.AirContents = new GasMixture(channel.GasVolume)
+                {
+                    Temperature = incoming.Temperature
+                };
             }
         }
 
@@ -305,7 +315,6 @@ public sealed partial class ReactorPartSystem : EntitySystem
                 throw new Exception("ReactorPart-ReactorPart temperature calculation resulted in sub-zero value.");
 #endif
 
-            ProcessHeatEffects(other);
         }
 
         // Component-Reactor calculation
@@ -402,7 +411,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
             if (!Prob(props.Density * csa * _bias))
                 continue;
 
-            if (neutron.Velocity <= 1 && Prob(_rate * props.NeutronRadioactivity * _bias)) // neutron stimulated emission
+            if (neutron.Velocity <= 1 && props.NeutronRadioactivity >= _reactant && Prob(_rate * props.NeutronRadioactivity * _bias)) // neutron stimulated emission
             {
                 props.NeutronRadioactivity -= _reactant;
                 props.Radioactivity += _product;
@@ -413,7 +422,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
                 neutrons.Remove(neutron);
                 part.Temperature += 75f * props.NeutronRadioactivity;
             }
-            else if (neutron.Velocity <= 5 && Prob(_rate * props.Radioactivity * _bias)) // stimulated emission
+            else if (neutron.Velocity <= 5 && props.Radioactivity >= _reactant && Prob(_rate * props.Radioactivity * _bias)) // stimulated emission
             {
                 props.Radioactivity -= _reactant;
                 props.SpentFuel += _product;
@@ -437,7 +446,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
                 part.Temperature += 1; // ... not worth the adjustment
             }
         }
-        if (Prob(props.NeutronRadioactivity * csa))
+        if (props.NeutronRadioactivity >= _reactant / 2 && Prob(props.NeutronRadioactivity * csa))
         {
             var count = _random.Next(1, 6);
             for (var i = 0; i < count; i++)
@@ -447,7 +456,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
             props.NeutronRadioactivity -= _reactant / 2;
             props.Radioactivity += _product / 2;
         }
-        if (Prob(props.Radioactivity * csa))
+        if (props.Radioactivity >= _reactant / 2 && Prob(props.Radioactivity * csa))
         {
             var count = _random.Next(1, 6);
             for (var i = 0; i < count; i++)
@@ -529,7 +538,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
             var reactMolPerLiter = 0.25;
             var reactMol = reactMolPerLiter * gas.Volume;
 
-            var plasmaReactCount = (int)Math.Round((plasma - (plasma % reactMol)) / reactMol) + (Prob(plasma - (plasma % reactMol)) ? 1 : 0);
+            var plasmaReactCount = GetGasReactionCount(plasma, reactMol);
             plasmaReactCount = _random.Next(0, plasmaReactCount + 1);
             gas.AdjustMoles(Gas.Plasma, plasmaReactCount * -0.5f);
             gas.AdjustMoles(Gas.Tritium, plasmaReactCount * 2);
@@ -542,7 +551,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
             var reactMolPerLiter = 0.4;
             var reactMol = reactMolPerLiter * gas.Volume;
 
-            var co2ReactCount = (int)Math.Round((co2 - (co2 % reactMol)) / reactMol) + (Prob(co2 - (co2 % reactMol)) ? 1 : 0);
+            var co2ReactCount = GetGasReactionCount(co2, reactMol);
             co2ReactCount = _random.Next(0, co2ReactCount + 1);
             part.Temperature += Math.Min(co2ReactCount, neutronCount);
             neutronCount -= Math.Min(co2ReactCount, neutronCount);
@@ -554,7 +563,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
             var reactMolPerLiter = 0.5;
             var reactMol = reactMolPerLiter * gas.Volume;
 
-            var tritiumReactCount = (int)Math.Round((tritium - (tritium % reactMol)) / reactMol) + (Prob(tritium - (tritium % reactMol)) ? 1 : 0);
+            var tritiumReactCount = GetGasReactionCount(tritium, reactMol);
             tritiumReactCount = _random.Next(0, tritiumReactCount + 1);
             if (tritiumReactCount > 0)
             {
@@ -573,6 +582,16 @@ public sealed partial class ReactorPartSystem : EntitySystem
         }
 
         return neutronCount;
+    }
+
+    private int GetGasReactionCount(double moles, double reactMol)
+    {
+        if (reactMol <= 0)
+            return 0;
+
+        var fullBatches = (int) Math.Floor(moles / reactMol);
+        var remainder = moles - fullBatches * reactMol;
+        return fullBatches + (Prob(remainder / reactMol * 100) ? 1 : 0);
     }
 
     /// <summary>

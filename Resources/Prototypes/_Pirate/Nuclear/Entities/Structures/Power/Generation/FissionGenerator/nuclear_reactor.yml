@@ -102,7 +102,7 @@
   - type: Anchorable
     delay: 10
   - type: AtmosDevice
-  - type: AtmosMonitoringConsoleDevice # TODO: this doesn't work?
+  - type: AtmosMonitoringConsoleDevice
     navMapBlip: NuclearReactor
   - type: RadiationSource
     intensity: 0
@@ -376,7 +376,7 @@
     arrowPrototype: ReactorSmallFlowArrow
 
 - type: entity
-  parent: NuclearReactorSmall
+  parent: NuclearReactorSmallSalvage
   id: NuclearReactorSmallRandomSalvage
   suffix: "Random, Salvage"
   components:

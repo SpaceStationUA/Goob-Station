@@ -8,6 +8,7 @@ using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -22,6 +23,7 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] protected ISharedAdminLogManager AdminLog = default!;
     [Dependency] private ItemSlotsSystem _slots = default!;
+    [Dependency] private LockSystem _lock = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] protected SharedContainerSystem Container = default!;
@@ -29,12 +31,15 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
     [Dependency] private SharedNuclearMachineSystem _machine = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
-    [Dependency] protected EntityQuery<NuclearPropertiesComponent> PropsQuery = default!;
-    [Dependency] protected EntityQuery<ReactorPartComponent> PartQuery = default!;
+    protected EntityQuery<NuclearPropertiesComponent> PropsQuery = default!;
+    protected EntityQuery<ReactorPartComponent> PartQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        PropsQuery = GetEntityQuery<NuclearPropertiesComponent>();
+        PartQuery = GetEntityQuery<ReactorPartComponent>();
 
         SubscribeLocalEvent<NuclearReactorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<NuclearReactorComponent, SignalReceivedEvent>(OnSignalReceived);
@@ -60,6 +65,9 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
 
     private void OnSwapPart(Entity<NuclearReactorComponent> ent, ref ReactorSwapPartMessage args)
     {
+        if (_lock.IsLocked(ent.Owner))
+            return;
+
         var comp = ent.Comp;
         var pos = args.Position;
         if (pos.X < 0 || pos.Y < 0 || pos.X >= ent.Comp.GridWidth || pos.Y >= ent.Comp.GridHeight)
@@ -118,11 +126,16 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
 
     private void OnEjectItem(Entity<NuclearReactorComponent> ent, ref ReactorEjectItemMessage args)
     {
-        _slots.TryEjectToHands(ent.Owner, ent.Comp.PartSlot, args.Actor);
+        var item = ent.Comp.PartSlot.Item;
+        if (_slots.TryEjectToHands(ent.Owner, ent.Comp.PartSlot, args.Actor) && item is { } ejected)
+            AdminLog.Add(LogType.Action, $"{args.Actor:player} ejected {ejected:part} from {ent.Owner:target}");
     }
 
     private void OnAdjustControlRods(Entity<NuclearReactorComponent> ent, ref ReactorAdjustControlRodsMessage args)
     {
+        if (_lock.IsLocked(args.Monitor ?? ent.Owner))
+            return;
+
         if (!AdjustControlRods(ent, args.Change))
             return;
 
@@ -214,6 +227,10 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
             if (!PartQuery.TryComp(part, out var partComp) || !PropsQuery.TryComp(part, out var props))
             {
                 Log.Error($"Found bad part {ToPrettyString(part)} in reactor {ToPrettyString(ent)} in slot {i}");
+                array[i] = new ReactorSlotBUIData
+                {
+                    NeutronCount = neutrons
+                };
                 continue;
             }
 

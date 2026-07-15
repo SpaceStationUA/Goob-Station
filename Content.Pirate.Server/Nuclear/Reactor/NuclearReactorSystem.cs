@@ -57,8 +57,8 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private StationSystem _station = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
-    [Dependency] private EntityQuery<ReactorControlRodComponent> _controlQuery = default!;
-    [Dependency] private EntityQuery<ReactorGasChannelComponent> _channelQuery = default!;
+    private EntityQuery<ReactorControlRodComponent> _controlQuery = default!;
+    private EntityQuery<ReactorGasChannelComponent> _channelQuery = default!;
 
     private List<Entity<ReactorPartComponent>> _neighbors = new(4);
     private List<ValueList<ReactorNeutron>> _flux = new(7*7);
@@ -71,6 +71,9 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        _controlQuery = GetEntityQuery<ReactorControlRodComponent>();
+        _channelQuery = GetEntityQuery<ReactorGasChannelComponent>();
 
         SubscribeLocalEvent<NuclearReactorComponent, MapInitEvent>(OnMapInit);
 
@@ -360,15 +363,20 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
 
         if (inGas != null && _atmos.GetThermalEnergy(inGas) > 0)
         {
-            comp.AirContents = inGas.RemoveVolume(comp.ReactorVesselGasVolume);
+            var incoming = inGas.RemoveVolume(comp.ReactorVesselGasVolume);
+            comp.AirContents = incoming;
 
-            if (comp.AirContents != null && comp.AirContents.TotalMoles < 1)
+            if (incoming.TotalMoles < 1)
             {
                 if (processedGas != null)
-                    _atmos.Merge(processedGas, comp.AirContents);
+                    _atmos.Merge(processedGas, incoming);
                 else
-                    processedGas = comp.AirContents;
-                comp.AirContents.Clear();
+                    processedGas = incoming;
+
+                comp.AirContents = new GasMixture(comp.ReactorVesselGasVolume)
+                {
+                    Temperature = incoming.Temperature
+                };
             }
         }
 
@@ -377,6 +385,9 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
 
     private float CalculateTransferVolume(float volume, PipeNode inlet, PipeNode outlet, float dt)
     {
+        if (volume <= 0f || inlet.Air.Pressure <= 0f || inlet.Air.Temperature <= 0f || outlet.Air.Temperature <= 0f)
+            return 0f;
+
         var wantToTransfer = volume * _atmos.PumpSpeedup() * dt;
         var transferVolume = Math.Min(inlet.Air.Volume, wantToTransfer);
         var transferMoles = inlet.Air.Pressure * transferVolume / (inlet.Air.Temperature * Atmospherics.R);
@@ -567,6 +578,12 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
 
             if (GetEntity(ent.Comp.PartGrid[i]) is not { } part || !PartQuery.TryComp(part, out var partComp))
                 continue;
+
+            if (!Container.Remove(part, ent.Comp.PartsContainer))
+                continue;
+
+            partComp.Position = null;
+            DirtyField(part, partComp, nameof(ReactorPartComponent.Position));
 
             var item = part;
             if (_random.Prob(0.5f) || partComp.Melted)

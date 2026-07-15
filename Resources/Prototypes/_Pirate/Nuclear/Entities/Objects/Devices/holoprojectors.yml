@@ -13,10 +13,3 @@
   - type: Tag
     tags:
       - HolofanProjector
-  # - type: StaticPrice
-  #   price: 50
-  # - type: GuideHelp
-  #   guides:
-  #   - AtmosTools
-  #   - Fires
-  #   - Spacing

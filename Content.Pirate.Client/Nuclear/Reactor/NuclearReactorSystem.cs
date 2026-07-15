@@ -12,8 +12,8 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
 {
     [Dependency] private IResourceCache _res = default!;
     [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private EntityQuery<NuclearReactorComponent> _query = default!;
-    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
+    private EntityQuery<NuclearReactorComponent> _query = default!;
+    private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     private static readonly ResPath RsiPath = new("/Textures/_Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_component_cap.rsi");
     private const string EmptyState = "empty_cap";
@@ -21,6 +21,9 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
     public override void Initialize()
     {
         base.Initialize();
+
+        _query = GetEntityQuery<NuclearReactorComponent>();
+        _spriteQuery = GetEntityQuery<SpriteComponent>();
 
         SubscribeLocalEvent<NuclearReactorComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<NuclearReactorComponent, EntInsertedIntoContainerMessage>(OnPartInserted);
@@ -70,7 +73,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
         if (args.Container != ent.Comp.PartsContainer || !PartQuery.TryComp(args.Entity, out var part) || part.Position is not { } pos)
             return;
 
-        var color = PropsQuery.Comp(ent).Color;
+        var color = PropsQuery.Comp(args.Entity).Color;
         var map = FormatMap(pos);
         UpdateRodAppearance(ent.Owner, map, part.IconStateCap, color);
     }

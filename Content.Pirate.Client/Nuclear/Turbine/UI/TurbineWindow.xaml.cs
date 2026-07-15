@@ -93,11 +93,11 @@ public sealed partial class TurbineWindow : FancyWindow
                 OnChangeFlowRate?.Invoke(TurbineFlowRateSlider.Value);
         };
         FlowRateDecrease.OnPressed += _ => OnChangeFlowRate?.Invoke(_flowRate - 100);
-        FlowRateDecrease.OnButtonDown += _ => _repeatQueue.Add(FlowRateDecrease, _repeatDelay);
+        FlowRateDecrease.OnButtonDown += _ => _repeatQueue[FlowRateDecrease] = _repeatDelay;
         FlowRateDecrease.OnButtonUp += _ => _repeatQueue.Remove(FlowRateDecrease);
 
         FlowRateIncrease.OnPressed += _ => OnChangeFlowRate?.Invoke(_flowRate + 100);
-        FlowRateIncrease.OnButtonDown += _ => _repeatQueue.Add(FlowRateIncrease, _repeatDelay);
+        FlowRateIncrease.OnButtonDown += _ => _repeatQueue[FlowRateIncrease] = _repeatDelay;
         FlowRateIncrease.OnButtonUp += _ => _repeatQueue.Remove(FlowRateIncrease);
 
         // Handle stator load
@@ -106,19 +106,19 @@ public sealed partial class TurbineWindow : FancyWindow
         TurbineStatorLoadLabel.OnTextEntered += _ => StatorTextChanged(true);
 
         StatorLoadDecreaseLarge.OnPressed += _ => OnChangeStatorLoad?.Invoke(_statorLoad - 1000);
-        StatorLoadDecreaseLarge.OnButtonDown += _ => _repeatQueue.Add(StatorLoadDecreaseLarge, _repeatDelay);
+        StatorLoadDecreaseLarge.OnButtonDown += _ => _repeatQueue[StatorLoadDecreaseLarge] = _repeatDelay;
         StatorLoadDecreaseLarge.OnButtonUp += _ => _repeatQueue.Remove(StatorLoadDecreaseLarge);
 
         StatorLoadDecrease.OnPressed += _ => OnChangeStatorLoad?.Invoke(_statorLoad - 100);
-        StatorLoadDecrease.OnButtonDown += _ => _repeatQueue.Add(StatorLoadDecrease, _repeatDelay);
+        StatorLoadDecrease.OnButtonDown += _ => _repeatQueue[StatorLoadDecrease] = _repeatDelay;
         StatorLoadDecrease.OnButtonUp += _ => _repeatQueue.Remove(StatorLoadDecrease);
 
         StatorLoadIncrease.OnPressed += _ => OnChangeStatorLoad?.Invoke(_statorLoad + 100);
-        StatorLoadIncrease.OnButtonDown += _ => _repeatQueue.Add(StatorLoadIncrease, _repeatDelay);
+        StatorLoadIncrease.OnButtonDown += _ => _repeatQueue[StatorLoadIncrease] = _repeatDelay;
         StatorLoadIncrease.OnButtonUp += _ => _repeatQueue.Remove(StatorLoadIncrease);
 
         StatorLoadIncreaseLarge.OnPressed += _ => OnChangeStatorLoad?.Invoke(_statorLoad + 1000);
-        StatorLoadIncreaseLarge.OnButtonDown += _ => _repeatQueue.Add(StatorLoadIncreaseLarge, _repeatDelay);
+        StatorLoadIncreaseLarge.OnButtonDown += _ => _repeatQueue[StatorLoadIncreaseLarge] = _repeatDelay;
         StatorLoadIncreaseLarge.OnButtonUp += _ => _repeatQueue.Remove(StatorLoadIncreaseLarge);
 
         CTabContainer.SetTabTitle(0, Loc.GetString("comp-turbine-ui-tab-main"));

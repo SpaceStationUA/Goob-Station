@@ -8,11 +8,13 @@ namespace Content.Pirate.Client.Nuclear;
 public sealed partial class NuclearPropertiesSystem : EntitySystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
+    private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _spriteQuery = GetEntityQuery<SpriteComponent>();
 
         SubscribeLocalEvent<NuclearPropertiesComponent, ComponentInit>(OnInit);
     }

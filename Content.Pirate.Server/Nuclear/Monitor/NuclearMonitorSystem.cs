@@ -16,12 +16,15 @@ public sealed partial class NuclearMonitorSystem : EntitySystem
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private EntityQuery<DeviceLinkSourceComponent> _sourceQuery = default!;
-    [Dependency] private EntityQuery<NuclearMonitorComponent> _query = default!;
+    private EntityQuery<DeviceLinkSourceComponent> _sourceQuery = default!;
+    private EntityQuery<NuclearMonitorComponent> _query = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _sourceQuery = GetEntityQuery<DeviceLinkSourceComponent>();
+        _query = GetEntityQuery<NuclearMonitorComponent>();
 
         SubscribeLocalEvent<NuclearMonitorComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<NuclearMonitorComponent, PortDisconnectedEvent>(OnPortDisconnected);

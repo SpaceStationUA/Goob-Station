@@ -57,7 +57,7 @@ comp-nuclear-reactor-ui-reactor-temp = Температура
 comp-nuclear-reactor-ui-reactor-rads = Радіація
 comp-nuclear-reactor-ui-reactor-therm = Теплова потужність
 comp-nuclear-reactor-ui-reactor-control = Керувальні стрижні
-comp-nuclear-reactor-ui-therm-format = { POWERWATTS($power) }т
+comp-nuclear-reactor-ui-therm-format = { POWERWATTS($power) }
 
 comp-nuclear-reactor-ui-footer-left = Небезпека: висока радіація.
 comp-nuclear-reactor-ui-footer-right = 0.8 РЕД. 3

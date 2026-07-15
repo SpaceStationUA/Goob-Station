@@ -7,9 +7,16 @@ namespace Content.Pirate.Shared.Nuclear;
 public abstract partial class SharedNuclearMachineSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] protected EntityQuery<NuclearMachineComponent> Query = default!;
+    protected EntityQuery<NuclearMachineComponent> Query = default!;
 
     private TimeSpan _logDelay = TimeSpan.FromSeconds(1.5); // admin logs arent made unless unchanged for this long, to avoid spamming
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        Query = GetEntityQuery<NuclearMachineComponent>();
+    }
 
     protected void SendLog(Entity<NuclearMachineComponent> ent)
     {

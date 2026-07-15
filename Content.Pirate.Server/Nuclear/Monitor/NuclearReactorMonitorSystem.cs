@@ -11,11 +11,13 @@ public sealed partial class NuclearReactorMonitorSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private NuclearMonitorSystem _monitor = default!;
     [Dependency] private SharedNuclearReactorSystem _reactor = default!;
-    [Dependency] private EntityQuery<NuclearReactorComponent> _query = default!;
+    private EntityQuery<NuclearReactorComponent> _query = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _query = GetEntityQuery<NuclearReactorComponent>();
 
         SubscribeLocalEvent<NuclearMonitorComponent, ReactorAdjustControlRodsMessage>(_monitor.RelayMessage);
     }

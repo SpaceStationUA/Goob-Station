@@ -25,14 +25,19 @@ public sealed partial class NuclearCentrifugeSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedStackSystem _stack = default!;
-    [Dependency] private EntityQuery<NuclearPropertiesComponent> _propsQuery = default!;
-    [Dependency] private EntityQuery<ReactorPartComponent> _partQuery = default!;
-    [Dependency] private EntityQuery<ReactorFuelRodComponent> _fuelQuery = default!;
-    [Dependency] private EntityQuery<StackComponent> _stackQuery = default!;
+    private EntityQuery<NuclearPropertiesComponent> _propsQuery = default!;
+    private EntityQuery<ReactorPartComponent> _partQuery = default!;
+    private EntityQuery<ReactorFuelRodComponent> _fuelQuery = default!;
+    private EntityQuery<StackComponent> _stackQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _propsQuery = GetEntityQuery<NuclearPropertiesComponent>();
+        _partQuery = GetEntityQuery<ReactorPartComponent>();
+        _fuelQuery = GetEntityQuery<ReactorFuelRodComponent>();
+        _stackQuery = GetEntityQuery<StackComponent>();
 
         SubscribeLocalEvent<ActiveNuclearCentrifugeComponent, ComponentInit>(OnActiveInit);
         SubscribeLocalEvent<ActiveNuclearCentrifugeComponent, ComponentShutdown>(OnActiveShutdown);
@@ -51,11 +56,17 @@ public sealed partial class NuclearCentrifugeSystem : EntitySystem
 
             // keep spawning stacks if there are more than it can fit in 1 item
             var failed = true;
-            while (comp.FuelToExtract > 1)
+            while (comp.FuelToExtract >= 1)
             {
-                failed = false;
                 var item = PredictedSpawnNextToOrDrop(comp.Result, uid);
-                var stack = _stackQuery.Comp(item);
+                if (!_stackQuery.TryComp(item, out var stack))
+                {
+                    Log.Error($"Nuclear centrifuge result {ToPrettyString(item)} is missing {nameof(StackComponent)}");
+                    PredictedQueueDel(item);
+                    break;
+                }
+
+                failed = false;
                 _stack.SetCount((item, stack), (int) Math.Floor(comp.FuelToExtract));
                 _stack.TryMergeToContacts((item, stack, null));
                 comp.FuelToExtract -= stack.Count;

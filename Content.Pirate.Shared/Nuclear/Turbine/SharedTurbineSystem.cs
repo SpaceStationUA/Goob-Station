@@ -28,7 +28,7 @@ public abstract partial class SharedTurbineSystem : EntitySystem
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private DamageableSystem _damage = default!;
-    [Dependency] private EntityQuery<NuclearPropertiesComponent> _propsQuery = default!;
+    private EntityQuery<NuclearPropertiesComponent> _propsQuery = default!;
 
     private const string BladeContainer = "blade_slot";
     private const string StatorContainer = "stator_slot";
@@ -36,6 +36,8 @@ public abstract partial class SharedTurbineSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        _propsQuery = GetEntityQuery<NuclearPropertiesComponent>();
 
         SubscribeLocalEvent<TurbineComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<TurbineComponent, ExaminedEvent>(OnExamined);
@@ -185,9 +187,11 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         {
             case BladeContainer:
                 ent.Comp.CurrentBlade = args.Entity;
+                DirtyField(ent, ent.Comp, nameof(TurbineComponent.CurrentBlade));
                 break;
             case StatorContainer:
                 ent.Comp.CurrentStator = args.Entity;
+                DirtyField(ent, ent.Comp, nameof(TurbineComponent.CurrentStator));
                 break;
             default:
                 return;
@@ -201,9 +205,11 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         {
             case BladeContainer:
                 ent.Comp.CurrentBlade = null;
+                DirtyField(ent, ent.Comp, nameof(TurbineComponent.CurrentBlade));
                 break;
             case StatorContainer:
                 ent.Comp.CurrentStator = null;
+                DirtyField(ent, ent.Comp, nameof(TurbineComponent.CurrentStator));
                 break;
             default:
                 return;
@@ -239,6 +245,8 @@ public abstract partial class SharedTurbineSystem : EntitySystem
             ent.Comp.TurbineMass = Math.Max(200, 200 * blade.Density);
             ent.Comp.BladeHealthMax = (int)Math.Max(1, 5 * blade.Hardness);
             ent.Comp.BladeHealth = ent.Comp.BladeHealthMax;
+            DirtyField(ent, ent.Comp, nameof(TurbineComponent.BladeHealthMax));
+            DirtyField(ent, ent.Comp, nameof(TurbineComponent.BladeHealth));
         }
 
         if (_propsQuery.TryComp(ent.Comp.CurrentStator, out var stator))
@@ -285,6 +293,9 @@ public abstract partial class SharedTurbineSystem : EntitySystem
 
     public bool SetStatorLoad(Entity<TurbineComponent> ent, float load)
     {
+        if (!float.IsFinite(load))
+            return false;
+
         load = Math.Clamp(load, ent.Comp.MinStatorLoad, ent.Comp.MaxStatorLoad);
         if (ent.Comp.StatorLoad == load)
             return false;
@@ -296,6 +307,9 @@ public abstract partial class SharedTurbineSystem : EntitySystem
 
     public bool SetFlowRate(Entity<TurbineComponent> ent, float rate)
     {
+        if (!float.IsFinite(rate))
+            return false;
+
         rate = Math.Clamp(rate, 0, ent.Comp.FlowRateMax);
         if (ent.Comp.FlowRate == rate)
             return false;

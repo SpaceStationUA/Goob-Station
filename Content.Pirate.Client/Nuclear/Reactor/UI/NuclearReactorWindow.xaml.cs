@@ -83,19 +83,19 @@ public sealed partial class NuclearReactorWindow : FancyWindow
         EjectItem.OnPressed += _ => OnEjectItem?.Invoke();
 
         ControlRodsInsertLarge.OnPressed += _ => AdjustControlRods(0.1f);
-        ControlRodsInsertLarge.OnButtonDown += _ => _repeatQueue.Add(ControlRodsInsertLarge, _repeatDelay);
+        ControlRodsInsertLarge.OnButtonDown += _ => _repeatQueue[ControlRodsInsertLarge] = _repeatDelay;
         ControlRodsInsertLarge.OnButtonUp += _ => _repeatQueue.Remove(ControlRodsInsertLarge);
 
         ControlRodsInsert.OnPressed += _ => AdjustControlRods(0.01f);
-        ControlRodsInsert.OnButtonDown += _ => _repeatQueue.Add(ControlRodsInsert, _repeatDelay);
+        ControlRodsInsert.OnButtonDown += _ => _repeatQueue[ControlRodsInsert] = _repeatDelay;
         ControlRodsInsert.OnButtonUp += _ => _repeatQueue.Remove(ControlRodsInsert);
 
         ControlRodsRemove.OnPressed += _ => AdjustControlRods(-0.01f);
-        ControlRodsRemove.OnButtonDown += _ => _repeatQueue.Add(ControlRodsRemove, _repeatDelay);
+        ControlRodsRemove.OnButtonDown += _ => _repeatQueue[ControlRodsRemove] = _repeatDelay;
         ControlRodsRemove.OnButtonUp += _ => _repeatQueue.Remove(ControlRodsRemove);
 
         ControlRodsRemoveLarge.OnPressed += _ => AdjustControlRods(-0.1f);
-        ControlRodsRemoveLarge.OnButtonDown += _ => _repeatQueue.Add(ControlRodsRemoveLarge, _repeatDelay);
+        ControlRodsRemoveLarge.OnButtonDown += _ => _repeatQueue[ControlRodsRemoveLarge] = _repeatDelay;
         ControlRodsRemoveLarge.OnButtonUp += _ => _repeatQueue.Remove(ControlRodsRemoveLarge);
 
         TargetTemperature.OnPressed += _ => ChangeTemp();
@@ -283,7 +283,6 @@ public sealed partial class NuclearReactorWindow : FancyWindow
         var mid = pointA+((pointB-pointA) / 2);
         Color result;
 
-        // TODO: kys
         if (value < pointA && pointA > 0)
             result = Color.InterpolateBetween(Color.DarkBlue, Color.FromHex("#31843E"), (float)(value / pointA));
         else if (value >= pointA && value < mid)

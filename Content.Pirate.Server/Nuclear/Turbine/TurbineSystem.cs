@@ -16,6 +16,7 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Pirate.Shared.Nuclear;
 using Content.Pirate.Shared.Nuclear.Turbine;
@@ -36,6 +37,7 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private LockSystem _lock = default!;
     [Dependency] private NuclearMachineSystem _machine = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
@@ -74,7 +76,11 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         SetPowerSupply(ent, (int) Math.Floor(supplier.CurrentSupply));
 
         if (!_machine.GetPipes(uid, out var inlet, out var outlet))
+        {
+            SetLastGen(ent, 0);
+            supplier.MaxSupply = 0;
             return;
+        }
 
         if (comp.CurrentBlade == null || comp.CurrentStator == null)
             SetRuined(ent);
@@ -86,8 +92,8 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         var airContents = inlet.Air.RemoveVolume(transferVolume) ?? new GasMixture();
 
         comp.LastVolumeTransfer = transferVolume;
-        comp.Overtemp = airContents.Temperature >= comp.MaxTemp - 500;
-        comp.Undertemp = airContents.Temperature <= comp.MinTemp;
+        SetOvertemp(ent, airContents.Temperature >= comp.MaxTemp - 500);
+        SetUndertemp(ent, airContents.Temperature <= comp.MinTemp);
 
         // Dump gas into atmosphere
         if (comp.Ruined || airContents.Temperature >= comp.MaxTemp)
@@ -161,10 +167,10 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         }
 
         // Calculate power generation
-        SetLastGen(ent, comp.PowerMultiplier * nextGen * (float)(1 / Math.Cosh(0.01 * (comp.RPM - comp.BestRPM))));
-
-        if (float.IsNaN(comp.LastGen))
-            throw new NotFiniteNumberException("Turbine made NaN power");
+        var generated = comp.PowerMultiplier * nextGen * (float)(1 / Math.Cosh(0.01 * (comp.RPM - comp.BestRPM)));
+        if (!float.IsFinite(generated))
+            throw new NotFiniteNumberException("Turbine made non-finite power");
+        SetLastGen(ent, generated);
 
         SetOverspeed(ent, comp.RPM > comp.BestRPM * 1.2);
 
@@ -189,6 +195,9 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
 
     private float CalculateTransferVolume(TurbineComponent comp, PipeNode inlet, PipeNode outlet, float dt)
     {
+        if (comp.FlowRate <= 0f || inlet.Air.Pressure <= 0f || inlet.Air.Temperature <= 0f || outlet.Air.Temperature <= 0f)
+            return 0f;
+
         var wantToTransfer = comp.FlowRate * _atmos.PumpSpeedup() * dt;
         var transferVolume = Math.Min(inlet.Air.Volume, wantToTransfer);
         var transferMoles = inlet.Air.Pressure * transferVolume / (inlet.Air.Temperature * Atmospherics.R);
@@ -232,12 +241,18 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
 
     private void OnChangeFlowRate(Entity<TurbineComponent> ent, ref TurbineChangeFlowRateMessage args)
     {
+        if (_lock.IsLocked(args.Monitor ?? ent.Owner))
+            return;
+
         if (SetFlowRate(ent, args.FlowRate))
             _machine.QueueLog(ent, args.Actor, args.Monitor);
     }
 
     private void OnChangeStatorLoad(Entity<TurbineComponent> ent, ref TurbineChangeStatorLoadMessage args)
     {
+        if (_lock.IsLocked(args.Monitor ?? ent.Owner))
+            return;
+
         if (SetStatorLoad(ent, args.StatorLoad))
             _machine.QueueLog(ent, args.Actor, args.Monitor);
     }
@@ -270,12 +285,26 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         }
 
         if (ent.Comp.RPM > ent.Comp.BestRPM / 6)
+        {
             TearApart(ent);
-        Del(ent.Comp.CurrentBlade);
+            return;
+        }
+
+        if (ent.Comp.CurrentBlade is { } blade)
+            Del(blade);
+        ent.Comp.CurrentBlade = null;
+        DirtyField(ent, ent.Comp, nameof(TurbineComponent.CurrentBlade));
+
         if (_random.Prob(Math.Clamp(ratio - 1f, 0, 1)))
         {
-            Del(ent.Comp.CurrentStator);
+            if (ent.Comp.CurrentStator is { } stator)
+                Del(stator);
+            ent.Comp.CurrentStator = null;
+            DirtyField(ent, ent.Comp, nameof(TurbineComponent.CurrentStator));
         }
+
+        SetRPM(ent, 0);
         SetRuined(ent);
+        UpdateAppearance(ent);
     }
 }

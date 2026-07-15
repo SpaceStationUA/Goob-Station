@@ -34,10 +34,12 @@ public sealed partial class TurbineBUI(EntityUid owner, Enum uiKey) : BoundUserI
         if (EntMan.TryGetComponent<TurbineComponent>(uid, out var turbine))
             return (uid, turbine);
 
-        if (EntMan.GetComponent<NuclearMonitorComponent>(uid).Linked is { } linked)
+        if (EntMan.TryGetComponent<NuclearMonitorComponent>(uid, out var monitorComp) &&
+            monitorComp.Linked is { } linked &&
+            EntMan.TryGetComponent<TurbineComponent>(linked, out var linkedTurbine))
         {
             monitor = uid;
-            return (linked, EntMan.GetComponent<TurbineComponent>(linked));
+            return (linked, linkedTurbine);
         }
 
         return null;

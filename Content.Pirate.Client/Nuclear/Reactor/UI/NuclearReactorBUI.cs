@@ -43,10 +43,12 @@ public sealed class NuclearReactorBUI(EntityUid owner, Enum uiKey) : BoundUserIn
         if (EntMan.TryGetComponent<NuclearReactorComponent>(uid, out var reactor))
             return (uid, reactor);
 
-        if (EntMan.GetComponent<NuclearMonitorComponent>(uid).Linked is { } linked)
+        if (EntMan.TryGetComponent<NuclearMonitorComponent>(uid, out var monitorComp) &&
+            monitorComp.Linked is { } linked &&
+            EntMan.TryGetComponent<NuclearReactorComponent>(linked, out var linkedReactor))
         {
             monitor = uid;
-            return (linked, EntMan.GetComponent<NuclearReactorComponent>(linked));
+            return (linked, linkedReactor);
         }
 
         return null;
