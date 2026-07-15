@@ -5,9 +5,10 @@ using Content.Goobstation.Maths.FixedPoint;
 using Content.Server.Pirate.Blood.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Forensics.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -33,7 +34,6 @@ public sealed class BloodRegenerationPirateSystem : EntitySystem
         var query = EntityQueryEnumerator<BloodstreamComponent>();
         while (query.MoveNext(out var uid, out var blood))
         {
-            // Align with bloodstream tick: run only when its tick is due (before or after base system advances it).
             if (curTime < blood.NextUpdate)
                 continue;
 
@@ -43,7 +43,7 @@ public sealed class BloodRegenerationPirateSystem : EntitySystem
             if (!_solutions.ResolveSolution(uid, blood.BloodSolutionName, ref blood.BloodSolution, out var bloodSolution))
                 continue;
 
-            TryDoNaturalRegeneration((uid, blood), bloodSolution).ToString();
+            TryDoNaturalRegeneration((uid, blood), bloodSolution);
         }
     }
 
@@ -76,9 +76,10 @@ public sealed class BloodRegenerationPirateSystem : EntitySystem
 
         if (usedThirst > FixedPoint2.Zero && thirstComp is not null)
             _thirst.ModifyThirst(ent, thirstComp, (float)-usedThirst);
+
         if (amount > FixedPoint2.Zero)
         {
-            return _bloodstream.TryModifyBloodLevel(ent.AsNullable(), amount);
+             return _bloodstream.TryModifyBloodLevel(ent.AsNullable(), amount);
         }
 
         // If we do it by _bloodstream.TryModifyBloodLevel, it will create blood puddles, soo we do it manually

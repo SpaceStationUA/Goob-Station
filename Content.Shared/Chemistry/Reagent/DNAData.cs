@@ -12,10 +12,7 @@ public sealed partial class DnaData : ReagentData
 
     public override ReagentData Clone()
     {
-        return new DnaData
-        {
-            DNA = DNA,
-        };
+        return new DnaData(this); //Pirate
     }
     [DataField] // Goobstation
     public TimeSpan Freshness = TimeSpan.Zero; // Goobstation
@@ -23,12 +20,16 @@ public sealed partial class DnaData : ReagentData
     [DataField]
     public bool VampireToxin = false; // Pirate
 
+    [DataField]
+    public bool TastyBlood = false; // Pirate
+
     // Goobstation start - fix solution shallow copy
     public DnaData(DnaData other)
     {
         DNA = other.DNA;
         Freshness = other.Freshness;
         VampireToxin = other.VampireToxin; // Pirate
+        TastyBlood = other.TastyBlood; // Pirate
     }
     // Goobstation End
 
@@ -40,11 +41,13 @@ public sealed partial class DnaData : ReagentData
         }
 
         var otherData = (DnaData)other; // Pirate
-        return otherData.DNA == DNA && otherData.VampireToxin == VampireToxin; // Pirate
+        return otherData.DNA == DNA
+            && otherData.VampireToxin == VampireToxin // Pirate
+            && otherData.TastyBlood == TastyBlood; // Pirate
     }
 
     public override int GetHashCode()
     {
-        return DNA.GetHashCode();
+        return HashCode.Combine(DNA, VampireToxin, TastyBlood); // Pirate
     }
 }
