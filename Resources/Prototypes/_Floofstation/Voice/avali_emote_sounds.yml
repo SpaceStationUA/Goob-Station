@@ -1,16 +1,3 @@
-# SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
-# SPDX-FileCopyrightText: 2024 Kira Bridgeton <161087999+Verbalase@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 AstroDogeDX <48888500+AstroDogeDX@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 CerberusWolfie <wb.johnb.willis@gmail.com>
-# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-# SPDX-FileCopyrightText: 2025 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Marty <martynashagriefer@gmail.com>
-# SPDX-FileCopyrightText: 2025 NotActuallyMarty <martynashagriefer@gmail.com>
-# SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
-# SPDX-FileCopyrightText: 2025 loltart <159829224+loltart@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 loltart <lo1tartyt@gmail.com>
-#
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: soundCollection
@@ -28,6 +15,13 @@
   params:
     variation: 0.125
   sounds:
+    # Pirate: Resomi bird-call emote mappings.
+    Scree:
+      collection: ResomiScrees
+    Call:
+      collection: ResomiCalls
+    Squawk:
+      collection: ResomiSquawk
     Scream:
       collection: AvaliScreams
     Laugh:
@@ -52,8 +46,9 @@
       collection: BikeHorn
     Sigh:
       collection: MaleSigh
+    # Pirate: source Avali cry.
     Crying:
-      collection: MaleCry
+      path: /Audio/_Pirate/Voice/Avali/avali_cry.ogg
     Whistle:
       collection: Whistles
     Weh:
@@ -72,12 +67,21 @@
       collection: MaleDeathGasp
     Gulp: # Goob
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
+    Belch: # Frontier
+      collection: Belch # Frontier
 
 - type: emoteSounds
   id: FemaleAvaliEmote
   params:
     variation: 0.125
   sounds:
+    # Pirate: Resomi bird-call emote mappings.
+    Scree:
+      collection: ResomiScrees
+    Call:
+      collection: ResomiCalls
+    Squawk:
+      collection: ResomiSquawk
     Scream:
       collection: AvaliScreams
     Laugh:
@@ -102,8 +106,9 @@
       collection: CluwneHorn
     Sigh:
       collection: FemaleSigh
+    # Pirate: source Avali cry.
     Crying:
-      collection: FemaleCry
+      path: /Audio/_Pirate/Voice/Avali/avali_cry.ogg
     Whistle:
       collection: Whistles
     Weh:
@@ -122,3 +127,5 @@
       collection: FemaleDeathGasp
     Gulp: # Goob
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
+    Belch: # Frontier
+      collection: Belch # Frontier

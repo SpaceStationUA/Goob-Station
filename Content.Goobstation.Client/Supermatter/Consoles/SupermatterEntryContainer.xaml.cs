@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Discoded <33738298+Discoded@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
@@ -131,14 +128,17 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
 
                 // Update gas bars
                 var atmosphereSystem = _entManager.System<AtmosphereSystem>();
-                var gases = atmosphereSystem.Gases.OrderByDescending(gas => GetStoredGas(gas, focusData));
+                // Pirate: Cache the parsed gas values for sorting and display.
+                var gases = atmosphereSystem.Gases
+                    .Select(gas => (Gas: gas, Amount: GetStoredGas(gas, focusData)))
+                    .OrderByDescending(gas => gas.Amount);
                 var index = 0;
 
-                foreach (var gas in gases)
+                foreach (var (gas, amount) in gases)
                 {
                     var name = gas.Name;
                     var color = Color.FromHex(gas.Color.StartsWith("#") ? gas.Color : $"#{gas.Color}");
-                    var value = GetStoredGas(gas, focusData) / focusData.Value.AbsorbedMoles * 100;
+                    var value = amount / focusData.Value.AbsorbedMoles * 100;
 
                     //Log.Debug(string.Format("{0:N2}", value));
 
@@ -151,12 +151,12 @@ public sealed partial class SupermatterEntryContainer : BoxContainer
 
     private float GetStoredGas(GasPrototype gas, SupermatterFocusData? focusData)
     {
-        var id = int.Parse(gas.ID);
-
-        if (focusData == null)
+        if (focusData is null)
             return 0;
 
-        return focusData.Value.GasStorage[(Gas)id];
+        Gas id = (Gas) Enum.Parse(typeof(Gas), gas.ID);
+
+        return focusData.Value.GasStorage[id];
     }
 
     private void UpdateEngineBar(ProgressBar bar, PanelContainer border, float value, float leftSize, float rightSize, Color leftColor, Color middleColor, Color rightColor)

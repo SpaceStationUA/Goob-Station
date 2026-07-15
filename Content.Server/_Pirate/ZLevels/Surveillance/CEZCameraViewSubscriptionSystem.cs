@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Linq;
 using Content.Server._Pirate.ZLevels.Core;
 using Content.Server.SurveillanceCamera;
+using Content.Shared.SurveillanceCamera.Components; // Pirate: multiz - SurveillanceCameraComponent moved to shared upstream
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Content.Shared._Pirate.ZLevels.Surveillance;

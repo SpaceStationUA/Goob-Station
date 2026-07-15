@@ -358,9 +358,7 @@ public sealed class CEZLevelLadderSystem : EntitySystem
 
     private bool IsWeightless(EntityUid user)
     {
-        return TryComp<PhysicsComponent>(user, out var physics) &&
-               TryComp(user, out TransformComponent? xform) &&
-               _gravity.IsWeightless(user, physics, xform);
+        return _gravity.IsWeightless(user); // Pirate: multiz - IsWeightless now reads cached GravityAffectedComponent, takes only the entity
     }
 
     private void StartFallingFromUpperOpening(EntityUid user)

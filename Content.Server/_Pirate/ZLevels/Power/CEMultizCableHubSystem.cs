@@ -28,7 +28,7 @@ public sealed class CEMultizCableHubSystem : EntitySystem
 
         foreach (var (stack, amount) in ent.Comp.SupportLossStacks)
         {
-            _stack.Spawn(amount, stack, args.Transform.Coordinates);
+            _stack.SpawnAtPosition(amount, stack, args.Transform.Coordinates); // Pirate: multiz - StackSystem.Spawn renamed to SpawnAtPosition upstream
         }
 
         QueueDel(ent.Owner);

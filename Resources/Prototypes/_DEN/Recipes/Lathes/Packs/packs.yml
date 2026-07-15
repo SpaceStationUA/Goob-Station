@@ -1,0 +1,7 @@
+- type: latheRecipePack
+  id: TentsStatic
+  recipes:
+  - LeatherTentWall
+  - ClothTentWall
+  - LeatherTentFlap
+  - ClothTentFlap

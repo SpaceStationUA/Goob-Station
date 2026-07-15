@@ -51,9 +51,9 @@ public sealed class CEZLevelLadderRadialMenuBUI : BoundUserInterface
         _menu.SetButtons(ConvertEntries(state.Entries));
     }
 
-    private List<RadialMenuOption> ConvertEntries(List<RadialSelectorEntry> entries)
+    private List<RadialMenuOptionBase> ConvertEntries(List<RadialSelectorEntry> entries) // Pirate: multiz - RadialMenuOption renamed to RadialMenuOptionBase upstream
     {
-        var result = new List<RadialMenuOption>(entries.Count);
+        var result = new List<RadialMenuOptionBase>(entries.Count);
 
         foreach (var entry in entries)
         {
@@ -62,7 +62,7 @@ public sealed class CEZLevelLadderRadialMenuBUI : BoundUserInterface
 
             result.Add(new RadialMenuActionOption<string>(OnSelected, entry.Prototype)
             {
-                Sprite = entry.Icon,
+                IconSpecifier = RadialMenuIconSpecifier.With(entry.Icon), // Pirate: multiz - Sprite replaced by IconSpecifier upstream
                 ToolTip = GetTooltip(entry.Prototype),
             });
         }

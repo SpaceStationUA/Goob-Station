@@ -77,8 +77,7 @@ public sealed class VampirismSystem : EntitySystem
         // Mark all DNA data in the solution with VampireToxin
         foreach (var reagent in solution.Contents)
         {
-            var dnaDataList = reagent.Reagent.EnsureReagentData().OfType<DnaData>().ToList();
-            foreach (var dnaData in dnaDataList)
+            foreach (var dnaData in reagent.Reagent.EnsureReagentData().OfType<DnaData>())
             {
                 dnaData.VampireToxin = true;
             }

@@ -125,13 +125,13 @@ public sealed partial class CMUZLevelShootingSystem : EntitySystem
 
     private bool TryGetReadyGun(EntityUid user, string noGunMessage, string requiresWieldMessage)
     {
-        if (!_gun.TryGetGun(user, out var gunUid, out _))
+        if (!_gun.TryGetGun(user, out var gun)) // Pirate: multiz - TryGetGun now returns Entity<GunComponent>
         {
             PopupSelf(user, noGunMessage);
             return false;
         }
 
-        if (!IsReadyGun(gunUid))
+        if (!IsReadyGun(gun.Owner))
         {
             PopupSelf(user, requiresWieldMessage);
             return false;
@@ -141,7 +141,7 @@ public sealed partial class CMUZLevelShootingSystem : EntitySystem
     }
 
     private bool HasReadyGun(EntityUid user) =>
-        _gun.TryGetGun(user, out var gunUid, out _) && IsReadyGun(gunUid);
+        _gun.TryGetGun(user, out var gun) && IsReadyGun(gun.Owner); // Pirate: multiz - TryGetGun now returns Entity<GunComponent>
 
     private bool IsReadyGun(EntityUid gunUid) =>
         !TryComp<WieldableComponent>(gunUid, out var wieldable) || wieldable.Wielded;

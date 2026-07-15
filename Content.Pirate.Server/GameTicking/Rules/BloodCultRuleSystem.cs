@@ -36,7 +36,7 @@ using Content.Shared.BloodCult.Components;
 using Content.Server.BloodCult.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Server.Administration.Systems;
+using Content.Shared.Administration.Systems;
 using Content.Server.Popups;
 using Content.Shared.Popups;
 using Content.Shared.Body.Systems;
@@ -48,6 +48,7 @@ using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Roles.Components;
 using Content.Shared.Localizations;
 using Content.Shared.Pinpointer;
 using Content.Shared.Ghost;
@@ -717,6 +718,20 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 
 		component = default!;
 		return false;
+	}
+
+	public int GetShuttleCurseCharges()
+	{
+		return TryGetActiveRule(out var component) ? component.ShuttleCurseCharges : 0;
+	}
+
+	public bool TryConsumeShuttleCurseCharge()
+	{
+		if (!TryGetActiveRule(out var component) || component.ShuttleCurseCharges <= 0)
+			return false;
+
+		component.ShuttleCurseCharges--;
+		return true;
 	}
 
 	private void OnGetBriefing(EntityUid uid, BloodCultRoleComponent comp, ref GetBriefingEvent args)

@@ -8,6 +8,7 @@ using Content.MapRenderer.Extensions;
 using Content.MapRenderer.Painters;
 using Content.Shared._Pirate.ZLevels.Mapping.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.UnitTesting.Pool; // Pirate: multiz - ExternalTestContext moved to Robust.UnitTesting.Pool upstream
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 

@@ -40,7 +40,7 @@ public sealed partial class CEZLevelsSystem
         SubscribeLocalEvent<ItemComponent, DroppedEvent>(OnItemDropped);
         SubscribeLocalEvent<ItemComponent, MoveEvent>(OnItemMoved);
         SubscribeLocalEvent<ItemComponent, IsWeightlessEvent>(OnItemIsWeightless);
-        SubscribeLocalEvent<ItemComponent, ThrownEvent>(OnItemThrown);
+        SubscribeLocalEvent<ItemComponent, ThrowEvent>(OnItemThrown); // Pirate: multiz - ThrownEvent renamed to ThrowEvent upstream
         SubscribeLocalEvent<CEZItemPhysicsComponent, GotEquippedHandEvent>(OnItemGotEquippedHand);
         SubscribeLocalEvent<CEZItemPhysicsComponent, GotEquippedEvent>(OnItemGotEquipped);
         SubscribeLocalEvent<CEZItemPhysicsComponent, EntGotInsertedIntoContainerMessage>(OnItemInsertedIntoContainer);
@@ -71,7 +71,7 @@ public sealed partial class CEZLevelsSystem
     // Only engage Z-physics on throw when aiming across Z (LookUp). Plain throws must stay free of
     // the component during flight, else the client's per-frame sprite drive fights the throw
     // animation and short throws look twitchy.
-    private void OnItemThrown(Entity<ItemComponent> ent, ref ThrownEvent args)
+    private void OnItemThrown(Entity<ItemComponent> ent, ref ThrowEvent args) // Pirate: multiz - ThrownEvent renamed to ThrowEvent upstream
     {
         if (args.User is not { } user ||
             !TryComp<CEZLevelViewerComponent>(user, out var viewer) ||

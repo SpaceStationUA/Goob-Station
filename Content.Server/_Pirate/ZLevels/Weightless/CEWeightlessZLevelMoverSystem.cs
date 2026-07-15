@@ -107,7 +107,7 @@ public sealed class CEWeightlessZLevelMoverSystem : EntitySystem
         if (TryComp<CEZFlyerComponent>(uid, out var flyer) && flyer.Active)
             return false;
 
-        if (!_gravity.IsWeightless(uid, physics, xform))
+        if (!_gravity.IsWeightless(uid)) // Pirate: multiz - IsWeightless now reads cached GravityAffectedComponent, takes only the entity
             return false;
 
         return true;

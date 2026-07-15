@@ -471,7 +471,7 @@ public sealed partial class FireControlSystem : EntitySystem
             else
                 _crossLayerTargetMap.Remove(localWeapon);
 
-            _gun.AttemptShoot(localWeapon, localWeapon, gun, translatedTargetCoords);
+            _gun.AttemptShoot(localWeapon, (localWeapon, gun), translatedTargetCoords); // Pirate: multiz - new tuple API + z-translated coords
 
             if (crossLayerFire)
                 _crossLayerTargetMap.Remove(localWeapon);
@@ -673,7 +673,7 @@ public sealed partial class FireControlSystem : EntitySystem
         // Try to get a gun component and fire the weapon
         if (TryComp<GunComponent>(weapon, out var gun))
         {
-            _gun.AttemptShoot(weapon, user, gun, coords);
+            _gun.AttemptShoot(user, (weapon, gun), coords);
             return true;
         }
 

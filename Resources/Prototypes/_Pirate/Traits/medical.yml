@@ -66,9 +66,7 @@
         - Plasmaman
   components:
   - type: Vampirism
-    succDelay: 3
   - type: VampireHolyWaterWeakness
-
   - type: WeakToHoly
     alwaysTakeHoly: true
 #endregion
@@ -125,8 +123,10 @@
         - Plasmaman
   components:
     - type: Narcolepsy
-      timeBetweenIncidents: 300, 600
-      durationOfIncident: 10, 30
+      minTimeBetweenIncidents: 300
+      maxTimeBetweenIncidents: 600
+      minDurationOfIncident: 10
+      maxDurationOfIncident: 30
 
 - type: trait
   id: SmokeSensitivity

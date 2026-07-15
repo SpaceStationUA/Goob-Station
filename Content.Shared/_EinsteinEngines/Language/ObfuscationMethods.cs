@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2025 BombasterDS <deniskaporoshok@gmail.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 John Willis <143434770+CerberusWolfie@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Text;
@@ -35,6 +31,26 @@ public abstract partial class ObfuscationMethod
         var builder = new StringBuilder();
         Obfuscate(builder, message, IoCManager.Resolve<EntitySystemManager>().GetEntitySystem<SharedLanguageSystem>());
         return builder.ToString();
+    }
+}
+
+/// <summary>
+///     Obfuscates letters and digits deterministically while preserving whitespace and punctuation.
+/// </summary>
+// Pirate: required by the Avali Scratch language port.
+public sealed partial class RandomObfuscation : ObfuscationMethod
+{
+    internal override void Obfuscate(StringBuilder builder, string message, SharedLanguageSystem context)
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ";
+        message = message.ToUpper();
+
+        for (var i = 0; i < chars.Length; i++)
+        {
+            message = message.Replace(chars[i], chars[context.PseudoRandomNumber(message.GetHashCode() + i, 0, chars.Length - 1)]);
+        }
+
+        builder.Append(message);
     }
 }
 

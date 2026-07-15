@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 Эдуард <36124833+Ertanic@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
@@ -139,13 +135,13 @@ public sealed partial class WantedListUiFragment : BoxContainer
         HistoryTable.AddChild(new Label()
         {
             Text = Loc.GetString("wanted-list-history-table-time-col"),
-            StyleClasses = { "LabelSmall" },
+            StyleClasses = { "font-small" }, // Pirate: ui fixes
             HorizontalAlignment = HAlignment.Center,
         });
         HistoryTable.AddChild(new Label()
         {
             Text = Loc.GetString("wanted-list-history-table-reason-col"),
-            StyleClasses = { "LabelSmall" },
+            StyleClasses = { "font-small" }, // Pirate: ui fixes
             HorizontalAlignment = HAlignment.Center,
             HorizontalExpand = true,
         });
@@ -153,7 +149,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
         HistoryTable.AddChild(new Label()
         {
             Text = Loc.GetString("wanted-list-history-table-initiator-col"),
-            StyleClasses = { "LabelSmall" },
+            StyleClasses = { "font-small" }, // Pirate: ui fixes
             HorizontalAlignment = HAlignment.Center,
         });
 
@@ -166,7 +162,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
                 HistoryTable.AddChild(new Label()
                 {
                     Text = $"{history.AddTime.Hours:00}:{history.AddTime.Minutes:00}:{history.AddTime.Seconds:00}",
-                    StyleClasses = { "LabelSmall" },
+                    StyleClasses = { "font-small" }, // Pirate: ui fixes
                     VerticalAlignment = VAlignment.Top,
                 });
 
