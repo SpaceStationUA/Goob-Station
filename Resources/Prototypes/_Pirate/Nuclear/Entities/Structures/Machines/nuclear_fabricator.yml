@@ -27,6 +27,7 @@
       - RawMaterial
       - Ingot
       - Ore # for charcoal, graphite parts
+      - SheetPlasma # Pirate: Goob replaces the inherited Sheet tag on plasma sheets.
   - type: Lathe
     idleState: icon
     runningState: building
