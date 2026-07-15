@@ -13,6 +13,7 @@ using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
+using Content.Shared._Pirate.CCVars; // Pirate - OOC automatic shuttle vote.
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.GameTicking;
@@ -31,7 +32,7 @@ namespace Content.Server.RoundEnd
     /// Handles ending rounds normally and also via requesting it (e.g. via comms console)
     /// If you request a round end then an escape shuttle will be used.
     /// </summary>
-    public sealed class RoundEndSystem : EntitySystem
+    public sealed partial class RoundEndSystem : EntitySystem // Pirate - OOC automatic shuttle vote.
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -409,7 +410,11 @@ namespace Content.Server.RoundEnd
             {
                 if (!_shuttle.EmergencyShuttleArrived && ExpectedCountdownEnd is null)
                 {
-                    RequestRoundEnd(null, false, "round-end-system-shuttle-auto-called-announcement");
+                    // Pirate - let players vote before the automatic shuttle call.
+                    if (_cfg.GetCVar(PirateVars.RoundEndIsOOCVote))
+                        CallEvacuationVote();
+                    else
+                        RequestRoundEnd(null, false, "round-end-system-shuttle-auto-called-announcement");
                     _autoCalledBefore = true;
                 }
 
