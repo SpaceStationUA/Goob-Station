@@ -665,158 +665,158 @@
         </ColorBox>
     </Table>
 
-		## Перерізи взаємодії з нейтронами
-		- Паливний стрижень: 1
-		- Керувальний стрижень: від 0 до 2 залежно від рівня введення
-		- Газовий канал: 0.5
-		- Теплообмінник: 0.1
+        ## Перерізи взаємодії з нейтронами
+        - Паливний стрижень: 1
+        - Керувальний стрижень: від 0 до 2 залежно від рівня введення
+        - Газовий канал: 0.5
+        - Теплообмінник: 0.1
 
-	# Вплив матеріалів компонентів турбіни
-	У таблицях наведено вплив кожного матеріалу на турбіну.
+    # Вплив матеріалів компонентів турбіни
+    У таблицях наведено вплив кожного матеріалу на турбіну.
 
-	## Лопаті
-	<Table Columns="3">
-		<ColorBox>
-			<Box>
-				Матеріал
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box>
-				Міцність
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box>
-				Інерція
-			</Box>
-		</ColorBox>
+    ## Лопаті
+    <Table Columns="3">
+        <ColorBox>
+            <Box>
+                Матеріал
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box>
+                Міцність
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box>
+                Інерція
+            </Box>
+        </ColorBox>
 
-		<ColorBox Color="#b18b25">
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				Латунь
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				10
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				1000
-			</Box>
-		</ColorBox>
+        <ColorBox Color="#b18b25">
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                Латунь
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                10
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                1000
+            </Box>
+        </ColorBox>
 
-		<ColorBox Color="#80ffff">
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				Діамант
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				35
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				1200
-			</Box>
-		</ColorBox>
+        <ColorBox Color="#80ffff">
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                Діамант
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                35
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                1200
+            </Box>
+        </ColorBox>
 
-		<ColorBox Color="#ffd700">
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				Золото
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				10
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				1200
-			</Box>
-		</ColorBox>
+        <ColorBox Color="#ffd700">
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                Золото
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                10
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                1200
+            </Box>
+        </ColorBox>
 
-		<ColorBox Color="#696969">
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				Пласталь
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				15
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				1400
-			</Box>
-		</ColorBox>
+        <ColorBox Color="#696969">
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                Пласталь
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                15
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                1400
+            </Box>
+        </ColorBox>
 
-		<ColorBox Color="#808080">
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				Сталь
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				15
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				800
-			</Box>
-		</ColorBox>
+        <ColorBox Color="#808080">
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                Сталь
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                15
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                800
+            </Box>
+        </ColorBox>
     </Table>
 
-	## Статори
-	<Table Columns="2">
-		<ColorBox>
-			<Box>
-				Матеріал
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box>
-				Ефективність
-			</Box>
-		</ColorBox>
+    ## Статори
+    <Table Columns="2">
+        <ColorBox>
+            <Box>
+                Матеріал
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box>
+                Ефективність
+            </Box>
+        </ColorBox>
 
-		<ColorBox Color="#ffd700">
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				Золото
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				140%
-			</Box>
-		</ColorBox>
+        <ColorBox Color="#ffd700">
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                Золото
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                140%
+            </Box>
+        </ColorBox>
 
-		<ColorBox Color="#c0c0c0">
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				Срібло
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				120%
-			</Box>
-		</ColorBox>
+        <ColorBox Color="#c0c0c0">
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                Срібло
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                120%
+            </Box>
+        </ColorBox>
 
-		<ColorBox Color="#808080">
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				Сталь
-			</Box>
-		</ColorBox>
-		<ColorBox>
-			<Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
-				100%
-			</Box>
-		</ColorBox>
+        <ColorBox Color="#808080">
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                Сталь
+            </Box>
+        </ColorBox>
+        <ColorBox>
+            <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="2">
+                100%
+            </Box>
+        </ColorBox>
     </Table>
 </Document>
