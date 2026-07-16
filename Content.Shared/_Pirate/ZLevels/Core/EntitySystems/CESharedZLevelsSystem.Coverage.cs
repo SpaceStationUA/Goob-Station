@@ -23,6 +23,15 @@ public abstract partial class CESharedZLevelsSystem
         return grids;
     }
 
+    /// <summary>Checks whether two grids share a z-network without allocating a linked-grid set.</summary>
+    public bool AreGridsLinked(EntityUid gridA, EntityUid gridB)
+    {
+        if (gridA == gridB)
+            return true;
+
+        return TryComp<CEZLinkedGridComponent>(gridA, out var linked) && linked.PeerGrids.ContainsValue(gridB);
+    }
+
     public CEZGridCoverage GetGridCoverage(EntityUid source, TransformComponent? xform = null)
     {
         xform ??= Transform(source);

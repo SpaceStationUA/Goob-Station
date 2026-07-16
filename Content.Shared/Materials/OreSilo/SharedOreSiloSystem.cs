@@ -1,3 +1,5 @@
+using System.Numerics; // Pirate: multiz
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -13,6 +15,7 @@ public abstract class SharedOreSiloSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!; // Pirate: multiz - link across z-levels
 
     private EntityQuery<OreSiloClientComponent> _clientQuery;
 
@@ -173,13 +176,35 @@ public abstract class SharedOreSiloSystem : EntitySystem
         if (!_powerReceiver.IsPowered(silo.Owner))
             return OreSiloLinkResult.Unpowered;
 
-        if (_transform.GetGrid(client) != _transform.GetGrid(silo.Owner))
-            return OreSiloLinkResult.DifferentGrid;
+        var siloGrid = _transform.GetGrid(silo.Owner);
+        var clientGrid = _transform.GetGrid(client);
+
+        #region Pirate: multiz - link aligned peer grids
+        if (siloGrid != clientGrid)
+        {
+            if (siloGrid is not { } sg || clientGrid is not { } cg || !_zLevels.AreGridsLinked(sg, cg))
+                return OreSiloLinkResult.DifferentGrid;
+
+            // Compare local positions because peer decks use different maps.
+            if (!InFootprintRange(silo.Owner, client, sg, cg, silo.Comp1.Range))
+                return OreSiloLinkResult.OutOfRange;
+
+            return OreSiloLinkResult.Success;
+        }
+        #endregion
 
         if (!_transform.InRange((silo.Owner, silo.Comp2), client, silo.Comp1.Range))
             return OreSiloLinkResult.OutOfRange;
 
         return OreSiloLinkResult.Success;
+    }
+
+    // Pirate: multiz - compare horizontal positions across aligned peer grids.
+    private bool InFootprintRange(EntityUid silo, EntityUid client, EntityUid siloGrid, EntityUid clientGrid, float range)
+    {
+        var siloLocal = Vector2.Transform(_transform.GetWorldPosition(silo), _transform.GetInvWorldMatrix(siloGrid));
+        var clientLocal = Vector2.Transform(_transform.GetWorldPosition(client), _transform.GetInvWorldMatrix(clientGrid));
+        return (siloLocal - clientLocal).LengthSquared() < range * range;
     }
 
     // Pirate: surface server-side link rejection instead of silently ignoring the click.

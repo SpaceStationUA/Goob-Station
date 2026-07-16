@@ -1,4 +1,6 @@
+using System.Numerics; // Pirate: multiz
 using Content.Server.Pinpointer;
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared.IdentityManagement;
 using Content.Shared.Materials.OreSilo;
 using Robust.Server.GameStates;
@@ -13,6 +15,8 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!; // Pirate: multiz
+    [Dependency] private readonly CESharedZLevelsSystem _zLevelsServer = default!; // Pirate: multiz
 
     private const float OreSiloPreloadRangeSquared = 225f; // ~1 screen
 
@@ -32,6 +36,23 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
 
         // Sneakily uses override with TComponent parameter
         _entityLookup.GetEntitiesInRange(xform.Coordinates, ent.Comp.Range, _clientLookup);
+
+        #region Pirate: multiz - include clients on linked decks
+        var siloGrid = _xform.GetGrid(ent.Owner);
+        if (siloGrid is { } sg)
+        {
+            // Reproject the silo's local footprint onto each aligned peer grid.
+            var siloLocal = Vector2.Transform(_xform.GetWorldPosition(ent.Owner), _xform.GetInvWorldMatrix(sg));
+            foreach (var linkedGrid in _zLevelsServer.GetLinkedGrids(sg))
+            {
+                if (linkedGrid == sg || !TryComp<TransformComponent>(linkedGrid, out var gridXform))
+                    continue;
+
+                var peerWorld = Vector2.Transform(siloLocal, _xform.GetWorldMatrix(linkedGrid));
+                _entityLookup.GetEntitiesInRange(gridXform.MapID, peerWorld, ent.Comp.Range, _clientLookup);
+            }
+        }
+        #endregion
 
         foreach (var client in _clientLookup)
         {
