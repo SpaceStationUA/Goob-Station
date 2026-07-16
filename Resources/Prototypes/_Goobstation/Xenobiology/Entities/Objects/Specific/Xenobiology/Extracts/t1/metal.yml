@@ -41,6 +41,7 @@
       - !type:SpawnEntity
         entity: SheetSteel1
         number: 15
+        shouldScale: false # Pirate: keep the steel output fixed like the other extract products.
       - !type:SpawnEntity
         entity: SheetPlasteel1
         number: 5
