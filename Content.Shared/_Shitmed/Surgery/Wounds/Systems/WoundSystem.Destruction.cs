@@ -10,7 +10,6 @@ using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Content.Goobstation.Common.Medical;
 using Robust.Shared.Audio;
-using System.Linq; // Pirate: multiz
 
 
 namespace Content.Shared._Shitmed.Medical.Surgery.Wounds.Systems;
@@ -31,7 +30,6 @@ public sealed partial class WoundSystem
         if (bodyPart.Body == null)
         {
             DropWoundableOrgans(woundableEntity, woundableComp);
-            DetachWoundsBeforeDestruction(woundableEntity, woundableComp); // Pirate: multiz
             PredictedQueueDel(woundableEntity);
         }
         else
@@ -98,26 +96,7 @@ public sealed partial class WoundSystem
             _body.DetachPart(parentWoundableEntity, bodyPartId.Remove(0, 15), woundableEntity);
             DestroyWoundableChildren(woundableEntity, woundableComp);
 
-            DetachWoundsBeforeDestruction(woundableEntity, woundableComp); // Pirate: multiz
             PredictedQueueDel(woundableEntity);
-        }
-    }
-
-    // Pirate: multiz - A destroyed body part is PredictedQueueDel'd, but its child wound entities linger in
-    // the "Wounds" container until the deletion queue is processed. In that window a game state can be
-    // serialized, and a client receiving those wounds for the first time (e.g. a mob entering PVS
-    // mid-dismemberment via a Z-level viewer probe) creates them under a parent that is already queued for
-    // deletion -> SharedTransformSystem.OnGetState assert in ClientGameStateManager.MergeImplicitData.
-    // Detach each wound off the part (reparent:true moves it onto the grid/map/parent - an alive parent -
-    // and OnWoundRemoved PredictedQueueDel's it). Deferred deletion (not immediate) is deliberate: destruction
-    // reenters synchronously from AddWound -> SetWoundSeverity, so immediately deleting a wound here would
-    // yank one out from under an in-flight TryCreateWound.
-    private void DetachWoundsBeforeDestruction(EntityUid woundableEntity, WoundableComponent woundableComp)
-    {
-        foreach (var wound in GetWoundableWounds(woundableEntity, woundableComp).ToList())
-        {
-            if (!TerminatingOrDeleted(wound.Owner))
-                _container.Remove(wound.Owner, woundableComp.Wounds, reparent: true, force: true);
         }
     }
 
