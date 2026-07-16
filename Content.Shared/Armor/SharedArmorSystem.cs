@@ -69,7 +69,7 @@ public abstract class SharedArmorSystem : EntitySystem
         if (TryComp<MaskComponent>(uid, out var mask) && mask.IsToggled)
             return;
 
-        // Pirate: preserve armor coverage and penetration for inventory-relayed damage.
+        // Goob-Fix-Start
         if (args.Args.TargetPart == null)
             return;
 
@@ -77,7 +77,8 @@ public abstract class SharedArmorSystem : EntitySystem
 
         if (component.ArmorCoverage.Contains(partType))
             args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage,
-                DamageSpecifier.PenetrateArmor(component.Modifiers, args.Args.Damage.ArmorPenetration));
+            DamageSpecifier.PenetrateArmor(component.Modifiers, args.Args.Damage.ArmorPenetration));
+        // Goob-Fix-End
     }
 
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
