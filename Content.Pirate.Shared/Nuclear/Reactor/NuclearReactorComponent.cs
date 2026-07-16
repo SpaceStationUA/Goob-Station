@@ -37,13 +37,13 @@ public sealed partial class NuclearReactorComponent : Component
     /// <summary>
     /// Width of the reactor grid
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int GridWidth = 7;
 
     /// <summary>
     /// Height of the reactor grid
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int GridHeight = 7;
 
     [DataField]

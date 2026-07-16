@@ -30,7 +30,7 @@ public sealed partial class NuclearReactorWindow : FancyWindow
     private readonly StyleBoxFlat _radiationBar = new(Color.Black);
     private readonly StyleBoxFlat _powerBar = new(Color.Black);
 
-    private ReactorSlotBUIData[] _data = default!;
+    private ReactorSlotBUIData[] _data = [];
     private int _width = 0;
     private int _height = 0;
 
@@ -103,6 +103,16 @@ public sealed partial class NuclearReactorWindow : FancyWindow
 
     public void Update(NuclearReactorBuiState msg)
     {
+        var gridSize = msg.GridWidth * msg.GridHeight;
+        if (msg.GridWidth > 0 &&
+            msg.GridHeight > 0 &&
+            (_width != msg.GridWidth ||
+             _height != msg.GridHeight ||
+             _reactorGrid.Count != gridSize))
+        {
+            RebuildReactorGrid(msg.GridWidth, msg.GridHeight);
+        }
+
         _data = msg.SlotData;
     }
 
@@ -156,20 +166,27 @@ public sealed partial class NuclearReactorWindow : FancyWindow
         this.SetInfoFromEntity(_ent, monitor ?? reactor.Owner);
 
         var comp = reactor.Comp;
-        _width = comp.GridWidth;
-        _height = comp.GridHeight;
-
-        ReactorGrid.Columns = _width;
-
         ReactorTempBar.MaxValue = comp.ReactorMeltdownTemp;
         ReactorRadsBar.MaxValue = comp.MaximumRadiation;
         ReactorThermBar.MaxValue = comp.MaximumThermalPower;
 
-        InitReactorGrid();
+        RebuildReactorGrid(comp.GridWidth, comp.GridHeight);
     }
 
-    public void InitReactorGrid()
+    private void RebuildReactorGrid(int width, int height)
     {
+        if (width <= 0 || height <= 0)
+            return;
+
+        _width = width;
+        _height = height;
+
+        ReactorGrid.Columns = _width;
+        ReactorGrid.RemoveAllChildren();
+        _reactorGrid.Clear();
+        _reactorRect.Clear();
+        _reactorButton.Clear();
+
         _data = new ReactorSlotBUIData[_width * _height];
         for (var y = 0; y < _height; y++)
         {
@@ -207,6 +224,8 @@ public sealed partial class NuclearReactorWindow : FancyWindow
                 ReactorGrid.AddChild(control);
             }
         }
+
+        SetTarget(_targetX, _targetY);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -215,46 +234,54 @@ public sealed partial class NuclearReactorWindow : FancyWindow
 
         Update();
 
-        //Update the grid
-        for (var x = 0; x < _width; x++)
+        if (IsGridReady())
         {
-            for (var y = 0; y < _height; y++)
+            // Update the grid.
+            for (var x = 0; x < _width; x++)
             {
-                var pos = new Vector2i(x, y);
-                var index = x + y * _width;
-                var data = _data[index];
-                var box = _reactorGrid[pos];
-                switch (_displayMode)
+                for (var y = 0; y < _height; y++)
                 {
-                    case DisplayModes.Temperature:
-                        box.BackgroundColor = GetColor(293.15, 1200, data?.Temperature ?? 0);
-                        ViewLabel.Text = Loc.GetString("comp-nuclear-reactor-ui-view-temp");
-                        break;
-                    case DisplayModes.Neutron:
-                        box.BackgroundColor = GetColor(0, 7, data?.NeutronCount ?? 0);
-                        ViewLabel.Text = Loc.GetString("comp-nuclear-reactor-ui-view-neutron");
-                        break;
-                    case DisplayModes.Target:
-                        box.BackgroundColor = x == _targetX && y == _targetY ? Color.Yellow : Color.Gray;
-                        ViewLabel.Text = Loc.GetString("comp-nuclear-reactor-ui-view-target");
-                        break;
-                    case DisplayModes.Fuel:
-                        box.BackgroundColor = Color.InterpolateBetween(Color.Gray, Color.FromHex("#22bbff"), data != null ? (float)GetFuelLevel(data) : 0);
-                        ViewLabel.Text = Loc.GetString("comp-nuclear-reactor-ui-view-fuel");
-                        break;
+                    var pos = new Vector2i(x, y);
+                    var index = x + y * _width;
+                    var data = _data[index];
+                    var box = _reactorGrid[pos];
+                    switch (_displayMode)
+                    {
+                        case DisplayModes.Temperature:
+                            box.BackgroundColor = GetColor(293.15, 1200, data?.Temperature ?? 0);
+                            ViewLabel.Text = Loc.GetString("comp-nuclear-reactor-ui-view-temp");
+                            break;
+                        case DisplayModes.Neutron:
+                            box.BackgroundColor = GetColor(0, 7, data?.NeutronCount ?? 0);
+                            ViewLabel.Text = Loc.GetString("comp-nuclear-reactor-ui-view-neutron");
+                            break;
+                        case DisplayModes.Target:
+                            box.BackgroundColor = x == _targetX && y == _targetY ? Color.Yellow : Color.Gray;
+                            ViewLabel.Text = Loc.GetString("comp-nuclear-reactor-ui-view-target");
+                            break;
+                        case DisplayModes.Fuel:
+                            box.BackgroundColor = Color.InterpolateBetween(Color.Gray, Color.FromHex("#22bbff"), data != null ? (float)GetFuelLevel(data) : 0);
+                            ViewLabel.Text = Loc.GetString("comp-nuclear-reactor-ui-view-fuel");
+                            break;
+                    }
+
+                    var part = _ent.GetEntity(_reactor.Comp.PartGrid[index]);
+                    var icon = _partQuery.TryComp(part, out var partComp) ? partComp.IconStateInserted : "base";
+                    _reactorRect[pos].TexturePath = $"/Textures/_Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_part_inserted/{icon}.png";
+
+                    _reactorButton[pos].ToolTip = data != null
+                        ? Loc.GetString("comp-nuclear-reactor-ui-fuel-level", ("level", (int) Math.Round(GetFuelLevel(data) * 100)))
+                        : "";
                 }
-
-                var part = _ent.GetEntity(_reactor.Comp.PartGrid[index]);
-                var icon = _partQuery.TryComp(part, out var partComp) ? partComp.IconStateInserted : "base";
-                _reactorRect[pos].TexturePath = $"/Textures/_Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_part_inserted/{icon}.png";
-
-                _reactorButton[pos].ToolTip = data != null
-                    ? Loc.GetString("comp-nuclear-reactor-ui-fuel-level", ("level", (int) Math.Round(GetFuelLevel(data) * 100)))
-                    : "";
             }
+
+            UpdateTargetInfo();
+        }
+        else
+        {
+            ClearTargetInfo();
         }
 
-        UpdateTargetInfo();
         UpdateSwapPart();
 
         // Handle repeat buttons
@@ -276,6 +303,19 @@ public sealed partial class NuclearReactorWindow : FancyWindow
                 _ => 0f
             });
         }
+    }
+
+    private bool IsGridReady()
+    {
+        if (_width <= 0 || _height <= 0)
+            return false;
+
+        var gridSize = _width * _height;
+        return _data.Length == gridSize &&
+               _reactor.Comp.PartGrid.Length == gridSize &&
+               _reactorGrid.Count == gridSize &&
+               _reactorRect.Count == gridSize &&
+               _reactorButton.Count == gridSize;
     }
 
     private static Color GetColor(double pointA, double pointB, double value)
@@ -330,6 +370,12 @@ public sealed partial class NuclearReactorWindow : FancyWindow
     private void UpdateTargetInfo()
     {
         var index = _targetX + _targetY * _width;
+        if (index < 0 || index >= _data.Length || index >= _reactor.Comp.PartGrid.Length)
+        {
+            ClearTargetInfo();
+            return;
+        }
+
         var part = _ent.GetEntity(_reactor.Comp.PartGrid[index]);
         _hasTarget = part != null;
         TargetName.Text = part != null
@@ -355,8 +401,24 @@ public sealed partial class NuclearReactorWindow : FancyWindow
         TargetSpent.Text = Math.Round(data.SpentFuel, 2).ToString();
     }
 
+    private void ClearTargetInfo()
+    {
+        _hasTarget = false;
+        TargetName.Text = Loc.GetString("comp-nuclear-reactor-ui-empty");
+        TargetTemperatureGrid.Visible = false;
+        TargetNRadiationGrid.Visible = false;
+        TargetRadiationGrid.Visible = false;
+        TargetSpentGrid.Visible = false;
+    }
+
     private void UpdateSwapPart()
     {
+        if (!IsGridReady())
+        {
+            SwapPart.Disabled = true;
+            return;
+        }
+
         SwapPart.Disabled = _hasItem == _hasTarget;
         if (SwapPart.Disabled)
             return;

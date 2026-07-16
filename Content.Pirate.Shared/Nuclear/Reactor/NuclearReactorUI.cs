@@ -11,9 +11,11 @@ public enum NuclearReactorUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class NuclearReactorBuiState(ReactorSlotBUIData[] data) : BoundUserInterfaceState
+public sealed class NuclearReactorBuiState(ReactorSlotBUIData[] data, int gridWidth, int gridHeight) : BoundUserInterfaceState
 {
     public readonly ReactorSlotBUIData[] SlotData = data;
+    public readonly int GridWidth = gridWidth;
+    public readonly int GridHeight = gridHeight;
 }
 
 [Serializable, NetSerializable]

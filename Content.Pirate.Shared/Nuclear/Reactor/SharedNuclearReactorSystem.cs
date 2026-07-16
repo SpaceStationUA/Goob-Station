@@ -261,7 +261,9 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
             };
         }
 
-        _ui.SetUiState(target, NuclearReactorUiKey.Key, new NuclearReactorBuiState(array));
+        _ui.SetUiState(target,
+            NuclearReactorUiKey.Key,
+            new NuclearReactorBuiState(array, ent.Comp.GridWidth, ent.Comp.GridHeight));
     }
 
     protected void UpdateVisuals(Entity<NuclearReactorComponent> ent)
