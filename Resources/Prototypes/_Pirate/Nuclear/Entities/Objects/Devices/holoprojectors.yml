@@ -7,6 +7,10 @@
   - type: ChargeHolosignProjector
     signProto: HolosignRadiationBlocking
     signComponentName: HoloRadiationblocker
+    signLifetime: 180
+  - type: ContainerContainer
+    containers:
+      signs: !type:Container
   - type: Sprite
     sprite: _Pirate/Nuclear/Objects/Devices/Holoprojectors/radiation.rsi
     state: icon
