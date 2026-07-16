@@ -168,6 +168,39 @@ public abstract class SharedOreSiloSystem : EntitySystem
         return GetLinkResult(silo, client) == OreSiloLinkResult.Success;
     }
 
+    #region Pirate: multiz - auto-link keyed clients across linked decks
+    /// <summary>Links an unlinked keyed client to a silo in the same z-network.</summary>
+    /// <remarks>Ignores power and range because transmission validates both.</remarks>
+    public bool TryAutoLinkClient(Entity<OreSiloClientComponent> client)
+    {
+        if (client.Comp.Silo != null || string.IsNullOrEmpty(client.Comp.SiloNetwork))
+            return false;
+
+        if (_transform.GetGrid(client.Owner) is not { } clientGrid)
+            return false;
+
+        var linkedGrids = _zLevels.GetLinkedGrids(clientGrid);
+
+        var query = EntityQueryEnumerator<OreSiloComponent, TransformComponent>();
+        while (query.MoveNext(out var siloUid, out var silo, out var siloXform))
+        {
+            if (silo.SiloNetwork != client.Comp.SiloNetwork)
+                continue;
+            if (siloXform.GridUid is not { } siloGrid || !linkedGrids.Contains(siloGrid))
+                continue;
+
+            silo.Clients.Add(client.Owner);
+            Dirty(siloUid, silo);
+            client.Comp.Silo = siloUid;
+            Dirty(client.Owner, client.Comp);
+            UpdateOreSiloUi((siloUid, silo));
+            return true;
+        }
+
+        return false;
+    }
+    #endregion
+
     private OreSiloLinkResult GetLinkResult(Entity<OreSiloComponent?, TransformComponent?> silo, EntityUid client)
     {
         if (!Resolve(silo, ref silo.Comp1, ref silo.Comp2))

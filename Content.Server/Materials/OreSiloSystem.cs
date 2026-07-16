@@ -1,5 +1,7 @@
 using System.Numerics; // Pirate: multiz
+using Content.Server._Pirate.ZLevels.Power; // Pirate: multiz - peer-link events
 using Content.Server.Pinpointer;
+using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared.IdentityManagement;
 using Content.Shared.Materials.OreSilo;
@@ -24,6 +26,37 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
     private readonly HashSet<(NetEntity, string, string)> _clientInformation = new();
     private readonly HashSet<EntityUid> _silosToAdd = new();
     private readonly HashSet<EntityUid> _silosToRemove = new();
+
+    #region Pirate: multiz - resolve map-time silo networks across linked decks
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        // Resolve same-deck links when the client initializes.
+        SubscribeLocalEvent<OreSiloClientComponent, MapInitEvent>(OnClientMapInit);
+        // Resolve cross-deck links after the z-network forms.
+        SubscribeLocalEvent<CEZLinkedGridComponent, CEMultizLinkedGridPeersChangedEvent>(OnGridPeersChanged);
+    }
+
+    private void OnClientMapInit(Entity<OreSiloClientComponent> ent, ref MapInitEvent args)
+    {
+        TryAutoLinkClient(ent);
+    }
+
+    private void OnGridPeersChanged(Entity<CEZLinkedGridComponent> ent, ref CEMultizLinkedGridPeersChangedEvent args)
+    {
+        // Retry clients that can now reach a keyed silo.
+        var linked = _zLevelsServer.GetLinkedGrids(ent.Owner);
+        var query = EntityQueryEnumerator<OreSiloClientComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var client, out var xform))
+        {
+            if (client.Silo != null || string.IsNullOrEmpty(client.SiloNetwork))
+                continue;
+            if (xform.GridUid is { } g && linked.Contains(g))
+                TryAutoLinkClient((uid, client));
+        }
+    }
+    #endregion
 
     protected override void UpdateOreSiloUi(Entity<OreSiloComponent> ent)
     {
