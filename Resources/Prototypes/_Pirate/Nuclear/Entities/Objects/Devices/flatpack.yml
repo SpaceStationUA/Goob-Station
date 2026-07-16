@@ -1,80 +1,72 @@
 - type: entity
+  abstract: true
   parent: BaseStructureDynamic
-  id: BaseStructureFlatpack
-  name: base structure flatpack
-  description: A flatpack used for constructing something.
-  categories:
-  - HideSpawnMenu
+  id: HeavyFlatpackBase
+  name: heavy flatpack
+  description: A large flatpack used to store a worryingly large machine.
   components:
-  - type: Animateable
-  - type: Transform
-    noRot: true
-  - type: Icon
-    sprite: Structures/Storage/Crates/generic.rsi
-    state: base
   - type: Sprite
-    sprite: Objects/Devices/flatpack.rsi
-    layers:
-    - state: base
-    - state: overlay
-      color: "#cec8ac"
-      map: ["enum.FlatpackVisualLayers.Overlay"]
-    - state: icon-default
-  - type: InteractionOutline
-  - type: Physics
+    sprite: _Pirate/Nuclear/Objects/Devices/large_flatpack.rsi
+    state: large
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.29"
-        density: 50
+        density: 100
         mask:
-        - CrateMask #this is so they can go under plastic flaps
+        - CrateMask
         layer:
         - MachineLayer
-  - type: Appearance
-  - type: Flatpack
-    boardColors:
-      command: "#334E6D"
-      medical: "#52B4E9"
-      service: "#9FED58"
-      engineering: "#EFB341"
-      security: "#DE3A3A"
-      science: "#D381C9"
-      supply: "#A46106"
-      cpu_command: "#334E6D"
-      cpu_medical: "#52B4E9"
-      cpu_service: "#9FED58"
-      cpu_engineering: "#EFB341"
-      cpu_security: "#DE3A3A"
-      cpu_science: "#D381C9"
-      cpu_supply: "#A46106"
-  - type: StaticPrice
-    price: 250
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: InteractionOutline
 
 - type: entity
-  parent: [BaseStructureFlatpack, BaseEngineeringContraband]
+  parent: HeavyFlatpackBase # DeltaV - was CrateEngineering
   id: NuclearReactorFlatpack
   name: nuclear reactor flatpack
   description: A flatpack used for constructing a nuclear reactor. Parts sold separately.
   components:
-  - type: Sprite
-    sprite: _Pirate/Nuclear/Objects/Devices/large_flatpack.rsi
-    layers:
-    - state: large
   - type: Flatpack
     entity: NuclearReactorEmpty
 
 - type: entity
-  parent: [BaseStructureFlatpack, BaseEngineeringContraband]
+  parent: HeavyFlatpackBase # DeltaV - was CrateEngineering
   id: GasTurbineFlatpack
   name: gas turbine flatpack
   description: A flatpack used for constructing a gas turbine.
   components:
-  - type: Sprite
-    sprite: _Pirate/Nuclear/Objects/Devices/large_flatpack.rsi
-    layers:
-    - state: large
   - type: Flatpack
     entity: Turbine
+
+- type: entity
+  parent: HeavyFlatpackBase
+  id: NuclearReactorSmallFlatpack
+  name: small nuclear reactor flatpack
+  description: A flatpack used for constructing a small nuclear reactor. Parts sold separately.
+  components:
+  - type: Flatpack
+    entity: NuclearReactorSmall
+
+- type: entity
+  parent: HeavyFlatpackBase
+  id: GasTurbineSmallFlatpack
+  name: small gas turbine flatpack
+  description: A flatpack used for constructing a small gas turbine.
+  components:
+  - type: Flatpack
+    entity: TurbineSmall

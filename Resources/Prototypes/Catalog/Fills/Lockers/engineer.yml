@@ -212,6 +212,7 @@
     - id: RCDAmmo
     - id: MetalFoamGrenade
     - id: AccessConfigurator # Pirate edit
+    - id: PillCanisterPotassiumIodide # Pirate: DeltaV nuclear reactor
 
 - type: entityTable
   id: FillEngineerHardsuit
@@ -244,7 +245,7 @@
     - id: GeigerCounter
       amount: 2
     - id: PillCanisterPotassiumIodide
-      prob: 0.75
+      amount: 2 # Pirate: DeltaV nuclear reactor
 
 - type: entity
   parent: LockerEvacRepair

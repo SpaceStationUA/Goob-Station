@@ -13,6 +13,11 @@
   copyright: "Taken from Goonstation"
   source: https://github.com/goonstation/goonstation/blob/ff86b044/sound/machines/meltdown_siren.ogg
 
+- files: ["orange.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Conflee"
+  source: https://bsky.app/profile/conflee.bsky.social
+
 - files: ["reactor_alarm_1.ogg"]
   license: "CC-BY-4.0"
   copyright: "Created by Tecc_Source, clipped and converted Mono by Jhrushbe"

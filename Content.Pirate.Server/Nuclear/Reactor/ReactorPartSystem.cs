@@ -90,10 +90,11 @@ public sealed partial class ReactorPartSystem : EntitySystem
     private void OnMapInit(Entity<NuclearPropertiesComponent> ent, ref MapInitEvent args)
     {
         var (uid, comp) = ent;
-        if (comp.SpentFuel > 0)
+        var radiation = comp.Radioactivity * 0.1f + comp.NeutronRadioactivity * 0.15f + comp.SpentFuel * 0.125f;
+        if (radiation > 0)
         {
             var source = EnsureComp<RadiationSourceComponent>(uid);
-            source.Intensity = comp.SpentFuel;
+            source.Intensity = radiation;
         }
 
         if (comp.NeutronRadioactivity > 0)
@@ -315,6 +316,8 @@ public sealed partial class ReactorPartSystem : EntitySystem
                 throw new Exception("ReactorPart-ReactorPart temperature calculation resulted in sub-zero value.");
 #endif
 
+            ProcessHeatEffects(other);
+            ProcessHeatEffects(part);
         }
 
         // Component-Reactor calculation
@@ -342,22 +345,21 @@ public sealed partial class ReactorPartSystem : EntitySystem
 
         void ProcessHeatEffects(Entity<ReactorPartComponent> part)
         {
-            var threshold = Atmospherics.T0C + 80; // lol random hardcoded shit
-            if (part.Comp.Temperature <= threshold || !_channelQuery.TryComp(part, out var channel) ||
-                !_propsQuery.TryComp(part, out var props) || props.ActivePlasma <= 0)
+            var threshold = Atmospherics.T0C + 80;
+            if (part.Comp.Temperature <= threshold ||
+                !_propsQuery.TryComp(part, out var props) ||
+                props.ActivePlasma <= 0)
                 return;
 
             var molesPerUnit = 100f; // Arbitrary value for how much gaseous plasma is in each unit of active plasma
 
-            // TODO: clear and reuse
             var payload = new GasMixture();
             payload.SetMoles(Gas.Plasma, (float)Math.Min(props.ActivePlasma * molesPerUnit, Math.Log(((part.Comp.Temperature - threshold) / 100) + 1)));
             payload.Temperature = part.Comp.Temperature;
             props.ActivePlasma -= payload.GetMoles(Gas.Plasma) / molesPerUnit;
-            // dont need to dirty since nothing shared/client needs it
 
-            channel.AirContents ??= new GasMixture();
-            _atmos.Merge(channel.AirContents, payload);
+            reactor.Comp.AirContents ??= new GasMixture();
+            _atmos.Merge(reactor.Comp.AirContents, payload);
         }
     }
 
@@ -397,21 +399,12 @@ public sealed partial class ReactorPartSystem : EntitySystem
         var flux = new List<ReactorNeutron>(neutrons);
         var isControlRod = _controlQuery.TryComp(uid, out var control);
 
-        // FIXME: holy dogshit performance
-        var csa = _rate * part.NeutronCrossSection;
         foreach (var neutron in flux)
         {
-            if (_random.Prob(part.ReflectChance)) // reflection
-            {
-                // A really complicated way of saying do a 180 or a 180+/-45
-                neutron.Dir = (neutron.Dir.GetOpposite().ToAngle() + (_random.NextAngle() / 4) - (MathF.Tau / 8)).GetDir();
-                continue;
-            }
-
-            if (!Prob(props.Density * csa * _bias))
+            if (!Prob(props.Density * _rate * part.NeutronCrossSection * _bias))
                 continue;
 
-            if (neutron.Velocity <= 1 && props.NeutronRadioactivity >= _reactant && Prob(_rate * props.NeutronRadioactivity * _bias)) // neutron stimulated emission
+            if (neutron.Velocity <= 1 && Prob(_rate * props.NeutronRadioactivity * _bias)) // neutron stimulated emission
             {
                 props.NeutronRadioactivity -= _reactant;
                 props.Radioactivity += _product;
@@ -420,9 +413,9 @@ public sealed partial class ReactorPartSystem : EntitySystem
                     neutrons.Add(new(_random.NextAngle().GetDir(), _random.Next(2, 4)));
                 }
                 neutrons.Remove(neutron);
-                part.Temperature += 75f * props.NeutronRadioactivity;
+                part.Temperature += 75f;
             }
-            else if (neutron.Velocity <= 5 && props.Radioactivity >= _reactant && Prob(_rate * props.Radioactivity * _bias)) // stimulated emission
+            else if (neutron.Velocity <= 5 && Prob(_rate * props.Radioactivity * _bias)) // stimulated emission
             {
                 props.Radioactivity -= _reactant;
                 props.SpentFuel += _product;
@@ -431,11 +424,13 @@ public sealed partial class ReactorPartSystem : EntitySystem
                     neutrons.Add(new(_random.NextAngle().GetDir(), _random.Next(1, 4)));
                 }
                 neutrons.Remove(neutron);
-                part.Temperature += 50f * props.Radioactivity;
+                part.Temperature += 50f;
             }
             else
             {
-                if (isControlRod)
+                if (Prob(_rate * props.Hardness))
+                    neutron.Dir = (neutron.Dir.GetOpposite().ToAngle() + (_random.NextAngle() / 4) - (MathF.Tau / 8)).GetDir();
+                else if (isControlRod)
                     neutron.Velocity = 0;
                 else
                     neutron.Velocity--;
@@ -446,7 +441,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
                 part.Temperature += 1; // ... not worth the adjustment
             }
         }
-        if (props.NeutronRadioactivity >= _reactant / 2 && Prob(props.NeutronRadioactivity * csa))
+        if (Prob(props.NeutronRadioactivity * _rate * part.NeutronCrossSection))
         {
             var count = _random.Next(1, 6);
             for (var i = 0; i < count; i++)
@@ -456,7 +451,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
             props.NeutronRadioactivity -= _reactant / 2;
             props.Radioactivity += _product / 2;
         }
-        if (props.Radioactivity >= _reactant / 2 && Prob(props.Radioactivity * csa))
+        if (Prob(props.Radioactivity * _rate * part.NeutronCrossSection))
         {
             var count = _random.Next(1, 6);
             for (var i = 0; i < count; i++)
@@ -469,15 +464,13 @@ public sealed partial class ReactorPartSystem : EntitySystem
 
         if (isControlRod)
         {
-            // cross section of a fuel rod is inversely proportional to its control rod insertion
-            var current = 1f - part.NeutronCrossSection;
             var target = control!.ConfiguredInsertionLevel;
             if (!part.Melted && part.NeutronCrossSection != target)
             {
-                if (target < current)
-                    part.NeutronCrossSection += Math.Min(0.1f, current - target);
+                if (target < part.NeutronCrossSection)
+                    part.NeutronCrossSection -= Math.Min(0.1f, part.NeutronCrossSection - target);
                 else
-                    part.NeutronCrossSection -= Math.Min(0.1f, target - current);
+                    part.NeutronCrossSection += Math.Min(0.1f, target - part.NeutronCrossSection);
             }
         }
 
@@ -509,7 +502,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
             var neutronCount = GasNeutronInteract(part, gas);
             if (neutronCount > 1)
             {
-                for (var i = 1; i < neutronCount; i++) // starting from 1 since 0 is the current neutron, which isnt being removed
+                for (var i = 0; i < neutronCount; i++)
                 {
                     neutrons.Add(new(_random.NextAngle().GetDir(), _random.Next(1, 4)));
                 }
@@ -538,7 +531,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
             var reactMolPerLiter = 0.25;
             var reactMol = reactMolPerLiter * gas.Volume;
 
-            var plasmaReactCount = GetGasReactionCount(plasma, reactMol);
+            var plasmaReactCount = (int)Math.Round((plasma - (plasma % reactMol)) / reactMol) + (Prob(plasma - (plasma % reactMol)) ? 1 : 0);
             plasmaReactCount = _random.Next(0, plasmaReactCount + 1);
             gas.AdjustMoles(Gas.Plasma, plasmaReactCount * -0.5f);
             gas.AdjustMoles(Gas.Tritium, plasmaReactCount * 2);
@@ -551,7 +544,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
             var reactMolPerLiter = 0.4;
             var reactMol = reactMolPerLiter * gas.Volume;
 
-            var co2ReactCount = GetGasReactionCount(co2, reactMol);
+            var co2ReactCount = (int)Math.Round((co2 - (co2 % reactMol)) / reactMol) + (Prob(co2 - (co2 % reactMol)) ? 1 : 0);
             co2ReactCount = _random.Next(0, co2ReactCount + 1);
             part.Temperature += Math.Min(co2ReactCount, neutronCount);
             neutronCount -= Math.Min(co2ReactCount, neutronCount);
@@ -563,7 +556,7 @@ public sealed partial class ReactorPartSystem : EntitySystem
             var reactMolPerLiter = 0.5;
             var reactMol = reactMolPerLiter * gas.Volume;
 
-            var tritiumReactCount = GetGasReactionCount(tritium, reactMol);
+            var tritiumReactCount = (int)Math.Round((tritium - (tritium % reactMol)) / reactMol) + (Prob(tritium - (tritium % reactMol)) ? 1 : 0);
             tritiumReactCount = _random.Next(0, tritiumReactCount + 1);
             if (tritiumReactCount > 0)
             {
@@ -582,16 +575,6 @@ public sealed partial class ReactorPartSystem : EntitySystem
         }
 
         return neutronCount;
-    }
-
-    private int GetGasReactionCount(double moles, double reactMol)
-    {
-        if (reactMol <= 0)
-            return 0;
-
-        var fullBatches = (int) Math.Floor(moles / reactMol);
-        var remainder = moles - fullBatches * reactMol;
-        return fullBatches + (Prob(remainder / reactMol * 100) ? 1 : 0);
     }
 
     /// <summary>

@@ -121,21 +121,20 @@
   - type: NuclearReactor
   - type: NuclearMachine
     arrowPrototype: ReactorFlowArrow
+    pipePrototype: ReactorGasPipe
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
     range: 200
   - type: DeviceLinkSource
-    range: 50
+    range: 1000
     ports:
     - NuclearReactorDataSender
-    - ControlRodsAvg
-    - CasingTemperature
-    - ReactorThermalPower
   - type: DeviceLinkSink
     ports:
-    - ControlRodInsertion
+    - InsertControlRods
+    - RetractControlRods
   - type: ActivatableUI
     key: enum.NuclearReactorUiKey.Key
   - type: ActivatableUIRequiresAnchor
@@ -152,6 +151,8 @@
 - type: entity
   parent: BaseNuclearReactor
   id: NuclearReactorCrew
+  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: AccessReader # You got a permit for that meltdown?
     access: [["Engineering"]]
@@ -165,11 +166,15 @@
 
 - type: entity
   parent: NuclearReactorCrew
+  id: NuclearReactorNormal
+
+- type: entity
+  parent: NuclearReactorCrew
   id: NuclearReactorEmpty
   suffix: Empty
   components:
   - type: NuclearReactor
-    prefab: Empty
+    prefab: ReactorPrefabEmpty
 
 - type: entity
   parent: NuclearReactorCrew
@@ -185,7 +190,7 @@
   suffix: Meltdown
   components:
   - type: NuclearReactor
-    prefab: 7x7Meltdown
+    prefab: ReactorPrefab7x7Meltdown
 
 - type: entity
   parent: [ BaseStructure, BaseNuclearPropertiesSteel ]
@@ -244,7 +249,7 @@
     thermalMass: 302400
     gridWidth: 5
     gridHeight: 5
-    prefab: 5x5Normal
+    prefab: ReactorPrefab5x5Normal
     gridbounds: [ 12, 11, 0, 0 ]
   - type: NuclearMachine
     inletPos: -1, 1
@@ -320,7 +325,7 @@
   suffix: "Empty, Salvage"
   components:
   - type: NuclearReactor
-    prefab: Empty
+    prefab: ReactorPrefabEmpty
 
 - type: entity
   parent: NuclearReactorSalvage
@@ -366,7 +371,7 @@
     thermalMass: 302400
     gridWidth: 5
     gridHeight: 5
-    prefab: 5x5Normal
+    prefab: ReactorPrefab5x5Normal
     gridbounds: [ 12, 11, 0, 0 ]
   - type: NuclearMachine
     inletPos: -1, 1
@@ -425,19 +430,19 @@
   - type: RadiationSource
     intensity: 1.6
 
-# Arrows to indicate flow for nuclear reactors and turbines
+# Arrows to indicate flow
 - type: entity
   id: ReactorFlowArrow
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Pirate/Nuclear/Markers/directional_arrow_indicator.rsi
+    sprite: Markers/teg_arrow.rsi
     color: "#FFFFFFBB"
     layers:
-    - state: blue_arrow
+    - state: arrow
       rotation: 90
       offset: 3, 1
-    - state: blue_arrow
+    - state: arrow
       rotation: 90
       offset: -3, -1
   - type: TimedDespawn
@@ -453,14 +458,14 @@
   components:
   - type: Sprite
     layers:
-    - state: blue_arrow
+    - state: arrow
       rotation: 0
       offset: -1, 2
-    - state: blue_arrow
+    - state: arrow
       rotation: 180
       offset: 1, 2
 
-# Pipes the reactor uses to connect to the pipe network
+# Base pipe used by nuclear reactors and turbines
 - type: entity
   id: NuclearMachineGasPipe
   categories: [ HideSpawnMenu ]
@@ -495,6 +500,11 @@
   - type: Tag
     tags:
     - HideContextMenu
+
+- type: entity
+  parent: NuclearMachineGasPipe
+  id: ReactorGasPipe
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   id: ReactorAlarmEntity

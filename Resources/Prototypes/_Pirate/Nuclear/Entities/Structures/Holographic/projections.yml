@@ -1,6 +1,6 @@
 - type: entity
   id: HolosignRadiationBlocking
-  parent: HolosignWetFloor
+  parent: BaseHolosign
   name: holographic radiation barrier
   description: A barrier of hard light that blocks light and radiation, but nothing else.
   components:
@@ -18,3 +18,7 @@
   - type: Occluder
   - type: RadiationBlocker
     resistance: 50
+  - type: HoloRadiationblocker
+  - type: PointLight
+    energy: 5
+    color: Green

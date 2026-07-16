@@ -19,9 +19,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     [color=#999999][italic]Пристрої, здатні до нескінченної енергії — і руйнівного потенціалу[italic][/color]
   </Box>
 
-  <!-- Pirate: Trauma Station nuclear reactor -->
+  <!-- Pirate: DeltaV nuclear reactor -->
   <Box>
-    <GuideEntityEmbed Entity="NuclearReactorCrew" Caption=""/>
+    <GuideEntityEmbed Entity="NuclearReactorNormal" Caption=""/>
     <GuideEntityEmbed Entity="Turbine" Caption=""/>
   </Box>
   <Box>

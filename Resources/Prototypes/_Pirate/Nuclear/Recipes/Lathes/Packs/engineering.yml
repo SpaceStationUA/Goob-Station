@@ -10,8 +10,10 @@
   id: ReactorPartsBasic
   recipes:
   - CerenkiteReactorFuelRod
-  - BohrumReactorReflector
-  - SteelReactorReflector
+  - BohrumReactorControlRod
+  - SteelReactorControlRod
+  - BrassReactorControlRod
+  - GlassReactorControlRod
   - SteelReactorGasChannel
   - BrassReactorGasChannel
   - GlassReactorGasChannel
@@ -31,11 +33,13 @@
   - UraniumGlassReactorFuelRod
 
 - type: latheRecipePack
-  id: ReactorReflectors
+  id: ReactorControlRods
   recipes:
-  - GraphiteReactorReflector
-  - GoldReactorReflector
-  - SilverReactorReflector
+  - GoldReactorControlRod
+  - SilverReactorControlRod
+  - PlasteelReactorControlRod
+  - PlasmaGlassReactorControlRod
+  - DiamondReactorControlRod
 
 - type: latheRecipePack
   id: ReactorGasChannels

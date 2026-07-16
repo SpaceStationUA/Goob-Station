@@ -51,14 +51,15 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         SubscribeLocalEvent<TurbineComponent, EntRemovedFromContainerMessage>(OnPartEjected);
 
         SubscribeLocalEvent<TurbineComponent, SignalReceivedEvent>(OnSignalReceived);
+        SubscribeLocalEvent<TurbineComponent, PortDisconnectedEvent>(OnPortDisconnected);
 
         SubscribeLocalEvent<TurbineComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
     }
 
     private void OnInit(Entity<TurbineComponent> ent, ref ComponentInit args)
     {
-        _device.EnsureSourcePorts(ent.Owner, ent.Comp.SpeedPort, ent.Comp.SpeedHighPort, ent.Comp.SpeedLowPort);
-        _device.EnsureSinkPorts(ent.Owner, ent.Comp.StatorLoadPort, ent.Comp.FlowRatePort);
+        _device.EnsureSourcePorts(ent.Owner, ent.Comp.TurbineDataPort, ent.Comp.SpeedHighPort, ent.Comp.SpeedLowPort);
+        _device.EnsureSinkPorts(ent.Owner, ent.Comp.StatorLoadIncreasePort, ent.Comp.StatorLoadDecreasePort);
     }
 
     private void OnExamined(Entity<TurbineComponent> ent, ref ExaminedEvent args)
@@ -219,14 +220,21 @@ public abstract partial class SharedTurbineSystem : EntitySystem
 
     private void OnSignalReceived(Entity<TurbineComponent> ent, ref SignalReceivedEvent args)
     {
-        int value = 0;
-        if (args.Data?.TryGetValue("logic_int", out value) != true)
-            return; // ignore non circuits
+        var state = SignalState.Momentary;
+        args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
 
-        if (args.Port == ent.Comp.StatorLoadPort)
-            SetStatorLoad(ent, (float) value);
-        else if (args.Port == ent.Comp.FlowRatePort)
-            SetFlowRate(ent, (float) value);
+        if (args.Port == ent.Comp.StatorLoadIncreasePort)
+            ent.Comp.IncreasePortState = state;
+        else if (args.Port == ent.Comp.StatorLoadDecreasePort)
+            ent.Comp.DecreasePortState = state;
+    }
+
+    private void OnPortDisconnected(Entity<TurbineComponent> ent, ref PortDisconnectedEvent args)
+    {
+        if (args.Port == ent.Comp.StatorLoadIncreasePort)
+            ent.Comp.IncreasePortState = SignalState.Low;
+        if (args.Port == ent.Comp.StatorLoadDecreasePort)
+            ent.Comp.DecreasePortState = SignalState.Low;
     }
 
     private void OnUnanchorAttempt(Entity<TurbineComponent> ent, ref UnanchorAttemptEvent args)
@@ -238,7 +246,7 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         args.Cancel();
     }
 
-    private void UpdatePartValues(Entity<TurbineComponent> ent)
+    protected void UpdatePartValues(Entity<TurbineComponent> ent)
     {
         if (_propsQuery.TryComp(ent.Comp.CurrentBlade, out var blade))
         {
@@ -296,7 +304,7 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         if (!float.IsFinite(load))
             return false;
 
-        load = Math.Clamp(load, ent.Comp.MinStatorLoad, ent.Comp.MaxStatorLoad);
+        load = Math.Max(load, ent.Comp.MinStatorLoad);
         if (ent.Comp.StatorLoad == load)
             return false;
 
@@ -327,16 +335,6 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         ent.Comp.RPM = rpm;
         DirtyField(ent, ent.Comp, nameof(TurbineComponent.RPM));
 
-        // update rpm on integer changes only, thats circuit resolution
-        int floored = (int) Math.Floor(rpm);
-        if (ent.Comp.LastSentSpeed == floored)
-            return;
-
-        ent.Comp.LastSentSpeed = floored;
-        var payload = new NetworkPayload();
-        payload["logic_int"] = floored;
-        _device.InvokePort(ent, ent.Comp.SpeedPort, payload);
-
         // update high/low speed ports if they change
         var high = rpm > ent.Comp.BestRPM * 1.05;
         var low = rpm < ent.Comp.BestRPM * 0.95;
@@ -354,29 +352,20 @@ public abstract partial class SharedTurbineSystem : EntitySystem
 
     public void SetLastGen(Entity<TurbineComponent> ent, float value)
     {
-        var gen = (int) Math.Floor(value);
-        if (ent.Comp.LastGen == gen)
+        if (ent.Comp.LastGen == value)
             return;
 
-        ent.Comp.LastGen = gen;
+        ent.Comp.LastGen = value;
         DirtyField(ent, ent.Comp, nameof(TurbineComponent.LastGen));
-
-        var payload = new NetworkPayload();
-        payload["logic_int"] = gen;
-        _device.InvokePort(ent, ent.Comp.PowerGenPort, payload);
     }
 
-    public void SetPowerSupply(Entity<TurbineComponent> ent, int supply)
+    public void SetPowerSupply(Entity<TurbineComponent> ent, float supply)
     {
         if (ent.Comp.PowerSupply == supply)
             return;
 
         ent.Comp.PowerSupply = supply;
         DirtyField(ent, ent.Comp, nameof(TurbineComponent.PowerSupply));
-
-        var payload = new NetworkPayload();
-        payload["logic_int"] = supply;
-        _device.InvokePort(ent, ent.Comp.PowerSupplyPort, payload);
     }
 
     public void SetRuined(Entity<TurbineComponent> ent, bool ruined = true)

@@ -14,12 +14,18 @@
   - UraniumReactorFuelRod
   - PlasmaReactorFuelRod
   - UraniumGlassReactorFuelRod
+  - SilverReactorControlRod
+  - PlasteelReactorControlRod
+  - PlasmaGlassReactorControlRod
   - SilverReactorGasChannel
   - PlasteelReactorGasChannel
   - PlasmaGlassReactorGasChannel
   - SilverReactorHeatExchanger
   - PlasteelReactorHeatExchanger
   - PlasmaGlassReactorHeatExchanger
+  - PlasteelGasTurbineBlade
+  - BrassGasTurbineBlade
+  - SilverGasTurbineStator
   position: 3,1
   technologyPrerequisites:
   - PowerGeneration
@@ -37,13 +43,15 @@
   - NuclearCentrifugeMachineCircuitboard
   - PlutoniumReactorFuelRod
   - BananiumReactorFuelRod
-  - GoldReactorReflector
-  - SilverReactorReflector
-  - GraphiteReactorReflector
+  - GoldReactorControlRod
+  - DiamondReactorControlRod
   - GoldReactorGasChannel
   - DiamondReactorGasChannel
   - GoldReactorHeatExchanger
   - DiamondReactorHeatExchanger
+  - GoldGasTurbineBlade
+  - DiamondGasTurbineBlade
+  - GoldGasTurbineStator
   position: 4,1
   technologyPrerequisites:
   - NuclearPowerGeneration

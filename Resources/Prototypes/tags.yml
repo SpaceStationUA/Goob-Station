@@ -1236,9 +1236,6 @@
 - type: Tag
   id: RawMaterial # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
-- type: Tag
-  id: ReactorPart # Pirate: Trauma Station nuclear reactor
-
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable

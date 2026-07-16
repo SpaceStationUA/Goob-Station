@@ -204,20 +204,20 @@ public sealed partial class NuclearReactorComponent : Component
     /// The soft maximum radiation the reactor is expected to produce, beyond which radiation increases logarithmically. Also used for alarms and UI.
     /// </summary>
     [DataField]
-    public float MaximumRadiation = 30;
+    public float MaximumRadiation = 50;
 
     /// <summary>
     /// The maximum thermal power the reactor is expected to produce
     /// </summary>
     /// <remarks>This will NOT stop the reactor from making more than this value</remarks>
     [DataField]
-    public int MaximumThermalPower = 10000000;
+    public float MaximumThermalPower = 10000000;
 
     /// <summary>
     /// The estimated thermal power the reactor is making in Watts.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int ThermalPower;
+    public float ThermalPower;
     [DataField]
     public int ThermalPowerCount;
     [DataField]
@@ -240,7 +240,7 @@ public sealed partial class NuclearReactorComponent : Component
     /// The selected prefab, or null for a random layout.
     /// </summary>
     [DataField]
-    public ProtoId<NuclearReactorPrefabPrototype>? Prefab = "7x7Normal";
+    public ProtoId<NuclearReactorPrefabPrototype>? Prefab = "ReactorPrefab7x7Normal";
 
     /// <summary>
     /// Chance that a reactor slot is filled when applying the random prefab
@@ -262,31 +262,28 @@ public sealed partial class NuclearReactorComponent : Component
 
     #region Device Network
     /// <summary>
-    /// The sink port to set control rod insertion.
+    /// The sink port that increases control rod insertion.
     /// </summary>
     [DataField]
-    public ProtoId<SinkPortPrototype> ControlRodInsertionPort = "ControlRodInsertion";
+    public ProtoId<SinkPortPrototype> ControlRodInsertPort = "InsertControlRods";
 
     /// <summary>
-    /// The source port to send average insertion of control rods.
+    /// The sink port that decreases control rod insertion.
     /// </summary>
     [DataField]
-    public ProtoId<SourcePortPrototype> ControlRodsAvgPort = "ControlRodsAvg";
+    public ProtoId<SinkPortPrototype> ControlRodRetractPort = "RetractControlRods";
 
     /// <summary>
-    /// The source port to send <see cref="Temperature"/> to.
+    /// Current signal state of <see cref="ControlRodInsertPort"/>.
     /// </summary>
     [DataField]
-    public ProtoId<SourcePortPrototype> CasingTempPort = "CasingTemperature";
+    public SignalState InsertPortState;
 
     /// <summary>
-    /// The source port to send <see cref="ThermalPower"/> to.
+    /// Current signal state of <see cref="ControlRodRetractPort"/>.
     /// </summary>
     [DataField]
-    public ProtoId<SourcePortPrototype> ThermalPowerPort = "ReactorThermalPower";
-
-    [DataField]
-    public int LastSentTemp;
+    public SignalState RetractPortState;
     #endregion
 
     [ViewVariables]

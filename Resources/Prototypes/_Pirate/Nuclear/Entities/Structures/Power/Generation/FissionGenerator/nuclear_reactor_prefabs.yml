@@ -1,9 +1,9 @@
 - type: nuclearReactorPrefab
-  id: Empty
+  id: ReactorPrefabEmpty
   parts: {}
 
 - type: nuclearReactorPrefab
-  id: 7x7Normal
+  id: ReactorPrefab7x7Normal
   parts:
     2,0: SteelReactorGasChannel
     2,2: SteelReactorGasChannel
@@ -23,11 +23,11 @@
     4,3: SteelReactorHeatExchanger
     4,5: SteelReactorHeatExchanger
 
-    3,2: BohrumReactorReflector
-    3,4: BohrumReactorReflector
+    3,2: BohrumReactorControlRod
+    3,4: BohrumReactorControlRod
 
 - type: nuclearReactorPrefab
-  id: 7x7Debug
+  id: ReactorPrefab7x7Debug
   parts:
     2,0: SteelReactorGasChannel
     2,2: SteelReactorGasChannel
@@ -47,15 +47,15 @@
     4,3: SteelReactorHeatExchanger
     4,5: SteelReactorHeatExchanger
 
-    3,2: BohrumReactorReflector
-    3,4: BohrumReactorReflector
+    3,2: BohrumReactorControlRod
+    3,4: BohrumReactorControlRod
 
     3,1: CerenkiteReactorFuelRod
     3,3: CerenkiteReactorFuelRod
     3,5: CerenkiteReactorFuelRod
 
 - type: nuclearReactorPrefab
-  id: 7x7Meltdown
+  id: ReactorPrefab7x7Meltdown
   parts:
     0,0: PlutoniumReactorFuelRod
     1,0: PlutoniumReactorFuelRod
@@ -114,7 +114,7 @@
     6,6: PlutoniumReactorFuelRod
 
 - type: nuclearReactorPrefab
-  id: 7x7Arachne
+  id: ReactorPrefab7x7Arachne
   parts:
     0,0: SteelReactorGasChannel
     0,2: SteelReactorGasChannel
@@ -146,19 +146,19 @@
     6,3: SteelReactorHeatExchanger
     6,5: SteelReactorHeatExchanger
 
-    1,2: BohrumReactorReflector
-    1,4: BohrumReactorReflector
-    2,1: BohrumReactorReflector
-    2,2: BohrumReactorReflector
-    2,4: BohrumReactorReflector
-    2,5: BohrumReactorReflector
-    3,3: BohrumReactorReflector
-    4,1: BohrumReactorReflector
-    4,2: BohrumReactorReflector
-    4,4: BohrumReactorReflector
-    4,5: BohrumReactorReflector
-    5,2: BohrumReactorReflector
-    5,4: BohrumReactorReflector
+    1,2: BohrumReactorControlRod
+    1,4: BohrumReactorControlRod
+    2,1: BohrumReactorControlRod
+    2,2: BohrumReactorControlRod
+    2,4: BohrumReactorControlRod
+    2,5: BohrumReactorControlRod
+    3,3: BohrumReactorControlRod
+    4,1: BohrumReactorControlRod
+    4,2: BohrumReactorControlRod
+    4,4: BohrumReactorControlRod
+    4,5: BohrumReactorControlRod
+    5,2: BohrumReactorControlRod
+    5,4: BohrumReactorControlRod
 
     1,1: CerenkiteReactorFuelRod
     1,3: CerenkiteReactorFuelRod
@@ -170,7 +170,7 @@
     5,5: CerenkiteReactorFuelRod
 
 - type: nuclearReactorPrefab
-  id: 7x7Lens
+  id: ReactorPrefab7x7Lens
   parts:
     0,0: SteelReactorGasChannel
     0,2: SteelReactorGasChannel
@@ -206,18 +206,18 @@
     6,3: SteelReactorHeatExchanger
     6,5: SteelReactorHeatExchanger
 
-    1,2: BohrumReactorReflector
-    1,4: BohrumReactorReflector
-    2,1: BohrumReactorReflector
-    2,2: BohrumReactorReflector
-    2,4: BohrumReactorReflector
-    2,5: BohrumReactorReflector
-    4,1: BohrumReactorReflector
-    4,2: BohrumReactorReflector
-    4,4: BohrumReactorReflector
-    4,5: BohrumReactorReflector
-    5,2: BohrumReactorReflector
-    5,4: BohrumReactorReflector
+    1,2: BohrumReactorControlRod
+    1,4: BohrumReactorControlRod
+    2,1: BohrumReactorControlRod
+    2,2: BohrumReactorControlRod
+    2,4: BohrumReactorControlRod
+    2,5: BohrumReactorControlRod
+    4,1: BohrumReactorControlRod
+    4,2: BohrumReactorControlRod
+    4,4: BohrumReactorControlRod
+    4,5: BohrumReactorControlRod
+    5,2: BohrumReactorControlRod
+    5,4: BohrumReactorControlRod
 
     1,1: CerenkiteReactorFuelRod
     1,5: CerenkiteReactorFuelRod
@@ -226,7 +226,7 @@
     5,5: CerenkiteReactorFuelRod
 
 - type: nuclearReactorPrefab
-  id: 5x5Normal
+  id: ReactorPrefab5x5Normal
   parts:
     0,0: SteelReactorGasChannel
     0,2: SteelReactorGasChannel
@@ -246,8 +246,8 @@
     4,1: SteelReactorHeatExchanger
     4,3: SteelReactorHeatExchanger
 
-    1,2: BohrumReactorReflector
-    2,1: BohrumReactorReflector
-    2,2: BohrumReactorReflector
-    2,3: BohrumReactorReflector
-    3,2: BohrumReactorReflector
+    1,2: BohrumReactorControlRod
+    2,1: BohrumReactorControlRod
+    2,2: BohrumReactorControlRod
+    2,3: BohrumReactorControlRod
+    3,2: BohrumReactorControlRod

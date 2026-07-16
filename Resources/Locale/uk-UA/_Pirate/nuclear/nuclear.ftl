@@ -142,33 +142,23 @@ comp-turbine-ui-footer-right = 2.0 РЕД. 1
 
 signal-port-name-nuclear-reactor-data-receiver = Монітор реактора
 signal-port-description-nuclear-reactor-data-receiver = Отримує дані про ядерний реактор.
-signal-port-name-nuclear-reactor-control-rods = Положення керувальних стрижнів
-signal-port-description-nuclear-reactor-control-rods = Встановлює цільове введення керувальних стрижнів у відсотках цілим числом.
-signal-port-name-gas-turbine-stator-load = Навантаження статора
-signal-port-description-gas-turbine-stator-load = Встановлює навантаження статора у ватах цілим числом.
-signal-port-name-gas-turbine-flow-rate = Швидкість потоку
-signal-port-description-gas-turbine-flow-rate = Встановлює швидкість потоку в літрах за секунду цілим числом.
+signal-port-name-nuclear-reactor-receiver-insert = Ввести керувальні стрижні
+signal-port-description-nuclear-reactor-receiver-insert = Збільшує рівень введення керувальних стрижнів.
+signal-port-name-nuclear-reactor-receiver-retract = Вивести керувальні стрижні
+signal-port-description-nuclear-reactor-receiver-retract = Зменшує рівень введення керувальних стрижнів.
 signal-port-name-gas-turbine-data-receiver = Монітор турбіни
 signal-port-description-gas-turbine-data-receiver = Отримує дані про газову турбіну.
+signal-port-name-gas-turbine-receiver-increase = Збільшити навантаження
+signal-port-description-gas-turbine-receiver-increase = Збільшує навантаження статора турбіни.
+signal-port-name-gas-turbine-receiver-decrease = Зменшити навантаження
+signal-port-description-gas-turbine-receiver-decrease = Зменшує навантаження статора турбіни.
 
-signal-port-name-nuclear-reactor-control-rods-avg = Середнє положення стрижнів
-signal-port-description-nuclear-reactor-control-rods-avg = Передає середнє введення керувальних стрижнів реактора у відсотках цілим числом.
-signal-port-name-nuclear-reactor-casing-temp = Температура корпусу
-signal-port-description-nuclear-reactor-casing-temp = Передає температуру корпусу реактора в кельвінах цілим числом.
-signal-port-name-nuclear-reactor-thermal-power = Теплова потужність
-signal-port-description-nuclear-reactor-thermal-power = Передає теплову потужність реактора у ватах цілим числом.
 signal-port-name-nuclear-reactor-data-sender = Ядерний реактор
 signal-port-description-nuclear-reactor-data-sender = Надсилає дані про ядерний реактор на монітор.
-signal-port-name-gas-turbine-speed = Швидкість турбіни
-signal-port-description-gas-turbine-speed = Передає поточну швидкість турбіни в обертах за хвилину цілим числом.
 signal-port-name-gas-turbine-speed-high = Висока швидкість
 signal-port-description-gas-turbine-speed-high = Подає ВИСОКИЙ сигнал, коли швидкість перевищує оптимальну.
 signal-port-name-gas-turbine-speed-low = Низька швидкість
 signal-port-description-gas-turbine-speed-low = Подає ВИСОКИЙ сигнал, коли швидкість нижча за оптимальну.
-signal-port-name-gas-turbine-generated = Вироблена потужність
-signal-port-description-gas-turbine-generated = Передає поточну вироблену потужність високовольтної мережі у ватах цілим числом.
-signal-port-name-gas-turbine-supply = Віддана потужність
-signal-port-description-gas-turbine-supply = Передає фактичну споживану потужність високовольтної мережі у ватах цілим числом.
 signal-port-name-gas-turbine-data-sender = Газова турбіна
 signal-port-description-gas-turbine-data-sender = Надсилає дані про газову турбіну на монітор.
 
@@ -185,8 +175,8 @@ guide-entry-nuclear-materials = Властивості матеріалів
 
 ### Сутності
 
-ent-BaseStructureFlatpack = базовий флетпак конструкції
-    .desc = Флетпак для побудови конструкції.
+ent-HeavyFlatpackBase = важкий флетпак
+    .desc = Великий флетпак для зберігання підозріло великої машини.
 ent-NuclearFabricatorMachineCircuitboard = машинна плата ядерного фабрикатора
     .desc = Машинна друкована плата для ядерного фабрикатора.
 ent-NuclearCentrifugeMachineCircuitboard = машинна плата ядерної центрифуги
@@ -200,6 +190,10 @@ ent-NuclearReactorFlatpack = флетпак ядерного реактора
     .desc = Флетпак для побудови ядерного реактора. Компоненти продаються окремо.
 ent-GasTurbineFlatpack = флетпак газової турбіни
     .desc = Флетпак для побудови газової турбіни.
+ent-NuclearReactorSmallFlatpack = флетпак малого ядерного реактора
+    .desc = Флетпак для побудови малого ядерного реактора. Компоненти продаються окремо.
+ent-GasTurbineSmallFlatpack = флетпак малої газової турбіни
+    .desc = Флетпак для побудови малої газової турбіни.
 
 ent-RadiationBlockingProjector = проєктор радіаційного бар'єра
     .desc = Дає змогу ненадовго стримати смертельну радіацію від деламінації або розплавлення реактора.
@@ -227,14 +221,20 @@ ent-BananiumReactorFuelRod = бананієвий паливний стриже�
     .desc = Гудковий паливний стрижень для ядерного реактора.
 ent-PlasmaReactorFuelRod = плазмовий паливний стрижень
 ent-UraniumGlassReactorFuelRod = ураново-скляний паливний стрижень
+ent-MeatReactorFuelRod = м'ясний паливний стрижень
+    .desc = Паливний стрижень... зачекайте, він живий?
 
-ent-BaseReactorReflector = відбивач нейтронів
-    .desc = Збірка відбивача нейтронів для ядерного реактора.
-ent-BohrumReactorReflector = борумовий відбивач нейтронів
-ent-SteelReactorReflector = сталевий відбивач нейтронів
-ent-GoldReactorReflector = золотий відбивач нейтронів
-ent-SilverReactorReflector = срібний відбивач нейтронів
-ent-GraphiteReactorReflector = графітовий відбивач нейтронів
+ent-BaseReactorControlRod = керувальний стрижень
+    .desc = Збірка керувального стрижня для ядерного реактора.
+ent-BohrumReactorControlRod = борумовий керувальний стрижень
+ent-SteelReactorControlRod = сталевий керувальний стрижень
+ent-GoldReactorControlRod = золотий керувальний стрижень
+ent-SilverReactorControlRod = срібний керувальний стрижень
+ent-BrassReactorControlRod = латунний керувальний стрижень
+ent-PlasteelReactorControlRod = пласталевий керувальний стрижень
+ent-GlassReactorControlRod = скляний керувальний стрижень
+ent-PlasmaGlassReactorControlRod = плазмово-скляний керувальний стрижень
+ent-DiamondReactorControlRod = діамантовий керувальний стрижень
 
 ent-BaseReactorGasChannel = газоканальний стрижень
     .desc = Газовий канал для ядерного реактора.
@@ -274,6 +274,7 @@ ent-GoldGasTurbineStator = золотий статор газової турбі
 ent-BaseNuclearReactor = ядерний реактор
     .desc = Корпус ядерного реактора з комірками для паливних стрижнів та інших компонентів. Стривайте, хіба один із таких не вибухнув?
 ent-NuclearReactorCrew = ядерний реактор
+ent-NuclearReactorNormal = ядерний реактор
 ent-NuclearReactorEmpty = ядерний реактор
 ent-NuclearReactorRandom = ядерний реактор
 ent-NuclearReactorMeltdown = ядерний реактор
@@ -304,9 +305,20 @@ ent-TurbineBladeShrapnel = уламок турбінної лопаті
 
 ent-CrateCerenkiteFuelRod = ящик церенкітових паливних стрижнів
     .desc = Містить три церенкітові паливні стрижні для ядерного реактора.
-ent-CrateBohrumReflector = ящик борумових відбивачів нейтронів
-    .desc = Містить два борумові відбивачі нейтронів для ядерного реактора.
+ent-CrateBohrumControlRod = ящик борумових керувальних стрижнів
+    .desc = Містить два борумові керувальні стрижні для ядерного реактора.
 ent-CrateSteelGasChannel = ящик сталевих газоканальних стрижнів
     .desc = Містить чотири сталеві газоканальні стрижні для ядерного реактора.
 ent-CrateSteelHeatExhanger = ящик сталевих теплообмінних стрижнів
     .desc = Містить чотири сталеві теплообмінні стрижні для ядерного реактора.
+
+### Ролі привидів і цілі
+
+ghost-role-information-plutonium-rod-name = Плутонієвий паливний стрижень
+ghost-role-information-plutonium-rod-description = Не хоче перетворитися на електроенергію.
+ghost-role-information-plutonium-rod-rules = Ви — [color={role-type-free-agent-color}][bold]{ghost-role-information-plutonium-rod-name}[/bold][/color]. Ваша єдина мета — не потрапити до ядерного реактора чи центрифуги, адже там ви [color=red]помрете[/color].
+    Ви не пам'ятаєте свого попереднього життя й нічого з того, що дізналися як привид.
+    Ви [color=red]не[/color] пам'ятаєте загальних знань про гру: як готувати, користуватися предметами тощо.
+    Вам категорично [color=red]заборонено[/color] згадувати ім'я, зовнішність або будь-які інші подробиці свого попереднього персонажа.
+
+steal-target-groups-reactorfuelrod = паливний стрижень реактора

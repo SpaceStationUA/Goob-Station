@@ -94,24 +94,22 @@
     inletPos: -1,-1
     outletPos: 1,-1
     arrowPrototype: TurbineFlowArrow
+    pipePrototype: TurbineGasPipe
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
     range: 200
   - type: DeviceLinkSource
-    range: 50
+    range: 1000
     ports:
-    - TurbineSpeed
+    - GasTurbineDataSender
     - TurbineSpeedHigh
     - TurbineSpeedLow
-    - TurbineGenerated
-    - TurbineSupply
-    - GasTurbineDataSender
   - type: DeviceLinkSink
     ports:
-    - TurbineStatorLoad
-    - TurbineFlowRate
+    - IncreaseStatorLoad
+    - DecreaseStatorLoad
   - type: ActivatableUI
     key: enum.TurbineUiKey.Key
   - type: ActivatableUIRequiresAnchor
@@ -166,13 +164,13 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Pirate/Nuclear/Markers/directional_arrow_indicator.rsi
+    sprite: Markers/teg_arrow.rsi
     color: "#FFFFFFBB"
     layers:
-    - state: blue_arrow
+    - state: arrow
       rotation: 90
       offset: 2, -1
-    - state: blue_arrow
+    - state: arrow
       rotation: 90
       offset: -2, -1
   - type: TimedDespawn
@@ -188,12 +186,17 @@
   components:
   - type: Sprite
     layers:
-    - state: blue_arrow
+    - state: arrow
       rotation: 180
       offset: 1, -2
-    - state: blue_arrow
+    - state: arrow
       rotation: 0
       offset: -1, -2
+
+- type: entity
+  parent: NuclearMachineGasPipe
+  id: TurbineGasPipe
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   id: GasTurbineAlarmEntity

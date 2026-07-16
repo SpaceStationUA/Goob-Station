@@ -15,5 +15,5 @@ public sealed partial class ReactorControlRodComponent : Component
     /// The target insertion level of the control rod.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ConfiguredInsertionLevel = 2;
+    public float ConfiguredInsertionLevel = 1;
 }

@@ -322,7 +322,7 @@
     - SecurityBoardsStaticGoob
     - ServiceBoardsStaticGoob
     dynamicPacks:
-    - ReactorCircuitboards # Pirate: Trauma Station nuclear reactor
+    - ReactorCircuitboards # Pirate: DeltaV nuclear reactor
     - EngineeringBoards
     - CargoBoards
     - MedicalBoards

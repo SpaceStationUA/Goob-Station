@@ -1,8 +1,13 @@
 # Nuclear Reactor
 - type: sinkPort
-  id: ControlRodInsertion
-  name: signal-port-name-nuclear-reactor-control-rods
-  description: signal-port-description-nuclear-reactor-control-rods
+  id: InsertControlRods
+  name: signal-port-name-nuclear-reactor-receiver-insert
+  description: signal-port-description-nuclear-reactor-receiver-insert
+
+- type: sinkPort
+  id: RetractControlRods
+  name: signal-port-name-nuclear-reactor-receiver-retract
+  description: signal-port-description-nuclear-reactor-receiver-retract
 
 - type: sinkPort
   id: NuclearReactorDataReceiver
@@ -11,14 +16,14 @@
 
 # Gas Turbine
 - type: sinkPort
-  id: TurbineStatorLoad
-  name: signal-port-name-gas-turbine-stator-load
-  description: signal-port-description-gas-turbine-stator-load
+  id: IncreaseStatorLoad
+  name: signal-port-name-gas-turbine-receiver-increase
+  description: signal-port-description-gas-turbine-receiver-increase
 
 - type: sinkPort
-  id: TurbineFlowRate
-  name: signal-port-name-gas-turbine-flow-rate
-  description: signal-port-description-gas-turbine-flow-rate
+  id: DecreaseStatorLoad
+  name: signal-port-name-gas-turbine-receiver-decrease
+  description: signal-port-description-gas-turbine-receiver-decrease
 
 - type: sinkPort
   id: GasTurbineDataReceiver

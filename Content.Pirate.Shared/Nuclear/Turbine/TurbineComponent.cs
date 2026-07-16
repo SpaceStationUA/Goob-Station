@@ -22,13 +22,13 @@ public sealed partial class TurbineComponent : Component
     /// Power generated last tick
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int LastGen;
+    public float LastGen;
 
     /// <summary>
     /// Power actually used last tick
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int PowerSupply;
+    public float PowerSupply;
 
     /// <summary>
     /// Joules per revolution
@@ -41,12 +41,6 @@ public sealed partial class TurbineComponent : Component
     /// </summary>
     [DataField]
     public float MinStatorLoad = 1000;
-
-    /// <summary>
-    /// Maximum setting of stator load
-    /// </summary>
-    [DataField]
-    public float MaxStatorLoad = 500000;
 
     /// <summary>
     /// Current RPM of turbine
@@ -198,10 +192,10 @@ public sealed partial class TurbineComponent : Component
 
     #region Device Network
     /// <summary>
-    /// Circuit source port that gets the current <see cref="RPM"/>.
+    /// Source port used to connect a gas turbine monitor.
     /// </summary>
     [DataField]
-    public ProtoId<SourcePortPrototype> SpeedPort = "TurbineSpeed";
+    public ProtoId<SourcePortPrototype> TurbineDataPort = "GasTurbineDataSender";
 
     /// <summary>
     /// The proto ID of the "Speed: High" source port
@@ -216,31 +210,29 @@ public sealed partial class TurbineComponent : Component
     public ProtoId<SourcePortPrototype> SpeedLowPort = "TurbineSpeedLow";
 
     /// <summary>
-    /// Circuit source port that gets the current <see cref="LastGen"/>.
+    /// Sink port that increases stator load.
     /// </summary>
     [DataField]
-    public ProtoId<SourcePortPrototype> PowerGenPort = "TurbineGenerated";
+    public ProtoId<SinkPortPrototype> StatorLoadIncreasePort = "IncreaseStatorLoad";
 
     /// <summary>
-    /// Circuit source port that gets the current <see cref="LastSupply"/>.
+    /// Sink port that decreases stator load.
     /// </summary>
     [DataField]
-    public ProtoId<SourcePortPrototype> PowerSupplyPort = "TurbineSupply";
+    public ProtoId<SinkPortPrototype> StatorLoadDecreasePort = "DecreaseStatorLoad";
 
     /// <summary>
-    /// Circuit port to set the current stator load.
+    /// Current signal state of <see cref="StatorLoadIncreasePort"/>.
     /// </summary>
     [DataField]
-    public ProtoId<SinkPortPrototype> StatorLoadPort = "TurbineStatorLoad";
+    public SignalState IncreasePortState;
 
     /// <summary>
-    /// Circuit port to set the current flow rate.
+    /// Current signal state of <see cref="StatorLoadDecreasePort"/>.
     /// </summary>
     [DataField]
-    public ProtoId<SinkPortPrototype> FlowRatePort = "TurbineFlowRate";
+    public SignalState DecreasePortState;
 
-    [DataField]
-    public int LastSentSpeed = -1;
     [DataField]
     public bool LastSentHigh;
     [DataField]

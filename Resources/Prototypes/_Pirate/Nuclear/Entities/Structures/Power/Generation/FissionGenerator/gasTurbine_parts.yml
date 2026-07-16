@@ -23,6 +23,9 @@
   description: A replacement blade for the gas turbine.
   components:
   - type: GasTurbineBlade
+  - type: Tag
+    tags:
+    - GasTurbineBlade
 
 - type: entity
   parent: [ BaseGasTurbineBlade, BaseNuclearPropertiesSteel ]
@@ -81,6 +84,9 @@
   - type: Sprite
     state: turbine_stator
   - type: GasTurbineStator
+  - type: Tag
+    tags:
+    - GasTurbineStator
 
 - type: entity
   parent: [ BaseGasTurbineStator, BaseNuclearPropertiesSteel ]

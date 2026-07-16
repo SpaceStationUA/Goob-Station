@@ -43,6 +43,7 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
 
         SubscribeLocalEvent<NuclearReactorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<NuclearReactorComponent, SignalReceivedEvent>(OnSignalReceived);
+        SubscribeLocalEvent<NuclearReactorComponent, PortDisconnectedEvent>(OnPortDisconnected);
         SubscribeLocalEvent<NuclearReactorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         Subs.BuiEvents<NuclearReactorComponent>(NuclearReactorUiKey.Key, subs =>
         {
@@ -54,8 +55,7 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
 
     private void OnInit(Entity<NuclearReactorComponent> ent, ref ComponentInit args)
     {
-        _device.EnsureSinkPorts(ent.Owner, ent.Comp.ControlRodInsertionPort);
-        _device.EnsureSourcePorts(ent.Owner, ent.Comp.ControlRodsAvgPort, ent.Comp.CasingTempPort);
+        _device.EnsureSinkPorts(ent.Owner, ent.Comp.ControlRodInsertPort, ent.Comp.ControlRodRetractPort);
 
         ent.Comp.PartsContainer = Container.EnsureContainer<Container>(ent.Owner, ent.Comp.PartsContainerName);
 
@@ -145,14 +145,31 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
 
     private void OnSignalReceived(Entity<NuclearReactorComponent> ent, ref SignalReceivedEvent args)
     {
-        if (args.Port != ent.Comp.ControlRodInsertionPort)
-            return; // wrong port
+        var state = SignalState.Momentary;
+        args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
 
-        int percent = 0;
-        if (args.Data?.TryGetValue("logic_int", out percent) != true)
-            return; // non circuit signal dont care
+        if (args.Port == ent.Comp.ControlRodInsertPort)
+            ent.Comp.InsertPortState = state;
+        else if (args.Port == ent.Comp.ControlRodRetractPort)
+            ent.Comp.RetractPortState = state;
+        else
+            return;
 
-        SetTargetInsertion(ent, percent * 0.02f);
+        var action = "maintain";
+        if (ent.Comp.InsertPortState != SignalState.Low && ent.Comp.RetractPortState == SignalState.Low)
+            action = "insert";
+        else if (ent.Comp.RetractPortState != SignalState.Low && ent.Comp.InsertPortState == SignalState.Low)
+            action = "retract";
+
+        AdminLog.Add(LogType.Action, $"{args.Trigger:trigger} set control rod insertion of {ent.Owner:target} to {action}");
+    }
+
+    private void OnPortDisconnected(Entity<NuclearReactorComponent> ent, ref PortDisconnectedEvent args)
+    {
+        if (args.Port == ent.Comp.ControlRodInsertPort)
+            ent.Comp.InsertPortState = SignalState.Low;
+        if (args.Port == ent.Comp.ControlRodRetractPort)
+            ent.Comp.RetractPortState = SignalState.Low;
     }
 
     private void OnUnanchorAttempt(EntityUid uid, NuclearReactorComponent comp, ref UnanchorAttemptEvent args)
@@ -305,17 +322,13 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
 
     public void SetAvgInsertion(Entity<NuclearReactorComponent> ent, float value)
     {
-        // only need % precision for networking or circuits since thats the resolution
+        // Percent precision is enough for the UI and avoids dirtying every tiny simulation step.
         var percent = (int) (value * 50);
         if ((int) (ent.Comp.AvgInsertion * 50) == percent)
             return;
 
         ent.Comp.AvgInsertion = value;
         DirtyField(ent, ent.Comp, nameof(NuclearReactorComponent.AvgInsertion));
-
-        var payload = new NetworkPayload();
-        payload["logic_int"] = percent;
-        _device.InvokePort(ent.Owner, ent.Comp.ControlRodsAvgPort, payload);
     }
 
     public void SetTemperature(Entity<NuclearReactorComponent> ent, float temp)
@@ -325,28 +338,15 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
 
         ent.Comp.Temperature = temp;
         DirtyField(ent, ent.Comp, nameof(NuclearReactorComponent.Temperature));
-
-        var floored = (int) Math.Floor(temp);
-        if (ent.Comp.LastSentTemp == floored)
-            return;
-
-        ent.Comp.LastSentTemp = floored;
-        var payload = new NetworkPayload();
-        payload["logic_int"] = floored;
-        _device.InvokePort(ent, ent.Comp.CasingTempPort, payload);
     }
 
-    public void SetThermalPower(Entity<NuclearReactorComponent> ent, int power)
+    public void SetThermalPower(Entity<NuclearReactorComponent> ent, float power)
     {
         if (ent.Comp.ThermalPower == power)
             return;
 
         ent.Comp.ThermalPower = power;
         DirtyField(ent, ent.Comp, nameof(NuclearReactorComponent.ThermalPower));
-
-        var payload = new NetworkPayload();
-        payload["logic_int"] = power;
-        _device.InvokePort(ent, ent.Comp.ThermalPowerPort, payload);
     }
 
     public void SetSmoking(Entity<NuclearReactorComponent> ent, bool smoking)

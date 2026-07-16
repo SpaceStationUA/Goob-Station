@@ -15,6 +15,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.DeviceLinking;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Radiation.Components;
@@ -165,6 +166,16 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
 
         gasInput.Volume = inlet.Volume;
 
+        if (comp.InsertPortState != SignalState.Low)
+            AdjustControlRods(ent, 0.1f);
+        if (comp.RetractPortState != SignalState.Low)
+            AdjustControlRods(ent, -0.1f);
+
+        if (comp.InsertPortState == SignalState.Momentary)
+            comp.InsertPortState = SignalState.Low;
+        if (comp.RetractPortState == SignalState.Momentary)
+            comp.RetractPortState = SignalState.Low;
+
         // Even though it's probably bad for performance, we have to do the for x, for y loops 3 times
         // to ensure the processes do not interfere with each other (TODO: no you dont...)
 
@@ -197,8 +208,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
                     control.ConfiguredInsertionLevel = comp.ControlRodInsertion;
                     Dirty(part, control);
                 }
-                // fuel rod cross section is inversely proportional to control rod insertion
-                avgControlRodInsertion += 1f - part.Comp.NeutronCrossSection;
+                avgControlRodInsertion += part.Comp.NeutronCrossSection;
                 controlRods++;
             }
         }
@@ -251,12 +261,11 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
         comp.RadiationLevel = Math.Max(comp.RadiationLevel + tempRads, 0);
         DirtyField(uid, comp, nameof(NuclearReactorComponent.RadiationLevel));
 
-        // W = J/s
         // use a rolling average to not jump erratically
-        var currentPower = energyChange / args.dt;
         if (comp.ThermalPowerCount < comp.ThermalPowerPrecision)
             comp.ThermalPowerCount++;
-        SetThermalPower(ent, comp.ThermalPower + (int) ((currentPower - comp.ThermalPower) / Math.Min(comp.ThermalPowerCount, comp.ThermalPowerPrecision)));
+        SetThermalPower(ent, comp.ThermalPower +
+            (energyChange - comp.ThermalPower) / Math.Min(comp.ThermalPowerCount, comp.ThermalPowerPrecision));
 
         if (comp.Temperature > comp.ReactorMeltdownTemp)
         {
@@ -276,11 +285,12 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
         var (uid, comp) = ent;
         var source = EnsureComp<RadiationSourceComponent>(uid);
 
-        // shielding protects up to MaximumRadiation, linear scaling past that
-        source.Intensity = MathF.Max(
-            comp.RadiationLevel - comp.MaximumRadiation,
-            comp.Melted ? comp.MeltdownRadiation : 0);
-        comp.RadiationLevel /= comp.RadiationStability;
+        // Linear scaling up to the expected maximum, logarithmic beyond it.
+        var radiation = comp.RadiationLevel <= comp.MaximumRadiation
+            ? comp.RadiationLevel
+            : comp.MaximumRadiation + MathF.Log(comp.RadiationLevel - comp.MaximumRadiation + 1);
+        source.Intensity = MathF.Max(radiation, comp.Melted ? comp.MeltdownRadiation : 0);
+        comp.RadiationLevel /= Math.Max(comp.RadiationStability, 1);
         DirtyField(uid, comp, nameof(NuclearReactorComponent.RadiationLevel));
     }
 
@@ -522,7 +532,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
             var announcement = Loc.GetString("reactor-melting-announcement");
             var sender = Loc.GetString("reactor-melting-announcement-sender");
             _chat.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, null, Color.Orange);
-            _globalSound.PlayGlobalOnStation(uid, Audio.ResolveSound(new SoundPathSpecifier("/Audio/Misc/delta.ogg")));
+            _globalSound.PlayGlobalOnStation(uid, Audio.ResolveSound(new SoundPathSpecifier("/Audio/_Pirate/Nuclear/Machines/orange.ogg")));
             comp.HasSentWarning = true;
         }
 

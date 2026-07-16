@@ -15,12 +15,13 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Pirate.Shared.Nuclear;
 using Content.Pirate.Shared.Nuclear.Turbine;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -39,6 +40,7 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
     [Dependency] private LockSystem _lock = default!;
     [Dependency] private NuclearMachineSystem _machine = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     public static readonly EntProtoId TurbineBladeShrapnel = "TurbineBladeShrapnel";
@@ -65,6 +67,20 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         ent.Comp.AlarmAudioUnderspeed = SpawnAttachedTo("GasTurbineAlarmEntity", coords);
         _ambient.SetSound(ent.Comp.AlarmAudioUnderspeed.Value, new SoundPathSpecifier("/Audio/_Pirate/Nuclear/Machines/alarm_beep.ogg"));
         _ambient.SetVolume(ent.Comp.AlarmAudioUnderspeed.Value, -4);
+
+        TryGetPart(ent, "blade_slot", out ent.Comp.CurrentBlade);
+        TryGetPart(ent, "stator_slot", out ent.Comp.CurrentStator);
+        UpdatePartValues(ent);
+    }
+
+    private bool TryGetPart(EntityUid uid, string containerId, [NotNullWhen(true)] out EntityUid? part)
+    {
+        part = null;
+        if (!_container.TryGetContainer(uid, containerId, out var container) || container.ContainedEntities.Count == 0)
+            return false;
+
+        part = container.ContainedEntities[0];
+        return true;
     }
 
     #region Main Loop
@@ -72,8 +88,8 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
     {
         var (uid, comp) = ent;
         var supplier = Comp<PowerSupplierComponent>(uid);
-        supplier.MaxSupply = (float) comp.LastGen;
-        SetPowerSupply(ent, (int) Math.Floor(supplier.CurrentSupply));
+        supplier.MaxSupply = comp.LastGen;
+        SetPowerSupply(ent, supplier.CurrentSupply);
 
         if (!_machine.GetPipes(uid, out var inlet, out var outlet))
         {
@@ -81,6 +97,16 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
             supplier.MaxSupply = 0;
             return;
         }
+
+        if (comp.IncreasePortState != SignalState.Low)
+            AdjustStatorLoad(ent, 1000f);
+        if (comp.DecreasePortState != SignalState.Low)
+            AdjustStatorLoad(ent, -1000f);
+
+        if (comp.IncreasePortState == SignalState.Momentary)
+            comp.IncreasePortState = SignalState.Low;
+        if (comp.DecreasePortState == SignalState.Momentary)
+            comp.DecreasePortState = SignalState.Low;
 
         if (comp.CurrentBlade == null || comp.CurrentStator == null)
             SetRuined(ent);
