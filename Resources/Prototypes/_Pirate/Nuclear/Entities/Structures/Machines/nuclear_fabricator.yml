@@ -25,6 +25,7 @@
         - Sheet
         - RawMaterial
         - Ingot
+        - SheetPlasma # Pirate: Goob replaces the inherited Sheet tag on plasma sheets.
   - type: OreSiloClient
   - type: Lathe
     idleState: icon
