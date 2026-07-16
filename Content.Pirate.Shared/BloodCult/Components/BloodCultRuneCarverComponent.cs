@@ -49,10 +49,10 @@ public sealed partial class BloodCultRuneCarverComponent : Component
     [DataField] public SoundSpecifier CarveSound = new SoundCollectionSpecifier("gib");
 
 	/// <summary>
-	/// 	Current user using the knife
+	/// Whether this component was granted to an ordinary sharp item at runtime.
 	/// </summary>
 	[ViewVariables]
-	public EntityUid? User;
+	public bool GrantedBySharp;
 }
 
 [Serializable, NetSerializable]
