@@ -2,9 +2,11 @@
 
 using Content.Goobstation.Shared.GrabIntent;
 using Content.IntegrationTests.Tests.Movement;
+using Content.Shared.Input;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Movement.Pulling.Systems;
-using Robust.Shared.Input;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Puller;
@@ -12,8 +14,6 @@ namespace Content.IntegrationTests.Tests.Puller;
 [TestFixture]
 public sealed class NonGrabbablePullEscapeTest : MovementTest
 {
-    protected override string PlayerPrototype => "NonGrabbablePullEscapeTestMob";
-
     [TestPrototypes]
     private const string Prototypes = """
         - type: entity
@@ -26,24 +26,29 @@ public sealed class NonGrabbablePullEscapeTest : MovementTest
     [Test]
     public async Task MoveInputStopsOrdinaryPull()
     {
-        var puller = await SpawnEntity("MobHuman", ToServer(TargetCoords));
-        var pulling = SEntMan.System<PullingSystem>();
-        var pullable = Comp<PullableComponent>(Player);
+        await SpawnTarget("NonGrabbablePullEscapeTestMob");
 
-        Assert.That(HasComp<GrabbableComponent>(Player), Is.False);
+        var puller = Comp<PullerComponent>(Player);
+        var pullable = Comp<PullableComponent>(Target);
+        var target = STarget!.Value;
 
-        await Server.WaitAssertion(() =>
+        Assert.That(HasComp<GrabbableComponent>(Target), Is.False);
+
+        await PressKey(ContentKeyFunctions.TryPullObject);
+        await RunTicks(5);
+
+        Assert.That(puller.Pulling, Is.EqualTo(target));
+        Assert.That(pullable.Puller, Is.EqualTo(SPlayer));
+
+        await Server.WaitPost(() =>
         {
-            Assert.That(pulling.TryStartPull(puller, SPlayer), Is.True);
-            Assert.That(pullable.Puller, Is.EqualTo(puller));
+            var mover = SEntMan.GetComponent<InputMoverComponent>(target);
+            var ev = new MoveInputEvent((target, mover), mover.HeldMoveButtons, Direction.West, true);
+            SEntMan.EventBus.RaiseLocalEvent(target, ref ev);
         });
-
         await RunTicks(5);
-        await SetMovementKey(DirectionFlag.West, BoundKeyState.Down);
-        await RunTicks(5);
-        await SetMovementKey(DirectionFlag.West, BoundKeyState.Up);
-        await RunTicks(1);
 
         Assert.That(pullable.Puller, Is.Null);
+        Assert.That(puller.Pulling, Is.Null);
     }
 }
