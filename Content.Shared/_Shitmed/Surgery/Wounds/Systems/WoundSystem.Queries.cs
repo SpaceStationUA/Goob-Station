@@ -418,6 +418,8 @@ public sealed partial class WoundSystem
         WoundComponent? woundComponent = null)
     {
         if (!_timing.IsFirstTimePredicted
+            || TerminatingOrDeleted(target) // Pirate: multiz - never attach a wound to a part being deleted
+            || EntityManager.IsQueuedForDeletion(target) // Pirate: multiz - part already queued for destruction this tick
             || !Resolve(target, ref woundableComponent)
             || !Resolve(wound, ref woundComponent)
             || woundableComponent.Wounds == null
@@ -657,19 +659,22 @@ public sealed partial class WoundSystem
             return false;
 
         var wound = EntityManager.PredictedSpawn(woundProtoId); // why isnt predicted spawn not exposed to entitysystems?
-        if (AddWound(uid, wound, severity, damageGroup))
+        // Pirate: multiz - AddWound calls SetWoundSeverity, which can synchronously destroy the woundable
+        // (CheckWoundableSeverityThresholds) and detach/delete this very wound. Guard the deref so we don't
+        // throw KeyNotFoundException on a wound that was consumed mid-creation.
+        if (AddWound(uid, wound, severity, damageGroup)
+            && !TerminatingOrDeleted(wound)
+            && TryComp<WoundComponent>(wound, out var createdComp))
         {
-            woundCreated = (wound, Comp<WoundComponent>(wound));
+            woundCreated = (wound, createdComp);
+            return true;
         }
-        else
-        {
-            // The wound failed some important checks, and we cannot let an invalid wound to be spawned!
+
+        // The wound failed some important checks (or was consumed by reentrant destruction); don't leak it.
+        if (!TerminatingOrDeleted(wound))
             PredictedQueueDel(wound);
 
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     /// <summary>

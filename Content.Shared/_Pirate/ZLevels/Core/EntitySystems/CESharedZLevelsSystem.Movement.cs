@@ -29,6 +29,12 @@ public abstract partial class CESharedZLevelsSystem
     // traces (scaled hitboxes stabilize ~0.39-0.40, normal bodies ~0.381-0.383) while staying clear
     // of the downward landing sample to avoid up/down stair loops.
     private const float StairUpTransferSampleThreshold = 0.42f;
+    // Large movers (e.g. mechs) are stopped by the stair's top wall fixture further from the stair's
+    // high edge than small mobs, so their sampled center never reaches StairUpTransferSampleThreshold
+    // and they climb the stair visually but never transfer up. For a body wider than the normal
+    // threshold we raise the ceiling to the body's collision radius plus this margin (see
+    // GetUpwardTransferSampleThreshold), clamped below the down-landing sample so no up/down loop forms.
+    private const float StairUpTransferLargeBodyMargin = 0.06f;
     // Mover lands just inside the next tile after climbing so it won't re-trigger descent.
     private const float StairUpLandingForwardNudge = 0.05f;
     // Mover lands at the start of stair 3 after descending so it won't instantly climb back up.
@@ -2044,6 +2050,29 @@ public abstract partial class CESharedZLevelsSystem
         return false;
     }
 
+    /// <summary>
+    /// The stair sample (position along the stair, 0 = high edge) at or below which an entity may
+    /// transfer up. Normal mobs stall around 0.38-0.40 so the tuned <see cref="StairUpTransferSampleThreshold"/>
+    /// catches them, but a wide body (e.g. a mech) is stopped by the stair's top wall fixture at a
+    /// larger sample and would never transfer. For such bodies we raise the ceiling to the body's
+    /// collision radius plus a margin, clamped below <see cref="StairDownLandingSample"/> so a mover
+    /// can't ping-pong up and down the same stair.
+    /// </summary>
+    private float GetUpwardTransferSampleThreshold(EntityUid ent)
+    {
+        if (!PhysicsQuery.HasComp(ent))
+            return StairUpTransferSampleThreshold;
+
+        var hardAabb = _physics.GetHardAABB(ent);
+        var bodyRadius = 0.5f * MathF.Max(hardAabb.Width, hardAabb.Height);
+        if (bodyRadius <= StairUpTransferSampleThreshold)
+            return StairUpTransferSampleThreshold;
+
+        return MathF.Min(
+            bodyRadius + StairUpTransferLargeBodyMargin,
+            StairDownLandingSample - StairUpTransferLargeBodyMargin);
+    }
+
     private bool ShouldAttemptUpwardTransfer(EntityUid ent, CEZPhysicsComponent zPhys, float upwardTransferThreshold)
     {
         if (zPhys.LocalPosition < upwardTransferThreshold)
@@ -2107,7 +2136,8 @@ public abstract partial class CESharedZLevelsSystem
             return false;
         }
 
-        allow = moveDot > 0.25f && support.Sample <= StairUpTransferSampleThreshold;
+        var sampleThreshold = GetUpwardTransferSampleThreshold(ent);
+        allow = moveDot > 0.25f && support.Sample <= sampleThreshold;
         reason = moveDot <= 0.25f
             ? "move_dir_gate"
             : allow
@@ -2116,7 +2146,7 @@ public abstract partial class CESharedZLevelsSystem
 
         DebugZStairCsv(ent,
             "up_check",
-            $"allow={StairCsvBool(allow)},reason={reason},sample={StairCsvFloat(sample)},sample_thr={StairCsvFloat(StairUpTransferSampleThreshold)},support_dir={supportDirection},up_dir={upwardDirection},move_dot={StairCsvFloat(moveDot)},move_intent={StairCsvBool(moveIntentFound)}",
+            $"allow={StairCsvBool(allow)},reason={reason},sample={StairCsvFloat(sample)},sample_thr={StairCsvFloat(sampleThreshold)},support_dir={supportDirection},up_dir={upwardDirection},move_dot={StairCsvFloat(moveDot)},move_intent={StairCsvBool(moveIntentFound)}",
             $"{reason}|{StairCsvFloat(MathF.Round(sample, 2))}|{StairCsvFloat(MathF.Round(moveDot, 2))}|{supportDirection}|{upwardDirection}|{StairCsvBool(moveIntentFound)}");
 
         return allow;

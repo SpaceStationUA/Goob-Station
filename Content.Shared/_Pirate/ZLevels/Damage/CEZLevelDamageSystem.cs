@@ -128,7 +128,15 @@ public sealed class CEZLevelDamageSystem : EntitySystem
         var damageAmount = args.ImpactPower * args.ImpactPower * BaseFallingDamage * damageModifier;
         if (damageAmount > 0)
         {
-            if (_damage.TryChangeDamage(ent.Owner, new DamageSpecifier(_proto.Index(BluntDamageType), damageAmount)) != null && _net.IsClient)
+            // Mark the impact as fall damage while it is applied, so damage-forwarding systems (e.g. a
+            // mech relaying a share to its pilot) can opt out of passing fall damage on. Added and
+            // removed around the synchronous TryChangeDamage so the DamageChangedEvent handlers see it.
+            var hadFallGuard = EnsureComp<CEZFallDamageInProgressComponent>(ent.Owner, out _);
+            var result = _damage.TryChangeDamage(ent.Owner, new DamageSpecifier(_proto.Index(BluntDamageType), damageAmount));
+            if (!hadFallGuard)
+                RemComp<CEZFallDamageInProgressComponent>(ent.Owner);
+
+            if (result != null && _net.IsClient)
                 redDamageFlash.Add(ent.Owner);
         }
 

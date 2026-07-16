@@ -4,6 +4,7 @@
 // (projectile visual offset portions only — lanos already has the rest of the client z-system).
 
 using System.Numerics;
+using Content.Client._Pirate.ZLevels.Core; // Pirate: multiz - CEClientZLevelsSystem.ZLevelOffset (render offset cvar)
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Robust.Client.GameObjects;
@@ -105,11 +106,16 @@ public sealed class CMUZLevelClientShootingSystem : EntitySystem
         TransformComponent xform)
     {
         // Add the render-displacement built from the live eye (the Z render pass shifts its eye by
-        // renderDir * ZLevelVisualOffset * depth). Live eye is the point of the split: lanos's eye
+        // renderDir * ZLevelOffset * depth). Live eye is the point of the split: lanos's eye
         // can be rotated, so this isn't axis-aligned and a baked constant would land off-line.
+        // Pirate: multiz - must use the SAME offset the render pass uses (CEClientZLevelsSystem.ZLevelOffset,
+        // the zlevels.ce_render_offset cvar), not the 0.7 physics constant ZLevelVisualOffset. The render
+        // offset was changed 0.7 => 0.3 (commit 05b426b395) without updating this compensation, leaving a
+        // ~0.4-tile vertical residual: invisible on N/S shots (slides along travel), but drops E/W shots
+        // below the aim line.
         Angle negEyeRotation = _eye.CurrentEye.Rotation * -1;
         var renderDir = negEyeRotation.ToWorldVec();
-        var worldOffset = barrelShift + renderDir * CESharedZLevelsSystem.ZLevelVisualOffset * depth;
+        var worldOffset = barrelShift + renderDir * CEClientZLevelsSystem.ZLevelOffset * depth;
 
         // No-rotation sprites stay screen-aligned; rotated sprites need the offset in their own
         // local frame so it doesn't flip with the projectile.
