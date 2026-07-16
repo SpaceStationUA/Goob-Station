@@ -34,7 +34,6 @@ using Robust.Shared.Map;
 using Content.Shared.NPC.Systems;
 using Content.Shared.NPC.Components;
 using Content.Server.GameTicking.Rules;
-using Content.Shared.Actions;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
@@ -60,22 +59,11 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 	[Dependency] private readonly IRobustRandom _random = default!;
 	[Dependency] private readonly SharedTransformSystem _transform = default!;
 	[Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-	[Dependency] private readonly SharedActionsSystem _actions = default!;
 	[Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
 	[Dependency] private readonly UserInterfaceSystem _ui = default!;
 	[Dependency] private readonly IPrototypeManager _prototype = default!;
 
 	private readonly Dictionary<EntityUid, PendingConstructSource> _pendingConstructs = new();
-
-	/// <summary>
-	/// Grants the Commune action to a juggernaut
-	/// </summary>
-	private void GrantCommuneAction(EntityUid juggernaut)
-	{
-		EntityUid? communeAction = null;
-		_actions.AddAction(juggernaut, ref communeAction, "ActionCultistCommune");
-	}
-
 
 	public override void Initialize()
 	{
@@ -215,9 +203,6 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 		}
 		_npcFaction.AddFaction(juggernaut, BloodCultRuleSystem.BloodCultistFactionId);
 		
-		// Grant Commune ability to juggernaut
-		GrantCommuneAction(juggernaut);
-		
 		// Play transformation audio
 		_audio.PlayPvs(new SoundPathSpecifier("/Audio/Magic/blink.ogg"), shellTransform.Coordinates);
 		
@@ -244,9 +229,6 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 
 		// Reactivate the juggernaut.
 		juggComp.IsInactive = false;
-
-		// Grant Commune ability to juggernaut if not already granted
-		GrantCommuneAction(juggernaut);
 
 		// DON'T heal the juggernaut - it stays in critical state until healed with blood
 
@@ -361,9 +343,6 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 			_npcFaction.ClearFactions((juggernaut, npcFaction), false);
 		}
 		_npcFaction.AddFaction(juggernaut, BloodCultRuleSystem.BloodCultistFactionId);
-		
-		// Grant Commune ability to juggernaut
-		GrantCommuneAction(juggernaut);
 		
 		// Play transformation audio
 		_audio.PlayPvs(new SoundPathSpecifier("/Audio/Magic/blink.ogg"), shellTransform.Coordinates);
@@ -650,9 +629,6 @@ public sealed partial class BloodCultConstructSystem : EntitySystem
 
 		// Reactivate the juggernaut.
 		juggComp.IsInactive = false;
-
-		// Grant Commune ability to juggernaut if not already granted
-		GrantCommuneAction(juggernaut);
 
 		// DON'T heal the juggernaut - it stays in critical state until healed with blood
 
