@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Pirate.Shared.Nuclear.Turbine;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class GasTurbineBladeComponent : Component
 {
     [DataField, AutoNetworkedField]
