@@ -69,6 +69,8 @@ public sealed partial class PullingSystem : EntitySystem // DOWNSTREAM-TPirates:
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
         UpdatesOutsidePrediction = true;
 
+        // Pirate: restore ordinary pull escape after the Goob grab-intent split.
+        SubscribeLocalEvent<PullableComponent, MoveInputEvent>(OnPullableMoveInput);
         SubscribeLocalEvent<PullableComponent, CollisionChangeEvent>(OnPullableCollisionChange);
         SubscribeLocalEvent<PullableComponent, JointRemovedEvent>(OnJointRemoved);
         SubscribeLocalEvent<PullableComponent, GetVerbsEvent<Verb>>(AddPullVerbs);
@@ -318,6 +320,14 @@ public sealed partial class PullingSystem : EntitySystem // DOWNSTREAM-TPirates:
             };
             args.Verbs.Add(verb);
         }
+    }
+
+    private void OnPullableMoveInput(Entity<PullableComponent> ent, ref MoveInputEvent args)
+    {
+        if (!ent.Comp.BeingPulled || !_blocker.CanMove(args.Entity))
+            return;
+
+        TryStopPull(ent, ent.Comp, ent);
     }
 
     private void OnPullableCollisionChange(EntityUid uid, PullableComponent component, ref CollisionChangeEvent args)
