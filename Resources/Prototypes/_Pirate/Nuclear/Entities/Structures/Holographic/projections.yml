@@ -1,0 +1,23 @@
+- type: entity
+  id: HolosignRadiationBlocking
+  parent: BaseHolosign
+  name: holographic radiation barrier
+  description: A barrier of hard light that blocks light and radiation, but nothing else.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Nuclear/Structures/Holo/radiation.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+  - type: Occluder
+    enabled: false # Pirate: enabled only while deployed; stored projections are not on a grid.
+  - type: RadiationBlocker
+    resistance: 50
+  - type: HoloRadiationblocker
+  - type: PointLight
+    energy: 5
+    color: Green
