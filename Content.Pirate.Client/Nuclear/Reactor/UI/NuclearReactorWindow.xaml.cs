@@ -48,7 +48,7 @@ public sealed partial class NuclearReactorWindow : FancyWindow
     }
     private int _displayModeCount = Enum.GetValues<DisplayModes>().Length;
 
-    private bool _kelvin = true;
+    private bool _kelvin;
 
     private int _targetX = 0;
     private int _targetY = 0;
