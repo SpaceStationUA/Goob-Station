@@ -205,8 +205,7 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         {
             // TODO: damage flash
             Audio.PlayPvs(comp.DamageSound, uid);
-            comp.BladeHealth--;
-            DirtyField(uid, comp, nameof(TurbineComponent.BladeHealth));
+            SetBladeHealth(ent, comp.BladeHealth - 1);
             UpdateHealthIndicators(ent);
         }
 
@@ -304,8 +303,7 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
 
         if (ratio < 1)
         {
-            ent.Comp.BladeHealth -= _random.Next(1, (int)(3f * ratio) + 1);
-            DirtyField(ent, ent.Comp, nameof(TurbineComponent.BladeHealth));
+            SetBladeHealth(ent, ent.Comp.BladeHealth - _random.Next(1, (int)(3f * ratio) + 1));
             UpdateHealthIndicators(ent);
             return;
         }

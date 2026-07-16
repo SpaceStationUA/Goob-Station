@@ -156,15 +156,13 @@ public abstract partial class SharedTurbineSystem : EntitySystem
             SetRuined(ent, false);
             if (ent.Comp.BladeHealth <= 0)
             {
-                ent.Comp.BladeHealth = 1;
-                DirtyField(ent, ent.Comp, nameof(TurbineComponent.BladeHealth));
+                SetBladeHealth(ent, 1);
             }
             UpdateHealthIndicators(ent, args.User);
         }
         else if (ent.Comp.BladeHealth < ent.Comp.BladeHealthMax)
         {
-            ent.Comp.BladeHealth++;
-            DirtyField(ent, ent.Comp, nameof(TurbineComponent.BladeHealth));
+            SetBladeHealth(ent, ent.Comp.BladeHealth + 1);
             UpdateHealthIndicators(ent, args.User);
         }
 
@@ -184,11 +182,13 @@ public abstract partial class SharedTurbineSystem : EntitySystem
 
     private void OnPartInserted(Entity<TurbineComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        var updateHealthIndicators = false;
         switch (args.Container.ID)
         {
             case BladeContainer:
                 ent.Comp.CurrentBlade = args.Entity;
                 DirtyField(ent, ent.Comp, nameof(TurbineComponent.CurrentBlade));
+                updateHealthIndicators = true;
                 break;
             case StatorContainer:
                 ent.Comp.CurrentStator = args.Entity;
@@ -198,6 +198,8 @@ public abstract partial class SharedTurbineSystem : EntitySystem
                 return;
         }
         UpdatePartValues(ent);
+        if (updateHealthIndicators)
+            UpdateHealthIndicators(ent);
     }
 
     private void OnPartEjected(Entity<TurbineComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -248,11 +250,26 @@ public abstract partial class SharedTurbineSystem : EntitySystem
 
     protected void UpdatePartValues(Entity<TurbineComponent> ent)
     {
-        if (_propsQuery.TryComp(ent.Comp.CurrentBlade, out var blade))
+        if (ent.Comp.CurrentBlade is { } bladeUid &&
+            _propsQuery.TryComp(bladeUid, out var bladeProps) &&
+            TryComp<GasTurbineBladeComponent>(bladeUid, out var blade))
         {
-            ent.Comp.TurbineMass = Math.Max(200, 200 * blade.Density);
-            ent.Comp.BladeHealthMax = (int)Math.Max(1, 5 * blade.Hardness);
-            ent.Comp.BladeHealth = ent.Comp.BladeHealthMax;
+            ent.Comp.TurbineMass = Math.Max(200, 200 * bladeProps.Density);
+
+            if (blade.MaxHealth == null)
+            {
+                blade.MaxHealth = (int)Math.Max(1, 5 * bladeProps.Hardness);
+                DirtyField(bladeUid, blade, nameof(GasTurbineBladeComponent.MaxHealth));
+            }
+
+            if (blade.Health == null)
+            {
+                blade.Health = blade.MaxHealth;
+                DirtyField(bladeUid, blade, nameof(GasTurbineBladeComponent.Health));
+            }
+
+            ent.Comp.BladeHealthMax = blade.MaxHealth.Value;
+            ent.Comp.BladeHealth = blade.Health.Value;
             DirtyField(ent, ent.Comp, nameof(TurbineComponent.BladeHealthMax));
             DirtyField(ent, ent.Comp, nameof(TurbineComponent.BladeHealth));
         }
@@ -261,6 +278,23 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         {
             ent.Comp.PowerMultiplier = (float)Math.Max(0.2, 0.2 * stator.ElectricalConductivity);
         }
+    }
+
+    protected void SetBladeHealth(Entity<TurbineComponent> ent, int health)
+    {
+        if (ent.Comp.BladeHealth != health)
+        {
+            ent.Comp.BladeHealth = health;
+            DirtyField(ent, ent.Comp, nameof(TurbineComponent.BladeHealth));
+        }
+
+        if (ent.Comp.CurrentBlade is not { } bladeUid ||
+            !TryComp<GasTurbineBladeComponent>(bladeUid, out var blade) ||
+            blade.Health == health)
+            return;
+
+        blade.Health = health;
+        DirtyField(bladeUid, blade, nameof(GasTurbineBladeComponent.Health));
     }
 
     protected void UpdateHealthIndicators(Entity<TurbineComponent> ent, EntityUid? user = null)
