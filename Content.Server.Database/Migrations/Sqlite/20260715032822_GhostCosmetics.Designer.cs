@@ -905,6 +905,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("first_seen_time");
 
+                    b.Property<string>("GhostHat")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_hat");
+
+                    b.Property<string>("GhostMask")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_mask");
+
+                    b.Property<string>("GhostParticles")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_particles");
+
                     b.Property<DateTime?>("LastReadRules")
                         .HasColumnType("TEXT")
                         .HasColumnName("last_read_rules");
@@ -1435,18 +1447,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<int?>("GhostColor")
                         .HasColumnType("INTEGER")
                         .HasColumnName("ghost_color");
-
-                    b.Property<string>("GhostHat")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("ghost_hat");
-
-                    b.Property<string>("GhostMask")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("ghost_mask");
-
-                    b.Property<string>("GhostParticles")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("ghost_particles");
 
                     b.Property<int>("TierId")
                         .HasColumnType("INTEGER")

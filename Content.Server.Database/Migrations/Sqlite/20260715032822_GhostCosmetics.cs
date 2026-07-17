@@ -12,19 +12,19 @@ namespace Content.Server.Database.Migrations.Sqlite
         {
             migrationBuilder.AddColumn<string>(
                 name: "ghost_hat",
-                table: "rmc_patrons",
+                table: "player", // Pirate: available to every player
                 type: "TEXT",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "ghost_mask",
-                table: "rmc_patrons",
+                table: "player", // Pirate: available to every player
                 type: "TEXT",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "ghost_particles",
-                table: "rmc_patrons",
+                table: "player", // Pirate: available to every player
                 type: "TEXT",
                 nullable: true);
 
@@ -48,15 +48,15 @@ namespace Content.Server.Database.Migrations.Sqlite
         {
             migrationBuilder.DropColumn(
                 name: "ghost_hat",
-                table: "rmc_patrons");
+                table: "player");
 
             migrationBuilder.DropColumn(
                 name: "ghost_mask",
-                table: "rmc_patrons");
+                table: "player");
 
             migrationBuilder.DropColumn(
                 name: "ghost_particles",
-                table: "rmc_patrons");
+                table: "player");
 
             migrationBuilder.DropColumn(
                 name: "ghost_cosmetics",

@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Shared._RMC14.LinkAccount; // Pirate: public ghost cosmetics
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Prototypes;
@@ -321,6 +322,8 @@ namespace Content.Server.Database
         Task SetGhostColor(Guid player, System.Drawing.Color? color);
 
         // Goob start
+        Task<SharedRMCGhostCosmetics?> GetGhostCosmetics(Guid player, CancellationToken cancel);
+
         Task SetGhostCosmetics(Guid player, string? particles, string? hat, string? mask);
 
         Task<List<RMCPatronTier>> GetPatronTiers();
@@ -1118,6 +1121,12 @@ namespace Content.Server.Database
         }
 
         // Goob start - ghost cosmetics + patron database commands
+        public Task<SharedRMCGhostCosmetics?> GetGhostCosmetics(Guid player, CancellationToken cancel)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetGhostCosmetics(player, cancel));
+        }
+
         public Task SetGhostCosmetics(Guid player, string? particles, string? hat, string? mask)
         {
             DbWriteOpsMetric.Inc();

@@ -1135,6 +1135,18 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("first_seen_time");
 
+                    b.Property<string>("GhostHat")
+                        .HasColumnType("text")
+                        .HasColumnName("ghost_hat");
+
+                    b.Property<string>("GhostMask")
+                        .HasColumnType("text")
+                        .HasColumnName("ghost_mask");
+
+                    b.Property<string>("GhostParticles")
+                        .HasColumnType("text")
+                        .HasColumnName("ghost_particles");
+
                     b.Property<DateTime?>("LastReadRules")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_read_rules");
@@ -1713,18 +1725,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int?>("GhostColor")
                         .HasColumnType("integer")
                         .HasColumnName("ghost_color");
-
-                    b.Property<string>("GhostHat")
-                        .HasColumnType("text")
-                        .HasColumnName("ghost_hat");
-
-                    b.Property<string>("GhostMask")
-                        .HasColumnType("text")
-                        .HasColumnName("ghost_mask");
-
-                    b.Property<string>("GhostParticles")
-                        .HasColumnType("text")
-                        .HasColumnName("ghost_particles");
 
                     b.Property<int>("TierId")
                         .HasColumnType("integer")

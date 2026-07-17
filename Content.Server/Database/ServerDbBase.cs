@@ -1775,16 +1775,31 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         }
 
         // Goob start
+        public async Task<SharedRMCGhostCosmetics?> GetGhostCosmetics(Guid player, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            var data = await db.DbContext.Player
+                .Where(p => p.UserId == player)
+                .Select(p => new { p.GhostParticles, p.GhostHat, p.GhostMask })
+                .FirstOrDefaultAsync(cancel);
+
+            if (data == null ||
+                (data.GhostParticles == null && data.GhostHat == null && data.GhostMask == null))
+                return null;
+
+            return new SharedRMCGhostCosmetics(data.GhostParticles, data.GhostHat, data.GhostMask);
+        }
+
         public async Task SetGhostCosmetics(Guid player, string? particles, string? hat, string? mask)
         {
             await using var db = await GetDb();
-            var patron = await db.DbContext.RMCPatrons.FirstOrDefaultAsync(p => p.PlayerId == player);
-            if (patron == null)
+            var playerData = await db.DbContext.Player.FirstOrDefaultAsync(p => p.UserId == player);
+            if (playerData == null)
                 return;
 
-            patron.GhostParticles = particles;
-            patron.GhostHat = hat;
-            patron.GhostMask = mask;
+            playerData.GhostParticles = particles;
+            playerData.GhostHat = hat;
+            playerData.GhostMask = mask;
             await db.DbContext.SaveChangesAsync();
         }
 

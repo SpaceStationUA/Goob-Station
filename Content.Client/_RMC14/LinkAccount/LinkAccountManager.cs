@@ -50,12 +50,7 @@ public sealed class LinkAccountManager : IPostInjectInit
 
     public bool CanViewPatronPerks()
     {
-        return Tier is { } tier &&
-               (tier.GhostColor ||
-                tier.GhostCosmetics || // Goob - ghost cosmetics
-                tier.GhostParticles || // Goob - ghost cosmetics
-                tier.LobbyMessage ||
-                tier.RoundEndShoutout);
+        return true; // Pirate: the window always exposes public ghost cosmetics.
     }
 
     void IPostInjectInit.PostInject()

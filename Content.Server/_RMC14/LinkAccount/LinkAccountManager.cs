@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared._RMC14.LinkAccount;
+using Robust.Server.Player; // Pirate: public ghost cosmetics
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -20,6 +21,7 @@ public sealed class LinkAccountManager : IPostInjectInit
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly UserDbDataManager _userDb = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!; // Pirate: public ghost cosmetics
 
     private readonly Dictionary<NetUserId, TimeSpan> _lastRequest = new();
     private readonly TimeSpan _minimumWait = TimeSpan.FromSeconds(0.5);
@@ -37,6 +39,7 @@ public sealed class LinkAccountManager : IPostInjectInit
     {
         var patron = await _db.GetPatron(player.UserId, cancel);
         var linked = await _db.HasLinkedAccount(player.UserId, cancel);
+        var ghostCosmetics = await _db.GetGhostCosmetics(player.UserId, cancel); // Pirate: not patron-gated
         cancel.ThrowIfCancellationRequested();
 
         var tier = patron?.Tier;
@@ -69,12 +72,6 @@ public sealed class LinkAccountManager : IPostInjectInit
             var sysColor = Color.FromArgb(patronColor);
             ghostColor = new Robust.Shared.Maths.Color(sysColor.R, sysColor.G, sysColor.B, sysColor.A);
         }
-
-        // Goob start - ghost cosmetics
-        SharedRMCGhostCosmetics? ghostCosmetics = null;
-        if (patron is { } p && (p.GhostParticles != null || p.GhostHat != null || p.GhostMask != null))
-            ghostCosmetics = new SharedRMCGhostCosmetics(p.GhostParticles, p.GhostHat, p.GhostMask);
-        // Goob end
 
         _connected[player.UserId] = new SharedRMCPatronFull(sharedTier, linked, ghostColor, ghostCosmetics, lobbyMessage, shoutouts); // Goob - ghost cosmetics
     }
@@ -178,21 +175,7 @@ public sealed class LinkAccountManager : IPostInjectInit
 
     public void SetGhostCosmetics(NetUserId user, string? particles, string? hat, string? mask)
     {
-        if (GetPatron(user)?.Tier is not { } tier ||
-            !tier.GhostCosmetics && !tier.GhostParticles)
-        {
-            return;
-        }
-
-        if (!tier.GhostParticles)
-            particles = null;
-
-        if (!tier.GhostCosmetics)
-        {
-            hat = null;
-            mask = null;
-        }
-
+        // Pirate: all validated ghost cosmetics are available to every player.
         var cosmetics = particles == null && hat == null && mask == null
             ? null
             : new SharedRMCGhostCosmetics(particles, hat, mask);
@@ -204,6 +187,9 @@ public sealed class LinkAccountManager : IPostInjectInit
             connected = connected with { GhostCosmetics = cosmetics };
             _connected[user] = connected;
             PatronUpdated?.Invoke((user, connected));
+
+            if (_playerManager.TryGetSessionById(user, out var player))
+                SendPatronStatus(player);
         }
     }
 

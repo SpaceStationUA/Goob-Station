@@ -152,28 +152,25 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
             _patronPerksWindow.GhostColorClearButton.OnPressed += OnGhostColorClear;
             _patronPerksWindow.GhostColorSaveButton.OnPressed += OnGhostColorSave;
 
-            // Goob start - ghost cosmetics
+            // Goob start - ghost cosmetics; Pirate: available to every player.
             SetTabTitle(_patronPerksWindow.GhostCosmeticsTab, Loc.GetString("goob-ui-ghost-cosmetics"));
-            SetTabVisible(_patronPerksWindow.GhostCosmeticsTab, tier is { GhostCosmetics: true } or { GhostParticles: true });
+            SetTabVisible(_patronPerksWindow.GhostCosmeticsTab, true);
 
             var cosmetics = _linkAccount.GhostCosmetics;
-            _patronPerksWindow.GhostParticlesRow.Visible = tier is { GhostParticles: true };
-            _patronPerksWindow.GhostHatRow.Visible = tier is { GhostCosmetics: true };
-            _patronPerksWindow.GhostMaskRow.Visible = tier is { GhostCosmetics: true };
+            _patronPerksWindow.GhostParticlesRow.Visible = true;
+            _patronPerksWindow.GhostHatRow.Visible = true;
+            _patronPerksWindow.GhostMaskRow.Visible = true;
             PopulateGhostCosmetics(_patronPerksWindow.GhostParticlesButton, GhostCosmeticCategory.Particles, cosmetics?.Particles);
             PopulateGhostCosmetics(_patronPerksWindow.GhostHatButton, GhostCosmeticCategory.Hat, cosmetics?.Hat);
             PopulateGhostCosmetics(_patronPerksWindow.GhostMaskButton, GhostCosmeticCategory.Mask, cosmetics?.Mask);
             _patronPerksWindow.GhostCosmeticsSaveButton.OnPressed += OnGhostCosmeticsSave;
 
-            if (tier is { GhostCosmetics: true } or { GhostParticles: true })
-            {
-                _cosmeticsPreviewGhost = _entityManager.SpawnEntity("GhostCosmeticsPreviewDummy", MapCoordinates.Nullspace);
-                if (_entityManager.TryGetComponent(_cosmeticsPreviewGhost.Value, out GhostColorComponent? previewColor))
-                    previewColor.Color = _linkAccount.GhostColor;
+            _cosmeticsPreviewGhost = _entityManager.SpawnEntity("GhostCosmeticsPreviewDummy", MapCoordinates.Nullspace);
+            if (_entityManager.TryGetComponent(_cosmeticsPreviewGhost.Value, out GhostColorComponent? previewColor))
+                previewColor.Color = _linkAccount.GhostColor;
 
-                _patronPerksWindow.GhostCosmeticsPreview.SetEntity(_cosmeticsPreviewGhost);
-                UpdateGhostCosmeticsPreview();
-            }
+            _patronPerksWindow.GhostCosmeticsPreview.SetEntity(_cosmeticsPreviewGhost);
+            UpdateGhostCosmeticsPreview();
             // Goob end
 
             UpdateExamples();
