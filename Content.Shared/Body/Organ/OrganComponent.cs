@@ -30,7 +30,7 @@ public sealed partial class OrganComponent : Component, ISurgeryToolComponent //
     [DataField]
     public EntityUid? OriginalBody;
 
-    // goida component registry bs fix
+    // [Err404] component registry bs fix
     [ViewVariables, AutoNetworkedField]
     public HashSet<string> AddedKeys = [];
 

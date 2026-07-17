@@ -156,7 +156,7 @@ public sealed class SlaughterDevourSystem : EntitySystem
         if (!_mind.TryGetMind(uid, out _, out var mind))
             return;
 
-        // Goidaaaaaa
+        // [Err404]
         foreach (var objective in mind.Objectives)
         {
             if (TryComp<SlaughterDevourConditionComponent>(objective, out var devourCondition))

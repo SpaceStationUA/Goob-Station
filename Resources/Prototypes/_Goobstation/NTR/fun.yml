@@ -139,7 +139,7 @@
   - type: CleansForensics
   - type: StainCleaner # Pirate: stains
   - type: FloorCleaner
-    cleanDelay: 3 # goida soap
+    cleanDelay: 3 # [Err404] soap
 
 - type: entity
   parent: SoapGold

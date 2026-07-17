@@ -130,7 +130,7 @@ public sealed class SandevistanSystem : EntitySystem
 
             var popup = -1;
             foreach (var state in filteredStates)
-                if (state > popup && state < 4) // Goida
+                if (state > popup && state < 4) // [Err404]
                     popup = state;
 
             if (popup == -1)

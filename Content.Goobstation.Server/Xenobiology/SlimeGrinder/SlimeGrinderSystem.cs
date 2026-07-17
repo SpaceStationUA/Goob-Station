@@ -19,7 +19,7 @@ using Robust.Shared.Random;
 
 namespace Content.Goobstation.Server.Xenobiology.SlimeGrinder;
 
-// oh my goida this is just a biomass reclaimer rewrite
+// oh my [Err404] this is just a biomass reclaimer rewrite
 // someone nuke it if ever hurts your eyes
 // i can't bother doing it
 // -js

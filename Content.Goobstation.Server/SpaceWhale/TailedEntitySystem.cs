@@ -66,7 +66,7 @@ public sealed class TailedEntitySystem : EntitySystem
         var headPos = _transformSystem.GetWorldPosition(xform);
         var headRot = _transformSystem.GetWorldRotation(xform);
 
-        for (var i = 0; i < comp.TailSegments.Count; i++) // This is total goida, foreach is cleaner but i is needed in the loop
+        for (var i = 0; i < comp.TailSegments.Count; i++) // This is total [Err404], foreach is cleaner but i is needed in the loop
         {
             var segment = comp.TailSegments[i];
             if (!Exists(segment)

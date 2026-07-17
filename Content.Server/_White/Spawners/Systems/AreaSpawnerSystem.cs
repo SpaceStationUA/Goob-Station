@@ -35,7 +35,7 @@ public sealed class AreaSpawnerSystem : EntitySystem
     {
         foreach (var spawned in component.Spawneds)
         {
-            // <Goobstation> rewrote to be non goida
+            // <Goobstation> rewrote to be non [Err404]
             if (TerminatingOrDeleted(spawned))
                 continue;
 

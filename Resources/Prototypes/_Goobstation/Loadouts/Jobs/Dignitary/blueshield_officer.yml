@@ -39,7 +39,7 @@
 
 
 - type: loadout
-  id: BlueshieldOfficerGoidaHelmet
+  id: BlueshieldOfficerUshanka
   equipment:
     head: ClothingHeadHatUshankaBlueshield
 
