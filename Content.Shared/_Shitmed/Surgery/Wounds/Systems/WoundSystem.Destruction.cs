@@ -1,6 +1,7 @@
 using Content.Shared._Shitmed.Medical.Surgery.Traumas;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
+using Content.Shared._Pirate.Medical.LimbFixation;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared._Shitmed.Targeting.Events;
 using Content.Shared.Body.Part;
@@ -116,6 +117,12 @@ public sealed partial class WoundSystem
         var bodyPart = Comp<BodyPartComponent>(parentWoundableEntity);
         if (bodyPart.Body is not { } body
             || !woundableComp.CanRemove)
+            return;
+
+        // Pirate: allow downstream traits to replace traumatic amputation without blocking surgery.
+        var amputationAttempt = new BeforeTraumaticAmputationEvent(woundableEntity);
+        RaiseLocalEvent(body, ref amputationAttempt);
+        if (amputationAttempt.Cancelled)
             return;
 
         _audio.PlayPvs(woundableComp.WoundableDelimbedSound, bodyPart.Body.Value);

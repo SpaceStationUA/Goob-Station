@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BasePartSurgery
+  id: SurgeryRestoreLimbFunction
+  name: Restore body part function
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepSawBones
+    - SurgeryStepClampInternalBleeders
+    - SurgeryStepRestoreLimbFunction
+  - type: SurgeryBleedsPresentCondition
+    inverted: true
+  - type: SurgeryPartComponentCondition
+    components:
+    - type: LimbFixationDamage
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRestoreLimbFunction
+  name: Stabilize body part connection
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: BoneGel
+    remove:
+    - type: LimbFixationDamage
+    duration: 7
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/bone-gel.rsi
+    state: bone-gel
+  - type: SurgeryStepPainInflicter
+    amount: 12
+    painType: TraumaticPain
+    sleepModifier: 0
