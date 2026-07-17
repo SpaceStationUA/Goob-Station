@@ -1,0 +1,16 @@
+<!--
+SPDX-FileCopyrightText: 2025 Starlight
+SPDX-FileCopyrightText: 2026 SpaceStationUA
+SPDX-License-Identifier: MIT
+-->
+
+<pirate:CharacterViewControl xmlns="https://spacestation14.io"
+                             xmlns:pirate="clr-namespace:Content.Client._Pirate.Character.UI">
+    <BoxContainer Orientation="Horizontal">
+        <SpriteView Name="CharacterSpriteView" Access="Public" OverrideDirection="South" Scale="2 2" SetSize="64 64"/>
+        <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
+            <Label Name="CharacterNameLabel" Access="Public"/>
+            <Label Name="CharacterSubText" Access="Public" VerticalAlignment="Top" StyleClasses="LabelSubText"/>
+        </BoxContainer>
+    </BoxContainer>
+</pirate:CharacterViewControl>

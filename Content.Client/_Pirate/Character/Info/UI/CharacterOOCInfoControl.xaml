@@ -1,0 +1,28 @@
+<!--
+SPDX-FileCopyrightText: 2025 Starlight
+SPDX-FileCopyrightText: 2026 SpaceStationUA
+SPDX-License-Identifier: MIT
+-->
+
+<pirate:CharacterOOCInfoControl xmlns="https://spacestation14.io"
+                                xmlns:pirate="clr-namespace:Content.Client._Pirate.Character.Info.UI"
+                                xmlns:character="clr-namespace:Content.Client._Pirate.Character.UI">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <Label Text="{Loc 'character-info-ooc-heading'}" Margin="0 6 0 10" HorizontalAlignment="Center"
+               VerticalAlignment="Top" StyleClasses="LabelHeading"/>
+        <character:CharacterViewControl Name="CharacterView" Access="Public"/>
+        <BoxContainer Name="OOCNotesSection" Access="Public" Orientation="Vertical" VerticalExpand="True">
+            <Label Text="{Loc 'character-info-editor-ooc-notes-label'}"/>
+            <RichTextLabel Name="OOCNotes" Access="Public" MinSize="220 100" Margin="10"
+                           VerticalAlignment="Top" VerticalExpand="True"/>
+        </BoxContainer>
+        <PanelContainer Name="HiddenInfoSection" Access="Public" Visible="False">
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <Label Text="{Loc 'character-info-hidden-heading'}" StyleClasses="LabelHeading"/>
+                <Label Text="{Loc 'character-info-editor-personal-notes-label'}"/>
+                <RichTextLabel Name="PersonalNotes" Access="Public" MinSize="220 100" Margin="10"
+                               VerticalAlignment="Top" VerticalExpand="True"/>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</pirate:CharacterOOCInfoControl>

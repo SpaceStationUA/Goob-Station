@@ -467,7 +467,7 @@ namespace Content.Server.Database
         public List<Profile> Profiles { get; } = new();
     }
 
-    public class Profile
+    public partial class Profile // Pirate: Starlight character descriptions.
     {
         public int Id { get; set; }
         public int Slot { get; set; }
