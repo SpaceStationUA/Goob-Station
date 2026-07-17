@@ -34,9 +34,9 @@ public sealed class LimbFixationSystem : EntitySystem
         SubscribeLocalEvent<LimbFixationComponent, BeforeTraumaticAmputationEvent>(OnBeforeTraumaticAmputation);
         SubscribeLocalEvent<LimbFixationDamageComponent, ComponentStartup>(OnDamageStartup);
         SubscribeLocalEvent<LimbFixationDamageComponent, ComponentShutdown>(OnDamageShutdown);
-        SubscribeLocalEvent<BodyPartComponent, BodyPartAddedEvent>(OnBodyPartAdded);
-        SubscribeLocalEvent<BodyComponent, RejuvenateEvent>(OnRejuvenate, after: [typeof(SharedBodySystem)]);
-        SubscribeLocalEvent<BodyComponent, StandUpAttemptEvent>(OnStandUpAttempt);
+        SubscribeLocalEvent<LimbFixationComponent, BodyPartAddedEvent>(OnBodyPartAdded);
+        SubscribeLocalEvent<LimbFixationComponent, RejuvenateEvent>(OnRejuvenate, after: [typeof(SharedBodySystem)]);
+        SubscribeLocalEvent<LimbFixationComponent, StandUpAttemptEvent>(OnStandUpAttempt);
     }
 
     private void OnBeforeTraumaInduced(Entity<WoundableComponent> ent, ref BeforeTraumaInducedEvent args)
@@ -92,25 +92,29 @@ public sealed class LimbFixationSystem : EntitySystem
         RefreshForPart(ent, ent.Owner);
     }
 
-    private void OnBodyPartAdded(Entity<BodyPartComponent> ent, ref BodyPartAddedEvent args)
+    private void OnBodyPartAdded(Entity<LimbFixationComponent> ent, ref BodyPartAddedEvent args)
     {
-        if (ent.Comp.Body is not { } body
-            || !TryComp<BodyComponent>(body, out var bodyComp)
-            || !_body.GetBodyChildren(body, bodyComp).Any(part => HasComp<LimbFixationDamageComponent>(part.Id)))
+        if (!TryComp<BodyComponent>(ent, out var bodyComp)
+            || !_body.GetBodyChildren(ent, bodyComp).Any(part => HasComp<LimbFixationDamageComponent>(part.Id)))
             return;
 
-        RefreshFunctionalState(body, bodyComp, null);
+        RefreshFunctionalState(ent, bodyComp, null);
     }
 
-    private void OnRejuvenate(Entity<BodyComponent> ent, ref RejuvenateEvent args)
+    private void OnRejuvenate(Entity<LimbFixationComponent> ent, ref RejuvenateEvent args)
     {
-        foreach (var part in _body.GetBodyChildren(ent, ent.Comp).ToArray())
+        if (!TryComp<BodyComponent>(ent, out var bodyComp))
+            return;
+
+        foreach (var part in _body.GetBodyChildren(ent, bodyComp).ToArray())
             RemComp<LimbFixationDamageComponent>(part.Id);
     }
 
-    private void OnStandUpAttempt(Entity<BodyComponent> ent, ref StandUpAttemptEvent args)
+    private void OnStandUpAttempt(Entity<LimbFixationComponent> ent, ref StandUpAttemptEvent args)
     {
-        if (ent.Comp.RequiredLegs > 0 && !HasEnabledLeg(ent.Comp))
+        if (TryComp<BodyComponent>(ent, out var bodyComp)
+            && bodyComp.RequiredLegs > 0
+            && !HasEnabledLeg(bodyComp))
             args.Cancelled = true;
     }
 
