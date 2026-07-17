@@ -34,7 +34,7 @@ public sealed class LimbFixationSystem : EntitySystem
         SubscribeLocalEvent<LimbFixationComponent, BeforeTraumaticAmputationEvent>(OnBeforeTraumaticAmputation);
         SubscribeLocalEvent<LimbFixationDamageComponent, ComponentStartup>(OnDamageStartup);
         SubscribeLocalEvent<LimbFixationDamageComponent, ComponentShutdown>(OnDamageShutdown);
-        SubscribeLocalEvent<BodyComponent, BodyPartAddedEvent>(OnBodyPartAdded);
+        SubscribeLocalEvent<BodyPartComponent, BodyPartAddedEvent>(OnBodyPartAdded);
         SubscribeLocalEvent<BodyComponent, RejuvenateEvent>(OnRejuvenate, after: [typeof(SharedBodySystem)]);
         SubscribeLocalEvent<BodyComponent, StandUpAttemptEvent>(OnStandUpAttempt);
     }
@@ -92,10 +92,14 @@ public sealed class LimbFixationSystem : EntitySystem
         RefreshForPart(ent, ent.Owner);
     }
 
-    private void OnBodyPartAdded(Entity<BodyComponent> ent, ref BodyPartAddedEvent args)
+    private void OnBodyPartAdded(Entity<BodyPartComponent> ent, ref BodyPartAddedEvent args)
     {
-        if (_body.GetBodyChildren(ent, ent.Comp).Any(part => HasComp<LimbFixationDamageComponent>(part.Id)))
-            RefreshFunctionalState(ent, ent.Comp, null);
+        if (ent.Comp.Body is not { } body
+            || !TryComp<BodyComponent>(body, out var bodyComp)
+            || !_body.GetBodyChildren(body, bodyComp).Any(part => HasComp<LimbFixationDamageComponent>(part.Id)))
+            return;
+
+        RefreshFunctionalState(body, bodyComp, null);
     }
 
     private void OnRejuvenate(Entity<BodyComponent> ent, ref RejuvenateEvent args)
