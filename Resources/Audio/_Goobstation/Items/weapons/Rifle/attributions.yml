@@ -2,4 +2,4 @@
 - files: [ "pickup1.ogg", "pickup2.ogg", "pickup3.ogg" ]
   license: "CC-BY-SA-3.0"
   copyright: "stolen by russians from somewhere, converted to mono by @deltanedas (github)"
-  #source: "https://[Err404].zip/unknown"
+  source: "https://github.com/Goob-Station/Goob-Station/tree/master/Resources/Audio/_Goobstation/Items/weapons/Rifle/"
