@@ -276,6 +276,7 @@
   cost: 4000
   recipeUnlocks:
   - PushHorn
+  - ClownPlating # Pirate: Wega modular suit port.
   # - BorgModuleAdvancedClowning # goobedit
   # Goobstation R&D Console rework start
   position: 0,5

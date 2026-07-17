@@ -1,0 +1,34 @@
+using Content.Pirate.Shared.ModularSuit;
+using Content.Shared.Popups;
+using Robust.Shared.Containers;
+
+namespace Content.Pirate.Server.ModularSuit;
+
+public sealed partial class ModularSuitModuleContainerRequirementSystem : EntitySystem
+{
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ModularSuitModuleContainerRequirementComponent, ModularSuitModuleAttemptEvent>(OnAttemptActivate);
+    }
+
+    private void OnAttemptActivate(Entity<ModularSuitModuleContainerRequirementComponent> ent, ref ModularSuitModuleAttemptEvent args)
+    {
+        if (!_container.TryGetContainer(ent.Owner, ent.Comp.RequiredContainerId, out var container))
+        {
+            _popup.PopupPredicted(Loc.GetString(ent.Comp.FailureMessage), args.Suit, null);
+            args.Cancel();
+            return;
+        }
+
+        if (container.ContainedEntities.Count == 0)
+        {
+            _popup.PopupPredicted(Loc.GetString(ent.Comp.FailureMessage), args.Suit, null);
+            args.Cancel();
+        }
+    }
+}

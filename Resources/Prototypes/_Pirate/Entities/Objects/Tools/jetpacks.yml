@@ -1,0 +1,24 @@
+- type: entity
+  parent: JetpackBlue
+  id: JetpackBlueModule
+  name: jetpack
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GasTank
+    toggleAction: null
+  - type: Jetpack
+    moleUsage: 0
+
+- type: entity
+  parent: JetpackSecurity
+  id: JetpackSecurityModule
+  name: jetpack
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GasTank
+    toggleAction: null
+  - type: Jetpack
+    acceleration: 2
+    weightlessModifier: 2.4
+    friction: 0.125
+    moleUsage: 0
