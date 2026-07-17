@@ -14,7 +14,7 @@
           state: icon
     - type: RandomSpawner
       rarePrototypes:
-        - SalvageHumanCorpse
+        #- SalvageHumanCorpse # Pirate - трупи в техах гниють і всі техи перетворюються в камеру з аміаком.
         - CrateMaterialPlasteel
         - CrateMaterialWood
         - CrateMaterialPlastic
