@@ -23301,36 +23301,36 @@ Entries:
 - author: Baptr0b0t
   changes:
     - type: Add
-      message: Added Leo Malone admin plushie
+      message: Додано адмінську плюшеву іграшку Лео Мелоуна.
   id: 2751
   time: '2026-07-17T01:33:37.0000000+00:00'
 - author: Durk
   changes:
     - type: Add
-      message: Added ghost cosmetics for patrons.
+      message: Додано косметику привидів для патронів.
   id: 2752
   time: '2026-07-17T01:37:41.0000000+00:00'
 - author: elioskmil
   changes:
     - type: Fix
-      message: vials and mini vials work now
+      message: Віали та міні-віали тепер працюють.
   id: 2753
   time: '2026-07-17T09:07:46.0000000+00:00'
 - author: BeeRobynn
   changes:
     - type: Add
-      message: Added 9 new hairstyles! Quirky!
+      message: Додано 9 нових зачісок! Химерно!
   id: 2754
   time: '2026-07-17T09:08:37.0000000+00:00'
 - author: OnsenCapy
   changes:
     - type: Add
-      message: Added a couple new AI customization options.
+      message: Додано кілька нових варіантів кастомізації ШІ.
   id: 2755
   time: '2026-07-17T09:10:03.0000000+00:00'
 - author: loltart
   changes:
     - type: Tweak
-      message: Gemini is now pacified
+      message: Джеміні тепер миролюбний.
   id: 2756
   time: '2026-07-17T10:34:45.0000000+00:00'

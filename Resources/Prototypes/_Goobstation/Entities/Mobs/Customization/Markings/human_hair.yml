@@ -342,7 +342,7 @@
   sprites:
     - sprite: _Goobstation/Mobs/Customization/human_hair.rsi
       state: impish
-      
+
 - type: marking
   id: HumanHairGloomyLonger
   bodyPart: Hair
@@ -350,7 +350,7 @@
   sprites:
     - sprite: _Goobstation/Mobs/Customization/human_hair.rsi
       state: gloomyLonger
-      
+
 - type: marking
   id: HumanHairLila
   bodyPart: Hair
@@ -358,7 +358,7 @@
   sprites:
     - sprite: _Goobstation/Mobs/Customization/human_hair.rsi
       state: lila
-      
+
 - type: marking
   id: HumanHairLongTails
   bodyPart: Hair
@@ -366,7 +366,7 @@
   sprites:
     - sprite: _Goobstation/Mobs/Customization/human_hair.rsi
       state: longTails
-      
+
 - type: marking
   id: HumanHairStrictLong
   bodyPart: Hair
@@ -374,7 +374,7 @@
   sprites:
     - sprite: _Goobstation/Mobs/Customization/human_hair.rsi
       state: strictLong
-      
+
 - type: marking
   id: HumanHairMermaid
   bodyPart: Hair
@@ -382,7 +382,7 @@
   sprites:
     - sprite: _Goobstation/Mobs/Customization/human_hair.rsi
       state: mermaid
-      
+
 - type: marking
   id: HumanHairShy
   bodyPart: Hair
@@ -390,7 +390,7 @@
   sprites:
     - sprite: _Goobstation/Mobs/Customization/human_hair.rsi
       state: shy
-      
+
 - type: marking
   id: HumanHairTwinTail
   bodyPart: Hair
