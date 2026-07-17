@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Client._Mono.Radar;
 using Content.Client.Station; // Pirate port - Monolith shields
 using Content.Shared._Pirate.ShipShields; // Pirate port - Monolith shields
+using Content.Shared._Pirate.Shuttles.BUIStates; // Pirate - replay memory optimization.
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -212,7 +213,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         return _coordinates.Value.Offset(relativeWorldPos);
     }
 
-    public void UpdateState(NavInterfaceState state)
+    public void UpdateState(NavInterfaceState state, DockingPortStates dockingPortStates)
     {
         SetMatrix(EntManager.GetCoordinates(state.Coordinates), state.Angle);
 
@@ -236,7 +237,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         HideCoords = state.HideCoords;
         // End Frontier
 
-        _docks = state.Docks;
+        _docks = dockingPortStates.Docks;
 
         NfUpdateState(state); // Frontier Update State
     }

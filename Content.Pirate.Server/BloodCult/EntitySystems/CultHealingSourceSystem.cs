@@ -31,6 +31,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 
@@ -57,6 +58,7 @@ public sealed partial class CultHealingSourceSystem : EntitySystem
 	[Dependency] private readonly MobStateSystem _mobState = default!;
 	[Dependency] private readonly SharedBodySystem _bodySystem = default!;
 	[Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+	[Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
 	/// <summary>
 	/// 	Subscribe to the cult healing system's server CCVars.
@@ -421,7 +423,11 @@ public sealed partial class CultHealingSourceSystem : EntitySystem
 					var bloodRecovery = (bloodMaxVolume / 240.0f) * time;
 					
 					// Restore blood
-					_bloodstreamSystem.TryModifyBloodLevel((uid, bloodstream), bloodRecovery);
+					if (_bloodstreamSystem.TryModifyBloodLevel((uid, bloodstream), bloodRecovery) &&
+						bloodstream.BloodSolution is { } bloodSolution)
+					{
+						_solutionContainer.UpdateChemicals(bloodSolution, false);
+					}
 				}
 			}
 		}

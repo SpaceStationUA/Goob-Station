@@ -3,6 +3,7 @@
 using System.Linq;
 using System.Numerics; // Pirate: multiz
 using System.Text;
+using Content.Shared._Pirate.Shuttles.BUIStates; // Pirate - replay memory optimization.
 using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Systems;
@@ -72,10 +73,10 @@ public sealed partial class DockingScreen : BoxContainer
         }
     }
 
-    public void UpdateState(EntityUid? shuttle, DockingInterfaceState state)
+    public void UpdateState(EntityUid? shuttle, DockingPortStates dockingPortStates)
     {
-        Docks = state.Docks;
-        DockingControl.DockState = state;
+        Docks = dockingPortStates.Docks;
+        DockingControl.DockState = dockingPortStates.Docks;
 
         #region Pirate: multiz
         // If the console moves to a different shuttle (or first ever update) drop the selection;

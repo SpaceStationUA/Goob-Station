@@ -101,6 +101,9 @@
         Extinguish: [ Touch ]
     - type: MindContainer
     - type: Juggernaut
+    - type: ActionGrant
+      actions:
+      - ActionCultistCommune
     - type: ContainerContainer
       containers:
         juggernaut_body_container: !type:ContainerSlot
@@ -232,6 +235,9 @@
       maxBleedAmount: 0
     - type: MindContainer
     - type: Shade
+    - type: ActionGrant
+      actions:
+      - ActionCultistCommune
     - type: Physics
     - type: InputMover
     - type: MobMover
@@ -303,6 +309,15 @@
       color: "#50595C"
       activateSound: null
       deactivateSound: null
+    - type: IntrinsicUI
+      uis:
+        enum.BloodCultistCommuneUIKey.Key:
+          toggleAction: null
+    - type: UserInterface
+      interfaces:
+        enum.BloodCultistCommuneUIKey.Key:
+          type: BloodCultCommuneBoundUserInterface
+          requireInputValidation: false
     - type: GuideHelp
       guides:
       - BloodCult
@@ -390,6 +405,15 @@
     color: "#50595C"
     activateSound: null
     deactivateSound: null
+  - type: IntrinsicUI
+    uis:
+      enum.BloodCultistCommuneUIKey.Key:
+        toggleAction: null
+  - type: UserInterface
+    interfaces:
+      enum.BloodCultistCommuneUIKey.Key:
+        type: BloodCultCommuneBoundUserInterface
+        requireInputValidation: false
   - type: IsDeadIC
   - type: GuideHelp
     guides:
@@ -416,6 +440,7 @@
         Structural: 60
   - type: ActionGrant
     actions:
+    - ActionCultistCommune
     - ActionBloodCultSummonFloor
     - ActionBloodCultSummonWall
     - ActionBloodCultSummonDoor
@@ -448,4 +473,5 @@
     - PhaseShifted
   - type: ActionGrant
     actions:
+    - ActionCultistCommune
     - ActionBloodCultPhaseShift

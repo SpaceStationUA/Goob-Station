@@ -925,6 +925,7 @@
     - SyndicateAgent
     - Wizard
     - Xenoborg
+    - DV-SpareSafe # Pirate port - DeltaV automatic acting captain procedure
     # Goobstation
     - NanotrasenRepresentative
     - BlueshieldOfficer

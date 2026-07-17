@@ -197,6 +197,6 @@
     sprite: _Goobstation/Xenobiology/Specific/Xenobiology/adamantine_bar.rsi
     state: icon
   - type: StaticPrice
-    price: 10000 # goida
+    price: 10000 # [Err404]
 
 # todo mind transfer potion

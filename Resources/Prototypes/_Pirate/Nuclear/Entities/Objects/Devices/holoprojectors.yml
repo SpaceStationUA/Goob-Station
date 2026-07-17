@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseItem
+  id: RadiationBlockingProjector
+  name: radiation barrier projector
+  description: Stop the deadly radiation from a delamination or meltdown, at least for a little while.
+  components:
+  - type: ChargeHolosignProjector
+    signProto: HolosignRadiationBlocking
+    signComponentName: HoloRadiationblocker
+    signLifetime: 180
+  - type: ContainerContainer
+    containers:
+      signs: !type:Container
+  - type: Sprite
+    sprite: _Pirate/Nuclear/Objects/Devices/Holoprojectors/radiation.rsi
+    state: icon
+  - type: Item
+    storedRotation: -90
+  - type: LimitedCharges
+    maxCharges: 6
+  - type: AutoRecharge
+    rechargeDuration: 90
+  - type: UseDelay
+  - type: Tag
+    tags:
+    - HolofanProjector

@@ -31,6 +31,18 @@ public sealed partial class BloodCultConstructComponent : Component
 	/// </summary>
 	[DataField]
 	public bool EjectSourceOnCritical;
+
+	/// <summary>
+	/// Message waiting to be sent through the cult commune.
+	/// </summary>
+	[DataField]
+	public string? CommuningMessage;
+
+	/// <summary>
+	/// Earliest time at which this construct may be forced to chant again.
+	/// </summary>
+	[DataField]
+	public TimeSpan NextChantTime = TimeSpan.Zero;
 }
 
 public enum BloodCultConstructSourceKind : byte

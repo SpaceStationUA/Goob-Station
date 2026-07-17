@@ -322,6 +322,7 @@
   - PortableGenerator
   - AME
   - SingularityTeslaEngine
+  - NuclearReactor # Pirate: DeltaV nuclear reactor
   - TEG
   - RTG
   - SolarPanels

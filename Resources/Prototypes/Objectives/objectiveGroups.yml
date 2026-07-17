@@ -83,6 +83,7 @@
     IDCardsStealCollectionObjective: 1
     LAMPStealCollectionObjective: 0.1                   #only for moth, weight decreased cause boring and insanely easy
     BatteryStealCollectionObjective: 2 #Goobedit - only for ipc
+    ReactorFuelRodStealCollectionObjective: 1 # Pirate: DeltaV nuclear reactor
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem

@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using Content.Pirate.Shared.Nuclear;
+using Robust.Client.GameObjects;
+
+namespace Content.Pirate.Client.Nuclear;
+
+public sealed partial class NuclearPropertiesSystem : EntitySystem
+{
+    [Dependency] private SpriteSystem _sprite = default!;
+    private EntityQuery<SpriteComponent> _spriteQuery = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _spriteQuery = GetEntityQuery<SpriteComponent>();
+
+        SubscribeLocalEvent<NuclearPropertiesComponent, ComponentInit>(OnInit);
+    }
+
+    private void OnInit(Entity<NuclearPropertiesComponent> ent, ref ComponentInit args)
+    {
+        if (!_spriteQuery.TryComp(ent, out var sprite))
+            return;
+
+        if (!_sprite.LayerMapTryGet((ent, sprite), NuclearPropertiesVisuals.Layer, out var layer, false))
+            return;
+
+        _sprite.LayerSetColor((ent, sprite), layer, ent.Comp.Color);
+    }
+}

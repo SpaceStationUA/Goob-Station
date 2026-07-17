@@ -1,0 +1,47 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using Content.Pirate.Shared.Nuclear.Monitor;
+using Content.Pirate.Shared.Nuclear.Turbine;
+using Robust.Client.UserInterface;
+
+namespace Content.Pirate.Client.Nuclear.Turbine.UI;
+
+/// <summary>
+/// Initializes a <see cref="TurbineWindow"/>.
+/// </summary>
+public sealed partial class TurbineBUI(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+{
+    [ViewVariables]
+    private TurbineWindow? _window;
+
+    protected override void Open()
+    {
+        if (GetTurbine(Owner, out var monitor) is not { } turbine)
+            return;
+
+        base.Open();
+
+        _window = this.CreateWindow<TurbineWindow>();
+        _window.SetEntity(turbine, monitor);
+
+        _window.OnChangeFlowRate += val => SendPredictedMessage(new TurbineChangeFlowRateMessage(val));
+        _window.OnChangeStatorLoad += val => SendPredictedMessage(new TurbineChangeStatorLoadMessage(val));
+    }
+
+    private Entity<TurbineComponent>? GetTurbine(EntityUid uid, out EntityUid? monitor)
+    {
+        monitor = null;
+        if (EntMan.TryGetComponent<TurbineComponent>(uid, out var turbine))
+            return (uid, turbine);
+
+        if (EntMan.TryGetComponent<NuclearMonitorComponent>(uid, out var monitorComp) &&
+            monitorComp.Linked is { } linked &&
+            EntMan.TryGetComponent<TurbineComponent>(linked, out var linkedTurbine))
+        {
+            monitor = uid;
+            return (linked, linkedTurbine);
+        }
+
+        return null;
+    }
+}

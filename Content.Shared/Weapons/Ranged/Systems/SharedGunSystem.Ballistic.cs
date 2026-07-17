@@ -277,7 +277,6 @@ public abstract partial class SharedGunSystem
                 DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
             }
             // Goobstation - end
-
         }
 
         UpdateBallisticAppearance(ent);

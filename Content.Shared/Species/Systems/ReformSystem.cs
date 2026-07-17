@@ -95,7 +95,7 @@ public sealed partial class ReformSystem : EntitySystem
 
         EntityUid child;
 
-        // Madness: If you just goidaspawn entities when they're in a container - Transform(ent).Coordinates will just give 0,0 and the box as the parent
+        // Madness: If you just [Err404]spawn entities when they're in a container - Transform(ent).Coordinates will just give 0,0 and the box as the parent
         // But you're not spawning them in the parent, you're spawning them next to it while thinking they're in the container
         // Which by a mysterious mean scams networking into thinking you NEVER LEFT the container, and frankly never even got back in into the world.
         // So anyone who was out of PVS range when you respawned will not and cannot see you as you're nonexistant.

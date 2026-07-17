@@ -11,7 +11,7 @@ using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared._Pirate.ZLevels.FireControl; // Pirate: multiz
 using Content.Shared.Power;
-using Content.Shared.Shuttles.BUIStates;
+using Content.Shared.Shuttles.BUIStates; // Pirate: multiz
 using Robust.Server.GameObjects;
 using Robust.Shared.Map; // Pirate: multiz
 
@@ -309,28 +309,26 @@ public sealed partial class FireControlSystem : EntitySystem
         int currentLayer,
         SortedDictionary<int, ConsoleNetworkLayer> networkLayers)
     {
-        var allDocks = _shuttleConsoleSystem.GetAllDocks();
-
         if (!networkLayers.TryGetValue(currentLayer, out var layer))
-            return _shuttleConsoleSystem.GetNavState(consoleUid, allDocks);
+            return _shuttleConsoleSystem.GetNavState(consoleUid);
 
         var consoleXform = Transform(consoleUid);
 
         if (layer.Grid is { } gridUid && consoleXform.GridUid == gridUid)
-            return _shuttleConsoleSystem.GetNavState(consoleUid, allDocks);
+            return _shuttleConsoleSystem.GetNavState(consoleUid);
 
         if (layer.Grid is { } peerGrid)
         {
             // Peer decks share local coordinates; this preserves console world rotation.
             var coords = new EntityCoordinates(peerGrid, consoleXform.LocalPosition);
-            return _shuttleConsoleSystem.GetNavState(consoleUid, allDocks, coords, consoleXform.LocalRotation);
+            return _shuttleConsoleSystem.GetNavState(consoleUid, coords, consoleXform.LocalRotation);
         }
 
         // Empty layers need world rotation because map anchors have zero rotation.
         var consoleWorldPos = _xform.GetWorldPosition(consoleUid);
         var consoleWorldRot = _xform.GetWorldRotation(consoleUid);
         var mapCoords = new EntityCoordinates(layer.Map, consoleWorldPos);
-        return _shuttleConsoleSystem.GetNavState(consoleUid, allDocks, mapCoords, consoleWorldRot);
+        return _shuttleConsoleSystem.GetNavState(consoleUid, mapCoords, consoleWorldRot);
     }
     #endregion Pirate: multiz
 }

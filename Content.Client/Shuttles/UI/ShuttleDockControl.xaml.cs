@@ -36,7 +36,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
     private EntityCoordinates? _coordinates;
     private Angle? _angle;
 
-    public DockingInterfaceState? DockState = null;
+    public Dictionary<NetEntity, List<DockingPortState>>? DockState;
 
     private List<Entity<MapGridComponent>> _grids = new();
     private readonly HashSet<EntityUid> _zPeerGrids = new(); // Pirate: multiz - grids from linked z-network peers
@@ -182,7 +182,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                 continue;
 
             // Draw any docks on that grid
-            if (!DockState.Docks.TryGetValue(EntManager.GetNetEntity(grid), out var gridDocks))
+            if (!DockState.TryGetValue(EntManager.GetNetEntity(grid), out var gridDocks))
                 continue;
 
             foreach (var dock in gridDocks)
@@ -392,7 +392,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
 
         var gridNent = EntManager.GetNetEntity(GridEntity);
 
-        foreach (var (otherShuttle, docks) in DockState.Docks)
+        foreach (var (otherShuttle, docks) in DockState)
         {
             // If it's our shuttle we add a view button
 

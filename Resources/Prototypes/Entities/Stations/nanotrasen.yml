@@ -32,6 +32,7 @@
     - BaseStationDeliveries
     - BaseStationWizardTarget # Goobstation
     - BaseStationStockMarket # Pirate port - Delta-V stocks trading
+    - BaseStationAutomaticSpareId # Pirate port - DeltaV automatic acting captain procedure
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform

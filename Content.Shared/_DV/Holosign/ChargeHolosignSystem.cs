@@ -11,6 +11,7 @@ using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
 using System.Linq;
 
@@ -23,6 +24,7 @@ public sealed class ChargeHolosignSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly OccluderSystem _occluder = default!; // Pirate: support stored occluding signs.
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -154,6 +156,13 @@ public sealed class ChargeHolosignSystem : EntitySystem
         var placed = container.ContainedEntities.First(); // checked Count beforehand so this won't fail
         _transform.SetCoordinates(placed, coords);
         _transform.AnchorEntity(placed);
+
+        if (TryComp<OccluderComponent>(placed, out var occluder))
+            _occluder.SetEnabled(placed, true, occluder);
+
+        if (ent.Comp1.SignLifetime is { } lifetime)
+            EnsureComp<TimedDespawnComponent>(placed).Lifetime = lifetime;
+
         return true;
     }
 
@@ -169,12 +178,20 @@ public sealed class ChargeHolosignSystem : EntitySystem
             return false;
         }
 
+        var occluder = CompOrNull<OccluderComponent>(sign);
+        if (occluder != null)
+            _occluder.SetEnabled(sign, false, occluder);
+
         if (!_container.Insert(sign, ent.Comp1.Container, force: true))
         {
+            if (occluder != null)
+                _occluder.SetEnabled(sign, true, occluder);
+
             Log.Error($"Failed to insert holosign {ToPrettyString(sign)} back into {ToPrettyString(ent)}!");
             return false;
         }
 
+        RemComp<TimedDespawnComponent>(sign);
         _charges.AddCharges((ent, ent.Comp2), 1);
 
         var othersStr = showIdentity ? Loc.GetString("charge-holoprojector-reclaim-others", ("sign", sign), ("user", Identity.Name(user, EntityManager)))

@@ -38,7 +38,7 @@ public sealed partial class ClothingComponent : Component
     /// Note that this may be a combination of different slot flags, not a singular bit.
     /// </remarks>
     [DataField(required: true)]
-    // [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)] // Goobstation - FUCK YOUR ACCESS! WE GOIDA IN THIS BITCH
+    // [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)] // Goobstation - FUCK YOUR ACCESS! WE [Err404] IN THIS BITCH
     public SlotFlags Slots = SlotFlags.NONE;
 
     [DataField]

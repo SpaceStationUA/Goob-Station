@@ -525,13 +525,13 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			// Drain the message into a local first so the slot is cleared BEFORE we dispatch.
 			// If anything inside DistributeCommune fails (precondition, cooldown, etc.) we
 			// must NOT leave the message stamped, otherwise the next Update tick would
-			// fire it again. Also clear any twin slot on JuggernautComponent so an entity
+			// fire it again. Also clear any twin slot on BloodCultConstructComponent so an entity
 			// holding both components can never queue two chants for one commune action.
 			if (cultist.CommuningMessage != null)
 			{
 				var pending = cultist.CommuningMessage;
 				cultist.CommuningMessage = null;
-				if (TryComp<JuggernautComponent>(cultistUid, out var twin))
+				if (TryComp<BloodCultConstructComponent>(cultistUid, out var twin))
 					twin.CommuningMessage = null;
 
 				DistributeCommune(component, pending, cultistUid);
@@ -600,26 +600,26 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			}
 		}
 
-		// Process juggernaut communes for entities that DON'T also hold BloodCultistComponent.
+		// Process construct communes for entities that DON'T also hold BloodCultistComponent.
 		// Anything that does hold both was already drained in the cultist loop above; the
-		// source-level guard in CultistSpellSystem.OnJuggernautCommune normally prevents
+		// source-level guard in CultistSpellSystem.OnConstructCommune normally prevents
 		// the slot from being stamped at all, but this is the symmetric defence in case a
 		// future caller writes to it directly.
-		var juggernauts = AllEntityQuery<JuggernautComponent>();
-		while (juggernauts.MoveNext(out var juggernautUid, out var juggernaut))
+		var constructs = AllEntityQuery<BloodCultConstructComponent>();
+		while (constructs.MoveNext(out var constructUid, out var construct))
 		{
-			if (juggernaut.CommuningMessage == null)
+			if (construct.CommuningMessage == null)
 				continue;
 
-			if (HasComp<BloodCultistComponent>(juggernautUid))
+			if (HasComp<BloodCultistComponent>(constructUid))
 			{
-				juggernaut.CommuningMessage = null;
+				construct.CommuningMessage = null;
 				continue;
 			}
 
-			var pending = juggernaut.CommuningMessage;
-			juggernaut.CommuningMessage = null;
-			DistributeCommune(component, pending, juggernautUid);
+			var pending = construct.CommuningMessage;
+			construct.CommuningMessage = null;
+			DistributeCommune(component, pending, constructUid);
 		}
 
 		// End the round
@@ -1056,7 +1056,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 		if (TerminatingOrDeleted(uid))
 			return false;
 
-		if (!HasComp<BloodCultistComponent>(uid) && !HasComp<JuggernautComponent>(uid))
+		if (!HasComp<BloodCultistComponent>(uid) && !HasComp<BloodCultConstructComponent>(uid))
 			return false;
 
 		if (_mobSystem.IsDead(uid))
@@ -1083,11 +1083,11 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			return true;
 		}
 
-		if (TryComp<JuggernautComponent>(uid, out var jugger))
+		if (TryComp<BloodCultConstructComponent>(uid, out var construct))
 		{
-			if (now < jugger.NextChantTime)
+			if (now < construct.NextChantTime)
 				return false;
-			jugger.NextChantTime = now + ChantCooldown;
+			construct.NextChantTime = now + ChantCooldown;
 			return true;
 		}
 
@@ -1540,7 +1540,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 	///   5. <see cref="TryConsumeChantCooldown"/>: claim the per-entity cooldown slot.
 	///        If this fails, we treat the commune as already-handled and bail out
 	///        WITHOUT either chanting or re-broadcasting, so a duplicate dispatch
-	///        (e.g. an entity holding both BloodCultistComponent and JuggernautComponent
+	///        (e.g. an entity holding both BloodCultistComponent and BloodCultConstructComponent
 	///        whose drain in Update wasn't atomic for some reason) collapses to one.
 	///   6. Build the chant variant for this sender (juggernaut accent vs random word).
 	///   7. Whisper the chant, then announce the typed message to the cult.

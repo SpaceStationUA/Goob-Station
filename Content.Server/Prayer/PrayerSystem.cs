@@ -114,7 +114,7 @@ public sealed class PrayerSystem : EntitySystem
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
 
         // Goobstation - Admin Notifications
-        if (comp.NotificationSound != null) // estas goida
+        if (comp.NotificationSound != null) // estas [Err404]
             foreach (var admin in _admin.ActiveAdmins)
                 RaiseNetworkEvent(new AdminNotificationEvent(comp.NotificationSound), admin);
     }

@@ -104,7 +104,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 
 		SubscribeLocalEvent<BloodCultistComponent, EventCultistStudyVeil>(OnStudyVeil);
 		SubscribeLocalEvent<BloodCultistComponent, BloodCultCommuneSendMessage>(OnCommune);
-		SubscribeLocalEvent<JuggernautComponent, BloodCultCommuneSendMessage>(OnJuggernautCommune);
+		SubscribeLocalEvent<BloodCultConstructComponent, BloodCultCommuneSendMessage>(OnConstructCommune);
 		SubscribeLocalEvent<BloodCultistComponent, EventCultistSanguineDream>(OnSanguineDream);
 		//SubscribeLocalEvent<CultMarkedComponent, AttackedEvent>(OnMarkedAttacked);
 
@@ -321,7 +321,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 		ent.Comp.CommuningMessage = args.Message;
 	}
 
-	private void OnJuggernautCommune(Entity<JuggernautComponent> ent, ref BloodCultCommuneSendMessage args)
+	private void OnConstructCommune(Entity<BloodCultConstructComponent> ent, ref BloodCultCommuneSendMessage args)
 	{
 		// Source-level fall-through: if this entity also holds BloodCultistComponent, the
 		// cultist handler already stamped the message and the rule's Update loop will
