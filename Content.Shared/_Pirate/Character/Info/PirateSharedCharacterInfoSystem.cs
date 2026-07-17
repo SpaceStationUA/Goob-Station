@@ -4,7 +4,6 @@
 
 using Content.Shared._Pirate.CCVars;
 using Content.Shared._Pirate.Character.Info.Components;
-using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
@@ -22,6 +21,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using CoreCCVars = Content.Shared.CCVar.CCVars;
 
 namespace Content.Shared._Pirate.Character.Info;
 
@@ -44,7 +44,7 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
     {
         base.Initialize();
 
-        _config.OnValueChanged(CCVars.FlavorText, value => _flavorTextEnabled = value, true);
+        _config.OnValueChanged(CoreCCVars.FlavorText, value => _flavorTextEnabled = value, true);
         _config.OnValueChanged(PirateVars.ExploitableSecrets, value => _exploitableSecretsEnabled = value, true);
         _config.OnValueChanged(PirateVars.CharacterInspectWindowEnabled, value => _characterWindowEnabled = value, true);
 
@@ -72,7 +72,7 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
         var mind = _minds.GetMind(mob);
         if (mind != null)
         {
-            if (_config.GetCVar(CCVars.FlavorText))
+            if (_config.GetCVar(CoreCCVars.FlavorText))
             {
                 AddComp(mind.Value, new CharacterDescriptionComponent
                 {
@@ -94,7 +94,7 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
             }
         }
 
-        if (_config.GetCVar(CCVars.FlavorText))
+        if (_config.GetCVar(CoreCCVars.FlavorText))
         {
             AddComp(mob, new CharacterDescriptionComponent
             {
@@ -203,13 +203,15 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
         if (Identity.Name(args.Target, EntityManager) != MetaData(args.Target).EntityName)
             return;
 
-        var detailsRange = _examine.IsInDetailsRange(args.User, entity);
+        var user = args.User;
+        var target = entity.Owner;
+        var detailsRange = _examine.IsInDetailsRange(user, target);
 
         if (_characterWindowEnabled)
         {
             args.Verbs.Add(new ExamineVerb
             {
-                Act = () => OpenCharacterWindow(entity, args.User),
+                Act = () => OpenCharacterWindow(target, user),
                 Disabled = !detailsRange,
                 Message = detailsRange ? null : Loc.GetString("detail-examine-verb-disabled"),
                 Text = Loc.GetString("character-info-inspect-prompt"),
@@ -230,7 +232,7 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
             {
                 var markup = new FormattedMessage();
                 markup.AddMarkupPermissive(description);
-                _examine.SendExamineTooltip(args.User, entity, markup, false, false);
+                _examine.SendExamineTooltip(user, target, markup, false, false);
             },
             Text = Loc.GetString("detail-examine-verb-text"),
             Category = VerbCategory.Examine,
@@ -250,14 +252,16 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
             return;
         }
 
-        var detailsRange = _examine.IsInDetailsRange(args.User, entity);
+        var user = args.User;
+        var target = entity.Owner;
+        var detailsRange = _examine.IsInDetailsRange(user, target);
         args.Verbs.Add(new ExamineVerb
         {
             Act = () =>
             {
                 var markup = new FormattedMessage();
                 markup.AddMarkupPermissive(entity.Comp.Info);
-                _examine.SendExamineTooltip(args.User, entity, markup, false, false);
+                _examine.SendExamineTooltip(user, target, markup, false, false);
             },
             Text = Loc.GetString("exploitable-examine-verb-text"),
             Category = VerbCategory.Examine,
