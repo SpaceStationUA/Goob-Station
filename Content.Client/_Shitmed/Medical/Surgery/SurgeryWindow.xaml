@@ -2,26 +2,152 @@
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
-<controls:SurgeryWindow
+<!-- Pirate: graphical surgery target selector ported from DeltaV. -->
+<controls:FancyWindow
     xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client._Shitmed.Medical.Surgery"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     MinSize="400 400">
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 10">
-            <Button Name="PartsButton" Access="Public" Text="{Loc 'surgery-ui-window-parts'}"
-                    HorizontalExpand="True" StyleClasses="OpenBoth" />
-            <Button Name="SurgeriesButton" Access="Public" Text="{Loc 'surgery-ui-window-surgeries'}"
-                    HorizontalExpand="True" StyleClasses="OpenBoth" />
-            <Button Name="StepsButton" Access="Public" Text="{Loc 'surgery-ui-window-steps'}"
-                    HorizontalExpand="True" StyleClasses="OpenBoth" />
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" MinSize="570 336">
+        <BoxContainer Orientation="Vertical"
+                      HorizontalExpand="False"
+                      VerticalExpand="False"
+                      MinSize="264 408">
+            <TextureRect TextureScale="6 6"
+                         TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUIBackground.png"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Stretch="KeepAspectCentered">
+                <PanelContainer>
+                    <TextureButton Name="CarpButton"
+                                   Access="Public"
+                                   Scale="8 8"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Margin="0 0 0 11"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUICarp.png" />
+                    <TextureButton Name="ChestButton"
+                                   Access="Public"
+                                   Scale="6 6"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Margin="0 0 0 11"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUITorso.png" />
+                    <TextureButton Name="HeadButton"
+                                   Access="Public"
+                                   Scale="6 6"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Center"
+                                   Margin="0 30 0 0"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUIHead.png" />
+                    <TextureButton Name="RArmButton"
+                                   Access="Public"
+                                   Scale="6 6"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Margin="30 0 0 47"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUIRArm.png" />
+                    <TextureButton Name="RHandButton"
+                                   Access="Public"
+                                   Scale="6 6"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Margin="30 61 0 0"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUIRHand.png" />
+                    <TextureButton Name="RLegButton"
+                                   Access="Public"
+                                   Scale="6 6"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Left"
+                                   Margin="78 0 0 42"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUIRLeg.png" />
+                    <TextureButton Name="RFootButton"
+                                   Access="Public"
+                                   Scale="6 6"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Left"
+                                   Margin="54 0 0 30"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUIRFoot.png" />
+                    <TextureButton Name="LArmButton"
+                                   Access="Public"
+                                   Scale="6 6"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+                                   Margin="0 0 30 47"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUILArm.png" />
+                    <TextureButton Name="LHandButton"
+                                   Access="Public"
+                                   Scale="6 6"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+                                   Margin="0 61 30 0"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUILHand.png" />
+                    <TextureButton Name="LLegButton"
+                                   Access="Public"
+                                   Scale="6 6"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Right"
+                                   Margin="0 0 78 42"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUILLeg.png" />
+                    <TextureButton Name="LFootButton"
+                                   Access="Public"
+                                   Scale="6 6"
+                                   ToggleMode="True"
+                                   StyleIdentifier="SurgeryTextureButton"
+                                   Visible="False"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Right"
+                                   Margin="0 0 54 30"
+                                   TexturePath="/Textures/_Pirate/Interface/SurgeryUI/surgeryUILFoot.png" />
+                </PanelContainer>
+            </TextureRect>
         </BoxContainer>
-        <cc:HSeparator />
-        <ScrollContainer VScrollEnabled="True" HorizontalExpand="True" VerticalExpand="True">
-            <BoxContainer Name="Parts" Access="Public" Orientation="Vertical" Visible="False" />
-            <BoxContainer Name="Surgeries" Access="Public" Orientation="Vertical" Visible="False" />
-            <BoxContainer Name="Steps" Access="Public" Orientation="Vertical" Visible="False" />
-        </ScrollContainer>
+        <cc:VSeparator StyleClasses="LowDivider" />
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 10">
+                <Button Name="PartsButton" Access="Public" Text="{Loc 'surgery-ui-window-parts'}"
+                        HorizontalExpand="True" StyleClasses="OpenBoth" />
+                <Button Name="SurgeriesButton" Access="Public" Text="{Loc 'surgery-ui-window-surgeries'}"
+                        HorizontalExpand="True" StyleClasses="OpenBoth" />
+                <Button Name="StepsButton" Access="Public" Text="{Loc 'surgery-ui-window-steps'}"
+                        HorizontalExpand="True" StyleClasses="OpenBoth" />
+            </BoxContainer>
+            <cc:HSeparator />
+            <ScrollContainer VScrollEnabled="True" HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Name="Parts" Access="Public" Orientation="Vertical" Visible="False" />
+                <BoxContainer Name="Surgeries" Access="Public" Orientation="Vertical" Visible="False" />
+                <BoxContainer Name="Steps" Access="Public" Orientation="Vertical" Visible="False" />
+            </ScrollContainer>
+        </BoxContainer>
     </BoxContainer>
-</controls:SurgeryWindow>
+</controls:FancyWindow>
