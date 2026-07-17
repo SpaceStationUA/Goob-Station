@@ -15,7 +15,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -1073,6 +1073,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("first_seen_time");
 
+                    b.Property<string>("GhostHat")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_hat");
+
+                    b.Property<string>("GhostMask")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_mask");
+
+                    b.Property<string>("GhostParticles")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_particles");
+
                     b.Property<DateTime?>("LastReadRules")
                         .HasColumnType("TEXT")
                         .HasColumnName("last_read_rules");
@@ -1692,6 +1704,14 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<bool>("GhostColor")
                         .HasColumnType("INTEGER")
                         .HasColumnName("ghost_color");
+
+                    b.Property<bool>("GhostCosmetics")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ghost_cosmetics");
+
+                    b.Property<bool>("GhostParticles")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ghost_particles");
 
                     b.Property<string>("Icon")
                         .HasColumnType("TEXT")

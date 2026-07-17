@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared._RMC14.LinkAccount;
+using Robust.Server.Player; // Pirate: public ghost cosmetics
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -20,6 +21,7 @@ public sealed class LinkAccountManager : IPostInjectInit
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly UserDbDataManager _userDb = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!; // Pirate: public ghost cosmetics
 
     private readonly Dictionary<NetUserId, TimeSpan> _lastRequest = new();
     private readonly TimeSpan _minimumWait = TimeSpan.FromSeconds(0.5);
@@ -37,6 +39,7 @@ public sealed class LinkAccountManager : IPostInjectInit
     {
         var patron = await _db.GetPatron(player.UserId, cancel);
         var linked = await _db.HasLinkedAccount(player.UserId, cancel);
+        var ghostCosmetics = await _db.GetGhostCosmetics(player.UserId, cancel); // Pirate: not patron-gated
         cancel.ThrowIfCancellationRequested();
 
         var tier = patron?.Tier;
@@ -45,6 +48,8 @@ public sealed class LinkAccountManager : IPostInjectInit
             : new SharedRMCPatronTier(
                 tier.ShowOnCredits,
                 tier.GhostColor,
+                tier.GhostCosmetics, // Goob - ghost cosmetics
+                tier.GhostParticles, // Goob - ghost cosmetics
                 tier.LobbyMessage,
                 tier.RoundEndShoutout,
                 tier.Name,
@@ -68,7 +73,7 @@ public sealed class LinkAccountManager : IPostInjectInit
             ghostColor = new Robust.Shared.Maths.Color(sysColor.R, sysColor.G, sysColor.B, sysColor.A);
         }
 
-        _connected[player.UserId] = new SharedRMCPatronFull(sharedTier, linked, ghostColor, lobbyMessage, shoutouts);
+        _connected[player.UserId] = new SharedRMCPatronFull(sharedTier, linked, ghostColor, ghostCosmetics, lobbyMessage, shoutouts); // Goob - ghost cosmetics
     }
 
     private void FinishLoad(ICommonSession player)
@@ -166,6 +171,38 @@ public sealed class LinkAccountManager : IPostInjectInit
         }
     }
 
+    // Goob start
+
+    public void SetGhostCosmetics(NetUserId user, string? particles, string? hat, string? mask)
+    {
+        // Pirate: all validated ghost cosmetics are available to every player.
+        var cosmetics = particles == null && hat == null && mask == null
+            ? null
+            : new SharedRMCGhostCosmetics(particles, hat, mask);
+
+        _db.SetGhostCosmetics(user, particles, hat, mask);
+
+        if (_connected.TryGetValue(user, out var connected))
+        {
+            connected = connected with { GhostCosmetics = cosmetics };
+            _connected[user] = connected;
+            PatronUpdated?.Invoke((user, connected));
+
+            if (_playerManager.TryGetSessionById(user, out var player))
+                SendPatronStatus(player);
+        }
+    }
+
+    public async Task ReloadPatron(ICommonSession player)
+    {
+        await LoadData(player, CancellationToken.None);
+        SendPatronStatus(player);
+
+        if (_connected.TryGetValue(player.UserId, out var connected))
+            PatronUpdated?.Invoke((player.UserId, connected));
+    }
+    // Goob end
+
     public async Task RefreshAllPatrons()
     {
         var patrons = await _db.GetAllPatrons();
@@ -225,13 +262,17 @@ public sealed class LinkAccountManager : IPostInjectInit
         if (_fauxPatronAssignments.TryGetValue(userId, out var tierId) &&
             _fauxTiers.TryGetValue(tierId, out var tier))
         {
+            // Goob start
+            var connected = _connected.GetValueOrDefault(userId);
             return new SharedRMCPatronFull(
                 Tier: tier,
                 Linked: true,
-                GhostColor: null,
-                LobbyMessage: null,
-                RoundEndShoutout: null
+                GhostColor: connected?.GhostColor,
+                GhostCosmetics: connected?.GhostCosmetics,
+                LobbyMessage: connected?.LobbyMessage,
+                RoundEndShoutout: connected?.RoundEndShoutout
             );
+            // Goob end
         }
 
         return _connected.GetValueOrDefault(userId);

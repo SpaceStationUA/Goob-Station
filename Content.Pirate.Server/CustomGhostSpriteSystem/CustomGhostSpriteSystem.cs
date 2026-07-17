@@ -3,7 +3,6 @@ using Content.Shared.Ghost;
 using Content.Pirate.Shared.CustomGhostSystem;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Server.CustomGhostSpriteSystem;
@@ -12,22 +11,21 @@ public sealed class CustomGhostSpriteSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnShit);
+        SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
     }
 
-    private void OnShit(EntityUid uid, GhostComponent component, PlayerAttachedEvent args)
+    private void OnPlayerAttached(PlayerAttachedEvent args)
     {
-        if (!_playerManager.TryGetSessionByEntity(uid, out var session))
+        if (!HasComp<GhostComponent>(args.Entity))
             return;
 
-        TrySetCustomSprite(uid, session.Name);
+        TrySetCustomSprite(args.Entity, args.Player.Name);
     }
 
 
