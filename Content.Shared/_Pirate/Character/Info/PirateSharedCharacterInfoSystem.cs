@@ -59,7 +59,7 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
 
         SubscribeLocalEvent<RoleAddedEvent>(OnRoleChanged);
         SubscribeLocalEvent<RoleRemovedEvent>(OnRoleChanged);
-        SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnGhostStartup);
+        SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
     }
 
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
@@ -181,7 +181,7 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
         DirtyExploitableInfo();
     }
 
-    private void OnGhostStartup(Entity<GhostComponent> entity, ref ComponentStartup args)
+    private void OnPlayerAttached(PlayerAttachedEvent args)
     {
         DirtyExploitableInfo();
     }
