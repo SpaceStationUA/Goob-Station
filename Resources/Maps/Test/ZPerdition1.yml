@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 07/16/2026 20:39:24
-  entityCount: 8607
+  time: 07/17/2026 11:36:25
+  entityCount: 8624
 maps:
 - 1
 grids:
@@ -7536,7 +7536,6 @@ entities:
       - 214
       - 3186
       - 3187
-      - 3149
       - 3118
       - 4805
       - 4861
@@ -7809,7 +7808,7 @@ entities:
       pos: -14.5,1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -160594.81
+      secondsUntilStateChange: -163850.11
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7821,7 +7820,7 @@ entities:
       pos: -13.5,6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -117753.54
+      secondsUntilStateChange: -121008.84
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8051,7 +8050,7 @@ entities:
       pos: 20.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -48288.4
+      secondsUntilStateChange: -51543.695
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8976,6 +8975,48 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+- proto: AreaTelecomms
+  entities:
+  - uid: 5653
+    components:
+    - type: Transform
+      pos: -37.5,16.5
+      parent: 2
+- proto: AreaBrig
+  entities:
+  - uid: 5610
+    components:
+    - type: Transform
+      pos: 18.5,7.5
+      parent: 2
+- proto: AreaChapel
+  entities:
+  - uid: 5869
+    components:
+    - type: Transform
+      pos: -12.5,49.5
+      parent: 2
+- proto: AreaEngineering
+  entities:
+  - uid: 5507
+    components:
+    - type: Transform
+      pos: -14.5,3.5
+      parent: 2
+- proto: AreaEngineLobby
+  entities:
+  - uid: 5433
+    components:
+    - type: Transform
+      pos: -27.5,6.5
+      parent: 2
+- proto: AreaPool
+  entities:
+  - uid: 5874
+    components:
+    - type: Transform
+      pos: -0.5,54.5
+      parent: 2
 - proto: ArrivalsShuttleTimer
   entities:
   - uid: 255
@@ -9266,11 +9307,11 @@ entities:
   entities:
   - uid: 301
     components:
-    - type: OreSiloClient
-      siloNetwork: perdition
     - type: Transform
       pos: 12.5,-5.5
       parent: 2
+    - type: OreSiloClient
+      siloNetwork: perdition
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -19903,11 +19944,11 @@ entities:
   entities:
   - uid: 2115
     components:
-    - type: OreSiloClient
-      siloNetwork: perdition
     - type: Transform
       pos: -19.5,-8.5
       parent: 2
+    - type: OreSiloClient
+      siloNetwork: perdition
 - proto: Carpet
   entities:
   - uid: 8156
@@ -21414,11 +21455,11 @@ entities:
   entities:
   - uid: 2328
     components:
-    - type: OreSiloClient
-      siloNetwork: perdition
     - type: Transform
       pos: -7.5,10.5
       parent: 2
+    - type: OreSiloClient
+      siloNetwork: perdition
 - proto: ClarinetInstrument
   entities:
   - uid: 9
@@ -22588,6 +22629,11 @@ entities:
     - type: Transform
       pos: -17.5,-7.5
       parent: 2
+  - uid: 3149
+    components:
+    - type: Transform
+      pos: -21.5,-4.5
+      parent: 2
 - proto: CrateFoodIceCream
   entities:
   - uid: 2496
@@ -23120,7 +23166,7 @@ entities:
       pos: 18.5,-18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2406.8467
+      secondsUntilStateChange: -5662.1465
       state: Opening
 - proto: CurtainsOrangeOpen
   entities:
@@ -23244,7 +23290,7 @@ entities:
       pos: 21.5,-18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2536.183
+      secondsUntilStateChange: -5791.483
       state: Opening
 - proto: CurtainsRedOpen
   entities:
@@ -26106,20 +26152,20 @@ entities:
   entities:
   - uid: 3047
     components:
-    - type: OreSiloClient
-      siloNetwork: perdition
     - type: Transform
       pos: -16.5,6.5
       parent: 2
+    - type: OreSiloClient
+      siloNetwork: perdition
 - proto: ExosuitFabricator
   entities:
   - uid: 3048
     components:
-    - type: OreSiloClient
-      siloNetwork: perdition
     - type: Transform
       pos: -6.5,10.5
       parent: 2
+    - type: OreSiloClient
+      siloNetwork: perdition
 - proto: ExtinguisherCabinetFilled
   entities:
   - uid: 3049
@@ -26885,15 +26931,6 @@ entities:
     - type: Transform
       pos: -6.5,5.5
       parent: 2
-  - uid: 3149
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -24.5,-12.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 71
   - uid: 3159
     components:
     - type: Transform
@@ -40408,6 +40445,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 24.5,7.5
       parent: 2
+  - uid: 5312
+    components:
+    - type: Transform
+      pos: -24.5,-12.5
+      parent: 2
   - uid: 7821
     components:
     - type: Transform
@@ -42496,11 +42538,11 @@ entities:
   entities:
   - uid: 5258
     components:
-    - type: OreSiloClient
-      siloNetwork: perdition
     - type: Transform
       pos: 10.5,12.5
       parent: 2
+    - type: OreSiloClient
+      siloNetwork: perdition
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -42864,15 +42906,6 @@ entities:
     components:
     - type: Transform
       pos: -28.5,-13.5
-      parent: 2
-- proto: OreProcessor
-  entities:
-  - uid: 5312
-    components:
-    - type: OreSiloClient
-      siloNetwork: perdition
-    - type: Transform
-      pos: -24.5,-12.5
       parent: 2
 - proto: OrganShadowkinHeart
   entities:
@@ -48456,11 +48489,6 @@ entities:
       parent: 2
 - proto: SalvageMaterialCrateSpawner
   entities:
-  - uid: 2510
-    components:
-    - type: Transform
-      pos: -21.5,-4.5
-      parent: 2
   - uid: 6040
     components:
     - type: Transform
@@ -48484,11 +48512,11 @@ entities:
   entities:
   - uid: 6042
     components:
-    - type: OreSiloClient
-      siloNetwork: perdition
     - type: Transform
       pos: -8.5,10.5
       parent: 2
+    - type: OreSiloClient
+      siloNetwork: perdition
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -48548,11 +48576,11 @@ entities:
   entities:
   - uid: 6049
     components:
-    - type: OreSiloClient
-      siloNetwork: perdition
     - type: Transform
       pos: 23.5,4.5
       parent: 2
+    - type: OreSiloClient
+      siloNetwork: perdition
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -48570,11 +48598,11 @@ entities:
   entities:
   - uid: 6051
     components:
-    - type: OreSiloClient
-      siloNetwork: perdition
     - type: Transform
       pos: 33.5,-6.5
       parent: 2
+    - type: OreSiloClient
+      siloNetwork: perdition
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -59014,7 +59042,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -5566.1797
+      secondsUntilStateChange: -8821.4795
       state: Opening
     - type: Airlock
       autoClose: False
@@ -59030,7 +59058,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -1704.8417
+      secondsUntilStateChange: -4960.1416
       state: Opening
     - type: Airlock
       autoClose: False
@@ -59049,24 +59077,12 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -1704.5084
+      secondsUntilStateChange: -4959.808
       state: Opening
     - type: Airlock
       autoClose: False
     - type: ElevatorDoor
       elevatorId: elevator2
-  - uid: 7541
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -24.5,-12.5
-      parent: 2
-  - uid: 7542
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -24.5,-12.5
-      parent: 2
   - uid: 7543
     components:
     - type: Transform
@@ -59285,6 +59301,11 @@ entities:
       parent: 2
 - proto: Window
   entities:
+  - uid: 2510
+    components:
+    - type: Transform
+      pos: -24.5,-12.5
+      parent: 2
   - uid: 7581
     components:
     - type: Transform

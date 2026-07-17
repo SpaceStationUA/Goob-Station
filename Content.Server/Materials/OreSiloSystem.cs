@@ -1,7 +1,5 @@
 using System.Numerics; // Pirate: multiz
-using Content.Server._Pirate.ZLevels.Power; // Pirate: multiz - peer-link events
 using Content.Server.Pinpointer;
-using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared.IdentityManagement;
 using Content.Shared.Materials.OreSilo;
@@ -27,33 +25,55 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
     private readonly HashSet<EntityUid> _silosToAdd = new();
     private readonly HashSet<EntityUid> _silosToRemove = new();
 
-    #region Pirate: multiz - resolve map-time silo networks across linked decks
+    #region Pirate: multiz - resolve map-time silo networks (same deck immediately, cross-deck once the Z-network forms)
+    // Clients whose keyed silo isn't reachable yet (their deck hasn't been linked into the Z-network).
+    // Retried in Update until linked or the attempt budget runs out. Can't use CEMultizLinkedGridPeersChangedEvent
+    // as a trigger - that directed subscription is already owned by CEMultizCableHubSystem (one subscriber per pair).
+    private readonly List<(EntityUid Uid, int Attempts)> _pendingAutoLink = new();
+    private const int MaxAutoLinkAttempts = 30; // ~30s at the 1s cadence below
+    private float _autoLinkTimer;
+
     public override void Initialize()
     {
         base.Initialize();
-
-        // Resolve same-deck links when the client initializes.
         SubscribeLocalEvent<OreSiloClientComponent, MapInitEvent>(OnClientMapInit);
-        // Resolve cross-deck links after the z-network forms.
-        SubscribeLocalEvent<CEZLinkedGridComponent, CEMultizLinkedGridPeersChangedEvent>(OnGridPeersChanged);
     }
 
     private void OnClientMapInit(Entity<OreSiloClientComponent> ent, ref MapInitEvent args)
     {
-        TryAutoLinkClient(ent);
+        if (string.IsNullOrEmpty(ent.Comp.SiloNetwork))
+            return;
+
+        // Same-deck (and single-map) links resolve now; cross-deck ones wait for the Z-network to form.
+        if (!TryAutoLinkClient(ent))
+            _pendingAutoLink.Add((ent.Owner, 0));
     }
 
-    private void OnGridPeersChanged(Entity<CEZLinkedGridComponent> ent, ref CEMultizLinkedGridPeersChangedEvent args)
+    private void UpdatePendingAutoLinks(float frameTime)
     {
-        // Retry clients that can now reach a keyed silo.
-        var linked = _zLevelsServer.GetLinkedGrids(ent.Owner);
-        var query = EntityQueryEnumerator<OreSiloClientComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var client, out var xform))
+        if (_pendingAutoLink.Count == 0)
+            return;
+
+        _autoLinkTimer += frameTime;
+        if (_autoLinkTimer < 1f)
+            return;
+        _autoLinkTimer = 0f;
+
+        for (var i = _pendingAutoLink.Count - 1; i >= 0; i--)
         {
-            if (client.Silo != null || string.IsNullOrEmpty(client.SiloNetwork))
-                continue;
-            if (xform.GridUid is { } g && linked.Contains(g))
-                TryAutoLinkClient((uid, client));
+            var (uid, attempts) = _pendingAutoLink[i];
+            if (TerminatingOrDeleted(uid)
+                || !TryComp<OreSiloClientComponent>(uid, out var comp)
+                || comp.Silo != null
+                || TryAutoLinkClient((uid, comp))
+                || attempts + 1 >= MaxAutoLinkAttempts)
+            {
+                _pendingAutoLink.RemoveAt(i);
+            }
+            else
+            {
+                _pendingAutoLink[i] = (uid, attempts + 1);
+            }
         }
     }
     #endregion
@@ -133,6 +153,8 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        UpdatePendingAutoLinks(frameTime); // Pirate: multiz
 
         // Solving an annoying problem: we need to send the silo to people who are near the silo so that
         // Things don't start wildly mispredicting. We do this as cheaply as possible via grid-based local-pos checks.
