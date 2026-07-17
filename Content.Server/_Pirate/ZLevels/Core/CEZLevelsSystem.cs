@@ -9,6 +9,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Shared.Station.Components;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
+using Content.Server.Shuttles.Systems;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization.Systems;
@@ -39,7 +40,13 @@ public sealed partial class CEZLevelsSystem : CESharedZLevelsSystem
 
         // Run before round-start variation so floor grids are linked before it spreads across them.
         SubscribeLocalEvent<CEStationZLevelsComponent, StationPostInitEvent>(OnStationPostInit,
-            before: new[] { typeof(RoundstartStationVariationRuleSystem) });
+            before:
+            [
+                typeof(RoundstartStationVariationRuleSystem),
+                typeof(ShuttleSystem),
+                typeof(ArrivalsSystem),
+                typeof(EmergencyShuttleSystem),
+            ]);
     }
 
     private void OnStationPostInit(Entity<CEStationZLevelsComponent> ent, ref StationPostInitEvent args)

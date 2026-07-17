@@ -230,7 +230,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
             if (component.FirstRun)
             {
-                var station = _station.GetLargestGrid(component.Station);
+                var station = _floorGrids.GetStationDefaultGrid(component.Station); // Pirate: multiz
                 sourceMap = station == null ? null : Transform(station.Value)?.MapUid;
                 arrivalsDelay += RoundStartFTLDuration;
                 component.FirstRun = false;
@@ -516,7 +516,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 else
                 {
                     var targetGrid = _floorGrids.FindStationFloorWithPriorityDock(comp.Station, "DockArrivals") // Pirate: multiz
-                        ?? _station.GetLargestGrid(comp.Station); // Pirate: multiz
+                        ?? _floorGrids.GetStationDefaultGrid(comp.Station); // Pirate: multiz
 
                     if (targetGrid != null)
                         _shuttles.FTLToDock(uid, shuttle, targetGrid.Value);

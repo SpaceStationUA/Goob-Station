@@ -9,6 +9,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: CEStationZLevels
+          defaultSpawnDepth: 1
           mapsAbove:
           - /Maps/Test/ZPerdition1.yml
         - type: StationNameSetup

@@ -192,7 +192,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         }
 
         var targetGrid = _floorGrids.FindStationFloorWithPriorityDock(station.Value, DockTag) // Pirate: multiz
-            ?? _station.GetLargestGrid(station.Value); // Pirate: multiz
+            ?? _floorGrids.GetStationDefaultGrid(station.Value); // Pirate: multiz
         if (targetGrid == null)
             return;
 
@@ -282,7 +282,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         }
 
         var targetGrid = _floorGrids.FindStationFloorWithPriorityDock(stationUid, DockTag) // Pirate: multiz
-            ?? _station.GetLargestGrid(stationUid); // Pirate: multiz
+            ?? _floorGrids.GetStationDefaultGrid(stationUid); // Pirate: multiz
 
         // UHH GOOD LUCK
         if (targetGrid == null)

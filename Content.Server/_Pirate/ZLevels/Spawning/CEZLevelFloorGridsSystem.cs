@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Components;
+using Content.Server._Pirate.ZLevels.Core.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared._Pirate.ZLevels.Core.Components;
@@ -17,6 +18,36 @@ public sealed class CEZLevelFloorGridsSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
 
     /// <summary>
+    /// Returns the configured external-space spawn floor for a multiz station.
+    /// Falls back to the station's normal main-grid selection for non-multiz stations or invalid depths.
+    /// </summary>
+    public EntityUid? GetStationDefaultGrid(EntityUid station)
+    {
+        if (!TryComp<StationDataComponent>(station, out var data))
+            return null;
+
+        if (TryComp<CEStationZLevelsComponent>(station, out var zLevels))
+        {
+            foreach (var grid in data.Grids)
+            {
+                if (TryComp<CEZLinkedGridComponent>(grid, out var linked) &&
+                    linked.Depth == zLevels.DefaultSpawnDepth)
+                {
+                    return grid;
+                }
+            }
+        }
+
+        foreach (var grid in data.Grids)
+        {
+            if (HasComp<BecomesStationComponent>(grid))
+                return grid;
+        }
+
+        return _station.GetLargestGrid((station, data));
+    }
+
+    /// <summary>
     /// Returns the station's main grid plus linked z-peer grids.
     /// </summary>
     public List<EntityUid> GetStationFloorGrids(EntityUid station)
@@ -31,17 +62,7 @@ public sealed class CEZLevelFloorGridsSystem : EntitySystem
                 return GetFloorGrids(grid);
         }
 
-        EntityUid? main = null;
-        foreach (var grid in data.Grids)
-        {
-            if (HasComp<BecomesStationComponent>(grid))
-            {
-                main = grid;
-                break;
-            }
-        }
-
-        main ??= _station.GetLargestGrid((station, data));
+        var main = GetStationDefaultGrid(station);
         return main is { } mainGrid ? GetFloorGrids(mainGrid) : new List<EntityUid>();
     }
 

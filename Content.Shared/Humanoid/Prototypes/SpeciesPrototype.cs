@@ -96,6 +96,16 @@ public sealed partial class SpeciesPrototype : IPrototype
     [DataField]
     public SpeciesNaming Naming { get; private set; } = SpeciesNaming.FirstLast;
 
+    #region Pirate: multiz
+
+    /// <summary>
+    /// Whether character names for this species may contain commas.
+    /// </summary>
+    [DataField]
+    public bool AllowNameCommas { get; private set; }
+
+    #endregion
+
     [DataField]
     public List<Sex> Sexes { get; private set; } = new() { Sex.Male, Sex.Female };
 

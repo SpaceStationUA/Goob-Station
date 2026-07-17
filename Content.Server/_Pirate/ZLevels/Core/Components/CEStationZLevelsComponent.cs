@@ -19,6 +19,12 @@ public sealed partial class CEStationZLevelsComponent : Component
     public EntityUid? ZNetworkEntity;
 
     /// <summary>
+    /// Z-depth used as the station's default external-space layer for grid, shuttle, and asteroid spawning.
+    /// </summary>
+    [DataField]
+    public int DefaultSpawnDepth;
+
+    /// <summary>
     /// CrystallEdge: Additional maps loaded below the main map (at negative depth levels).
     /// Each map in the list is loaded at depth -N, -N+1, ..., -1, with <see cref="MapPath"/> at depth 0.
     /// </summary>

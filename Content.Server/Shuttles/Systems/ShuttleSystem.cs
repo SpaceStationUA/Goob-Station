@@ -2,6 +2,7 @@
 
 using Content.Server.Administration.Logs;
 using Content.Server._Pirate.ZLevels.Core; // Pirate: multiz
+using Content.Server._Pirate.ZLevels.Spawning; // Pirate: multiz
 using Content.Server.Body.Systems;
 using Content.Server.Buckle.Systems;
 using Content.Server.Parallax;
@@ -68,6 +69,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     // Needed to translate linked shuttle decks between relative z-maps when FTL is initiated or completed. // Pirate: multiz
     [Dependency] private readonly CEZLevelsSystem _zLevels = default!; // Pirate: multiz
+    [Dependency] private readonly CEZLevelFloorGridsSystem _zFloorGrids = default!; // Pirate: multiz
     [Dependency] private readonly TurfSystem _turf = default!;
 
     private EntityQuery<BuckleComponent> _buckleQuery;
