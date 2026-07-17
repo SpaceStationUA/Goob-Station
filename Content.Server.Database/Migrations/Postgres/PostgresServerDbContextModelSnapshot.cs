@@ -1478,7 +1478,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasMaxLength(4096)
                         .HasColumnType("character varying(4096)")
-                        .HasColumnName("ooc_notes");
+                        .HasColumnName("oocnotes");
 
                     b.Property<string>("PersonalNotes")
                         .IsRequired()

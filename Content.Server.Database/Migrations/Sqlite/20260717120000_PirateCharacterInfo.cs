@@ -24,7 +24,7 @@ public partial class PirateCharacterInfo : Migration
             defaultValue: "");
 
         migrationBuilder.AddColumn<string>(
-            name: "ooc_notes",
+            name: "oocnotes",
             table: "profile",
             type: "TEXT",
             maxLength: 4096,
@@ -59,7 +59,7 @@ public partial class PirateCharacterInfo : Migration
     protected override void Down(MigrationBuilder migrationBuilder)
     {
         migrationBuilder.DropColumn(name: "exploitable_info", table: "profile");
-        migrationBuilder.DropColumn(name: "ooc_notes", table: "profile");
+        migrationBuilder.DropColumn(name: "oocnotes", table: "profile");
         migrationBuilder.DropColumn(name: "personal_notes", table: "profile");
         migrationBuilder.DropColumn(name: "personality_description", table: "profile");
         migrationBuilder.DropColumn(name: "secrets", table: "profile");

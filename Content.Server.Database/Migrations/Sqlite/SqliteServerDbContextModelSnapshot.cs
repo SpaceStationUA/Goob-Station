@@ -1401,7 +1401,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasMaxLength(4096)
                         .HasColumnType("TEXT")
-                        .HasColumnName("ooc_notes");
+                        .HasColumnName("oocnotes");
 
                     b.Property<string>("PersonalNotes")
                         .IsRequired()
