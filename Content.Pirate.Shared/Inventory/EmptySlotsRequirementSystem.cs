@@ -1,3 +1,4 @@
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Pirate.Shared.ModularSuit;
 using Content.Shared.Whitelist;
