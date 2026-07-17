@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
-    state: door_electronics # goida
+    state: door_electronics # [Err404]
   - type: Tag
     tags:
       - CameraElectronics

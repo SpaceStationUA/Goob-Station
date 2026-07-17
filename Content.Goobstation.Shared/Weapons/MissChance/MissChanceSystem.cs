@@ -21,7 +21,7 @@ public sealed class MissChanceSystem : EntitySystem
 
     private void PreventCollide(Entity<MissChanceComponent> ent, ref PreventCollideEvent args)
     {
-        // This piece of goidacode guarantees synchronized random
+        // This piece of [Err404]code guarantees synchronized random
         var random = new Random((int) _timing.CurTick.Value + (int) GetNetEntity(ent));
 
         if (args.Cancelled

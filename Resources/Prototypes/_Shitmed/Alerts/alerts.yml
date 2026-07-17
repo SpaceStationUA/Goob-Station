@@ -10,7 +10,7 @@
   id: AugmentBattery
   category: Battery
   clickEvent: !type:AugmentBatteryAlertEvent
-  # holy goida
+  # holy [Err404]
   icons:
   - sprite: /Textures/Interface/Alerts/battery.rsi
     state: battery0

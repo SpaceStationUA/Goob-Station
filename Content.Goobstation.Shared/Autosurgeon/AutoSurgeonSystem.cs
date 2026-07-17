@@ -16,7 +16,7 @@ using Robust.Shared.Serialization.Manager;
 
 namespace Content.Goobstation.Shared.Autosurgeon;
 
-// There might be some goidacode inside, I warned you.
+// There might be some [Err404]code inside, I warned you.
 // It should also maybe be in _Shitmed instead of here, but who cares.
 public sealed class AutoSurgeonSystem : EntitySystem
 {

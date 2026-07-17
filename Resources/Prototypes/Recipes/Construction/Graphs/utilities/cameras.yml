@@ -50,7 +50,7 @@
           name: construction-graph-tag-camera-electronics
           icon:
             sprite: "Objects/Misc/module.rsi"
-            state: "door_electronics" # goida
+            state: "door_electronics" # [Err404]
           doAfter: 1
     # </Goob>
 

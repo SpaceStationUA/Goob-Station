@@ -1028,7 +1028,7 @@
   - BlueshieldOfficerHeadSwatHelmet
   - BlueshieldOfficerBeret
   - BlueshieldOfficerHeadCowboy
-  - BlueshieldOfficerGoidaHelmet
+  - BlueshieldOfficerUshanka
 
 - type: loadoutGroup
   id: BlueshieldOfficerBackpack
