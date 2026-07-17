@@ -3,4 +3,4 @@
 - files: [ "drop1.ogg", "pickup1.ogg", "pickup2.ogg" ]
   license: "CC-BY-SA-3.0"
   copyright: "stolen by russians from somewhere, converted to mono by @deltanedas (github)"
-  source: "[Err404]"
+  source: "https://github.com/Goob-Station/Goob-Station/blob/master/Resources/Audio/_Goobstation/Items/weapons/Laser/"
