@@ -154,6 +154,8 @@
       reagents:
       - ReagentId: AvaliBlood
         Quantity: 300
+  - type: Preenable
+    featherPrototype: AvaliFeather
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Weapons/pierce.ogg

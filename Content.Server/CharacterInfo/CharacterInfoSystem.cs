@@ -5,10 +5,10 @@ using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
+using Content.Server._Pirate.Character.Info;
 using Content.Shared.CCVar;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Database;
-using Content.Shared.DetailExaminable;
 using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
@@ -25,6 +25,7 @@ public sealed class CharacterInfoSystem : EntitySystem
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _minds = default!;
     [Dependency] private readonly IServerPreferencesManager _preferences = default!;
+    [Dependency] private readonly PirateCharacterInfoSystem _pirateCharacterInfo = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
 
@@ -79,9 +80,8 @@ public sealed class CharacterInfoSystem : EntitySystem
             //Pirate banking end
         }
 
-        var detailExaminable = TryComp<DetailExaminableComponent>(entity, out var detail)
-            ? detail.Content
-            : Loc.GetString("flavor-text-placeholder");
+        var detailExaminable = _pirateCharacterInfo.GetPhysicalDescription(entity)
+            ?? Loc.GetString("flavor-text-placeholder");
 
         RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing, detailExaminable, memories), args.SenderSession); //Pirate banking
     }
@@ -97,15 +97,12 @@ public sealed class CharacterInfoSystem : EntitySystem
         if (newContent.Length > maxFlavorTextLength)
             newContent = newContent[..maxFlavorTextLength];
 
-        var detail = EnsureComp<DetailExaminableComponent>(entity);
-        detail.Content = newContent;
+        _pirateCharacterInfo.SetPhysicalDescription(entity, newContent);
 
         var preferences = _preferences.GetPreferences(args.SenderSession.UserId);
         if (preferences.SelectedCharacter is HumanoidCharacterProfile profile)
-            _ = _preferences.SetProfile(args.SenderSession.UserId, preferences.SelectedCharacterIndex, profile.WithFlavorText(newContent));
+            _ = _preferences.SetProfile(args.SenderSession.UserId, preferences.SelectedCharacterIndex, profile.WithPhysicalDescription(newContent));
 
         _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(entity):user} updated their round description");
-
-        Dirty(entity, detail);
     }
 }

@@ -15,7 +15,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -1073,6 +1073,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("first_seen_time");
 
+                    b.Property<string>("GhostHat")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_hat");
+
+                    b.Property<string>("GhostMask")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_mask");
+
+                    b.Property<string>("GhostParticles")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_particles");
+
                     b.Property<DateTime?>("LastReadRules")
                         .HasColumnType("TEXT")
                         .HasColumnName("last_read_rules");
@@ -1343,6 +1355,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("employer");
 
+                    b.Property<string>("ExploitableInfo")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("exploitable_info");
+
                     b.Property<string>("EyeColor")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -1391,6 +1409,24 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("nationality");
 
+                    b.Property<string>("OOCNotes")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("oocnotes");
+
+                    b.Property<string>("PersonalNotes")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("personal_notes");
+
+                    b.Property<string>("PersonalityDescription")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("personality_description");
+
                     b.Property<int>("PreferenceId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("preference_id");
@@ -1403,6 +1439,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("sex");
+
+                    b.Property<string>("Secrets")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("secrets");
 
                     b.Property<string>("SkinColor")
                         .IsRequired()
@@ -1692,6 +1734,14 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<bool>("GhostColor")
                         .HasColumnType("INTEGER")
                         .HasColumnName("ghost_color");
+
+                    b.Property<bool>("GhostCosmetics")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ghost_cosmetics");
+
+                    b.Property<bool>("GhostParticles")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ghost_particles");
 
                     b.Property<string>("Icon")
                         .HasColumnType("TEXT")

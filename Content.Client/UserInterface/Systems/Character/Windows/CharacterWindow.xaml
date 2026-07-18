@@ -6,11 +6,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Character.Windows"
+    xmlns:pirate="clr-namespace:Content.Client._Pirate.Character.Info.UI"
     Title="{Loc 'character-info-title'}"
     MinWidth="400"
     MinHeight="545">
-    <ScrollContainer>
-        <BoxContainer Orientation="Vertical">
+	<ScrollContainer HScrollEnabled="False">
+	    <TabContainer Name="CharacterInfoTabs" Access="Public">
+	        <BoxContainer Orientation="Vertical">
             <Label Name="RoleType" VerticalAlignment="Top" Margin="0 6 0 10" HorizontalAlignment="Center" StyleClasses="LabelHeading" Access="Public"/>
             <BoxContainer Orientation="Horizontal">
                 <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public" SetSize="64 64"/>
@@ -41,6 +43,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     </BoxContainer>
                 </BoxContainer>
             </PanelContainer>
-        </BoxContainer>
-    </ScrollContainer>
+	        </BoxContainer>
+	        <pirate:CharacterICInfoControl Name="InfoIC" Access="Public"/>
+	        <pirate:CharacterOOCInfoControl Name="InfoOOC" Access="Public"/>
+	    </TabContainer>
+	</ScrollContainer>
 </windows:CharacterWindow>

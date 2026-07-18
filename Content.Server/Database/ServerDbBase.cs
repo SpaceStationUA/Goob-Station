@@ -300,7 +300,12 @@ namespace Content.Server.Database
                 traits.ToHashSet(),
                 loadouts,
                 barkVoice // Goob Station - Barks
-            );
+            ).WithCharacterInfo( // Pirate: Starlight character descriptions.
+                profile.PersonalityDescription,
+                profile.PersonalNotes,
+                profile.OOCNotes,
+                profile.Secrets,
+                profile.ExploitableInfo);
         }
 
         private static Profile ConvertProfiles(HumanoidCharacterProfile humanoid, int slot, Profile? profile = null)
@@ -316,6 +321,11 @@ namespace Content.Server.Database
 
             profile.CharacterName = humanoid.Name;
             profile.FlavorText = humanoid.FlavorText;
+            profile.PersonalityDescription = humanoid.PersonalityDescription; // Pirate: Starlight character descriptions.
+            profile.PersonalNotes = humanoid.PersonalNotes;
+            profile.OOCNotes = humanoid.OOCNotes;
+            profile.Secrets = humanoid.Secrets;
+            profile.ExploitableInfo = humanoid.ExploitableInfo;
             profile.Species = humanoid.Species;
             profile.Height = humanoid.Height; // Goobstation: port EE height/width sliders
             profile.Width = humanoid.Width; // Goobstation: port EE height/width sliders
@@ -1773,6 +1783,118 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             patron.GhostColor = color?.ToArgb();
             await db.DbContext.SaveChangesAsync();
         }
+
+        // Goob start
+        public async Task<SharedRMCGhostCosmetics?> GetGhostCosmetics(Guid player, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            var data = await db.DbContext.Player
+                .Where(p => p.UserId == player)
+                .Select(p => new { p.GhostParticles, p.GhostHat, p.GhostMask })
+                .FirstOrDefaultAsync(cancel);
+
+            if (data == null ||
+                (data.GhostParticles == null && data.GhostHat == null && data.GhostMask == null))
+                return null;
+
+            return new SharedRMCGhostCosmetics(data.GhostParticles, data.GhostHat, data.GhostMask);
+        }
+
+        public async Task SetGhostCosmetics(Guid player, string? particles, string? hat, string? mask)
+        {
+            await using var db = await GetDb();
+            var playerData = await db.DbContext.Player.FirstOrDefaultAsync(p => p.UserId == player);
+            if (playerData == null)
+                return;
+
+            playerData.GhostParticles = particles;
+            playerData.GhostHat = hat;
+            playerData.GhostMask = mask;
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<RMCPatronTier>> GetPatronTiers()
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.RMCPatronTiers.ToListAsync();
+        }
+
+        public async Task<int> AddPatronTier(RMCPatronTier tier)
+        {
+            await using var db = await GetDb();
+            db.DbContext.RMCPatronTiers.Add(tier);
+            await db.DbContext.SaveChangesAsync();
+            return tier.Id;
+        }
+
+        public async Task<bool> UpdatePatronTier(RMCPatronTier tier)
+        {
+            await using var db = await GetDb();
+            var existing = await db.DbContext.RMCPatronTiers.FirstOrDefaultAsync(t => t.Id == tier.Id);
+            if (existing == null)
+                return false;
+
+            existing.Name = tier.Name;
+            existing.Icon = tier.Icon;
+            existing.DiscordRole = tier.DiscordRole;
+            existing.Priority = tier.Priority;
+            existing.ShowOnCredits = tier.ShowOnCredits;
+            existing.GhostColor = tier.GhostColor;
+            existing.GhostCosmetics = tier.GhostCosmetics;
+            existing.GhostParticles = tier.GhostParticles;
+            existing.LobbyMessage = tier.LobbyMessage;
+            existing.RoundEndShoutout = tier.RoundEndShoutout;
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<int> CountPatronsInTier(int tierId)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.RMCPatrons.CountAsync(p => p.TierId == tierId);
+        }
+
+        public async Task<bool> DeletePatronTier(int tierId)
+        {
+            await using var db = await GetDb();
+            var tier = await db.DbContext.RMCPatronTiers.FirstOrDefaultAsync(t => t.Id == tierId);
+            if (tier == null)
+                return false;
+
+            db.DbContext.RMCPatronTiers.Remove(tier);
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> SetPatron(Guid player, int? tierId)
+        {
+            await using var db = await GetDb();
+            var patron = await db.DbContext.RMCPatrons.FirstOrDefaultAsync(p => p.PlayerId == player);
+
+            if (tierId == null)
+            {
+                if (patron == null)
+                    return false;
+
+                db.DbContext.RMCPatrons.Remove(patron);
+                await db.DbContext.SaveChangesAsync();
+                return true;
+            }
+
+            if (patron == null)
+            {
+                patron = new RMCPatron { PlayerId = player, TierId = tierId.Value };
+                db.DbContext.RMCPatrons.Add(patron);
+            }
+            else
+            {
+                patron.TierId = tierId.Value;
+            }
+
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+        // Goob end
 
         public async Task SetLobbyMessage(Guid player, string message)
         {

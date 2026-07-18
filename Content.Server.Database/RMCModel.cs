@@ -43,6 +43,12 @@ public sealed class RMCPatronTier
 
     public bool GhostColor { get; set; }
 
+    // Goob - ghost cosmetics
+    public bool GhostCosmetics { get; set; }
+
+    // Goob - ghost cosmetics
+    public bool GhostParticles { get; set; }
+
     public bool LobbyMessage { get; set; }
 
     public bool RoundEndShoutout { get; set; }

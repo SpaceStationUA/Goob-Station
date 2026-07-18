@@ -22,7 +22,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <Button Name="CharacterSetup" Text="{Loc 'lobby-character-preview-panel-character-setup-button'}"
                         HorizontalAlignment="Center"
                         Margin="0 5 0 0" />
-                <Button Name="PatronPerks" Access="Public" Text="{Loc 'rmc-ui-patron-perks'}"
+                <!-- Pirate: public ghost cosmetics reuse the upstream perks window. -->
+                <Button Name="PatronPerks" Access="Public" Text="{Loc 'goob-ui-ghost-cosmetics'}"
                         Margin="0 5 0 0" Visible="False" />
                 <cc:CommandButton Name="Currency"
                     Command="balanceui"

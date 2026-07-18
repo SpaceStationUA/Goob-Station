@@ -284,6 +284,10 @@
     range: 3
   - type: InputMover
   - type: MobMover
+  - type: Eye # Pirate - preserve built-in T-ray subfloor vision through ghost role takeover.
+    visMask:
+    - Normal
+    - Subfloor
   - type: ContentEye
     maxZoom: 1.2, 1.2
   - type: Tag
