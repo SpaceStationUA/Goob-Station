@@ -105,6 +105,7 @@ public sealed partial class GrabIntentSystem : EntitySystem
         }
 
         Dirty(uid, component);
+        _modifierSystem.RefreshMovementSpeedModifiers(uid); // Pirate: clear cached grab slowdown after resetting the stage.
     }
 
     private void OnCheckGrabbed(EntityUid uid, GrabbableComponent component, ref CheckGrabbedEvent args)
