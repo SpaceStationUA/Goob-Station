@@ -1,7 +1,7 @@
 <ui:ModularSuitWindow
     xmlns="https://spacestation14.io"
     xmlns:ui="clr-namespace:Content.Pirate.Client.ModularSuit.Ui"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls;assembly=Content.Client"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     SetSize="550 700" MouseFilter="Stop">
 

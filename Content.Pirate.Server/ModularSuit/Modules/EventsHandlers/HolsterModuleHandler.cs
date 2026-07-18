@@ -46,7 +46,7 @@ public sealed partial class HolsterModuleHandler : ModuleActionHandler
             if (_hands.TryPickup(user, item))
             {
                 if (TryComp<WieldableComponent>(item, out var wieldable))
-                    _wieldable.TryWield((item, wieldable), user);
+                    _wieldable.TryWield(item, wieldable, user);
 
                 if (TryComp<ChamberMagazineAmmoProviderComponent>(item, out var chamber)
                     && chamber.BoltClosed != null && !chamber.BoltClosed.Value)

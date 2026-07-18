@@ -1,6 +1,6 @@
 using Content.Pirate.Shared.ModularSuit;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Storage;
-using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Containers;
 
 namespace Content.Pirate.Server.ModularSuit;
@@ -8,7 +8,7 @@ namespace Content.Pirate.Server.ModularSuit;
 public sealed partial class ModularSuitStorageModuleSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedStorageSystem _storage = default!;
+    [Dependency] private StorageSystem _storage = default!;
 
     public override void Initialize()
     {
