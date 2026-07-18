@@ -37,37 +37,50 @@ public sealed class PhotophobiaSystem : SharedPhotophobiaSystem
         _overlay = new PhotophobiaOverlay();
     }
 
+    private void SetOverlayActive(bool active)
+    {
+        if (active)
+        {
+            if (!_overlayManager.HasOverlay<PhotophobiaOverlay>())
+                _overlayManager.AddOverlay(_overlay);
+
+            return;
+        }
+
+        _overlayManager.RemoveOverlay(_overlay);
+    }
+
     private void OnPlayerAttached(Entity<PhotophobiaComponent> ent, ref LocalPlayerAttachedEvent args)
     {
-        _overlayManager.AddOverlay(_overlay);
+        SetOverlayActive(true);
     }
 
     private void OnPlayerDetached(Entity<PhotophobiaComponent> ent, ref LocalPlayerDetachedEvent args)
     {
-        _overlayManager.RemoveOverlay(_overlay);
+        SetOverlayActive(false);
     }
 
     private void OnPhotophobiaInit(Entity<PhotophobiaComponent> ent, ref ComponentInit args)
     {
         if (_player.LocalEntity == ent.Owner)
-            _overlayManager.AddOverlay(_overlay);
+            SetOverlayActive(true);
     }
 
     private void OnPhotophobiaShutdown(Entity<PhotophobiaComponent> ent, ref ComponentShutdown args)
     {
         if (_player.LocalEntity == ent.Owner)
-            _overlayManager.RemoveOverlay(_overlay);
+            SetOverlayActive(false);
     }
 
     private void OnFlashProtectionEquipped(Entity<FlashImmunityComponent> ent, ref GotEquippedEvent args)
     {
         if (_player.LocalEntity == args.Equipee && args.SlotFlags != SlotFlags.POCKET)
-            _overlayManager.RemoveOverlay(_overlay);
+            SetOverlayActive(false);
     }
 
     private void OnFlashProtectionUnequipped(Entity<FlashImmunityComponent> ent, ref GotUnequippedEvent args)
     {
         if (_player.LocalEntity == args.Equipee && args.SlotFlags != SlotFlags.POCKET)
-            _overlayManager.AddOverlay(_overlay);
+            SetOverlayActive(HasComp<PhotophobiaComponent>(args.Equipee));
     }
 }
