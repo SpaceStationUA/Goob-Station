@@ -2,8 +2,8 @@
   abstract: true
   parent: BaseStructureDynamic
   id: HeavyFlatpackBase
-  name: heavy flatpack
-  description: A large flatpack used to store a worryingly large machine.
+  name: "важкий флетпак"
+  description: "Великий флетпак для зберігання підозріло великої машини."
   components:
   - type: Sprite
     sprite: _Pirate/Nuclear/Objects/Devices/large_flatpack.rsi
@@ -38,8 +38,8 @@
 - type: entity
   parent: HeavyFlatpackBase # DeltaV - was CrateEngineering
   id: NuclearReactorFlatpack
-  name: nuclear reactor flatpack
-  description: A flatpack used for constructing a nuclear reactor. Parts sold separately.
+  name: "флетпак ядерного реактора"
+  description: "Флетпак для побудови ядерного реактора. Компоненти продаються окремо."
   components:
   - type: Flatpack
     entity: NuclearReactorEmpty
@@ -47,8 +47,8 @@
 - type: entity
   parent: HeavyFlatpackBase # DeltaV - was CrateEngineering
   id: GasTurbineFlatpack
-  name: gas turbine flatpack
-  description: A flatpack used for constructing a gas turbine.
+  name: "флетпак газової турбіни"
+  description: "Флетпак для побудови газової турбіни."
   components:
   - type: Flatpack
     entity: Turbine
@@ -56,8 +56,8 @@
 - type: entity
   parent: HeavyFlatpackBase
   id: NuclearReactorSmallFlatpack
-  name: small nuclear reactor flatpack
-  description: A flatpack used for constructing a small nuclear reactor. Parts sold separately.
+  name: "флетпак малого ядерного реактора"
+  description: "Флетпак для побудови малого ядерного реактора. Компоненти продаються окремо."
   components:
   - type: Flatpack
     entity: NuclearReactorSmall
@@ -65,8 +65,8 @@
 - type: entity
   parent: HeavyFlatpackBase
   id: GasTurbineSmallFlatpack
-  name: small gas turbine flatpack
-  description: A flatpack used for constructing a small gas turbine.
+  name: "флетпак малої газової турбіни"
+  description: "Флетпак для побудови малої газової турбіни."
   components:
   - type: Flatpack
     entity: TurbineSmall
