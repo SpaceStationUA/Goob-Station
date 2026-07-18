@@ -18,7 +18,7 @@
   - ClownPlating
   - MedicalPlating
   - ModularSuitCorePlasma
-  - ModularSuitCoreInfinite
+  # Pirate: Wega keeps ModularSuitCoreInfinite research disabled.
 
 - type: latheRecipePack
   id: ModesuitModuleStatic
@@ -59,7 +59,7 @@
   - ConstructorSuitModule
   - DrillSuitModule
   - AdvancedFlashlightSuitModule
-  - TemperatureRegulatorSuitModule
+  # Pirate: Wega keeps TemperatureRegulatorSuitModule research disabled.
 
 - type: latheRecipePack
   id: ModesuitModuleSecStatic
