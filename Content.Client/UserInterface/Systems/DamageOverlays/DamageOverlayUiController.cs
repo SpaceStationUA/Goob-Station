@@ -76,6 +76,7 @@ public sealed class DamageOverlayUiController : UIController
 
     private void ClearOverlay()
     {
+        _overlay.State = MobState.Alive; // Pirate: Do not retain critical vision after transferring to a borg.
         _overlay.DeadLevel = 0f;
         _overlay.CritLevel = 0f;
         _overlay.PainLevel = 0f;
