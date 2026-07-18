@@ -35,8 +35,6 @@
   productEntity: EnergyShieldSuitModule
   categories:
   - UplinkWearables
-  discountDownTo:
-    Telecrystal: 6
   cost:
     Telecrystal: 8
   conditions:
