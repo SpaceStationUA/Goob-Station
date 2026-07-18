@@ -1,0 +1,20 @@
+// SPDX-FileCopyrightText: 2025 MarkerWicker <markerWicker@proton.me>
+// SPDX-FileCopyrightText: 2026 Oguzhan Bayar <Oguzhan.Bayar@hotmail.de>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D LIGHT_TEXTURE;
+uniform highp float effectStrength;
+
+void fragment() {
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, UV);
+    highp vec4 lightcolor = zTextureSpec(LIGHT_TEXTURE, UV);
+
+    // Soft-light blending with channel offsets to account for perceived brightness.
+    color.r = pow(color.r, pow(2.0, 2.0 * (0.5 - clamp((lightcolor.r - 0.05) * effectStrength, 0.5, 1.0))));
+    color.g = pow(color.g, pow(2.0, 2.0 * (0.5 - clamp((lightcolor.g + 0.05) * effectStrength, 0.5, 1.0))));
+    color.b = pow(color.b, pow(2.0, 2.0 * (0.5 - clamp((lightcolor.b + 0.10) * effectStrength, 0.5, 1.0))));
+
+    COLOR = color;
+}

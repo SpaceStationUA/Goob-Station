@@ -214,10 +214,14 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 </BoxContainer>
                 <!-- Pirate: Starlight extended character descriptions. -->
                 <BoxContainer Name="ICInfoTab" Orientation="Vertical" Margin="10" Visible="False">
-                    <pirateInfo:CharacterInfoEditor Name="ICInfoEditor" />
+                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                        <pirateInfo:CharacterInfoEditor Name="ICInfoEditor" />
+                    </ScrollContainer>
                 </BoxContainer>
                 <BoxContainer Name="OOCInfoTab" Orientation="Vertical" Margin="10" Visible="False">
-                    <pirateInfo:OOCInfoEditor Name="OOCInfoEditor" />
+                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                        <pirateInfo:OOCInfoEditor Name="OOCInfoEditor" />
+                    </ScrollContainer>
                 </BoxContainer>
             </TabContainer>
         </BoxContainer>

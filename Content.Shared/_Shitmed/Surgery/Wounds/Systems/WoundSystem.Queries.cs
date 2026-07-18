@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared._Shitmed.Medical.Surgery.Pain.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
+using Content.Shared._Pirate.Medical.LimbFixation;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
@@ -232,7 +233,7 @@ public sealed partial class WoundSystem
             if (!TryComp<WoundableComponent>(id, out var woundable))
                 continue;
 
-            result[target] = woundable.WoundableSeverity;
+            result[target] = GetDisplayedWoundableSeverity(id, woundable.WoundableSeverity);
         }
 
         return result;
@@ -278,7 +279,7 @@ public sealed partial class WoundSystem
                 break;
             }
 
-            result[target] = nearestSeverity;
+            result[target] = GetDisplayedWoundableSeverity(id, nearestSeverity);
         }
 
         return result;
@@ -325,10 +326,19 @@ public sealed partial class WoundSystem
                 break;
             }
 
-            result[target] = nearestSeverity;
+            result[target] = GetDisplayedWoundableSeverity(id, nearestSeverity);
         }
 
         return result;
+    }
+
+    // Pirate: limb fixation damage is distinct from mangling; a stopping marker is already being removed.
+    private WoundableSeverity GetDisplayedWoundableSeverity(EntityUid part, WoundableSeverity severity)
+    {
+        return TryComp<LimbFixationDamageComponent>(part, out var damage)
+            && damage.LifeStage < ComponentLifeStage.Stopping
+            ? WoundableSeverity.Disabled
+            : severity;
     }
 
     /// <summary>

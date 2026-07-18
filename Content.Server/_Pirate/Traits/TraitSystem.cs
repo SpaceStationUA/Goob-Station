@@ -4,6 +4,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
+using Content.Shared.Whitelist;
 using Content.Shared._Pirate.Traits;
 using Content.Shared._Pirate.Traits.Conditions;
 using Content.Shared._Pirate.Traits.Effects;
@@ -15,6 +16,7 @@ public sealed class TraitSystem : SharedTraitSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly ILogManager _log = default!;
 
@@ -75,6 +77,10 @@ public sealed class TraitSystem : SharedTraitSystem
         foreach (var traitId in selectedTraits)
         {
             if (!_prototypeManager.TryIndex(traitId, out var trait))
+                continue;
+
+            if (_whitelistSystem.IsWhitelistFail(trait.Whitelist, player) ||
+                _whitelistSystem.IsWhitelistPass(trait.Blacklist, player))
                 continue;
 
             if (speciesId is { } selectedSpecies && (trait.ExcludedSpecies.Contains(selectedSpecies) ||
@@ -141,6 +147,11 @@ public sealed class TraitSystem : SharedTraitSystem
 
         EntityManager.AddComponents(player, trait.Components, false);
 
+        foreach (var special in trait.Specials)
+        {
+            special.AfterEquip(player);
+        }
+
         var language = EntityManager.System<LanguageSystem>();
 
         if (trait.RemoveLanguagesSpoken is not null)
@@ -178,6 +189,13 @@ public sealed class TraitSystem : SharedTraitSystem
 
         foreach (var effect in trait.Effects)
         {
+            if (effect is SpawnItemInHandEffect spawnItemEffect)
+            {
+                var item = Spawn(spawnItemEffect.Item, Transform(player).Coordinates);
+                _sharedHandsSystem.TryPickupAnyHand(player, item);
+                continue;
+            }
+
             effect.Apply(context);
         }
     }

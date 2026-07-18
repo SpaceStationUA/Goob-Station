@@ -20,6 +20,7 @@ public sealed partial class ForeignerTraitSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly LanguageSystem _languages = default!;
     [Dependency] private readonly StorageSystem _storage = default!;
+    [Dependency] private readonly TranslatorSystem _translator = default!; // Pirate: Configure spawned translators through their system.
 
     public override void Initialize()
     {
@@ -78,6 +79,7 @@ public sealed partial class ForeignerTraitSystem : EntitySystem
         handheld.SpokenLanguages = [translatorLanguage];
         handheld.UnderstoodLanguages = [translatorLanguage];
         handheld.RequiredLanguages = [entityLanguage];
+        _translator.SetEnabled((translator, handheld), false);
 
         // Try to put it in entities hand
         if (_hands.TryPickupAnyHand(uid, translator, false, false, false))
