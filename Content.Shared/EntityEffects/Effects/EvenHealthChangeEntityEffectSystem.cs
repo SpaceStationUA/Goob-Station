@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared._Shitmed.Damage;
 using Content.Shared._Shitmed.EntityEffects.Effects;
 using Content.Shared.Localizations;
 using Content.Shared.Temperature.Components;
@@ -37,7 +38,12 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
             {
                 spec.DamageDict[type] = healing / groupProto.DamageTypes.Count;
             }
-            _damageable.TryChangeDamage(entity, spec, ignoreResistances: args.Effect.IgnoreResistances);
+            _damageable.TryChangeDamage(
+                entity,
+                spec,
+                ignoreResistances: args.Effect.IgnoreResistances,
+                interruptsDoAfters: false,
+                splitDamage: args.Effect.SplitDamage);
             // </Goob>
         }
     }
@@ -57,6 +63,10 @@ public sealed partial class EvenHealthChange : EntityEffectBase<EvenHealthChange
     /// </summary>
     [DataField]
     public bool IgnoreResistances = true;
+
+    // Pirate: Restore Shitmed body-part routing lost during the entity effects refactor.
+    [DataField]
+    public SplitDamageBehavior SplitDamage = SplitDamageBehavior.SplitEnsureAllOrganic;
 
     /// <summary>
     /// Shitmed - How to scale the effect based on the temperature of the target entity.
