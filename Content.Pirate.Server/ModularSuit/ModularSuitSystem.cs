@@ -427,19 +427,64 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         args.Verbs.Add(toggleVerb);
     }
 
-    private void StartPartToggleDoAfter(EntityUid user, Entity<ModularSuitPartComponent> part, bool activate)
+    private void StartPartToggleDoAfter(
+        EntityUid user,
+        Entity<ModularSuitPartComponent> part,
+        bool activate,
+        bool activateSuit = false)
     {
         var delay = part.Comp.ToggleDelay;
         if (TryComp<AffectedModuleSpringlockComponent>(user, out var springlock))
             delay /= springlock.SpeedMultiplier;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay,
-            new ModularSuitPartSealDoAfterEvent(activate), part, part)
+            new ModularSuitPartSealDoAfterEvent(activate, activateSuit), part, part)
         {
             BreakOnDamage = true
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
+    }
+
+    private bool TryStartSuitSealing(Entity<ModularSuitComponent> suit, EntityUid user)
+    {
+        if (!suit.Comp.Deployed || suit.Comp.Wearer != user ||
+            !TryComp<ModularSuitEquippedComponent>(suit, out var equipped))
+        {
+            return false;
+        }
+
+        var requiredParts = new HashSet<SuitPartType>
+        {
+            SuitPartType.Helmet,
+            SuitPartType.Torso,
+            SuitPartType.Gloves,
+            SuitPartType.Boots
+        };
+
+        foreach (var partUid in equipped.EquippedParts.Values)
+        {
+            if (TryComp<ModularSuitPartComponent>(partUid, out var part))
+                requiredParts.Remove(part.PartType);
+        }
+
+        if (requiredParts.Count > 0)
+            return false;
+
+        foreach (var partUid in equipped.EquippedParts.Values)
+        {
+            if (!TryComp<ModularSuitPartComponent>(partUid, out var part) ||
+                !TryComp<ItemToggleComponent>(partUid, out var toggle) ||
+                Toggle.IsActivated((partUid, toggle)))
+            {
+                continue;
+            }
+
+            StartPartToggleDoAfter(user, (partUid, part), true, activateSuit: true);
+            return true;
+        }
+
+        return false;
     }
 
     private void OnPartDoAfterComplete(Entity<ModularSuitPartComponent> part, ref ModularSuitPartSealDoAfterEvent args)
@@ -478,7 +523,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
                         delay /= springlock.SpeedMultiplier;
 
                     var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay,
-                        new ModularSuitPartSealDoAfterEvent(true), partUid, partUid)
+                        new ModularSuitPartSealDoAfterEvent(true, args.ActivateSuit), partUid, partUid)
                     {
                         BreakOnDamage = true
                     };
@@ -490,7 +535,9 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
             }
 
             if (TryComp<ModularSuitComponent>(attached.Suit.Value, out var suitComp)
-                && suitComp.AutoActivateOnAssemble && !suitComp.Active && suitComp.Assembled)
+                && (suitComp.AutoActivateOnAssemble || args.ActivateSuit)
+                && !suitComp.Active
+                && suitComp.Assembled)
             {
                 SetActive((attached.Suit.Value, suitComp), true);
             }

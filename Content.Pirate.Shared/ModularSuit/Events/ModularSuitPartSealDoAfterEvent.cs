@@ -7,9 +7,11 @@ namespace Content.Pirate.Shared.ModularSuit;
 public sealed partial class ModularSuitPartSealDoAfterEvent : SimpleDoAfterEvent
 {
     public bool Activate { get; }
+    public bool ActivateSuit { get; }
 
-    public ModularSuitPartSealDoAfterEvent(bool activate)
+    public ModularSuitPartSealDoAfterEvent(bool activate, bool activateSuit = false)
     {
         Activate = activate;
+        ActivateSuit = activateSuit;
     }
 }
