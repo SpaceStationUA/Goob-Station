@@ -97,6 +97,18 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         });
     }
 
+    // Pirate: Centralize translator state side effects for external configuration and event handlers.
+    public void SetEnabled(Entity<HandheldTranslatorComponent> translator, bool enabled)
+    {
+        translator.Comp.Enabled = enabled;
+        _powerCell.SetDrawEnabled(translator.Owner, enabled);
+        OnAppearanceChange(translator, translator.Comp);
+
+        if (_containers.TryGetContainingContainer(translator.Owner, out var holderCont)
+            && HasComp<LanguageSpeakerComponent>(holderCont.Owner))
+            _language.UpdateEntityLanguages(holderCont.Owner);
+    }
+
     private void OnTranslatorToggle(EntityUid translator, HandheldTranslatorComponent translatorComp, ActivateInWorldEvent args)
     {
         if (!translatorComp.ToggleOnInteract)
@@ -106,23 +118,26 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         var hasPower = _powerCell.HasDrawCharge(translator);
         var isEnabled = !translatorComp.Enabled && hasPower;
 
-        translatorComp.Enabled = isEnabled;
-        _powerCell.SetDrawEnabled(translator, isEnabled);
+        Entity<LanguageSpeakerComponent?>? holderEntity = null;
+        var firstNewLanguage = default(ProtoId<LanguagePrototype>);
 
         if (_containers.TryGetContainingContainer(translator, out var holderCont)
             && holderCont.Owner is var holder
             && TryComp<LanguageSpeakerComponent>(holder, out var languageComp))
         {
             // The first new spoken language added by this translator, or null
-            var firstNewLanguage = translatorComp.SpokenLanguages.FirstOrDefault(it => !languageComp.SpokenLanguages.Contains(it));
-            _language.UpdateEntityLanguages(holder);
-
-            // Update the current language of the entity if necessary
-            if (isEnabled && translatorComp.SetLanguageOnInteract && firstNewLanguage is {})
-                _language.SetLanguage((holder, languageComp), firstNewLanguage);
+            firstNewLanguage = translatorComp.SpokenLanguages.FirstOrDefault(it => !languageComp.SpokenLanguages.Contains(it));
+            holderEntity = (holder, languageComp);
         }
 
-        OnAppearanceChange(translator, translatorComp);
+        SetEnabled((translator, translatorComp), isEnabled);
+
+        // Update the current language of the entity if necessary
+        if (isEnabled
+            && translatorComp.SetLanguageOnInteract
+            && firstNewLanguage is {}
+            && holderEntity is {} languageHolder)
+            _language.SetLanguage(languageHolder, firstNewLanguage);
 
         if (hasPower)
         {
@@ -134,23 +149,13 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
 
     private void OnPowerCellSlotEmpty(EntityUid translator, HandheldTranslatorComponent component, PowerCellSlotEmptyEvent args)
     {
-        component.Enabled = false;
-        _powerCell.SetDrawEnabled(translator, false);
-        OnAppearanceChange(translator, component);
-
-        if (_containers.TryGetContainingContainer(translator, out var holderCont) && HasComp<LanguageSpeakerComponent>(holderCont.Owner))
-            _language.UpdateEntityLanguages(holderCont.Owner);
+        SetEnabled((translator, component), false);
     }
 
     private void OnPowerCellChanged(EntityUid translator, HandheldTranslatorComponent component, PowerCellChangedEvent args)
     {
         var hasCharge = _powerCell.HasActivatableCharge(translator);
-        component.Enabled = hasCharge;
-        _powerCell.SetDrawEnabled(translator, hasCharge);
-        OnAppearanceChange(translator, component);
-
-        if (_containers.TryGetContainingContainer((translator, null, null), out var holderCont) && HasComp<LanguageSpeakerComponent>(holderCont.Owner))
-            _language.UpdateEntityLanguages(holderCont.Owner);
+        SetEnabled((translator, component), hasCharge);
     }
 
     private void OnItemToggled(EntityUid translator, HandheldTranslatorComponent component, ItemToggledEvent args)
@@ -158,12 +163,7 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         var hasCharge = _powerCell.HasActivatableCharge(translator);
         var shouldEnable = args.Activated && hasCharge;
 
-        component.Enabled = shouldEnable;
-        _powerCell.SetDrawEnabled(translator, shouldEnable);
-        OnAppearanceChange(translator, component);
-
-        if (_containers.TryGetContainingContainer((translator, null, null), out var holderCont) && HasComp<LanguageSpeakerComponent>(holderCont.Owner))
-            _language.UpdateEntityLanguages(holderCont.Owner);
+        SetEnabled((translator, component), shouldEnable);
     }
 
     private void CopyLanguages(BaseTranslatorComponent from, DetermineEntityLanguagesEvent to, LanguageKnowledgeComponent knowledge)
