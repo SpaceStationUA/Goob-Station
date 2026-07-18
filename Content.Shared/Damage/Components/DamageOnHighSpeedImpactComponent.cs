@@ -13,6 +13,9 @@ namespace Content.Shared.Damage.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(DamageOnHighSpeedImpactSystem))]
 public sealed partial class DamageOnHighSpeedImpactComponent : Component
 {
+    [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Enabled = true; // Pirate: Allow FPV drones to opt out of collision damage.
+
     [DataField("minimumSpeed"), ViewVariables(VVAccess.ReadWrite)]
     public float MinimumSpeed = 20f;
 
