@@ -25,6 +25,12 @@ public sealed partial class ModularSuitSystem
 
     private void OnToggleActiveMessage(Entity<ModularSuitComponent> ent, ref ToggleSuitActiveMessage args)
     {
+        if (args.Active && !ent.Comp.Assembled && TryStartSuitSealing(ent, args.Actor))
+        {
+            UpdateUiState(ent);
+            return;
+        }
+
         SetActive(ent, args.Active);
         UpdateUiState(ent);
     }
