@@ -171,6 +171,11 @@
     - 0,0,1,1
 
   # Damage
+  - type: Reflect
+    reflectProb: 0.5
+    spread: 270
+    reflects:
+    - NonEnergy
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
@@ -178,7 +183,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 60
       behaviors:
       - !type:EmptyContainersBehaviour
         containers:
