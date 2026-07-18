@@ -205,7 +205,7 @@ public sealed class LimbFixationTest
     }
 
     [Test]
-    public async Task DisabledPartBlocksHealingSurgeriesButAllowsAmputation()
+    public async Task DisabledPartsBlockHealingSurgeriesButAllowAmputation()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
@@ -228,7 +228,14 @@ public sealed class LimbFixationTest
                     BodyPartType.Leg,
                     symmetry: BodyPartSymmetry.Left)
                 .Single();
+            var foot = body.GetBodyChildrenOfType(
+                    human,
+                    BodyPartType.Foot,
+                    symmetry: BodyPartSymmetry.Left)
+                .Single();
             entMan.EnsureComponent<LimbFixationDamageComponent>(leg.Id);
+
+            Assert.That(entMan.HasComponent<LimbFixationDisabledComponent>(foot.Id), Is.True);
 
             foreach (var surgeryId in new[]
                      {
@@ -262,6 +269,10 @@ public sealed class LimbFixationTest
             entMan.EventBus.RaiseLocalEvent(condition, ref blocked);
             Assert.That(blocked.Cancelled, Is.True);
 
+            var indirectlyBlocked = new SurgeryValidEvent(human, foot.Id);
+            entMan.EventBus.RaiseLocalEvent(condition, ref indirectlyBlocked);
+            Assert.That(indirectlyBlocked.Cancelled, Is.True);
+
             var amputation = surgery.GetSingleton("SurgeryRemovePart");
             Assert.That(amputation, Is.Not.Null);
             var amputationValid = new SurgeryValidEvent(human, leg.Id);
@@ -273,6 +284,28 @@ public sealed class LimbFixationTest
             var unblocked = new SurgeryValidEvent(human, leg.Id);
             entMan.EventBus.RaiseLocalEvent(condition, ref unblocked);
             Assert.That(unblocked.Cancelled, Is.False);
+
+            var indirectlyUnblocked = new SurgeryValidEvent(human, foot.Id);
+            entMan.EventBus.RaiseLocalEvent(condition, ref indirectlyUnblocked);
+            Assert.That(indirectlyUnblocked.Cancelled, Is.False);
+
+            var rightFoot = body.GetBodyChildrenOfType(
+                    human,
+                    BodyPartType.Foot,
+                    symmetry: BodyPartSymmetry.Right)
+                .Single();
+            var rightLeg = body.GetBodyChildrenOfType(
+                    human,
+                    BodyPartType.Leg,
+                    symmetry: BodyPartSymmetry.Right)
+                .Single();
+            entMan.EnsureComponent<LimbFixationDamageComponent>(rightFoot.Id);
+
+            Assert.That(entMan.HasComponent<LimbFixationDisabledComponent>(rightLeg.Id), Is.True);
+
+            var legDisabledByFoot = new SurgeryValidEvent(human, rightLeg.Id);
+            entMan.EventBus.RaiseLocalEvent(condition, ref legDisabledByFoot);
+            Assert.That(legDisabledByFoot.Cancelled, Is.True);
         });
 
         await pair.CleanReturnAsync();

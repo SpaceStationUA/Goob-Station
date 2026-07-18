@@ -133,7 +133,9 @@ public sealed class LimbFixationSystem : EntitySystem
             || !TryComp<WoundableComponent>(args.Part, out var woundable))
             return;
 
-        RestoreCriticalIntegrity((args.Part, woundable));
+        if (!RestoreCriticalIntegrity((args.Part, woundable)))
+            return;
+
         RemComp<LimbFixationDamageComponent>(args.Part);
     }
 
@@ -149,14 +151,17 @@ public sealed class LimbFixationSystem : EntitySystem
         Entity<SurgeryFunctionalPartConditionComponent> ent,
         ref SurgeryValidEvent args)
     {
-        args.Cancelled |= HasActiveDamage(args.Part);
+        args.Cancelled |= HasActiveDamage(args.Part)
+            || HasComp<LimbFixationDisabledComponent>(args.Part);
     }
 
-    private void RestoreCriticalIntegrity(Entity<WoundableComponent> part)
+    private bool RestoreCriticalIntegrity(Entity<WoundableComponent> part)
     {
-        if (!part.Comp.Thresholds.TryGetValue(WoundableSeverity.Critical, out var criticalIntegrity)
-            || part.Comp.WoundableIntegrity >= criticalIntegrity)
-            return;
+        if (!part.Comp.Thresholds.TryGetValue(WoundableSeverity.Critical, out var criticalIntegrity))
+            return false;
+
+        if (part.Comp.WoundableIntegrity >= criticalIntegrity)
+            return true;
 
         var attempts = part.Comp.Wounds.Count + 1;
         while (part.Comp.WoundableIntegrity < criticalIntegrity && attempts-- > 0)
@@ -173,6 +178,8 @@ public sealed class LimbFixationSystem : EntitySystem
             if (part.Comp.WoundableIntegrity <= previousIntegrity)
                 break;
         }
+
+        return part.Comp.WoundableIntegrity >= criticalIntegrity;
     }
 
     private bool HasDisabledTargetingStatus(EntityUid body, EntityUid part)
