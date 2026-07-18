@@ -110,6 +110,9 @@
     verbIcon:
       sprite: *mod-rsi
       state: mod-core-plasma
+  - type: Tag
+    tags:
+    - ModularSuitCore
 
 - type: entity
   parent: BaseModularSuitCore
