@@ -8,7 +8,24 @@ namespace Content.IntegrationTests.Tests._Pirate;
 
 public sealed class BloodRegenerationTest : InteractionTest
 {
-    protected override string PlayerPrototype => "MobHuman";
+    private const float InitialHunger = 175f;
+    private const float InitialThirst = 450f;
+
+    protected override string PlayerPrototype => "BloodRegenerationTestMob";
+
+    [TestPrototypes]
+    private const string Prototypes = """
+        - type: entity
+          id: BloodRegenerationTestMob
+          parent: MobHuman
+          components:
+          - type: Hunger
+            baseDecayRate: 0
+            startingHunger: 175
+          - type: Thirst
+            baseDecayRate: 0
+            startingThirst: 450
+        """;
 
     [Test]
     public async Task NaturalRegenerationRestoresSmallDeficitWithoutNutritionCost()
@@ -20,18 +37,8 @@ public sealed class BloodRegenerationTest : InteractionTest
         var thirst = Comp<ThirstComponent>(Player);
         var bloodstreamSystem = SEntMan.System<BloodstreamSystem>();
         var hungerSystem = SEntMan.System<HungerSystem>();
-        var thirstSystem = SEntMan.System<ThirstSystem>();
 
-        const float initialHunger = 175f;
-        const float initialThirst = 450f;
         const float missingBlood = 0.25f;
-
-        hunger.BaseDecayRate = 0f;
-        hunger.ActualDecayRate = 0f;
-        thirst.BaseDecayRate = 0f;
-        thirst.ActualDecayRate = 0f;
-        hungerSystem.SetHunger(SPlayer, initialHunger, hunger);
-        thirstSystem.SetThirst(SPlayer, thirst, initialThirst);
 
         Assert.That(
             bloodstreamSystem.TryModifyBloodLevel((SPlayer, bloodstream), -missingBlood),
@@ -47,8 +54,8 @@ public sealed class BloodRegenerationTest : InteractionTest
         Assert.Multiple(() =>
         {
             Assert.That(bloodstreamSystem.GetBloodLevel((SPlayer, bloodstream)), Is.EqualTo(1f).Within(0.001f));
-            Assert.That(hungerSystem.GetHunger(hunger), Is.EqualTo(initialHunger).Within(0.001f));
-            Assert.That(thirst.CurrentThirst, Is.EqualTo(initialThirst).Within(0.001f));
+            Assert.That(hungerSystem.GetHunger(hunger), Is.EqualTo(InitialHunger).Within(0.001f));
+            Assert.That(thirst.CurrentThirst, Is.EqualTo(InitialThirst).Within(0.001f));
         });
     }
 }
