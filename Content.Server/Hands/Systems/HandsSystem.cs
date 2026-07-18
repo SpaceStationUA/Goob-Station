@@ -117,7 +117,8 @@ namespace Content.Server.Hands.Systems
                 _pullingSystem.TryStopPull(puller.Pulling.Value, pullable, ignoreGrab: true); // Goobstation edit added check for grab
 
             var offsetRandomCoordinates = _transformSystem.GetMoverCoordinates(args.Target).Offset(_random.NextVector2(1f, 1.5f));
-            if (!ThrowHeldItem(args.Target, offsetRandomCoordinates))
+            // Pirate: Disarms can affect inactive hands.
+            if (!ThrowHeldItem(args.Target, offsetRandomCoordinates, allowInactiveHand: true))
                 return;
 
             args.Handled = true; // Successful disarm
@@ -196,15 +197,36 @@ namespace Content.Server.Hands.Systems
         }
 
         /// <summary>
-        /// Throw the player's currently held item.
+        /// Throw the item in the player's active hand.
         /// </summary>
-        public bool ThrowHeldItem(EntityUid player, EntityCoordinates coordinates, float minDistance = 0.1f)
+        /// <param name="allowInactiveHand">
+        /// Whether to fall back to another occupied hand when the active hand is empty.
+        /// </param>
+        public bool ThrowHeldItem(
+            EntityUid player,
+            EntityCoordinates coordinates,
+            float minDistance = 0.1f,
+            bool allowInactiveHand = false)
         {
             if (ContainerSystem.IsEntityInContainer(player) ||
-                !TryComp(player, out HandsComponent? hands) ||
-                !TryGetHeldItem((player, hands), out var throwEnt) || // DOWNSTREAM-TPirates: combat actions
-                !_actionBlockerSystem.CanThrow(player, throwEnt.Value))
+                !TryComp(player, out HandsComponent? hands))
                 return false;
+
+            // Pirate: Manual throws only use the active hand; disarms may fall back to another occupied hand.
+            EntityUid? throwEnt;
+            if (allowInactiveHand)
+            {
+                if (!TryGetHeldItem((player, hands), out throwEnt))
+                    return false;
+            }
+            else if (!TryGetActiveItem((player, hands), out throwEnt))
+            {
+                return false;
+            }
+
+            if (!_actionBlockerSystem.CanThrow(player, throwEnt.Value))
+                return false;
+
             // Goobstation start added throwing for grabbed mobs, mnoved direction.
             var direction = _transformSystem.ToMapCoordinates(coordinates).Position - _transformSystem.GetWorldPosition(player);
 
