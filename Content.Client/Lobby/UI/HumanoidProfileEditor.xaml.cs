@@ -47,6 +47,7 @@ using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
 using Content.Goobstation.Common.CCVar; // Goob Station - Barks
 using Content.Goobstation.Common.Barks; // Goob Station - Barks
+using Content.Shared._Pirate.CCVars; // Pirate: Starlight character descriptions.
 namespace Content.Client.Lobby.UI
 {
     [GenerateTypedNameReferences]
@@ -70,9 +71,10 @@ namespace Content.Client.Lobby.UI
         // CCvar.
         private int _maxNameLength;
         private bool _allowFlavorText;
-
-        private FlavorText.FlavorText? _flavorText;
-        private TextEdit? _flavorTextEdit;
+        private bool _allowCharacterSecrets; // Pirate: Starlight character descriptions.
+        private bool _allowExploitableInfo;
+        private bool _allowRoleplayNotes;
+        private bool _suppressCharacterInfoChanges;
 
         // One at a time.
         private LoadoutWindow? _loadoutWindow;
@@ -207,6 +209,9 @@ namespace Content.Client.Lobby.UI
 
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
+            _allowCharacterSecrets = _cfgManager.GetCVar(PirateVars.ICSecrets); // Pirate: Starlight character descriptions.
+            _allowExploitableInfo = _cfgManager.GetCVar(PirateVars.ExploitableSecrets);
+            _allowRoleplayNotes = _cfgManager.GetCVar(PirateVars.OOCNotes);
 
             ImportButton.OnPressed += args =>
             {
@@ -554,6 +559,8 @@ namespace Content.Client.Lobby.UI
             #region Markings
 
             TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-markings-tab")); // Pirate: loadout
+            TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-ic-info-tab")); // Pirate: Starlight character descriptions.
+            TabContainer.SetTabTitle(7, Loc.GetString("humanoid-profile-editor-ooc-info-tab"));
 
             Markings.OnMarkingAdded += OnMarkingChange;
             Markings.OnMarkingRemoved += OnMarkingChange;
@@ -562,7 +569,8 @@ namespace Content.Client.Lobby.UI
 
             #endregion Markings
 
-            RefreshFlavorText();
+            SetupCharacterInfoEditors(); // Pirate: Starlight character descriptions.
+            RefreshCharacterInfo();
 
             #region Dummy
 
@@ -602,35 +610,37 @@ namespace Content.Client.Lobby.UI
             IsDirty = false;
         }
 
-        /// <summary>
-        /// Refreshes the flavor text editor status.
-        /// </summary>
+        // Pirate: compatibility entry point used by LobbyUIController.
         public void RefreshFlavorText()
         {
-            if (_allowFlavorText)
-            {
-                if (_flavorText != null)
-                    return;
+            RefreshCharacterInfo();
+        }
 
-                _flavorText = new FlavorText.FlavorText();
-                TabContainer.AddChild(_flavorText);
-                TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-flavortext-tab"));
-                _flavorTextEdit = _flavorText.CFlavorTextInput;
+        public void RefreshCharacterInfo()
+        {
+            _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
+            _allowCharacterSecrets = _cfgManager.GetCVar(PirateVars.ICSecrets);
+            _allowExploitableInfo = _cfgManager.GetCVar(PirateVars.ExploitableSecrets);
+            _allowRoleplayNotes = _cfgManager.GetCVar(PirateVars.OOCNotes);
 
-                _flavorText.OnFlavorTextChanged += OnFlavorTextChange;
-            }
-            else
-            {
-                if (_flavorText == null)
-                    return;
+            ICInfoTab.Visible = _allowFlavorText || _allowCharacterSecrets || _allowExploitableInfo;
+            OOCInfoTab.Visible = _allowRoleplayNotes;
+            ICInfoEditor.Physical.Visible = _allowFlavorText;
+            ICInfoEditor.Personality.Visible = _allowFlavorText;
+            ICInfoEditor.Secrets.Visible = _allowCharacterSecrets;
+            ICInfoEditor.Exploitable.Visible = _allowExploitableInfo;
+            OOCInfoEditor.PersonalNotes.Visible = _allowRoleplayNotes;
+            OOCInfoEditor.OOCNotes.Visible = _allowRoleplayNotes;
+        }
 
-                TabContainer.RemoveChild(_flavorText);
-                _flavorText.OnFlavorTextChanged -= OnFlavorTextChange;
-                _flavorText.Dispose();
-                _flavorTextEdit?.Dispose();
-                _flavorTextEdit = null;
-                _flavorText = null;
-            }
+        private void SetupCharacterInfoEditors()
+        {
+            ICInfoEditor.PhysicalDescriptionInput.OnTextChanged += OnPhysicalDescriptionChanged;
+            ICInfoEditor.PersonalityDescriptionInput.OnTextChanged += OnPersonalityDescriptionChanged;
+            ICInfoEditor.ExploitableInfoInput.OnTextChanged += OnExploitableInfoChanged;
+            ICInfoEditor.SecretsInput.OnTextChanged += OnSecretsChanged;
+            OOCInfoEditor.PersonalNotesInput.OnTextChanged += OnPersonalNotesChanged;
+            OOCInfoEditor.OOCNotesInput.OnTextChanged += OnOOCNotesChanged;
         }
 
         /// <summary>
@@ -2045,7 +2055,7 @@ namespace Content.Client.Lobby.UI
             JobOverride = null;
 
             UpdateNameEdit();
-            UpdateFlavorTextEdit();
+            UpdateCharacterInfoEditorText(); // Pirate: Starlight character descriptions.
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSkinColor();
@@ -2383,12 +2393,57 @@ namespace Content.Client.Lobby.UI
             UpdateJobPriorities();
         }
 
-        private void OnFlavorTextChange(string content)
+        private void OnPhysicalDescriptionChanged(TextEdit.TextEditEventArgs args)
         {
-            if (Profile is null)
+            if (Profile is null || _suppressCharacterInfoChanges)
                 return;
 
-            Profile = Profile.WithFlavorText(content);
+            Profile = Profile.WithPhysicalDescription(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
+        private void OnPersonalityDescriptionChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithPersonalityDescription(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
+        private void OnExploitableInfoChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithExploitableInfo(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
+        private void OnSecretsChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithSecrets(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
+        private void OnPersonalNotesChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithPersonalNotes(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
+        private void OnOOCNotesChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithOOCNotes(Rope.Collapse(args.TextRope).Trim());
             SetDirty();
         }
 
@@ -2615,11 +2670,21 @@ namespace Content.Client.Lobby.UI
             NameEdit.Text = Profile?.Name ?? "";
         }
 
-        private void UpdateFlavorTextEdit()
+        private void UpdateCharacterInfoEditorText()
         {
-            if (_flavorTextEdit != null)
+            _suppressCharacterInfoChanges = true;
+            try
             {
-                _flavorTextEdit.TextRope = new Rope.Leaf(Profile?.FlavorText ?? "");
+                ICInfoEditor.PhysicalDescriptionInput.TextRope = new Rope.Leaf(Profile?.PhysicalDescription ?? string.Empty);
+                ICInfoEditor.PersonalityDescriptionInput.TextRope = new Rope.Leaf(Profile?.PersonalityDescription ?? string.Empty);
+                ICInfoEditor.ExploitableInfoInput.TextRope = new Rope.Leaf(Profile?.ExploitableInfo ?? string.Empty);
+                ICInfoEditor.SecretsInput.TextRope = new Rope.Leaf(Profile?.Secrets ?? string.Empty);
+                OOCInfoEditor.PersonalNotesInput.TextRope = new Rope.Leaf(Profile?.PersonalNotes ?? string.Empty);
+                OOCInfoEditor.OOCNotesInput.TextRope = new Rope.Leaf(Profile?.OOCNotes ?? string.Empty);
+            }
+            finally
+            {
+                _suppressCharacterInfoChanges = false;
             }
         }
 

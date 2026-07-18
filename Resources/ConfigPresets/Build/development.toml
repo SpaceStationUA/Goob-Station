@@ -66,3 +66,11 @@ ascension_requires_objectives = false
 random_characters = false
 random_species_weights = ""
 ssd_sleep_time = 3600
+# Pirate: Starlight extended character descriptions.
+secrets_text = true
+secrets_exploitable = true
+inspect_windows = true
+
+[ooc]
+# Pirate: Starlight extended character descriptions.
+rp_notes = true

@@ -27,7 +27,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Systems.Character;
 
 [UsedImplicitly]
-public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
+public sealed partial class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem> // Pirate: Starlight character descriptions.
 {
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -66,6 +66,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     public void OnStateExited(GameplayState state)
     {
+        ClosePirateCharacterInfoWindows(); // Pirate: Starlight character descriptions.
         if (_window != null)
         {
             _window.OnClose -= DeactivateButton;
@@ -148,6 +149,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         _window.NameLabel.Text = entityName;
         _window.SubText.Text = job;
+        SetPirateSelfCharacterInfo(entity); // Pirate: Starlight character descriptions.
         _window.Objectives.RemoveAllChildren();
         _window.ObjectivesLabel.Visible = objectives.Any();
         _window.Memories.RemoveAllChildren(); //Pirate banking
@@ -258,6 +260,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     private void CharacterDetached(EntityUid uid)
     {
+        ClosePirateCharacterInfoWindows(); // Pirate: Starlight character descriptions.
         CloseWindow();
     }
 
@@ -280,11 +283,14 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         if (_window.IsOpen)
         {
+            ClearPirateSelfCharacterInfo(); // Pirate: Starlight character descriptions.
             CloseWindow();
         }
         else
         {
             _characterInfo.RequestCharacterInfo();
+            if (_player.LocalEntity is { } entity)
+                SetPirateSelfCharacterInfo(entity); // Pirate: Starlight character descriptions.
             _window.Open();
         }
     }
