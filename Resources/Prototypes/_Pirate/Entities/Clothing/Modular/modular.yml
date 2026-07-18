@@ -447,8 +447,14 @@
         whitelist:
           tags:
           - Jetpack
+  # Pirate: container dictionaries replace inherited entries, so restate the base containers.
   - type: ContainerContainer
     containers:
+      cell_slot: !type:ContainerSlot { }
+      suit_core: !type:ContainerSlot { }
+      suit_module: !type:Container { }
+      suit_part: !type:Container { }
+      suit_hidden: !type:Container { }
       item: !type:ContainerSlot { }
 
 - type: entity
