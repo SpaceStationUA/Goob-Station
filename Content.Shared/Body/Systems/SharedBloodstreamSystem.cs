@@ -92,9 +92,10 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
             if (!SolutionContainer.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution))
                 continue;
 
-            // Pirate change: Moved blood regeneration to its own system. See Content.Server/_Pirate/Blood/BloodRegenerationPirateSystem.cs
             if (!_mobStateSystem.IsDead(uid))
             {
+                TryRegulateBloodLevel(uid, bloodstream.BloodRefreshAmount);
+
                 TickBleed((uid, bloodstream));
 
                 // deal bloodloss damage if their blood level is below a threshold.
@@ -501,12 +502,11 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
             return false;
 
         referenceFactor = Math.Clamp(referenceFactor, 0f, ent.Comp.MaxVolumeModifier);
-        var ratio = amount / ent.Comp.BloodReferenceSolution.Volume;
-
         foreach (var (referenceReagent, referenceQuantity) in ent.Comp.BloodReferenceSolution)
         {
             var error = referenceQuantity * referenceFactor - bloodSolution.GetTotalPrototypeQuantity(referenceReagent.Prototype);
-            var adjustedAmount = referenceQuantity * ratio;
+            // Pirate: multiply before dividing so small blood changes do not truncate to zero.
+            var adjustedAmount = amount * referenceQuantity / ent.Comp.BloodReferenceSolution.Volume;
 
             if (error > 0)
             {
