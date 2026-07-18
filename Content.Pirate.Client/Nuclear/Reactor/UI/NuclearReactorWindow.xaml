@@ -114,19 +114,24 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 					<PanelContainer SetHeight="2" VerticalAlignment="Top" SetWidth="200" Margin="2 5" />
 
 
-					<BoxContainer Name="ControlRodsText" Orientation="Horizontal">
+					<BoxContainer Name="ControlRodsText" Orientation="Vertical">
 						<Label Name="ControlRodsLabel" Text="{Loc comp-nuclear-reactor-ui-reactor-control}" StyleClasses="StatusFieldTitle"  HorizontalExpand="True"/>
-						<Label Name="ControlRodsValue" Text="100%" HorizontalAlignment="Right"/>
+						<Label Name="ControlRodsValue" Text="100% -> 100%" HorizontalAlignment="Right"
+							ToolTip="{Loc comp-nuclear-reactor-ui-control-format-tooltip}"/>
 					</BoxContainer>
 					<BoxContainer Name="ControlRods" Orientation="Horizontal">
 						<ProgressBar Name="ControlRodsActual" MaxValue="2" SetSize="5 100" Margin="5" Vertical="True" />
 						<ProgressBar Name="ControlRodsSet" MaxValue="2" SetSize="5 100" Margin="5" Vertical="True" />
 						<controls:StripeBack>
 							<BoxContainer Name="ControlRodsButtons" Orientation="Vertical">
-								<Button Name="ControlRodsInsertLarge" Text="+ +"/>
-								<Button Name="ControlRodsInsert" Text=" + "/>
-								<Button Name="ControlRodsRemove" Text=" - "/>
-								<Button Name="ControlRodsRemoveLarge" Text="- -"/>
+								<Button Name="ControlRodsInsertLarge" Text="++"
+									ToolTip="{Loc comp-nuclear-reactor-ui-control-insert-large}"/>
+								<Button Name="ControlRodsInsert" Text="+"
+									ToolTip="{Loc comp-nuclear-reactor-ui-control-insert}"/>
+								<Button Name="ControlRodsRemove" Text="-"
+									ToolTip="{Loc comp-nuclear-reactor-ui-control-remove}"/>
+								<Button Name="ControlRodsRemoveLarge" Text="--"
+									ToolTip="{Loc comp-nuclear-reactor-ui-control-remove-large}"/>
 							</BoxContainer>
 							<Label Name="ControlRodsLock" Text="{Loc comp-nuclear-reactor-ui-locked}" Visible="false" HorizontalAlignment="Center" VerticalAlignment="Center" />
 						</controls:StripeBack>
