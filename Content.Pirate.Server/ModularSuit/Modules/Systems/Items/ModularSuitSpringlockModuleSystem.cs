@@ -76,6 +76,6 @@ public sealed partial class ModularSuitSpringlockModuleSystem : EntitySystem
 
     private void OnUnequipped(Entity<ModularSuitSpringlockInstalledComponent> ent, ref GotUnequippedEvent args)
     {
-        RemComp<AffectedModuleSpringlockComponent>(args.EquipTarget);
+        RemComp<AffectedModuleSpringlockComponent>(args.Equipee);
     }
 }
