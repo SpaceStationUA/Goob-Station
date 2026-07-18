@@ -104,7 +104,7 @@ public abstract partial class SharedStunSystem
                 || knockedDown.NextStandAttempt > GameTiming.CurTime)
                 continue;
 
-            if (!TryStanding(uid))
+            if (!TryStanding((uid, knockedDown)))
             {
                 knockedDown.NextStandAttempt = GameTiming.CurTime + StandupRetryCooldown;
                 DirtyField(uid, knockedDown, nameof(KnockedDownComponent.NextStandAttempt));
