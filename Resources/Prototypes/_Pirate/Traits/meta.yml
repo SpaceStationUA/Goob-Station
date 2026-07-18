@@ -34,4 +34,19 @@
   components:
     - type: Unrevivable
       cloneable: true
+
+- type: trait
+  id: LimbFixation
+  name: trait-limb-fixation-name
+  description: trait-limb-fixation-desc
+  category: Meta
+  cost: 5
+  conditions:
+    - !type:IsSpeciesCondition
+      invert: true
+      species:
+        - IPC
+        - SlimePerson
+  components:
+    - type: LimbFixation
 #endregion

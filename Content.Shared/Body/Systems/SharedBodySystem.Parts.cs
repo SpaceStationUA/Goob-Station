@@ -626,7 +626,9 @@ public partial class SharedBodySystem
         foreach (var legEntity in body.LegEntities)
         {
             if (!TryComp<MovementBodyPartComponent>(legEntity, out var legModifier)
-                || HasComp<LimbParalyzedComponent>(legEntity)) // Shitmed Change
+                || HasComp<LimbParalyzedComponent>(legEntity)
+                || !TryComp<BodyPartComponent>(legEntity, out var legPart)
+                || !legPart.Enabled) // Pirate: disabled body parts must not contribute movement.
                 continue;
 
             walkSpeed += legModifier.WalkSpeed;
