@@ -12,6 +12,7 @@
     - SurgeryStepClampInternalBleeders
     - SurgeryStepRestoreLimbFunction
   - type: SurgeryPartComponentCondition
+    inverse: false
     components:
     - type: LimbFixationDamage
 
