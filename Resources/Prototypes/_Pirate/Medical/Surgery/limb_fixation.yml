@@ -11,8 +11,6 @@
     - SurgeryStepSawBones
     - SurgeryStepClampInternalBleeders
     - SurgeryStepRestoreLimbFunction
-  - type: SurgeryBleedsPresentCondition
-    inverted: true
   - type: SurgeryPartComponentCondition
     components:
     - type: LimbFixationDamage
@@ -25,9 +23,8 @@
   - type: SurgeryStep
     tool:
     - type: BoneGel
-    remove:
-    - type: LimbFixationDamage
     duration: 7
+  - type: SurgeryRestoreLimbFunctionStep
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/bone-gel.rsi
     state: bone-gel

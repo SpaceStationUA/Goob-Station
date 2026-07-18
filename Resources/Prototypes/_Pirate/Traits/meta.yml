@@ -42,8 +42,11 @@
   category: Meta
   cost: 5
   conditions:
-    - !type:HasCompCondition
-      component: Body
+    - !type:IsSpeciesCondition
+      invert: true
+      species:
+        - IPC
+        - SlimePerson
   components:
     - type: LimbFixation
 #endregion

@@ -332,10 +332,11 @@ public sealed partial class WoundSystem
         return result;
     }
 
-    // Pirate: limb fixation damage is visually distinct from both mangling and a missing part.
+    // Pirate: limb fixation damage is distinct from mangling; a stopping marker is already being removed.
     private WoundableSeverity GetDisplayedWoundableSeverity(EntityUid part, WoundableSeverity severity)
     {
-        return HasComp<LimbFixationDamageComponent>(part)
+        return TryComp<LimbFixationDamageComponent>(part, out var damage)
+            && damage.LifeStage < ComponentLifeStage.Stopping
             ? WoundableSeverity.Disabled
             : severity;
     }

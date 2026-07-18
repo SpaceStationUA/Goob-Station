@@ -2,6 +2,8 @@
 
 using System.Linq;
 using Content.Shared._Shitmed.Body.Events;
+using Content.Shared._Shitmed.Medical.Surgery;
+using Content.Shared._Shitmed.Medical.Surgery.Steps;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
@@ -37,6 +39,8 @@ public sealed class LimbFixationSystem : EntitySystem
         SubscribeLocalEvent<LimbFixationComponent, BodyPartAddedEvent>(OnBodyPartAdded);
         SubscribeLocalEvent<LimbFixationComponent, RejuvenateEvent>(OnRejuvenate, after: [typeof(SharedBodySystem)]);
         SubscribeLocalEvent<LimbFixationComponent, StandUpAttemptEvent>(OnStandUpAttempt);
+        SubscribeLocalEvent<SurgeryRestoreLimbFunctionStepComponent, SurgeryStepEvent>(OnRestoreLimbFunction);
+        SubscribeLocalEvent<SurgeryRestoreLimbFunctionStepComponent, SurgeryStepCompleteCheckEvent>(OnRestoreLimbFunctionCheck);
     }
 
     private void OnBeforeTraumaInduced(Entity<WoundableComponent> ent, ref BeforeTraumaInducedEvent args)
@@ -81,7 +85,7 @@ public sealed class LimbFixationSystem : EntitySystem
 
     private void OnDamageStartup(Entity<LimbFixationDamageComponent> ent, ref ComponentStartup args)
     {
-        RefreshForPart(ent, null);
+        RefreshForPart(ent);
     }
 
     private void OnDamageShutdown(Entity<LimbFixationDamageComponent> ent, ref ComponentShutdown args)
@@ -89,16 +93,16 @@ public sealed class LimbFixationSystem : EntitySystem
         if (TerminatingOrDeleted(ent))
             return;
 
-        RefreshForPart(ent, ent.Owner);
+        RefreshForPart(ent);
     }
 
     private void OnBodyPartAdded(Entity<LimbFixationComponent> ent, ref BodyPartAddedEvent args)
     {
         if (!TryComp<BodyComponent>(ent, out var bodyComp)
-            || !_body.GetBodyChildren(ent, bodyComp).Any(part => HasComp<LimbFixationDamageComponent>(part.Id)))
+            || !_body.GetBodyChildren(ent, bodyComp).Any(part => HasActiveDamage(part.Id)))
             return;
 
-        RefreshFunctionalState(ent, bodyComp, null);
+        RefreshFunctionalState(ent, bodyComp);
     }
 
     private void OnRejuvenate(Entity<LimbFixationComponent> ent, ref RejuvenateEvent args)
@@ -118,21 +122,47 @@ public sealed class LimbFixationSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    private void RefreshForPart(EntityUid uid, EntityUid? ignoredDamage)
+    private void OnRestoreLimbFunction(
+        Entity<SurgeryRestoreLimbFunctionStepComponent> ent,
+        ref SurgeryStepEvent args)
+    {
+        if (TryComp<BodyPartComponent>(args.Part, out var part) && part.Body == args.Body)
+            RemComp<LimbFixationDamageComponent>(args.Part);
+    }
+
+    private void OnRestoreLimbFunctionCheck(
+        Entity<SurgeryRestoreLimbFunctionStepComponent> ent,
+        ref SurgeryStepCompleteCheckEvent args)
+    {
+        if (HasActiveDamage(args.Part) || HasDisabledTargetingStatus(args.Body, args.Part))
+            args.Cancelled = true;
+    }
+
+    private bool HasDisabledTargetingStatus(EntityUid body, EntityUid part)
+    {
+        if (!TryComp<BodyPartComponent>(part, out var partComp)
+            || !TryComp<TargetingComponent>(body, out var targeting))
+            return false;
+
+        return targeting.BodyStatus.TryGetValue(_body.GetTargetBodyPart(partComp), out var status)
+            && status == WoundableSeverity.Disabled;
+    }
+
+    private void RefreshForPart(EntityUid uid)
     {
         if (!TryComp<BodyPartComponent>(uid, out var part) || part.Body is not { } body)
             return;
 
-        RefreshFunctionalState(body, Comp<BodyComponent>(body), ignoredDamage);
+        RefreshFunctionalState(body, Comp<BodyComponent>(body));
     }
 
-    private void RefreshFunctionalState(EntityUid body, BodyComponent bodyComp, EntityUid? ignoredDamage)
+    private void RefreshFunctionalState(EntityUid body, BodyComponent bodyComp)
     {
         var changed = false;
 
         foreach (var (partId, part) in _body.GetBodyChildren(body, bodyComp).ToArray())
         {
-            if (ShouldDisablePart(body, (partId, part), ignoredDamage))
+            if (ShouldDisablePart(body, (partId, part)))
             {
                 if (!part.Enabled)
                     continue;
@@ -163,15 +193,12 @@ public sealed class LimbFixationSystem : EntitySystem
         RefreshTargeting(body);
     }
 
-    private bool ShouldDisablePart(
-        EntityUid body,
-        Entity<BodyPartComponent> part,
-        EntityUid? ignoredDamage)
+    private bool ShouldDisablePart(EntityUid body, Entity<BodyPartComponent> part)
     {
         var current = part.Owner;
         while (true)
         {
-            if (HasActiveDamage(current, ignoredDamage))
+            if (HasActiveDamage(current))
                 return true;
 
             if (!_body.TryGetParentBodyPart(current, out var parent, out _) || parent is null)
@@ -187,12 +214,13 @@ public sealed class LimbFixationSystem : EntitySystem
                 body,
                 BodyPartType.Foot,
                 symmetry: part.Comp.Symmetry)
-            .Any(foot => HasActiveDamage(foot.Id, ignoredDamage));
+            .Any(foot => HasActiveDamage(foot.Id));
     }
 
-    private bool HasActiveDamage(EntityUid part, EntityUid? ignoredDamage)
+    private bool HasActiveDamage(EntityUid part)
     {
-        return part != ignoredDamage && HasComp<LimbFixationDamageComponent>(part);
+        return TryComp<LimbFixationDamageComponent>(part, out var damage)
+            && damage.LifeStage < ComponentLifeStage.Stopping;
     }
 
     private bool CanEnablePart(Entity<BodyPartComponent> part)
