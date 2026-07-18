@@ -80,6 +80,7 @@
     - Sheet
     - Metal
     - Steel
+    - ConstructionMaterial # Pirate: Keep steel usable by cyborg construction modules.
 
 - type: entity
   parent: SheetSteel
