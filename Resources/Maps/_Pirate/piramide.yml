@@ -127626,7 +127626,7 @@ entities:
     - type: Transform
       pos: -38.5,-27.5
       parent: 2
-- proto: SpawnMobCatException
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
   entities:
   - uid: 15239
     components:

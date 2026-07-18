@@ -95533,7 +95533,7 @@ entities:
     - type: Transform
       pos: 9.5,81.5
       parent: 1
-- proto: SpawnMobCat
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
   entities:
   - uid: 10719
     components:

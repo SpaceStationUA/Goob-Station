@@ -132624,7 +132624,7 @@ entities:
     - type: Transform
       pos: -43.5,3.5
       parent: 2
-- proto: SpawnMobCat
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
   entities:
   - uid: 19980
     components:

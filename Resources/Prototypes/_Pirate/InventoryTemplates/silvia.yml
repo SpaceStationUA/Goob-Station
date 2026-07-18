@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2024 Velcroboy <107660393+IamVelcroboy@users.noreply.github.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: inventoryTemplate
+  id: silvia
+  slots:
+  - name: eyes
+    slotTexture: glasses
+    slotFlags: EYES
+    stripTime: 3
