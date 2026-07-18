@@ -342,19 +342,19 @@ public sealed class SurgeryBui : BoundUserInterface
             return null;
 
         var isLeftPart = bodyPart.Symmetry == BodyPartSymmetry.Left;
+        var isHumanoid = bodyPart.Body is { } body && _entities.HasComponent<HumanoidAppearanceComponent>(body);
 
         return partType switch
         {
-            BodyPartType.Chest => bodyPart.Body is { } body && _entities.HasComponent<HumanoidAppearanceComponent>(body)
-                ? _window.ChestButton
-                : _window.CarpButton,
+            BodyPartType.Chest => isHumanoid ? _window.ChestButton : _window.CarpButton,
+            BodyPartType.Groin => isHumanoid ? _window.GroinButton : null,
             BodyPartType.Head => _window.HeadButton,
             BodyPartType.Arm => isLeftPart ? _window.LArmButton : _window.RArmButton,
             BodyPartType.Hand => isLeftPart ? _window.LHandButton : _window.RHandButton,
             BodyPartType.Leg => isLeftPart ? _window.LLegButton : _window.RLegButton,
             BodyPartType.Foot => isLeftPart ? _window.LFootButton : _window.RFootButton,
-            // DeltaV's source anatomy has no separate groin, tail, or custom-part sprite.
-            BodyPartType.Groin or BodyPartType.Tail or BodyPartType.Other or null => null,
+            // DeltaV's source anatomy has no tail or custom-part sprite.
+            BodyPartType.Tail or BodyPartType.Other or null => null,
             _ => null,
         };
     }
