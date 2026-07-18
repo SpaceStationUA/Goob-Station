@@ -40,7 +40,7 @@ ent-AdvancedFlashlightSuitModulePink = { ent-AdvancedFlashlightSuitModule }
 ent-AdvancedFlashlightSuitModuleOrange = { ent-AdvancedFlashlightSuitModule }
     .desc = { ent-AdvancedFlashlightSuitModule.desc }
 
-# Visor
+# Візор
 ent-VisorMedicalSuitModule = модуль медичного візора
     .desc = Інтерфейс у забралі шолома. Поєднує дані сенсорів костюма із сучасним біологічним сканером, дозволяючи бачити стан здоров'я органічних істот і дані пацієнтів. Кажуть, такі візори дозволяють бачити, що коїться за спиною.
 ent-VisorDiagnosticSuitModule = модуль діагностичного візора
