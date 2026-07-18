@@ -7,8 +7,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-         xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
-         xmlns:pirate="clr-namespace:Content.Client._Pirate.Traits.UI"
+	         xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
+	         xmlns:pirate="clr-namespace:Content.Client._Pirate.Traits.UI"
+	         xmlns:pirateInfo="clr-namespace:Content.Client._Pirate.Lobby.UI"
          HorizontalExpand="True">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10" HorizontalExpand="True">
@@ -210,6 +211,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <ScrollContainer VerticalExpand="True">
                         <humanoid:MarkingPicker Name="Markings" IgnoreCategories="Hair,FacialHair" />
                     </ScrollContainer>
+                </BoxContainer>
+                <!-- Pirate: Starlight extended character descriptions. -->
+                <BoxContainer Name="ICInfoTab" Orientation="Vertical" Margin="10" Visible="False">
+                    <pirateInfo:CharacterInfoEditor Name="ICInfoEditor" />
+                </BoxContainer>
+                <BoxContainer Name="OOCInfoTab" Orientation="Vertical" Margin="10" Visible="False">
+                    <pirateInfo:OOCInfoEditor Name="OOCInfoEditor" />
                 </BoxContainer>
             </TabContainer>
         </BoxContainer>

@@ -1432,6 +1432,12 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("employer");
 
+                    b.Property<string>("ExploitableInfo")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("exploitable_info");
+
                     b.Property<string>("EyeColor")
                         .IsRequired()
                         .HasColumnType("text")
@@ -1480,6 +1486,24 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("nationality");
 
+                    b.Property<string>("OOCNotes")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("oocnotes");
+
+                    b.Property<string>("PersonalNotes")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("personal_notes");
+
+                    b.Property<string>("PersonalityDescription")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("personality_description");
+
                     b.Property<int>("PreferenceId")
                         .HasColumnType("integer")
                         .HasColumnName("preference_id");
@@ -1492,6 +1516,12 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("sex");
+
+                    b.Property<string>("Secrets")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("secrets");
 
                     b.Property<string>("SkinColor")
                         .IsRequired()

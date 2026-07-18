@@ -300,7 +300,12 @@ namespace Content.Server.Database
                 traits.ToHashSet(),
                 loadouts,
                 barkVoice // Goob Station - Barks
-            );
+            ).WithCharacterInfo( // Pirate: Starlight character descriptions.
+                profile.PersonalityDescription,
+                profile.PersonalNotes,
+                profile.OOCNotes,
+                profile.Secrets,
+                profile.ExploitableInfo);
         }
 
         private static Profile ConvertProfiles(HumanoidCharacterProfile humanoid, int slot, Profile? profile = null)
@@ -316,6 +321,11 @@ namespace Content.Server.Database
 
             profile.CharacterName = humanoid.Name;
             profile.FlavorText = humanoid.FlavorText;
+            profile.PersonalityDescription = humanoid.PersonalityDescription; // Pirate: Starlight character descriptions.
+            profile.PersonalNotes = humanoid.PersonalNotes;
+            profile.OOCNotes = humanoid.OOCNotes;
+            profile.Secrets = humanoid.Secrets;
+            profile.ExploitableInfo = humanoid.ExploitableInfo;
             profile.Species = humanoid.Species;
             profile.Height = humanoid.Height; // Goobstation: port EE height/width sliders
             profile.Width = humanoid.Width; // Goobstation: port EE height/width sliders

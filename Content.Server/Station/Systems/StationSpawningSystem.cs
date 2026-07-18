@@ -7,9 +7,7 @@ using Content.Server.PDA;
 using Content.Server.Station.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.CCVar;
 using Content.Shared.Clothing;
-using Content.Shared.DetailExaminable;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
@@ -20,7 +18,6 @@ using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Station;
 using JetBrains.Annotations;
-using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -38,7 +35,6 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
     [Dependency] private readonly ActorSystem _actors = default!;
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
@@ -139,10 +135,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             _humanoidSystem.LoadProfile(entity.Value, profile);
             _metaSystem.SetEntityName(entity.Value, profile.Name);
 
-            if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
-            {
-                AddComp<DetailExaminableComponent>(entity.Value).Content = profile.FlavorText;
-            }
+            // Pirate: extended character descriptions are applied after the mind is attached.
         }
 
         if (loadout != null)

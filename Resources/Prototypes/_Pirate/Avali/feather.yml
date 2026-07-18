@@ -1,0 +1,59 @@
+# SPDX-FileCopyrightText: 2026 kotobdev <59124164+kotobdev@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+# Pirate: Avali feather preening ported from DeltaV.
+
+- type: entity
+  parent: BaseItem
+  id: AvaliFeather
+  name: feather
+  description: Probably not ethically sourced.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/feather.rsi
+    layers:
+    - state: feather
+      map: [ "enum.FeatherVisualLayers.Feather" ]
+    - state: featherblood
+      color: "#FFFFFF00"
+      map: [ "enum.FeatherVisualLayers.Blood" ]
+  - type: Flammable
+    fireSpread: true
+    alwaysCombustible: true
+    damage:
+      types:
+        Heat: 1
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Item
+    size: Tiny
+  - type: Clothing
+    sprite: _Pirate/Objects/Misc/feather.rsi
+    clothingVisuals:
+      ears:
+      - state: equipped-EARS
+        map: [ "feather" ]
+      head:
+      - state: equipped-HELMET
+        map: [ "feather" ]
+    slots:
+    - ears
+    - head
+  - type: Tag
+    tags:
+    - Write
+    - Pen
+    - Trash
+  - type: Feather

@@ -9,6 +9,7 @@ using Content.Client.Lobby.UI;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Station;
 using Content.Shared.CCVar;
+using Content.Shared._Pirate.CCVars; // Pirate: Starlight character descriptions.
 using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
@@ -73,6 +74,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         {
             _profileEditor?.RefreshFlavorText();
         });
+        _configurationManager.OnValueChanged(PirateVars.ICSecrets, _ => _profileEditor?.RefreshCharacterInfo());
+        _configurationManager.OnValueChanged(PirateVars.ExploitableSecrets, _ => _profileEditor?.RefreshCharacterInfo());
+        _configurationManager.OnValueChanged(PirateVars.OOCNotes, _ => _profileEditor?.RefreshCharacterInfo());
 
         _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshProfileEditor());
         _configurationManager.OnValueChanged(CCVars.GameRoleLoadoutTimers, _ => RefreshProfileEditor());
