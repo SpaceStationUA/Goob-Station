@@ -109,8 +109,9 @@ selectable-set-blueshield-syringe-description = Ідеально підходи�
     Включає: бойовий інжектор та кілька флаконів з ліками
 selectable-set-blueshield-hardsuit-light-name = броньований скафандр
 selectable-set-blueshield-hardsuit-light-description = Броньований скафандр, що забезпечує більшу швидкість за рахунок захисту.
-selectable-set-blueshield-modsuit-name = скафандр «Синій щит»
-selectable-set-blueshield-modsuit-description = Спеціальний скафандр, що дозволяє більше налаштувань, за рахунок потреби в енергії
+# Pirate: legacy MODsuit choices use the new modular suit system.
+selectable-set-blueshield-modsuit-name = корпоративний MOD-костюм
+selectable-set-blueshield-modsuit-description = Попередньо зібраний MOD-костюм для високопоставлених офіцерів Nanotrasen із посиленим захистом, мобільністю та блюспейс-сховищем.
 selectable-set-ert-ballistic-name = набір «Балістика»
 selectable-set-ert-ballistic-description = Надійні, ефективні та компактні. Енні вас прикриє.
     Включає: Гвинтівку калібру .30, "Енні".
@@ -123,44 +124,36 @@ selectable-set-ert-pulse-description = Закінчення боєприпасі
 selectable-set-paramedic-voidsuit-name = Скафандр парамедика
 selectable-set-paramedic-voidsuit-desc = Легкий скафандр з мінімальним захистом,
     але високою швидкістю руху.
-selectable-set-paramedic-modsuit-name = Скафандр «Санітар»
-selectable-set-paramedic-modsuit-desc = Модульний скафандр з важчими пластинами,
-    щоб, сподіваємось, витримати кулю-другу.
+# Pirate: legacy MODsuit choices use the new modular suit system.
+selectable-set-paramedic-modsuit-name = рятувальний MOD-костюм
+selectable-set-paramedic-modsuit-desc = Попередньо зібраний медичний MOD-костюм з аналізатором здоров'я, медичним візором, дефібрилятором і сервоприводами для перенесення поранених.
 selectable-set-security-voidsuit-name = Скафандр служби безпеки
 selectable-set-security-voidsuit-desc = Легкий скафандр із вбудованим бронежилетом для забезпечення
     помірного захисту, залишаючись при цьому мобільним для кінетичних операцій низької інтенсивності.
-selectable-set-security-modsuit-name = Скафандр СБ «Солдат»
-selectable-set-security-modsuit-desc = Модульний скафандр з керамічними вставками для забезпечення більшого захисту,
-    ніж у його аналога-скафандра, але з меншою мобільністю.
+selectable-set-security-modsuit-name = охоронний MOD-костюм
+selectable-set-security-modsuit-desc = Попередньо зібраний MOD-костюм із модулем посилення броні, охоронним візором, магнітними черевиками та сховищем.
 selectable-set-headofsecurity-voidsuit-name = Скафандр голови служби безпеки
 selectable-set-headofsecurity-voidsuit-desc = Легкий скафандр, з якого вирізано матеріал з нежиттєво важливих зон для незначного збільшення
     броні життєво важливих органів та підвищення мобільності
     у порівнянні зі стандартним скафандром служби безпеки.
-selectable-set-headofsecurity-modsuit-name = Скафандр ГСБ «Бастіон»
-selectable-set-headofsecurity-modsuit-desc = Модульний скафандр з дорогою пластитановою бронею для використання головою служби безпеки.
-    Оснащений бортовим внутрішньовенним інжектором стимуляторів, керованим ШІ
+selectable-set-headofsecurity-modsuit-name = MOD-костюм ГСБ «Вартовий»
+selectable-set-headofsecurity-modsuit-desc = Попередньо зібраний командний MOD-костюм із посиленням броні, охоронним візором, джетпаком, магнітними черевиками та збільшеним сховищем.
 selectable-set-engineering-voidsuit-name = Інженерний скафандр
 selectable-set-engineering-voidsuit-desc = Легкий скафандр для ремонту низької інтенсивності навколо станції
-selectable-set-engineering-modsuit-name = Інженерний скафандр «Сапер»
-selectable-set-engineering-modsuit-desc = Модульний скафандр з посиленим вибуховим покриттям, а великий вразливий візор
-    замінено зовнішніми камерами для кращого захисту від вибухів
-    та інших зовнішніх загроз.
+selectable-set-engineering-modsuit-name = інженерний MOD-костюм
+selectable-set-engineering-modsuit-desc = Попередньо зібраний MOD-костюм зі зварювальним модулем, радіаційним захистом, магнітними черевиками, ліхтарем і сховищем.
 selectable-set-captain-voidsuit-name = Парадний скафандр капітана
 selectable-set-captain-voidsuit-desc = Легкий скафандр капітана, виготовлений на замовлення для урочистих подій, легко
     броньований для захисту під час спокійної зміни, при цьому зберігаючи
     звичайні можливості для виходу в космос.
 selectable-set-captain-modsuit-name = Капітанський скафандр «Магнат»
-selectable-set-captain-modsuit-desc = Модульний скафандр, ідеально відполірований, прикрашений та броньований для найкращих
-    з найкращих, оснащений спеціальними пластинами, охолоджувальною рідиною та діамантами, щоб
-    навіть найважчі часи керівництва здавалися вам нічим.
+selectable-set-captain-modsuit-desc = Попередньо зібраний капітанський MOD-костюм із посиленим джетпаком, магнітними черевиками, збільшеним сховищем і модулем видачі паперу.
 selectable-set-research-director-voidsuit-name = Скафандр НД
 selectable-set-research-director-voidsuit-desc = Легкий скафандр наукового директора, пристосований для експериментів, легко
     броньований для захисту від грейтайдерів, що вриваються, і при цьому зберігає
     звичайні можливості для виходу в космос.
-selectable-set-research-director-modsuit-name = Важкий скафандр НД «Мінерва»
-selectable-set-research-director-modsuit-desc = Модульний важкий скафандр, ідеально броньований, щоб перетворити вас на дослідницький танк,
-    навіть найнебезпечніші експерименти не зашкодять вам у ньому,
-    а найгірші з асистентів двічі подумають, перш ніж вриватися в науковий відділ.
+selectable-set-research-director-modsuit-name = дослідницький MOD-костюм НД
+selectable-set-research-director-modsuit-desc = Попередньо зібраний дослідницький MOD-костюм зі сканером реагентів, Т-променевим модулем, радіаційним захистом, зварювальним модулем і збільшеним сховищем.
 selectable-set-syndicate-sus-name = Підозрілий набір
 selectable-set-syndicate-sus-description = Коли зрадник підозрілий... а зрадник, звісно ж, ви.
     Містить: вдосконалений костюм акробата, ніж зрадника, мініатюрний

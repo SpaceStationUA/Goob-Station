@@ -22,18 +22,20 @@
   id: ModsuitsTech
   name: research-technology-modsuits
   icon:
-    sprite: _Goobstation/Objects/Specific/Robotics/modsuit_parts.rsi
+    sprite: _Pirate/Objects/Specific/Robotics/modular_suits.rsi # Pirate: new modular suit system.
     state: mod-core-standard
   discipline: Experimental
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - ModsuitChestplate
-  - ModsuitBoots
-  - ModsuitHelmet
-  - ModsuitGauntlets
-  - ModsuitShell
-  - ModsuitPlatingExternal
+  - ModularSuitConstruction # Pirate: replace legacy Goob MODsuit recipes.
+  - ModularSuitChestPlate
+  - ModularSuitBoots
+  - ModularSuitHelmet
+  - ModularSuitGauntlets
+  - BasicPlating
+  - CivilianPlating
+  - ModularSuitCoreStandard
   position: -4,-1
   technologyPrerequisites:
   - MagnetsTech

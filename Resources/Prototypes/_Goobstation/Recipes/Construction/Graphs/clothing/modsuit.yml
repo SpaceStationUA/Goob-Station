@@ -111,25 +111,25 @@
           doAfter: 1
 
   - node: standard
-    entity: ClothingModsuitStandard
+    entity: ClothingModularControllerStandardPreassembled # Pirate: legacy graph outputs the new modular suits.
 
   - node: security
-    entity: ClothingModsuitSecurity
+    entity: ClothingModularControllerSecurityPreassembled
 
   - node: paramedic
-    entity: ClothingModsuitParamedic
+    entity: ClothingModularControllerRescuePreassembled
 
   - node: headofsecurity
-    entity: ClothingModsuitHeadOfSecurity
+    entity: ClothingModularControllerSafeguardPreassembled
 
   - node: engineer
-    entity: ClothingModsuitEngineer
+    entity: ClothingModularControllerEngineeringPreassembled
 
   - node: atmostech
-    entity: ClothingModsuitAtmostech
+    entity: ClothingModularControllerAtmosphericPreassembled
 
   - node: rd
-    entity: ClothingModsuitResearchDirector
+    entity: ClothingModularControllerResearchPreassembled
 
   - node: captain
-    entity: ClothingModsuitCaptain
+    entity: ClothingModularControllerMagnatePreassembled
