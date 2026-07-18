@@ -5,7 +5,7 @@
   description: Contains a preassembled Syndicate modular suit.
   components:
   - type: Storage
-    maxItemSize: Huge
+    maxItemSize: Ginormous
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector

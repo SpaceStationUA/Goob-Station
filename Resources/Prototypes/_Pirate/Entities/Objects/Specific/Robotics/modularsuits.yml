@@ -64,6 +64,7 @@
   - type: Construction
     graph: ModularSuitVariants
     node: base_suit
+    defaultTarget: null # Pirate: clear the inherited target from the assembly graph.
     deconstructionTarget: null # Pirate: this one-way graph has no local "start" node or deconstruction path.
 
 # Cores
