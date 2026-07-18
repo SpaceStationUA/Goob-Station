@@ -118,7 +118,7 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         var hasPower = _powerCell.HasDrawCharge(translator);
         var isEnabled = !translatorComp.Enabled && hasPower;
 
-        Entity<LanguageSpeakerComponent>? holderEntity = null;
+        Entity<LanguageSpeakerComponent?>? holderEntity = null;
         var firstNewLanguage = default(ProtoId<LanguagePrototype>);
 
         if (_containers.TryGetContainingContainer(translator, out var holderCont)
