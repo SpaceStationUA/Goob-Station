@@ -5,6 +5,7 @@ ent-OrganCobraHeartSilvia = залоза Сільвії
     .desc = Незвичайна залоза космічної кобри, що керує її маскуванням.
 
 ent-SpawnMobCMOPetSilvia = спавнер Сільвії
+    .desc = Спавнить Сільвію, улюбленицю медичного відділу.
     .suffix = Улюблениця медичного відділу
 
 ghost-role-information-silvia-name = Сільвія
