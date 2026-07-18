@@ -8,3 +8,6 @@
     slotTexture: glasses
     slotFlags: EYES
     stripTime: 3
+    uiWindowPos: 0,3 # Pirate: Required by the current inventory template schema.
+    strippingWindowPos: 0,0
+    displayName: Eyes
