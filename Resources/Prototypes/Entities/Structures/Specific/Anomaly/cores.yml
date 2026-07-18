@@ -31,6 +31,7 @@
   - type: Tag
     tags:
     - ForceableFollow
+    - AnomalyCore # Pirate: MODsuit core-powered modules.
   - type: AnomalyCore
     timeToDecay: 600
     startPrice: 10000
@@ -77,6 +78,11 @@
     maxLevel: 2 # Non-inert cores can roll max level
     enchants:
     - EnchantKnockback
+  - type: Tag # Pirate: MODsuit anti-gravity module.
+    tags:
+    - ForceableFollow
+    - AnomalyCore
+    - GravityCore
 
 - type: entity
   parent: BaseAnomalyCore
@@ -166,6 +172,11 @@
     energy: 3.5
     color: "#00ccff"
     castShadows: false
+  - type: Tag # Pirate: MODsuit teleporter module.
+    tags:
+    - ForceableFollow
+    - AnomalyCore
+    - BluespaceCore
 
 - type: entity
   parent: BaseAnomalyCore
@@ -305,6 +316,11 @@
     maxLevel: 1
     enchants:
     - EnchantKnockback
+  - type: Tag # Pirate: MODsuit anti-gravity module.
+    tags:
+    - ForceableFollow
+    - AnomalyCore
+    - GravityCore
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -394,6 +410,11 @@
     energy: 3.5
     color: "#00ccff"
     castShadows: false
+  - type: Tag # Pirate: MODsuit teleporter module.
+    tags:
+    - ForceableFollow
+    - AnomalyCore
+    - BluespaceCore
 
 - type: entity
   parent: BaseAnomalyInertCore

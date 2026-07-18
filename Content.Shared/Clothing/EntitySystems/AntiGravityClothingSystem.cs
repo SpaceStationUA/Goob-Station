@@ -20,11 +20,39 @@ public sealed class AntiGravityClothingSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        // Pirate: modular suit modules add and remove this component at runtime.
+        SubscribeLocalEvent<AntiGravityClothingComponent, ComponentAdd>(OnAdd);
+        SubscribeLocalEvent<AntiGravityClothingComponent, ComponentRemove>(OnRemove);
+
         SubscribeLocalEvent<AntiGravityClothingComponent, InventoryRelayedEvent<IsWeightlessEvent>>(OnIsWeightless);
         SubscribeLocalEvent<AntiGravityClothingComponent, ClothingGotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<AntiGravityClothingComponent, ClothingGotUnequippedEvent>(OnUnequipped);
         SubscribeLocalEvent<AntiGravityClothingComponent, InventoryRelayedEvent<DownedEvent>>(OnDowned);
         SubscribeLocalEvent<AntiGravityClothingComponent, InventoryRelayedEvent<StoodEvent>>(OnStood);
+    }
+
+    private void OnAdd(Entity<AntiGravityClothingComponent> ent, ref ComponentAdd args)
+    {
+        if (!TryComp<ClothingComponent>(ent, out var clothing) || clothing.InSlotFlag == null)
+            return;
+
+        var wearer = Transform(ent).ParentUid;
+        if (_standing.IsDown(wearer))
+            return;
+
+        _gravity.RefreshWeightless(wearer, true);
+    }
+
+    private void OnRemove(Entity<AntiGravityClothingComponent> ent, ref ComponentRemove args)
+    {
+        if (!TryComp<ClothingComponent>(ent, out var clothing) || clothing.InSlotFlag == null)
+            return;
+
+        var wearer = Transform(ent).ParentUid;
+        if (_standing.IsDown(wearer))
+            return;
+
+        _gravity.RefreshWeightless(wearer, false);
     }
 
     private void OnIsWeightless(Entity<AntiGravityClothingComponent> ent, ref InventoryRelayedEvent<IsWeightlessEvent> args)

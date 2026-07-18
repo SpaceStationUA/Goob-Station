@@ -94,7 +94,7 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     public float TankFragmentScale = 2.25f * Atmospherics.OneAtmosphere;
 
     [DataField]
-    public EntProtoId ToggleAction = "ActionToggleInternals";
+    public EntProtoId? ToggleAction = "ActionToggleInternals"; // Pirate: MODsuit jetpacks have no internals action.
 
     [DataField, AutoNetworkedField]
     public EntityUid? ToggleActionEntity;

@@ -9,6 +9,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Item.ItemToggle.Components; // Pirate: modular suit helmet toggles.
 using Content.Shared.VoiceMask;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
@@ -46,6 +47,7 @@ public sealed partial class IdentitySystem : EntitySystem
         SubscribeLocalEvent<IdentityBlockerComponent, SeeIdentityAttemptEvent>(OnSeeIdentity);
         SubscribeLocalEvent<IdentityBlockerComponent, InventoryRelayedEvent<SeeIdentityAttemptEvent>>(OnRelaySeeIdentity);
         SubscribeLocalEvent<IdentityBlockerComponent, ItemMaskToggledEvent>(OnMaskToggled);
+        SubscribeLocalEvent<IdentityBlockerComponent, ItemToggledEvent>(OnItemToggled); // Pirate: modular suit helmet toggles.
 
         SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<IdentityComponent, ComponentInit>(OnComponentInit);
@@ -124,6 +126,13 @@ public sealed partial class IdentitySystem : EntitySystem
     private void OnMaskToggled(Entity<IdentityBlockerComponent> ent, ref ItemMaskToggledEvent args)
     {
         ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
+        Dirty(ent);
+    }
+
+    // Pirate: modular suit helmets use ItemToggle rather than Mask.
+    private void OnItemToggled(Entity<IdentityBlockerComponent> ent, ref ItemToggledEvent args)
+    {
+        ent.Comp.Enabled = args.Activated;
         Dirty(ent);
     }
 

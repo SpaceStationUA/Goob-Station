@@ -183,6 +183,9 @@
   - ClothingBackpackElectropack
   - ClothingNeckBaseShockCollar # Pirate
   - ClothingHandsGlovesMansusBlock # Pirate
+  - SecurityPlating # Pirate: Wega modular suit port.
+  - ArmorBossterSuitModule # Pirate: Wega modular suit port.
+  - EMPShieldSuitModule # Pirate: Wega modular suit port.
   # Goobstation R&D Console rework start
   position: 5,3
   technologyPrerequisites:
