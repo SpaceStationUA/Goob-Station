@@ -253,7 +253,7 @@ public sealed partial class ModularSuitSystem
             return;
 
         var needed = core.MaxCharge - core.Charge;
-        var maxTransfer = core.ChargeRate * (float)suit.UpdateInterval.TotalSeconds;
+        var maxTransfer = core.ChargeRate * (float)suit.Comp.UpdateInterval.TotalSeconds;
         var transfer = Math.Min(needed, maxTransfer);
 
         if (transfer <= 0)
