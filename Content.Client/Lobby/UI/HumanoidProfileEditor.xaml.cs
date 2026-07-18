@@ -623,8 +623,16 @@ namespace Content.Client.Lobby.UI
             _allowExploitableInfo = _cfgManager.GetCVar(PirateVars.ExploitableSecrets);
             _allowRoleplayNotes = _cfgManager.GetCVar(PirateVars.OOCNotes);
 
-            ICInfoTab.Visible = _allowFlavorText || _allowCharacterSecrets || _allowExploitableInfo;
-            OOCInfoTab.Visible = _allowRoleplayNotes;
+            var showIcInfo = _allowFlavorText || _allowCharacterSecrets || _allowExploitableInfo;
+            TabContainer.SetTabVisible(6, showIcInfo); // Pirate: Keep disabled character-info tabs inaccessible.
+            TabContainer.SetTabVisible(7, _allowRoleplayNotes);
+
+            if ((!showIcInfo && TabContainer.CurrentTab == 6)
+                || (!_allowRoleplayNotes && TabContainer.CurrentTab == 7))
+            {
+                TabContainer.CurrentTab = 0;
+            }
+
             ICInfoEditor.Physical.Visible = _allowFlavorText;
             ICInfoEditor.Personality.Visible = _allowFlavorText;
             ICInfoEditor.Secrets.Visible = _allowCharacterSecrets;
