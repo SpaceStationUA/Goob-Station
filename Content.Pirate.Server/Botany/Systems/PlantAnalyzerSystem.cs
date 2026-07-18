@@ -7,6 +7,7 @@ using Content.Server.Botany.Systems;
 using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Pirate.Shared.Botany.PlantAnalyzer;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.EntitySystems;
@@ -30,6 +31,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly LabelSystem _labelSystem = default!;
+    [Dependency] private readonly SharedAtmosphereSystem _atmosphereSystem = default!;
 
     public override void Initialize()
     {
@@ -149,7 +151,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             ("toxins", data.TolerancesData?.ToxinsTolerance.ToString("0.00") ?? missingData),
             ("pests", data.TolerancesData?.PestTolerance.ToString("0.00") ?? missingData),
             ("weeds", data.TolerancesData?.WeedTolerance.ToString("0.00") ?? missingData),
-            ("gasesIn", data.TolerancesData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.TolerancesData.ConsumeGasses, _prototypeManager) : missingData),
+            ("gasesIn", data.TolerancesData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.TolerancesData.ConsumeGasses, _atmosphereSystem) : missingData),
             ("kpa", data.TolerancesData?.IdealPressure.ToString("0.00") ?? missingData),
             ("kpaTolerance", data.TolerancesData?.PressureTolerance.ToString("0.00") ?? missingData),
             ("temp", data.TolerancesData?.IdealHeat.ToString("0.00") ?? missingData),
@@ -159,7 +161,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             ("yield", data.ProduceData?.Yield ?? -1),
             ("potency", data.ProduceData is not null ? Loc.GetString(data.ProduceData.Potency) : missingData),
             ("chemicals", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(data.ProduceData.Chemicals, _prototypeManager) : missingData),
-            ("gasesOut", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.ProduceData.ExudeGasses, _prototypeManager) : missingData),
+            ("gasesOut", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.ProduceData.ExudeGasses, _atmosphereSystem) : missingData),
             ("endurance", data.PlantData?.Endurance.ToString("0.00") ?? missingData),
             ("lifespan", data.PlantData?.Lifespan.ToString("0.00") ?? missingData),
             ("seeds", data.ProduceData is not null ? (data.ProduceData.Seedless ? "no" : "yes") : "other"),

@@ -1,5 +1,5 @@
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Prototypes;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Localizations;
 using Robust.Shared.Prototypes;
@@ -8,19 +8,14 @@ namespace Content.Pirate.Shared.Botany.PlantAnalyzer;
 
 public sealed class PlantAnalyzerLocalizationHelper
 {
-    public static string GasesToLocalizedStrings(List<Gas> gases, IPrototypeManager protMan)
+    public static string GasesToLocalizedStrings(List<Gas> gases, SharedAtmosphereSystem atmosphereSystem)
     {
         if (gases.Count == 0)
             return "";
 
-        List<int> gasIds = [];
-        foreach (var gas in gases)
-            gasIds.Add((int)gas);
-
         List<string> gasesLoc = [];
-        foreach (var gas in protMan.EnumeratePrototypes<GasPrototype>())
-            if (gasIds.Contains(int.Parse(gas.ID)))
-                gasesLoc.Add(Loc.GetString(gas.Name));
+        foreach (var gas in gases)
+            gasesLoc.Add(Loc.GetString(atmosphereSystem.GetGas(gas).Name));
 
         return ContentLocalizationManager.FormatList(gasesLoc);
     }
