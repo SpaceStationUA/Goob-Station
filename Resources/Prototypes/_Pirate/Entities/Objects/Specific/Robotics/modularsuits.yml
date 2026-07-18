@@ -78,6 +78,9 @@
     storedRotation: -90
   - type: Sprite
     sprite: *mod-rsi
+  - type: Tag
+    tags:
+    - ModularSuitCore
 
 - type: entity
   parent: BaseModularSuitCore
@@ -91,9 +94,6 @@
     verbIcon:
       sprite: *mod-rsi
       state: mod-core-standard
-  - type: Tag
-    tags:
-    - ModularSuitCore
 
 - type: entity
   parent: BaseModularSuitCore
