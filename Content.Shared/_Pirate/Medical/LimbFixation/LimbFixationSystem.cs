@@ -41,6 +41,7 @@ public sealed class LimbFixationSystem : EntitySystem
         SubscribeLocalEvent<LimbFixationComponent, StandUpAttemptEvent>(OnStandUpAttempt);
         SubscribeLocalEvent<SurgeryRestoreLimbFunctionStepComponent, SurgeryStepEvent>(OnRestoreLimbFunction);
         SubscribeLocalEvent<SurgeryRestoreLimbFunctionStepComponent, SurgeryStepCompleteCheckEvent>(OnRestoreLimbFunctionCheck);
+        SubscribeLocalEvent<SurgeryFunctionalPartConditionComponent, SurgeryValidEvent>(OnFunctionalPartCondition);
     }
 
     private void OnBeforeTraumaInduced(Entity<WoundableComponent> ent, ref BeforeTraumaInducedEvent args)
@@ -126,8 +127,13 @@ public sealed class LimbFixationSystem : EntitySystem
         Entity<SurgeryRestoreLimbFunctionStepComponent> ent,
         ref SurgeryStepEvent args)
     {
-        if (TryComp<BodyPartComponent>(args.Part, out var part) && part.Body == args.Body)
-            RemComp<LimbFixationDamageComponent>(args.Part);
+        if (!TryComp<BodyPartComponent>(args.Part, out var part)
+            || part.Body != args.Body
+            || !TryComp<WoundableComponent>(args.Part, out var woundable))
+            return;
+
+        RestoreCriticalIntegrity((args.Part, woundable));
+        RemComp<LimbFixationDamageComponent>(args.Part);
     }
 
     private void OnRestoreLimbFunctionCheck(
@@ -136,6 +142,36 @@ public sealed class LimbFixationSystem : EntitySystem
     {
         if (HasActiveDamage(args.Part) || HasDisabledTargetingStatus(args.Body, args.Part))
             args.Cancelled = true;
+    }
+
+    private void OnFunctionalPartCondition(
+        Entity<SurgeryFunctionalPartConditionComponent> ent,
+        ref SurgeryValidEvent args)
+    {
+        args.Cancelled |= HasActiveDamage(args.Part);
+    }
+
+    private void RestoreCriticalIntegrity(Entity<WoundableComponent> part)
+    {
+        if (!part.Comp.Thresholds.TryGetValue(WoundableSeverity.Critical, out var criticalIntegrity)
+            || part.Comp.WoundableIntegrity >= criticalIntegrity)
+            return;
+
+        var attempts = part.Comp.Wounds.Count + 1;
+        while (part.Comp.WoundableIntegrity < criticalIntegrity && attempts-- > 0)
+        {
+            var previousIntegrity = part.Comp.WoundableIntegrity;
+            _wounds.TryHealWoundsOnWoundable(
+                part.Owner,
+                criticalIntegrity - previousIntegrity,
+                out _,
+                part.Comp,
+                ignoreMultipliers: true,
+                ignoreBlockers: true);
+
+            if (part.Comp.WoundableIntegrity <= previousIntegrity)
+                break;
+        }
     }
 
     private bool HasDisabledTargetingStatus(EntityUid body, EntityUid part)
