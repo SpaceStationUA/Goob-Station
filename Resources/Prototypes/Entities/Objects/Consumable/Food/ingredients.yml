@@ -206,6 +206,9 @@
   name: sugar bag
   description: A big bag of tasty spacey sugar.
   components:
+  - type: Tag # Pirate ranching
+    tags:
+    - Sugar
   - type: Appearance
   - type: GenericVisualizer
     visuals:

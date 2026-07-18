@@ -11,6 +11,7 @@
     - WheatBushel
   mutationPrototypes:
     - meatwheat
+    - SteelWheat # Pirate ranching
   lifespan: 25
   maturation: 6
   production: 3
@@ -746,6 +747,7 @@
   productPrototypes:
     - FoodApple
   mutationPrototypes:
+    - deliciousApple # Pirate ranching
     - goldenApple
   harvestRepeat: Repeat
   lifespan: 55
@@ -1636,6 +1638,7 @@
     - FoodWatermelon
   mutationPrototypes:
     - holymelon
+    - BalloonWatermelon # Pirate ranching
   lifespan: 55
   maturation: 12
   production: 3
@@ -1781,6 +1784,7 @@
     - FoodPeaPod
   mutationPrototypes:
     - laughinPea
+    - Peanut # Pirate ranching
   lifespan: 25
   growthStages: 3
   maturation: 8

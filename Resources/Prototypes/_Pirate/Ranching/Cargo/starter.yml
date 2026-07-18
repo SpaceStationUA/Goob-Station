@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseFlatpack
+  id: RanchIncubatorFlatpack
+  name: incubator flatpack
+  description: A flatpack used for constructing a ranching incubator.
+  components:
+  - type: Flatpack
+    entity: RanchIncubator
+
+- type: entity
+  parent: BaseChemistryBottleFilled
+  id: ChemistryBottleNanoMachines
+  name: nanomachine bottle
+  suffix: nanomachines
+  components:
+  - type: Label
+    currentLabel: reagent-name-nanomachines
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: NanoMachines
+          Quantity: 30
+
+- type: entity
+  parent: CrateLivestock
+  id: CratePirateRanchingStarter
+  name: chicken ranching starter crate
+  description: Contains a breeding flock and the equipment needed to start a chicken ranch.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: MobWhiteHen
+          amount: 2
+        - id: MobWhiteRooster
+        - id: WhiteEgg
+          amount: 4
+        - id: ChickenCarrier
+        - id: RanchIncubatorFlatpack
+        - id: ChemistryBottleNanoMachines
+
+- type: cargoProduct
+  id: LivestockPirateRanchingStarter
+  icon:
+    sprite: _Pirate/Ranching/Mobs/Ranch/chicken-white.rsi
+    state: hen
+  product: CratePirateRanchingStarter
+  cost: 8000
+  category: cargoproduct-category-name-livestock
+  group: market

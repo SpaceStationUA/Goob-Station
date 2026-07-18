@@ -271,6 +271,11 @@
         - ReagentId: Radium
           Quantity: 2
         canReact: false
+  - type: PlateableChickenOre # Pirate ranching
+    components:
+    - type: RadiationSource
+      slope: 0.7
+      intensity: 4.5
   - type: Item
     heldPrefix: uranium
   - type: Tag
@@ -437,4 +442,3 @@
   components:
   - type: Stack
     count: 1
-
