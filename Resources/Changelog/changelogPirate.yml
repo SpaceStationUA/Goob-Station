@@ -2587,3 +2587,9 @@ Entries:
         ліхтарики можуть осліпити.
   id: 253
   time: '2026-07-18T10:32:30.0000000+00:00'
+- author: Vareniko
+  changes:
+    - type: Fix
+      message: SpareIdCabinetFilled (аварійна карточка кепа) тепер не пропадає.
+  id: 254
+  time: '2026-07-18T12:08:31.0000000+00:00'
