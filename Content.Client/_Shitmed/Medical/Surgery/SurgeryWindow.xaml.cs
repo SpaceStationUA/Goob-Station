@@ -21,6 +21,7 @@ public sealed partial class SurgeryWindow : FancyWindow
         BodyPartButtons =
         [
             ChestButton,
+            GroinButton,
             HeadButton,
             LArmButton,
             LHandButton,
