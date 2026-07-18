@@ -29,6 +29,12 @@ public sealed partial class LimbFixationDisabledComponent : Component;
 public sealed partial class SurgeryRestoreLimbFunctionStepComponent : Component;
 
 /// <summary>
+/// Prevents a surgery from being performed before limb fixation damage is restored.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed partial class SurgeryFunctionalPartConditionComponent : Component;
+
+/// <summary>
 /// Raised before a damaging or otherwise traumatic amputation. Surgical removal uses the safe amputation path.
 /// </summary>
 [ByRefEvent]
