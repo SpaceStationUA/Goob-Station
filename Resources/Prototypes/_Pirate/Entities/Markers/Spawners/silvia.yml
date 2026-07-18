@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2024 Velcroboy <107660393+IamVelcroboy@users.noreply.github.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  name: Silvia Spawner
+  id: SpawnMobCMOPetSilvia
+  parent: MarkerBase
+  suffix: Medical Pet
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: silvia
+      sprite: _Pirate/Mobs/Animals/silvia.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCobraSilvia

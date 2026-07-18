@@ -1,0 +1,142 @@
+# SPDX-FileCopyrightText: 2024 Velcroboy <107660393+IamVelcroboy@users.noreply.github.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  name: Silvia
+  id: MobCobraSilvia
+  parent: MobSpaceBasic
+  description: With needle-sharp fangs and an alluring gaze, will you let her bite you?
+  components:
+  - type: Body # Pirate: dedicated body preserves Delta-V stealth timing through local cobra organs.
+    prototype: SpaceCobraSilvia
+  - type: SurgeryTarget
+  - type: UserInterface
+    interfaces:
+      enum.SurgeryUIKey.Key:
+        type: SurgeryBui
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Pirate/Mobs/Animals/silvia.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: silvia
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: Loadout
+    prototypes: [ MobSilviaGear ]
+  - type: Inventory
+    speciesId: silvia
+    templateId: silvia
+  - type: InventorySlots
+  - type: Strippable
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepSnake
+  - type: NoSlip
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      125: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: silvia
+        BaseUnshaded: glow
+      Dead:
+        Base: dead_silvia
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSnakeSilvia
+      maxAmount: 3
+    - id: ClothingShoesSnakeskinBoots
+      amount: 1
+      prob: 0.2
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 200
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 120
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MeleeWeapon
+    attackRate: 1.75
+    hidden: true
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 6
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 30
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 30
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 6
+  - type: SolutionRegeneration
+    solution: melee
+    duration: 15
+    generated:
+      reagents:
+      - ReagentId: Omnizine
+        Quantity: 1
+  - type: ReplacementAccent
+    accent: xeno
+  - type: PointLight
+    radius: 1.1
+    energy: 0.25
+    color: "#00ff80"
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-silvia-name
+    description: ghost-role-information-silvia-description
+    rules: ghost-role-information-silvia-rules
+    job: RoleSilvia
+  - type: InteractionPopup
+    successChance: 0.65
+    interactSuccessString: petting-success-snake
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/snake_hiss.ogg
+  - type: NpcFactionMember
+    factions:
+    - PetsNT
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Access # Pirate: Silvia must be able to reach patients throughout medical.
+    tags:
+    - Medical
+    - Maintenance
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+    - DoorBumpOpener
+    - FootstepSound
+  - type: StealTarget
+    stealGroup: AnimalSilvia
