@@ -4,6 +4,8 @@
   name: syndicate modular suit bundle
   description: Contains a preassembled Syndicate modular suit.
   components:
+  - type: Storage
+    maxItemSize: Huge
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector

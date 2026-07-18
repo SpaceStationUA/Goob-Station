@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Pirate.Shared.ModularSuit;
 
-[RegisterComponent, NetworkedComponent]
+[NetworkedComponent]
 public abstract partial class SharedItemModuleComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly)]

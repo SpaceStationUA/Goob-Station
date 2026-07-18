@@ -64,7 +64,6 @@
   - type: Construction
     graph: ModularSuitVariants
     node: base_suit
-    defaultTarget: base_suit
     deconstructionTarget: null # Pirate: this one-way graph has no local "start" node or deconstruction path.
 
 # Cores

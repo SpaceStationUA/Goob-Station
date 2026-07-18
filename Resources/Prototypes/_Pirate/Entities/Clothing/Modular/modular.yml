@@ -447,6 +447,9 @@
         whitelist:
           tags:
           - Jetpack
+  - type: ContainerContainer
+    containers:
+      item: !type:ContainerSlot { }
 
 - type: entity
   parent: ClothingModularHelmetBase
