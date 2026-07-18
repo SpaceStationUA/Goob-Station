@@ -97,10 +97,18 @@ public abstract partial class SharedStunSystem
         while (query.MoveNext(out var uid, out var knockedDown))
         {
             // If it's null then we don't want to stand up
-            if (!knockedDown.AutoStand || knockedDown.DoAfterId.HasValue || knockedDown.NextUpdate > GameTiming.CurTime)
+            // Pirate: Debounce failed predicted stand attempts.
+            if (!knockedDown.AutoStand
+                || knockedDown.DoAfterId.HasValue
+                || knockedDown.NextUpdate > GameTiming.CurTime
+                || knockedDown.NextStandAttempt > GameTiming.CurTime)
                 continue;
 
-            TryStanding(uid);
+            if (!TryStanding(uid))
+            {
+                knockedDown.NextStandAttempt = GameTiming.CurTime + StandupRetryCooldown;
+                DirtyField(uid, knockedDown, nameof(KnockedDownComponent.NextStandAttempt));
+            }
         }
     }
 
