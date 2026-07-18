@@ -27,9 +27,6 @@ public sealed partial class ModularSuitSystem
         var query = EntityQueryEnumerator<ModularSuitComponent>();
         while (query.MoveNext(out var uid, out var suit))
         {
-            if (!suit.Active)
-                continue;
-
             if (GameTiming.CurTime < suit.NextUpdate)
                 continue;
 
@@ -201,6 +198,14 @@ public sealed partial class ModularSuitSystem
         if (core.Infinite)
             return;
 
+        if (!suit.Comp.Active)
+        {
+            if (core.Charge < core.MaxCharge && TryChargeFromBattery(suit, core))
+                UpdateUiState(suit);
+
+            return;
+        }
+
         float totalDraw = suit.Comp.BasePowerDraw;
         foreach (var module in GetCurrentModules(suit))
         {
@@ -223,18 +228,15 @@ public sealed partial class ModularSuitSystem
             RaiseLocalEvent(suit.Owner, ref ev);
         }
 
+        if (core.Charge < core.MaxCharge && TryChargeFromBattery(suit, core))
+            UpdateUiState(suit);
+
         if (core.Charge <= 0)
         {
             SetActive(suit, false);
             UpdateUiState(suit);
 
             _audio.PlayPvs(suit.Comp.CriticalDestroySound, suit.Owner);
-        }
-
-        if (core.Charge < core.MaxCharge)
-        {
-            TryChargeFromBattery(suit, core);
-            UpdateUiState(suit);
         }
 
         if (!core.Infinite)
@@ -247,24 +249,27 @@ public sealed partial class ModularSuitSystem
         }
     }
 
-    private void TryChargeFromBattery(Entity<ModularSuitComponent> suit, ModularSuitCoreComponent core)
+    private bool TryChargeFromBattery(Entity<ModularSuitComponent> suit, ModularSuitCoreComponent core)
     {
         if (!_powerCell.TryGetBatteryFromSlot(suit.Owner, out _))
-            return;
+            return false;
 
         var needed = core.MaxCharge - core.Charge;
         var maxTransfer = core.ChargeRate * (float)suit.Comp.UpdateInterval.TotalSeconds;
         var transfer = Math.Min(needed, maxTransfer);
 
         if (transfer <= 0)
-            return;
+            return false;
 
         if (_powerCell.TryUseCharge(suit.Owner, transfer, predicted: false))
         {
             core.Charge += transfer;
             var ev = new ModularSuitChargeChangedEvent(core.Charge, core.MaxCharge);
             RaiseLocalEvent(suit.Owner, ref ev);
+            return true;
         }
+
+        return false;
     }
 
     public bool TryUseCoreCharge(Entity<ModularSuitComponent?> suit, float amount)
