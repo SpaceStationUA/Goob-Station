@@ -1,5 +1,5 @@
 using Content.Shared.Chemistry;
-using Content.Shared.Damage.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Inventory;
 using Content.Pirate.Shared.ModularSuit;
 using Content.Shared.Popups;
