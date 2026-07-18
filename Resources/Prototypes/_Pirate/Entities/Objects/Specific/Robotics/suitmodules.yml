@@ -1158,9 +1158,6 @@
   - type: ModularSuitModuleEffect
     activeComponents:
     - type: SelfUnremovableClothing
-    # Just in case
-    returnedComponents:
-    - type: SelfUnremovableClothing
   - type: ModularSuitModuleWearerEffect
     activeComponents:
     - type: VentCrawler

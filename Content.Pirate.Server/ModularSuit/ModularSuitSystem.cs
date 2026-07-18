@@ -203,7 +203,9 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
                 }
                 break;
             case ModularSuitPart.Part:
-                RemoveDependentModules(suit, args.Used.Value);
+                if (!RemoveDependentModules(suit, args.Used.Value, args.User))
+                    return;
+
                 if (HasComp<PointLightComponent>(args.Used.Value))
                     _light.SetEnabled(args.Used.Value, false);
                 break;
@@ -510,26 +512,23 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
             return false;
         }
 
-        if (module.Comp.Tags.Count > 0)
+        var moduleProtoId = Prototype(module)?.ID;
+        var existingModules = GetCurrentModules(suit);
+        foreach (var existing in existingModules)
         {
-            var moduleProto = Prototype(module);
-            var existingModules = GetCurrentModules(suit);
-            foreach (var existing in existingModules)
+            if (!TryComp<ModularSuitModuleComponent>(existing, out var existingComp))
+                continue;
+
+            if (module.Comp.Tags.Count > 0 && existingComp.Tags.Intersect(module.Comp.Tags).Any())
             {
-                if (!TryComp<ModularSuitModuleComponent>(existing, out var existingComp))
-                    continue;
+                Popup.PopupEntity(Loc.GetString("modsuit-module-tag-conflict"), suit, user);
+                return false;
+            }
 
-                if (existingComp.Tags.Intersect(module.Comp.Tags).Any())
-                {
-                    Popup.PopupEntity(Loc.GetString("modsuit-module-tag-conflict"), suit, user);
-                    return false;
-                }
-
-                if (moduleProto == Prototype(existing))
-                {
-                    Popup.PopupEntity(Loc.GetString("modsuit-module-proto-conflict"), suit, user);
-                    return false;
-                }
+            if (moduleProtoId != null && moduleProtoId == Prototype(existing)?.ID)
+            {
+                Popup.PopupEntity(Loc.GetString("modsuit-module-proto-conflict"), suit, user);
+                return false;
             }
         }
 
@@ -580,18 +579,27 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         return false;
     }
 
-    private void RemoveDependentModules(Entity<ModularSuitComponent> suit, EntityUid removedPart)
+    private bool RemoveDependentModules(Entity<ModularSuitComponent> suit, EntityUid removedPart, EntityUid user)
     {
         if (!TryComp<ModularSuitPartComponent>(removedPart, out var partComp))
-            return;
+            return true;
 
         var moduleContainer = Container.GetContainer(suit, ModuleContainer);
         var modulesToRemove = new List<EntityUid>();
 
         foreach (var module in moduleContainer.ContainedEntities)
         {
-            if (TryComp<ModularSuitModuleComponent>(module, out var moduleComp) && moduleComp.ModulePart == partComp.PartType)
-                modulesToRemove.Add(module);
+            if (!TryComp<ModularSuitModuleComponent>(module, out var moduleComp) ||
+                moduleComp.ModulePart != partComp.PartType)
+                continue;
+
+            if (moduleComp.IsPermanent)
+            {
+                Popup.PopupEntity(Loc.GetString("modsuit-module-permanent"), suit, user);
+                return false;
+            }
+
+            modulesToRemove.Add(module);
         }
 
         foreach (var module in modulesToRemove)
@@ -602,6 +610,8 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
                 RaiseLocalEvent(module, ref ev);
             }
         }
+
+        return true;
     }
 
     private void CheckSuitAssembly(EntityUid uid)

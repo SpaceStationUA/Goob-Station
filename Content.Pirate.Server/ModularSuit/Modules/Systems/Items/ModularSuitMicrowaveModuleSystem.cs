@@ -99,19 +99,18 @@ public sealed partial class ModularSuitMicrowaveSystem : EntitySystem
         if (!CanHeat(args.Args.Target.Value))
             return;
 
+        if (module.Comp.Module == null
+            || !TryComp<ModularSuitModuleComponent>(module.Comp.Module.Value, out var moduleComp)
+            || !TryComp<ModularSuitCarrierComponent>(args.User, out var carrier)
+            || string.IsNullOrEmpty(carrier.CurrentSlot)
+            || !_inventory.TryGetSlotEntity(args.User, carrier.CurrentSlot, out var suit)
+            || !_modularSuit.TryUseCoreCharge(suit.Value, moduleComp.PowerInstanceUsage))
+            return;
+
         _temperature.ChangeHeat(args.Args.Target.Value, module.Comp.HeatAmount);
 
         _audio.PlayPvs(module.Comp.CompleteSound, args.Args.User);
         _popup.PopupEntity(Loc.GetString("modsuit-microwave-cooked", ("target", Name(args.Args.Target.Value))), args.Args.User, args.Args.User);
-
-        if (module.Comp.Module != null && TryComp<ModularSuitModuleComponent>(module.Comp.Module.Value, out var moduleComp))
-        {
-            if (TryComp<ModularSuitCarrierComponent>(args.User, out var carrier) && !string.IsNullOrEmpty(carrier.CurrentSlot)
-                && _inventory.TryGetSlotEntity(args.User, carrier.CurrentSlot, out var suit))
-            {
-                _modularSuit.UseCoreCharge(suit.Value, moduleComp.PowerInstanceUsage);
-            }
-        }
 
         args.Handled = true;
     }

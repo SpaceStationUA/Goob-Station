@@ -43,8 +43,15 @@ public sealed partial class HolsterModuleHandler : ModuleActionHandler
         if (holster.ContainedEntities.Count > 0)
         {
             var item = holster.ContainedEntities[0];
-            if (_hands.TryPickup(user, item))
+            var activeHand = _hands.GetActiveHand(user);
+            if (activeHand != null && _hands.CanPickupToHand(user, item, activeHand, showPopup: true))
             {
+                if (!ModularSuit.TryUseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage))
+                    return;
+
+                if (!_hands.TryPickup(user, item))
+                    return;
+
                 if (TryComp<WieldableComponent>(item, out var wieldable))
                     _wieldable.TryWield(item, wieldable, user);
 
@@ -53,7 +60,6 @@ public sealed partial class HolsterModuleHandler : ModuleActionHandler
                     _gun.SetBoltClosed(item, chamber, true);
 
                 Audio.PlayPvs(args.EjectSound, ent.Owner);
-                ModularSuit.UseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage);
             }
         }
         else
@@ -68,15 +74,24 @@ public sealed partial class HolsterModuleHandler : ModuleActionHandler
                 return;
             }
 
-            if (_whitelist.IsWhitelistFail(slot.Whitelist, item.Value) || _whitelist.IsWhitelistPass(slot.Blacklist, item.Value)
-                || !Container.Insert(item.Value, holster))
+            if (_whitelist.IsWhitelistFail(slot.Whitelist, item.Value)
+                || _whitelist.IsWhitelistPass(slot.Blacklist, item.Value)
+                || !Container.CanInsert(item.Value, holster))
             {
                 Popup.PopupEntity(Loc.GetString("modsuit-holster-cant-holster"), ent.Owner, user);
             }
             else
             {
+                if (!ModularSuit.TryUseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage))
+                    return;
+
+                if (!Container.Insert(item.Value, holster))
+                {
+                    Popup.PopupEntity(Loc.GetString("modsuit-holster-cant-holster"), ent.Owner, user);
+                    return;
+                }
+
                 Audio.PlayPvs(args.InsertSound, ent.Owner);
-                ModularSuit.UseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage);
             }
         }
 

@@ -34,33 +34,44 @@ public sealed partial class TeleporterModuleHandler : ModuleActionHandler
         if (attemptEvent.Cancelled)
             return;
 
-        if (PerformTeleport(args.Performer))
+        if (!TryFindTarget(args.Performer, out var target))
         {
-            Audio.PlayPvs(args.ActivationSound, args.Performer);
-            ModularSuit.UseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage);
+            args.Handled = true;
+            return;
         }
 
+        if (!ModularSuit.TryUseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage))
+            return;
+
+        PerformTeleport(args.Performer, target);
+        Audio.PlayPvs(args.ActivationSound, args.Performer);
         args.Handled = true;
     }
 
-    private bool PerformTeleport(EntityUid user)
+    private bool TryFindTarget(EntityUid user, out EntityUid target)
     {
         var userCoords = Transform(user).Coordinates;
 
         var mobs = new HashSet<Entity<MobStateComponent>>();
         _lookup.GetEntitiesInRange(userCoords, TeleportRadius, mobs, LookupFlags.Uncontained);
+        mobs.RemoveWhere(mob => mob.Owner == user);
 
         if (mobs.Count == 0)
         {
             Popup.PopupEntity(Loc.GetString("modsuit-teleporter-no-targets"), user, user);
+            target = default;
             return false;
         }
 
-        var target = _random.Pick(mobs).Owner;
+        target = _random.Pick(mobs).Owner;
+        return true;
+    }
+
+    private void PerformTeleport(EntityUid user, EntityUid target)
+    {
+        var userCoords = Transform(user).Coordinates;
 
         _transform.SetCoordinates(user, Transform(target).Coordinates);
         _transform.SetCoordinates(target, userCoords);
-
-        return true;
     }
 }

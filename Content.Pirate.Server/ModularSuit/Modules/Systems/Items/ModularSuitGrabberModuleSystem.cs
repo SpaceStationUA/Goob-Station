@@ -131,19 +131,16 @@ public sealed partial class ModularSuitGrabberModuleSystem : EntitySystem
         if (container.ContainedEntities.Count >= tool.Comp.MaxContents)
             return;
 
+        if (!_container.CanInsert(args.Args.Target.Value, container))
+            return;
+
+        if (!TryUseModuleCharge(args.Args.User, tool.Comp.Module))
+            return;
+
         if (_container.Insert(args.Args.Target.Value, container))
         {
             args.Handled = true;
             _popup.PopupEntity(Loc.GetString("modsuit-grabber-grabbed", ("target", Name(args.Args.Target.Value))), args.Args.User, args.Args.User, PopupType.Medium);
-
-            if (tool.Comp.Module != null && TryComp<ModularSuitModuleComponent>(tool.Comp.Module.Value, out var moduleComp))
-            {
-                if (TryComp<ModularSuitCarrierComponent>(args.User, out var carrier) && !string.IsNullOrEmpty(carrier.CurrentSlot)
-                    && _inventory.TryGetSlotEntity(args.User, carrier.CurrentSlot, out var suit))
-                {
-                    _modularSuit.UseCoreCharge(suit.Value, moduleComp.PowerInstanceUsage);
-                }
-            }
         }
     }
 
@@ -155,6 +152,9 @@ public sealed partial class ModularSuitGrabberModuleSystem : EntitySystem
 
     private void EjectAllItems(EntityUid user, Entity<ModularSuitGrabberToolComponent> tool, BaseContainer container)
     {
+        if (!TryUseModuleCharge(user, tool.Comp.Module))
+            return;
+
         var items = container.ContainedEntities.ToList();
         foreach (var item in items)
         {
@@ -164,15 +164,19 @@ public sealed partial class ModularSuitGrabberModuleSystem : EntitySystem
 
         _audio.PlayPvs(tool.Comp.EjectSound, user);
         _popup.PopupEntity(Loc.GetString("modsuit-grabber-ejected-all"), user, user, PopupType.Medium);
+    }
 
-        if (tool.Comp.Module != null && TryComp<ModularSuitModuleComponent>(tool.Comp.Module.Value, out var moduleComp))
-        {
-            if (TryComp<ModularSuitCarrierComponent>(user, out var carrier) && !string.IsNullOrEmpty(carrier.CurrentSlot)
-                && _inventory.TryGetSlotEntity(user, carrier.CurrentSlot, out var suit))
-            {
-                _modularSuit.UseCoreCharge(suit.Value, moduleComp.PowerInstanceUsage);
-            }
-        }
+    private bool TryUseModuleCharge(EntityUid user, EntityUid? module)
+    {
+        if (module == null || !TryComp<ModularSuitModuleComponent>(module.Value, out var moduleComp))
+            return false;
+
+        if (!TryComp<ModularSuitCarrierComponent>(user, out var carrier)
+            || string.IsNullOrEmpty(carrier.CurrentSlot)
+            || !_inventory.TryGetSlotEntity(user, carrier.CurrentSlot, out var suit))
+            return false;
+
+        return _modularSuit.TryUseCoreCharge(suit.Value, moduleComp.PowerInstanceUsage);
     }
 
     private void OnModuleToggled(Entity<ModularSuitGrabberModuleComponent> module, ref ModularSuitModuleToggledEvent args)

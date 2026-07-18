@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
@@ -18,6 +19,10 @@ public sealed partial class EnergyShieldSystem : EntitySystem
 
     private void OnAttacked(Entity<EnergyShieldOwnerComponent> ent, ref AttackedEvent args)
     {
+        // Thrown DamageOtherOnHit damage is applied before AttackedEvent and cannot be cancelled here.
+        if (args.User == args.Used && HasComp<DamageOtherOnHitComponent>(args.Used))
+            return;
+
         if (ent.Comp.ShieldEntity == null || ent.Comp.SustainingCount <= 0)
         {
             RemCompDeferred(ent.Owner, ent.Comp);

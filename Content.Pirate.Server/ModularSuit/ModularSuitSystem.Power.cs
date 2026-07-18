@@ -216,12 +216,11 @@ public sealed partial class ModularSuitSystem
         var newCharge = Math.Max(0, core.Charge - chargeToUse);
         var used = core.Charge - newCharge;
         core.Charge = newCharge;
-        Dirty(coreEnt, core);
 
         if (used > 0)
         {
             var ev = new ModularSuitChargeChangedEvent(core.Charge, core.MaxCharge);
-            RaiseLocalEvent(coreEnt, ref ev);
+            RaiseLocalEvent(suit.Owner, ref ev);
         }
 
         if (core.Charge <= 0)
@@ -234,7 +233,7 @@ public sealed partial class ModularSuitSystem
 
         if (core.Charge < core.MaxCharge)
         {
-            TryChargeFromBattery(suit.Owner, core, suit);
+            TryChargeFromBattery(suit, core);
             UpdateUiState(suit);
         }
 
@@ -248,9 +247,9 @@ public sealed partial class ModularSuitSystem
         }
     }
 
-    private void TryChargeFromBattery(EntityUid uid, ModularSuitCoreComponent core, ModularSuitComponent suit)
+    private void TryChargeFromBattery(Entity<ModularSuitComponent> suit, ModularSuitCoreComponent core)
     {
-        if (!_powerCell.TryGetBatteryFromSlot(uid, out _))
+        if (!_powerCell.TryGetBatteryFromSlot(suit.Owner, out _))
             return;
 
         var needed = core.MaxCharge - core.Charge;
@@ -260,45 +259,47 @@ public sealed partial class ModularSuitSystem
         if (transfer <= 0)
             return;
 
-        if (_powerCell.TryUseCharge(uid, transfer, predicted: false))
+        if (_powerCell.TryUseCharge(suit.Owner, transfer, predicted: false))
         {
             core.Charge += transfer;
-            Dirty(uid, core);
             var ev = new ModularSuitChargeChangedEvent(core.Charge, core.MaxCharge);
-            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(suit.Owner, ref ev);
         }
     }
 
-    public void UseCoreCharge(Entity<ModularSuitComponent?> suit, float amount)
+    public bool TryUseCoreCharge(Entity<ModularSuitComponent?> suit, float amount)
     {
-        if (!Resolve(suit, ref suit.Comp) || amount <= 0)
-            return;
+        if (!Resolve(suit, ref suit.Comp) || !float.IsFinite(amount))
+            return false;
+
+        if (amount <= 0)
+            return true;
 
         var coreContainer = Container.GetContainer(suit, CoreContainer);
         if (coreContainer.ContainedEntities.Count == 0)
-            return;
+            return false;
 
         var coreEnt = coreContainer.ContainedEntities[0];
         if (!TryComp<ModularSuitCoreComponent>(coreEnt, out var core))
-            return;
+            return false;
 
         if (core.Infinite)
-            return;
+            return true;
 
-        var actualUse = Math.Min(core.Charge, amount);
-        core.Charge -= actualUse;
-        Dirty(coreEnt, core);
+        if (core.Charge < amount)
+            return false;
 
-        if (actualUse > 0)
-        {
-            var ev = new ModularSuitChargeChangedEvent(core.Charge, core.MaxCharge);
-            RaiseLocalEvent(coreEnt, ref ev);
-        }
+        core.Charge -= amount;
+
+        var ev = new ModularSuitChargeChangedEvent(core.Charge, core.MaxCharge);
+        RaiseLocalEvent(suit.Owner, ref ev);
 
         if (core.Charge <= 0 && suit.Comp.Active)
         {
             SetActive((suit.Owner, suit.Comp), false);
             UpdateUiState((suit.Owner, suit.Comp));
         }
+
+        return true;
     }
 }

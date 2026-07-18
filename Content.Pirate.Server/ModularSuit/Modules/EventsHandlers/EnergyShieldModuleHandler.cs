@@ -23,13 +23,18 @@ public sealed partial class EnergyShieldModuleHandler : ModuleActionHandler
         if (!TryComp<ModularSuitModuleComponent>(moduleEnt, out var moduleComp) || !moduleComp.IsActive)
             return;
 
+        if (!ModularSuit.TryUseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage))
+            return;
+
         var user = args.Performer;
         var shield = EnsureComp<EnergyShieldOwnerComponent>(user);
+        if (shield.ShieldEntity != null)
+            QueueDel(shield.ShieldEntity.Value);
+
         shield.ShieldEntity = Spawn(args.ShieldProto, Transform(user).Coordinates);
         shield.SustainingCount = 5;
 
         _transform.SetParent(shield.ShieldEntity.Value, user);
-        ModularSuit.UseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage);
         args.Handled = true;
     }
 }

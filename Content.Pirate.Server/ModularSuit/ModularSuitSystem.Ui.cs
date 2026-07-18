@@ -38,27 +38,38 @@ public sealed partial class ModularSuitSystem
             return;
         }
 
-        var moduleEnt = GetEntity(args.ModuleUid);
-        if (!TryComp<ModularSuitModuleComponent>(moduleEnt, out var module))
+        var moduleContainer = Container.GetContainer(ent, ModuleContainer);
+        if (!TryGetEntity(args.ModuleUid, out var moduleEnt)
+            || !moduleContainer.ContainedEntities.Contains(moduleEnt.Value)
+            || !TryComp<ModularSuitModuleComponent>(moduleEnt.Value, out var module))
+        {
+            UpdateUiState(ent);
             return;
+        }
 
         if (!module.CanBeDisabled)
+        {
+            UpdateUiState(ent);
             return;
+        }
 
         if (args.Active)
         {
             var attemptEvent = new ModularSuitModuleAttemptEvent(ent.Owner);
-            RaiseLocalEvent(moduleEnt, ref attemptEvent);
+            RaiseLocalEvent(moduleEnt.Value, ref attemptEvent);
 
             if (attemptEvent.Cancelled)
+            {
+                UpdateUiState(ent);
                 return;
+            }
         }
 
         module.IsActive = args.Active;
-        Dirty(moduleEnt, module);
+        Dirty(moduleEnt.Value, module);
 
         var ev = new ModularSuitModuleToggledEvent(ent, ent.Comp.Wearer, args.Active);
-        RaiseLocalEvent(moduleEnt, ref ev);
+        RaiseLocalEvent(moduleEnt.Value, ref ev);
 
         UpdateUiState(ent);
     }

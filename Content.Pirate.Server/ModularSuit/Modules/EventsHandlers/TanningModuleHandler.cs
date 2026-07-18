@@ -40,6 +40,9 @@ public sealed partial class TanningModuleHandler : ModuleActionHandler
             return;
         }
 
+        if (!ModularSuit.TryUseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage))
+            return;
+
         var newColor = new Color(
             Math.Max(MinColorValue, currentColor.R * DarkenFactor),
             Math.Max(MinColorValue, currentColor.G * DarkenFactor),
@@ -49,7 +52,6 @@ public sealed partial class TanningModuleHandler : ModuleActionHandler
         // Pirate: SharedVisualBodySystem was replaced upstream by humanoid appearance APIs.
         _humanoid.SetSkinColor(user, newColor, verify: false, humanoid: humanoid);
 
-        ModularSuit.UseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage);
         Popup.PopupEntity(Loc.GetString("modsuit-tanning-used"), user, user);
 
         args.Handled = true;

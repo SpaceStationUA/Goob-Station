@@ -71,7 +71,7 @@ public sealed partial class ModularSuitLightModuleSystem : EntitySystem
 
     private void OnModuleRemoved(Entity<ModularSuitLightModuleComponent> module, ref ModularSuitRemovedEvent args)
     {
-        RemoveLight(args.User, args.Suit, module.Comp);
+        RemoveLight(GetSuitWearer(args.Suit), args.Suit, module.Comp);
     }
 
     private void OnModuleToggled(Entity<ModularSuitLightModuleComponent> module, ref ModularSuitModuleToggledEvent args)
@@ -84,9 +84,6 @@ public sealed partial class ModularSuitLightModuleSystem : EntitySystem
 
     private void RemoveLight(EntityUid? user, EntityUid suit, ModularSuitLightModuleComponent component)
     {
-        if (user == null)
-            return;
-
         if (!TryGetTargetEntity(user, suit, component.TargetSlot, out var targetEntity))
             return;
 
@@ -95,6 +92,11 @@ public sealed partial class ModularSuitLightModuleSystem : EntitySystem
         {
             EntityManager.RemoveComponents(targetEntity.Value, component.GuaranteedRemoved);
         }
+    }
+
+    private EntityUid? GetSuitWearer(EntityUid suit)
+    {
+        return TryComp<ModularSuitComponent>(suit, out var suitComp) ? suitComp.Wearer : null;
     }
 
     private bool TryGetTargetEntity(EntityUid? user, EntityUid suit, string targetSlot, [NotNullWhen(true)] out EntityUid? targetEntity)

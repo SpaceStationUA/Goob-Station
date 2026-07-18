@@ -42,6 +42,9 @@ public sealed partial class AtrocinatorModuleHandler : ModuleActionHandler
             return;
         }
 
+        if (!ModularSuit.TryUseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage))
+            return;
+
         foreach (var entity in entities)
         {
             if (!HasComp<PhysicsComponent>(entity))
@@ -53,7 +56,6 @@ public sealed partial class AtrocinatorModuleHandler : ModuleActionHandler
         }
 
         Audio.PlayPvs(args.ActivationSound, user);
-        ModularSuit.UseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage);
         Popup.PopupPredicted(Loc.GetString("modsuit-atrocinator-used"), user, null);
 
         args.Handled = true;

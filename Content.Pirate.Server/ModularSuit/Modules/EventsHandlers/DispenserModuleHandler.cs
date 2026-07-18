@@ -25,11 +25,13 @@ public sealed partial class DispenserModuleHandler : ModuleActionHandler
         if (!TryComp<ModularSuitModuleComponent>(moduleEnt, out var moduleComp) || !moduleComp.IsActive)
             return;
 
+        if (!ModularSuit.TryUseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage))
+            return;
+
         var item = Spawn(_random.Pick(args.SpawnedProto), Transform(ent).Coordinates);
         _hands.TryPickupAnyHand(args.Performer, item);
 
         Audio.PlayPvs(args.ActivateSound, ent.Owner);
-        ModularSuit.UseCoreCharge(ent.Owner, moduleComp.PowerInstanceUsage);
         args.Handled = true;
     }
 }
