@@ -133,7 +133,8 @@ public sealed class BarkSystem : EntitySystem
 
         if (proto.Predictable)
         {
-            var hashCode = character.GetHashCode();
+            // Pirate: Char.GetHashCode can be negative for UTF-16 surrogates, producing invalid collection indices.
+            var hashCode = character.GetHashCode() & int.MaxValue;
 
             if (sound is ResolvedCollectionSpecifier collection && collection.Collection != null)
             {
