@@ -1946,8 +1946,8 @@
   id: UplinkModsuitContractor
   name: uplink-moduist-contractor-name
   description: uplink-moduist-contractor-desc
-  icon: { sprite: /Textures/_Goobstation/Clothing/OuterClothing/Modsuits/contractor.rsi, state: control }
-  productEntity: ClothingModsuitContractor
+  icon: { sprite: /Textures/_Pirate/Clothing/Modular/Syndicate/control.rsi, state: icon } # Pirate: new modular suit system.
+  productEntity: ClothingModularControllerSyndicatePreassembled # Pirate: replace the legacy contractor MODsuit.
   cost:
     Telecrystal: 50
   categories:

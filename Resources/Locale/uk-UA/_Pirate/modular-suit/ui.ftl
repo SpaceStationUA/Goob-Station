@@ -170,5 +170,26 @@ uplink-syndie-plate-compression-name = модуль стиснення брон�
 uplink-syndie-plate-compression-desc = Експериментальний модуль, що стискає бронепластини та дає змогу пролазити крізь вентиляцію. Під час роботи костюм неможливо зняти.
 uplink-syndie-energy-shield-module-name = модуль енергетичного щита
 uplink-syndie-energy-shield-module-desc = Зменшена версія корабельного дефлекторного щита. Блокує майже будь-які атаки ціною значного споживання енергії.
+
+uplink-syndie-modsuit-name = попередньо зібраний MOD-костюм Синдикату
+uplink-syndie-modsuit-desc = Набір із бойовим MOD-костюмом Gorlex Marauders, батареєю надвисокої ємності, штатними модулями та спорядженням для роботи у вакуумі.
+
+uplink-syndie-holster-module-name = модуль кобури MOD-костюма
+uplink-syndie-holster-module-desc = Вбудована кобура для швидкого приховування та діставання більшості видів балістичної зброї.
+
+uplink-syndie-medical-visor-module-name = модуль медичного візора MOD-костюма
+uplink-syndie-medical-visor-module-desc = Виводить на візор стан здоров'я та медичні дані екіпажу. Несумісний з іншими модулями візора.
+
+uplink-syndie-security-visor-module-name = модуль охоронного візора MOD-костюма
+uplink-syndie-security-visor-module-desc = Виводить на візор дані служби безпеки та статуси цілей. Несумісний з іншими модулями візора.
+
+uplink-syndie-injector-module-name = модуль інжектора MOD-костюма
+uplink-syndie-injector-module-desc = Вбудовує у рукавицю місткий струменевий інжектор, здатний вводити реагенти крізь захисне спорядження.
+
+uplink-syndie-quick-carry-module-name = модуль швидкого перенесення MOD-костюма
+uplink-syndie-quick-carry-module-desc = Підсилює сервоприводи рук і дає змогу швидко переносити поранених оперативників.
+
+uplink-syndie-holding-storage-module-name = блюспейс-модуль сховища MOD-костюма
+uplink-syndie-holding-storage-module-desc = Значно розширює внутрішнє сховище костюма. Перед встановленням потрібно вийняти штатний модуль сховища.
 uplink-energy-shield-module-bundle-name = набір модулів енергетичного щита
 uplink-energy-shield-module-bundle-desc = П'ять модулів енергетичного щита у зручній сумці для оснащення всієї команди.

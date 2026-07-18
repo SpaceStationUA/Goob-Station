@@ -108,7 +108,8 @@
     - MechParts
     - MechEquipment
     - MechPartsGoob
-    - Modsuits
+    - ModesuitPartStatic # Pirate: replace the legacy Goob MODsuit recipes.
+    - ModesuitModuleStatic # Pirate: expose the matching new modules.
     - PowerCages
     - BorgModulesGoob
     - BasicCybernetics

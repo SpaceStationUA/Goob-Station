@@ -174,7 +174,7 @@
     - id: OxygenTankFilled
     - id: NitrogenTankFilled # Pirate
     - id: ClothingMaskBreath
-    - id: ClothingModsuitAtmostechPowerCell # Goob edit
+    - id: ClothingModularControllerAtmosphericPreassembled # Pirate: replace the legacy Goob MODsuit.
     - id: ClothingOuterHardsuitAtmosOld # Pirate
 
 - type: entity

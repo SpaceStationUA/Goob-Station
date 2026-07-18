@@ -9990,14 +9990,14 @@ entities:
     - type: Transform
       pos: 68.5,35.5
       parent: 1
-- proto: ClothingModsuitHeadOfSecurityPowerCell
+- proto: ClothingModularControllerSafeguardPreassembled
   entities:
   - uid: 3454
     components:
     - type: Transform
       pos: 75.5,35.5
       parent: 1
-- proto: ClothingModsuitSecurityPowerCell
+- proto: ClothingModularControllerSecurityPreassembled
   entities:
   - uid: 3519
     components:

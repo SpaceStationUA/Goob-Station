@@ -115556,10 +115556,10 @@ entities:
             sizes: null
             components: null
         icon:
-          sprite: /Textures/_Goobstation/Clothing/OuterClothing/Modsuits/contractor.rsi
-          state: control
+          sprite: /Textures/_Pirate/Clothing/Modular/Syndicate/control.rsi
+          state: icon
         priority: 0
-        productEntity: ClothingModsuitContractor
+        productEntity: ClothingModularControllerSyndicatePreassembled
         productAction: null
         productUpgradeId: null
         productActionEntity: null

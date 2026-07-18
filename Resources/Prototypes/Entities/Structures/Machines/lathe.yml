@@ -382,8 +382,6 @@
     - PartsStatic
     - CablesStatic
     - PowerCellsStatic
-    # Pirate: Wega modular suit port.
-    - ModesuitPartStatic
     - ModesuitModuleStatic
     dynamicPacks:
     - Robotics
@@ -392,7 +390,8 @@
     - MechEquipment
     # Goobstation Packs
     - MechPartsGoob
-    - Modsuits
+    # Pirate: legacy Modsuits pack replaced by the new modular suit parts.
+    - ModesuitPartStatic
     - PowerCages
     - BorgModulesGoob
     - BasicCybernetics
