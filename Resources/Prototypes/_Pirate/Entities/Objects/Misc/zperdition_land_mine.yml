@@ -9,6 +9,7 @@
       Blunt: 5
       Slash: 5
   tileBreakChance: [0]
+  tileBreakIntensity: [0]
 
 - type: entity
   parent: LandMineExplosive
