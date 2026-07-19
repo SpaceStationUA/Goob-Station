@@ -91,7 +91,9 @@
     defaultChannel: CorticalBorer
   - type: Speech
     enabled: false
-  # Pirate: keep borer speech on the standard font; UniversalLanguageSpeaker otherwise selects Psychomantic.
+  # Pirate: keep borer speech on the standard font while retaining universal understanding.
+  - type: LanguageSpeaker
+    currentLanguage: TauCetiBasic
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
