@@ -1,0 +1,10 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Document>
+  # Заморожені ласощі
+  Алкоголь пасує не всім. Крижаний смаколик допоможе відпочити, особливо у спекотний день!
+
+  <GuideReagentGroupEmbed Group="FrozenTreats"/>
+</Document>
