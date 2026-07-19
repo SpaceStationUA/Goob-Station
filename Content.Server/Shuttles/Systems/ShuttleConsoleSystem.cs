@@ -505,6 +505,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         _ztravel.WriteConsoleState(shuttle.Owner, mapState); // Pirate: multiz
 
-        return mapState;
+        return mapState; // Pirate: multiz
     }
 }
