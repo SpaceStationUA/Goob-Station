@@ -53,6 +53,7 @@ ent-MobCorticalBorer = кортикальний бурильник
     .desc = Паразитичний черв, що проникає в мозок носія та відкладає яйця.
 ent-CorticalBorerEgg = яйце кортикального бурильника
     .desc = Воно тривожно вологе й м'яке.
+ent-MindRoleCorticalBorer = роль кортикального бурильника
 
 ent-ActionCorticalBorerChemMenu = Хімікати
     .desc = Відкрити меню хімікатів для введення реагентів носієві.

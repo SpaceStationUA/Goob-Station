@@ -12,14 +12,11 @@
     makeSentient: true
     allowSpeech: false
     allowMovement: true
-    requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 180000
     name: cortical-borer-ghostrole-name
     description: cortical-borer-ghostrole-desc
     rules: cortical-borer-ghostrole-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleCorticalBorer
   - type: GhostTakeoverAvailable
   - type: Sprite
     drawdepth: SmallMobs
@@ -121,11 +118,8 @@
     name: cortical-borer-ghostrole-name
     description: cortical-borer-ghostrole-desc
     rules: cortical-borer-ghostrole-rules
-    requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 180000
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleCorticalBorer
   - type: GhostRoleMobSpawner
     prototype: MobCorticalBorer
   - type: Damageable

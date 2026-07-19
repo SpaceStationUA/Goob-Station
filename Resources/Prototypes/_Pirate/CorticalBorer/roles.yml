@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: antag
+  id: CorticalBorerAntag
+  name: cortical-borer-ghostrole-name
+  antagonist: true
+  objective: cortical-borer-ghostrole-desc
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 50h
+  guides:
+  - CorticalBorerGuide
+
+- type: entity
+  parent: MindRoleGhostRoleFreeAgent
+  id: MindRoleCorticalBorer
+  name: Cortical Borer Role
+  components:
+  - type: MindRole
+    antagPrototype: CorticalBorerAntag
