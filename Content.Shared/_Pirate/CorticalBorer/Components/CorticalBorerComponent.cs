@@ -66,12 +66,12 @@ public sealed partial class CorticalBorerComponent : Component
     [DataField]
     public ProtoId<CollectiveMindPrototype> HivemindChannel = "CorticalBorer";
 
-    public readonly List<EntProtoId> InitialCorticalBorerActions =
-    [
+    public readonly List<EntProtoId> InitialCorticalBorerActions = new()
+    {
         "ActionCorticalBorerInfest",
         "ActionCorticalBorerEject",
         "ActionCorticalBorerChemMenu",
         "ActionCheckBlood",
         "ActionControlHost",
-    ];
+    };
 }
