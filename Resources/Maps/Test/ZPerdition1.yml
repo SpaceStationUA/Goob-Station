@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 07/19/2026 09:17:43
-  entityCount: 8585
+  time: 07/19/2026 09:37:51
+  entityCount: 8584
 maps:
 - 1
 grids:
@@ -7788,7 +7788,7 @@ entities:
       pos: -14.5,1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -172682.98
+      secondsUntilStateChange: -172894.19
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7800,7 +7800,7 @@ entities:
       pos: -13.5,6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -129841.734
+      secondsUntilStateChange: -130052.94
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8030,7 +8030,7 @@ entities:
       pos: 20.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -60376.59
+      secondsUntilStateChange: -60587.793
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8639,17 +8639,6 @@ entities:
     - type: Transform
       pos: 20.5,-1.5
       parent: 2
-- proto: AlwaysPoweredWallLight
-  entities:
-  - uid: 5646
-    components:
-    - type: Transform
-      anchored: False
-      rot: -1.5707963267948966 rad
-      pos: -3.5,-0.5
-      parent: 1
-    - type: Physics
-      bodyType: Dynamic
 - proto: AnomalyScanner
   entities:
   - uid: 225
@@ -8953,13 +8942,6 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
-- proto: AreaBrig
-  entities:
-  - uid: 5610
-    components:
-    - type: Transform
-      pos: 18.5,7.5
-      parent: 2
 - proto: AreaChapel
   entities:
   - uid: 5869
@@ -23215,7 +23197,7 @@ entities:
       pos: 17.5,-18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5922.1685
+      secondsUntilStateChange: -6133.3696
       state: Opening
 - proto: CurtainsOrangeOpen
   entities:
@@ -23329,7 +23311,7 @@ entities:
       pos: 23.5,-18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5919.535
+      secondsUntilStateChange: -6130.7363
       state: Opening
 - proto: CurtainsRedOpen
   entities:
@@ -44192,13 +44174,6 @@ entities:
     - type: Transform
       pos: 35.5,-11.5
       parent: 2
-- proto: PoweredFloorLight
-  entities:
-  - uid: 5527
-    components:
-    - type: Transform
-      pos: 0.5,5.5
-      parent: 2
 - proto: PoweredLEDLightPostSmall
   entities:
   - uid: 5456
@@ -44532,6 +44507,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,2.5
       parent: 2
+  - uid: 5527
+    components:
+    - type: Transform
+      pos: -1.5,5.5
+      parent: 2
   - uid: 5530
     components:
     - type: Transform
@@ -44643,6 +44623,11 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,8.5
+      parent: 2
+  - uid: 5610
+    components:
+    - type: Transform
+      pos: 2.5,5.5
       parent: 2
   - uid: 5629
     components:
@@ -58888,7 +58873,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -5840.102
+      secondsUntilStateChange: -6051.303
       state: Opening
     - type: Airlock
       autoClose: False
@@ -58901,7 +58886,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -5839.502
+      secondsUntilStateChange: -6050.703
       state: Opening
     - type: Airlock
       autoClose: False

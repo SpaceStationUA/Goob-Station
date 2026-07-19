@@ -4,7 +4,7 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 07/19/2026 09:17:42
+  time: 07/19/2026 09:37:50
   entityCount: 6913
 maps:
 - 3
@@ -2943,7 +2943,7 @@ entities:
       pos: -16.5,-7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -48300.39
+      secondsUntilStateChange: -48511.594
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -26526,7 +26526,7 @@ entities:
       pos: -1.5,-2.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -72509.49
+      secondsUntilStateChange: -72720.695
       state: Opening
   - uid: 4958
     components:
@@ -29649,8 +29649,8 @@ entities:
   - uid: 6750
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -7.5,-1.5
+      rot: -1.5707963267948966 rad
+      pos: -3.5,-0.5
       parent: 2
 - proto: PoweredlightBlack
   entities:
@@ -33508,7 +33508,7 @@ entities:
       pos: -11.5,-6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -12756.87
+      secondsUntilStateChange: -12968.071
       state: Closing
     - type: DeviceLinkSource
       lastSignals:
@@ -33519,7 +33519,7 @@ entities:
       pos: -11.5,-5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -12758.237
+      secondsUntilStateChange: -12969.438
       state: Closing
     - type: DeviceLinkSource
       lastSignals:
@@ -33530,7 +33530,7 @@ entities:
       pos: -16.5,-5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -12753.9375
+      secondsUntilStateChange: -12965.139
       state: Closing
     - type: DeviceLinkSource
       lastSignals:
@@ -33561,7 +33561,7 @@ entities:
       pos: -16.5,-6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -12752.638
+      secondsUntilStateChange: -12963.839
       state: Closing
     - type: DeviceLinkSource
       lastSignals:
@@ -42769,7 +42769,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -6569.8755
+      secondsUntilStateChange: -6781.0767
       state: Opening
     - type: Airlock
       autoClose: False
