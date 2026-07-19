@@ -91,6 +91,12 @@
     defaultChannel: CorticalBorer
   - type: Speech
     enabled: false
+  # Pirate: keep borer speech on the standard font; UniversalLanguageSpeaker otherwise selects Psychomantic.
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    understands:
+    - TauCetiBasic
   - type: HealthAnalyzer
     scanningEndSound:
       path: /Audio/Voice/Slime/slime_squish.ogg
