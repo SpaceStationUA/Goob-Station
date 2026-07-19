@@ -274,7 +274,7 @@
   - type: PlateableChickenOre # Pirate ranching
     components:
     - type: RadiationSource
-      slope: 0.7
+      terminalDecaySlope: 0.7 # Pirate: target equivalent for Trauma's removed slope field.
       intensity: 4.5
   - type: Item
     heldPrefix: uranium
