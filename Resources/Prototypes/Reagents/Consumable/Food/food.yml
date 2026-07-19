@@ -161,6 +161,11 @@
         - !type:MetabolizerTypeCondition # Pirate
           type: [ Vampiric ]
           inverted: true
+      - !type:GenericStatusEffect # Pirate
+        key: CorticalBorerProtection
+        type: Add
+        time: 3
+        refresh: false
   plantMetabolism:
   - !type:PlantAdjustNutrition
     amount: 0.1

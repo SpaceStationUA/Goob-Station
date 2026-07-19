@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: collectiveMind
+  id: CorticalBorer
+  name: collective-mind-borer
+  keycode: 'z'
+  color: "#d842fc"
+
+- type: radioChannel
+  id: CorticalBorer
+  name: chat-radio-cortical-borer
+  keycode: 'z'
+  color: "#d842fc"
+  longRange: true
