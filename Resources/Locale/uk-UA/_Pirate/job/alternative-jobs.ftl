@@ -8,10 +8,10 @@ job-alternative-name-flora-engineer = Флора-інженер
 job-alternative-name-prankster = Пранкер
 job-alternative-name-waiter = Офіціант
 job-alternative-name-maid = Покоївка
+job-alternative-name-correspondent = Кориспондент
 
-# Юрист
 
-# Прокурор
+# lybrarian
 job-alternative-name-archivist = Архіваріус
 job-description-archivist = Сторож знань і пилу. Зберігайте документи, книги та секрети станції. Іноді здається, що тільки ви ще пам’ятаєте, як читати.
 
@@ -93,6 +93,10 @@ job-alternative-name-secretary = Секретар
 job-alternative-name-teg-specialist = Спеціаліст з ТЕГ-двигунів
 job-alternative-name-engine-specialist = Спеціаліст з станційних двигунів
 job-alternative-name-electrician = Електрик
+job-alternative-name-nuclear-physicist = Фізик-ядерник
+job-description-nuclear-physicist = Ви, напевно, єдиний спеціаліст у вашій справі. Оперуйте та вдосконалюйте Ядерний
+реактор. Випадково наразіть усих на набезпеку, бо вам треба було випити води. Бухайте горілку в кінці зміни
+виправдовуючи це захистом від радіації.
 
 # Medical
 job-alternative-name-surgeon = Хірург
@@ -100,6 +104,7 @@ job-alternative-name-necrologist = Некролог
 job-alternative-name-cryo-specialist = Спеціаліст з кріогеніки
 job-alternative-name-pharmacist = Фармацеут
 job-alternative-name-smo = Старший медичний офіцер
+job-alternative-name-psychotherapist = Психотерапевт
 
 # Science
 job-alternative-name-anomalist = Аномаліст
@@ -114,13 +119,9 @@ job-alternative-name-peacekeeper = Миротворець
 job-alternative-name-inspector = Інспектор
 job-alternative-name-forensist = Слідчий
 job-alternative-name-corpsman = Санітар
-
-# Other
 job-alternative-name-lawenforcer = Правоохоронець
 job-description-lawenforcer = Охоронець закону і порядку. Затримуйте злочинців, захищайте станцію, але пам’ятайте: надмірна жорстокість — теж злочин.
 
 # Кінець lawenforcer
 
 # Інші
-job-alternative-name-psychotherapist = Психотерапевт
-job-alternative-name-correspondent = Кориспондент
