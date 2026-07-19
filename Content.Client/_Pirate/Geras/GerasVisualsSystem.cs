@@ -53,7 +53,7 @@ public sealed class GerasVisualsSystem : VisualizerSystem<GerasVisualsComponent>
         var layer = 0;
         foreach (var _ in sprite.AllLayers)
         {
-            SpriteSystem.LayerSetShader((ent.Owner, sprite), layer++, shader);
+            sprite.LayerSetShader(layer++, shader);
         }
     }
 }
