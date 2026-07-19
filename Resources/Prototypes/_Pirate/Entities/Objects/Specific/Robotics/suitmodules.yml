@@ -101,7 +101,7 @@
       state: storage_holding
   - type: Storage
     grid:
-    - 0,0,19,9
+    - 0,0,14,5 # Pirate: match the bag of holding capacity.
 
 # Flashlight
 - type: entity
