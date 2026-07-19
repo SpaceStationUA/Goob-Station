@@ -9,7 +9,7 @@
   discipline: Arsenal
   tier: 2
   cost: 8000
-  position: 4,1 # Pirate: required by the R&D console technology graph.
+  position: 7,0 # Pirate: required by the R&D console technology graph.
   recipeUnlocks:
   - ClothingOuterHardsuitCombatK9
   - ClothingOuterHardsuitCombatRiotK9
