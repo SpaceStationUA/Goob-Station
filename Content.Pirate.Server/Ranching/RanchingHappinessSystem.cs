@@ -4,6 +4,7 @@ using Content.Goobstation.Common.Ingestion;
 using Content.Goobstation.Common.Medical;
 using Content.Pirate.Shared.Ranching;
 using Content.Server.NPC.HTN;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Medical;

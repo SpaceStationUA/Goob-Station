@@ -2,6 +2,7 @@
 
 using Content.Pirate.Shared.Ranching;
 using Content.Shared.Clothing;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.Interaction;
@@ -13,6 +14,7 @@ using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
