@@ -16,11 +16,12 @@ on:
 
 env:
   # Pirate: mapped groups run independently; every other integration test falls through to the unmapped shard.
-  ENTITY_HEAVY_TEST_PATTERNS: Content.IntegrationTests.Tests.EntityTest.SpawnAndDeleteAllEntitiesInTheSameSpot
+  ENTITY_HEAVY_TEST_PATTERNS: >-
+    Content.IntegrationTests.Tests.EntityTest.SpawnAndDeleteAllEntitiesInTheSameSpot
+    Content.IntegrationTests.Tests.EntityTest.SpawnAndDeleteAllEntitiesOnDifferentMaps
   ENTITY_REMAINING_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.EntityTest.AllComponentsOneToOneDeleteTest
     Content.IntegrationTests.Tests.EntityTest.SpawnAndDeleteEntityCountTest
-    Content.IntegrationTests.Tests.EntityTest.SpawnAndDeleteAllEntitiesOnDifferentMaps
   ATMOS_TILE_TEST_PATTERNS: Content.IntegrationTests.Tests.Atmos.TileAtmosphereTest
   ATMOS_CORE_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Atmos.AirtightTest
@@ -41,9 +42,9 @@ env:
     Content.IntegrationTests.Tests.Sprite
     Content.IntegrationTests.Tests.StartTest
     Content.IntegrationTests.Tests.WizdenContentFreeze
-  VALIDATION_DATA_TEST_PATTERNS: >-
+  VALIDATION_MAP_TEST_PATTERNS: Content.IntegrationTests.Tests.PostMapInitTest
+  VALIDATION_SERIALIZATION_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Mapping
-    Content.IntegrationTests.Tests.PostMapInitTest
     Content.IntegrationTests.Tests.PrototypeSaveTest
     Content.IntegrationTests.Tests.PrototypeTests
     Content.IntegrationTests.Tests.SaveLoad
@@ -67,7 +68,11 @@ env:
     Content.IntegrationTests.Tests.Weldable
     Content.IntegrationTests.Tests.Wires
   ACTION_TEST_PATTERNS: Content.IntegrationTests.Tests.Actions
-  MIND_TEST_PATTERNS: Content.IntegrationTests.Tests.Minds
+  GHOST_ROLE_TEST_PATTERNS: Content.IntegrationTests.Tests.Minds.GhostRoleTests
+  MIND_CORE_TEST_PATTERNS: >-
+    Content.IntegrationTests.Tests.Minds.GhostTests
+    Content.IntegrationTests.Tests.Minds.MindTests
+    Content.IntegrationTests.Tests.Minds.RoleTests
   GAMEPLAY_CORE_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Body
     Content.IntegrationTests.Tests.Buckle
@@ -87,6 +92,32 @@ env:
     Content.IntegrationTests.Tests.Storage
     Content.IntegrationTests.Tests.Strip
     Content.IntegrationTests.Tests.Weapons
+  SUPPORT_TEST_PATTERNS: >-
+    Content.IntegrationTests.Tests.Access
+    Content.IntegrationTests.Tests.Chameleon
+    Content.IntegrationTests.Tests.Cleanup
+    Content.IntegrationTests.Tests.Cloning
+    Content.IntegrationTests.Tests.Commands
+    Content.IntegrationTests.Tests.DoAfter
+    Content.IntegrationTests.Tests.Embedding
+    Content.IntegrationTests.Tests.EncryptionKeys
+    Content.IntegrationTests.Tests.Engineering
+    Content.IntegrationTests.Tests.Goobstation
+    Content.IntegrationTests.Tests.Internals
+    Content.IntegrationTests.Tests.Lathe
+    Content.IntegrationTests.Tests.Lobby
+    Content.IntegrationTests.Tests.Materials
+    Content.IntegrationTests.Tests.Networking
+    Content.IntegrationTests.Tests.Payload
+    Content.IntegrationTests.Tests.Preferences
+    Content.IntegrationTests.Tests.Replays
+    Content.IntegrationTests.Tests.Serialization
+    Content.IntegrationTests.Tests.SmartFridge
+    Content.IntegrationTests.Tests.Tag
+    Content.IntegrationTests.Tests.Toolshed
+    Content.IntegrationTests.Tests.UserInterface
+    Content.IntegrationTests.Tests.Utility
+    Content.IntegrationTests.Tests.Vending
 
 jobs:
   tests:
@@ -114,21 +145,30 @@ jobs:
           - name: Validation core integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: validation-core
-          - name: Validation data integration tests
+          - name: Validation map integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: validation-data
+            shard: validation-map
+          - name: Validation serialization integration tests
+            project: Content.IntegrationTests/Content.IntegrationTests.csproj
+            shard: validation-serialization
           - name: World integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: world
           - name: Action integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: actions
-          - name: Mind integration tests
+          - name: Ghost role integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: minds
+            shard: ghost-role
+          - name: Mind core integration tests
+            project: Content.IntegrationTests/Content.IntegrationTests.csproj
+            shard: mind-core
           - name: Gameplay core integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: gameplay-core
+          - name: Support integration tests
+            project: Content.IntegrationTests/Content.IntegrationTests.csproj
+            shard: support
           - name: Unmapped integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: unmapped
@@ -179,11 +219,14 @@ jobs:
         read -r -a atmos_tile_patterns <<< "$ATMOS_TILE_TEST_PATTERNS"
         read -r -a atmos_core_patterns <<< "$ATMOS_CORE_TEST_PATTERNS"
         read -r -a validation_core_patterns <<< "$VALIDATION_CORE_TEST_PATTERNS"
-        read -r -a validation_data_patterns <<< "$VALIDATION_DATA_TEST_PATTERNS"
+        read -r -a validation_map_patterns <<< "$VALIDATION_MAP_TEST_PATTERNS"
+        read -r -a validation_serialization_patterns <<< "$VALIDATION_SERIALIZATION_TEST_PATTERNS"
         read -r -a world_patterns <<< "$WORLD_TEST_PATTERNS"
         read -r -a action_patterns <<< "$ACTION_TEST_PATTERNS"
-        read -r -a mind_patterns <<< "$MIND_TEST_PATTERNS"
+        read -r -a ghost_role_patterns <<< "$GHOST_ROLE_TEST_PATTERNS"
+        read -r -a mind_core_patterns <<< "$MIND_CORE_TEST_PATTERNS"
         read -r -a gameplay_core_patterns <<< "$GAMEPLAY_CORE_TEST_PATTERNS"
+        read -r -a support_patterns <<< "$SUPPORT_TEST_PATTERNS"
 
         case "$TEST_SHARD" in
           unit)
@@ -214,8 +257,13 @@ jobs:
             comparison="~"
             separator="|"
             ;;
-          validation-data)
-            patterns=("${validation_data_patterns[@]}")
+          validation-map)
+            patterns=("${validation_map_patterns[@]}")
+            comparison="~"
+            separator="|"
+            ;;
+          validation-serialization)
+            patterns=("${validation_serialization_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
@@ -229,13 +277,23 @@ jobs:
             comparison="~"
             separator="|"
             ;;
-          minds)
-            patterns=("${mind_patterns[@]}")
+          ghost-role)
+            patterns=("${ghost_role_patterns[@]}")
+            comparison="~"
+            separator="|"
+            ;;
+          mind-core)
+            patterns=("${mind_core_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
           gameplay-core)
             patterns=("${gameplay_core_patterns[@]}")
+            comparison="~"
+            separator="|"
+            ;;
+          support)
+            patterns=("${support_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
@@ -246,11 +304,14 @@ jobs:
               "${atmos_tile_patterns[@]}"
               "${atmos_core_patterns[@]}"
               "${validation_core_patterns[@]}"
-              "${validation_data_patterns[@]}"
+              "${validation_map_patterns[@]}"
+              "${validation_serialization_patterns[@]}"
               "${world_patterns[@]}"
               "${action_patterns[@]}"
-              "${mind_patterns[@]}"
+              "${ghost_role_patterns[@]}"
+              "${mind_core_patterns[@]}"
               "${gameplay_core_patterns[@]}"
+              "${support_patterns[@]}"
             )
             comparison="!~"
             separator="&"
