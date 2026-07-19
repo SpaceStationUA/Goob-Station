@@ -88,13 +88,10 @@ jobs:
     if: github.event.pull_request.draft == false
     strategy:
       fail-fast: false
-      # Pirate: leave two runner slots for packaging and map-renderer checks.
-      max-parallel: 8
+      # Pirate: leave runner slots for packaging, map-renderer, and short validation checks.
+      max-parallel: 7
       matrix:
         include:
-          - name: Unit tests
-            project: Content.Tests/Content.Tests.csproj
-            shard: unit
           - name: Entity integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: entity
@@ -104,9 +101,9 @@ jobs:
           - name: Validation map integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: validation-map
-          - name: World and atmos tile integration tests
+          - name: World, atmos tile, and unit tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: world
+            shard: world-unit
           - name: Mind integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: minds
@@ -166,9 +163,6 @@ jobs:
         read -r -a gameplay_patterns <<< "$GAMEPLAY_TEST_PATTERNS"
 
         case "$TEST_SHARD" in
-          unit)
-            patterns=()
-            ;;
           entity)
             patterns=("${entity_patterns[@]}")
             comparison="~"
@@ -184,7 +178,7 @@ jobs:
             comparison="~"
             separator="|"
             ;;
-          world)
+          world-unit)
             patterns=("${world_patterns[@]}")
             comparison="~"
             separator="|"
@@ -228,12 +222,14 @@ jobs:
           test_args+=(--filter "$test_filter")
         fi
 
-        if [[ "$TEST_SHARD" != "unit" ]]; then
-          test_args+=(--logger "console;verbosity=detailed")
-          nunit_args+=(NUnit.MapWarningTo=Failed)
-        fi
+        test_args+=(--logger "console;verbosity=detailed")
+        nunit_args+=(NUnit.MapWarningTo=Failed)
 
         dotnet test "${test_args[@]}" -- "${nunit_args[@]}"
+
+        if [[ "$TEST_SHARD" == "world-unit" ]]; then
+          dotnet test --no-build --configuration DebugOpt Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0
+        fi
   ci-success:
     name: Build & Test Debug
     needs:
