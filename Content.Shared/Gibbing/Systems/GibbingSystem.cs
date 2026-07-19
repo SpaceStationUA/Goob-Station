@@ -139,7 +139,8 @@ public sealed class GibbingSystem : EntitySystem
             {
                 foreach (var container in validContainers)
                 {
-                    foreach (var ent in container.ContainedEntities)
+                    // Pirate: dropping contents removes them from the container while iterating.
+                    foreach (var ent in container.ContainedEntities.ToArray())
                     {
                         DropEntity(new Entity<GibbableComponent?>(ent, null), outerEntity, randomSpreadMod,
                             ref droppedEntities, launchGibs,
@@ -153,7 +154,7 @@ public sealed class GibbingSystem : EntitySystem
             {
                 foreach (var container in validContainers)
                 {
-                    foreach (var ent in container.ContainedEntities)
+                    foreach (var ent in container.ContainedEntities.ToArray())
                     {
                         GibEntity(new Entity<GibbableComponent?>(ent, null), outerEntity, randomSpreadMod,
                             ref droppedEntities, launchGibs,
