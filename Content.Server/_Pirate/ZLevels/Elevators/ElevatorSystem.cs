@@ -543,8 +543,14 @@ public sealed partial class ElevatorSystem : EntitySystem
     /// </summary>
     private bool CanRideCab(EntityUid uid, ElevatorControllerComponent comp)
     {
-        if (!_xformQuery.HasComponent(uid))
+        if (!_xformQuery.TryComp(uid, out var xform))
             return false;
+
+        // Only move hierarchy roots. Children (notably ghosts parented to followed mobs) are already
+        // carried recursively with their parent; moving them again detaches them at stale cab coordinates.
+        if (xform.ParentUid != xform.GridUid && xform.ParentUid != xform.MapUid)
+            return false;
+
         if (HasComp<MapGridComponent>(uid) ||
             HasComp<ElevatorControllerComponent>(uid) ||
             HasComp<WallMountComponent>(uid) ||

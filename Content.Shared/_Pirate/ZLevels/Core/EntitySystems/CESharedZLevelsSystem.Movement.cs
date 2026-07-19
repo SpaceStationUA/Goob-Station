@@ -2656,6 +2656,23 @@ public abstract partial class CESharedZLevelsSystem
         return targetWorldPosition;
     }
 
+    /// <summary>
+    /// Returns whether an entity has a linked or map-level z target at the requested offset.
+    /// This mirrors the target resolution used by <see cref="TryMove"/> without moving the entity.
+    /// </summary>
+    [PublicAPI]
+    public bool CanMove(EntityUid ent, int offset)
+    {
+        if (offset == 0)
+            return false;
+
+        if (TryResolveLinkedMoveTarget(ent, offset, out _, out _, out _))
+            return true;
+
+        var mapUid = Transform(ent).MapUid;
+        return mapUid is { } map && TryResolveTraversalMapOffset(map, offset, out _, out _);
+    }
+
     [PublicAPI]
     public bool TryMove(EntityUid ent, int offset, Entity<CEZLevelMapComponent?>? map = null, Vector2? targetWorldPositionOverride = null, bool allowStairExitLanding = true)
     {

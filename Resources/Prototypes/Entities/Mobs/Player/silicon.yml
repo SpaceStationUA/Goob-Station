@@ -45,8 +45,7 @@
     - ActionOpenRemoteDevicesMenu # Corvax-Next-AiRemoteControl
     - ActionOpenCameraWarpMenu # Goobstation-Ai-Camera-Jumping
     - ActionAIRedPhone # Pirate-AI-RedPhone
-    - ActionStationAiViewUp # Pirate: multiz
-    - ActionStationAiViewDown # Pirate: multiz
+  - type: CEZLevelEyeMover # Pirate: multiz
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
