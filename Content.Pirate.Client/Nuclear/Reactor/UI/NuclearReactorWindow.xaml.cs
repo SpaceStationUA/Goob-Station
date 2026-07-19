@@ -20,7 +20,6 @@ public sealed partial class NuclearReactorWindow : FancyWindow
 {
     [Dependency] private IEntityManager _ent = default!;
     private readonly LockSystem _lock;
-    private readonly EntityQuery<ReactorPartComponent> _partQuery;
 
     private readonly Dictionary<Vector2i, StyleBoxFlat> _reactorGrid = [];
     private readonly Dictionary<Vector2i, TextureRect> _reactorRect = [];
@@ -34,8 +33,8 @@ public sealed partial class NuclearReactorWindow : FancyWindow
     private int _width = 0;
     private int _height = 0;
 
-    private Entity<NuclearReactorComponent> _reactor = default!;
-    private EntityUid? _monitor = default!;
+    private EntityUid _owner;
+    private bool _isMonitor;
 
     private DisplayModes _displayMode = DisplayModes.Temperature;
 
@@ -68,7 +67,6 @@ public sealed partial class NuclearReactorWindow : FancyWindow
         IoCManager.InjectDependencies(this);
 
         _lock = _ent.System<LockSystem>();
-        _partQuery = _ent.GetEntityQuery<ReactorPartComponent>();
 
         ReactorTempBar.ForegroundStyleBoxOverride = _temperatureBar;
         ReactorRadsBar.ForegroundStyleBoxOverride = _radiationBar;
@@ -114,63 +112,56 @@ public sealed partial class NuclearReactorWindow : FancyWindow
         }
 
         _data = msg.SlotData;
+        ReactorTempBar.MaxValue = msg.MeltdownTemperature;
+        ReactorRadsBar.MaxValue = msg.MaximumRadiation;
+        ReactorThermBar.MaxValue = msg.MaximumThermalPower;
+
+        ReactorTempValue.Text = FormatTemperature(msg.Temperature);
+        ReactorTempBar.Value = msg.Temperature;
+        _temperatureBar.BackgroundColor = GetColor(Atmospherics.T20C, ReactorTempBar.MaxValue * 0.75, msg.Temperature);
+
+        ReactorRadsValue.Text = msg.RadiationLevel <= msg.MaximumRadiation
+            ? Math.Round(msg.RadiationLevel, 1).ToString()
+            : Loc.GetString("comp-nuclear-reactor-ui-overload");
+        ReactorRadsBar.Value = msg.RadiationLevel;
+        _radiationBar.BackgroundColor = GetColor(0, ReactorRadsBar.MaxValue * 0.5, msg.RadiationLevel);
+
+        ReactorThermValue.Text = FormatPower(msg.ThermalPower);
+        ReactorThermBar.Value = msg.ThermalPower;
+        _powerBar.BackgroundColor = GetSteppedColor(ReactorThermBar.MaxValue * 0.75, ReactorThermBar.MaxValue, msg.ThermalPower);
+
+        ControlRodsValue.Text = Math.Round(msg.AverageControlRodInsertion * 50, 1).ToString() + "%";
+        ControlRodsActual.Value = msg.AverageControlRodInsertion;
+        ControlRodsSet.Value = msg.ControlRodInsertion;
+
+        _hasItem = msg.PartSlotItemName != null;
+        ItemName.Text = msg.PartSlotItemName ?? Loc.GetString("comp-nuclear-reactor-ui-empty");
+        EjectItem.Disabled = !_hasItem;
+
+        UpdateControls();
     }
 
-    private void Update()
+    private void UpdateControls()
     {
-        var comp = _reactor.Comp;
-        ReactorTempValue.Text = FormatTemperature(comp.Temperature);
-        ReactorTempBar.Value = comp.Temperature;
-        _temperatureBar.BackgroundColor = GetColor(Atmospherics.T20C, ReactorTempBar.MaxValue * 0.75, comp.Temperature);
-
-        ReactorRadsValue.Text = comp.RadiationLevel <= comp.MaximumRadiation
-            ? Math.Round(comp.RadiationLevel, 1).ToString()
-            : Loc.GetString("comp-nuclear-reactor-ui-overload");
-        ReactorRadsBar.Value = comp.RadiationLevel;
-        _radiationBar.BackgroundColor = GetColor(0, ReactorRadsBar.MaxValue * 0.5, comp.RadiationLevel);
-
-        ReactorThermValue.Text = FormatPower(comp.ThermalPower);
-        ReactorThermBar.Value = comp.ThermalPower;
-        _powerBar.BackgroundColor = GetSteppedColor(ReactorThermBar.MaxValue * 0.75, ReactorThermBar.MaxValue, comp.ThermalPower);
-
-        ControlRodsValue.Text = Math.Round(comp.AvgInsertion * 50, 1).ToString() + "%";
-        ControlRodsActual.Value = comp.AvgInsertion;
-        ControlRodsSet.Value = comp.ControlRodInsertion;
-
-        var locktarget = _monitor ?? _reactor.Owner;
-        var locked = _lock.IsLocked(_monitor ?? _reactor.Owner);
-
+        var locked = _lock.IsLocked(_owner);
         ControlRodsButtons.Visible = !locked;
-        SwapPart.Visible = !locked && _monitor == null;
+        SwapPart.Visible = !locked && !_isMonitor;
 
-        SwapPartLock.Visible = locked && _monitor == null;
+        SwapPartLock.Visible = locked && !_isMonitor;
         ControlRodsLock.Visible = locked;
 
-        Shelf.Visible = _monitor == null;
-
-        _hasItem = comp.PartSlot.Item != null;
-        ItemName.Text = comp.PartSlot.Item is { } item
-            ? Name(item)
-            : Loc.GetString("comp-nuclear-reactor-ui-empty");
-        EjectItem.Disabled = !_hasItem;
+        Shelf.Visible = true;
+        EjectItem.Visible = !_isMonitor;
     }
 
-    private new string Name(EntityUid uid)
-        => _ent.GetComponent<MetaDataComponent>(uid).EntityName;
-
-    public void SetEntity(Entity<NuclearReactorComponent> reactor, EntityUid? monitor = null)
+    public void SetEntity(EntityUid owner, bool isMonitor)
     {
-        _reactor = reactor;
-        _monitor = monitor;
+        _owner = owner;
+        _isMonitor = isMonitor;
 
-        this.SetInfoFromEntity(_ent, monitor ?? reactor.Owner);
-
-        var comp = reactor.Comp;
-        ReactorTempBar.MaxValue = comp.ReactorMeltdownTemp;
-        ReactorRadsBar.MaxValue = comp.MaximumRadiation;
-        ReactorThermBar.MaxValue = comp.MaximumThermalPower;
-
-        RebuildReactorGrid(comp.GridWidth, comp.GridHeight);
+        this.SetInfoFromEntity(_ent, owner);
+        SetTarget(0, 0);
+        UpdateControls();
     }
 
     private void RebuildReactorGrid(int width, int height)
@@ -232,7 +223,7 @@ public sealed partial class NuclearReactorWindow : FancyWindow
     {
         base.FrameUpdate(args);
 
-        Update();
+        UpdateControls();
 
         if (IsGridReady())
         {
@@ -265,11 +256,10 @@ public sealed partial class NuclearReactorWindow : FancyWindow
                             break;
                     }
 
-                    var part = _ent.GetEntity(_reactor.Comp.PartGrid[index]);
-                    var icon = _partQuery.TryComp(part, out var partComp) ? partComp.IconStateInserted : "base";
+                    var icon = data?.IconStateInserted ?? "base";
                     _reactorRect[pos].TexturePath = $"/Textures/_Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_part_inserted/{icon}.png";
 
-                    _reactorButton[pos].ToolTip = data != null
+                    _reactorButton[pos].ToolTip = data?.HasPart == true
                         ? Loc.GetString("comp-nuclear-reactor-ui-fuel-level", ("level", (int) Math.Round(GetFuelLevel(data) * 100)))
                         : "";
                 }
@@ -312,7 +302,6 @@ public sealed partial class NuclearReactorWindow : FancyWindow
 
         var gridSize = _width * _height;
         return _data.Length == gridSize &&
-               _reactor.Comp.PartGrid.Length == gridSize &&
                _reactorGrid.Count == gridSize &&
                _reactorRect.Count == gridSize &&
                _reactorButton.Count == gridSize;
@@ -370,18 +359,15 @@ public sealed partial class NuclearReactorWindow : FancyWindow
     private void UpdateTargetInfo()
     {
         var index = _targetX + _targetY * _width;
-        if (index < 0 || index >= _data.Length || index >= _reactor.Comp.PartGrid.Length)
+        if (index < 0 || index >= _data.Length)
         {
             ClearTargetInfo();
             return;
         }
 
-        var part = _ent.GetEntity(_reactor.Comp.PartGrid[index]);
-        _hasTarget = part != null;
-        TargetName.Text = part != null
-            ? Name(part.Value)
-            : Loc.GetString("comp-nuclear-reactor-ui-empty");
         var data = _data[index];
+        _hasTarget = data?.HasPart == true;
+        TargetName.Text = data?.PartName ?? Loc.GetString("comp-nuclear-reactor-ui-empty");
         if (data == null)
         {
             TargetTemperatureGrid.Visible = TargetNRadiationGrid.Visible = TargetRadiationGrid.Visible = TargetSpentGrid.Visible = false;
@@ -434,6 +420,18 @@ public sealed partial class NuclearReactorWindow : FancyWindow
 
     private void SetTarget(int x, int y)
     {
+        if (_width <= 0 || _height <= 0)
+        {
+            _targetX = 0;
+            _targetY = 0;
+            TargetPos.Text = "0,0";
+            XIncrement.Disabled = true;
+            XDecrement.Disabled = true;
+            YIncrement.Disabled = true;
+            YDecrement.Disabled = true;
+            return;
+        }
+
         _targetX = Math.Clamp(x, 0, _width - 1);
         _targetY = Math.Clamp(y, 0, _height - 1);
 

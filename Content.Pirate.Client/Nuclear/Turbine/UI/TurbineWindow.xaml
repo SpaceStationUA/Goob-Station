@@ -13,7 +13,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 				<!--View of turbine sprite-->
 				<BoxContainer Name="TurbineVeiw" Orientation="Horizontal" VerticalExpand="True" Margin="4">
-					<SpriteView Name="EntityView" SetSize="96 160" Scale="2 2" OverrideDirection="South" Margin="15" />
+					<EntityPrototypeView Name="EntityView" SetSize="96 160" Scale="2 2" OverrideDirection="South" Margin="15" />
 				</BoxContainer>
 
 				<!--RPM gauge-->
@@ -89,7 +89,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 					<BoxContainer Name="BladeInfo" Orientation="Vertical" HorizontalExpand="True" Margin="4">
 						<Label Name="BladeInfoName" Text="{Loc 'comp-turbine-ui-blade'}" StyleClasses="LabelKeyText" HorizontalAlignment="Center" HorizontalExpand="True"/>
 
-						<SpriteView Name="BladeEntityView" SetSize="128 128" Scale="2 2" OverrideDirection="South" Margin="15" />
+						<EntityPrototypeView Name="BladeEntityView" SetSize="128 128" Scale="2 2" OverrideDirection="South" Margin="15" />
 						<BoxContainer VerticalExpand="True"/>
 
 						<GridContainer Columns="2">
@@ -108,7 +108,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 					<BoxContainer Name="StatorInfo" Orientation="Vertical" HorizontalExpand="True" Margin="4">
 						<Label Name="StatorInfoName" Text="{Loc 'comp-turbine-ui-stator'}" StyleClasses="LabelKeyText" HorizontalAlignment="Center" HorizontalExpand="True"/>
 
-						<SpriteView Name="StatorEntityView" SetSize="128 128" Scale="2 2" OverrideDirection="South" Margin="15" />
+						<EntityPrototypeView Name="StatorEntityView" SetSize="128 128" Scale="2 2" OverrideDirection="South" Margin="15" />
 						<BoxContainer VerticalExpand="True"/>
 
 						<GridContainer Columns="2">

@@ -17,6 +17,7 @@ using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 
 namespace Content.Pirate.Shared.Nuclear.Turbine;
 
@@ -28,6 +29,8 @@ public abstract partial class SharedTurbineSystem : EntitySystem
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
     private EntityQuery<NuclearPropertiesComponent> _propsQuery = default!;
 
     private const string BladeContainer = "blade_slot";
@@ -40,6 +43,7 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         _propsQuery = GetEntityQuery<NuclearPropertiesComponent>();
 
         SubscribeLocalEvent<TurbineComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<TurbineComponent, BoundUIOpenedEvent>(OnUiOpened);
         SubscribeLocalEvent<TurbineComponent, ExaminedEvent>(OnExamined);
 
         SubscribeLocalEvent<TurbineComponent, InteractUsingEvent>(OnInteractUsing);
@@ -60,6 +64,12 @@ public abstract partial class SharedTurbineSystem : EntitySystem
     {
         _device.EnsureSourcePorts(ent.Owner, ent.Comp.TurbineDataPort, ent.Comp.SpeedHighPort, ent.Comp.SpeedLowPort);
         _device.EnsureSinkPorts(ent.Owner, ent.Comp.StatorLoadIncreasePort, ent.Comp.StatorLoadDecreasePort);
+    }
+
+    private void OnUiOpened(Entity<TurbineComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        if (args.UiKey.Equals(TurbineUiKey.Key))
+            UpdateUI(ent);
     }
 
     private void OnExamined(Entity<TurbineComponent> ent, ref ExaminedEvent args)
@@ -168,6 +178,7 @@ public abstract partial class SharedTurbineSystem : EntitySystem
 
         Popup.PopupClient(Loc.GetString("turbine-repair", ("target", ent), ("tool", args.Used!)), ent, args.User);
         _damage.SetAllDamage(ent.Owner, Comp<DamageableComponent>(ent.Owner), 0);
+        UpdateUI(ent);
     }
 
     private void OnEjectAttempt(EntityUid uid, TurbineComponent comp, ref ItemSlotEjectAttemptEvent args)
@@ -200,6 +211,7 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         UpdatePartValues(ent);
         if (updateHealthIndicators)
             UpdateHealthIndicators(ent);
+        UpdateUI(ent);
     }
 
     private void OnPartEjected(Entity<TurbineComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -218,6 +230,7 @@ public abstract partial class SharedTurbineSystem : EntitySystem
                 return;
         }
         UpdatePartValues(ent);
+        UpdateUI(ent);
     }
 
     private void OnSignalReceived(Entity<TurbineComponent> ent, ref SignalReceivedEvent args)
@@ -278,6 +291,42 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         {
             ent.Comp.PowerMultiplier = (float)Math.Max(0.2, 0.2 * stator.ElectricalConductivity);
         }
+    }
+
+    public void UpdateUI(Entity<TurbineComponent> ent, EntityUid? uiTarget = null)
+    {
+        var target = uiTarget ?? ent.Owner;
+        if (_net.IsClient || !_ui.IsUiOpen(target, TurbineUiKey.Key))
+            return;
+
+        _ui.SetUiState(target,
+            TurbineUiKey.Key,
+            new TurbineBuiState(
+                MetaData(ent).EntityPrototype?.ID,
+                ent.Comp.RPM,
+                ent.Comp.BestRPM,
+                ent.Comp.FlowRate,
+                ent.Comp.FlowRateMax,
+                ent.Comp.StatorLoad,
+                ent.Comp.LastGen,
+                ent.Comp.PowerSupply,
+                ent.Comp.Overspeed,
+                ent.Comp.Overtemp,
+                ent.Comp.Stalling,
+                ent.Comp.Undertemp,
+                ent.Comp.Ruined,
+                ent.Comp.BladeHealth,
+                ent.Comp.BladeHealthMax,
+                GetPartUiData(ent.Comp.CurrentBlade),
+                GetPartUiData(ent.Comp.CurrentStator)));
+    }
+
+    private TurbinePartBuiData? GetPartUiData(EntityUid? part)
+    {
+        if (part is not { } uid || !TryComp<MetaDataComponent>(uid, out var metadata))
+            return null;
+
+        return new TurbinePartBuiData(metadata.EntityName, metadata.EntityPrototype?.ID);
     }
 
     protected void SetBladeHealth(Entity<TurbineComponent> ent, int health)

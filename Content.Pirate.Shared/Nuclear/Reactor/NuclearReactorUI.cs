@@ -11,16 +11,42 @@ public enum NuclearReactorUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class NuclearReactorBuiState(ReactorSlotBUIData[] data, int gridWidth, int gridHeight) : BoundUserInterfaceState
+public sealed class NuclearReactorBuiState(
+    ReactorSlotBUIData[] data,
+    int gridWidth,
+    int gridHeight,
+    float temperature,
+    float meltdownTemperature,
+    float radiationLevel,
+    float maximumRadiation,
+    float thermalPower,
+    float maximumThermalPower,
+    float controlRodInsertion,
+    float averageControlRodInsertion,
+    string? partSlotItemName)
+    : BoundUserInterfaceState
 {
     public readonly ReactorSlotBUIData[] SlotData = data;
     public readonly int GridWidth = gridWidth;
     public readonly int GridHeight = gridHeight;
+    public readonly float Temperature = temperature;
+    public readonly float MeltdownTemperature = meltdownTemperature;
+    public readonly float RadiationLevel = radiationLevel;
+    public readonly float MaximumRadiation = maximumRadiation;
+    public readonly float ThermalPower = thermalPower;
+    public readonly float MaximumThermalPower = maximumThermalPower;
+    public readonly float ControlRodInsertion = controlRodInsertion;
+    public readonly float AverageControlRodInsertion = averageControlRodInsertion;
+    public readonly string? PartSlotItemName = partSlotItemName;
 }
 
 [Serializable, NetSerializable]
 public sealed class ReactorSlotBUIData
 {
+    public bool HasPart;
+    public string? PartName;
+    public string IconStateInserted = "base";
+
     public double Temperature = 0;
     public int NeutronCount = 0;
 
