@@ -41,6 +41,9 @@ public sealed partial class CorticalBorerInfestedComponent : Component
 
     [ViewVariables]
     public ProtoId<CollectiveMindPrototype>? OldDefault;
+
+    [ViewVariables]
+    public bool AddedControlThermalVision;
 }
 
 [RegisterComponent, NetworkedComponent]
