@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseMentalAction
+  id: ActionStationAiViewUp
+  name: View deck above
+  description: Move your eye to the deck above.
+  components:
+  - type: Action
+    checkCanInteract: false
+    priority: -8
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Pirate/Actions/misc.rsi
+      state: up
+  - type: InstantAction
+    event: !type:CEZViewUpEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionStationAiViewDown
+  name: View deck below
+  description: Move your eye to the deck below.
+  components:
+  - type: Action
+    checkCanInteract: false
+    priority: -7
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Pirate/Actions/misc.rsi
+      state: down
+  - type: InstantAction
+    event: !type:CEZViewDownEvent

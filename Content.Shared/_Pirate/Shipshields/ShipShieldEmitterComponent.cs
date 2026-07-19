@@ -9,8 +9,10 @@ namespace Content.Shared._Pirate.ShipShields;
 [RegisterComponent]
 public sealed partial class ShipShieldEmitterComponent : Component
 {
-    public EntityUid? Shield;
-    public EntityUid? Shielded;
+    /// <summary>Shield bubbles owned by this emitter, keyed by the grid each protects.</summary>
+    public Dictionary<EntityUid, EntityUid> Shields = new();
+
+    public bool Active;
 
     [DataField]
     public float Accumulator;
@@ -49,6 +51,10 @@ public sealed partial class ShipShieldEmitterComponent : Component
     public Color ShieldColor = Color.White;
 
     public float OverloadAccumulator = 0f;
+
+    /// <summary>Shape-template grid for the current shielded peer set; rebuild on change.</summary>
+    public EntityUid? TemplateGrid;
+
     /// <summary>
     /// On power up, players for all on vessel, pitched down.
     /// </summary>

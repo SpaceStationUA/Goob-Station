@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared._Shitmed.Weapons.Ranged.Events; // Shitmed Change
 using Content.Shared._Lavaland.Weapons.Ranged.Events; // Pirate: gunplay
+using Content.Shared._Pirate.ZLevels.Shooting; // Pirate: multiz
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -73,6 +74,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] protected readonly TagSystem TagSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
+    [Dependency] private readonly CMUZLevelShootingSystem _zLevelShooting = default!; // Pirate: multiz
 
     /// <summary>
     /// Default projectile speed
@@ -383,6 +385,27 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         var fromCoordinates = Transform(user).Coordinates;
+
+        #region Pirate: multiz
+        // Cross-Z shoot redirect (ShootDown toggle, or LookUp + wielded gun): rewrite the shot onto
+        // the adjacent Z map, pre-shifted by the layer's render displacement so it renders on the
+        // aim line and hits where clicked. On failure (no layer / no opening) abort.
+        var sourceFromCoordinates = fromCoordinates;
+        if (!_zLevelShooting.TryAdjustShotCoordinates(user, fromCoordinates, toCoordinates.Value, out fromCoordinates, out var zAdjustedTo))
+        {
+            // Same safety throttle a cancelled attempt uses, so a latched ShootDown/LookUp with no
+            // valid target doesn't burn the trigger at full fire rate (popup/sound spam).
+            gun.Comp.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.Comp.NextFire.TotalSeconds)); // Pirate: multiz - gun is Entity<GunComponent> upstream, use .Comp
+            return false; // Pirate: multiz - method became bool upstream; abort path returns false
+        }
+        toCoordinates = zAdjustedTo;
+
+        // Prime the per-projectile visual offset (barrel-shift + depth) so cross-Z projectiles
+        // render back on the aim line; the EndShotOffset() calls below clear it.
+        if (_zLevelShooting.TryGetProjectileVisualOffset(user, sourceFromCoordinates, fromCoordinates, out var barrelShift, out var shotDepth))
+            _zLevelShooting.BeginShotOffset(barrelShift, shotDepth);
+        #endregion Pirate: multiz
+
         // Remove ammo
         var ev = new TakeAmmoEvent(shots, [], fromCoordinates, user);
 
@@ -401,6 +424,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (ev.Ammo.Count <= 0)
         {
+            _zLevelShooting.EndShotOffset(); // Pirate: multiz — every return in this block skips the normal EndShotOffset below
+
             // triggers effects on the gun if it's empty
             var emptyGunShotEvent = new OnEmptyGunShotEvent(user);
             RaiseLocalEvent(gun, ref emptyGunShotEvent);
@@ -456,6 +481,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
         Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, out var userImpulse, user, throwItems: attemptEv.ThrowItems);
+        _zLevelShooting.EndShotOffset(); // Pirate: multiz
         var shotEv = new GunShotEvent(user, ev.Ammo);
         RaiseLocalEvent(gun, ref shotEv);
         var shotBodyEv = new GunShotBodyEvent(gun, gun); // Shitmed Change

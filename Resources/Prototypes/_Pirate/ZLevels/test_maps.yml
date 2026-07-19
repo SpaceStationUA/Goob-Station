@@ -1,0 +1,5 @@
+- type: zMap
+  id: ZTest
+  maps:
+  - /Maps/Test/empty.yml
+  - /Maps/Test/empty.yml

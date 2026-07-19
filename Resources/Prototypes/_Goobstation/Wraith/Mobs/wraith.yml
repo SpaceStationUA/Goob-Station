@@ -64,6 +64,7 @@
     castShadows: false
   - type: ContentEye
     maxZoom: 1.2, 1.2
+  - type: CEZLevelGhostMover # Pirate: multiz
   - type: Visibility
     layer: 2 #ghost vis layer
   - type: Speech

@@ -1,0 +1,142 @@
+- type: entity
+  parent: MarkerBase
+  id: ElevatorController
+  name: elevator controller
+  description: Coordinates an elevator cab. A mapping marker placed inside the shaft.
+  components:
+  # MarkerBase: visible in the editor, hidden in-round.
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    state: red
+    drawdepth: Overdoors
+  - type: ElevatorController
+    elevatorId: elevator
+    width: 1
+    height: 1
+    perDeckTravelSeconds: 3.0  # 3s per floor (SS13 public elevator)
+    violentLanding: false
+    crushDamage:
+      types:
+        Blunt: 200
+
+- type: entity
+  parent: BaseWallmount
+  id: ElevatorPanel
+  name: elevator control panel
+  description: Calls an elevator cab to the chosen floor.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/ZLevels/Elevator/elevator_panel.rsi
+    state: elevpanel0
+  - type: ElevatorPanel
+    elevatorId: elevator
+  - type: ActivatableUI
+    key: enum.ElevatorUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ElevatorUiKey.Key:
+        type: ElevatorBoundUserInterface
+
+- type: entity
+  parent: BaseWallmount
+  id: ElevatorCallButton
+  name: elevator call button
+  description: Summons the elevator to this floor.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/ZLevels/Elevator/elevator_button.rsi
+    state: tram
+  - type: ElevatorCallButton
+    elevatorId: elevator
+
+- type: entity
+  parent: BaseWallmount
+  id: ElevatorIndicator
+  name: elevator floor indicator
+  description: Shows the elevator's current floor and direction.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/ZLevels/Elevator/lift_indicator.rsi
+    layers:
+    # Housing.
+    - state: lift_indo-base
+      map: ["enum.ElevatorVisualLayers.Base"]
+    # Floor-number digit; the client visualizer sets its state.
+    - state: lift_indo-num1
+      map: ["enum.ElevatorVisualLayers.Digit"]
+    # Arrow overlay; shown only while travelling.
+    - state: lift_indo-up
+      map: ["enum.ElevatorVisualLayers.Arrow"]
+      visible: false
+  - type: ElevatorIndicator
+    elevatorId: elevator
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ElevatorIndicatorVisuals.Direction:
+        enum.ElevatorVisualLayers.Arrow:
+          Idle: { visible: false }
+          Up: { state: lift_indo-up, visible: true }
+          Down: { state: lift_indo-down, visible: true }
+
+# No dedicated door entity: add ElevatorDoor (matching elevatorId) to any door — e.g. a vanilla
+# airlock with `- type: ElevatorDoor`.
+
+# Legacy object cab floor; prefer the tile prototypes in _Pirate/Turf/elevator.yml.
+- type: entity
+  id: ElevatorPlatform
+  name: elevator platform
+  description: The floor of an elevator cab.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/catwalk.rsi
+    drawdepth: FloorTiles
+  - type: Icon
+    sprite: Structures/catwalk.rsi
+    state: catwalk_preview
+  - type: IconSmooth
+    key: elevator_platform
+    base: catwalk_
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCatwalk
+      params:
+        volume: 8
+  - type: Tag
+    tags:
+    - Catwalk
+
+# Invisible looping speaker spawned in the cab and carried to its current deck.
+- type: entity
+  id: ElevatorMusicSpeaker
+  name: elevator music
+  description: You can't see this — it's mounted in the elevator cab.
+  components:
+  - type: Transform
+  # Starts disabled; the elevator enables it at init.
+  - type: AmbientSound
+    volume: -5
+    range: 4
+    enabled: false
+    sound:
+      path: /Audio/_Pirate/Elevator/elevator_music.ogg
+
+# Telegraph shown on each destination tile while the cab descends.
+- type: entity
+  id: ElevatorTravelWarning
+  name: elevator hazard
+  description: Stand clear.
+  components:
+  - type: Transform
+    anchored: true
+  - type: TimedDespawn
+    lifetime: 2
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    sprite: _Pirate/Structures/ZLevels/Elevator/elevator_warning.rsi
+    state: target_box
