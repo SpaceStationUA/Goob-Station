@@ -42,6 +42,15 @@
     TowercapSeeds: 5
     WheatSeeds: 5
     WatermelonSeeds: 5
+    # Pirate ranching
+    deliciousAppleSeeds: 3
+    MethAppleSeeds: 3
+    ClearCornSeeds: 3
+    PeanutSeeds: 3
+    MagicMushroomSeeds: 3
+    SynthMeatSeeds: 3
+    BalloonMelonSeeds: 3
+    SteelWheatSeeds: 3
   contrabandInventory:
     TobaccoSeeds: 2
     FoodSnackSemki: 2

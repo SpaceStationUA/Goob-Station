@@ -158,6 +158,7 @@
       - fishy
   - type: Tag
     tags:
+    - Fish # Pirate ranching
     - Raw
     - Meat
   - type: Sprite
@@ -508,6 +509,11 @@
   components:
   - type: Sprite
     state: lizard
+  - type: Tag # Pirate ranching: raw lizard meat substitutes for Trauma's detachable lizard tail.
+    tags:
+    - Raw
+    - Meat
+    - LizardTail
   - type: SolutionContainerManager
     solutions:
       food:
