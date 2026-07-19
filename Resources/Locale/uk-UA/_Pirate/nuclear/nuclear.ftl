@@ -57,12 +57,6 @@ comp-nuclear-reactor-ui-reactor-temp = Температура
 comp-nuclear-reactor-ui-reactor-rads = Радіація
 comp-nuclear-reactor-ui-reactor-therm = Теплова потужність
 comp-nuclear-reactor-ui-reactor-control = Керувальні стрижні
-comp-nuclear-reactor-ui-control-format = {$actual}% -> {$target}%
-comp-nuclear-reactor-ui-control-format-tooltip = Фактичний рівень введення -> заданий рівень введення
-comp-nuclear-reactor-ui-control-insert-large = Ввести керувальні стрижні на 5%
-comp-nuclear-reactor-ui-control-insert = Ввести керувальні стрижні на 0,5%
-comp-nuclear-reactor-ui-control-remove = Вивести керувальні стрижні на 0,5%
-comp-nuclear-reactor-ui-control-remove-large = Вивести керувальні стрижні на 5%
 comp-nuclear-reactor-ui-therm-format = { POWERWATTS($power) }
 
 comp-nuclear-reactor-ui-footer-left = Небезпека: висока радіація.

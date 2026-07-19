@@ -133,33 +133,11 @@ public sealed partial class NuclearReactorWindow : FancyWindow
         ReactorThermBar.Value = comp.ThermalPower;
         _powerBar.BackgroundColor = GetSteppedColor(ReactorThermBar.MaxValue * 0.75, ReactorThermBar.MaxValue, comp.ThermalPower);
 
-        var actualInsertion = Math.Round(comp.AvgInsertion * 50, 1);
-        var targetInsertion = Math.Round(comp.ControlRodInsertion * 50, 1);
-        ControlRodsValue.Text = Loc.GetString("comp-nuclear-reactor-ui-control-format",
-            ("actual", actualInsertion),
-            ("target", targetInsertion));
+        ControlRodsValue.Text = Math.Round(comp.AvgInsertion * 50, 1).ToString() + "%";
         ControlRodsActual.Value = comp.AvgInsertion;
         ControlRodsSet.Value = comp.ControlRodInsertion;
 
-        var cannotInsert = comp.ControlRodInsertion >= ControlRodsSet.MaxValue;
-        var cannotRemove = comp.ControlRodInsertion <= 0f;
-        ControlRodsInsertLarge.Disabled = cannotInsert;
-        ControlRodsInsert.Disabled = cannotInsert;
-        ControlRodsRemove.Disabled = cannotRemove;
-        ControlRodsRemoveLarge.Disabled = cannotRemove;
-
-        if (cannotInsert)
-        {
-            _repeatQueue.Remove(ControlRodsInsertLarge);
-            _repeatQueue.Remove(ControlRodsInsert);
-        }
-
-        if (cannotRemove)
-        {
-            _repeatQueue.Remove(ControlRodsRemove);
-            _repeatQueue.Remove(ControlRodsRemoveLarge);
-        }
-
+        var locktarget = _monitor ?? _reactor.Owner;
         var locked = _lock.IsLocked(_monitor ?? _reactor.Owner);
 
         ControlRodsButtons.Visible = !locked;
