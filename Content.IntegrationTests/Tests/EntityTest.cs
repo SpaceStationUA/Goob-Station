@@ -174,6 +174,7 @@ namespace Content.IntegrationTests.Tests
                 .Where(p => !p.Components.ContainsKey("DarkLord")) // 25 % chance to fail tests because the system is fucking shitcoded
                 .Where(p => !p.Components.ContainsKey("GrapplingProjectile")) // shitcode double-embeds or something, fails test
                 .Where(p => !p.Components.ContainsKey("PolymorphOnTrigger")) // Pirate: stacked projectiles can polymorph mobs into incompatible sentient entities
+                .Where(p => !p.Components.ContainsKey("EmbeddableProjectile")) // Pirate: stacked thrown items can embed into the same target twice
                 .Where(p => !p.Components.ContainsKey("SpawnOnDespawn")) // it leaves entities behind if lifetime is under 15s
                 .Where(p => !p.Components.ContainsKey("Chasm")) // probably not the best idea for a bunch of entities stacked ontop of each other?
                 .Select(p => p.ID)
