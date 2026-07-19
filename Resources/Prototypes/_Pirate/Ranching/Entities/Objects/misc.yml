@@ -3,8 +3,8 @@
 - type: entity
   id: ThunderCloud
   parent: BaseEnergyBall
-  name: thunder cloud
-  description: A cloud which has a localized thunder storm inside of it, probably due to chicken magic.
+  name: "грозова хмара"
+  description: "Локальна гроза, породжена курячою магією."
   components:
   - type: ChasingWalk
     minSpeed: 2
