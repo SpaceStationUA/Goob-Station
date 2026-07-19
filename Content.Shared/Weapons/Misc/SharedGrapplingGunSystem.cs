@@ -46,6 +46,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         SubscribeLocalEvent<GrapplingGunComponent, GunShotEvent>(OnGrapplingShot);
         SubscribeLocalEvent<GrapplingGunComponent, ActivateInWorldEvent>(OnGunActivate);
         SubscribeLocalEvent<GrapplingGunComponent, HandDeselectedEvent>(OnGrapplingDeselected);
+        SubscribeLocalEvent<GrapplingGunComponent, EntityTerminatingEvent>(OnGrapplingTerminating);
     }
 
     private void OnGrappleJointRemoved(EntityUid uid, GrapplingProjectileComponent component, JointRemovedEvent args)
@@ -61,8 +62,10 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             if (!HasComp<GrapplingProjectileComponent>(shotUid))
                 continue;
 
-            //todo: this doesn't actually support multigrapple
-            // At least show the visuals.
+            // Pirate: MODsuit tether guns must never leave multiple active ropes behind.
+            if (component.Projectile is { } previousProjectile && previousProjectile != shotUid.Value)
+                DeleteProjectile(previousProjectile);
+
             component.Projectile = shotUid.Value;
             Dirty(uid, component);
             var visuals = EnsureComp<JointVisualsComponent>(shotUid.Value);
@@ -79,6 +82,11 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     private void OnGrapplingDeselected(EntityUid uid, GrapplingGunComponent component, HandDeselectedEvent args)
     {
         SetReeling(uid, component, false, args.User);
+    }
+
+    private void OnGrapplingTerminating(EntityUid uid, GrapplingGunComponent component, ref EntityTerminatingEvent args)
+    {
+        DeleteProjectile(component.Projectile);
     }
 
     private void OnGrapplingReel(RequestGrapplingReelMessage msg, EntitySessionEventArgs args)
@@ -125,14 +133,21 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         _audio.PlayPredicted(component.CycleSound, uid, args.User);
         _appearance.SetData(uid, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
 
-        if (_netManager.IsServer)
-            QueueDel(projectile);
+        DeleteProjectile(projectile);
 
         component.Projectile = null;
         SetReeling(uid, component, false, args.User);
         _gun.ChangeBasicEntityAmmoCount(uid, 1);
 
         args.Handled = true;
+    }
+
+    private void DeleteProjectile(EntityUid? projectile)
+    {
+        if (!_netManager.IsServer || projectile is not { } uid || TerminatingOrDeleted(uid))
+            return;
+
+        QueueDel(uid);
     }
 
     private void SetReeling(EntityUid uid, GrapplingGunComponent component, bool value, EntityUid? user)
