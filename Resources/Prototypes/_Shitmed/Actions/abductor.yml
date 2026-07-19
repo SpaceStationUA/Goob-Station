@@ -36,40 +36,6 @@
   - type: WorldTargetAction
     event: !type:SendYourselfEvent
 
-# Pirate: multiz (start)
-- type: entity
-  parent: BaseMentalAction
-  id: ActionAbductorViewUp
-  name: View deck above
-  description: Move the observation camera to the deck above.
-  components:
-  - type: Action
-    checkCanInteract: false
-    priority: -18
-    itemIconStyle: BigAction
-    icon:
-      sprite: _Pirate/Actions/misc.rsi
-      state: up
-  - type: InstantAction
-    event: !type:CEZViewUpEvent
-
-- type: entity
-  parent: BaseMentalAction
-  id: ActionAbductorViewDown
-  name: View deck below
-  description: Move the observation camera to the deck below.
-  components:
-  - type: Action
-    checkCanInteract: false
-    priority: -17
-    itemIconStyle: BigAction
-    icon:
-      sprite: _Pirate/Actions/misc.rsi
-      state: down
-  - type: InstantAction
-    event: !type:CEZViewDownEvent
-# Pirate: multiz (end)
-
 - type: entity
   parent: BaseAction
   id: ActionReturnToShip

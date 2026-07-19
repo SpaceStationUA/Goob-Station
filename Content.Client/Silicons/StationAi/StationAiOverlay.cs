@@ -63,11 +63,10 @@ public sealed class StationAiOverlay : Overlay
         var playerEnt = _player.LocalEntity;
 
         // Shitmed - Starlight Abductors Change Start
-        #region Pirate: multiz - calculate camera coverage on the relayed eye's current deck
-        if (_entManager.TryGetComponent(playerEnt, out StationAiOverlayComponent? _)
+        if (_entManager.TryGetComponent(playerEnt, out StationAiOverlayComponent? stationAiOverlay)
+            && stationAiOverlay.AllowCrossGrid
             && _entManager.TryGetComponent(playerEnt, out RelayInputMoverComponent? relay))
             playerEnt = relay.RelayEntity;
-        #endregion Pirate: multiz
         // Shitmed Change End
 
         _entManager.TryGetComponent(playerEnt, out TransformComponent? playerXform);

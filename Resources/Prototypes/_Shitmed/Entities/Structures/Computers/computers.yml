@@ -70,8 +70,6 @@
   categories: [ HideSpawnMenu, DoNotMap ]
   suffix: DO NOT MAP
   components:
-  - type: CEZLevelPhysicsExempt # Pirate: multiz
-  - type: CEZViewSource # Pirate: multiz
   - type: NoFTL
   - type: WarpPoint
     follow: true

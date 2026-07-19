@@ -3,15 +3,10 @@
 
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared._Mono.FireControl;
-using Content.Shared._Lavaland.Weapons.Ranged.Events; // Pirate: multiz
-using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
-using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
-using Content.Shared._Pirate.ZLevels.FireControl; // Pirate: multiz
 using Content.Shared.Power;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components; // Pirate: multiz
 using Robust.Shared.Physics.Systems;
 using System.Linq;
 using Content.Shared.Physics;
@@ -33,20 +28,11 @@ public sealed partial class FireControlSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly RotateToFaceSystem _rotateToFace = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!; // Pirate: multiz
-    // _zLevels declared in FireControlSystem.Console.cs partial (Pirate: multiz)
 
     /// <summary>
     /// Dictionary of entities that have visualization enabled
     /// </summary>
     private readonly HashSet<EntityUid> _visualizedEntities = new();
-
-    #region Pirate: multiz
-    /// <summary>
-    /// Gun -> target map for the current synchronous console shot.
-    /// </summary>
-    private readonly Dictionary<EntityUid, EntityUid> _crossLayerTargetMap = new();
-    #endregion Pirate: multiz
 
     public override void Initialize()
     {
@@ -59,7 +45,6 @@ public sealed partial class FireControlSystem : EntitySystem
         SubscribeLocalEvent<FireControllableComponent, PowerChangedEvent>(OnControllablePowerChanged);
         SubscribeLocalEvent<FireControllableComponent, ComponentShutdown>(OnControllableShutdown);
         SubscribeLocalEvent<FireControllableComponent, EntParentChangedMessage>(OnControllableParentChanged);
-        SubscribeLocalEvent<FireControllableComponent, ProjectileShotEvent>(OnCrossLayerProjectileShot); // Pirate: multiz
 
         // Subscribe to grid split events to ensure we update when grids change
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
@@ -110,8 +95,6 @@ public sealed partial class FireControlSystem : EntitySystem
 
     private void OnControllableShutdown(EntityUid uid, FireControllableComponent component, ComponentShutdown args)
     {
-        _crossLayerTargetMap.Remove(uid); // Pirate: multiz — drop stale cross-layer fire entry
-
         if (component.ControllingServer != null && TryComp<FireControlServerComponent>(component.ControllingServer, out var server))
         {
             Unregister(uid, component);
@@ -389,204 +372,69 @@ public sealed partial class FireControlSystem : EntitySystem
         if (!Resolve(server, ref component))
             return;
 
-        #region Pirate: multiz
-        // Console target may be on another z-layer; translate per gun.
+        // Check if the weapon's grid is in FTL
         var grid = component.ConnectedGrid;
-        if (grid != null && TryComp<FTLComponent>((EntityUid)grid, out _))
+        if (grid != null && TryComp<FTLComponent>((EntityUid)grid, out var ftlComp))
+        {
+            // Cannot fire weapons during FTL travel
             return;
+        }
 
         var targetCoords = GetCoordinates(coordinates);
-        var targetMap = targetCoords.ToMap(EntityManager, _xform);
-        if (targetMap.MapId == MapId.Nullspace)
-            return;
-
-        var targetMapUid = _mapManager.GetMapEntityId(targetMap.MapId);
-        // Null means the target map is outside this console z-network.
-        var targetDepth = ResolveLayerDepthForMap(targetMap.MapId, component);
-        if (targetDepth is null)
-            return;
 
         foreach (var weapon in weapons)
         {
             var localWeapon = GetEntity(weapon);
-            if (!Exists(localWeapon))
-                continue;
-
-            // Accept guns controlled by any server in this z-network.
-            if (!TryComp<FireControllableComponent>(localWeapon, out var controllableComp) ||
-                controllableComp.ControllingServer is not { } gunServer ||
-                !TryComp<FireControlServerComponent>(gunServer, out var gunServerComp) ||
-                !gunServerComp.Controlled.Contains(localWeapon))
-            {
-                continue;
-            }
-
-            if (!IsInSameZNetwork(component.ConnectedGrid, gunServerComp.ConnectedGrid))
+            if (!Exists(localWeapon) || !component.Controlled.Contains(localWeapon))
                 continue;
 
             if (!TryComp<GunComponent>(localWeapon, out var gun))
                 continue;
 
-            // Skip guns whose deck cannot reach the selected layer.
-            var gunDepth = GetGridDepth(_xform.GetGrid(localWeapon)) ?? 0;
-            // Clamp bad YAML reach to zero.
-            var reach = Math.Max(0, TryComp<CEZGunLayerReachComponent>(localWeapon, out var reachComp) ? reachComp.Reach : DefaultGunLayerReach);
-            if (Math.Abs(gunDepth - targetDepth.Value) > reach)
-                continue;
-
-            // Use target xy on each gun's map; z-synced decks share local footprint.
-            var weaponXform = Transform(localWeapon);
-            var gunMapId = weaponXform.MapID;
-            var gunMapUid = _mapManager.GetMapEntityId(gunMapId);
-
-            if (gunMapId == MapId.Nullspace || gunMapUid == EntityUid.Invalid)
-                continue;
-
-            var translatedTargetCoords = gunMapId == targetMap.MapId
-                ? targetCoords
-                : new EntityCoordinates(gunMapUid, targetMap.Position);
-
-            var weaponMapPos = _xform.GetMapCoordinates(localWeapon, weaponXform);
-            var diff = targetMap.Position - weaponMapPos.Position;
-
-            if (diff.LengthSquared() > 0.01f && HasLineOfSightOnMap(localWeapon, weaponMapPos.Position, targetMap.Position, gunMapId))
+            if (TryComp<TransformComponent>(localWeapon, out var weaponXform))
             {
-                var goalAngle = Angle.FromWorldVec(diff);
-                _rotateToFace.TryRotateTo(localWeapon, goalAngle, 0f, Angle.FromDegrees(1), float.MaxValue, weaponXform);
+                var currentMapCoords = _xform.GetMapCoordinates(localWeapon, weaponXform);
+                var destinationMapCoords = targetCoords.ToMap(EntityManager, _xform);
+
+                if (destinationMapCoords.MapId == currentMapCoords.MapId && currentMapCoords.MapId != MapId.Nullspace)
+                {
+                    var diff = destinationMapCoords.Position - currentMapCoords.Position;
+                    if (diff.LengthSquared() > 0.01f)
+                    {
+                        // Only rotate the gun if it has line of sight to the target
+                        if (HasLineOfSight(localWeapon, currentMapCoords.Position, destinationMapCoords.Position, currentMapCoords.MapId))
+                        {
+                            var goalAngle = Angle.FromWorldVec(diff);
+                            _rotateToFace.TryRotateTo(localWeapon, goalAngle, 0f, Angle.FromDegrees(1), float.MaxValue, weaponXform);
+                        }
+                    }
+                }
             }
 
-            var distance = diff.Length();
+            var weaponX = Transform(localWeapon);
+            var targetPos = targetCoords.ToMap(EntityManager, _xform);
+
+            if (targetPos.MapId != weaponX.MapID)
+                continue;
+
+            var weaponPos = _xform.GetWorldPosition(weaponX);
+
+            // Get direction to target
+            var direction = (targetPos.Position - weaponPos);
+            var distance = direction.Length();
             if (distance <= 0)
                 continue;
 
-            var direction = Vector2.Normalize(diff);
+            direction = Vector2.Normalize(direction);
 
-            if (!CanFireInDirection(localWeapon, weaponMapPos.Position, direction, targetMap.Position, gunMapId))
+            // Check for obstacles in the firing direction
+            if (!CanFireInDirection(localWeapon, weaponPos, direction, targetPos.Position, weaponX.MapID))
                 continue;
 
-            // Redirect projectiles only for this synchronous shot.
-            var crossLayerFire = gunMapId != targetMap.MapId;
-            if (crossLayerFire)
-                _crossLayerTargetMap[localWeapon] = targetMapUid;
-            else
-                _crossLayerTargetMap.Remove(localWeapon);
-
-            _gun.AttemptShoot(localWeapon, (localWeapon, gun), translatedTargetCoords); // Pirate: multiz - new tuple API + z-translated coords
-
-            if (crossLayerFire)
-                _crossLayerTargetMap.Remove(localWeapon);
+            // If we can fire, fire the weapon
+            _gun.AttemptShoot(localWeapon, (localWeapon, gun), targetCoords);
         }
-        #endregion Pirate: multiz
     }
-
-    #region Pirate: multiz
-    /// <summary>
-    /// Reuses the existing LOS check after coordinate translation.
-    /// </summary>
-    private bool HasLineOfSightOnMap(EntityUid weapon, Vector2 weaponPos, Vector2 targetPos, MapId mapId, float maxDistance = 500f)
-    {
-        return HasLineOfSight(weapon, weaponPos, targetPos, mapId, maxDistance);
-    }
-
-    private int? GetGridDepth(EntityUid? grid)
-    {
-        if (grid is null)
-            return null;
-        return TryComp<CEZLinkedGridComponent>(grid.Value, out var linked) ? linked.Depth : null;
-    }
-
-    /// <summary>
-    /// Compares grids by map network; linked-grid ZNetwork may be unset during BUI updates.
-    /// </summary>
-    private bool IsInSameZNetwork(EntityUid? a, EntityUid? b)
-    {
-        if (a is null || b is null)
-            return false;
-        if (a == b)
-            return true;
-
-        var aMap = Transform(a.Value).MapUid;
-        var bMap = Transform(b.Value).MapUid;
-        if (aMap is null || bMap is null)
-            return false;
-        if (aMap == bMap)
-            return true;
-
-        if (!_zLevels.TryGetZNetwork(aMap.Value, out var aNet))
-            return false;
-        if (!_zLevels.TryGetZNetwork(bMap.Value, out var bNet))
-            return false;
-        return aNet.Value.Owner == bNet.Value.Owner;
-    }
-
-    /// <summary>
-    /// Returns target map depth in the console z-network, or null if outside it.
-    /// </summary>
-    private int? ResolveLayerDepthForMap(MapId mapId, FireControlServerComponent serverComp)
-    {
-        if (serverComp.ConnectedGrid is not { } hostGrid)
-            return null;
-
-        var hostMapId = Transform(hostGrid).MapID;
-        var hostDepth = GetGridDepth(hostGrid) ?? 0;
-        if (hostMapId == mapId)
-            return hostDepth;
-
-        var hostMapUid = Transform(hostGrid).MapUid;
-        if (hostMapUid is not { } hostMap)
-            return null;
-
-        var targetMapUid = _mapManager.GetMapEntityId(mapId);
-        const int probeRange = 16;
-
-        for (var offset = 1; offset <= probeRange; offset++)
-        {
-            if (!_zLevels.TryMapOffset(hostMap, offset, out var aboveMap))
-                break;
-            if (aboveMap.Value.Owner == targetMapUid)
-                return hostDepth + offset;
-        }
-        for (var offset = 1; offset <= probeRange; offset++)
-        {
-            if (!_zLevels.TryMapOffset(hostMap, -offset, out var belowMap))
-                break;
-            if (belowMap.Value.Owner == targetMapUid)
-                return hostDepth - offset;
-        }
-
-        return null;
-    }
-
-    /// <summary>
-    /// Moves cross-layer projectiles to the selected target map while preserving motion.
-    /// </summary>
-    private void OnCrossLayerProjectileShot(EntityUid gunUid, FireControllableComponent comp, ProjectileShotEvent args)
-    {
-        if (!_crossLayerTargetMap.TryGetValue(gunUid, out var targetMapUid))
-            return;
-        if (!Exists(targetMapUid) || !Exists(args.FiredProjectile))
-            return;
-        if (!TryComp<TransformComponent>(args.FiredProjectile, out var projXform))
-            return;
-
-        // Ignore stale or no-op redirect entries.
-        if (projXform.MapUid == targetMapUid)
-            return;
-
-        var worldPos = _xform.GetWorldPosition(projXform);
-        var worldRot = _xform.GetWorldRotation(projXform);
-
-        Vector2 mapVelocity = default;
-        if (TryComp<PhysicsComponent>(args.FiredProjectile, out var physics))
-            mapVelocity = _physics.GetMapLinearVelocity(args.FiredProjectile, physics);
-
-        _xform.SetCoordinates(args.FiredProjectile, new EntityCoordinates(targetMapUid, worldPos));
-        _xform.SetWorldRotationNoLerp((args.FiredProjectile, Transform(args.FiredProjectile)), worldRot);
-
-        if (TryComp<PhysicsComponent>(args.FiredProjectile, out var newPhysics))
-            _physics.SetLinearVelocity(args.FiredProjectile, mapVelocity, body: newPhysics);
-    }
-    #endregion Pirate: multiz
 
     /// <summary>
     /// Checks all controllables on a grid and unregisters any that don't belong.

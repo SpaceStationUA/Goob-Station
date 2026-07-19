@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Anomaly;
-using Content.Server._Pirate.ZLevels.Spawning; // Pirate: multiz
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
@@ -11,7 +10,6 @@ namespace Content.Server.StationEvents.Events;
 public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleComponent>
 {
     [Dependency] private readonly AnomalySystem _anomaly = default!;
-    [Dependency] private readonly CEZLevelFloorGridsSystem _zFloors = default!; // Pirate: multiz
 
     protected override void Added(EntityUid uid, AnomalySpawnRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -35,18 +33,15 @@ public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleCompon
         if (!TryComp<StationDataComponent>(chosenStation, out var stationData))
             return;
 
-        #region Pirate: multiz
-        if (GetStationMainGrid(stationData) is not { } mainGrid)
+        var grid = StationSystem.GetLargestGrid((chosenStation.Value, stationData));
+
+        if (grid is null)
             return;
-        #endregion
 
         var amountToSpawn = 1;
         for (var i = 0; i < amountToSpawn; i++)
         {
-            #region Pirate: multiz
-            var spawnGrid = _zFloors.GetRandomFloorGrid(mainGrid.Owner);
-            _anomaly.SpawnOnRandomGridLocation(spawnGrid, component.AnomalySpawnerPrototype);
-            #endregion
+            _anomaly.SpawnOnRandomGridLocation(grid.Value, component.AnomalySpawnerPrototype);
         }
     }
 }

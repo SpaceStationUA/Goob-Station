@@ -4,19 +4,15 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
-using Content.Shared.Pinpointer; // Pirate: multiz
 using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 
 // Goobstation
 using Content.Goobstation.Common.SurveillanceCamera;
-using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
-using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
 using Content.Shared.UserInterface;
 using Robust.Server.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components; // Pirate: multiz
 using System.Runtime.InteropServices;
 
 namespace Content.Server.SurveillanceCamera;
@@ -45,40 +41,9 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             subs.Event<SurveillanceCameraRefreshSubnetsMessage>(OnRefreshSubnetsMessage);
             subs.Event<SurveillanceCameraDisconnectMessage>(OnDisconnectMessage);
             subs.Event<SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
-            subs.Event<CEZMonitoringConsoleLevelSelectedMessage>(OnZLevelSelected); // Pirate: multiz
             subs.Event<BoundUIClosedEvent>(OnBoundUiClose);
         });
     }
-
-    #region Pirate: multiz
-    private void OnZLevelSelected(EntityUid uid, SurveillanceCameraMonitorComponent component, CEZMonitoringConsoleLevelSelectedMessage args)
-    {
-        var targetGrid = GetEntity(args.Grid);
-        if (targetGrid == null)
-            return;
-
-        // Reject stale/malformed UI payloads that don't point at an actual grid.
-        if (!HasComp<MapGridComponent>(targetGrid.Value))
-            return;
-
-        var xform = Transform(uid);
-        if (xform.GridUid == null || !IsValidZMonitoringGrid(xform.GridUid.Value, targetGrid.Value))
-            return;
-
-        EnsureComp<NavMapComponent>(targetGrid.Value);
-    }
-
-    private bool IsValidZMonitoringGrid(EntityUid sourceGrid, EntityUid targetGrid)
-    {
-        if (sourceGrid == targetGrid)
-            return true;
-
-        return TryComp<CEZLinkedGridComponent>(sourceGrid, out var sourceLinked) &&
-               TryComp<CEZLinkedGridComponent>(targetGrid, out var targetLinked) &&
-               sourceLinked.ZNetwork.IsValid() &&
-               sourceLinked.ZNetwork == targetLinked.ZNetwork;
-    }
-    #endregion
 
     private const float MaxHeartbeatTime = 3f; // Goobstation
     private const float HeartbeatDelay = 1f; // Goobstation

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Anomaly.Components;
-using Content.Server._Pirate.ZLevels.Spawning; // Pirate: multiz
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.CCVar;
@@ -26,7 +25,6 @@ public sealed partial class AnomalySystem
 {
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly CEZLevelFloorGridsSystem _zFloors = default!; // Pirate: multiz
 
     private void InitializeGenerator()
     {
@@ -171,10 +169,15 @@ public sealed partial class AnomalySystem
     {
         var xform = Transform(uid);
 
-        #region Pirate: multiz - spawn needs a valid grid, but the cleanup below must always run
-        if (xform.GridUid is { } grid)
-            SpawnOnRandomGridLocation(_zFloors.GetRandomFloorGrid(grid), component.SpawnerPrototype);
-        #endregion
+        if (_station.GetStationInMap(xform.MapID) is not { } station ||
+            _station.GetLargestGrid(station) is not { } grid)
+        {
+            if (xform.GridUid == null)
+                return;
+            grid = xform.GridUid.Value;
+        }
+
+        SpawnOnRandomGridLocation(grid, component.SpawnerPrototype);
         RemComp<GeneratingAnomalyGeneratorComponent>(uid);
         Appearance.SetData(uid, AnomalyGeneratorVisuals.Generating, false);
         Audio.PlayPvs(component.GeneratingFinishedSound, uid);

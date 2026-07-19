@@ -18,7 +18,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
-using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Robust.Shared.Utility;
 using Content.Shared.Localizations;
 using Content.Shared.Power;
@@ -165,15 +164,11 @@ public sealed class ThrusterSystem : EntitySystem
         // TODO: Don't make them rotatable and make it require anchoring.
 
         if (!component.Enabled ||
-            !TryComp(uid, out TransformComponent? xform)) // Pirate: multiz
+            !TryComp(uid, out TransformComponent? xform) ||
+            !TryComp(xform.GridUid, out ShuttleComponent? shuttleComponent))
         {
             return;
         }
-
-        var shuttleGridUid = ResolveZLinkedLeaderGrid(xform.GridUid); // Pirate: multiz
-
-        if (!TryComp(shuttleGridUid, out ShuttleComponent? shuttleComponent)) // Pirate: multiz
-            return;
 
         var canEnable = CanEnable(uid, component);
 
@@ -201,8 +196,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         if (args.ParentChanged)
         {
-            var oldGridUid = ResolveZLinkedLeaderGrid(args.OldPosition.EntityId) ?? args.OldPosition.EntityId; // Pirate: multiz
-            oldShuttleComponent = Comp<ShuttleComponent>(oldGridUid); // Pirate: multiz
+            oldShuttleComponent = Comp<ShuttleComponent>(args.OldPosition.EntityId);
 
             // If no parent change doesn't matter for angular.
             if (component.Type == ThrusterType.Angular)
@@ -292,8 +286,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         component.IsOn = true;
 
-        var shuttleGridUid = ResolveZLinkedLeaderGrid(xform.GridUid); // Pirate: multiz
-        if (!TryComp(shuttleGridUid, out ShuttleComponent? shuttleComponent)) // Pirate: multiz
+        if (!TryComp(xform.GridUid, out ShuttleComponent? shuttleComponent))
             return;
 
         // Logger.DebugS("thruster", $"Enabled thruster {uid}");
@@ -390,7 +383,6 @@ public sealed class ThrusterSystem : EntitySystem
 
         component.IsOn = false;
 
-        gridId = ResolveZLinkedLeaderGrid(gridId); // Pirate: multiz
         if (!TryComp(gridId, out ShuttleComponent? shuttleComponent))
             return;
 
@@ -608,18 +600,4 @@ public sealed class ThrusterSystem : EntitySystem
     {
         return (int)Math.Log2((int)flag);
     }
-
-    #region Pirate: multiz
-    // Thrusters on non-leader peer grids contribute to the leader's ShuttleComponent.
-    private EntityUid? ResolveZLinkedLeaderGrid(EntityUid? gridUid)
-    {
-        if (gridUid is null)
-            return null;
-
-        if (!TryComp<CEZLinkedGridComponent>(gridUid.Value, out var linked) || linked.Depth == 0)
-            return gridUid;
-
-        return linked.PeerGrids.TryGetValue(0, out var leaderGrid) ? leaderGrid : gridUid;
-    }
-    #endregion
 }

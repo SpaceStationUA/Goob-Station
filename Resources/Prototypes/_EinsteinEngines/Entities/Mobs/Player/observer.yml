@@ -21,7 +21,6 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 8
     baseWalkSpeed: 5
-  - type: CEZLevelGhostMover # Pirate: multiz
   - type: Psionic
     removable: false
     roller: false

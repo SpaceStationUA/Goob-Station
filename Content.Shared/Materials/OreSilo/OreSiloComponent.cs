@@ -24,10 +24,6 @@ public sealed partial class OreSiloComponent : Component
     /// </remarks>
     [DataField, AutoNetworkedField]
     public float Range = 10000f; // Pirate - 40->10000
-
-    /// <summary>Map key for auto-linking clients in the same z-network.</summary>
-    [DataField]
-    public string? SiloNetwork; // Pirate: multiz
 }
 
 [Serializable, NetSerializable]
