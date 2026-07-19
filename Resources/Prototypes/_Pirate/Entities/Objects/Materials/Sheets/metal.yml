@@ -1,7 +1,7 @@
 - type: entity
   parent: SheetMetalBase
   id: SheetPlastitanium
-  name: "пластитан"
+  name: пластитан
   suffix: Full
   components:
   - type: Material
@@ -29,7 +29,7 @@
 - type: entity
   parent: SheetPlastitanium
   id: SheetPlastitanium10
-  name: "пластитан"
+  name: пластитан
   suffix: 10
   components:
   - type: Sprite
@@ -41,7 +41,7 @@
 - type: entity
   parent: SheetPlastitanium
   id: SheetPlastitanium1
-  name: "пластитан"
+  name: пластитан
   suffix: Single
   components:
   - type: Sprite
