@@ -9,4 +9,4 @@
   unit: materials-unit-sheet
   icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: plastitanium }
   color: "#5c5c5c"
-  price: 6
+  price: 2.6 # Pirate: keep the 30-sheet cargo crate below its 8000 spesos purchase cost.
