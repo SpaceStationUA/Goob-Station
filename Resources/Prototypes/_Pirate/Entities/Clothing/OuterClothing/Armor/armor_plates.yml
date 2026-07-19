@@ -38,7 +38,7 @@
   parent: BaseItem
   id: ArmorPlatePierce
   name: "протикульова бронеплита"
-  description: "Бронемодуль із міцних пластитанових пластин. Захищає від куль та колючих атак, але вразливий до опіків."
+  description: "Бронемодуль із міцних пласталевих і сталевих пластин. Захищає від куль та колючих атак, але вразливий до опіків."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/ArmorPlate/armor_plates.rsi
@@ -69,7 +69,7 @@
   parent: BaseItem
   id: ArmorPlateHeat
   name: "теплозахисна бронеплита"
-  description: "Бронемодуль з іридієвим екрануванням і системами розсіювання тепла, що послаблює лазерні атаки. Вразливий до колючих атак."
+  description: "Бронемодуль із плазмовим екрануванням і системами розсіювання тепла, що послаблює лазерні атаки. Вразливий до колючих атак."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/ArmorPlate/armor_plates.rsi
@@ -100,7 +100,7 @@
   parent: BaseItem
   id: ArmorPlateSpeed
   name: "полегшена бронеплита"
-  description: "Бронемодуль із полегшених латунних пластин. Збільшує швидкість, але робить власника вразливішим до більшості видів шкоди."
+  description: "Бронемодуль із полегшених сталевих і пластикових пластин. Збільшує швидкість, але робить власника вразливішим до більшості видів шкоди."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/ArmorPlate/armor_plates.rsi
