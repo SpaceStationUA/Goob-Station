@@ -298,6 +298,8 @@
   - type: Sprite
     sprite: _Pirate/Objects/Decoration/Flora/bush.rsi
     state: bush01
+    drawdepth: OverMobs
+    offset: "0, 0.4"
 
 - type: entity
   parent: BaseStructure
