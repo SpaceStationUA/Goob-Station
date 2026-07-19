@@ -81,14 +81,6 @@ public sealed partial class NuclearReactorComponent : Component
     public NetEntity? GetPart(int x, int y)
         => IsInBounds(x, y) ? PartGrid[GridIndex(x, y)] : null;
 
-    public ref ValueList<ReactorNeutron> GetFlux(int x, int y)
-    {
-        if (!IsInBounds(x, y))
-            throw new ArgumentOutOfRangeException(nameof(x), $"Reactor grid position {x},{y} is out of bounds for {GridWidth}x{GridHeight}.");
-
-        return ref FluxGrid[GridIndex(x, y)];
-    }
-
     public void SetPart(int x, int y, NetEntity? part)
     {
         if (!IsInBounds(x, y))
