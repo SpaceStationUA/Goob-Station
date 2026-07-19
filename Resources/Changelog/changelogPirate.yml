@@ -2714,3 +2714,15 @@ Entries:
         повного розрядження.
   id: 272
   time: '2026-07-18T22:10:58.0000000+00:00'
+- author: inhat-d
+  changes:
+    - type: Add
+      message: Альтернативна назва інженеру
+    - type: Add
+      message: Іконка фізику-ядернику
+    - type: Fix
+      message: >-
+        некоректно розставлені коментарі у файлі
+        `Resources/Locale/uk-UA/_Pirate/job/alternative-jobs.ftl`
+  id: 273
+  time: '2026-07-19T07:40:10.0000000+00:00'
