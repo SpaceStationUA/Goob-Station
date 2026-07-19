@@ -26,9 +26,23 @@ public sealed partial class NuclearMonitorSystem : EntitySystem
         _sourceQuery = GetEntityQuery<DeviceLinkSourceComponent>();
         _query = GetEntityQuery<NuclearMonitorComponent>();
 
+        SubscribeLocalEvent<NuclearMonitorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NuclearMonitorComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<NuclearMonitorComponent, PortDisconnectedEvent>(OnPortDisconnected);
         SubscribeLocalEvent<NuclearMonitorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+    }
+
+    private void OnMapInit(Entity<NuclearMonitorComponent> ent, ref MapInitEvent args)
+    {
+        if (ent.Comp.Linked is { } linked && IsLinked(ent, linked))
+            return;
+
+        var actualLinked = FindLinkedSource(ent);
+        if (ent.Comp.Linked == actualLinked)
+            return;
+
+        ent.Comp.Linked = actualLinked;
+        Dirty(ent);
     }
 
     private void OnNewLink(Entity<NuclearMonitorComponent> ent, ref NewLinkEvent args)
@@ -42,11 +56,17 @@ public sealed partial class NuclearMonitorSystem : EntitySystem
 
     private void OnPortDisconnected(Entity<NuclearMonitorComponent> ent, ref PortDisconnectedEvent args)
     {
-        if (ent.Comp.Linked == null || args.Port != ent.Comp.LinkingPort)
+        if (ent.Comp.Linked != args.RemovedPortUid || args.Port != ent.Comp.LinkingPort)
             return;
 
-        ent.Comp.Linked = null;
+        ent.Comp.Linked = FindLinkedSource(ent, args.RemovedPortUid);
         Dirty(ent);
+
+        if (ent.Comp.Linked == null)
+        {
+            var key = Comp<ActivatableUIComponent>(ent).Key!;
+            _ui.CloseUi(ent.Owner, key);
+        }
     }
 
     private void OnAnchorChanged(Entity<NuclearMonitorComponent> ent, ref AnchorStateChangedEvent args)
@@ -59,7 +79,52 @@ public sealed partial class NuclearMonitorSystem : EntitySystem
     /// Get the machine linked to a monitor.
     /// </summary>
     public EntityUid? GetLinked(EntityUid monitor)
-        => _query.CompOrNull(monitor)?.Linked;
+    {
+        if (!_query.TryComp(monitor, out var comp))
+            return null;
+
+        var ent = new Entity<NuclearMonitorComponent>(monitor, comp);
+        if (comp.Linked is { } linked && IsLinked(ent, linked))
+            return linked;
+
+        var actualLinked = FindLinkedSource(ent);
+        if (comp.Linked != actualLinked)
+        {
+            comp.Linked = actualLinked;
+            Dirty(ent);
+        }
+
+        return actualLinked;
+    }
+
+    private EntityUid? FindLinkedSource(Entity<NuclearMonitorComponent> ent, EntityUid? ignored = null)
+    {
+        var query = EntityQueryEnumerator<DeviceLinkSourceComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            if (uid != ignored && IsLinked(ent, uid))
+                return uid;
+        }
+
+        return null;
+    }
+
+    private bool IsLinked(Entity<NuclearMonitorComponent> ent, EntityUid sourceUid)
+    {
+        if (!_sourceQuery.TryComp(sourceUid, out var source) ||
+            _whitelist.IsWhitelistFail(ent.Comp.Whitelist, sourceUid))
+        {
+            return false;
+        }
+
+        foreach (var (_, sinkPort) in _device.GetLinks(sourceUid, ent.Owner, source))
+        {
+            if (sinkPort == ent.Comp.LinkingPort)
+                return true;
+        }
+
+        return false;
+    }
 
     /// <summary>
     /// Unlink a monitor if it's outside the linked machine's range.
@@ -74,8 +139,6 @@ public sealed partial class NuclearMonitorSystem : EntitySystem
 
         var key = Comp<ActivatableUIComponent>(ent).Key!;
         _ui.CloseUi(ent.Owner, key);
-        ent.Comp.Linked = null;
-        Dirty(ent);
         _device.RemoveSinkFromSource(linked, ent, source);
     }
 
@@ -84,7 +147,7 @@ public sealed partial class NuclearMonitorSystem : EntitySystem
     /// </summary>
     public void RelayMessage(EntityUid uid, NuclearMonitorComponent comp, NuclearMachineBUIMessage args)
     {
-        if (comp.Linked is { } linked)
+        if (comp.Linked is { } linked && IsLinked((uid, comp), linked))
         {
             args.Monitor = uid;
             RaiseLocalEvent(linked, args);

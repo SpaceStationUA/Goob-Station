@@ -11,6 +11,7 @@ public sealed partial class GasTurbineMonitorSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private NuclearMonitorSystem _monitor = default!;
     [Dependency] private SharedTurbineSystem _turbine = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
     private EntityQuery<TurbineComponent> _query = default!;
 
     public override void Initialize()
@@ -19,8 +20,21 @@ public sealed partial class GasTurbineMonitorSystem : EntitySystem
 
         _query = GetEntityQuery<TurbineComponent>();
 
+        SubscribeLocalEvent<GasTurbineMonitorComponent, BoundUIOpenedEvent>(OnUiOpened);
         SubscribeLocalEvent<NuclearMonitorComponent, TurbineChangeFlowRateMessage>(_monitor.RelayMessage);
         SubscribeLocalEvent<NuclearMonitorComponent, TurbineChangeStatorLoadMessage>(_monitor.RelayMessage);
+    }
+
+    private void OnUiOpened(Entity<GasTurbineMonitorComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        if (!args.UiKey.Equals(TurbineUiKey.Key))
+            return;
+
+        _monitor.CheckRange(ent.Owner);
+        if (GetTurbine(ent.Owner) is { } turbine)
+            _turbine.UpdateUI(turbine, ent.Owner);
+        else
+            _ui.CloseUi(ent.Owner, TurbineUiKey.Key);
     }
 
     public Entity<TurbineComponent>? GetTurbine(EntityUid monitor)
@@ -42,6 +56,8 @@ public sealed partial class GasTurbineMonitorSystem : EntitySystem
             comp.NextUpdate = _timing.CurTime + comp.UpdateDelay;
 
             _monitor.CheckRange(uid);
+            if (GetTurbine(uid) is { } turbine)
+                _turbine.UpdateUI(turbine, uid);
         }
     }
 }

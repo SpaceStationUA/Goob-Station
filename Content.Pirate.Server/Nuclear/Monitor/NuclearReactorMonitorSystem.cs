@@ -11,6 +11,7 @@ public sealed partial class NuclearReactorMonitorSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private NuclearMonitorSystem _monitor = default!;
     [Dependency] private SharedNuclearReactorSystem _reactor = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
     private EntityQuery<NuclearReactorComponent> _query = default!;
 
     public override void Initialize()
@@ -19,7 +20,20 @@ public sealed partial class NuclearReactorMonitorSystem : EntitySystem
 
         _query = GetEntityQuery<NuclearReactorComponent>();
 
+        SubscribeLocalEvent<NuclearReactorMonitorComponent, BoundUIOpenedEvent>(OnUiOpened);
         SubscribeLocalEvent<NuclearMonitorComponent, ReactorAdjustControlRodsMessage>(_monitor.RelayMessage);
+    }
+
+    private void OnUiOpened(Entity<NuclearReactorMonitorComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        if (!args.UiKey.Equals(NuclearReactorUiKey.Key))
+            return;
+
+        _monitor.CheckRange(ent.Owner);
+        if (GetReactor(ent.Owner) is { } reactor)
+            _reactor.UpdateUI(reactor, ent.Owner);
+        else
+            _ui.CloseUi(ent.Owner, NuclearReactorUiKey.Key);
     }
 
     public Entity<NuclearReactorComponent>? GetReactor(EntityUid monitor)

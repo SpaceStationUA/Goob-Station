@@ -78,7 +78,7 @@
     guides:
     - Science
   - type: ResearchPointSource # Goobstation
-    pointspersecond: 15
+    pointspersecond: 30 # Pirate
     active: true
 
 - type: entity

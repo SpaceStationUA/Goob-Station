@@ -31,3 +31,6 @@
         settings: default
     - type: GhostRoleMobSpawner
       prototype: MobEeeplet
+    - type: GrantObjectivesOnGhostTakeover # Pirate
+      objectives:
+        - EeepSurviveObjective

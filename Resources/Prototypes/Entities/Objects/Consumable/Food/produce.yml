@@ -970,6 +970,7 @@
     tags:
     - Fruit
     - Vegetable
+    - Tomato # Pirate ranching
   - type: FoodSequenceElement
     entries:
       Skewer: TomatoSkewer
@@ -1105,6 +1106,7 @@
     tags:
     - Fruit
     - Vegetable
+    - EggPlant # Pirate ranching
 
 - type: entity
   name: apple
@@ -1138,6 +1140,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Apple # Pirate ranching
   - type: FoodSequenceElement
     entries:
       Burger: Apple
@@ -1514,6 +1517,7 @@
   - type: Tag
     tags:
     - Vegetable
+    - Chili # Pirate ranching
   - type: FoodSequenceElement
     entries:
       Taco: ChiliPepper
@@ -1552,6 +1556,9 @@
       Taco: ChillyPepper
       Burger: ChillyPepper
       Skewer: ChillyPepperSkewer
+  - type: Tag # Pirate ranching
+    tags:
+    - Chilly
 
 - type: entity
   name: aloe
@@ -2022,6 +2029,10 @@
           Quantity: 10
   - type: Produce
     seedId: rice
+  - type: Tag # Pirate ranching
+    tags:
+    - Ruminant
+    - Rice
 
 - type: entity
   name: soybeans
@@ -2487,6 +2498,7 @@
   - type: Tag
     tags:
     - Vegetable
+    - Peas # Pirate ranching
   - type: FoodSequenceElement
     entries:
       Taco: Pea

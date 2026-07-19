@@ -150,7 +150,10 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
             return;
 
         if (!_machine.GetPipes(uid, out var inlet, out var outlet))
+        {
+            UpdateUI(ent);
             return;
+        }
 
         var gridWidth = comp.GridWidth;
         var gridHeight = comp.GridHeight;
@@ -244,7 +247,7 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
                     var ymod = ((dir >> 2) & 1) - (dir & 1);
 
                     if (x + xmod >= 0 && y + ymod >= 0 && x + xmod <= gridWidth - 1 && y + ymod <= gridHeight - 1)
-                        comp.GetFlux(x + xmod, y + ymod).Add(neutron);
+                        comp.FluxGrid[comp.GridIndex(x + xmod, y + ymod)].Add(neutron);
                     else
                         tempRads++; // neutrons hitting the casing become radiation, too much and it will bypass shielding
                     comp.FluxGrid[index].Remove(neutron);

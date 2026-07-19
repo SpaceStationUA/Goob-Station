@@ -16,32 +16,23 @@ public sealed partial class TurbineBUI(EntityUid owner, Enum uiKey) : BoundUserI
 
     protected override void Open()
     {
-        if (GetTurbine(Owner, out var monitor) is not { } turbine)
-            return;
-
         base.Open();
 
         _window = this.CreateWindow<TurbineWindow>();
-        _window.SetEntity(turbine, monitor);
+        _window.SetEntity(Owner, EntMan.HasComponent<NuclearMonitorComponent>(Owner));
 
         _window.OnChangeFlowRate += val => SendPredictedMessage(new TurbineChangeFlowRateMessage(val));
         _window.OnChangeStatorLoad += val => SendPredictedMessage(new TurbineChangeStatorLoadMessage(val));
+
+        if (State is TurbineBuiState state)
+            _window.Update(state);
     }
 
-    private Entity<TurbineComponent>? GetTurbine(EntityUid uid, out EntityUid? monitor)
+    protected override void UpdateState(BoundUserInterfaceState state)
     {
-        monitor = null;
-        if (EntMan.TryGetComponent<TurbineComponent>(uid, out var turbine))
-            return (uid, turbine);
+        base.UpdateState(state);
 
-        if (EntMan.TryGetComponent<NuclearMonitorComponent>(uid, out var monitorComp) &&
-            monitorComp.Linked is { } linked &&
-            EntMan.TryGetComponent<TurbineComponent>(linked, out var linkedTurbine))
-        {
-            monitor = uid;
-            return (linked, linkedTurbine);
-        }
-
-        return null;
+        if (state is TurbineBuiState cast)
+            _window?.Update(cast);
     }
 }

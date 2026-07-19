@@ -2,7 +2,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.UserInterface.Controls;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Lock;
 using Content.Shared.Rounding;
 using Content.Pirate.Shared.Nuclear.Turbine;
@@ -50,15 +49,8 @@ public sealed partial class TurbineWindow : FancyWindow
     private int _speedLevel;
     private float _flowRate = -1;
     private float _statorLoad = -1;
-    private int _bladeHealth = -1;
-    private int _rpmPercent = -1;
-    private float _powerGen = -1;
-    private float _powerSupply = -1;
-    private EntityUid? _blade;
-    private EntityUid? _stator;
-
-    private Entity<TurbineComponent> _turbine = default!;
-    private EntityUid? _monitor;
+    private EntityUid _owner;
+    private bool _isMonitor;
 
     private bool _suppressSliderEvents;
     private bool _suppressStatorUpdate;
@@ -142,15 +134,17 @@ public sealed partial class TurbineWindow : FancyWindow
     }
 
     #region Graphics
-    public void SetEntity(Entity<TurbineComponent> turbine, EntityUid? monitor = null)
+    public void SetEntity(EntityUid owner, bool isMonitor)
     {
-        _turbine = turbine;
-        _monitor = monitor;
+        _owner = owner;
+        _isMonitor = isMonitor;
 
-        this.SetInfoFromEntity(_ent, monitor ?? turbine.Owner);
+        this.SetInfoFromEntity(_ent, owner);
 
-        EntityView.SetEntity(turbine);
-        Update();
+        if (!isMonitor)
+            EntityView.SetEntity(owner);
+
+        UpdateLock();
     }
 
     [MemberNotNull(nameof(_speedMeter))]
@@ -185,104 +179,86 @@ public sealed partial class TurbineWindow : FancyWindow
         return Color.FromHsv(hsv);
     }
 
-    public void Update()
+    public void Update(TurbineBuiState state)
     {
-        var comp = _turbine.Comp;
-        UpdateIndicators(comp);
+        UpdateIndicators(state);
 
-        if (comp.FlowRate != _flowRate)
+        if (state.FlowRate != _flowRate)
         {
-            _flowRate = comp.FlowRate;
+            _flowRate = state.FlowRate;
             if (!_suppressFlowUpdate)
                 TurbineFlowRateLabel.Text = Math.Round(_flowRate).ToString();
         }
-        if (comp.StatorLoad != _statorLoad)
+        if (state.StatorLoad != _statorLoad)
         {
-            _statorLoad = comp.StatorLoad;
+            _statorLoad = state.StatorLoad;
             if (!_suppressStatorUpdate)
                 TurbineStatorLoadLabel.Text = Math.Round(_statorLoad).ToString();
         }
 
-        var locktarget = _monitor ?? _turbine.Owner;
-        Inputs.Visible = !_lock.IsLocked(locktarget);
-        LockedMessage.Visible = _lock.IsLocked(locktarget);
-
         _suppressSliderEvents = true;
-        TurbineFlowRateSlider.MaxValue = comp.FlowRateMax;
-        TurbineFlowRateSlider.Value = comp.FlowRate;
+        TurbineFlowRateSlider.MaxValue = state.MaximumFlowRate;
+        TurbineFlowRateSlider.Value = state.FlowRate;
         _suppressSliderEvents = false;
 
-        _speedLevel = ContentHelpers.RoundToNearestLevels(comp.RPM, comp.BestRPM * 1.2, _speedMeter.Length);
+        _speedLevel = ContentHelpers.RoundToNearestLevels(state.Rpm, state.BestRpm * 1.2, _speedMeter.Length);
 
-        if (comp.CurrentBlade != _blade)
-        {
-            _blade = comp.CurrentBlade;
-            if (_blade is { } blade)
-            {
-                BladeEntityView.SetEntity(blade);
-                BladeInfoName.Text = Name(blade);
-            }
+        if (_isMonitor)
+            EntityView.SetPrototype(state.TurbinePrototypeId);
 
-            BladeInfo.Visible = _blade != null;
-            _bladeHealth = -1; // just incase BladeHealthMax changed
-        }
-        if (comp.BladeHealth != _bladeHealth)
+        BladeEntityView.SetPrototype(state.Blade?.PrototypeId);
+        BladeInfo.Visible = state.Blade != null;
+        if (state.Blade is { } blade)
         {
-            _bladeHealth = comp.BladeHealth;
-            var percent = Math.Round(_bladeHealth * 100.0 / comp.BladeHealthMax);
-            BladeInfoIntegrity.Text = $"{percent}%";
-        }
-        var rpmPercent = (int) Math.Round(comp.RPM * 100f / (comp.BestRPM * 1.2));
-        if (rpmPercent != _rpmPercent)
-        {
-            _rpmPercent = rpmPercent;
-            BladeInfoStress.Text = $"{rpmPercent}%";
+            BladeInfoName.Text = blade.Name;
+            var integrity = state.MaximumBladeHealth > 0
+                ? Math.Round(state.BladeHealth * 100.0 / state.MaximumBladeHealth)
+                : 0;
+            BladeInfoIntegrity.Text = $"{integrity}%";
+
+            var maximumRpm = state.BestRpm * 1.2;
+            var stress = maximumRpm > 0
+                ? (int) Math.Round(state.Rpm * 100f / maximumRpm)
+                : 0;
+            BladeInfoStress.Text = $"{stress}%";
         }
 
-        if (comp.CurrentStator != _stator)
+        StatorEntityView.SetPrototype(state.Stator?.PrototypeId);
+        StatorInfo.Visible = state.Stator != null;
+        if (state.Stator is { } stator)
         {
-            _stator = comp.CurrentStator;
-            if (_stator is { } stator)
-            {
-                StatorEntityView.SetEntity(stator);
-                StatorInfoName.Text = Name(stator);
-            }
-
-            StatorInfo.Visible = _stator != null;
+            StatorInfoName.Text = stator.Name;
+            StatorInfoPotential.Text = Loc.GetString("comp-turbine-ui-power", ("power", state.GeneratedPower));
+            StatorInfoSupply.Text = Loc.GetString("comp-turbine-ui-power", ("power", state.SuppliedPower));
         }
 
-        if (comp.LastGen != _powerGen)
-        {
-            _powerGen = comp.LastGen;
-            StatorInfoPotential.Text = Loc.GetString("comp-turbine-ui-power", ("power", _powerGen));
-        }
-        if (comp.PowerSupply != _powerSupply)
-        {
-            _powerSupply = comp.PowerSupply;
-            StatorInfoSupply.Text = Loc.GetString("comp-turbine-ui-power", ("power", _powerSupply));
-        }
+        UpdateLock();
     }
 
-    private new string Name(EntityUid uid)
-        => _ent.GetComponent<MetaDataComponent>(uid).EntityName;
+    private void UpdateLock()
+    {
+        var locked = _lock.IsLocked(_owner);
+        Inputs.Visible = !locked;
+        LockedMessage.Visible = locked;
+    }
 
-    private void UpdateIndicators(TurbineComponent comp)
+    private void UpdateIndicators(TurbineBuiState state)
     {
         string Lit(bool b)
             => b ? "lit.png" : "dim.png";
 
         var root = "/Textures/_Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/indicator_lamps/";
-        TurbineOverspeed.TexturePath = $"{root}red{Lit(comp.Overspeed)}";
-        TurbineOvertemp.TexturePath = $"{root}red{Lit(comp.Overtemp)}";
-        TurbineStalling.TexturePath = $"{root}amber{Lit(comp.Stalling)}";
-        TurbineUndertemp.TexturePath = $"{root}blue{Lit(comp.Undertemp)}";
+        TurbineOverspeed.TexturePath = $"{root}red{Lit(state.Overspeed)}";
+        TurbineOvertemp.TexturePath = $"{root}red{Lit(state.Overtemp)}";
+        TurbineStalling.TexturePath = $"{root}amber{Lit(state.Stalling)}";
+        TurbineUndertemp.TexturePath = $"{root}blue{Lit(state.Undertemp)}";
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        Update();
+        UpdateLock();
 
         for (var i = 0; i < _speedMeter.Length; i++)
         {

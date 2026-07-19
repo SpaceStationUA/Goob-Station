@@ -95,6 +95,7 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         {
             SetLastGen(ent, 0);
             supplier.MaxSupply = 0;
+            UpdateUI(ent);
             return;
         }
 
@@ -141,6 +142,7 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         if (comp.Ruined)
         {
             SetLastGen(ent, 0);
+            UpdateUI(ent);
             return;
         }
 
@@ -216,6 +218,8 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         {
             TearApart(ent);
         }
+
+        UpdateUI(ent);
     }
 
     private float CalculateTransferVolume(TurbineComponent comp, PipeNode inlet, PipeNode outlet, float dt)
@@ -269,8 +273,11 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         if (_lock.IsLocked(args.Monitor ?? ent.Owner))
             return;
 
-        if (SetFlowRate(ent, args.FlowRate))
-            _machine.QueueLog(ent, args.Actor, args.Monitor);
+        if (!SetFlowRate(ent, args.FlowRate))
+            return;
+
+        _machine.QueueLog(ent, args.Actor, args.Monitor);
+        UpdateUI(ent, args.Monitor);
     }
 
     private void OnChangeStatorLoad(Entity<TurbineComponent> ent, ref TurbineChangeStatorLoadMessage args)
@@ -278,8 +285,11 @@ public sealed partial class TurbineSystem : SharedTurbineSystem
         if (_lock.IsLocked(args.Monitor ?? ent.Owner))
             return;
 
-        if (SetStatorLoad(ent, args.StatorLoad))
-            _machine.QueueLog(ent, args.Actor, args.Monitor);
+        if (!SetStatorLoad(ent, args.StatorLoad))
+            return;
+
+        _machine.QueueLog(ent, args.Actor, args.Monitor);
+        UpdateUI(ent, args.Monitor);
     }
 
     private void OnMachineLog(Entity<TurbineComponent> ent, ref NuclearMachineLogEvent args)

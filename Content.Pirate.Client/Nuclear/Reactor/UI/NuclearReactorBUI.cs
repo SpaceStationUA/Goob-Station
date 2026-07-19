@@ -16,17 +16,17 @@ public sealed class NuclearReactorBUI(EntityUid owner, Enum uiKey) : BoundUserIn
 
     protected override void Open()
     {
-        if (GetReactor(Owner, out var monitor) is not { } reactor)
-            return;
-
         base.Open();
 
         _window = this.CreateWindow<NuclearReactorWindow>();
-        _window.SetEntity(reactor, monitor);
+        _window.SetEntity(Owner, EntMan.HasComponent<NuclearMonitorComponent>(Owner));
 
         _window.OnSwapPart += pos => SendPredictedMessage(new ReactorSwapPartMessage(pos));
         _window.OnEjectItem += () => SendPredictedMessage(new ReactorEjectItemMessage());
         _window.OnAdjustControlRods += change => SendPredictedMessage(new ReactorAdjustControlRodsMessage(change));
+
+        if (State is NuclearReactorBuiState state)
+            _window.Update(state);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -37,20 +37,4 @@ public sealed class NuclearReactorBUI(EntityUid owner, Enum uiKey) : BoundUserIn
             _window?.Update(cast);
     }
 
-    private Entity<NuclearReactorComponent>? GetReactor(EntityUid uid, out EntityUid? monitor)
-    {
-        monitor = null;
-        if (EntMan.TryGetComponent<NuclearReactorComponent>(uid, out var reactor))
-            return (uid, reactor);
-
-        if (EntMan.TryGetComponent<NuclearMonitorComponent>(uid, out var monitorComp) &&
-            monitorComp.Linked is { } linked &&
-            EntMan.TryGetComponent<NuclearReactorComponent>(linked, out var linkedReactor))
-        {
-            monitor = uid;
-            return (linked, linkedReactor);
-        }
-
-        return null;
-    }
 }

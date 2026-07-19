@@ -2714,3 +2714,47 @@ Entries:
         повного розрядження.
   id: 272
   time: '2026-07-18T22:10:58.0000000+00:00'
+- author: inhat-d
+  changes:
+    - type: Add
+      message: Альтернативна назва інженеру
+    - type: Add
+      message: Іконка фізику-ядернику
+    - type: Fix
+      message: >-
+        некоректно розставлені коментарі у файлі
+        `Resources/Locale/uk-UA/_Pirate/job/alternative-jobs.ftl`
+  id: 273
+  time: '2026-07-19T07:40:10.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Add
+      message: Ііпля отримала ціль антагоніста «Живи овечим життям або еволюціонуй».
+  id: 274
+  time: '2026-07-19T08:15:29.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: >-
+        Консолі реактора й турбіни тепер коректно відстежують та змінюють стан
+        підключених машин.
+  id: 275
+  time: '2026-07-19T09:03:05.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: Старі хімічні диспенсери на мапах замінено на енергетичні.
+  id: 276
+  time: '2026-07-19T09:07:14.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Add
+      message: Додано розведення численних порід курей.
+  id: 277
+  time: '2026-07-19T09:19:10.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Tweak
+      message: Збільшено пасивне нарахування наукових балів.
+  id: 278
+  time: '2026-07-19T09:20:51.0000000+00:00'

@@ -5,6 +5,9 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: GhostTakeoverAvailable
+    - type: GrantObjectivesOnGhostTakeover # Pirate
+      objectives:
+        - EeepSurviveObjective
     - type: Examiner
     - type: Speech
       speechSounds: Pop
