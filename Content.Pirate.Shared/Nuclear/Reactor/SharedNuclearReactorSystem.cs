@@ -42,6 +42,7 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
         PartQuery = GetEntityQuery<ReactorPartComponent>();
 
         SubscribeLocalEvent<NuclearReactorComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<NuclearReactorComponent, BoundUIOpenedEvent>(OnUiOpened);
         SubscribeLocalEvent<NuclearReactorComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<NuclearReactorComponent, PortDisconnectedEvent>(OnPortDisconnected);
         SubscribeLocalEvent<NuclearReactorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
@@ -61,6 +62,12 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
 
         if (_slots.TryGetSlot(ent.Owner, ent.Comp.PartSlotId, out var slot))
             ent.Comp.PartSlot = slot;
+    }
+
+    private void OnUiOpened(Entity<NuclearReactorComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        if (args.UiKey.Equals(NuclearReactorUiKey.Key))
+            UpdateUI(ent);
     }
 
     private void OnSwapPart(Entity<NuclearReactorComponent> ent, ref ReactorSwapPartMessage args)
@@ -128,7 +135,10 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
     {
         var item = ent.Comp.PartSlot.Item;
         if (_slots.TryEjectToHands(ent.Owner, ent.Comp.PartSlot, args.Actor) && item is { } ejected)
+        {
             AdminLog.Add(LogType.Action, $"{args.Actor:player} ejected {ejected:part} from {ent.Owner:target}");
+            UpdateUI(ent);
+        }
     }
 
     private void OnAdjustControlRods(Entity<NuclearReactorComponent> ent, ref ReactorAdjustControlRodsMessage args)
@@ -253,6 +263,9 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
 
             array[i] = new ReactorSlotBUIData
             {
+                HasPart = true,
+                PartName = MetaData(part).EntityName,
+                IconStateInserted = partComp.IconStateInserted,
                 Temperature = partComp.Temperature,
                 NeutronCount = neutrons,
                 NeutronRadioactivity = props.NeutronRadioactivity,
@@ -263,7 +276,19 @@ public abstract partial class SharedNuclearReactorSystem : EntitySystem
 
         _ui.SetUiState(target,
             NuclearReactorUiKey.Key,
-            new NuclearReactorBuiState(array, ent.Comp.GridWidth, ent.Comp.GridHeight));
+            new NuclearReactorBuiState(
+                array,
+                ent.Comp.GridWidth,
+                ent.Comp.GridHeight,
+                ent.Comp.Temperature,
+                ent.Comp.ReactorMeltdownTemp,
+                ent.Comp.RadiationLevel,
+                ent.Comp.MaximumRadiation,
+                ent.Comp.ThermalPower,
+                ent.Comp.MaximumThermalPower,
+                ent.Comp.ControlRodInsertion,
+                ent.Comp.AvgInsertion,
+                ent.Comp.PartSlot.Item is { } item ? MetaData(item).EntityName : null));
     }
 
     protected void UpdateVisuals(Entity<NuclearReactorComponent> ent)

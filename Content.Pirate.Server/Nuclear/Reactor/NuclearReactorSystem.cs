@@ -150,7 +150,10 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
             return;
 
         if (!_machine.GetPipes(uid, out var inlet, out var outlet))
+        {
+            UpdateUI(ent);
             return;
+        }
 
         var gridWidth = comp.GridWidth;
         var gridHeight = comp.GridHeight;
