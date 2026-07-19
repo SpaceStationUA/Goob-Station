@@ -5,8 +5,8 @@
 - type: entity
   parent: BaseItem
   id: ArmorPlateBlunt_Slash
-  name: blunt/slash armor plate
-  description: An armor module consisting of additional protective plasteel plating and shock absorbent plastic. Protects against blunt force and slash attacks. Vulnerable to heat.
+  name: "ударно-різальна бронеплита"
+  description: "Бронемодуль із додаткових пласталевих пластин та ударопоглинального пластику. Захищає від ударів і порізів, але вразливий до опіків."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/ArmorPlate/armor_plates.rsi
@@ -37,8 +37,8 @@
 - type: entity
   parent: BaseItem
   id: ArmorPlatePierce
-  name: pierce armor plate
-  description: An armor module consisting of robust plastitanium plating. Protects against firearms and piercing attacks. Vulnerable to heat.
+  name: "протикульова бронеплита"
+  description: "Бронемодуль із міцних пластитанових пластин. Захищає від куль та колючих атак, але вразливий до опіків."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/ArmorPlate/armor_plates.rsi
@@ -68,8 +68,8 @@
 - type: entity
   parent: BaseItem
   id: ArmorPlateHeat
-  name: heat armor plate
-  description: An armor module consisting of iridite shielding and heat diffusion systems, capable of diffracting incoming laser assaults. Vulnerable to piercing attacks.
+  name: "теплозахисна бронеплита"
+  description: "Бронемодуль з іридієвим екрануванням і системами розсіювання тепла, що послаблює лазерні атаки. Вразливий до колючих атак."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/ArmorPlate/armor_plates.rsi
@@ -99,8 +99,8 @@
 - type: entity
   parent: BaseItem
   id: ArmorPlateSpeed
-  name: speed armor plate
-  description: An armor module consisting of replacement brass plating for shedding weight. Increases your speed, but makes you vulnerable to most damage.
+  name: "полегшена бронеплита"
+  description: "Бронемодуль із полегшених латунних пластин. Збільшує швидкість, але робить власника вразливішим до більшості видів шкоди."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/ArmorPlate/armor_plates.rsi
