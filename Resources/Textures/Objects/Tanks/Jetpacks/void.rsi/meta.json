@@ -42,6 +42,10 @@
             "directions": 4
         },
         {
+            "name": "equipped-SUITSTORAGE-secdog",
+            "directions": 4
+        },
+        {
             "name": "on-equipped-SUITSTORAGE",
             "directions": 4
         },

@@ -39,6 +39,10 @@
             "directions": 4
         },
         {
+            "name": "equipped-MASK-secdog",
+            "directions": 4
+        },
+        {
             "name": "equipped-MASK-puppy",
             "directions": 4
         },

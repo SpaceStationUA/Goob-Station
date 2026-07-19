@@ -551,7 +551,7 @@
   - type: NotJobRequirement
     jobs: [ SecurityOfficer ]
   - type: StealCondition
-    stealGroup: AnimalShiva
+    stealGroup: AnimalSecurity # Pirate: security pets share one theft target group.
   - type: Objective
     difficulty: 2
 

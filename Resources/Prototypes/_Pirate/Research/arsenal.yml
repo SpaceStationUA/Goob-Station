@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: technology
+  id: SecurityHardsuitsPirate
+  name: research-technology-security-eva
+  icon:
+    sprite: _Pirate/Clothing/OuterClothing/Hardsuits/Combat/k9.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 8000
+  recipeUnlocks:
+  - ClothingOuterHardsuitCombatK9
+  - ClothingOuterHardsuitCombatRiotK9

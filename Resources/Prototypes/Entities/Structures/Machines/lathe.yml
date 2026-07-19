@@ -503,6 +503,7 @@
     - GrenadeTriggersStatic
     - SecurityWeaponsStaticGoob
     # Pirate Packs
+    - SecurityEquipmentStaticPirate # Pirate: K9 durathread vest.
     - SecurityAmmoStaticPirate
     - PirateStraightjacketLatheRecipePackStatic # Pirate - tweak recipes | Add straint-jacket to med and sec fabs.
     - ModesuitModuleSecStatic # Pirate: Wega modular suit port.
@@ -527,6 +528,7 @@
     - SpecOpsGoogles
     - PowerCells
     # Pirate Packs
+    - SecurityHardsuitsPirate # Pirate: K9 combat hardsuits.
     - SecurityAmmoPirate
     - ModesuitModuleSecReach # Pirate: Wega modular suit port.
   - type: EmagLatheRecipes # Goobstation

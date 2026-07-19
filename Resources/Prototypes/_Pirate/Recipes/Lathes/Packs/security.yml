@@ -1,5 +1,10 @@
 ## Static
 - type: latheRecipePack
+  id: SecurityEquipmentStaticPirate
+  recipes:
+  - ClothingOuterArmorDuraVestK9
+
+- type: latheRecipePack
   id: SecurityAmmoStaticPirate
   recipes:
   - MagazineUniversalMagnumEmpty
@@ -13,6 +18,12 @@
   - MagazineBoxCaselessRifleStandard
 
 ## Dynamic
+- type: latheRecipePack
+  id: SecurityHardsuitsPirate
+  recipes:
+  - ClothingOuterHardsuitCombatK9
+  - ClothingOuterHardsuitCombatRiotK9
+
 - type: latheRecipePack
   id: SecurityAmmoPirate
   recipes:

@@ -17,6 +17,25 @@
 
 - type: entity
   parent: IDCardStandard
+  id: K9OfficerIDCard
+  name: ID-картка офіцера K9
+  description: Картка, що підтверджує службовий статус пса служби безпеки.
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: "#39393c"
+    - state: stripe_bottom
+      color: "#262626"
+    - sprite: _Pirate/Interface/Misc/job_icons.rsi
+      offset: -0.09375, 0.0625
+      state: SecurityK9Officer
+  - type: PresetIdCard
+    job: RoleK9Officer
+
+- type: entity
+  parent: IDCardStandard
   id: CaptainInterdyneIDCard
   name: Interdyne Officer ID card
   components:
