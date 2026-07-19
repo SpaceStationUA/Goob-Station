@@ -280,6 +280,23 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (language.SpeechOverride.ChatTypeOverride is { } chatTypeOverride)
             desiredType = chatTypeOverride;
 
+        // Pirate: systems can route a message privately to a small set of entities.
+        var targetedSpeech = new CheckTargetedSpeechEvent();
+        RaiseLocalEvent(source, targetedSpeech);
+        if (targetedSpeech.Targets.Count > 0 && !targetedSpeech.ChatTypeIgnore.Contains(desiredType))
+        {
+            SendEntityDirect(source,
+                message,
+                range,
+                nameOverride,
+                targetedSpeech.Targets,
+                language,
+                hideLog,
+                ignoreActionBlocker,
+                colorOverride);
+            return;
+        }
+
         // This message may have a radio prefix, and should then be whispered to the resolved radio channel
         if (checkRadioPrefix)
         {
@@ -774,6 +791,78 @@ public sealed partial class ChatSystem : SharedChatSystem
                     _adminLogger.Add(LogType.Chat, LogImpact.Low,
                     $"Whisper from {source}, original: {originalMessage}, transformed: {message}.");
             }
+    }
+
+    // Pirate: targeted speech is used for private host/borer conversation.
+    private void SendEntityDirect(
+        EntityUid source,
+        string originalMessage,
+        ChatTransmitRange range,
+        string? nameOverride,
+        List<EntityUid> recipients,
+        LanguagePrototype language,
+        bool hideLog = false,
+        bool ignoreActionBlocker = false,
+        Color? colorOverride = null)
+    {
+        var message = FormattedMessage.RemoveMarkupOrThrow(originalMessage);
+        message = FormattedMessage.EscapeText(message);
+        message = TransformSpeech(source, message, language);
+        if (message.Length == 0)
+            return;
+
+        var name = nameOverride;
+        if (name == null)
+        {
+            var nameEv = new TransformSpeakerNameEvent(source, Name(source));
+            RaiseLocalEvent(source, nameEv);
+            name = nameEv.VoiceName;
+        }
+
+        name = FormattedMessage.EscapeText(name);
+        var obfuscated = SanitizeInGameICMessage(source,
+            _language.ObfuscateSpeech(message, language),
+            out _,
+            capitalize: true,
+            punctuate: _configurationManager.GetCVar(CCVars.ChatPunctuation),
+            capitalizeTheWordI: (!CultureInfo.CurrentCulture.IsNeutralCulture &&
+                                 CultureInfo.CurrentCulture.Parent.Name == "en") ||
+                                (CultureInfo.CurrentCulture.IsNeutralCulture &&
+                                 CultureInfo.CurrentCulture.Name == "en"));
+
+        foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
+        {
+            if (session.AttachedEntity is not { Valid: true } listener)
+                continue;
+
+            if (MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full ||
+                !recipients.Contains(listener) && !HasComp<GhostComponent>(listener))
+            {
+                continue;
+            }
+
+            var perceived = _language.CanUnderstand(listener, language.ID) ? message : obfuscated;
+            var wrapped = WrapWhisperMessage(source,
+                "chat-manager-entity-whisper-wrap-message",
+                name,
+                perceived,
+                language,
+                colorOverride);
+            _chatManager.ChatMessageToOne(ChatChannel.CollectiveMind,
+                perceived,
+                wrapped,
+                source,
+                false,
+                session.Channel,
+                colorOverride: colorOverride);
+        }
+
+        if (hideLog)
+            return;
+
+        _adminLogger.Add(LogType.Chat,
+            LogImpact.Low,
+            $"Direct message from {ToPrettyString(source):user} as {name}: {originalMessage}.");
     }
 
     protected override void SendEntityEmote(
@@ -1289,4 +1378,11 @@ public sealed partial class ChatSystem : SharedChatSystem
 /// </summary>
 public record ExpandICChatRecipientsEvent(EntityUid Source, float VoiceRange, Dictionary<ICommonSession, ChatSystem.ICChatRecipientData> Recipients)
 {
+}
+
+// Pirate: raised before normal chat routing so a system can choose private recipients.
+public sealed class CheckTargetedSpeechEvent : EntityEventArgs
+{
+    public List<EntityUid> Targets = new();
+    public HashSet<InGameICChatType> ChatTypeIgnore = new();
 }
