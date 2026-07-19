@@ -2,7 +2,7 @@
 
 ## Parent File to easily add more attributes, here it's used for plasmaman mostly
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, ClothingArmorPlate] # Pirate: armor plates.
   id: ClothingOuterModsuitBase
   categories: [ HideSpawnMenu ]
   components:
@@ -25,7 +25,7 @@
 
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, ClothingArmorPlate] # Pirate: armor plates.
   id: ClothingModsuitChestplateStandard
   name: standard modsuit chestplate
   description: A special modular suit spaceproof cover designed for compact folding inside modular suit control.
@@ -100,7 +100,7 @@
     reduction: 0.5
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, ClothingArmorPlate] # Pirate: armor plates.
   id: ClothingModsuitChestplateSecurity
   name: soldat modsuit chestplate
   description: A robust modular suit cover with ceramic inserts for extra protection.
@@ -183,7 +183,7 @@
 
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, ClothingArmorPlate] # Pirate: armor plates.
   id: ClothingModsuitChestplateHeadOfSecurity
   name: bulwark modsuit chestplate
   description: A robust modular suit cover with EXTRA ceramic inserts for slightly more protection.
@@ -272,7 +272,7 @@
       Tramadol: 5
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, ClothingArmorPlate] # Pirate: armor plates.
   id: ClothingModsuitChestplateParamedic
   name: sanitater modsuit chestplate
   description: A white and blue-ish-grey steel plate for keeping out the harsh void of space and the occasional bullet.
@@ -355,7 +355,7 @@
     reduction: 0.5
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, ClothingArmorPlate] # Pirate: armor plates.
   id: ClothingModsuitChestplateEngineer
   name: sapper modsuit chestplate
   description: A tough armor plate to defend against harsh atmospheric conditions and shockwaves.
@@ -439,7 +439,7 @@
     reduction: 0.7
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, ClothingArmorPlate] # Pirate: armor plates.
   id: ClothingModsuitChestplateAtmostech
   name: aeolus modsuit chestplate
   description: A fire-proof armor plate to defend against harsh atmospheric conditions.
@@ -521,7 +521,7 @@
     reduction: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, ClothingArmorPlate] # Pirate: armor plates.
   id: ClothingModsuitChestplateResearchDirector
   name: minerva modsuit chestplate
   description: A bulky bomb and bat proof chunk of steel.
@@ -606,7 +606,7 @@
   - type: GroupExamine
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, ClothingArmorPlate] # Pirate: armor plates.
   id: ClothingModsuitChestplateCaptain
   name: magnate modsuit chestplate
   description: This shit is made out of DIAMONDS, man, this armor was forged with GEMS.

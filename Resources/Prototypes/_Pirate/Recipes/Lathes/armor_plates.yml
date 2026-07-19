@@ -1,0 +1,40 @@
+# SPDX-FileCopyrightText: 2026 OneZerooo0 <moguls-charade4n@icloud.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipe
+  id: ArmorPlateBlunt_Slash
+  result: ArmorPlateBlunt_Slash
+  completetime: 15
+  materials:
+    Plasteel: 2000
+    Durathread: 500
+    Plastic: 1000
+
+- type: latheRecipe
+  id: ArmorPlatePierce
+  result: ArmorPlatePierce
+  completetime: 15
+  materials:
+    Durathread: 500
+    Plastic: 500
+    Plastitanium: 1500
+
+- type: latheRecipe
+  id: ArmorPlateHeat
+  result: ArmorPlateHeat
+  completetime: 15
+  materials:
+    Steel: 600
+    Durathread: 500
+    PlasmaGlass: 1500
+    UraniumGlass: 1500
+
+- type: latheRecipe
+  id: ArmorPlateSpeed
+  result: ArmorPlateSpeed
+  completetime: 15
+  materials:
+    Durathread: 1000
+    Brass: 3000
+    Plastitanium: 1000

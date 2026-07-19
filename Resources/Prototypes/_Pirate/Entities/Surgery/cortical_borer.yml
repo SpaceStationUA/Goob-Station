@@ -1,0 +1,35 @@
+# SPDX-FileCopyrightText: 2025 Coenx-flex
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BasePartSurgery
+  id: SurgeryCorticalBorerRemoval
+  name: Remove Cortical Borer
+  description: Remove a cortical borer infestation from the body.
+  components:
+  - type: Surgery
+    priority: -1
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepSawBones
+    - SurgeryStepClampInternalBleeders
+    - SurgeryStepRemoveCorticalBorer
+  - type: SurgeryCorticalBorerCondition
+  - type: SurgeryPartCondition
+    parts: [ Head ]
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRemoveCorticalBorer
+  name: Remove the Cortical Borer
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Tweezers
+    duration: 8
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryStepRemoveCorticalBorer
+  - type: SurgeryStepEmoteEffect

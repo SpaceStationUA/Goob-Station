@@ -1,0 +1,17 @@
+- type: entity
+  id: CEZLevelAperture
+  name: floor aperture
+  description: A small reinforced opening that exposes the level below.
+  categories: [ HideSpawnMenu ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: FloorTiles
+    noRot: true
+    sprite: _Pirate/Structures/ZLevels/Ladders/tg_ladders.rsi
+    state: ladder_rim
+  - type: CEZLevelAperture
+  - type: CEZLevelAscentPassage

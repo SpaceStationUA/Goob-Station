@@ -1,0 +1,11 @@
+- type: rcd
+  id: CEMultizAtmosPipeAdapter
+  name: floor pipe adapter
+  category: Piping
+  sprite: /Textures/_Pirate/Interface/Radial/RPD/pipe_adapter.png
+  mode: ConstructObject
+  prototype: CEMultizAtmosPipeAdapter
+  cost: 1
+  delay: 0
+  rotation: User
+  fx: EffectRCDConstruct0

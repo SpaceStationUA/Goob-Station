@@ -102,6 +102,8 @@ public sealed partial class AbductorsAbilitiesComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? SendYourself;
 
+    // Pirate: multiz - remote deck actions are managed by CEZLevelEyeMoverComponent.
+
     [DataField]
     public EntityUid[] HiddenActions = [];
 }

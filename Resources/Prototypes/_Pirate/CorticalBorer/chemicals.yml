@@ -1,0 +1,63 @@
+# SPDX-FileCopyrightText: 2025 Coenx-flex
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: borerChemical
+  id: borerBicaridine
+  cost: 4
+  reagent: Bicaridine
+
+- type: borerChemical
+  id: borerKelotane
+  cost: 4
+  reagent: Kelotane
+
+- type: borerChemical
+  id: borerSaline
+  cost: 2
+  reagent: Saline
+
+- type: borerChemical
+  id: borerEthanol
+  cost: 5
+  reagent: Ethanol
+
+- type: borerChemical
+  id: borerMuteToxin
+  cost: 10
+  reagent: MuteToxin
+
+- type: borerChemical
+  id: borerCharcoal
+  cost: 3
+  reagent: Charcoal
+
+- type: borerChemical
+  id: borerHappiness
+  cost: 5
+  reagent: Happiness
+
+- type: borerChemical
+  id: borerEphedrine
+  cost: 10
+  reagent: Ephedrine
+
+- type: borerChemical
+  id: borerNorepinephricAcid
+  cost: 2
+  reagent: NorepinephricAcid
+
+- type: borerChemical
+  id: borerDexalinPlus
+  cost: 10
+  reagent: DexalinPlus
+
+- type: borerChemical
+  id: borerHeartbreakerToxin
+  cost: 10
+  reagent: HeartbreakerToxin
+
+- type: borerChemical
+  id: borerNocturine
+  cost: 5
+  reagent: Nocturine

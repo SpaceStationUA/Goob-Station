@@ -1,0 +1,18 @@
+- type: gameMap
+  id: ZShittle
+  mapName: ZShittle
+  mapPath: /Maps/Test/ZShittle0.yml
+  minPlayers: 0
+  stations:
+    Empty:
+      stationProto: StandardNanotrasenStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "ZShittle"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+      - type: CEStationZLevels
+        mapsAbove:
+        - /Maps/Test/ZShittle1.yml
+        - /Maps/Test/ZShittle2.yml

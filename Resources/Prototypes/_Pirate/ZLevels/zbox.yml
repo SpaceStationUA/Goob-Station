@@ -1,0 +1,6 @@
+- type: zMap
+  id: ZBox
+  maps:
+  - /Maps/Test/ZBox0.yml  # depth 0
+  - /Maps/Test/ZBox1.yml  # depth 1
+  - /Maps/Test/ZBox2.yml  # depth 2

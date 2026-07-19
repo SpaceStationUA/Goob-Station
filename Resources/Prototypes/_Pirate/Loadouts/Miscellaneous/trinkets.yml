@@ -21,6 +21,12 @@
     cost: 1
 
 - type: loadout
+  id: ClothingNeckLanyard
+  storage:
+    back:
+    - ClothingNeckLanyard
+
+- type: loadout
   id: NoviceMark
   storage:
     back:

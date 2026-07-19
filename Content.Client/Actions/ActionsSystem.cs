@@ -302,7 +302,8 @@ namespace Content.Client.Actions
                     SetIcon(actionId, new SpriteSpecifier.EntityPrototype(id));
                     SetEvent(actionId, new StartPlacementActionEvent()
                     {
-                        PlacementOption = "SnapgridCenter",
+                        // Pirate: pipe layer hotbar - honor the prototype's own placement mode (e.g. AlignAtmosPipeLayers) when set, else keep the SnapgridCenter default. "PlaceFree" is the prototype's unset default, so treat it as "not overridden".
+                        PlacementOption = proto.PlacementMode == "PlaceFree" ? "SnapgridCenter" : proto.PlacementMode,
                         EntityType = id
                     });
                     _metaData.SetEntityName(actionId, proto.Name);

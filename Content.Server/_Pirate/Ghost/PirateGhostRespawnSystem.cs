@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Goobstation.Common.Cloning;
+using Content.Server._Pirate.CorticalBorer;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
@@ -283,6 +284,10 @@ public sealed class PirateGhostRespawnSystem : EntitySystem
     private bool ShouldSeedCrewCycle(EntityUid entity)
     {
         if (HasComp<GhostComponent>(entity))
+            return false;
+
+        // Pirate: a temporary nullspace mind holder is not a new crew life.
+        if (HasComp<CorticalBorerControlMindHolderComponent>(entity))
             return false;
 
         if (HasComp<GhostRoleComponent>(entity))

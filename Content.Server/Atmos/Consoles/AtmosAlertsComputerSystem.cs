@@ -9,6 +9,8 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Consoles;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
+using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
@@ -33,6 +35,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
 
     // Note: this data does not need to be saved
     private float _updateTimer = 1.0f;
+    private readonly Dictionary<EntityUid, EntityUid> _selectedMonitorGrids = new(); // Pirate: multiz
 
     public override void Initialize()
     {
@@ -42,6 +45,8 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         SubscribeLocalEvent<AtmosAlertsComputerComponent, ComponentInit>(OnConsoleInit);
         SubscribeLocalEvent<AtmosAlertsComputerComponent, EntParentChangedMessage>(OnConsoleParentChanged);
         SubscribeLocalEvent<AtmosAlertsComputerComponent, AtmosAlertsComputerFocusChangeMessage>(OnFocusChangedMessage);
+        SubscribeLocalEvent<AtmosAlertsComputerComponent, CEZMonitoringConsoleLevelSelectedMessage>(OnZLevelSelected); // Pirate: multiz
+        SubscribeLocalEvent<AtmosAlertsComputerComponent, ComponentShutdown>(OnConsoleShutdown); // Pirate: multiz
 
         // Grid events
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
@@ -63,8 +68,79 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         InitalizeConsole(uid, component);
     }
 
+    #region Pirate: multiz
+    private void OnConsoleShutdown(EntityUid uid, AtmosAlertsComputerComponent component, ComponentShutdown args)
+    {
+        _selectedMonitorGrids.Remove(uid);
+    }
+
+    private void OnZLevelSelected(EntityUid uid, AtmosAlertsComputerComponent component, CEZMonitoringConsoleLevelSelectedMessage args)
+    {
+        var targetGrid = GetEntity(args.Grid);
+        if (targetGrid == null)
+            return;
+
+        var xform = Transform(uid);
+        if (xform.GridUid == null || !IsValidZMonitoringGrid(xform.GridUid.Value, targetGrid.Value))
+            return;
+
+        _selectedMonitorGrids[uid] = targetGrid.Value;
+        component.FocusDevice = null;
+        EnsureComp<NavMapComponent>(targetGrid.Value);
+        component.AtmosDevices = GetAllAtmosDeviceNavMapData(targetGrid.Value);
+        Dirty(uid, component);
+
+        var airAlarmEntries = GetAlarmStateData(targetGrid.Value, AtmosAlertsComputerGroup.AirAlarm).ToArray(); // Pirate: multiz
+        var fireAlarmEntries = GetAlarmStateData(targetGrid.Value, AtmosAlertsComputerGroup.FireAlarm).ToArray(); // Pirate: multiz
+        UpdateUIState(uid, airAlarmEntries, fireAlarmEntries, component, xform); // Pirate: multiz
+    }
+
+    private EntityUid GetSelectedMonitoringGrid(EntityUid consoleUid, TransformComponent xform)
+    {
+        if (xform.GridUid == null)
+            return EntityUid.Invalid;
+
+        if (_selectedMonitorGrids.TryGetValue(consoleUid, out var selectedGrid) &&
+            IsValidZMonitoringGrid(xform.GridUid.Value, selectedGrid))
+        {
+            return selectedGrid;
+        }
+
+        _selectedMonitorGrids.Remove(consoleUid);
+        return xform.GridUid.Value;
+    }
+
+    private bool IsValidZMonitoringGrid(EntityUid sourceGrid, EntityUid targetGrid)
+    {
+        if (sourceGrid == targetGrid)
+            return true;
+
+        return TryComp<CEZLinkedGridComponent>(sourceGrid, out var sourceLinked) &&
+               TryComp<CEZLinkedGridComponent>(targetGrid, out var targetLinked) &&
+               sourceLinked.ZNetwork.IsValid() &&
+               sourceLinked.ZNetwork == targetLinked.ZNetwork;
+    }
+    #endregion
+
     private void OnFocusChangedMessage(EntityUid uid, AtmosAlertsComputerComponent component, AtmosAlertsComputerFocusChangeMessage args)
     {
+        #region Pirate: multiz
+        var focus = GetEntity(args.FocusDevice);
+        if (focus != null)
+        {
+            var xform = Transform(uid);
+            var selectedGrid = GetSelectedMonitoringGrid(uid, xform);
+
+            if (selectedGrid == EntityUid.Invalid ||
+                !TryComp(focus.Value, out TransformComponent? focusXform) ||
+                focusXform.GridUid != selectedGrid)
+            {
+                component.FocusDevice = null;
+                return;
+            }
+        }
+        #endregion
+
         component.FocusDevice = args.FocusDevice;
     }
 
@@ -83,7 +159,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
             if (entXform.GridUid == null)
                 continue;
 
-            if (!allGrids.Contains(entXform.GridUid.Value))
+            if (!allGrids.Contains(GetSelectedMonitoringGrid(ent, entXform))) // Pirate: multiz
                 continue;
 
             InitalizeConsole(ent, entConsole);
@@ -119,7 +195,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         var query = AllEntityQuery<AtmosAlertsComputerComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var entConsole, out var entXform))
         {
-            if (gridUid != entXform.GridUid)
+            if (gridUid != GetSelectedMonitoringGrid(ent, entXform)) // Pirate: multiz
                 continue;
 
             if (isAdding)
@@ -159,17 +235,21 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                 if (entXform?.GridUid == null)
                     continue;
 
+                var gridUid = GetSelectedMonitoringGrid(ent, entXform); // Pirate: multiz
+                if (gridUid == EntityUid.Invalid) // Pirate: multiz
+                    continue; // Pirate: multiz
+
                 // Make a list of alarm state data for all the air and fire alarms on the grid
-                if (!airAlarmEntriesForEachGrid.TryGetValue(entXform.GridUid.Value, out var airAlarmEntries))
+                if (!airAlarmEntriesForEachGrid.TryGetValue(gridUid, out var airAlarmEntries)) // Pirate: multiz
                 {
-                    airAlarmEntries = GetAlarmStateData(entXform.GridUid.Value, AtmosAlertsComputerGroup.AirAlarm).ToArray();
-                    airAlarmEntriesForEachGrid[entXform.GridUid.Value] = airAlarmEntries;
+                    airAlarmEntries = GetAlarmStateData(gridUid, AtmosAlertsComputerGroup.AirAlarm).ToArray(); // Pirate: multiz
+                    airAlarmEntriesForEachGrid[gridUid] = airAlarmEntries; // Pirate: multiz
                 }
 
-                if (!fireAlarmEntriesForEachGrid.TryGetValue(entXform.GridUid.Value, out var fireAlarmEntries))
+                if (!fireAlarmEntriesForEachGrid.TryGetValue(gridUid, out var fireAlarmEntries)) // Pirate: multiz
                 {
-                    fireAlarmEntries = GetAlarmStateData(entXform.GridUid.Value, AtmosAlertsComputerGroup.FireAlarm).ToArray();
-                    fireAlarmEntriesForEachGrid[entXform.GridUid.Value] = fireAlarmEntries;
+                    fireAlarmEntries = GetAlarmStateData(gridUid, AtmosAlertsComputerGroup.FireAlarm).ToArray(); // Pirate: multiz
+                    fireAlarmEntriesForEachGrid[gridUid] = fireAlarmEntries; // Pirate: multiz
                 }
 
                 // Determine the highest level of alert for the console (based on non-silenced alarms)
@@ -207,7 +287,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         if (!_userInterfaceSystem.IsUiOpen(uid, AtmosAlertsComputerUiKey.Key))
             return;
 
-        var gridUid = xform.GridUid!.Value;
+        var gridUid = GetSelectedMonitoringGrid(uid, xform); // Pirate: multiz
 
         if (!HasComp<MapGridComponent>(gridUid))
             return;
@@ -406,8 +486,11 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         if (xform.GridUid == null)
             return;
 
-        var grid = xform.GridUid.Value;
-        component.AtmosDevices = GetAllAtmosDeviceNavMapData(grid);
+        var grid = GetSelectedMonitoringGrid(uid, xform); // Pirate: multiz
+        if (grid == EntityUid.Invalid) // Pirate: multiz
+            return; // Pirate: multiz
+
+        component.AtmosDevices = GetAllAtmosDeviceNavMapData(grid); // Pirate: multiz
 
         Dirty(uid, component);
     }

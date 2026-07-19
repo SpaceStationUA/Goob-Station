@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: 2025 starch <starchpersonal@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: material
+  id: Plastitanium
+  stackEntity: SheetPlastitanium1
+  name: materials-plastitanium
+  unit: materials-unit-sheet
+  icon: { sprite: Objects/Materials/Sheets/metal.rsi, state: plastitanium }
+  color: "#5c5c5c"
+  price: 2.6 # Pirate: keep the 30-sheet cargo crate below its 8000 spesos purchase cost.
