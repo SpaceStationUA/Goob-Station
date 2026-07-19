@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Ported from DeltaV PR #5943.
+
+- type: loadout
+  id: SodaJerkUniform
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSodaJerk
+
+- type: loadout
+  id: SodaJerkCap
+  equipment:
+    head: ClothingHeadHatSodaJerkCap
