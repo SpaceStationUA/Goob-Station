@@ -285,7 +285,7 @@ uplink-m90-ammo-desc = Гвинтівковий магазин на 25 патр�
 # Grenades
 # Pirate: legacy contractor MODsuit replaced by the new modular suit system.
 uplink-moduist-contractor-name = MOD-костюм Синдикату для підрядника
-uplink-moduist-contractor-desc = Попередньо зібраний бойовий MOD-костюм Gorlex Marauders із батареєю надвисокої ємності, джетпаком, магнітними черевиками, посиленням броні, ЕМІ-захистом та вбудованим сховищем.
+uplink-moduist-contractor-desc = Попередньо зібраний бойовий MOD-костюм Мародерів Горлекса з батареєю надвисокої ємності, джетпаком, магнітними черевиками, модулем посилення броні, захистом від ЕМІ та вбудованим сховищем.
 uplink-hardsuit-contractor-name = Набір скафандра підрядника
 uplink-hardsuit-contractor-desc = Цей легкий скафандр створено спеціально для Гільдії! Його можна легко скласти й прибрати в рюкзак.
 uplink-webbing-contractor-name = Розвантажувальний жилет підрядника
