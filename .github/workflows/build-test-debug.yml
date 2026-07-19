@@ -17,10 +17,6 @@ on:
 env:
   # Pirate: mapped groups run independently; every other integration test falls through to the unmapped shard.
   ENTITY_TEST_PATTERNS: Content.IntegrationTests.Tests.EntityTest
-  ENTITY_COMPONENT_TEST_PATTERNS: Content.IntegrationTests.Tests.EntityTest.AllComponentsOneToOneDeleteTest
-  ENTITY_COUNT_TEST_PATTERNS: Content.IntegrationTests.Tests.EntityTest.SpawnAndDeleteEntityCountTest
-  ENTITY_SAME_SPOT_TEST_PATTERNS: Content.IntegrationTests.Tests.EntityTest.SpawnAndDeleteAllEntitiesInTheSameSpot
-  ENTITY_DIFFERENT_MAPS_TEST_PATTERNS: Content.IntegrationTests.Tests.EntityTest.SpawnAndDeleteAllEntitiesOnDifferentMaps
   ATMOS_CORE_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Atmos.AirtightTest
     Content.IntegrationTests.Tests.Atmos.AlarmThresholdTest
@@ -97,22 +93,9 @@ jobs:
       max-parallel: 8
       matrix:
         include:
-          - name: Entity component integration tests
+          - name: Entity integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: entity-components
-            test_timeout: 10
-          - name: Entity count integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: entity-count
-            test_timeout: 15
-          - name: Entity same-spot integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: entity-same-spot
-            test_timeout: 20
-          - name: Entity multi-map integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: entity-different-maps
-            test_timeout: 20
+            shard: entity
           - name: Atmos core integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: atmos-core
@@ -167,7 +150,7 @@ jobs:
       run: dotnet build --configuration DebugOpt --no-restore /m
 
     - name: Run ${{ matrix.name }}
-      timeout-minutes: ${{ matrix.test_timeout || 60 }}
+      timeout-minutes: 60
       env:
         TEST_PROJECT: ${{ matrix.project }}
         TEST_SHARD: ${{ matrix.shard }}
@@ -177,10 +160,6 @@ jobs:
         nunit_args=(NUnit.ConsoleOut=0)
 
         read -r -a entity_patterns <<< "$ENTITY_TEST_PATTERNS"
-        read -r -a entity_component_patterns <<< "$ENTITY_COMPONENT_TEST_PATTERNS"
-        read -r -a entity_count_patterns <<< "$ENTITY_COUNT_TEST_PATTERNS"
-        read -r -a entity_same_spot_patterns <<< "$ENTITY_SAME_SPOT_TEST_PATTERNS"
-        read -r -a entity_different_maps_patterns <<< "$ENTITY_DIFFERENT_MAPS_TEST_PATTERNS"
         read -r -a atmos_core_patterns <<< "$ATMOS_CORE_TEST_PATTERNS"
         read -r -a validation_serialization_patterns <<< "$VALIDATION_SERIALIZATION_TEST_PATTERNS"
         read -r -a validation_map_patterns <<< "$VALIDATION_MAP_TEST_PATTERNS"
@@ -189,23 +168,8 @@ jobs:
         read -r -a gameplay_validation_patterns <<< "$GAMEPLAY_VALIDATION_TEST_PATTERNS"
 
         case "$TEST_SHARD" in
-          entity-components)
-            patterns=("${entity_component_patterns[@]}")
-            comparison="~"
-            separator="|"
-            ;;
-          entity-count)
-            patterns=("${entity_count_patterns[@]}")
-            comparison="~"
-            separator="|"
-            ;;
-          entity-same-spot)
-            patterns=("${entity_same_spot_patterns[@]}")
-            comparison="~"
-            separator="|"
-            ;;
-          entity-different-maps)
-            patterns=("${entity_different_maps_patterns[@]}")
+          entity)
+            patterns=("${entity_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
