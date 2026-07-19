@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 07/18/2026 18:17:32
-  entityCount: 8581
+  time: 07/19/2026 09:17:43
+  entityCount: 8585
 maps:
 - 1
 grids:
@@ -7733,17 +7733,13 @@ entities:
     - type: Transform
       pos: -14.5,50.5
       parent: 2
-- proto: AirlockChemistryGlass
+- proto: AirlockChemistryGlassLocked
   entities:
   - uid: 95
     components:
     - type: Transform
       pos: 11.5,13.5
       parent: 2
-    - type: AccessReader
-      access:
-      - - Medical
-      - - Research
 - proto: AirlockChiefEngineerGlassLocked
   entities:
   - uid: 96
@@ -7792,7 +7788,7 @@ entities:
       pos: -14.5,1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -172239.48
+      secondsUntilStateChange: -172682.98
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7804,7 +7800,7 @@ entities:
       pos: -13.5,6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -129398.234
+      secondsUntilStateChange: -129841.734
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8034,7 +8030,7 @@ entities:
       pos: 20.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -59933.09
+      secondsUntilStateChange: -60376.59
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8181,18 +8177,6 @@ entities:
     - type: Transform
       pos: 13.5,0.5
       parent: 2
-- proto: AirlockMedicalGlassAlt
-  entities:
-  - uid: 158
-    components:
-    - type: Transform
-      pos: 8.5,5.5
-      parent: 2
-  - uid: 159
-    components:
-    - type: Transform
-      pos: 7.5,5.5
-      parent: 2
 - proto: AirlockMedicalGlassLockedAlt
   entities:
   - uid: 160
@@ -8215,6 +8199,16 @@ entities:
       - - Research
 - proto: AirlockMedicalMorgueGlassLockedAlt
   entities:
+  - uid: 158
+    components:
+    - type: Transform
+      pos: 7.5,5.5
+      parent: 2
+  - uid: 159
+    components:
+    - type: Transform
+      pos: 8.5,5.5
+      parent: 2
   - uid: 162
     components:
     - type: Transform
@@ -8645,6 +8639,17 @@ entities:
     - type: Transform
       pos: 20.5,-1.5
       parent: 2
+- proto: AlwaysPoweredWallLight
+  entities:
+  - uid: 5646
+    components:
+    - type: Transform
+      anchored: False
+      rot: -1.5707963267948966 rad
+      pos: -3.5,-0.5
+      parent: 1
+    - type: Physics
+      bodyType: Dynamic
 - proto: AnomalyScanner
   entities:
   - uid: 225
@@ -10447,6 +10452,14 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 26.5,5.5
+      parent: 2
+- proto: ButtonFrameExit
+  entities:
+  - uid: 5642
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 9.5,5.5
       parent: 2
 - proto: ButtonFrameJanitor
   entities:
@@ -23202,7 +23215,7 @@ entities:
       pos: 17.5,-18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5478.67
+      secondsUntilStateChange: -5922.1685
       state: Opening
 - proto: CurtainsOrangeOpen
   entities:
@@ -23316,7 +23329,7 @@ entities:
       pos: 23.5,-18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5476.0366
+      secondsUntilStateChange: -5919.535
       state: Opening
 - proto: CurtainsRedOpen
   entities:
@@ -41553,6 +41566,24 @@ entities:
           - Toggle
     - type: Fixtures
       fixtures: {}
+- proto: LockableButtonMedical
+  entities:
+  - uid: 5626
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 9.5,5.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        159:
+        - - Pressed
+          - Open
+        158:
+        - - Pressed
+          - Open
+    - type: Fixtures
+      fixtures: {}
 - proto: LockerAtmosphericsFilled
   entities:
   - uid: 5167
@@ -44161,6 +44192,13 @@ entities:
     - type: Transform
       pos: 35.5,-11.5
       parent: 2
+- proto: PoweredFloorLight
+  entities:
+  - uid: 5527
+    components:
+    - type: Transform
+      pos: 0.5,5.5
+      parent: 2
 - proto: PoweredLEDLightPostSmall
   entities:
   - uid: 5456
@@ -44494,11 +44532,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,2.5
       parent: 2
-  - uid: 5527
-    components:
-    - type: Transform
-      pos: 3.5,5.5
-      parent: 2
   - uid: 5530
     components:
     - type: Transform
@@ -44610,6 +44643,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,8.5
+      parent: 2
+  - uid: 5629
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -7.5,-1.5
       parent: 2
   - uid: 7722
     components:
@@ -58849,7 +58888,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -5396.6035
+      secondsUntilStateChange: -5840.102
       state: Opening
     - type: Airlock
       autoClose: False
@@ -58862,7 +58901,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -5396.0034
+      secondsUntilStateChange: -5839.502
       state: Opening
     - type: Airlock
       autoClose: False

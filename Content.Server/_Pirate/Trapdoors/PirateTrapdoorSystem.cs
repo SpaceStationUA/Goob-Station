@@ -164,6 +164,8 @@ public sealed class PirateTrapdoorSystem : EntitySystem
 
     private void DropOccupants(Entity<PirateTrapdoorComponent> ent, HashSet<EntityUid> occupants)
     {
+        var trapdoorGrid = Transform(ent.Owner).GridUid;
+
         foreach (var occupant in occupants)
         {
             if (occupant == ent.Owner ||
@@ -173,6 +175,17 @@ public sealed class PirateTrapdoorSystem : EntitySystem
             {
                 continue;
             }
+
+            // The occupant set is snapshotted before the tile is cleared. Clearing the tile leaves
+            // unsupported movers (mobs) without a floor, and z-physics detaches them and drops them
+            // to the level below on its own within this same call. Force-dropping such an
+            // already-descended occupant a second time restarts the descent from the level below —
+            // which has no floor beneath it — so TryMoveDownOrChasm fails to move and dumps the mob
+            // into a chasm, deleting it. Loose items avoid this only because they are non-colliding
+            // (Sundries) and never appear in this Dynamic/Static snapshot. Skip any occupant that has
+            // already left the trapdoor's grid; z-physics is handling its fall.
+            if (xform.GridUid != trapdoorGrid)
+                continue;
 
             if (!_zLevels.TryMoveDownOrChasm(occupant))
                 continue;
