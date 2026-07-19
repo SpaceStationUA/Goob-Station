@@ -529,6 +529,7 @@
     # Pirate Packs
     - SecurityAmmoPirate
     - ModesuitModuleSecReach # Pirate: Wega modular suit port.
+    - ArmorPlates # Pirate: Monolith armor plates.
   - type: EmagLatheRecipes # Goobstation
     emagStaticPacks:
     - SyndicateAmmoStatic
