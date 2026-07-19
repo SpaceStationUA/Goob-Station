@@ -823,12 +823,12 @@ public sealed partial class ChatSystem : SharedChatSystem
         var obfuscated = SanitizeInGameICMessage(source,
             _language.ObfuscateSpeech(message, language),
             out _,
-            shouldCapitalize: true,
-            shouldPunctuate: _configurationManager.GetCVar(CCVars.ChatPunctuation),
-            shouldCapitalizeTheWordI: (!CultureInfo.CurrentCulture.IsNeutralCulture &&
-                                       CultureInfo.CurrentCulture.Parent.Name == "en") ||
-                                      (CultureInfo.CurrentCulture.IsNeutralCulture &&
-                                       CultureInfo.CurrentCulture.Name == "en"));
+            capitalize: true,
+            punctuate: _configurationManager.GetCVar(CCVars.ChatPunctuation),
+            capitalizeTheWordI: (!CultureInfo.CurrentCulture.IsNeutralCulture &&
+                                 CultureInfo.CurrentCulture.Parent.Name == "en") ||
+                                (CultureInfo.CurrentCulture.IsNeutralCulture &&
+                                 CultureInfo.CurrentCulture.Name == "en"));
 
         foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
         {

@@ -84,7 +84,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         foreach (var actionId in ent.Comp.InitialCorticalBorerActions)
             Actions.AddAction(ent, actionId);
 
-        _alerts.ShowAlert(ent, ent.Comp.ChemicalAlert);
+        _alerts.ShowAlert(ent.Owner, ent.Comp.ChemicalAlert);
         UpdateUiState(ent);
     }
 
@@ -127,7 +127,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         if (ent.Comp.ChemicalPoints % ent.Comp.UiUpdateInterval == 0)
             UpdateUiState(ent);
 
-        _alerts.ShowAlert(ent, ent.Comp.ChemicalAlert);
+        _alerts.ShowAlert(ent.Owner, ent.Comp.ChemicalAlert);
         Dirty(ent);
     }
 
@@ -337,7 +337,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
 
         var logMessage = $"{ToPrettyString(worm)} has taken control over {ToPrettyString(host)}";
         Log.Info(logMessage);
-        _admin.Add(LogType.Mind, LogImpact.High, logMessage);
+        _admin.Add(LogType.Mind, LogImpact.High, $"{logMessage}");
         _chat.SendAdminAlert(logMessage);
     }
 
