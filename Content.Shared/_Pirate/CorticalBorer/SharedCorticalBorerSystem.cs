@@ -8,6 +8,7 @@ using Content.Shared._Shitmed.Medical.Surgery;
 using Content.Shared._Shitmed.Medical.Surgery.Conditions;
 using Content.Shared._Shitmed.Medical.Surgery.Steps;
 using Content.Shared._Shitmed.Medical.Surgery.Steps.Parts;
+using Content.Shared.Actions;
 using Content.Shared.Coordinates;
 using Content.Shared.Damage;
 using Content.Shared.Interaction.Events;
