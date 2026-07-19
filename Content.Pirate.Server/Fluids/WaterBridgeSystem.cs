@@ -1,5 +1,6 @@
 using Content.Pirate.Shared.Fluids;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Pirate.Server.Fluids;
@@ -52,12 +53,15 @@ public sealed class WaterBridgeSystem : EntitySystem
 
     public void UpdateWater(EntityUid water, EntityUid? ignore = null)
     {
+        if (!TryComp<PhysicsComponent>(water, out var physics))
+            return;
+
         var xform = Transform(water);
         if (!TryGetTile(xform, out var gridUid, out var grid, out var tile))
             return;
 
         var bridged = TileHasBridge(gridUid, grid, tile, ignore);
-        _physics.SetCanCollide(water, !bridged);
+        _physics.SetCanCollide(water, !bridged, body: physics);
     }
 
     private bool TileHasBridge(EntityUid gridUid, MapGridComponent grid, Vector2i tile, EntityUid? ignore)
