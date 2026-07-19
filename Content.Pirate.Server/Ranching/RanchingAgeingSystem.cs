@@ -3,6 +3,7 @@
 using Content.Pirate.Shared.Ranching;
 using Content.Server.Polymorph.Systems;
 using Content.Shared.Chat;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;

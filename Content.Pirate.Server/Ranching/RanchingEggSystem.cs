@@ -143,7 +143,7 @@ public sealed class RanchingEggSystem : EntitySystem
         if (fertilizer.SpecialReplacement is { } replacement)
         {
             if (fertilizer.SpecialReplacementRequiredEgg is { } required &&
-                Prototype(ent.Owner)?.ID != required)
+                Prototype(ent.Owner)?.ID != required.Id)
                 return;
 
             ent.Comp.Entity = replacement;
