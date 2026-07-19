@@ -28,6 +28,7 @@ using Content.Shared.StatusIcon; // Goobstation
 using Content.Goobstation.Shared.Radio; // Goobstation
 using Content.Server._Pirate.Radio.Components; // Pirate - Handheld Radios port
 using Content.Shared._Pirate.Radio; // Pirate: radio sounds
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -45,6 +46,7 @@ public sealed partial class RadioSystem : EntitySystem
     [Dependency] private readonly RadioJobIconSystem _radioIconSystem = default!; // Goobstation - radio icons
     [Dependency] private readonly LanguageSystem _language = default!; // Einstein Engines - Language
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // Goobstation - Whitelisted radio channels
+    [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!; // Pirate: multiz
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -211,8 +213,9 @@ public sealed partial class RadioSystem : EntitySystem
         RaiseLocalEvent(radioSource, ref sendAttemptEv);
         var canSend = !sendAttemptEv.Cancelled;
 
-        var sourceMapId = Transform(radioSource).MapID;
-        var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
+        var sourceCoverage = _zLevels.GetGridCoverage(radioSource); // Pirate: multiz
+        var sourceMapId = sourceCoverage.FallbackMapId; // Pirate: multiz
+        var hasActiveServer = HasActiveServer(sourceCoverage, channel.ID); // Pirate: multiz
         var sourceServerExempt = _exemptQuery.HasComp(radioSource);
 
         // Pirate start - handheld radios port
@@ -244,7 +247,7 @@ public sealed partial class RadioSystem : EntitySystem
                 continue;
             // Pirate end - Handheld Radios port
 
-            if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive
+            if (!channel.LongRange && !_zLevels.IsInCoverage(sourceCoverage, receiver, transform) && !radio.GlobalReceive // Pirate: multiz
                 && !(HasActiveTransmitter(transform.MapID) && HasActiveTransmitter(sourceMapId))) // goob - intermap transmitters
                 continue;
 
@@ -351,12 +354,14 @@ public sealed partial class RadioSystem : EntitySystem
     // Einstein Engines - Language end
 
     /// <inheritdoc cref="TelecomServerComponent"/>
-    private bool HasActiveServer(MapId mapId, string channelId)
+    private bool HasActiveServer(CEZGridCoverage coverage, string channelId) // Pirate: multiz
     {
-        var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
-        foreach (var (_, keys, power, transform) in servers)
+        var servers = EntityQueryEnumerator<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>(); // Pirate: multiz
+        while (servers.MoveNext(out var server, out _, out var keys, out var power, out var transform)) // Pirate: multiz
         {
-            if (transform.MapID == mapId &&
+            var serverInCoverage = _zLevels.IsInCoverage(coverage, server, transform); // Pirate: multiz
+
+            if (serverInCoverage && // Pirate: multiz
                 power.Powered &&
                 keys.Channels.Contains(channelId))
             {

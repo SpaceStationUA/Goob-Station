@@ -1,0 +1,67 @@
+- type: entity
+  parent: GasPipeBase
+  id: CEMultizAtmosPipeAdapter
+  name: floor pipe adapter
+  description: A vertical adapter for linking matching pipe networks between connected floors.
+  suffix: Default
+  placement:
+    mode: AlignAtmosPipeLayers
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Piping/Atmospherics/pipe_adapter_layer2.rsi
+    drawdepth: ThinPipe
+    layers:
+    - state: adapter
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Icon
+    sprite: _Pirate/Structures/Piping/Atmospherics/pipe_adapter_layer2.rsi
+    state: adapter
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:CEMultizAtmosPipeAdapterNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: AtmosPipeLayers
+    spriteLayersRsiPaths:
+      enum.PipeVisualLayers.Pipe:
+        Primary: _Pirate/Structures/Piping/Atmospherics/pipe_adapter_layer2.rsi
+        Secondary: _Pirate/Structures/Piping/Atmospherics/pipe_adapter_layer1.rsi
+        Tertiary: _Pirate/Structures/Piping/Atmospherics/pipe_adapter_layer3.rsi
+    alternativePrototypes:
+      Primary: CEMultizAtmosPipeAdapter
+      Secondary: CEMultizAtmosPipeAdapterAlt1
+      Tertiary: CEMultizAtmosPipeAdapterAlt2
+  - type: CEMultizAtmosPipeAdapter
+  - type: VentCrawlerTube
+    containerId: VentCrawlerTube
+  - type: VentCrawlerJunction
+    degrees:
+    - 0
+  - type: RCDDeconstructable
+    cost: 1
+    delay: 2
+    fx: EffectRCDDeconstruct2
+    rpd: true
+  - type: GuideHelp
+    guides:
+    - Pipes
+    - PipeNetworks
+
+- type: entity
+  parent: [GasPipeLayerAlt1, CEMultizAtmosPipeAdapter]
+  id: CEMultizAtmosPipeAdapterAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt1
+    sprite: _Pirate/Structures/Piping/Atmospherics/pipe_adapter_layer1.rsi
+
+- type: entity
+  parent: [GasPipeLayerAlt2, CEMultizAtmosPipeAdapter]
+  id: CEMultizAtmosPipeAdapterAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: _Pirate/Structures/Piping/Atmospherics/pipe_adapter_layer3.rsi

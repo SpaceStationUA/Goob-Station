@@ -1,0 +1,7 @@
+# Resources/Prototypes/_Pirate/ZLevels/test_maps.yml
+- type: zMap
+  id: ZShittle
+  maps:
+  - /Maps/Test/ZShittle0.yml  # depth 0
+  - /Maps/Test/ZShittle1.yml  # depth 1
+  - /Maps/Test/ZShittle2.yml  # depth 2

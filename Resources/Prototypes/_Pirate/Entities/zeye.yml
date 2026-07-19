@@ -1,0 +1,9 @@
+# Non-saveable probe-eye prototype. Spawned per (viewer, depth) by CEZLevelsSystem.View.
+- type: entity
+  id: CEZLevelEye
+  save: false
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+    gridTraversal: false
+  - type: Eye

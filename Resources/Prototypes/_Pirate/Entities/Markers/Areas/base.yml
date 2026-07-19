@@ -4,7 +4,7 @@
 # this is like markerbase without marker, clickable and interaction outline to not make mapping very annoying
 - type: entity
   abstract: true
-  save: false # areas use custom serialization in MapAreaSystem
+  save: true # Pirate: markers are plain entities (no MapAreaSystem ported); must be saved with the map or mapping placement is lost (fixes not being saved during mapping)
   id: BaseArea
   suffix: Area # to avoid adding area to every entity name
   placement:

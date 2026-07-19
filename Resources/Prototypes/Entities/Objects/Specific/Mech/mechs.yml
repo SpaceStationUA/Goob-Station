@@ -81,6 +81,7 @@
   - type: Pullable
   - type: Physics
     bodyType: KinematicController
+  - type: CEZPhysics # Pirate: multiz - mech falls through open tiles as a unit, carrying its pilot/cargo
   - type: GravityAffected
   - type: Clickable
   - type: WiresPanel
