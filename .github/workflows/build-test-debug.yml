@@ -17,7 +17,7 @@ on:
 env:
   # Pirate: mapped groups run independently; every other integration test falls through to the unmapped shard.
   ENTITY_TEST_PATTERNS: Content.IntegrationTests.Tests.EntityTest
-  ATMOS_VALIDATION_TEST_PATTERNS: >-
+  ATMOS_SERIALIZATION_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Atmos.AirtightTest
     Content.IntegrationTests.Tests.Atmos.AlarmThresholdTest
     Content.IntegrationTests.Tests.Atmos.AtmosMonitoringTest
@@ -28,17 +28,10 @@ env:
     Content.IntegrationTests.Tests.Atmos.GridJoinTest
     Content.IntegrationTests.Tests.Atmos.RoomSpacingTest
     Content.IntegrationTests.Tests.Atmos.SharedGasSpecificHeatsTest
-    Content.IntegrationTests.Tests.ConfigPresetTests
-    Content.IntegrationTests.Tests.Guidebook
-    Content.IntegrationTests.Tests.Linter
-    Content.IntegrationTests.Tests.Localization
     Content.IntegrationTests.Tests.Mapping
     Content.IntegrationTests.Tests.PrototypeSaveTest
     Content.IntegrationTests.Tests.PrototypeTests
     Content.IntegrationTests.Tests.SaveLoad
-    Content.IntegrationTests.Tests.Sprite
-    Content.IntegrationTests.Tests.StartTest
-    Content.IntegrationTests.Tests.WizdenContentFreeze
   VALIDATION_MAP_TEST_PATTERNS: Content.IntegrationTests.Tests.PostMapInitTest
   WORLD_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Atmos.TileAtmosphereTest
@@ -61,7 +54,14 @@ env:
     Content.IntegrationTests.Tests.Weldable
     Content.IntegrationTests.Tests.Wires
   MIND_TEST_PATTERNS: Content.IntegrationTests.Tests.Minds
-  GAMEPLAY_TEST_PATTERNS: >-
+  GAMEPLAY_VALIDATION_TEST_PATTERNS: >-
+    Content.IntegrationTests.Tests.ConfigPresetTests
+    Content.IntegrationTests.Tests.Guidebook
+    Content.IntegrationTests.Tests.Linter
+    Content.IntegrationTests.Tests.Localization
+    Content.IntegrationTests.Tests.Sprite
+    Content.IntegrationTests.Tests.StartTest
+    Content.IntegrationTests.Tests.WizdenContentFreeze
     Content.IntegrationTests.Tests.Actions
     Content.IntegrationTests.Tests.Body
     Content.IntegrationTests.Tests.Buckle
@@ -95,9 +95,9 @@ jobs:
           - name: Entity integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: entity
-          - name: Atmos and validation integration tests
+          - name: Atmos and serialization integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: atmos-validation
+            shard: atmos-serialization
           - name: Validation map integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: validation-map
@@ -107,9 +107,9 @@ jobs:
           - name: Mind integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: minds
-          - name: Gameplay integration tests
+          - name: Gameplay and core validation integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: gameplay
+            shard: gameplay-validation
           - name: Unmapped integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: unmapped
@@ -156,11 +156,11 @@ jobs:
         nunit_args=(NUnit.ConsoleOut=0)
 
         read -r -a entity_patterns <<< "$ENTITY_TEST_PATTERNS"
-        read -r -a atmos_validation_patterns <<< "$ATMOS_VALIDATION_TEST_PATTERNS"
+        read -r -a atmos_serialization_patterns <<< "$ATMOS_SERIALIZATION_TEST_PATTERNS"
         read -r -a validation_map_patterns <<< "$VALIDATION_MAP_TEST_PATTERNS"
         read -r -a world_patterns <<< "$WORLD_TEST_PATTERNS"
         read -r -a mind_patterns <<< "$MIND_TEST_PATTERNS"
-        read -r -a gameplay_patterns <<< "$GAMEPLAY_TEST_PATTERNS"
+        read -r -a gameplay_validation_patterns <<< "$GAMEPLAY_VALIDATION_TEST_PATTERNS"
 
         case "$TEST_SHARD" in
           entity)
@@ -168,8 +168,8 @@ jobs:
             comparison="~"
             separator="|"
             ;;
-          atmos-validation)
-            patterns=("${atmos_validation_patterns[@]}")
+          atmos-serialization)
+            patterns=("${atmos_serialization_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
@@ -188,19 +188,19 @@ jobs:
             comparison="~"
             separator="|"
             ;;
-          gameplay)
-            patterns=("${gameplay_patterns[@]}")
+          gameplay-validation)
+            patterns=("${gameplay_validation_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
           unmapped)
             patterns=(
               "${entity_patterns[@]}"
-              "${atmos_validation_patterns[@]}"
+              "${atmos_serialization_patterns[@]}"
               "${validation_map_patterns[@]}"
               "${world_patterns[@]}"
               "${mind_patterns[@]}"
-              "${gameplay_patterns[@]}"
+              "${gameplay_validation_patterns[@]}"
             )
             comparison="!~"
             separator="&"
