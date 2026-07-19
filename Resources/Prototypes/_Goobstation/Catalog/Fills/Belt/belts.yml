@@ -91,7 +91,7 @@
   components:
   - type: ContainerFill
     containers:
-      item:
+      storagebase: # Pirate: avoid a second container on the storage-enabled sheath.
       - Justice
 
 - type: entityTable

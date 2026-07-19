@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: BorerSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+    chaos:
+      Hostile: 20
+      Medical: 50
+    eventType: HostilesSpawn
+  - type: GameRule
+    chaosScore: 240
+  - type: VentCrittersRule
+    min: 1
+    max: 1
+    table:
+      id: MobCorticalBorer

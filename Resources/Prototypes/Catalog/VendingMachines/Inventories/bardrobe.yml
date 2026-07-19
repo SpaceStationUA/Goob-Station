@@ -14,11 +14,13 @@
     ClothingUniformJumpsuitBartender: 2
     ClothingUniformJumpskirtBartender: 2
     ClothingUniformJumpsuitBartenderPurple: 2
+    ClothingUniformJumpsuitSodaJerk: 2 # Pirate - DeltaV frozen treats port
     ClothingShoesColorBlack: 2
     ClothingOuterArmorBasicSlim: 2
     ClothingOuterVest: 2
     ClothingBeltBandolier: 2
     ClothingEyesGlassesSunglasses: 2
+    ClothingHeadHatSodaJerkCap: 2 # Pirate - DeltaV frozen treats port
     ClothingHeadHatBunnyearsDark: 2 # Pirate
     Eftpos: 4 #Pirate banking
   contrabandInventory:
