@@ -9,6 +9,8 @@
   - type: Item
     sprite: _Goobstation/Objects/Weapons/Melee/justice.rsi
     size: Ginormous # Use your sheath.
+    shape:
+    - 0,0,0,5 # Pirate: reserve a narrow sheath region without adding general-purpose storage.
     heldPrefix: off
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Melee/justice.rsi

@@ -166,7 +166,7 @@
 
 
 - type: entity
-  parent: ClothingBeltSheath
+  parent: [ClothingBeltStorageBase, BaseCommandContraband] # Pirate: use one storage container for Justice and belt gear.
   id: ClothingBeltSheathHeadOfSecurity
   name: head of security's sheath
   description: A rugged sheath, designed to hold the Head of Security's custom energy sword.
@@ -180,12 +180,16 @@
     size: Ginormous
   # Pirate: keep limited security storage so carrying Justice does not replace the whole duty belt.
   - type: Storage
-    maxItemSize: Normal
+    maxItemSize: Ginormous
     defaultStorageOrientation: Vertical
     grid:
     - 0,0,3,1
+    - 5,0,5,5
+    storageInsertSound: /Audio/Items/sheath.ogg
+    storageRemoveSound: /Audio/Items/unsheath.ogg
     whitelist:
       tags:
+      - Justice
       - CigPack
       - Taser
       - SecBeltEquip
@@ -212,27 +216,9 @@
       - Whistle
       - BalloonPopper
       - ScatteringGrenade
-  - type: ContainerContainer
-    containers:
-      item: !type:ContainerSlot
-      storagebase: !type:Container
-        ents: []
-  - type: UserInterface
-    interfaces:
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
-  - type: ItemSlots
-    slots:
-      item:
-        name: Sabre
-        insertVerbText: sheath-insert-verb
-        ejectVerbText: sheath-eject-verb
-        insertSound: /Audio/Items/sheath.ogg
-        ejectSound: /Audio/Items/unsheath.ogg
-        whitelist:
-          tags:
-          - Justice
   - type: ItemMapper
+    containerWhitelist:
+    - storagebase
     mapLayers:
       sheath-sabre:
         whitelist:
