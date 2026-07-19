@@ -366,13 +366,13 @@ public sealed partial class SharedArmorPlateSystem : EntitySystem
 
     private void OnEquippedArmor(Entity<ArmorPlateHolderComponent> armor, ref GotEquippedEvent args)
     {
-        if (TryGetActivePlate(armor, out _))
+        if (TryGetActivePlate((armor.Owner, armor.Comp), out _))
             EnsureComp<ArmorPlateProtectedComponent>(args.Equipee);
     }
 
     private void OnUnequippedArmor(Entity<ArmorPlateHolderComponent> armor, ref GotUnequippedEvent args)
     {
-        if (TryGetActivePlate(armor, out _))
+        if (TryGetActivePlate((armor.Owner, armor.Comp), out _))
             RemComp<ArmorPlateProtectedComponent>(args.Equipee);
     }
 
