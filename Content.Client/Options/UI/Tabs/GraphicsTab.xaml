@@ -17,6 +17,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <Label Text="{Loc 'ui-options-quality-label'}" StyleClasses="LabelKeyText"/>
                 <ui:OptionDropDown Name="DropDownLightingQuality" Title="{Loc 'ui-options-lighting-label'}" />
                 <ui:OptionDropDown Name="DropDownParticleQuality" Title="{Loc 'ui-options-particles-label'}" /> <!-- Starfall: Particles -->
+                <ui:OptionSlider Name="ZLevelsBelowSlider" Title="{Loc 'ui-options-zlevels-visible-below'}" /> <!-- Pirate: multiz -->
+                <ui:OptionSlider Name="ShadowcastingLightsSlider" Title="{Loc 'ui-options-max-shadowcasting-lights'}" ToolTip="{Loc 'ui-options-max-shadowcasting-lights-tooltip'}" /> <!-- Pirate: light-flicker -->
                 <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
                 <CheckBox Name="ParallaxLowQualityCheckBox" Text="{Loc 'ui-options-parallax-low-quality'}" />
                 <CheckBox Name="AmbientOcclusionCheckBox" Text="{Loc 'ui-options-ambient-occlusion'}" />

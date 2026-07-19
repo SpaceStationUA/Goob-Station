@@ -84,7 +84,6 @@
   name: Juggernaut
   description: Strong, slow, and has lots of health. Solves most problems by punching them. Immune to weak attacks.
   parent: [ SimpleSpaceMobBase, BaseBloodCultContraband ]
-  categories: [ HideSpawnMenu ]
   components:
     - type: Hands
       showInHands: false
@@ -112,6 +111,9 @@
     - type: Physics
     - type: InputMover
     - type: MobMover
+    - type: MovementIgnoreGravity
+    - type: CEZLevelPhysicsExempt
+    - type: CEZLevelContextualMover
     - type: Speech
     - type: Emoting
     - type: ReplacementAccent
@@ -220,7 +222,6 @@
   name: Shade
   description: A soul made solid, enslaved to the will of the blood cult.
   parent: [ SimpleSpaceMobBase, BaseBloodCultContraband ]
-  #categories: [ HideSpawnMenu ]
   components:
     #- type: Hands
     - type: ZombieImmune
@@ -240,6 +241,9 @@
     - type: Physics
     - type: InputMover
     - type: MobMover
+    - type: MovementIgnoreGravity
+    - type: CEZLevelPhysicsExempt
+    - type: CEZLevelContextualMover
     - type: ReplacementAccent
       accent: genericAggressive
     - type: CombatMode
@@ -323,7 +327,6 @@
   parent: [ SimpleSpaceMobBase, BaseBloodCultContraband ]
   name: lesser construct
   abstract: true
-  categories: [ HideSpawnMenu ]
   components:
   - type: ZombieImmune
   - type: DamageOnHighSpeedImpact
@@ -344,6 +347,8 @@
   - type: InputMover
   - type: MobMover
   - type: MovementIgnoreGravity
+  - type: CEZLevelPhysicsExempt
+  - type: CEZLevelContextualMover
   - type: Speech
   - type: Emoting
   - type: TypingIndicator

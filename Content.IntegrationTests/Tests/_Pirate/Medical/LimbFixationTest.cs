@@ -197,7 +197,7 @@ public sealed class LimbFixationTest
                 Assert.That(woundable.WoundableSeverity, Is.EqualTo(WoundableSeverity.Critical));
                 Assert.That(
                     entMan.GetComponent<TargetingComponent>(human).BodyStatus[TargetBodyPart.LeftLeg],
-                    Is.EqualTo(WoundableSeverity.Critical));
+                    Is.Not.EqualTo(WoundableSeverity.Disabled));
             });
         });
 

@@ -31,6 +31,7 @@
   - type: Tag
     tags:
       - Catwalk
+  - type: WaterBridge # Pirate: wetness - disable water effects under catwalks
   - type: Construction
     graph: Catwalk
     node: Catwalk

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 
+using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
 
@@ -30,7 +31,9 @@ public abstract partial class SharedShuttleSystem
 
     public string? GetIFFLabel(EntityUid gridUid, bool self = false, IFFComponent? component = null)
     {
-        var entName = MetaData(gridUid).EntityName;
+        // Pirate: multiz - use the lowest linked deck as the display-name source.
+        var nameSource = ResolveLinkedGridForLabel(gridUid);
+        var entName = TryComp<MetaDataComponent>(nameSource, out var nameMeta) ? nameMeta.EntityName : string.Empty;
 
         if (self)
         {
@@ -44,6 +47,29 @@ public abstract partial class SharedShuttleSystem
 
         return string.IsNullOrEmpty(entName) ? Loc.GetString("shuttle-console-unknown") : entName;
     }
+
+    #region Pirate: multiz
+    /// <summary>
+    /// Returns the lowest linked deck for shared IFF labels.
+    /// </summary>
+    private EntityUid ResolveLinkedGridForLabel(EntityUid gridUid)
+    {
+        if (!TryComp<CEZLinkedGridComponent>(gridUid, out var linked))
+            return gridUid;
+
+        var bestUid = gridUid;
+        var bestDepth = linked.Depth;
+        foreach (var (depth, peer) in linked.PeerGrids)
+        {
+            if (depth < bestDepth && Exists(peer))
+            {
+                bestDepth = depth;
+                bestUid = peer;
+            }
+        }
+        return bestUid;
+    }
+    #endregion
 
     /// <summary>
     /// Sets the color for this grid to appear as on radar.

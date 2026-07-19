@@ -33,10 +33,8 @@ public partial class ShipShieldsSystem
 
     private void OnRemoved(Entity<ShipShieldEmitterComponent> owner,ref ComponentRemove remove)
     {
-        var parent = Transform(owner.Owner).GridUid;
-        if (parent is null)
-            return;
-        UnshieldEntity(parent.Value, null);
+        ClearShields(owner.Comp);
+        owner.Comp.Active = false;
     }
 
     private void OnShieldDeflected(EntityUid uid, ShipShieldEmitterComponent component, ShieldDeflectedEvent args)

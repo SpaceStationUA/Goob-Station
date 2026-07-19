@@ -1,0 +1,58 @@
+- type: entity
+  id: CEActionZLevelUp
+  name: Move up
+  description: Move up one floor
+  components:
+  - type: Action
+    checkCanInteract: false
+    icon:
+      sprite: _Pirate/Actions/misc.rsi
+      state: up
+  - type: InstantAction
+    event: !type:CEZLevelActionUp
+
+- type: entity
+  id: CEActionZLevelDown
+  name: Move down
+  description: Move down one floor
+  components:
+  - type: Action
+    checkCanInteract: false
+    icon:
+      sprite: _Pirate/Actions/misc.rsi
+      state: down
+  - type: InstantAction
+    event: !type:CEZLevelActionDown
+
+- type: entity
+  id: CEActionWeightlessZLevelUp
+  parent: CEActionZLevelUp
+  components:
+  - type: Action
+    checkCanInteract: false
+    icon:
+      sprite: _Pirate/Actions/misc.rsi
+      state: up
+
+- type: entity
+  id: CEActionWeightlessZLevelDown
+  parent: CEActionZLevelDown
+  components:
+  - type: Action
+    checkCanInteract: false
+    icon:
+      sprite: _Pirate/Actions/misc.rsi
+      state: down
+
+- type: entity
+  id: CEActionToggleLookUp
+  name: Look up
+  description: You lift your head and look up at the sky.
+  components:
+  - type: Action
+    checkCanInteract: false
+    icon:
+      sprite: _Pirate/Actions/misc.rsi
+      state: eye
+  - type: InstantAction
+    event: !type:CEToggleZLevelLookUpAction

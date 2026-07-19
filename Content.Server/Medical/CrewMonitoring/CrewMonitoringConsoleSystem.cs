@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
+using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
 using Content.Goobstation.Shared.CrewMonitoring;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
@@ -11,6 +13,7 @@ using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components; // Pirate: multiz
 
 namespace Content.Server.Medical.CrewMonitoring;
 
@@ -25,6 +28,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
+        SubscribeLocalEvent<CrewMonitoringConsoleComponent, CEZMonitoringConsoleLevelSelectedMessage>(OnZLevelSelected); // Pirate: multiz
     }
 
     private void OnRemove(EntityUid uid, CrewMonitoringConsoleComponent component, ComponentRemove args)
@@ -57,6 +61,39 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
 
         UpdateUserInterface(uid, component);
     }
+
+    #region Pirate: multiz
+    private void OnZLevelSelected(EntityUid uid, CrewMonitoringConsoleComponent component, CEZMonitoringConsoleLevelSelectedMessage args)
+    {
+        var targetGrid = GetEntity(args.Grid);
+        if (targetGrid == null)
+            return;
+
+        var xform = Transform(uid);
+        if (xform.GridUid == null || !IsValidZMonitoringGrid(xform.GridUid.Value, targetGrid.Value))
+            return;
+
+        // Guard against a stale/malformed payload that resolves to a non-grid entity; mutating
+        // an arbitrary entity with NavMapComponent would corrupt unrelated state.
+        if (!HasComp<MapGridComponent>(targetGrid.Value))
+            return;
+
+        EnsureComp<NavMapComponent>(targetGrid.Value);
+    }
+
+    private bool IsValidZMonitoringGrid(EntityUid sourceGrid, EntityUid targetGrid)
+    {
+        if (sourceGrid == targetGrid)
+            return true;
+
+        // Both sides must carry the linked-grid marker AND point at a real network — two
+        // unlinked grids both holding default ZNetwork would otherwise compare equal.
+        return TryComp<CEZLinkedGridComponent>(sourceGrid, out var sourceLinked) &&
+               TryComp<CEZLinkedGridComponent>(targetGrid, out var targetLinked) &&
+               sourceLinked.ZNetwork.IsValid() &&
+               sourceLinked.ZNetwork == targetLinked.ZNetwork;
+    }
+    #endregion
 
     private void UpdateUserInterface(EntityUid uid, CrewMonitoringConsoleComponent? component = null)
     {

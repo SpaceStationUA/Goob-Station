@@ -5,6 +5,8 @@
 
 using Content.Server.BloodCult.Components;
 using Content.Server.Popups;
+using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared._White.ListViewSelector;
 using Content.Shared.BloodCult;
 using Content.Shared.BloodCult.Components;
@@ -27,6 +29,7 @@ public sealed class TeleportRuneSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!; // Pirate: multiz
 
     public override void Initialize()
     {
@@ -77,12 +80,12 @@ public sealed class TeleportRuneSystem : EntitySystem
 
     private void OnDestinationSelected(Entity<TeleportRuneComponent> origin, ref ListViewItemSelectedMessage args)
     {
+        // Pirate: multiz - allow destinations on other maps.
         if (!HasComp<BloodCultistComponent>(args.Actor) ||
             !_ui.IsUiOpen(origin.Owner, ListViewSelectorUiKey.Key, args.Actor) ||
             !EntityUid.TryParse(args.SelectedItem.Id, out var destinationUid) ||
             destinationUid == origin.Owner ||
             !TryComp<TeleportRuneComponent>(destinationUid, out var destination) ||
-            Transform(origin).MapID != Transform(destinationUid).MapID ||
             !_transform.InRange(Transform(args.Actor).Coordinates, Transform(origin).Coordinates, InteractionRange))
             return;
 
@@ -100,6 +103,12 @@ public sealed class TeleportRuneSystem : EntitySystem
             return;
 
         var destinationCoordinates = Transform(destinationUid).Coordinates;
+        var destinationMap = Transform(destinationUid).MapID;
+        // Pirate: multiz - resolve the destination depth, defaulting to zero.
+        var destinationDepth = TryComp<CEZLinkedGridComponent>(_transform.GetGrid(destinationUid), out var destLinked)
+            ? destLinked.Depth
+            : 0;
+
         var targets = _lookup.GetEntitiesInRange<HumanoidAppearanceComponent>(
             Transform(origin).Coordinates,
             origin.Comp.GatherRange);
@@ -107,7 +116,19 @@ public sealed class TeleportRuneSystem : EntitySystem
         foreach (var target in targets)
         {
             StopPulling(target);
-            _transform.SetCoordinates(target, destinationCoordinates);
+
+            // Pirate: multiz - preserve depth and view state when teleporting across maps.
+            if (Transform(target).MapID != destinationMap)
+            {
+                var currentDepth = TryComp<CEZLinkedGridComponent>(_transform.GetGrid(target.Owner), out var curLinked)
+                    ? curLinked.Depth
+                    : 0;
+                _zLevels.TeleportToZLevelCoordinates(target, destinationCoordinates, destinationDepth, destinationDepth - currentDepth);
+            }
+            else
+            {
+                _transform.SetCoordinates(target, destinationCoordinates);
+            }
         }
 
         _audio.PlayPvs(origin.Comp.TeleportOutSound, origin.Owner);
@@ -118,12 +139,12 @@ public sealed class TeleportRuneSystem : EntitySystem
     private List<ListViewSelectorEntry> GetDestinations(Entity<TeleportRuneComponent> origin)
     {
         var destinations = new List<ListViewSelectorEntry>();
-        var originMap = Transform(origin).MapID;
         var query = EntityQueryEnumerator<TeleportRuneComponent>();
 
         while (query.MoveNext(out var uid, out var teleport))
         {
-            if (uid == origin.Owner || Transform(uid).MapID != originMap)
+            // Pirate: multiz - include runes from every map and z-level.
+            if (uid == origin.Owner)
                 continue;
 
             var name = string.IsNullOrWhiteSpace(teleport.Name)
