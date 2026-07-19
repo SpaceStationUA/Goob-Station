@@ -214,6 +214,8 @@
   - type: AccessReader # Goobstation-WantedMenu
     access: [["Security"]]
     shouldShowExaminationText: false
+  - type: IdExaminablePsionics # Pirate-PsionicsMenu
+    radioChannel: Science
   - type: UserInterface
     interfaces:
       enum.HumanoidMarkingModifierKey.Key:
@@ -222,6 +224,8 @@
         type: StrippableBoundUserInterface
       enum.SetWantedVerbMenu.Key: # Goobstation-WantedMenu
         type: WantedMenuBoundUserInterface
+      enum.SetPsionicsVerbMenu.Key: # Pirate-PsionicsMenu
+        type: PsionicsMenuBoundUserInterface
       # Goobstation - changelings
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface

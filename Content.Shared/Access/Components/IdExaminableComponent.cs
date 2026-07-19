@@ -23,3 +23,10 @@ public enum SetWantedVerbMenu : byte
 {
 	Key,
 }
+
+// Pirate-PsionicsMenu
+[NetSerializable, Serializable]
+public enum SetPsionicsVerbMenu : byte
+{
+	Key,
+}

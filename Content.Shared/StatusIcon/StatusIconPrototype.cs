@@ -178,6 +178,21 @@ public sealed partial class SecurityIconPrototype : StatusIconPrototype, IInheri
     public bool Abstract { get; private set; }
 }
 
+// Pirate
+[Prototype]
+public sealed partial class PsionicsIconPrototype : StatusIconPrototype, IInheritingPrototype
+{
+    /// <inheritdoc />
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<PsionicsIconPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    /// <inheritdoc />
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
+}
+// Pirate end
+
 /// <summary>
 /// StatusIcons for faction membership
 /// </summary>

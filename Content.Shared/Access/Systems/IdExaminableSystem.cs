@@ -64,6 +64,22 @@ public sealed class IdExaminableSystem : EntitySystem
             args.Verbs.Add(wantedVerb);
         }
         // Goobstation-WantedMenu-End
+        // Pirate-PsionicsMenu-Start
+	    if (CanAccessPsionicsMenu(args.User, uid))
+	    {
+            var psionicsVerb = new ExamineVerb()
+	        {
+	            Act = () => OpenPsionicsUI(args.User, uid),
+                Text = Loc.GetString("psionics-verb-name"),
+	            Category = VerbCategory.Examine,
+	            Disabled = !detailsRange,
+                Message = detailsRange ? null : Loc.GetString("id-examinable-component-verb-disabled"),
+	            Icon = new SpriteSpecifier.Rsi(new("_EinsteinEngines/Icons/psi.rsi"), "psi"),
+	            Priority = 2,
+	        };
+            args.Verbs.Add(psionicsVerb);
+	    }
+	    // Pirate-PsionicsMenu-End
     }
 
     private void OnWantedMenuOpen(EntityUid uid,
@@ -100,6 +116,27 @@ public sealed class IdExaminableSystem : EntitySystem
 
         return true;
     }
+    // Pirate-PsionicsMenu-Start
+    private bool CanAccessPsionicsMenu(EntityUid user, EntityUid target)
+    {
+        if (!_inventorySystem.TryGetSlotEntity(user, "eyes", out var eyes)
+            || !TryComp<ShowPsionicsRecordIconsComponent>(eyes, out _))
+            return false;
+
+        if (TryComp<AccessReaderComponent>(target, out var accessReader))
+        {
+            if (!_accessReader.IsAllowed(user, target, accessReader))
+                return false;
+        }
+
+        return true;
+    }
+
+    private void OpenPsionicsUI(EntityUid uid, EntityUid target)
+    {
+        _ui.TryToggleUi(target, SetPsionicsVerbMenu.Key, uid);
+    }
+    // Pirate-PsionicsMenu-End
 
     private void OpenWantedUI(EntityUid uid, EntityUid target) // Goobstation-WantedMenu
     {

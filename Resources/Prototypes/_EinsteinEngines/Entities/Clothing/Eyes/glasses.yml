@@ -16,3 +16,25 @@
     tags:
     - WhitelistChameleon
     - ForensicBeltEquip
+
+- type: entity
+  parent: [ClothingEyesBase, BaseMantisContraband]
+  id: ClothingEyesGlassesEpistemics
+  name: epi psionics glasses
+  description: Upgraded sunglasses that provide flash immunity and a epistemics psionics HUD.
+  components:
+  - type: Sprite
+    sprite: _EinsteinEngines/Clothing/Eyes/Glasses/epiglasses.rsi
+  - type: Clothing
+    sprite: _EinsteinEngines/Clothing/Eyes/Glasses/epiglasses.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - PetWearable
+    - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: ShowPsionicsRecordIcons
