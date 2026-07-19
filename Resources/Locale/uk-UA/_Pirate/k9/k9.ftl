@@ -53,10 +53,10 @@ ent-ClothingOuterHardsuitCombatK9 = бойовий скафандр K9
     .desc = Бойовий скафандр для собак, створений для захисту від будь-яких ворогів у середовищі з низьким тиском. Має позначки служби безпеки станції.
 ent-ClothingHeadHelmetHardsuitCombatK9 = шолом бойового скафандра K9
     .desc = Шолом для бойового скафандра службового пса.
-ent-ClothingOuterHardsuitCombatRiotK9 = протиоборонний скафандр K9
+ent-ClothingOuterHardsuitCombatRiotK9 = протиударний скафандр K9
     .desc = Собачий бойовий скафандр для контролю натовпу та протидії озброєним противникам у середовищі з низьким тиском.
-ent-ClothingOuterHardsuitCombatRiotK9Helmet = шолом протиоборонного скафандра K9
-    .desc = Шолом для протиоборонного скафандра службового пса.
+ent-ClothingOuterHardsuitCombatRiotK9Helmet = шолом протиударного скафандра K9
+    .desc = Шолом для протиударного скафандра службового пса.
 ent-ClothingOuterArmorDuraVestK9 = дюратканинний жилет K9
     .desc = Щільний і міцний бронежилет для собак, укріплений дюратканиною для захисту від гострих предметів і ударів.
 

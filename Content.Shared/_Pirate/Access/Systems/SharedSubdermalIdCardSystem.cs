@@ -63,7 +63,11 @@ public abstract class SharedSubdermalIdCardSystem : EntitySystem
     /// <param name="args">Args for the event.</param>
     private void OnRemoveAttempt(Entity<SubdermalIdCardComponent> ent, ref ContainerGettingRemovedAttemptEvent args)
     {
-        // Subdermal ID cards are NEVER removable by any means.
+        // Block removal from an implanted body's implant container, but allow an implanter to load it.
+        if (args.Container.ID != ImplanterComponent.ImplantSlotId ||
+            HasComp<ImplanterComponent>(args.Container.Owner))
+            return;
+
         args.Cancel();
     }
 }

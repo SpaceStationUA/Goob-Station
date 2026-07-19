@@ -8,14 +8,14 @@ namespace Content.Shared._Pirate.Grappling.Components;
 /// <summary>
 /// Marks this entity as having been grappled.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedGrapplingSystem))]
 public sealed partial class GrappledComponent : Component
 {
     /// <summary>
     /// The entity which is performing the grapple.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid Grappler = EntityUid.Invalid;
 
     /// <summary>
@@ -41,13 +41,13 @@ public sealed partial class GrappledComponent : Component
     /// <summary>
     /// Whether the grapple has fully taken effect and the grappled entity should be prone'd.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool GrappleActivated = false;
 
     /// <summary>
     /// How much this entity should be slowed, before the grapple fully activates.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float? MovementSpeedModifier = null;
 }
 

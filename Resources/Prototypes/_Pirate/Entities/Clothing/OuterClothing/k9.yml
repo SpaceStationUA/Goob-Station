@@ -64,7 +64,7 @@
 - type: entity
   parent: ClothingOuterHardsuitCombatK9
   id: ClothingOuterHardsuitCombatRiotK9
-  name: протиоборонний скафандр K9
+  name: протиударний скафандр K9
   description: Собачий бойовий скафандр для контролю натовпу та протидії озброєним противникам у середовищі з низьким тиском.
   components:
   - type: Sprite
@@ -87,8 +87,8 @@
 - type: entity
   parent: [K9ClothingBase, ClothingHeadHardsuitWithLightBase]
   id: ClothingOuterHardsuitCombatRiotK9Helmet
-  name: шолом протиоборонного скафандра K9
-  description: Шолом для протиоборонного скафандра службового пса.
+  name: шолом протиударного скафандра K9
+  description: Шолом для протиударного скафандра службового пса.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hardsuits/Combat/k9_riot.rsi

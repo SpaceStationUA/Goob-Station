@@ -120,6 +120,9 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
         if (!HasComp<GrappleTargetComponent>(victim))
             return false;  // Not a valid target
 
+        if (HasComp<GrappledComponent>(victim))
+            return false; // Already grappled by someone else
+
         return _actionBlocker.CanInteract(grappler, victim);
     }
 
@@ -611,6 +614,7 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
         // Cleanup the grappling on the victim
         RemComp<GrappledComponent>(victim);
         _actionBlocker.UpdateCanMove(victim); // Must be done AFTER the component is removed.
+        _movement.RefreshMovementSpeedModifiers(victim);
         _movement.RefreshFrictionModifiers(victim);
 
         // Automatically get the grappler back up
@@ -665,9 +669,6 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
     {
         if (!grappled.Comp.GrappleActivated)
             return; // Grapple hasn't fully pinned them just yet, they can move.
-
-        if (!grappled.Comp.GrappleActivated)
-            return; // If the grapple is not yet activated, the user can punch their way out of it
 
         args.Cancel(); // Can't move while fully grappled
     }
