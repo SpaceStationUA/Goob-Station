@@ -96,6 +96,7 @@ jobs:
           - name: Entity integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: entity
+            test_timeout: 20
           - name: Atmos core integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: atmos-core
@@ -150,7 +151,7 @@ jobs:
       run: dotnet build --configuration DebugOpt --no-restore /m
 
     - name: Run ${{ matrix.name }}
-      timeout-minutes: 60
+      timeout-minutes: ${{ matrix.test_timeout || 60 }}
       env:
         TEST_PROJECT: ${{ matrix.project }}
         TEST_SHARD: ${{ matrix.shard }}
@@ -235,6 +236,11 @@ jobs:
 
         test_args+=(--logger "console;verbosity=detailed")
         nunit_args+=(NUnit.MapWarningTo=Failed)
+
+        # Pirate: multi-Z raises Entity test memory use; keep its heavy prototype tests from overlapping.
+        if [[ "$TEST_SHARD" == "entity" ]]; then
+          nunit_args+=(NUnit.NumberOfTestWorkers=1)
+        fi
 
         dotnet test "${test_args[@]}" -- "${nunit_args[@]}"
 
