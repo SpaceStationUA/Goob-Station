@@ -32,3 +32,8 @@
   id: PhotophobiaShader
   kind: source
   path: "/Textures/_Pirate/Shaders/photophobia.swsl"
+
+- type: shader
+  id: GerasColorTint
+  kind: source
+  path: "/Textures/_Pirate/Shaders/geras_color_tint.swsl"

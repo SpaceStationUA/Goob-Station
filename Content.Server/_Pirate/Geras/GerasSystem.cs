@@ -6,6 +6,7 @@ using Content.Server.Actions;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Shared._Pirate.Geras;
+using Content.Shared.Humanoid;
 using Content.Shared.Zombies;
 using Robust.Shared.Player;
 
@@ -14,6 +15,7 @@ namespace Content.Server._Pirate.Geras;
 public sealed class GerasSystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
@@ -50,8 +52,14 @@ public sealed class GerasSystem : EntitySystem
         if (args.Handled || HasComp<ZombieComponent>(ent.Owner))
             return;
 
+        var color = TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid)
+            ? humanoid.SkinColor
+            : Color.White;
+
         if (_polymorph.PolymorphEntity(ent.Owner, ent.Comp.GerasPolymorphId) is not { } geras)
             return;
+
+        _appearance.SetData(geras, GerasVisuals.Color, color);
 
         _popup.PopupEntity(
             Loc.GetString("geras-popup-morph-message-others", ("entity", geras)),
