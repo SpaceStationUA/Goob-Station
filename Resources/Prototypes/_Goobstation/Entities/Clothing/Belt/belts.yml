@@ -178,6 +178,49 @@
     sprite: _Goobstation/Clothing/Belt/hossheath.rsi
   - type: Item
     size: Ginormous
+  # Pirate: keep limited security storage so carrying Justice does not replace the whole duty belt.
+  - type: Storage
+    maxItemSize: Normal
+    defaultStorageOrientation: Vertical
+    grid:
+    - 0,0,3,1
+    whitelist:
+      tags:
+      - CigPack
+      - Taser
+      - SecBeltEquip
+      - Radio
+      - Sidearm
+      - MagazinePistol
+      - MagazineMagnum
+      - CombatKnife
+      - Truncheon
+      - BolaEnergy
+      - EnergySpeedloader
+      - MilitaryPowerCell
+      - EnergyMagAmmo
+      - HandGrenade
+      components:
+      - Stunbaton
+      - FlashOnTrigger
+      - SmokeOnTrigger
+      - Flash
+      - Handcuff
+      - BallisticAmmoProvider
+      - CartridgeAmmo
+      - DoorRemote
+      - Whistle
+      - BalloonPopper
+      - ScatteringGrenade
+  - type: ContainerContainer
+    containers:
+      item: !type:ContainerSlot
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: ItemSlots
     slots:
       item:

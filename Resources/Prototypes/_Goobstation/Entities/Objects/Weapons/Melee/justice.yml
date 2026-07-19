@@ -18,8 +18,8 @@
     startingCharge: 1000
   - type: ExaminableBattery # Pirate
   - type: BatterySelfRecharger
-    autoRechargeRate: 50
-    autoRechargePauseTime: 40
+    autoRechargeRate: 20 # Pirate: restores 12% charge every 6 seconds.
+    autoRechargePauseTime: 6 # Pirate
   - type: DisarmMalus
   - type: Tag
     tags:
@@ -35,6 +35,7 @@
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1.5
+    clickDamageModifier: 1.5 # Pirate: reward precise strikes without buffing wide swings.
     damage:
       types:
         Slash: 12
@@ -82,6 +83,7 @@
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 1.5
+          clickDamageModifier: 1.5 # Pirate
           damage:
             types:
               Slash: 12
@@ -112,6 +114,8 @@
         - type: StaminaDamageOnHit
           damage: 20
           overtime: 15
+          lightAttackDamageMultiplier: 2 # Pirate: stronger precise stun strikes, as used downstream.
+          lightAttackOvertimeDamageMultiplier: 1 # Pirate
         soundStateActivate:
           collection: sparks
           params:
@@ -150,6 +154,7 @@
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 1.5
+          clickDamageModifier: 1.5 # Pirate
           damage:
             types:
               Slash: 6
@@ -167,7 +172,7 @@
 
       empowered: !type:ItemSwitchState
         verb: empowered
-        energyPerUse: 999
+        energyPerUse: 800 # Pirate: retain emergency charge after the empowered strike.
         sprite:
           sprite: _Goobstation/Objects/Weapons/Melee/justice.rsi
           state: empowered-icon
@@ -184,6 +189,7 @@
         - type: MeleeWeapon
           canWideSwing: false
           attackRate: 0.5
+          clickDamageModifier: 1.5 # Pirate
           animation: WeaponArcThrust
           damage:
             types:
