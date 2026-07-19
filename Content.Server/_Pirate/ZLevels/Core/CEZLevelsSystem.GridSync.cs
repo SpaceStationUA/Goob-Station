@@ -145,7 +145,52 @@ public sealed partial class CEZLevelsSystem
             Dirty(gridUid, comp);
         }
 
+        // Snap peers onto the leader's transform up front, before the peer maps initialize and
+        // their cross-Z nodes first reflood in response to the notification below. See
+        // AlignPeersToLeader for why this can't wait for the per-tick sync.
+        AlignPeersToLeader(gridsByDepth);
+
         RaiseLinkedGridPeersChanged(gridsByDepth.Values);
+    }
+
+    /// <summary>
+    /// Snaps every peer grid onto the depth-0 leader's local transform at the moment linkage is
+    /// established. Cross-Z nodes — cable hubs (<see cref="Power.CEMultizCableHubNode"/>) and atmos
+    /// pipe adapters — locate their vertical counterpart by reprojecting a world position onto the
+    /// peer grid and flooring to a tile. If the decks are still offset by a sub-tile amount at that
+    /// instant (a mapper nudge, or simply the saved grid position before the runtime sync snaps it),
+    /// the floored lookup lands one tile off and the link silently fails to form. That load-time
+    /// reflood is one-shot — a later position sync does <b>not</b> re-flood those nodes — so the
+    /// decks have to be aligned here, before the peers are notified and their maps are initialised.
+    /// Mirrors <see cref="SyncPeersFromLeader"/> but writes position/rotation only (velocities are
+    /// zero at link time).
+    /// </summary>
+    private void AlignPeersToLeader(Dictionary<int, EntityUid> gridsByDepth)
+    {
+        if (!gridsByDepth.TryGetValue(0, out var leaderUid) ||
+            !TryComp<TransformComponent>(leaderUid, out var leaderXform))
+        {
+            return;
+        }
+
+        foreach (var (depth, peerUid) in gridsByDepth)
+        {
+            if (depth == 0 || !TryComp<TransformComponent>(peerUid, out var peerXform))
+                continue;
+
+            // Peers sharing the leader's map are the FTL-fallback overlap case; leave them be for
+            // the same reason SyncPeersFromLeader skips them.
+            if (peerXform.MapUid == leaderXform.MapUid)
+                continue;
+
+            if (peerXform.LocalPosition.EqualsApprox(leaderXform.LocalPosition) &&
+                peerXform.LocalRotation.EqualsApprox(leaderXform.LocalRotation))
+            {
+                continue;
+            }
+
+            _transform.SetLocalPositionRotation(peerUid, leaderXform.LocalPosition, leaderXform.LocalRotation, peerXform);
+        }
     }
 
     /// <summary>
