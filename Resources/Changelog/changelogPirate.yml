@@ -2726,3 +2726,9 @@ Entries:
         `Resources/Locale/uk-UA/_Pirate/job/alternative-jobs.ftl`
   id: 273
   time: '2026-07-19T07:40:10.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Add
+      message: Ііпля отримала ціль антагоніста «Живи овечим життям або еволюціонуй».
+  id: 274
+  time: '2026-07-19T08:15:29.0000000+00:00'
