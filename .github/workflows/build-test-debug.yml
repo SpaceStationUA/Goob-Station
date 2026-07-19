@@ -17,7 +17,6 @@ on:
 env:
   # Pirate: mapped groups run independently; every other integration test falls through to the unmapped shard.
   ENTITY_TEST_PATTERNS: Content.IntegrationTests.Tests.EntityTest
-  ATMOS_TILE_TEST_PATTERNS: Content.IntegrationTests.Tests.Atmos.TileAtmosphereTest
   ATMOS_CORE_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Atmos.AirtightTest
     Content.IntegrationTests.Tests.Atmos.AlarmThresholdTest
@@ -29,20 +28,14 @@ env:
     Content.IntegrationTests.Tests.Atmos.GridJoinTest
     Content.IntegrationTests.Tests.Atmos.RoomSpacingTest
     Content.IntegrationTests.Tests.Atmos.SharedGasSpecificHeatsTest
-  VALIDATION_TEST_PATTERNS: >-
-    Content.IntegrationTests.Tests.ConfigPresetTests
-    Content.IntegrationTests.Tests.Guidebook
-    Content.IntegrationTests.Tests.Linter
-    Content.IntegrationTests.Tests.Localization
+  VALIDATION_SERIALIZATION_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Mapping
-    Content.IntegrationTests.Tests.PostMapInitTest
     Content.IntegrationTests.Tests.PrototypeSaveTest
     Content.IntegrationTests.Tests.PrototypeTests
     Content.IntegrationTests.Tests.SaveLoad
-    Content.IntegrationTests.Tests.Sprite
-    Content.IntegrationTests.Tests.StartTest
-    Content.IntegrationTests.Tests.WizdenContentFreeze
+  VALIDATION_MAP_TEST_PATTERNS: Content.IntegrationTests.Tests.PostMapInitTest
   WORLD_TEST_PATTERNS: >-
+    Content.IntegrationTests.Tests.Atmos.TileAtmosphereTest
     Content.IntegrationTests.Tests.Chasm
     Content.IntegrationTests.Tests.Climbing
     Content.IntegrationTests.Tests.Construction
@@ -61,7 +54,15 @@ env:
     Content.IntegrationTests.Tests.Tiles
     Content.IntegrationTests.Tests.Weldable
     Content.IntegrationTests.Tests.Wires
-  GAMEPLAY_TEST_PATTERNS: >-
+  MIND_TEST_PATTERNS: Content.IntegrationTests.Tests.Minds
+  GAMEPLAY_VALIDATION_TEST_PATTERNS: >-
+    Content.IntegrationTests.Tests.ConfigPresetTests
+    Content.IntegrationTests.Tests.Guidebook
+    Content.IntegrationTests.Tests.Linter
+    Content.IntegrationTests.Tests.Localization
+    Content.IntegrationTests.Tests.Sprite
+    Content.IntegrationTests.Tests.StartTest
+    Content.IntegrationTests.Tests.WizdenContentFreeze
     Content.IntegrationTests.Tests.Actions
     Content.IntegrationTests.Tests.Body
     Content.IntegrationTests.Tests.Buckle
@@ -72,7 +73,6 @@ env:
     Content.IntegrationTests.Tests.GameRules
     Content.IntegrationTests.Tests.Hands
     Content.IntegrationTests.Tests.Interaction
-    Content.IntegrationTests.Tests.Minds
     Content.IntegrationTests.Tests.Mousetrap
     Content.IntegrationTests.Tests.Movement
     Content.IntegrationTests.Tests.NPC
@@ -89,29 +89,31 @@ jobs:
     if: github.event.pull_request.draft == false
     strategy:
       fail-fast: false
+      # Pirate: leave two runner slots for packaging and map-renderer checks.
+      max-parallel: 8
       matrix:
         include:
-          - name: Unit tests
-            project: Content.Tests/Content.Tests.csproj
-            shard: unit
           - name: Entity integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: entity
-          - name: Atmos tile integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: atmos-tile
           - name: Atmos core integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: atmos-core
-          - name: Validation integration tests
+          - name: Validation serialization integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: validation
-          - name: World integration tests
+            shard: validation-serialization
+          - name: Validation map integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: world
-          - name: Gameplay integration tests
+            shard: validation-map
+          - name: World, atmos tile, and unit tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: gameplay
+            shard: world-unit
+          - name: Mind integration tests
+            project: Content.IntegrationTests/Content.IntegrationTests.csproj
+            shard: minds
+          - name: Gameplay and core validation integration tests
+            project: Content.IntegrationTests/Content.IntegrationTests.csproj
+            shard: gameplay-validation
           - name: Unmapped integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: unmapped
@@ -158,23 +160,16 @@ jobs:
         nunit_args=(NUnit.ConsoleOut=0)
 
         read -r -a entity_patterns <<< "$ENTITY_TEST_PATTERNS"
-        read -r -a atmos_tile_patterns <<< "$ATMOS_TILE_TEST_PATTERNS"
         read -r -a atmos_core_patterns <<< "$ATMOS_CORE_TEST_PATTERNS"
-        read -r -a validation_patterns <<< "$VALIDATION_TEST_PATTERNS"
+        read -r -a validation_serialization_patterns <<< "$VALIDATION_SERIALIZATION_TEST_PATTERNS"
+        read -r -a validation_map_patterns <<< "$VALIDATION_MAP_TEST_PATTERNS"
         read -r -a world_patterns <<< "$WORLD_TEST_PATTERNS"
-        read -r -a gameplay_patterns <<< "$GAMEPLAY_TEST_PATTERNS"
+        read -r -a mind_patterns <<< "$MIND_TEST_PATTERNS"
+        read -r -a gameplay_validation_patterns <<< "$GAMEPLAY_VALIDATION_TEST_PATTERNS"
 
         case "$TEST_SHARD" in
-          unit)
-            patterns=()
-            ;;
           entity)
             patterns=("${entity_patterns[@]}")
-            comparison="~"
-            separator="|"
-            ;;
-          atmos-tile)
-            patterns=("${atmos_tile_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
@@ -183,29 +178,40 @@ jobs:
             comparison="~"
             separator="|"
             ;;
-          validation)
-            patterns=("${validation_patterns[@]}")
+          validation-serialization)
+            patterns=("${validation_serialization_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
-          world)
+          validation-map)
+            patterns=("${validation_map_patterns[@]}")
+            comparison="~"
+            separator="|"
+            ;;
+          world-unit)
             patterns=("${world_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
-          gameplay)
-            patterns=("${gameplay_patterns[@]}")
+          minds)
+            patterns=("${mind_patterns[@]}")
+            comparison="~"
+            separator="|"
+            ;;
+          gameplay-validation)
+            patterns=("${gameplay_validation_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
           unmapped)
             patterns=(
               "${entity_patterns[@]}"
-              "${atmos_tile_patterns[@]}"
               "${atmos_core_patterns[@]}"
-              "${validation_patterns[@]}"
+              "${validation_serialization_patterns[@]}"
+              "${validation_map_patterns[@]}"
               "${world_patterns[@]}"
-              "${gameplay_patterns[@]}"
+              "${mind_patterns[@]}"
+              "${gameplay_validation_patterns[@]}"
             )
             comparison="!~"
             separator="&"
@@ -227,12 +233,14 @@ jobs:
           test_args+=(--filter "$test_filter")
         fi
 
-        if [[ "$TEST_SHARD" != "unit" ]]; then
-          test_args+=(--logger "console;verbosity=detailed")
-          nunit_args+=(NUnit.MapWarningTo=Failed)
-        fi
+        test_args+=(--logger "console;verbosity=detailed")
+        nunit_args+=(NUnit.MapWarningTo=Failed)
 
         dotnet test "${test_args[@]}" -- "${nunit_args[@]}"
+
+        if [[ "$TEST_SHARD" == "world-unit" ]]; then
+          dotnet test --no-build --configuration DebugOpt Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0
+        fi
   ci-success:
     name: Build & Test Debug
     needs:
