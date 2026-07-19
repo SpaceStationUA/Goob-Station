@@ -206,15 +206,15 @@
 - type: selectableSet
   id: IPPilot
   name: "Набір пілота"
-  description: "Містить в собі EVA-скафандр, набір медикаментів та \"щелепи життя\". А для самозахисту надається револьвер \"Декард\""
+  description: "Містить попередньо зібраний охоронний MOD-костюм та револьвер \"Декард\" із запасними набоями."
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/security.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Security/control.rsi
+    state: icon
   content:
   - WeaponRevolverDeckard
   - SpeedLoaderMagnumUranium
   - SpeedLoaderMagnumUranium
-  - ClothingModsuitSecurityPowerCell
+  - ClothingModularControllerSecurityPreassembled
   
 # Interdyne
 - type: selectableSet

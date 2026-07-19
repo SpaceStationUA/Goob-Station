@@ -52,21 +52,13 @@
   id: SecurityOfficerModSuit
   parent: SecurityOfficerGearDebug
   equipment:
-    head: ClothingModsuitHelmetSecurity
-    shoes: ClothingModsuitBootsSecurity
-    gloves: ClothingModsuitGauntletsSecurity
-    outerClothing: ClothingModsuitChestplateSecurity
-    back: ClothingModsuitSecurityPowerCell
+    back: ClothingModularControllerSecurityPreassembled # Pirate: new modular suit deploys its own parts.
 
 - type: startingGear
   id: SecurityHoSModSuit
   parent: HoSGearDebug
   equipment:
-    head: ClothingModsuitHelmetHeadOfSecurity
-    shoes: ClothingModsuitBootsHeadOfSecurity
-    gloves: ClothingModsuitGauntletsHeadOfSecurity
-    outerClothing: ClothingModsuitChestplateHeadOfSecurity
-    back: ClothingModsuitHeadOfSecurityPowerCell
+    back: ClothingModularControllerSafeguardPreassembled # Pirate: new modular suit deploys its own parts.
 
 
 - type: startingGear
@@ -132,10 +124,7 @@
   id: BlueShieldOfficerGearModSuit
   parent: BlueShieldOfficerGearDebug
   equipment:
-    outerClothing: ClothingModsuitChestplatePraetorian
-    head: ClothingModsuitHelmetPraetorian
-    back: ClothingModsuitPraetorian
-    gloves: ClothingModsuitGauntletsPraetorian
+    back: ClothingModularControllerCorporatePreassembled # Pirate: new modular suit deploys its own parts.
 
 - type: startingGear
   id: WizardHardsuitGearDebug
@@ -166,8 +155,4 @@
   id: CaptainModsuit
   parent: VisitorCaptain
   equipment:
-    back: ClothingModsuitCaptainPowerCell
-    outerClothing: ClothingModsuitChestplateCaptain
-    gloves: ClothingModsuitGauntletsCaptain
-    shoes: ClothingModsuitBootsCaptain
-    head: ClothingModsuitHelmetCaptain
+    back: ClothingModularControllerMagnatePreassembled # Pirate: new modular suit deploys its own parts.

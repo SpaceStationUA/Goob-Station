@@ -8,5 +8,5 @@
   components:
   - type: StorageFill
     contents:
-    - id: ModsuitCoreStandard
+    - id: ModularSuitCoreStandard # Pirate: replace the legacy Goob MODsuit core.
       amount: 3

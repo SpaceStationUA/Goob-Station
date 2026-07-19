@@ -208,6 +208,10 @@
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       prob: 0.05
+    # Pirate: rare Wega MODsuit modules.
+    - !type:NestedSelector
+      tableId: MaintModsuitModulesTable
+      prob: 0.05
     # Recursive
     - id: ClosetMaintenanceFilledRandom
       prob: 0.01

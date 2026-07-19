@@ -604,7 +604,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 10.5,-14.5
       parent: 2
-- proto: APCBasic
+# Pirate: raise the breaker limit for this legacy shared LV network.
+- proto: PirateShuttleAPCBasic
   entities:
   - uid: 697
     components:

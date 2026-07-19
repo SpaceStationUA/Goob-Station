@@ -1,6 +1,7 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
+using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -16,12 +17,21 @@ public sealed class HideLayerClothingSystem : EntitySystem
         SubscribeLocalEvent<HideLayerClothingComponent, ClothingGotUnequippedEvent>(OnHideGotUnequipped);
         SubscribeLocalEvent<HideLayerClothingComponent, ClothingGotEquippedEvent>(OnHideGotEquipped);
         SubscribeLocalEvent<HideLayerClothingComponent, ItemMaskToggledEvent>(OnHideToggled);
+        SubscribeLocalEvent<HideLayerClothingComponent, ItemToggledEvent>(OnItemToggled); // Pirate: modular suits
     }
 
     private void OnHideToggled(Entity<HideLayerClothingComponent> ent, ref ItemMaskToggledEvent args)
     {
         if (args.Wearer != null)
             SetLayerVisibility(ent!, args.Wearer.Value, hideLayers: true);
+    }
+
+    private void OnItemToggled(Entity<HideLayerClothingComponent> ent, ref ItemToggledEvent args)
+    {
+        if (!TryComp<ClothingComponent>(ent, out var clothing) || clothing.InSlotFlag == null || args.User == null)
+            return;
+
+        SetLayerVisibility(ent!, args.User.Value, args.Activated);
     }
 
     private void OnHideGotEquipped(Entity<HideLayerClothingComponent> ent, ref ClothingGotEquippedEvent args)
@@ -98,6 +108,9 @@ public sealed class HideLayerClothingSystem : EntitySystem
 
         if (!clothing.Comp1.HideOnToggle)
             return true;
+
+        if (TryComp<ItemToggleComponent>(clothing, out var toggle)) // Pirate: modular suits
+            return toggle.Activated;
 
         if (!TryComp(clothing, out MaskComponent? mask))
             return true;

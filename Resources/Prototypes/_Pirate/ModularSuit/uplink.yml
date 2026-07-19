@@ -1,0 +1,172 @@
+# Pirate: Goob uplink discount categories are disabled locally.
+- type: listing
+  id: UplinNoSlipSuitModule
+  name: uplink-syndie-noslip-module-name
+  description: uplink-syndie-noslip-module-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: noslip }
+  productEntity: NoSlipSuitModule
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 1
+
+- type: listing
+  id: UplinkPlateCompressionSuitModule
+  name: uplink-syndie-plate-compression-name
+  description: uplink-syndie-plate-compression-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: plate_compression }
+  productEntity: PlateCompressionSuitModule
+  categories:
+  - UplinkJob
+  cost:
+    Telecrystal: 2
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - AtmosphericTechnician
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: UplinkModularSuitSyndicateNukeOps
+  name: uplink-syndie-modsuit-name
+  description: uplink-syndie-modsuit-desc
+  icon: { sprite: _Pirate/Clothing/Modular/Syndicate/control.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateControllerBundle
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 50
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkHolsterSuitModuleNukeOps
+  name: uplink-syndie-holster-module-name
+  description: uplink-syndie-holster-module-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: holster }
+  productEntity: HolsterSuitModule
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 4
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkMedicalVisorSuitModuleNukeOps
+  name: uplink-syndie-medical-visor-module-name
+  description: uplink-syndie-medical-visor-module-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: medhud_visor }
+  productEntity: VisorMedicalSuitModule
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 3
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkSecurityVisorSuitModuleNukeOps
+  name: uplink-syndie-security-visor-module-name
+  description: uplink-syndie-security-visor-module-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: sechud_visor }
+  productEntity: VisorSecuritySuitModule
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 3
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkInjectorSuitModuleNukeOps
+  name: uplink-syndie-injector-module-name
+  description: uplink-syndie-injector-module-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: injector }
+  productEntity: InjectorSuitModule
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 6
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkQuickCarrySuitModuleNukeOps
+  name: uplink-syndie-quick-carry-module-name
+  description: uplink-syndie-quick-carry-module-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: carry }
+  productEntity: QuickCarrySuitModule
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 4
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkHoldingStorageSuitModuleNukeOps
+  name: uplink-syndie-holding-storage-module-name
+  description: uplink-syndie-holding-storage-module-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: storage_holding }
+  productEntity: StorageHoldingSuitModule
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 12
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinEnergyShieldSuitModuleNukeOps
+  name: uplink-syndie-energy-shield-module-name
+  description: uplink-syndie-energy-shield-module-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: energy_shield }
+  productEntity: EnergyShieldSuitModule
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 8
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkEnergyShieldModuleBundle
+  name: uplink-energy-shield-module-bundle-name
+  description: uplink-energy-shield-module-bundle-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: energy_shield }
+  productEntity: ClothingBackpackDuffelEnergyShieldModuleBundle
+  cost:
+    Telecrystal: 32
+  categories:
+  - UplinkWearables
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink

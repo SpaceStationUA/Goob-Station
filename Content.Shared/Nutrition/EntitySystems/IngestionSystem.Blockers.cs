@@ -6,6 +6,7 @@ using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Item.ItemToggle.Components; // Pirate: modular suit helmet toggles.
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Storage;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -21,6 +22,7 @@ public sealed partial class IngestionSystem
     {
         SubscribeLocalEvent<UnremoveableComponent, IngestibleEvent>(OnUnremovableIngestion);
         SubscribeLocalEvent<IngestionBlockerComponent, ItemMaskToggledEvent>(OnBlockerMaskToggled);
+        SubscribeLocalEvent<IngestionBlockerComponent, ItemToggledEvent>(OnBlockerToggled); // Pirate: modular suit helmet toggles.
         SubscribeLocalEvent<IngestionBlockerComponent, IngestionAttemptEvent>(OnIngestionBlockerAttempt);
         SubscribeLocalEvent<IngestionBlockerComponent, InventoryRelayedEvent<IngestionAttemptEvent>>(OnIngestionBlockerAttempt);
         SubscribeLocalEvent<IngestionBlockerComponent, ExaminedEvent>(OnIngestionBlockerExamined);
@@ -55,6 +57,12 @@ public sealed partial class IngestionSystem
     private void OnBlockerMaskToggled(Entity<IngestionBlockerComponent> ent, ref ItemMaskToggledEvent args)
     {
         ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
+    }
+
+    // Pirate: modular suit helmets use ItemToggle rather than Mask.
+    private void OnBlockerToggled(Entity<IngestionBlockerComponent> ent, ref ItemToggledEvent args)
+    {
+        ent.Comp.Enabled = args.Activated;
     }
 
     private void OnIngestionBlockerAttempt(Entity<IngestionBlockerComponent> entity, ref IngestionAttemptEvent args)

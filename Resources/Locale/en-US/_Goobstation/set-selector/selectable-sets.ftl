@@ -173,9 +173,10 @@ selectable-set-blueshield-hardsuit-light-name = blueshield hardsuit
 selectable-set-blueshield-hardsuit-light-description =
     An armoured hardsuit, allowing for more speed at the cost of protection.
 
-selectable-set-blueshield-modsuit-name = blueshield modsuit
+# Pirate: legacy MODsuit choices use the new modular suit system.
+selectable-set-blueshield-modsuit-name = corporate MODsuit
 selectable-set-blueshield-modsuit-description =
-    A custom modular hardsuit, allowing for more customisation, at the cost of requiring power.
+    A preassembled MODsuit for high-ranking Nanotrasen officers, with enhanced protection, mobility, and bluespace storage.
 
 # ERT
 
@@ -199,20 +200,19 @@ selectable-set-paramedic-voidsuit-desc =
     A light hardsuit with minimal protection
     but a fast movement speed.
 
-selectable-set-paramedic-modsuit-name = Sanitater modsuit
+# Pirate: legacy MODsuit choices use the new modular suit system.
+selectable-set-paramedic-modsuit-name = rescue MODsuit
 selectable-set-paramedic-modsuit-desc =
-    A modular hardsuit with heavier plates
-    to shrug off a bullet or two, hopefully.
+    A preassembled medical MODsuit with a health analyzer, medical visor, defibrillator, and powered casualty-carrying servos.
 
 selectable-set-security-voidsuit-name = Security hardsuit
 selectable-set-security-voidsuit-desc =
     A light hardsuit with an in-built plate carrier to provide
     moderate protection while remaining mobile for low intensity kinetic ops.
 
-selectable-set-security-modsuit-name = Security 'soldat' modsuit
+selectable-set-security-modsuit-name = security MODsuit
 selectable-set-security-modsuit-desc =
-    A modular hardsuit with ceramic inserts to provide more protection
-    than the hardsuit counterpart, but with less mobility.
+    A preassembled MODsuit with an armor booster, security visor, magnetic boots, and integrated storage.
 
 selectable-set-headofsecurity-voidsuit-name = Head of security's hardsuit
 selectable-set-headofsecurity-voidsuit-desc =
@@ -220,20 +220,17 @@ selectable-set-headofsecurity-voidsuit-desc =
     the armour value of the vital organs and increase mobility
     compared to the standard security hardsuit.
 
-selectable-set-headofsecurity-modsuit-name = Head of security's 'bulwark' modsuit
+selectable-set-headofsecurity-modsuit-name = Head of Security's safeguard MODsuit
 selectable-set-headofsecurity-modsuit-desc =
-    A modular hardsuit with expensive plastitanium armour for the head of security's use.
-    Comes equipped with an AI operated on-board intravenous stim injector.
+    A preassembled command MODsuit with an armor booster, security visor, jetpack, magnetic boots, and expanded storage.
 
 selectable-set-engineering-voidsuit-name = Engineering hardsuit
 selectable-set-engineering-voidsuit-desc =
     A light hardsuit for low-intensity repairs around the station.
 
-selectable-set-engineering-modsuit-name = Engineering 'sapper' modsuit
+selectable-set-engineering-modsuit-name = engineering MODsuit
 selectable-set-engineering-modsuit-desc =
-    A modular hardsuit with increased blast plating and the large vulnerable visor
-    replaced with external cameras to better protect against explosions
-    and other external threats.
+    A preassembled MODsuit with welding and radiation shielding modules, magnetic boots, a flashlight, and storage.
 
 selectable-set-captain-voidsuit-name = Captain's parade hardsuit
 selectable-set-captain-voidsuit-desc =
@@ -243,9 +240,7 @@ selectable-set-captain-voidsuit-desc =
 
 selectable-set-captain-modsuit-name = Captain's 'Magnate' modsuit
 selectable-set-captain-modsuit-desc =
-    A modular hardsuit perfectly shined, adorned, and armored for the best of
-    the best, fitted with custom plating, cooling fluid, and diamonds to
-    make even the toughest of times leading seem like nothing to you.
+    A preassembled captain's MODsuit with an advanced jetpack, magnetic boots, expanded storage, and a paper dispenser.
 
 
 selectable-set-research-director-voidsuit-name = RD's hardsuit
@@ -254,8 +249,6 @@ selectable-set-research-director-voidsuit-desc =
     armored to protect from assistants breaking in, all while still retaining
     common spacewalking capabilities.
 
-selectable-set-research-director-modsuit-name = RD's 'Minerva' modsuit
+selectable-set-research-director-modsuit-name = RD's research MODsuit
 selectable-set-research-director-modsuit-desc =
-    A modular hardsuit armored perfectly to turn you into a research tank,
-    not even the most dangerous of experiments will harm you in this,
-    and the worst of assistants will think twice before breaking in sci.
+    A preassembled research MODsuit with reagent and T-ray scanners, radiation shielding, a welding module, and expanded storage.

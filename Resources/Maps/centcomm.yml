@@ -19841,7 +19841,7 @@ entities:
     - type: Transform
       pos: -10.288156,6.059138
       parent: 1668
-- proto: ClothingModsuitApocryphal
+- proto: ClothingModularControllerApocryphalPreassembled
   entities:
   - uid: 2806
     components:
