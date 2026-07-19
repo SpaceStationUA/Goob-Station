@@ -42,7 +42,13 @@ env:
     Content.IntegrationTests.Tests.Sprite
     Content.IntegrationTests.Tests.StartTest
     Content.IntegrationTests.Tests.WizdenContentFreeze
-  VALIDATION_MAP_TEST_PATTERNS: Content.IntegrationTests.Tests.PostMapInitTest
+  VALIDATION_GAME_MAP_TEST_PATTERNS: Content.IntegrationTests.Tests.PostMapInitTest.GameMapsLoadableTest
+  VALIDATION_OTHER_MAP_TEST_PATTERNS: >-
+    Content.IntegrationTests.Tests.PostMapInitTest.AllMapsTested
+    Content.IntegrationTests.Tests.PostMapInitTest.GridsLoadableTest
+    Content.IntegrationTests.Tests.PostMapInitTest.NoSavedPostMapInitTest
+    Content.IntegrationTests.Tests.PostMapInitTest.NonGameMapsLoadableTest
+    Content.IntegrationTests.Tests.PostMapInitTest.ShuttlesLoadableTest
   VALIDATION_SERIALIZATION_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Mapping
     Content.IntegrationTests.Tests.PrototypeSaveTest
@@ -145,9 +151,12 @@ jobs:
           - name: Validation core integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: validation-core
-          - name: Validation map integration tests
+          - name: Validation game map integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: validation-map
+            shard: validation-game-map
+          - name: Validation other map integration tests
+            project: Content.IntegrationTests/Content.IntegrationTests.csproj
+            shard: validation-other-map
           - name: Validation serialization integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: validation-serialization
@@ -219,7 +228,8 @@ jobs:
         read -r -a atmos_tile_patterns <<< "$ATMOS_TILE_TEST_PATTERNS"
         read -r -a atmos_core_patterns <<< "$ATMOS_CORE_TEST_PATTERNS"
         read -r -a validation_core_patterns <<< "$VALIDATION_CORE_TEST_PATTERNS"
-        read -r -a validation_map_patterns <<< "$VALIDATION_MAP_TEST_PATTERNS"
+        read -r -a validation_game_map_patterns <<< "$VALIDATION_GAME_MAP_TEST_PATTERNS"
+        read -r -a validation_other_map_patterns <<< "$VALIDATION_OTHER_MAP_TEST_PATTERNS"
         read -r -a validation_serialization_patterns <<< "$VALIDATION_SERIALIZATION_TEST_PATTERNS"
         read -r -a world_patterns <<< "$WORLD_TEST_PATTERNS"
         read -r -a action_patterns <<< "$ACTION_TEST_PATTERNS"
@@ -257,8 +267,13 @@ jobs:
             comparison="~"
             separator="|"
             ;;
-          validation-map)
-            patterns=("${validation_map_patterns[@]}")
+          validation-game-map)
+            patterns=("${validation_game_map_patterns[@]}")
+            comparison="~"
+            separator="|"
+            ;;
+          validation-other-map)
+            patterns=("${validation_other_map_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
@@ -304,7 +319,8 @@ jobs:
               "${atmos_tile_patterns[@]}"
               "${atmos_core_patterns[@]}"
               "${validation_core_patterns[@]}"
-              "${validation_map_patterns[@]}"
+              "${validation_game_map_patterns[@]}"
+              "${validation_other_map_patterns[@]}"
               "${validation_serialization_patterns[@]}"
               "${world_patterns[@]}"
               "${action_patterns[@]}"
