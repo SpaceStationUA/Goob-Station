@@ -673,6 +673,7 @@ public sealed partial class WoundSystem
         }
         else
         {
+            // The wound failed some important checks, and we cannot let an invalid wound to be spawned!
             PredictedQueueDel(wound);
 
             return false;

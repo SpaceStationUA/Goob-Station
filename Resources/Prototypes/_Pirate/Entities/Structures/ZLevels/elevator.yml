@@ -1,15 +1,3 @@
-# SS13-style multiz elevator. All parts link by matching elevatorId.
-# Mapping:
-#  - Place the controller at the lower-left of the cab footprint on the home (lowest) deck.
-#  - Paint the cab floor tiles on that footprint and put platform objects on top; the elevator carries
-#    both tiles and objects between decks.
-#  - Leave every other served deck's footprint EMPTY (open shaft) — that's how decks are discovered. No
-#    tiles are written at init; while travelling it lays the cab pattern on arrival and, on leaving,
-#    restores FloorElevatorShaft only on the basement (decks above reopen to empty space).
-#  - Panels/call buttons/indicators share the same elevatorId; add ElevatorDoor (same elevatorId) to
-#    any door to make it open on arrival and shut while moving.
-# Sprites + music ported from tgstation.
-
 - type: entity
   parent: MarkerBase
   id: ElevatorController
