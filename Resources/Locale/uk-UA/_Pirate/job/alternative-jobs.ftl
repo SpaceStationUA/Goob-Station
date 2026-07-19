@@ -8,7 +8,7 @@ job-alternative-name-flora-engineer = Флора-інженер
 job-alternative-name-prankster = Пранкер
 job-alternative-name-waiter = Офіціант
 job-alternative-name-maid = Покоївка
-job-alternative-name-correspondent = Кориспондент
+job-alternative-name-correspondent = Кореспондент
 
 
 # lybrarian
