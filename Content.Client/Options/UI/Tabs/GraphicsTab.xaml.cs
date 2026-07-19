@@ -29,6 +29,7 @@ public sealed partial class GraphicsTab : Control
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
         Control.AddOption(new OptionParticleQuality(Control, _cfg, DropDownParticleQuality)); // Starfall: Particle quality.
         Control.AddOption(new CEImmediateOptionSliderIntCVar(Control, _cfg, CCVars.CEZLevelsVisibleBelow, ZLevelsBelowSlider, 0, CESharedZLevelsSystem.MaxZLevelsBelowRendering)); // Pirate: multiz
+        Control.AddOption(new CEImmediateOptionSliderIntCVar(Control, _cfg, CVars.MaxShadowcastingLights, ShadowcastingLightsSlider, 128, 320, step: 64)); // Pirate: light-flicker
 
         Control.AddOptionDropDown(
             CVars.DisplayUIScale,

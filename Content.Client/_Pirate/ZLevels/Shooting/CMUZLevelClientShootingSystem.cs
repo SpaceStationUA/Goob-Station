@@ -1,7 +1,6 @@
 // SPDX-FileCopyrightText: 2026 ColonialMarinesUniverse contributors <https://github.com/AU-14/ColonialMarinesUniverse>
 // SPDX-License-Identifier: AGPL-3.0-only
 // Ported from ColonialMarinesUniverse Content.Client/_CMU14/ZLevels/Core/CMUClientZLevelsSystem.cs
-// (projectile visual offset portions only — lanos already has the rest of the client z-system).
 
 using System.Numerics;
 using Content.Client._Pirate.ZLevels.Core; // Pirate: multiz - CEClientZLevelsSystem.ZLevelOffset (render offset cvar)
