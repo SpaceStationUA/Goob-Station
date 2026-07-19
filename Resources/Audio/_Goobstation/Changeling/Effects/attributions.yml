@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-# SPDX-FileCopyrightText: 2025 Marcus F <199992874+thebiggestbruh@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 the biggest bruh <199992874+thebiggestbruh@users.noreply.github.com>
-#
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - files: ["armour_transform.ogg", "armour_strip.ogg"]
@@ -13,4 +9,4 @@
 - files: ["changeling_shriek.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "taken by someone from somewhere probably tg, converted to mono by @deltanedas (github)"
-  source: "https://goida.zip/unknown"
+  source: "https://github.com/Goob-Station/Goob-Station/tree/master/Resources/Audio/_Goobstation/Changeling/Effects/"

@@ -8,25 +8,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 heretic-influence-start = Висмоктування впливу...
-
 heretic-ritualrune-examine = Поточний обраний ритуал: [color=yellow]{$rit}[/color]
-
 heretic-knowledge-gain = Ви дещо дізналися
 heretic-knowledge-loss = Ви дещо забули
-
 heretic-clothing-component-fail = Неможливо це вдягнути!
-
 heretic-protective-blade-component-no-targets = Немає цілей!
-
 rust-corruption-silicon-damage = Ви піддаєтеся корозії іржі!
-
 disgust-effect-warning = Ви почуваєтесь якось дивно...
-
 chat-speech-verb-name-hiss = Шипіння
-
 void-ascend-begin = За вікнами раптово з'являється хуртовина. Насувається всепоглинаюче почуття жаху...
 void-ascend-end = Хуртовина починає вщухати...
 void-ascend-restart = Хуртовина раптово з'являється знову...
-
 cosmic-field-component-bomb-defused-message = {$bomb} раптово вимикається!
 ghoul-weapon-comp-examine = [color=red]Ця зброя виглядає надзвичайно крихкою. При детальнішому огляді видно, що вона виготовлена з плоті й крові. Вона належить одній із істот Мансусу й зникне, коли істота помре.[/color]

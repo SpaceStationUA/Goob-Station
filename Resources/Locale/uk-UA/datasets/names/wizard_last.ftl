@@ -44,7 +44,6 @@ names-wizard-last-dataset-43 = білий
 names-wizard-last-dataset-44 = мудрий
 names-wizard-last-dataset-45 = ксобех
 names-wizard-last-dataset-46 = ім Саґоз
-
 names-wizard-last-dataset-47 = імператор
 names-wizard-last-dataset-48 = сяючий
 names-wizard-last-dataset-49 = сірий

@@ -57,7 +57,6 @@ thunderdome-revival-decline = Залишитися на арені
 thunderdome-join = У Тандердом заходить {$player}!
 thunderdome-leave = {$player} покидає Тандердом.
 thunderdome-leave-01 = {$user} зникає, втомившись убивати.
-
 thunderdome-loadout-mosin = Кардашев-Мосін
 
 # Weapon descriptions (tooltips)

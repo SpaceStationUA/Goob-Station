@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltMantis
+  name: psionic mantis' belt # DeltaV - Rename Forensic Mantis to Psionic Mantis
+  description: Perfect for storing all of your equipment.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Belt/mantis_belt.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Belt/mantis_belt.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - Document
+        - Flashlight
+        - ForensicBeltEquip
+        - Sidearm
+        - Folder
+<<<<<<< HEAD:Resources/Prototypes/Nyanotrasen/Entities/Clothing/Belt/belts.yml
+=======
+        - Pill
+        - Syringe
+        - MagazinePistol
+        - PillCanister
+>>>>>>> upstream:Resources/Prototypes/_EinsteinEngines/Entities/Clothing/Belt/belts.yml
+      components:
+        - HandLabeler
+<<<<<<< HEAD:Resources/Prototypes/Nyanotrasen/Entities/Clothing/Belt/belts.yml
+=======
+        - TinfoilHat
+        - Handcuff
+>>>>>>> upstream:Resources/Prototypes/_EinsteinEngines/Entities/Clothing/Belt/belts.yml

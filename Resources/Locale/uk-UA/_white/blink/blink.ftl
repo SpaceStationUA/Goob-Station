@@ -6,6 +6,5 @@
 
 blink-component-control-active = кліпання: [color=green]активне[/color]
 blink-component-control-inactive = кліпання: [color=red]неактивне[/color]
-
 blink-activated-message = Кліпання активовано.
 blink-deactivated-message = Кліпання деактивовано.

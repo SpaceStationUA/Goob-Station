@@ -35,10 +35,8 @@ emote-fart-out-of-farts = У вас закінчилися пуки!
 emote-fart-super-fart = Ви (буквально) відриваєте собі дупу!
 emote-fart-inhale-notice = Ви вдихаєте, заряджаючи супер-пук.
 emote-fart-inhale-disarm-notice = Ви розряджаєте свій супер-пук.
-
 chat-emote-name-boop = Буп
 chat-emote-name-whirr = Дзижчання
-
 chat-emote-msg-bagawk = кудкудак!
 
 

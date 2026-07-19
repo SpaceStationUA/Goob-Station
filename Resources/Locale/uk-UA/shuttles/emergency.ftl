@@ -31,7 +31,6 @@ emergency-shuttle-ui-authorize = АВТОРИЗУВАТИ
 emergency-shuttle-ui-repeal = СКАСУВАТИ
 emergency-shuttle-ui-authorizations = Авторизацій
 emergency-shuttle-ui-remaining = Залишилося: {$remaining}
-
 emergency-shuttle-extended = Час запуску подовжено через незручні обставини
 map-name-centcomm = Центральне Командування
 map-name-terminal = Термінал прибуття

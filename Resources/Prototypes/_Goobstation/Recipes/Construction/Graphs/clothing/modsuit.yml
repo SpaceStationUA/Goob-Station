@@ -1,11 +1,3 @@
-# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
-# SPDX-FileCopyrightText: 2025 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 BombasterDS <deniskaporoshok@gmail.com>
-# SPDX-FileCopyrightText: 2025 BombasterDS2 <shvalovdenis.workmail@gmail.com>
-# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-# SPDX-FileCopyrightText: 2025 PunishedJoe <PunishedJoeseph@proton.me>
-#
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: constructionGraph
@@ -119,25 +111,25 @@
           doAfter: 1
 
   - node: standard
-    entity: ClothingModsuitStandard
+    entity: ClothingModularControllerStandardPreassembled # Pirate: legacy graph outputs the new modular suits.
 
   - node: security
-    entity: ClothingModsuitSecurity
+    entity: ClothingModularControllerSecurityPreassembled
 
   - node: paramedic
-    entity: ClothingModsuitParamedic
+    entity: ClothingModularControllerRescuePreassembled
 
   - node: headofsecurity
-    entity: ClothingModsuitHeadOfSecurity
+    entity: ClothingModularControllerSafeguardPreassembled
 
   - node: engineer
-    entity: ClothingModsuitEngineer
+    entity: ClothingModularControllerEngineeringPreassembled
 
   - node: atmostech
-    entity: ClothingModsuitAtmostech
+    entity: ClothingModularControllerAtmosphericPreassembled
 
   - node: rd
-    entity: ClothingModsuitResearchDirector
+    entity: ClothingModularControllerResearchPreassembled
 
   - node: captain
-    entity: ClothingModsuitCaptain
+    entity: ClothingModularControllerMagnatePreassembled

@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 04/27/2026 05:07:48
-  entityCount: 47815
+  entityCount: 47816
 maps:
 - 1
 grids:
@@ -31490,7 +31490,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 116.546524,173.3486
       parent: 2
-- proto: BaseChemistryEmptyVial
+- proto: ChemistryEmptyVial
   entities:
   - uid: 21
     components:
@@ -132890,7 +132890,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 173.5,28.5
       parent: 2
-- proto: EnergyChemDispenser
+- proto: ChemDispenser
   entities:
   - uid: 10790
     components:
@@ -234809,7 +234809,7 @@ entities:
     - type: Transform
       pos: 76.50275,149.61908
       parent: 2
-- proto: MaterialSilo
+- proto: MachineMaterialSilo
   entities:
   - uid: 113
     components:
@@ -263703,6 +263703,13 @@ entities:
     components:
     - type: Transform
       pos: 31.5,121.5
+      parent: 2
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
+  entities:
+  - uid: 210901
+    components:
+    - type: Transform
+      pos: 33.5,139.5
       parent: 2
 - proto: SpawnMobCleanBot
   entities:

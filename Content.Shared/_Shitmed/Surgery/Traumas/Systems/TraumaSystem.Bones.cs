@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 gluesniffler <linebarrelerenthusiast@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared._Shitmed.DoAfter;
@@ -219,7 +215,8 @@ public partial class TraumaSystem
 
         bool hasBrokenBones = false;
 
-        var rootPart = bodyComp.RootContainer.ContainedEntity;
+        // Pirate: Replay state application can call this before body containers are restored.
+        var rootPart = bodyComp.RootContainer?.ContainedEntity;
         if (rootPart.HasValue)
         {
             foreach (var (_, woundable) in _wound.GetAllWoundableChildren(rootPart.Value))
@@ -296,7 +293,9 @@ public partial class TraumaSystem
 
         foreach (var legEntity in bodyComp.LegEntities)
         {
-            if (!TryComp<MovementBodyPartComponent>(legEntity, out var movement))
+            if (!TryComp<MovementBodyPartComponent>(legEntity, out var movement)
+                || !TryComp<BodyPartComponent>(legEntity, out var legPart)
+                || !legPart.Enabled) // Pirate: do not restore movement to a disabled fixed limb.
                 continue;
 
             var partWalkSpeed = movement.WalkSpeed;
@@ -314,7 +313,7 @@ public partial class TraumaSystem
             var footEnt =
                 _body.GetBodyChildrenOfType(body,
                         BodyPartType.Foot,
-                        symmetry: Comp<BodyPartComponent>(legEntity).Symmetry)
+                        symmetry: legPart.Symmetry)
                     .FirstOrNull();
 
             if (footEnt != null)

@@ -1,13 +1,9 @@
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 RadsammyT <32146976+RadsammyT@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
 using Content.Shared._EstacaoPirata.Cards.Stack;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client._EstacaoPirata.Cards;
 
@@ -83,8 +79,24 @@ public sealed class CardSpriteSystem : EntitySystem
         {
             var (cardIndex, layer) = obj;
             sprite.LayerSetVisible(j, true);
-            sprite.LayerSetTexture(j, layer.Texture);
-            sprite.LayerSetState(j, layer.RsiState.Name);
+
+            // Use the card layer's RSI (or the card's base RSI) so states from different card RSIs resolve correctly.
+            var card = stack.Cards.ElementAt(cardIndex);
+            if (TryComp(card, out SpriteComponent? cardSprite) && layer.RsiState.Name != null)
+            {
+                var rsi = layer.Rsi ?? cardSprite.BaseRSI;
+                if (rsi != null)
+                {
+                    var specifier = new SpriteSpecifier.Rsi(rsi.Path, layer.RsiState.Name);
+                    sprite.LayerSetSprite(j, specifier);
+                }
+            }
+            else
+            {
+                sprite.LayerSetTexture(j, layer.Texture);
+                sprite.LayerSetState(j, layer.RsiState.Name);
+            }
+
             layerFunc.Invoke((uid, sprite), cardIndex, j);
             j++;
         }

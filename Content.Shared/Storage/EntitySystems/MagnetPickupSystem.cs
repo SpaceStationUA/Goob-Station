@@ -1,16 +1,3 @@
-// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Stray-Pyramid <Pharaohofnile@gmail.com>
-// SPDX-FileCopyrightText: 2024 Kara <lunarautomaton6@gmail.com>
-// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
-// SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 RatherUncreative <RatherUncreativeName@proton.me>
-// SPDX-FileCopyrightText: 2024 TemporalOroboros <TemporalOroboros@gmail.com>
-// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 plykiya <plykiya@protonmail.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Kyle Tyo <36606155+VerinSenpai@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Examine;
@@ -41,6 +28,11 @@ public sealed class MagnetPickupSystem : EntitySystem
 
 
     private static readonly TimeSpan ScanDelay = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// Reused list of nearby pickup candidates so we can sort them deterministically without allocating every scan.
+    /// </summary>
+    private readonly List<EntityUid> _nearby = [];
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
 
@@ -88,12 +80,13 @@ public sealed class MagnetPickupSystem : EntitySystem
                 continue;
             // WD EDIT END
 
-             if (comp.NextScan > currentTime)
+            if (comp.NextScan > currentTime)
                 continue;
 
             comp.NextScan += ScanDelay;
+            Dirty(uid, comp);
 
-                        // WD EDIT START. Added ForcePickup.
+            // WD EDIT START. Added ForcePickup.
             if (!comp.ForcePickup && !_inventory.TryGetContainingSlot((uid, xform, meta), out _))
                 continue;
 
@@ -105,8 +98,11 @@ public sealed class MagnetPickupSystem : EntitySystem
             var playedSound = false;
             var finalCoords = xform.Coordinates;
             var moverCoords = _transform.GetMoverCoordinates(uid, xform);
+            _nearby.Clear();
+            _nearby.AddRange(_lookup.GetEntitiesInRange(uid, comp.Range, LookupFlags.Dynamic | LookupFlags.Sundries));
+            _nearby.Sort((a, b) => GetNetEntity(a).CompareTo(GetNetEntity(b)));
 
-            foreach (var near in _lookup.GetEntitiesInRange(uid, comp.Range, LookupFlags.Dynamic | LookupFlags.Sundries))
+            foreach (var near in _nearby)
             {
                 if (_whitelistSystem.IsWhitelistFail(storage.Whitelist, near))
                     continue;
@@ -125,11 +121,11 @@ public sealed class MagnetPickupSystem : EntitySystem
                 var nearMap = _transform.GetMapCoordinates(near, xform: nearXform);
                 var nearCoords = _transform.ToCoordinates(moverCoords.EntityId, nearMap);
 
-                if (!_storage.Insert(uid, near, out var stacked, storageComp: storage, playSound: !playedSound))
+                if (!_storage.Insert(uid, near, out var stacked, user: parentUid, storageComp: storage, playSound: !playedSound))
                     continue;
 
                 // Play pickup animation for either the stack entity or the original entity.
-                                _storage.PlayPickupAnimation(stacked ?? near, nearCoords, finalCoords, nearXform.LocalRotation);
+                _storage.PlayPickupAnimation(stacked ?? near, nearCoords, finalCoords, nearXform.LocalRotation, parentUid);
 
                 playedSound = true;
             }

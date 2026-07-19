@@ -5,7 +5,6 @@ admin-verb-make-nuclear-operative = Перетворити на одиноког
 admin-verb-make-pirate = Перетворити на пірата. Зауважте, що це не налаштовує правило гри.
 admin-verb-make-head-rev = Перетворити на Головного Революціонера.
 admin-verb-make-thief = Перетворіть ціль на злодія.
-
 admin-verb-text-make-traitor = Зробити Зрадником
 admin-verb-text-make-zombie = Зробити Зомбі
 admin-verb-text-make-nuclear-operative = Зробити ЯО
@@ -18,3 +17,9 @@ admin-verb-make-initial-infected = Зробити ціль початковим 
 admin-verb-make-paradox-clone = Створити роль привида "Парадоксальний клон" для цілі.
 admin-verb-text-make-initial-infected = Зробити початковим інфікованим
 admin-verb-text-make-paradox-clone = Створити парадоксального клона
+admin-verb-make-wizard = Перетворити ціль на чарівника.
+admin-verb-make-space-ninja = Перетворити ціль на Космічного Ніндзя.
+admin-verb-make-changeling = Перетворити ціль на генокрада.
+admin-verb-text-make-wizard = Зробити Чарівником
+admin-verb-text-make-space-ninja = Зробити Ніндзя
+admin-verb-text-make-changeling = Зробити ченджлінгом

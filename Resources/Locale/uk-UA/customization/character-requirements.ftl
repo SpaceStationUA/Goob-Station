@@ -18,7 +18,6 @@ character-clothing-preference-requirement = Ви повинні {$inverted ->
     [true] не носити
     *[other] носити
 } [color=lightblue]{$type}[/color]
-
 character-job-requirement = Ви повинні {$inverted ->
     [true] не бути
     *[other] бути
@@ -27,17 +26,14 @@ character-department-requirement = Ви повинні {$inverted ->
     [true] не бути
     *[other] бути
 } в одному з цих відділів: {$departments}
-
 character-timer-department-insufficient = Вам потрібно на [color=yellow]{TOSTRING($time, "0")}[/color] хвилин більше ігрового часу у відділі [color={$departmentColor}]{$department}[/color]
 character-timer-department-too-high = Вам потрібно на [color=yellow]{TOSTRING($time, "0")}[/color] хвилин менше ігрового часу у відділі [color={$departmentColor}]{$department}[/color]
 character-timer-overall-insufficient = Вам потрібно на [color=yellow]{TOSTRING($time, "0")}[/color] хвилин більше ігрового часу
 character-timer-overall-too-high = Вам потрібно на [color=yellow]{TOSTRING($time, "0")}[/color] хвилин менше ігрового часу
 character-timer-role-insufficient = Вам потрібно на [color=yellow]{TOSTRING($time, "0")}[/color] хвилин більше ігрового часу за роль [color={$departmentColor}]{$job}[/color]
 character-timer-role-too-high = Вам потрібно на [color=yellow] {TOSTRING($time, "0")}[/color] менше ігрового часу за роль [color={$departmentColor}]{$job}[/color]
-
 character-trait-group-exclusion-requirement = Якщо ви виберете цю опцію, ви не можете мати одну з наступних рис: {$traits}
 character-loadout-group-exclusion-requirement = Якщо ви виберете цю опцію, ви не зможете мати жодного з наступних завантажень: {$loadouts}
-
 character-loadout-requirement = Ви повинні {$inverted ->
     [true] не мати
     *[other] мати
@@ -140,7 +136,6 @@ character-age-requirement-maximum-only = Ви повинні{$inverted ->
     [true]{""}
     *[other]{" "}не
 } бути старше [color=yellow]{$max}[/color] років
-
 character-antagonist-requirement = Ви {$inverted ->
     [true]повинні
     *[other]не повинні

@@ -3,10 +3,8 @@ salvage-system-announcement-spawn-debris-disintegrated = Уламок розва
 salvage-system-announcement-spawn-no-debris-available = Немає уламків, які можна притягнути магнітом.
 salvage-system-announcement-arrived = Частину уламку, який можна зачистити, притягнуто. Приблизний час утримання: {$timeLeft} секунд.
 salvage-asteroid-name = Астероїд
-
 salvage-magnet-window-title = Утилізаційний магніт
 salvage-expedition-window-progression = Прогресія
-
 salvage-magnet-resources = {$resource ->
     [OreIron] Залізо
     [OreCoal] Вугілля
@@ -20,7 +18,6 @@ salvage-magnet-resources = {$resource ->
     [OreArtifactFragment] Фрагменти артефактів
     *[other] {$resource}
 }
-
 salvage-magnet-resources-count = {$count ->
     [1] (Мало)
     [2] (Помірно)
@@ -49,7 +46,6 @@ salvage-map-proto-SmallChef = Ресторан
 salvage-map-proto-SmallParty = Вечірка на день народження
 salvage-map-proto-SmallSyndicate = Зруйнований Корабель Синдикату
 salvage-map-proto-SmallTesla = Стримувач Тесли
-
 salvage-map-proto-SmallA1 = Астероїд Плазмафайр
 salvage-map-proto-Medium1 = Кеш із Плазмовою Пасткою
 salvage-map-proto-MediumVault1 = Сховище
@@ -66,7 +62,6 @@ salvage-map-proto-MediumPetHospital = Лікарня для Улюбленців
 salvage-map-proto-MediumCrashedShuttle = Розбитий Шатл
 salvage-map-proto-Meatball = Фрикаделька
 salvage-map-proto-VeganMeatball = Веганська фрикаделька
-
 salvage-map-proto-StationStation = Станція станція
 salvage-map-proto-AsteroidBase = База Астероїдів
 salvage-map-proto-RuinCargoBase = Зруйноване Вантажне Сховище

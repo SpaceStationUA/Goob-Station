@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Materials;
@@ -47,7 +44,7 @@ public sealed partial class AutomatedMaterialStorage : AutomationSlot
         if (!_power.IsPowered(Owner))
             return false;
 
-        // this has to be essentially copypasted because goidacode doesnt have a CanInsertMaterial method
+        // this has to be essentially copypasted because [Err404]code doesnt have a CanInsertMaterial method
         if (!_materialQuery.HasComp(item) || !_compositionQuery.HasComp(item))
             return false;
 

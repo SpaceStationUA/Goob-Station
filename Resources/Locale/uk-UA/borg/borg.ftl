@@ -1,16 +1,11 @@
 borg-player-not-allowed = Мозок не підходить!
 borg-player-not-allowed-eject = Мозок вигнали з шасі!
-
 borg-panel-not-open = Панель кіборга не відкрита...
-
 borg-mind-added = {CAPITALIZE($name)} увімкнено!
 borg-mind-removed = {CAPITALIZE($name)} вимкнено!
-
 borg-module-too-many = Не вистачає місця для ще одного модуля...
 borg-module-whitelist-deny = Цей модуль не підходить для цього типу кіборга...
-
 borg-construction-guide-string = Кінцівки і тулуб кіборга повинні бути прикріплені до ендоскелету.
-
 borg-ui-menu-title = Інтерфейс Кіборга
 borg-ui-charge-label = Заряд: {$charge}%
 borg-ui-no-brain = Немає ядра
@@ -50,3 +45,5 @@ borg-type-service-name = Обслуговуючий
 borg-type-service-desc = Допомагайте з широким спектром послуг для екіпажу, від подачі закусок і напоїв до ботаніки та розваг.
 borg-type-service-transponder = обслуговуючий кіборг
 borg-module-duplicate = Цей модуль вже встановлений у цьому кіборзі.
+borg-module-action-name = Активувати {$moduleName}
+borg-module-action-description = Виберіть {$moduleName}, що дозволить вам використовувати інструменти, які він надає.

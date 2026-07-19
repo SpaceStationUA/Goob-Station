@@ -1,16 +1,8 @@
-// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2024 Fishbait <Fishbait@git.ml>
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 fishbait <gnesse@gmail.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
-// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
 using Content.Goobstation.Common.Blob;
-using Content.Server.Abilities.Felinid;
+using Content.Server.Nyanotrasen.Abilities.Felinid;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Nutrition.Components;
 using Content.Server.Station.Components;
@@ -42,6 +34,13 @@ public sealed class BlobSpawnRule : StationEventSystem<BlobSpawnRuleComponent>
         GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
+
+        // Pirate - Blob should never appear automatically on lowpop, even if the rule is started directly.
+        if (_playerSystem.PlayerCount < gameRule.MinPlayers)
+        {
+            GameTicker.EndGameRule(uid, gameRule);
+            return;
+        }
 
         if (!TryGetRandomStation(out var station))
         {
@@ -90,7 +89,7 @@ public sealed class BlobSpawnRule : StationEventSystem<BlobSpawnRuleComponent>
             return;
 
         // Blob doesn't spawn when blob carrier was eaten.
-        RemComp<FoodComponent>(carrier);
+        RemComp<EdibleComponent>(carrier);
         RemComp<FelinidFoodComponent>(carrier);
 
 

@@ -36,4 +36,10 @@ public sealed partial class CatchableComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? CatchSuccessSound;
+
+    /// <summary>
+    ///     Pirate: if true, this item can only be caught in the active hand.
+    /// </summary>
+    [DataField]
+    public bool OnlyActiveHand = true;
 }

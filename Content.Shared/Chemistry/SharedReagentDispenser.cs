@@ -1,15 +1,3 @@
-// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 0x6273 <0x40@keemail.me>
-// SPDX-FileCopyrightText: 2024 AWF <you@example.com>
-// SPDX-FileCopyrightText: 2024 Brandon Li <48413902+aspiringLich@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 GitHubUser53123 <110841413+GitHubUser53123@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Kevin Zheng <kevinz5000@gmail.com>
-// SPDX-FileCopyrightText: 2024 Kira Bridgeton <161087999+Verbalase@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Maths.FixedPoint;
@@ -113,6 +101,13 @@ namespace Content.Shared.Chemistry
 
     }
 
+    #region Pirate: chem plumbing
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserToggleValveMessage : BoundUserInterfaceMessage
+    {
+    }
+    #endregion
+
     public enum ReagentDispenserDispenseAmount
     {
         U1 = 1,
@@ -149,6 +144,8 @@ namespace Content.Shared.Chemistry
 
         public readonly ReagentDispenserDispenseAmount SelectedDispenseAmount;
 
+        public readonly bool ValveOpen; // Pirate: chem plumbing
+
         public readonly List<ReagentDispenserRecipeItem> SavedRecipes;// Pirate: chem recipes
         public readonly bool HasRecipeDisk;// Pirate: chem recipes
         public readonly List<ReagentDispenserRecipeItem> DiskRecipes;// Pirate: chem recipes
@@ -160,6 +157,7 @@ namespace Content.Shared.Chemistry
             NetEntity? outputContainerEntity,
             List<ReagentInventoryItem> inventory,
             ReagentDispenserDispenseAmount selectedDispenseAmount,
+            bool valveOpen, // Pirate: chem plumbing
             List<ReagentDispenserRecipeItem> savedRecipes,
             bool hasRecipeDisk,
             List<ReagentDispenserRecipeItem> diskRecipes,
@@ -170,6 +168,7 @@ namespace Content.Shared.Chemistry
             OutputContainerEntity = outputContainerEntity;
             Inventory = inventory;
             SelectedDispenseAmount = selectedDispenseAmount;
+            ValveOpen = valveOpen; // Pirate: chem plumbing
             #region Pirate: chem recipes
             SavedRecipes = savedRecipes;
             HasRecipeDisk = hasRecipeDisk;

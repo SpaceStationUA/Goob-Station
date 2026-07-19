@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Ilya246 <ilyukarno@gmail.com>
-// SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Robust.Shared.Containers;
@@ -37,6 +33,12 @@ public sealed partial class ChargeHolosignProjectorComponent : Component
     /// </summary>
     [DataField]
     public string ContainerId = "signs";
+
+    /// <summary>
+    /// Optional lifetime applied when a stored sign is deployed.
+    /// </summary>
+    [DataField]
+    public float? SignLifetime; // Pirate: stored signs must not expire inside the projector.
 
     /// <summary>
     /// Holosigns we "own".

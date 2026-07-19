@@ -1,0 +1,6 @@
+- type: stealTargetGroup
+  id: AccessConfigurator
+  name: steal-target-groups-access-configurator
+  sprite:
+    sprite: Objects/Tools/access_configurator.rsi
+    state: icon

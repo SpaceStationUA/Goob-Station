@@ -41,7 +41,6 @@ network-configurator-examine-switch-modes = Натисніть {$key} для п�
 # стан елемента
 network-configurator-item-status-label = Поточний режим: {$mode}
     Перемкнути: {$keybinding}
-
 cmd-clearnetworklinkoverlays-desc = Очистити всі накладення мережевих з'єднань.
 cmd-clearnetworklinkoverlays-help = Використання: clearnetworklinkoverlays
 network-configurator-text-set = Встановити

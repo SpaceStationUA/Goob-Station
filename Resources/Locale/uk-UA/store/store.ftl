@@ -4,12 +4,9 @@ store-ui-balance-display = {$currency}: {$amount}
 store-ui-price-display = {$amount} {$currency}
 store-ui-traitor-flavor = Авторське право (C) NT -30643
 store-ui-traitor-warning = Оперативники повинні заблокувати свої аплінки після використання, щоб уникнути виявлення.
-
 store-withdraw-button-ui = Зняти {$currency}
-
 store-ui-button-out-of-stock = {""} (Немає в наявності)
 store-not-account-owner = Цей {$store} не прив'язаний до вас!
-
 store-ui-discount-display-with-currency = Знижка {$amount} на {$currency}
 store-ui-discount-display = ({$amount} знижка!)
 store-preset-name-uplink = Аплінк
@@ -17,3 +14,5 @@ store-preset-name-spellbook = Книга заклинань
 store-preset-name-uplink-ghost = Контрабандний Аплінк
 store-preset-name-spellbook-ghost = Примарна Крамниця Заклинань
 store-ui-refund-text = Повернути
+store-preset-name-nukie-delivery = Блюспейс-доставка NukeOps
+store-preset-name-changeling = Крамниця ДНК

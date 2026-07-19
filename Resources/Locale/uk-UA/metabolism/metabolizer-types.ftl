@@ -11,8 +11,6 @@ metabolizer-type-moth = Міль
 metabolizer-type-arachnid = Павукоподібний
 metabolizer-type-vampiric = Вампірський
 metabolizer-type-liquorlifeline = Алкогольна життєва підтримка
-
-
 metabolizer-type-goblin = Гоблін
 metabolizer-type-vampire = Вампір
 metabolizer-type-terror-spider = Павук терору

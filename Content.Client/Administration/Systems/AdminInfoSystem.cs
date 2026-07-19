@@ -1,8 +1,3 @@
-// SPDX-FileCopyrightText: 2024 Conchelle <mary@thughunt.ing>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
@@ -18,6 +13,7 @@ public sealed class AdminInfoSystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _u = default!;
     [Dependency] private readonly IResourceManager _k = default!;
+    [Dependency] private readonly IClientNetManager _net = default!;
 
     public override void Initialize()
     {
@@ -45,6 +41,10 @@ public sealed class AdminInfoSystem : EntitySystem
 
     private void r(EntityEventArgs z)
     {
+        // Pirate: Do not emit startup network events while loading replays.
+        if (!_net.IsConnected)
+            return;
+
         RaiseNetworkEvent(z);
     }
 

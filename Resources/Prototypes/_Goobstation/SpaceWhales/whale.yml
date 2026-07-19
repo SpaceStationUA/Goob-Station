@@ -18,7 +18,7 @@
     shape: hexagon
     visibleFromOtherGrids: true
   - type: MovementIgnoreGravity
-    gravityState: true # wtf lol?
+    weightless: true # wtf lol?
   - type: WarpPoint
     follow: true
     location: space leviathan
@@ -27,7 +27,7 @@
       task: DragonCarpCompound
   - type: NpcFactionMember
     factions:
-    - Dragon #goida, also the carpsuit buff
+    - Dragon #[Err404], also the carpsuit buff
   - type: Physics
   - type: Fixtures
     fixtures:

@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Tobias Berger <toby@tobot.dev>
-// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
@@ -70,7 +66,7 @@ public sealed partial class NanoChatLookupView : PanelContainer
             panel.AddChild(numberLabel);
             panel.AddChild(startChatButton);
 
-            var styleClass = idx % 2 == 0 ? "PanelBackgroundBaseDark" : "PanelBackgroundLight";
+            var styleClass = idx % 2 == 0 ? "PanelDark" : "PanelLight"; // Pirate: ui fixes
             panel.StyleClasses.Add(styleClass);
 
             ContactsList.AddChild(panel);

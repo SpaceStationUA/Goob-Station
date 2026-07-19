@@ -1,27 +1,3 @@
-// SPDX-FileCopyrightText: 2024 0x6273 <0x40@keemail.me>
-// SPDX-FileCopyrightText: 2024 Ed <96445749+TheShuEd@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 MilenVolf <63782763+MilenVolf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 TemporalOroboros <TemporalOroboros@gmail.com>
-// SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2024 plykiya <plykiya@protonmail.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 DoutorWhite <thedoctorwhite@gmail.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 J <billsmith116@gmail.com>
-// SPDX-FileCopyrightText: 2025 Rouden <149893554+Roudenn@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Roudenn <romabond091@gmail.com>
-// SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
-// SPDX-FileCopyrightText: 2025 ScarKy0 <106310278+ScarKy0@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Tayrtahn <tayrtahn@gmail.com>
-// SPDX-FileCopyrightText: 2025 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
@@ -151,7 +127,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             SetSeed(uid, component, _random.Next());
         }
 
-        if (_proto.TryIndex(component.Template, out var biome))
+        if (_proto.Resolve(component.Template, out var biome))
             SetTemplate(uid, component, biome);
 
         var xform = Transform(uid);
@@ -476,17 +452,23 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         foreach (var chunk in active)
         {
-            // Lavaland Change start: optimization real
-            var ev = new _Lavaland.Procedural.BeforeLoadChunkEvent(chunk);
-            RaiseLocalEvent(gridUid, ref ev);
+            // Pirate: Loaded chunks cannot transition to loaded again, but may still have pending markers.
+            var loaded = component.LoadedChunks.Contains(chunk);
 
-            if (ev.Cancelled)
-                continue;
-            // Lavaland Change end
+            if (!loaded)
+            {
+                // Lavaland Change start: optimization real
+                var ev = new _Lavaland.Procedural.BeforeLoadChunkEvent(chunk);
+                RaiseLocalEvent(gridUid, ref ev);
+
+                if (ev.Cancelled)
+                    continue;
+                // Lavaland Change end
+            }
 
             LoadChunkMarkers(component, gridUid, grid, chunk, seed);
 
-            if (!component.LoadedChunks.Add(chunk))
+            if (loaded || !component.LoadedChunks.Add(chunk))
                 continue;
 
             // Load NOW!
@@ -922,6 +904,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         foreach (var chunk in component.LoadedChunks)
         {
+            // Pirate: Active chunks cannot unload, so skip the lifecycle event as well.
+            if (active.Contains(chunk))
+                continue;
+
             // Lavaland Change start: optimization real
             var ev = new _Lavaland.Procedural.UnLoadChunkEvent(chunk);
             RaiseLocalEvent(gridUid, ref ev);
@@ -930,7 +916,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 continue;
             // Lavaland Change end
 
-            if (active.Contains(chunk) || !component.LoadedChunks.Remove(chunk))
+            if (!component.LoadedChunks.Remove(chunk))
                 continue;
 
             // Unload NOW!
@@ -946,7 +932,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         // Reverse order to loading
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
-        modified ??= new HashSet<Vector2i>();
+        modified ??= _tilePool.Get(); // Pirate: Reuse the existing transient tile set pool.
 
         // Delete decals
         foreach (var (dec, indices) in component.LoadedDecals[chunk])
@@ -1033,6 +1019,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         if (modified.Count == 0)
         {
             component.ModifiedTiles.Remove(chunk);
+            _tilePool.Return(modified);
         }
         else
         {

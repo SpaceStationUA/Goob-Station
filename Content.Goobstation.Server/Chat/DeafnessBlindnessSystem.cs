@@ -52,7 +52,8 @@ public sealed class DeafnessBlindnessSystem : EntitySystem
     }
     private void OnBlindnessOverrideInRange(Entity<PermanentBlindnessComponent> ent, ref ChatMessageOverrideInRange args)
     {
-        if (!args.RequiresSight)
+        // Pirate: PoorVision also uses PermanentBlindnessComponent, but only full blindness should block sight-only chat.
+        if (!args.RequiresSight || ent.Comp.Blindness != 0)
             return;
         args.Cancel();
     }

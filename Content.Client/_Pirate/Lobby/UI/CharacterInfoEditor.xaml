@@ -1,0 +1,34 @@
+<!--
+SPDX-FileCopyrightText: 2025 Starlight
+SPDX-FileCopyrightText: 2026 SpaceStationUA
+SPDX-License-Identifier: MIT
+-->
+
+<Control xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         HorizontalExpand="True">
+    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+            <BoxContainer Name="Physical" Access="Public" Orientation="Vertical" VerticalExpand="True">
+                <Label Text="{Loc 'character-info-editor-physical-label'}"/>
+                <TextEdit Name="PhysicalDescriptionInput" Access="Public" MinSize="220 100" Margin="10"
+                          HorizontalExpand="True" VerticalExpand="True"/>
+            </BoxContainer>
+            <BoxContainer Name="Personality" Access="Public" Orientation="Vertical" VerticalExpand="True">
+                <Label Text="{Loc 'character-info-editor-personality-label'}"/>
+                <TextEdit Name="PersonalityDescriptionInput" Access="Public" MinSize="220 100" Margin="10"
+                          HorizontalExpand="True" VerticalExpand="True"/>
+            </BoxContainer>
+            <BoxContainer Name="Exploitable" Access="Public" Orientation="Vertical" VerticalExpand="True">
+                <Label Text="{Loc 'character-info-editor-exploitable-label'}"/>
+                <TextEdit Name="ExploitableInfoInput" Access="Public" MinSize="220 100" Margin="10"
+                          HorizontalExpand="True" VerticalExpand="True"/>
+            </BoxContainer>
+            <BoxContainer Name="Secrets" Access="Public" Orientation="Vertical" VerticalExpand="True">
+                <Label Text="{Loc 'character-info-editor-secrets-label'}"/>
+                <TextEdit Name="SecretsInput" Access="Public" MinSize="220 100" Margin="10"
+                          HorizontalExpand="True" VerticalExpand="True"/>
+            </BoxContainer>
+        </BoxContainer>
+    </ScrollContainer>
+</Control>

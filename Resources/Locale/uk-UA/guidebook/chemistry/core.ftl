@@ -1,11 +1,13 @@
-guidebook-reagent-effect-description = { $chance ->
+guidebook-reagent-effect-description = {$quantity ->
+        [0] {""}
+        *[other] Якщо є щонайменше {$quantity}u {$reagent},{" "}
+    }{$chance ->
         [1] { $effect }
-        *[other] Має { NATURALPERCENT($chance, 2) } шанс на { $effect }
+        *[other] з шансом { NATURALPERCENT($chance, 2) } { $effect }
     }{ $conditionCount ->
         [0] .
         *[other] {" "}коли { $conditions }.
     }
-
 guidebook-reagent-name = [bold][color={$color}]{CAPITALIZE($name)}[/color][/bold]
 guidebook-reagent-recipes-header = Рецепт
 guidebook-reagent-recipes-reagent-display = [bold]{$reagent}[/bold] \[{$ratio}\]
@@ -25,6 +27,5 @@ guidebook-reagent-recipes-mix-info = {$minTemp ->
             *[false] вище {NATURALFIXED($minTemp, 2)}K
         }
 }
-
 guidebook-reagent-plant-metabolisms-header = Метаболізм рослин
 guidebook-reagent-plant-metabolisms-rate = [bold]Метаболізм рослин[/bold] [color=gray](1 одиниця кожні 3 секунди як база)[/color]

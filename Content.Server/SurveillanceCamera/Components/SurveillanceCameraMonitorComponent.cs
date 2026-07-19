@@ -1,10 +1,3 @@
-// SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
-// SPDX-FileCopyrightText: 2022 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: MIT
 
 using Robust.Shared.Map; // Goobstation
@@ -12,7 +5,7 @@ using Robust.Shared.Map; // Goobstation
 namespace Content.Server.SurveillanceCamera;
 
 [RegisterComponent]
-[Access(typeof(SurveillanceCameraMonitorSystem))]
+[Access(typeof(SurveillanceCameraMonitorSystem), Other = AccessPermissions.ReadExecute)] // Pirate: FPV drones pass monitor components into public monitor methods.
 public sealed partial class SurveillanceCameraMonitorComponent : Component
 {
     // Currently active camera viewed by this monitor.
@@ -61,4 +54,7 @@ public sealed partial class SurveillanceCameraMonitorComponent : Component
     // The subnets known by this camera monitor.
     public Dictionary<string, string> KnownSubnets { get; } = new();
 
+    // Pirate: FPV drone laptops switch to cameras directly and should not run automatic camera-network heartbeats.
+    [DataField, ViewVariables]
+    public bool NeverAutomaticallyHeartbeat = false;
 }

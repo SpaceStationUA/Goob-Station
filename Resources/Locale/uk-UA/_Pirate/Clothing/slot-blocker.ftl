@@ -1,7 +1,6 @@
 slot-blocker-blocked-generic = Ви повинні зняти {THE($blocker)}, щоб зробити це!
 slot-blocker-blocked-equipped = Ви повинні зняти {THE($blocker)}, щоб одягнути це!
 slot-blocker-blocked-unequipped = Ви повинні зняти {THE($blocker)}, щоб зняти це!
-
 slot-blocker-examine-blocks = Це може блокувати наступні слоти при екіпіруванні: [bold]{$slots}[/bold]
 slot-blocker-examine-blocked-by = Це може бути заблоковано наступними слотами: [bold]{$slots}[/bold]
 

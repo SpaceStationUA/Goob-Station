@@ -20,7 +20,7 @@
   components:
   - type: Sprite
     sprite: _Pirate/Contractors/Passport.rsi
-    state: passport_eridan_closed
+    state: CorpID_eridan_open
 
 - type: entity
   id: GuidebookGoldenDeep
@@ -45,14 +45,6 @@
   - type: Sprite
     sprite: _Pirate/Contractors/Passport.rsi
     state: passport_nralakk_closed
-
-- type: entity
-  id: GuidebookVoxflock
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: _Pirate/Contractors/Passport.rsi
-    state: vox_wallet_closed
 
 - type: entity
   id: GuidebookSol

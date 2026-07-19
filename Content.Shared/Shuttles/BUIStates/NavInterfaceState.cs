@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Robust.Shared.Map;
@@ -25,8 +21,7 @@ public sealed class NavInterfaceState
     /// </summary>
     public Angle? Angle;
 
-    public Dictionary<NetEntity, List<DockingPortState>> Docks;
-
+    // Pirate - docking port data is sent separately to avoid replay duplication.
     public bool RotateWithEntity = true;
 
     // Frontier fields
@@ -57,14 +52,12 @@ public sealed class NavInterfaceState
         float maxRange,
         NetCoordinates? coordinates,
         Angle? angle,
-        Dictionary<NetEntity, List<DockingPortState>> docks,
         InertiaDampeningMode dampeningMode, // Frontier
         Dictionary<string, string>? networkPortNames = null)
     {
         MaxRange = maxRange;
         Coordinates = coordinates;
         Angle = angle;
-        Docks = docks;
         DampeningMode = dampeningMode; // Frontier
         NetworkPortNames = networkPortNames ?? new Dictionary<string, string>();
     }

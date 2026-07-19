@@ -1,0 +1,79 @@
+# Pirate: ported from https://github.com/lagrange14/substations/pull/560
+
+- type: entity
+  id: QuadChassisMining
+  parent: BorgChassisSelectable
+  name: salvage quad cyborg
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Mobs/Silicon/chassis.rsi
+    scale: 0.7, 0.7
+    noRot: true
+    layers:
+    - state: quadsalv
+      map: [ "enum.BorgVisualLayers.Body", "movement" ]
+    - state: quadsalv_e_r
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+    - state: quadsalv_l
+      map: [ "light", "enum.BorgVisualLayers.LightStatus" ]
+      shader: unshaded
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: quadmining
+  - type: BorgSwitchableSubtype
+    borgSubtype: quadmining_default
+
+- type: entity
+  id: QuadChassisMedical
+  parent: BorgChassisSelectable
+  name: medical quad cyborg
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Mobs/Silicon/chassis.rsi
+    scale: 0.7, 0.7
+    noRot: true
+    layers:
+    - state: quadmed
+      map: [ "enum.BorgVisualLayers.Body", "movement" ]
+    - state: quadmed_e_r
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+    - state: quadmed_l
+      map: [ "light", "enum.BorgVisualLayers.LightStatus" ]
+      shader: unshaded
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: quadmedical
+  - type: BorgSwitchableSubtype
+    borgSubtype: quadmedical_default
+
+- type: entity
+  id: QuadChassisService
+  parent: BorgChassisSelectable
+  name: service quad cyborg
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Mobs/Silicon/chassis.rsi
+    scale: 0.7, 0.7
+    noRot: true
+    layers:
+    - state: quadserv
+      map: [ "enum.BorgVisualLayers.Body", "movement" ]
+    - state: quadserv_e_r
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+    - state: quadserv_l
+      map: [ "light", "enum.BorgVisualLayers.LightStatus" ]
+      shader: unshaded
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: quadservice
+  - type: BorgSwitchableSubtype
+    borgSubtype: quadservice_default

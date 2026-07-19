@@ -1,29 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 DrSmugleaf <10968691+DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 DrSmugleaf <drsmugleaf@gmail.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Ichaie <167008606+Ichaie@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Ilya246 <57039557+Ilya246@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 JORJ949 <159719201+JORJ949@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 MortalBaguette <169563638+MortalBaguette@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Panela <107573283+AgentePanela@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2025 Poips <Hanakohashbrown@gmail.com>
-// SPDX-FileCopyrightText: 2025 PuroSlavKing <103608145+PuroSlavKing@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
-// SPDX-FileCopyrightText: 2025 Whisper <121047731+QuietlyWhisper@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 blobadoodle <me@bloba.dev>
-// SPDX-FileCopyrightText: 2025 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2025 github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 kamkoi <poiiiple1@gmail.com>
-// SPDX-FileCopyrightText: 2025 shibe <95730644+shibechef@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 tetra <169831122+Foralemes@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
@@ -31,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared._RMC14.LinkAccount;
+using Robust.Server.Player; // Pirate: public ghost cosmetics
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -46,6 +21,7 @@ public sealed class LinkAccountManager : IPostInjectInit
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly UserDbDataManager _userDb = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!; // Pirate: public ghost cosmetics
 
     private readonly Dictionary<NetUserId, TimeSpan> _lastRequest = new();
     private readonly TimeSpan _minimumWait = TimeSpan.FromSeconds(0.5);
@@ -63,6 +39,7 @@ public sealed class LinkAccountManager : IPostInjectInit
     {
         var patron = await _db.GetPatron(player.UserId, cancel);
         var linked = await _db.HasLinkedAccount(player.UserId, cancel);
+        var ghostCosmetics = await _db.GetGhostCosmetics(player.UserId, cancel); // Pirate: not patron-gated
         cancel.ThrowIfCancellationRequested();
 
         var tier = patron?.Tier;
@@ -71,6 +48,8 @@ public sealed class LinkAccountManager : IPostInjectInit
             : new SharedRMCPatronTier(
                 tier.ShowOnCredits,
                 tier.GhostColor,
+                tier.GhostCosmetics, // Goob - ghost cosmetics
+                tier.GhostParticles, // Goob - ghost cosmetics
                 tier.LobbyMessage,
                 tier.RoundEndShoutout,
                 tier.Name,
@@ -94,7 +73,7 @@ public sealed class LinkAccountManager : IPostInjectInit
             ghostColor = new Robust.Shared.Maths.Color(sysColor.R, sysColor.G, sysColor.B, sysColor.A);
         }
 
-        _connected[player.UserId] = new SharedRMCPatronFull(sharedTier, linked, ghostColor, lobbyMessage, shoutouts);
+        _connected[player.UserId] = new SharedRMCPatronFull(sharedTier, linked, ghostColor, ghostCosmetics, lobbyMessage, shoutouts); // Goob - ghost cosmetics
     }
 
     private void FinishLoad(ICommonSession player)
@@ -192,6 +171,38 @@ public sealed class LinkAccountManager : IPostInjectInit
         }
     }
 
+    // Goob start
+
+    public void SetGhostCosmetics(NetUserId user, string? particles, string? hat, string? mask)
+    {
+        // Pirate: all validated ghost cosmetics are available to every player.
+        var cosmetics = particles == null && hat == null && mask == null
+            ? null
+            : new SharedRMCGhostCosmetics(particles, hat, mask);
+
+        _db.SetGhostCosmetics(user, particles, hat, mask);
+
+        if (_connected.TryGetValue(user, out var connected))
+        {
+            connected = connected with { GhostCosmetics = cosmetics };
+            _connected[user] = connected;
+            PatronUpdated?.Invoke((user, connected));
+
+            if (_playerManager.TryGetSessionById(user, out var player))
+                SendPatronStatus(player);
+        }
+    }
+
+    public async Task ReloadPatron(ICommonSession player)
+    {
+        await LoadData(player, CancellationToken.None);
+        SendPatronStatus(player);
+
+        if (_connected.TryGetValue(player.UserId, out var connected))
+            PatronUpdated?.Invoke((player.UserId, connected));
+    }
+    // Goob end
+
     public async Task RefreshAllPatrons()
     {
         var patrons = await _db.GetAllPatrons();
@@ -251,13 +262,17 @@ public sealed class LinkAccountManager : IPostInjectInit
         if (_fauxPatronAssignments.TryGetValue(userId, out var tierId) &&
             _fauxTiers.TryGetValue(tierId, out var tier))
         {
+            // Goob start
+            var connected = _connected.GetValueOrDefault(userId);
             return new SharedRMCPatronFull(
                 Tier: tier,
                 Linked: true,
-                GhostColor: null,
-                LobbyMessage: null,
-                RoundEndShoutout: null
+                GhostColor: connected?.GhostColor,
+                GhostCosmetics: connected?.GhostCosmetics,
+                LobbyMessage: connected?.LobbyMessage,
+                RoundEndShoutout: connected?.RoundEndShoutout
             );
+            // Goob end
         }
 
         return _connected.GetValueOrDefault(userId);

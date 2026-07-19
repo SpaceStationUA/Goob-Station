@@ -70,16 +70,15 @@
 Окрім мегакорпорацій, в 27-м столітті зберіглись й звичайні нації, уряди, країни:
 
 <Box>
-    <GuideEntityEmbed Entity="GuidebookSol" Caption="Солоріанський Альянс"/>
-    <GuideEntityEmbed Entity="GuidebookBiesel" Caption="Республіка Бізель"/>
-    <GuideEntityEmbed Entity="GuidebookNralakk" Caption="Федерація Нралакк"/>
-    <GuideEntityEmbed Entity="GuidebookAdhomai" Caption="Народ. Респуб. Адхомаі"/>
+    <GuideEntityEmbed Entity="GuidebookSol" Caption="Соларіанський Альянс"/>
+    <GuideEntityEmbed Entity="GuidebookBiesel" Caption="Республіка Бізеліт"/>
+    <GuideEntityEmbed Entity="GuidebookNralakk" Caption="Федерація Нраллак"/>
+    <GuideEntityEmbed Entity="GuidebookAdhomai" Caption="Народ. Респуб. Адхомай"/>
 </Box>
 <Box>
     <GuideEntityEmbed Entity="GuidebookIzweski" Caption="Ізвескі-Гегемонії"/>
     <GuideEntityEmbed Entity="GuidebookGoldenDeep" Caption="Золота Глибина"/>
     <GuideEntityEmbed Entity="GuidebookEridan" Caption="Федерація Ерідан"/>
-    <GuideEntityEmbed Entity="GuidebookVoxflock" Caption="Стая"/>
 </Box>
 [color=yellow][italic]ЛОР ще розробляється[/italic][/color]
 

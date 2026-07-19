@@ -1,8 +1,3 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
-// SPDX-FileCopyrightText: 2025 TheBorzoiMustConsume <197824988+TheBorzoiMustConsume@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Shared.Xenobiology.Components;
@@ -24,7 +19,7 @@ using Robust.Shared.Random;
 
 namespace Content.Goobstation.Server.Xenobiology.SlimeGrinder;
 
-// oh my goida this is just a biomass reclaimer rewrite
+// oh my [Err404] this is just a biomass reclaimer rewrite
 // someone nuke it if ever hurts your eyes
 // i can't bother doing it
 // -js

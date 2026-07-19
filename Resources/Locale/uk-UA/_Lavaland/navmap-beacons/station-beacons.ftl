@@ -7,7 +7,5 @@ station-beacon-ruin-hunter-shelter = Сигнал мисливця
 station-beacon-ruin-small-outpost = Малий аванпост
 station-beacon-ruin-rouge-ai = Невідома лабораторія
 station-beacon-ruin-snow-biodome = Сніжний біодом
-
 station-beacon-ruin-syndicate = Сигнал Синдикату
-
 station-beacon-ruin-lavaland = Лаваленд

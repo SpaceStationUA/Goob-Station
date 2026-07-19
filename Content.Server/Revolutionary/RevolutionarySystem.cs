@@ -1,10 +1,8 @@
-// SPDX-FileCopyrightText: 2024 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server._EinsteinEngines.Language; // Goob Station - Revolutionary Language
 using Content.Server.Polymorph.Systems;
+using Content.Shared.Mood;
 using Content.Shared.Polymorph;
 using Content.Shared.Revolutionary;
 using Content.Shared.Revolutionary.Components;
@@ -40,9 +38,11 @@ public sealed class RevolutionarySystem : SharedRevolutionarySystem  // Goob Sta
         switch (someComp)
         {
             case HeadRevolutionaryComponent headRevComp:
+                RaiseLocalEvent(someUid, new MoodEffectEvent("RevolutionFocused")); // Pirate - port EE mood system
                 _languageSystem.AddLanguage(someUid, headRevComp.Language);
                 break;
             case RevolutionaryComponent revComp:
+                RaiseLocalEvent(someUid, new MoodEffectEvent("RevolutionFocused")); // Pirate - port EE mood system
                 _languageSystem.AddLanguage(someUid, revComp.Language);
                 break;
         }
@@ -53,9 +53,11 @@ public sealed class RevolutionarySystem : SharedRevolutionarySystem  // Goob Sta
         switch (component)
         {
             case HeadRevolutionaryComponent headRevComp:
+                RaiseLocalEvent(uid, new MoodRemoveEffectEvent("RevolutionFocused")); // Pirate - port EE mood system
                 _languageSystem.RemoveLanguage(uid, headRevComp.Language);
                 break;
             case RevolutionaryComponent revComp:
+                RaiseLocalEvent(uid, new MoodRemoveEffectEvent("RevolutionFocused")); // Pirate - port EE mood system
                 _languageSystem.RemoveLanguage(uid, revComp.Language);
                 break;
         }

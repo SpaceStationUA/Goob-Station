@@ -9,7 +9,6 @@ body-part-LeftLeg = ліва нога
 body-part-LeftFoot = ліва ступня
 body-part-RightLeg = права нога
 body-part-RightFoot = права ступня
-
 body-part-Hands = кисті
 body-part-Arms = руки
 body-part-Legs = ноги

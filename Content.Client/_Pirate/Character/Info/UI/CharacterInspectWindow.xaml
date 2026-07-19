@@ -1,0 +1,20 @@
+<!--
+SPDX-FileCopyrightText: 2025 Starlight
+SPDX-FileCopyrightText: 2026 SpaceStationUA
+SPDX-License-Identifier: MIT
+-->
+
+<pirate:CharacterInspectWindow xmlns="https://spacestation14.io"
+                               xmlns:pirate="clr-namespace:Content.Client._Pirate.Character.Info.UI"
+                               MinSize="400 545">
+    <ScrollContainer HScrollEnabled="False">
+        <TabContainer Name="InspectTabs" Access="Public">
+            <BoxContainer Orientation="Vertical">
+                <pirate:CharacterICInfoControl Name="ICInfo" Access="Public"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical">
+                <pirate:CharacterOOCInfoControl Name="OOCInfo" Access="Public"/>
+            </BoxContainer>
+        </TabContainer>
+    </ScrollContainer>
+</pirate:CharacterInspectWindow>

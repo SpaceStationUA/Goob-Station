@@ -9,5 +9,4 @@ admin-menu-server-tab = Сервер
 admin-menu-panic-bunker-tab = Панічний Бункер
 admin-menu-players-tab = Гравці
 admin-menu-objects-tab = Об'єкти
-
 admin-menu-baby-jail-tab = Дитяча в'язниця

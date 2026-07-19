@@ -1,4 +1,5 @@
 using Content.Pirate.Shared.Vampire.Components;
+using Content.Pirate.Server.Mood;
 using Content.Pirate.Server.Alchemy.Components;
 using Content.Pirate.Shared.Alchemy.EntityEffects;
 using Content.Pirate.Shared.Witch;
@@ -173,7 +174,7 @@ public sealed class PirateEntityEffectSystem : EntitySystem
         }
 
         if (!TryComp<BloodstreamComponent>(reagentArgs.TargetEntity, out var bloodstream)
-            || !_solutions.ResolveSolution(reagentArgs.TargetEntity, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemSolution))
+            || !_solutions.ResolveSolution(reagentArgs.TargetEntity, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var chemSolution))
             return;
 
         foreach (var magicalReagent in MagicalReagents)
@@ -181,7 +182,7 @@ public sealed class PirateEntityEffectSystem : EntitySystem
             var reagentId = new ReagentId(magicalReagent, null);
             var quantity = chemSolution.GetReagentQuantity(reagentId);
             if (quantity > FixedPoint2.Zero)
-                _solutions.RemoveReagent(bloodstream.ChemicalSolution.Value, reagentId, quantity);
+                _solutions.RemoveReagent(bloodstream.BloodSolution.Value, reagentId, quantity);
         }
     }
 
@@ -293,7 +294,7 @@ public sealed class PirateEntityEffectSystem : EntitySystem
     {
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
             || !TryComp<BloodstreamComponent>(target, out var bloodstream)
-            || !_solutions.ResolveSolution(target, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemSolution))
+            || !_solutions.ResolveSolution(target, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var chemSolution))
             return false;
 
         var reagentId = new ReagentId("AlchemistPhilosopherStone", null);
@@ -474,7 +475,7 @@ public sealed class PirateEntityEffectSystem : EntitySystem
 
         var reagent = _random.Pick(args.Effect.Reagents);
         var solution = new Solution(reagent, FixedPoint2.New(args.Effect.Quantity));
-        _bloodstream.TryAddToChemicals((reagentArgs.TargetEntity, bloodstream), solution);
+        _bloodstream.TryAddToBloodstream((reagentArgs.TargetEntity, bloodstream), solution);
     }
 
     private readonly record struct PhilosopherStoneStackTransmutation(string OutputPrototype, int InputRatio, int OutputMultiplier = 1);

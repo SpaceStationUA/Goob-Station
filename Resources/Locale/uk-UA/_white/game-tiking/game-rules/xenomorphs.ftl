@@ -10,13 +10,11 @@ xenomorphs-win-announcement = УВАГА: Станцію поглинув Чор
     Колоніальних морських піхотинців сповіщено, вони прибудуть протягом двох тижнів.
 
     Аварійний шатл уже прямує.
-
 xenomorphs-xenomajor = Велика перемога ксеноморфів!
 xenomorphs-xenominor = Мала перемога ксеноморфів!
 xenomorphs-neutral = Патова ситуація!
 xenomorphs-crewminor = Мала перемога екіпажу!
 xenomorphs-crewmajor = Вирішальна перемога екіпажу!
-
 xenomorphs-cond-nukeexplodedonstation = Екіпаж знищив ксеноморфів за допомогою ядерного вибухового пристрою.
 xenomorphs-cond-nukeactiveinstation = Екіпаж залишив активований ядерний вибуховий пристрій на станції.
 xenomorphs-cond-xenotakeoverstation = Ксеноморфи змогли захопити станцію.

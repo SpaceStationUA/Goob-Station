@@ -20,6 +20,12 @@
   - !type:PointsCostLoadoutEffect
     cost: 1
 
+- type: loadout
+  id: NoviceMark
+  storage:
+    back:
+    - ClothingNeckNoviceMark
+
 # Pillows
 - type: loadout
   id: Pillow
@@ -116,3 +122,44 @@
     - PlushiePocketAssistant
   groupBy: "Plushie"
 
+- type: loadout
+  id: CardBoxTarot
+  storage:
+    back:
+    - CardBoxTarot
+  groupBy: "Gambling"
+
+- type: loadout
+  id: CardBoxSparot
+  storage:
+    back:
+    - CardBoxSparot
+  groupBy: "Gambling"
+
+- type: loadout
+  id: CardBoxTippyTrump
+  storage:
+    back:
+    - CardBoxTippyTrump
+  groupBy: "Gambling"
+
+- type: loadout
+  id: TippyTrumpMysteryPack
+  storage:
+    back:
+    - TippyTrumpMysteryPack
+  groupBy: "Gambling"
+
+- type: loadout
+  id: CardBoxNuno
+  storage:
+    back:
+    - CardBoxNuno
+  groupBy: "Gambling"
+
+- type: loadout
+  id: TrinketsTrainWhistle
+  storage:
+    back:
+    - TrainWhistle
+  groupBy: "Trinkets"

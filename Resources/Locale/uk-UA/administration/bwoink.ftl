@@ -1,15 +1,11 @@
 bwoink-user-title = Повідомлення Адмінів
-
 bwoink-system-starmute-message-no-other-users = *СИСТЕМА: Нікому отримати повідомлення. Зверніться до адміністрації у дискорді.
-
 bwoink-system-messages-being-relayed-to-discord = Повідомлення відправляються адмінам у Дискорд.
     Відповідь може зайняти час.
-
 bwoink-system-typing-indicator = {$players} {$count ->
 [one] друкує
 *[other] друкують
 } ...
-
 admin-bwoink-play-sound = Бвоінк?
 bwoink-system-rate-limited = Система: ви надсилаєте повідомлення занадто швидко.
 bwoink-system-player-disconnecting = від'єднався.
@@ -25,3 +21,4 @@ admin-ahelp-admin-only-tooltip = Якщо позначено, повідомле
     але буде видимим для інших адміністраторів і все одно буде передано в Discord.
 bwoink-message-admin-only = (Лише для адміністраторів)
 bwoink-message-silent = (Т)
+bwoink-admin-title = Адмін-допомога

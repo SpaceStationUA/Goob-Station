@@ -26,6 +26,3 @@ ui-options-pirate-ping-name-color-preview = Перегляд кольору:
 ui-options-pirate-ping-name-color-preview-tooltip = Візуальний перегляд вибраного кольору підсвічування
 ui-options-pirate-ping-name-color-reset = Скинути до стандартного
 ui-options-pirate-ping-name-color-reset-tooltip = Скинути колір до жовтого за замовчуванням
-
-
-

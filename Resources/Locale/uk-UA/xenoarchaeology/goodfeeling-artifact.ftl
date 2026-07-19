@@ -12,7 +12,6 @@ goodfeeling-artifact-11 = Ваше чоло приємно поколює.
 goodfeeling-artifact-12 = Усі кольори здаються більш насиченими.
 goodfeeling-artifact-13 = Все здається більш яскравим.
 goodfeeling-artifact-14 = Схоже, всі світові проблеми зникають.
-
 goodfeeling-artifact-drastic-1 = Ви хочете обійняти усіх, кого зустрінете!
 goodfeeling-artifact-drastic-2 = Все вкрай чудово!
 goodfeeling-artifact-drastic-3 = Ви відчуваєте ейфорію.

@@ -29,7 +29,7 @@ public sealed partial class BlinkingComponent : Component
     public TimeSpan MaxInterval = TimeSpan.FromSeconds(6);
 
     [DataField, AutoNetworkedField]
-    public TimeSpan Duration = TimeSpan.FromSeconds(0.4);
+    public TimeSpan Duration = TimeSpan.FromSeconds(0.3);
 
     [DataField, AutoNetworkedField]
     public TimeSpan RapidDuration = TimeSpan.FromSeconds(0.2);

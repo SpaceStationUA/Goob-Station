@@ -1,0 +1,2 @@
+petting-failure-syndicat = Ви намагаєтеся погладити {$target}, але {SUBJECT($target)} відсувається, ніби запрошуючи спробувати ще раз.
+petting-success-syndicat = Ви гладите {$target} по голові у криваво-червоному костюмі.

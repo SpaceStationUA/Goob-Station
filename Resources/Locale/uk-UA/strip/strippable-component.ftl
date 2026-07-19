@@ -17,10 +17,8 @@ strippable-component-alert-owner-interact = {$user} хтось мацає ваш
 strip-verb-get-data-text = Роздягання
 
 ## UI
-
 strippable-bound-user-interface-stripping-menu-title = Інвентар {$ownerName}
 strippable-bound-user-interface-stripping-menu-ensnare-button = Розв'язати ноги
-
 thieving-component-user = Хтось
 thieving-component-item = щось
 strippable-component-alert-owner-insert-hand = {CAPITALIZE(THE($user))} кладе {$item} вам у руку!

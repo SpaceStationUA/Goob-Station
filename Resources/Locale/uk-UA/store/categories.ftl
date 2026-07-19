@@ -15,9 +15,7 @@ store-category-pointless = Безглузде
 
 # Revenant
 store-category-abilities = Здібності
-
 store-category-utility = Предмети
-
 store-category-misc = Різне
 store-category-bundles = Пакети
 store-category-tools = Інструменти
@@ -26,7 +24,7 @@ store-caregory-spellbook-offensive = Атакуючі Заклинання
 store-caregory-spellbook-defensive = Захисні Заклинання
 store-caregory-spellbook-utility = Корисні Заклинання
 store-caregory-spellbook-equipment = Оснащення Мага
-store-caregory-spellbook-events = Заклинання Подій
+store-caregory-spellbook-events = Подієві закляття
 store-discounted-items = Знижки
-
 store-category-contractor = Підрядник
+store-category-nukie-delivery = Пропозиції

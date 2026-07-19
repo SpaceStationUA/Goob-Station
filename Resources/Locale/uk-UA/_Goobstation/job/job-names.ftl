@@ -10,33 +10,26 @@
 job-name-futureagent = Агент Майбутнього
 job-name-salvagediver = Рятувальник-водолаз
 job-name-ntr = Представник NT
-
 job-name-bs = Блакитний Щит
 job-name-overall = Загальний
-
 job-name-exec = Виконавчий Доступ
 
 # Navy Stuff
-
 job-name-navyofficer = Офіцер флоту
 job-name-navy-officer-undercover = Офіцер флоту під прикриттям
 job-name-navycaptain = Капітан флоту
 job-name-diplomat = Дипломат
 job-name-inspector = Аудитор Центрального Командування
 job-name-nct = Кар'єрний тренер Nanotrasen
-
 job-name-highcommander = Верховний Командувач
 
 # Half Life
-
 job-name-hecu = Оперативник HECU
 job-name-governmentman = G-мен
 
 # Різне
-
 job-name-conquest = Завойовник
 job-name-mercenarycaptain = Капітан найманців
-
 JobBlueshieldOfficer = Офіцер Блакитного Щита
 JobNanotrasenRepresentative = Представник NT
 JobNanotrasenCareerTrainer = Кар'єрний тренер Nanotrasen
@@ -49,7 +42,6 @@ JobGovernmentMan = G-Man
 JobConquest = Завойовник
 JobInspector = Аудитор Центрального Командування
 JobMercenaryCaptain = Капітан Найманців
-
 job-name-navy-officer = Офіцер флоту
 job-name-navy-captain = Капітан флоту
 JobRoboticist = Робототехнік

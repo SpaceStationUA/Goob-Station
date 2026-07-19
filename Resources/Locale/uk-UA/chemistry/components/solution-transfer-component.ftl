@@ -15,6 +15,5 @@ comp-solution-transfer-verb-toggle = Встановлено на {$amount}u
 
 ## Відображається після успішної зміни суми рішення за допомогою інтерфейсу користувача
 comp-solution-transfer-set-amount = Обсяг перенесення встановлено на {$amount}u.
-
 comp-solution-transfer-set-amount-max = Макс: {$amount}u
 comp-solution-transfer-set-amount-min = Мін: {$amount}u

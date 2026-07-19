@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2024 Velcroboy <107660393+IamVelcroboy@users.noreply.github.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: stealTargetGroup
+  id: AnimalSilvia
+  name: steal-target-groups-silvia
+  sprite:
+    sprite: _Pirate/Mobs/Animals/silvia.rsi
+    state: silvia

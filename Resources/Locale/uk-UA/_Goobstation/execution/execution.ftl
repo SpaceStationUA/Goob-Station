@@ -3,7 +3,6 @@ execution-popup-gun-initial-external = {$attacker} приставляє дуло
 execution-popup-gun-complete-internal = Ви стріляєте {$victim} у голову!
 execution-popup-gun-complete-external = {$attacker} стріляє {$victim} у голову!
 execution-popup-gun-empty = {CAPITALIZE(THE($weapon))} клацає.
-
 suicide-popup-gun-initial-internal = Ви ставите дуло {THE($weapon)} собі до рота.
 suicide-popup-gun-initial-external = {$attacker} ставить дуло {THE($weapon)} у {POSS-ADJ($attacker)} рот.
 suicide-popup-gun-complete-internal = Ви стріляєте собі в голову!

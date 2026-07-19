@@ -116,6 +116,13 @@ public sealed partial class GoobCVars
     public static readonly CVarDef<bool> CloneBiomassEasyMode =
         CVarDef.Create("goob.clone_biomass_easy_mode", false, CVar.SERVER | CVar.SERVER);
 
+    /// <summary>
+    ///     DEBUG Cvar - Should pathfinding be disabled globally. For SpawnAndDirty cause we need the mem.
+    /// </summary>
+    public static readonly CVarDef<bool> DisablePathfinding =
+        CVarDef.Create("goob.disable_pathfinding", false, CVar.SERVER | CVar.SERVERONLY);
+
+
     #region Player Listener
 
     /// <summary>
@@ -381,6 +388,12 @@ public sealed partial class GoobCVars
     /// </summary>
     public static readonly CVarDef<bool> DoMindContests =
         CVarDef.Create("contests.do_mind_contests", true, CVar.REPLICATED | CVar.SERVER);
+
+    /// <summary>
+    ///     Toggles all MoodContest functions. All mood contests output 1f when false.
+    /// </summary>
+    public static readonly CVarDef<bool> DoMoodContests =
+        CVarDef.Create("contests.do_mood_contests", true, CVar.REPLICATED | CVar.SERVER);
 
     /// <summary>
     ///     The maximum amount that Mass Contests can modify a physics multiplier, given as a +/- percentage

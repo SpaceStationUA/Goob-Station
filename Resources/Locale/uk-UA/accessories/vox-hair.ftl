@@ -11,7 +11,6 @@ marking-VoxHairRuffhawk = Пір'я Вокса (Жорсткий Могавк)
 marking-VoxHairRows = Пір'я Вокса (Ряди)
 marking-VoxHairMange = Пір'я Вокса (Манж)
 marking-VoxHairPony = Пір'я Вокса (Поні)
-
 marking-VoxHairBraids = Коси Vox
 marking-VoxHairCrestedQuills = Vox Creeded Quills
 marking-VoxHairEmperorQuills = Vox Emperor Квілс
@@ -31,3 +30,4 @@ marking-VoxHairMadScientist = Вокс божевільний вчений
 marking-VoxHairHedgehog = Вокс Їжак
 marking-VoxHairBushy = Вокс густі голки
 marking-VoxHairSlick = Вокс гладкі голки
+marking-VoxHairCatfish = Вокс-сомик

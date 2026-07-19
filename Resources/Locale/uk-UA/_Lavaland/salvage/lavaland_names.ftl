@@ -4,7 +4,6 @@ lavaland-planet-name-icemoon = Крижаний Місяць
 
 # GPS Сигнали
 lavaland-planet-outpost = Головний Аванпост
-
 lavaland-ruin-unknown = Невідомо
 lavaland-ruin-cargo = Вантажні уламки
 lavaland-ruin-arrivals-shuttle = Уламки шатла прибуття
@@ -19,7 +18,6 @@ lavaland-ruin-big-shuttle = Величезний зруйнований шатл
 lavaland-ruin-biodome = Біокупол
 lavaland-ruin-syndicate = База Синдикату
 lavaland-ruin-hierophant = Міжвимірний сигнал
-
 lavaland-ruin-abductor = Сигнал прибульців
 lavaland-ruin-cult = Космічний сигнал
 lavaland-ruin-flesh = Печера з плоті

@@ -7,6 +7,5 @@
 
 mindshield-implant-effect-removed = Ви відчуваєте нестерпний біль, коли ваша перспектива змінюється, а зір майже миттєво розширюється.
 nanite-mend-popup = Ви відчуваєте, як яскраве тепло розливається по всьому тілу
-
 deathrattle-implant-dead-message = {$user} загинув у {$position}.
 deathrattle-implant-critical-message = Життєві показники {$user} критичні, необхідна негайна допомога у {$position}.

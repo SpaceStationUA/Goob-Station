@@ -51,7 +51,6 @@ log-probe-card-number = Картка: {$number}
 log-probe-recipients = {$count} Отримувачів
 log-probe-recipient-list = Відомі отримувачі:
 log-probe-message-format = {$sender} → {$recipient}: {$content}
-
 crime-assist-crimetype-innocent = Невинний
 crime-assist-crimetype-misdemeanour = Проступок
 crime-assist-crimetype-felony = Тяжкий злочин
@@ -169,7 +168,6 @@ crime-assist-sophont-explanation = Софонт описується як буд
                                     • [bold]Сентієнтність[/bold]: сутність здатна відчувати емоції (або їхню відсутність) чи принаймні розпізнавати власний біль.
                                     • [bold]Самосвідомість[/bold]: сутність здатна змінювати свою поведінку розумним чином у відповідь на стимули або принаймні усвідомлює власну сапієнтність і сентієнтність.
                                     Кожен софонт вважається юридичною особою незалежно від походження чи попереднього когнітивного статусу. Подібно до будь-якого іншого розумного органіка, софонт може подавати скарги на членів екіпажу та постати перед судом за злочини.
-
 crime-assist-program-name = Кримінальний Помічник
 crime-assist-yes-button = Так
 crime-assist-no-button = Ні
@@ -184,8 +182,4 @@ mail-metrics-count-header = Посилки
 mail-metrics-money-header = Спесо
 mail-metrics-total = Всього
 mail-metrics-progress = {$opened} з {$total} посилок відкрито!
-mail-metrics-progress-percent = Рейтинг успіху: {$successRate}%
-
-## NanoChat
-
-# Загальне
+mail-metrics-progress-percent = Успішність: {$successRate}%

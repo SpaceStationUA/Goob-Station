@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 04/27/2026 05:43:54
-  entityCount: 30499
+  entityCount: 30500
 maps:
 - 1
 grids:
@@ -92791,7 +92791,7 @@ entities:
       parent: 10023
     - type: Physics
       canCollide: False
-- proto: EnergyChemDispenser
+- proto: ChemDispenser
   entities:
   - uid: 7800
     components:
@@ -129165,7 +129165,7 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#FF1212FF'
-- proto: Gauze10Lingering
+- proto: Gauze
   entities:
   - uid: 17923
     components:
@@ -140793,7 +140793,7 @@ entities:
     - type: Transform
       pos: 41.613995,-4.120341
       parent: 2
-- proto: MaterialSilo
+- proto: MachineMaterialSilo
   entities:
   - uid: 14991
     components:
@@ -161737,6 +161737,13 @@ entities:
     components:
     - type: Transform
       pos: -24.5,-34.5
+      parent: 2
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
+  entities:
+  - uid: 30500
+    components:
+    - type: Transform
+      pos: 25.5,16.5
       parent: 2
 - proto: SpawnMobCorgi
   entities:

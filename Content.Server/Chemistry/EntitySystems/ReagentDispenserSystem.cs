@@ -1,42 +1,10 @@
-// SPDX-FileCopyrightText: 2021 20kdc <asdd2808@gmail.com>
-// SPDX-FileCopyrightText: 2021 Clyybber <darkmine956@gmail.com>
-// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <gradientvera@outlook.com>
-// SPDX-FileCopyrightText: 2021 Ygg01 <y.laughing.man.y@gmail.com>
-// SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 metalgearsloth <metalgearsloth@gmail.com>
-// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 ElectroJr <leonsfriedrich@gmail.com>
-// SPDX-FileCopyrightText: 2023 Emisse <99158783+Emisse@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Pieter-Jan Briers <pieterjan.briers@gmail.com>
-// SPDX-FileCopyrightText: 2023 TemporalOroboros <TemporalOroboros@gmail.com>
-// SPDX-FileCopyrightText: 2023 deltanedas <deltanedas@laptop>
-// SPDX-FileCopyrightText: 2023 deltanedas <user@zenith>
-// SPDX-FileCopyrightText: 2024 0x6273 <0x40@keemail.me>
-// SPDX-FileCopyrightText: 2024 AWF <you@example.com>
-// SPDX-FileCopyrightText: 2024 Brandon Li <48413902+aspiringLich@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Cojoke <83733158+Cojoke-dot@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 GitHubUser53123 <110841413+GitHubUser53123@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Jake Huxell <JakeHuxell@pm.me>
-// SPDX-FileCopyrightText: 2024 Kevin Zheng <kevinz5000@gmail.com>
-// SPDX-FileCopyrightText: 2024 Kira Bridgeton <161087999+Verbalase@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
-// SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 metalgearsloth <comedian_vs_clown@hotmail.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
 using System.Diagnostics.CodeAnalysis; // Pirate: chem recipes
 using Content.Server._Pirate.Chemistry; // Pirate: chem recipes
 using Content.Shared._Pirate.Chemistry; // Pirate: chem recipes
+using Content.Shared._Pirate.Plumbing.Components; // Pirate: chem plumbing
 using Content.Shared.Chemistry.Reagent; // Pirate: chem recipes
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry;
@@ -92,6 +60,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserDispenseReagentMessage>(OnDispenseReagentMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserEjectContainerMessage>(OnEjectReagentMessage);
             SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserClearContainerSolutionMessage>(OnClearContainerSolutionMessage);
+            SubscribeLocalEvent<ReagentDispenserComponent, ReagentDispenserToggleValveMessage>(OnToggleValveMessage); // Pirate: chem plumbing
             RegisterPirateRecipeEvents(); // Pirate: chem recipes
 
             SubscribeLocalEvent<ReagentDispenserComponent, MapInitEvent>(OnMapInit, before: new[] { typeof(ItemSlotsSystem) });
@@ -121,11 +90,14 @@ namespace Content.Server.Chemistry.EntitySystems
                 _itemSlotsSystem,
                 EntityManager);
 
+            var valveOpen = TryComp<PlumbingOutletComponent>(reagentDispenser.Owner, out var plumbingOutlet) && plumbingOutlet.Enabled; // Pirate: chem plumbing
+
             var state = new ReagentDispenserBoundUserInterfaceState(
                 outputContainerInfo,
                 GetNetEntity(outputContainer),
                 inventory,
                 reagentDispenser.Comp.DispenseAmount,
+                valveOpen, // Pirate: chem plumbing
                 recipeUiData.SavedRecipes,
                 recipeUiData.HasRecipeDisk,
                 recipeUiData.DiskRecipes,
@@ -210,10 +182,10 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 // force open container, if applicable, to avoid confusing people on why it doesn't dispense
                 _openable.SetOpen(storedContainer, true);
-                _solutionTransferSystem.Transfer(reagentDispenser,
+                _solutionTransferSystem.Transfer(new SolutionTransferData(reagentDispenser,
                         storedContainer, src.Value,
                         outputContainer.Value, dst.Value,
-                        (int)reagentDispenser.Comp.DispenseAmount);
+                        (int)reagentDispenser.Comp.DispenseAmount));
             }
 
             UpdateUiState(reagentDispenser);
@@ -245,6 +217,19 @@ namespace Content.Server.Chemistry.EntitySystems
             UpdateUiState(reagentDispenser);
             PlayClickSound(reagentDispenser); // Pirate: chem recipes
         }
+
+        #region Pirate: chem plumbing
+        private void OnToggleValveMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserToggleValveMessage message)
+        {
+            if (!TryComp<PlumbingOutletComponent>(reagentDispenser.Owner, out var plumbingOutlet))
+                return;
+
+            plumbingOutlet.Enabled = !plumbingOutlet.Enabled;
+            Dirty(reagentDispenser.Owner, plumbingOutlet);
+            UpdateUiState(reagentDispenser);
+            PlayClickSound(reagentDispenser); // Pirate: chem plumbing
+        }
+        #endregion
 
         /// <summary>
         /// Initializes the beaker slot
@@ -315,13 +300,13 @@ namespace Content.Server.Chemistry.EntitySystems
                     return false;
 
                 _openable.SetOpen(source.Container, true);
-                var transferred = _solutionTransferSystem.Transfer(
+                var transferred = _solutionTransferSystem.Transfer(new SolutionTransferData(
                     reagentDispenser,
                     source.Container,
                     srcDrainable,
                     outputContainer.Value,
                     dstRefillable.Value,
-                    quantity);
+                    quantity));
 
                 if (transferred < quantity)
                     return false;

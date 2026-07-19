@@ -113,8 +113,6 @@ public class SharedPassportSystem : EntitySystem
     public void UpdatePassportProfile(Entity<PassportComponent> passport, HumanoidCharacterProfile profile)
     {
         passport.Comp.OwnerProfile = profile;
-        var evt = new PassportProfileUpdatedEvent(profile);
-        RaiseLocalEvent(passport, ref evt);
     }
 
     private void OnUseInHand(Entity<PassportComponent> passport, ref UseInHandEvent evt)
@@ -151,10 +149,4 @@ public class SharedPassportSystem : EntitySystem
 
     [ByRefEvent]
     public sealed class PassportToggleEvent : HandledEntityEventArgs {}
-
-    [ByRefEvent]
-    public sealed class PassportProfileUpdatedEvent(HumanoidCharacterProfile profile) : HandledEntityEventArgs
-    {
-        public HumanoidCharacterProfile Profile { get; } = profile;
-    }
 }

@@ -1,15 +1,9 @@
 loadout-group-security-weapon = Табельна зброя офіцера СБ
 loadout-group-senior-security-weapon = Табельна зброя старшого офіцера СБ
 loadout-group-security-officer-mask = Маски офіцера СБ
-
-
 loadout-group-command-self-defense = Оснащення самозахисту
-
-
 loadout-group-station-engineer-equipment = Оснащення інженера
 loadout-group-technical-assistant-equipment = Оснащення технічного асистента
-
-
 loadout-group-passenger-head = Головний убір пасажира
 loadout-group-generic-head = Головний убір
 loadout-group-generic-mask = Маска
@@ -32,3 +26,15 @@ loadout-group-interdyne-stamp-officer = Печатка офіцера Інтер
 loadout-group-interdyne-stamp-deputy = Печатка заступника офіцера Інтердайну
 loadout-group-interdyne-surgery = Хірургічне спорядження Інтердайну
 loadout-group-interdyne-key = Ключ шифрування Інтердайну
+loadout-group-mantis-head = Головні убори Мантіса
+loadout-group-mantis-Jumpsuit = Уніформа Мантіса
+loadout-group-mantis-Back = Рюкзак Мантіса
+loadout-group-mantis-OuterClothing = Верхній одяг Мантіса
+loadout-group-mantis-Gloves = Рукавички Мантіса
+loadout-group-mantis-Shoes = Взуття Мантіса
+loadout-group-mantis-Belt = Пояс Мантіса
+loadout-group-mantis-Eyes = Окуляри Мантіса
+loadout-group-mantis-Neck = Нашийний одяг Мантіса
+loadout-group-mantis-Ears = Гарнітура Мантіса
+loadout-group-mantis-Mask = Маска Мантіса
+loadout-group-service-worker-head = Головний убір сервісника

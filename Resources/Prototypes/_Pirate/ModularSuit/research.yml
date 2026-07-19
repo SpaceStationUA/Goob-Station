@@ -1,0 +1,77 @@
+- type: technology
+  id: MedicalModifier
+  name: research-technology-medical-modifier
+  icon:
+    sprite: _Pirate/Clothing/Modular/Medical/control.rsi
+    state: icon
+  discipline: CivilianServices # Pirate: Biochemical is merged into CivilianServices locally.
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - DefibrillatorSuitModule
+  - InjectorSuitModule
+  - MedicalPlating
+  - SolutionScannerSuitModule
+  position: -1,3 # Pirate: avoid overlapping the upstream AdvancedCleaning node.
+
+- type: technology
+  id: CivilianModifier
+  name: research-technology-civilian-modifier
+  icon:
+    sprite: _Pirate/Objects/Specific/Robotics/modules.rsi
+    state: microwave_beam
+  discipline: CivilianServices
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - MicrowaveBeamSuitModule
+  - BurgerDispenserSuitModule
+  - ApparatusSuitModule
+  - AdvancedFlashlightSuitModule
+  position: 1,3
+
+- type: technology
+  id: IndustrialModifier
+  name: research-technology-industrial-modifier
+  icon:
+    sprite: _Pirate/Objects/Specific/Robotics/modules.rsi
+    state: ore
+  discipline: Industrial
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - OreBagSuitModule
+  - DrillSuitModule
+  - EngineeringPlating
+  position: -1,-3
+
+- type: technology
+  id: Gidravlik
+  name: research-technology-gidravlik
+  icon:
+    sprite: _Pirate/Objects/Specific/Robotics/modules.rsi
+    state: clamp
+  discipline: Industrial
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - QuickCarrySuitModule
+  - GrabberSuitModule
+  position: -1,-4
+
+- type: technology
+  id: AdvencedIndustrialModifier
+  name: research-technology-adv-industrial-modifier
+  icon:
+    sprite: _Pirate/Objects/Specific/Robotics/modules.rsi
+    state: jetpack
+  discipline: Industrial
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - StorageLargeSuitModule
+  - JetpackSuitModule
+  - ConstructorSuitModule
+  technologyPrerequisites:
+  - IndustrialModifier
+  position: -2,-6

@@ -8,12 +8,9 @@ possession-fail-target-dead = Немає розуму, яким ви могли 
 possession-fail-target-shielded = Набридливий щит не дає вам проникнути в їхній розум!
 possession-fail-target-already-possessed = Хтось інший вже захопив цей розум...
 possession-fail-target-chaplain = Свята сила не дозволяє вам вселитися в цю ціль!
-
 possession-popup-others = Кінцівки {$target} дивно викривляються, {POSS-ADJ($target)} очі закочуються в {POSS-ADJ($target)} голові.
 possession-popup-self = Вашу душу виштовхують з тіла!
 possession-end-popup = {$target} завмирає і безсило падає на землю.
-
 possessed-component-examined = У вас залишилося {$timeremaining} секунд у цьому тілі.
-
 possession-fail-target-immune = Незвичайний бар'єр блокує вашу спробу оволодіння!
 possession-fail-target-polymorphed = Ця форма занадто нестабільна для оволодіння!

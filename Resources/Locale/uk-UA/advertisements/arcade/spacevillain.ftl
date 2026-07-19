@@ -13,7 +13,6 @@ advertisement-space-villain-12 = БІЙСЯ МЕНЕ!
 advertisement-space-villain-13 = Чи наважишся ти зустрітися зі мною в бою?
 advertisement-space-villain-14 = Обережно, я живу!
 advertisement-space-villain-15 = Я голодний!
-
 thankyou-space-villain-1 = І куди це ти зібрався, панку?
 thankyou-space-villain-2 = Це все, що ти можеш?
 thankyou-space-villain-3 = Ця битва ще не закінчена!

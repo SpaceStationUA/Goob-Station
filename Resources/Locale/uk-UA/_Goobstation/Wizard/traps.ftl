@@ -7,7 +7,6 @@
 trap-revealed-message = Ви виявляєте {THE($trap)}!
 trap-flare-message = {CAPITALIZE(THE($trap))} яскраво спалахує!
 trap-triggered-message = Ви наступаєте на {THE($trap)}!
-
 ice-cube-break-free-start = Ви починаєте виламуватися з крижаного куба...
 ice-cube-melt = Куб тане!
 admin-smite-ice-cube-name = Крижаний куб

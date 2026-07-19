@@ -1,7 +1,6 @@
 vampires-title = Вампіри
 
 ## Alerts
-
 alerts-vampire-blood-name = Випита кров
 alerts-vampire-blood-desc = Показує, скільки крові ти випив. Витягни ікла й клацни по цілі, щоб пити кров.
 alerts-vampire-fed-name = Ситість кров'ю
@@ -12,7 +11,6 @@ alerts-vampire-blood-rush-name = Кривавий ривок
 alerts-vampire-blood-rush-desc = Надприродна швидкість проходить крізь твоє тіло.
 
 ## Roles and round state
-
 roles-antag-vamire-name = Вампір
 roles-antag-vampire-description = Харчуйся екіпажем. Витягуй ікла та пий їхню кров.
 roles-antag-vampire-thrall-name = Вампірський раб
@@ -23,7 +21,6 @@ vampire-role-greeting = Ти вампір!
     Ікла дозволяють висмоктувати кров з гуманоїдів. Кров лікує тебе та відкриває нові здібності.
     Знайди, чого досягти під час цієї зміни.
 objective-issuer-vampire = [color=crimson]Вампір[/color]
-
 roundend-prepend-vampire-drained-low = Вампіри майже не харчувалися цієї зміни, випивши лише { $blood } крові.
 roundend-prepend-vampire-drained-medium = Вампіри непогано попоїли, випивши { $blood } крові.
 roundend-prepend-vampire-drained-high = Вампіри влаштували кривавий бенкет, випивши { $blood } крові!
@@ -32,7 +29,6 @@ roundend-prepend-vampire-drained = Жоден вампір не зміг вип�
 roundend-prepend-vampire-drained-named = { $name } був найкровожерливішим вампіром, випивши загалом { $number } крові.
 
 ## Objectives
-
 objective-condition-drain-title = Випити { $count } крові
 objective-condition-drain-description = Випий { $count } крові з членів екіпажу, використовуючи свої ікла.
 objective-vampire-thrall-obey-master-title = Слухатися свого господаря, { $targetName }.
@@ -40,15 +36,16 @@ ent-VampireSurviveObjective = Вижити
     .desc = Я маю вижити, чого б це не коштувало.
 ent-VampireEscapeObjective = Полетіти до Центкому живим і не скутим.
     .desc = Мені треба втекти на евакуаційному шатлі. Без кайданів.
-ent-VampireKillRandomPersonObjective = Усунути ціль
-    .desc = Зроби це як завгодно, але ціль не має дістатися Центкому.
+ent-VampireTeachRandomPersonObjective = Провчити ціль
+    .desc = Переконайся, що ціль помре хоча б один раз протягом зміни.
+ent-VampireKillRandomHeadObjective = Усунути члена командування
+    .desc = Переконайся, що ціль помре протягом зміни.
 ent-VampireDrainObjective = Випити кров
     .desc = Я повинен наситити свою вампірську сутність кров'ю екіпажу.
 ent-VampireThrallObeyMasterObjective = Слухатися господаря
     .desc = Ти поневолений. Виконуй накази свого господаря.
 
 ## Base vampire
-
 vampire-drink-start = Ти впиваєшся іклами в { CAPITALIZE(THE($target)) }.
 vampire-not-enough-blood = Недостатньо крові.
 vampire-mouth-covered = Твій рот закритий!
@@ -66,7 +63,6 @@ vampire-space-burn-warning = Жорстке світло космосу обпа
 vampire-holy-place-burn = Священна земля обпалює твою нечестиву плоть!
 
 ## Class selection
-
 action-vampire-class-select = Обрати клас вампіра
 action-vampire-class-select-desc = Обери свій вампірський підклас.
 vampire-class-hemomancer-tooltip = Гемомант
@@ -79,7 +75,6 @@ vampire-class-dantalion-tooltip = Данталіон
     Зосереджується на поневоленні та ілюзіях.
 
 ## Entity names
-
 ent-ActionVampireToggleFangs = Перемкнути ікла
     .desc = Витягнути або втягнути ікла, щоб пити кров жертв.
 ent-ActionVampireGlare = Погляд
@@ -152,7 +147,6 @@ ent-MobVampireSanguinePool = кривава калюжа
     .desc = Розумна калюжа вампірської крові.
 
 ## Hemomancer
-
 action-vampire-hemomancer-tendrils-wrong-place = Тут не можна це використати.
 action-vampire-blood-barrier-wrong-place = Тут не можна поставити бар'єр.
 action-vampire-sanguine-pool-already-in = Ти вже у формі кривавої калюжі!
@@ -176,7 +170,6 @@ vampire-locate-search-placeholder = Пошук...
 vampiric-claws-remove-popup = Ти змушуєш кігті зникнути.
 
 ## Umbrae
-
 action-vampire-cloak-of-darkness-start = Ти зливаєшся з тінями!
 action-vampire-cloak-of-darkness-stop = Ти виходиш із тіней.
 action-vampire-shadow-snare-placed = Ти ставиш тіньову пастку.
@@ -198,7 +191,6 @@ action-vampire-eternal-darkness-stop = Вічна темрява розсіює�
 vampire-umbrae-full-power-fov = Тіні коряться твоїй волі. Тепер ти бачиш крізь стіни!
 
 ## Dantalion
-
 vampire-enthrall-start = Ти проникаєш у розум { CAPITALIZE(THE($target)) }...
 vampire-enthrall-success = { CAPITALIZE(THE($target)) } схиляється перед тобою і стає твоїм рабом.
 vampire-enthrall-target = Твій розум придушено вампірським пануванням!
@@ -224,15 +216,12 @@ vampire-blood-bond-stop = Ти послаблюєш кривавий зв'язо
 vampire-blood-bond-no-thralls = У тебе немає поневолених слуг для зв'язку.
 vampire-blood-bond-stop-blood = Зв'язок рветься: тобі бракує крові для підтримки.
 action-vampire-not-enough-power = Твоєї сили недостатньо: потрібно понад 1000 загальної крові та 8 унікальних жертв.
-
 Vamp-converted-title = Поневолено!
-Vamp-converted-text =
-    Тебе поневолено!
+Vamp-converted-text = Тебе поневолено!
     Вірно слухайся свого господаря.
 Vamp-converted-confirm = Зрозуміло
 
 ## Gargantua
-
 vampire-blood-swell-start = Твої м'язи набухають нечестивою силою.
 vampire-blood-swell-end = Кривава лють спадає.
 vampire-blood-rush-start = Кров рине крізь твої кінцівки!
@@ -250,7 +239,6 @@ vampire-charge-impact = Ти врізаєшся в { CAPITALIZE(THE($target)) } 
 vampire-blood-swell-cancel-shoot = Твої пальці не влазять у спускову скобу!
 
 ## Language
-
 language-chat-confirmation = Повідомлення буде надіслано мовою { $lang }.
 language-Dantalion-name = Рабський зв'язок
 chat-language-Dantalion-name = Рабський зв'язок

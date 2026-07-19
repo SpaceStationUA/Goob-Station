@@ -1,0 +1,9 @@
+- type: entity
+  id: NoRoofNoWeatherMarker
+  name: Roof
+  suffix: Disabled, No Weather
+  parent: NoRoofMarker
+  components:
+  - type: SetRoof
+    value: false
+    blockWeather: true

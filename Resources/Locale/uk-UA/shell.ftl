@@ -11,7 +11,6 @@ shell-only-players-can-run-this-command = Тільки гравці можуть
 shell-must-be-attached-to-entity = Щоб виконати цю команду, ви маєте бути приєднані до сутності.
 
 ## Аргументи
-
 shell-need-exactly-one-argument = Потрібно рівно 1 аргумент (параметр).
 shell-wrong-arguments-number-need-specific = Потрібно {$properAmount} аргументів, надано {$currentAmount}.
 shell-argument-must-be-number = Аргумент має бути числом.
@@ -20,11 +19,9 @@ shell-wrong-arguments-number = Невірна кількість аргумен�
 shell-need-between-arguments = Потрібно від {$lower} до {$upper} аргументів!
 shell-need-minimum-arguments = Потрібно щонайменше {$minimum} аргументів!
 shell-need-minimum-one-argument = Потрібно хоча б 1 аргумент!
-
 shell-argument-uid = EntityUid
 
 ## Охорона
-
 shell-entity-is-not-mob = Цільовий суб'єкт не є натовпом!
 shell-invalid-entity-id = Невірний ідентифікатор суб'єкта.
 shell-invalid-grid-id = Неправильний ідентифікатор сітки.
@@ -47,12 +44,12 @@ shell-argument-number-invalid = Аргумент {$index} повинен бут�
 
 # Підказки
 shell-argument-username-hint = <ім'я користувача>
-
 shell-argument-username-optional-hint = [ім'я користувача]
-
 shell-entity-target-lacks-component = Цільова сутність не має компонента {$componentName}
 shell-must-have-body = Ви повинні мати тіло, щоб виконати цю команду.
 
 ## Аргументи
 shell-need-exactly-zero-arguments = Ця команда не приймає аргументів.
 shell-missing-required-permission = Вам потрібен дозвіл {$perm} для цієї команди!
+shell-can-only-run-from-pre-round-lobby = Цю команду можна виконувати лише коли гра у передраундовому лобі.
+shell-can-only-run-while-round-is-active = Цю команду можна виконувати лише під час раунду.

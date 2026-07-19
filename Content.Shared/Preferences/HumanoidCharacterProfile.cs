@@ -297,6 +297,7 @@ namespace Content.Shared.Preferences
                 new Dictionary<string, RoleLoadout>(other.Loadouts),
                 other.BarkVoice) // Goob Station - Barks
         {
+            CopyPirateCharacterInfo(other); // Pirate: Starlight character descriptions.
         }
 
         /// <summary>
@@ -322,6 +323,7 @@ namespace Content.Shared.Preferences
                 Species = species,
                 Nationality = SharedHumanoidAppearanceSystem.DefaultNationality, // Pirate - port EE contractors
                 Employer = SharedHumanoidAppearanceSystem.DefaultEmployer, // Pirate - port EE contractors
+                Appearance = HumanoidCharacterAppearance.DefaultWithSpecies(species),
             };
         }
 
@@ -580,7 +582,7 @@ namespace Content.Shared.Preferences
             // Category not found so dump it.
             TraitCategoryPrototype? traitCategory = null;
 
-            if (category != null && !protoManager.TryIndex(category, out traitCategory))
+            if (category != null && !protoManager.Resolve(category, out traitCategory))
                 return new(this);
 
             var list = new HashSet<ProtoId<TraitPrototype>>(_traitPreferences) { traitId };
@@ -656,6 +658,7 @@ namespace Content.Shared.Preferences
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false; // Pirate: port and modified DV traits system
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
+            if (!PirateCharacterInfoEquals(other)) return false; // Pirate: Starlight character descriptions.
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
@@ -819,6 +822,7 @@ namespace Content.Shared.Preferences
 
             Name = name;
             FlavorText = flavortext;
+            EnsurePirateCharacterInfoValid(); // Pirate: Starlight character descriptions.
             Age = age;
             Nationality = nationality; // Pirate - port EE contractors
             Employer = employer; // Pirate - port EE contractors
@@ -859,6 +863,8 @@ namespace Content.Shared.Preferences
                     continue;
                 }
 
+                // This happens after we verify the prototype exists
+                // These values are set equal in the database and we need to make sure they're equal here too!
                 loadouts.Role = roleName;
                 loadouts.EnsureValid(this, session, collection);
             }
@@ -910,7 +916,7 @@ namespace Content.Shared.Preferences
                 }
 
                 // No category so dump it.
-                if (!protoManager.TryIndex(traitProto.Category, out var category))
+                if (!protoManager.Resolve(traitProto.Category, out var category))
                     continue;
 
                 var existingPoints = groups.GetValueOrDefault(category.ID, 0);
@@ -972,6 +978,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(_loadouts);
             hashCode.Add(Name);
             hashCode.Add(FlavorText);
+            AddPirateCharacterInfoHash(ref hashCode); // Pirate: Starlight character descriptions.
             hashCode.Add(Species);
             hashCode.Add(Height); // Goobstation: port EE height/width sliders
             hashCode.Add(Width); // Goobstation: port EE height/width sliders

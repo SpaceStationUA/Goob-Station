@@ -1,7 +1,6 @@
 loadout-description-LoadoutSecurityUniformJumpskirtSenior = Спідниця для найкращих з найкращих.
 loadout-description-LoadoutSecurityUniformJumpsuitSenior = Костюм для кращих з кращих.
 loadout-description-LoadoutSecurityShoesJackboots = Дуже гарні, важкі, чорні черевики
-
 loadout-name-LoadoutMagazinePistolSpare = пістолетний магазин (.35 auto, запасний)
 loadout-name-LoadoutMagazinePistolNonLethalSpare = пістолетний магазин (.35 auto гумовий, запасний)
 loadout-name-LoadoutSpeedLoaderMagnumSpare = спідлоадер (.45 magnum, запасний)
@@ -33,7 +32,6 @@ loadout-name-LoadoutSecurityRevolverFitz = Фітц (летал)
 loadout-name-LoadoutSecurityRevolverFitzNonlethal = Фітц (нелетальна)
 loadout-name-LoadoutSecurityRevolverPython = Пітон (летал)
 loadout-name-LoadoutSecurityRevolverPythonNonlethal = Пітон (нелетальна)
-
 loadout-name-LoadoutSecurityPistolEnergyRevolver = Енергетичний револьвер EG-4
 loadout-name-LoadoutSecurityEquipmentTruncheon = Палиця
 loadout-name-LoadoutSecurityEquipmentEnergySword = Енергетичний меч

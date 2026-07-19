@@ -12,7 +12,6 @@ loadout-traitor-uplink-pen-desc = Ваш аплінк буде сховано в
 # Варіант аплінку-імпланта
 loadout-traitor-uplink-implant-name = Підшкірний імплант
 loadout-traitor-uplink-implant-desc = Ваш аплінк буде імплантовано під шкіру. Коштує 10 ТК. Активуйте його з меню дій.
-
 ent-LoadoutDummyTraitorPda = Аплінк ПДА
     .desc = Ваш аплінк буде сховано у вашому ПДА. Введіть код у мелодії дзвінка вашого ПДА, щоб отримати доступ до нього.
 ent-LoadoutDummyTraitorPen = Ручка-аплінк

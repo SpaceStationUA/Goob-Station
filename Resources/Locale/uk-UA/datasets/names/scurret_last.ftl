@@ -34,7 +34,6 @@ names-scurret-last-dataset-33 = Клени
 names-scurret-last-dataset-34 = Дуби
 names-scurret-last-dataset-35 = Ліщини
 names-scurret-last-dataset-36 = всезнаючий
-
 names-scurret-last-dataset-37 = Тарни
 names-scurret-last-dataset-38 = Води
 names-scurret-last-dataset-39 = Резервуари

@@ -304,7 +304,7 @@ reagent-effect-guidebook-missing = { $chance ->
 reagent-effect-guidebook-change-glimmer-reaction-effect = { $chance ->
         [1] Змінює
         *[other] Змінює
-    } кількість мерехтінь на {$amount} пунктів
+    } кількість мерехтінь на {$count} пунктів
 reagent-effect-guidebook-chem-remove-psionic = { $chance ->
         [1] Видаляє
         *[other] видаляє

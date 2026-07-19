@@ -1,9 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aviu00 <aviu00@protonmail.com>
-// SPDX-FileCopyrightText: 2025 Fishbait <Fishbait@git.ml>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 fishbait <gnesse@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Stealth.Components;
@@ -91,7 +85,7 @@ public sealed class SharedGoobStealthSystem : EntitySystem
         if (ent.Owner != args.PlayerUid)
             return;
 
-        // Some goida stuff. If a slasher attempts to throw an item it stops them from throwing it BUTTTTT THEY STILL GET REVEALED, so here we are.
+        // Some [Err404] stuff. If a slasher attempts to throw an item it stops them from throwing it BUTTTTT THEY STILL GET REVEALED, so here we are.
         // Slasher
         if (TryComp<SlasherIncorporealComponent>(ent.Owner, out var slasher) && slasher.IsIncorporeal)
             return;

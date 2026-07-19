@@ -4,9 +4,7 @@ signal-linker-component-unlinked-port = Успішно від'єднано {$mac
 signal-linker-component-connection-refused = {$machine} відмовився від з'єднання!
 signal-linker-component-max-connections-receiver = Максимальна кількість з'єднань досягнута на приймачі!
 signal-linker-component-max-connections-transmitter = Максимальна кількість з'єднань, досягнута на передавачі!
-
 signal-linker-component-type-mismatch = Тип порту не відповідає типу збереженого порту!
-
 signal-linker-component-out-of-range = З'єднання поза зоною досяжності!
 
 # Дієслова

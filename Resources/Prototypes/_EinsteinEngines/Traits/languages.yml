@@ -51,6 +51,12 @@
   description: trait-language-solcommon-desc
   category: LanguageTraits
   cost: 1
+  conditions:
+    - !type:IsNationalityCondition
+      nationalities:
+        - Solarian
+        - Eridanian
+      invert: true
   components:
   - type: LanguageSpeaker
   languagesSpoken:
@@ -64,6 +70,11 @@
   description: trait-language-tradeband-desc
   category: LanguageTraits
   cost: 1
+  conditions:
+    - !type:IsNationalityCondition
+      nationalities:
+        - Eridanian
+      invert: true
   components:
   - type: LanguageSpeaker
   languagesSpoken:

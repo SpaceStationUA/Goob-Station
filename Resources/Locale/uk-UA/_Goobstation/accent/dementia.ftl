@@ -10,14 +10,12 @@ accent-dementia-prefix-2 = Гей-... чорт, я забув... О, точно!
 accent-dementia-prefix-3 = Що це було знову... А!
 accent-dementia-prefix-4 = Кхм,
 accent-dementia-prefix-5 = Кха,
-
 accent-dementia-suffix-1 = , чекайте, про що я знову говорив?
 accent-dementia-suffix-2 = , чи щось таке
 accent-dementia-suffix-3 = , ти... чекай, хто ти знову?
 accent-dementia-suffix-4 = , я думаю.
 accent-dementia-suffix-5 = . О, до речі, ви не бачили моїх таблеток?
 accent-dementia-suffix-6 = . Кх, де я?
-
 accent-dementia-words-1 = безпека
 accent-dementia-words-replace-1 = якийсь відділ
 accent-dementia-words-2 = медичний
@@ -44,7 +42,6 @@ accent-dementia-words-12 = інженер
 accent-dementia-words-replace-12 = якийсь відділ
 accent-dementia-words-13 = медвідсік
 accent-dementia-words-replace-13 = якийсь відділ
-
 accent-dementia-words-14 = синдик
 accent-dementia-words-replace-14 = якийсь поганець, забув, який саме
 accent-dementia-words-15 = ядерники
@@ -71,7 +68,6 @@ accent-dementia-words-25 = загін смерті
 accent-dementia-words-replace-25 = якась казка, забув, яка
 accent-dementia-words-26 = злодій
 accent-dementia-words-replace-26 = якийсь поганець, забув, який
-
 accent-dementia-words-27 = місток
 accent-dementia-words-replace-27 = якийсь відділ
 accent-dementia-words-28 = синди
@@ -88,7 +84,6 @@ accent-dementia-words-33 = чарівник
 accent-dementia-words-replace-33 = якийсь поганець, забув, який
 accent-dementia-words-34 = віз
 accent-dementia-words-replace-34 = якийсь поганець, забув, який
-
 accent-dementia-words-35 = південь
 accent-dementia-words-replace-35 = десь
 accent-dementia-words-36 = північ

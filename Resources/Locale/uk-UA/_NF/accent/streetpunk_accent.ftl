@@ -348,7 +348,6 @@ accent-streetpunk-replaced-340 = ти знаєш
 accent-streetpunk-replaced-341 = ти б
 accent-streetpunk-replaced-342 = ти б
 accent-streetpunk-replaced-343 = ти
-
 accent-streetpunk-replacement-1 = трохи
 accent-streetpunk-replacement-2 = дофіга
 accent-streetpunk-replacement-3 = про

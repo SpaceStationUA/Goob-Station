@@ -22,3 +22,9 @@
     - displayName: stock-trading-company-zenghu
       basePrice: 225
       currentPrice: 225
+
+- type: entity
+  id: BaseStationAutomaticSpareId
+  abstract: true
+  components:
+  - type: AutomaticSpareId

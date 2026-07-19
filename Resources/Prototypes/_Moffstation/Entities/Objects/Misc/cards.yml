@@ -1,0 +1,859 @@
+- type: entity
+  parent: CardBase
+  id: CardBaseNuno
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    state: singlecard_down_nuno
+  - type: Card
+    backSpriteLayers:
+    - sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+      state: singlecard_down_nuno
+    flipped: true
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoWild
+  components:
+  - type: Card
+    name: card-nuno-wild
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: card_fourcolors
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoWildDrawCards
+  components:
+  - type: Card
+    name: card-nuno-wild-draw-cards
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: plus4
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedZero
+  components:
+  - type: Card
+    name: card-nuno-zero-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: num0
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedOne
+  components:
+  - type: Card
+    name: card-nuno-one-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: num1
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedTwo
+  components:
+  - type: Card
+    name: card-nuno-two-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: num2
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedThree
+  components:
+  - type: Card
+    name: card-nuno-three-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: num3
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedFour
+  components:
+  - type: Card
+    name: card-nuno-four-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: num4
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedFive
+  components:
+  - type: Card
+    name: card-nuno-five-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: num5
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedSix
+  components:
+  - type: Card
+    name: card-nuno-six-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: num6
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedSeven
+  components:
+  - type: Card
+    name: card-nuno-seven-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: num7
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedEight
+  components:
+  - type: Card
+    name: card-nuno-eight-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: num8
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedNine
+  components:
+  - type: Card
+    name: card-nuno-nine-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: num9
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedDrawTwo
+  components:
+  - type: Card
+    name: card-nuno-drawtwo-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: plus2
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedReverse
+  components:
+  - type: Card
+    name: card-nuno-reverse-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: reverse
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoRedSkip
+  components:
+  - type: Card
+    name: card-nuno-skip-red
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_red
+    - state: skip
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowZero
+  components:
+  - type: Card
+    name: card-nuno-zero-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: num0
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowOne
+  components:
+  - type: Card
+    name: card-nuno-one-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: num1
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowTwo
+  components:
+  - type: Card
+    name: card-nuno-two-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: num2
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowThree
+  components:
+  - type: Card
+    name: card-nuno-three-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: num3
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowFour
+  components:
+  - type: Card
+    name: card-nuno-four-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: num4
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowFive
+  components:
+  - type: Card
+    name: card-nuno-five-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: num5
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowSix
+  components:
+  - type: Card
+    name: card-nuno-six-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: num6
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowSeven
+  components:
+  - type: Card
+    name: card-nuno-seven-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: num7
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowEight
+  components:
+  - type: Card
+    name: card-nuno-eight-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: num8
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowNine
+  components:
+  - type: Card
+    name: card-nuno-nine-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: num9
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowDrawTwo
+  components:
+  - type: Card
+    name: card-nuno-drawtwo-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: plus2
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowReverse
+  components:
+  - type: Card
+    name: card-nuno-reverse-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: reverse
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoYellowSkip
+  components:
+  - type: Card
+    name: card-nuno-skip-yellow
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_yellow
+    - state: skip
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueZero
+  components:
+  - type: Card
+    name: card-nuno-zero-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: num0
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueOne
+  components:
+  - type: Card
+    name: card-nuno-one-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: num1
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueTwo
+  components:
+  - type: Card
+    name: card-nuno-two-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: num2
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueThree
+  components:
+  - type: Card
+    name: card-nuno-three-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: num3
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueFour
+  components:
+  - type: Card
+    name: card-nuno-four-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: num4
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueFive
+  components:
+  - type: Card
+    name: card-nuno-five-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: num5
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueSix
+  components:
+  - type: Card
+    name: card-nuno-six-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: num6
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueSeven
+  components:
+  - type: Card
+    name: card-nuno-seven-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: num7
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueEight
+  components:
+  - type: Card
+    name: card-nuno-eight-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: num8
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueNine
+  components:
+  - type: Card
+    name: card-nuno-nine-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: num9
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueDrawTwo
+  components:
+  - type: Card
+    name: card-nuno-drawtwo-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: plus2
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueReverse
+  components:
+  - type: Card
+    name: card-nuno-reverse-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: reverse
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoBlueSkip
+  components:
+  - type: Card
+    name: card-nuno-skip-blue
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_blue
+    - state: skip
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenZero
+  components:
+  - type: Card
+    name: card-nuno-zero-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: num0
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenOne
+  components:
+  - type: Card
+    name: card-nuno-one-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: num1
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenTwo
+  components:
+  - type: Card
+    name: card-nuno-two-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: num2
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenThree
+  components:
+  - type: Card
+    name: card-nuno-three-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: num3
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenFour
+  components:
+  - type: Card
+    name: card-nuno-four-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: num4
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenFive
+  components:
+  - type: Card
+    name: card-nuno-five-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: num5
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenSix
+  components:
+  - type: Card
+    name: card-nuno-six-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: num6
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenSeven
+  components:
+  - type: Card
+    name: card-nuno-seven-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: num7
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenEight
+  components:
+  - type: Card
+    name: card-nuno-eight-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: num8
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenNine
+  components:
+  - type: Card
+    name: card-nuno-nine-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: num9
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenDrawTwo
+  components:
+  - type: Card
+    name: card-nuno-drawtwo-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: plus2
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenReverse
+  components:
+  - type: Card
+    name: card-nuno-reverse-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: reverse
+
+- type: entity
+  parent: CardBaseNuno
+  categories: [ HideSpawnMenu ]
+  id: CardNunoGreenSkip
+  components:
+  - type: Card
+    name: card-nuno-skip-green
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: background_green
+    - state: skip
+
+- type: entity
+  parent: CardBoxBase
+  id: CardBoxNuno
+  name: box of Nuno™
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    layers:
+    - state: box
+      map: [ "closeLayer" ]
+    - state: box_open
+      map: [ "openLayer" ]
+      visible: false
+    - state: box
+      map: [ "fullLayer" ]
+      visible: false
+  - type: OpenTriggeredStorageFill
+    contents:
+    - id: CardDeckNuno
+      amount: 1
+
+- type: entity
+  parent: CardDeckBase
+  id: CardDeckNuno
+  name: deck of Nuno™ cards
+  components:
+  - type: Sprite
+    sprite: EstacaoPirata/Objects/Misc/Cards/card_nuno.rsi
+    state: box
+    drawdepth: SmallObjects
+  - type: CardStack
+    content:
+    - CardNunoRedZero
+    - CardNunoRedOne
+    - CardNunoRedTwo
+    - CardNunoRedThree
+    - CardNunoRedFour
+    - CardNunoRedFive
+    - CardNunoRedSix
+    - CardNunoRedSeven
+    - CardNunoRedEight
+    - CardNunoRedNine
+    - CardNunoRedDrawTwo
+    - CardNunoRedReverse
+    - CardNunoRedSkip
+    - CardNunoYellowZero
+    - CardNunoYellowOne
+    - CardNunoYellowTwo
+    - CardNunoYellowThree
+    - CardNunoYellowFour
+    - CardNunoYellowFive
+    - CardNunoYellowSix
+    - CardNunoYellowSeven
+    - CardNunoYellowEight
+    - CardNunoYellowNine
+    - CardNunoYellowDrawTwo
+    - CardNunoYellowReverse
+    - CardNunoYellowSkip
+    - CardNunoBlueZero
+    - CardNunoBlueOne
+    - CardNunoBlueTwo
+    - CardNunoBlueThree
+    - CardNunoBlueFour
+    - CardNunoBlueFive
+    - CardNunoBlueSix
+    - CardNunoBlueSeven
+    - CardNunoBlueEight
+    - CardNunoBlueNine
+    - CardNunoBlueDrawTwo
+    - CardNunoBlueReverse
+    - CardNunoBlueSkip
+    - CardNunoGreenZero
+    - CardNunoGreenOne
+    - CardNunoGreenTwo
+    - CardNunoGreenThree
+    - CardNunoGreenFour
+    - CardNunoGreenFive
+    - CardNunoGreenSix
+    - CardNunoGreenSeven
+    - CardNunoGreenEight
+    - CardNunoGreenNine
+    - CardNunoGreenDrawTwo
+    - CardNunoGreenReverse
+    - CardNunoGreenSkip
+    # second set
+    - CardNunoRedOne
+    - CardNunoRedTwo
+    - CardNunoRedThree
+    - CardNunoRedFour
+    - CardNunoRedFive
+    - CardNunoRedSix
+    - CardNunoRedSeven
+    - CardNunoRedEight
+    - CardNunoRedNine
+    - CardNunoRedDrawTwo
+    - CardNunoRedReverse
+    - CardNunoRedSkip
+    - CardNunoYellowOne
+    - CardNunoYellowTwo
+    - CardNunoYellowThree
+    - CardNunoYellowFour
+    - CardNunoYellowFive
+    - CardNunoYellowSix
+    - CardNunoYellowSeven
+    - CardNunoYellowEight
+    - CardNunoYellowNine
+    - CardNunoYellowDrawTwo
+    - CardNunoYellowReverse
+    - CardNunoYellowSkip
+    - CardNunoBlueOne
+    - CardNunoBlueTwo
+    - CardNunoBlueThree
+    - CardNunoBlueFour
+    - CardNunoBlueFive
+    - CardNunoBlueSix
+    - CardNunoBlueSeven
+    - CardNunoBlueEight
+    - CardNunoBlueNine
+    - CardNunoBlueDrawTwo
+    - CardNunoBlueReverse
+    - CardNunoBlueSkip
+    - CardNunoGreenOne
+    - CardNunoGreenTwo
+    - CardNunoGreenThree
+    - CardNunoGreenFour
+    - CardNunoGreenFive
+    - CardNunoGreenSix
+    - CardNunoGreenSeven
+    - CardNunoGreenEight
+    - CardNunoGreenNine
+    - CardNunoGreenDrawTwo
+    - CardNunoGreenReverse
+    - CardNunoGreenSkip
+    # wildcards
+    - CardNunoWild
+    - CardNunoWild
+    - CardNunoWild
+    - CardNunoWild
+    - CardNunoWildDrawCards
+    - CardNunoWildDrawCards
+    - CardNunoWildDrawCards
+    - CardNunoWildDrawCards

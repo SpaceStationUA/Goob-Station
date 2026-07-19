@@ -1,7 +1,4 @@
 <!--
-SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-SPDX-FileCopyrightText: 2025 ArtisticRoomba <145879011+ArtisticRoomba@users.noreply.github.com>
-
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
@@ -20,6 +17,18 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   </Box>
   <Box>
     [color=#999999][italic]Пристрої, здатні до нескінченної енергії — і руйнівного потенціалу[italic][/color]
+  </Box>
+
+  <!-- Pirate: DeltaV nuclear reactor -->
+  <Box>
+    <GuideEntityEmbed Entity="NuclearReactorNormal" Caption=""/>
+    <GuideEntityEmbed Entity="Turbine" Caption=""/>
+  </Box>
+  <Box>
+    ## Ядерний генератор
+  </Box>
+  <Box>
+    [color=#999999][italic]Використовує енергію ядерного поділу для живлення станції.[italic][/color]
   </Box>
 
   <Box>

@@ -1,0 +1,58 @@
+- type: entity
+  parent: [ ClothingShoesBootsMantis, BaseFoldable ]
+  id: ClothingShoesSandalsMantisAiry
+  name: airy mantis sandals
+  description: "Sandal boots made of gloomy fabric. You can fold the tops down if they're in the way of your pants."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Shoes/Sandals/mantis_sandals_airy.rsi
+    layers:
+    - state: icon
+      map: ["unfoldedLayer"]
+    - state: icon-folded
+      map: ["foldedLayer"]
+      visible: false
+  - type: Clothing
+    sprite: _DEN/Clothing/Shoes/Sandals/mantis_sandals_airy.rsi
+  - type: Foldable
+    canFoldInsideContainer: true
+    foldVerbText: fold-verb
+    unfoldVerbText: unfold-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded
+
+
+- type: entity
+  parent: ClothingShoesBootsMantis
+  id: ClothingShoesSandalsMantisDark
+  name: dark mantis sandals
+  description: "Strapped sandals, for the modest mystic."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Shoes/Sandals/mantis_sandals_dark.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Shoes/Sandals/mantis_sandals_dark.rsi
+
+
+- type: entity
+  parent: [ClothingShoesBootsMantis, BaseFoldable]
+  id: ClothingShoesSandalsMantisOrnate
+  name: ornate mantis sandals
+  description: "Sandal boots made of magenta fabric. You can fold the tops down if they're in the way of your pants."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Shoes/Sandals/mantis_sandals_ornate.rsi
+    layers:
+    - state: icon
+      map: ["unfoldedLayer"]
+    - state: icon-folded
+      map: ["foldedLayer"]
+      visible: false
+  - type: Clothing
+    sprite: _DEN/Clothing/Shoes/Sandals/mantis_sandals_ornate.rsi
+  - type: Foldable
+    canFoldInsideContainer: true
+    foldVerbText: fold-verb
+    unfoldVerbText: unfold-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded

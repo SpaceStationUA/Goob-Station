@@ -8,7 +8,6 @@
 
 wires-board-name-autodoc = АвтоДок Mk.XIV
 wires-board-name-contraband-detector = Детектор контрабанди
-
 wire-name-autodoc-safety = БЕЗПЕКА
 wire-name-contraband-detector-chance = ТОЧНІСТЬ
 wire-name-contraband-detector-fake-scan = СКАН

@@ -8,7 +8,6 @@ admin-ui-atmos-add = Додати в атмосферу
 admin-ui-atmos-add-gas = Додати газ
 admin-ui-atmos-fill-gas = Заповнити газом
 admin-ui-atmos-set-temperature = Встановити температуру
-
 admin-ui-atmos-grid = Сітка
 admin-ui-atmos-grid-current = Поточна
 admin-ui-atmos-tile-x = ПлиткаX

@@ -39,6 +39,7 @@ public enum WoundableSeverity : byte
     Critical,
     Mangled,
     Severed,
+    Disabled, // Pirate: attached but non-functional due to limb fixation damage.
 }
 
 [Serializable, NetSerializable]
@@ -104,7 +105,7 @@ public record struct WoundHealAttemptEvent(Entity<WoundableComponent> Woundable,
 public record struct WoundHealAttemptOnWoundableEvent(Entity<WoundComponent> Wound, bool Cancelled = false);
 
 [Serializable, DataRecord]
-public record struct WoundableSeverityMultiplier(FixedPoint2 Change, string Identifier = "Unspecified");
+public partial record struct WoundableSeverityMultiplier(FixedPoint2 Change, string Identifier = "Unspecified");
 
 [Serializable, DataRecord]
-public record struct WoundableHealingMultiplier(FixedPoint2 Change, string Identifier = "Unspecified");
+public partial record struct WoundableHealingMultiplier(FixedPoint2 Change, string Identifier = "Unspecified");

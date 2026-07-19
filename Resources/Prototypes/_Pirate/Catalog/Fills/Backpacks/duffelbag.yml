@@ -1,5 +1,17 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFpvDroneBundle
+  name: FPV drone bundle
+  description: A remote-controlled FPV drone bundled with its control laptop.
+  components:
+  - type: StorageFill
+    contents:
+      - id: RemoteDroneLaptop
+      - id: RemoteDroneFpv
+      - id: Multitool
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledAkurra
   name: Akurra bundle
   description: "A fearsome liquid-ammo plasma rifle, bundled with 4 canisters of its proprietary fuel."
@@ -9,6 +21,18 @@
       - id: WeaponPlasmaAkurra
       - id: EchionCanister
         amount: 4
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledDMR
+  name: набір "Бандит"
+  description: "Містить DMR Бандит і 2 запасні магазини до нього."
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleBandit
+    - id: MagazineLightRifleCaseless
+      amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffel

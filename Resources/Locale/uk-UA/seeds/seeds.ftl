@@ -111,7 +111,6 @@ seeds-pumpkin-name = гарбуз
 seeds-pumpkin-display-name = гарбуз
 seeds-cotton-name = бавовна
 seeds-cotton-display-name = кущ бавовни
-
 seeds-rainbow-cannabis-name = веселковий канабіс
 seeds-rainbow-cannabis-display-name = веселковий канабіс
 seeds-pyrotton-name = пірововна
@@ -142,6 +141,5 @@ seeds-blue-pumpkin-name = синій гарбуз
 seeds-blue-pumpkin-display-name = синій гарбуз
 seeds-anomaly-berry-name = аномальна ягода
 seeds-anomaly-berry-display-name = аномальні ягоди
-
 seeds-bloonion-name = блуніон
 seeds-bloonion-display-name = цибулини блуніону

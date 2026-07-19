@@ -1,0 +1,33 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Modified from files taken from tgstation and modified by Swept, potato1234x and deltanedas at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, snail by IproduceWidgets (github) and Kezu (discord), anomalymeat/cooked by august-sun, dragoncutlet, dragoncutlet_veins, dragoncutlet-cooked and dragon-cooked by JuneSzalkowska (discord), raw and cooked patty taken from tgstation at https://github.com/tgstation/tgstation/commit/b83c7deee4c91df4de130db242facce20308aa8a. A lot of inhands by Orsoniks.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "abyssalfish"
+        },
+        {
+            "name": "badfish"
+        },
+        {
+            "name": "bad-pink-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "bad-pink-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "abyssal-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "abyssal-inhand-left",
+            "directions": 4
+        }
+    ]
+}

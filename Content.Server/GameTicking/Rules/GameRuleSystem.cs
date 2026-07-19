@@ -1,20 +1,3 @@
-// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Moony <moonheart08@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Paul Ritter <ritter.paul1@googlemail.com>
-// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
-// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 AJCM <AJCM@tutanota.com>
-// SPDX-FileCopyrightText: 2024 Kara <lunarautomaton6@gmail.com>
-// SPDX-FileCopyrightText: 2024 Mr. 27 <45323883+Dutch-VanDerLinde@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Rainfall <rainfey0+git@gmail.com>
-// SPDX-FileCopyrightText: 2024 Rainfey <rainfey0+github@gmail.com>
-// SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Atmos.EntitySystems;
@@ -59,7 +42,16 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out _, out var gameRule))
         {
+            // Harmony: skip ended rules (e.g. from a failed start during fallback)
+            if (HasComp<EndedGameRuleComponent>(uid))
+            {
+                Log.Debug($"Ended gamerule ignored from startup check: {ToPrettyString(uid)}");
+                continue;
+            }
+
             var minPlayers = gameRule.MinPlayers;
+            var name = ToPrettyString(uid);
+
             if (playerCount >= minPlayers)
                 continue;
 
@@ -68,8 +60,10 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
                 ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
                     ("readyPlayersCount", playerCount),
                     ("minimumPlayers", minPlayers),
-                    ("presetName", ToPrettyString(uid))));
+                    ("presetName", name)));
                 args.Cancel();
+                //TODO remove this once announcements are logged
+                Log.Info($"Rule '{name}' requires {minPlayers} players, but only {playerCount} are ready.");
             }
             else
             {
@@ -106,6 +100,13 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         {
             if (!TryComp<GameRuleComponent>(uid, out var ruleData))
                 continue;
+
+            // Harmony: skip ended rules (e.g. from a failed start during fallback)
+            if (HasComp<EndedGameRuleComponent>(uid))
+            {
+                Log.Debug($"Ended gamerule ignored from round end: {ToPrettyString(uid)}");
+                continue;
+            }
 
             AppendRoundEndText(uid, comp, ruleData, ref ev);
         }

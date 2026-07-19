@@ -1,0 +1,97 @@
+<!--
+SPDX-FileCopyrightText: 2025 Skye <57879983+Rainbeon@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 kbarkevich <24629810+kbarkevich@users.noreply.github.com>
+SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+SPDX-FileCopyrightText: 2025 Terkala <appleorange64@gmail.com>
+
+SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
+-->
+
+<Document>
+# Культ крові
+
+[color=#ff3333][italic]Нар'Сі, Геометриня Крові, кличе своїх послідовників крізь тонку завісу реальності.[/italic][/color]
+
+Культисти крові діють спільно, викрадають і навертають екіпаж, готують ритуальні руни та зрештою проривають завісу, щоб привести Нар'Сі на станцію.
+
+  <Box>
+    <GuideEntityEmbed Entity="TearVeilRune" Caption="Сигіл Нар'Сі"/>
+  </Box>
+
+## Основні здібності
+
+  <Box>
+    <GuideEntityEmbed Entity="ActionCultistCommune" Caption="Причастя"/>
+    <GuideEntityEmbed Entity="ActionCultistStudyVeil" Caption="Вивчити завісу"/>
+    <GuideEntityEmbed Entity="ActionCultistSpellsSelect" Caption="Підготувати закляття"/>
+  </Box>
+
+[bold]Причастя[/bold] дає змогу говорити з іншими культистами на будь-якій відстані, але вимовлена фраза може видати вас поруч з екіпажем. [bold]Вивчити завісу[/bold] показує вказівки Геометрині. [bold]Підготувати закляття[/bold] вирізає на тілі один кривавий знак; на руні посилення можна мати більше заклять.
+
+## Руни
+
+  <Box>
+    <GuideEntityEmbed Entity="OfferingRune" Caption="Навернення"/>
+    <GuideEntityEmbed Entity="EmpoweringRune" Caption="Посилення"/>
+    <GuideEntityEmbed Entity="ReviveRune" Caption="Відродження"/>
+    <GuideEntityEmbed Entity="BarrierRune" Caption="Бар'єр"/>
+    <GuideEntityEmbed Entity="BloodBoilRune" Caption="Кипіння крові"/>
+    <GuideEntityEmbed Entity="SummoningRune" Caption="Заклик"/>
+    <GuideEntityEmbed Entity="TeleportRune" Caption="Телепортація"/>
+  </Box>
+
+Руни кресляться кинджалом культу вашою кров'ю. Руна жертви навертає слабких духом і може розбивати ментальний захист після пробудження Нар'Сі. Руна посилення пришвидшує підготовку заклять. Руна відродження повертає мертвих за ціну крові. Бар'єрна руна створює тимчасові стіни, а руна заклику матеріалізує споруди та слуг культу.
+
+[bold]Кипіння крові[/bold] потребує трьох живих культистів або конструктів поруч. Ритуал ранить учасників, підпалює та атакує до трьох живих ворогів у полі зору. [bold]Руни телепортації[/bold] отримують назву після створення; активуйте одну з них, щоб перенести всіх гуманоїдів на руні до іншої руни на тій самій мапі.
+
+## Закляття та інструменти
+
+  <Box>
+    <GuideEntityEmbed Entity="CultDaggerCurved" Caption="Кинджал культу"/>
+    <GuideEntityEmbed Entity="CultPylon" Caption="Пілон"/>
+    <GuideEntityEmbed Entity="CultJuggernautShell" Caption="Оболонка джагернаута"/>
+    <GuideEntityEmbed Entity="CultAltar" Caption="Вівтар"/>
+    <GuideEntityEmbed Entity="CultForge" Caption="Кузня"/>
+    <GuideEntityEmbed Entity="CultArchives" Caption="Архіви"/>
+  </Box>
+
+Кинджал потрібен для бою та креслення рун. Криваві закляття допомагають отримати новий кинджал, приспати жертву або перетворити метал, скло й пласталь на рунічні матеріали. Пілони лікують культистів і зменшують прогрес очищення, тому база культу має бути захищеною.
+
+З трьох листів рунічної сталі культист може спорудити вівтар, кузню або архіви. Після створення предмета кожна споруда відновлює силу чотири хвилини. Вівтар створює малі оболонки й точила, кузня - зброю та обладунки, а архіви - допоміжні реліквії. Проклята куля з архівів затримує аварійний шатл на три хвилини; культ може зробити це не більш як тричі за раунд.
+
+  <Box>
+    <GuideEntityEmbed Entity="MirrorShieldBloodCult" Caption="Дзеркальний щит"/>
+    <GuideEntityEmbed Entity="EldritchLongsword" Caption="Потойбічний меч"/>
+    <GuideEntityEmbed Entity="ShuttleCurse" Caption="Проклята куля"/>
+    <GuideEntityEmbed Entity="VeilShifter" Caption="Зміщувач завіси"/>
+    <GuideEntityEmbed Entity="VoidTorch" Caption="Смолоскип порожнечі"/>
+  </Box>
+
+## Конструкти
+
+  <Box>
+    <GuideEntityEmbed Entity="MobBloodCultShade" Caption="Тінь"/>
+    <GuideEntityEmbed Entity="MobBloodCultJuggernaut" Caption="Джагернаут"/>
+    <GuideEntityEmbed Entity="MobBloodCultArtificer" Caption="Ремісник"/>
+    <GuideEntityEmbed Entity="MobBloodCultWraith" Caption="Примара"/>
+  </Box>
+
+Тіні й джагернаути служать культу замість живих послідовників. Тінь швидка та повертається до каменя душі після вигнання. Джагернаут повільний, витривалий, ламає укріплення й може відновлюватися від крові.
+
+Мала оболонка приймає душу з мертвого тіла або наповненого каменя душі та дає обрати [bold]ремісника[/bold] або [bold]примару[/bold]. Ремісник створює культові підлоги, стіни, двері й камені душ. Примара швидка та може тимчасово проходити крізь стіни.
+
+Душею конструкта керує сам гравець. Якщо гравець виходить із гри або переходить у привида, конструктом тимчасово керує автоматика; після повернення гравця вона вимикається. У критичному стані джагернаута або після загибелі малого конструкта вкладене тіло чи камінь душі вивільняється. Душа повертається до джерела, а власник мертвого тіла може дочекатися реанімації та повернутися в нього.
+
+## Ритуал Нар'Сі
+
+Коли культ достатньо зросте, Нар'Сі відкриє місця для руни розриву завіси. Після розриву культ більше не зможе ховатися, а фінальний ритуал біля кривавого розлому вимагатиме кількох культистів на завершальних рунах.
+
+## Протидія культу
+
+Культиста можна очистити святою водою, імплантом захисту розуму або святим димом, що виникає, коли свята вода реагує з кривавою пернікулятою. Капелан стійкий до багатьох засобів культу та є ключовим союзником екіпажу.
+
+  <Box>
+    <GuideEntityEmbed Entity="RandomHumanoidVisitorChaplain" Caption="Капелан"/>
+  </Box>
+
+</Document>

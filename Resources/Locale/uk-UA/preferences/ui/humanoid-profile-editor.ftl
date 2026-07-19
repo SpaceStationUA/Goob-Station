@@ -38,13 +38,11 @@ humanoid-profile-editor-guidebook-button-tooltip = Натисніть для д�
 humanoid-profile-editor-preference-spawn-priority-none = Нічого
 humanoid-profile-editor-preference-spawn-priority-arrivals = Прибуття
 humanoid-profile-editor-preference-spawn-priority-cryosleep = Кріосон
-
 humanoid-profile-editor-jobs-amount-in-department-tooltip = Робота у {$departmentName} відділі
 humanoid-profile-editor-department-jobs-label = {$departmentName} роботи
 humanoid-profile-editor-antags-tab = Антаги
 humanoid-profile-editor-antag-preference-yes-button = Так
 humanoid-profile-editor-antag-preference-no-button = Ні
-
 humanoid-profile-editor-job-priority-high-button = Високий
 humanoid-profile-editor-job-priority-medium-button = Середній
 humanoid-profile-editor-job-priority-low-button = Низький
@@ -56,9 +54,7 @@ humanoid-profile-editor-flavortext-tab = Опис
 # Traits
 humanoid-profile-editor-traits-tab = Особливості
 humanoid-profile-editor-no-traits = Немає доступних рис
-
 humanoid-profile-editor-trait-count-hint = Доступно очок: [{$current}/{$max}]
-
 trait-category-disabilities = Вади
 trait-category-speech = Риси мовлення
 trait-category-quirks = Дивацтва

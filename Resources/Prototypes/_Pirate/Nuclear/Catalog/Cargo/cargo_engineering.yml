@@ -1,0 +1,79 @@
+- type: cargoProduct
+  id: NuclearReactorFlatpackPurchase
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/cargo_icons.rsi
+    state: reactor
+  product: NuclearReactorFlatpack
+  cost: 15000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: GasTurbineFlatpackPurchase
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/cargo_icons.rsi
+    state: turbine
+  product: GasTurbineFlatpack
+  cost: 10000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: CerenkiteFuelRodPurchase
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_parts.rsi
+    state: default_rod
+  product: CrateCerenkiteFuelRod
+  cost: 4000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: BohrumControlRodPurchase
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_parts.rsi
+    state: default_rod
+  product: CrateBohrumControlRod
+  cost: 2000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: SteelGasChannelPurchase
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_parts.rsi
+    state: default_rod
+  product: CrateSteelGasChannel
+  cost: 1000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: SteelHeatExhangerPurchase
+  icon:
+    sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/reactor_parts.rsi
+    state: default_rod
+  product: CrateSteelHeatExhanger
+  cost: 1000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: NuclearReactorSmallFlatpackPurchase
+  icon:
+    sprite: _Pirate/Nuclear/Objects/Devices/large_flatpack.rsi
+    state: large
+  product: NuclearReactorSmallFlatpack
+  cost: 7500
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: GasTurbineSmallFlatpackPurchase
+  icon:
+    sprite: _Pirate/Nuclear/Objects/Devices/large_flatpack.rsi
+    state: large
+  product: GasTurbineSmallFlatpack
+  cost: 5000
+  category: cargoproduct-category-name-engineering
+  group: market

@@ -18,9 +18,7 @@ heretic-ability-fail-tile-occupied = Цільова плитка зайнята!
 heretic-ability-fail-rust-stage-low = Ви недостатньо могутні, щоб покрити іржею цю поверхню!
 heretic-ability-fail-target-ghoul = Ціль вже є упирем!
 heretic-ability-fail-target-no-mind = Ціль не має душі!
-
 heretic-magicitem-examine = [color=yellow]Дозволяє використовувати просунуті закляття, коли тримаєте або екіпіровані.[/color]
-
 mansus-grasp-trigger-fail = Щось заважає вам це активувати!
 
 ## клинок
@@ -50,33 +48,26 @@ heretic-livingheart-faraway = Воно {$state}, надзвичайно дале
 
 ## зорегляд
 heretic-speech-mansusgrasp = Р'Ч Т'Х ТР'ТХ!
-
 heretic-speech-ash-jaunt = ЕШ'Н П'ССГ'
 heretic-speech-ash-volcano = В'ЛК'Н!
 heretic-speech-ash-rebirth = Г'ЛР'Й Т' ТХ' Н'ЙТВ'ТЧ'Р!
 heretic-speech-ash-flame = ФЛ'МС!!
 heretic-speech-ash-cascade = К'СК'Д!!
-
 heretic-speech-blade-furioussteel = ФЛ'ШН'Г С'ЛВ'Р!
-
 heretic-speech-flesh-surgery = КЛ'М М'Н!
 heretic-speech-flesh-worm = РЕАЛЬНІСТЬ РОЗКРУЧУЙСЯ!!
-
 heretic-speech-rust-spread = А'ГРСВ СПР'Д!
 heretic-speech-rust-wave = П'ШР'Т СЛ'В!
 heretic-speech-rust-plume = 'НТРП'ЧН'Й ШЛ'ЙФ!
-
 heretic-speech-void-blast = З'МР'ЗН'Й!
 heretic-speech-void-phase = Р'Л'Т' Ф'З'!
 heretic-speech-void-pull = ПР'В'Д'ТЬ 'Х Д' М'Н'!!
-
 heretic-speech-cleave = Р'ЗС'Ч'ТЬ!
 heretic-speech-bloodsiphon = П'Л'М'Я В'ЧН'СТ'!
 heretic-speech-mansuslink = ПР'Н'З'ТЬ Р'З'М!
 heretic-speech-realignment = П'ВСТ'НЬ!
 heretic-speech-fuckoff = ЙД'ТЬ Г'ТЬ!!
 heretic-speech-ice-spear = ВН'З З КР'Г!
-
 heretic-cosmic-rune-fail-star-mark = Заблоковано зоряною міткою!
 heretic-cosmic-rune-fail-unlinked = Немає пов'язаної руни!
 heretic-cosmic-rune-fail-range = Недостатньо близько!

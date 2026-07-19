@@ -1,16 +1,3 @@
-# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Aiden <aiden@djkraz.com>
-# SPDX-FileCopyrightText: 2025 BombasterDS <115770678+BombasterDS@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 BombasterDS <deniskaporoshok@gmail.com>
-# SPDX-FileCopyrightText: 2025 BombasterDS2 <shvalovdenis.workmail@gmail.com>
-# SPDX-FileCopyrightText: 2025 FaDeOkno <143940725+FaDeOkno@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 FaDeOkno <logkedr18@gmail.com>
-# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-# SPDX-FileCopyrightText: 2025 Rouden <149893554+Roudenn@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Roudenn <romabond091@gmail.com>
-# SPDX-FileCopyrightText: 2025 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-#
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: technology
@@ -35,18 +22,20 @@
   id: ModsuitsTech
   name: research-technology-modsuits
   icon:
-    sprite: _Goobstation/Objects/Specific/Robotics/modsuit_parts.rsi
+    sprite: _Pirate/Objects/Specific/Robotics/modular_suits.rsi # Pirate: new modular suit system.
     state: mod-core-standard
   discipline: Experimental
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - ModsuitChestplate
-  - ModsuitBoots
-  - ModsuitHelmet
-  - ModsuitGauntlets
-  - ModsuitShell
-  - ModsuitPlatingExternal
+  - ModularSuitConstruction # Pirate: replace legacy Goob MODsuit recipes.
+  - ModularSuitChestPlate
+  - ModularSuitBoots
+  - ModularSuitHelmet
+  - ModularSuitGauntlets
+  - BasicPlating
+  - CivilianPlating
+  - ModularSuitCoreStandard
   position: -4,-1
   technologyPrerequisites:
   - MagnetsTech

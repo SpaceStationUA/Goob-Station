@@ -28,26 +28,22 @@ loadout-description-LoadoutEmergencyMedipen = Швидкий і безпечни
 loadout-description-LoadoutSpaceMedipen = Містить суміш хімічних речовин, які захищають вас від смертоносного впливу космосу.
                                           Також відомий як "скафандр бідняка".
                                           ПОПЕРЕДЖЕННЯ: одночасне введення двох космічних медипенів призведе до передозування барозином.
-
 loadout-name-LoadoutItemBoxSurvival = ящик для виживання (стандартний)
 loadout-name-LoadoutItemBoxSurvivalEngineering = аварійно-рятувальний бокс збільшеної місткості (інженерний)
 loadout-name-LoadoutItemBoxSurvivalSecurity = ящик для виживання (безпека)
 loadout-name-LoadoutItemBoxSurvivalBrigmedic = ящик для виживання (санітарний)
 loadout-name-LoadoutItemBoxSurvivalMedical = аптечка (медична)
 loadout-name-LoadoutItemBoxHug = коробка з обіймами (клоун)
-
 loadout-name-LoadoutItemLighter = запальничка (кольорова)
 loadout-name-LoadoutItemLighterCheap = дешева запальничка (кольорова)
 loadout-name-LoadoutItemLighterFlippo = запальничка фліппо (кольорова)
 loadout-name-LoadoutItemDrinkShinyFlask = блискуча колба (кольорова)
 loadout-name-LoadoutItemDrinkLithiumFlask = літієва колба (кольорова)
 loadout-name-LoadoutItemDrinkVacuumFlask = вакуумна колба (кольорова)
-
 loadout-name-LoadoutItemPetMouse = домашня миша
 loadout-name-LoadoutItemPetHamster = домашній хом'як
 loadout-name-LoadoutItemPetMothroach = домашня тарганоміль
 loadout-name-LoadoutItemPetCockroach = домашній тарган
-
 loadout-description-LoadoutItemBlackDeck = Чорна скринька зі стандартними 53 гральними картами. Будь ласка, грайте відповідально.
 loadout-description-LoadoutItemNTDeck = Коробка з логотипом Nanotrasen, що містить стандартні 53 гральні карти. Будь ласка, грайте відповідально.
 loadout-name-LoadoutItemShadowkinPlush = тіньовик плюш

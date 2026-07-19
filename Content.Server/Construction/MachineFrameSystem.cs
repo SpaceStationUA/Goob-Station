@@ -1,22 +1,8 @@
-// SPDX-FileCopyrightText: 2022 CommieFlowers <rasmus.cedergren@hotmail.com>
-// SPDX-FileCopyrightText: 2022 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
-// SPDX-FileCopyrightText: 2022 rolfero <45628623+rolfero@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 TemporalOroboros <TemporalOroboros@gmail.com>
-// SPDX-FileCopyrightText: 2023 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 c4llv07e <38111072+c4llv07e@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Ilya246 <ilyukarno@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Construction.Components;
 using Content.Server.Stack;
+using Content.Shared._Pirate.BladeServer;
 using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -59,7 +45,9 @@ public sealed class MachineFrameSystem : EntitySystem
         if (TryComp<ConstructionComponent>(uid, out var construction) && construction.TargetNode == null)
         {
             // Attempt to set pathfinding to the machine node...
-            _construction.SetPathfindingTarget(uid, "machine", construction);
+            // Pirate: blade server frames use the same machine frame system with a custom final node.
+            if (!_construction.SetPathfindingTarget(uid, "machine", construction))
+                _construction.SetPathfindingTarget(uid, "bladeServer", construction);
         }
     }
 
@@ -156,6 +144,10 @@ public sealed class MachineFrameSystem : EntitySystem
         if (!TryComp<MachineBoardComponent>(used, out var machineBoard))
             return false;
 
+        // Pirate: blade server frames only accept boards that explicitly declare a blade server variant.
+        if (HasComp<BladeServerFrameComponent>(uid) && !HasComp<BladeServerBoardComponent>(used))
+            return false;
+
         if (!_container.TryRemoveFromContainer(used, false, out var wasInContainer) && wasInContainer) // Goobstation
             return false;
 
@@ -199,7 +191,7 @@ public sealed class MachineFrameSystem : EntitySystem
             return true;
         }
 
-        var splitStack = _stack.Split(used, needed, Transform(uid).Coordinates, stack);
+        var splitStack = _stack.Split((used, stack), needed, Transform(uid).Coordinates);
 
         if (splitStack == null)
             return false;

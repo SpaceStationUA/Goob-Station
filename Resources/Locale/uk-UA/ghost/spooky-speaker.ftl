@@ -18,7 +18,6 @@ spooky-speaker-generic-11 = Вех
 spooky-speaker-generic-12 = ТРЕМТІТЬ, СМЕРТНІ!
 spooky-speaker-generic-13 = 4444444444
 spooky-speaker-generic-14 = ...Я знайшов тебе...
-
 spooky-speaker-recycler-1 = Я ГОЛОДНИЙ
 spooky-speaker-recycler-2 = БІЛЬШЕ! ДАЙТЕ МЕНІ БІЛЬШЕ!
 spooky-speaker-recycler-3 = ГОДУЙТЕ МЕНЕ

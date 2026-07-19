@@ -1,57 +1,77 @@
 
 marking-VoxScarEyeRight-vox_scar_eye_right = Шрам на правому оці
 marking-VoxScarEyeRight = Шрам на оці (правий)
-
 marking-VoxScarEyeLeft-vox_scar_eye_left = Шрам на лівому оці
 marking-VoxScarEyeLeft = Шрам на оці (лівий)
-
 marking-VoxScarTopSurgeryShort-vox_scar_top_surgery_short = Торакотомічний шрам
 marking-VoxScarTopSurgeryShort = Торакотомічний шрам
-
 marking-VoxScarTopSurgeryLong-vox_scar_top_surgery_long = Шрам "розкладачка
 marking-VoxScarTopSurgeryLong = Шрам "розкладачка
-
 marking-VoxScarChest-vox_scar_chest = Шрам на грудях
 marking-VoxScarChest = Шрам на грудях
-
 marking-VoxScarNeck-vox_scar_neck = Шрам на шиї
 marking-VoxScarNeck = Шрам на шиї
-
 marking-VoxScarChestBullets-vox_scar_chest_bullets = Шрам від кульових отворів
 marking-VoxScarChestBullets = Шрам на грудях (кулі)
-
 marking-VoxScarStomachBullets-vox_scar_stomach_bullets = Шрам від кульових отворів
 marking-VoxScarStomachBullets = Шрам на животі (кулі)
-
 marking-VoxScarFace1-vox_scar_face_1 = Шрам на обличчі
 marking-VoxScarFace1 = Шрам на обличчі (великий)
-
 marking-VoxScarFace2-vox_scar_face_2 = Шрам на обличчі
 marking-VoxScarFace2 = Шрам на обличчі (маленький)
-
 marking-VoxScarEyeRightSmall-vox_scar_eye_right_small = Шрам на правому оці (маленький)
 marking-VoxScarEyeRightSmall = Маленький шрам на оці (правий)
-
 marking-VoxScarEyeLeftSmall-vox_scar_eye_left_small = Шрам на лівому оці (маленький)
 marking-VoxScarEyeLeftSmall = Маленький шрам на оці (лівий)
-
 marking-VoxTailShort-vox_tail_small = Хвіст Вокса (Короткий)
 marking-VoxTailShort = Хвіст Вокса (Короткий)
-
 marking-VoxTail-vox_tail = Хвіст Вокса (Середній)
 marking-VoxTail = Хвіст Вокса (Середній)
-
 marking-VoxTailBig-vox_tail_big = Хвіст Вокса (Великий)
 marking-VoxTailBig = Хвіст Вокса (Великий)
 marking-TattooVoxHeartLeftArm-heart_l_arm = Тату Вокса на лівій руці (Серце)
 marking-TattooVoxHeartLeftArm = Тату Вокса на лівій руці (Серце)
 marking-TattooVoxHeartRightArm-heart_r_arm = Тату Вокса на правій руці (Серце)
 marking-TattooVoxHeartRightArm = Тату Вокса на правій руці (Серце)
-marking-TattooVoxHiveChest-hive_s = Тату Вокса на грудях (рій)
-marking-TattooVoxHiveChest = Тату Вокса на грудях (рій)
-marking-TattooVoxNightlingChest-nightling_s = Тату Вокса на грудях (найтлінг)
-marking-TattooVoxNightlingChest = Тату Вокса на грудях (найтлінг)
+marking-TattooVoxHiveChest-hive_s = Тату Вокса на грудях (Вулик)
+marking-TattooVoxHiveChest = Тату Вокса на грудях (Вулик)
+marking-TattooVoxNightlingChest-nightling_s = Тату Вокса на грудях (Найтлінг)
+marking-TattooVoxNightlingChest = Тату Вокса на грудях (Найтлінг)
 marking-VoxTailSpikes-vox_tail_spikes = Хвіст вокса (з шипами)
 marking-VoxTailSpikes = Хвіст вокса (з шипами)
 marking-VoxTailDocked-vox_tail_docked = Хвіст вокса (рудиментарний)
 marking-VoxTailDocked = Хвіст вокса (рудиментарний)
+marking-TattooVoxNightlingHead-tattoo_nightling_head = Татуювання голови вокса (Найтлінг)
+marking-TattooVoxNightlingHead = Татуювання голови вокса (Найтлінг)
+marking-TattooVoxArrowHead-tattoo_arrow_head = Татуювання голови вокса (Стріла)
+marking-TattooVoxArrowHead = Татуювання голови вокса (Стріла)
+marking-VoxTattooEyeliner-eyeliner = Підводка
+marking-VoxTattooEyeliner = Підводка
+marking-VoxVisage-visage = Візаж (повний)
+marking-VoxVisage = Візаж (повний)
+marking-VoxVisageL-visage_l = Візаж (лівий)
+marking-VoxVisageL = Візаж (лівий)
+marking-VoxVisageR-visage_r = Візаж (правий)
+marking-VoxVisageR = Візаж (правий)
+marking-VoxCheek-cheekblush = Щоки
+marking-VoxCheek = Щоки
+marking-VoxBeak-beak = Дзьоб (гострий)
+marking-VoxBeak = Дзьоб (загострений)
+marking-VoxBeakSquareCere-beak_squarecere = Дзьоб (квадратна восковиця)
+marking-VoxBeakSquareCere = Дзьоб (квадратна восковиця)
+marking-VoxBeakHooked-beak_hooked = Дзьоб (гачкуватий)
+marking-VoxBeakHooked = Дзьоб (гачкуватий)
+marking-VoxBeakShaved-beak_shaved = Дзьоб (голений)
+marking-VoxBeakShaved = Дзьоб (голений)
+marking-VoxBeakCoverTip-beakcover_tip = Кінчик дзьоба
+marking-VoxBeakCoverTip = Кінчик дзьоба
+marking-VoxBeakCoverStripe-beakcover_stripe = Смуга дзьоба
+marking-VoxBeakCoverStripe = Смуга дзьоба
+marking-TattooVoxNightbelt-nightbelt = Татуювання живота вокса (Найтлінг)
+marking-TattooVoxNightbelt = Татуювання живота вокса (Найтлінг)
+marking-TattooVoxChestV-night_v = Татуювання грудей вокса (V-подібне)
+marking-TattooVoxChestV = Татуювання грудей вокса (V-подібне)
+marking-TattooVoxUnderbelly-underbelly = Низ живота
+marking-TattooVoxUnderbelly = Низ живота
+marking-VoxTailSplit-vox_tail_split = Хвіст вокса (роздвоєний)
+marking-VoxTailSplit = Хвіст Вокса (розділений)

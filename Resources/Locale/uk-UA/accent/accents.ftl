@@ -120,12 +120,10 @@ accent-words-nymph-1 = Цвіріньк!
 accent-words-nymph-2 = Чуррр...
 accent-words-nymph-3 = Дешево?
 accent-words-nymph-4 = Хрупе!
-
 accent-words-mothroach-2 = Цвіріньк!
 accent-words-mothroach-3 = Піп!
 accent-words-mothroach-4 = Ііі!
 accent-words-mothroach-5 = Іп!
-
 accent-words-tomato-1 = Тотато!
 accent-words-tomato-2 = Тротект
 accent-words-tomato-3 = Мастет?

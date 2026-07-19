@@ -1,6 +1,3 @@
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Roudenn <romabond091@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
@@ -39,7 +36,6 @@ public sealed class FireControlNavControl : BaseShuttleControl
     private EntityCoordinates? _coordinates;
     private EntityUid? _consoleEntity;
     private Angle? _rotation;
-    private Dictionary<NetEntity, List<DockingPortState>> _docks = new();
 
     private EntityUid? _activeConsole;
     private FireControllableEntry[]? _controllables;
@@ -180,7 +176,6 @@ public sealed class FireControlNavControl : BaseShuttleControl
     public void UpdateState(NavInterfaceState state)
     {
         SetMatrix(EntManager.GetCoordinates(state.Coordinates), state.Angle);
-        _docks = state.Docks;
         RotateWithEntity = state.RotateWithEntity;
     }
 

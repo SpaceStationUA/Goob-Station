@@ -13,3 +13,24 @@
   license: "Custom"
   copyright: "Valve Software, Non-Commercial Steam Subscriber Agreement"
   source: "https://store.steampowered.com/app/220/HalfLife_2/"
+
+- files:
+  - Footsteps/wet_shoes_step.ogg
+  license: "Custom"
+  copyright: "GPL-3.0-or-later, taken from TauCeti Classic"
+  source: "https://github.com/TauCetiStation/TauCetiClassic/blob/master/sound/effects/mob/footstep/wet_shoes_step.ogg"
+
+- files: ["fpv_drone_static.ogg", "fpv_drone_flyby.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by `bruno.auzet` on freesound.org, edited and converted to .ogg"
+  source: "https://freesound.org/people/bruno.auzet/sounds/578270/"
+
+- files: ["mass_driver_launching.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Starlight."
+  source: "https://github.com/ss14Starlight/space-station-14/blob/starlight-dev/Resources/Audio/_Starlight/Effects/mass_driver_launching.ogg"
+
+- files: ["Emotes/blink.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from NovaSector, added by Manatee."
+  source: "https://github.com/NovaSector/NovaSector/blob/ab979ae8f8e0c65bdce45f368837148d064da32f/modular_nova/modules/emotes/sound/voice/blink.ogg"

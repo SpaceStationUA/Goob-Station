@@ -1,0 +1,30 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by IRS for klovnstation.",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "base",
+            "directions": 1
+        },
+        {
+            "name": "prop_static",
+            "directions": 1
+        },
+        {
+            "name": "prop_moving",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

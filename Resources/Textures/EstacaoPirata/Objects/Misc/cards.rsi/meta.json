@@ -1,216 +1,999 @@
 {
-  "version": 1,
-  "copyright": "coookies369",
-  "license": "CC-BY-SA-3.0",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "clubs1"
-    },
-    {
-      "name": "clubs2"
-    },
-    {
-      "name": "clubs3"
-    },
-    {
-      "name": "clubs4"
-    },
-    {
-      "name": "clubs5"
-    },
-    {
-      "name": "clubs6"
-    },
-    {
-      "name": "clubs7"
-    },
-    {
-      "name": "clubs8"
-    },
-    {
-      "name": "clubs9"
-    },
-    {
-      "name": "clubs10"
-    },
-    {
-      "name": "clubs11"
-    },
-    {
-      "name": "clubs12"
-    },
-    {
-      "name": "clubs13"
-    },
-    {
-      "name": "diamonds1"
-    },
-    {
-      "name": "diamonds2"
-    },
-    {
-      "name": "diamonds3"
-    },
-    {
-      "name": "diamonds4"
-    },
-    {
-      "name": "diamonds5"
-    },
-    {
-      "name": "diamonds6"
-    },
-    {
-      "name": "diamonds7"
-    },
-    {
-      "name": "diamonds8"
-    },
-    {
-      "name": "diamonds9"
-    },
-    {
-      "name": "diamonds10"
-    },
-    {
-      "name": "diamonds11"
-    },
-    {
-      "name": "diamonds12"
-    },
-    {
-      "name": "diamonds13"
-    },
-    {
-      "name": "hearts1"
-    },
-    {
-      "name": "hearts2"
-    },
-    {
-      "name": "hearts3"
-    },
-    {
-      "name": "hearts4"
-    },
-    {
-      "name": "hearts5"
-    },
-    {
-      "name": "hearts6"
-    },
-    {
-      "name": "hearts7"
-    },
-    {
-      "name": "hearts8"
-    },
-    {
-      "name": "hearts9"
-    },
-    {
-      "name": "hearts10"
-    },
-    {
-      "name": "hearts11"
-    },
-    {
-      "name": "hearts12"
-    },
-    {
-      "name": "hearts13"
-    },
-    {
-      "name": "spades1"
-    },
-    {
-      "name": "spades2"
-    },
-    {
-      "name": "spades3"
-    },
-    {
-      "name": "spades4"
-    },
-    {
-      "name": "spades5"
-    },
-    {
-      "name": "spades6"
-    },
-    {
-      "name": "spades7"
-    },
-    {
-      "name": "spades8"
-    },
-    {
-      "name": "spades9"
-    },
-    {
-      "name": "spades10"
-    },
-    {
-      "name": "spades11"
-    },
-    {
-      "name": "spades12"
-    },
-    {
-      "name": "spades13"
-    },
-    {
-      "name": "joker"
-    },
-    {
-      "name": "back_black"
-    },
-    {
-      "name": "back_nanotrasen"
-    },
-    {
-      "name": "back_syndicate"
-    },
-    {
-      "name": "syndicate_box"
-    },
-    {
-      "name": "syndicate_box_open"
-    },
-    {
-      "name": "syndicate_box_full"
-    },
-    {
-      "name": "black_box"
-    },
-    {
-      "name": "black_box_open"
-    },
-    {
-      "name": "black_box_full"
-    },
-    {
-      "name": "nanotrasen_box"
-    },
-    {
-      "name": "nanotrasen_box_open"
-    },
-    {
-      "name": "nanotrasen_box_full"
-    },
-
-    {
-      "name": "deck_black_full"
-    },
-    {
-      "name": "deck_nanotrasen_full"
-    },
-    {
-      "name": "deck_syndicate_full"
-    }
-  ]
+    "version": 1,
+    "copyright": "coookies369",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "back_black"
+        },
+        {
+            "name": "back_nanotrasen"
+        },
+        {
+            "name": "back_syndicate"
+        },
+        {
+            "name": "black_box"
+        },
+        {
+            "name": "black_box_full"
+        },
+        {
+            "name": "black_box_open"
+        },
+        {
+            "name": "clubs1"
+        },
+        {
+            "name": "clubs10"
+        },
+        {
+            "name": "clubs11"
+        },
+        {
+            "name": "clubs12"
+        },
+        {
+            "name": "clubs13"
+        },
+        {
+            "name": "clubs2"
+        },
+        {
+            "name": "clubs3"
+        },
+        {
+            "name": "clubs4"
+        },
+        {
+            "name": "clubs5"
+        },
+        {
+            "name": "clubs6"
+        },
+        {
+            "name": "clubs7"
+        },
+        {
+            "name": "clubs8"
+        },
+        {
+            "name": "clubs9"
+        },
+        {
+            "name": "copper_box"
+        },
+        {
+            "name": "copper_box_open"
+        },
+        {
+            "name": "deck_black_full"
+        },
+        {
+            "name": "deck_nanotrasen_full"
+        },
+        {
+            "name": "deck_sparot_full"
+        },
+        {
+            "name": "deck_syndicate_full"
+        },
+        {
+            "name": "deck_tarot_full"
+        },
+        {
+            "name": "diamonds1"
+        },
+        {
+            "name": "diamonds10"
+        },
+        {
+            "name": "diamonds11"
+        },
+        {
+            "name": "diamonds12"
+        },
+        {
+            "name": "diamonds13"
+        },
+        {
+            "name": "diamonds2"
+        },
+        {
+            "name": "diamonds3"
+        },
+        {
+            "name": "diamonds4"
+        },
+        {
+            "name": "diamonds5"
+        },
+        {
+            "name": "diamonds6"
+        },
+        {
+            "name": "diamonds7"
+        },
+        {
+            "name": "diamonds8"
+        },
+        {
+            "name": "diamonds9"
+        },
+        {
+            "name": "hearts1"
+        },
+        {
+            "name": "hearts10"
+        },
+        {
+            "name": "hearts11"
+        },
+        {
+            "name": "hearts12"
+        },
+        {
+            "name": "hearts13"
+        },
+        {
+            "name": "hearts2"
+        },
+        {
+            "name": "hearts3"
+        },
+        {
+            "name": "hearts4"
+        },
+        {
+            "name": "hearts5"
+        },
+        {
+            "name": "hearts6"
+        },
+        {
+            "name": "hearts7"
+        },
+        {
+            "name": "hearts8"
+        },
+        {
+            "name": "hearts9"
+        },
+        {
+            "name": "joker"
+        },
+        {
+            "name": "nanotrasen_box"
+        },
+        {
+            "name": "nanotrasen_box_full"
+        },
+        {
+            "name": "nanotrasen_box_open"
+        },
+        {
+            "name": "tt_terrelli"
+        },
+        {
+            "name": "tt_omen"
+        },
+        {
+            "name": "tt_monarch"
+        },
+        {
+            "name": "tt_eeeplet"
+        },
+        {
+            "name": "tt_cube"
+        },
+        {
+            "name": "tt_crab7"
+        },
+        {
+            "name": "tt_crab6"
+        },
+        {
+            "name": "tt_crab5"
+        },
+        {
+            "name": "tt_crab4"
+        },
+        {
+            "name": "tt_crab3"
+        },
+        {
+            "name": "tt_crab2"
+        },
+        {
+            "name": "tt_augury"
+        },
+        {
+            "name": "pack",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    3
+                ]
+            ]
+        },
+        {
+            "name": "pack_open"
+        },
+        {
+            "name": "purple_box"
+        },
+        {
+            "name": "purple_box_open"
+        },
+        {
+            "name": "sc_10_of_Cables_sparot"
+        },
+        {
+            "name": "sc_10_of_Cups_tarot"
+        },
+        {
+            "name": "sc_10_of_Discs_sparot"
+        },
+        {
+            "name": "sc_10_of_Knives_sparot"
+        },
+        {
+            "name": "sc_10_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_10_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_10_of_Swords_tarot"
+        },
+        {
+            "name": "sc_10_of_Wands_tarot"
+        },
+        {
+            "name": "sc_2_of_Cables_sparot"
+        },
+        {
+            "name": "sc_2_of_Cups_tarot"
+        },
+        {
+            "name": "sc_2_of_Discs_sparot"
+        },
+        {
+            "name": "sc_2_of_Knives_sparot"
+        },
+        {
+            "name": "sc_2_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_2_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_2_of_Swords_tarot"
+        },
+        {
+            "name": "sc_2_of_Wands_tarot"
+        },
+        {
+            "name": "sc_3_of_Cables_sparot"
+        },
+        {
+            "name": "sc_3_of_Cups_tarot"
+        },
+        {
+            "name": "sc_3_of_Discs_sparot"
+        },
+        {
+            "name": "sc_3_of_Knives_sparot"
+        },
+        {
+            "name": "sc_3_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_3_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_3_of_Swords_tarot"
+        },
+        {
+            "name": "sc_3_of_Wands_tarot"
+        },
+        {
+            "name": "sc_4_of_Cables_sparot"
+        },
+        {
+            "name": "sc_4_of_Cups_tarot"
+        },
+        {
+            "name": "sc_4_of_Discs_sparot"
+        },
+        {
+            "name": "sc_4_of_Knives_sparot"
+        },
+        {
+            "name": "sc_4_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_4_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_4_of_Swords_tarot"
+        },
+        {
+            "name": "sc_4_of_Wands_tarot"
+        },
+        {
+            "name": "sc_5_of_Cables_sparot"
+        },
+        {
+            "name": "sc_5_of_Cups_tarot"
+        },
+        {
+            "name": "sc_5_of_Discs_sparot"
+        },
+        {
+            "name": "sc_5_of_Knives_sparot"
+        },
+        {
+            "name": "sc_5_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_5_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_5_of_Swords_tarot"
+        },
+        {
+            "name": "sc_5_of_Wands_tarot"
+        },
+        {
+            "name": "sc_6_of_Cables_sparot"
+        },
+        {
+            "name": "sc_6_of_Cups_tarot"
+        },
+        {
+            "name": "sc_6_of_Discs_sparot"
+        },
+        {
+            "name": "sc_6_of_Knives_sparot"
+        },
+        {
+            "name": "sc_6_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_6_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_6_of_Swords_tarot"
+        },
+        {
+            "name": "sc_6_of_Wands_tarot"
+        },
+        {
+            "name": "sc_7_of_Cables_sparot"
+        },
+        {
+            "name": "sc_7_of_Cups_tarot"
+        },
+        {
+            "name": "sc_7_of_Discs_sparot"
+        },
+        {
+            "name": "sc_7_of_Knives_sparot"
+        },
+        {
+            "name": "sc_7_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_7_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_7_of_Swords_tarot"
+        },
+        {
+            "name": "sc_7_of_Wands_tarot"
+        },
+        {
+            "name": "sc_8_of_Cables_sparot"
+        },
+        {
+            "name": "sc_8_of_Cups_tarot"
+        },
+        {
+            "name": "sc_8_of_Discs_sparot"
+        },
+        {
+            "name": "sc_8_of_Knives_sparot"
+        },
+        {
+            "name": "sc_8_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_8_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_8_of_Swords_tarot"
+        },
+        {
+            "name": "sc_8_of_Wands_tarot"
+        },
+        {
+            "name": "sc_9_of_Cables_sparot"
+        },
+        {
+            "name": "sc_9_of_Cups_tarot"
+        },
+        {
+            "name": "sc_9_of_Discs_sparot"
+        },
+        {
+            "name": "sc_9_of_Knives_sparot"
+        },
+        {
+            "name": "sc_9_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_9_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_9_of_Swords_tarot"
+        },
+        {
+            "name": "sc_9_of_Wands_tarot"
+        },
+        {
+            "name": "sc_Ace_of_Cables_sparot"
+        },
+        {
+            "name": "sc_Ace_of_Cups_tarot"
+        },
+        {
+            "name": "sc_Ace_of_Discs_sparot"
+        },
+        {
+            "name": "sc_Ace_of_Knives_sparot"
+        },
+        {
+            "name": "sc_Ace_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_Ace_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_Ace_of_Swords_tarot"
+        },
+        {
+            "name": "sc_Ace_of_Wands_tarot"
+        },
+        {
+            "name": "sc_Death_tarot"
+        },
+        {
+            "name": "sc_Judgement_tarot"
+        },
+        {
+            "name": "sc_Justice_tarot"
+        },
+        {
+            "name": "sc_King_of_Cups_tarot"
+        },
+        {
+            "name": "sc_King_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_King_of_Swords_tarot"
+        },
+        {
+            "name": "sc_King_of_Wands_tarot"
+        },
+        {
+            "name": "sc_Knight_of_Cables_sparot"
+        },
+        {
+            "name": "sc_Knight_of_Cups_tarot"
+        },
+        {
+            "name": "sc_Knight_of_Discs_sparot"
+        },
+        {
+            "name": "sc_Knight_of_Knives_sparot"
+        },
+        {
+            "name": "sc_Knight_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_Knight_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_Knight_of_Swords_tarot"
+        },
+        {
+            "name": "sc_Knight_of_Wands_tarot"
+        },
+        {
+            "name": "sc_Page_of_Cups_tarot"
+        },
+        {
+            "name": "sc_Page_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_Page_of_Swords_tarot"
+        },
+        {
+            "name": "sc_Page_of_Wands_tarot"
+        },
+        {
+            "name": "sc_Princess_of_Cables_sparot"
+        },
+        {
+            "name": "sc_Princess_of_Discs_sparot"
+        },
+        {
+            "name": "sc_Princess_of_Knives_sparot"
+        },
+        {
+            "name": "sc_Princess_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_Queen_of_Cables_sparot"
+        },
+        {
+            "name": "sc_Queen_of_Cups_tarot"
+        },
+        {
+            "name": "sc_Queen_of_Discs_sparot"
+        },
+        {
+            "name": "sc_Queen_of_Knives_sparot"
+        },
+        {
+            "name": "sc_Queen_of_Pentacles_tarot"
+        },
+        {
+            "name": "sc_Queen_of_Sparrows_sparot"
+        },
+        {
+            "name": "sc_Queen_of_Swords_tarot"
+        },
+        {
+            "name": "sc_Queen_of_Wands_tarot"
+        },
+        {
+            "name": "sc_Strength_tarot"
+        },
+        {
+            "name": "sc_Temperance_tarot"
+        },
+        {
+            "name": "sc_The_Chariot_tarot"
+        },
+        {
+            "name": "sc_The_Clown_sparot"
+        },
+        {
+            "name": "sc_The_Devil_sparot"
+        },
+        {
+            "name": "sc_The_Devil_tarot"
+        },
+        {
+            "name": "sc_The_Emperor_tarot"
+        },
+        {
+            "name": "sc_The_Empress_tarot"
+        },
+        {
+            "name": "sc_The_Fool_tarot"
+        },
+        {
+            "name": "sc_The_Hanged_Man_tarot"
+        },
+        {
+            "name": "sc_The_Hermit_tarot"
+        },
+        {
+            "name": "sc_The_Hierophant_tarot"
+        },
+        {
+            "name": "sc_The_High_Priestess_tarot"
+        },
+        {
+            "name": "sc_The_Lovers_tarot"
+        },
+        {
+            "name": "sc_The_Magician_tarot"
+        },
+        {
+            "name": "sc_The_Moon_tarot"
+        },
+        {
+            "name": "sc_The_Star_tarot"
+        },
+        {
+            "name": "sc_The_Sun_tarot"
+        },
+        {
+            "name": "sc_The_Tower_tarot"
+        },
+        {
+            "name": "sc_The_Wheel_tarot"
+        },
+        {
+            "name": "sc_The_World_tarot"
+        },
+        {
+            "name": "singlecard_down_sparot"
+        },
+        {
+            "name": "singlecard_down_tarot"
+        },
+        {
+            "name": "spades1"
+        },
+        {
+            "name": "spades10"
+        },
+        {
+            "name": "spades11"
+        },
+        {
+            "name": "spades12"
+        },
+        {
+            "name": "spades13"
+        },
+        {
+            "name": "spades2"
+        },
+        {
+            "name": "spades3"
+        },
+        {
+            "name": "spades4"
+        },
+        {
+            "name": "spades5"
+        },
+        {
+            "name": "spades6"
+        },
+        {
+            "name": "spades7"
+        },
+        {
+            "name": "spades8"
+        },
+        {
+            "name": "spades9"
+        },
+        {
+            "name": "syndicate_box"
+        },
+        {
+            "name": "syndicate_box_full"
+        },
+        {
+            "name": "syndicate_box_open"
+        },
+        {
+            "name": "tt_apid"
+        },
+        {
+            "name": "tt_babykode"
+        },
+        {
+            "name": "tt_back"
+        },
+        {
+            "name": "tt_banom"
+        },
+        {
+            "name": "tt_basilisk"
+        },
+        {
+            "name": "tt_behonker"
+        },
+        {
+            "name": "tt_boar"
+        },
+        {
+            "name": "tt_bomb"
+        },
+        {
+            "name": "tt_box"
+        },
+        {
+            "name": "tt_boxclosed"
+        },
+        {
+            "name": "tt_boxopen"
+        },
+        {
+            "name": "tt_bros"
+        },
+        {
+            "name": "tt_bsnail"
+        },
+        {
+            "name": "tt_canom"
+        },
+        {
+            "name": "tt_carp"
+        },
+        {
+            "name": "tt_cccrab"
+        },
+        {
+            "name": "tt_ccflin"
+        },
+        {
+            "name": "tt_ccpt"
+        },
+        {
+            "name": "tt_cmouse"
+        },
+        {
+            "name": "tt_crab"
+        },
+        {
+            "name": "tt_cspider"
+        },
+        {
+            "name": "tt_deer"
+        },
+        {
+            "name": "tt_dolby"
+        },
+        {
+            "name": "tt_doppa"
+        },
+        {
+            "name": "tt_dragon"
+        },
+        {
+            "name": "tt_eanom"
+        },
+        {
+            "name": "tt_eeep"
+        },
+        {
+            "name": "tt_fanom"
+        },
+        {
+            "name": "tt_finfin"
+        },
+        {
+            "name": "tt_foes"
+        },
+        {
+            "name": "tt_forklift"
+        },
+        {
+            "name": "tt_ganom"
+        },
+        {
+            "name": "tt_glock"
+        },
+        {
+            "name": "tt_golaith"
+        },
+        {
+            "name": "tt_golly"
+        },
+        {
+            "name": "tt_gondal"
+        },
+        {
+            "name": "tt_gorilla"
+        },
+        {
+            "name": "tt_griffy"
+        },
+        {
+            "name": "tt_gslime"
+        },
+        {
+            "name": "tt_hamlet"
+        },
+        {
+            "name": "tt_hivelord"
+        },
+        {
+            "name": "tt_honkbot"
+        },
+        {
+            "name": "tt_ian"
+        },
+        {
+            "name": "tt_ianom"
+        },
+        {
+            "name": "tt_killer"
+        },
+        {
+            "name": "tt_kisser"
+        },
+        {
+            "name": "tt_lepidodent"
+        },
+        {
+            "name": "tt_llr"
+        },
+        {
+            "name": "tt_loppa"
+        },
+        {
+            "name": "tt_lr"
+        },
+        {
+            "name": "tt_major"
+        },
+        {
+            "name": "tt_manom"
+        },
+        {
+            "name": "tt_mcgriff"
+        },
+        {
+            "name": "tt_mop"
+        },
+        {
+            "name": "tt_moth"
+        },
+        {
+            "name": "tt_mouse"
+        },
+        {
+            "name": "tt_ncat"
+        },
+        {
+            "name": "tt_orbbees"
+        },
+        {
+            "name": "tt_panom"
+        },
+        {
+            "name": "tt_penguin"
+        },
+        {
+            "name": "tt_pipi"
+        },
+        {
+            "name": "tt_pleeb"
+        },
+        {
+            "name": "tt_pun"
+        },
+        {
+            "name": "tt_rancho"
+        },
+        {
+            "name": "tt_ranom"
+        },
+        {
+            "name": "tt_ren"
+        },
+        {
+            "name": "tt_repli"
+        },
+        {
+            "name": "tt_rev"
+        },
+        {
+            "name": "tt_rking"
+        },
+        {
+            "name": "tt_rock"
+        },
+        {
+            "name": "tt_roo"
+        },
+        {
+            "name": "tt_rouny"
+        },
+        {
+            "name": "tt_rs"
+        },
+        {
+            "name": "tt_sanom"
+        },
+        {
+            "name": "tt_sbear"
+        },
+        {
+            "name": "tt_seof"
+        },
+        {
+            "name": "tt_serval"
+        },
+        {
+            "name": "tt_shiva"
+        },
+        {
+            "name": "tt_shrimp"
+        },
+        {
+            "name": "tt_slurva"
+        },
+        {
+            "name": "tt_smile"
+        },
+        {
+            "name": "tt_smspider"
+        },
+        {
+            "name": "tt_snail"
+        },
+        {
+            "name": "tt_snake"
+        },
+        {
+            "name": "tt_sorb"
+        },
+        {
+            "name": "tt_sroo"
+        },
+        {
+            "name": "tt_ssnake"
+        },
+        {
+            "name": "tt_tanom"
+        },
+        {
+            "name": "tt_tck"
+        },
+        {
+            "name": "tt_tckut"
+        },
+        {
+            "name": "tt_tick"
+        },
+        {
+            "name": "tt_top"
+        },
+        {
+            "name": "tt_tslime"
+        },
+        {
+            "name": "tt_vrex"
+        },
+        {
+            "name": "tt_watcher"
+        },
+        {
+            "name": "tt_wb"
+        },
+        {
+            "name": "tt_wizspore"
+        },
+        {
+            "name": "tt_yslime"
+        },
+        {
+            "name": "yumyum",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    2
+                ]
+            ]
+        }
+    ]
 }

@@ -2,7 +2,6 @@ dv-ascended-title-1 = Вознесений
 dv-ascended-title-2 = Апокрифічний
 dv-ascended-title-3 = Безмежний
 dv-ascended-title-4 = Трансцендентний
-
 dv-ascended-name-1 = Те-Що-Дивиться,
 dv-ascended-name-2 = Те-Що-Втекло,
 dv-ascended-name-3 = Те-Що-Чекає,

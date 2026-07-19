@@ -5,7 +5,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 hulk-unhulked = Ви відчуваєте, що стали значно слабшими.
-
 hulk-roar-1 = РААААААААРГХ!
 hulk-roar-2 = ХННННННННННГГГГГХ!
 hulk-roar-3 = ГВААААААААРРРХХХ!

@@ -1,5 +1,4 @@
 lathe-recipe-BaseTranslatorImplanter-name = імплантер імплантів-перекладачів
-
 lathe-recipe-BasicGalaticCommonTranslatorImplanter-subname = базовий імплант-перекладач загальногалактичної мови
 lathe-recipe-AdvancedGalaticCommonTranslatorImplanter-subname = просунутий імплант-перекладач загальногалактичної мови
 lathe-recipe-BubblishTranslatorImplanter-subname = імплант-перекладач мови Bubblish
@@ -16,7 +15,5 @@ lathe-recipe-MarishTranslatorImplanter-subname = імплант-переклад
 lathe-recipe-SchechiTranslatorImplanter-subname = імплант-перекладач мови Schechi
 lathe-recipe-NewKinPidginTranslatorImplanter-subname = імплант-перекладач мови Ka'rakk
 lathe-recipe-ChevalTranslatorImplanter-subname = імплант-перекладач мови Cheval
-
 lathe-recipe-YowKriolTranslatorImplanter-subname = імплант-перекладач мови Yow Kriol
-
 lathe-recipe-SignTranslatorImplanter-subname = імплант перекладача жестової мови

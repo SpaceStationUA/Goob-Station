@@ -19,7 +19,6 @@ comms-console-announcement-title-station = Комунікаційна Консо
 comms-console-announcement-title-centcom = Центральне Командування
 comms-console-announcement-title-nukie = Ядерні Оперативники 'СИНДИКАТ'
 comms-console-announcement-title-SAN = Соляріанського Флоту
-
 comms-console-message-too-long = Повідомлення занадто довге
 
 # Значення-заповнювачі
@@ -29,3 +28,4 @@ comms-console-menu-announcement-button-tooltip = Надіслати ваше п�
 comms-console-menu-broadcast-button-tooltip = Транслювати ваше повідомлення на настінні екрани по всій станції. Примітка: вони вміщують лише десять символів!
 comms-console-menu-alert-level-button-tooltip = Змінити рівень тривоги на станції. Застосовується негайно після вибору.
 comms-console-menu-emergency-shuttle-button-tooltip = Викликає або відкликає аварійний шатл. Ви можете відкликати його лише тоді, коли залишилося достатньо часу.
+comms-console-announcement-title-wizard = Чарівник

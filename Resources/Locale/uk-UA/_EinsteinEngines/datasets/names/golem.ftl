@@ -1,4 +1,4 @@
-﻿names-golem-1 = Абельсоніт
+names-golem-1 = Абельсоніт
 names-golem-2 = Абенакііт
 names-golem-3 = Абернатіїт
 names-golem-4 = Абхурит

@@ -8,4 +8,3 @@ advertisement-ammo-7 = Зброя не вбиває людей, але ви мо
 advertisement-ammo-8 = Кому потрібна відповідальність, якщо у вас є зброя?
 advertisement-ammo-9 = Вбивати людей - це весело!
 advertisement-ammo-10 = Іди, розстріляй їх!
-

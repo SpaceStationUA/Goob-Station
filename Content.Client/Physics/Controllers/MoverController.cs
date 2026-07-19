@@ -1,29 +1,3 @@
-// SPDX-FileCopyrightText: 2021 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2021 Javier Guardia Fernández <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2021 Metal Gear Sloth <metalgearsloth@gmail.com>
-// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <gradientvera@outlook.com>
-// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <zddm@outlook.es>
-// SPDX-FileCopyrightText: 2021 Visne <39844191+Visne@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Acruid <shatter66@gmail.com>
-// SPDX-FileCopyrightText: 2022 keronshb <54602815+keronshb@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 metalgearsloth <comedian_vs_clown@hotmail.com>
-// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 0x6273 <0x40@keemail.me>
-// SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Jezithyr <jezithyr@gmail.com>
-// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 plykiya <plykiya@protonmail.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 MarkerWicker <markerWicker@proton.me>
-// SPDX-FileCopyrightText: 2025 Princess Cheeseballs <66055347+Pronana@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
-// SPDX-FileCopyrightText: 2025 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Alert;
@@ -36,6 +10,7 @@ using Content.Shared.Movement.Systems;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -47,6 +22,7 @@ public sealed class MoverController : SharedMoverController
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IClientNetManager _net = default!;
 
     public override void Initialize()
     {
@@ -60,7 +36,16 @@ public sealed class MoverController : SharedMoverController
         SubscribeLocalEvent<MovementRelayTargetComponent, UpdateIsPredictedEvent>(OnUpdateRelayTargetPredicted);
         SubscribeLocalEvent<PullableComponent, UpdateIsPredictedEvent>(OnUpdatePullablePredicted);
 
-        Subs.CVar(_cfg, CCVars.DefaultWalk, _ => RaiseNetworkEvent(new UpdateInputCVarsMessage()));
+        Subs.CVar(_cfg, CCVars.DefaultWalk, _ => SendInputCvars());
+    }
+
+    private void SendInputCvars()
+    {
+        // Pirate: Replay metadata applies CVars locally without a server connection.
+        if (!_net.IsConnected)
+            return;
+
+        RaiseNetworkEvent(new UpdateInputCVarsMessage());
     }
 
     private void OnUpdatePredicted(Entity<InputMoverComponent> entity, ref UpdateIsPredictedEvent args)
@@ -150,9 +135,9 @@ public sealed class MoverController : SharedMoverController
         // Logger.Info($"[{_gameTiming.CurTick}/{subTick}] Sprint: {enabled}");
         base.SetSprinting(entity, subTick, walking);
 
-        if (_cfg.GetCVar(CCVars.ToggleWalk) && (walking && !_cfg.GetCVar(CCVars.DefaultWalk) || !walking && _cfg.GetCVar(CCVars.DefaultWalk)))
-            _alerts.ShowAlert(entity, WalkingAlert, showCooldown: false, autoRemove: false);
+        if (walking && _cfg.GetCVar(CCVars.ToggleWalk))
+            _alerts.ShowAlert(entity.Owner, WalkingAlert, showCooldown: false, autoRemove: false);
         else
-            _alerts.ClearAlert(entity, WalkingAlert);
+            _alerts.ClearAlert(entity.Owner, WalkingAlert);
     }
 }

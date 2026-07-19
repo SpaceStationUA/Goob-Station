@@ -1,0 +1,10 @@
+- type: listing
+  id: UplinkSyndieTrumps
+  name: uplink-syndietrumps-name
+  description: uplink-syndietrumps-desc
+  icon: { sprite: EstacaoPirata/Objects/Misc/cards.rsi, state: pack }
+  productEntity: TippyTrumpMysteryPackSyndicate
+  cost:
+    Telecrystal: 50
+  categories:
+  - UplinkAllies

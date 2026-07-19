@@ -1,8 +1,3 @@
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 RadsammyT <32146976+RadsammyT@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
@@ -20,6 +15,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
+using Robust.Shared.Timing; // Pirate: shuffle-cooldown
 using Robust.Shared.Utility;
 
 namespace Content.Shared._EstacaoPirata.Cards.Stack;
@@ -42,6 +38,7 @@ public sealed class CardStackSystem : EntitySystem
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly CardHandSystem _cardHandSystem = default!; // Frontier
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly IGameTiming _timing = default!; // Pirate: shuffle-cooldown
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -112,6 +109,11 @@ public sealed class CardStackSystem : EntitySystem
     {
         if (!Resolve(uid, ref comp))
             return false;
+
+        // Pirate: shuffle-cooldown
+        if (_timing.CurTime < comp.NextShuffle)
+            return false;
+        comp.NextShuffle = _timing.CurTime + comp.ShuffleCooldown;
 
         _random.Shuffle(comp.Cards);
 

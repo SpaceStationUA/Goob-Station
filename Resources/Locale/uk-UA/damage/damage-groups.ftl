@@ -4,5 +4,4 @@ damage-group-airloss = Асфіксія
 damage-group-toxin = Токсини
 damage-group-genetic = Генетичні
 damage-group-immaterial = Нематеріальні
-
 damage-group-metaphysical = Метафізичний

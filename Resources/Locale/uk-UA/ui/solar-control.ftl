@@ -7,4 +7,3 @@ solar-control-window-panel-angle = Кут Панелі:
 solar-control-window-panel-angular-velocity = Кутова Швидкість Панелі:
 solar-control-window-degrees-per-minute = °/хв.
 solar-control-window-press-enter-to-confirm = Натисніть «Enter», щоб підтвердити.
-

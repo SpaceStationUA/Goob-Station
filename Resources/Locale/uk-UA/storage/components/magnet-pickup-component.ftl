@@ -10,5 +10,4 @@
 
 comp-magnet-pickup-examined-on = Магніт наразі [color=darkgreen]ввімкнено[/color].
 comp-magnet-pickup-examined-off = Магніт наразі [color=darkred]вимкнено[/color].
-
 comp-magnet-pickup-toggle-verb = Перемкнути магніт

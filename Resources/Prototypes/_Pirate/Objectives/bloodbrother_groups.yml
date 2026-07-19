@@ -1,0 +1,34 @@
+- type: weightedRandom
+  id: BloodBrotherObjectiveGroups
+  weights:
+    BloodBrotherObjectiveGroupState: 1
+    BloodBrotherObjectiveGroupSteal: 1
+    BloodBrotherObjectiveGroupKill: 1
+
+- type: weightedRandom
+  id: BloodBrotherObjectiveGroupState
+  weights:
+    BloodBrotherEscapeShuttleObjective: 0.30
+    BloodBrotherSurviveObjective: 0.70
+
+- type: weightedRandom
+  id: BloodBrotherObjectiveGroupSteal
+  weights:
+    BloodBrotherCaptainIDStealObjective: 1
+    BloodBrotherCMOHyposprayStealObjective: 1
+    BloodBrotherRDHardsuitStealObjective: 1
+    BloodBrotherNukeDiskStealObjective: 1
+    BloodBrotherMagbootsStealObjective: 1
+    BloodBrotherCorgiMeatStealObjective: 1
+    BloodBrotherClipboardStealObjective: 1
+    BloodBrotherCaptainGunStealObjective: 0.5
+    BloodBrotherCaptainJetpackStealObjective: 0.5
+    BloodBrotherHandTeleporterStealObjective: 0.5
+    BloodBrotherLawbringerStealObjective: 0.5
+    BloodBrotherAccessConfiguratorStealObjective: 1
+
+- type: weightedRandom
+  id: BloodBrotherObjectiveGroupKill
+  weights:
+    BloodBrotherKillRandomPersonObjective: 0.85
+    BloodBrotherKillRandomHeadObjective: 0.25

@@ -1,4 +1,4 @@
-﻿# used this tool: https://www.fantasynamegenerators.com/goblin-wow-names.php
+# used this tool: https://www.fantasynamegenerators.com/goblin-wow-names.php
 names-goblin-first-male-dataset-1 = Катснап
 names-goblin-first-male-dataset-2 = Дедшифт
 names-goblin-first-male-dataset-3 = Смартрокет
@@ -209,4 +209,3 @@ names-goblin-first-male-dataset-207 = Слайфайр
 names-goblin-first-male-dataset-208 = Фоумскрю
 names-goblin-first-male-dataset-209 = Фіззлбаб
 names-goblin-first-male-dataset-210 = Хардфолт
-

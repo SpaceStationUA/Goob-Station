@@ -1,27 +1,3 @@
-// SPDX-FileCopyrightText: 2022 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Jezithyr <Jezithyr.@gmail.com>
-// SPDX-FileCopyrightText: 2022 Jezithyr <Jezithyr@gmail.com>
-// SPDX-FileCopyrightText: 2022 Jezithyr <jmaster9999@gmail.com>
-// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 wrexbe <wrexbe@protonmail.com>
-// SPDX-FileCopyrightText: 2023 Justin Trotter <trotter.justin@gmail.com>
-// SPDX-FileCopyrightText: 2023 Kara <lunarautomaton6@gmail.com>
-// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Ed <96445749+TheShuEd@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Kevin Zheng <kevinz5000@gmail.com>
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Errant <35878406+Errant-4@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 SpaceManiac <tad@platymuus.com>
-// SPDX-FileCopyrightText: 2025 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
@@ -51,7 +27,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Systems.Character;
 
 [UsedImplicitly]
-public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
+public sealed partial class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem> // Pirate: Starlight character descriptions.
 {
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -79,6 +55,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         _window.OnClose += DeactivateButton;
         _window.OnOpen += ActivateButton;
+        _window.DetailExaminableTextEdit.OnTextChanged += OnDetailExaminableChanged;
+        _window.DetailExaminableSubmitButton.OnPressed += OnDetailExaminableSubmit;
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
@@ -88,8 +66,13 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     public void OnStateExited(GameplayState state)
     {
+        ClosePirateCharacterInfoWindows(); // Pirate: Starlight character descriptions.
         if (_window != null)
         {
+            _window.OnClose -= DeactivateButton;
+            _window.OnOpen -= ActivateButton;
+            _window.DetailExaminableTextEdit.OnTextChanged -= OnDetailExaminableChanged;
+            _window.DetailExaminableSubmitButton.OnPressed -= OnDetailExaminableSubmit;
             _window.Close();
             _window = null;
         }
@@ -137,6 +120,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         }
 
         CharacterButton.Pressed = false;
+        if (_window != null)
+            _window.DetailExaminableSubmitButton.Disabled = true;
     }
 
     private void ActivateButton()
@@ -156,7 +141,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             return;
         }
 
-        var (entity, job, objectives, briefing, entityName, memories) = data; // Pirate banking
+        var (entity, job, objectives, briefing, detailExaminable, entityName, memories) = data; // Pirate banking
 
         _window.SpriteView.SetEntity(entity);
 
@@ -164,9 +149,12 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         _window.NameLabel.Text = entityName;
         _window.SubText.Text = job;
+        SetPirateSelfCharacterInfo(entity); // Pirate: Starlight character descriptions.
         _window.Objectives.RemoveAllChildren();
         _window.ObjectivesLabel.Visible = objectives.Any();
         _window.Memories.RemoveAllChildren(); //Pirate banking
+        if (detailExaminable != null)
+            _window.DetailExaminableTextEdit.TextRope = new Rope.Leaf(detailExaminable);
 
         foreach (var (groupId, conditions) in objectives)
         {
@@ -182,7 +170,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
             var objectiveLabel = new RichTextLabel
             {
-                StyleClasses = { StyleNano.StyleClassTooltipActionTitle }
+                StyleClasses = { StyleClass.TooltipTitle }
             };
             objectiveLabel.SetMessage(objectiveText);
 
@@ -243,7 +231,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             _window.Objectives.AddChild(control);
         }
 
-        _window.RolePlaceholder.Visible = briefing == null && !controls.Any() && !objectives.Any();
+        _window.RolePlaceholder.Visible = false; // Pirate: the in-round description editor keeps this window useful.
     }
 
     private void OnRoleTypeChanged(MindRoleTypeChangedEvent ev, EntitySessionEventArgs _)
@@ -272,6 +260,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     private void CharacterDetached(EntityUid uid)
     {
+        ClosePirateCharacterInfoWindows(); // Pirate: Starlight character descriptions.
         CloseWindow();
     }
 
@@ -294,12 +283,34 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         if (_window.IsOpen)
         {
+            ClearPirateSelfCharacterInfo(); // Pirate: Starlight character descriptions.
             CloseWindow();
         }
         else
         {
             _characterInfo.RequestCharacterInfo();
+            if (_player.LocalEntity is { } entity)
+                SetPirateSelfCharacterInfo(entity); // Pirate: Starlight character descriptions.
             _window.Open();
         }
+    }
+
+    // Pirate: allow editing the round description in-game.
+    private void OnDetailExaminableSubmit(ButtonEventArgs args)
+    {
+        if (_window == null)
+            return;
+
+        var text = Rope.Collapse(_window.DetailExaminableTextEdit.TextRope).Trim();
+        _window.DetailExaminableSubmitButton.Disabled = true;
+        _characterInfo.UpdateDetailExaminable(text);
+    }
+
+    private void OnDetailExaminableChanged(TextEdit.TextEditEventArgs args)
+    {
+        if (_window == null)
+            return;
+
+        _window.DetailExaminableSubmitButton.Disabled = false;
     }
 }

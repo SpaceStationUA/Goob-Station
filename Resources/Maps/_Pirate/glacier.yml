@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 04/09/2026 18:21:05
-  entityCount: 19225
+  entityCount: 19226
 maps:
 - 1
 grids:
@@ -151,6 +151,15 @@ entities:
         - 0
     - type: Broadphase
     - type: OccluderTree
+    - type: LightCycle
+      minLevel: '#FFFFFFFF'
+      clipLevel: '#FFFFFFFF'
+      clipLight: 2.25
+      minLightLevel: 0.2
+      duration: 3600
+      originalColor: '#575C94FF'
+    - type: DynamicWeather
+      scheduler: WeatherGlacier
   - uid: 2
     components:
     - type: MetaData
@@ -82993,7 +83002,7 @@ entities:
     - type: Transform
       pos: 23.5,-28.5
       parent: 2
-- proto: GlowstickBase
+- proto: Glowstick
   entities:
   - uid: 11097
     components:
@@ -90305,7 +90314,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: MaterialSilo
+- proto: MachineMaterialSilo
   entities:
   - uid: 12157
     components:
@@ -112405,6 +112414,13 @@ entities:
     components:
     - type: Transform
       pos: 15.5,0.5
+      parent: 2
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
+  entities:
+  - uid: 19226
+    components:
+    - type: Transform
+      pos: 36.5,42.5
       parent: 2
 - proto: SpawnMobCleanBot
   entities:

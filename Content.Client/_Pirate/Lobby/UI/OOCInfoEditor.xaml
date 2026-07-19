@@ -1,0 +1,24 @@
+<!--
+SPDX-FileCopyrightText: 2025 Starlight
+SPDX-FileCopyrightText: 2026 SpaceStationUA
+SPDX-License-Identifier: MIT
+-->
+
+<Control xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         HorizontalExpand="True">
+    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+            <BoxContainer Name="PersonalNotes" Access="Public" Orientation="Vertical" VerticalExpand="True">
+                <Label Text="{Loc 'character-info-editor-personal-notes-label'}"/>
+                <TextEdit Name="PersonalNotesInput" Access="Public" MinSize="220 100" Margin="10"
+                          HorizontalExpand="True" VerticalExpand="True"/>
+            </BoxContainer>
+            <BoxContainer Name="OOCNotes" Access="Public" Orientation="Vertical" VerticalExpand="True">
+                <Label Text="{Loc 'character-info-editor-ooc-notes-label'}"/>
+                <TextEdit Name="OOCNotesInput" Access="Public" MinSize="220 100" Margin="10"
+                          HorizontalExpand="True" VerticalExpand="True"/>
+            </BoxContainer>
+        </BoxContainer>
+    </ScrollContainer>
+</Control>

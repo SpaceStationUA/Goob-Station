@@ -1,12 +1,3 @@
-// SPDX-FileCopyrightText: 2021 ShadowCommander <10494922+ShadowCommander@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
-// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: MIT
 
 using Content.Shared.Objectives;
@@ -32,14 +23,28 @@ public sealed class CharacterInfoEvent : EntityEventArgs
     public readonly string JobTitle;
     public readonly Dictionary<string, List<ObjectiveInfo>> Objectives;
     public readonly string? Briefing;
+    public readonly string? DetailExaminable; // Pirate: allow editing the round description in-game.
     public readonly Dictionary<string, string> Memory; //Pirate banking
 
-    public CharacterInfoEvent(NetEntity netEntity, string jobTitle, Dictionary<string, List<ObjectiveInfo>> objectives, string? briefing, Dictionary<string, string> memory) //Pirate banking
+    public CharacterInfoEvent(NetEntity netEntity, string jobTitle, Dictionary<string, List<ObjectiveInfo>> objectives, string? briefing, string? detailExaminable, Dictionary<string, string> memory) //Pirate banking
     {
         NetEntity = netEntity;
         JobTitle = jobTitle;
         Objectives = objectives;
         Briefing = briefing;
+        DetailExaminable = detailExaminable;
         Memory = memory; //Pirate banking
+    }
+}
+
+// Pirate: allow editing the round description in-game.
+[Serializable, NetSerializable]
+public sealed class UpdateDetailExaminableEvent : EntityEventArgs
+{
+    public readonly string Content;
+
+    public UpdateDetailExaminableEvent(string content)
+    {
+        Content = content;
     }
 }

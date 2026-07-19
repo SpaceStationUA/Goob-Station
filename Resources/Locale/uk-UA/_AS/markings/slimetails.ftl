@@ -1,0 +1,14 @@
+marking-SlimeArachnidCurled = Арахнідові зігнуті руки
+marking-SlimeArachnidCurled-slime-curled = Арахнідові зігнуті руки
+marking-SlimeArachnidScorpion = Арахнідові скорпіонові руки
+marking-SlimeArachnidScorpion-slime-scorpion = Арахнідові скорпіонові руки
+marking-SlimeArachnidShort = Арахнідові короткі руки
+marking-SlimeArachnidShort-slime-short = Арахнідові короткі руки
+marking-SlimeLizardTail = Ящірковий хвіст
+marking-SlimeLizardTail-slime-lizard = Ящірковий хвіст
+marking-SlimeLizardSnake = Зміїний хвіст
+marking-SlimeLizardSnake-slime-snake = Зміїний хвіст
+marking-SlimeLizardSnakeLarge = Зміїний хвіст (великий)
+marking-SlimeLizardSnakeLarge-slime-snake-large = Зміїний хвіст (великий)
+marking-SlimeVoxTail = Хвіст вокса
+marking-SlimeVoxTail-slime-tail-vox = Хвіст вокса

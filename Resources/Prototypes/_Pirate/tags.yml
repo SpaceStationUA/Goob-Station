@@ -26,6 +26,12 @@
   id: Photo
 
 - type: Tag
+  id: PlumbingDuct
+
+- type: Tag
+  id: MechReactor
+
+- type: Tag
   id: CameraFilm
 
 - type: Tag
@@ -48,3 +54,9 @@
 
 - type: Tag
   id: CoffeeCondimentChocolatePirate
+
+- type: Tag
+  id: MagazineLightRifleCaseless
+
+- type: Tag
+  id: CartridgeLightRifleCaseless

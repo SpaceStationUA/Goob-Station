@@ -3,9 +3,7 @@ obradinn-activate-fail-map = не та мапа
 obradinn-activate-fail-no-distance = неможливо визначити відстань
 obradinn-activate-fail-distance = ви за {$distance} плиток від місця події
 obradinn-activate-success = годинник зупиняється
-
 obradinn-interact-fail-target = неприпустима ціль
 obradinn-interact-fail-witness = свідків не записано
 obradinn-interact-success = годинник починає цокати
-
 obradinn-hologram-name = Невідомо

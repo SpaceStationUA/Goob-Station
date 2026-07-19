@@ -12,7 +12,6 @@ guardian-no-soul = Твій охоронець не має душі.
 guardian-available = Твій охоронець тепер має душу.
 
 ## Особа охоронця специфічна
-
 guardian-entity-recall = Охоронець зникає в повітрі!
 guardian-entity-taking-damage = Ваш охоронець отримує пошкодження!
 
@@ -21,8 +20,6 @@ guardian-host-critical-warn = ВАШ ГОСПОДАР ПОРАНЕНИЙ!
 guardian-host-death-warn = ВАША ФОРМА ПІДДАЄТЬСЯ НЕБУТТЮ!
 guardian-death-warn = ВАШЕ ТІЛО ПРОНИЗУЄ СУБАТОМНИЙ БІЛЬ, КОЛИ ВОНО РОЗПАДАЄТЬСЯ!
 guardian-attack-host = Ви не можете нападати на свого господаря.
-
-
 guardian-inside-container = Немає місця, щоб випустити вашого вартового!
 
 ## Специфічне для сутності Вартового

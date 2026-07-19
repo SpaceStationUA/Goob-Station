@@ -6,9 +6,13 @@
   - TrinketsClothingHeadPaperSack
   - TrinketsPhotoAlbum
   - TrinketsPhotoCameraFilled
+  - NoviceMark
   - Pillow
+  - TrinketsTrainWhistle
   subgroups:
   - PiratePlushies
+  - PirateGambling
+  - PirateCassettes
 
 
 - type: loadoutGroup
@@ -25,6 +29,35 @@
   - PlushieSkeleton
   - PlushieTayler
   - PlushiePocketAssistant
+
+- type: loadoutGroup
+  id: PirateGambling
+  name: loadout-group-trinkets
+  loadouts:
+  - CardBoxBlack
+  - CardBoxNanotrasen
+  - CardBoxTarot
+  - CardBoxSparot
+  - CardBoxTippyTrump
+  - TippyTrumpMysteryPack
+  - CardBoxNuno
+
+- type: loadoutGroup
+  id: PirateCassettes
+  name: loadout-group-pirate-cassettes
+  minLimit: 0
+  maxLimit: 3
+  loadouts:
+  - LoadoutRMCCassettePlayer
+  - LoadoutRMCCassetteTapeWigWoo1
+  - LoadoutRMCCassetteTapeMendax
+  - LoadoutRMCCassetteTapeNighty
+  - LoadoutRMCCassetteTapeGoodShowOldChap
+  - LoadoutRMCCassetteTapeRedQwesta
+  - LoadoutRMCCassetteTapeBolgarich
+  - LoadoutRMCCassetteTapeQwertyquerty
+  - LoadoutRMCCassetteTapePigeonBeans
+  - LoadoutRMCCassetteTapeCustom
 
 - type: loadoutGroup
   id: PirateEEGenericItems
@@ -106,7 +139,6 @@
   - LoadoutBeltWaist
   - LoadoutBeltWaistThin
   - LoadoutBeltWaistbagColor
-  - ClothingBeltTCAFWebbing
 
 - type: loadoutGroup
   id: PirateEEGenericHands
@@ -118,7 +150,6 @@
   - LoadoutHandsGlovesEnviroglovesEvening
   - LoadoutHandsClothWrap
   - ClothingHandsTacticalMaidGlovesLoadout
-  - ClothingHandsGlovesCombatTCAF
 
 - type: loadoutGroup
   id: PirateEEGenericMask
@@ -246,6 +277,7 @@
   - LoadoutUniformJumpsuitSuitVictorianRedVest
   - LoadoutUniformJumpsuitSuitVictorianVest
   - LoadoutUniformJumpsuitWaiter
+  - LoadoutUniformJumpsuitWaitstaffFormal
   - LoadoutUniformJumpsuitYogaGymBra
   - LoadoutUniformJumpsuitBlackTurtleneck
   - LoadoutUniformJumpsuitBlackTurtleneckFlipped
@@ -265,11 +297,6 @@
   - LoadoutUniformJumpsuitFlannelBlackJeans
   - LoadoutUniformJumpsuitFlannelKhakis
   - LoadoutUniformJumpsuitFlannelBlackKhakis
-  - ClothingUniformTCAFArmsman
-  - ClothingUniformTCFLLegate
-  - ClothingUniformTCFLPilot
-  - ClothingUniformTCFLSentinel
-  - ClothingUniformTCFLVolunteer
   subgroups:
   - PiratePassengerJumpsuit
 
@@ -460,6 +487,7 @@
   - WardrobeBandGreen
   - WardrobeBandBlue
   - WardrobeBandBlack
+  - WardrobeConductorHat
 
 
 - type: loadoutGroup
@@ -562,12 +590,6 @@
   - LoadoutHeadBowSmall
   - LoadoutHeadHatBeanieGreen
   - LoadoutHeadHatMountie
-  - ClothingHeadHatTCAFBeretDress
-  - ClothingHeadHatTCAFBeretField
-  - ClothingHeadHatTCFLBeretDress
-  - ClothingHeadHatTCFLBeretField
-  - ClothingHeadHatTCFLBeretSentinel
-  - ClothingHeadHatTCFLSoftCap
   subgroups:
   - PiratePassengerHead
 
@@ -712,10 +734,19 @@
   - LoadoutOuterCoatSubmarinerOpened
   - LoadoutOuterVestColorable
   - LoadoutOuterVestThick
-  - LoadoutOuterJacketTCAF
   subgroups:
   - PiratePassengerOuterClothing
 
+# Сервісний працівник
+- type: loadoutGroup
+  id: ServiceWorkerHead
+  name: loadout-group-service-worker-head
+  minLimit: 0
+  loadouts:
+  - Bunnyears
+  - BunnyearsDark
+  subgroups:
+  - BartenderHead
 
 
 ## Cargo - Карго
@@ -766,45 +797,103 @@
   - MantisTinfoil
   - MantisHelmet
   - MantisFez
+  - MantisFezInsulative
+  - MantisFezAiry
+  - MantisFezOrnate
+  - MantisHoodDark
+  - MantisBeret
 
 - type: loadoutGroup
   id: MantisJumpsuit
   name: loadout-group-mantis-Jumpsuit
   loadouts:
   - MantisSuit
+  - MantisSuitDark
   - MantisSkirt
+  - MantisSkirtAiry
+  - MantisSkirtOrnate
 
 - type: loadoutGroup
   id: MantisBack
   name: loadout-group-mantis-Back
   loadouts:
   - MantisBackpack
+  - MantisBackpackDEN
   - MantisSatchel
+  - MantisSatchelDEN
   - MantisDuffel
+  - MantisDuffelDEN
+  - MantisPurse
+  - MantisMessenger
 
 - type: loadoutGroup
   id: MantisOuterClothing
   name: loadout-group-mantis-OuterClothing
   loadouts:
   - MantisCoat
+  - MantisCoatAiry
+  - MantisCoatOrnate
   - MantisCoatWinter
+  - MantisCoatWinterDark
+
+- type: loadoutGroup
+  id: MantisGloves
+  name: loadout-group-mantis-Gloves
+  loadouts:
+  - MantisGloves
+  - MantisGlovesAiry
 
 - type: loadoutGroup
   id: MantisShoes
   name: loadout-group-mantis-Shoes
   loadouts:
   - MantisBoots
+  - MantisSandalsAiry
+  - MantisSandalsDark
+  - MantisSandalsOrnate
 
 - type: loadoutGroup
   id: MantisEyes
   name: loadout-group-mantis-Eyes
   loadouts:
+  - EpiHudGlasses
   - EtherealGlasses
+  - EpiHud
+  - MantisGlasses
+  - MantisGlassesTinted
+  - MantisGlassesVeil
+  - MantisGlassesMirrored
 
 - type: loadoutGroup
   id: MantisBelt
   name: loadout-group-mantis-Belt
   loadouts:
+  - MantisBelt
+  - MantisBeltAiry
+  - MantisBeltDark
+  - MantisBeltOrnate
+
+- type: loadoutGroup
+  id: MantisNeck
+  name: loadout-group-mantis-Neck
+  loadouts:
+  - MantisCloakDark
+  - MantisMantleOrnate
+  - MantisShackles
+  - MantisPendulum
+
+- type: loadoutGroup
+  id: MantisEars
+  name: loadout-group-mantis-Ears
+  loadouts:
+  - MantisHeadset
+  - MantisHeadsetAlt
+
+- type: loadoutGroup
+  id: MantisMask
+  name: loadout-group-mantis-Mask
+  loadouts:
+  - MantisMaskRitual
   - MantisBelt
 
 
@@ -934,7 +1023,7 @@
   - BlackShoes
   - CombatBoots
   - JackBoots
-  - NanotrasenRepresentativeBoots
+  - LaceupShoes # Pirate: upstream removed the duplicate NTR loadout.
 
 #Печатки
 - type: loadoutGroup

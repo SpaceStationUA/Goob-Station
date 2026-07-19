@@ -6,7 +6,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 admin-explosion-eui-title = Спавнити Вибухи
-
 admin-explosion-eui-label-type = Тип вибуху
 admin-explosion-eui-label-mapid = ID Мапи
 admin-explosion-eui-label-xmap = X (Мапа)

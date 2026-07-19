@@ -7,7 +7,5 @@ surveillance-camera-monitor-ui-status-connecting = З'єднання:
 surveillance-camera-monitor-ui-status-connected = З'єднано:
 surveillance-camera-monitor-ui-status-disconnected = Від'єднано
 surveillance-camera-monitor-ui-no-subnets = Нема Мережей
-
 surveillance-camera-setup = Налаштувати
 surveillance-camera-setup-ui-set = Встановити
-

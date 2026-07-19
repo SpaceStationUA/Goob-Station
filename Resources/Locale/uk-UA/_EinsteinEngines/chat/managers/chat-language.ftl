@@ -23,12 +23,10 @@ chat-language-Xeeplian-name = Ксіпліан
 chat-language-Hydraspeak-name = Гі'драв'та
 
 # Перенесено з Floofstation:
-
 chat-language-Schechi-name = Шечі
 chat-language-NewKinPidgin-name = Ка'ракк
 
 # Додаткові мови
-
 chat-language-NalRasan-name = Нал'расан
 chat-language-SiikTajr-name = Сіік'тайр
 chat-language-SiikMaas-name = Сіік'маас
@@ -38,7 +36,6 @@ chat-language-Shadowmind-name = Тіньовий розум
 chat-language-Qiilour-name = Кіілур
 
 # Мови тварин
-
 chat-language-Cat-name = Котяча
 chat-language-Chicken-name = Куряча
 chat-language-Cow-name = Коров'яча

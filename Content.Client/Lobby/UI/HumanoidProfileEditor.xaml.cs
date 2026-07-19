@@ -1,156 +1,3 @@
-// SPDX-FileCopyrightText: 2020 20kdc <asdd2808@gmail.com>
-// SPDX-FileCopyrightText: 2020 DamianX <DamianX@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2020 Exp <theexp111@gmail.com>
-// SPDX-FileCopyrightText: 2020 ike709 <ike709@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2021 Acruid <shatter66@gmail.com>
-// SPDX-FileCopyrightText: 2021 Galactic Chimp <63882831+GalacticChimp@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2021 Metal Gear Sloth <metalgearsloth@gmail.com>
-// SPDX-FileCopyrightText: 2021 Pancake <Pangogie@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2021 RemberBL <timmermanrembrandt@gmail.com>
-// SPDX-FileCopyrightText: 2021 Remie Richards <remierichards@gmail.com>
-// SPDX-FileCopyrightText: 2021 Swept <sweptwastaken@protonmail.com>
-// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <gradientvera@outlook.com>
-// SPDX-FileCopyrightText: 2021 bgare89 <Rockdtben@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Alex Evgrashin <aevgrashin@yandex.ru>
-// SPDX-FileCopyrightText: 2022 CommieFlowers <rasmus.cedergren@hotmail.com>
-// SPDX-FileCopyrightText: 2022 EmoGarbage404 <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Javier Guardia Fernández <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Jezithyr <Jezithyr.@gmail.com>
-// SPDX-FileCopyrightText: 2022 Jezithyr <Jezithyr@gmail.com>
-// SPDX-FileCopyrightText: 2022 Jezithyr <jmaster9999@gmail.com>
-// SPDX-FileCopyrightText: 2022 Kara <lunarautomaton6@gmail.com>
-// SPDX-FileCopyrightText: 2022 Leeroy <97187620+elthundercloud@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Moony <moonheart08@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Morber <14136326+Morb0@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 S1ss3l <45254902+S1ss3l@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 Sissel <axel.roche@pm.me>
-// SPDX-FileCopyrightText: 2022 Veritius <veritiusgaming@gmail.com>
-// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
-// SPDX-FileCopyrightText: 2022 rolfero <45628623+rolfero@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 wrexbe <wrexbe@protonmail.com>
-// SPDX-FileCopyrightText: 2023 ElectroJr <leonsfriedrich@gmail.com>
-// SPDX-FileCopyrightText: 2023 James Simonson <jamessimo89@gmail.com>
-// SPDX-FileCopyrightText: 2023 Morb <14136326+Morb0@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 PrPleGoo <PrPleGoo@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Ray <vigersray@gmail.com>
-// SPDX-FileCopyrightText: 2023 Visne <39844191+Visne@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Ygg01 <y.laughing.man.y@gmail.com>
-// SPDX-FileCopyrightText: 2023 csqrb <56765288+CaptainSqrBeard@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 12rabbits <53499656+12rabbits@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 AJCM-git <60196617+AJCM-git@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Aiden <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2024 Alzore <140123969+Blackern5000@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 ArtisticRoomba <145879011+ArtisticRoomba@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 BeeRobynn <166929042+BeeRobynn@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Brandon Hu <103440971+Brandon-Huu@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 CaasGit <87243814+CaasGit@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Chief-Engineer <119664036+Chief-Engineer@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Ciac32 <aknoxlor@gmail.com>
-// SPDX-FileCopyrightText: 2024 Cojoke <83733158+Cojoke-dot@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Dimastra <65184747+Dimastra@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Dimastra <dimastra@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 DrSmugleaf <10968691+DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Ed <96445749+TheShuEd@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Emisse <99158783+Emisse@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 EmoGarbage404 <retron404@gmail.com>
-// SPDX-FileCopyrightText: 2024 Eoin Mcloughlin <helloworld@eoinrul.es>
-// SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Firewatch <54725557+musicmanvr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Flareguy <78941145+Flareguy@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Hrosts <35345601+Hrosts@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 IProduceWidgets <107586145+IProduceWidgets@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Ian <ignaz.k@live.de>
-// SPDX-FileCopyrightText: 2024 Ilya246 <57039557+Ilya246@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 JIPDawg <51352440+JIPDawg@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 JIPDawg <JIPDawg93@gmail.com>
-// SPDX-FileCopyrightText: 2024 Joel Zimmerman <JoelZimmerman@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 JustCone <141039037+JustCone14@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Killerqu00 <47712032+Killerqu00@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Ko4ergaPunk <62609550+Ko4ergaPunk@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Kot <1192090+koteq@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Krunklehorn <42424291+Krunklehorn@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Kukutis96513 <146854220+Kukutis96513@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Lye <128915833+Lyroth001@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 MerrytheManokit <167581110+MerrytheManokit@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Mervill <mervills.email@gmail.com>
-// SPDX-FileCopyrightText: 2024 Moomoobeef <62638182+Moomoobeef@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Mr. 27 <45323883+Dutch-VanDerLinde@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Mr. 27 <koolthunder019@gmail.com>
-// SPDX-FileCopyrightText: 2024 MureixloI <132683811+MureixloI@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 NakataRin <45946146+NakataRin@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 OrangeMoronage9622 <whyteterry0092@gmail.com>
-// SPDX-FileCopyrightText: 2024 PJBot <pieterjan.briers+bot@gmail.com>
-// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers@gmail.com>
-// SPDX-FileCopyrightText: 2024 Plykiya <58439124+Plykiya@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 PoTeletubby <151896601+PoTeletubby@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 PopGamer46 <yt1popgamer@gmail.com>
-// SPDX-FileCopyrightText: 2024 Preston Smith <92108534+thetolbean@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Psychpsyo <60073468+Psychpsyo@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 PursuitInAshes <pursuitinashes@gmail.com>
-// SPDX-FileCopyrightText: 2024 QueerNB <176353696+QueerNB@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Repo <47093363+Titian3@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 RiceMar1244 <138547931+RiceMar1244@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Saphire Lattice <lattice@saphi.re>
-// SPDX-FileCopyrightText: 2024 ShadowCommander <10494922+ShadowCommander@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Simon <63975668+Simyon264@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 SlamBamActionman <83650252+SlamBamActionman@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Spessmann <156740760+Spessmann@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Stalen <33173619+stalengd@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 TakoDragon <69509841+BackeTako@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Thomas <87614336+Aeshus@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Tornado Tech <54727692+Tornado-Technology@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 TsjipTsjip <19798667+TsjipTsjip@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Ubaser <134914314+UbaserB@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Unkn0wn_Gh0st <shadowstalkermll@gmail.com>
-// SPDX-FileCopyrightText: 2024 Vasilis <vasilis@pikachu.systems>
-// SPDX-FileCopyrightText: 2024 Vigers Ray <60344369+VigersRay@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Winkarst <74284083+Winkarst-cpu@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Winkarst-cpu <74284083+Winkarst-cpu@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 beck-thompson <107373427+beck-thompson@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 deathride58 <deathride58@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2024 dffdff2423 <dffdff2423@gmail.com>
-// SPDX-FileCopyrightText: 2024 eoineoineoin <github@eoinrul.es>
-// SPDX-FileCopyrightText: 2024 foboscheshir <156405958+foboscheshir@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 metalgearsloth <comedian_vs_clown@hotmail.com>
-// SPDX-FileCopyrightText: 2024 nikthechampiongr <32041239+nikthechampiongr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 plykiya <plykiya@protonmail.com>
-// SPDX-FileCopyrightText: 2024 saintmuntzer <47153094+saintmuntzer@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 shamp <140359015+shampunj@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 slarticodefast <161409025+slarticodefast@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 stellar-novas <stellar_novas@riseup.net>
-// SPDX-FileCopyrightText: 2024 strO0pwafel <153459934+strO0pwafel@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 stroopwafel <j.o.luijkx@student.tudelft.nl>
-// SPDX-FileCopyrightText: 2024 themias <89101928+themias@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 to4no_fix <156101927+chavonadelal@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 voidnull000 <18663194+voidnull000@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 BeBright <98597725+be1bright@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 BeBright <98597725+bebr3ght@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Ignaz "Ian" Kraft <ignaz.k@live.de>
-// SPDX-FileCopyrightText: 2025 J <billsmith116@gmail.com>
-// SPDX-FileCopyrightText: 2025 MarkerWicker <markerWicker@proton.me>
-// SPDX-FileCopyrightText: 2025 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
-// SPDX-FileCopyrightText: 2025 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2025 SX-7 <92227810+SX-7@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
-// SPDX-FileCopyrightText: 2025 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 āda <ss.adasts@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.IO;
@@ -164,8 +11,8 @@ using Content.Client.Lobby.UI.Roles;
 using Content.Client._Pirate.Traits.UI; // Pirate: port and modified DV traits UI
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
-using Content.Client.Sprite;
 using Content.Client.Stylesheets;
+using Content.Client.Sprite;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared._Pirate.Contractors.Prototypes; // Pirate - port EE contractors
 using Content.Pirate.UIKit.UserInterface.Lobby; // Pirate - Alternative Jobs
@@ -184,6 +31,7 @@ using Robust.Client.AutoGenerated;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.ResourceManagement; // Pirate: loadout
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
@@ -194,10 +42,12 @@ using Robust.Shared.Enums;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing; // Pirate: loadout
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
 using Content.Goobstation.Common.CCVar; // Goob Station - Barks
 using Content.Goobstation.Common.Barks; // Goob Station - Barks
+using Content.Shared._Pirate.CCVars; // Pirate: Starlight character descriptions.
 namespace Content.Client.Lobby.UI
 {
     [GenerateTypedNameReferences]
@@ -221,15 +71,28 @@ namespace Content.Client.Lobby.UI
         // CCvar.
         private int _maxNameLength;
         private bool _allowFlavorText;
-
-        private FlavorText.FlavorText? _flavorText;
-        private TextEdit? _flavorTextEdit;
+        private bool _allowCharacterSecrets; // Pirate: Starlight character descriptions.
+        private bool _allowExploitableInfo;
+        private bool _allowRoleplayNotes;
+        private bool _suppressCharacterInfoChanges;
 
         // One at a time.
         private LoadoutWindow? _loadoutWindow;
         private bool _showUnavailableLoadouts; // Pirate: loadout
         private readonly Dictionary<(ProtoId<LoadoutGroupPrototype> Group, ProtoId<LoadoutPrototype> Loadout), List<LoadoutIconButton>> _loadoutIconButtons = new(); // Pirate: loadout
         private readonly Dictionary<int, BoxContainer> _loadoutSidebarSlots = new(); // Pirate: loadout
+        #region Pirate: loadout
+        private readonly Dictionary<string, ScrollContainer> _loadoutCategoryScrolls = new();
+        private readonly Dictionary<string, int> _loadoutCategoryTabIndex = new();
+        private readonly Dictionary<ProtoId<LoadoutGroupPrototype>, List<LoadoutLimitPill>> _loadoutLimitPills = new(); // Pirate: loadout
+        private string _loadoutSearchQuery = string.Empty;
+        private bool _suppressLoadoutTabChange;
+        private bool _loadoutPreviewReloadQueued; // Pirate: loadout
+        private int _loadoutSearchBuildGeneration;
+        private bool IsLoadoutSearchActive => !string.IsNullOrWhiteSpace(_loadoutSearchQuery);
+        // Last stable icon-row width, reused after rebuilds.
+        private readonly PirateWrapContainer.WidthCache _loadoutWrapWidth = new();
+        #endregion
 
         private bool _exporting;
         private bool _imaging;
@@ -309,10 +172,46 @@ namespace Content.Client.Lobby.UI
             _controller = UserInterfaceManager.GetUIController<LobbyUIController>();
             _sprite = _entManager.System<SpriteSystem>();
 
-            LoadoutSlotTabs.OnTabChanged += MoveLoadoutSidebarToTab; // Pirate: loadout
+            #region Pirate: loadout
+            LoadoutSlotTabs.OnTabChanged += OnLoadoutTabChanged;
+            LoadoutSearchBar.PlaceHolder = Loc.GetString("loadout-search-placeholder");
+            LoadoutSearchBar.OnTextChanged += args => ApplyLoadoutSearch(args.Text);
+            var clearCache = IoCManager.Resolve<IResourceCache>();
+            var clearStyle = LoadoutStyles.RoundedBordered(Color.FromHex("#4a4a57"), 0, 2);
+            LoadoutSearchClear.StyleBoxOverride = clearStyle;
+            LoadoutSearchClear.VerticalAlignment = VAlignment.Center; // keep the clear button square
+            // Use desired height to avoid resize feedback.
+            var lastClearSide = -1f;
+            void SizeClearButtonSquare()
+            {
+                var inputHeight = LoadoutSearchBar.DesiredSize.Y;
+                if (inputHeight <= 0f)
+                    return;
+
+                var side = MathF.Max(1f, inputHeight - 4f); // Pirate: loadout
+                if (Math.Abs(side - lastClearSide) < 0.5f)
+                    return;
+
+                lastClearSide = side;
+                LoadoutSearchClear.SetSize = new Vector2(side, side);
+                // Fit the glyph inside the square.
+                var fontSize = Math.Clamp((int) MathF.Floor((side - 4f) / 1.8f), 8, 24); // Pirate: loadout
+                LoadoutSearchClear.Label.FontOverride = clearCache.NotoStack(size: fontSize);
+            }
+            LoadoutSearchBar.OnResized += SizeClearButtonSquare;
+            SizeClearButtonSquare();
+            LoadoutSearchClear.OnPressed += _ =>
+            {
+                LoadoutSearchBar.Text = string.Empty;
+                ApplyLoadoutSearch(string.Empty);
+            };
+            #endregion
 
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
+            _allowCharacterSecrets = _cfgManager.GetCVar(PirateVars.ICSecrets); // Pirate: Starlight character descriptions.
+            _allowExploitableInfo = _cfgManager.GetCVar(PirateVars.ExploitableSecrets);
+            _allowRoleplayNotes = _cfgManager.GetCVar(PirateVars.OOCNotes);
 
             ImportButton.OnPressed += args =>
             {
@@ -660,6 +559,8 @@ namespace Content.Client.Lobby.UI
             #region Markings
 
             TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-markings-tab")); // Pirate: loadout
+            TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-ic-info-tab")); // Pirate: Starlight character descriptions.
+            TabContainer.SetTabTitle(7, Loc.GetString("humanoid-profile-editor-ooc-info-tab"));
 
             Markings.OnMarkingAdded += OnMarkingChange;
             Markings.OnMarkingRemoved += OnMarkingChange;
@@ -668,7 +569,8 @@ namespace Content.Client.Lobby.UI
 
             #endregion Markings
 
-            RefreshFlavorText();
+            SetupCharacterInfoEditors(); // Pirate: Starlight character descriptions.
+            RefreshCharacterInfo();
 
             #region Dummy
 
@@ -708,35 +610,45 @@ namespace Content.Client.Lobby.UI
             IsDirty = false;
         }
 
-        /// <summary>
-        /// Refreshes the flavor text editor status.
-        /// </summary>
+        // Pirate: compatibility entry point used by LobbyUIController.
         public void RefreshFlavorText()
         {
-            if (_allowFlavorText)
+            RefreshCharacterInfo();
+        }
+
+        public void RefreshCharacterInfo()
+        {
+            _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
+            _allowCharacterSecrets = _cfgManager.GetCVar(PirateVars.ICSecrets);
+            _allowExploitableInfo = _cfgManager.GetCVar(PirateVars.ExploitableSecrets);
+            _allowRoleplayNotes = _cfgManager.GetCVar(PirateVars.OOCNotes);
+
+            var showIcInfo = _allowFlavorText || _allowCharacterSecrets || _allowExploitableInfo;
+            TabContainer.SetTabVisible(6, showIcInfo); // Pirate: Keep disabled character-info tabs inaccessible.
+            TabContainer.SetTabVisible(7, _allowRoleplayNotes);
+
+            if ((!showIcInfo && TabContainer.CurrentTab == 6)
+                || (!_allowRoleplayNotes && TabContainer.CurrentTab == 7))
             {
-                if (_flavorText != null)
-                    return;
-
-                _flavorText = new FlavorText.FlavorText();
-                TabContainer.AddChild(_flavorText);
-                TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-flavortext-tab"));
-                _flavorTextEdit = _flavorText.CFlavorTextInput;
-
-                _flavorText.OnFlavorTextChanged += OnFlavorTextChange;
+                TabContainer.CurrentTab = 0;
             }
-            else
-            {
-                if (_flavorText == null)
-                    return;
 
-                TabContainer.RemoveChild(_flavorText);
-                _flavorText.OnFlavorTextChanged -= OnFlavorTextChange;
-                _flavorText.Dispose();
-                _flavorTextEdit?.Dispose();
-                _flavorTextEdit = null;
-                _flavorText = null;
-            }
+            ICInfoEditor.Physical.Visible = _allowFlavorText;
+            ICInfoEditor.Personality.Visible = _allowFlavorText;
+            ICInfoEditor.Secrets.Visible = _allowCharacterSecrets;
+            ICInfoEditor.Exploitable.Visible = _allowExploitableInfo;
+            OOCInfoEditor.PersonalNotes.Visible = _allowRoleplayNotes;
+            OOCInfoEditor.OOCNotes.Visible = _allowRoleplayNotes;
+        }
+
+        private void SetupCharacterInfoEditors()
+        {
+            ICInfoEditor.PhysicalDescriptionInput.OnTextChanged += OnPhysicalDescriptionChanged;
+            ICInfoEditor.PersonalityDescriptionInput.OnTextChanged += OnPersonalityDescriptionChanged;
+            ICInfoEditor.ExploitableInfoInput.OnTextChanged += OnExploitableInfoChanged;
+            ICInfoEditor.SecretsInput.OnTextChanged += OnSecretsChanged;
+            OOCInfoEditor.PersonalNotesInput.OnTextChanged += OnPersonalNotesChanged;
+            OOCInfoEditor.OOCNotesInput.OnTextChanged += OnOOCNotesChanged;
         }
 
         /// <summary>
@@ -762,6 +674,7 @@ namespace Content.Client.Lobby.UI
             _species.Clear();
 
             _species.AddRange(_prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart));
+            _species.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.CurrentCultureIgnoreCase));
             var speciesIds = _species.Select(o => o.ID).ToList();
 
             for (var i = 0; i < _species.Count; i++)
@@ -905,7 +818,7 @@ namespace Content.Client.Lobby.UI
 
         public void RefreshAntags()
         {
-            AntagList.DisposeAllChildren();
+            AntagList.RemoveAllChildren();
             var items = new[]
             {
                 ("humanoid-profile-editor-antag-preference-yes-button", 0),
@@ -935,8 +848,10 @@ namespace Content.Client.Lobby.UI
                 selector.Setup(items, title, 250, description, guides: antag.Guides);
                 selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
 
-                var requirements = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
-                if (!_requirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                if (!_requirements.IsAllowed(
+                        antag,
+                        (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
+                        out var reason))
                 {
                     selector.LockRequirements(reason);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
@@ -1014,36 +929,50 @@ namespace Content.Client.Lobby.UI
         {
             _loadoutWindow?.Dispose();
             #region Pirate: loadout
-            LoadoutSidebarScroll.Orphan();
-            _loadoutSidebarSlots.Clear();
-            LoadoutSlotTabs.DisposeAllChildren();
-            SelectedLoadoutsList.DisposeAllChildren();
-            _loadoutIconButtons.Clear();
-
-            if (Profile == null || _playerManager.LocalSession == null)
-                return;
-
-            var collection = IoCManager.Instance;
-            if (collection == null)
-                return;
-
-            var choices = CollectLoadoutChoices(collection);
-            var categoryTabs = CreateLoadoutCategoryTabs();
-            var loadoutSystem = _entManager.System<LoadoutSystem>();
-
-            foreach (var category in categoryTabs.Keys)
+            _suppressLoadoutTabChange = true;
+            try
             {
-                var categoryChoices = choices.Values
-                    .Where(choice => choice.Category == category)
-                    .Where(ShouldShowCombinedLoadout)
-                    .OrderBy(choice => loadoutSystem.GetName(choice.Prototype))
-                    .ToList();
+                LoadoutSidebarScroll.Orphan();
+                _loadoutSidebarSlots.Clear();
+                _loadoutCategoryScrolls.Clear();
+                _loadoutCategoryTabIndex.Clear();
+                _loadoutLimitPills.Clear(); // Pirate: loadout
+                LoadoutSlotTabs.DisposeAllChildren();
+                SelectedLoadoutsList.DisposeAllChildren();
+                LoadoutSearchResultsBody.DisposeAllChildren();
+                _loadoutIconButtons.Clear();
 
-                AddLoadoutChoiceSections(categoryTabs[category], categoryChoices, CombinedLoadoutKind.Job, loadoutSystem);
-                AddLoadoutChoiceSections(categoryTabs[category], categoryChoices, CombinedLoadoutKind.Generic, loadoutSystem);
+                if (Profile == null || _playerManager.LocalSession == null)
+                    return;
+
+                var collection = IoCManager.Instance;
+                if (collection == null)
+                    return;
+
+                var choices = CollectLoadoutChoices(collection);
+                var categoryTabs = CreateLoadoutCategoryTabs();
+                var loadoutSystem = _entManager.System<LoadoutSystem>();
+
+                foreach (var category in categoryTabs.Keys)
+                {
+                    var categoryChoices = choices.Values
+                        .Where(choice => choice.Category == category)
+                        .Where(ShouldShowCombinedLoadout)
+                        .OrderBy(choice => loadoutSystem.GetName(choice.Prototype))
+                        .ToList();
+
+                    AddLoadoutChoiceSections(categoryTabs[category], categoryChoices, CombinedLoadoutKind.Job, loadoutSystem);
+                    AddLoadoutChoiceSections(categoryTabs[category], categoryChoices, CombinedLoadoutKind.Generic, loadoutSystem);
+                }
+
+                RefreshSelectedLoadoutsList(choices, loadoutSystem);
+                UpdateLoadoutTabMarkers(choices);
+                UpdateLoadoutSearchVisibility();
             }
-
-            RefreshSelectedLoadoutsList(choices, loadoutSystem);
+            finally
+            {
+                _suppressLoadoutTabChange = false;
+            }
             #endregion
         }
 
@@ -1080,6 +1009,11 @@ namespace Content.Client.Lobby.UI
                     .GetLoadoutOrDefault(roleId, _playerManager.LocalSession, Profile.Species, _entManager, _prototypeManager)
                     .Clone();
 
+                // Preserve the player's explicit empty groups before EnsureValid applies defaults.
+                var rawSelected = new Dictionary<ProtoId<LoadoutGroupPrototype>, List<Loadout>>(); // Pirate: loadout
+                foreach (var (rawGroup, rawList) in roleLoadout.SelectedLoadouts) // Pirate: loadout
+                    rawSelected[rawGroup] = new List<Loadout>(rawList); // Pirate: loadout
+
                 roleLoadout.EnsureValid(Profile, _playerManager.LocalSession, collection);
 
                 var shownGroups = new HashSet<ProtoId<LoadoutGroupPrototype>>();
@@ -1088,14 +1022,15 @@ namespace Content.Client.Lobby.UI
                     if (AbsorbedLoadoutGroups.Contains(groupId) ||
                         !shownGroups.Add(groupId) ||
                         !_prototypeManager.TryIndex(groupId, out LoadoutGroupPrototype? groupProto) ||
-                        groupProto.Hidden)
+                        groupProto.Hidden ||
+                        groupProto.Deprecated) // Pirate: loadout
                         continue;
 
                     var category = GetLoadoutGroupCategory(groupProto);
                     if (!CreateLoadoutCategoryNames().Contains(category))
                         category = "Items";
 
-                    var selected = roleLoadout.SelectedLoadouts.GetValueOrDefault(groupId);
+                    var selected = rawSelected.GetValueOrDefault(groupId); // Pirate: loadout
                     var generic = GlobalLoadoutGroups.Groups.Contains(groupId);
 
                     foreach (var loadoutId in groupProto.GetAllLoadouts(_prototypeManager).Distinct())
@@ -1149,7 +1084,9 @@ namespace Content.Client.Lobby.UI
             BoxContainer categoryBody,
             List<CombinedLoadoutChoice> choices,
             CombinedLoadoutKind kind,
-            LoadoutSystem loadoutSystem)
+            LoadoutSystem loadoutSystem,
+            string? categoryPrefix = null, // Pirate: loadout
+            bool register = true) // Pirate: loadout
         {
             var groupIds = choices
                 .SelectMany(choice => choice.Locations)
@@ -1176,35 +1113,58 @@ namespace Content.Client.Lobby.UI
                 if (sectionChoices.Count == 0)
                     continue;
 
-                sections.Add(new CombinedLoadoutSection(groupId, $"{Loc.GetString(group.Name)}: {group.MaxLimit}", sectionChoices));
+                sections.Add(new CombinedLoadoutSection(groupId, Loc.GetString(group.Name), group.MaxLimit, sectionChoices)); // Pirate: loadout
             }
 
             foreach (var section in sections.OrderBy(section => section.Title))
             {
-                AddLoadoutChoiceSection(categoryBody, section, loadoutSystem);
+                AddLoadoutChoiceSection(categoryBody, section, loadoutSystem, categoryPrefix, register); // Pirate: loadout
             }
         }
 
         private void AddLoadoutChoiceSection(
             BoxContainer categoryBody,
             CombinedLoadoutSection section,
-            LoadoutSystem loadoutSystem)
+            LoadoutSystem loadoutSystem,
+            string? categoryPrefix = null, // Pirate: loadout
+            bool register = true) // Pirate: loadout
         {
             var visibleChoices = section.Choices;
             if (visibleChoices.Count == 0)
                 return;
 
-            categoryBody.AddChild(new Label
+            #region Pirate: loadout
+            // Group name plus selected/max pill.
+            var headerName = categoryPrefix == null
+                ? section.Title
+                : $"{categoryPrefix} › {section.Title}";
+
+            var selectedInGroup = section.Choices.Count(choice => choice.IsSelectedInGroup(section.Group)); // Pirate: loadout
+            var pill = new LoadoutLimitPill { ToolTip = Loc.GetString("loadout-group-limit-tooltip", ("max", section.MaxLimit)) };
+            pill.SetCount(selectedInGroup, section.MaxLimit);
+            if (register) // Pirate: loadout
+                RegisterLoadoutLimitPill(section.Group, pill); // Pirate: loadout
+
+            categoryBody.AddChild(new BoxContainer
             {
-                Text = section.Title,
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                HorizontalExpand = true,
                 Margin = new Thickness(5, 6, 5, 4),
+                Children =
+                {
+                    new Label { Text = headerName, VerticalAlignment = VAlignment.Center },
+                    new Control { MinSize = new Vector2(6, 0) },
+                    pill,
+                },
             });
+            #endregion
 
             var iconRows = new PirateWrapContainer // Pirate: loadout
             {
                 SeparationOverride = 6,
                 Margin = new Thickness(5, 0, 5, 8),
                 HorizontalExpand = true,
+                SharedWidth = _loadoutWrapWidth, // Pirate: loadout
             };
 
             foreach (var choice in visibleChoices)
@@ -1219,7 +1179,8 @@ namespace Content.Client.Lobby.UI
                 icon.OnPressed += args => SetCombinedLoadout(choice, args.Button.Pressed, section.Group);
                 icon.OnCustomizePressed += (defName, defDesc) => OpenLoadoutCustomize(choice, section.Group, loadoutSystem.GetName(choice.Prototype), defName, defDesc); // Pirate: loadout
                 iconRows.AddChild(icon);
-                RegisterLoadoutIconButton(section.Group, choice.Prototype.ID, icon);
+                if (register) // Pirate: loadout
+                    RegisterLoadoutIconButton(section.Group, choice.Prototype.ID, icon);
             }
 
             categoryBody.AddChild(iconRows);
@@ -1237,28 +1198,95 @@ namespace Content.Client.Lobby.UI
             buttons.Add(icon);
         }
 
+        #region Pirate: loadout
+        private void RegisterLoadoutLimitPill(ProtoId<LoadoutGroupPrototype> group, LoadoutLimitPill pill)
+        {
+            if (!_loadoutLimitPills.TryGetValue(group, out var pills))
+            {
+                pills = new List<LoadoutLimitPill>();
+                _loadoutLimitPills[group] = pills;
+            }
+
+            pills.Add(pill);
+        }
+
         private void RefreshDisplayedLoadoutState(IDependencyCollection collection)
         {
             var choices = CollectLoadoutChoices(collection);
             var loadoutSystem = _entManager.System<LoadoutSystem>();
 
-            foreach (var choice in choices.Values)
+            foreach (var ((group, loadout), buttons) in _loadoutIconButtons)
             {
-                foreach (var location in choice.Locations.Where(location => location.Active))
+                if (!choices.TryGetValue(loadout, out var choice))
+                    continue;
+
+                var enabled = choice.IsEnabledForGroup(group);
+                var selected = choice.IsSelectedInGroup(group);
+
+                foreach (var button in buttons)
                 {
-                    if (!_loadoutIconButtons.TryGetValue((location.Group, choice.Prototype.ID), out var buttons))
+                    if (button.Disposed)
                         continue;
 
-                    foreach (var button in buttons)
-                    {
-                        button.Disabled = !location.Enabled;
-                        button.Pressed = location.Selected;
-                    }
+                    button.Disabled = !enabled;
+                    button.Pressed = selected;
+                }
+            }
+
+            foreach (var (group, pills) in _loadoutLimitPills)
+            {
+                if (!_prototypeManager.TryIndex(group, out LoadoutGroupPrototype? groupProto))
+                    continue;
+
+                var selected = choices.Values.Count(choice => choice.IsSelectedInGroup(group));
+                foreach (var pill in pills)
+                {
+                    if (!pill.Disposed)
+                        pill.SetCount(selected, groupProto.MaxLimit);
                 }
             }
 
             RefreshSelectedLoadoutsList(choices, loadoutSystem);
+            UpdateLoadoutTabMarkers(choices);
+
+            if (IsLoadoutSearchActive)
+                QueueLoadoutSearchResultsBuild();
+
+            PositionLoadoutSidebar();
         }
+
+        private void QueueLoadoutSearchResultsBuild()
+        {
+            if (!IsLoadoutSearchActive)
+                return;
+
+            var generation = ++_loadoutSearchBuildGeneration;
+            Timer.Spawn(50, () =>
+            {
+                if (Disposed || generation != _loadoutSearchBuildGeneration || !IsLoadoutSearchActive)
+                    return;
+
+                BuildLoadoutSearchResults();
+                PositionLoadoutSidebar();
+            });
+        }
+
+        private void QueueLoadoutPreviewReload()
+        {
+            if (_loadoutPreviewReloadQueued)
+                return;
+
+            _loadoutPreviewReloadQueued = true;
+            Timer.Spawn(33, () =>
+            {
+                if (Disposed)
+                    return;
+
+                _loadoutPreviewReloadQueued = false;
+                ReloadPreview();
+            });
+        }
+        #endregion
 
         private void SetCombinedLoadout(CombinedLoadoutChoice choice, bool selected, ProtoId<LoadoutGroupPrototype>? group = null)
         {
@@ -1271,6 +1299,7 @@ namespace Content.Client.Lobby.UI
 
             var updated = Profile;
             var touched = new HashSet<(string Role, ProtoId<LoadoutGroupPrototype> Group)>();
+            var changed = false; // Pirate: loadout
 
             var activeLocations = choice.Locations
                 .Where(location => location.Active)
@@ -1301,7 +1330,7 @@ namespace Content.Client.Lobby.UI
                     continue;
 
                 if (selected)
-                    RemoveConflictingLoadouts(roleLoadout, choice.Prototype);
+                    RemoveConflictingLoadouts(roleLoadout, location.Group, choice.Prototype); // Pirate: loadout
 
                 if (selected)
                     roleLoadout.AddLoadout(location.Group, choice.Prototype.ID, _prototypeManager);
@@ -1309,15 +1338,19 @@ namespace Content.Client.Lobby.UI
                     roleLoadout.RemoveLoadout(location.Group, choice.Prototype.ID, _prototypeManager);
 
                 updated = updated.WithLoadout(roleLoadout);
+                changed = true; // Pirate: loadout
             }
+
+            if (!changed) // Pirate: loadout
+            { // Pirate: loadout
+                RefreshDisplayedLoadoutState(collection); // Pirate: loadout
+                return; // Pirate: loadout
+            } // Pirate: loadout
 
             Profile = updated;
             SetDirty();
-            if (_showUnavailableLoadouts)
-                RefreshDisplayedLoadoutState(collection);
-            else
-                RefreshLoadouts();
-            ReloadPreview();
+            RefreshDisplayedLoadoutState(collection); // Pirate: loadout
+            QueueLoadoutPreviewReload(); // Pirate: loadout
         }
 
         #region Pirate: loadout
@@ -1401,7 +1434,7 @@ namespace Content.Client.Lobby.UI
             var selected = groupLoadouts.FirstOrDefault(loadout => loadout.Prototype == choice.Prototype.ID);
             if (selected == null)
             {
-                RemoveConflictingLoadouts(roleLoadout, choice.Prototype);
+                RemoveConflictingLoadouts(roleLoadout, group, choice.Prototype); // Pirate: loadout
                 roleLoadout.AddLoadout(location.Group, choice.Prototype.ID, _prototypeManager, customColorTint, customName, customDescription);
             }
             else
@@ -1424,15 +1457,19 @@ namespace Content.Client.Lobby.UI
         }
         #endregion
 
-        private void RemoveConflictingLoadouts(RoleLoadout roleLoadout, LoadoutPrototype selectedPrototype)
+        private void RemoveConflictingLoadouts(RoleLoadout roleLoadout, ProtoId<LoadoutGroupPrototype> selectedGroup, LoadoutPrototype selectedPrototype) // Pirate: loadout
         {
             if (selectedPrototype.Equipment.Count == 0)
                 return;
 
             var occupiedSlots = selectedPrototype.Equipment.Keys.ToHashSet();
+            var selectedGroupIsGeneric = GlobalLoadoutGroups.Groups.Contains(selectedGroup); // Pirate: loadout
 
-            foreach (var loadouts in roleLoadout.SelectedLoadouts.Values)
+            foreach (var (group, loadouts) in roleLoadout.SelectedLoadouts) // Pirate: loadout
             {
+                if (GlobalLoadoutGroups.Groups.Contains(group) != selectedGroupIsGeneric) // Pirate: loadout
+                    continue; // Pirate: loadout
+
                 for (var i = loadouts.Count - 1; i >= 0; i--)
                 {
                     if (!_prototypeManager.TryIndex(loadouts[i].Prototype, out LoadoutPrototype? loadoutProto))
@@ -1463,15 +1500,27 @@ namespace Content.Client.Lobby.UI
 
             SelectedLoadoutsList.AddChild(showUnavailable);
 
-            foreach (var choice in choices.Values
+            #region Pirate: loadout
+            var selectedChoices = choices.Values
                 .Where(choice => choice.Selected)
-                .OrderBy(choice => choice.CustomName ?? loadoutSystem.GetName(choice.Prototype))) // Pirate: loadout
+                .OrderBy(choice => choice.CustomName ?? loadoutSystem.GetName(choice.Prototype))
+                .ToList();
+
+            SelectedLoadoutsList.AddChild(new Label
+            {
+                Text = Loc.GetString("loadout-selected-count", ("count", selectedChoices.Count)),
+                StyleClasses = { "LabelKeyText" },
+                Margin = new Thickness(0, 0, 0, 6),
+            });
+
+            foreach (var choice in selectedChoices)
             {
                 var remove = new ContainerButton
                 {
                     StyleBoxOverride = new StyleBoxEmpty(),
                     MinSize = new Vector2(24, 24),
                     SetSize = new Vector2(24, 24),
+                    VerticalAlignment = VAlignment.Center,
                     ToolTip = Loc.GetString("loadout-window"),
                 };
                 remove.AddChild(new TextureRect
@@ -1485,24 +1534,46 @@ namespace Content.Client.Lobby.UI
 
                 remove.OnPressed += _ => SetCombinedLoadout(choice, false);
 
-                SelectedLoadoutsList.AddChild(new BoxContainer
+                // Click name to jump to the item.
+                var locate = choice;
+                var name = new ContainerButton
                 {
-                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                    StyleBoxOverride = new StyleBoxEmpty(),
                     HorizontalExpand = true,
+                    VerticalAlignment = VAlignment.Center,
+                    ToolTip = Loc.GetString("loadout-locate-tooltip"),
+                    Children =
+                    {
+                        new Label
+                        {
+                            // ClipText labels must stay stretched.
+                            Text = choice.CustomName ?? loadoutSystem.GetName(choice.Prototype),
+                            ClipText = true,
+                            HorizontalExpand = true,
+                        },
+                    },
+                };
+                name.OnPressed += _ => LocateLoadout(locate);
+
+                var entry = new PanelContainer
+                {
+                    PanelOverride = LoadoutStyles.RoundedBordered(Color.FromHex("#2a2a35"), 0),
                     Margin = new Thickness(0, 0, 0, 4),
                     Children =
                     {
-                        remove,
-                        new Label
+                        new BoxContainer
                         {
-                            Text = choice.CustomName ?? loadoutSystem.GetName(choice.Prototype), // Pirate: loadout
-                            ClipText = true,
+                            Orientation = BoxContainer.LayoutOrientation.Horizontal,
                             HorizontalExpand = true,
-                            Margin = new Thickness(5, 0, 0, 0),
+                            Margin = new Thickness(4, 2, 4, 2),
+                            Children = { remove, name },
                         },
                     },
-                });
+                };
+
+                SelectedLoadoutsList.AddChild(entry);
             }
+            #endregion
         }
 
         private Dictionary<string, BoxContainer> CreateLoadoutCategoryTabs()
@@ -1556,21 +1627,233 @@ namespace Content.Client.Lobby.UI
                 LoadoutSlotTabs.AddChild(row);
                 LoadoutSlotTabs.SetTabTitle(LoadoutSlotTabs.ChildCount - 1, GetLoadoutCategoryTitle(category));
                 _loadoutSidebarSlots[LoadoutSlotTabs.ChildCount - 1] = sidebarSlot;
+                _loadoutCategoryScrolls[category] = scroll; // Pirate: loadout
+                _loadoutCategoryTabIndex[category] = LoadoutSlotTabs.ChildCount - 1; // Pirate: loadout
                 result[category] = body;
             }
 
-            MoveLoadoutSidebarToTab(LoadoutSlotTabs.CurrentTab);
             return result;
         }
 
-        private void MoveLoadoutSidebarToTab(int tab)
+        #region Pirate: loadout
+        private void OnLoadoutTabChanged(int tab)
         {
-            if (!_loadoutSidebarSlots.TryGetValue(tab, out var slot) || LoadoutSidebarScroll.Parent == slot)
+            if (_suppressLoadoutTabChange)
+                return;
+
+            // Tabs exit search mode.
+            if (IsLoadoutSearchActive)
+                ClearLoadoutSearch();
+
+            PositionLoadoutSidebar();
+        }
+
+        // Moves the selected sidebar to the active view.
+        private void PositionLoadoutSidebar()
+        {
+            var target = IsLoadoutSearchActive
+                ? LoadoutSearchSidebarSlot
+                : _loadoutSidebarSlots.GetValueOrDefault(LoadoutSlotTabs.CurrentTab);
+
+            if (target == null || LoadoutSidebarScroll.Parent == target)
                 return;
 
             LoadoutSidebarScroll.Orphan();
-            slot.AddChild(LoadoutSidebarScroll);
+            target.AddChild(LoadoutSidebarScroll);
         }
+
+        private void ApplyLoadoutSearch(string raw)
+        {
+            _loadoutSearchQuery = raw.Trim();
+
+            if (!IsLoadoutSearchActive)
+            {
+                ClearLoadoutSearch();
+                PositionLoadoutSidebar();
+                return;
+            }
+
+            LoadoutSlotTabs.Visible = false;
+            LoadoutSearchView.Visible = true;
+            QueueLoadoutSearchResultsBuild();
+            PositionLoadoutSidebar();
+        }
+
+        private void ClearLoadoutSearch()
+        {
+            _loadoutSearchBuildGeneration++;
+            _loadoutSearchQuery = string.Empty;
+            if (LoadoutSearchBar.Text.Length != 0)
+                LoadoutSearchBar.Text = string.Empty;
+
+            LoadoutSearchResultsBody.DisposeAllChildren();
+            LoadoutSearchView.Visible = false;
+            LoadoutSlotTabs.Visible = true;
+        }
+
+        private void UpdateLoadoutSearchVisibility()
+        {
+            LoadoutSlotTabs.Visible = !IsLoadoutSearchActive;
+            LoadoutSearchView.Visible = IsLoadoutSearchActive;
+
+            if (IsLoadoutSearchActive)
+                QueueLoadoutSearchResultsBuild();
+
+            PositionLoadoutSidebar();
+        }
+
+        // Builds flat cross-category search results.
+        private void BuildLoadoutSearchResults(Dictionary<ProtoId<LoadoutPrototype>, CombinedLoadoutChoice>? choices = null) // Pirate: loadout
+        {
+            LoadoutSearchResultsBody.DisposeAllChildren();
+
+            var collection = IoCManager.Instance;
+            if (collection == null)
+                return;
+
+            choices ??= CollectLoadoutChoices(collection); // Pirate: loadout
+            var loadoutSystem = _entManager.System<LoadoutSystem>();
+            var query = _loadoutSearchQuery;
+            var matchCount = 0;
+
+            foreach (var category in CreateLoadoutCategoryNames())
+            {
+                var categoryChoices = choices.Values
+                    .Where(choice => choice.Category == category)
+                    .Where(ShouldShowCombinedLoadout)
+                    .Where(choice => LoadoutMatchesSearch(choice.Prototype, query, loadoutSystem))
+                    .OrderBy(choice => loadoutSystem.GetName(choice.Prototype))
+                    .ToList();
+
+                if (categoryChoices.Count == 0)
+                    continue;
+
+                matchCount += categoryChoices.Count;
+                var prefix = GetLoadoutCategoryTitle(category);
+                AddLoadoutChoiceSections(LoadoutSearchResultsBody, categoryChoices, CombinedLoadoutKind.Job, loadoutSystem, prefix, register: false);
+                AddLoadoutChoiceSections(LoadoutSearchResultsBody, categoryChoices, CombinedLoadoutKind.Generic, loadoutSystem, prefix, register: false);
+            }
+
+            LoadoutSearchResultsLabel.Text = Loc.GetString("loadout-search-results", ("count", matchCount), ("query", query));
+        }
+
+        // Match localized and raw prototype text.
+        private bool LoadoutMatchesSearch(LoadoutPrototype loadout, string query, LoadoutSystem loadoutSystem)
+        {
+            bool Matches(string? value) => value != null && value.Contains(query, StringComparison.OrdinalIgnoreCase);
+
+            if (Matches(loadoutSystem.GetName(loadout)))
+                return true;
+
+            foreach (var entity in ResolveLoadoutDisplayEntities(loadout, loadoutSystem))
+            {
+                if (!_prototypeManager.TryIndex<EntityPrototype>(entity, out var proto))
+                    continue;
+
+                if (Matches(proto.Name) ||
+                    Matches(proto.Description) ||
+                    Matches(proto.SetName) ||
+                    Matches(proto.SetDesc))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private IEnumerable<EntProtoId> ResolveLoadoutDisplayEntities(LoadoutPrototype loadout, LoadoutSystem loadoutSystem)
+        {
+            var seen = new HashSet<EntProtoId>();
+
+            IEnumerable<EntProtoId> Yield(EntProtoId? entity)
+            {
+                if (entity != null && seen.Add(entity.Value))
+                    yield return entity.Value;
+            }
+
+            foreach (var entity in Yield(loadout.DummyEntity))
+                yield return entity;
+
+            foreach (var entity in Yield(loadoutSystem.GetFirstOrNull(loadout)))
+                yield return entity;
+
+            foreach (var equipment in loadout.Equipment.Values)
+            {
+                foreach (var entity in Yield(equipment))
+                    yield return entity;
+            }
+
+            foreach (var inhand in loadout.Inhand)
+            {
+                foreach (var entity in Yield(inhand))
+                    yield return entity;
+            }
+
+            foreach (var storage in loadout.Storage.Values)
+            {
+                foreach (var item in storage)
+                {
+                    foreach (var entity in Yield(item))
+                        yield return entity;
+                }
+            }
+        }
+
+        // Jumps to a selected item's slot tab.
+        private void LocateLoadout(CombinedLoadoutChoice choice)
+        {
+            if (IsLoadoutSearchActive)
+            {
+                ClearLoadoutSearch();
+                PositionLoadoutSidebar();
+            }
+
+            if (!_loadoutCategoryTabIndex.TryGetValue(choice.Category, out var tabIndex))
+                return;
+
+            LoadoutSlotTabs.CurrentTab = tabIndex;
+
+            var group = choice.Locations
+                .Where(location => location.Active && location.Selected)
+                .Select(location => location.Group)
+                .FirstOrDefault();
+
+            if (!_loadoutIconButtons.TryGetValue((group, choice.Prototype.ID), out var buttons) || buttons.Count == 0)
+                return;
+
+            var button = buttons[0];
+            // Wait for tab layout before scrolling.
+            Timer.Spawn(50, () =>
+            {
+                if (button.Disposed)
+                    return;
+
+                ScrollLoadoutButtonIntoView(choice.Category, button);
+                button.Flash();
+            });
+        }
+
+        private void ScrollLoadoutButtonIntoView(string category, Control button)
+        {
+            if (!_loadoutCategoryScrolls.TryGetValue(category, out var scroll))
+                return;
+
+            var target = scroll.GetScrollValue().Y + (button.GlobalPosition.Y - scroll.GlobalPosition.Y);
+            scroll.SetScrollValue(new Vector2(0, MathF.Max(0, target)));
+        }
+
+        private void UpdateLoadoutTabMarkers(Dictionary<ProtoId<LoadoutPrototype>, CombinedLoadoutChoice> choices)
+        {
+            foreach (var (category, index) in _loadoutCategoryTabIndex)
+            {
+                var hasSelection = choices.Values.Any(choice => choice.Category == category && choice.Selected);
+                // Keep tab titles stable when the marker toggles.
+                var marker = hasSelection ? " ●" : "   ";
+                LoadoutSlotTabs.SetTabTitle(index, GetLoadoutCategoryTitle(category) + marker);
+            }
+        }
+        #endregion
 
         private string GetLoadoutCategoryTitle(string category)
         {
@@ -1595,9 +1878,6 @@ namespace Content.Client.Lobby.UI
             if (key.Contains("gloves") || key.Contains("hands"))
                 return "Hands";
 
-            if (key.Contains("head"))
-                return "Head";
-
             if (key.Contains("mask"))
                 return "Mask";
 
@@ -1612,6 +1892,11 @@ namespace Content.Client.Lobby.UI
 
             if (key.Contains("jumpsuit") || key.Contains("jumpskirt") || key.Contains("uniform") || key.Contains("clothing"))
                 return "Uniform";
+
+
+            // Pirate: loadout. Job names like "Head of Security" contain "head"; let slot keywords win first.
+            if (key.Contains("head"))
+                return "Head";
 
             return "Items";
         }
@@ -1713,6 +1998,7 @@ namespace Content.Client.Lobby.UI
         private readonly record struct CombinedLoadoutSection(
             ProtoId<LoadoutGroupPrototype> Group,
             string Title,
+            int MaxLimit, // Pirate: loadout
             List<CombinedLoadoutChoice> Choices);
 
         #endregion
@@ -1777,7 +2063,7 @@ namespace Content.Client.Lobby.UI
             JobOverride = null;
 
             UpdateNameEdit();
-            UpdateFlavorTextEdit();
+            UpdateCharacterInfoEditorText(); // Pirate: Starlight character descriptions.
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSkinColor();
@@ -1837,7 +2123,7 @@ namespace Content.Client.Lobby.UI
             if (_prototypeManager.HasIndex<GuideEntryPrototype>(species))
                 page = new ProtoId<GuideEntryPrototype>(species.Id); // Gross. See above todo comment.
 
-            if (_prototypeManager.TryIndex(DefaultSpeciesGuidebook, out var guideRoot))
+            if (_prototypeManager.Resolve(DefaultSpeciesGuidebook, out var guideRoot))
             {
                 var dict = new Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry>();
                 dict.Add(DefaultSpeciesGuidebook, guideRoot);
@@ -1851,7 +2137,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public void RefreshJobs()
         {
-            JobList.DisposeAllChildren();
+            JobList.RemoveAllChildren();
             _jobCategories.Clear();
             _jobPriorities.Clear();
             _jobAlternatives.Clear(); // Pirate - Alternative Jobs
@@ -2115,12 +2401,57 @@ namespace Content.Client.Lobby.UI
             UpdateJobPriorities();
         }
 
-        private void OnFlavorTextChange(string content)
+        private void OnPhysicalDescriptionChanged(TextEdit.TextEditEventArgs args)
         {
-            if (Profile is null)
+            if (Profile is null || _suppressCharacterInfoChanges)
                 return;
 
-            Profile = Profile.WithFlavorText(content);
+            Profile = Profile.WithPhysicalDescription(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
+        private void OnPersonalityDescriptionChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithPersonalityDescription(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
+        private void OnExploitableInfoChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithExploitableInfo(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
+        private void OnSecretsChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithSecrets(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
+        private void OnPersonalNotesChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithPersonalNotes(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
+        private void OnOOCNotesChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithOOCNotes(Rope.Collapse(args.TextRope).Trim());
             SetDirty();
         }
 
@@ -2138,93 +2469,40 @@ namespace Content.Client.Lobby.UI
             if (Profile is null) return;
 
             var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+            var strategy = _prototypeManager.Index(skin).Strategy;
 
-            switch (skin)
+            switch (strategy.InputType)
             {
-                case HumanoidSkinColor.HumanToned:
+                case SkinColorationStrategyInput.Unary:
+                {
+                    if (!Skin.Visible)
                     {
-                        if (!Skin.Visible)
-                        {
-                            Skin.Visible = true;
-                            RgbSkinColorContainer.Visible = false;
-                        }
-
-                        var color = SkinColor.HumanSkinTone((int) Skin.Value);
-
-                        Markings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));//
-                        break;
+                        Skin.Visible = true;
+                        RgbSkinColorContainer.Visible = false;
                     }
-                case HumanoidSkinColor.Hues:
+
+                    var color = strategy.FromUnary(Skin.Value);
+
+                    Markings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+
+                    break;
+                }
+                case SkinColorationStrategyInput.Color:
+                {
+                    if (!RgbSkinColorContainer.Visible)
                     {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        Markings.CurrentSkinColor = _rgbSkinColorSelector.Color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(_rgbSkinColorSelector.Color));
-                        break;
+                        Skin.Visible = false;
+                        RgbSkinColorContainer.Visible = true;
                     }
-                case HumanoidSkinColor.TintedHues:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
 
-                        var color = SkinColor.TintedHues(_rgbSkinColorSelector.Color);
+                    var color = strategy.ClosestSkinColor(_rgbSkinColorSelector.Color);
 
-                        Markings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-                        break;
-                    }
-                case HumanoidSkinColor.VoxFeathers:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
+                    Markings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
 
-                        var color = SkinColor.ClosestVoxColor(_rgbSkinColorSelector.Color);
-
-                        Markings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-                        break;
-                    }
-                case HumanoidSkinColor.NoColor:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        var color = Color.FromName("White");
-
-                        Markings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-                        break;
-                    }
-                // Goobstation Section Start - Tajaran
-                case HumanoidSkinColor.AnimalFur: // Goobstation - Tajaran
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        var color = SkinColor.ClosestAnimalFurColor(_rgbSkinColorSelector.Color);
-
-                        Markings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-                        break;
-                    }
-                    // Goobstation Section End - Tajaran
+                    break;
+                }
             }
 
             ReloadProfilePreview();
@@ -2400,11 +2678,21 @@ namespace Content.Client.Lobby.UI
             NameEdit.Text = Profile?.Name ?? "";
         }
 
-        private void UpdateFlavorTextEdit()
+        private void UpdateCharacterInfoEditorText()
         {
-            if (_flavorTextEdit != null)
+            _suppressCharacterInfoChanges = true;
+            try
             {
-                _flavorTextEdit.TextRope = new Rope.Leaf(Profile?.FlavorText ?? "");
+                ICInfoEditor.PhysicalDescriptionInput.TextRope = new Rope.Leaf(Profile?.PhysicalDescription ?? string.Empty);
+                ICInfoEditor.PersonalityDescriptionInput.TextRope = new Rope.Leaf(Profile?.PersonalityDescription ?? string.Empty);
+                ICInfoEditor.ExploitableInfoInput.TextRope = new Rope.Leaf(Profile?.ExploitableInfo ?? string.Empty);
+                ICInfoEditor.SecretsInput.TextRope = new Rope.Leaf(Profile?.Secrets ?? string.Empty);
+                OOCInfoEditor.PersonalNotesInput.TextRope = new Rope.Leaf(Profile?.PersonalNotes ?? string.Empty);
+                OOCInfoEditor.OOCNotesInput.TextRope = new Rope.Leaf(Profile?.OOCNotes ?? string.Empty);
+            }
+            finally
+            {
+                _suppressCharacterInfoChanges = false;
             }
         }
 
@@ -2435,7 +2723,7 @@ namespace Content.Client.Lobby.UI
             var sexes = new List<Sex>();
 
             // add species sex options, default to just none if we are in bizzaro world and have no species
-            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesProto))
+            if (_prototypeManager.Resolve<SpeciesPrototype>(Profile.Species, out var speciesProto))
             {
                 foreach (var sex in speciesProto.Sexes)
                 {
@@ -2465,84 +2753,35 @@ namespace Content.Client.Lobby.UI
                 return;
 
             var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
+            var strategy = _prototypeManager.Index(skin).Strategy;
 
-            switch (skin)
+            switch (strategy.InputType)
             {
-                case HumanoidSkinColor.HumanToned:
+                case SkinColorationStrategyInput.Unary:
+                {
+                    if (!Skin.Visible)
                     {
-                        if (!Skin.Visible)
-                        {
-                            Skin.Visible = true;
-                            RgbSkinColorContainer.Visible = false;
-                        }
-
-                        Skin.Value = SkinColor.HumanSkinToneFromColor(Profile.Appearance.SkinColor);
-
-                        break;
+                        Skin.Visible = true;
+                        RgbSkinColorContainer.Visible = false;
                     }
-                case HumanoidSkinColor.Hues:
+
+                    Skin.Value = strategy.ToUnary(Profile.Appearance.SkinColor);
+
+                    break;
+                }
+                case SkinColorationStrategyInput.Color:
+                {
+                    if (!RgbSkinColorContainer.Visible)
                     {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        // set the RGB values to the direct values otherwise
-                        _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
-                        break;
+                        Skin.Visible = false;
+                        RgbSkinColorContainer.Visible = true;
                     }
-                case HumanoidSkinColor.TintedHues:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
 
-                        // set the RGB values to the direct values otherwise
-                        _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
-                        break;
-                    }
-                case HumanoidSkinColor.VoxFeathers:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
+                    _rgbSkinColorSelector.Color = strategy.ClosestSkinColor(Profile.Appearance.SkinColor);
 
-                        _rgbSkinColorSelector.Color = SkinColor.ClosestVoxColor(Profile.Appearance.SkinColor);
-
-                        break;
-                    }
-                case HumanoidSkinColor.NoColor:
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        _rgbSkinColorSelector.Color = Color.FromName("White");
-
-                        break;
-                    }
-                // Goobstation Section Start - Tajaran
-                case HumanoidSkinColor.AnimalFur: // Goobstation - Tajaran
-                    {
-                        if (!RgbSkinColorContainer.Visible)
-                        {
-                            Skin.Visible = false;
-                            RgbSkinColorContainer.Visible = true;
-                        }
-
-                        _rgbSkinColorSelector.Color = SkinColor.ClosestAnimalFurColor(Profile.Appearance.SkinColor);
-                        break;
-                    }
-                    // Goobstation Section End - Tajaran
+                    break;
+                }
             }
-
         }
 
         public void UpdateSpeciesGuidebookIcon()
@@ -2553,7 +2792,7 @@ namespace Content.Client.Lobby.UI
             if (species is null)
                 return;
 
-            if (!_prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesProto))
+            if (!_prototypeManager.Resolve<SpeciesPrototype>(species, out var speciesProto))
                 return;
 
             // Don't display the info button if no guide entry is found
@@ -2561,7 +2800,7 @@ namespace Content.Client.Lobby.UI
                 return;
 
             const string style = "SpeciesInfoDefault";
-            SpeciesInfoButton.StyleClasses.Add(style);
+            SpeciesInfoButton.StyleIdentifier = style;
         }
 
         private void UpdateMarkings()
@@ -2846,7 +3085,7 @@ namespace Content.Client.Lobby.UI
                 return;
 
             StartExport();
-            await using var file = await _dialogManager.OpenFile(new FileDialogFilters(new FileDialogFilters.Group("yml")));
+            await using var file = await _dialogManager.OpenFile(new FileDialogFilters(new FileDialogFilters.Group("yml")), FileAccess.Read);
 
             if (file == null)
             {

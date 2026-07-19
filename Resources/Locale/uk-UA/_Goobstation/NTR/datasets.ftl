@@ -18,7 +18,6 @@ bsd-names-dataset-14 = Джо
 bsd-names-dataset-15 = Шелдон
 bsd-names-dataset-16 = Янсі
 bsd-names-dataset-17 = Чарлі
-
 bsd-prefix-dataset-1 = Блеквуд
 bsd-prefix-dataset-2 = Бун
 bsd-prefix-dataset-3 = Кессіді

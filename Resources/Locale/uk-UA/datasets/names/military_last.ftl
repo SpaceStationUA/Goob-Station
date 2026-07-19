@@ -43,4 +43,3 @@ names-military-last-dataset-42 = Зосма
 # Губстанція
 names-military-last-dataset-43 = Вольтер
 names-military-last-dataset-44 = Вінтервінґ
-

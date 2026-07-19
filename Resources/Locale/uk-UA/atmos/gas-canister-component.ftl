@@ -8,7 +8,6 @@ gas-canister-bound-user-interface-title = Каністра з газом
 gas-canister-popup-denied = Відмовлено в доступі
 
 # window
-
 gas-canister-window-ok-text = ОК
 gas-canister-window-edit-text = Редагувати
 gas-canister-window-label-label = Етикетка:

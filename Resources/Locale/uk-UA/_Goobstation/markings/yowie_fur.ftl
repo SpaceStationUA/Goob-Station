@@ -7,7 +7,6 @@
 marking-YowieFur = Шерсть тіла йові
 marking-YowieFurFeetRight = Шерсть правої ноги йові
 marking-YowieFurFeetLeft = Шерсть лівої ноги йові
-
 marking-YowieFurHead = Хутро голови Йові
 marking-YowieFurHead-yowie_fur_head = Хутро голови Йові
 marking-YowieFurChest = Хутро грудей Йові

@@ -1,8 +1,3 @@
-// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2024 RadsammyT <32146976+RadsammyT@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 coderabbitai[bot] <136622811+coderabbitai[bot]@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Robust.Shared.Audio;
@@ -44,6 +39,20 @@ public sealed partial class CardStackComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public List<EntityUid> Cards = [];
+
+    #region Pirate: shuffle-cooldown
+    /// <summary>
+    /// How long to wait between shuffles.
+    /// </summary>
+    [DataField]
+    public TimeSpan ShuffleCooldown = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    /// Earliest time the stack can be shuffled again.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan NextShuffle;
+    #endregion
 }
 
 [Serializable, NetSerializable]

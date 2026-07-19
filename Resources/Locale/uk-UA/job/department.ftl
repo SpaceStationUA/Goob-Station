@@ -21,5 +21,4 @@ department-Security = Безпека
 department-Science = Науковий
 department-Silicon = Кремнієві
 department-Specific = Специфічний для станції
-
 department-Unknown = Невідомо

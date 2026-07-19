@@ -3,13 +3,11 @@ loadout-description-LoadoutOuterCoatBomberjacket = Гладка куртка-б�
 loadout-description-LoadoutOuterCoatHoodieBlack = Теплий балахон.
 loadout-description-LoadoutOuterCoatHoodieGrey = Теплий балахон.
 loadout-description-LoadoutOuterCoatWinterCoat = Для того, щоб було приємно і затишно.
-
 loadout-name-LoadoutOuterCoatHoodieGrey = худі сірого кольору (можна розфарбувати)
 loadout-name-LoadoutOuterCoatWinterCoat = зимове пальто (кольорове)
 loadout-name-LoadoutOuterCoatHyenhSweater = светр (кольоровий)
 loadout-name-LoadoutOuterWinterCoatLong = довге зимове пальто (кольорове)
 loadout-name-LoadoutOuterCoatMNKWhiteHoodie = Худі MNK (кольорове)
-
 loadout-name-LoadoutOuterSuitJacket = піджак костюмний (кольоровий)
 loadout-name-LoadoutOuterSuitJacketOpened = піджак костюмний, відкритий (кольоровий)
 loadout-name-LoadoutOuterCoatModern = сучасне пальто (кольорове)

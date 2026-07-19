@@ -1,15 +1,4 @@
 <!--
-SPDX-FileCopyrightText: 2024 Aidenkrz <aiden@djkraz.com>
-SPDX-FileCopyrightText: 2024 BeeRobynn <robynthewarcrime@proton.me>
-SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
-SPDX-FileCopyrightText: 2024 Just-a-Unity-Dev <67359748+Just-a-Unity-Dev@users.noreply.github.com>
-SPDX-FileCopyrightText: 2024 Kira Bridgeton <161087999+Verbalase@users.noreply.github.com>
-SPDX-FileCopyrightText: 2024 deepdarkdepths <155149356+deepdarkdepths@users.noreply.github.com>
-SPDX-FileCopyrightText: 2024 kbailey-git <84491830+kbailey-git@users.noreply.github.com>
-SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
-SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
-
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
@@ -25,8 +14,16 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   Вони видихають оксид азоту і не піддаються його впливу.
   Їхній організм переробляє лише два токсини одночасно, замість трьох.
 
+  <!-- Pirate -->
+  Слаймолюди можуть перетворитися на [bold]гераса[/bold] — меншу й швидшу форму, яка проходить крізь решітки, але змушує скинути спорядження та речі з рук.
+  Гераса можна підняти двома руками й покласти до речового мішка.
+
+  <Box>
+    <GuideEntityEmbed Entity="MobSlimesGeras" Caption="Типовий герас."/>
+  </Box>
+
   Слаймолюди мають [bold]внутрішнє сховище 2x3[/bold] всередині своєї слаймової оболонки. Будь-хто може побачити, що всередині, і витягнути це з вас без дозволу,
-  тому будьте обережні.
+  тому будьте обережні. Вміст цього сховища не випадає під час перетворення на гераса.
 
   Слаймолюди мають прискорену регенерацію порівняно з іншими гуманоїдами.
 

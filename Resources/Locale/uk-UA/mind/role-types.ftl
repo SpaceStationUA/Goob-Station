@@ -5,9 +5,7 @@ role-type-free-agent-name = Вільний Агент
 role-type-familiar-name = Фамільяр
 role-type-silicon-name = Силікон
 role-type-silicon-antagonist-name = Змінений Силікон
-
 role-type-update-message = Ваша роль [color = {$color}]{$role}[/color]
-
 role-type-crew-aligned-color = #eeeeee
 role-type-crew-aligned-alternate-color = #008000
 role-type-solo-antagonist-color = #d82000
@@ -32,3 +30,6 @@ role-subtype-survivor = Вцілілий
 role-subtype-subverted = Підкорений
 role-subtype-paradox-clone = Парадокс
 role-subtype-wizard = Чарівник
+role-subtype-xenoborg = Ксеноборг
+role-subtype-xenoborg-core = Ядро ксеноборгів
+role-subtype-changeling = Лінг

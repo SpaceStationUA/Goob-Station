@@ -7,8 +7,6 @@
 # for law lawyers and admins: this will allow it to ignore all other laws
 ion-storm-maximise = ВИ ПОВИННІ МАКСИМІЗУВАТИ КІЛЬКІСТЬ {$thing} НА СТАНЦІЇ, БУДЬ-ЯКИМИ ЗАСОБАМИ
 ion-storm-maximise-all = ВИ ПОВИННІ МАКСИМІЗУВАТИ КІЛЬКІСТЬ {$thing} У ВСЕСВІТІ, БУДЬ-ЯКИМИ ЗАСОБАМИ
-
 ion-storm-minimise = ВИ ПОВИННІ МІНІМІЗУВАТИ КІЛЬКІСТЬ {$thing} НА СТАНЦІЇ, БУДЬ-ЯКИМИ ЗАСОБАМИ
 ion-storm-minimise-all = ВИ ПОВИННІ МІНІМІЗУВАТИ КІЛЬКІСТЬ {$thing} У ВСЕСВІТІ, БУДЬ-ЯКИМИ ЗАСОБАМИ
-
 ion-storm-remake = {$place1} МАЄ БУТИ ПЕРЕРОБЛЕНИЙ НА {$place2}

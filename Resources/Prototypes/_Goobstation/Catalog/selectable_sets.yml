@@ -1,23 +1,3 @@
-# SPDX-FileCopyrightText: 2025 Armok <155400926+ARMOKS@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Baptr0b0t <152836416+Baptr0b0t@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Baptr0b0t <bapt.buriot@gmail.com>
-# SPDX-FileCopyrightText: 2025 CliveOcelot <165305605+Orion-416@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 Conchelle <mary@thughunt.ing>
-# SPDX-FileCopyrightText: 2025 Creatorbot01 <creatorbot02@gmail.com>
-# SPDX-FileCopyrightText: 2025 Creatorbot01 <creatorbot20@gmail.com>
-# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-# SPDX-FileCopyrightText: 2025 IrisTheAmped <iristheamped@gmail.com>
-# SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
-# SPDX-FileCopyrightText: 2025 Orion-416 <cliveocelot@gmail.com>
-# SPDX-FileCopyrightText: 2025 PunishedJoe <PunishedJoeseph@proton.me>
-# SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
-# SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
-# SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 TurboTracker <130304754+TurboTrackerss14@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-# SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
-#
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Thief
@@ -450,10 +430,10 @@
   name: selectable-set-blueshield-modsuit-name
   description: selectable-set-blueshield-modsuit-description
   sprite:
-    sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/praetorian.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Corporate/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-    - ClothingModsuitPraetorian
+    - ClothingModularControllerCorporatePreassembled # Pirate: use the new modular suit system.
 
 # ERT
 
@@ -505,10 +485,10 @@
   name: selectable-set-paramedic-modsuit-name
   description: selectable-set-paramedic-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/paramedic.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Rescue/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitParamedicPowerCell
+  - ClothingModularControllerRescuePreassembled # Pirate: use the new modular suit system.
 
 # security
 - type: selectableSet
@@ -526,10 +506,10 @@
   name: selectable-set-security-modsuit-name
   description: selectable-set-security-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/security.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Security/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitSecurityPowerCell
+  - ClothingModularControllerSecurityPreassembled # Pirate: use the new modular suit system.
 
 # head of security
 - type: selectableSet
@@ -547,10 +527,10 @@
   name: selectable-set-headofsecurity-modsuit-name
   description: selectable-set-headofsecurity-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/headofsecurity.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Safeguard/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitHeadOfSecurityPowerCell
+  - ClothingModularControllerSafeguardPreassembled # Pirate: use the new modular suit system.
 
 # engineer
 
@@ -569,10 +549,10 @@
   name: selectable-set-engineering-modsuit-name
   description: selectable-set-engineering-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/engineer.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Engineering/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitEngineerPowerCell
+  - ClothingModularControllerEngineeringPreassembled # Pirate: use the new modular suit system.
 
 # Head Of Security
 
@@ -633,10 +613,10 @@
   name: selectable-set-captain-modsuit-name
   description: selectable-set-captain-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/captain.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Magnate/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitCaptainPowerCell
+  - ClothingModularControllerMagnatePreassembled # Pirate: use the new modular suit system.
 
 # Research Director RD
 
@@ -655,7 +635,7 @@
   name: selectable-set-research-director-modsuit-name
   description: selectable-set-research-director-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/researchdirector.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Research/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitResearchDirectorPowerCell
+  - ClothingModularControllerResearchPreassembled # Pirate: use the new modular suit system.

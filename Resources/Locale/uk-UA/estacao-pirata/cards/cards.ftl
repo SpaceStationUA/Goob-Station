@@ -17,19 +17,13 @@ card-stack-examine = { $count ->
 }
 cards-stackquantitychange-added = Карту додано (Всього карт: {$quantity})
 cards-stackquantitychange-removed = Карту прибрано (Всього карт: {$quantity})
-
 cards-stackquantitychange-joined = Колоди поєднано (Всього карт: {$quantity})
 cards-stackquantitychange-split = Колоду поділено навпіл (Всього карт: {$quantity})
 cards-stackquantitychange-unknown = Кількість карт в колоді змінилась (Всього карт: {$quantity})
-
 cards-verb-convert-to-deck = Трансформувати в колоду
 cards-verb-split = Поділити навпіл
-
-
 card-base-name = карта
 card-deck-name = колода карт
-
-
 card-sc-2-clubs-black = 2 треф
 card-sc-3-clubs-black = 3 треф
 card-sc-4-clubs-black = 4 треф
@@ -82,9 +76,7 @@ card-sc-ace-spades-black = туз піка
 card-sc-jack-spades-black = валет піка
 card-sc-king-spades-black = король піка
 card-sc-queen-spades-black = королева піка
-
 card-sc-joker-black = джокер
-
 card-sc-2-clubs = 2 хреста
 card-sc-3-clubs = 3 хреста
 card-sc-4-clubs = 4 хреста

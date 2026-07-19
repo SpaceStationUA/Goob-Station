@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: legacy single-LV-network shuttles need a substation-sized breaker limit
+# after upstream added APC overload tripping.
+- type: entity
+  parent: APCBasic
+  id: PirateShuttleAPCBasic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Apc
+    maxLoad: 150000
+
+- type: entity
+  parent: APCHighCapacity
+  id: PirateShuttleAPCHighCapacity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Apc
+    maxLoad: 150000

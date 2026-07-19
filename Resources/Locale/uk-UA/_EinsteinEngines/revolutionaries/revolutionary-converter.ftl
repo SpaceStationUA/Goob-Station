@@ -108,7 +108,6 @@ revolutionary-converter-speech-107 = Майбутнє пишуть не прав
 revolutionary-converter-speech-108 = Нехай майорить червоний прапор! Нехай править народ! Час гноблення минув!
 revolutionary-converter-speech-109 = Товариші, сьогодні ми повертаємо не лише нашу працю, а й нашу гідність!
 revolutionary-converter-speech-110 = Більше не будемо ми кланятися! Більше не будемо ми благати! Ми будемо правити разом!
-
 revolutionary-converter-speech-111 = Ми раби інституцій; хто сказав, що ми не можемо створити власні?
 revolutionary-converter-speech-112 = Ми десятиліттями видобуваємо плазму, але досі не бачили жодного спесо!
 revolutionary-converter-speech-113 = Цю станцію не збудували за день, але згорить вона за один день!

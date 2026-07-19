@@ -159,7 +159,7 @@ public sealed class StationProximitySystem : EntitySystem
         // Spawn a dummy entity at the player's location and lock it onto the player
         var dummy = Spawn(null, Transform(entity).Coordinates);
         _transform.SetParent(dummy, entity);
-        var mobCaller = EnsureComp<MobCallerComponent>(dummy); // assign the goidacaller to the dummy
+        var mobCaller = EnsureComp<MobCallerComponent>(dummy); // assign the [Err404]caller to the dummy
 
         mobCaller.SpawnProto = "SpaceLeviathanDespawn";
         mobCaller.MaxAlive = 1; // nuh uh

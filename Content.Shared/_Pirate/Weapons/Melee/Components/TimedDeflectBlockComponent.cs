@@ -59,6 +59,9 @@ public sealed partial class TimedDeflectBlockComponent : Component
     public float DeflectStaminaMultiplier = 1.2f;
 
     [DataField]
+    public float RangedStaminaMultiplier = 1f / 1.5f;
+
+    [DataField]
     public float StaminaReferenceDamage = 12f;
 
     [DataField]
@@ -101,10 +104,10 @@ public sealed partial class TimedDeflectBlockComponent : Component
 
     /// <summary>
     /// Scales the effective time counted toward <see cref="PowerDecayDelay"/> while sheathed.
-    /// 0.25 = the delay window is 4× larger (sheathed time counts at 25%).
+    /// 0.125 = the delay window is 8× larger (sheathed time counts at 12.5%).
     /// </summary>
     [DataField]
-    public float SheathWindowMultiplier = 0.25f;
+    public float SheathWindowMultiplier = 0.125f;
 
     /// <summary>
     /// Scales <see cref="PowerDecayPerSecond"/> while the weapon is inside a

@@ -118,6 +118,8 @@ entities:
       offset: 720
       duration: 2400
       originalColor: '#E0A0C0FF'
+    - type: DynamicWeather
+      scheduler: WeatherPiramide
     - type: MapAtmosphere
       space: False
       mixture:
@@ -15563,8 +15565,6 @@ entities:
     - type: Transform
       pos: 56.5,7.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
 - proto: AnomalyScanner
   entities:
   - uid: 572
@@ -44156,8 +44156,6 @@ entities:
     - type: Transform
       pos: -9.5,32.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -60450,8 +60448,6 @@ entities:
     - type: Transform
       pos: -39.5,20.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -95207,7 +95203,7 @@ entities:
     - type: Transform
       pos: 12.626967,-6.5651913
       parent: 2
-- proto: MaterialSilo
+- proto: MachineMaterialSilo
   entities:
   - uid: 13106
     components:
@@ -95382,8 +95378,6 @@ entities:
     - type: Transform
       pos: 36.5,-27.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
 - proto: MedicatedSuture
   entities:
   - uid: 13127
@@ -115547,10 +115541,10 @@ entities:
             sizes: null
             components: null
         icon:
-          sprite: /Textures/_Goobstation/Clothing/OuterClothing/Modsuits/contractor.rsi
-          state: control
+          sprite: /Textures/_Pirate/Clothing/Modular/Syndicate/control.rsi
+          state: icon
         priority: 0
-        productEntity: ClothingModsuitContractor
+        productEntity: ClothingModularControllerSyndicatePreassembled
         productAction: null
         productUpgradeId: null
         productActionEntity: null
@@ -123441,8 +123435,6 @@ entities:
     - type: Transform
       pos: -12.5,-30.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -123575,8 +123567,6 @@ entities:
     - type: Transform
       pos: 63.5,9.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -123604,8 +123594,6 @@ entities:
     - type: Transform
       pos: 30.5,45.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -127623,7 +127611,7 @@ entities:
     - type: Transform
       pos: -38.5,-27.5
       parent: 2
-- proto: SpawnMobCatException
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
   entities:
   - uid: 15239
     components:
@@ -154017,25 +154005,6 @@ entities:
       parent: 2
     - type: Pullable
       prevFixedRotation: True
-    - type: MindContainer
-    - type: InputMover
-    - type: MobMover
-    - type: MovementSpeedModifier
-    - type: Speech
-      suffixSpeechVerbs:
-        chat-speech-verb-suffix-exclamation-strong: DefaultExclamationStrong
-        chat-speech-verb-suffix-exclamation: DefaultExclamation
-        chat-speech-verb-suffix-question: DefaultQuestion
-        chat-speech-verb-suffix-stutter: DefaultStutter
-        chat-speech-verb-suffix-mumble: DefaultMumble
-      allowedEmotes: []
-    - type: Emoting
-    - type: Examiner
-    - type: LanguageSpeaker
-      understoodLanguages:
-      - TauCetiBasic
-      spokenLanguages:
-      - TauCetiBasic
   - uid: 20175
     components:
     - type: Transform

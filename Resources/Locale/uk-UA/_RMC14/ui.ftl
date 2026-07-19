@@ -10,7 +10,6 @@ rmc-ui-link-discord-account-copy = Скопіювати код
 rmc-ui-link-discord-account-copied = Скопійовано!
 rmc-ui-link-discord-account-already-linked = [bold]Ваш акаунт вже прив'язано![/bold]
 rmc-ui-link-discord-account-open-channel = Відкрити канал
-
 rmc-ui-patron-perks = Бонуси патрона
 rmc-ui-lobby-message = Повідомлення в лобі
 rmc-ui-lobby-message-description = Відображається гравцям перед початком гри.
@@ -24,14 +23,10 @@ rmc-ui-shoutout-example = Приклад:
 rmc-ui-shoutout-info = Кожне ім'я обирається випадково з-поміж усіх патронів цього рівня.
   Переконайтеся, що обрані імена відповідають рольовій грі та не порушують правил.
   Якщо не впевнені, запитайте в AHelp! (F1)
-
 rmc-ui-ghost-color = Колір привида
 rmc-ui-ghost-color-clear = Очистити
 rmc-ui-ghost-color-save = Зберегти
-
 rmc-ui-shoutout-nt = [bold]Nanotrasen фінансується: [color=green]{$name}[/color]![/bold]
-
 rmc-ui-discord = Discord
 rmc-ui-patreon = Patreon
-
 rmc-ui-save = Зберегти

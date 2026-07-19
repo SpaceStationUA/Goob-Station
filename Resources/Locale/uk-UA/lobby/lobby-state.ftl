@@ -20,7 +20,6 @@ lobby-state-song-text = Грає: [color=white]{$songTitle}[/color] від [colo
 lobby-state-song-no-song-text = У лобі не грає пісня.
 lobby-state-song-unknown-title = [color=dimgray]Невідома Пісня[/color]
 lobby-state-song-unknown-artist = [color=dimgray]Невідомого Автору[/color]
-
 lobby-state-playtime-comment-normal = Сьогодні ви провели у грі {$hours} {$hours ->
     [1]годину
     *[other]годин

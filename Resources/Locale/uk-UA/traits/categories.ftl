@@ -6,7 +6,6 @@ trait-category-Mental = Психічний
 trait-category-Physical = Фізичний
 trait-category-Speech = Промова
 trait-category-Visual = Візуальний
-
 trait-category-TraitsSpeechUncategorized = Без категорії
 trait-category-TraitsSpeechAccents = Акценти
 trait-category-TraitsSpeechLanguages = Мови

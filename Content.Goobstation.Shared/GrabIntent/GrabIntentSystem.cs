@@ -64,7 +64,8 @@ public sealed partial class GrabIntentSystem : EntitySystem
 
     private void InitializeCoreEvents()
     {
-        SubscribeLocalEvent<GrabbableComponent, MoveInputEvent>(OnPullableMoveInput);
+        // Pirate: ordinary pull escape lives in PullingSystem.
+        SubscribeLocalEvent<GrabbableComponent, MoveInputEvent>(OnSoftGrabMoveInput);
         SubscribeLocalEvent<GrabbableComponent, CheckGrabbedEvent>(OnCheckGrabbed);
         SubscribeLocalEvent<GrabbableComponent, GrabAttemptEvent>(OnGrabAttempt);
         SubscribeLocalEvent<GrabbableComponent, PullStoppedMessage>(OnPullStoppedGrabbable);
@@ -104,6 +105,7 @@ public sealed partial class GrabIntentSystem : EntitySystem
         }
 
         Dirty(uid, component);
+        _modifierSystem.RefreshMovementSpeedModifiers(uid); // Pirate: clear cached grab slowdown after resetting the stage.
     }
 
     private void OnCheckGrabbed(EntityUid uid, GrabbableComponent component, ref CheckGrabbedEvent args)
@@ -123,18 +125,17 @@ public sealed partial class GrabIntentSystem : EntitySystem
             args.EscapeAttemptModifier);
     }
 
-    private void OnPullableMoveInput(EntityUid uid, GrabbableComponent component, ref MoveInputEvent args)
+    private void OnSoftGrabMoveInput(Entity<GrabbableComponent> ent, ref MoveInputEvent args)
     {
-        if (!TryComp<PullableComponent>(uid, out var pullable) || !pullable.BeingPulled)
+        if (ent.Comp.GrabStage != GrabStage.Soft
+            || !TryComp<PullableComponent>(ent, out var pullable)
+            || !pullable.BeingPulled
+            || !_blocker.CanInteract(ent, null))
+        {
             return;
+        }
 
-        if (component.GrabStage == GrabStage.Soft && _blocker.CanInteract(uid, null))
-            _pulling.TryStopPull(uid, pullable, uid);
-
-        if (!_blocker.CanMove(args.Entity))
-            return;
-
-        _pulling.TryStopPull(uid, pullable, user: uid);
+        _pulling.TryStopPull(ent, pullable, ent);
     }
 
     #endregion

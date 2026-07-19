@@ -18,10 +18,8 @@ ui-vote-type-not-available = Цей тип голосування вимкнен
 ui-vote-fluff = Технологія «Антиледащо» від компанії Робуста™
 
 ## Vote menu command
-
 ui-vote-menu-command-description = Відкрити меню голосування
 ui-vote-menu-command-help-text = Використовуйте: votemenu
-
 ui-vote-type-votekick = Голосування за виключення
 
 # Причини голосування за виключення

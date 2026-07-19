@@ -5,7 +5,7 @@ using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using System.Linq;
 using Robust.Shared.Random;
-using Content.Server.Light.Components;
+using Content.Shared.Light.Components;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Damage.Systems;

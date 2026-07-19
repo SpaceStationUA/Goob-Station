@@ -1,21 +1,4 @@
 <!--
-SPDX-FileCopyrightText: 2022 Flipp Syder <76629141+vulppine@users.noreply.github.com>
-SPDX-FileCopyrightText: 2022 Moony <moonheart08@users.noreply.github.com>
-SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
-SPDX-FileCopyrightText: 2022 Veritius <veritiusgaming@gmail.com>
-SPDX-FileCopyrightText: 2022 Visne <39844191+Visne@users.noreply.github.com>
-SPDX-FileCopyrightText: 2023 James Simonson <jamessimo89@gmail.com>
-SPDX-FileCopyrightText: 2023 Morb <14136326+Morb0@users.noreply.github.com>
-SPDX-FileCopyrightText: 2024 Errant <35878406+Errant-4@users.noreply.github.com>
-SPDX-FileCopyrightText: 2024 Krunklehorn <42424291+Krunklehorn@users.noreply.github.com>
-SPDX-FileCopyrightText: 2024 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
-SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
-SPDX-FileCopyrightText: 2024 PoTeletubby <151896601+PoTeletubby@users.noreply.github.com>
-SPDX-FileCopyrightText: 2024 ShadowCommander <shadowjjt@gmail.com>
-SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
-SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
@@ -24,8 +7,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-         xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
-         xmlns:pirate="clr-namespace:Content.Client._Pirate.Traits.UI"
+	         xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
+	         xmlns:pirate="clr-namespace:Content.Client._Pirate.Traits.UI"
+	         xmlns:pirateInfo="clr-namespace:Content.Client._Pirate.Lobby.UI"
          HorizontalExpand="True">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10" HorizontalExpand="True">
@@ -196,7 +180,27 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <!-- Pirate end: port and modified DV traits UI -->
                 <!-- Pirate: loadout -->
                 <BoxContainer Name="LoadoutsTab" Orientation="Vertical" Margin="10">
+                    <!-- #region Pirate: loadout -->
+                    <!-- global item search -->
+                    <BoxContainer Orientation="Horizontal" Margin="0 0 0 6">
+                        <LineEdit Name="LoadoutSearchBar" HorizontalExpand="True" />
+                        <Control MinWidth="2" />
+                        <Button Name="LoadoutSearchClear" Text="✕" />
+                    </BoxContainer>
+                    <!-- #endregion Pirate: loadout -->
                     <TabContainer Name="LoadoutSlotTabs" HorizontalExpand="True" VerticalExpand="True" />
+                    <!-- #region Pirate: loadout -->
+                    <!-- flat search results, shown in place of the slot tabs while searching -->
+                    <BoxContainer Name="LoadoutSearchView" Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Visible="False">
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="4">
+                            <Label Name="LoadoutSearchResultsLabel" Margin="5 0 5 4" />
+                            <ScrollContainer Name="LoadoutSearchScroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
+                                <BoxContainer Name="LoadoutSearchResultsBody" Orientation="Vertical" Margin="5" HorizontalExpand="True" />
+                            </ScrollContainer>
+                        </BoxContainer>
+                        <BoxContainer Name="LoadoutSearchSidebarSlot" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="1" />
+                    </BoxContainer>
+                    <!-- #endregion Pirate: loadout -->
                     <ScrollContainer Name="LoadoutSidebarScroll" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False">
                         <BoxContainer Name="SelectedLoadoutsList" Orientation="Vertical" HorizontalExpand="True" Margin="5" />
                     </ScrollContainer>
@@ -206,6 +210,17 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <!-- Markings -->
                     <ScrollContainer VerticalExpand="True">
                         <humanoid:MarkingPicker Name="Markings" IgnoreCategories="Hair,FacialHair" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <!-- Pirate: Starlight extended character descriptions. -->
+                <BoxContainer Name="ICInfoTab" Orientation="Vertical" Margin="10" Visible="False">
+                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                        <pirateInfo:CharacterInfoEditor Name="ICInfoEditor" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <BoxContainer Name="OOCInfoTab" Orientation="Vertical" Margin="10" Visible="False">
+                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                        <pirateInfo:OOCInfoEditor Name="OOCInfoEditor" />
                     </ScrollContainer>
                 </BoxContainer>
             </TabContainer>

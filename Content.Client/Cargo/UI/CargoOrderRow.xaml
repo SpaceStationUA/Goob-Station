@@ -1,7 +1,4 @@
 <!--
-SPDX-FileCopyrightText: 2021 Visne <39844191+Visne@users.noreply.github.com>
-SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-
 SPDX-License-Identifier: MIT
 -->
 <!-- basically all of this has been changed by goobstation to a new UI, See PR #4780-->
@@ -10,7 +7,7 @@ SPDX-License-Identifier: MIT
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     HorizontalExpand="True"
     Margin="0 1"
-    StyleClasses="AngleRect">
+    StyleClasses="BackgroundPanel"> <!-- Pirate: ui fixes (legacy style migration; prefer upstream on conflict) -->
 
     <!-- Main Container -->
     <BoxContainer Orientation="Vertical"

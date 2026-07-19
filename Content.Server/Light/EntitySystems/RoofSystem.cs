@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 DoutorWhite <thedoctorwhite@gmail.com>
-// SPDX-FileCopyrightText: 2025 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Light.Components;
@@ -31,7 +27,7 @@ public sealed class RoofSystem : SharedRoofSystem
         if (_gridQuery.TryComp(xform.GridUid, out var grid))
         {
             var index = _maps.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
-            SetRoof((xform.GridUid.Value, grid, null), index, ent.Comp.Value);
+            SetRoof((xform.GridUid.Value, grid, null), index, ent.Comp.Value, ent.Comp.BlockWeather);
         }
 
         QueueDel(ent.Owner);

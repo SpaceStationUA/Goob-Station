@@ -338,7 +338,7 @@ public sealed class SlasherIncorporealSystem : EntitySystem
         ent.Comp.AddedIncorporealComponents.Clear();
     }
 
-    // Goida as shit.. I couldn't find a better way stop cooldowns
+    // [Err404] as shit.. I couldn't find a better way stop cooldowns
     private void FreezeCooldowns(Entity<SlasherIncorporealComponent> ent)
     {
         if (!_net.IsServer)

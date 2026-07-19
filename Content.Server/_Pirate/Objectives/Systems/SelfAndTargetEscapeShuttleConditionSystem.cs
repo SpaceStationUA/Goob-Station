@@ -1,0 +1,35 @@
+using Content.Server._Pirate.Objectives.Components;
+using Content.Server.Mind;
+using Content.Server.Objectives.Systems;
+using Content.Shared.Objectives.Components;
+
+namespace Content.Server._Pirate.Objectives.Systems;
+
+public sealed partial class SelfAndTargetEscapeShuttleConditionSystem : EntitySystem
+{
+    [Dependency] private EscapeShuttleConditionSystem _escapeShuttleConditionSystem = default!;
+    [Dependency] private MindSystem _mindSystem = default!;
+    [Dependency] private TargetObjectiveSystem _targetObjectiveSystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<SelfAndTargetEscapeShuttleConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
+    }
+
+    private void OnGetProgress(Entity<SelfAndTargetEscapeShuttleConditionComponent> entity, ref ObjectiveGetProgressEvent args)
+    {
+        var progress = _escapeShuttleConditionSystem.GetProgress(args.MindId, args.Mind);
+
+        if (_targetObjectiveSystem.GetTarget(entity, out var target) &&
+            target != EntityUid.Invalid &&
+            _mindSystem.TryGetMind(target.Value, out var mindId, out var mind))
+        {
+            progress *= 0.5f;
+            progress += _escapeShuttleConditionSystem.GetProgress(mindId, mind) * 0.5f;
+        }
+
+        args.Progress = progress;
+    }
+}

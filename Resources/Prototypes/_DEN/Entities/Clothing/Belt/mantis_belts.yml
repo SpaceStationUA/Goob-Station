@@ -1,0 +1,58 @@
+- type: entity
+  parent: [ClothingBeltMantis, BaseFoldable]
+  id: ClothingBeltMantisAiry
+  name: airy mantis belt
+  description: "A finely-woven rope belt with loops to carry mantis equipment. The loose end can be tucked in, if you prefer clean lines. It has sheaths for certain weapons."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Belt/mantis_belt_airy.rsi
+    layers:
+    - state: icon
+      map: ["unfoldedLayer"]
+    - state: icon-folded
+      map: ["foldedLayer"]
+      visible: false
+  - type: Clothing
+    sprite: _DEN/Clothing/Belt/mantis_belt_airy.rsi
+  - type: Foldable
+    canFoldInsideContainer: true
+    foldVerbText: fold-verb
+    unfoldVerbText: unfold-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded
+
+
+- type: entity
+  parent: [ClothingBeltMantis, BaseFoldable]
+  id: ClothingBeltMantisDark
+  name: dark mantis belt
+  description: "A structured, layered sash designed to carry mantis equipment. The loose end can be tucked in, if you prefer clean lines. It has sheaths for certain weapons."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Belt/mantis_belt_dark.rsi
+    layers:
+    - state: icon
+      map: ["unfoldedLayer"]
+    - state: icon-folded
+      map: ["foldedLayer"]
+      visible: false
+  - type: Clothing
+    sprite: _DEN/Clothing/Belt/mantis_belt_dark.rsi
+  - type: Foldable
+    canFoldInsideContainer: true
+    foldVerbText: fold-verb
+    unfoldVerbText: unfold-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded
+
+
+- type: entity
+  parent: ClothingBeltMantis
+  id: ClothingBeltMantisOrnate
+  name: ornate mantis belt
+  description: "A thick band fastened by an electrum chain, with inner pockets designed to carry mantis equipment. It has sheaths for certain weapons."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Belt/mantis_belt_ornate.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Belt/mantis_belt_ornate.rsi

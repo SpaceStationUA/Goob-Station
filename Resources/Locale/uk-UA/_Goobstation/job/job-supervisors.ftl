@@ -9,6 +9,6 @@
 job-supervisors-ntr-centcom = представник Nanotrasen та Центральне Командування
 job-supervisors-commander = капітан флоту
 job-supervisors-null = нікого, крім вас.
-
 job-supervisor-syndicate = Синдикат Спінвард
 job-supervisors-credits = Ті, хто запропонує найвищу ціну
+job-supervisors-syndicate = Синдикат

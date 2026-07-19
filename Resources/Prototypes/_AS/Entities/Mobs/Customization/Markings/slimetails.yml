@@ -1,0 +1,65 @@
+# Arachnid slimes
+- type: marking
+  id: SlimeArachnidCurled
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: _AS/Mobs/Customization/Slime/arachnidslime.rsi
+    state: slime-curled
+
+- type: marking
+  id: SlimeArachnidScorpion
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: _AS/Mobs/Customization/Slime/arachnidslime.rsi
+    state: slime-scorpion
+
+- type: marking
+  id: SlimeArachnidShort
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: _AS/Mobs/Customization/Slime/arachnidslime.rsi
+    state: slime-short
+
+# Lizard slimes
+- type: marking
+  id: SlimeLizardTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: _AS/Mobs/Customization/Slime/lizardslime.rsi
+    state: slime-lizard
+
+- type: marking
+  id: SlimeLizardSnake
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: _AS/Mobs/Customization/Slime/lizardslime.rsi
+    state: slime-snake
+
+- type: marking
+  id: SlimeLizardSnakeLarge
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: _AS/Mobs/Customization/Slime/lizardslime64x32.rsi
+    state: slime-snake-large
+
+# Vox slimes
+- type: marking
+  id: SlimeVoxTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: _AS/Mobs/Customization/Slime/voxslime.rsi
+    state: slime-tail-vox

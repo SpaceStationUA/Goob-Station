@@ -1,0 +1,19 @@
+# Pirate: local Goob borg subtype wiring for quadborgs ported from https://github.com/lagrange14/substations/pull/560
+
+- type: borgSubtype
+  parentBorgType: quadmining
+  id: quadmining_default
+  spritePath: _Pirate/Mobs/Silicon/chassis.rsi
+  dummyPrototype: QuadChassisMining
+
+- type: borgSubtype
+  parentBorgType: quadmedical
+  id: quadmedical_default
+  spritePath: _Pirate/Mobs/Silicon/chassis.rsi
+  dummyPrototype: QuadChassisMedical
+
+- type: borgSubtype
+  parentBorgType: quadservice
+  id: quadservice_default
+  spritePath: _Pirate/Mobs/Silicon/chassis.rsi
+  dummyPrototype: QuadChassisService

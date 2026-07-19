@@ -1,35 +1,31 @@
-// SPDX-FileCopyrightText: 2022 Rane <60792108+Elijahrane@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
-// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 ShadowCommander <10494922+ShadowCommander@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2023 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Cojoke <83733158+Cojoke-dot@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 Ed <96445749+TheShuEd@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 chavonadelal <156101927+chavonadelal@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 lzk <124214523+lzk228@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server.Administration.Logs;
 using Content.Server.Mind;
+using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
+using Content.Server._Pirate.Character.Info;
+using Content.Shared.CCVar;
 using Content.Shared.CharacterInfo;
+using Content.Shared.Database;
 using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.Preferences;
+using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 
 namespace Content.Server.CharacterInfo;
 
 public sealed class CharacterInfoSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private readonly IServerPreferencesManager _preferences = default!;
+    [Dependency] private readonly PirateCharacterInfoSystem _pirateCharacterInfo = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
 
@@ -38,6 +34,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         base.Initialize();
 
         SubscribeNetworkEvent<RequestCharacterInfoEvent>(OnRequestCharacterInfoEvent);
+        SubscribeNetworkEvent<UpdateDetailExaminableEvent>(OnUpdateDetailExaminableEvent);
     }
 
     private void OnRequestCharacterInfoEvent(RequestCharacterInfoEvent msg, EntitySessionEventArgs args)
@@ -83,6 +80,29 @@ public sealed class CharacterInfoSystem : EntitySystem
             //Pirate banking end
         }
 
-        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing, memories), args.SenderSession); //Pirate banking
+        var detailExaminable = _pirateCharacterInfo.GetPhysicalDescription(entity)
+            ?? Loc.GetString("flavor-text-placeholder");
+
+        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing, detailExaminable, memories), args.SenderSession); //Pirate banking
+    }
+
+    // Pirate: allow editing the round description in-game.
+    private void OnUpdateDetailExaminableEvent(UpdateDetailExaminableEvent msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { } entity)
+            return;
+
+        var newContent = FormattedMessage.RemoveMarkupOrThrow(msg.Content);
+        var maxFlavorTextLength = _cfg.GetCVar(CCVars.MaxFlavorTextLength);
+        if (newContent.Length > maxFlavorTextLength)
+            newContent = newContent[..maxFlavorTextLength];
+
+        _pirateCharacterInfo.SetPhysicalDescription(entity, newContent);
+
+        var preferences = _preferences.GetPreferences(args.SenderSession.UserId);
+        if (preferences.SelectedCharacter is HumanoidCharacterProfile profile)
+            _ = _preferences.SetProfile(args.SenderSession.UserId, preferences.SelectedCharacterIndex, profile.WithPhysicalDescription(newContent));
+
+        _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(entity):user} updated their round description");
     }
 }

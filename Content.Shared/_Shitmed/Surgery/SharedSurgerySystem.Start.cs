@@ -19,6 +19,7 @@ public abstract partial class SharedSurgerySystem
         _targetQuery = GetEntityQuery<SurgeryTargetComponent>();
 
         SubscribeLocalEvent<SurgeryToolComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
+        InitializePirateAltInteract(); // Pirate - quick-open surgery with Alt+LMB.
 
         // cvar is yes var is no, invert it
         Subs.CVar(_config, SurgeryCVars.CanOperateOnSelf, x => _noSelfOperate = !x, true);
@@ -44,7 +45,8 @@ public abstract partial class SharedSurgerySystem
         var target = args.Target;
         if (!args.CanInteract
             || !args.CanAccess
-            || !_targetQuery.HasComp(target))
+            || !_targetQuery.HasComp(target)
+            || CanPirateQuickOpenSurgery(args.User)) // Pirate - the alt verb handles noncombat users.
             return;
 
         var user = args.User;

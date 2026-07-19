@@ -1,0 +1,17 @@
+- type: weather
+  id: WeatherCharonOilfall
+  sprite:
+    sprite: /Textures/Effects/weather.rsi
+    state: oilfall
+  sound:
+    collection: Rain
+    params:
+      loop: true
+      volume: -20
+  statusEffect: StatusEffectMuted
+  refresh: true
+
+# NOTE: This isn't intended to be used directly! DynamicWeatherSystem secretly swaps this for `null`.
+- type: weather
+  id: WeatherClear
+  abstract: true

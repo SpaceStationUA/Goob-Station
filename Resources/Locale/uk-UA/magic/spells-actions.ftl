@@ -12,8 +12,9 @@ action-speech-spell-heal = ХІЛИМОСЬ ЖИВЕМО!
 action-speech-spell-magicmissile = ЛОВИ ПОДАЧУ!
 action-speech-spell-iceburst = ЗАМЕРЗНІТЬ!
 action-speech-spell-teslaball = ПІКА ПІКА!
-
 action-speech-spell-summon-guns = ЙОР'НІ ВЕС-КОРФА
 action-speech-spell-summon-magic = РІГОІН ФЕМА-ВЕРЕКО
 action-speech-spell-mind-swap = ГІН'Ю КАПАН!
 action-speech-spell-slip = СЛІ ПАРРІ!
+action-speech-spell-cluwne = !KNOH
+action-speech-spell-charge = DI'RI CEL!

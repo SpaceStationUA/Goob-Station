@@ -1,18 +1,12 @@
-// SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2024 August Eymann <august.eymann@gmail.com>
-// SPDX-FileCopyrightText: 2024 Steve <marlumpy@gmail.com>
-// SPDX-FileCopyrightText: 2024 chromiumboy <50505512+chromiumboy@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2024 marc-pelletier <113944176+marc-pelletier@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.RCD.Systems;
+using Content.Shared.Atmos.Components; // Pirate: chem plumbing
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization; // Pirate: chem plumbing
 
 namespace Content.Shared.RCD.Components;
 
@@ -55,6 +49,29 @@ public sealed partial class RCDComponent : Component
     [DataField, AutoNetworkedField]
     public bool IsRpd { get; set; } = false;
 
+    #region Pirate: chem plumbing
+    /// <summary>
+    /// Indicates whether this is an RPLD.
+    /// </summary>
+    [DataField("isRPLD"), AutoNetworkedField]
+    public bool IsRPLD { get; set; } = false;
+
+    /// <summary>
+    /// Last free-mode pipe layer selected by the client.
+    /// </summary>
+    [DataField]
+    public AtmosPipeLayer? LastSelectedLayer { get; set; } = null;
+
+    /// <summary>
+    /// Current pipe layer build mode for RPD/RPLD placement.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public RpdMode CurrentMode { get; set; } = RpdMode.Free;
+
+    [DataField]
+    public SoundSpecifier SoundSwitchMode { get; set; } = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg");
+    #endregion
+
     /// <summary>
     /// The direction constructed entities will face upon spawning
     /// </summary>
@@ -80,3 +97,16 @@ public sealed partial class RCDComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public Transform ConstructionTransform { get; private set; }
 }
+
+#region Pirate: chem plumbing
+[Serializable, NetSerializable]
+public enum RpdMode : byte
+{
+    Primary = 0,
+    Secondary = 1,
+    Tertiary = 2,
+    Quaternary = 3,
+    Quinary = 4,
+    Free = 5,
+}
+#endregion

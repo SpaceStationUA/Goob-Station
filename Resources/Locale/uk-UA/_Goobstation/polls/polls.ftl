@@ -32,7 +32,6 @@ poll-command-list-no-polls = Немає активних опитувань.
 poll-command-info-not-found = Опитування {$id} не знайдено.
 cmd-polls-desc = Відкриває вікно опитувань спільноти.
 cmd-polls-help = Використання: polls
-
 poll-control-seen-by = { $count ->
     [one] Переглянув {$count} гравець
     [few] Переглянули {$count} гравці

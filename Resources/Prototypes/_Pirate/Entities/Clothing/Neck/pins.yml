@@ -1,0 +1,12 @@
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckNoviceMark
+  name: novice's mark
+  description: A mark for identifying yourself as unskilled to others. Take it as a trinket if you need to!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Misc/novicemark.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Misc/novicemark.rsi
+  - type: ExaminableClothing
+    examineText: obvious-x-pin-novice

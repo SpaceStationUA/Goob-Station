@@ -29,7 +29,7 @@
   access:
   - Research
   - Maintenance
-  - Mantis # DeltaV - Psionic Mantis, see Resources/Prototypes/_DV/Access/epistemics.yml
+  - Mantis
   special:
   - !type:AddComponentSpecial
     components:
@@ -54,6 +54,7 @@
 - type: chameleonOutfit
   id: ForensicMantisChameleonOutfit
   job: ForensicMantis
+  startingGear: ForensicMantisGear
   equipment:
     id: PsionicMantisPDA
     eyes: ClothingEyesGlassesSunglasses

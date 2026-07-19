@@ -1,0 +1,9 @@
+signal-port-name-fpv-drone-payload-drop-sender = Кнопка скидання предмета FPV-дрона
+signal-port-description-fpv-drone-payload-drop-sender = Надсилає сигнал для скидання одного предмета зі сховища FPV-дрона.
+signal-port-name-fpv-drone-trigger = Скинути предмет
+signal-port-description-fpv-drone-trigger = Після отримання сигналу скидає один предмет зі сховища дрона на землю.
+fpv-drone-payload-dropped = {$name} скидає щось зі свого сховища!
+ent-RemoteDroneLaptop = ноутбук керування дроном
+    .desc = Керує дронами. Для роботи має бути прив'язаний до дрона.
+ent-RemoteDroneFpv = FPV-дрон
+    .desc = Реліквія історичної війни. Для роботи має бути прив'язаний до контролера дрона. У польоті споживає близько 0.6 джоуля енергії на секунду.

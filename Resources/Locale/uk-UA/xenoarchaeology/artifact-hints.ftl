@@ -24,7 +24,6 @@ artifact-effect-hint-visual = Візуальні спотворення
 
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")
-
 artifact-trigger-hint-electricity = Електрика
 artifact-trigger-hint-heat = Високі температури
 artifact-trigger-hint-physical = Фізична травма
@@ -40,7 +39,6 @@ artifact-trigger-hint-regular-gases = Стандартні атмосферні 
 artifact-trigger-hint-plasma = Газоподібна плазма
 artifact-trigger-hint-land = Активне уповільнення
 artifact-trigger-hint-examine = Вивчення
-
 artifact-effect-hint-psionic = Ноосферні бурі
 artifact-trigger-hint-medical = Терапевтичні хімікати
 xenoarch-trigger-tip-music = Гармонійні звукові коливання
@@ -71,7 +69,6 @@ xenoarch-trigger-tip-death = Смерть
 xenoarch-trigger-tip-magnet = Магнітні хвилі
 
 ### Підказки до опису
-
 xenoarch-trigger-examine-wrenching = Навколо обертається якась незакріплена деталь.
 xenoarch-trigger-examine-prying = З поверхні виступає панель.
 xenoarch-trigger-examine-screwing = Є піднята секція з невеликим заглибленням.

@@ -1,0 +1,11 @@
+reagent-name-eggcream = яєчний крем
+reagent-desc-eggcream = Не містить ні яєць, ні вершків. Жадана спеціальність содового бармена.
+milkshake-desc = Вершина молочної справи
+reagent-name-vanillamilkshake = ванільний мілкшейк
+reagent-desc-vanillamilkshake = {milkshake-desc}. Мабуть, все ще варто для тих, хто не переносить лактозу.
+reagent-name-chocolatemilkshake = шоколадний мілкшейк
+reagent-desc-chocolatemilkshake = {milkshake-desc}, але шоколаду ніщо не може зіпсувати.
+reagent-name-berrymilkshake = ягідний мілкшейк
+reagent-desc-berrymilkshake = {milkshake-desc}. Додавання ягідного сиропу перетворило скромний мілкшейк.
+reagent-name-cottonmilkshake = бавовняний мілкшейк
+reagent-desc-cottonmilkshake = {milkshake-desc}. Ручного приготування для максимальної насолоди метеликів!

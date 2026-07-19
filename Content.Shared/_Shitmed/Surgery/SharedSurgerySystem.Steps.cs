@@ -1,22 +1,3 @@
-// SPDX-FileCopyrightText: 2024 Skubman <ba.fallaria@gmail.com>
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Janet Blackquill <uhhadd@gmail.com>
-// SPDX-FileCopyrightText: 2025 Kayzel <43700376+KayzelW@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Piras314 <p1r4s@proton.me>
-// SPDX-FileCopyrightText: 2025 Roudenn <romabond091@gmail.com>
-// SPDX-FileCopyrightText: 2025 Spatison <137375981+Spatison@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Trest <144359854+trest100@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
-// SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 gluesniffler <linebarrelerenthusiast@gmail.com>
-// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
-// SPDX-FileCopyrightText: 2025 kurokoTurbo <92106367+kurokoTurbo@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 pacable <77161122+pxc1984@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 pacable <igor.mamaev1@gmail.com>
-// SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Humanoid;
@@ -41,6 +22,7 @@ using Content.Shared._Shitmed.Medical.Surgery.Traumas.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Mood;
 using Content.Shared._Shitmed.Body.Organ;
 using Content.Shared._Shitmed.Body.Part;
 using Content.Shared.Popups;
@@ -126,7 +108,7 @@ public abstract partial class SharedSurgerySystem
     private void HandleOrganModifications(SurgeryStepEvent args, SurgeryStepComponent comp)
     {
         HandleOrganModification(args.Part, args.Body, comp.AddOrganOnAdd);
-        HandleOrganModification(args.Part, args.Body, comp.RemoveOrganOnAdd, true); // oh my goida code
+        HandleOrganModification(args.Part, args.Body, comp.RemoveOrganOnAdd, true); // oh my [Err404] code
     }
 
     private void OnToolCheck(Entity<SurgeryStepComponent> ent, ref SurgeryStepCompleteCheckEvent args)
@@ -653,6 +635,9 @@ public abstract partial class SharedSurgerySystem
         if (Status.HasEffectComp<ForcedSleepingStatusEffectComponent>(args.Body))
             painToInflict *= ent.Comp.SleepModifier;
 
+        if (painToInflict > 0)
+            RaiseLocalEvent(args.Body, new MoodEffectEvent("SurgeryPain")); // Pirate - port EE mood system
+
         if (!_pain.TryChangePainModifier(
                 nerveSys.Value.Owner,
                 args.Part,
@@ -903,6 +888,7 @@ public abstract partial class SharedSurgerySystem
             NeedHand = true,
             BreakOnHandChange = true,
             AttemptFrequency = AttemptFrequency.EveryTick,
+            DistanceThreshold = null
         };
 
         if (!_doAfter.TryStartDoAfter(doAfter))

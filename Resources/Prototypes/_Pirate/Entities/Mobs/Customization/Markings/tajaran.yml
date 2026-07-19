@@ -1,0 +1,11 @@
+# Tajaran Tails
+- type: marking
+  id: TajaranTailLeopardAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Tajaran]
+  sprites:
+  - sprite: _Pirate/Mobs/Customization/Tajaran/leopard_tail.rsi
+    state: m_tail_leopard_primary_wag
+  - sprite: _Pirate/Mobs/Customization/Tajaran/leopard_tail.rsi
+    state: m_tail_leopard_tertiary_wag

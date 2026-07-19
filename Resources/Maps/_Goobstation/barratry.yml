@@ -49887,7 +49887,7 @@ entities:
     - type: Transform
       pos: 27.345951,23.492924
       parent: 2
-- proto: EnergyChemDispenser
+- proto: ChemDispenser
   entities:
   - uid: 5200
     components:
@@ -77956,7 +77956,7 @@ entities:
     - type: Transform
       pos: 4.5405226,-14.581865
       parent: 2
-- proto: MaterialSilo
+- proto: MachineMaterialSilo
   entities:
   - uid: 9829
     components:
@@ -89543,6 +89543,8 @@ entities:
     - type: Transform
       pos: 0.5,16.5
       parent: 2
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
+  entities:
   - uid: 12304
     components:
     - type: Transform

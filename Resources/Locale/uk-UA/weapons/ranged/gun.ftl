@@ -6,8 +6,6 @@ gun-selected-mode = Обрано {$mode} режим
 gun-disabled = Ви не можете використовувати зброю!
 gun-clumsy = Ви закурткобейнились!
 gun-set-fire-mode = Виставити на {$mode}
-
-# SelectiveFire
 gun-SemiAuto = напівавтоматичний
 gun-Burst = відсічками
 gun-FullAuto = автоматичний
@@ -48,7 +46,6 @@ gun-revolver-insert = Вкладено
 gun-revolver-spin = Прокрутити револьвер
 gun-revolver-spun = Прокручено
 gun-speedloader-empty = Швидкозарядник пустий
-
 gun-burst-fire-rate-examine = Скорострільність - [color={$color}]{$fireRate}[/color] пострілів на хвилину.
 gun-burst-fire-burst-count = Стріляє серіями по [color={$color}]{$burstcount}[/color] куль.
 gun-damage-modifier-examine = Її постріли завдають [color={$color}]{$damage}x[/color] шкоди.
@@ -58,3 +55,5 @@ gun-magazine-fired-empty = Набоїв не залишилося!
 # SelectiveFire
 examine-gun-spread-modifier-reduction = Розсіювання зменшено на [color=yellow]{$percentage}%[/color].
 examine-gun-spread-modifier-increase = Розсіювання збільшено на [color=yellow]{$percentage}%[/color].
+gun-set-fire-mode-examine = Встановлено на [color=yellow]{$mode}[/color].
+gun-set-fire-mode-popup = Змінено на {$mode}

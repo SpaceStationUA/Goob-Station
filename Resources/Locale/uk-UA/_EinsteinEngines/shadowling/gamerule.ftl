@@ -1,17 +1,12 @@
 shadowling-condition-win = Тіньовики успішно перейшли у свою остаточну форму!
 shadowling-condition-draw = Обидві сторони зазнали великих втрат, але екіпаж зумів вижити.
 shadowling-condition-failure = Екіпажу вдалося перешкодити переходу тіньовиків у свою остаточну форму!
-
 shadowling-list-start = Тіньовиками були:
 thrall-list-start = Тралами були:
-
 shadowling-list-name = [color=#880808]{ $name }[/color] ([color=gray]{ $user }[/color])
-
 shadowling-title = Тіньовики
 shadowling-description = Тінь - найкращий вчитель того, як вийти на світло.
-
 objective-issuer-shadowling = Тіньовик
-
 shadowling-round-end-name = тіньовик
 shadowling-role-greeting = Щось ворушиться глибоко у вашій свідомості. Червоне світло заливає ваш зір, і ви повільно згадуєте. Хоча ваша людська подоба добре вам служила,
     настав час скинути її та прийняти свою справжню форму. Ви замаскувалися серед людей, але ви не один з них.

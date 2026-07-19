@@ -5,5 +5,4 @@
         [hit] Влучання
        *[other] Невідомо
     }
-
 damage-popup-component-switched = Встановлено цільовий тип

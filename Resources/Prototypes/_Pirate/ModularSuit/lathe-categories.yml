@@ -1,0 +1,7 @@
+- type: latheCategory
+  id: ModesuitPart
+  name: lathe-category-modepart
+
+- type: latheCategory
+  id: ModesuitModule
+  name: lathe-category-modemodule

@@ -1,10 +1,8 @@
 death-match-title = ДезМатч
 death-match-description = Вбивайте все, що рухається! Звичайна рольова гра не обов'язкова. Перемагає перший, хто набере 31 очко!
-
 death-match-name-player = [bold]{$name}[/bold] ([italic]{$username}[/italic])
 death-match-name-npc = [bold]{$name}[/bold]
 death-match-assist = {$primary}, якому допоміг {$secondary},
-
 death-match-kill-callout-0 = {CAPITALIZE($killer)} вбив(ла) {$victim}!
 death-match-kill-callout-1 = {CAPITALIZE($killer)} вбив(ла) {$victim}!
 death-match-kill-callout-2 = {CAPITALIZE($killer)} замовдував(ла) {$victim}!

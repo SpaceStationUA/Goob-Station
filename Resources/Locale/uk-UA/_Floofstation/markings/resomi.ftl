@@ -22,7 +22,6 @@ marking-ResomiFluffHead = Пух на голові Ресомі
 marking-ResomiFluffHead-fluff_head = Пух на голові Ресомі
 marking-ResomiFluffHeadUp = Пух на голові Ресомі (вгору)
 marking-ResomiFluffHeadUp-fluff_head_up = Пух на голові Ресомі (вгору)
-
 marking-ResomiFeathersBig = Великі пір'їни хвоста
 marking-ResomiFluffyChest = Великі пухнасті груди
 marking-ResomiEars = Великі вуха

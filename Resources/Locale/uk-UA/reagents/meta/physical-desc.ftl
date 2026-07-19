@@ -123,5 +123,6 @@ reagent-physical-desc-holy = святий
 reagent-physical-desc-slimy = слизький
 reagent-physical-desc-neural = нейронний
 reagent-physical-desc-unidentifiable = непізнаваний
-
 reagent-physical-desc-non-newtonian = неньютонівський
+reagent-physical-desc-thin = рідкий
+reagent-physical-desc-arcryox = крижано-синій

@@ -1,0 +1,53 @@
+- type: entity
+  parent: ClothingEyesGlassesEpistemics
+  id: ClothingEyesGlassesEpistemicsMantis
+  name: mantis psionics pince-nez
+  description: "A pince-nez that provides weld and flash protection. Comes with prescription eidolite lenses, if requested." #Aurora
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Eyes/Glasses/epiglasses_mantis.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Eyes/Glasses/epiglasses_mantis.rsi
+  - type: VisionCorrection
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - MantisBeltStorable
+
+
+- type: entity
+  parent: [ClothingEyesGlassesEpistemicsMantis]
+  id: ClothingEyesGlassesEpistemicsMantisTinted
+  name: mantis psionics pince-nez (tinted)
+  description: "A pince-nez that provides weld and flash protection. Comes with prescription eidolite lenses, if requested."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Eyes/Glasses/epiglasses_mantis_dark.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Eyes/Glasses/epiglasses_mantis_dark.rsi
+  - type: VisionCorrection
+
+
+- type: entity
+  parent: ClothingEyesGlassesEpistemicsMantis
+  id: ClothingEyesGlassesEpistemicsMantisMirrored
+  name: mantis psionics pince-nez (mirrored)
+  description: "A mirrored pince-nez that provides flash immunity and a psionics HUD. Comes with prescription eidolite lenses, if requested."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Eyes/Glasses/epiglasses_mantis_mirrored.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Eyes/Glasses/epiglasses_mantis_mirrored.rsi
+  - type: VisionCorrection
+
+
+- type: entity
+  parent: ClothingEyesGlassesEpistemicsMantis
+  id: ClothingEyesGlassesEpistemicsMantisVeil
+  name: mantis psionics blindfold
+  description: "A sheer blindfold decorated with an electrum eye that provides flash immunity and weld protection."
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Eyes/Glasses/epiglasses_mantis_alt.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Eyes/Glasses/epiglasses_mantis_alt.rsi

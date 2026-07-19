@@ -11,7 +11,6 @@ reagent-effect-condition-guidebook-stamina-damage-threshold = { $max ->
                     *[other] ціль має від {NATURALFIXED($min, 2)} до {NATURALFIXED($max, 2)} шкоди витривалості
                  }
     }
-
 reagent-effect-condition-guidebook-unique-bloodstream-chem-threshold = { $max ->
         [2147483648] { $min ->
                         [1] є щонайменше {$min} реагент
@@ -26,7 +25,6 @@ reagent-effect-condition-guidebook-unique-bloodstream-chem-threshold = { $max ->
                     *[other] є від {$min} до {$max} реагентів
                  }
     }
-
 reagent-effect-condition-guidebook-typed-damage-threshold = { $inverse ->
         [true] ціль має щонайбільше
         *[false] ціль має щонайменше

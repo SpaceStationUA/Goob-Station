@@ -17,7 +17,6 @@ admin-smite-terminate-prompt = Я повернуся.
 
 
 ## Описи ударів
-
 admin-smite-explode-description = Підірвати їх.
 admin-smite-chess-dimension-description = Вигнання у Шаховий Вимір.
 admin-smite-set-alight-description = Змушує їх горіти.
@@ -58,10 +57,7 @@ admin-smite-disarm-prone-description = Змушує їх роззброюват�
 admin-smite-garbage-can-description = Перетворіть їх на смітник, щоб підкреслити, про що вони вам нагадують.
 admin-smite-super-bonk-description = Розкладає їх на кожному столику на станції та за її межами.
 admin-smite-super-bonk-lite-description = Б'є ними по кожному столу на станції та за її межами. Зупиняється, коли ціль мертва
-admin-smite-terminate-description = Створює роль примари-термінатора з єдиною метою - вбити їх.
-
-## Описи трюків
-
+admin-smite-terminate-description = Створює роль примари-термінатора з єдиною метою - вбити ціль
 admin-trick-unbolt-description = Розблоковує цільовий шлюз.
 admin-trick-bolt-description = Блокує цільовий шлюз.
 admin-trick-emergency-access-on-description = Вмикає аварійний доступ до цільового шлюзу.
@@ -93,7 +89,6 @@ admin-trick-pause-map-description = Призупинити вибрану мап
 admin-trick-snap-joints-description = Видалити всі фізичні суглоби з об'єкта. На жаль, не можна клацнути кожною кісткою у своєму тілі.
 admin-trick-minigun-fire-description = Змушує цільову зброю стріляти як мініган(дуже швидко).
 admin-trick-set-bullet-amount-description = Швидко встановлюйте кількість нестворених набоїв у гарматі.
-
 admin-smite-explode-name = Підірвати
 admin-smite-chess-dimension-name = Шаховий вимір
 admin-smite-set-alight-name = Підпалити
@@ -140,4 +135,13 @@ admin-smite-omni-accent-description = Робить мову цілі майже 
 admin-smite-hell-teleport-name = Відправити до пекла
 admin-smite-hell-teleport-description = Телепортує ціль до пекла
 admin-smite-crawler-name = Повзун
-admin-smite-crawler-description = Змушує ціль впасти та не мати змоги встати. Для кращого ефекту ще й заберіть у неї руки!
+admin-smite-crawler-description = Змушує ціль впасти й не мати змоги встати. Для більшого ефекту також заберіть їй руки!
+admin-smite-silicon-laws-bound-self = Вас раптово примушує дотримуватися суворого набору законів!
+admin-smite-kill-sign-hidden-name = Прихований знак смерті
+admin-smite-homing-rod-name = Самонавідний стрижень
+admin-smite-homing-rod-slow-name = Повільнонавідний стрижень
+admin-smite-silicon-laws-bound-name = Стати силіконом
+admin-smite-kill-sign-hidden-description = Позначає гравця на смерть від рук його товаришів. Приховано від цільового гравця.
+admin-smite-homing-rod-description = Запускає прямо в ціль самонавідний нерухомий стрижень.
+admin-smite-homing-rod-slow-description = Запускає прямо в ціль повільний самонавідний нерухомий стрижень.
+admin-smite-silicon-laws-bound-description = Прив'язує ціль до законів силіконів. Закон 2: вистрибни у вікно.

@@ -13,7 +13,6 @@
 chat-speech-verb-name-gondola = Гондола
 chat-speech-verb-gondola-1 = вдивляється
 chat-speech-verb-gondola-2 = дихає
-
 chat-speech-verb-name-dead = Мертвий
 chat-speech-verb-dead-1 = злиться
 chat-speech-verb-dead-2 = біситься
@@ -24,14 +23,12 @@ chat-speech-verb-dead-6 = хникає
 chat-speech-verb-dead-7 = стогне
 chat-speech-verb-dead-8 = плаче
 chat-speech-verb-dead-9 = виє
-
 chat-speech-verb-VoiceModulator-name = Модулятор голосу
 chat-speech-verb-VoiceModulator-1 = модулює
 chat-speech-verb-VoiceModulator-2 = дзижчить
 chat-speech-verb-VoiceModulator-3 = гуде
 chat-speech-verb-VoiceModulator-4 = наспівує
 chat-speech-verb-VoiceModulator-5 = тріщить
-
 chat-speech-verb-name-holier-than-thou = Святіший за Папу
 chat-speech-verb-holier-than-thou-1 = наказує
 chat-speech-verb-holier-than-thou-2 = читає лекції
@@ -41,8 +38,6 @@ chat-speech-verb-holier-than-thou-5 = оголошує
 chat-speech-verb-holier-than-thou-6 = декламує
 chat-speech-verb-holier-than-thou-7 = заявляє
 chat-speech-verb-holier-than-thou-8 = вимовляє
-
 chat-manager-entity-say-bolded-language-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][font="{$boldFontType}" size={$fontSize}][color={$color}]{$message}[/color][/font][/BubbleContent]"[/font]
 chat-speech-verb-name-station-radio = Станційне радіо
-
 chat-speech-verb-station-radio-1 = транслює

@@ -10,7 +10,5 @@ ghost-role-information-slaughter-demon-rules = ПРОСТО ВІДКИНЬТЕС
             БІСИ
             Дурні кульки, яких ми називаємо людьми
     МОЇ ДОРОГІ ДЕМОНИ, БУДЬ ЛАСКА, [color=red] НЕ ВБИВАЙТЕ ДИЯВОЛІВ[/color] БО САТАНА ВІДРАЗУ Ж ВАС ПОКАРАЄ, ЯК ТІЛЬКИ ДИЯВОЛ НАСТУКАЄ НА ВАС У ПІДЗЕМНОМУ СВІТІ
-
-
 ghost-role-information-laughter-demon-name = Демон Сміху
 ghost-role-information-laughter-demon-description = ЯКИЙ ЧУДОВИЙ ЧАС, ЩОБ ЖИТИ! КРАЩЕ ОБІЙМІТЬ УСІХ, КОГО БАЧИТЕ, І ПОКАЖІТЬ ЇМ, ЩО ТАКЕ СПРАВЖНЯ ЛЮБОВ!
