@@ -46,7 +46,7 @@
       task: SimpleHostileCompound
   - type: Physics
   - type: Speech
-    allowedEmotes: ["Bark", "Snarl", "Whine", "Howl", "Awoo"]
+    allowedEmotes: ["Bark", "Snarl", "Whine", "Awoo"] # Pirate: Howl is disabled in the local emote prototypes.
     speechVerb: Canine
     speechSounds: Vulpkanin
   - type: Fixtures
