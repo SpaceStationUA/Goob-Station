@@ -17,7 +17,7 @@ on:
 env:
   # Pirate: mapped groups run independently; every other integration test falls through to the unmapped shard.
   ENTITY_TEST_PATTERNS: Content.IntegrationTests.Tests.EntityTest
-  ATMOS_SERIALIZATION_TEST_PATTERNS: >-
+  ATMOS_CORE_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Atmos.AirtightTest
     Content.IntegrationTests.Tests.Atmos.AlarmThresholdTest
     Content.IntegrationTests.Tests.Atmos.AtmosMonitoringTest
@@ -28,6 +28,7 @@ env:
     Content.IntegrationTests.Tests.Atmos.GridJoinTest
     Content.IntegrationTests.Tests.Atmos.RoomSpacingTest
     Content.IntegrationTests.Tests.Atmos.SharedGasSpecificHeatsTest
+  VALIDATION_SERIALIZATION_TEST_PATTERNS: >-
     Content.IntegrationTests.Tests.Mapping
     Content.IntegrationTests.Tests.PrototypeSaveTest
     Content.IntegrationTests.Tests.PrototypeTests
@@ -88,16 +89,19 @@ jobs:
     if: github.event.pull_request.draft == false
     strategy:
       fail-fast: false
-      # Pirate: leave runner slots for packaging, map-renderer, and short validation checks.
-      max-parallel: 7
+      # Pirate: leave two runner slots for packaging and map-renderer checks.
+      max-parallel: 8
       matrix:
         include:
           - name: Entity integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: entity
-          - name: Atmos and serialization integration tests
+          - name: Atmos core integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
-            shard: atmos-serialization
+            shard: atmos-core
+          - name: Validation serialization integration tests
+            project: Content.IntegrationTests/Content.IntegrationTests.csproj
+            shard: validation-serialization
           - name: Validation map integration tests
             project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: validation-map
@@ -156,7 +160,8 @@ jobs:
         nunit_args=(NUnit.ConsoleOut=0)
 
         read -r -a entity_patterns <<< "$ENTITY_TEST_PATTERNS"
-        read -r -a atmos_serialization_patterns <<< "$ATMOS_SERIALIZATION_TEST_PATTERNS"
+        read -r -a atmos_core_patterns <<< "$ATMOS_CORE_TEST_PATTERNS"
+        read -r -a validation_serialization_patterns <<< "$VALIDATION_SERIALIZATION_TEST_PATTERNS"
         read -r -a validation_map_patterns <<< "$VALIDATION_MAP_TEST_PATTERNS"
         read -r -a world_patterns <<< "$WORLD_TEST_PATTERNS"
         read -r -a mind_patterns <<< "$MIND_TEST_PATTERNS"
@@ -168,8 +173,13 @@ jobs:
             comparison="~"
             separator="|"
             ;;
-          atmos-serialization)
-            patterns=("${atmos_serialization_patterns[@]}")
+          atmos-core)
+            patterns=("${atmos_core_patterns[@]}")
+            comparison="~"
+            separator="|"
+            ;;
+          validation-serialization)
+            patterns=("${validation_serialization_patterns[@]}")
             comparison="~"
             separator="|"
             ;;
@@ -196,7 +206,8 @@ jobs:
           unmapped)
             patterns=(
               "${entity_patterns[@]}"
-              "${atmos_serialization_patterns[@]}"
+              "${atmos_core_patterns[@]}"
+              "${validation_serialization_patterns[@]}"
               "${validation_map_patterns[@]}"
               "${world_patterns[@]}"
               "${mind_patterns[@]}"
