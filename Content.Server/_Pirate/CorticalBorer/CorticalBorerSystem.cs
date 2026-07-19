@@ -291,7 +291,6 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         }
 
         infested.BorerMindId = wormMind;
-        comp.ControlingHost = true;
 
         if (_mind.TryGetMind(host, out var controlledMind, out _))
         {
@@ -306,6 +305,9 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
             infested.OriginalMindId = null;
         }
 
+        // Pirate: mark control only after moving the host's original mind. The move raises MindRemovedMessage,
+        // which must not be treated as an unexpected loss of the host's mind during takeover.
+        comp.ControlingHost = true;
         _mind.TransferTo(wormMind, host);
 
         if (TryComp<GhostRoleComponent>(worm, out var ghostRole))
