@@ -180,9 +180,12 @@ public abstract class SwitchableOverlaySystem<TComp, TEvent> : EntitySystem // t
 
     private void OnToggle(EntityUid uid, TComp component, TEvent args)
     {
-        Toggle(uid, component, !component.IsActive);
+        // Pirate: equipment action entity references are not networked, so use the performed action's replicated state.
+        var activate = component.PulseTime > 0f || !args.Action.Comp.Toggled;
+        Toggle(uid, component, activate);
         RaiseSwitchableOverlayToggledEvent(uid, args.Performer, component.IsActive);
         args.Handled = true;
+        args.Toggle = component.PulseTime <= 0f;
     }
 
     private void Toggle(EntityUid uid, TComp component, bool activate, bool playSound = true)
@@ -202,7 +205,6 @@ public abstract class SwitchableOverlaySystem<TComp, TEvent> : EntitySystem // t
         }
 
         component.IsActive = activate;
-        _actions.SetToggled(component.ToggleActionEntity, activate); // WD EDIT - it's white dream system but okay
         Dirty(uid, component);
     }
 
