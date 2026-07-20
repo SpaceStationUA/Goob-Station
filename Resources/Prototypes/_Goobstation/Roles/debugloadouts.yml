@@ -124,7 +124,7 @@
   id: BlueShieldOfficerGearModSuit
   parent: BlueShieldOfficerGearDebug
   equipment:
-    back: ClothingModularControllerCorporatePreassembled # Pirate: new modular suit deploys its own parts.
+    back: ClothingModularControllerPraetorianPreassembled # Pirate: new modular suit deploys its own parts.
 
 - type: startingGear
   id: WizardHardsuitGearDebug
