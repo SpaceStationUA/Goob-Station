@@ -1,0 +1,208 @@
+- type: entity
+  name: "captain bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieCaptain
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/captain.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "atmos bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieAtmos
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/atmos.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "botany bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieBotany
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/botany.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "cargo bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieCargo
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/cargo.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "Chief Engineer's bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieCE
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/CE.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "Central Command bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieCentcom
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/centcom.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "chef's bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieChef
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/chef.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "chemistry bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieChem
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/chem.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "Chief Medical Officer bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieCMO
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/CMO.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "doctor bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieDoctor
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/doctor.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "engineering bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieEngineer
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/engineer.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "genetics bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieGenetics
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/genetics.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "Head of Personel bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieHOP
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/HOP.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "janitor bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieJanitor
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/janitor.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "paramedic bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieParamedic
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/paramedic.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "science bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieScience
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/science.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "security bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieSecurity
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/security.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "syndicate bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieSyndicate
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/syndi.rsi
+    layers:
+      - state: icon
+
+- type: entity
+  name: "virologist bowtie"
+  description: "Cute bowtile"
+  id: ClothingNeckBowtieVirologist
+  parent: ClothingNeckBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/bowtie/virologist.rsi
+    layers:
+      - state: icon
