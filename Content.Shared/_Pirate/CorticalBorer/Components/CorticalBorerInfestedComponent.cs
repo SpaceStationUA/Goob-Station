@@ -44,6 +44,9 @@ public sealed partial class CorticalBorerInfestedComponent : Component
 
     [ViewVariables]
     public bool AddedControlThermalVision;
+
+    [ViewVariables]
+    public bool IsPolymorphing;
 }
 
 [RegisterComponent, NetworkedComponent]

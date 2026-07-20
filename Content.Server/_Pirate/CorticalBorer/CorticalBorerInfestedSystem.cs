@@ -6,6 +6,7 @@
 
 using Content.Server._EinsteinEngines.Language;
 using Content.Server.Radio;
+using Content.Shared._DV.Polymorph;
 using Content.Shared._Pirate.CorticalBorer;
 using Content.Shared.Body.Part;
 using Content.Shared.Chat;
@@ -39,6 +40,7 @@ public sealed class CorticalBorerInfestedSystem : EntitySystem
         SubscribeLocalEvent<CorticalBorerInfestedComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<CorticalBorerInfestedComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<CorticalBorerInfestedComponent, HeadsetRadioReceiveRelayEvent>(OnRadioMessageHeard);
+        SubscribeLocalEvent<CorticalBorerInfestedComponent, BeforePolymorphedEvent>(OnBeforePolymorphed);
         SubscribeLocalEvent<CorticalBorerInfestedComponent, PolymorphedEvent>(OnPolymorphed);
     }
 
@@ -80,7 +82,7 @@ public sealed class CorticalBorerInfestedSystem : EntitySystem
 
     private void OnMindRemoved(Entity<CorticalBorerInfestedComponent> ent, ref MindRemovedMessage args)
     {
-        if (!ent.Comp.Borer.Comp.ControlingHost)
+        if (!ent.Comp.Borer.Comp.ControlingHost || ent.Comp.IsPolymorphing)
             return;
 
         _borer.EndControl(ent.Comp.Borer);
@@ -101,10 +103,19 @@ public sealed class CorticalBorerInfestedSystem : EntitySystem
         }
     }
 
+    private void OnBeforePolymorphed(Entity<CorticalBorerInfestedComponent> ent, ref BeforePolymorphedEvent args)
+    {
+        ent.Comp.IsPolymorphing = true;
+    }
+
     private void OnPolymorphed(Entity<CorticalBorerInfestedComponent> ent, ref PolymorphedEvent args)
     {
+        if (ent.Owner != args.OldEntity)
+            return;
+
         var borer = ent.Comp.Borer;
-        _borer.EndControl(borer);
+        ent.Comp.IsPolymorphing = false;
+        _borer.EndControl(borer, args.NewEntity);
         _borer.TryEjectBorer(borer);
         _borer.InfestTarget(borer, args.NewEntity);
     }
