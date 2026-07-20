@@ -347,7 +347,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         _chat.SendAdminAlert(logMessage);
     }
 
-    public void EndControl(Entity<CorticalBorerComponent> worm)
+    public void EndControl(Entity<CorticalBorerComponent> worm, EntityUid? originalMindTarget = null)
     {
         var (uid, comp) = worm;
         if (comp.Host is not { } host ||
@@ -377,8 +377,13 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         if (!TerminatingOrDeleted(infested.BorerMindId))
             _mind.TransferTo(infested.BorerMindId, infested.Borer);
 
-        if (infested.OriginalMindId is { } originalMind && !TerminatingOrDeleted(originalMind))
-            _mind.TransferTo(originalMind, host);
+        var mindTarget = originalMindTarget ?? host;
+        if (infested.OriginalMindId is { } originalMind &&
+            !TerminatingOrDeleted(originalMind) &&
+            !TerminatingOrDeleted(mindTarget))
+        {
+            _mind.TransferTo(originalMind, mindTarget);
+        }
 
         if (TryComp<CollectiveMindComponent>(host, out var collective))
         {
