@@ -16403,8 +16403,6 @@ entities:
     - type: Transform
       pos: 56.5,7.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
 - proto: AnomalyScanner
   entities:
   - uid: 572
@@ -46501,8 +46499,6 @@ entities:
     - type: Transform
       pos: -9.5,32.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -63124,8 +63120,6 @@ entities:
     - type: Transform
       pos: -39.5,20.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -108092,7 +108086,7 @@ entities:
     - type: Transform
       pos: -82.37234,6.5218086
       parent: 2
-- proto: MaterialSilo
+- proto: MachineMaterialSilo
   entities:
   - uid: 13106
     components:
@@ -108557,8 +108551,6 @@ entities:
     - type: Transform
       pos: 36.5,-27.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
 - proto: MedicatedSuture
   entities:
   - uid: 13127
@@ -137832,8 +137824,6 @@ entities:
     - type: Transform
       pos: -12.5,-30.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -137966,8 +137956,6 @@ entities:
     - type: Transform
       pos: 63.5,9.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -137995,8 +137983,6 @@ entities:
     - type: Transform
       pos: 30.5,45.5
       parent: 2
-    - type: SiloUtilizer
-      silo: 13106
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
