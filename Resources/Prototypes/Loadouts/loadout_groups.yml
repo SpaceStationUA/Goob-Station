@@ -356,6 +356,7 @@
   loadouts:
   - BartenderHead
   - BartenderBowler
+  - SodaJerkCap # Pirate - DeltaV frozen treats port
 
 - type: loadoutGroup
   id: BartenderJumpsuit
@@ -365,6 +366,7 @@
   - BartenderJumpskirt
   - BartenderJumpsuitPurple
   - ServiceMJ # goob
+  - SodaJerkUniform # Pirate - DeltaV frozen treats port
 
 - type: loadoutGroup
   id: BartenderOuterClothing

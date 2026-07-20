@@ -50,10 +50,11 @@
        enabled: true
 
 - type: entity
-  categories: [ HideSpawnMenu ]
+# Pirate: multiz - allow spawning
   parent: [MobCosmicGodBase, BaseMob]
   id: MobCosmicGod
   components:
+  - type: CEZLevelPhysicsExempt # Pirate: multiz - prevent falling through openings
   - type: CargoSellBlacklist
   # big mob needs to see everything
   - type: ContentEye

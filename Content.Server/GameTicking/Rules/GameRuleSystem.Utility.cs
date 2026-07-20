@@ -2,6 +2,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server._Pirate.ZLevels.Spawning; // Pirate: multiz
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.GameTicking.Components;
@@ -20,6 +21,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 {
     [Dependency] private readonly StationSystem _station = default!; // Goobstation
     [Dependency] private readonly TurfSystem _turf = default!; // Goobstation
+    [Dependency] private readonly CEZLevelFloorGridsSystem _zFloors = default!; // Pirate: multiz
 
     protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
     {
@@ -102,8 +104,27 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         if (GetStationMainGrid(station.Comp) is not { } grid)
             return false;
 
-        targetGrid = grid.Owner;
-        return TryFindTileOnGrid(grid, out tile, out targetCoords);
+        #region Pirate: multiz
+        // Try the weighted floor first, then the rest in case one has no valid tiles.
+        var floors = _zFloors.GetFloorGrids(grid.Owner);
+        var chosen = _zFloors.GetRandomFloorGrid(grid.Owner);
+        floors.Remove(chosen);
+        floors.Insert(0, chosen);
+
+        foreach (var floor in floors)
+        {
+            if (!TryComp<MapGridComponent>(floor, out var floorComp))
+                continue;
+
+            if (TryFindTileOnGrid((floor, floorComp), out tile, out targetCoords))
+            {
+                targetGrid = floor;
+                return true;
+            }
+        }
+
+        return false;
+        #endregion
     }
 
     protected Entity<MapGridComponent>? GetStationMainGrid(StationDataComponent station)

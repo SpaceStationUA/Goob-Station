@@ -289,7 +289,12 @@ namespace Content.Server.Atmos.EntitySystems
                     // goob end
 
                     // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
-                    _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * Atmospherics.LowPressureDamage, true, false, targetPart: TargetBodyPart.All); // Shitmed Change
+                    _damageableSystem.TryChangeDamage(uid,
+                        barotrauma.Damage * Atmospherics.LowPressureDamage,
+                        true,
+                        false,
+                        targetPart: TargetBodyPart.All,
+                        originFlag: DamageableSystem.DamageOriginFlag.Barotrauma); // Shitmed Change; Pirate: armor plates.
 
                     if (!barotrauma.TakingDamage)
                     {
@@ -314,7 +319,12 @@ namespace Content.Server.Atmos.EntitySystems
                     var damageScale = MathF.Min(((pressure / Atmospherics.HazardHighPressure) - 1) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
                     // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
-                    _damageableSystem.TryChangeDamage(uid, barotrauma.Damage * damageScale, true, false, targetPart: TargetBodyPart.All); // Shitmed Change
+                    _damageableSystem.TryChangeDamage(uid,
+                        barotrauma.Damage * damageScale,
+                        true,
+                        false,
+                        targetPart: TargetBodyPart.All,
+                        originFlag: DamageableSystem.DamageOriginFlag.Barotrauma); // Shitmed Change; Pirate: armor plates.
 
                     if (!barotrauma.TakingDamage)
                     {

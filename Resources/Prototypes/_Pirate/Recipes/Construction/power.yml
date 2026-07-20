@@ -1,0 +1,9 @@
+- type: construction
+  id: CEMultizCableHub
+  graph: CEMultizCableHub
+  startNode: start
+  targetNode: hub
+  category: construction-category-utilities
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false

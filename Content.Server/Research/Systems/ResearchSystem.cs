@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Radio.EntitySystems;
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared.Access.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
@@ -24,6 +25,7 @@ namespace Content.Server.Research.Systems
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly RadioSystem _radio = default!;
+        [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!; // Pirate: multiz
 
         public override void Initialize()
         {
@@ -81,12 +83,15 @@ namespace Content.Server.Research.Systems
 
         public HashSet<Entity<ResearchServerComponent>> GetServers(EntityUid client)
         {
-            var clientXform = Transform(client);
-            if (clientXform.GridUid is not { } grid)
+            var clientCoverage = _zLevels.GetGridCoverage(client); // Pirate: multiz
+            if (!clientCoverage.HasGrid) // Pirate: multiz
                 return [];
 
             var set = new HashSet<Entity<ResearchServerComponent>>();
-            _lookup.GetGridEntities(grid, set);
+            foreach (var grid in clientCoverage.GridUids) // Pirate: multiz
+            { // Pirate: multiz
+                _lookup.GetGridEntities(grid, set); // Pirate: multiz
+            } // Pirate: multiz
             return set;
         }
 

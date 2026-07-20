@@ -114,6 +114,9 @@
   - type: Tag # Goobstation
     tags:
     - SheetPlasma # Goobstation
+    - Sheet # Pirate: Preserve SheetOtherBase tags when adding SheetPlasma.
+    - ConstructionMaterial
+    - DroneUsable
 
 - type: entity
   parent: SheetPlasma

@@ -1,0 +1,64 @@
+# SPDX-FileCopyrightText: 2025 Ark <189933909+ark1368@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2026 OneZerooo0 <moguls-charade4n@icloud.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  id: ClothingArmorPlate
+  components:
+  - type: ArmorPlateHolder
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,1,1
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        showEnts: false
+        occludes: true
+        ents: []
+      toggleable-clothing: !type:Container
+        showEnts: false
+        occludes: true
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+
+- type: entity
+  abstract: true
+  parent: ClothingArmorPlate
+  id: ClothingArmorPlateBlunt_Slash
+  components:
+  - type: StorageFill
+    contents:
+    - id: ArmorPlateBlunt_Slash
+
+- type: entity
+  abstract: true
+  parent: ClothingArmorPlate
+  id: ClothingArmorPlatePierce
+  components:
+  - type: StorageFill
+    contents:
+    - id: ArmorPlatePierce
+
+- type: entity
+  abstract: true
+  parent: ClothingArmorPlate
+  id: ClothingArmorPlateHeat
+  components:
+  - type: StorageFill
+    contents:
+    - id: ArmorPlateHeat
+
+- type: entity
+  abstract: true
+  parent: ClothingArmorPlate
+  id: ClothingArmorPlateSpeed
+  components:
+  - type: StorageFill
+    contents:
+    - id: ArmorPlateSpeed

@@ -195,7 +195,8 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// <summary>
     /// Returns true if the spot is free to be FTLd to (not close to any objects and in range).
     /// </summary>
-    public bool FTLFree(EntityUid shuttleUid, EntityCoordinates coordinates, Angle angle, List<ShuttleExclusionObject>? exclusionZones, FTLDriveComponent? ftl = null) // Frontier edit - FTL drive
+    // Pirate: multiz - deck consoles may resolve onto a root shuttle on the target map.
+    public bool FTLFree(EntityUid shuttleUid, EntityCoordinates coordinates, Angle angle, List<ShuttleExclusionObject>? exclusionZones, FTLDriveComponent? ftl = null, bool allowSameMap = false) // Frontier edit - FTL drive // Pirate: multiz
     {
         if (!_physicsQuery.TryGetComponent(shuttleUid, out var shuttlePhysics) ||
             !_xformQuery.TryGetComponent(shuttleUid, out var shuttleXform)
@@ -216,7 +217,8 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         // Frontier edit start
         // FTL on the same map won't work without a bluespace drive on board.
         if (mapCoordinates.MapId == shuttleXform.MapID
-            && !ftl.Data.FTLToSameMap)
+            && !ftl.Data.FTLToSameMap
+            && !allowSameMap) // Pirate: multiz
             return false;
         // Frontier edit end
 

@@ -4,6 +4,9 @@
   id: MobCosmicWisp
   components:
   - type: AntagImmune
+  - type: MovementIgnoreGravity # Pirate: multiz - fly in zero gravity
+  - type: CEZLevelPhysicsExempt # Pirate: multiz - prevent falling through openings
+  - type: CEZLevelContextualMover # Pirate: multiz - openings-only z-movement
   - type: Sprite
     drawdepth: Mobs
     sprite: _DV/CosmicCult/Mobs/wisp.rsi
