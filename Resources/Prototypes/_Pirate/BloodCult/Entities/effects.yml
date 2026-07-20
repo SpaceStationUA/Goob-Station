@@ -5,7 +5,7 @@
 
 - type: entity
   id: BloodCultTeleportInEffect
-  name: blood cult teleport in effect
+  name: "ефект появи культу крові"
   categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
@@ -25,7 +25,7 @@
 
 - type: entity
   id: BloodCultTeleportOutEffect
-  name: blood cult teleport out effect
+  name: "ефект зникнення культу крові"
   categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
@@ -45,7 +45,7 @@
 
 - type: entity
   id: BloodCultTileSpawnEffect
-  name: blood cult tile effect
+  name: "ефект створення культової підлоги"
   categories: [ HideSpawnMenu ]
   placement:
     mode: SnapgridCenter
@@ -67,7 +67,7 @@
 
 - type: entity
   id: BloodCultWallSpawnEffect
-  name: blood cult wall effect
+  name: "ефект створення культової стіни"
   categories: [ HideSpawnMenu ]
   placement:
     mode: SnapgridCenter
@@ -90,7 +90,7 @@
 
 - type: entity
   id: BloodCultDoorSpawnEffect
-  name: blood cult door effect
+  name: "ефект створення культових дверей"
   categories: [ HideSpawnMenu ]
   placement:
     mode: SnapgridCenter
