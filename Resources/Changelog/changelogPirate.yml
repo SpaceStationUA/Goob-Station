@@ -3197,3 +3197,13 @@ Entries:
       message: Кортикальний хробак більше не викрадає трансформоване тіло хоста.
   id: 297
   time: '2026-07-20T16:14:07.0000000+00:00'
+- author: AgentMaper
+  changes:
+    - type: Remove
+      message: тайли з сс13, що не співпадали по палітрі
+    - type: Fix
+      message: декалі
+    - type: Fix
+      message: текстура bush
+  id: 298
+  time: '2026-07-20T16:15:08.0000000+00:00'
