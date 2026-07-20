@@ -34,6 +34,8 @@ public sealed partial class CorticalBorerInfestedComponent : Component
 
     public List<EntityUid> RemoveAbilities = new();
 
+    public EntityUid? LayEggAction;
+
     public EntityUid? RemovedReformAction;
 
     [ViewVariables]

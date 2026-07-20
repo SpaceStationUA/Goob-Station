@@ -207,6 +207,9 @@ public sealed partial class CorticalBorerSystem
             return;
 
         var borer = host.Comp.Borer;
+        if (!borer.Comp.CanReproduce || borer.Comp.HasLaidEgg)
+            return;
+
         if (borer.Comp.EggCost > borer.Comp.ChemicalPoints)
         {
             Popup.PopupEntity(Loc.GetString("cortical-borer-not-enough-chem"), host, host, PopupType.Medium);
@@ -215,7 +218,16 @@ public sealed partial class CorticalBorerSystem
 
         _vomit.Vomit(host, -20, -20);
         LayEgg(borer);
+        borer.Comp.HasLaidEgg = true;
         UpdateChems(borer, -borer.Comp.EggCost);
+
+        if (host.Comp.LayEggAction is { } layEggAction)
+        {
+            Actions.RemoveAction(host.Owner, layEggAction);
+            host.Comp.RemoveAbilities.Remove(layEggAction);
+            host.Comp.LayEggAction = null;
+        }
+
         args.Handled = true;
     }
 }

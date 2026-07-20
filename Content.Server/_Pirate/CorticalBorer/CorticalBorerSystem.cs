@@ -320,9 +320,10 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         if (Actions.AddAction(host, EndControlAction) is { } endControl)
             infested.RemoveAbilities.Add(endControl);
 
-        if (comp.CanReproduce &&
+        if (comp.CanReproduce && !comp.HasLaidEgg &&
             Actions.AddAction(host, LayEggAction) is { } layEgg)
         {
+            infested.LayEggAction = layEgg;
             infested.RemoveAbilities.Add(layEgg);
         }
 
@@ -364,6 +365,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         foreach (var ability in infested.RemoveAbilities)
             Actions.RemoveAction(host, ability);
         infested.RemoveAbilities.Clear();
+        infested.LayEggAction = null;
 
         if (infested.RemovedReformAction is not null && TryComp<ReformComponent>(host, out var reform))
         {
