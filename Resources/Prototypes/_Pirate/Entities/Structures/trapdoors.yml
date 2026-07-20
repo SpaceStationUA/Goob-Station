@@ -1,7 +1,7 @@
 - type: entity
   id: PirateTrapdoor
-  name: "люк"
-  description: "Підлоговий механізм із проводами, що відкривається на рівень нижче."
+  name: trapdoor
+  description: A wired floor mechanism that can open into the level below.
   placement:
     mode: SnapgridCenter
     snap:
