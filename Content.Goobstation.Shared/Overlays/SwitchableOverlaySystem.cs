@@ -158,7 +158,11 @@ public abstract class SwitchableOverlaySystem<TComp, TEvent> : EntitySystem // t
     private void OnGetItemActions(Entity<TComp> ent, ref GetItemActionsEvent args)
     {
         if (ent.Comp.IsEquipment && ent.Comp.ToggleAction != null && args.SlotFlags is not SlotFlags.POCKET and not null)
+        {
             args.AddAction(ref ent.Comp.ToggleActionEntity, ent.Comp.ToggleAction);
+            if (ent.Comp.PulseTime <= 0f)
+                _actions.SetToggled(ent.Comp.ToggleActionEntity, ent.Comp.IsActive);
+        }
     }
 
     private void OnShutdown(EntityUid uid, TComp component, ComponentShutdown args)
@@ -175,7 +179,11 @@ public abstract class SwitchableOverlaySystem<TComp, TEvent> : EntitySystem // t
     private void OnMapInit(EntityUid uid, TComp component, MapInitEvent args)
     {
         if (component is { IsEquipment: false, ToggleActionEntity: null, ToggleAction: not null })
+        {
             _actions.AddAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
+            if (component.PulseTime <= 0f)
+                _actions.SetToggled(component.ToggleActionEntity, component.IsActive);
+        }
     }
 
     private void OnToggle(EntityUid uid, TComp component, TEvent args)
