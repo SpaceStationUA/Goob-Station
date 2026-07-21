@@ -5,6 +5,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server._EinsteinEngines.Language;
+using Content.Server.Polymorph.Components;
 using Content.Server.Radio;
 using Content.Shared._DV.Polymorph;
 using Content.Shared._Pirate.CorticalBorer;
@@ -82,8 +83,12 @@ public sealed class CorticalBorerInfestedSystem : EntitySystem
 
     private void OnMindRemoved(Entity<CorticalBorerInfestedComponent> ent, ref MindRemovedMessage args)
     {
-        if (!ent.Comp.Borer.Comp.ControlingHost || ent.Comp.IsPolymorphing)
+        if (!ent.Comp.Borer.Comp.ControlingHost ||
+            ent.Comp.IsPolymorphing ||
+            TryComp<PolymorphedEntityComponent>(ent, out var polymorphed) && polymorphed.Reverted)
+        {
             return;
+        }
 
         _borer.EndControl(ent.Comp.Borer);
         _borer.TryEjectBorer(ent.Comp.Borer);

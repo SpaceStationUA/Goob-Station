@@ -45,7 +45,7 @@ public sealed partial class CorticalBorerComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool CanReproduce = true;
 
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public bool HasLaidEgg;
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
