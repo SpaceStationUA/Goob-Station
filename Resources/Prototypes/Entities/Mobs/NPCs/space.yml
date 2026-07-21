@@ -137,6 +137,8 @@
   parent: [MobSpaceBasic, StripableInventoryBase]
   description: "Виглядає дружелюбно. Чому б тобі не обійняти його?"
   components:
+  - type: Physics # Pirate: input movers require kinematic controller bodies
+    bodyType: KinematicController
   - type: Body # Shitmed Change
     prototype: SpaceKangaroo
   - type: SurgeryTarget # Shitmed
