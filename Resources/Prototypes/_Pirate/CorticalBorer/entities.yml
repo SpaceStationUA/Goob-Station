@@ -73,6 +73,10 @@
     lightRadius: 15
     activateSound: null
     deactivateSound: null
+  - type: NightVision
+    color: "#808080"
+    activateSound: null
+    deactivateSound: null
   - type: CorticalBorer
     eggProto: CorticalBorerEgg
     addOnInfest:
