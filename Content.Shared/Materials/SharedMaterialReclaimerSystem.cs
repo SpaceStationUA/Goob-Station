@@ -108,7 +108,8 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (HasComp<MaterialReclaimerImmuneComponent>(item))
             return false;
 
-        if (HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
+        // Pirate: emagged reclaimers stun mobs instead of gibbing them.
+        if (HasComp<MobStateComponent>(item) && !CanProcessMob(uid, item, component))
             return false;
 
         if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
@@ -221,9 +222,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
     /// <summary>
     /// Whether or not the reclaimer satisfies the conditions
-    /// allowing it to gib/reclaim a living creature.
+    /// allowing it to process a living creature.
     /// </summary>
-    public bool CanGib(EntityUid uid, EntityUid victim, MaterialReclaimerComponent component)
+    public bool CanProcessMob(EntityUid uid, EntityUid victim, MaterialReclaimerComponent component)
     {
         return component.Powered &&
                component.Enabled &&
