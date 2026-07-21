@@ -1,6 +1,6 @@
 - type: entity
   id: TurbineBladeShrapnel
-  name: "уламок турбінної лопаті"
+  name: turbine blade
   categories: [ HideSpawnMenu ]
   components:
   - type: FlyBySound
