@@ -348,6 +348,7 @@
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 2
   - type: Perishable
+    rotAfter: 900 # Pirate: player corpses start rotting after 15 minutes
   - type: Butcherable
     butcheringType: Spike # TODO human.
     spawned:
