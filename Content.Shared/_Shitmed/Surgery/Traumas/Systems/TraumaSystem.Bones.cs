@@ -293,7 +293,9 @@ public partial class TraumaSystem
 
         foreach (var legEntity in bodyComp.LegEntities)
         {
-            if (!TryComp<MovementBodyPartComponent>(legEntity, out var movement))
+            if (!TryComp<MovementBodyPartComponent>(legEntity, out var movement)
+                || !TryComp<BodyPartComponent>(legEntity, out var legPart)
+                || !legPart.Enabled) // Pirate: do not restore movement to a disabled fixed limb.
                 continue;
 
             var partWalkSpeed = movement.WalkSpeed;
@@ -311,7 +313,7 @@ public partial class TraumaSystem
             var footEnt =
                 _body.GetBodyChildrenOfType(body,
                         BodyPartType.Foot,
-                        symmetry: Comp<BodyPartComponent>(legEntity).Symmetry)
+                        symmetry: legPart.Symmetry)
                     .FirstOrNull();
 
             if (footEnt != null)

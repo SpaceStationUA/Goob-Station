@@ -10,7 +10,12 @@
   id: BaseClone
   components:
   # general
-  - DetailExaminable
+  # Pirate: Starlight extended character descriptions.
+  - CharacterDescription
+  - CharacterSecrets
+  - ExploitableInfo
+  - MindSecrets
+  - RoleplayInfo
   - Dna
   - Fingerprint
   - NpcFactionMember
@@ -82,7 +87,6 @@
   - Lightweight
   - LightStep
   - Vampirism
-  - BloodDeficiency
   # Pirate end
   eventComponents:
   - Trainability # Pirate

@@ -89,6 +89,9 @@
     insertedTextType: gun-upgrade-inserted-examine-type-attached
   - type: GunUpgradeFlashlight
   # Lavaland Change end
+  - type: ItemToggleCastRay # Pirate - Photophobia trait
+    raiseEventAt:
+    - type: Photophobia
 
 - type: entity
   name: seclite

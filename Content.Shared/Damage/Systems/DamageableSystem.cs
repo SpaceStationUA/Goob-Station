@@ -123,6 +123,13 @@ namespace Content.Shared.Damage
             Subs.CVar(_config, CCVars.PlaytestMobDamageModifier, value => UniversalMobDamageModifier = value, true);
         }
 
+        // Pirate: Armor plates need to distinguish explosions from passive damage without an origin entity.
+        public enum DamageOriginFlag
+        {
+            Explosion,
+            Barotrauma,
+        }
+
         /// <summary>
         ///     Initialize a damageable component
         /// </summary>
@@ -234,7 +241,8 @@ namespace Content.Shared.Damage
             TargetBodyPart? targetPart = null,
             bool ignoreBlockers = false,
             SplitDamageBehavior splitDamage = SplitDamageBehavior.Split,
-            bool canMiss = true)
+            bool canMiss = true,
+            DamageOriginFlag? originFlag = null)
         {
             if (!uid.HasValue || !_damageableQuery.Resolve(uid.Value, ref damageable, false))
             {
@@ -259,7 +267,11 @@ namespace Content.Shared.Damage
             vitalDamage.TrimZeros();
             // Goobstation end
 
-            var before = new BeforeDamageChangedEvent(damage, origin, canBeCancelled, targetPart); // Shitmed Change
+            var before = new BeforeDamageChangedEvent(damage,
+                origin,
+                canBeCancelled,
+                targetPart,
+                OriginFlag: originFlag); // Shitmed Change; Pirate: indirect damage origin.
             RaiseLocalEvent(uid.Value, ref before);
 
             if (before.Cancelled)
@@ -348,23 +360,14 @@ namespace Content.Shared.Damage
                 }
 
                 // Goob edit start
-                List<float>? multipliers = null;
                 var damagePerPart = adjustedDamage;
-                if (targetedBodyParts.Count > 0 && adjustedDamage.PartDamageVariation != 0f)
-                {
-                    multipliers =
-                        GetDamageVariationMultipliers(adjustedDamage.PartDamageVariation, targetedBodyParts.Count);
-                }
-                else
-                    damagePerPart = ApplySplitDamageBehaviors(splitDamageBehavior, adjustedDamage, targetedBodyParts);
+                damagePerPart = ApplySplitDamageBehaviors(splitDamageBehavior, adjustedDamage, targetedBodyParts);
                 var appliedDamage = new DamageSpecifier();
                 var surplusHealing = new DamageSpecifier();
                 for (var i = 0; i < targetedBodyParts.Count; i++)
                 {
                     var (partId, _, partDamageable) = targetedBodyParts[i];
                     var modifiedDamage = damagePerPart;
-                    if (multipliers != null && multipliers.Count == targetedBodyParts.Count)
-                        modifiedDamage *= multipliers[i];
                     modifiedDamage += surplusHealing;
                     // Goob edit end
 
@@ -639,30 +642,6 @@ namespace Content.Shared.Damage
                 ignoreBlockers: ignoreBlockers);
 
             return true;
-        }
-
-        public List<float> GetDamageVariationMultipliers(float variation, int count)
-        {
-            DebugTools.AssertNotEqual(count, 0);
-            var list = new List<float>(count);
-            var weights = new List<float>(count);
-            var totalWeight = 0f;
-            var random = new System.Random((int) _timing.CurTick.Value);
-            for (var i = 0; i < count; i++)
-            {
-                var weight = random.NextFloat() * MathF.Abs(variation) + 1f;
-                weights.Add(weight);
-                totalWeight += weight;
-            }
-
-            DebugTools.AssertNotEqual(totalWeight, 0f);
-
-            foreach (var weight in weights)
-            {
-                list.Add(weight / totalWeight);
-            }
-
-            return list;
         }
 
         public DamageSpecifier ApplySplitDamageBehaviors(SplitDamageBehavior splitDamageBehavior,
@@ -1009,7 +988,8 @@ namespace Content.Shared.Damage
         EntityUid? Origin = null,
         bool CanBeCancelled = false, // Shitmed Change
         TargetBodyPart? TargetPart = null, // Shitmed Change
-        bool Cancelled = false);
+        bool Cancelled = false,
+        DamageableSystem.DamageOriginFlag? OriginFlag = null); // Pirate: armor plate damage filtering.
 
     /// <summary>
     ///     Raised on an entity when damage is about to be dealt,

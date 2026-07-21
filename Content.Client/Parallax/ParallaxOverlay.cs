@@ -2,6 +2,7 @@
 
 using System.Numerics;
 using Content.Client.Parallax.Managers;
+using Content.Client.Viewport; // Pirate: multiz
 using Content.Shared.CCVar;
 using Content.Shared.Parallax.Biomes;
 using Robust.Client.GameObjects;
@@ -10,7 +11,8 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
+using Content.Shared.Shuttles.Components; // Pirate: multiz
+using Robust.Shared.Timing; // Pirate: multiz
 
 namespace Content.Client.Parallax;
 
@@ -38,6 +40,28 @@ public sealed class ParallaxOverlay : Overlay
     {
         if (args.MapId == MapId.Nullspace || _entManager.HasComponent<BiomeComponent>(_mapSystem.GetMapOrInvalid(args.MapId)))
             return false;
+
+        #region Pirate: multiz
+        if (args.Viewport.Eye is ScalingViewport.ZEye zEye)
+        {
+            // Always draw at the lowest depth (visible through floor).
+            if (zEye.Depth == zEye.LowestDepth)
+                return true;
+
+            // During FTL, also draw at depth 0 so hyperspace is visible through windows.
+            // Per-viewport: ask whether the map this viewport is rendering is an FTL map,
+            // rather than checking the local player's grid (camera consoles render maps
+            // unrelated to the local player).
+            if (zEye.Depth == 0 &&
+                _entManager.HasComponent<FTLMapComponent>(_mapSystem.GetMapOrInvalid(args.MapId)))
+            {
+                return true;
+            }
+
+            // Suppress all other depths.
+            return false;
+        }
+        #endregion
 
         return true;
     }

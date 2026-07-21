@@ -182,6 +182,8 @@
     inverted: true
   - type: SurgeryTraumaPresentCondition
     trauma: BoneDamage
+  # Pirate: restore a disabled part before treating its bones.
+  - type: SurgeryFunctionalPartCondition
 
 - type: entity
   parent: BasePartSurgery
@@ -501,6 +503,8 @@
     - SurgeryStepSealTendWound
   - type: SurgeryWoundedCondition
     damageGroup: Brute
+  # Pirate: restore a disabled part before treating its tissues.
+  - type: SurgeryFunctionalPartCondition
 
 - type: entity
   parent: SurgeryBase
@@ -514,6 +518,8 @@
     - SurgeryStepSealTendWound
   - type: SurgeryWoundedCondition
     damageGroup: Burn
+  # Pirate: restore a disabled part before treating its tissues.
+  - type: SurgeryFunctionalPartCondition
 
 - type: entity
   parent: SurgeryBase

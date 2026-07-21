@@ -61944,7 +61944,7 @@ entities:
     - type: Transform
       pos: -2.5,-28.5
       parent: 2
-- proto: SpawnMobCat
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
   entities:
   - uid: 9525
     components:

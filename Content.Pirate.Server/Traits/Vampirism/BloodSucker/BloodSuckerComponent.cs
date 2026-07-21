@@ -8,13 +8,13 @@ namespace Content.Pirate.Server.Traits.Vampirism.Components
         /// How much to succ each time we succ.
         /// </summary>
         [DataField("unitsToSucc")]
-        public float UnitsToSucc = 20f;
+        public float UnitsToSucc = 5f;
 
         /// <summary>
         /// The time (in seconds) that it takes to succ an entity.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public TimeSpan Delay = TimeSpan.FromSeconds(4);
+        public TimeSpan Delay = TimeSpan.FromSeconds(3);
 
         // ***INJECT WHEN SUCC***
 

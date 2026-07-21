@@ -247,7 +247,7 @@
   - type: UseDelayBlockMelee
     delays:
     - hit
-  - type: TelescopicBaton # GOIDA, does nothing
+  - type: TelescopicBaton # [Err404], does nothing
   - type: KnockdownOnHit
     duration: 0.15
   - type: StaminaDamageOnHit

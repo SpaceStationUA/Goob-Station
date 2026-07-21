@@ -5,6 +5,7 @@
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Shared._NF.Shuttles.Events;
+using Content.Shared._Pirate.Shuttles.BUIStates; // Pirate - replay memory optimization.
 using Content.Shared.DeviceLinking;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -35,7 +36,8 @@ public sealed partial class ShuttleConsoleSystem
         // The implementation seems to be missing, but it's referenced in ShuttleConsoleSystem.cs
         // We'll handle updating the state and ensuring device link components
         DockingInterfaceState? dockState = null;
-        UpdateState(uid, ref dockState);
+        DockingPortStates? dockingPortStates = null;
+        UpdateState(uid, ref dockState, ref dockingPortStates);
 
         // Also ensure device link components are added for our port buttons
         EnsureDeviceLinkComponents(uid, component);

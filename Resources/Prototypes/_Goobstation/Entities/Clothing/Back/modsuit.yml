@@ -5,6 +5,7 @@
   id: ClothingModsuitStandard
   name: standard modsuit control unit
   description: A special modular suit contol unit containing all necessary modular hardsuit parts.
+  categories: [ HideSpawnMenu ] # Pirate: legacy MODsuits remain for compatibility only.
   components:
   - type: Appearance
   - type: Sprite
@@ -89,6 +90,7 @@
   id: ClothingModsuitStandardNoStorage
   name: standard modsuit control unit
   description: A special modular suit contol unit containing all necessary modular hardsuit parts.
+  categories: [ HideSpawnMenu ] # Pirate: legacy MODsuits remain for compatibility only.
   components:
   - type: Appearance
   - type: Sprite

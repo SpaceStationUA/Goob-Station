@@ -1,0 +1,12 @@
+- type: entity
+  parent: BaseSurviveObjective
+  id: EeepSurviveObjective
+  name: Live a sheep's life or evolve
+  description: Keep living as an electric sheep, or evolve into your adult form.
+  components:
+  - type: Objective
+    difficulty: 0
+    issuer: objective-issuer-self
+    icon:
+      sprite: _Impstation/Mobs/Aliens/eeeplet.rsi
+      state: eeeplet

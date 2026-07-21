@@ -39,7 +39,7 @@ public sealed partial class VirologyMachineComponent : Component
     public string? RunningState;
 
     // is this machine a vaccinator or analyzer?
-    // holy fuck goida
+    // holy fuck [Err404]
     [DataField]
     public bool Vaccinator;
 

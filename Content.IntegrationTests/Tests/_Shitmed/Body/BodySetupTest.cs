@@ -352,7 +352,7 @@ public sealed class BodySetupTest
             // Find all non-abstract entities with MobStateComponent
             var entityPrototypes = protoMan.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract
-                            && p.ID != "MobPotyzhnobot" // pure GOIDA
+                            && p.ID != "MobPotyzhnobot" // pure [Err404]
                             && p.Components.ContainsKey("MobState")
                             && !p.Components.ContainsKey("Godmode")
                             && !p.Components.ContainsKey("MegafaunaGodmode")) // Lavaland Change

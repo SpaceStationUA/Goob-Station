@@ -297,6 +297,7 @@ namespace Content.Shared.Preferences
                 new Dictionary<string, RoleLoadout>(other.Loadouts),
                 other.BarkVoice) // Goob Station - Barks
         {
+            CopyPirateCharacterInfo(other); // Pirate: Starlight character descriptions.
         }
 
         /// <summary>
@@ -657,6 +658,7 @@ namespace Content.Shared.Preferences
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false; // Pirate: port and modified DV traits system
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
+            if (!PirateCharacterInfoEquals(other)) return false; // Pirate: Starlight character descriptions.
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
@@ -820,6 +822,7 @@ namespace Content.Shared.Preferences
 
             Name = name;
             FlavorText = flavortext;
+            EnsurePirateCharacterInfoValid(); // Pirate: Starlight character descriptions.
             Age = age;
             Nationality = nationality; // Pirate - port EE contractors
             Employer = employer; // Pirate - port EE contractors
@@ -975,6 +978,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(_loadouts);
             hashCode.Add(Name);
             hashCode.Add(FlavorText);
+            AddPirateCharacterInfoHash(ref hashCode); // Pirate: Starlight character descriptions.
             hashCode.Add(Species);
             hashCode.Add(Height); // Goobstation: port EE height/width sliders
             hashCode.Add(Width); // Goobstation: port EE height/width sliders

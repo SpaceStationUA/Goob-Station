@@ -1,0 +1,344 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Components;
+using Content.Server.Audio;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.Power.Components;
+using Content.Server.NodeContainer.Nodes;
+using Content.Server.Weapons.Ranged.Systems;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Audio;
+using Content.Shared.Damage;
+using Content.Shared.Database;
+using Content.Shared.DeviceLinking;
+using Content.Shared.Lock;
+using Content.Shared.Popups;
+using Content.Pirate.Shared.Nuclear;
+using Content.Pirate.Shared.Nuclear.Turbine;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
+
+namespace Content.Pirate.Server.Nuclear.Turbine;
+
+public sealed partial class TurbineSystem : SharedTurbineSystem
+{
+    [Dependency] private AmbientSoundSystem _ambient = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private ExplosionSystem _explosion = default!;
+    [Dependency] private GunSystem _gun = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] private NuclearMachineSystem _machine = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+
+    public static readonly EntProtoId TurbineBladeShrapnel = "TurbineBladeShrapnel";
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<TurbineComponent, MapInitEvent>(OnMapInit);
+
+        SubscribeLocalEvent<TurbineComponent, DamageChangedEvent>(OnDamageChanged);
+
+        SubscribeLocalEvent<TurbineComponent, AtmosDeviceUpdateEvent>(OnUpdate);
+
+        SubscribeLocalEvent<TurbineComponent, TurbineChangeFlowRateMessage>(OnChangeFlowRate);
+        SubscribeLocalEvent<TurbineComponent, TurbineChangeStatorLoadMessage>(OnChangeStatorLoad);
+        SubscribeLocalEvent<TurbineComponent, NuclearMachineLogEvent>(OnMachineLog);
+    }
+
+    private void OnMapInit(Entity<TurbineComponent> ent, ref MapInitEvent args)
+    {
+        var coords = new EntityCoordinates(ent, 0, 0);
+        ent.Comp.AlarmAudioOvertemp = SpawnAttachedTo("GasTurbineAlarmEntity", coords);
+        ent.Comp.AlarmAudioUnderspeed = SpawnAttachedTo("GasTurbineAlarmEntity", coords);
+        _ambient.SetSound(ent.Comp.AlarmAudioUnderspeed.Value, new SoundPathSpecifier("/Audio/_Pirate/Nuclear/Machines/alarm_beep.ogg"));
+        _ambient.SetVolume(ent.Comp.AlarmAudioUnderspeed.Value, -4);
+
+        TryGetPart(ent, "blade_slot", out ent.Comp.CurrentBlade);
+        TryGetPart(ent, "stator_slot", out ent.Comp.CurrentStator);
+        UpdatePartValues(ent);
+    }
+
+    private bool TryGetPart(EntityUid uid, string containerId, [NotNullWhen(true)] out EntityUid? part)
+    {
+        part = null;
+        if (!_container.TryGetContainer(uid, containerId, out var container) || container.ContainedEntities.Count == 0)
+            return false;
+
+        part = container.ContainedEntities[0];
+        return true;
+    }
+
+    #region Main Loop
+    private void OnUpdate(Entity<TurbineComponent> ent, ref AtmosDeviceUpdateEvent args)
+    {
+        var (uid, comp) = ent;
+        var supplier = Comp<PowerSupplierComponent>(uid);
+        supplier.MaxSupply = comp.LastGen;
+        SetPowerSupply(ent, supplier.CurrentSupply);
+
+        if (!_machine.GetPipes(uid, out var inlet, out var outlet))
+        {
+            SetLastGen(ent, 0);
+            supplier.MaxSupply = 0;
+            UpdateUI(ent);
+            return;
+        }
+
+        if (comp.IncreasePortState != SignalState.Low)
+            AdjustStatorLoad(ent, 1000f);
+        if (comp.DecreasePortState != SignalState.Low)
+            AdjustStatorLoad(ent, -1000f);
+
+        if (comp.IncreasePortState == SignalState.Momentary)
+            comp.IncreasePortState = SignalState.Low;
+        if (comp.DecreasePortState == SignalState.Momentary)
+            comp.DecreasePortState = SignalState.Low;
+
+        if (comp.CurrentBlade == null || comp.CurrentStator == null)
+            SetRuined(ent);
+
+        UpdateAppearance(ent);
+
+        var transferVolume = CalculateTransferVolume(comp, inlet, outlet, args.dt);
+
+        var airContents = inlet.Air.RemoveVolume(transferVolume) ?? new GasMixture();
+
+        comp.LastVolumeTransfer = transferVolume;
+        SetOvertemp(ent, airContents.Temperature >= comp.MaxTemp - 500);
+        SetUndertemp(ent, airContents.Temperature <= comp.MinTemp);
+
+        // Dump gas into atmosphere
+        if (comp.Ruined || airContents.Temperature >= comp.MaxTemp)
+        {
+            if (_atmos.GetTileMixture(uid, excite: true) is { } tile)
+                _atmos.Merge(tile, airContents);
+
+            // This does rely on the alarm existing, but if it doesn't then there are bigger problems
+            if (!comp.Ruined && TryComp<AmbientSoundComponent>(comp.AlarmAudioOvertemp, out var ambience) && !ambience.Enabled)
+                Popup.PopupEntity(Loc.GetString("turbine-overheat", ("owner", uid)), uid, PopupType.LargeCaution);
+
+            // Prevent power from being generated by residual gasses
+            airContents.Clear();
+        }
+
+        if (comp.AlarmAudioOvertemp is { } overtempAlarm && Exists(overtempAlarm))
+            _ambient.SetAmbience(overtempAlarm, !comp.Ruined && airContents.Temperature >= comp.MaxTemp);
+
+        if (comp.Ruined)
+        {
+            SetLastGen(ent, 0);
+            UpdateUI(ent);
+            return;
+        }
+
+        var inputStartingEnergy = _atmos.GetThermalEnergy(airContents);
+        var inputHeatCap = _atmos.GetHeatCapacity(airContents, true);
+
+        // Prevents div by 0 if it would come up
+        if (inputStartingEnergy <= 0)
+            inputStartingEnergy = 1;
+        if (inputHeatCap <= 0)
+            inputHeatCap = 1;
+
+        if (airContents.Temperature > comp.MinTemp)
+            airContents.Temperature = (float)Math.Max((inputStartingEnergy - ((inputStartingEnergy - (inputHeatCap * Atmospherics.T20C)) * 0.8)) / inputHeatCap, Atmospherics.T20C);
+
+        var outputStartingEnergy = _atmos.GetThermalEnergy(airContents);
+        var energyGenerated = comp.StatorLoad * (comp.RPM / 60);
+
+        var deltaE = inputStartingEnergy - outputStartingEnergy;
+        var newRpm = comp.RPM + ((deltaE > energyGenerated)
+            ? (float)Math.Sqrt(2 * ((deltaE - energyGenerated) / comp.TurbineMass))
+            : -(float)Math.Sqrt(2 * ((energyGenerated - deltaE) / comp.TurbineMass)));
+
+        var nextGen = comp.StatorLoad * (Math.Max(newRpm, 0) / 60);
+
+        var nextRpm = comp.RPM + ((deltaE > nextGen)
+            ? (float)Math.Sqrt(2 * ((deltaE - nextGen) / comp.TurbineMass))
+            : -(float)Math.Sqrt(2 * ((nextGen - deltaE) / comp.TurbineMass)));
+
+        if (newRpm < 0 || nextRpm < 0)
+        {
+            // Stator load is too high
+            SetStalling(ent);
+            SetRPM(ent, 0);
+        }
+        else
+        {
+            SetStalling(ent, false);
+            SetRPM(ent, nextRpm);
+        }
+
+        if (comp.AlarmAudioUnderspeed is { } audio && Exists(audio))
+            _ambient.SetAmbience(audio, !comp.Ruined && comp.Stalling && !comp.Undertemp && comp.FlowRate > 0);
+
+        if (comp.RPM > 10)
+        {
+            // Sacrifices must be made to have a smooth ramp up:
+            // This will generate 2 audio streams every second with up to 4 of them playing at once... surely this can't go wrong :clueless:
+            Audio.PlayPvs(new SoundPathSpecifier("/Audio/_Pirate/Nuclear/Ambience/Objects/turbine_room.ogg"), uid, AudioParams.Default.WithPitchScale(comp.RPM / comp.BestRPM).WithVolume(-2));
+        }
+
+        // Calculate power generation
+        var generated = comp.PowerMultiplier * nextGen * (float)(1 / Math.Cosh(0.01 * (comp.RPM - comp.BestRPM)));
+        if (!float.IsFinite(generated))
+            throw new NotFiniteNumberException("Turbine made non-finite power");
+        SetLastGen(ent, generated);
+
+        SetOverspeed(ent, comp.RPM > comp.BestRPM * 1.2);
+
+        // Damage the turbines during overspeed, linear increase from 18% to 45% then stays at 45%
+        if (comp.Overspeed && _random.Prob(0.15f * Math.Min(comp.RPM / comp.BestRPM, 3)))
+        {
+            // TODO: damage flash
+            Audio.PlayPvs(comp.DamageSound, uid);
+            SetBladeHealth(ent, comp.BladeHealth - 1);
+            UpdateHealthIndicators(ent);
+        }
+
+        _atmos.Merge(outlet.Air, airContents);
+
+        // Explode
+        if (comp.BladeHealth <= 0 || comp.RPM > comp.BestRPM*4)
+        {
+            TearApart(ent);
+        }
+
+        UpdateUI(ent);
+    }
+
+    private float CalculateTransferVolume(TurbineComponent comp, PipeNode inlet, PipeNode outlet, float dt)
+    {
+        if (comp.FlowRate <= 0f || inlet.Air.Pressure <= 0f || inlet.Air.Temperature <= 0f || outlet.Air.Temperature <= 0f)
+            return 0f;
+
+        var wantToTransfer = comp.FlowRate * _atmos.PumpSpeedup() * dt;
+        var transferVolume = Math.Min(inlet.Air.Volume, wantToTransfer);
+        var transferMoles = inlet.Air.Pressure * transferVolume / (inlet.Air.Temperature * Atmospherics.R);
+        var molesSpaceLeft = (comp.OutputPressure - outlet.Air.Pressure) * outlet.Air.Volume / (outlet.Air.Temperature * Atmospherics.R);
+        var actualMolesTransfered = Math.Clamp(transferMoles, 0, Math.Max(0, molesSpaceLeft));
+        return Math.Max(0, actualMolesTransfered * inlet.Air.Temperature * Atmospherics.R / inlet.Air.Pressure);
+    }
+
+    private void TearApart(Entity<TurbineComponent> ent)
+    {
+        Audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/metal_break5.ogg"), ent, AudioParams.Default);
+        Popup.PopupEntity(Loc.GetString("turbine-explode", ("owner", ent)), ent, PopupType.LargeCaution);
+
+        _explosion.QueueExplosion(ent, "Default", ent.Comp.RPM / 10, 15, 5, 0, canCreateVacuum: false);
+
+        if (ent.Comp.RPM > ent.Comp.BestRPM / 6) // If it's barely moving then there's not really reason it would throw shrapnel
+            ShootShrapnel(ent);
+
+        _adminLog.Add(LogType.Explosion, LogImpact.High, $"{ent.Owner:reactor} destroyed by overspeeding for too long");
+
+        SetRuined(ent);
+        SetRPM(ent, 0);
+
+        QueueDel(ent.Comp.CurrentBlade);
+        ent.Comp.CurrentBlade = null;
+        DirtyField(ent, ent.Comp, nameof(TurbineComponent.CurrentBlade));
+
+        UpdateAppearance(ent);
+    }
+
+    private void ShootShrapnel(EntityUid uid)
+    {
+        var count = _random.Next(5, 20);
+        var coords = _transform.GetMapCoordinates(uid);
+        for (var i = 0; i < count; i++)
+        {
+            _gun.ShootProjectile(Spawn(TurbineBladeShrapnel, coords), _random.NextAngle().ToVec().Normalized(), _random.NextVector2(2, 6), uid, uid);
+        }
+    }
+    #endregion
+
+    private void OnChangeFlowRate(Entity<TurbineComponent> ent, ref TurbineChangeFlowRateMessage args)
+    {
+        if (_lock.IsLocked(args.Monitor ?? ent.Owner))
+            return;
+
+        if (!SetFlowRate(ent, args.FlowRate))
+            return;
+
+        _machine.QueueLog(ent, args.Actor, args.Monitor);
+        UpdateUI(ent, args.Monitor);
+    }
+
+    private void OnChangeStatorLoad(Entity<TurbineComponent> ent, ref TurbineChangeStatorLoadMessage args)
+    {
+        if (_lock.IsLocked(args.Monitor ?? ent.Owner))
+            return;
+
+        if (!SetStatorLoad(ent, args.StatorLoad))
+            return;
+
+        _machine.QueueLog(ent, args.Actor, args.Monitor);
+        UpdateUI(ent, args.Monitor);
+    }
+
+    private void OnMachineLog(Entity<TurbineComponent> ent, ref NuclearMachineLogEvent args)
+    {
+        _adminLog.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
+            $"{args.User:player} changed turbine {ent.Owner:turbine} flow rate to {ent.Comp.FlowRate:rate} and stator load to {ent.Comp.StatorLoad:load} using {args.Monitor:monitor}");
+    }
+
+    private void OnDamageChanged(Entity<TurbineComponent> ent, ref DamageChangedEvent args)
+    {
+        if (ent.Comp.Ruined)
+            return;
+
+        if (!args.DamageIncreased || args.DamageDelta is not { } damageDelta)
+            return;
+
+        var damage = (float) damageDelta.GetTotal();
+
+        var threshold = 50;
+        var ratio = damage / threshold;
+
+        if (ratio < 1)
+        {
+            SetBladeHealth(ent, ent.Comp.BladeHealth - _random.Next(1, (int)(3f * ratio) + 1));
+            UpdateHealthIndicators(ent);
+            return;
+        }
+
+        if (ent.Comp.RPM > ent.Comp.BestRPM / 6)
+        {
+            TearApart(ent);
+            return;
+        }
+
+        if (ent.Comp.CurrentBlade is { } blade)
+            Del(blade);
+        ent.Comp.CurrentBlade = null;
+        DirtyField(ent, ent.Comp, nameof(TurbineComponent.CurrentBlade));
+
+        if (_random.Prob(Math.Clamp(ratio - 1f, 0, 1)))
+        {
+            if (ent.Comp.CurrentStator is { } stator)
+                Del(stator);
+            ent.Comp.CurrentStator = null;
+            DirtyField(ent, ent.Comp, nameof(TurbineComponent.CurrentStator));
+        }
+
+        SetRPM(ent, 0);
+        SetRuined(ent);
+        UpdateAppearance(ent);
+    }
+}

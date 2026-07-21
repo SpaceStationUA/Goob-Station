@@ -21,6 +21,7 @@
   children: # Goob - Drinks guidebook split
   - AlcoholicDrinks
   - NonAlcoholicDrinks
+  - FrozenTreats # Pirate - DeltaV frozen treats port
 
 - type: guideEntry
   id: FoodRecipes

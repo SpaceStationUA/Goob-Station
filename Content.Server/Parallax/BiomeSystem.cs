@@ -452,17 +452,23 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         foreach (var chunk in active)
         {
-            // Lavaland Change start: optimization real
-            var ev = new _Lavaland.Procedural.BeforeLoadChunkEvent(chunk);
-            RaiseLocalEvent(gridUid, ref ev);
+            // Pirate: Loaded chunks cannot transition to loaded again, but may still have pending markers.
+            var loaded = component.LoadedChunks.Contains(chunk);
 
-            if (ev.Cancelled)
-                continue;
-            // Lavaland Change end
+            if (!loaded)
+            {
+                // Lavaland Change start: optimization real
+                var ev = new _Lavaland.Procedural.BeforeLoadChunkEvent(chunk);
+                RaiseLocalEvent(gridUid, ref ev);
+
+                if (ev.Cancelled)
+                    continue;
+                // Lavaland Change end
+            }
 
             LoadChunkMarkers(component, gridUid, grid, chunk, seed);
 
-            if (!component.LoadedChunks.Add(chunk))
+            if (loaded || !component.LoadedChunks.Add(chunk))
                 continue;
 
             // Load NOW!
@@ -898,6 +904,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         foreach (var chunk in component.LoadedChunks)
         {
+            // Pirate: Active chunks cannot unload, so skip the lifecycle event as well.
+            if (active.Contains(chunk))
+                continue;
+
             // Lavaland Change start: optimization real
             var ev = new _Lavaland.Procedural.UnLoadChunkEvent(chunk);
             RaiseLocalEvent(gridUid, ref ev);
@@ -906,7 +916,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 continue;
             // Lavaland Change end
 
-            if (active.Contains(chunk) || !component.LoadedChunks.Remove(chunk))
+            if (!component.LoadedChunks.Remove(chunk))
                 continue;
 
             // Unload NOW!
@@ -922,7 +932,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         // Reverse order to loading
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
-        modified ??= new HashSet<Vector2i>();
+        modified ??= _tilePool.Get(); // Pirate: Reuse the existing transient tile set pool.
 
         // Delete decals
         foreach (var (dec, indices) in component.LoadedDecals[chunk])
@@ -1009,6 +1019,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         if (modified.Count == 0)
         {
             component.ModifiedTiles.Remove(chunk);
+            _tilePool.Return(modified);
         }
         else
         {

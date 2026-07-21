@@ -430,10 +430,10 @@
   name: selectable-set-blueshield-modsuit-name
   description: selectable-set-blueshield-modsuit-description
   sprite:
-    sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/praetorian.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Praetorian/control.rsi # Pirate: use the modular Praetorian suit.
+    state: icon
   content:
-    - ClothingModsuitPraetorian
+    - ClothingModularControllerPraetorianPreassembled # Pirate: use the modular Praetorian suit.
 
 # ERT
 
@@ -485,10 +485,10 @@
   name: selectable-set-paramedic-modsuit-name
   description: selectable-set-paramedic-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/paramedic.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Rescue/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitParamedicPowerCell
+  - ClothingModularControllerRescuePreassembled # Pirate: use the new modular suit system.
 
 # security
 - type: selectableSet
@@ -506,10 +506,10 @@
   name: selectable-set-security-modsuit-name
   description: selectable-set-security-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/security.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Security/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitSecurityPowerCell
+  - ClothingModularControllerSecurityPreassembled # Pirate: use the new modular suit system.
 
 # head of security
 - type: selectableSet
@@ -527,10 +527,10 @@
   name: selectable-set-headofsecurity-modsuit-name
   description: selectable-set-headofsecurity-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/headofsecurity.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Safeguard/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitHeadOfSecurityPowerCell
+  - ClothingModularControllerSafeguardPreassembled # Pirate: use the new modular suit system.
 
 # engineer
 
@@ -549,10 +549,10 @@
   name: selectable-set-engineering-modsuit-name
   description: selectable-set-engineering-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/engineer.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Engineering/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitEngineerPowerCell
+  - ClothingModularControllerEngineeringPreassembled # Pirate: use the new modular suit system.
 
 # Head Of Security
 
@@ -613,10 +613,10 @@
   name: selectable-set-captain-modsuit-name
   description: selectable-set-captain-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/captain.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Magnate/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitCaptainPowerCell
+  - ClothingModularControllerMagnatePreassembled # Pirate: use the new modular suit system.
 
 # Research Director RD
 
@@ -635,7 +635,7 @@
   name: selectable-set-research-director-modsuit-name
   description: selectable-set-research-director-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/researchdirector.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Research/control.rsi # Pirate: use the new modular suit system.
+    state: icon
   content:
-  - ClothingModsuitResearchDirectorPowerCell
+  - ClothingModularControllerResearchPreassembled # Pirate: use the new modular suit system.

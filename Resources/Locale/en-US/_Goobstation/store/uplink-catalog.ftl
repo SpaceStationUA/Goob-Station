@@ -377,8 +377,9 @@ uplink-box-xenobio-desc = Slimes for your xenobiology needs. Contains 9 random T
 
 #Contractor
 
-uplink-moduist-contractor-name = Contractor Modsuit
-uplink-moduist-contractor-desc = This lightweight modsuit was made specifically for The Guild! Made using plastitanium for extreme durability but light-weight, comes packed with servos to to help you grab harder, critical damage detecting injectors, and a built in chameleon tech! To keep it ultra light-weight this modsuit has no storage capabilities.
+# Pirate: legacy contractor MODsuit replaced by the new modular suit system.
+uplink-moduist-contractor-name = Contractor Syndicate MODsuit
+uplink-moduist-contractor-desc = A preassembled Gorlex Marauders combat MODsuit with a hyper-capacity cell, jetpack, magnetic boots, armor booster, EMP shielding, and integrated storage.
 
 uplink-hardsuit-contractor-name = Contractor Hardsuit Bundle
 uplink-hardsuit-contractor-desc = This lightweight hardsuit was made specifically for The Guild! Can easily be folded up into backpacks.

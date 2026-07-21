@@ -209,6 +209,14 @@
   jobIconProtoId: JobIconElectrician
   parentJobId: StationEngineer
 
+- type: alternativeJob
+  id: AlternativeJobNuclearPhysicist
+  jobName: job-alternative-name-nuclear-physicist
+  jobDescription: job-description-nuclear-physicist
+  jobIconProtoId: JobIconNuclearPhysicist
+  parentJobId: StationEngineer
+
+
 #endregion
 
 #region Medical
@@ -361,6 +369,15 @@
     sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
     state: electrician
   jobName: job-alternative-name-electrician
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconNuclearPhysicist
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: NuclearPhysicist
+  jobName: job-alternative-name-nuclear-physicist
+
 
 - type: jobIcon
   parent: JobIcon

@@ -1,7 +1,10 @@
 using System.Numerics;
 using Content.Shared._Mono.Radar;
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared.Projectiles;
 using Content.Shared.Shuttles.Components;
+using Robust.Shared.Map; // Pirate: multiz
+using Robust.Shared.Map.Components; // Pirate: multiz
 
 namespace Content.Server._Mono.Radar;
 
@@ -41,6 +44,23 @@ public sealed partial class RadarBlipSystem : EntitySystem
             var radarGrid = _xform.GetGrid(uid);
             var radarMapId = radarXform.MapID;
 
+            #region Pirate: multiz - collect adjacent Z-level map IDs
+            var zLevelMapIds = new HashSet<MapId> { radarMapId };
+            var zLevels = EntityManager.System<CESharedZLevelsSystem>();
+            if (radarXform.MapUid is { } radarMapUid)
+            {
+                for (var zOff = -1; zOff <= 1; zOff++)
+                {
+                    if (zOff == 0)
+                        continue;
+                    if (!zLevels.TryMapOffset(radarMapUid, zOff, out var adjMap))
+                        continue;
+                    if (TryComp<MapComponent>(adjMap.Value, out var adjMapComp))
+                        zLevelMapIds.Add(adjMapComp.MapId);
+                }
+            }
+            #endregion Pirate: multiz
+
             var blipQuery = EntityQueryEnumerator<RadarBlipComponent, TransformComponent>();
 
             while (blipQuery.MoveNext(out var blipUid, out var blip, out var blipXform))
@@ -51,19 +71,20 @@ public sealed partial class RadarBlipSystem : EntitySystem
                 // Don't show radar blips for projectiles on different maps than the one they were fired from
                 if (TryComp<ProjectileComponent>(blipUid, out var projectile))
                 {
-                    // If the projectile is on a different map than the radar, don't show it
-                    if (blipXform.MapID != radarMapId)
+                    if (!zLevelMapIds.Contains(blipXform.MapID)) // Pirate: multiz
                         continue;
 
-                    // If we can determine the shooter and they're on a different map, don't show the blip
+                    // Pirate: multiz - if we can determine the shooter and they're on a different map, don't show
+                    // the blip unless that different map is part of this radar's z-network
+                    // (e.g. a gunnery console firing across z-layers from a peer deck).
                     if (projectile.Shooter != null &&
                         TryComp<TransformComponent>(projectile.Shooter, out var shooterXform) &&
-                        shooterXform.MapID != blipXform.MapID)
+                        shooterXform.MapID != blipXform.MapID && // Pirate: multiz
+                        !zLevelMapIds.Contains(shooterXform.MapID)) // Pirate: multiz
                         continue;
                 }
 
-                // This prevents blips from showing on radars that are on different maps
-                if (blipXform.MapID != radarMapId)
+                if (!zLevelMapIds.Contains(blipXform.MapID)) // Pirate: multiz
                     continue;
 
                 var blipGrid = _xform.GetGrid(blipUid);

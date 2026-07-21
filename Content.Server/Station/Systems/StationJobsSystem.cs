@@ -2,6 +2,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server._Pirate.Station.Events; // Pirate - automatic acting captain procedure
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
@@ -111,6 +112,8 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!TryAdjustJobSlot(station, jobPrototypeId, -1, false, false, stationJobs))
             return false;
 
+        var playerJobAdded = new PlayerJobAddedEvent(netUserId, jobPrototypeId);
+        RaiseLocalEvent(station, ref playerJobAdded, false); // Pirate - notify station systems about captain changes
         stationJobs.PlayerJobs.TryAdd(netUserId, new());
         stationJobs.PlayerJobs[netUserId].Add(jobPrototypeId);
         return true;
@@ -209,7 +212,13 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref jobsComponent, false))
             return false;
 
-        return jobsComponent.PlayerJobs.Remove(userId);
+        // Pirate - notify station systems after the manifest entry is removed.
+        if (!jobsComponent.PlayerJobs.Remove(userId, out var playerJobs))
+            return false;
+
+        var playerJobsRemoved = new PlayerJobsRemovedEvent(userId, playerJobs);
+        RaiseLocalEvent(station, ref playerJobsRemoved, false);
+        return true;
     }
 
     /// <inheritdoc cref="TrySetJobSlot(Robust.Shared.GameObjects.EntityUid,string,int,bool,Content.Server.Station.Components.StationJobsComponent?)"/>

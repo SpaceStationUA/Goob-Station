@@ -13,6 +13,7 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
+using Content.Shared.Whitelist; // Pirate
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
@@ -31,6 +32,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // Pirate
 
     [Dependency] private readonly IGameTiming _timing = default!; // Goobstation
 
@@ -158,6 +160,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
     ///     <item>The target does not have a bloodstream.</item>
     ///     <item><see cref="BaseSolutionInjectOnEventComponent.PierceArmor"/> is false and the target is wearing a hardsuit.</item>
     ///     <item><see cref="BaseSolutionInjectOnEventComponent.BlockSlots"/> is not NONE and the target has an item equipped in any of the specified slots.</item>
+    ///     <item>The target matches <see cref="BaseSolutionInjectOnEventComponent.TargetBlacklist"/>.</item>
     /// </list>
     /// </remarks>
     /// <returns>true if at least one target was successfully injected, otherwise false</returns>
@@ -176,6 +179,10 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
         foreach (var target in targets)
         {
             if (Deleted(target))
+                continue;
+
+            // Pirate - allow injectors to protect specific targets from their chemical payload.
+            if (_whitelist.IsWhitelistPass(injector.Comp.TargetBlacklist, target))
                 continue;
 
             // Goobstation - Armor resisting syringe gun

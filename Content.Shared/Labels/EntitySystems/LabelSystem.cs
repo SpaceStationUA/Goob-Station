@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels.Components;
@@ -117,6 +118,13 @@ public sealed partial class LabelSystem : EntitySystem
             args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
             var text = paper.Content;
             args.PushMarkup(text.TrimEnd());
+
+            // Pirate: DeltaV lanyards - show stamps on inserted labels.
+            if (paper.StampedBy.Count > 0)
+            {
+                var stamps = string.Join(", ", paper.StampedBy.Select(s => Loc.GetString(s.StampedName)));
+                args.PushMarkup(Loc.GetString("comp-label-examine-detail-stamped-by", ("stamps", stamps)));
+            }
         }
     }
 

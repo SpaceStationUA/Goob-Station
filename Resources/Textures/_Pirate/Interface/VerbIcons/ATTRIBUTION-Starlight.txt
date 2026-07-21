@@ -1,0 +1,2 @@
+examine-character-menu.png and examine-exploitable.png are public domain.
+Source: https://github.com/ss14Starlight/space-station-14

@@ -31,7 +31,8 @@ public sealed partial class HasComponentConditionSystem : EntityConditionSystem<
 
         var hasComp = entHasComp || mindEntHasComp;
 
-        args.Result = hasComp ^ args.Condition.Inverted;
+        // Pirate: inversion is applied by SharedEntityConditionsSystem.TryCondition.
+        args.Result = hasComp;
     }
 }
 

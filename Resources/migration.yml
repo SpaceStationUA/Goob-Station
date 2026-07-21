@@ -151,7 +151,7 @@ SignLastIdiot: null
 SignSec: null
 #SophicScribe: null
 SpaceCashLuckyBill: null
-SpareIdCabinetFilled: null
+#SpareIdCabinetFilled: null # Pirate
 SpawnMobArcticFoxSiobhan: null
 SpawnMobFerret: null
 SpawnMobMothroach: null
@@ -971,7 +971,7 @@ GhostBarSpawner: null
 DVSmartFridgeMedical: SmartFridgeMedical
 
 ## 2026-01-10 Goobstation Change Mapped Chem to Energy Chem by default
-#ChemDispenser: EnergyChemDispenser
+ChemDispenser: EnergyChemDispenser # Pirate
 # Edit: this was un-done at some point. wow.
 
 

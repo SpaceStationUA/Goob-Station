@@ -42,7 +42,10 @@
     children:
     - id: ClosetSkeleton
     - id: KingRatMigration
+    - id: BorerSpawn # Pirate
     # - id: RevenantSpawn # Goob
+    - id: EeepEvent # Harmony Eeep Port - imp
+    - id: SyndicateDeadDrop
     - !type:NestedSelector
       tableId: DerelictBorgEventTable
 

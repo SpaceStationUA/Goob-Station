@@ -31,10 +31,11 @@
   - type: VampireRule
   - type: AntagObjectives
     objectives:
-    - VampireKillRandomPersonObjective
     - VampireDrainObjective
   - type: AntagRandomObjectives
     sets:
+    - groups: VampireObjectiveGroupsTargetOnly
+      maxPicks: 1
     - groups: VampireObjectiveGroupsStateOnly
       maxPicks: 1
     - groups: VampireObjectiveGroupsStealOnly

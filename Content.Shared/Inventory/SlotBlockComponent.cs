@@ -13,4 +13,8 @@ public sealed partial class SlotBlockComponent : Component
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public SlotFlags Slots = SlotFlags.NONE;
+
+    // Pirate: modular suits only block covered slots while deployed.
+    [DataField, AutoNetworkedField]
+    public bool Enabled = true;
 }

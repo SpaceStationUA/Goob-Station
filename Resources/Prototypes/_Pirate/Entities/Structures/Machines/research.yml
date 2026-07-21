@@ -29,5 +29,5 @@
     guides:
     - Science
   - type: ResearchPointSource # Goobstation/Pirate
-    pointspersecond: 15
+    pointspersecond: 30
     active: true

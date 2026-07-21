@@ -174,7 +174,8 @@ public abstract partial class SharedGravitySystem : EntitySystem
     {
         entity.Comp ??= Transform(entity);
 
-        return GravityQuery.HasComp(entity.Comp.GridUid) ||
+        return GravityQuery.HasComp(entity.Owner) || // Pirate: multiz - self-entity (grid) gravity
+               GravityQuery.HasComp(entity.Comp.GridUid) ||
                GravityQuery.HasComp(entity.Comp.MapUid);
     }
 
@@ -190,7 +191,8 @@ public abstract partial class SharedGravitySystem : EntitySystem
         if (entity.Comp.MapID == MapId.Nullspace)
             return true;
 
-        return GravityQuery.TryComp(entity.Comp.GridUid, out var gravity) && gravity.Enabled ||
+        return GravityQuery.TryComp(entity.Owner, out var selfGravity) && selfGravity.Enabled || // Pirate: multiz - self-entity (grid) gravity
+               GravityQuery.TryComp(entity.Comp.GridUid, out var gravity) && gravity.Enabled ||
                GravityQuery.TryComp(entity.Comp.MapUid, out var mapGravity) && mapGravity.Enabled;
     }
 

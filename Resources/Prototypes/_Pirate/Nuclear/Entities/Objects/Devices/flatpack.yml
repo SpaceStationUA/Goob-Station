@@ -1,0 +1,74 @@
+- type: entity
+  abstract: true
+  parent: BaseStructureDynamic
+  id: HeavyFlatpackBase
+  name: heavy flatpack
+  description: A large flatpack used to store a worryingly large machine.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Nuclear/Objects/Devices/large_flatpack.rsi
+    state: large
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 100
+        mask:
+        - CrateMask
+        layer:
+        - MachineLayer
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: InteractionOutline
+
+- type: entity
+  parent: HeavyFlatpackBase # DeltaV - was CrateEngineering
+  id: NuclearReactorFlatpack
+  name: nuclear reactor flatpack
+  description: A flatpack used for constructing a nuclear reactor. Parts sold separately.
+  components:
+  - type: Flatpack
+    entity: NuclearReactorEmpty
+    checkObstruction: false
+
+- type: entity
+  parent: HeavyFlatpackBase # DeltaV - was CrateEngineering
+  id: GasTurbineFlatpack
+  name: gas turbine flatpack
+  description: A flatpack used for constructing a gas turbine.
+  components:
+  - type: Flatpack
+    entity: Turbine
+    checkObstruction: false
+
+- type: entity
+  parent: HeavyFlatpackBase
+  id: NuclearReactorSmallFlatpack
+  name: small nuclear reactor flatpack
+  description: A flatpack used for constructing a small nuclear reactor. Parts sold separately.
+  components:
+  - type: Flatpack
+    entity: NuclearReactorSmall
+
+- type: entity
+  parent: HeavyFlatpackBase
+  id: GasTurbineSmallFlatpack
+  name: small gas turbine flatpack
+  description: A flatpack used for constructing a small gas turbine.
+  components:
+  - type: Flatpack
+    entity: TurbineSmall

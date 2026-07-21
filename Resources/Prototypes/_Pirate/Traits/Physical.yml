@@ -82,6 +82,15 @@
   category: Physical
   components:
     - type: DogVision
+
+- type: trait
+  id: Photophobia
+  name: trait-photophobia-name
+  description: trait-photophobia-desc
+  category: Physical
+  cost: 0
+  components:
+    - type: Photophobia
 #endregion
 
 #region Sensory

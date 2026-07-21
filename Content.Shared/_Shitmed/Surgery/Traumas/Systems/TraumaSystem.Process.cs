@@ -24,6 +24,9 @@ namespace Content.Shared._Shitmed.Medical.Surgery.Traumas.Systems;
 public partial class TraumaSystem
 {
     private const string TraumaContainerId = "Traumas";
+    // Pirate: Dismemberment can synchronously induce a wound on the parent.
+    // Ignore reentrant severity events for that parent until the amputation finishes.
+    private readonly HashSet<EntityUid> _dismembermentInProgress = new();
     public static readonly TraumaType[] TraumasBlockingHealing = { TraumaType.BoneDamage, TraumaType.OrganDamage, TraumaType.Dismemberment };
 
     private void InitProcess()
@@ -77,6 +80,9 @@ public partial class TraumaSystem
     {
         if (!_timing.IsFirstTimePredicted
             || HasComp<GodmodeComponent>(args.Component.HoldingWoundable))
+            return;
+
+        if (_dismembermentInProgress.Contains(args.Component.HoldingWoundable))
             return;
 
         // Overflow is only used when we are capping the wound, so we use it over the computed delta
@@ -273,19 +279,19 @@ public partial class TraumaSystem
             return traumaList;
 
 
-        if (severity > 5 && woundInflicter.Comp.AllowedTraumas.Contains(TraumaType.NerveDamage) &&
+        if (severity >= 5 && woundInflicter.Comp.AllowedTraumas.Contains(TraumaType.NerveDamage) &&
             RandomNerveDamageChance((target, woundable), woundInflicter))
             traumaList.Add(TraumaType.NerveDamage);
 
-        if (severity > 10 && woundInflicter.Comp.AllowedTraumas.Contains(TraumaType.BoneDamage) &&
+        if (severity >= 10 && woundInflicter.Comp.AllowedTraumas.Contains(TraumaType.BoneDamage) &&
             RandomBoneTraumaChance((target, woundable), woundInflicter))
             traumaList.Add(TraumaType.BoneDamage);
 
-        if (severity > 10 && woundInflicter.Comp.AllowedTraumas.Contains(TraumaType.Dismemberment) &&
+        if (severity >= 10 && woundInflicter.Comp.AllowedTraumas.Contains(TraumaType.Dismemberment) &&
             RandomDismembermentTraumaChance((target, woundable), woundInflicter))
             traumaList.Add(TraumaType.Dismemberment);
 
-        if (severity > 15 && woundInflicter.Comp.AllowedTraumas.Contains(TraumaType.OrganDamage) &&
+        if (severity >= 15 && woundInflicter.Comp.AllowedTraumas.Contains(TraumaType.OrganDamage) &&
             RandomOrganTraumaChance((target, woundable), woundInflicter))
             traumaList.Add(TraumaType.OrganDamage);
 
@@ -766,19 +772,33 @@ public partial class TraumaSystem
 
                 case TraumaType.Dismemberment:
                     Logger.Debug("Attempting to trigger dismemberment");
-                    if (!_wound.IsWoundableRoot(target)
-                        && _wound.TryInduceWound(targetChosen.Value, "Blunt", 0f, out var woundInduced)) // We need this to add the trauma into.
-                    {
-                        AddTrauma(
-                            targetChosen.Value,
-                            (targetChosen.Value, Comp<WoundableComponent>(targetChosen.Value)),
-                            (woundInduced.Value.Owner, EnsureComp<TraumaInflicterComponent>(woundInduced.Value.Owner)),
-                            TraumaType.Dismemberment,
-                            severity,
-                            (bodyPart.PartType, bodyPart.Symmetry));
+                    if (_wound.IsWoundableRoot(target))
+                        break;
 
-                        _wound.AmputateWoundable(targetChosen.Value, target, target);
-                        Logger.Debug($"Amputating woundable.");
+                    // Pirate: inducing the parent wound raises local events synchronously;
+                    // prevent that event from recursively inducing another dismemberment.
+                    if (!_dismembermentInProgress.Add(targetChosen.Value))
+                        break;
+
+                    try
+                    {
+                        if (_wound.TryInduceWound(targetChosen.Value, "Blunt", 0f, out var woundInduced)) // We need this to add the trauma into.
+                        {
+                            AddTrauma(
+                                targetChosen.Value,
+                                (targetChosen.Value, Comp<WoundableComponent>(targetChosen.Value)),
+                                (woundInduced.Value.Owner, EnsureComp<TraumaInflicterComponent>(woundInduced.Value.Owner)),
+                                TraumaType.Dismemberment,
+                                severity,
+                                (bodyPart.PartType, bodyPart.Symmetry));
+
+                            _wound.AmputateWoundable(targetChosen.Value, target, target);
+                            Logger.Debug($"Amputating woundable.");
+                        }
+                    }
+                    finally
+                    {
+                        _dismembermentInProgress.Remove(targetChosen.Value);
                     }
                     break;
 

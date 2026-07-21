@@ -467,7 +467,7 @@ namespace Content.Server.Database
         public List<Profile> Profiles { get; } = new();
     }
 
-    public class Profile
+    public partial class Profile // Pirate: Starlight character descriptions.
     {
         public int Id { get; set; }
         public int Slot { get; set; }
@@ -679,6 +679,11 @@ namespace Content.Server.Database
         public TimeSpan? LastRolledAntag { get; set; } // Goobstation
 
         public DateTime? LastReadRules { get; set; }
+
+        // Pirate: ghost cosmetics are available to every player.
+        public string? GhostParticles { get; set; }
+        public string? GhostHat { get; set; }
+        public string? GhostMask { get; set; }
 
         public List<AdminNote> AdminNotesReceived { get; set; } = null!;
         public List<AdminNote> AdminNotesCreated { get; set; } = null!;

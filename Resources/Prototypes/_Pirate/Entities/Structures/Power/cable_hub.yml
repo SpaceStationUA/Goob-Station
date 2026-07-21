@@ -1,0 +1,70 @@
+- type: entity
+  id: CEMultizCableHub
+  name: multiz cable hub
+  description: A compact relay for bridging matching power cable networks between linked floors.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Visibility
+    layer: 1
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+  - type: Sprite
+    sprite: _Pirate/Structures/Power/cable_hub.rsi
+    state: cablerelay
+    drawdepth: BelowFloor
+    noRot: true
+  - type: Icon
+    sprite: _Pirate/Structures/Power/cable_hub.rsi
+    state: cablerelay
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: CollideOnAnchor
+  - type: SubFloorHide
+  - type: Appearance
+  - type: Electrified
+    onHandInteract: true
+    onInteractUsing: true
+    onBump: false
+    requirePower: true
+    highVoltageNode: powerHV
+    mediumVoltageNode: powerMV
+    lowVoltageNode: powerLV
+  - type: PowerProvider
+    voltage: Apc
+    node: powerLV
+  - type: ExtensionCableProvider
+  - type: CEMultizCableHubSupport
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 0
+    fx: EffectRCDConstruct0
+  - type: Construction
+    graph: CEMultizCableHub
+    node: hub
+  - type: NodeContainer
+    nodes:
+      powerHV:
+        !type:CEMultizCableHubNode
+        nodeGroupID: HVPower
+      powerMV:
+        !type:CEMultizCableHubNode
+        nodeGroupID: MVPower
+      powerLV:
+        !type:CEMultizCableHubNode
+        nodeGroupID: Apc

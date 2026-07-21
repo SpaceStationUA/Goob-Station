@@ -36,6 +36,7 @@
   recipeUnlocks:
   - RadarConsoleCircuitboard
   - HandHeldMassScanner
+  - GPSSuitModule # Pirate: Wega modular suit port.
   # Goobstation R&D Console rework start
   position: 0,-3
   technologyPrerequisites:
@@ -126,6 +127,7 @@
   - SolarControlComputerCircuitboard
   - SolarTrackerElectronics
   - EmitterCircuitboard
+  - ModularSuitCorePlasma # Pirate: Wega modular suit port.
   position: 0,-2
 
 - type: technology
@@ -206,6 +208,7 @@
   - HellfireFreezerMachineCircuitBoard
   - PortableScrubberMachineCircuitBoard
   - HolofanProjector
+  - AtmosPlating # Pirate: Wega modular suit port.
   technologyPrerequisites:
   - AtmosphericTech
   # Goobstation R&D Console rework start
@@ -270,6 +273,7 @@
   - ClothingBackpackSatchelHolding
   - ClothingBackpackDuffelHolding
   - ClothingBackpackMessengerHolding # Frontier
+  - StorageHoldingSuitModule # Pirate: Wega modular suit port.
   # Goobstation R&D Console rework start
   position: 2,-7
   technologyPrerequisites:

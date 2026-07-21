@@ -192,6 +192,7 @@
   - type: StandingState
   - type: Crawler
   - type: Dna
+  - type: TastyBlood  # Pirate
   - type: Scent # Einstein Engines
   - type: MindContainer
   - type: MindExaminable
@@ -212,6 +213,7 @@
   - type: Stripping
   - type: AccessReader # Goobstation-WantedMenu
     access: [["Security"]]
+    shouldShowExaminationText: false
   - type: UserInterface
     interfaces:
       enum.HumanoidMarkingModifierKey.Key:

@@ -5,6 +5,9 @@
   name: entropic colossus
   description: A colossal monstrosity of malign plating and dendritic infestation.
   components:
+  - type: MovementIgnoreGravity # Pirate: multiz - fly in zero gravity
+  - type: CEZLevelPhysicsExempt # Pirate: multiz - prevent falling through openings
+  - type: CEZLevelContextualMover # Pirate: multiz - openings-only z-movement
   - type: FTLSmashImmune
   - type: CosmicCultExamine
     cultistText: cosmic-examine-text-cultentity

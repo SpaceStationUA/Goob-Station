@@ -44,7 +44,7 @@ public sealed partial class AutomatedMaterialStorage : AutomationSlot
         if (!_power.IsPowered(Owner))
             return false;
 
-        // this has to be essentially copypasted because goidacode doesnt have a CanInsertMaterial method
+        // this has to be essentially copypasted because [Err404]code doesnt have a CanInsertMaterial method
         if (!_materialQuery.HasComp(item) || !_compositionQuery.HasComp(item))
             return false;
 

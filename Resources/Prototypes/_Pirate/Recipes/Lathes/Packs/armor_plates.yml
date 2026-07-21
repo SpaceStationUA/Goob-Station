@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2026 OneZerooo0 <moguls-charade4n@icloud.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipePack
+  id: ArmorPlates
+  recipes:
+  - ArmorPlateBlunt_Slash
+  - ArmorPlatePierce
+  - ArmorPlateHeat
+  - ArmorPlateSpeed

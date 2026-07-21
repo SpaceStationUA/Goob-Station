@@ -80769,7 +80769,7 @@ entities:
     - type: Transform
       pos: 62.5,10.5
       parent: 2
-- proto: SpawnMobCatGeneric
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
   entities:
   - uid: 11940
     components:

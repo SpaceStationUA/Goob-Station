@@ -1,0 +1,35 @@
+# SPDX-FileCopyrightText: 2026 OneZerooo0 <moguls-charade4n@icloud.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: technology
+  id: ArmorPlatesT1
+  name: research-technology-armor-plates-t1
+  icon:
+    sprite: _Pirate/Clothing/ArmorPlate/armor_plates.rsi
+    state: blunt_slash
+  discipline: Arsenal
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - ArmorPlateBlunt_Slash
+  - ArmorPlatePierce
+  technologyPrerequisites:
+  - AdvancedRiotControl
+  position: 4,4
+
+- type: technology
+  id: ArmorPlatesT2
+  name: research-technology-armor-plates-t2
+  icon:
+    sprite: _Pirate/Clothing/ArmorPlate/armor_plates.rsi
+    state: heat
+  discipline: Arsenal
+  tier: 2
+  cost: 15000
+  recipeUnlocks:
+  - ArmorPlateHeat
+  - ArmorPlateSpeed
+  technologyPrerequisites:
+  - ArmorPlatesT1
+  position: 5,4

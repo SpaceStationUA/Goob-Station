@@ -174,7 +174,7 @@
     - id: OxygenTankFilled
     - id: NitrogenTankFilled # Pirate
     - id: ClothingMaskBreath
-    - id: ClothingModsuitAtmostechPowerCell # Goob edit
+    - id: ClothingModularControllerAtmosphericPreassembled # Pirate: replace the legacy Goob MODsuit.
     - id: ClothingOuterHardsuitAtmosOld # Pirate
 
 - type: entity
@@ -212,6 +212,7 @@
     - id: RCDAmmo
     - id: MetalFoamGrenade
     - id: AccessConfigurator # Pirate edit
+    - id: PillCanisterPotassiumIodide # Pirate: DeltaV nuclear reactor
 
 - type: entityTable
   id: FillEngineerHardsuit
@@ -238,12 +239,13 @@
   id: FillRadiationSuit
   table: !type:AllSelector
     children:
+    - id: RadiationBlockingProjector # Pirate: nuclear reactor emergency equipment
     - id: ClothingOuterSuitRad
       amount: 2
     - id: GeigerCounter
       amount: 2
     - id: PillCanisterPotassiumIodide
-      prob: 0.75
+      amount: 2 # Pirate: DeltaV nuclear reactor
 
 - type: entity
   parent: LockerEvacRepair

@@ -38184,7 +38184,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingModsuitStandardPowerCell
+- proto: ClothingModularControllerStandardPreassembled
   entities:
   - uid: 11477
     components:

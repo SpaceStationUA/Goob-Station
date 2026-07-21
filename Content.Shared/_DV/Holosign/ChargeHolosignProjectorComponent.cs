@@ -35,6 +35,12 @@ public sealed partial class ChargeHolosignProjectorComponent : Component
     public string ContainerId = "signs";
 
     /// <summary>
+    /// Optional lifetime applied when a stored sign is deployed.
+    /// </summary>
+    [DataField]
+    public float? SignLifetime; // Pirate: stored signs must not expire inside the projector.
+
+    /// <summary>
     /// Holosigns we "own".
     /// </summary>
     [ViewVariables, AutoNetworkedField]

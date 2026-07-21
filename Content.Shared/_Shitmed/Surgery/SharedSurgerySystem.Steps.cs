@@ -108,7 +108,7 @@ public abstract partial class SharedSurgerySystem
     private void HandleOrganModifications(SurgeryStepEvent args, SurgeryStepComponent comp)
     {
         HandleOrganModification(args.Part, args.Body, comp.AddOrganOnAdd);
-        HandleOrganModification(args.Part, args.Body, comp.RemoveOrganOnAdd, true); // oh my goida code
+        HandleOrganModification(args.Part, args.Body, comp.RemoveOrganOnAdd, true); // oh my [Err404] code
     }
 
     private void OnToolCheck(Entity<SurgeryStepComponent> ent, ref SurgeryStepCompleteCheckEvent args)

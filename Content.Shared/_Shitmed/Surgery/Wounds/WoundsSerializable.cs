@@ -39,6 +39,7 @@ public enum WoundableSeverity : byte
     Critical,
     Mangled,
     Severed,
+    Disabled, // Pirate: attached but non-functional due to limb fixation damage.
 }
 
 [Serializable, NetSerializable]

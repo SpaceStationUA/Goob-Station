@@ -27,7 +27,7 @@
       task: DragonCarpCompound
   - type: NpcFactionMember
     factions:
-    - Dragon #goida, also the carpsuit buff
+    - Dragon #[Err404], also the carpsuit buff
   - type: Physics
   - type: Fixtures
     fixtures:

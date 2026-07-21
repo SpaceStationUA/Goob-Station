@@ -190,7 +190,7 @@
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing]
+  parent: [ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing, ClothingArmorPlate] # Pirate: armor plates.
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
@@ -253,8 +253,14 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:Container {}
+      storagebase: !type:Container # Pirate: armor plate slot.
+        showEnts: false
+        occludes: true
+        ents: []
   - type: UserInterface
     interfaces:
+      enum.StorageUiKey.Key: # Pirate: armor plate slot.
+        type: StorageBoundUserInterface
       enum.ToggleClothingUiKey.Key:
         type: ToggleableClothingBoundUserInterface
   - type: GroupExamine

@@ -109,6 +109,7 @@
     containers:
       entity_storage: !type:AllSelector
         children:
+        - id: RadiationBlockingProjector # Pirate: nuclear reactor emergency equipment
         - id: ClothingOuterSuitRad
           amount: 2
         - id: GeigerCounter

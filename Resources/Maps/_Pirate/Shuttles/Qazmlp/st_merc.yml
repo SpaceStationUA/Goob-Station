@@ -1919,7 +1919,7 @@ entities:
     - type: Transform
       pos: -14.5,2.5
       parent: 2
-- proto: APCBasic
+- proto: PirateShuttleAPCBasic
   entities:
   - uid: 949
     components:
@@ -1927,7 +1927,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,5.5
       parent: 823
-- proto: APCHighCapacity
+- proto: PirateShuttleAPCHighCapacity
   entities:
   - uid: 129
     components:

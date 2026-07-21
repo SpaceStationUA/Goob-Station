@@ -86,6 +86,7 @@
     sound:
       path: /Audio/_Pirate/Effects/fpv_drone_flyby.ogg
   - type: DamageOnHighSpeedImpact
+    enabled: false # Pirate: FPV drones should not take damage from flying into obstacles.
     damage:
       types:
         Blunt: 40
@@ -170,6 +171,11 @@
     - 0,0,1,1
 
   # Damage
+  - type: Reflect
+    reflectProb: 0.5
+    spread: 270
+    reflects:
+    - NonEnergy
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
@@ -177,7 +183,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 60
       behaviors:
       - !type:EmptyContainersBehaviour
         containers:

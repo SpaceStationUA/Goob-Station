@@ -322,6 +322,7 @@
     - SecurityBoardsStaticGoob
     - ServiceBoardsStaticGoob
     dynamicPacks:
+    - ReactorCircuitboards # Pirate: DeltaV nuclear reactor
     - EngineeringBoards
     - CargoBoards
     - MedicalBoards
@@ -381,6 +382,7 @@
     - PartsStatic
     - CablesStatic
     - PowerCellsStatic
+    - ModesuitModuleStatic
     dynamicPacks:
     - Robotics
     - BorgModules
@@ -388,7 +390,8 @@
     - MechEquipment
     # Goobstation Packs
     - MechPartsGoob
-    - Modsuits
+    # Pirate: legacy Modsuits pack replaced by the new modular suit parts.
+    - ModesuitPartStatic
     - PowerCages
     - BorgModulesGoob
     - BasicCybernetics
@@ -397,12 +400,17 @@
     - PowerAugments
     - ToolAugments
     - PowerCells
+    # Pirate: Wega modular suit port.
+    - ModesuitPlatingReach
+    - ModesuitModuleReach
   - type: EmagLatheRecipes # Goobstation
     emagStaticPacks:
     - MechWeaponsSecurityStatic
+    - ModesuitModuleSecStatic # Pirate: Wega modular suit port.
     emagDynamicPacks:
     - MechWeaponsSalvage
     - MechWeaponsSecurityLight
+    - ModesuitModuleSecReach # Pirate: Wega modular suit port.
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
@@ -497,6 +505,7 @@
     # Pirate Packs
     - SecurityAmmoStaticPirate
     - PirateStraightjacketLatheRecipePackStatic # Pirate - tweak recipes | Add straint-jacket to med and sec fabs.
+    - ModesuitModuleSecStatic # Pirate: Wega modular suit port.
     dynamicPacks:
     - SalvageSecurityBoards
     - SalvageSecurityWeapons
@@ -519,6 +528,8 @@
     - PowerCells
     # Pirate Packs
     - SecurityAmmoPirate
+    - ModesuitModuleSecReach # Pirate: Wega modular suit port.
+    - ArmorPlates # Pirate: Monolith armor plates.
   - type: EmagLatheRecipes # Goobstation
     emagStaticPacks:
     - SyndicateAmmoStatic

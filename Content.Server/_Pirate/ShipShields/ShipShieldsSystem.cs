@@ -4,15 +4,18 @@
 
 using System.Numerics;
 using Content.Shared._Pirate.ShipShields;
+using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Server.GameStates;
 using Content.Server.Power.Components;
+using Content.Server._Pirate.ZLevels.Power;
 using Robust.Shared.Physics;
 using Content.Shared._Mono.SpaceArtillery;
 using Content.Shared.Projectiles;
@@ -33,6 +36,10 @@ public sealed partial class ShipShieldsSystem : EntitySystem
     [Dependency] private readonly PhysicsSystem _physicsSystem = default!;
 
     [Dependency] private readonly PvsOverrideSystem _pvsSys = default!;
+
+    // Scratch buffers reused across reconcile passes so we don't allocate per tick.
+    private readonly HashSet<EntityUid> _scratchTargetGrids = new();
+    private readonly List<EntityUid> _scratchObsoleteGrids = new();
 
     public override void Update(float frameTime)
     {
@@ -73,34 +80,32 @@ public sealed partial class ShipShieldsSystem : EntitySystem
 
             AdjustEmitterLoad(uid, emitter, power);
 
-            var parent = Transform(uid).GridUid;
-
-            if (parent == null)
-                return;
-
-            var filter = _station.GetInOwningStation(uid);
-
             if (emitter.Damage > emitter.DamageLimit)
                 emitter.OverloadAccumulator = emitter.DamageOverloadTimePunishment;
 
-            if (!emitter.Recharging && emitter.Shield is null && emitter.OverloadAccumulator < 1)
-            {
-                var shield = ShieldEntity(parent.Value, source: uid);
-                if (shield != EntityUid.Invalid)
-                {
-                    emitter.Shield = shield;
-                    emitter.Shielded = parent.Value;
-                }
-                _audio.PlayGlobal(emitter.PowerUpSound, filter, true, emitter.PowerUpSound.Params);
-            }
-            else if ((emitter.Recharging || emitter.OverloadAccumulator > 0) && emitter.Shield is not null)
-            {
-                UnshieldEntity(parent.Value);
-                emitter.Shield = null;
-                emitter.Shielded = null;
-                _audio.PlayGlobal(emitter.PowerDownSound, filter, true, emitter.PowerUpSound.Params);
-            }
+            var shouldShield = !emitter.Recharging && emitter.OverloadAccumulator < 1;
 
+            if (shouldShield && !emitter.Active)
+            {
+                if (SyncShields(uid, emitter))
+                {
+                    emitter.Active = true;
+                    var filter = _station.GetInOwningStation(uid);
+                    _audio.PlayGlobal(emitter.PowerUpSound, filter, true, emitter.PowerUpSound.Params);
+                }
+            }
+            else if (!shouldShield && emitter.Active)
+            {
+                ClearShields(emitter);
+                emitter.Active = false;
+                var filter = _station.GetInOwningStation(uid);
+                _audio.PlayGlobal(emitter.PowerDownSound, filter, true, emitter.PowerDownSound.Params);
+            }
+            else if (emitter.Active)
+            {
+                // Already active: catch up with z-network changes that happened between events.
+                SyncShields(uid, emitter);
+            }
         }
     }
     public override void Initialize()
@@ -108,6 +113,8 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ShipShieldComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<ShipShieldEmitterComponent, ComponentShutdown>(OnEmitterShutdown);
+        // Broadcast sub; CEMultizCableHubSystem owns the per-component one.
+        SubscribeLocalEvent<CEMultizLinkedGridPeersChangedEvent>(OnLinkedPeersChanged);
 
         InitializeCommands();
         InitializeEmitters();
@@ -149,17 +156,121 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         }
     }
 
-    private void OnEmitterShutdown(EntityUid uid, ShipShieldEmitterComponent emitter, ComponentShutdown args) // Mono 
+    private void OnEmitterShutdown(EntityUid uid, ShipShieldEmitterComponent emitter, ComponentShutdown args) // Mono
     {
-        if (emitter.Shielded != null)
+        ClearShields(emitter);
+        emitter.Active = false;
+    }
+
+    /// <summary>Reconcile every active emitter immediately on z-network changes.</summary>
+    private void OnLinkedPeersChanged(ref CEMultizLinkedGridPeersChangedEvent args)
+    {
+        var query = EntityQueryEnumerator<ShipShieldEmitterComponent>();
+        while (query.MoveNext(out var emitterUid, out var emitter))
         {
-            UnshieldEntity(emitter.Shielded.Value);
-            emitter.Shield = null;
-            emitter.Shielded = null;
+            if (!emitter.Active)
+                continue;
+            SyncShields(emitterUid, emitter);
         }
     }
 
-    private EntityUid ShieldEntity(EntityUid entity, MapGridComponent? mapGrid = null, EntityUid? source = null)
+    /// <summary>Reconciles owned shields against the host grid plus its z-linked peers.</summary>
+    private bool SyncShields(EntityUid emitterUid, ShipShieldEmitterComponent emitter)
+    {
+        var hostGrid = Transform(emitterUid).GridUid;
+        if (hostGrid is null || TerminatingOrDeleted(hostGrid.Value))
+        {
+            ClearShields(emitter);
+            emitter.TemplateGrid = null;
+            return false;
+        }
+
+        _scratchTargetGrids.Clear();
+        _scratchTargetGrids.Add(hostGrid.Value);
+
+        if (TryComp<CEZLinkedGridComponent>(hostGrid.Value, out var linked))
+        {
+            foreach (var (_, peerGrid) in linked.PeerGrids)
+            {
+                if (!TerminatingOrDeleted(peerGrid))
+                    _scratchTargetGrids.Add(peerGrid);
+            }
+        }
+
+        // Largest AABB drives shape so every peer's bubble matches. Lowest-uid tiebreak so HashSet
+        // enumeration order doesn't flip the template between equal-area grids and thrash shields.
+        EntityUid templateGrid = EntityUid.Invalid;
+        MapGridComponent? templateMapGrid = null;
+        var bestArea = -1f;
+        foreach (var gridUid in _scratchTargetGrids)
+        {
+            if (!TryComp<MapGridComponent>(gridUid, out var grid))
+                continue;
+
+            var aabb = grid.LocalAABB;
+            var area = aabb.Width * aabb.Height;
+            var isBetter = area > bestArea
+                || (area == bestArea && (templateGrid == EntityUid.Invalid || gridUid.Id < templateGrid.Id));
+            if (isBetter)
+            {
+                bestArea = area;
+                templateGrid = gridUid;
+                templateMapGrid = grid;
+            }
+        }
+
+        if (templateGrid == EntityUid.Invalid)
+            templateGrid = hostGrid.Value;
+
+        // Template changed: tear down so the spawn pass rebuilds with the new shape.
+        if (emitter.TemplateGrid != templateGrid)
+        {
+            ClearShields(emitter);
+            emitter.TemplateGrid = templateGrid;
+        }
+
+        // Drop shields for grids that left the network or whose shield entity died.
+        _scratchObsoleteGrids.Clear();
+        foreach (var (gridUid, shieldUid) in emitter.Shields)
+        {
+            if (!_scratchTargetGrids.Contains(gridUid)
+                || TerminatingOrDeleted(gridUid)
+                || TerminatingOrDeleted(shieldUid))
+            {
+                _scratchObsoleteGrids.Add(gridUid);
+            }
+        }
+        foreach (var gridUid in _scratchObsoleteGrids)
+        {
+            if (!TerminatingOrDeleted(gridUid))
+                UnshieldEntity(gridUid);
+            emitter.Shields.Remove(gridUid);
+        }
+
+        foreach (var gridUid in _scratchTargetGrids)
+        {
+            if (emitter.Shields.ContainsKey(gridUid))
+                continue;
+
+            var shield = ShieldEntity(gridUid, source: emitterUid, templateMapGrid: templateMapGrid);
+            if (shield != EntityUid.Invalid)
+                emitter.Shields[gridUid] = shield;
+        }
+
+        return emitter.Shields.Count > 0;
+    }
+
+    private void ClearShields(ShipShieldEmitterComponent emitter)
+    {
+        foreach (var (gridUid, _) in emitter.Shields)
+        {
+            if (!TerminatingOrDeleted(gridUid))
+                UnshieldEntity(gridUid);
+        }
+        emitter.Shields.Clear();
+    }
+
+    private EntityUid ShieldEntity(EntityUid entity, MapGridComponent? mapGrid = null, EntityUid? source = null, MapGridComponent? templateMapGrid = null)
     {
         if (TryComp<ShipShieldedComponent>(entity, out var existingShielded))
             return existingShielded.Shield;
@@ -167,9 +278,13 @@ public sealed partial class ShipShieldsSystem : EntitySystem
         if (!Resolve(entity, ref mapGrid, false))
             return EntityUid.Invalid;
 
+        var shapeGrid = templateMapGrid ?? mapGrid;
+
         var prototype = ShipShieldPrototype;
 
         var shield = Spawn(prototype, Transform(entity).Coordinates);
+        // Prevent auto-reparenting onto overlapping grids on the same map.
+        Transform(shield).GridTraversal = false;
         var shieldPhysics = EnsureComp<PhysicsComponent>(shield);
         var shieldComp = EnsureComp<ShipShieldComponent>(shield);
         shieldComp.Shielded = entity;
@@ -182,11 +297,14 @@ public sealed partial class ShipShieldsSystem : EntitySystem
             Dirty(shield, shieldVisuals);
         }
 
-        _transformSystem.SetLocalPosition(shield, mapGrid.LocalAABB.Center);
-        _transformSystem.SetWorldRotation(shield, _transformSystem.GetWorldRotation(entity));
-        _transformSystem.SetParent(shield, entity);
+        // Atomic parent + offset; the previous SetLocalPosition→SetParent ordering left the local
+        // pos offset by the grid's own LocalPosition for grids parked away from map origin.
+        _transformSystem.SetCoordinates(
+            (shield, Transform(shield), MetaData(shield)),
+            new EntityCoordinates(entity, shapeGrid.LocalAABB.Center),
+            rotation: Angle.Zero);
 
-        var chain = GenerateOvalFixture(shield, "shield", shieldPhysics, mapGrid);
+        var chain = GenerateOvalFixture(shield, "shield", shieldPhysics, shapeGrid);
 
         List<Vector2> roughPoly = new();
 

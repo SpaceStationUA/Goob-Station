@@ -24,10 +24,25 @@ public sealed class SharedMagbootsSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MagbootsComponent, ItemToggledEvent>(OnToggled);
+        // Pirate: modular suit modules add and remove this component at runtime.
+        SubscribeLocalEvent<MagbootsComponent, ComponentAdd>(OnAddComponent);
+        SubscribeLocalEvent<MagbootsComponent, ComponentRemove>(OnRemoveComponent);
         SubscribeLocalEvent<MagbootsComponent, ClothingGotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<MagbootsComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<MagbootsComponent, IsWeightlessEvent>(OnIsWeightless);
         SubscribeLocalEvent<MagbootsComponent, InventoryRelayedEvent<IsWeightlessEvent>>(OnIsWeightless);
+    }
+
+    private void OnAddComponent(Entity<MagbootsComponent> ent, ref ComponentAdd args)
+    {
+        if (_container.TryGetContainingContainer((ent.Owner, null, null), out var container))
+            UpdateMagbootEffects(container.Owner, ent, true);
+    }
+
+    private void OnRemoveComponent(Entity<MagbootsComponent> ent, ref ComponentRemove args)
+    {
+        if (_container.TryGetContainingContainer((ent.Owner, null, null), out var container))
+            UpdateMagbootEffects(container.Owner, ent, false);
     }
 
     private void OnToggled(Entity<MagbootsComponent> ent, ref ItemToggledEvent args)

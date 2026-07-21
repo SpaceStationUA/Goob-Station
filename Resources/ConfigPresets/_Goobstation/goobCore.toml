@@ -74,6 +74,14 @@ show_typing_indicator = true
 [ic]
 punctuation = true
 flavor_text = true
+# Pirate: Starlight extended character descriptions.
+secrets_text = true
+secrets_exploitable = true
+inspect_windows = true
+
+[ooc]
+# Pirate: Starlight extended character descriptions.
+rp_notes = true
 
 [ban]
 hardware_ids = true

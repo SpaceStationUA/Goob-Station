@@ -13,7 +13,6 @@
       blacklist:
         tags:
           - ContractorUplink
-          - NukeOpsUplink
 
 - type: listing
   id: UplinkAdderBundle

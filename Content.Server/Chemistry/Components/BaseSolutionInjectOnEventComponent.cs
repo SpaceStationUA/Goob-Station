@@ -3,6 +3,7 @@
 using Content.Shared.Damage; // Goobstation - Armor resisting syringe gun
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Whitelist; // Pirate
 
 namespace Content.Server.Chemistry.Components;
 
@@ -67,6 +68,12 @@ public abstract partial class BaseSolutionInjectOnEventComponent : Component
     /// </summary>
     [DataField]
     public SlotFlags BlockSlots = SlotFlags.NONE;
+
+    /// <summary>
+    /// Entities matching this blacklist are not injected.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? TargetBlacklist; // Pirate
 
     // <Goobstation>
     /// <summary>

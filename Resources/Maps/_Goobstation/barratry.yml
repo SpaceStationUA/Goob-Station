@@ -89543,6 +89543,8 @@ entities:
     - type: Transform
       pos: 0.5,16.5
       parent: 2
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
+  entities:
   - uid: 12304
     components:
     - type: Transform

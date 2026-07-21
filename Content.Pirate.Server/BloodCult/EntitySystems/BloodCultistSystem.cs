@@ -31,12 +31,11 @@ public sealed class BloodCultistSystem : SharedBloodCultistSystem
 		if (communeEntity == null)
 			return;
 
-		// Allow both blood cultists and juggernauts to use commune
-		// Check both separately to ensure variables are assigned
+		// Allow both blood cultists and constructs to use commune.
 		bool isCultist = TryComp<BloodCultistComponent>(communeEntity, out var cultistComp);
-		bool isJuggernaut = TryComp<JuggernautComponent>(communeEntity, out var juggernautComp);
+		bool isConstruct = HasComp<BloodCultConstructComponent>(communeEntity.Value);
 		
-		if (!isCultist && !isJuggernaut)
+		if (!isCultist && !isConstruct)
 			return;
 
 		if (!_uiSystem.HasUi(communeEntity.Value, BloodCultistCommuneUIKey.Key))
@@ -49,8 +48,8 @@ public sealed class BloodCultistSystem : SharedBloodCultistSystem
 		{
 			if (isCultist && cultistComp != null)
 				UpdateCommuneUI((communeEntity.Value, cultistComp));
-			else if (isJuggernaut && juggernautComp != null)
-				// Juggernauts use the same UI but with empty state (no stored message)
+			else
+				// Constructs use the same UI but with empty state (no stored message).
 				_uiSystem.SetUiState(communeEntity.Value, BloodCultistCommuneUIKey.Key, new BloodCultCommuneBuiState(""));
 		}
 

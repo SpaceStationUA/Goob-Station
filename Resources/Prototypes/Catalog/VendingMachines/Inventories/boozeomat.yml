@@ -50,6 +50,10 @@
     DrinkSakeBottleFull: 3
     DrinkBeerCan: 5
     DrinkWineCan: 5
+    # Pirate - DeltaV frozen treats port
+    DrinkAngobittersBottleFull: 3
+    DrinkCaramelBottleFull: 3
+    GlassChoppedNuts: 5
   contrabandInventory:
     ChemistryBottleEthanol: 3
     DrinkBottleOfNothingFull: 1

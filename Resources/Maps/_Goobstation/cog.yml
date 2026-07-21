@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 04/27/2026 05:14:46
-  entityCount: 31853
+  entityCount: 31854
 maps:
 - 1
 grids:
@@ -169875,6 +169875,13 @@ entities:
     components:
     - type: Transform
       pos: -10.5,-39.5
+      parent: 2
+- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
+  entities:
+  - uid: 31854
+    components:
+    - type: Transform
+      pos: -54.5,30.5
       parent: 2
 - proto: SpawnMobCatGeneric
   entities:

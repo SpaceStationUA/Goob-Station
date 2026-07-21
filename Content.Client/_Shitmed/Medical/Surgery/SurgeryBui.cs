@@ -3,11 +3,14 @@
 using Content.Client._Shitmed.Choice.UI;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Shared._Shitmed.Medical.Surgery;
+using Content.Shared._Shitmed.Medical.Surgery.Steps.Parts; // Pirate - DeltaV surgery UI
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Humanoid; // Pirate - DeltaV surgery UI
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.UserInterface.Controls; // Pirate - DeltaV surgery UI
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -26,6 +29,8 @@ public sealed class SurgeryBui : BoundUserInterface
     private bool _isBody;
     private (EntityUid Ent, EntProtoId Proto)? _surgery;
     private readonly List<EntProtoId> _previousSurgeries = new();
+    // Pirate - DeltaV surgery UI
+    private readonly Dictionary<TextureButton, (NetEntity Part, List<EntProtoId> Surgeries)> _texturePartChoices = new();
     public SurgeryBui(EntityUid owner, Enum uiKey) : base(owner, uiKey) => _system = _entities.System<SurgerySystem>();
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
@@ -60,12 +65,13 @@ public sealed class SurgeryBui : BoundUserInterface
             _window.OnClose += Close;
             _window.Title = Loc.GetString("surgery-ui-window-title");
 
+            // Pirate - Bind persistent texture buttons once; their targets are refreshed with each BUI state.
+            foreach (var button in _window.BodyPartButtons)
+                button.OnPressed += args => OnTexturePartPressed((TextureButton) args.Button);
+
             _window.PartsButton.OnPressed += _ =>
             {
-                _part = null;
-                _isBody = false;
-                _surgery = null;
-                _previousSurgeries.Clear();
+                ClearPartSelection();
                 View(ViewType.Parts);
             };
 
@@ -109,6 +115,17 @@ public sealed class SurgeryBui : BoundUserInterface
         _part = null;
         _surgery = null;
 
+        // Pirate start - Reset and remap the persistent graphical body-part controls.
+        _texturePartChoices.Clear();
+        foreach (var button in _window.BodyPartButtons)
+        {
+            button.Visible = false;
+            button.Pressed = false;
+            button.StyleIdentifier = "SurgeryTextureButton";
+            button.ToolTip = null;
+        }
+        // Pirate end
+
         var options = new List<(NetEntity netEntity, EntityUid entity, string Name, BodyPartType? PartType)>();
         foreach (var choice in state.Choices.Keys)
             if (_entities.TryGetEntity(choice, out var ent))
@@ -141,16 +158,36 @@ public sealed class SurgeryBui : BoundUserInterface
             return GetScore(a.PartType) - GetScore(b.PartType);
         });
 
-        foreach (var (netEntity, entity, partName, _) in options)
+        foreach (var (netEntity, entity, partName, bodyPartType) in options) // Pirate - DeltaV surgery UI
         {
             //var netPart = _entities.GetNetEntity(part.Owner);
             var surgeries = state.Choices[netEntity];
-            var partButton = new ChoiceControl();
+            var textureButton = GetBodyPartTextureButton(entity, bodyPartType); // Pirate - DeltaV surgery UI
+            var usesTextureButton = textureButton != null &&
+                                    _texturePartChoices.TryAdd(textureButton, (netEntity, surgeries));
 
-            partButton.Set(partName, null);
-            partButton.Button.OnPressed += _ => OnPartPressed(netEntity, surgeries);
+            // Pirate start - Use the doll when there is a unique matching region, otherwise keep the text fallback.
+            if (usesTextureButton && textureButton != null)
+            {
+                textureButton.Visible = true;
+                textureButton.ToolTip = partName;
+                if (_entities.HasComponent<IncisionOpenComponent>(entity))
+                    textureButton.StyleIdentifier = "OpenIncision";
+            }
+            else
+            {
+                var partButton = new ChoiceControl();
+                partButton.Set(partName, null);
+                partButton.Button.OnPressed += _ =>
+                {
+                    DeactivateOtherParts();
+                    OnPartPressed(netEntity, surgeries);
+                };
+                _window.Parts.AddChild(partButton);
+            }
+            // Pirate end
 
-            _window.Parts.AddChild(partButton);
+            var restoredPart = false;
 
             foreach (var surgeryId in surgeries)
             {
@@ -159,11 +196,23 @@ public sealed class SurgeryBui : BoundUserInterface
                     continue;
 
                 if (oldPart == entity && oldSurgery?.Proto == surgeryId)
+                {
                     OnSurgeryPressed((surgery, surgeryComp), netEntity, surgeryId);
+                    restoredPart = true;
+                }
             }
 
             if (oldPart == entity && oldSurgery == null)
+            {
                 OnPartPressed(netEntity, surgeries);
+                restoredPart = true;
+            }
+
+            if (restoredPart && usesTextureButton && textureButton != null)
+            {
+                textureButton.Pressed = true;
+                DeactivateOtherParts(textureButton);
+            }
         }
 
 
@@ -230,6 +279,8 @@ public sealed class SurgeryBui : BoundUserInterface
 
         _part = _entities.GetEntity(netPart);
         _isBody = _entities.HasComponent<BodyComponent>(_part);
+        _surgery = null; // Pirate - the body doll can switch parts without returning to the parts tab first.
+        _previousSurgeries.Clear(); // Pirate - requirement navigation belongs to the previously selected part.
         _window.Surgeries.DisposeAllChildren();
 
         var surgeries = new List<(Entity<SurgeryComponent> Ent, EntProtoId Id, string Name)>();
@@ -266,6 +317,69 @@ public sealed class SurgeryBui : BoundUserInterface
         RefreshUI();
         View(ViewType.Surgeries);
     }
+
+    // Pirate start - DeltaV graphical surgery target selection.
+    private void OnTexturePartPressed(TextureButton button)
+    {
+        if (!_texturePartChoices.TryGetValue(button, out var choice))
+            return;
+
+        if (button.Pressed)
+        {
+            DeactivateOtherParts(button);
+            OnPartPressed(choice.Part, choice.Surgeries);
+            return;
+        }
+
+        ClearPartSelection();
+        View(ViewType.Parts);
+    }
+
+    private TextureButton? GetBodyPartTextureButton(EntityUid entity, BodyPartType? partType)
+    {
+        if (_window == null ||
+            !_entities.TryGetComponent(entity, out BodyPartComponent? bodyPart))
+            return null;
+
+        var isLeftPart = bodyPart.Symmetry == BodyPartSymmetry.Left;
+        var isHumanoid = bodyPart.Body is { } body && _entities.HasComponent<HumanoidAppearanceComponent>(body);
+
+        return partType switch
+        {
+            BodyPartType.Chest => isHumanoid ? _window.ChestButton : _window.CarpButton,
+            BodyPartType.Groin => isHumanoid ? _window.GroinButton : null,
+            BodyPartType.Head => _window.HeadButton,
+            BodyPartType.Arm => isLeftPart ? _window.LArmButton : _window.RArmButton,
+            BodyPartType.Hand => isLeftPart ? _window.LHandButton : _window.RHandButton,
+            BodyPartType.Leg => isLeftPart ? _window.LLegButton : _window.RLegButton,
+            BodyPartType.Foot => isLeftPart ? _window.LFootButton : _window.RFootButton,
+            // DeltaV's source anatomy has no tail or custom-part sprite.
+            BodyPartType.Tail or BodyPartType.Other or null => null,
+            _ => null,
+        };
+    }
+
+    private void DeactivateOtherParts(TextureButton? activeButton = null)
+    {
+        if (_window == null)
+            return;
+
+        foreach (var button in _window.BodyPartButtons)
+        {
+            if (button != activeButton)
+                button.Pressed = false;
+        }
+    }
+
+    private void ClearPartSelection()
+    {
+        _part = null;
+        _isBody = false;
+        _surgery = null;
+        _previousSurgeries.Clear();
+        DeactivateOtherParts();
+    }
+    // Pirate end
 
     private void RefreshUI()
     {

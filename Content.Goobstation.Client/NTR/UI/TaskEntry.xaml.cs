@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-// goidacore inside
+// [Err404]core inside
 namespace Content.Goobstation.Client.NTR.UI;
 
 [GenerateTypedNameReferences]
