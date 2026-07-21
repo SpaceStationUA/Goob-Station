@@ -188,12 +188,16 @@ public abstract class SwitchableOverlaySystem<TComp, TEvent> : EntitySystem // t
 
     private void OnToggle(EntityUid uid, TComp component, TEvent args)
     {
-        // Pirate: equipment action entity references are not networked, so use the performed action's replicated state.
-        var activate = component.PulseTime > 0f || !args.Action.Comp.Toggled;
+        // Pirate: keep the component authoritative during prediction and mirror the performed action explicitly.
+        var activate = component.PulseTime > 0f || !component.IsActive;
         Toggle(uid, component, activate);
+
+        if (component.PulseTime <= 0f)
+            _actions.SetToggled(args.Action.Owner, component.IsActive);
+
         RaiseSwitchableOverlayToggledEvent(uid, args.Performer, component.IsActive);
         args.Handled = true;
-        args.Toggle = component.PulseTime <= 0f;
+        args.Toggle = false;
     }
 
     private void Toggle(EntityUid uid, TComp component, bool activate, bool playSound = true)
