@@ -70,3 +70,5 @@ ent-LivestockSecDog = { ent-CrateNPCSecDog }
     .desc = { ent-CrateNPCSecDog.desc }
 ent-SpawnMobSecDogLaika = спавнер Лайки
     .desc = Місце для появи Лайки.
+ent-SpawnMobSecLaikaOrShiva = спавнер службової тварини
+    .desc = Випадково створює Лайку або Шиву.

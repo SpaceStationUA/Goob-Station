@@ -2,6 +2,7 @@ using Content.Shared._Pirate.Grappling.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.DoAfter;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Pirate.Grappling.Components;
 
@@ -17,6 +18,12 @@ public sealed partial class GrappledComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid Grappler = EntityUid.Invalid;
+
+    /// <summary>
+    /// The alert shown for this grapple. Stored on the victim so cleanup does not depend on the grappler surviving.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ProtoId<AlertPrototype> GrappledAlert = "Grappled";
 
     /// <summary>
     /// How much time is required to escape.

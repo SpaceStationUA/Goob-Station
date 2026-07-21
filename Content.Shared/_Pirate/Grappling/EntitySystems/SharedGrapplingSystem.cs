@@ -66,8 +66,10 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
         SubscribeLocalEvent<GrapplerComponent, StartPullAttemptEvent>(OnPullAttempt);
         SubscribeLocalEvent<GrapplerComponent, EscapeGrappleAlertEvent>(OnEscapeGrapplerAlert);
         SubscribeLocalEvent<GrapplerComponent, MobStateChangedEvent>(OnGrapplerStateChanged);
+        SubscribeLocalEvent<GrapplerComponent, ComponentShutdown>(OnGrapplerShutdown);
 
         SubscribeLocalEvent<GrappledComponent, MobStateChangedEvent>(OnGrappledStateChanged);
+        SubscribeLocalEvent<GrappledComponent, ComponentShutdown>(OnGrappledShutdown);
         SubscribeLocalEvent<GrappledComponent, MoveInputEvent>(OnGrappledMove);
         SubscribeLocalEvent<GrappledComponent, GrappledEscapeDoAfter>(OnEscapeDoAfter);
         SubscribeLocalEvent<GrappledComponent, EscapeGrappleAlertEvent>(OnEscapeGrappledAlert);
@@ -177,7 +179,11 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
             return false; // Not grappling anything
 
         if (!TryComp<GrappledComponent>(victim, out var victimComp))
-            return false; // Somehow not a grappled target
+        {
+            // Recover from a stale endpoint instead of leaving the grappler permanently blocked.
+            CleanupGrapplerAfterEndpointRemoved((grappler, grappler.Comp));
+            return true;
+        }
 
         ReleaseGrapple((grappler, grappler.Comp),
             (victim, victimComp),
@@ -198,6 +204,7 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
         EnsureComp<GrappledComponent>(victim, out var grappled);
         grappled.Grappler = grappler;
         grappled.EscapeTime = grappler.Comp.EscapeTime;
+        grappled.GrappledAlert = grappler.Comp.GrappledAlert;
 
         // Disable hands if requested
         DisableHands(grappler!, (victim, grappled));
@@ -228,7 +235,17 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
             grappled.MovementSpeedModifier = drain.MovementSpeedModifier;
 
             if (drain.InitialDamage != null)
+            {
                 _damageable.TryChangeDamage(victim, drain.InitialDamage);
+
+                // Damage can synchronously put the victim into crit and release the grapple.
+                if (grappler.Comp.ActiveVictim != victim ||
+                    !TryComp<GrappledComponent>(victim, out var activeGrapple) ||
+                    activeGrapple.Grappler != grappler.Owner)
+                {
+                    return;
+                }
+            }
         }
         else
         {
@@ -359,12 +376,12 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
     /// </summary>
     /// <param name="grappler">Entity which was performing grapple.</param>
     /// <param name="victim">Victim which had become grappled.</param>
-    private void EnableHands(Entity<GrapplerComponent> grappler, Entity<GrappledComponent> victim)
+    private void EnableHands(EntityUid grappler, Entity<GrappledComponent> victim)
     {
         if (!TryComp<HandsComponent>(victim, out var hands))
             return; // This victim has no hands
 
-        if (grappler.Comp.HandDisabling == HandDisabling.None)
+        if (victim.Comp.DisabledHands.Count == 0)
             return; // Nothing left to do
 
         _virtual.DeleteInHandsMatching(victim, grappler);
@@ -386,6 +403,8 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
 
             RemComp<UnremoveableComponent>(item.Value);
         }
+
+        victim.Comp.DisabledHands.Clear();
     }
 
     /// <summary>
@@ -499,6 +518,40 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
         ReleaseGrapple(grappler.AsNullable(), manualRelease: true);
     }
 
+    private void OnGrapplerShutdown(Entity<GrapplerComponent> grappler, ref ComponentShutdown args)
+    {
+        if (grappler.Comp.ActiveVictim is not { } victim)
+            return;
+
+        CleanupGrapplerAfterEndpointRemoved(grappler, componentShuttingDown: true);
+
+        if (TerminatingOrDeleted(victim) ||
+            !TryComp<GrappledComponent>(victim, out var victimComp) ||
+            victimComp.Grappler != grappler.Owner)
+        {
+            return;
+        }
+
+        CleanupVictimAfterEndpointRemoved(grappler.Owner, (victim, victimComp));
+    }
+
+    private void OnGrappledShutdown(Entity<GrappledComponent> grappled, ref ComponentShutdown args)
+    {
+        var grappler = grappled.Comp.Grappler;
+        if (grappler == EntityUid.Invalid)
+            return;
+
+        CleanupVictimAfterEndpointRemoved(grappler, grappled, componentShuttingDown: true);
+
+        if (!TryComp<GrapplerComponent>(grappler, out var grapplerComp) ||
+            grapplerComp.ActiveVictim != grappled.Owner)
+        {
+            return;
+        }
+
+        CleanupGrapplerAfterEndpointRemoved((grappler, grapplerComp));
+    }
+
     /// <summary>
     /// Handles when a grappler enters crit or dies while holding a grappler, which will then release it.
     /// </summary>
@@ -543,41 +596,10 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
         Entity<GrappledComponent> victim,
         bool manualRelease = false)
     {
-        // Ensure any jointing is cleaned up
-        if (grappler.Comp.PullJointId != null)
-        {
-            _joint.RemoveJoint(grappler, grappler.Comp.PullJointId);
-            grappler.Comp.PullJointId = null;
-        }
+        CleanupGrapplerAfterEndpointRemoved(grappler);
 
-        // Inform the grappler that their victim is now free and they can move, updating the cooldown as well.
-        grappler.Comp.ActiveVictim = null;
-        grappler.Comp.CooldownEnd = _gameTiming.CurTime + grappler.Comp.Cooldown;
-        Dirty(grappler);
-        _actionBlocker.UpdateCanMove(grappler);
-
-        // Clean up the hold on their hands we have
-        EnableHands(grappler, victim);
-
-        // Ensure any stamina drains are cleared on release
-        _stamina.ToggleStaminaDrain(victim,
-            0,
-            false,
-            false,
-            GetStaminaDrainKey(grappler.Owner),
-            grappler.Owner);
-
-        // Ensure accumlated damage is reset
-        grappler.Comp.DamageAccumulated = 0f;
-
-        // If this was a manul release by the grappler, we should cancel the doafter they have in progress, if any.
         if (manualRelease)
         {
-            if (victim.Comp.DoAfterId.HasValue)
-            {
-                _doAfter.Cancel(victim.Comp.DoAfterId.Value);
-            }
-
             if (_netManager.IsServer)
             {
                 _popup.PopupEntity(
@@ -611,18 +633,76 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
             }
         }
 
-        // Cleanup the grappling on the victim
-        RemComp<GrappledComponent>(victim);
-        _actionBlocker.UpdateCanMove(victim); // Must be done AFTER the component is removed.
-        _movement.RefreshMovementSpeedModifiers(victim);
-        _movement.RefreshFrictionModifiers(victim);
+        CleanupVictimAfterEndpointRemoved(grappler.Owner, victim, cancelDoAfter: manualRelease);
+    }
 
-        // Automatically get the grappler back up
-        if (grappler.Comp.ProneOnGrapple && TryComp<StandingStateComponent>(grappler, out var standingState) && _standingState.IsDown((grappler, standingState)))
+    private void CleanupGrapplerAfterEndpointRemoved(
+        Entity<GrapplerComponent> grappler,
+        bool componentShuttingDown = false)
+    {
+        var jointId = grappler.Comp.PullJointId;
+        grappler.Comp.PullJointId = null;
+        grappler.Comp.ActiveVictim = null;
+        grappler.Comp.CooldownEnd = _gameTiming.CurTime + grappler.Comp.Cooldown;
+        grappler.Comp.DamageAccumulated = 0f;
+
+        if (TerminatingOrDeleted(grappler))
+            return;
+
+        if (jointId != null)
+            _joint.RemoveJoint(grappler, jointId);
+
+        if (!componentShuttingDown)
+            Dirty(grappler);
+
+        _actionBlocker.UpdateCanMove(grappler);
+
+        if (grappler.Comp.ProneOnGrapple &&
+            TryComp<StandingStateComponent>(grappler, out var standingState) &&
+            _standingState.IsDown((grappler, standingState)))
+        {
             _standingState.Stand(grappler);
+        }
 
         _alerts.ClearAlert(grappler.Owner, grappler.Comp.GrappledAlert);
-        _alerts.ClearAlert(victim.Owner, grappler.Comp.GrappledAlert);
+    }
+
+    private void CleanupVictimAfterEndpointRemoved(
+        EntityUid grappler,
+        Entity<GrappledComponent> victim,
+        bool componentShuttingDown = false,
+        bool cancelDoAfter = true)
+    {
+        var alert = victim.Comp.GrappledAlert;
+        victim.Comp.Grappler = EntityUid.Invalid;
+        victim.Comp.GrappleActivated = false;
+        victim.Comp.MovementSpeedModifier = null;
+
+        if (TerminatingOrDeleted(victim))
+            return;
+
+        EnableHands(grappler, victim);
+
+        _stamina.ToggleStaminaDrain(victim,
+            0,
+            false,
+            false,
+            GetStaminaDrainKey(grappler),
+            grappler);
+
+        if (cancelDoAfter && victim.Comp.DoAfterId is { } doAfterId)
+        {
+            victim.Comp.DoAfterId = null;
+            _doAfter.Cancel(doAfterId);
+        }
+
+        if (!componentShuttingDown)
+            RemComp<GrappledComponent>(victim);
+
+        _actionBlocker.UpdateCanMove(victim);
+        _movement.RefreshMovementSpeedModifiers(victim);
+        _movement.RefreshFrictionModifiers(victim);
+        _alerts.ClearAlert(victim.Owner, alert);
     }
 
     /// <summary>

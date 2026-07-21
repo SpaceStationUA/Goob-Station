@@ -13,6 +13,7 @@
     allowMovement: true
     name: ghost-role-information-secdog-name
     description: ghost-role-information-secdog-description
+    job: RoleK9Officer
   - type: GhostTakeoverAvailable
   - type: CombatMode
   - type: MovementSpeedModifier

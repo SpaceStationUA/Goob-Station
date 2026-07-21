@@ -13,3 +13,18 @@
   - type: ConditionalSpawner
     prototypes:
     - MobSecDogLaika
+
+- type: entity
+  name: спавнер службової тварини
+  id: SpawnMobSecLaikaOrShiva
+  parent: MarkerBase
+  suffix: улюбленець СБ, Лайка або Шива
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSecDogLaika
+    - MobSpiderShiva
