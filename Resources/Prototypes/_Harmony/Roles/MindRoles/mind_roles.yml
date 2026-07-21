@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleConspirator
-  name: "роль змовника"
+  name: Conspirator Role
   components:
   - type: ConspiratorRole
   - type: MindRole
