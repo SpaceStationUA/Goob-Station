@@ -80,7 +80,7 @@ public sealed class CyberdeckSystem : SharedCyberdeckSystem
         }
 
         var radius = percentage * MathF.Sqrt(mass) / 2f;
-        var duration = percentage * 10f;
+        var duration = TimeSpan.FromSeconds(percentage * 10f);
         _emp.EmpPulse(Xform.GetMapCoordinates(ent.Owner), radius, currentCharge, duration);
 
         var message = Loc.GetString(
