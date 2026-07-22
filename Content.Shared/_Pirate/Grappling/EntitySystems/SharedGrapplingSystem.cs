@@ -431,6 +431,9 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
     /// <param name="grappled">Entity beginning the escape.</param>
     private void BeginEscapeAttempt(Entity<GrappledComponent> grappled)
     {
+        if (grappled.Comp.DoAfterId != null)
+            return;
+
         if (!TryComp<GrapplerComponent>(grappled.Comp.Grappler, out var grappler))
             return; // Somehow grappled by a non-grappler?
 
@@ -471,6 +474,11 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
     /// <param name="args">Args for the event.</param>
     private void OnEscapeDoAfter(Entity<GrappledComponent> grappled, ref GrappledEscapeDoAfter args)
     {
+        if (grappled.Comp.DoAfterId != args.DoAfter.Id)
+            return;
+
+        grappled.Comp.DoAfterId = null;
+
         if (args.Cancelled)
             return; // Was manually cancelled in some way
 

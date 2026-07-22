@@ -28,7 +28,7 @@ public sealed partial class GrappledComponent : Component
     /// <summary>
     /// How much time is required to escape.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan EscapeTime = TimeSpan.FromSeconds(15);
 
     /// <summary>
@@ -42,7 +42,7 @@ public sealed partial class GrappledComponent : Component
     /// A list of all hands, if any, that have been disabled as part of the grapple
     /// via a virtual item.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<string> DisabledHands = new();
 
     /// <summary>

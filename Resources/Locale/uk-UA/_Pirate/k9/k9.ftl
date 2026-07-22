@@ -30,14 +30,14 @@ role-description-k9-officer = Допомагай команді безпеки �
 RoleLaika = Лайка
 RoleK9Officer = Офіцер K9
 
-names-secdogs-dataset-0 = Білка
-names-secdogs-dataset-1 = Стрілка
-names-secdogs-dataset-2 = Пчілка
-names-secdogs-dataset-3 = Мушка
-names-secdogs-dataset-4 = Чорнушка
-names-secdogs-dataset-5 = Зірочка
-names-secdogs-dataset-6 = Вітерець
-names-secdogs-dataset-7 = Вуглик
+names-secdogs-dataset-1 = Білка
+names-secdogs-dataset-2 = Стрілка
+names-secdogs-dataset-3 = Пчілка
+names-secdogs-dataset-4 = Мушка
+names-secdogs-dataset-5 = Чорнушка
+names-secdogs-dataset-6 = Зірочка
+names-secdogs-dataset-7 = Вітерець
+names-secdogs-dataset-8 = Вуглик
 
 lathe-category-hardsuits = Скафандри
 research-technology-security-eva = Скафандри служби безпеки

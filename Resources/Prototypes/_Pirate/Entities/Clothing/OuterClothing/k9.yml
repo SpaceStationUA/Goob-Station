@@ -33,6 +33,7 @@
         Radiation: 0.75
         Caustic: 0.75
         Heat: 0.75
+  - type: NonLocationalArmor
   - type: StaminaResistance
     damageCoefficient: 0.3
   - type: ClothingSpeedModifier
@@ -111,12 +112,16 @@
   - type: Clothing
     sprite: _Pirate/Clothing/OuterClothing/Armor/duravest.rsi
   - type: Armor
+    coverage:
+    - Chest
+    - Groin
     modifiers:
       coefficients:
         Blunt: 0.6
         Slash: 0.6
         Piercing: 0.9
         Heat: 0.9
+  - type: NonLocationalArmor
   - type: StaminaResistance
     damageCoefficient: 0.9
   - type: ExplosionResistance
