@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Armor;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;
 using Content.Shared.Inventory;
 
@@ -21,6 +22,9 @@ public sealed partial class SharedNonLocationalArmorSystem : EntitySystem
         Entity<NonLocationalArmorComponent> ent,
         ref InventoryRelayedEvent<DamageModifyEvent> args)
     {
+        if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
+            return;
+
         if (args.Args.TargetPart != null || !TryComp<ArmorComponent>(ent, out var armor))
             return;
 
