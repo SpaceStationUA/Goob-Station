@@ -475,7 +475,8 @@ public abstract partial class SharedStaminaSystem : EntitySystem
                     comp,
                     source: GetEntity(source),
                     visual: false,
-                    ignoreResist: !applyResistances); // todo unfuck this shit. goob.
+                    ignoreResist: !applyResistances, // todo unfuck this shit. goob.
+                    logDamage: false); // Pirate - Continuous drains would otherwise flood admin logs.
 
             // Shouldn't need to consider paused time as we're only iterating non-paused stamina components.
             var nextUpdate = comp.NextUpdate;

@@ -53,8 +53,8 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly INetManager _netManager = default!;
 
-    private static string GetStaminaDrainKey(EntityUid grappler)
-        => $"grapple-{grappler}";
+    private string GetStaminaDrainKey(EntityUid grappler)
+        => $"grapple-{GetNetEntity(grappler)}";
 
     public override void Initialize()
     {
@@ -231,12 +231,13 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
                 true,
                 true,
                 GetStaminaDrainKey(grappler.Owner),
-                grappler.Owner);
+                grappler.Owner,
+                applyResistances: true);
             grappled.MovementSpeedModifier = drain.MovementSpeedModifier;
 
             if (drain.InitialDamage != null)
             {
-                _damageable.TryChangeDamage(victim, drain.InitialDamage);
+                _damageable.TryChangeDamage(victim, drain.InitialDamage, origin: grappler.Owner);
 
                 // Damage can synchronously put the victim into crit and release the grapple.
                 if (grappler.Comp.ActiveVictim != victim ||
