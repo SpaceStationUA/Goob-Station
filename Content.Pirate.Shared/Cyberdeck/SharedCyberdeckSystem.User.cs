@@ -83,6 +83,7 @@ public abstract partial class SharedCyberdeckSystem
             || !user.InProjection)
             return;
 
+        var stationAi = args.User;
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("cyberdeck-station-ai-smite-verb"),
@@ -107,7 +108,7 @@ public abstract partial class SharedCyberdeckSystem
                     remote,
                     PopupType.LargeCaution);
                 _audio.PlayLocal(ent.Comp.CounterHackSound, ent.Owner, ent.Owner);
-                _audio.PlayLocal(ent.Comp.CounterHackSound, args.User, args.User);
+                _audio.PlayLocal(ent.Comp.CounterHackSound, stationAi, stationAi);
             },
             Impact = LogImpact.High,
         });
