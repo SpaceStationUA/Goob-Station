@@ -3,6 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using Content.Pirate.Common.Access; // Pirate - Cyberdeck
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Systems;
@@ -206,6 +207,10 @@ public sealed class AccessReaderSystem : EntitySystem
             return true;
 
         if (!reader.Enabled)
+            return true;
+
+        // Pirate - Cyberdeck backdoor.
+        if (TryComp<IgnoreAccessComponent>(target, out var ignore) && ignore.Ignore.Contains(user))
             return true;
 
         var accessSources = FindPotentialAccessItems(user);

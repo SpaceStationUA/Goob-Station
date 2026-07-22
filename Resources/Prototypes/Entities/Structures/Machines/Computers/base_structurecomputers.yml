@@ -111,6 +111,9 @@
 #    interfaces:
 #      enum.WiresUiKey.Key:
 #        type: WiresBoundUserInterface
+  - type: CyberdeckHackable # Pirate - Cyberdeck
+    cost: 2
+    delay: 6
 
 - type: entity
   parent: BaseComputer

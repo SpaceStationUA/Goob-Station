@@ -27,6 +27,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared._DV.Silicons.Laws; // DOWNSTREAM-TPirates: borg wireless access
+using Content.Pirate.Common.Cyberdeck.Components; // Pirate - Cyberdeck
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -201,9 +202,13 @@ public abstract partial class SharedStationAiSystem
         if (!_uiSystem.HasUi(args.Target, AiUi.Key))
             return;
 
+        var cyberdeckProjection = TryComp(args.User, out CyberdeckUserComponent? cyberdeck)
+            && cyberdeck.InProjection;
+
         if (!args.CanComplexInteract
             || !HasComp<StationAiHeldComponent>(args.User)
             && !HasComp<RemoteInteractionComponent>(args.User) // DOWNSTREAM-TPirates: borg wireless access
+            && !cyberdeckProjection // Pirate - Cyberdeck
             || !args.CanInteract)
         {
             return;
@@ -276,6 +281,8 @@ public abstract class BaseStationAiAction
 {
     [field:NonSerialized]
     public EntityUid User { get; set; }
+
+    public bool Cancelled; // Pirate - Cyberdeck can reject an AI action before it executes
 }
 
 // No idea if there's a better way to do this.
