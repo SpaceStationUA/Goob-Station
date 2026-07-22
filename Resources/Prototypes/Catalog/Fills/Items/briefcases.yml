@@ -31,7 +31,7 @@
         - id: MagazineBoxAntiMateriel
         - id: ClothingNeckTieRed
         - id: ClothingHandsGlovesLatex
-        - id: ClothingUniformJumpsuitLawyerBlack
+        - id: ClothingUniformHitmanSuit # Pirate: use the ported Hitman suit.
         - id: BarberScissors
 
 - type: entity

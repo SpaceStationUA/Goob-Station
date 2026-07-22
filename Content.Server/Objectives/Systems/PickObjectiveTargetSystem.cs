@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._Pirate.Objectives.Components; // Pirate: honor target-objective immunity.
 using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
@@ -53,6 +54,13 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
             return;
         }
 
+        // Pirate: immune entities cannot be assigned as specific targets.
+        if (HasComp<TargetObjectiveImmuneComponent>(targetComp.Target.Value))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
         _target.SetTarget(ent.Owner, targetComp.Target.Value);
     }
 
@@ -71,6 +79,14 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
 
         // couldn't find a target :(
         if (_mind.PickFromPool(ent.Comp.Pool, ent.Comp.Filters, args.MindId) is not {} picked)
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        // Pirate: the filter normally removes these; keep a fallback for custom pools.
+        if (HasComp<TargetObjectiveImmuneComponent>(picked) ||
+            picked.Comp.OwnedEntity is { } owned && HasComp<TargetObjectiveImmuneComponent>(owned))
         {
             args.Cancelled = true;
             return;
