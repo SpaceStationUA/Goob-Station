@@ -70,17 +70,18 @@ public sealed class CyberdeckSystem : SharedCyberdeckSystem
             mass = physics.FixturesMass;
 
         mass = Math.Min(mass, 1000f);
-        var percentage = ent.Comp.CurrentCharge / Math.Max(ent.Comp.MaxCharge, 1f);
+        var currentCharge = _battery.GetCharge(ent.AsNullable());
+        var percentage = currentCharge / Math.Max(ent.Comp.MaxCharge, 1f);
 
         if (percentage < 0.05f)
         {
-            _battery.SetCharge(ent.Owner, 0f, ent.Comp);
+            _battery.SetCharge(ent.AsNullable(), 0f);
             return;
         }
 
         var radius = percentage * MathF.Sqrt(mass) / 2f;
         var duration = percentage * 10f;
-        _emp.EmpPulse(Xform.GetMapCoordinates(ent.Owner), radius, ent.Comp.CurrentCharge, duration);
+        _emp.EmpPulse(Xform.GetMapCoordinates(ent.Owner), radius, currentCharge, duration);
 
         var message = Loc.GetString(
             "cyberdeck-battery-get-hacked",
