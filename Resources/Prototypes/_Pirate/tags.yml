@@ -60,3 +60,12 @@
 
 - type: Tag
   id: CartridgeLightRifleCaseless
+
+- type: Tag
+  id: SecDogWearable # Pirate: glasses and other eye gear for K9 units
+
+- type: Tag
+  id: K9Armor # Pirate: equipment allowed in K9 armor slots
+
+- type: Tag
+  id: K9 # Pirate: marks a K9 unit for specialised clothing

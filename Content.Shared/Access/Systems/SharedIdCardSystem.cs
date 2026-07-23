@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Globalization;
+using Content.Shared._Pirate.Access.Systems; // Pirate: subdermal ID cards
 using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -27,6 +28,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedSubdermalIdCardSystem _subdermalId = default!; // Pirate
 
     // CCVar.
     private int _maxNameLength;
@@ -98,6 +100,10 @@ public abstract class SharedIdCardSystem : EntitySystem
 
         // check inventory slot?
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid) && TryGetIdCard(idUid.Value, out idCard))
+            return true;
+
+        // Pirate: subdermal ID cards are part of the entity's identity.
+        if (_subdermalId.TryGetIdCard(uid, out var idEntity) && TryGetIdCard(idEntity.Value, out idCard))
             return true;
 
         return false;
