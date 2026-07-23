@@ -91,8 +91,6 @@
   - type: Tag # Goobstation - Prevent RCD from making lights in one tile
     tags:
     - WallLight
-  - type: CyberdeckHackable # Pirate - Cyberdeck
-    delay: 0.8
   placement:
     mode: SnapgridCenter
     snap:
@@ -112,6 +110,8 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
+  - type: CyberdeckHackable # Pirate - Cyberdeck
+    delay: 0.8
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot

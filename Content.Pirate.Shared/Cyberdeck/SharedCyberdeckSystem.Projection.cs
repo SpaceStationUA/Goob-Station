@@ -107,7 +107,9 @@ public abstract partial class SharedCyberdeckSystem
 
     private void OnCyberVisionUsed(Entity<CyberdeckUserComponent> ent, ref CyberdeckVisionEvent args)
     {
-        if (args.Handled || !UseCharges(ent.Owner, ent.Comp.CyberVisionAbilityCost))
+        if (args.Handled
+            || HasComp<RelayInputMoverComponent>(ent.Owner)
+            || !UseCharges(ent.Owner, ent.Comp.CyberVisionAbilityCost))
             return;
 
         AttachToProjection(ent);

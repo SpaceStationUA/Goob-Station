@@ -3,9 +3,9 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Client._Lavaland.Audio;
 using Content.Pirate.Common.Cyberdeck.Components;
 using Content.Pirate.Shared.Cyberdeck;
-using Content.Shared._Lavaland.Audio;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
@@ -16,10 +16,11 @@ public sealed class CyberdeckSystem : SharedCyberdeckSystem
 {
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly SharedBossMusicSystem _bossMusic = default!;
+    [Dependency] private readonly BossMusicSystem _bossMusic = default!;
 
     private CyberdeckOverlay _overlay = default!;
     private EntityUid? _activeEntity;
+    private string? _diveMusicId;
 
     public override void Initialize()
     {
@@ -67,8 +68,10 @@ public sealed class CyberdeckSystem : SharedCyberdeckSystem
         _activeEntity = user;
         _overlayManager.AddOverlay(_overlay);
 
-        if (TryComp(user, out CyberdeckUserComponent? cyberdeck))
-            _bossMusic.StartBossMusic(cyberdeck.DiveMusicId);
+        _diveMusicId = null;
+        if (TryComp(user, out CyberdeckUserComponent? cyberdeck)
+            && _bossMusic.TryStartBossMusic(cyberdeck.DiveMusicId))
+            _diveMusicId = cyberdeck.DiveMusicId;
     }
 
     private void DisableEffects()
@@ -77,7 +80,10 @@ public sealed class CyberdeckSystem : SharedCyberdeckSystem
             return;
 
         _overlayManager.RemoveOverlay(_overlay);
-        _bossMusic.EndAllMusic();
+        if (_diveMusicId is { } musicId)
+            _bossMusic.TryEndBossMusic(musicId);
+
+        _diveMusicId = null;
         _activeEntity = null;
     }
 }

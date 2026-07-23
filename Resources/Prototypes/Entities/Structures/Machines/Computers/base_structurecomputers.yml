@@ -111,15 +111,15 @@
 #    interfaces:
 #      enum.WiresUiKey.Key:
 #        type: WiresBoundUserInterface
-  - type: CyberdeckHackable # Pirate - Cyberdeck
-    cost: 2
-    delay: 6
 
 - type: entity
   parent: BaseComputer
   id: BaseComputerAiAccess
   components:
   - type: StationAiWhitelist
+  - type: CyberdeckHackable # Pirate - Cyberdeck
+    cost: 2
+    delay: 6
   - type: Wires
     boardName: wires-board-name-computer
     layoutId: ComputerAi

@@ -86,3 +86,4 @@
   - type: LagCompensation
   - type: StationAiWhitelist
   - type: NoFTL
+  - type: CEZLevelPhysicsExempt # Pirate: multiz

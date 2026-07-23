@@ -83,7 +83,6 @@ public abstract partial class SharedCyberdeckSystem
             || !user.InProjection)
             return;
 
-        var stationAi = args.User;
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("cyberdeck-station-ai-smite-verb"),
@@ -107,8 +106,7 @@ public abstract partial class SharedCyberdeckSystem
                     remote,
                     remote,
                     PopupType.LargeCaution);
-                _audio.PlayLocal(ent.Comp.CounterHackSound, ent.Owner, ent.Owner);
-                _audio.PlayLocal(ent.Comp.CounterHackSound, stationAi, stationAi);
+                _audio.PlayGlobal(ent.Comp.CounterHackSound, remote);
             },
             Impact = LogImpact.High,
         });
@@ -159,7 +157,7 @@ public abstract partial class SharedCyberdeckSystem
         CyberdeckUserComponent component,
         PullAttemptEvent args)
     {
-        if (component.InProjection)
+        if (component.InProjection && args.PullerUid == uid)
             args.Cancelled = true;
     }
 }
