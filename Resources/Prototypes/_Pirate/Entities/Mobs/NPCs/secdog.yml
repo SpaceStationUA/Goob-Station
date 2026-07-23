@@ -19,6 +19,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.5
     baseSprintSpeed: 5.0
+  - type: Sprinter
+  - type: ScentTracker
   - type: NpcFactionMember
     factions:
     - PetsNT
@@ -146,10 +148,14 @@
       !type:GrapplerActivationStaminaDrain
         staminaDrainRate: 5
         movementSpeedModifier: 0.2
+        initialKnockdownTime: 1.5
         initialDamage:
           types:
             Slash: 5
             Piercing: 10
+          woundSeverityMultipliers:
+            Slash: 2
+            Piercing: 2
 
 - type: entity
   parent: MobSecDogBase

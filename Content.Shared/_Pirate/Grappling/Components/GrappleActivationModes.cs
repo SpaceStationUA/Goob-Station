@@ -38,4 +38,10 @@ public sealed partial class GrapplerActivationStaminaDrain : IGrapplerActivation
     /// </summary>
     [DataField]
     public DamageSpecifier? InitialDamage = null;
+
+    /// <summary>
+    /// Optionally, how long to knock down the victim when this mode is activated.
+    /// </summary>
+    [DataField]
+    public TimeSpan? InitialKnockdownTime = null;
 }

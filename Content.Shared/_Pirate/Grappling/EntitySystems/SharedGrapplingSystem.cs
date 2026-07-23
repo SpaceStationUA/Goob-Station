@@ -50,6 +50,7 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtual = default!;
     [Dependency] private readonly SharedStaminaSystem _stamina = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly INetManager _netManager = default!;
 
@@ -247,6 +248,9 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
                     return;
                 }
             }
+
+            if (drain.InitialKnockdownTime is { } knockdownTime && knockdownTime > TimeSpan.Zero)
+                _stun.TryKnockdown(victim, knockdownTime, force: true);
         }
         else
         {
