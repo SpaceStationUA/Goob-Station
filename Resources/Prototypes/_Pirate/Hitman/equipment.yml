@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformHitmanSuit
-  name: entity-clothing-uniform-hitman-name
-  description: entity-clothing-uniform-hitman-description
+  name: contract killer suit
+  description: The perfect outfit for blending in at any event, office, or space station.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/hitmansuit.rsi
@@ -23,7 +23,6 @@
 - type: entity
   parent: AgentIDCard
   id: HitmanIDCard
-  name: entity-hitman-id-card-name
   components:
   - type: Access
     tags:
@@ -33,7 +32,6 @@
 - type: entity
   parent: PassengerPDA
   id: HitmanPDA
-  name: entity-hitman-pda-name
   components:
   - type: Pda
     id: HitmanIDCard
@@ -129,8 +127,8 @@
         - id: PassengerPDA
 
 - type: entity
-  name: entity-weapon-mf-katana-name
-  description: entity-weapon-mf-katana-description
+  name: medium-frequency blade
+  description: An incredibly sharp katana with a heated blade, able to cut through both flesh and steel.
   parent: Katana
   id: WeaponMFKatana
   components:
@@ -162,8 +160,8 @@
 - type: entity
   parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponLeverActionSKL93
-  name: entity-weapon-skl93-name
-  description: entity-weapon-skl93-description
+  name: SKL93
+  description: A modernized variant of the L93, manufactured in limited amounts by Waffle Corp, lightweight materials are used for the furniture. It has an extended barrel and magazine, along side a WZR-4X Scope. Uses .45 Magnum rounds.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Rifles/skl93.rsi
@@ -243,8 +241,8 @@
 - type: entity
   parent: ClothingNeckCWPSec
   id: ClothingNeckCWPGorlex
-  name: entity-clothing-neck-cwp-gorlex-name
-  description: entity-clothing-neck-cwp-gorlex-description
+  name: gorlex cold weather poncho
+  description: A stylish red and black poncho made of heavy, cut-proof weave. Protects the wearer from the harshest weather conditions (and more!)
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Neck/Misc/cwpgorlex.rsi
@@ -264,8 +262,8 @@
 - type: entity
   parent: BaseMagazinePistolCaselessRifle
   id: MagazinePistolCaselessRiflePoison
-  name: entity-magazine-caseless-poison-name
-  description: entity-magazine-caseless-poison-description
+  name: pistol magazine (.25 caseless toxin)
+  description: 10-round magazine for the Cobra pistol. Intended to hold poisonous ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePoison
@@ -280,8 +278,8 @@
 - type: entity
   parent: BaseMagazinePistolCaselessRifle
   id: MagazinePistolCaselessRifleTranquilizer
-  name: entity-magazine-caseless-tranquilizer-name
-  description: entity-magazine-caseless-tranquilizer-description
+  name: pistol magazine (.25 caseless tranq)
+  description: 10-round magazine for the Cobra pistol. Intended to hold tranquilizer ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifleTranquilizer
@@ -296,8 +294,8 @@
 - type: entity
   parent: BaseCartridgeCaselessRifle
   id: CartridgeCaselessRifleTranquilizer
-  name: entity-cartridge-caseless-tranquilizer-name
-  description: entity-cartridge-caseless-tranquilizer-description
+  name: cartridge (.25 caseless tranq)
+  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. A reservoir injects a mix of sedative and mute toxin into the target for true silent takedowns.
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifleTranquilizer
@@ -323,8 +321,8 @@
 - type: entity
   parent: BaseCartridgeCaselessRifle
   id: CartridgeCaselessRiflePoison
-  name: entity-cartridge-caseless-poison-name
-  description: entity-cartridge-caseless-poison-description
+  name: cartridge (.25 caseless toxin)
+  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. A toxic payload is installed to kill the target over time.
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRiflePoison
@@ -347,7 +345,7 @@
 
 - type: entity
   id: BulletCaselessRifleTranquilizer
-  name: entity-bullet-caseless-tranquilizer-name
+  name: bullet (.25 caseless tranq)
   parent: BaseBullet
   categories: [HideSpawnMenu]
   components:
@@ -372,7 +370,7 @@
 
 - type: entity
   id: BulletCaselessRiflePoison
-  name: entity-bullet-caseless-poison-name
+  name: bullet (.25 caseless toxin)
   parent: BaseBullet
   categories: [HideSpawnMenu]
   components:
@@ -398,8 +396,8 @@
 - type: entity
   parent: ClothingMaskPullableBase
   id: ClothingMaskOniBlue
-  name: entity-clothing-mask-oni-blue-name
-  description: entity-clothing-mask-oni-blue-description
+  name: blue oni mask
+  description: A mask depicting a ferocious creature from Japanese myth.
   components:
   - type: IngestionBlocker
   - type: IdentityBlocker
@@ -411,8 +409,8 @@
 - type: entity
   parent: Emag
   id: Doorjack
-  name: entity-doorjack-name
-  description: entity-doorjack-description
+  name: airlock access override
+  description: A specialized cryptographic sequencer with a distinctive battery tray, specifically designed to override station airlock access codes.
   components:
   - type: Emag
     emagType: Access
@@ -426,8 +424,8 @@
 - type: entity
   parent: RemoteSignaller
   id: DeadMansSignaler
-  name: entity-dead-mans-signaler-name
-  description: entity-dead-mans-signaler-description
+  name: dead man's signaler
+  description: A device that if armed will send signals to objects within 50 meters when dropped or put away.
   components:
   - type: DeadMansSignaller
   - type: ItemToggle
@@ -449,8 +447,8 @@
 
 - type: entity
   id: SpyCrewMonitor
-  name: entity-spy-crew-monitor-name
-  description: entity-spy-crew-monitor-description
+  name: spy monitor
+  description: A spy device capable of connecting to crew monitoring servers.
   parent: HandheldCrewMonitor
   components:
   - type: Sprite
@@ -522,6 +520,6 @@
 - type: entity
   parent: HandheldStationMapStatic
   id: HandheldStationMapRecordsTablet
-  name: entity-hitman-records-tablet-name
-  description: entity-hitman-records-tablet-description
+  name: station map
+  description: Displays a readout of the current station.
   suffix: Hitman

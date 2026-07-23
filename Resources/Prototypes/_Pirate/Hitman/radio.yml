@@ -9,8 +9,8 @@
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeyTraffic
-  name: entity-encryption-key-traffic-name
-  description: entity-encryption-key-traffic-description
+  name: traffic control encryption key
+  description: An encryption key for the space traffic control channel.
   components:
   - type: EncryptionKey
     channels:

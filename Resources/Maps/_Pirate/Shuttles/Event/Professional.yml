@@ -1879,7 +1879,7 @@ entities:
           - Toggle
     - type: Fixtures
       fixtures: {}
-- proto: ChairComfy # Pirate: local equivalent of DeltaV's N14 armchair.
+- proto: ComfyChair # Pirate: local equivalent of DeltaV's N14 armchair.
   entities:
   - uid: 98
     components:

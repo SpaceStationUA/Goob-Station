@@ -1,7 +1,7 @@
 - type: entity
   id: HitmanCase
-  name: entity-hitman-case-name
-  description: entity-hitman-case-description
+  name: hitman case
+  description: A case containing the tools of the trade of a hitman.
   parent: ToolboxThief
   components:
   - type: Sprite
@@ -20,8 +20,8 @@
 
 - type: entity
   id: HitmanBusinessCard
-  name: entity-hitman-business-card-name
-  description: entity-hitman-business-card-description
+  name: hitman business card
+  description: A black card with a crosshair. There's something on the back.
   parent: [Paper, BaseMajorContraband]
   components:
   - type: Sprite
@@ -48,8 +48,8 @@
 - type: entity
   parent: BaseImplantAction
   id: ActionCreateHitmanCard
-  name: action-create-hitman-card-name
-  description: action-create-hitman-card-description
+  name: Create hitman card
+  description: creates a calling card you can write on
   components:
   - type: Action
     checkCanInteract: false
@@ -62,7 +62,7 @@
 
 - type: entity
   id: HitmanCardImplanter
-  name: entity-hitman-card-implanter-name
+  name: hitman card implanter
   parent: BaseImplantOnlyImplanterSyndi
   components:
   - type: Implanter
@@ -71,8 +71,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: HitmanCardImplant
-  name: entity-hitman-card-implant-name
-  description: entity-hitman-card-implant-description
+  name: hitman card implant
+  description: This implant lets the user make a calling card at will
   categories: [HideSpawnMenu]
   components:
   - type: SubdermalImplant
