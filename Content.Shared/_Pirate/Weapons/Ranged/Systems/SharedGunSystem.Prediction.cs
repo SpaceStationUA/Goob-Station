@@ -16,9 +16,34 @@ public abstract partial class SharedGunSystem
 {
     protected System.Random PredictedRandom(EntityUid uid)
     {
+        return new System.Random(GetPredictedRandomSeed(uid));
+    }
+
+    private int GetPredictedRandomSeed(EntityUid uid)
+    {
         var netEntity = GetNetEntity(uid);
-        var seed = HashCode.Combine((int) Timing.CurTick.Value, netEntity.Id, 0x50495241);
-        return new System.Random(seed);
+        unchecked
+        {
+            // System.HashCode is salted per process, so it cannot be used for client/server prediction.
+            // Mix the shared tick and network entity ID explicitly to produce the same seed on both sides.
+            var hash = 0x50495241u;
+            hash = MixPredictedRandomSeed(hash, (uint) Timing.CurTick.Value);
+            hash = MixPredictedRandomSeed(hash, (uint) netEntity.Id);
+            hash ^= hash >> 16;
+            hash *= 0x7FEB352Du;
+            hash ^= hash >> 15;
+            hash *= 0x846CA68Bu;
+            hash ^= hash >> 16;
+            return (int) hash;
+        }
+    }
+
+    private static uint MixPredictedRandomSeed(uint hash, uint value)
+    {
+        unchecked
+        {
+            return hash ^ (value + 0x9E3779B9u + (hash << 6) + (hash >> 2));
+        }
     }
 
     protected Angle GetPredictedRecoilAngle(TimeSpan curTime, Entity<GunComponent> ent, Angle direction, EntityUid? user = null)
@@ -35,7 +60,8 @@ public abstract partial class SharedGunSystem
         component.CurrentAngle = new Angle(newTheta);
         component.LastFire = component.NextFire;
 
-        var random = PredictedRandom(uid).NextFloat(-0.5f, 0.5f);
+        var seed = GetPredictedRandomSeed(uid);
+        var random = new System.Random(seed).NextFloat(-0.5f, 0.5f);
 
         var angleEv = new GetRecoilModifiersEvent
         {
@@ -51,6 +77,7 @@ public abstract partial class SharedGunSystem
 
         var spread = component.CurrentAngle.Theta * random;
         var angle = new Angle(direction.Theta + spread);
+
         DebugTools.Assert(Math.Abs(spread) <= maxTheta);
         return angle;
     }
@@ -70,8 +97,26 @@ public abstract partial class SharedGunSystem
 
     protected void ShootOrThrowPredicted(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, GunComponent gun, EntityUid gunUid, EntityUid? user, Vector2? targetCoordinates = null)
     {
-        if (gun.Target is { } target && !TerminatingOrDeleted(target))
-            SetTarget(uid, target, out _);
+        EntityUid? target = gun.Target is { } requestedTarget && !TerminatingOrDeleted(requestedTarget)
+            ? requestedTarget
+            : null;
+
+        if (HasComp<Content.Shared._Goobstation.Weapons.SmartGun.SmartGunComponent>(gunUid))
+        {
+            target = GetPredictedSmartTarget(
+                gunUid,
+                uid,
+                user,
+                targetCoordinates,
+                out _,
+                out _);
+
+            if (target is { } smartTarget)
+                gun.Target = smartTarget;
+        }
+
+        if (target is { } validTarget)
+            SetTarget(uid, validTarget, out _);
 
         if (!HasComp<ProjectileComponent>(uid))
         {

@@ -1,22 +1,34 @@
 using System.Numerics;
 using Content.Shared.Projectiles;
 using Content.Shared._Pirate.Projectiles;
+using Content.Shared._Goobstation.Wizard.Projectiles;
+using Content.Shared._Goobstation.Wizard.TimeStop;
+using Content.Shared.Interaction;
 using Robust.Client.GameObjects;
 using Robust.Shared.Collections;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
+using PhysicsTransform = Robust.Shared.Physics.Transform;
 
 namespace Content.Client._Pirate.Projectiles;
 
 public sealed class PredictedProjectileSystem : EntitySystem
 {
     private static readonly TimeSpan PendingPairTtl = TimeSpan.FromSeconds(0.5);
+    private static readonly TimeSpan PendingHideTtl = TimeSpan.FromSeconds(2);
 
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly PredictedProjectileHitSystem _predictedHits = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly RayCastSystem _rayCast = default!;
+    [Dependency] private readonly RotateToFaceSystem _rotate = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -39,7 +51,7 @@ public sealed class PredictedProjectileSystem : EntitySystem
 
     private readonly Dictionary<EntityUid, PromotedData> _promoted = new();
     private readonly Queue<PendingPromoted> _pendingPromoted = new();
-    private readonly HashSet<NetEntity> _pendingHide = new();
+    private readonly Dictionary<NetEntity, TimeSpan> _pendingHide = new();
     private readonly Dictionary<NetEntity, PendingAuthoritativeLink> _pendingAuthoritativeLinks = new();
     private readonly Dictionary<EntityUid, EntityUid> _authoritativeToPromoted = new();
     private readonly Dictionary<EntityUid, EntityUid> _promotedToAuthoritative = new();
@@ -61,6 +73,7 @@ public sealed class PredictedProjectileSystem : EntitySystem
 
         PrunePendingPromoted();
         PrunePendingAuthoritativeLinks();
+        PrunePendingHides();
 
         // Advance promoted entities only during the main tick, not during re-simulation.
         if (_timing.IsFirstTimePredicted)
@@ -74,8 +87,8 @@ public sealed class PredictedProjectileSystem : EntitySystem
                     continue;
                 }
 
-                data.Position += data.Velocity * frameTime;
-                _transform.SetLocalPosition(uid, data.Position);
+                UpdatePromotedHoming(uid, data, frameTime);
+                SweepAndMovePromoted(uid, data, frameTime);
                 _transform.SetWorldRotationNoLerp((uid, Transform(uid)), data.Rotation);
             }
 
@@ -106,7 +119,7 @@ public sealed class PredictedProjectileSystem : EntitySystem
             return;
 
         var resolved = new ValueList<NetEntity>();
-        foreach (var netEnt in _pendingHide)
+        foreach (var (netEnt, _) in _pendingHide)
         {
             var uid = GetEntity(netEnt);
             if (!uid.IsValid())
@@ -120,6 +133,149 @@ public sealed class PredictedProjectileSystem : EntitySystem
 
         foreach (var r in resolved)
             _pendingHide.Remove(r);
+    }
+
+    private void UpdatePromotedHoming(EntityUid uid, PromotedData data, float frameTime)
+    {
+        if (!TryComp<HomingProjectileComponent>(uid, out var homing))
+            return;
+
+        homing.HomingAccumulator -= frameTime;
+        if (homing.HomingAccumulator >= 0f)
+            return;
+
+        homing.HomingAccumulator = homing.HomingTime;
+        if (HasComp<FrozenComponent>(uid) ||
+            homing.Target is not { } target ||
+            !TryComp<TransformComponent>(target, out var targetXform))
+        {
+            return;
+        }
+
+        var xform = Transform(uid);
+        var projectileCoordinates = _transform.GetMapCoordinates(xform);
+        var targetCoordinates = _transform.GetMapCoordinates(targetXform);
+        if (projectileCoordinates.MapId != targetCoordinates.MapId)
+        {
+            return;
+        }
+
+        var offset = targetCoordinates.Position - projectileCoordinates.Position;
+        if (offset.LengthSquared() <= 0.0001f)
+            return;
+
+        var goalAngle = offset.ToWorldAngle();
+        var homingSpeed = homing.HomingSpeed is { } degrees
+            ? MathHelper.DegreesToRadians(degrees)
+            : float.MaxValue;
+        _rotate.TryRotateTo(uid, goalAngle, frameTime, homing.Tolerance, homingSpeed, xform);
+
+        data.Rotation = _transform.GetWorldRotation(xform);
+        var projectileSpeed = data.Velocity.Length();
+        var worldVelocity = data.Rotation.ToWorldVec() * projectileSpeed;
+        var parentRotation = _transform.GetWorldRotation(xform.ParentUid);
+        data.Velocity = (-parentRotation).RotateVec(worldVelocity);
+        if (TryComp<PhysicsComponent>(uid, out var body))
+            _physics.SetLinearVelocity(uid, worldVelocity, body: body);
+    }
+
+    private void SweepAndMovePromoted(EntityUid uid, PromotedData data, float frameTime)
+    {
+        var xform = Transform(uid);
+        var nextPosition = data.Position + data.Velocity * frameTime;
+
+        if (!TryComp<ProjectileComponent>(uid, out var projectile) ||
+            !TryComp<PhysicsComponent>(uid, out var body) ||
+            !TryComp<FixturesComponent>(uid, out var fixtures) ||
+            !fixtures.Fixtures.TryGetValue(SharedProjectileSystem.ProjectileFixture, out var projectileFixture))
+        {
+            data.Position = nextPosition;
+            _transform.SetLocalPosition(uid, data.Position);
+            return;
+        }
+
+        var startMap = _transform.GetMapCoordinates(uid);
+        var endMap = _transform.ToMapCoordinates(new EntityCoordinates(xform.ParentUid, nextPosition));
+        if (startMap.MapId != endMap.MapId)
+        {
+            data.Position = nextPosition;
+            _transform.SetLocalPosition(uid, data.Position);
+            return;
+        }
+
+        var translation = endMap.Position - startMap.Position;
+        if (translation.IsLengthZero())
+            return;
+
+        EntityUid? hitEntity = null;
+        Fixture? hitFixture = null;
+        var hitFraction = float.PositiveInfinity;
+
+        float SweepCallback(
+            FixtureProxy proxy,
+            Vector2 point,
+            Vector2 normal,
+            float fraction,
+            ref RayResult result)
+        {
+            if (proxy.Entity == uid)
+                return -1f;
+
+            var prevent = new PreventCollideEvent(
+                uid,
+                proxy.Entity,
+                body,
+                proxy.Body,
+                projectileFixture,
+                proxy.Fixture);
+            RaiseLocalEvent(uid, ref prevent);
+            if (prevent.Cancelled)
+                return -1f;
+
+            prevent = new PreventCollideEvent(
+                proxy.Entity,
+                uid,
+                proxy.Body,
+                body,
+                proxy.Fixture,
+                projectileFixture);
+            RaiseLocalEvent(proxy.Entity, ref prevent);
+            if (prevent.Cancelled)
+                return -1f;
+
+            if (fraction < hitFraction)
+            {
+                hitEntity = proxy.Entity;
+                hitFixture = proxy.Fixture;
+                hitFraction = fraction;
+            }
+
+            return RayCastSystem.RayCastClosestCallback(proxy, point, normal, fraction, ref result);
+        }
+
+        _rayCast.CastShape(
+            startMap.MapId,
+            projectileFixture.Shape,
+            new PhysicsTransform(startMap.Position, data.Rotation),
+            translation,
+            new QueryFilter
+            {
+                LayerBits = projectileFixture.CollisionLayer,
+                MaskBits = projectileFixture.CollisionMask,
+                IsIgnored = entity => entity == uid,
+            },
+            SweepCallback);
+
+        if (hitEntity is not { } target || hitFixture == null)
+        {
+            data.Position = nextPosition;
+            _transform.SetLocalPosition(uid, data.Position);
+            return;
+        }
+
+        data.Position += data.Velocity * frameTime * hitFraction;
+        _transform.SetLocalPosition(uid, data.Position);
+        _predictedHits.DoHit((uid, projectile, body), target, hitFixture);
     }
 
     private void OnUpdateIsPredicted(Entity<ProjectileComponent> ent, ref Robust.Client.Physics.UpdateIsPredictedEvent args)
@@ -176,7 +332,7 @@ public sealed class PredictedProjectileSystem : EntitySystem
         }
         else
         {
-            _pendingHide.Add(args.Projectile);
+            _pendingHide[args.Projectile] = _timing.CurTime + PendingHideTtl;
             if (promoted is { } promotedUid)
                 _pendingAuthoritativeLinks[args.Projectile] = new PendingAuthoritativeLink(promotedUid, GetPendingPairExpiry());
         }
@@ -284,6 +440,22 @@ public sealed class PredictedProjectileSystem : EntitySystem
             _pendingAuthoritativeLinks.Remove(netEnt);
     }
 
+    private void PrunePendingHides()
+    {
+        if (_pendingHide.Count == 0)
+            return;
+
+        var stale = new ValueList<NetEntity>();
+        foreach (var (netEnt, expiresAt) in _pendingHide)
+        {
+            if (_timing.CurTime >= expiresAt)
+                stale.Add(netEnt);
+        }
+
+        foreach (var netEnt in stale)
+            _pendingHide.Remove(netEnt);
+    }
+
     private bool IsStalePendingPromoted(EntityUid promoted, TimeSpan expiresAt)
     {
         return _timing.CurTime >= expiresAt ||
@@ -306,4 +478,5 @@ public sealed class PredictedProjectileSystem : EntitySystem
         if (TryComp<PhysicsComponent>(uid, out var physics))
             _physics.SetCanCollide(uid, false, body: physics);
     }
+
 }

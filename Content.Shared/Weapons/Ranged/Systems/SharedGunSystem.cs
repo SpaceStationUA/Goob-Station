@@ -460,6 +460,8 @@ public abstract partial class SharedGunSystem : EntitySystem
             return false;
         }
 
+        var clearTargetAfterShot = false; // Pirate: gunplay
+
         // Handle burstfire
         if (gun.Comp.SelectedMode == SelectiveFire.Burst)
         {
@@ -471,8 +473,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             if (gun.Comp.BurstShotsCount >= gun.Comp.ShotsPerBurstModified)
             {
                 gun.Comp.NextFire += TimeSpan.FromSeconds(gun.Comp.BurstCooldownModified); // Goobstation edit
-                if (!gun.Comp.LockOnTargetBurst || gun.Comp.ShootCoordinates == null) // Goobstation
-                    gun.Comp.Target = null;
+                clearTargetAfterShot = !gun.Comp.LockOnTargetBurst || gun.Comp.ShootCoordinates == null; // Pirate: gunplay
                 gun.Comp.NextFire += TimeSpan.FromSeconds(gun.Comp.BurstCooldown);
                 gun.Comp.BurstActivated = false;
                 gun.Comp.BurstShotsCount = 0;
@@ -481,6 +482,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
         Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, out var userImpulse, user, throwItems: attemptEv.ThrowItems);
+        if (clearTargetAfterShot) // Pirate: gunplay
+            gun.Comp.Target = null; // Pirate: gunplay
         _zLevelShooting.EndShotOffset(); // Pirate: multiz
         var shotEv = new GunShotEvent(user, ev.Ammo);
         RaiseLocalEvent(gun, ref shotEv);
