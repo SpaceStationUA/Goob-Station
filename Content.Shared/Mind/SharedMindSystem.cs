@@ -27,6 +27,9 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Physics; // Pirate
+using Robust.Shared.Physics.Components; // Pirate
+using Robust.Shared.Physics.Systems; // Pirate
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -45,6 +48,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!; // Pirate
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -715,6 +719,11 @@ public abstract partial class SharedMindSystem : EntitySystem
         EnsureComp<MindContainerComponent>(uid);
         if (allowMovement)
         {
+            // Pirate: InputMover requires controller physics, including for previously inanimate entities.
+            EnsureComp<PhysicsComponent>(uid, out var physics);
+            _physics.SetBodyType(uid, BodyType.KinematicController);
+            Dirty(uid, physics);
+
             EnsureComp<InputMoverComponent>(uid);
             EnsureComp<MobMoverComponent>(uid);
             EnsureComp<MovementSpeedModifierComponent>(uid);

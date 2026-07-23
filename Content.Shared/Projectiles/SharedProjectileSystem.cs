@@ -98,7 +98,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void OnEmbedProjectileHit(Entity<EmbeddableProjectileComponent> embeddable, ref ProjectileHitEvent args)
     {
-        EmbedAttach(embeddable, args.Target, args.Shooter, embeddable.Comp);
+        if (!EmbedAttach(embeddable, args.Target, args.Shooter, embeddable.Comp))
+            return;
 
         // Raise a specific event for projectiles.
         if (!TryComp<ProjectileComponent>(embeddable, out var projectile))
@@ -108,8 +109,12 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         RaiseLocalEvent(embeddable, ref ev);
     }
 
-    private void EmbedAttach(EntityUid uid, EntityUid target, EntityUid? user, EmbeddableProjectileComponent component)
+    private bool EmbedAttach(EntityUid uid, EntityUid target, EntityUid? user, EmbeddableProjectileComponent component)
     {
+        // Pirate: one physics step can report multiple contacts before the throw is stopped.
+        if (component.EmbeddedIntoUid != null)
+            return false;
+
         TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetLinearVelocity(uid, Vector2.Zero, body: physics);
         _physics.SetBodyType(uid, BodyType.Static, body: physics);
@@ -136,6 +141,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         DebugTools.AssertEqual(embeddedContainer.EmbeddedObjects.Contains(uid), false);
 
         embeddedContainer.EmbeddedObjects.Add(uid);
+        return true;
     }
 
     public void EmbedDetach(EntityUid uid, EmbeddableProjectileComponent? component, EntityUid? user = null)
