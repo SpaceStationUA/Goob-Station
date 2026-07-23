@@ -57,6 +57,7 @@ public sealed partial class NuclearReactorWindow : FancyWindow
     public event Action<Vector2i>? OnSwapPart;
     public event Action? OnEjectItem;
     public event Action<float>? OnAdjustControlRods;
+    public event Action? OnEmergencyShutdown;
 
     private readonly float _repeatDelay = 0.5f;
     private readonly Dictionary<Button, float> _repeatQueue = [];
@@ -96,6 +97,8 @@ public sealed partial class NuclearReactorWindow : FancyWindow
         ControlRodsRemoveLarge.OnButtonDown += _ => _repeatQueue[ControlRodsRemoveLarge] = _repeatDelay;
         ControlRodsRemoveLarge.OnButtonUp += _ => _repeatQueue.Remove(ControlRodsRemoveLarge);
 
+        EmergencyShutdown.OnPressed += _ => OnEmergencyShutdown?.Invoke();
+
         TargetTemperature.OnPressed += _ => ChangeTemp();
     }
 
@@ -133,6 +136,7 @@ public sealed partial class NuclearReactorWindow : FancyWindow
         ControlRodsValue.Text = Math.Round(msg.AverageControlRodInsertion * 50, 1).ToString() + "%";
         ControlRodsActual.Value = msg.AverageControlRodInsertion;
         ControlRodsSet.Value = msg.ControlRodInsertion;
+        EmergencyShutdown.Disabled = msg.ControlRodInsertion >= 2f;
 
         _hasItem = msg.PartSlotItemName != null;
         ItemName.Text = msg.PartSlotItemName ?? Loc.GetString("comp-nuclear-reactor-ui-empty");

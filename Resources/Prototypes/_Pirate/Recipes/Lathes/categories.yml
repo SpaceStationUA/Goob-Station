@@ -38,6 +38,10 @@
   id: ErrorDocument
   name: lathe-category-error
 
+- type: latheCategory
+  id: Hardsuits
+  name: lathe-category-hardsuits
+
 # Нове
 - type: latheCategory
   id: ExternalBureaucracy

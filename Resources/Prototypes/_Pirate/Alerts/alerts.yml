@@ -6,3 +6,10 @@
     state: offer_item
   name: alerts-offer-name
   description: alerts-offer-desc
+
+- type: alert
+  id: Grappled
+  clickEvent: !type:EscapeGrappleAlertEvent
+  icons: [ /Textures/_Pirate/Interface/Alerts/Grappled/grappled.png ]
+  name: alerts-grappled-name
+  description: alerts-grappled-desc
