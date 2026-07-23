@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 07/23/2026 21:11:36
-  entityCount: 8583
+  time: 07/23/2026 21:39:41
+  entityCount: 8589
 maps:
 - 1
 grids:
@@ -7593,25 +7593,26 @@ entities:
       parent: 2
     - type: DeviceList
       devices:
-      - 4895
-      - 4824
-      - 203
-      - 4823
-      - 4894
-      - 4896
+      - 5646
       - 4822
+      - 4896
+      - 4894
+      - 4823
       - 3134
-      - 3135
       - 3131
-      - 3128
-      - 4891
-      - 4829
+      - 3135
       - 3133
       - 3132
-      - 3205
-      - 3203
-      - 3204
+      - 3128
+      - 4178
+      - 4332
+      - 199
+      - 4890
+      - 4818
       - 3127
+      - 3204
+      - 3203
+      - 3205
     - type: Fixtures
       fixtures: {}
   - uid: 308
@@ -7620,6 +7621,27 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -7.5,-3.5
       parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 5647
+    components:
+    - type: Transform
+      pos: 27.5,-13.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 4825
+      - 4827
+      - 4828
+      - 4826
+      - 5545
+      - 5654
+      - 3136
+      - 3195
+      - 3205
+      - 5656
+      - 5655
+      - 146
     - type: Fixtures
       fixtures: {}
 - proto: AirCanister
@@ -7794,7 +7816,7 @@ entities:
       pos: -14.5,1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -174031.16
+      secondsUntilStateChange: -175016.89
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7806,7 +7828,7 @@ entities:
       pos: -13.5,6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -131189.9
+      secondsUntilStateChange: -132175.64
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8036,7 +8058,7 @@ entities:
       pos: 20.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -61724.754
+      secondsUntilStateChange: -62710.492
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8111,6 +8133,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 31.5,-19.5
       parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
+      deviceLists:
+      - 5647
 - proto: AirlockJanitorLocked
   entities:
   - uid: 147
@@ -8503,6 +8530,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 73
+      - 74
   - uid: 202
     components:
     - type: Transform
@@ -8513,9 +8541,6 @@ entities:
     - type: Transform
       pos: 32.5,-7.5
       parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 74
   - uid: 206
     components:
     - type: Transform
@@ -8631,6 +8656,33 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 73
+  - uid: 5545
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 27.5,-15.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 5647
+  - uid: 5646
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 25.5,-8.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 74
+  - uid: 5654
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 21.5,-15.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 5647
 - proto: AltarSpawner
   entities:
   - uid: 223
@@ -23203,7 +23255,7 @@ entities:
       pos: 17.5,-18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -7270.3335
+      secondsUntilStateChange: -8256.072
       state: Opening
 - proto: CurtainsOrangeOpen
   entities:
@@ -23317,7 +23369,7 @@ entities:
       pos: 23.5,-18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -7267.7
+      secondsUntilStateChange: -8253.438
       state: Opening
 - proto: CurtainsRedOpen
   entities:
@@ -26847,6 +26899,9 @@ entities:
     - type: Transform
       pos: 31.5,-19.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 5647
   - uid: 3140
     components:
     - type: Transform
@@ -26876,6 +26931,22 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 70
+  - uid: 5655
+    components:
+    - type: Transform
+      pos: 18.5,-10.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 5647
+  - uid: 5656
+    components:
+    - type: Transform
+      pos: 17.5,-10.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 5647
 - proto: FirelockEdge
   entities:
   - uid: 3144
@@ -27219,6 +27290,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 15.5,-14.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 5647
   - uid: 3196
     components:
     - type: Transform
@@ -27290,6 +27364,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 74
+      - 5647
   - uid: 3206
     components:
     - type: Transform
@@ -38678,6 +38753,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 27.5,-10.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 74
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 4799
@@ -38881,6 +38959,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 73
+      - 74
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 4822
@@ -38911,9 +38990,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 31.5,-3.5
       parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 74
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 4827
@@ -38922,6 +38998,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 20.5,-17.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 5647
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 4828
@@ -38930,6 +39009,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 25.5,-17.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 5647
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 4829
@@ -38938,9 +39020,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 27.5,-2.5
       parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 74
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 4830
@@ -39620,6 +39699,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 73
+      - 74
     - type: AtmosPipeLayers
       pipeLayer: Secondary
     - type: AtmosPipeColor
@@ -39630,9 +39710,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 27.5,-4.5
       parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 74
     - type: AtmosPipeLayers
       pipeLayer: Secondary
     - type: AtmosPipeColor
@@ -39655,9 +39732,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 33.5,-3.5
       parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 74
     - type: AtmosPipeLayers
       pipeLayer: Secondary
     - type: AtmosPipeColor
@@ -39818,6 +39892,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 23.5,-10.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 74
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 4825
@@ -39826,6 +39903,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 19.5,-17.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 5647
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 4826
@@ -39834,6 +39914,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 29.5,-17.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 5647
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GasVolumePump
@@ -58875,7 +58958,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -7188.267
+      secondsUntilStateChange: -8174.006
       state: Opening
     - type: Airlock
       autoClose: False
@@ -58888,7 +58971,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -7187.667
+      secondsUntilStateChange: -8173.406
       state: Opening
     - type: Airlock
       autoClose: False
