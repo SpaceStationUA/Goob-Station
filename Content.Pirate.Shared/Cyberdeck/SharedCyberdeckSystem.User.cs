@@ -117,7 +117,7 @@ public abstract partial class SharedCyberdeckSystem
         if (!ent.Comp.InProjection || args.User != ent.Owner)
             return;
 
-        args.Accessible = _aiWhitelistQuery.HasComp(args.Target);
+        args.Accessible = IsAiControlEnabled(args.Target);
         args.Handled = true;
     }
 
@@ -126,21 +126,26 @@ public abstract partial class SharedCyberdeckSystem
         if (!ent.Comp.InProjection || args.User != ent.Owner)
             return;
 
-        args.InRange = _aiWhitelistQuery.HasComp(args.Target);
+        args.InRange = IsAiControlEnabled(args.Target);
         args.Handled = true;
     }
 
     private void OnInteractionAttempt(Entity<CyberdeckUserComponent> ent, ref InteractionAttemptEvent args)
     {
         if (ent.Comp.InProjection
-            && (args.Target is not { } target || !_aiWhitelistQuery.HasComp(target)))
+            && (args.Target is not { } target || !IsAiControlEnabled(target)))
             args.Cancelled = true;
     }
 
     private void OnUseAttempt(Entity<CyberdeckUserComponent> ent, ref UseAttemptEvent args)
     {
-        if (ent.Comp.InProjection && !_aiWhitelistQuery.HasComp(args.Used))
+        if (ent.Comp.InProjection && !IsAiControlEnabled(args.Used))
             args.Cancel();
+    }
+
+    private bool IsAiControlEnabled(EntityUid target)
+    {
+        return _aiWhitelistQuery.TryComp(target, out var whitelist) && whitelist.Enabled;
     }
 
     private static void OnProjectedAttempt(

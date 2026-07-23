@@ -93,7 +93,7 @@ public abstract partial class SharedCyberdeckSystem
             hackable.HackingTime + before.PenaltyTime,
             new CyberdeckHackDoAfterEvent(),
             hackTarget,
-            hackTarget,
+            args.Target,
             component.ProviderEntity,
             uid)
         {
@@ -125,7 +125,7 @@ public abstract partial class SharedCyberdeckSystem
     {
         if (args.Cancelled
             || args.Handled
-            || ent.Owner != args.Target
+            || ent.Owner != args.Args.EventTarget
             || !TryHackDevice(args.User, ent.Owner))
             return;
 
