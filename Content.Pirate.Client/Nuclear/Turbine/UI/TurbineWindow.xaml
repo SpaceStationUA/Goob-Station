@@ -74,6 +74,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 									</BoxContainer>
 								</BoxContainer>
 							</PanelContainer>
+
+							<Button Name="EmergencyShutdown" Text="{Loc nuclear-machine-ui-emergency-shutdown}"
+									StyleClasses="Caution"/>
 						</BoxContainer>
 						<Label Name="LockedMessage" Text="{Loc comp-turbine-ui-locked-message}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 					</controls:StripeBack>
