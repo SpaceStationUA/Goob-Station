@@ -1,0 +1,56 @@
+- type: healthIcon
+  parent: HealthIcon
+  abstract: true
+  id: GoobYautjaIconBase
+  priority: -10
+  locationPreference: Right
+  isShaded: true
+
+- type: healthIcon
+  parent: GoobYautjaIconBase
+  id: GoobYautjaIconPrey
+  icon:
+    sprite: _Oskarrr/Yautja/Interface/xeno_leader.rsi
+    state: hudxenoleader
+
+- type: healthIcon
+  parent: GoobYautjaIconBase
+  id: GoobYautjaIconHonored
+  icon:
+    sprite: _Oskarrr/Yautja/Interface/cm_job_icons.rsi
+    state: hudsquad_leader
+
+- type: healthIcon
+  parent: GoobYautjaIconBase
+  id: GoobYautjaIconDishonored
+  icon:
+    sprite: _Oskarrr/Yautja/Interface/health_hud.rsi
+    state: huddead
+
+- type: healthIcon
+  parent: GoobYautjaIconBase
+  id: GoobYautjaIconGearCarrier
+  icon:
+    sprite: _Oskarrr/Yautja/Interface/cm_job_icons.rsi
+    state: hudRESS
+
+- type: healthIcon
+  parent: GoobYautjaIconBase
+  id: GoobYautjaIconThrall
+  icon:
+    sprite: _Oskarrr/Yautja/Interface/cm_job_icons.rsi
+    state: hudCLF
+
+- type: healthIcon
+  parent: GoobYautjaIconBase
+  id: GoobYautjaIconStudent
+  icon:
+    sprite: _Oskarrr/Yautja/Interface/cm_job_icons.rsi
+    state: hudsquad_rifleman
+
+- type: healthIcon
+  parent: GoobYautjaIconBase
+  id: GoobYautjaIconBlooded
+  icon:
+    sprite: _Oskarrr/Yautja/Interface/cm_job_icons.rsi
+    state: hudsquad_spec

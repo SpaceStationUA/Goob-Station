@@ -1,0 +1,216 @@
+﻿# Original upstream reference: https://github.com/cmss13-devs/cmss13
+- type: tile
+  abstract: true
+  # Рядок parent повністю видалено!
+  id: GoobYautjaHunterFloorBase
+  name: "підлога мисливця Яутжа"
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsFloor
+  name: "підлога Яутжа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/floor.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsOuterhull
+  name: "зовнішній корпус Яутжа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/outerhull.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsDamaged1
+  name: "пошкоджена підлога Яутжа 1"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/damaged1.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsDamaged2
+  name: "пошкоджена підлога Яутжа 2"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/damaged2.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsDamaged3
+  name: "пошкоджена підлога Яутжа 3"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/damaged3.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsDamaged4
+  name: "пошкоджена підлога Яутжа 4"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/damaged4.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsDamaged5
+  name: "пошкоджена підлога Яутжа 5"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/damaged5.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsOuterhullAlt
+  name: "зовнішній корпус Яутжа альт"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/outerhull_alt.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterGlow
+  name: "сяючий мисливець Яутжа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_glow.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterBridge
+  name: "міст мисливця Яутжа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_bridge.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterCatwalkAlpha
+  name: "катвок мисливця Яутжа альфа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_catwalk_alpha.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterCatwalk
+  name: "катвок мисливця Яутжа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_catwalk.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterCatwalkAltAlpha
+  name: "катвок мисливця Яутжа альт альфа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_catwalk_alt_alpha.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterCatwalkAlt
+  name: "катвок мисливця Яутжа альт"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_catwalk_alt.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterCatwalkNewAlpha
+  name: "новий катвок мисливця Яутжа альфа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_catwalk_new_alpha.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterCatwalkNew
+  name: "новий катвок мисливця Яутжа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_catwalk_new.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterGrille
+  name: "ґрати мисливця Яутжа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_grille.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterGrilleAlpha
+  name: "ґрати мисливця Яутжа альфа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_grille_alpha.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsN611
+  name: "підлога Яутжа 6,11"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/6,11.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsN612
+  name: "підлога Яутжа 6,12"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/6,12.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsCorner1
+  name: "кутова підлога Яутжа 1"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/corner_1.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsCorner2
+  name: "кутова підлога Яутжа 2"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/corner_2.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsCorner3
+  name: "кутова підлога Яутжа 3"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/corner_3.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsCorner4
+  name: "кутова підлога Яутжа 4"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/corner_4.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsCorner6
+  name: "кутова підлога Яутжа 6"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/corner_6.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsCorner7
+  name: "кутова підлога Яутжа 7"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/corner_7.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsCorner8
+  name: "кутова підлога Яутжа 8"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/corner_8.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterRed
+  name: "червоний мисливець Яутжа"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_red.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterRed2
+  name: "червоний мисливець Яутжа 2"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_red_2.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterRed3
+  name: "червоний мисливець Яутжа 3"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_red_3.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterRed4
+  name: "червоний мисливець Яутжа 4"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_red_4.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterRed5
+  name: "червоний мисливець Яутжа 5"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_red_5.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsHunterRed6
+  name: "червоний мисливець Яутжа 6"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/hunter_red_6.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsBorderlessV
+  name: "безмежна підлога Яутжа в"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/borderless_v.png
+
+- type: tile
+  parent: GoobYautjaHunterFloorBase
+  id: GoobYautjaTileHunterFloorsBorderlessH
+  name: "безмежна підлога Яутжа г"
+  sprite: /Textures/_Oskarrr/Tiles/Yautja/hunter_floors/borderless_h.png
