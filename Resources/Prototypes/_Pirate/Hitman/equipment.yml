@@ -517,9 +517,6 @@
       range: 5
     - state: yellow
       range: 12
-  - type: MappingCategories
-    categories:
-    - Syndicate
 
 # Pirate: CharacterRecordConsole is unavailable; retain the portable station-map function.
 - type: entity
@@ -528,7 +525,3 @@
   name: entity-hitman-records-tablet-name
   description: entity-hitman-records-tablet-description
   suffix: Hitman
-  components:
-  - type: MappingCategories
-    categories:
-    - Syndicate
