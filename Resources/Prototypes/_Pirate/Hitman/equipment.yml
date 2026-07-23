@@ -417,7 +417,7 @@
   - type: Emag
     emagType: Access
     emagImmuneTag: AccessBreakerImmune
-    blacklist: null
+    # Pirate: local Emag has no inherited blacklist to clear.
   - type: Sprite
     sprite: _Pirate/Objects/Tools/doorjack.rsi
   - type: Item
