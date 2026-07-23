@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._Pirate.Mind.Filters;
 using Content.Server._Pirate.Objectives.Components; // Pirate: honor target-objective immunity.
 using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
@@ -77,15 +78,12 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
         if (target.Target != null)
             return;
 
-        // couldn't find a target :(
-        if (_mind.PickFromPool(ent.Comp.Pool, ent.Comp.Filters, args.MindId) is not {} picked)
-        {
-            args.Cancelled = true;
-            return;
-        }
+        // Pirate: filter immune candidates before picking so one bad roll cannot cancel the objective.
+        var filters = ent.Comp.Filters.ToList();
+        filters.Add(new ObjectiveImmuneFilter());
 
-        // Pirate: the filter normally removes these; keep a fallback for custom pools.
-        if (IsTargetObjectiveImmune(picked))
+        // couldn't find a target :(
+        if (_mind.PickFromPool(ent.Comp.Pool, filters, args.MindId) is not {} picked)
         {
             args.Cancelled = true;
             return;
