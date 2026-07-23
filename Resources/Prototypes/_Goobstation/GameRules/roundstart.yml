@@ -147,6 +147,7 @@
       unequipOldGear: true
       components:
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: nukies are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesSyndicateElite
@@ -164,6 +165,7 @@
       unequipOldGear: true
       components:
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: nukies are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesSyndicateElite
@@ -184,6 +186,7 @@
       unequipOldGear: true
       components:
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: nukies are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesSyndicateElite
@@ -317,6 +320,7 @@
         snore: /Audio/Voice/Misc/silly_snore.ogg
         interval: 10
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: nukies are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesHonkopsPrefix
@@ -338,6 +342,7 @@
         snore: /Audio/Voice/Misc/silly_snore.ogg
         interval: 10
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: nukies are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesHonkopsPrefix
@@ -363,6 +368,7 @@
         snore: /Audio/Voice/Misc/silly_snore.ogg
         interval: 10
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: nukies are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesHonkopsPrefix
