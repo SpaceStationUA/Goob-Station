@@ -239,7 +239,7 @@
         - id: ClothingHeadHatCowboyBlack
 
 - type: entity
-  parent: ClothingNeckCWPSec
+  parent: [ClothingNeckPonchoSyndicate, BaseSecurityContraband]
   id: ClothingNeckCWPGorlex
   name: gorlex cold weather poncho
   description: A stylish red and black poncho made of heavy, cut-proof weave. Protects the wearer from the harshest weather conditions (and more!)

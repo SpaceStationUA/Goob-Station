@@ -69,6 +69,13 @@
     minimumPlayers: 25
     maxOccurrences: 1
     duration: null
+    chaos:
+      Hostile: 100
+      Medical: 50
+      Death: 50
+    eventType: HostilesSpawn
+  - type: GameRule
+    chaosScore: 100
   # Pirate: PrecognitionResult is unavailable in the local psionics implementation.
   - type: LoadMapRule
     gridPath: /Maps/_Pirate/Shuttles/Event/Professional.yml
@@ -94,6 +101,9 @@
       roleLoadout:
       - RoleSurvivalStandard
       components:
+      - type: AutoImplant
+        implants:
+        - HitmanCardImplant
       - type: RandomMetadata
         nameSegments:
         - NamesFakeHumanFirst
