@@ -740,6 +740,9 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
     /// <param name="args">Args for the event.</param>
     private void OnGrappledStand(Entity<GrappledComponent> grappled, ref StandAttemptEvent args)
     {
+        if (!grappled.Comp.GrappleActivated)
+            return;
+
         args.Cancel(); // Can't stand while being grappled
     }
 
@@ -750,6 +753,9 @@ public sealed partial class SharedGrapplingSystem : EntitySystem
     /// <param name="args">Args for the event.</param>
     private void OnGrappledStandUp(Entity<GrappledComponent> grappled, ref StandUpAttemptEvent args)
     {
+        if (!grappled.Comp.GrappleActivated)
+            return;
+
         args.Cancelled = true; // Can't stand while being grappled
     }
 
