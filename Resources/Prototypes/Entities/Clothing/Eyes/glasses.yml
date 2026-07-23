@@ -73,6 +73,7 @@
     - MesonGoggles
     - WhitelistChameleon
     - PetWearable # Goobstation?
+    - SecDogWearable # Pirate: K9 units may wear these goggles
 
 - type: entity
   parent: ClothingEyesBase
@@ -152,6 +153,7 @@
     - CorgiWearable
     - PetWearable # Goobstation?
     - WhitelistChameleon
+    - SecDogWearable # Pirate: K9 units may wear these glasses
   - type: IdentityBlocker
     coverage: EYES
 
@@ -171,6 +173,7 @@
     - PetWearable # Goobstation?
     - HamsterWearable
     - WhitelistChameleon
+    - SecDogWearable # Pirate: K9 units may wear these glasses
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
@@ -194,6 +197,7 @@
     - CorgiWearable
     - PetWearable # Goobstation?
     - WhitelistChameleon
+    - SecDogWearable # Pirate: K9 units may wear these glasses
   - type: GuideHelp
     guides:
     - Security

@@ -3,6 +3,7 @@
 nuclear-reactor-window-title = Ядерний реактор
 gas-turbine-window-title = Газова турбіна
 nuclear-machine-invalid-anchoring = Неможливо закріпити машину в цьому положенні!
+nuclear-machine-ui-emergency-shutdown = Аварійна зупинка
 
 ### Ядерна центрифуга
 

@@ -16,4 +16,6 @@ public enum DamageStateVisualLayers : byte
 {
     Base,
     BaseUnshaded,
+    // Pirate: allow animated pet tails to change with mob state.
+    Tail,
 }

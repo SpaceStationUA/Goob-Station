@@ -127,6 +127,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 								<Button Name="ControlRodsInsert" Text=" + "/>
 								<Button Name="ControlRodsRemove" Text=" - "/>
 								<Button Name="ControlRodsRemoveLarge" Text="- -"/>
+								<Button Name="EmergencyShutdown" Text="{Loc nuclear-machine-ui-emergency-shutdown}"
+										StyleClasses="Caution" Margin="0 5 0 0"/>
 							</BoxContainer>
 							<Label Name="ControlRodsLock" Text="{Loc comp-nuclear-reactor-ui-locked}" Visible="false" HorizontalAlignment="Center" VerticalAlignment="Center" />
 						</controls:StripeBack>

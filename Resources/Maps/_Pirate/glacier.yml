@@ -112533,7 +112533,7 @@ entities:
     - type: Transform
       pos: 50.5,15.5
       parent: 2
-- proto: SpawnMobShiva
+- proto: SpawnMobSecLaikaOrShiva
   entities:
   - uid: 15968
     components:

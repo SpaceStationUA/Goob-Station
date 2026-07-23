@@ -179806,7 +179806,7 @@ entities:
     - type: Transform
       pos: -26.5,202.5
       parent: 2
-- proto: SpawnMobShiva
+- proto: SpawnMobSecLaikaOrShiva
   entities:
   - uid: 26816
     components:

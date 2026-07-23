@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  name: спавнер Лайки
+  id: SpawnMobSecDogLaika
+  parent: MarkerBase
+  suffix: улюблениця ГСБ
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSecDogLaika
+
+- type: entity
+  name: спавнер службової тварини
+  id: SpawnMobSecLaikaOrShiva
+  parent: MarkerBase
+  suffix: улюбленець СБ, Лайка або Шива
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSecDogLaika
+    - MobSpiderShiva
