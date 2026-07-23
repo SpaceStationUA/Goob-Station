@@ -423,11 +423,11 @@
     state: fox
 
 - type: stealTargetGroup
-  id: AnimalShiva
-  name: steal-target-groups-animal-shiva
+  id: AnimalSecurity # Pirate: security pets share one theft target group.
+  name: steal-target-groups-animal-security
   sprite:
-    sprite: Mobs/Pets/shiva.rsi
-    state: shiva
+    sprite: _Pirate/Mobs/Pets/secdog.rsi
+    state: base
 
 - type: stealTargetGroup
   id: AnimalTropico

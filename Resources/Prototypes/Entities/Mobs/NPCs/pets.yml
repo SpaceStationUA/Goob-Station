@@ -838,7 +838,7 @@
     - DoorBumpOpener
     - FootstepSound
   - type: StealTarget
-    stealGroup: AnimalShiva
+    stealGroup: AnimalSecurity # Pirate: security pets share one theft target group.
   - type: LanguageKnowledge # Einstein Engines - Language
     speaks:
     - Xeno

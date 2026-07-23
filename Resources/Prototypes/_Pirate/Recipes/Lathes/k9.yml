@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipe
+  id: ClothingOuterArmorDuraVestK9
+  result: ClothingOuterArmorDuraVestK9
+  categories:
+  - Clothing
+  completetime: 10
+  materials:
+    Steel: 500
+    Plastic: 1000
+
+- type: latheRecipe
+  id: ClothingOuterHardsuitCombatK9
+  result: ClothingOuterHardsuitCombatK9
+  categories:
+  - Hardsuits
+  completetime: 10
+  materials:
+    Plasteel: 1000
+    Durathread: 600
+    Steel: 1500
+    Glass: 800
+    Plastic: 400
+
+- type: latheRecipe
+  id: ClothingOuterHardsuitCombatRiotK9
+  result: ClothingOuterHardsuitCombatRiotK9
+  categories:
+  - Hardsuits
+  completetime: 10
+  materials:
+    Plasteel: 1000
+    Durathread: 600
+    Steel: 1500
+    Glass: 800
+    Plastic: 400
