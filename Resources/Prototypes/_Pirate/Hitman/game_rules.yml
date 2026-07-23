@@ -3,6 +3,7 @@
   id: HitmanRule
   components:
   - type: GameRule
+  - type: HitmanRule
   - type: AntagObjectives
     objectives:
     - HitmanEscapeShuttleObjective

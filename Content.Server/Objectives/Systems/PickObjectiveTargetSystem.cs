@@ -54,8 +54,8 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
             return;
         }
 
-        // Pirate: immune entities cannot be assigned as specific targets.
-        if (HasComp<TargetObjectiveImmuneComponent>(targetComp.Target.Value))
+        // Pirate: immune entities and their minds cannot be assigned as specific targets.
+        if (IsTargetObjectiveImmune(targetComp.Target.Value))
         {
             args.Cancelled = true;
             return;
@@ -85,13 +85,28 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
         }
 
         // Pirate: the filter normally removes these; keep a fallback for custom pools.
-        if (HasComp<TargetObjectiveImmuneComponent>(picked) ||
-            picked.Comp.OwnedEntity is { } owned && HasComp<TargetObjectiveImmuneComponent>(owned))
+        if (IsTargetObjectiveImmune(picked))
         {
             args.Cancelled = true;
             return;
         }
 
         _target.SetTarget(ent, picked, target);
+    }
+
+    // Pirate: target overrides may point at either a body or a mind.
+    private bool IsTargetObjectiveImmune(EntityUid target)
+    {
+        if (HasComp<TargetObjectiveImmuneComponent>(target))
+            return true;
+
+        if (TryComp<MindComponent>(target, out var targetMind))
+        {
+            return targetMind.OwnedEntity is { } owned &&
+                   HasComp<TargetObjectiveImmuneComponent>(owned);
+        }
+
+        return _mind.TryGetMind(target, out var mindId, out _) &&
+               HasComp<TargetObjectiveImmuneComponent>(mindId);
     }
 }

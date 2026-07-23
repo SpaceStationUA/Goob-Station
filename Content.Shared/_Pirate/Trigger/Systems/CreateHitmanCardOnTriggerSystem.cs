@@ -20,6 +20,9 @@ public sealed class CreateHitmanCardOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<CreateHitmanCardOnTriggerComponent> ent, ref TriggerEvent args)
     {
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+            return;
+
         if (args.Handled || args.User is not { } user)
             return;
 

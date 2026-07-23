@@ -23,7 +23,7 @@ public sealed class AiDetectorSystem : EntitySystem
         while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.NextUpdate > now)
-                return;
+                continue;
 
             comp.NextUpdate = now + comp.UpdateDelay;
             UpdateState((uid, comp));
