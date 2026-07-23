@@ -47,8 +47,23 @@ public abstract partial class SharedCyberdeckSystem
             Dirty(projection, projectionComp);
         }
 
+        if (user.Comp.AiUiProxyEntity == null || TerminatingOrDeleted(user.Comp.AiUiProxyEntity))
+        {
+            if (_net.IsClient)
+                return;
+
+            user.Comp.AiUiProxyEntity = Spawn(user.Comp.AiUiProxyEntityId, MapCoordinates.Nullspace);
+        }
+
         var projectionEntity = user.Comp.ProjectionEntity.Value;
+        var proxyEntity = user.Comp.AiUiProxyEntity.Value;
+        var proxy = EnsureComp<CyberdeckAiUiProxyComponent>(proxyEntity);
+        proxy.RemoteEntity = user.Owner;
+        proxy.TargetEntity = null;
+
         Xform.SetCoordinates(projectionEntity, Transform(user).Coordinates);
+        Xform.SetCoordinates(proxyEntity, new EntityCoordinates(user.Owner, default));
+        Dirty(proxyEntity, proxy);
 
         if (TryComp(user, out EyeComponent? eye))
         {
@@ -70,6 +85,15 @@ public abstract partial class SharedCyberdeckSystem
     {
         if (!user.Comp.InProjection)
             return;
+
+        if (user.Comp.AiUiProxyEntity is { } proxyEntity
+            && !TerminatingOrDeleted(proxyEntity)
+            && TryComp(proxyEntity, out CyberdeckAiUiProxyComponent? proxy))
+        {
+            _ui.CloseUi(proxyEntity, AiUi.Key, user.Owner);
+            proxy.TargetEntity = null;
+            Dirty(proxyEntity, proxy);
+        }
 
         RemComp<StationAiOverlayComponent>(user);
         RemComp<CyberdeckOverlayComponent>(user);

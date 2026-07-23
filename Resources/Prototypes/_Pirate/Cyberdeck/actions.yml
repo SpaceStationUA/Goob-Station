@@ -16,7 +16,7 @@
       state: hack
     priority: -24
   - type: TargetAction
-    range: 30
+    range: 20
   - type: EntityTargetAction
     event: !type:CyberdeckHackActionEvent
     rotateOnUse: false

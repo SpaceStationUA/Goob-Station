@@ -43,6 +43,7 @@ public abstract partial class SharedCyberdeckSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly INetManager _net = default!;
 
     private EntityQuery<HandsComponent> _handsQuery;

@@ -209,7 +209,8 @@ public abstract partial class SharedStationAiSystem
             || !HasComp<StationAiHeldComponent>(args.User)
             && !HasComp<RemoteInteractionComponent>(args.User) // DOWNSTREAM-TPirates: borg wireless access
             && !cyberdeckProjection // Pirate - Cyberdeck
-            || !args.CanInteract)
+            || !args.CanInteract
+            || cyberdeckProjection && !args.CanAccess) // Pirate - Cyberdeck
         {
             return;
         }
@@ -217,8 +218,20 @@ public abstract partial class SharedStationAiSystem
         var user = args.User;
 
         var target = args.Target;
+        var uiOwner = target;
+        if (cyberdeckProjection)
+        {
+            if (cyberdeck?.AiUiProxyEntity is not { } proxyEntity
+                || !TryComp(proxyEntity, out CyberdeckAiUiProxyComponent? proxy))
+                return;
 
-        var isOpen = _uiSystem.IsUiOpen(target, AiUi.Key, user);
+            uiOwner = proxyEntity;
+        }
+
+        var isOpen = _uiSystem.IsUiOpen(uiOwner, AiUi.Key, user)
+            && (!cyberdeckProjection
+                || TryComp(uiOwner, out CyberdeckAiUiProxyComponent? currentProxy)
+                && currentProxy.TargetEntity == target);
 
         var verb = new AlternativeVerb
         {
@@ -227,11 +240,27 @@ public abstract partial class SharedStationAiSystem
             {
                 if (isOpen)
                 {
-                    _uiSystem.CloseUi(ent.Owner, AiUi.Key, user);
+                    _uiSystem.CloseUi(uiOwner, AiUi.Key, user);
+
+                    if (TryComp(uiOwner, out CyberdeckAiUiProxyComponent? proxy))
+                    {
+                        proxy.TargetEntity = null;
+                        Dirty(uiOwner, proxy);
+                    }
                 }
                 else
                 {
-                    _uiSystem.OpenUi(ent.Owner, AiUi.Key, user);
+                    if (cyberdeckProjection)
+                    {
+                        if (!TryComp(uiOwner, out CyberdeckAiUiProxyComponent? proxy))
+                            return;
+
+                        _uiSystem.CloseUi(uiOwner, AiUi.Key, user);
+                        proxy.TargetEntity = target;
+                        Dirty(uiOwner, proxy);
+                    }
+
+                    _uiSystem.OpenUi(uiOwner, AiUi.Key, user);
                 }
             }
         };

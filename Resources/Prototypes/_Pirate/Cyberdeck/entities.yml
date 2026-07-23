@@ -88,3 +88,15 @@
   - type: NoFTL
   - type: CEZLevelPhysicsExempt # Pirate: multiz
   - type: CEZViewSource # Pirate: multiz
+
+- type: entity
+  id: CyberdeckAiUiProxy
+  name: cyberdeck AI interface proxy
+  categories: [HideSpawnMenu, DoNotMap]
+  components:
+  - type: Transform
+  - type: CyberdeckAiUiProxy
+  - type: UserInterface
+    interfaces:
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface

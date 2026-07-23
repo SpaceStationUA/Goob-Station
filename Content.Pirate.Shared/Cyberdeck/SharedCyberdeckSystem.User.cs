@@ -34,6 +34,10 @@ public abstract partial class SharedCyberdeckSystem
         SubscribeLocalEvent<CyberdeckUserComponent, InRangeOverrideEvent>(OnCyberdeckInRange,
             after: new[] { typeof(SharedStationAiSystem) });
         SubscribeLocalEvent<CyberdeckProjectionComponent, GetVerbsEvent<AlternativeVerb>>(OnProjectionVerbs);
+        SubscribeLocalEvent<CyberdeckAiUiProxyComponent, BoundUserInterfaceCheckRangeEvent>(OnProxyBuiCheck);
+        SubscribeLocalEvent<CyberdeckAiUiProxyComponent, BoundUserInterfaceMessageAttempt>(OnProxyMessageAttempt);
+        SubscribeLocalEvent<CyberdeckAiUiProxyComponent, GetStationAiRadialEvent>(OnProxyGetRadial);
+        SubscribeLocalEvent<CyberdeckAiUiProxyComponent, StationAiRadialMessage>(OnProxyRadialMessage);
 
         SubscribeLocalEvent<CyberdeckUserComponent, InteractionAttemptEvent>(OnInteractionAttempt);
         SubscribeLocalEvent<CyberdeckUserComponent, UseAttemptEvent>(OnUseAttempt);
@@ -73,11 +77,13 @@ public abstract partial class SharedCyberdeckSystem
         _actions.RemoveAction(ent.Owner, ent.Comp.VisionAction);
         _actions.RemoveAction(ent.Owner, ent.Comp.ReturnAction);
         PredictedQueueDel(ent.Comp.ProjectionEntity);
+        PredictedQueueDel(ent.Comp.AiUiProxyEntity);
     }
 
     private void OnProjectionVerbs(Entity<CyberdeckProjectionComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!HasComp<StationAiHeldComponent>(args.User)
+        if (!args.CanAccess
+            || !HasComp<StationAiHeldComponent>(args.User)
             || ent.Comp.RemoteEntity is not { } remote
             || !_cyberdeckUserQuery.TryComp(remote, out var user)
             || !user.InProjection)
@@ -133,8 +139,82 @@ public abstract partial class SharedCyberdeckSystem
     private void OnInteractionAttempt(Entity<CyberdeckUserComponent> ent, ref InteractionAttemptEvent args)
     {
         if (ent.Comp.InProjection
-            && (args.Target is not { } target || !IsAiControlEnabled(target)))
+            && (args.Target is not { } target
+                || target != ent.Comp.AiUiProxyEntity && !IsAiControlEnabled(target)))
             args.Cancelled = true;
+    }
+
+    private void OnProxyBuiCheck(
+        Entity<CyberdeckAiUiProxyComponent> ent,
+        ref BoundUserInterfaceCheckRangeEvent args)
+    {
+        args.Result = BoundUserInterfaceRangeResult.Fail;
+
+        if (args.UiKey.Equals(AiUi.Key)
+            && TryGetProxyTarget(ent, args.Actor.Owner, out _))
+            args.Result = BoundUserInterfaceRangeResult.Pass;
+    }
+
+    private void OnProxyMessageAttempt(
+        Entity<CyberdeckAiUiProxyComponent> ent,
+        ref BoundUserInterfaceMessageAttempt args)
+    {
+        if (!args.UiKey.Equals(AiUi.Key)
+            || !TryGetProxyTarget(ent, args.Actor, out _))
+            args.Cancel();
+    }
+
+    private void OnProxyGetRadial(
+        Entity<CyberdeckAiUiProxyComponent> ent,
+        ref GetStationAiRadialEvent args)
+    {
+        if (ent.Comp.RemoteEntity is not { } remote
+            || !TryGetProxyTarget(ent, remote, out var target))
+            return;
+
+        RaiseLocalEvent(target, ref args);
+    }
+
+    private void OnProxyRadialMessage(
+        Entity<CyberdeckAiUiProxyComponent> ent,
+        ref StationAiRadialMessage args)
+    {
+        if (!TryGetProxyTarget(ent, args.Actor, out var target))
+            return;
+
+        args.Event.User = args.Actor;
+        RaiseLocalEvent(target, (object) args.Event);
+    }
+
+    private bool TryGetProxyTarget(
+        Entity<CyberdeckAiUiProxyComponent> proxy,
+        EntityUid actor,
+        out EntityUid target)
+    {
+        target = default;
+
+        if (proxy.Comp.RemoteEntity != actor
+            || !_cyberdeckUserQuery.TryComp(actor, out var user)
+            || !user.InProjection
+            || user.AiUiProxyEntity != proxy.Owner
+            || user.ProjectionEntity is not { } projection
+            || TerminatingOrDeleted(projection)
+            || !TryComp(projection, out CyberdeckProjectionComponent? projectionComponent)
+            || projectionComponent.RemoteEntity != actor
+            || proxy.Comp.TargetEntity is not { } targetEntity
+            || TerminatingOrDeleted(targetEntity)
+            || !_aiWhitelistQuery.TryComp(targetEntity, out var whitelist)
+            || !whitelist.Enabled
+            || !_hackableQuery.HasComp(targetEntity)
+            || !_ui.HasUi(targetEntity, AiUi.Key))
+            return false;
+
+        var projectionGrid = Transform(projection).GridUid;
+        if (projectionGrid == null || Transform(targetEntity).GridUid != projectionGrid)
+            return false;
+
+        target = targetEntity;
+        return true;
     }
 
     private void OnUseAttempt(Entity<CyberdeckUserComponent> ent, ref UseAttemptEvent args)

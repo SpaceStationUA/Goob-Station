@@ -22,6 +22,9 @@ public sealed partial class CyberdeckUserComponent : Component
     public EntityUid? ProjectionEntity;
 
     [ViewVariables, AutoNetworkedField]
+    public EntityUid? AiUiProxyEntity;
+
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? HackAction;
 
     [ViewVariables, AutoNetworkedField]
@@ -56,6 +59,9 @@ public sealed partial class CyberdeckUserComponent : Component
 
     [DataField]
     public EntProtoId ProjectionEntityId = "CyberdeckProjection";
+
+    [DataField]
+    public EntProtoId AiUiProxyEntityId = "CyberdeckAiUiProxy";
 
     [DataField]
     public EntProtoId HackActionId = "ActionCyberdeckHack";
