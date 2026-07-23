@@ -431,7 +431,7 @@ public abstract partial class CESharedZLevelsSystem : EntitySystem
         return false;
     }
 
-    private bool HasTraversalContext(TransformComponent xform)
+    protected bool HasTraversalContext(TransformComponent xform)
     {
         if (xform.MapUid is { } mapUid &&
             (_zMapQuery.HasComp(mapUid) || _ftlMapQuery.HasComp(mapUid)))

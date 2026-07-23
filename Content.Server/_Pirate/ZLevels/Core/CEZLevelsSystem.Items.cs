@@ -137,7 +137,7 @@ public sealed partial class CEZLevelsSystem
     private void TryAddItemZPhysics(EntityUid item, bool requireZGravity = false)
     {
         var xform = Transform(item);
-        if (!IsItemRestingOnMapOrGrid(xform))
+        if (!HasTraversalContext(xform) || !IsItemRestingOnMapOrGrid(xform))
             return;
 
         if (requireZGravity && !CanItemExperienceZGravity(item, xform))
@@ -350,7 +350,7 @@ public sealed partial class CEZLevelsSystem
 
     private bool CanItemExperienceZGravity(EntityUid item, TransformComponent xform)
     {
-        if (!IsItemRestingOnMapOrGrid(xform))
+        if (!HasTraversalContext(xform) || !IsItemRestingOnMapOrGrid(xform))
             return false;
 
         var worldPos = _transform.GetWorldPosition(item);

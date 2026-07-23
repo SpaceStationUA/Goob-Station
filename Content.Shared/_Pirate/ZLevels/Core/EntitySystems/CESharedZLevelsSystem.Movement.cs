@@ -502,6 +502,17 @@ public abstract partial class CESharedZLevelsSystem
 
     private void OnMoveEvent(Entity<CEZPhysicsComponent> ent, ref MoveEvent args)
     {
+        var xform = Transform(ent);
+        if (!HasTraversalContext(xform))
+        {
+            SleepBody(ent);
+            SetZGravityInfluenced(ent, false);
+            ent.Comp.DetachedCarrierGridUid = EntityUid.Invalid;
+            ent.Comp.DetachedCarrierLocalPosition = Vector2.Zero;
+            ent.Comp.DetachedCarrierReferenceExpiresAt = TimeSpan.Zero;
+            return;
+        }
+
         if (IsAutomaticZPhysicsExcluded(ent))
         {
             SleepBody(ent);
@@ -512,7 +523,7 @@ public abstract partial class CESharedZLevelsSystem
             return;
         }
 
-        PruneDeferredClientMovingStairDescent(ent, Transform(ent));
+        PruneDeferredClientMovingStairDescent(ent, xform);
 
         var detachedFromLinkedGrid = false;
         if (args.ParentChanged &&
@@ -521,7 +532,7 @@ public abstract partial class CESharedZLevelsSystem
         {
             if (args.OldPosition.EntityId != EntityUid.Invalid &&
                 TryComp<CEZLinkedGridComponent>(args.OldPosition.EntityId, out _) &&
-                args.NewPosition.EntityId == Transform(ent).MapUid)
+                args.NewPosition.EntityId == xform.MapUid)
             {
                 detachedFromLinkedGrid = true;
                 ent.Comp.DetachedCarrierGridUid = args.OldPosition.EntityId;
