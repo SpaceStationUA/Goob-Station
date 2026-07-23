@@ -24,6 +24,7 @@ public sealed class NuclearReactorBUI(EntityUid owner, Enum uiKey) : BoundUserIn
         _window.OnSwapPart += pos => SendPredictedMessage(new ReactorSwapPartMessage(pos));
         _window.OnEjectItem += () => SendPredictedMessage(new ReactorEjectItemMessage());
         _window.OnAdjustControlRods += change => SendPredictedMessage(new ReactorAdjustControlRodsMessage(change));
+        _window.OnEmergencyShutdown += () => SendPredictedMessage(new ReactorAdjustControlRodsMessage(2f));
 
         if (State is NuclearReactorBuiState state)
             _window.Update(state);
