@@ -79,6 +79,26 @@ public sealed class BossMusicSystem : SharedBossMusicSystem
             _audio.SetVolume(_bossMusicStream, _musicProto.Sound.Params.Volume + _volumeSlider);
     }
 
+    // Pirate: lets Cyberdeck stop only the boss track it started.
+    public bool TryStartBossMusic(string musicId)
+    {
+        if (_musicProto != null || _bossMusicStream != null)
+            return false;
+
+        StartBossMusic(musicId);
+        return true;
+    }
+
+    // Pirate: do not interrupt another boss track that replaced Cyberdeck music.
+    public bool TryEndBossMusic(string musicId)
+    {
+        if (_musicProto?.ID != musicId)
+            return false;
+
+        EndAllMusic();
+        return true;
+    }
+
     public override void StartBossMusic(ProtoId<BossMusicPrototype> music)
     {
         if (_musicProto != null || _bossMusicStream != null)

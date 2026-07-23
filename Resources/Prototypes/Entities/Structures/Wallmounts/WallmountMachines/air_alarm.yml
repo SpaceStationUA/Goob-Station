@@ -111,6 +111,9 @@
     guides:
     - AirAlarms
     - DeviceMonitoringAndControl
+  - type: CyberdeckHackable # Pirate - Cyberdeck
+    cost: 2
+    delay: 4
 
 - type: entity
   parent: BaseWallmountMetallic

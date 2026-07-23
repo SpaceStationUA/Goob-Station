@@ -146,6 +146,9 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: output
+  - type: CyberdeckHackable # Pirate - Cyberdeck
+    cost: 6
+    delay: 16
 
 # Compact Wall Substation Base
 - type: entity
@@ -219,6 +222,9 @@
     intensitySlope: 2
     totalIntensity: 100
   - type: WallMount
+  - type: CyberdeckHackable # Pirate - Cyberdeck
+    cost: 5
+    delay: 15
 
 # Substations in use
 

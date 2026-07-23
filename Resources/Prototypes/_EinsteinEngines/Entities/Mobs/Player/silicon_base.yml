@@ -365,3 +365,7 @@
     - type: CombatMode
       canDisarm: true
     - type: ExaminableCharacter # WWDP
+    - type: CyberdeckSiliconTarget # Pirate - Cyberdeck
+      penaltyTime: 0
+    - type: CyberdeckHackable # Pirate - Cyberdeck
+      delay: 8

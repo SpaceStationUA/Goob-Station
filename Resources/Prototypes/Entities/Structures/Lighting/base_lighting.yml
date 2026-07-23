@@ -110,6 +110,8 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
+  - type: CyberdeckHackable # Pirate - Cyberdeck
+    delay: 0.8
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot

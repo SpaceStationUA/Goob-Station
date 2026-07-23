@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Wires;
+using Content.Pirate.Common.Access; // Pirate - Cyberdeck
 using Content.Shared.Doors;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Wires;
@@ -23,6 +24,7 @@ public sealed partial class AiInteractWireAction : ComponentWireAction<StationAi
 
     public override bool Cut(EntityUid user, Wire wire, StationAiWhitelistComponent component)
     {
+        EntityManager.RemoveComponent<IgnoreAccessComponent>(component.Owner); // Pirate - remove Cyberdeck backdoor
         return EntityManager.System<SharedStationAiSystem>()
             .SetWhitelistEnabled((component.Owner, component), false, announce: true);
     }
