@@ -47,7 +47,7 @@ public sealed partial class ScalingViewport
     private readonly Dictionary<int, IRenderTexture> _zApertureTargets = new();
     private readonly HashSet<int> _zApertureValidTargets = new();
     private readonly Dictionary<int, EntityUid> _zApertureMapUids = new();
-    private readonly Dictionary<int, ZEye> _zApertureEyes = new();
+    private readonly Dictionary<int, IEye> _zApertureEyes = new();
     private ZLevelApertureOverlay? _zApertureOverlay;
     private bool _zApertureCaptureThisFrame;
 
@@ -304,6 +304,10 @@ public sealed partial class ScalingViewport
             0,
             CESharedZLevelsSystem.MaxZLevelsBelowRendering);
         var lookUp = zLevelViewer.LookUp ? 1 : 0;
+        var highestDepth = lookUp > 0 &&
+            TryResolveZMap(playerXform.MapUid.Value, effectiveGridUid, lookUp, out _)
+                ? lookUp
+                : 0;
         _zApertureValidTargets.Clear();
         _zApertureMapUids.Clear();
         _zApertureEyes.Clear();
@@ -320,11 +324,11 @@ public sealed partial class ScalingViewport
             lowestDepth = i;
         }
 
-        _zApertureCaptureThisFrame = HasZLevelAperturesInRenderedDepths(playerXform.MapUid.Value, effectiveGridUid, lowestDepth, lookUp);
+        _zApertureCaptureThisFrame = HasZLevelAperturesInRenderedDepths(playerXform.MapUid.Value, effectiveGridUid, lowestDepth, highestDepth);
 
         if (_zApertureCaptureThisFrame)
         {
-            EnsureZLevelApertureTargets(viewport.RenderTarget.Size, lowestDepth, lookUp);
+            EnsureZLevelApertureTargets(viewport.RenderTarget.Size, lowestDepth, highestDepth);
             EnsureZLevelApertureOverlay();
         }
 
@@ -335,78 +339,114 @@ public sealed partial class ScalingViewport
         _cachedParallaxOverlay ??= _overlayManager.AllOverlays
             .FirstOrDefault(o => o is Content.Client.Parallax.ParallaxOverlay);
 
-        for (var depth = lowestDepth; depth <= lookUp; depth++)
+        var playerEye = _fallbackEye as Robust.Shared.Graphics.Eye;
+        var playerEyePosition = playerEye?.Position ?? default;
+        var playerEyeDrawFov = playerEye?.DrawFov ?? default;
+        var playerEyeDrawLight = playerEye?.DrawLight ?? default;
+        var playerEyeOffset = playerEye?.Offset ?? default;
+        var playerEyeRotation = playerEye?.Rotation ?? default;
+        var playerEyeScale = playerEye?.Scale ?? default;
+
+        try
         {
-            EntityUid renderedMapUid;
-
-            if (depth == 0)
+            for (var depth = lowestDepth; depth <= highestDepth; depth++)
             {
-                renderedMapUid = playerXform.MapUid.Value;
-                var eye = new ZEye(lowestDepth, 0, lookUp)
+                EntityUid renderedMapUid;
+                MapCoordinates eyePosition;
+                bool drawFov;
+                Vector2 offset;
+
+                if (depth == 0)
                 {
-                    Position = _fallbackEye.Position,
-                    DrawFov = _fallbackEye.DrawFov,
-                    DrawLight = _fallbackEye.DrawLight,
-                    Offset = _fallbackEye.Offset,
-                    Rotation = _fallbackEye.Rotation,
-                    Scale = _fallbackEye.Scale,
-                };
+                    renderedMapUid = playerXform.MapUid.Value;
+                    eyePosition = _fallbackEye.Position;
+                    drawFov = _fallbackEye.DrawFov;
+                    offset = _fallbackEye.Offset;
+                }
+                else
+                {
+                    if (!TryResolveZMapEntity(playerXform.MapUid.Value, effectiveGridUid, depth, out renderedMapUid, out var targetMapId, out var peerGridUid))
+                        continue;
+
+                    var rotation = -_fallbackEye.Rotation;
+                    offset = _fallbackEye.Offset +
+                        rotation.ToWorldVec() * CEClientZLevelsSystem.ZLevelOffset * depth;
+                    // Peer-aware eye position keeps linked decks aligned, even off-grid.
+                    eyePosition = GetResolvedEyePosition(playerXform, effectiveGridUid, peerGridUid, targetMapId);
+                    drawFov = _fallbackEye.DrawFov && depth >= 0;
+                }
+
+                IEye eye;
+                if (depth == highestDepth && playerEye != null)
+                {
+                    // Player-only overlays compare eye identity. Use the real eye only on the final
+                    // compositing pass so flash, blindness and vision shaders affect the whole frame once.
+                    playerEye.Position = eyePosition;
+                    playerEye.DrawFov = drawFov;
+                    playerEye.DrawLight = _fallbackEye.DrawLight;
+                    playerEye.Offset = offset;
+                    playerEye.Rotation = _fallbackEye.Rotation;
+                    playerEye.Scale = _fallbackEye.Scale;
+                    eye = playerEye;
+                }
+                else
+                {
+                    eye = new ZEye(lowestDepth, depth, highestDepth)
+                    {
+                        Position = eyePosition,
+                        DrawFov = drawFov,
+                        DrawLight = _fallbackEye.DrawLight,
+                        Offset = offset,
+                        Rotation = _fallbackEye.Rotation,
+                        Scale = _fallbackEye.Scale,
+                    };
+                }
+
                 viewport.Eye = eye;
                 _zApertureEyes[depth] = eye;
+                _zApertureMapUids[depth] = renderedMapUid;
+                viewport.ClearColor = depth == lowestDepth ? Color.Black : null;
+
+                #region Pirate: multiz
+                // Hide duplicate previews, plus unsafe mid-z-move placement snaps.
+                var hidePlacement = _cachedPlacementOverlay != null
+                    && (depth != 0 || PlacementOverlayWouldDesync(renderedMapUid));
+                if (hidePlacement)
+                    _overlayManager.RemoveOverlay(_cachedPlacementOverlay!);
+
+                // Higher deck parallax would cover the already composited lower decks.
+                var hideParallax = depth != lowestDepth && _cachedParallaxOverlay != null;
+                if (hideParallax)
+                    _overlayManager.RemoveOverlay(_cachedParallaxOverlay!);
+
+                viewport.Render();
+
+                if (_zApertureCaptureThisFrame && depth < highestDepth)
+                    CaptureZLevelApertureTexture(screenHandle, viewport, depth);
+
+                if (hideParallax)
+                    _overlayManager.AddOverlay(_cachedParallaxOverlay!);
+
+                if (hidePlacement)
+                    _overlayManager.AddOverlay(_cachedPlacementOverlay!);
+                #endregion Pirate: multiz
             }
-            else
-            {
-                if (!TryResolveZMapEntity(playerXform.MapUid.Value, effectiveGridUid, depth, out renderedMapUid, out var targetMapId, out var peerGridUid))
-                    continue;
-
-                Angle rotation = _fallbackEye.Rotation * -1;
-                var offset = rotation.ToWorldVec() * CEClientZLevelsSystem.ZLevelOffset * depth;
-                // Peer-aware eye position keeps linked decks aligned, even off-grid.
-                var eyePosition = GetResolvedEyePosition(playerXform, effectiveGridUid, peerGridUid, targetMapId);
-
-                var eye = new ZEye(lowestDepth, depth, lookUp)
-                {
-                    Position = eyePosition,
-                    DrawFov = _fallbackEye.DrawFov && depth >= 0,
-                    DrawLight = _fallbackEye.DrawLight,
-                    Offset = _fallbackEye.Offset + offset,
-                    Rotation = _fallbackEye.Rotation,
-                    Scale = _fallbackEye.Scale,
-                };
-                viewport.Eye = eye;
-                _zApertureEyes[depth] = eye;
-            }
-
-            _zApertureMapUids[depth] = renderedMapUid;
-            viewport.ClearColor = depth == lowestDepth ? Color.Black : null;
-
-            #region Pirate: multiz
-            // Hide duplicate previews, plus unsafe mid-z-move placement snaps.
-            var hidePlacement = _cachedPlacementOverlay != null
-                && (depth != 0 || PlacementOverlayWouldDesync(renderedMapUid));
-            if (hidePlacement)
-                _overlayManager.RemoveOverlay(_cachedPlacementOverlay!);
-
-            // Higher deck parallax would cover the already composited lower decks.
-            var hideParallax = depth != lowestDepth && _cachedParallaxOverlay != null;
-            if (hideParallax)
-                _overlayManager.RemoveOverlay(_cachedParallaxOverlay!);
-
-            viewport.Render();
-
-            if (_zApertureCaptureThisFrame && depth < lookUp)
-                CaptureZLevelApertureTexture(screenHandle, viewport, depth);
-
-            if (hideParallax)
-                _overlayManager.AddOverlay(_cachedParallaxOverlay!);
-
-            if (hidePlacement)
-                _overlayManager.AddOverlay(_cachedPlacementOverlay!);
-            #endregion Pirate: multiz
         }
+        finally
+        {
+            if (playerEye != null)
+            {
+                playerEye.Position = playerEyePosition;
+                playerEye.DrawFov = playerEyeDrawFov;
+                playerEye.DrawLight = playerEyeDrawLight;
+                playerEye.Offset = playerEyeOffset;
+                playerEye.Rotation = playerEyeRotation;
+                playerEye.Scale = playerEyeScale;
+            }
 
-        Eye = _fallbackEye;
-        viewport.Eye = Eye;
+            Eye = _fallbackEye;
+            viewport.Eye = Eye;
+        }
     }
 
     // Returns the remote eye currently viewed by the local player, if any.
