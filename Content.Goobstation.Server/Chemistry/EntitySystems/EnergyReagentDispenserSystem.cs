@@ -5,6 +5,7 @@ using Content.Goobstation.Server.Chemistry.Components;
 using Content.Goobstation.Shared.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Power;
@@ -15,17 +16,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared.Power.Components;
-
-#region Pirate: chem recipes
-using Content.Goobstation.Maths.FixedPoint;
-using Content.Server._Pirate.Chemistry;
-using Content.Server.Chemistry.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Shared._Pirate.Chemistry;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared._Pirate.Plumbing.Components; // Pirate: chem plumbing
-#endregion
 
 namespace Content.Goobstation.Server.Chemistry.EntitySystems
 {
@@ -34,7 +27,7 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
     /// <seealso cref="EnergyReagentDispenserComponent"/>
     /// </summary>
     [UsedImplicitly]
-    public sealed class EnergyReagentDispenserSystem : PirateRecipeDispenserSystemBase<EnergyReagentDispenserComponent> // Pirate: chem recipes
+    public sealed class EnergyReagentDispenserSystem : EntitySystem
     {
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -42,11 +35,6 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly BatterySystem _battery = default!;
-        #region Pirate: chem recipes
-        protected override ItemSlotsSystem ItemSlotsSystem => _itemSlotsSystem;
-        protected override string RecipeDiskSlotName => SharedEnergyReagentDispenser.RecipeDiskSlotName;
-        protected override int RecipeNameMaxLength => SharedEnergyReagentDispenser.RecipeNameMaxLength;
-        #endregion
         public override void Initialize()
         {
             base.Initialize();
@@ -62,15 +50,16 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<EnergyReagentDispenserComponent, EnergyReagentDispenserClearContainerSolutionMessage>(OnClearContainerSolutionMessage);
             SubscribeLocalEvent<EnergyReagentDispenserComponent, EnergyReagentDispenserToggleValveMessage>(OnToggleValveMessage); // Pirate: chem plumbing
             SubscribeLocalEvent<EnergyReagentDispenserComponent, PowerChangedEvent>(OnPowerChanged);
-            RegisterPirateRecipeEvents(); // Pirate: chem recipes
 
             SubscribeLocalEvent<EnergyReagentDispenserComponent, MapInitEvent>(OnMapInit, before: [typeof(ItemSlotsSystem)]);
         }
 
+        private void SubscribeUpdateUiState<T>(Entity<EnergyReagentDispenserComponent> ent, ref T ev) => UpdateUiState(ent);
+
         private void UpdateUiState(Entity<EnergyReagentDispenserComponent> reagentDispenser)
         {
             var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedEnergyReagentDispenser.OutputSlotName);
-            var outputContainerInfo = PirateDispenserUiHelper.BuildOutputContainerInfo(outputContainer, _solutionContainerSystem, uid => Name(uid)); // Pirate: chem recipes
+            var outputContainerInfo = BuildOutputContainerInfo(outputContainer);
             var inventory = GetInventory(reagentDispenser.Comp);
             var batteryCharge = 0f;
             var batteryMaxCharge = 0f;
@@ -97,14 +86,6 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
 
             var valveOpen = TryComp<PlumbingOutletComponent>(reagentDispenser.Owner, out var plumbingOutlet) && plumbingOutlet.Enabled; // Pirate: chem plumbing
 
-            #region Pirate: chem recipes
-            var recipeUiData = PirateChemRecipeUiDataHelper.BuildRecipeUiData(
-                reagentDispenser,
-                SharedEnergyReagentDispenser.RecipeDiskSlotName,
-                _prototypeManager,
-                _itemSlotsSystem,
-                EntityManager);
-            #endregion
             var state = new EnergyReagentDispenserBoundUserInterfaceState(
                 outputContainerInfo,
                 GetNetEntity(outputContainer),
@@ -115,17 +96,27 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
                 currentReceivingEnergy,
                 idleUse,
                 usingBattery,
-                hasPower,// Pirate: chem recipes
-                valveOpen,// Pirate: chem plumbing
-                recipeUiData.SavedRecipes,// Pirate: chem recipes
-                recipeUiData.HasRecipeDisk,// Pirate: chem recipes
-                recipeUiData.DiskRecipes,// Pirate: chem recipes
-                recipeUiData.IsRecordingRecipe,// Pirate: chem recipes
-                recipeUiData.RecordingReagents// Pirate: chem recipes
+                hasPower,
+                valveOpen
             );
             _userInterfaceSystem.SetUiState(reagentDispenser.Owner, EnergyReagentDispenserUiKey.Key, state);
         }
 
+        private ContainerInfo? BuildOutputContainerInfo(EntityUid? container)
+        {
+            if (container is not { Valid: true })
+                return null;
+
+            if (_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out _, out var solution))
+            {
+                return new ContainerInfo(Name(container.Value), solution.Volume, solution.MaxVolume)
+                {
+                    Reagents = solution.Contents,
+                };
+            }
+
+            return null;
+        }
         private List<EnergyReagentInventoryItem> GetInventory(EnergyReagentDispenserComponent comp)
         {
             var inventory = new List<EnergyReagentInventoryItem>();
@@ -151,7 +142,7 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
         {
             reagentDispenser.Comp.DispenseAmount = message.EnergyReagentDispenserDispenseAmount;
             UpdateUiState(reagentDispenser);
-            PlayClickSound(reagentDispenser); // Pirate: chem recipes
+            ClickSound(reagentDispenser);
         }
 
         private void OnPowerChanged(Entity<EnergyReagentDispenserComponent> reagentDispenser, ref PowerChangedEvent args) =>
@@ -159,20 +150,6 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
 
         private void OnDispenseReagentMessage(Entity<EnergyReagentDispenserComponent> reagentDispenser, ref EnergyReagentDispenserDispenseReagentMessage message)
         {
-            #region Pirate: chem recipes
-            var amount = FixedPoint2.New((int)reagentDispenser.Comp.DispenseAmount);
-            if (reagentDispenser.Comp.RecordingRecipe != null)
-            {
-                if (PirateChemRecipeSharedHelper.TryAddRecordedReagent(message.ReagentId, amount, reagentDispenser.Comp.RecordingRecipe))
-                {
-                    UpdateUiState(reagentDispenser);
-                    PlayClickSound(reagentDispenser);
-                }
-
-                return;
-            }
-            #endregion
-
             var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedEnergyReagentDispenser.OutputSlotName);
             if (outputContainer is not { Valid: true }
                 || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
@@ -181,7 +158,8 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
             if (!TryComp<BatteryComponent>(reagentDispenser, out var battery))
                 return;
 
-            var powerRequired = GetPowerCostForReagent(message.ReagentId, amount.Float(), reagentDispenser.Comp); // Pirate: chem recipes
+            var amount = (int) reagentDispenser.Comp.DispenseAmount;
+            var powerRequired = GetPowerCostForReagent(message.ReagentId, amount, reagentDispenser.Comp);
 
             if (battery.LastCharge < powerRequired)
             {
@@ -194,7 +172,7 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
                 return;
 
             _battery.SetCharge(reagentDispenser.Owner, battery.LastCharge - powerRequired);
-            PlayClickSound(reagentDispenser); // Pirate: chem recipes
+            ClickSound(reagentDispenser);
             UpdateUiState(reagentDispenser);
         }
 
@@ -205,7 +183,7 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
                 || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer, out var solution, out var soln))
                 return;
 
-            var refundedPower = soln.Sum(reagent => GetPowerCostForReagent(reagent.Reagent.Prototype, reagent.Quantity.Float(), reagentDispenser)); // Pirate: chem recipes
+            var refundedPower = soln.Sum(reagent => GetPowerCostForReagent(reagent.Reagent.Prototype, (int) reagent.Quantity, reagentDispenser));
             if (refundedPower > 0)
             {
                 _battery.TryGetBatteryComponent(reagentDispenser, out var batteryComponent, out _);
@@ -216,9 +194,11 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
 
             _solutionContainerSystem.RemoveAllSolution(solution.Value);
             UpdateUiState(reagentDispenser);
-            PlayClickSound(reagentDispenser); // Pirate: chem recipes
+            ClickSound(reagentDispenser);
         }
 
+        private void ClickSound(Entity<EnergyReagentDispenserComponent> reagentDispenser) =>
+            _audioSystem.PlayPvs(reagentDispenser.Comp.ClickSound, reagentDispenser, AudioParams.Default.WithVolume(-2f));
 
         // Pirate: chem plumbing
         private void OnToggleValveMessage(Entity<EnergyReagentDispenserComponent> reagentDispenser, ref EnergyReagentDispenserToggleValveMessage message)
@@ -229,72 +209,16 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
             plumbingOutlet.Enabled = !plumbingOutlet.Enabled;
             Dirty(reagentDispenser.Owner, plumbingOutlet);
             UpdateUiState(reagentDispenser);
-            PlayClickSound(reagentDispenser);
+            ClickSound(reagentDispenser);
         }
 
-        private static float GetPowerCostForReagent(string reagentId, float amount, EnergyReagentDispenserComponent comp) // Pirate: chem recipes
+        private static float GetPowerCostForReagent(string reagentId, int amount, EnergyReagentDispenserComponent comp)
         {
             return comp.Reagents.TryGetValue(reagentId, out var cost)
                 ? cost * amount
                 : float.MaxValue;
         }
-        private void OnMapInit(Entity<EnergyReagentDispenserComponent> entity, ref MapInitEvent args)
-        {
-            EnsureItemSlot(entity.Owner, SharedEnergyReagentDispenser.OutputSlotName, entity.Comp.EnergyBeakerSlot); // Pirate: chem recipes
-            EnsureItemSlot(entity.Owner, SharedEnergyReagentDispenser.RecipeDiskSlotName, entity.Comp.RecipeDiskSlot); // Pirate: chem recipes
-        }
-
-        #region Pirate: chem recipes
-        private void SubscribeUpdateUiState<T>(Entity<EnergyReagentDispenserComponent> ent, ref T ev)
-        {
-            UpdateUiState(ent);
-            if (ev is EntRemovedFromContainerMessage removed &&
-                removed.Container.ID == SharedEnergyReagentDispenser.RecipeDiskSlotName)
-                PlayClickSound(ent);
-        }
-
-        protected override bool TryDispenseRecipe(Entity<EnergyReagentDispenserComponent> reagentDispenser, Dictionary<string, FixedPoint2> recipe)
-        {
-            if (PirateChemRecipeServerHelper.MergeRecipeIntoRecording(reagentDispenser.Comp.RecordingRecipe, recipe))
-                return true;
-
-            var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedEnergyReagentDispenser.OutputSlotName);
-            if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out _, out _))
-                return false;
-
-            if (!_solutionContainerSystem.TryGetRefillableSolution(outputContainer.Value, out var refillable, out var outputSolution))
-                return false;
-
-            var totalRequiredQuantity = recipe.Values.Aggregate(FixedPoint2.Zero, (current, quantity) => current + quantity);
-            if (totalRequiredQuantity > outputSolution.AvailableVolume)
-                return false;
-
-            if (!TryComp<BatteryComponent>(reagentDispenser, out var battery))
-                return false;
-
-            var totalPowerRequired = 0f;
-            foreach (var (reagentId, quantity) in recipe)
-            {
-                if (!reagentDispenser.Comp.Reagents.ContainsKey(reagentId))
-                    return false;
-
-                totalPowerRequired += GetPowerCostForReagent(reagentId, quantity.Float(), reagentDispenser.Comp);
-            }
-
-            if (battery.LastCharge < totalPowerRequired)
-                return false;
-
-            foreach (var (reagentId, quantity) in recipe)
-            {
-                if (!_solutionContainerSystem.TryAddSolution(refillable.Value, new Solution(reagentId, quantity)))
-                    return false;
-            }
-
-            _battery.SetCharge(reagentDispenser.Owner, battery.LastCharge - totalPowerRequired);
-            return true;
-        }
-
-        protected override void UpdateRecipeUiState(Entity<EnergyReagentDispenserComponent> reagentDispenser) => UpdateUiState(reagentDispenser);
-        #endregion
+        private void OnMapInit(Entity<EnergyReagentDispenserComponent> entity, ref MapInitEvent args) =>
+            _itemSlotsSystem.AddItemSlot(entity.Owner, SharedEnergyReagentDispenser.OutputSlotName, entity.Comp.EnergyBeakerSlot);
     }
 }
