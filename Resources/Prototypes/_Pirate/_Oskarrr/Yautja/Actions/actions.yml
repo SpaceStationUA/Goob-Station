@@ -1,0 +1,39 @@
+- type: entity
+  parent: BaseToggleAction
+  id: ActionYautjaToggleClaws
+  name: yautja-bracer-toggle-claws-name
+  description: yautja-bracer-toggle-claws-desc
+  components:
+  - type: Action
+    icon:
+      sprite: _Oskarrr/Yautja/wrist_blades.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:ToggleYautjaClawsEvent {}
+
+- type: entity
+  parent: BaseToggleAction
+  id: ActionYautjaToggleCloak
+  name: yautja-bracer-toggle-cloak-name
+  description: yautja-bracer-toggle-cloak-desc
+  components:
+  - type: Action
+    icon:
+      sprite: _Oskarrr/Yautja/cape_full.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:ToggleYautjaCloakEvent {}
+
+- type: entity
+  parent: BaseAction
+  id: ActionYautjaSelfDestruct
+  name: yautja-bracer-self-destruct-name
+  description: yautja-bracer-self-destruct-desc
+  components:
+  - type: Action
+    priority: -20
+    icon:
+      sprite: Actions/Implants/implants.rsi
+      state: explosive
+  - type: InstantAction
+    event: !type:YautjaBracerSelfDestructEvent {}
