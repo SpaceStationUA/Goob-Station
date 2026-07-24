@@ -286,9 +286,13 @@
     state: medicomp
   - type: Item
     size: Small
-  - type: Hypospray
-    transferAmount: 15
-    onlyAffectsMobs: true
+  - type: Injector
+    solutionName: hypospray
+    currentTransferAmount: 15
+    activeModeProtoId: HyposprayInjectMode
+    allowedModes:
+    - HyposprayInjectMode
+  - type: HyposprayBlockNonMobInjection
   - type: SolutionContainerManager
     solutions:
       hypospray:
@@ -320,9 +324,13 @@
     state: medicomp
   - type: Item
     size: Small
-  - type: Hypospray
-    transferAmount: 10
-    onlyAffectsMobs: true
+  - type: Injector
+    solutionName: hypospray
+    currentTransferAmount: 10
+    activeModeProtoId: HyposprayInjectMode
+    allowedModes:
+    - HyposprayInjectMode
+  - type: HyposprayBlockNonMobInjection
   - type: SolutionContainerManager
     solutions:
       hypospray:

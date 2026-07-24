@@ -237,9 +237,13 @@
     size: Small
   - type: UseDelay
     delay: 1.0
-  - type: Hypospray
-    transferAmount: 30
-    onlyAffectsMobs: true
+  - type: Injector
+    solutionName: hypospray
+    currentTransferAmount: 30
+    activeModeProtoId: HyposprayInjectMode
+    allowedModes:
+    - HyposprayInjectMode
+  - type: HyposprayBlockNonMobInjection
   - type: SolutionContainerManager
     solutions:
       hypospray:

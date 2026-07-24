@@ -602,7 +602,7 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: GoobYautjaPlasmaRifleBolt
     fireCost: 175
   - type: Battery
