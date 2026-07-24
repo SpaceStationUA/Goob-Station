@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Body.Components;
+using Content.Pirate.Common.Bloodstream; // Pirate: BloodDeficiencyComponent
 using Content.Pirate.Server.Traits.Vampirism.Components;
 using Content.Pirate.Shared.Vampire.Components;
 using Content.Server.Body.Systems;
@@ -35,6 +36,9 @@ public sealed class VampirismSystem : EntitySystem
         // Mark vampire blood with VampireToxin on the DnaComponent so future blood generation includes it
         if (TryComp<Content.Shared.Forensics.Components.DnaComponent>(ent, out var dnaComp))
             dnaComp.VampireToxin = true;
+
+        // Pirate: invalidate cached blood data so VampireToxin flag is re-read on next access
+        _bloodstream.InvalidateBloodDataCache((ent.Owner, CompOrNull<BloodstreamComponent>(ent)));
 
         // Mark existing blood solution with VampireToxin so metabolism effects won't apply
         MarkVampireBloodWithToxin(ent);

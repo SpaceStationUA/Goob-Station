@@ -1,4 +1,5 @@
 using Content.Goobstation.Common.Bloodstream;
+using Content.Pirate.Common.Bloodstream; // Pirate: BloodRegenerationModifierEvent
 using Content.Goobstation.Common.CCVar; // Goobstation
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared._Shitmed.Body;
@@ -94,7 +95,15 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
 
             if (!_mobStateSystem.IsDead(uid))
             {
-                TryRegulateBloodLevel(uid, bloodstream.BloodRefreshAmount);
+                // Pirate: raise event so other systems can modify or cancel blood regeneration
+                var regenEv = new BloodRegenerationModifierEvent((float) bloodstream.BloodRefreshAmount);
+                RaiseLocalEvent(uid, regenEv);
+                TryModifyBloodLevel(uid, FixedPoint2.New(regenEv.Amount));
+                //var regenAmount = FixedPoint2.New(regenEv.Amount);
+                //if (regenAmount > FixedPoint2.Zero)
+                //    TryRegulateBloodLevel(uid, regenAmount);
+                //else if (regenAmount < FixedPoint2.Zero)
+                //    TryModifyBloodLevel(uid, regenAmount);
 
                 TickBleed((uid, bloodstream));
 
@@ -699,6 +708,18 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
     }
 
     /// <summary>
+    /// Pirate: Invalidates the cached blood data so it is re-read from DnaComponent on next access.
+    /// Call this when DnaComponent fields (VampireToxin, TastyBlood) change after init.
+    /// </summary>
+    public void InvalidateBloodDataCache(Entity<BloodstreamComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.BloodData = null;
+    }
+
+    /// <summary>
     /// Get the reagent data for blood that a specific entity should have.
     /// </summary>
     public List<ReagentData> GetEntityBloodData(Entity<BloodstreamComponent?> entity)
@@ -728,6 +749,7 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
 
+        dnaData.TastyBlood = HasComp<TastyBloodComponent>(uid); // Pirate: mark blood as tasty
         bloodData.Add(dnaData);
         return bloodData;
     }
