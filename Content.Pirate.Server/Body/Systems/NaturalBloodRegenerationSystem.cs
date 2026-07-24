@@ -46,13 +46,17 @@ public sealed class NaturalBloodRegenerationSystem : EntitySystem
         var bloodIsBelowFull = bloodLevel < 1.0f;
         var amount = args.Amount;
 
+        // Override regen amount with blood deficiency drain.
         if (HasComp<BloodDeficiencyComponent>(ent))
         {
             var deficiency = Comp<BloodDeficiencyComponent>(ent);
             amount = deficiency.DrainPerTick;
         }
-        if (bloodIsBelowFull && amount >= 0f)
+
+        // No regeneration needed when blood is full (and not draining).
+        if (!bloodIsBelowFull && amount > 0f)
         {
+            args.Amount = 0f;
             return;
         }
 

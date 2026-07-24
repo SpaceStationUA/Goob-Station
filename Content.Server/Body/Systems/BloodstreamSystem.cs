@@ -74,7 +74,6 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
 
         if (TryComp<DnaComponent>(uid, out var donorComp))
         {
-            dnaData.VampireToxin = donorComp.VampireToxin; // Pirate
             if (donorComp.DNA != null)
                 dnaData.DNA = donorComp.DNA;
             else
@@ -83,7 +82,6 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
 
-        dnaData.TastyBlood = HasComp<TastyBloodComponent>(uid); // Pirate
         bloodData.Add(dnaData);
 
         return bloodData;

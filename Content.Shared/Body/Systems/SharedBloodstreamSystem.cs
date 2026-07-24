@@ -99,12 +99,6 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
                 var regenEv = new BloodRegenerationModifierEvent((float) bloodstream.BloodRefreshAmount);
                 RaiseLocalEvent(uid, regenEv);
                 TryModifyBloodLevel(uid, FixedPoint2.New(regenEv.Amount));
-                //var regenAmount = FixedPoint2.New(regenEv.Amount);
-                //if (regenAmount > FixedPoint2.Zero)
-                //    TryRegulateBloodLevel(uid, regenAmount);
-                //else if (regenAmount < FixedPoint2.Zero)
-                //    TryModifyBloodLevel(uid, regenAmount);
-
                 TickBleed((uid, bloodstream));
 
                 // deal bloodloss damage if their blood level is below a threshold.
@@ -709,7 +703,6 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
 
     /// <summary>
     /// Pirate: Invalidates the cached blood data so it is re-read from DnaComponent on next access.
-    /// Call this when DnaComponent fields (VampireToxin, TastyBlood) change after init.
     /// </summary>
     public void InvalidateBloodDataCache(Entity<BloodstreamComponent?> ent)
     {
@@ -740,8 +733,7 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
 
         if (TryComp<DnaComponent>(uid, out var donorComp))
         {
-            dnaData.VampireToxin = donorComp.VampireToxin; // Pirate
-            if (donorComp.DNA != null)
+                if (donorComp.DNA != null)
                 dnaData.DNA = donorComp.DNA;
             else
                 dnaData.DNA = Loc.GetString("forensics-dna-unknown");
@@ -749,7 +741,6 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
 
-        dnaData.TastyBlood = HasComp<TastyBloodComponent>(uid); // Pirate: mark blood as tasty
         bloodData.Add(dnaData);
         return bloodData;
     }

@@ -15,7 +15,6 @@ using Content.Pirate.Shared.Vampirism.Events;
 using Content.Pirate.Server.Traits.Vampirism.Components;
 using Content.Pirate.Server.Vampire.Systems;
 using Content.Goobstation.Common.Religion;
-//using Content.Shared.Cocoon;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
@@ -46,18 +45,14 @@ using Content.Shared.Mobs.Components;
 using Content.Shared._EinsteinEngines.Silicon.Components;
 using Robust.Shared.Audio;
 
-
 namespace Content.Pirate.Server.Traits.Vampirism.Systems
 {
     public sealed class BloodSuckerSystem : EntitySystem
     {
-        [Dependency] private readonly BodySystem _bodySystem = default!;
-        [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionSystem = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly StomachSystem _stomachSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -66,6 +61,7 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly VampireSystem _vampireSystem = default!;
         [Dependency] private readonly HungerSystem _hunger = default!;
+        [Dependency] private readonly ThirstSystem _thirst = default!;
         [Dependency] private readonly RottingSystem _rotting = default!;
 
         public override void Initialize()
@@ -79,9 +75,7 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
 
         private void AddSuccVerb(EntityUid uid, BloodSuckerComponent component, GetVerbsEvent<InnateVerb> args)
         {
-
             var victim = args.Target;
-            var ignoreClothes = false;
 
             if (!TryComp<BloodstreamComponent>(victim, out var bloodstream) || args.User == victim || !args.CanAccess)
                 return;
@@ -90,7 +84,7 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
             {
                 Act = () =>
                 {
-                    StartSuccDoAfter(uid, victim, component, bloodstream, !ignoreClothes); // start doafter
+                    StartSuccDoAfter(uid, victim, component, bloodstream);
                 },
                 Text = Loc.GetString("action-name-suck-blood"),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Nyanotrasen/Icons/verbiconfangs.png")),
@@ -126,60 +120,38 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
             if (success)
                 args.Repeat = true;
         }
-        public void StartSuccDoAfter(EntityUid bloodsucker, EntityUid victim, BloodSuckerComponent? bloodSuckerComponent = null, BloodstreamComponent? stream = null, bool doChecks = true)
+
+        public void StartSuccDoAfter(EntityUid bloodsucker, EntityUid victim, BloodSuckerComponent? bloodSuckerComponent = null, BloodstreamComponent? stream = null)
         {
             if (!Resolve(bloodsucker, ref bloodSuckerComponent) || !Resolve(victim, ref stream))
                 return;
 
-            if (doChecks)
-            {
-                if (!_interactionSystem.InRangeUnobstructed(bloodsucker, victim))
-                    return;
+            // Hard checks: block the action before doafter starts
 
-                // Block if the bloodsucker cant suck
-                var ingestAttempt = new IngestionAttemptEvent(IngestionSystem.DefaultFlags);
-                RaiseLocalEvent(bloodsucker, ref ingestAttempt);
-                if (ingestAttempt.Cancelled)
-                    return;
-                // Block if the victim is wearing pressure-protecting headgear, because that would be only thing that really hard to bite through
-                if (_inventorySystem.TryGetSlotEntity(victim, "head", out var head) && HasComp<PressureProtectionComponent>(head))
-                {
-                    _popups.PopupEntity(Loc.GetString("bloodsucker-fail-mouth-blocked", ("target", victim)), victim, bloodsucker, PopupType.Medium);
-                    return;
-                }
-                if (_rotting.IsRotten(victim))
-                {
-                    _popups.PopupEntity(Loc.GetString("vampire-blooddrink-rotted"), victim, bloodsucker, PopupType.Medium);
-                    return;
-                }
-                // is bloodsucker have mouth free?
-                if (IsMouthBlocked(bloodsucker))
-                {
-                    _popups.PopupEntity(Loc.GetString("vampire-mouth-covered"), bloodsucker, bloodsucker);
-                    return;
-                }
-                // Warn if the victim is another vampire
-                if (HasComp<VampireComponent>(victim) || HasComp<VampirismComponent>(victim))
-                {
-                    _popups.PopupEntity(Loc.GetString("bloodsucker-victim-is-vampire"), victim, bloodsucker, PopupType.MediumCaution);
-                }
-            }
-            // Antag vampires get an early heads-up that a faith-protected victim will give no power.
-            // Drinking is still allowed, they just won't feed on the blood (see TryGainVampirePower).
+            if (!CanBite(bloodsucker, victim, bloodSuckerComponent, stream))
+                return;
+
+            // Soft checks: warn but don't block
+            if (_rotting.IsRotten(victim))
+                _popups.PopupEntity(Loc.GetString("vampire-blooddrink-rotted"), victim, bloodsucker, PopupType.Medium);
+
+            if (HasComp<VampireComponent>(victim) || HasComp<VampirismComponent>(victim))
+                _popups.PopupEntity(Loc.GetString("bloodsucker-victim-is-vampire"), victim, bloodsucker, PopupType.MediumCaution);
+
+            // TastyBloodComponent marks humanoid/animal blood — if missing, blood is from an alien/creature.
+            if (!HasComp<TastyBloodComponent>(victim))
+                _popups.PopupEntity(Loc.GetString("bloodsucker-not-blood", ("target", victim)), victim, bloodsucker, PopupType.Medium);
+
+            if (_bloodstreamSystem.GetBloodLevel((victim, stream)) == 0.0f)
+                _popups.PopupEntity(Loc.GetString("bloodsucker-fail-no-blood", ("target", victim)), victim, bloodsucker, PopupType.Medium);
+
             if (TryComp<VampireComponent>(bloodsucker, out var vamp)
                 && !vamp.FullPower
                 && _vampireSystem.IsProtectedByFaith(victim))
-            {
                 _popups.PopupEntity(Loc.GetString("vampire-target-protected-by-faith"), bloodsucker, bloodsucker, PopupType.MediumCaution);
-            }
 
-            if (GetPrimaryBloodReagent(stream) != "Blood")
-                _popups.PopupEntity(Loc.GetString("bloodsucker-not-blood", ("target", victim)), victim, bloodsucker, PopupType.Medium);
-            else if (_solutionSystem.PercentFull(victim) != 0)
-                _popups.PopupEntity(Loc.GetString("bloodsucker-fail-no-blood", ("target", victim)), victim, bloodsucker, PopupType.Medium);
-            else
-                _popups.PopupEntity(Loc.GetString("bloodsucker-doafter-start", ("target", victim)), victim, bloodsucker, PopupType.Medium);
-
+            // All good — show doafter messages and start.
+            _popups.PopupEntity(Loc.GetString("bloodsucker-doafter-start", ("target", victim)), victim, bloodsucker, PopupType.Medium);
             _popups.PopupEntity(Loc.GetString("bloodsucker-doafter-start-victim", ("sucker", bloodsucker)), victim, victim, PopupType.LargeCaution);
 
             var args = new DoAfterArgs(EntityManager, bloodsucker, bloodSuckerComponent.Delay, new BloodSuckDoAfterEvent(), bloodsucker, target: victim)
@@ -193,88 +165,166 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
 
             _doAfter.TryStartDoAfter(args);
         }
-
-        public bool TrySucc(EntityUid bloodsucker, EntityUid victim, BloodSuckerComponent? bloodsuckerComp = null)
+        /// <summary>
+        /// Returns true if the bite should be blocked completely.
+        /// These are fundamental feasibility checks — if any fail, nothing happens.
+        /// </summary>
+        private bool CanBite(EntityUid bloodsucker, EntityUid victim, BloodSuckerComponent comp, BloodstreamComponent stream)
         {
-            // Is bloodsucker a bloodsucker?
-            if (!Resolve(bloodsucker, ref bloodsuckerComp))
-                return false;
-
-            // Check for IPCs/silicons
+            // Check for IPCs/silicons — they have no blood.
             if (HasComp<SiliconComponent>(victim))
             {
                 _popups.PopupEntity(Loc.GetString("vampire-drink-target-not-viable"), bloodsucker, bloodsucker, PopupType.MediumCaution);
                 return false;
             }
 
-            // Does victim have a bloodstream?
-            if (!TryComp<BloodstreamComponent>(victim, out var bloodstream))
+            // Bloodsucker must be able to bite — check ingestion ability.
+            var ingestAttempt = new IngestionAttemptEvent(IngestionSystem.DefaultFlags);
+            RaiseLocalEvent(bloodsucker, ref ingestAttempt);
+            if (ingestAttempt.Cancelled)
                 return false;
 
-            // No blood left, yikes.
-            if (_bloodstreamSystem.GetBloodLevel((victim, bloodstream)) == 0.0f)
+            // Bloodsucker's mouth must be free (no mask/head blocking).
+            if (IsMouthBlocked(bloodsucker))
             {
-                _popups.PopupEntity(Loc.GetString("bloodsucker-fail-no-blood", ("target", victim)), victim, bloodsucker, PopupType.Medium);
+                _popups.PopupEntity(Loc.GetString("vampire-mouth-covered"), bloodsucker, bloodsucker);
                 return false;
             }
 
-            // Does bloodsucker have a stomach?
-            List<Entity<StomachComponent, OrganComponent>>? stomachList;
-            if (!_bodySystem.TryGetBodyOrganEntityComps<StomachComponent>(bloodsucker, out stomachList)
-                || stomachList == null || stomachList.Count == 0)
+            // Victim's head must not have pressure-protecting gear (hard to bite through).
+            if (_inventorySystem.TryGetSlotEntity(victim, "head", out var head) && HasComp<PressureProtectionComponent>(head))
             {
+                _popups.PopupEntity(Loc.GetString("bloodsucker-fail-mouth-blocked", ("target", victim)), victim, bloodsucker, PopupType.Medium);
                 return false;
             }
 
-            if (!_solutionSystem.TryGetSolution(stomachList[0].Comp2.Owner, StomachSystem.DefaultSolutionName, out var stomachSolution))
+            // Must be in range and unobstructed.
+            if (!_interactionSystem.InRangeUnobstructed(bloodsucker, victim))
                 return false;
 
-            // Are we too full?
-
-            if (_solutionSystem.PercentFull(bloodsucker) >= 1)
-            {
-                _popups.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough"), bloodsucker, bloodsucker, PopupType.MediumCaution);
+            // Bloodstream solution must exist.
+            if (stream.BloodSolution == null)
                 return false;
-            }
-
-            _adminLogger.Add(LogType.MeleeHit, LogImpact.Medium, $"{ToPrettyString(bloodsucker):player} sucked blood from {ToPrettyString(victim):target}");
-
-            // All good, succ time.
-            _audio.PlayPvs("/Audio/Items/drink.ogg", bloodsucker);
-            _popups.PopupEntity(Loc.GetString("bloodsucker-blood-sucked-victim", ("sucker", bloodsucker)), victim, victim, PopupType.LargeCaution);
-            _popups.PopupEntity(Loc.GetString("bloodsucker-blood-sucked", ("target", victim)), bloodsucker, bloodsucker, PopupType.Medium);
-            EnsureComp<BloodSuckedComponent>(victim);
-
-            // Make everything actually ingest.
-            if (bloodstream.BloodSolution == null)
-                return false;
-
-            var temp = _solutionSystem.SplitSolution(bloodstream.BloodSolution.Value, bloodsuckerComp.UnitsToSucc);
-            _stomachSystem.TryTransferSolution(stomachList[0].Comp2.Owner, temp, stomachList[0].Comp1);
-
-            // Add a little pierce
-            DamageSpecifier damage = new();
-            damage.DamageDict.Add("Piercing", 1); // Slowly accumulate enough to gib after like half an hour
-
-            _damageableSystem.TryChangeDamage(victim, damage, true, true);
-
-            //I'm not porting the nocturine gland, this code is deprecated, and will be reworked at a later date.
-            //if (bloodsuckerComp.InjectWhenSucc && _solutionSystem.TryGetInjectableSolution(victim, out var injectable))
-            //{
-            //    _solutionSystem.TryAddReagent(victim, injectable, bloodsuckerComp.InjectReagent, bloodsuckerComp.UnitsToInject, out var acceptedQuantity);
-            //}
-
-            // Antag vampires additionally feed on the blood to power their abilities.
-            if (TryComp<VampireComponent>(bloodsucker, out var vamp))
-                TryGainVampirePower(bloodsucker, vamp, victim, temp.Volume.Float());
 
             return true;
         }
 
         /// <summary>
-        /// Antag-only follow up to a successful bite. Runs the additional checks the old
-        /// VampireComponent drinking system had and, if they pass, feeds the vampire's power.
-        /// On a failed check the vampire still drank normally but is warned and gains nothing.
+        /// Evaluates soft conditions that determine whether the bloodsucker receives buffs.
+        /// Returns a record describing what's allowed.
+        /// </summary>
+        private SuckResult EvaluateSuck(EntityUid bloodsucker, EntityUid victim, BloodSuckerComponent comp, BloodstreamComponent stream)
+        {
+            var result = new SuckResult();
+
+            // Check if victim is rotten — no buffs from rotten blood.
+            if (_rotting.IsRotten(victim))
+                result.NoBuffs = true;
+
+            // Check if victim is another vampire or has vampirism trait — no power.
+            if (HasComp<VampireComponent>(victim) || HasComp<VampirismComponent>(victim))
+                result.NoPower = true;
+
+            // Check if victim has no blood left.
+            if (_bloodstreamSystem.GetBloodLevel((victim, stream)) == 0.0f)
+                result.NoBlood = true;
+
+            // TastyBloodComponent marks humanoid/animal blood — verify victim is a valid blood source.
+            // Without it, the blood is from an alien/creature and grants no buffs.
+            if (!HasComp<TastyBloodComponent>(victim))
+                result.NoBuffs = true;
+
+            // Faith-protected victims give no power (unless vampire is full power).
+            if (TryComp<VampireComponent>(bloodsucker, out var vamp)
+                && !vamp.FullPower
+                && _vampireSystem.IsProtectedByFaith(victim))
+                result.NoPower = true;
+
+            return result;
+        }
+
+        public bool TrySucc(EntityUid bloodsucker, EntityUid victim, BloodSuckerComponent? bloodsuckerComp = null)
+        {
+            // Resolve bloodsucker component
+            if (!Resolve(bloodsucker, ref bloodsuckerComp))
+                return false;
+
+            // Resolve victim bloodstream
+            if (!TryComp<BloodstreamComponent>(victim, out var bloodstream))
+                return false;
+
+            // Hard checks — block entirely if infeasible
+            if (!CanBite(bloodsucker, victim, bloodsuckerComp, bloodstream))
+                return false;
+
+            // Soft checks — evaluate buff eligibility
+            var result = EvaluateSuck(bloodsucker, victim, bloodsuckerComp, bloodstream);
+
+            // Success — blood is drawn, effects applied
+            _adminLogger.Add(LogType.MeleeHit, LogImpact.Medium, $"{ToPrettyString(bloodsucker):player} sucked blood from {ToPrettyString(victim):target}");
+
+            // Play sound and show popups.
+            _audio.PlayPvs("/Audio/Items/drink.ogg", bloodsucker);
+            _popups.PopupEntity(Loc.GetString("bloodsucker-blood-sucked-victim", ("sucker", bloodsucker)), victim, victim, PopupType.LargeCaution);
+            _popups.PopupEntity(Loc.GetString("bloodsucker-blood-sucked", ("target", victim)), bloodsucker, bloodsucker, PopupType.Medium);
+            EnsureComp<BloodSuckedComponent>(victim);
+
+            var unitsSucked = bloodsuckerComp.UnitsToSucc;
+
+            // Drain blood from victim (always happens if blood exists).
+            if (!result.NoBlood && bloodstream.BloodSolution != null)
+            {
+                var temp = _solutionSystem.SplitSolution(bloodstream.BloodSolution.Value, unitsSucked);
+
+                // Transfer any chemicals/poisons from the victim's blood into the bloodsucker's bloodstream.
+                // This means poisoned blood can still harm the bloodsucker.
+                if (TryComp<BloodstreamComponent>(bloodsucker, out var suckerStream)
+                    && suckerStream.BloodSolution != null)
+                {
+                    var chems = _bloodstreamSystem.FlushChemicals((victim, bloodstream), unitsSucked);
+                    if (chems != null)
+                        _bloodstreamSystem.TryAddToBloodstream((bloodsucker, suckerStream), chems);
+                }
+
+                // Apply blood buffs (only if soft checks allow).
+                if (!result.NoBuffs)
+                {
+                    // Restore blood level (counters BloodDeficiency drain).
+                    _bloodstreamSystem.TryModifyBloodLevel((bloodsucker, null), FixedPoint2.New(unitsSucked * 0.05f));
+
+                    // Reduce bleeding.
+                    _bloodstreamSystem.TryModifyBleedAmount((bloodsucker, null), unitsSucked * -0.05f);
+
+                    // Satisfy hunger.
+                    _hunger.ModifyHunger(bloodsucker, unitsSucked * 1.5f);
+
+                    // Satisfy thirst directly.
+                    if (TryComp<ThirstComponent>(bloodsucker, out var thirst))
+                        _thirst.ModifyThirst(bloodsucker, thirst, unitsSucked * 0.5f);
+
+                    // Heal brute and burn damage.
+                    var healing = new DamageSpecifier();
+                    healing.DamageDict.Add("Brute", unitsSucked * -0.6f);
+                    healing.DamageDict.Add("Burn", unitsSucked * -0.25f);
+                    _damageableSystem.TryChangeDamage(bloodsucker, healing, true);
+                }
+
+                // Antag vampires feed on the blood to power their abilities.
+                // NoPower is true for: vampire victims, faith-protected, rotten, not-blood.
+                if (!result.NoPower && !result.NoBuffs && TryComp<VampireComponent>(bloodsucker, out var vamp))
+                    TryGainVampirePower(bloodsucker, vamp, victim, unitsSucked);
+            }
+
+            // Add a little pierce damage to victim (always happens).
+            DamageSpecifier pierce = new();
+            pierce.DamageDict.Add("Piercing", 1);
+            _damageableSystem.TryChangeDamage(victim, pierce, true, true);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Antag-only follow-up to a successful bite. Feeds the vampire's power system.
         /// </summary>
         private void TryGainVampirePower(EntityUid uid, VampireComponent comp, EntityUid target, float drunkAmount)
         {
@@ -330,8 +380,6 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
             if (bloodGained <= 0f)
                 return;
 
-            // Damage, sound and other side effects of biting are handled by the shared TrySucc flow.
-            // Here antags only convert the drawn blood into usable power.
             _vampireSystem.AddBlood(uid, comp, bloodGained, target, countTotalBlood: targetIsHumanoid);
         }
 
@@ -344,12 +392,7 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
             _ => comp.Rot4Efficiency,
         };
 
-        private static string GetPrimaryBloodReagent(BloodstreamComponent bloodstream)
-        {
-            return bloodstream.BloodReferenceSolution.Contents.Count == 0
-                ? "Blood"
-                : bloodstream.BloodReferenceSolution.Contents[0].Reagent.Prototype;
-        }
+
 
         private bool IsMouthBlocked(EntityUid uid)
         {
@@ -359,12 +402,25 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
             var slots = new[] { "mask", "head" };
             foreach (var slot in slots)
                 if (_inventorySystem.TryGetSlotEntity(uid, slot, out var ent) &&
-                    TryComp<IngestionBlockerComponent>(ent.Value, out var blocker) &&
-                    blocker.Enabled)
-
+                    TryComp<IngestionBlockerComponent>(ent.Value, out var blocker) && blocker.Enabled)
                     return true;
 
             return false;
+        }
+
+        /// <summary>
+        /// Result of soft-check evaluation. Determines what buffs the bloodsucker receives.
+        /// </summary>
+        private sealed class SuckResult
+        {
+            /// <summary>If true, blood is still drained but no healing/hunger/thirst/blood restore.</summary>
+            public bool NoBuffs;
+
+            /// <summary>If true, vampire power system is not fed.</summary>
+            public bool NoPower;
+
+            /// <summary>If true, victim has no blood to drain.</summary>
+            public bool NoBlood;
         }
     }
 }
