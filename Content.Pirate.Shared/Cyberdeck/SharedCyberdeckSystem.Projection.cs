@@ -18,6 +18,23 @@ public abstract partial class SharedCyberdeckSystem
     {
         SubscribeLocalEvent<CyberdeckUserComponent, CyberdeckVisionEvent>(OnCyberVisionUsed);
         SubscribeLocalEvent<CyberdeckUserComponent, CyberdeckVisionReturnEvent>(OnCyberVisionReturn);
+        SubscribeLocalEvent<CyberdeckSiliconTargetComponent, GetVisMaskEvent>(OnSiliconGetVisMask);
+        SubscribeLocalEvent<CyberdeckSiliconTargetComponent, MapInitEvent>(OnSiliconMapInit);
+    }
+
+    private static void OnSiliconGetVisMask(
+        Entity<CyberdeckSiliconTargetComponent> ent,
+        ref GetVisMaskEvent args)
+    {
+        args.VisibilityMask |= (int) VisibilityFlags.StationAiNetwork;
+    }
+
+    private void OnSiliconMapInit(Entity<CyberdeckSiliconTargetComponent> ent, ref MapInitEvent args)
+    {
+        if (_net.IsClient || !TryComp(ent, out EyeComponent? eye))
+            return;
+
+        _eye.RefreshVisibilityMask((ent.Owner, eye));
     }
 
     private void AttachToProjection(Entity<CyberdeckUserComponent> user)
