@@ -15,7 +15,10 @@ public sealed partial class PolymorphOnTriggerSystem : EntitySystem
     /// an entity we're colliding with in case of TriggerOnCollide.
     /// Also makes sure other trigger effects don't activate in nullspace after we have polymorphed.
     /// </summary>
-    private Queue<(EntityUid Uid, ProtoId<PolymorphPrototype> Polymorph)> _queuedPolymorphUpdates = new();
+    private readonly Queue<(EntityUid Uid, ProtoId<PolymorphPrototype> Polymorph)> _queuedPolymorphUpdates = new();
+
+    // Pirate: multiple contacts in one physics step must not polymorph the same hidden parent repeatedly.
+    private readonly HashSet<EntityUid> _queuedPolymorphTargets = [];
 
     public override void Initialize()
     {
@@ -34,7 +37,9 @@ public sealed partial class PolymorphOnTriggerSystem : EntitySystem
         if (target == null)
             return;
 
-        _queuedPolymorphUpdates.Enqueue((target.Value, ent.Comp.Polymorph));
+        if (_queuedPolymorphTargets.Add(target.Value))
+            _queuedPolymorphUpdates.Enqueue((target.Value, ent.Comp.Polymorph));
+
         args.Handled = true;
     }
 
@@ -42,10 +47,17 @@ public sealed partial class PolymorphOnTriggerSystem : EntitySystem
     {
         while (_queuedPolymorphUpdates.TryDequeue(out var data))
         {
-            if (TerminatingOrDeleted(data.Uid))
-                continue;
+            try
+            {
+                if (TerminatingOrDeleted(data.Uid))
+                    continue;
 
-            _polymorph.PolymorphEntity(data.Uid, data.Polymorph);
+                _polymorph.PolymorphEntity(data.Uid, data.Polymorph);
+            }
+            finally
+            {
+                _queuedPolymorphTargets.Remove(data.Uid);
+            }
         }
     }
 }
