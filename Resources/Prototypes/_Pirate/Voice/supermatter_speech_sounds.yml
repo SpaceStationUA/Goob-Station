@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: speechSounds
+  id: PirateSupermatterWarning
+  variation: 0
+  saySound:
+    path: /Audio/_Pirate/Supermatter/status/terminal_alert.ogg
+  askSound:
+    path: /Audio/_Pirate/Supermatter/status/terminal_alert.ogg
+  exclaimSound:
+    path: /Audio/_Pirate/Supermatter/status/terminal_alert.ogg
+
+- type: speechSounds
+  id: PirateSupermatterDanger
+  variation: 0
+  saySound:
+    path: /Audio/_Pirate/Supermatter/status/engine_alert2.ogg
+  askSound:
+    path: /Audio/_Pirate/Supermatter/status/engine_alert2.ogg
+  exclaimSound:
+    path: /Audio/_Pirate/Supermatter/status/engine_alert2.ogg
+
+- type: speechSounds
+  id: PirateSupermatterEmergency
+  variation: 0
+  saySound:
+    path: /Audio/_Pirate/Supermatter/status/engine_alert1.ogg
+  askSound:
+    path: /Audio/_Pirate/Supermatter/status/engine_alert1.ogg
+  exclaimSound:
+    path: /Audio/_Pirate/Supermatter/status/engine_alert1.ogg
+
+- type: speechSounds
+  id: PirateSupermatterDelaminating
+  variation: 0
+  saySound:
+    path: /Audio/_Pirate/Supermatter/status/ohfuck.ogg
+  askSound:
+    path: /Audio/_Pirate/Supermatter/status/ohfuck.ogg
+  exclaimSound:
+    path: /Audio/_Pirate/Supermatter/status/ohfuck.ogg
