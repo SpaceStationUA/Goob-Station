@@ -34,6 +34,11 @@
     RFoot: MobSlimeRFoot
     Tail: MobSlimeMarkingFollowSkin #Pirate Changes start
     HeadSide: MobSlimeMarkingFollowSkin #Pirate Changes end
+    # Pirate: slime morph - host layers for copied race features (ears/horns, snouts, wings).
+    # Routed to an "any marking" base sprite so the mimic system controls their colors directly.
+    HeadTop: MobSlimeMarkingBlend # Pirate: slime morph
+    Snout: MobSlimeMarkingBlend # Pirate: slime morph
+    Wings: MobSlimeMarkingBlend # Pirate: slime morph
 
 - type: markingPoints
   id: MobSlimeMarkingLimits
@@ -88,11 +93,33 @@
       points: 3
       required: false
     # PIRATE END
+    # Pirate: slime morph - marking points for copied race features so mimicked parts fit.
+    HeadTop:
+      points: 3
+      required: false
+    Snout:
+      points: 1
+      required: false
+    Wings:
+      points: 1
+      required: false
+    Head:
+      points: 3
+      required: false
+    Groin:
+      points: 2
+      required: false
+    # Pirate: slime morph end
 
 - type: humanoidBaseSprite
   id: MobSlimeMarkingFollowSkin
   markingsMatchSkin: true
   layerAlpha: 0.75
+
+# Pirate: slime morph - empty base sprite (markings keep their own colors). The slime morph
+# system writes pre-tinted, translucent colors onto copied markings, so this must NOT match skin.
+- type: humanoidBaseSprite
+  id: MobSlimeMarkingBlend
 
 - type: humanoidBaseSprite
   id: MobSlimeHead
