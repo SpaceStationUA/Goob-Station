@@ -289,6 +289,15 @@
   - type: Hypospray
     transferAmount: 15
     onlyAffectsMobs: true
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 30
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 15
+        - ReagentId: Dermaline
+          Quantity: 15
 
 - type: entity
   parent: GoobYautjaHealthShardHalf
@@ -297,6 +306,7 @@
   description: "Розділений цілющий уламок яутжа."
   components:
   - type: Sprite
+    sprite: _Oskarrr/Yautja/health_shard.rsi
     state: shard_icon
 
 - type: entity
@@ -313,6 +323,15 @@
   - type: Hypospray
     transferAmount: 10
     onlyAffectsMobs: true
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 20
+        reagents:
+        - ReagentId: Inaprovaline
+          Quantity: 10
+        - ReagentId: TranexamicAcid
+          Quantity: 10
 
 - type: entity
   parent: BaseItem
