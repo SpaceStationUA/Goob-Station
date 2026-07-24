@@ -1525,7 +1525,7 @@ namespace Content.Client.Lobby.UI
                 };
                 remove.AddChild(new TextureRect
                 {
-                    TexturePath = "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-cancel.svg.192dpi.png",
+                    TexturePath = "/Textures/Interface/VerbIcons/close.svg.192dpi.png",
                     SetSize = new Vector2(16, 16),
                     VerticalAlignment = VAlignment.Center,
                     HorizontalAlignment = HAlignment.Center,

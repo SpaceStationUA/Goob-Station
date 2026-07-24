@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Maths.FixedPoint;
-using Content.Shared.Chemistry.Reagent; // Pirate: chem recipes
 using Robust.Shared.Serialization;
 using Content.Shared.Chemistry;
 
@@ -13,10 +12,6 @@ namespace Content.Goobstation.Shared.Chemistry
     public static class SharedEnergyReagentDispenser
     {
         public const string OutputSlotName = "energyBeakerSlot";
-        #region Pirate: chem recipes
-        public const string RecipeDiskSlotName = "recipeDiskSlot";
-        public const int RecipeNameMaxLength = 16;
-        #endregion
     }
 
     [Serializable, NetSerializable]
@@ -92,7 +87,7 @@ namespace Content.Goobstation.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class EnergyReagentDispenserBoundUserInterfaceState(  // Pirate: chem recipes
+    public sealed class EnergyReagentDispenserBoundUserInterfaceState(
         ContainerInfo? outputContainer,
         NetEntity? outputContainerEntity,
         List<EnergyReagentInventoryItem> inventory,
@@ -103,12 +98,7 @@ namespace Content.Goobstation.Shared.Chemistry
         float idleUse,
         bool usingBattery,
         bool hasPower,
-        bool valveOpen, // Pirate: chem plumbing
-        List<ReagentDispenserRecipeItem> savedRecipes,
-        bool hasRecipeDisk,
-        List<ReagentDispenserRecipeItem> diskRecipes,
-        bool isRecordingRecipe,
-        List<ReagentQuantity> recordingRecipeReagents)
+        bool valveOpen) // Pirate: chem plumbing
         : BoundUserInterfaceState
     {
         public readonly ContainerInfo? OutputContainer = outputContainer;
@@ -128,13 +118,6 @@ namespace Content.Goobstation.Shared.Chemistry
         public readonly bool UsingBattery = usingBattery;
         public readonly bool HasPower = hasPower;
         public readonly bool ValveOpen = valveOpen; // Pirate: chem plumbing
-        #region Pirate: chem recipes
-        public readonly List<ReagentDispenserRecipeItem> SavedRecipes = savedRecipes;
-        public readonly bool HasRecipeDisk = hasRecipeDisk;
-        public readonly List<ReagentDispenserRecipeItem> DiskRecipes = diskRecipes;
-        public readonly bool IsRecordingRecipe = isRecordingRecipe;
-        public readonly List<ReagentQuantity> RecordingRecipeReagents = recordingRecipeReagents;
-        #endregion
     }
 
     [Serializable, NetSerializable]
