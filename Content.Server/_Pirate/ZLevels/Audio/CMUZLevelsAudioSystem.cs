@@ -50,11 +50,12 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
         Subs.CVar(_config, CCVars.CEZLevelsCrossZAudio, OnCrossZAudioChanged, true);
         Subs.CVar(_config, CCVars.CEZLevelsCrossZAudioDebug, v => _debug = v, true);
 
-        // MoveEvent catches PlayPvs(coords) audio (footsteps, gunshots); MapInitEvent catches
-        // PlayPvs(uid) audio (jukeboxes) parented to an entity without a world-position transition.
-        SubscribeLocalEvent<AudioComponent, MoveEvent>(OnAudioMove);
+        // Parent changes and map init discover new sources. Only sources on a Z map receive the
+        // movement marker, keeping ordinary-map MoveEvents out of this system entirely.
         SubscribeLocalEvent<AudioComponent, MapInitEvent>(OnAudioMapInit);
+        SubscribeLocalEvent<AudioComponent, EntParentChangedMessage>(OnAudioParentChanged);
         SubscribeLocalEvent<AudioComponent, ComponentShutdown>(OnAudioShutdown);
+        SubscribeLocalEvent<CMUZLevelAudioActiveComponent, MoveEvent>(OnAudioMove);
     }
 
     private void OnCrossZAudioChanged(bool enabled)
@@ -79,34 +80,62 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
         _processed.Clear();
     }
 
-    private void OnAudioMove(Entity<AudioComponent> ent, ref MoveEvent args)
+    private void OnAudioMove(Entity<CMUZLevelAudioActiveComponent> active, ref MoveEvent args)
     {
-        if (_processed.Remove(ent) && _projectionsBySource.Remove(ent, out var stale))
+        if (!TryComp<AudioComponent>(active, out var audio))
         {
-            foreach (var p in stale)
-            {
-                _projections.Remove(p);
-                if (!TerminatingOrDeleted(p))
-                    QueueDel(p);
-            }
+            RemComp<CMUZLevelAudioActiveComponent>(active);
+            return;
         }
-        TryProject(ent, args.Component);
+
+        Entity<AudioComponent> ent = (active, audio);
+        ClearSourceProjections(ent);
+        RefreshAudioSource(ent, args.Component);
     }
 
     private void OnAudioMapInit(Entity<AudioComponent> ent, ref MapInitEvent args)
     {
         if (!TryComp<TransformComponent>(ent, out var xform))
             return;
-        TryProject(ent, xform);
+
+        RefreshAudioSource(ent, xform);
+    }
+
+    private void OnAudioParentChanged(Entity<AudioComponent> ent, ref EntParentChangedMessage args)
+    {
+        ClearSourceProjections(ent);
+        RefreshAudioSource(ent, args.Transform);
     }
 
     private void OnAudioShutdown(Entity<AudioComponent> ent, ref ComponentShutdown args)
     {
-        _processed.Remove(ent);
+        RemComp<CMUZLevelAudioActiveComponent>(ent);
         _projections.Remove(ent);
+        ClearSourceProjections(ent);
+    }
 
-        // Kill projected copies when the source dies so looped audio doesn't outlive it.
-        if (_projectionsBySource.Remove(ent, out var projections))
+    private void RefreshAudioSource(Entity<AudioComponent> ent, TransformComponent xform)
+    {
+        if (_creatingProjection || _projections.Contains(ent))
+            return;
+
+        if (xform.MapUid is not { } mapUid || !_zMapQuery.HasComp(mapUid))
+        {
+            RemComp<CMUZLevelAudioActiveComponent>(ent);
+            ClearSourceProjections(ent);
+            return;
+        }
+
+        EnsureComp<CMUZLevelAudioActiveComponent>(ent);
+        TryProject(ent, xform);
+    }
+
+    private void ClearSourceProjections(EntityUid source)
+    {
+        _processed.Remove(source);
+
+        // Kill projected copies when the source moves or dies so stale looped audio cannot linger.
+        if (_projectionsBySource.Remove(source, out var projections))
         {
             foreach (var projection in projections)
             {

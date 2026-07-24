@@ -124,7 +124,9 @@ public abstract partial class CESharedZLevelsSystem
     {
         RefreshBody(ent);
 
-        var xform = Transform(ent);
+        var xform = args.Transform;
+        if (!HasTraversalContext(xform))
+            return;
 
         if (_net.IsClient && !_timing.ApplyingState)
             return;

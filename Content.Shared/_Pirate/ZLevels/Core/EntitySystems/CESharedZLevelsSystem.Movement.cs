@@ -88,12 +88,13 @@ public abstract partial class CESharedZLevelsSystem
         if (TerminatingOrDeleted(grid.Owner))
             return;
 
+        var gridXform = Transform(grid);
+        if (!HasTraversalContext(gridXform))
+            return;
+
         // Server-only hook, routed through this single sub (the server system inherits this shared
         // one, and two broadcast subs on one instance is illegal).
         OnTileChangedServer(grid, args.Changes);
-
-        if (Transform(grid).MapUid is not { } mapUid || !HasComp<CEZLevelMapComponent>(mapUid))
-            return;
 
         // Invalidate the opening cache so cross-Z gating sees the new floor topology.
         InvalidateOpeningCache(grid, args.Changes);
