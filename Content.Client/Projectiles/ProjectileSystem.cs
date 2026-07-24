@@ -16,8 +16,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     public override void Initialize()
     {
         base.Initialize();
-        // Pirate: gunplay
-        SubscribeLocalEvent<ImpactEffectEvent>(OnProjectileImpact);
+        SubscribeNetworkEvent<ImpactEffectEvent>(OnProjectileImpact);
     }
 
     private void OnProjectileImpact(ImpactEffectEvent ev)
@@ -31,7 +30,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         if (TryComp<SpriteComponent>(ent, out var sprite))
         {
-            // Pirate: gunplay
+            sprite[EffectLayers.Unshaded].AutoAnimated = false;
             _sprite.LayerMapTryGet((ent, sprite), EffectLayers.Unshaded, out var layer, false);
             var state = _sprite.LayerGetRsiState((ent, sprite), layer);
             var lifetime = 0.5f;

@@ -12,8 +12,7 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// and changing <see cref="Direction"/> where shot will go next
 /// </summary>
 [ByRefEvent]
-// Pirate: gunplay
-public record struct HitScanReflectAttemptEvent(EntityUid? Shooter, EntityUid SourceItem, ReflectType Reflective, Vector2 Direction, bool Reflected, DamageSpecifier? Damage, EntityUid Target) : IInventoryRelayEvent
+public record struct HitScanReflectAttemptEvent(EntityUid? Shooter, EntityUid SourceItem, ReflectType Reflective, Vector2 Direction, bool Reflected, DamageSpecifier? Damage) : IInventoryRelayEvent // WD EDIT
 {
     SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.WITHOUT_POCKET;
 }

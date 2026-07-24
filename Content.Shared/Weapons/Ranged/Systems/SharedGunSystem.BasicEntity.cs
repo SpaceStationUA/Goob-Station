@@ -35,7 +35,6 @@ public abstract partial class SharedGunSystem
                                         prototypes.Weights.Count == 0))
             return;
         // Goobstation end
-        var rand = PredictedRandom(ent.Owner); // Pirate: gunplay
 
         for (var i = 0; i < args.Shots; i++)
         {
@@ -45,9 +44,10 @@ public abstract partial class SharedGunSystem
             if (ent.Comp.Count != null)
                 ent.Comp.Count--;
 
-            // Pirate: gunplay
-            var proto = ent.Comp.Proto ?? prototypes!.Pick(rand);
-            var ammoEnt = EntityManager.PredictedSpawnAttachedTo(proto, args.Coordinates);
+            // Goob edit start
+            var proto = ent.Comp.Proto ?? prototypes!.Pick(Random);
+            var ammoEnt = Spawn(proto, args.Coordinates);
+            // Goob edit end
             args.Ammo.Add((ammoEnt, EnsureShootable(ammoEnt)));
         }
 

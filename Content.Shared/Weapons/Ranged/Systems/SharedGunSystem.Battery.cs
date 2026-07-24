@@ -95,7 +95,8 @@ public abstract partial class SharedGunSystem
 
     private (EntityUid? Entity, IShootable) GetShootable(BatteryAmmoProviderComponent component, EntityCoordinates coordinates)
     {
-        var ent = EntityManager.PredictedSpawnAttachedTo(component.Prototype, coordinates); // Pirate: gunplay
+
+        var ent = Spawn(component.Prototype, coordinates);
         return (ent, EnsureShootable(ent));
     }
 
