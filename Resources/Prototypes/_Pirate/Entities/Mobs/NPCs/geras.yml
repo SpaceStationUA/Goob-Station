@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "герас"
-  description: "Маленька форма слаймолюдини. Назва іронічна, чи не так?"
+  name: geras
+  description: A geras of a slime. The name is ironic, isn't it?
   id: MobSlimesGeras
   parent: [ SimpleMobBase, MobCombat ]
   categories: [ HideSpawnMenu ]
