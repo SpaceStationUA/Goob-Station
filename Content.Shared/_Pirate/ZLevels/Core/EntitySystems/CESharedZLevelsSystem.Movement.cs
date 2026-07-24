@@ -1075,7 +1075,7 @@ public abstract partial class CESharedZLevelsSystem
 
             if (!HasTraversalContext(xform))
             {
-                SetZGravityInfluenced(uid, false);
+                ResetInactiveZPhysics((uid, zPhys));
                 continue;
             }
 

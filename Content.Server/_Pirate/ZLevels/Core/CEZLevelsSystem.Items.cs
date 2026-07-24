@@ -130,7 +130,7 @@ public sealed partial class CEZLevelsSystem
 
     private void OnItemZPhysicsParentChanged(Entity<CEZItemPhysicsComponent> ent, ref EntParentChangedMessage args)
     {
-        if (!IsItemRestingOnMapOrGrid(args.Transform))
+        if (!HasTraversalContext(args.Transform) || !IsItemRestingOnMapOrGrid(args.Transform))
             RemoveItemZPhysics(ent.Owner);
     }
 
@@ -163,7 +163,7 @@ public sealed partial class CEZLevelsSystem
         var query = EntityQueryEnumerator<CEZItemPhysicsComponent, ItemComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var zItem, out _, out var xform))
         {
-            if (!IsItemRestingOnMapOrGrid(xform))
+            if (!HasTraversalContext(xform) || !IsItemRestingOnMapOrGrid(xform))
             {
                 RemoveItemZPhysics(uid);
                 continue;
