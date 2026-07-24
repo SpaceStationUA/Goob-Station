@@ -502,16 +502,11 @@ public abstract partial class CESharedZLevelsSystem
 
     private void OnMoveEvent(Entity<CEZPhysicsComponent> ent, ref MoveEvent args)
     {
+        // Normal maps can move thousands of CEZPhysics entities during stress tests. Their
+        // activation state is handled by RefreshBody; avoid touching components on every MoveEvent.
         var xform = Transform(ent);
         if (!HasTraversalContext(xform))
-        {
-            SleepBody(ent);
-            SetZGravityInfluenced(ent, false);
-            ent.Comp.DetachedCarrierGridUid = EntityUid.Invalid;
-            ent.Comp.DetachedCarrierLocalPosition = Vector2.Zero;
-            ent.Comp.DetachedCarrierReferenceExpiresAt = TimeSpan.Zero;
             return;
-        }
 
         if (IsAutomaticZPhysicsExcluded(ent))
         {

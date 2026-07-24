@@ -192,7 +192,7 @@ public abstract partial class CESharedZLevelsSystem
 
         if (!HasTraversalContext(xform))
         {
-            SleepBody(ent);
+            ResetInactiveZPhysics(ent);
             return;
         }
 
@@ -219,6 +219,15 @@ public abstract partial class CESharedZLevelsSystem
 
         DebugZ(ent, "z-physics active");
         WakeBody(ent);
+    }
+
+    private void ResetInactiveZPhysics(Entity<CEZPhysicsComponent> ent)
+    {
+        SleepBody(ent);
+        SetZGravityInfluenced(ent, false);
+        ent.Comp.DetachedCarrierGridUid = EntityUid.Invalid;
+        ent.Comp.DetachedCarrierLocalPosition = default;
+        ent.Comp.DetachedCarrierReferenceExpiresAt = default;
     }
 
     /// <summary>
