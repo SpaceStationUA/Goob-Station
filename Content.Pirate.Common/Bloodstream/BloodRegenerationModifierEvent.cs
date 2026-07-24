@@ -6,7 +6,8 @@ namespace Content.Pirate.Common.Bloodstream;
 /// Raised on an entity before blood regeneration is applied.
 /// Allows other systems to modify or cancel the regeneration amount.
 /// </summary>
-public sealed class BloodRegenerationModifierEvent : EntityEventArgs
+[ByRefEvent]
+public struct BloodRegenerationModifierEvent
 {
     /// <summary>
     /// The amount of blood to regenerate. Systems can modify this value.

@@ -97,7 +97,7 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
             {
                 // Pirate: raise event so other systems can modify or cancel blood regeneration
                 var regenEv = new BloodRegenerationModifierEvent((float) bloodstream.BloodRefreshAmount);
-                RaiseLocalEvent(uid, regenEv);
+                RaiseLocalEvent(uid, ref regenEv);
                 TryModifyBloodLevel(uid, FixedPoint2.New(regenEv.Amount));
                 TickBleed((uid, bloodstream));
 

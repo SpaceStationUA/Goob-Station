@@ -131,21 +131,18 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
             if (!CanBite(bloodsucker, victim, bloodSuckerComponent, stream))
                 return;
 
-            // Soft checks: warn but don't block
-            if (_rotting.IsRotten(victim))
-                _popups.PopupEntity(Loc.GetString("vampire-blooddrink-rotted"), victim, bloodsucker, PopupType.Medium);
+            var result = EvaluateSuck(bloodsucker, victim, bloodSuckerComponent, stream);
 
-            if (HasComp<VampireComponent>(victim) || HasComp<VampirismComponent>(victim))
-                _popups.PopupEntity(Loc.GetString("bloodsucker-victim-is-vampire"), victim, bloodsucker, PopupType.MediumCaution);
-
-            // TastyBloodComponent marks humanoid/animal blood — if missing, blood is from an alien/creature.
-            if (!HasComp<TastyBloodComponent>(victim))
+            // Map SuckResult flags to warning popups — no duplicate condition checks.
+            if (result.NoBlood)
+                _popups.PopupEntity(Loc.GetString("bloodsucker-fail-no-blood", ("target", victim)), victim, bloodsucker, PopupType.Medium);
+            else if (result.NoBuffs)
                 _popups.PopupEntity(Loc.GetString("bloodsucker-not-blood", ("target", victim)), victim, bloodsucker, PopupType.Medium);
 
-            if (_bloodstreamSystem.GetBloodLevel((victim, stream)) == 0.0f)
-                _popups.PopupEntity(Loc.GetString("bloodsucker-fail-no-blood", ("target", victim)), victim, bloodsucker, PopupType.Medium);
+            if (result.NoPower)
+                _popups.PopupEntity(Loc.GetString("bloodsucker-victim-is-vampire"), victim, bloodsucker, PopupType.MediumCaution);
 
-            if (TryComp<VampireComponent>(bloodsucker, out var vamp)
+            if (result.NoPower && TryComp<VampireComponent>(bloodsucker, out var vamp)
                 && !vamp.FullPower
                 && _vampireSystem.IsProtectedByFaith(victim))
                 _popups.PopupEntity(Loc.GetString("vampire-target-protected-by-faith"), bloodsucker, bloodsucker, PopupType.MediumCaution);
@@ -203,8 +200,11 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
                 return false;
 
             // Bloodstream solution must exist.
-            if (stream.BloodSolution == null)
+            if (!_solutionSystem.ResolveSolution(victim, stream.BloodSolutionName, ref stream.BloodSolution))
+            {
+                _popups.PopupEntity(Loc.GetString("vampire-drink-target-not-viable"), bloodsucker, bloodsucker, PopupType.MediumCaution);
                 return false;
+            }
 
             return true;
         }
@@ -302,20 +302,34 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
                     if (TryComp<ThirstComponent>(bloodsucker, out var thirst))
                         _thirst.ModifyThirst(bloodsucker, thirst, unitsSucked * 0.5f);
 
-                    // Heal brute and burn damage.
+                    // Heal brute and burn damage — use concrete type IDs, split evenly per group.
                     var healing = new DamageSpecifier();
-                    healing.DamageDict.Add("Brute", unitsSucked * -0.6f);
-                    healing.DamageDict.Add("Burn", unitsSucked * -0.25f);
+                    // Brute group: Blunt, Slash, Piercing (3 types)
+                    var brutePerType = unitsSucked * -0.6f / 3f;
+                    healing.DamageDict["Blunt"] = brutePerType;
+                    healing.DamageDict["Slash"] = brutePerType;
+                    healing.DamageDict["Piercing"] = brutePerType;
+                    // Burn group: Heat, Shock, Cold, Caustic (4 types)
+                    var burnPerType = unitsSucked * -0.25f / 4f;
+                    healing.DamageDict["Heat"] = burnPerType;
+                    healing.DamageDict["Shock"] = burnPerType;
+                    healing.DamageDict["Cold"] = burnPerType;
+                    healing.DamageDict["Caustic"] = burnPerType;
                     _damageableSystem.TryChangeDamage(bloodsucker, healing, true);
                 }
 
                 // Antag vampires feed on the blood to power their abilities.
-                // NoPower is true for: vampire victims, faith-protected, rotten, not-blood.
-                if (!result.NoPower && !result.NoBuffs && TryComp<VampireComponent>(bloodsucker, out var vamp))
+                // TryGainVampirePower has its own checks for vampire victims, faith, etc.
+                if (TryComp<VampireComponent>(bloodsucker, out var vamp))
                     TryGainVampirePower(bloodsucker, vamp, victim, unitsSucked);
             }
+            else if (result.NoBlood)
+            {
+                // No blood to drain — do not proceed to pierce damage or return success.
+                return false;
+            }
 
-            // Add a little pierce damage to victim (always happens).
+            // Add a little pierce damage to victim (always happens when blood exists).
             DamageSpecifier pierce = new();
             pierce.DamageDict.Add("Piercing", 1);
             _damageableSystem.TryChangeDamage(victim, pierce, true, true);

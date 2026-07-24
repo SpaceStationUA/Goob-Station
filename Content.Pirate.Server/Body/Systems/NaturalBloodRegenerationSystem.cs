@@ -24,13 +24,11 @@ public sealed class NaturalBloodRegenerationSystem : EntitySystem
     /// <summary>
     /// Base hunger cost per unit of blood regenerated.
     /// </summary>
-    [DataField]
     public float HungerCostPerUnit = 0.5f;
 
     /// <summary>
     /// Base thirst cost per unit of blood regenerated.
     /// </summary>
-    [DataField]
     public float ThirstCostPerUnit = 0.5f;
 
     public override void Initialize()
@@ -60,14 +58,17 @@ public sealed class NaturalBloodRegenerationSystem : EntitySystem
             return;
         }
 
+        var magnitude = MathF.Abs(amount);
+        var penalty = 1f;
+
         // Hunger cost
         if(TryComp<HungerComponent>(ent, out var hunger))
         {
             var currentHunger = _hunger.GetHunger(hunger);
-            var hungerCost = HungerCostPerUnit * MathF.Abs(amount);
+            var hungerCost = HungerCostPerUnit * MathF.Abs(magnitude);
             if (currentHunger <= hungerCost)
             {
-                amount *= 0.5f;
+                penalty *= 0.5f;
             }
             _hunger.ModifyHunger(ent, -hungerCost);
         }
@@ -75,14 +76,14 @@ public sealed class NaturalBloodRegenerationSystem : EntitySystem
         // Thirst cost
         if (TryComp<ThirstComponent>(ent, out var thirst))
         {
-            var thirstCost = ThirstCostPerUnit * MathF.Abs(amount);
+            var thirstCost = ThirstCostPerUnit * MathF.Abs(magnitude);
 
             if(thirst.CurrentThirst <= thirstCost)
             {
-                amount *= 0.5f;
+                penalty *= 0.5f;
             }
             _thirst.ModifyThirst(ent, thirst, -thirstCost);
         }
-        args.Amount = amount;
+        args.Amount = amount * penalty;
     }
 }
