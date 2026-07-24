@@ -38,9 +38,11 @@ public sealed partial class CEZLevelsSystem
     {
         SubscribeLocalEvent<ItemComponent, StopThrowEvent>(OnItemStopThrow);
         SubscribeLocalEvent<ItemComponent, DroppedEvent>(OnItemDropped);
-        SubscribeLocalEvent<ItemComponent, MoveEvent>(OnItemMoved);
-        SubscribeLocalEvent<ItemComponent, IsWeightlessEvent>(OnItemIsWeightless);
+        SubscribeLocalEvent<ItemComponent, MapInitEvent>(OnItemMapInit);
+        SubscribeLocalEvent<ItemComponent, EntParentChangedMessage>(OnItemParentChanged);
         SubscribeLocalEvent<ItemComponent, ThrowEvent>(OnItemThrown); // Pirate: multiz - ThrownEvent renamed to ThrowEvent upstream
+        SubscribeLocalEvent<CEZItemTraversalComponent, MoveEvent>(OnItemMoved);
+        SubscribeLocalEvent<CEZItemTraversalComponent, IsWeightlessEvent>(OnItemIsWeightless);
         SubscribeLocalEvent<CEZItemPhysicsComponent, GotEquippedHandEvent>(OnItemGotEquippedHand);
         SubscribeLocalEvent<CEZItemPhysicsComponent, GotEquippedEvent>(OnItemGotEquipped);
         SubscribeLocalEvent<CEZItemPhysicsComponent, EntGotInsertedIntoContainerMessage>(OnItemInsertedIntoContainer);
@@ -105,12 +107,38 @@ public sealed partial class CEZLevelsSystem
         TryAddItemZPhysics(ent.Owner, requireZGravity: true);
     }
 
-    private void OnItemMoved(Entity<ItemComponent> ent, ref MoveEvent args)
+    private void OnItemMapInit(Entity<ItemComponent> ent, ref MapInitEvent args)
     {
+        var xform = Transform(ent);
+        if (HasTraversalContext(xform) && IsItemRestingOnMapOrGrid(xform))
+            EnsureComp<CEZItemTraversalComponent>(ent);
+    }
+
+    private void OnItemParentChanged(Entity<ItemComponent> ent, ref EntParentChangedMessage args)
+    {
+        if (HasTraversalContext(args.Transform) && IsItemRestingOnMapOrGrid(args.Transform))
+        {
+            EnsureComp<CEZItemTraversalComponent>(ent);
+            return;
+        }
+
+        RemComp<CEZItemTraversalComponent>(ent);
+        RemoveItemZPhysics(ent);
+    }
+
+    private void OnItemMoved(Entity<CEZItemTraversalComponent> ent, ref MoveEvent args)
+    {
+        if (!HasTraversalContext(args.Component) || !IsItemRestingOnMapOrGrid(args.Component))
+        {
+            RemComp<CEZItemTraversalComponent>(ent);
+            RemoveItemZPhysics(ent);
+            return;
+        }
+
         if (HasComp<CEZItemPhysicsComponent>(ent.Owner))
             return;
 
-        TryAddItemZPhysics(ent.Owner, true);
+        TryAddItemZPhysics(ent.Owner, true, args.Component);
     }
 
     private void OnItemGotEquippedHand(Entity<CEZItemPhysicsComponent> ent, ref GotEquippedHandEvent args)
@@ -134,11 +162,13 @@ public sealed partial class CEZLevelsSystem
             RemoveItemZPhysics(ent.Owner);
     }
 
-    private void TryAddItemZPhysics(EntityUid item, bool requireZGravity = false)
+    private void TryAddItemZPhysics(EntityUid item, bool requireZGravity = false, TransformComponent? xform = null)
     {
-        var xform = Transform(item);
+        xform ??= Transform(item);
         if (!HasTraversalContext(xform) || !IsItemRestingOnMapOrGrid(xform))
             return;
+
+        EnsureComp<CEZItemTraversalComponent>(item);
 
         if (requireZGravity && !CanItemExperienceZGravity(item, xform))
             return;
@@ -336,7 +366,7 @@ public sealed partial class CEZLevelsSystem
         return hasZGravity;
     }
 
-    private void OnItemIsWeightless(Entity<ItemComponent> ent, ref IsWeightlessEvent args)
+    private void OnItemIsWeightless(Entity<CEZItemTraversalComponent> ent, ref IsWeightlessEvent args)
     {
         if (args.Handled || !TryComp(ent.Owner, out TransformComponent? xform))
             return;

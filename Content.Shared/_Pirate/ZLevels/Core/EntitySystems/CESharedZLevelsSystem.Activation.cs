@@ -14,7 +14,6 @@ namespace Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 
 /// <summary>
 /// Raised on a z-physics entity when it wakes (becomes active) or sleeps (becomes inactive).
-/// Replaces what used to be <c>CEActiveZPhysicsComponent</c> ComponentInit / ComponentShutdown.
 /// </summary>
 [ByRefEvent]
 public readonly record struct CEZPhysicsActivationChangedEvent(bool Active);
@@ -28,6 +27,7 @@ public abstract partial class CESharedZLevelsSystem
     /// Membership is mutated only through <see cref="WakeBody"/> / <see cref="SleepBody"/>.
     /// </summary>
     private readonly List<EntityUid> _activeBodies = new();
+    private readonly HashSet<EntityUid> _activeBodySet = new();
 
     /// <summary>
     /// Entities whose movement cache will be refreshed at the start of the next physics update.
@@ -40,7 +40,7 @@ public abstract partial class CESharedZLevelsSystem
     public IReadOnlyList<EntityUid> ActiveBodies => _activeBodies;
 
     [PublicAPI]
-    public bool IsBodyActive(EntityUid uid) => _activeBodies.Contains(uid);
+    public bool IsBodyActive(EntityUid uid) => _activeBodySet.Contains(uid);
 
     /// <summary>
     /// Queues a coalesced movement-cache refresh, drained at the start of the next physics update.
@@ -239,10 +239,11 @@ public abstract partial class CESharedZLevelsSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (_activeBodies.Contains(ent))
+        if (!_activeBodySet.Add(ent))
             return;
 
         _activeBodies.Add(ent);
+        EnsureComp<CEZPhysicsActiveComponent>(ent);
 
         CacheMovement(ent);
 
@@ -259,9 +260,11 @@ public abstract partial class CESharedZLevelsSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        if (!_activeBodies.Remove(uid))
+        if (!_activeBodySet.Remove(uid))
             return;
 
+        _activeBodies.Remove(uid);
+        RemComp<CEZPhysicsActiveComponent>(uid);
         SetZGravityInfluenced(uid, false);
 
         var ev = new CEZPhysicsActivationChangedEvent(false);

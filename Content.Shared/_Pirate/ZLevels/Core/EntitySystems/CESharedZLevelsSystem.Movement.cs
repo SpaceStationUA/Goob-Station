@@ -73,7 +73,7 @@ public abstract partial class CESharedZLevelsSystem
         SubscribeLocalEvent<CEZPhysicsComponent, CEZLevelMapMoveEvent>(OnZLevelMapMove);
         SubscribeLocalEvent<CEZGravityInfluencedComponent, IsWeightlessEvent>(OnZGravityInfluenced);
 
-        SubscribeLocalEvent<CEZPhysicsComponent, MoveEvent>(OnMoveEvent);
+        SubscribeLocalEvent<CEZPhysicsActiveComponent, MoveEvent>(OnMoveEvent);
         SubscribeLocalEvent<MapGridComponent, EntParentChangedMessage>(OnGridParentChanged);
         SubscribeLocalEvent<MapGridComponent, MapUidChangedEvent>(OnGridMapUidChanged);
         // Broadcast, not directed on MapGridComponent: only one directed subscriber is allowed
@@ -500,16 +500,21 @@ public abstract partial class CESharedZLevelsSystem
         return AutoDescendMode.None;
     }
 
-    private void OnMoveEvent(Entity<CEZPhysicsComponent> ent, ref MoveEvent args)
+    private void OnMoveEvent(Entity<CEZPhysicsActiveComponent> active, ref MoveEvent args)
     {
-        // Normal maps can move thousands of CEZPhysics entities during stress tests, but those
-        // bodies are never active. Avoid transform and component lookups for every MoveEvent.
-        if (!IsBodyActive(ent))
+        if (!ZPhysQuery.TryComp(active, out var zPhys))
+        {
+            SleepBody(active);
             return;
+        }
 
-        var xform = Transform(ent);
+        Entity<CEZPhysicsComponent> ent = (active, zPhys);
+        var xform = args.Component;
         if (!HasTraversalContext(xform))
+        {
+            ResetInactiveZPhysics(ent);
             return;
+        }
 
         if (IsAutomaticZPhysicsExcluded(ent))
         {
