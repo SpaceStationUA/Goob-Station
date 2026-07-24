@@ -3337,3 +3337,11 @@ Entries:
       message: Виправлено чорний екран compatibility mode на Linux.
   id: 316
   time: '2026-07-24T21:34:45.0000000+00:00'
+- author: CyberLanos
+  changes:
+    - type: Remove
+      message: залагану 💩кончену 💢 ненависну 🤡 всім 🤮 нову 🤓 стрільбу 🤢
+    - type: Add
+      message: повертає ✨прекрасну 🤩 ідеальну 💖 стару 😊 стрільбу 😻
+  id: 317
+  time: '2026-07-24T23:56:26.0000000+00:00'
