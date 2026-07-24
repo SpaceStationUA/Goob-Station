@@ -71,11 +71,7 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
         foreach (var projections in _projectionsBySource.Values)
         {
             foreach (var projection in projections)
-            {
-                _projections.Remove(projection);
-                if (!TerminatingOrDeleted(projection))
-                    QueueDel(projection);
-            }
+                RemoveProjection(projection);
         }
 
         _projectionsBySource.Clear();
@@ -345,7 +341,10 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
             var projectedAudio = _audio.PlayPvs(specifier, new EntityCoordinates(targetMap, sourcePosition), source.Comp.Params);
 
             if (projectedAudio is not { } projected)
+            {
+                if (_debug) Log.Info($"[crossz-audio]   FAILED to project {source.Comp.FileName} to {ToPrettyString(targetMap)} @ {sourcePosition}");
                 return null;
+            }
 
             _projections.Add(projected.Entity);
             projected.Component.Flags = source.Comp.Flags;

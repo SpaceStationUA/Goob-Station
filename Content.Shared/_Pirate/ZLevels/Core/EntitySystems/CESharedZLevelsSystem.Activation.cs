@@ -108,6 +108,8 @@ public abstract partial class CESharedZLevelsSystem
     private void OnParentChanged(Entity<CEZPhysicsComponent> ent, ref EntParentChangedMessage args)
     {
         RefreshBody(ent);
+        if (!IsBodyActive(ent))
+            return;
 
         var xform = args.Transform;
         if (!HasTraversalContext(xform))

@@ -120,8 +120,8 @@ public abstract partial class CESharedZLevelsSystem
     }
 
     /// <summary>
-    /// Server override point for tile changes (e.g. re-arming loose-item Z-physics). Runs for every
-    /// changed grid, before the Z-network gate. Default is no-op.
+    /// Server override point for tile changes (e.g. re-arming loose-item Z-physics). Runs for
+    /// changed grids in a traversal context, before shared cache invalidation. Default is no-op.
     /// </summary>
     protected virtual void OnTileChangedServer(Entity<MapGridComponent> grid, ReadOnlySpan<TileChangedEntry> changes)
     {
