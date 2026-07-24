@@ -2,15 +2,12 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Ported from ColonialMarinesUniverse Content.Shared/_CMU14/ZLevels/Core/EntitySystems/CMUZLevelShootingSystem.cs.
 // Adapted for lanos:
-//   * Subscribes to per-projectile PlayerShotProjectileEvent (lanos's prediction-correct hook
-//     point) instead of CMU's post-Shoot list iteration. SharedGunSystem.Shoot raises this event
-//     per projectile in the same prediction tick, so we can attach the visual offset without
-//     needing Shoot() to return a list.
+//   * SharedGunSystem notifies this system for each projectile so the visual offset can be
+//     attached without requiring Shoot() to return a list.
 //   * Inline LookUp-disable since lanos's viewer system doesn't expose TryDisableLookUp publicly.
 
 using System.Numerics;
 using Content.Shared._Pirate.Input;
-using Content.Shared._Pirate.Projectiles;
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Content.Shared.Popups;
@@ -41,8 +38,8 @@ public sealed partial class CMUZLevelShootingSystem : EntitySystem
 
     /// <summary>
     /// Per-call visual-offset slot. Set by <see cref="BeginShotOffset"/> before <c>SharedGunSystem.Shoot</c>,
-    /// consumed by the <see cref="PlayerShotProjectileEvent"/> subscriber that lanos's Shoot raises
-    /// per projectile, cleared by <see cref="EndShotOffset"/> after.
+    /// consumed by <see cref="ApplyPendingProjectileVisualOffset"/> for every fired projectile, and
+    /// cleared by <see cref="EndShotOffset"/> after.
     /// </summary>
     private Vector2 _pendingVisualOffset;
     private int _pendingShotDepth;
@@ -52,7 +49,6 @@ public sealed partial class CMUZLevelShootingSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GunComponent, ItemUnwieldedEvent>(OnGunUnwielded);
-        SubscribeLocalEvent<PlayerShotProjectileEvent>(OnPlayerShotProjectile);
 
         Subs.CVar(_config, SharedCCVars.CEZShootingRange, v => _crossZShotRange = MathF.Max(0f, v), true);
         Subs.CVar(_config, SharedCCVars.CEZShootingOpeningTileRange, v => _crossZOpeningSourceEdgeRangeTiles = MathF.Max(0f, v), true);
@@ -80,14 +76,14 @@ public sealed partial class CMUZLevelShootingSystem : EntitySystem
             PopupSelf(args.User, "ce-zlevel-shoot-down-disabled-unwield");
     }
 
-    private void OnPlayerShotProjectile(ref PlayerShotProjectileEvent args)
+    public void ApplyPendingProjectileVisualOffset(EntityUid projectile)
     {
         // Gate on depth, not barrelShift magnitude: a straight-up shot has zero shift but still
         // needs the client-side render compensation.
         if (_pendingShotDepth == 0)
             return;
 
-        ApplyProjectileVisualOffset(args.Projectile, _pendingVisualOffset, _pendingShotDepth);
+        ApplyProjectileVisualOffset(projectile, _pendingVisualOffset, _pendingShotDepth);
     }
 
     /// <summary>Reserve the barrel-shift + shot depth applied to every projectile fired during the next Shoot call.</summary>

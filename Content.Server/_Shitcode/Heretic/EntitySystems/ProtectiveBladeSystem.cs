@@ -262,13 +262,6 @@ public sealed class ProtectiveBladeSystem : EntitySystem
         if (playSound)
             _audio.PlayPvs(BladeAppearSound, ent);
 
-        // Pirate: gunplay
-        if (TryComp<ProtectiveBladeComponent>(pblade, out var blade))
-        {
-            blade.User = ent;
-            Dirty(pblade, blade);
-        }
-
         EnsureComp<ProtectiveBladesComponent>(ent);
 
         /* Upstream removed this, but they randomise the start point so it's w/e
@@ -288,8 +281,7 @@ public sealed class ProtectiveBladeSystem : EntitySystem
         var ev = new ProtectiveBladeUsedEvent() { Used = blade };
         RaiseLocalEvent(follower.Following, ev);
 
-        // Pirate: gunplay
-        PredictedQueueDel(blade.Owner);
+        QueueDel(blade);
     }
 
     public bool TryThrowProtectiveBlade(EntityUid origin, Entity<ProtectiveBladeComponent>? pblade, EntityUid? target = null)
@@ -336,8 +328,7 @@ public sealed class ProtectiveBladeSystem : EntitySystem
         var pos = _xform.GetWorldPosition(origin);
         var direction = target - pos;
 
-        // Pirate: gunplay
-        var proj = PredictedSpawnAtPosition(BladeProjecilePrototype, Transform(origin).Coordinates);
+        var proj = Spawn(BladeProjecilePrototype, Transform(origin).Coordinates);
         _gun.ShootProjectile(proj, direction, Vector2.Zero, origin, origin);
         if (targetEntity != EntityUid.Invalid)
             _gun.SetTarget(proj, targetEntity, out _);

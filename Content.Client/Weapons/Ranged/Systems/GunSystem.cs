@@ -28,8 +28,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Content.Goobstation.Common.Weapons.Ranged; // Pirate: gunplay
-using Content.Shared.Projectiles; // Pirate: gunplay
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
@@ -212,7 +210,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         NetEntity? target = null;
         if (_state.CurrentState is GameplayStateBase screen)
-            target = GetNetEntity(GetPredictedProjectileTarget(screen, mousePos)); // Pirate: gunplay
+            target = GetNetEntity(screen.GetDamageableClickedEntity(mousePos)); // Goob edit
 
         Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
@@ -221,18 +219,74 @@ public sealed partial class GunSystem : SharedGunSystem
             Target = target,
             Coordinates = GetNetCoordinates(coordinates),
             Gun = GetNetEntity(gun),
-            Continuous = true, // Pirate: gunplay
         });
     }
 
     public override void Shoot(Entity<GunComponent> gun, List<(EntityUid? Entity, IShootable Shootable)> ammo,
         EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, out bool userImpulse, EntityUid? user = null, bool throwItems = false)
     {
-        SharedShoot(gun.Owner, gun.Comp, ammo, fromCoordinates, toCoordinates, out userImpulse, user, throwItems); // Pirate: gunplay
+        userImpulse = true;
+
+        // Rather than splitting client / server for every ammo provider it's easier
+        // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
+        // This also means any ammo specific stuff can be grabbed as necessary.
+        var direction = TransformSystem.ToMapCoordinates(fromCoordinates).Position - TransformSystem.ToMapCoordinates(toCoordinates).Position;
+        var worldAngle = direction.ToAngle().Opposite();
+
+        foreach (var (ent, shootable) in ammo)
+        {
+            if (throwItems)
+            {
+                Recoil(user, direction, gun.Comp.CameraRecoilScalarModified);
+                if (IsClientSide(ent!.Value))
+                    Del(ent.Value);
+                else
+                    RemoveShootable(ent.Value);
+                continue;
+            }
+
+            // TODO: Clean this up in a gun refactor at some point - too much copy pasting
+            switch (shootable)
+            {
+                case CartridgeAmmoComponent cartridge:
+                    if (!cartridge.Spent)
+                    {
+                        SetCartridgeSpent(ent!.Value, cartridge, true);
+                        MuzzleFlash(gun, cartridge, worldAngle, user);
+                        Audio.PlayPredicted(gun.Comp.SoundGunshotModified, gun, user);
+                        Recoil(user, direction, gun.Comp.CameraRecoilScalarModified);
+                        // TODO: Can't predict entity deletions.
+                        //if (cartridge.DeleteOnSpawn)
+                        //    Del(cartridge.Owner);
+                    }
+                    else
+                    {
+                        userImpulse = false;
+                        Audio.PlayPredicted(gun.Comp.SoundEmpty, gun, user);
+                    }
+
+                    if (IsClientSide(ent!.Value))
+                        Del(ent.Value);
+
+                    break;
+                case AmmoComponent newAmmo:
+                    MuzzleFlash(gun, newAmmo, worldAngle, user);
+                    Audio.PlayPredicted(gun.Comp.SoundGunshotModified, gun, user);
+                    Recoil(user, direction, gun.Comp.CameraRecoilScalarModified);
+                    if (IsClientSide(ent!.Value))
+                        Del(ent.Value);
+                    else
+                        RemoveShootable(ent.Value);
+                    break;
+                case HitscanAmmoComponent:
+                    Audio.PlayPredicted(gun.Comp.SoundGunshotModified, gun, user);
+                    Recoil(user, direction, gun.Comp.CameraRecoilScalarModified);
+                    break;
+            }
+        }
     }
 
-    // Pirate: gunplay
-    protected override void Recoil(EntityUid? user, Vector2 recoil, float recoilScalar)
+    private void Recoil(EntityUid? user, Vector2 recoil, float recoilScalar)
     {
         if (!Timing.IsFirstTimePredicted || user == null || recoil == Vector2.Zero || recoilScalar == 0)
             return;
