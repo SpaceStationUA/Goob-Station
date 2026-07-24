@@ -1,4 +1,5 @@
 species-name-yautja = Yautja
+job-name-yautja = Yautja
 
 goob-name-yautja-first-1 = Nu'koir
 goob-name-yautja-first-2 = Za-ai'stba

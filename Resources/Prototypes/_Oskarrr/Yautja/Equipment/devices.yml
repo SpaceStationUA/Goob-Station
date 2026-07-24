@@ -217,10 +217,11 @@
     - state: default
     - state: silver
   - type: IdCard
-    jobTitle: "Yautja"
+    jobTitle: job-name-yautja
     jobIcon: JobIconUnknown
   - type: Access
-    tags: [ AllAccess ]
+    groups:
+    - AllAccess
 - type: entity
   parent: BaseItem
   id: GoobYautjaHealthShardHalf

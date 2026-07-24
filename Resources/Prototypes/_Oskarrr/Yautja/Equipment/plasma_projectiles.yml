@@ -156,10 +156,11 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    devastationRadius: 0
-    heavyRadius: 1.0
-    lightRadius: 2.5
+    totalIntensity: 30
+    intensitySlope: 3
+    maxIntensity: 5
     maxTileBreak: 0
+    canCreateVacuum: false
 
 - type: entity
   parent: GoobYautjaPlasmaBoltBase
@@ -179,10 +180,11 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    devastationRadius: 0
-    heavyRadius: 1.5
-    lightRadius: 3.5
+    totalIntensity: 80
+    intensitySlope: 3
+    maxIntensity: 8
     maxTileBreak: 1
+    canCreateVacuum: false
   - type: PointLight
     color: "#55c7ff"
     radius: 4.25
@@ -246,10 +248,11 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    devastationRadius: 0.8
-    heavyRadius: 2.5
-    lightRadius: 5.0
+    totalIntensity: 230
+    intensitySlope: 4
+    maxIntensity: 12
     maxTileBreak: 2
+    canCreateVacuum: false
   - type: PointLight
     color: "#55b8ff"
     radius: 4.75
@@ -276,10 +279,11 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    devastationRadius: 2.0
-    heavyRadius: 4.5
-    lightRadius: 8.0
+    totalIntensity: 900
+    intensitySlope: 5
+    maxIntensity: 20
     maxTileBreak: 2
+    canCreateVacuum: false
   - type: PointLight
     color: "#2da4ff"
     radius: 6.5

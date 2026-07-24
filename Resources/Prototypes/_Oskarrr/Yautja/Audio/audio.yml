@@ -1,4 +1,4 @@
-﻿- type: soundCollection
+- type: soundCollection
   id: GoobYautjaSpeechClicks
   files:
   - /Audio/_Oskarrr/Yautja/Voice/Clicks/pred_click01.wav
@@ -192,8 +192,6 @@
       collection: GoobYautjaLaughs
     Growl:
       path: /Audio/_Oskarrr/Yautja/Voice/Roars/predgrowl.wav
-    Warcry:
-      collection: GoobYautjaRoars
     DefaultDeathgasp:
       collection: GoobYautjaDeath
 
