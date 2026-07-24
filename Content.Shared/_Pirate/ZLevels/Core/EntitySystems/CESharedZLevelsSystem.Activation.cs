@@ -184,7 +184,7 @@ public abstract partial class CESharedZLevelsSystem
 
         if (IsAutomaticZPhysicsExcluded(ent))
         {
-            SleepBody(ent);
+            ResetInactiveZPhysics(ent);
             return;
         }
 

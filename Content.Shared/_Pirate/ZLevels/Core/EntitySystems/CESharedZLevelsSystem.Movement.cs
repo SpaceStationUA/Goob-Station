@@ -502,8 +502,11 @@ public abstract partial class CESharedZLevelsSystem
 
     private void OnMoveEvent(Entity<CEZPhysicsComponent> ent, ref MoveEvent args)
     {
-        // Normal maps can move thousands of CEZPhysics entities during stress tests. Their
-        // activation state is handled by RefreshBody; avoid touching components on every MoveEvent.
+        // Normal maps can move thousands of CEZPhysics entities during stress tests, but those
+        // bodies are never active. Avoid transform and component lookups for every MoveEvent.
+        if (!IsBodyActive(ent))
+            return;
+
         var xform = Transform(ent);
         if (!HasTraversalContext(xform))
             return;
