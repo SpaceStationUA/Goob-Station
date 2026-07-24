@@ -24,6 +24,8 @@ namespace Content.Server._Pirate.ZLevels.Audio;
 
 public sealed class CMUZLevelsAudioSystem : EntitySystem
 {
+    private readonly record struct ProjectionTarget(EntityUid MapUid, Vector2 Position);
+
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -89,8 +91,7 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
         }
 
         Entity<AudioComponent> ent = (active, audio);
-        ClearSourceProjections(ent);
-        RefreshAudioSource(ent, args.Component);
+        RefreshAudioSource(ent, args.Component, reconcileExisting: true);
     }
 
     private void OnAudioMapInit(Entity<AudioComponent> ent, ref MapInitEvent args)
@@ -103,8 +104,7 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
 
     private void OnAudioParentChanged(Entity<AudioComponent> ent, ref EntParentChangedMessage args)
     {
-        ClearSourceProjections(ent);
-        RefreshAudioSource(ent, args.Transform);
+        RefreshAudioSource(ent, args.Transform, reconcileExisting: true);
     }
 
     private void OnAudioShutdown(Entity<AudioComponent> ent, ref ComponentShutdown args)
@@ -114,7 +114,10 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
         ClearSourceProjections(ent);
     }
 
-    private void RefreshAudioSource(Entity<AudioComponent> ent, TransformComponent xform)
+    private void RefreshAudioSource(
+        Entity<AudioComponent> ent,
+        TransformComponent xform,
+        bool reconcileExisting = false)
     {
         if (_creatingProjection || _projections.Contains(ent))
             return;
@@ -127,23 +130,32 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
         }
 
         EnsureComp<CMUZLevelAudioActiveComponent>(ent);
-        TryProject(ent, xform);
+        if (reconcileExisting && _processed.Contains(ent))
+            RefreshSourceProjections(ent, xform);
+        else
+            TryProject(ent, xform);
     }
 
     private void ClearSourceProjections(EntityUid source)
     {
         _processed.Remove(source);
+        RemoveSourceProjections(source);
+    }
 
-        // Kill projected copies when the source moves or dies so stale looped audio cannot linger.
+    private void RemoveSourceProjections(EntityUid source)
+    {
         if (_projectionsBySource.Remove(source, out var projections))
         {
             foreach (var projection in projections)
-            {
-                _projections.Remove(projection);
-                if (!TerminatingOrDeleted(projection))
-                    QueueDel(projection);
-            }
+                RemoveProjection(projection);
         }
+    }
+
+    private void RemoveProjection(EntityUid projection)
+    {
+        _projections.Remove(projection);
+        if (!TerminatingOrDeleted(projection))
+            QueueDel(projection);
     }
 
     private void TryProject(Entity<AudioComponent> ent, TransformComponent xform)
@@ -167,41 +179,64 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
             return;
         }
 
-        if (!_zMapQuery.TryComp(sourceMap, out var sourceZMap))
+        if (!_zMapQuery.HasComp(sourceMap))
             return;
 
-        // First fire wins; later MoveEvent/MapInitEvent on the same audio are no-ops.
+        // First fire creates the projections. Movement reconciles this same source separately.
         if (!_processed.Add(ent))
             return;
 
-        var sourcePosition = _transform.GetWorldPosition(xform);
-        if (_debug) Log.Info($"[crossz-audio] {ToPrettyString(ent)} ENTER: file={ent.Comp.FileName} map={ToPrettyString(sourceMap)} grid={(xform.GridUid is { } g ? ToPrettyString(g) : "null")} pos={sourcePosition} MaxDistance={ent.Comp.Params.MaxDistance}");
-        ProjectCrossZAudio((ent.Owner, ent.Comp), (sourceMap, sourceZMap), sourcePosition, xform.GridUid);
+        RefreshSourceProjections(ent, xform);
     }
 
-    private void ProjectCrossZAudio(
+    private void RefreshSourceProjections(Entity<AudioComponent> ent, TransformComponent xform)
+    {
+        if (!_crossZAudioEnabled ||
+            ent.Comp.Global ||
+            ent.Comp.IncludedEntities != null ||
+            string.IsNullOrEmpty(ent.Comp.FileName))
+        {
+            RemoveSourceProjections(ent);
+            return;
+        }
+
+        if (xform.MapUid is not { } sourceMap ||
+            !_zMapQuery.TryComp(sourceMap, out var sourceZMap))
+        {
+            RemoveSourceProjections(ent);
+            return;
+        }
+
+        var sourcePosition = _transform.GetWorldPosition(xform);
+        if (_debug) Log.Info($"[crossz-audio] {ToPrettyString(ent)} ENTER: file={ent.Comp.FileName} map={ToPrettyString(sourceMap)} grid={(xform.GridUid is { } g ? ToPrettyString(g) : "null")} pos={sourcePosition} MaxDistance={ent.Comp.Params.MaxDistance}");
+        var targets = CollectProjectionTargets((ent.Owner, ent.Comp), (sourceMap, sourceZMap), sourcePosition, xform.GridUid);
+        ReconcileProjections(ent, targets);
+    }
+
+    private List<ProjectionTarget> CollectProjectionTargets(
         Entity<AudioComponent> source,
         Entity<CEZLevelMapComponent> sourceMap,
         Vector2 sourcePosition,
         EntityUid? sourceGridUid)
     {
+        var targets = new List<ProjectionTarget>();
         if (source.Comp.Params.MaxDistance <= 0f)
         {
             if (_debug) Log.Info($"[crossz-audio] {ToPrettyString(source)} bail: MaxDistance<=0");
-            return;
+            return targets;
         }
 
-        ResolvedSoundSpecifier? specifier = null;
-        ProjectDirection(source, sourceMap, sourcePosition, sourceGridUid, ref specifier, -1);
-        ProjectDirection(source, sourceMap, sourcePosition, sourceGridUid, ref specifier, +1);
+        CollectProjectionTargetsInDirection(source, sourceMap, sourcePosition, sourceGridUid, targets, -1);
+        CollectProjectionTargetsInDirection(source, sourceMap, sourcePosition, sourceGridUid, targets, +1);
+        return targets;
     }
 
-    private void ProjectDirection(
+    private void CollectProjectionTargetsInDirection(
         Entity<AudioComponent> source,
         Entity<CEZLevelMapComponent> sourceMap,
         Vector2 sourcePosition,
         EntityUid? sourceGridUid,
-        ref ResolvedSoundSpecifier? specifier,
+        List<ProjectionTarget> targets,
         int step)
     {
         // Each step crosses one barrier (the upper deck's floor = the lower deck's ceiling). For
@@ -240,16 +275,63 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
                 }
             }
 
-            specifier ??= new ResolvedPathSpecifier(source.Comp.FileName!);
-            CreateProjection(source, specifier, nextMap, nextPos);
-            if (_debug) Log.Info($"[crossz-audio]   depth={depth}: PROJECTED {source.Comp.FileName} to {ToPrettyString(nextMap)} @ {nextPos}");
+            targets.Add(new ProjectionTarget(nextMap, nextPos));
 
             currentMap = nextMap;
             currentPos = nextPos;
         }
     }
 
-    private void CreateProjection(
+    private void ReconcileProjections(Entity<AudioComponent> source, List<ProjectionTarget> targets)
+    {
+        var remaining = _projectionsBySource.Remove(source, out var existing)
+            ? existing
+            : new List<EntityUid>();
+        var retained = new List<EntityUid>(targets.Count);
+        ResolvedSoundSpecifier? specifier = null;
+
+        foreach (var target in targets)
+        {
+            EntityUid? matching = null;
+            for (var i = remaining.Count - 1; i >= 0; i--)
+            {
+                var projection = remaining[i];
+                if (TerminatingOrDeleted(projection) ||
+                    !TryComp<TransformComponent>(projection, out var projectionXform))
+                {
+                    _projections.Remove(projection);
+                    remaining.RemoveAt(i);
+                    continue;
+                }
+
+                if (projectionXform.MapUid != target.MapUid)
+                    continue;
+
+                matching = projection;
+                remaining.RemoveAt(i);
+                break;
+            }
+
+            if (matching is { } projected)
+            {
+                _transform.SetCoordinates(projected, new EntityCoordinates(target.MapUid, target.Position));
+                retained.Add(projected);
+                continue;
+            }
+
+            specifier ??= new ResolvedPathSpecifier(source.Comp.FileName!);
+            if (CreateProjection(source, specifier, target.MapUid, target.Position) is { } created)
+                retained.Add(created);
+        }
+
+        foreach (var projection in remaining)
+            RemoveProjection(projection);
+
+        if (retained.Count != 0)
+            _projectionsBySource[source] = retained;
+    }
+
+    private EntityUid? CreateProjection(
         Entity<AudioComponent> source,
         ResolvedSoundSpecifier specifier,
         EntityUid targetMap,
@@ -263,18 +345,13 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
             var projectedAudio = _audio.PlayPvs(specifier, new EntityCoordinates(targetMap, sourcePosition), source.Comp.Params);
 
             if (projectedAudio is not { } projected)
-                return;
+                return null;
 
             _projections.Add(projected.Entity);
             projected.Component.Flags = source.Comp.Flags;
             Dirty(projected.Entity, projected.Component);
-
-            if (!_projectionsBySource.TryGetValue(source.Owner, out var list))
-            {
-                list = new List<EntityUid>();
-                _projectionsBySource[source.Owner] = list;
-            }
-            list.Add(projected.Entity);
+            if (_debug) Log.Info($"[crossz-audio]   PROJECTED {source.Comp.FileName} to {ToPrettyString(targetMap)} @ {sourcePosition}");
+            return projected.Entity;
         }
         finally
         {

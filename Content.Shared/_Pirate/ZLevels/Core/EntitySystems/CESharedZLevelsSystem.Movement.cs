@@ -318,7 +318,7 @@ public abstract partial class CESharedZLevelsSystem
     [PublicAPI]
     public bool HasZGravityInfluenceFromBelow(EntityUid ent, TransformComponent? xform = null)
     {
-        if (!Resolve(ent, ref xform, false))
+        if (!Resolve(ent, ref xform, false) || !HasTraversalContext(xform))
             return false;
 
         if (!TryFindSupportedLevelBelow(ent, xform, out _, out var belowGridUid, out _)) // Pirate: multiz
@@ -335,7 +335,7 @@ public abstract partial class CESharedZLevelsSystem
     [PublicAPI]
     public bool HasGridGravityFromBelow(EntityUid ent, TransformComponent? xform = null)
     {
-        if (!Resolve(ent, ref xform, false))
+        if (!Resolve(ent, ref xform, false) || !HasTraversalContext(xform))
             return false;
 
         if (!TryFindSupportedLevelBelow(ent, xform, out _, out var belowGridUid, out _)) // Pirate: multiz
@@ -519,11 +519,7 @@ public abstract partial class CESharedZLevelsSystem
 
         if (IsAutomaticZPhysicsExcluded(ent))
         {
-            SleepBody(ent);
-            SetZGravityInfluenced(ent, false);
-            ent.Comp.DetachedCarrierGridUid = EntityUid.Invalid;
-            ent.Comp.DetachedCarrierLocalPosition = Vector2.Zero;
-            ent.Comp.DetachedCarrierReferenceExpiresAt = TimeSpan.Zero;
+            ResetInactiveZPhysics(ent);
             return;
         }
 
@@ -1064,21 +1060,7 @@ public abstract partial class CESharedZLevelsSystem
 
             if (IsAutomaticZPhysicsExcluded(uid))
             {
-                SleepBody(uid);
-                SetZGravityInfluenced(uid, false);
-
-                var dirtyVelocity = Math.Abs(zPhys.Velocity) > 0.01f;
-                var dirtyHeight = Math.Abs(zPhys.LocalPosition) > 0.01f;
-
-                zPhys.Velocity = 0f;
-                zPhys.LocalPosition = 0f;
-
-                if (dirtyVelocity)
-                    DirtyField(uid, zPhys, nameof(CEZPhysicsComponent.Velocity));
-
-                if (dirtyHeight)
-                    DirtyField(uid, zPhys, nameof(CEZPhysicsComponent.LocalPosition));
-
+                ResetInactiveZPhysics((uid, zPhys));
                 continue;
             }
 

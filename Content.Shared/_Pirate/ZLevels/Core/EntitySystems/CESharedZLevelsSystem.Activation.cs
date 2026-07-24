@@ -18,6 +18,13 @@ namespace Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 [ByRefEvent]
 public readonly record struct CEZPhysicsActivationChangedEvent(bool Active);
 
+/// <summary>
+/// Raised by the platform ghost systems when <see cref="GhostComponent"/> starts or stops.
+/// This avoids observing every component mutation just to refresh Z-physics for ghosts.
+/// </summary>
+[ByRefEvent]
+public readonly record struct CEZPhysicsGhostStateChangedEvent(bool IsGhost);
+
 public abstract partial class CESharedZLevelsSystem
 {
     private static readonly TimeSpan StartupActivationDelay = TimeSpan.FromSeconds(0.5);
@@ -71,31 +78,9 @@ public abstract partial class CESharedZLevelsSystem
         SubscribeLocalEvent<CEZPhysicsComponent, AnchorStateChangedEvent>(OnAnchorStateChange);
         SubscribeLocalEvent<CEZPhysicsComponent, PhysicsBodyTypeChangedEvent>(OnPhysicsBodyTypeChange);
         SubscribeLocalEvent<CEZPhysicsComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<CEZPhysicsComponent, CEZPhysicsGhostStateChangedEvent>(OnGhostStateChanged);
         SubscribeLocalEvent<CEZLevelGhostMoverComponent, ComponentStartup>(OnGhostMoverStartup);
         SubscribeLocalEvent<CEZLevelGhostMoverComponent, ComponentShutdown>(OnGhostMoverShutdown);
-        // Becoming/leaving a ghost flips IsAutomaticZPhysicsExcluded; refresh activation so the
-        // body sleeps/wakes. Hooked via ComponentAdded/Removed because GhostComponent's exclusive
-        // ComponentStartup is already owned by GhostSystem.
-        EntityManager.ComponentAdded += OnComponentAddedForActivation;
-        EntityManager.ComponentRemoved += OnComponentRemovedForActivation;
-    }
-
-    private void ShutdownActivation()
-    {
-        EntityManager.ComponentAdded -= OnComponentAddedForActivation;
-        EntityManager.ComponentRemoved -= OnComponentRemovedForActivation;
-    }
-
-    private void OnComponentAddedForActivation(AddedComponentEventArgs ev)
-    {
-        if (ev.BaseArgs.Component is GhostComponent)
-            RefreshZPhysicsActivation(ev.BaseArgs.Owner);
-    }
-
-    private void OnComponentRemovedForActivation(RemovedComponentEventArgs ev)
-    {
-        if (ev.BaseArgs.Component is GhostComponent)
-            RefreshZPhysicsActivation(ev.BaseArgs.Owner);
     }
 
     private void OnAnchorStateChange(Entity<CEZPhysicsComponent> ent, ref AnchorStateChangedEvent args)
@@ -155,6 +140,18 @@ public abstract partial class CESharedZLevelsSystem
         RefreshZPhysicsActivation(ent);
     }
 
+    private void OnGhostStateChanged(Entity<CEZPhysicsComponent> ent, ref CEZPhysicsGhostStateChangedEvent args)
+    {
+        if (args.IsGhost)
+        {
+            ResetInactiveZPhysics(ent);
+            return;
+        }
+
+        // ComponentShutdown/ComponentRemove is raised while GhostComponent is still queryable.
+        RefreshBody(ent, ignoreGhost: true);
+    }
+
     private void RefreshZPhysicsActivation(EntityUid uid)
     {
         if (!ZPhysQuery.TryComp(uid, out var zPhys))
@@ -163,9 +160,9 @@ public abstract partial class CESharedZLevelsSystem
         RefreshBody((uid, zPhys));
     }
 
-    private bool IsAutomaticZPhysicsExcluded(EntityUid uid)
+    private bool IsAutomaticZPhysicsExcluded(EntityUid uid, bool ignoreGhost = false)
     {
-        return HasComp<GhostComponent>(uid) ||
+        return (!ignoreGhost && HasComp<GhostComponent>(uid)) ||
                HasComp<CEZLevelGhostMoverComponent>(uid) ||
                HasComp<CEZLevelPhysicsExemptComponent>(uid) || // Pirate: multiz - free-floating camera eyes
                _container.IsEntityInContainer(uid); // Pirate: multiz - contained entities (e.g. mech pilot) ride their holder, never fall independently
@@ -178,21 +175,26 @@ public abstract partial class CESharedZLevelsSystem
     [PublicAPI]
     public void RefreshBody(Entity<CEZPhysicsComponent> ent)
     {
+        RefreshBody(ent, ignoreGhost: false);
+    }
+
+    private void RefreshBody(Entity<CEZPhysicsComponent> ent, bool ignoreGhost)
+    {
         if (TerminatingOrDeleted(ent))
         {
             SleepBody(ent);
             return;
         }
 
-        if (IsAutomaticZPhysicsExcluded(ent))
+        var xform = Transform(ent);
+
+        if (!HasTraversalContext(xform))
         {
             ResetInactiveZPhysics(ent);
             return;
         }
 
-        var xform = Transform(ent);
-
-        if (!HasTraversalContext(xform))
+        if (IsAutomaticZPhysicsExcluded(ent, ignoreGhost))
         {
             ResetInactiveZPhysics(ent);
             return;
@@ -225,6 +227,18 @@ public abstract partial class CESharedZLevelsSystem
 
     private void ResetInactiveZPhysics(Entity<CEZPhysicsComponent> ent)
     {
+        if (ent.Comp.Velocity != 0f)
+        {
+            ent.Comp.Velocity = 0f;
+            DirtyField(ent, ent.Comp, nameof(CEZPhysicsComponent.Velocity));
+        }
+
+        if (ent.Comp.LocalPosition != 0f)
+        {
+            ent.Comp.LocalPosition = 0f;
+            DirtyField(ent, ent.Comp, nameof(CEZPhysicsComponent.LocalPosition));
+        }
+
         SleepBody(ent);
         SetZGravityInfluenced(ent, false);
         ent.Comp.DetachedCarrierGridUid = EntityUid.Invalid;

@@ -3,6 +3,7 @@
 using Content.Client._Shitcode.Wizard.Systems;
 using Content.Client.Movement.Systems;
 using Content.Shared.Actions;
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared.Ghost;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
@@ -81,6 +82,9 @@ namespace Content.Client.Ghost
 
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
+            var zPhysicsEvent = new CEZPhysicsGhostStateChangedEvent(true); // Pirate: multiz
+            RaiseLocalEvent(uid, ref zPhysicsEvent); // Pirate: multiz
+
             if (TryComp(uid, out SpriteComponent? sprite))
                 _sprite.SetVisible((uid, sprite), GhostVisibility || uid == _playerManager.LocalEntity);
         }
@@ -139,6 +143,9 @@ namespace Content.Client.Ghost
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
+            var zPhysicsEvent = new CEZPhysicsGhostStateChangedEvent(false); // Pirate: multiz
+            RaiseLocalEvent(uid, ref zPhysicsEvent); // Pirate: multiz
+
             _actions.RemoveAction(uid, component.ToggleLightingActionEntity);
             _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);

@@ -97,7 +97,6 @@ public abstract partial class CESharedZLevelsSystem : EntitySystem
 
         _config.UnsubValueChanged(SharedCCVars.CEZPhysicsTickRate, OnPhysicsTickRateChanged);
         ShutdownOpeningCache();
-        ShutdownActivation();
         ShutdownDebug();
     }
 

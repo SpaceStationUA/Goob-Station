@@ -11,6 +11,7 @@ using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 #region DOWNSTREAM-TPirates: ghost follow menu update
 using Content.Shared.Actions;
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -219,6 +220,9 @@ namespace Content.Server.Ghost
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
+            var zPhysicsEvent = new CEZPhysicsGhostStateChangedEvent(true); // Pirate: multiz
+            RaiseLocalEvent(uid, ref zPhysicsEvent); // Pirate: multiz
+
             // Allow this entity to be seen by other ghosts.
             var visibility = EnsureComp<VisibilityComponent>(uid);
 
@@ -236,6 +240,9 @@ namespace Content.Server.Ghost
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
         {
+            var zPhysicsEvent = new CEZPhysicsGhostStateChangedEvent(false); // Pirate: multiz
+            RaiseLocalEvent(uid, ref zPhysicsEvent); // Pirate: multiz
+
             // Perf: If the entity is deleting itself, no reason to change these back.
             if (Terminating(uid))
                 return;
