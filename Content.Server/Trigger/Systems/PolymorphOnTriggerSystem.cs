@@ -10,7 +10,7 @@ namespace Content.Server.Trigger.Systems;
 
 public sealed partial class PolymorphOnTriggerSystem : EntitySystem
 {
-    private const int MaxUnlimitedCollisionPolymorphsPerTick = 32;
+    private const int MaxUnlimitedCollisionPolymorphsPerTick = 1;
 
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
 
