@@ -136,6 +136,8 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
             // Map SuckResult flags to warning popups — no duplicate condition checks.
             if (result.NoBlood)
                 _popups.PopupEntity(Loc.GetString("bloodsucker-fail-no-blood", ("target", victim)), victim, bloodsucker, PopupType.Medium);
+            else if (result.IsRotten)
+                _popups.PopupEntity(Loc.GetString("vampire-blooddrink-rotted"), victim, bloodsucker, PopupType.Medium);
             else if (result.NoBuffs)
                 _popups.PopupEntity(Loc.GetString("bloodsucker-not-blood", ("target", victim)), victim, bloodsucker, PopupType.Medium);
 
@@ -219,7 +221,10 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
 
             // Check if victim is rotten — no buffs from rotten blood.
             if (_rotting.IsRotten(victim))
+            {
                 result.NoBuffs = true;
+                result.IsRotten = true;
+            }
 
             // Check if victim is another vampire or has vampirism trait — no power.
             if (HasComp<VampireComponent>(victim) || HasComp<VampirismComponent>(victim))
@@ -274,16 +279,14 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
             // Drain blood from victim (always happens if blood exists).
             if (!result.NoBlood && bloodstream.BloodSolution != null)
             {
-                var temp = _solutionSystem.SplitSolution(bloodstream.BloodSolution.Value, unitsSucked);
+                // The split already contains the victim's chemicals/poisons in proportion to the drawn volume.
+                var drawn = _solutionSystem.SplitSolution(bloodstream.BloodSolution.Value, unitsSucked);
 
-                // Transfer any chemicals/poisons from the victim's blood into the bloodsucker's bloodstream.
-                // This means poisoned blood can still harm the bloodsucker.
+                // Transfer them into the bloodsucker, so poisoned blood can still harm them.
                 if (TryComp<BloodstreamComponent>(bloodsucker, out var suckerStream)
-                    && suckerStream.BloodSolution != null)
+                    && _solutionSystem.ResolveSolution(bloodsucker, suckerStream.BloodSolutionName, ref suckerStream.BloodSolution))
                 {
-                    var chems = _bloodstreamSystem.FlushChemicals((victim, bloodstream), unitsSucked);
-                    if (chems != null)
-                        _bloodstreamSystem.TryAddToBloodstream((bloodsucker, suckerStream), chems);
+                    _bloodstreamSystem.TryAddToBloodstream((bloodsucker, suckerStream), drawn);
                 }
 
                 // Apply blood buffs (only if soft checks allow).
@@ -435,6 +438,9 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
 
             /// <summary>If true, victim has no blood to drain.</summary>
             public bool NoBlood;
+
+            /// <summary>If true, victim is rotten — specific popup feedback.</summary>
+            public bool IsRotten;
         }
     }
 }

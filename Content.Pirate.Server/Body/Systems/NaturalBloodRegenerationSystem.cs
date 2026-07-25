@@ -58,7 +58,7 @@ public sealed class NaturalBloodRegenerationSystem : EntitySystem
             return;
         }
 
-        var magnitude = MathF.Abs(amount);
+        var magnitude = args.Amount;
         var penalty = 1f;
 
         // Hunger cost

@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Body.Components;
-using Content.Pirate.Common.Bloodstream; // BloodDeficiencyComponent
 using Content.Pirate.Server.Traits.Vampirism.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
@@ -22,14 +21,6 @@ public sealed class VampirismSystem : EntitySystem
 
     private void OnInitVampire(Entity<VampirismComponent> ent, ref MapInitEvent args)
     {
-        // Pirate: vampire blood is incompatible — causes blood drain (blood deficiency).
-        // Don't overwrite an existing BloodDeficiencyComponent (e.g. from BloodDeficiency trait).
-        if (!TryComp<BloodDeficiencyComponent>(ent, out var deficiency))
-        {
-            deficiency = EnsureComp<BloodDeficiencyComponent>(ent);
-        }
-        deficiency.DrainPerTick = ent.Comp.DeficiencyDrainPerTick;
-
         EnsureComp<BloodSuckerComponent>(ent);
 
         SetMetabolizerTypes(ent, ent.Comp.MetabolizerPrototypes);
