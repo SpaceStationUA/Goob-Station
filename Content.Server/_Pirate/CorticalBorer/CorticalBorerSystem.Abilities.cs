@@ -126,6 +126,7 @@ public sealed partial class CorticalBorerSystem
 
         _flammable.Extinguish(ent);
         InfestTarget(ent, target);
+        SyncHostVision(ent);
         args.Handled = true;
     }
 
