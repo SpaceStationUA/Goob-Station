@@ -1,6 +1,7 @@
 using Content.Server.Polymorph.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Shared.Polymorph;
+using Content.Shared.Projectiles;
 using Content.Shared.Trigger;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Trigger.Components.Triggers;
@@ -52,7 +53,9 @@ public sealed partial class PolymorphOnTriggerSystem : EntitySystem
         var targetUid = target.Value;
         var unlimitedCollision = TryComp<TriggerOnCollideComponent>(ent.Owner, out var collision) &&
                                  collision.MaxTriggers == null;
-        if (unlimitedCollision)
+        var deleteOnCollideProjectile = TryComp<ProjectileComponent>(ent.Owner, out var projectile) &&
+                                        projectile.DeleteOnCollide;
+        if (unlimitedCollision && !deleteOnCollideProjectile)
         {
             var root = GetPolymorphRoot(targetUid);
             if (!_collisionPolymorphRootsBySource.TryGetValue(ent.Owner, out var roots))
