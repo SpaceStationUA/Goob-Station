@@ -98,10 +98,11 @@ public sealed partial class CorticalBorerSystem
         out CorticalBorerInfestedComponent infested)
     {
         if (borer.Comp.Host is { } currentHost &&
-            TryComp<CorticalBorerInfestedComponent>(currentHost, out infested) &&
-            infested.Borer.Owner == borer.Owner)
+            TryComp<CorticalBorerInfestedComponent>(currentHost, out var currentInfested) &&
+            currentInfested.Borer.Owner == borer.Owner)
         {
             host = currentHost;
+            infested = currentInfested;
             return true;
         }
 
