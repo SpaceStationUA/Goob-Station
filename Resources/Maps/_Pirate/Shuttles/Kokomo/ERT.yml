@@ -395,8 +395,6 @@ entities:
       pos: 1.5,-7.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 403
   - uid: 497
@@ -406,8 +404,6 @@ entities:
       pos: 1.5,-3.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 496
 - proto: AlwaysPoweredlightBlack
@@ -1875,8 +1871,6 @@ entities:
       pos: 0.5,-7.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 403
   - uid: 453
@@ -1892,8 +1886,6 @@ entities:
       pos: 2.5,-7.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 403
   - uid: 464
@@ -1908,8 +1900,6 @@ entities:
       pos: 2.5,-2.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 496
   - uid: 466
@@ -1919,8 +1909,6 @@ entities:
       pos: 0.5,-2.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 496
 - proto: GeneratorWallmountAPU
@@ -3580,7 +3568,7 @@ entities:
     - type: AccessReader
       access:
       - - CentralCommand
-    - type: ProjectileBatteryAmmoProvider
+    - type: BatteryAmmoProvider
       proto: BulletEnergyTurretLaser
     - type: BatteryWeaponFireModes
       currentFireMode: 1
@@ -3605,8 +3593,6 @@ entities:
       pos: 3.5,-6.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 108
   - uid: 151
@@ -3615,8 +3601,6 @@ entities:
       pos: -0.5,-6.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 108
   - uid: 233
@@ -3627,7 +3611,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 108
-    - type: ProjectileBatteryAmmoProvider
+    - type: BatteryAmmoProvider
       proto: BulletEnergyTurretLaser
     - type: BatteryWeaponFireModes
       currentFireMode: 1
@@ -3640,7 +3624,7 @@ entities:
     - type: AccessReader
       access:
       - - CentralCommand
-    - type: ProjectileBatteryAmmoProvider
+    - type: BatteryAmmoProvider
       proto: BulletEnergyTurretLaser
     - type: BatteryWeaponFireModes
       currentFireMode: 1
