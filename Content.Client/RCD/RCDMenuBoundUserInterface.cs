@@ -1,3 +1,9 @@
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 chromiumboy <50505512+chromiumboy@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 metalgearsloth <31366439+metalgearsloth@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Client.Popups;
@@ -29,12 +35,8 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             // Goobstation - RPD (13 of stars)
             ["Piping"] = ("rcd-component-piping", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RPD/fourway.png"))),
             ["AtmosphericUtility"] = ("rcd-component-atmosphericutility", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RPD/port.png"))),
-            ["PumpsValves"] = ("rcd-component-pumps", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RPD/pump_volume.png"))), // Pirate: chem plumbing
+            ["PumpsValves"] = ("rcd-component-pumpsvalves", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RPD/pump_volume.png"))),
             ["Vents"] = ("rcd-component-vents", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RPD/vent_passive.png"))),
-            // Pirate: chem plumbing
-            ["PlumbingDucts"] = ("rpld-component-ducts", new SpriteSpecifier.Texture(new ResPath("/Textures/_Pirate/Interface/Radial/RPLD/category_ducts.png"))), // Pirate: chem plumbing
-            ["PlumbingSupply"] = ("rpld-component-supply", new SpriteSpecifier.Texture(new ResPath("/Textures/_Pirate/Interface/Radial/RPLD/tank.png"))), // Pirate: chem plumbing
-            ["PlumbingProduction"] = ("rpld-component-production", new SpriteSpecifier.Texture(new ResPath("/Textures/_Pirate/Interface/Radial/RPLD/reaction_chamber.png"))), // Pirate: chem plumbing
         };
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -62,10 +64,10 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
         _menu.OpenOverMouseScreenPosition();
     }
 
-    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(HashSet<ProtoId<RCDPrototype>> prototypes)
+    private IEnumerable<RadialMenuOption> ConvertToButtons(HashSet<ProtoId<RCDPrototype>> prototypes)
     {
-        Dictionary<string, List<RadialMenuActionOptionBase>> buttonsByCategory = new();
-        ValueList<RadialMenuActionOptionBase> topLevelActions = new();
+        Dictionary<string, List<RadialMenuActionOption>> buttonsByCategory = new();
+        ValueList<RadialMenuActionOption> topLevelActions = new();
         foreach (var protoId in prototypes)
         {
             var prototype = _prototypeManager.Index(protoId);
@@ -73,7 +75,7 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             {
                 var topLevelActionOption = new RadialMenuActionOption<RCDPrototype>(HandleMenuOptionClick, prototype)
                 {
-                    IconSpecifier = RadialMenuIconSpecifier.With(prototype.Sprite),
+                    Sprite = prototype.Sprite,
                     ToolTip = GetTooltip(prototype)
                 };
                 topLevelActions.Add(topLevelActionOption);
@@ -85,26 +87,26 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 
             if (!buttonsByCategory.TryGetValue(prototype.Category, out var list))
             {
-                list = new List<RadialMenuActionOptionBase>();
+                list = new List<RadialMenuActionOption>();
                 buttonsByCategory.Add(prototype.Category, list);
             }
 
             var actionOption = new RadialMenuActionOption<RCDPrototype>(HandleMenuOptionClick, prototype)
             {
-                IconSpecifier = RadialMenuIconSpecifier.With(prototype.Sprite),
+                Sprite = prototype.Sprite,
                 ToolTip = GetTooltip(prototype)
             };
             list.Add(actionOption);
         }
 
-        var models = new RadialMenuOptionBase[buttonsByCategory.Count + topLevelActions.Count];
+        var models = new RadialMenuOption[buttonsByCategory.Count + topLevelActions.Count];
         var i = 0;
         foreach (var (key, list) in buttonsByCategory)
         {
             var groupInfo = PrototypesGroupingInfo[key];
             models[i] = new RadialMenuNestedLayerOption(list)
             {
-                IconSpecifier = RadialMenuIconSpecifier.With(groupInfo.Sprite),
+                Sprite = groupInfo.Sprite,
                 ToolTip = Loc.GetString(groupInfo.Tooltip)
             };
             i++;
@@ -136,10 +138,8 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             var name = Loc.GetString(proto.SetName);
 
             if (proto.Prototype != null &&
-                _prototypeManager.TryIndex(proto.Prototype, out var entProto)) // don't use Resolve because this can be a tile
-            {
+                _prototypeManager.TryIndex(proto.Prototype, out var entProto, logError: false))
                 name = entProto.Name;
-            }
 
             msg = Loc.GetString("rcd-component-change-build-mode", ("name", name));
         }
@@ -155,7 +155,7 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 
         if (proto.Mode is RcdMode.ConstructTile or RcdMode.ConstructObject
             && proto.Prototype != null
-            && _prototypeManager.TryIndex(proto.Prototype, out var entProto)) // don't use Resolve because this can be a tile
+            && _prototypeManager.TryIndex(proto.Prototype, out var entProto, logError: false))
         {
             tooltip = Loc.GetString(entProto.Name);
         }

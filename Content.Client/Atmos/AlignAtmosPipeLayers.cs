@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 ArtisticRoomba <145879011+ArtisticRoomba@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+// SPDX-FileCopyrightText: 2025 chromiumboy <50505512+chromiumboy@users.noreply.github.com>
+//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Client.Construction;
@@ -102,8 +106,8 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
         float tileSize = mapGrid.TileSize;
         GridDistancing = tileSize;
 
-        var tileCenter = _mapSystem.GridTileToLocal(gridId.Value, mapGrid, CurrentTile.GridIndices); // Pirate: chem plumbing
-        MouseCoords = tileCenter.WithPosition(tileCenter.Position + new Vector2(pManager.PlacementOffset.X, pManager.PlacementOffset.Y)); // Pirate: chem plumbing
+        MouseCoords = new EntityCoordinates(MouseCoords.EntityId, new Vector2(CurrentTile.X + tileSize / 2 + pManager.PlacementOffset.X,
+            CurrentTile.Y + tileSize / 2 + pManager.PlacementOffset.Y));
 
         // Calculate the position of the mouse cursor with respect to the center of the tile to determine which layer to use
         var mouseCoordsDiff = _unalignedMouseCoords.Position - MouseCoords.Position;
@@ -136,7 +140,7 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
 
         var newProtoId = altPrototypes[(int)layer];
 
-        if (!_protoManager.Resolve(newProtoId, out var newProto))
+        if (!_protoManager.TryIndex(newProtoId, out var newProto))
             return;
 
         if (newProto.Type != ConstructionType.Structure)

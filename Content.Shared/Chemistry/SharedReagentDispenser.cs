@@ -96,13 +96,6 @@ namespace Content.Shared.Chemistry
 
     }
 
-    #region Pirate: chem plumbing
-    [Serializable, NetSerializable]
-    public sealed class ReagentDispenserToggleValveMessage : BoundUserInterfaceMessage
-    {
-    }
-    #endregion
-
     public enum ReagentDispenserDispenseAmount
     {
         U1 = 1,
@@ -139,20 +132,16 @@ namespace Content.Shared.Chemistry
 
         public readonly ReagentDispenserDispenseAmount SelectedDispenseAmount;
 
-        public readonly bool ValveOpen; // Pirate: chem plumbing
-
         public ReagentDispenserBoundUserInterfaceState(
             ContainerInfo? outputContainer,
             NetEntity? outputContainerEntity,
             List<ReagentInventoryItem> inventory,
-            ReagentDispenserDispenseAmount selectedDispenseAmount,
-            bool valveOpen) // Pirate: chem plumbing
+            ReagentDispenserDispenseAmount selectedDispenseAmount)
         {
             OutputContainer = outputContainer;
             OutputContainerEntity = outputContainerEntity;
             Inventory = inventory;
             SelectedDispenseAmount = selectedDispenseAmount;
-            ValveOpen = valveOpen; // Pirate: chem plumbing
         }
     }
 

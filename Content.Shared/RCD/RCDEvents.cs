@@ -1,3 +1,9 @@
+// SPDX-FileCopyrightText: 2024 August Eymann <august.eymann@gmail.com>
+// SPDX-FileCopyrightText: 2024 Steve <marlumpy@gmail.com>
+// SPDX-FileCopyrightText: 2024 chromiumboy <50505512+chromiumboy@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 marc-pelletier <113944176+marc-pelletier@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Robust.Shared.Prototypes;
@@ -24,15 +30,6 @@ public sealed class RCDConstructionGhostFlipEvent(NetEntity netEntity, bool useM
     public readonly NetEntity NetEntity = netEntity;
     public readonly bool UseMirrorPrototype = useMirrorPrototype;
 }
-
-#region Pirate: chem plumbing
-[Serializable, NetSerializable]
-public sealed class RPDSelectedLayerEvent(NetEntity netEntity, byte layer) : EntityEventArgs
-{
-    public readonly NetEntity NetEntity = netEntity;
-    public readonly byte Layer = layer;
-}
-#endregion
 
 [Serializable, NetSerializable]
 public enum RcdUiKey : byte

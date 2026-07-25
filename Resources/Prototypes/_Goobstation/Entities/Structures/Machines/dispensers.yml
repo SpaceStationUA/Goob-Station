@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+# SPDX-FileCopyrightText: 2025 IrisTheAmped <iristheamped@gmail.com>
+# SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
+#
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
@@ -15,9 +19,7 @@
     snapCardinals: true
   - type: Transform
     anchored: true
-    noRot: false # Pirate: chem plumbing
-  - type: Rotatable # Pirate: chem plumbing
-    rotateWhileAnchored: true
+    noRot: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -34,7 +36,6 @@
         layer:
         - MachineLayer
   - type: Battery
-    netsync: false
     maxCharge: 1500
     startingCharge: 1500
   - type: ApcPowerReceiverBattery
@@ -67,6 +68,7 @@
       machine_board: !type:Container
       machine_parts: !type:Container
       energyBeakerSlot: !type:ContainerSlot
+      recipeDiskSlot: !type:ContainerSlot # Pirate: chem recipes
       storagebase: !type:Container
   - type: StaticPrice
     price: 1000
@@ -77,38 +79,6 @@
     - Chemist
   - type: StealTarget
     stealGroup: ChemDispenser
-  # Pirate: chem plumbing
-  - type: PlumbingConnectorAppearance
-    offset: 0.09375
-  - type: AtmosPipeColor
-  - type: NodeContainer
-    nodes:
-      outletNorth:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: North
-      outletEast:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: East
-      outletSouth:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: South
-      outletWest:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: West
-  - type: PlumbingOutlet
-    solutionName: beaker
-    connectedOutlets: true
-    outletNames:
-    - outletNorth
-    - outletEast
-    - outletSouth
-    - outletWest
-    containerSlotId: energyBeakerSlot
-    enabled: false
   - type: Machine
     board: EnergyChemDispenserMachineCircuitboard
   - type: ActivatableUI
@@ -125,6 +95,16 @@
       whitelist:
         components:
         - FitsInDispenser
+    recipeDiskSlot: # Pirate: chem recipes
+      name: reagent-dispenser-component-slot-name-disk
+      insertSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      ejectSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
+      whitelist:
+        tags:
+        - ChemRecipeDisk
     reagents:
       Aluminium: 8
       Carbon: 3
@@ -163,9 +143,7 @@
     snapCardinals: true
   - type: Transform
     anchored: true
-    noRot: false # Pirate: chem plumbing
-  - type: Rotatable # Pirate: chem plumbing
-    rotateWhileAnchored: true
+    noRot: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -182,7 +160,6 @@
         layer:
         - MachineLayer
   - type: Battery
-    netsync: false
     maxCharge: 1500
     startingCharge: 1500
   - type: ApcPowerReceiverBattery
@@ -221,38 +198,6 @@
   - type: WiresPanel
   - type: StealTarget
     stealGroup: ChemDispenser
-  # Pirate: chem plumbing
-  - type: PlumbingConnectorAppearance
-    offset: 0.09375
-  - type: AtmosPipeColor
-  - type: NodeContainer
-    nodes:
-      outletNorth:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: North
-      outletEast:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: East
-      outletSouth:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: South
-      outletWest:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: West
-  - type: PlumbingOutlet
-    solutionName: beaker
-    connectedOutlets: true
-    outletNames:
-    - outletNorth
-    - outletEast
-    - outletSouth
-    - outletWest
-    containerSlotId: energyBeakerSlot
-    enabled: false
   - type: Machine
     board: ServiceEnergyChemMachineCircuitboard
   - type: ActivatableUI

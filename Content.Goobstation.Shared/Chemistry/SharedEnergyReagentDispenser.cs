@@ -1,6 +1,25 @@
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 0x6273 <0x40@keemail.me>
+// SPDX-FileCopyrightText: 2024 AWF <you@example.com>
+// SPDX-FileCopyrightText: 2024 Brandon Li <48413902+aspiringLich@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 GitHubUser53123 <110841413+GitHubUser53123@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Kevin Zheng <kevinz5000@gmail.com>
+// SPDX-FileCopyrightText: 2024 Kira Bridgeton <161087999+Verbalase@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Piras314 <p1r4s@proton.me>
+// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+// SPDX-FileCopyrightText: 2025 IrisTheAmped <iristheamped@gmail.com>
+// SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
+// SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
+// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
+// SPDX-FileCopyrightText: 2025 pathetic meowmeow <uhhadd@gmail.com>
+//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.Chemistry.Reagent; // Pirate: chem recipes
 using Robust.Shared.Serialization;
 using Content.Shared.Chemistry;
 
@@ -12,6 +31,10 @@ namespace Content.Goobstation.Shared.Chemistry
     public static class SharedEnergyReagentDispenser
     {
         public const string OutputSlotName = "energyBeakerSlot";
+        #region Pirate: chem recipes
+        public const string RecipeDiskSlotName = "recipeDiskSlot";
+        public const int RecipeNameMaxLength = 16;
+        #endregion
     }
 
     [Serializable, NetSerializable]
@@ -58,12 +81,6 @@ namespace Content.Goobstation.Shared.Chemistry
     {
     }
 
-    // Pirate: chem plumbing
-    [Serializable, NetSerializable]
-    public sealed class EnergyReagentDispenserToggleValveMessage : BoundUserInterfaceMessage
-    {
-    }
-
     public enum EnergyReagentDispenserDispenseAmount
     {
         U1 = 1,
@@ -87,7 +104,7 @@ namespace Content.Goobstation.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class EnergyReagentDispenserBoundUserInterfaceState(
+    public sealed class EnergyReagentDispenserBoundUserInterfaceState(  // Pirate: chem recipes
         ContainerInfo? outputContainer,
         NetEntity? outputContainerEntity,
         List<EnergyReagentInventoryItem> inventory,
@@ -98,7 +115,11 @@ namespace Content.Goobstation.Shared.Chemistry
         float idleUse,
         bool usingBattery,
         bool hasPower,
-        bool valveOpen) // Pirate: chem plumbing
+        List<ReagentDispenserRecipeItem> savedRecipes,
+        bool hasRecipeDisk,
+        List<ReagentDispenserRecipeItem> diskRecipes,
+        bool isRecordingRecipe,
+        List<ReagentQuantity> recordingRecipeReagents)
         : BoundUserInterfaceState
     {
         public readonly ContainerInfo? OutputContainer = outputContainer;
@@ -117,7 +138,13 @@ namespace Content.Goobstation.Shared.Chemistry
         public readonly float IdleUse = idleUse;
         public readonly bool UsingBattery = usingBattery;
         public readonly bool HasPower = hasPower;
-        public readonly bool ValveOpen = valveOpen; // Pirate: chem plumbing
+        #region Pirate: chem recipes
+        public readonly List<ReagentDispenserRecipeItem> SavedRecipes = savedRecipes;
+        public readonly bool HasRecipeDisk = hasRecipeDisk;
+        public readonly List<ReagentDispenserRecipeItem> DiskRecipes = diskRecipes;
+        public readonly bool IsRecordingRecipe = isRecordingRecipe;
+        public readonly List<ReagentQuantity> RecordingRecipeReagents = recordingRecipeReagents;
+        #endregion
     }
 
     [Serializable, NetSerializable]

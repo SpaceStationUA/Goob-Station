@@ -1,3 +1,18 @@
+# SPDX-FileCopyrightText: 2023 IProduceWidgets <107586145+IProduceWidgets@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Sailor <109166122+Equivocateur@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 deltanedas <39013340+deltanedas@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 deltanedas <@deltanedas:kde.org>
+# SPDX-FileCopyrightText: 2023 freeman2651 <104049107+freeman2651@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 Tonk-GCR <ryantrujillo82@gmail.com>
+# SPDX-FileCopyrightText: 2024 wafehling <wafehling@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+# SPDX-FileCopyrightText: 2025 IrisTheAmped <iristheamped@gmail.com>
+# SPDX-FileCopyrightText: 2025 SX_7 <sn1.test.preria.2002@gmail.com>
+# SPDX-FileCopyrightText: 2025 ScarKy0 <106310278+ScarKy0@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 Smith <182301147+AgentSmithRadio@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 āda <ss.adasts@gmail.com>
+#
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: vendingMachineInventory
@@ -6,25 +21,25 @@
     Jug: 8 #Goob edit - Energy Chem
     JugAluminium: 2
     JugCarbon: 4
-    JugChlorine: 2 #Goob edit
+    JugChlorine: 1
     JugCopper: 2
     JugEthanol: 2
-    JugFluorine: 2 #Goob edit
+    JugFluorine: 1
     JugHydrogen: 3
-    JugIodine: 2 #Goob edit
+    JugIodine: 1
     JugIron: 2
     JugLithium: 2
-    JugMercury: 2 #Goob edit
+    JugMercury: 1
     JugNitrogen: 3
     JugOxygen: 3
-    JugPhosphorus: 2 #Goob edit
+    JugPhosphorus: 1
     JugPotassium: 2
-    JugRadium: 2 #Goob edit
+    JugRadium: 1
     JugSilicon: 2
     JugSodium: 2
     JugSugar: 3
-    JugSulfur: 2 #Goob edit
-    RPLD: 2 # Pirate: chem plumbing
+    JugSulfur: 1
+    ChemRecipeDisk: 4 # Pirate: chem recipes
   contrabandInventory:
     DrinkLithiumFlask: 1
     StrangePill: 3
@@ -36,29 +51,30 @@
 - type: vendingMachineInventory
   id: ChemVendInventorySyndicate
   startingInventory:
-    Jug: 8 #Goob edit
+    Jug: 4
     JugAluminium: 2
     JugCarbon: 4
-    JugChlorine: 2 #Goob edit
+    JugChlorine: 1
     JugCopper: 2
     JugEthanol: 2
-    JugFluorine: 2 #Goob edit
+    JugFluorine: 1
     JugHydrogen: 3
-    JugIodine: 2 #Goob edit
+    JugIodine: 1
     JugIron: 2
     JugLithium: 2
-    JugMercury: 2 #Goob edit
+    JugMercury: 1
     JugNitrogen: 3
     JugOxygen: 3
-    JugPhosphorus: 2 #Goob edit
+    JugPhosphorus: 1
     JugPotassium: 2
-    JugRadium: 2 #Goob edit
+    JugRadium: 1
     JugSilicon: 2
     JugSodium: 2
     JugSugar: 3
-    JugSulfur: 2 #Goob edit
-    JugWeldingFuel: 2 #Goob edit
-    PlasmaChemistryVial: 2 #Goob edit
+    JugSulfur: 1
+    ChemRecipeDisk: 4 # Pirate: chem recipes
+    JugWeldingFuel: 1
+    PlasmaChemistryVial: 1
   contrabandInventory:
     DrinkLithiumFlask: 1
     StrangePill: 3

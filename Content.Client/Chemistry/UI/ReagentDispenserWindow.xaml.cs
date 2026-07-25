@@ -23,7 +23,6 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private readonly IEntityManager _entityManager = default!;
         public event Action<ItemStorageLocation>? OnDispenseReagentButtonPressed;
         public event Action<ItemStorageLocation>? OnEjectJugButtonPressed;
-        public event Action? OnToggleValveButtonPressed; // Pirate: chem plumbing
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
         /// actual data isn't filled in until the server sends data about the dispenser.
@@ -32,7 +31,6 @@ namespace Content.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            ValveButton.OnPressed += _ => OnToggleValveButtonPressed?.Invoke(); // Pirate: chem plumbing
         }
 
         /// <summary>
@@ -73,8 +71,6 @@ namespace Content.Client.Chemistry.UI
             // Disable the Clear & Eject button if no beaker
             ClearButton.Disabled = castState.OutputContainer is null;
             EjectButton.Disabled = castState.OutputContainer is null;
-
-            ValveButton.Text = GetValveText(castState.ValveOpen); // Pirate: chem plumbing
 
             AmountGrid.Selected = ((int)castState.SelectedDispenseAmount).ToString();
         }
@@ -127,11 +123,5 @@ namespace Content.Client.Chemistry.UI
             }
         }
 
-        #region Pirate: chem plumbing
-        private static string GetValveText(bool open)
-        {
-            return $"{Loc.GetString("gas-canister-window-valve-label")} {Loc.GetString(open ? "gas-canister-window-valve-open-text" : "gas-canister-window-valve-closed-text")}";
-        }
-        #endregion
     }
 }

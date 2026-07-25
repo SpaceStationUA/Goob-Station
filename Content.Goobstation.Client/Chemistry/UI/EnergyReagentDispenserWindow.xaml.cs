@@ -1,3 +1,40 @@
+// SPDX-FileCopyrightText: 2019 Remie Richards <remierichards@gmail.com>
+// SPDX-FileCopyrightText: 2019 moneyl <8206401+Moneyl@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2020 Exp <theexp111@gmail.com>
+// SPDX-FileCopyrightText: 2020 PrPleGoo <felix.leeuwen@gmail.com>
+// SPDX-FileCopyrightText: 2020 Víctor Aguilera Puerto <6766154+Zumorica@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2020 ike709 <ike709@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 20kdc <asdd2808@gmail.com>
+// SPDX-FileCopyrightText: 2021 Acruid <shatter66@gmail.com>
+// SPDX-FileCopyrightText: 2021 DrSmugleaf <DrSmugleaf@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 Galactic Chimp <63882831+GalacticChimp@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 Pieter-Jan Briers <pieterjan.briers+git@gmail.com>
+// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto <gradientvera@outlook.com>
+// SPDX-FileCopyrightText: 2021 Visne <39844191+Visne@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2021 Ygg01 <y.laughing.man.y@gmail.com>
+// SPDX-FileCopyrightText: 2021 mirrorcult <notzombiedude@gmail.com>
+// SPDX-FileCopyrightText: 2022 0x6273 <0x40@keemail.me>
+// SPDX-FileCopyrightText: 2022 Alex Evgrashin <aevgrashin@yandex.ru>
+// SPDX-FileCopyrightText: 2022 Paul Ritter <ritter.paul1@googlemail.com>
+// SPDX-FileCopyrightText: 2022 metalgearsloth <comedian_vs_clown@hotmail.com>
+// SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
+// SPDX-FileCopyrightText: 2022 wrexbe <81056464+wrexbe@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2023 Leon Friedrich <60421075+ElectroJr@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 AWF <you@example.com>
+// SPDX-FileCopyrightText: 2024 Brandon Li <48413902+aspiringLich@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 GitHubUser53123 <110841413+GitHubUser53123@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Guillaume E <262623+quatre@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Kevin Zheng <kevinz5000@gmail.com>
+// SPDX-FileCopyrightText: 2024 Kira Bridgeton <161087999+Verbalase@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Nemanja <98561806+EmoGarbage404@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2024 Tayrtahn <tayrtahn@gmail.com>
+// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+// SPDX-FileCopyrightText: 2025 IrisTheAmped <iristheamped@gmail.com>
+// SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
+// SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
+// SPDX-FileCopyrightText: 2025 pathetic meowmeow <uhhadd@gmail.com>
+//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
@@ -13,6 +50,13 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
+#region Pirate: chem recipes
+using Content.Client.Chemistry.UI;
+using Content.Shared.Administration;
+using Content.Shared.Storage;
+using Robust.Client.Audio;
+#endregion
+
 namespace Content.Goobstation.Client.Chemistry.UI
 {
     [GenerateTypedNameReferences]
@@ -20,6 +64,12 @@ namespace Content.Goobstation.Client.Chemistry.UI
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        #region Pirate: chem recipes
+        private AudioSystem _audioSystem = default!;
+        private DialogWindow? _saveRecipeDialog;
+        private bool _isRecordingRecipe;
+        private bool? _recordButtonIsCancel;
+        #endregion
 
         private float _batteryCharge;
         private float _batteryMaxCharge;
@@ -31,24 +81,65 @@ namespace Content.Goobstation.Client.Chemistry.UI
         private float _lastBatteryCharge = -1;
         private bool _cardsNeedUpdate = true;
         public event Action<string>? OnDispenseReagentButtonPressed;
-        public event Action? OnToggleValveButtonPressed; // Pirate: chem plumbing
+        #region Pirate: chem recipes
+        public event Action? OnStartRecipeRecordingPressed;
+        public event Action? OnCancelRecipeRecordingPressed;
+        public event Action<string>? OnSaveRecipePressed;
+        public event Action? OnClearRecipesPressed;
+        public event Action<string>? OnDispenseRecipePressed;
+        public event Action<string>? OnDeleteRecipePressed;
+        public event Action<string>? OnSaveRecipeToDiskPressed;
+        public event Action<string>? OnCopyDiskRecipePressed;
+        public event Action<string>? OnDispenseDiskRecipePressed;
+        public event Action<string>? OnDeleteDiskRecipePressed;
+        public event Action? OnEjectRecipeDiskPressed;
+        #endregion
         public EnergyReagentDispenserWindow()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            ValveButton.OnPressed += _ => OnToggleValveButtonPressed?.Invoke(); // Pirate: chem plumbing
+            #region Pirate: chem recipes
+            _audioSystem = _entityManager.System<AudioSystem>();
+            RecordRecipeButton.OnPressed += _ =>
+            {
+                ReagentDispenserRecipeUiHelper.PlayRecipeUiClickSound(_audioSystem);
+                if (_isRecordingRecipe)
+                    OnCancelRecipeRecordingPressed?.Invoke();
+                else
+                    OnStartRecipeRecordingPressed?.Invoke();
+            };
+            SaveRecipeButton.OnPressed += _ =>
+            {
+                ReagentDispenserRecipeUiHelper.PlayRecipeUiClickSound(_audioSystem);
+                ReagentDispenserRecipeUiHelper.OpenSaveRecipeDialog(_saveRecipeDialog, SharedEnergyReagentDispenser.RecipeNameMaxLength, OnSaveRecipePressed, dialog => _saveRecipeDialog = dialog);
+            };
+            ClearRecipesButton.OnPressed += _ =>
+            {
+                ReagentDispenserRecipeUiHelper.PlayRecipeUiClickSound(_audioSystem);
+                OnClearRecipesPressed?.Invoke();
+            };
+            EjectRecipeDiskButton.OnPressed += _ =>
+            {
+                ReagentDispenserRecipeUiHelper.PlayRecipeUiClickSound(_audioSystem);
+                OnEjectRecipeDiskPressed?.Invoke();
+            };
+
+            ReagentDispenserRecipeUiHelper.ConfigureRecipeActionButton(RecordRecipeButton, "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-record.svg.192dpi.png");
+            ReagentDispenserRecipeUiHelper.ConfigureRecipeActionButton(SaveRecipeButton, "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-save.svg.192dpi.png");
+            ReagentDispenserRecipeUiHelper.ConfigureRecipeActionButton(ClearRecipesButton, "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-delete-all.svg.192dpi.png");
+            ReagentDispenserRecipeUiHelper.ConfigureRecipeActionButton(EjectRecipeDiskButton, "/Textures/_Pirate/Interface/VerbIcons/ChemRecipes/recipe-eject.svg.192dpi.png");
+            RecipeList.OnResized += () => ReagentDispenserRecipeUiHelper.ApplyRecipeChipWidths(RecipeList);
+            RecipeDiskList.OnResized += () => ReagentDispenserRecipeUiHelper.ApplyRecipeChipWidths(RecipeDiskList);
+            OnClose += () => _saveRecipeDialog?.Close();
+            #endregion
         }
 
         public void UpdateReagentsList(List<EnergyReagentInventoryItem> inventory)
         {
-            if (ReagentList == null)
-                return;
-
             ReagentList.Children.Clear();
             inventory.Sort((x, y) => string.Compare(x.ReagentLabel, y.ReagentLabel, StringComparison.Ordinal));
 
-            foreach (var card in inventory
-                         .Select(item => new EnergyReagentCardControl(item)))
+            foreach (var card in inventory.Select(item => new EnergyReagentCardControl(item))) // Pirate: chem recipes
             {
                 card.OnPressed += OnDispenseReagentButtonPressed;
                 ReagentList.Children.Add(card);
@@ -72,6 +163,7 @@ namespace Content.Goobstation.Client.Chemistry.UI
 
             UpdateContainerInfo(state);
             UpdateReagentsList(state.Inventory);
+            UpdateRecipes(state); // Pirate: chem recipes
             UpdateBatteryPercent();
 
             _entityManager.TryGetEntity(state.OutputContainerEntity, out var outputContainerEnt);
@@ -79,8 +171,6 @@ namespace Content.Goobstation.Client.Chemistry.UI
 
             ClearButton.Disabled = state.OutputContainer is null;
             EjectButton.Disabled = state.OutputContainer is null;
-
-            ValveButton.Text = GetValveText(state.ValveOpen); // Pirate: chem plumbing
 
             AmountGrid.Selected = ((int) state.SelectedDispenseAmount).ToString();
             _cardsNeedUpdate = true;
@@ -106,6 +196,15 @@ namespace Content.Goobstation.Client.Chemistry.UI
         private void UpdateContainerInfo(EnergyReagentDispenserBoundUserInterfaceState state)
         {
             ContainerInfo.Children.Clear();
+            #region Pirate: chem recipes
+            if (state.IsRecordingRecipe)
+            {
+                ContainerInfoName.Text = Loc.GetString("reagent-dispenser-window-recipes-virtual-container-name");
+                ContainerInfoFill.Text = $"{ReagentDispenserRecipeUiHelper.GetRecordingTotalVolume(state.RecordingRecipeReagents)}u";
+                ReagentDispenserRecipeUiHelper.UpdateVirtualRecordingContents(_prototypeManager, ContainerInfo, state.RecordingRecipeReagents);
+                return;
+            }
+            #endregion
 
             if (state.OutputContainer is null)
             {
@@ -128,7 +227,7 @@ namespace Content.Goobstation.Client.Chemistry.UI
                 var quantityLabel = new Label
                 {
                     Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity)),
-                    StyleClasses = { StyleClass.LabelWeak }, // Pirate: ui fixes (legacy style migration; prefer upstream on conflict)
+                    StyleClasses = { StyleNano.StyleClassLabelSecondaryColor },
                 };
 
                 ContainerInfo.Children.Add(new BoxContainer
@@ -145,7 +244,7 @@ namespace Content.Goobstation.Client.Chemistry.UI
 
         private void UpdateCardStates()
         {
-            if (ReagentList == null || !_cardsNeedUpdate)
+            if (!_cardsNeedUpdate) // Pirate: chem recipes
                 return;
 
             var stateChanged = false;
@@ -206,9 +305,6 @@ namespace Content.Goobstation.Client.Chemistry.UI
 
         private void CheckEnergyThresholds(float oldEnergy, float newEnergy)
         {
-            if (ReagentList == null)
-                return;
-
             foreach (var child in ReagentList.Children)
             {
                 if (child is not EnergyReagentCardControl card)
@@ -223,12 +319,36 @@ namespace Content.Goobstation.Client.Chemistry.UI
             }
             UpdateCardStates();
         }
-        // Pirate: chem plumbing
-        private static string GetValveText(bool open)
+        #region Pirate: chem recipes
+        private void UpdateRecipes(EnergyReagentDispenserBoundUserInterfaceState state)
         {
-            return $"{Loc.GetString("gas-canister-window-valve-label")} {Loc.GetString(open ? "gas-canister-window-valve-open-text" : "gas-canister-window-valve-closed-text")}";
+            _isRecordingRecipe = state.IsRecordingRecipe;
+            var recipeState = new ReagentDispenserRecipeUiHelper.RecipeUiState(
+                state.IsRecordingRecipe,
+                state.RecordingRecipeReagents,
+                state.SavedRecipes,
+                state.HasRecipeDisk,
+                state.DiskRecipes);
+            var callbacks = new ReagentDispenserRecipeUiHelper.RecipeUiCallbacks(
+                OnDispenseRecipePressed,
+                OnSaveRecipeToDiskPressed,
+                OnDeleteRecipePressed,
+                OnDispenseDiskRecipePressed,
+                OnCopyDiskRecipePressed,
+                OnDeleteDiskRecipePressed);
+            ReagentDispenserRecipeUiHelper.UpdateRecipeSection(
+                recipeState,
+                callbacks,
+                RecordRecipeButton,
+                SaveRecipeButton,
+                ClearRecipesButton,
+                EjectRecipeDiskButton,
+                RecipeDiskSection,
+                RecipeList,
+                RecipeDiskList,
+                ref _recordButtonIsCancel);
         }
-
+        #endregion
     }
 }
 
