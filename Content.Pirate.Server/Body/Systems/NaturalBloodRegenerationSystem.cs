@@ -24,12 +24,12 @@ public sealed class NaturalBloodRegenerationSystem : EntitySystem
     /// <summary>
     /// Base hunger cost per unit of blood regenerated.
     /// </summary>
-    public float HungerCostPerUnit = 0.5f;
+    public float HungerCostPerUnit = 0.1f;
 
     /// <summary>
     /// Base thirst cost per unit of blood regenerated.
     /// </summary>
-    public float ThirstCostPerUnit = 0.5f;
+    public float ThirstCostPerUnit = 0.1f;
 
     public override void Initialize()
     {
