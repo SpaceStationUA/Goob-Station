@@ -30,8 +30,8 @@
   id: BaseReactorFuelRod
   parent: [ BaseReactorPart, BaseEngineeringContraband ]
   categories: [ HideSpawnMenu ]
-  name: "паливний стрижень"
-  description: "Паливний стрижень для ядерного реактора."
+  name: fuel rod
+  description: A fuel rod for a nuclear reactor.
   abstract: true
   components:
   - type: ReactorPart
@@ -69,17 +69,17 @@
 - type: entity
   id: CerenkiteReactorFuelRod
   parent: [ BaseReactorFuelRod, BaseNuclearPropertiesCerenkite ]
-  name: "церенкітовий паливний стрижень" # These are your basic, semi-harmless fuel rods
+  name: cerenkite fuel rod # These are your basic, semi-harmless fuel rods
 
 - type: entity
   id: UraniumReactorFuelRod
   parent: [ BaseReactorFuelRod, BaseNuclearPropertiesUranium ]
-  name: "урановий паливний стрижень"
+  name: uranium fuel rod
 
 - type: entity
   id: PlutoniumReactorFuelRod
   parent: [ BaseReactorFuelRod, BaseNuclearPropertiesPlutonium ]
-  name: "плутонієвий паливний стрижень"
+  name: plutonium fuel rod
   components:
   - type: GhostRole
     makeSentient: true
@@ -97,24 +97,24 @@
 - type: entity
   id: BananiumReactorFuelRod
   parent: [ BaseReactorFuelRod, BaseNuclearPropertiesBananium ]
-  name: "бананієвий паливний стрижень"
-  description: "Гудковий паливний стрижень для ядерного реактора."
+  name: bananium fuel rod
+  description: A honk rod for a nuclear reactor.
 
 - type: entity
   id: PlasmaReactorFuelRod
   parent: [ BaseReactorFuelRod, BaseNuclearPropertiesPlasma ]
-  name: "плазмовий паливний стрижень"
+  name: plasma fuel rod
 
 - type: entity
   id: UraniumGlassReactorFuelRod
   parent: [ BaseReactorFuelRod, BaseNuclearPropertiesUraniumGlass ]
-  name: "ураново-скляний паливний стрижень"
+  name: uranium glass fuel rod
 
 - type: entity
   id: MeatReactorFuelRod
   parent: BaseReactorFuelRod
-  name: "м'ясний паливний стрижень"
-  description: "Паливний стрижень... зачекайте, він живий?"
+  name: meat fuel rod
+  description: A fuel rod fo- wait, is it alive?
   components:
   - type: NuclearProperties
     color: "#c53648"
@@ -129,8 +129,8 @@
   id: BaseReactorControlRod
   parent: BaseReactorPart
   categories: [ HideSpawnMenu ]
-  name: "керувальний стрижень"
-  description: "Збірка керувального стрижня для ядерного реактора."
+  name: control rod
+  description: A control rod assembly for a nuclear reactor.
   components:
   - type: ReactorPart
     iconStateInserted: "control"
@@ -144,7 +144,7 @@
 - type: entity
   id: BohrumReactorControlRod
   parent: [ BaseReactorControlRod, BaseNuclearPropertiesBohrum ] # what the crew start with
-  name: "борумовий керувальний стрижень"
+  name: bohrum control rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -154,7 +154,7 @@
 - type: entity
   id: SteelReactorControlRod
   parent: [ BaseReactorControlRod, BaseNuclearPropertiesSteel ]
-  name: "сталевий керувальний стрижень"
+  name: steel control rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -163,7 +163,7 @@
 - type: entity
   id: GoldReactorControlRod
   parent: [ BaseReactorControlRod, BaseNuclearPropertiesGold ]
-  name: "золотий керувальний стрижень"
+  name: gold control rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -173,7 +173,7 @@
 - type: entity
   id: SilverReactorControlRod
   parent: [ BaseReactorControlRod, BaseNuclearPropertiesSilver ]
-  name: "срібний керувальний стрижень"
+  name: silver control rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -183,7 +183,7 @@
 - type: entity
   id: BrassReactorControlRod
   parent: [ BaseReactorControlRod, BaseNuclearPropertiesBrass ]
-  name: "латунний керувальний стрижень"
+  name: brass control rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -193,7 +193,7 @@
 - type: entity
   id: PlasteelReactorControlRod
   parent: [ BaseReactorControlRod, BaseNuclearPropertiesPlasteel ]
-  name: "пласталевий керувальний стрижень"
+  name: plasteel control rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -203,7 +203,7 @@
 - type: entity
   id: GlassReactorControlRod
   parent: [ BaseReactorControlRod, BaseNuclearPropertiesGlass ]
-  name: "скляний керувальний стрижень"
+  name: glass control rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -213,7 +213,7 @@
 - type: entity
   id: PlasmaGlassReactorControlRod
   parent: [ BaseReactorControlRod, BaseNuclearPropertiesPlasmaGlass ]
-  name: "плазмово-скляний керувальний стрижень"
+  name: plasma glass control rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -223,7 +223,7 @@
 - type: entity
   id: DiamondReactorControlRod
   parent: [ BaseReactorControlRod, BaseNuclearPropertiesDiamond ]
-  name: "діамантовий керувальний стрижень"
+  name: diamond control rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -235,8 +235,8 @@
   id: BaseReactorGasChannel
   parent: BaseReactorPart
   categories: [ HideSpawnMenu ]
-  name: "газоканальний стрижень"
-  description: "Газовий канал для ядерного реактора."
+  name: gas channel rod
+  description: A gas channel for a nuclear reactor.
   components:
   - type: ReactorPart
     iconStateInserted: "gas"
@@ -252,7 +252,7 @@
 - type: entity
   id: SteelReactorGasChannel
   parent: [ BaseReactorGasChannel, BaseNuclearPropertiesSteel ]
-  name: "сталевий газоканальний стрижень"
+  name: steel gas channel rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -261,7 +261,7 @@
 - type: entity
   id: GoldReactorGasChannel
   parent: [ BaseReactorGasChannel, BaseNuclearPropertiesGold ]
-  name: "золотий газоканальний стрижень"
+  name: gold gas channel rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -271,7 +271,7 @@
 - type: entity
   id: SilverReactorGasChannel
   parent: [ BaseReactorGasChannel, BaseNuclearPropertiesSilver ]
-  name: "срібний газоканальний стрижень"
+  name: silver gas channel rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -281,7 +281,7 @@
 - type: entity
   id: BrassReactorGasChannel
   parent: [ BaseReactorGasChannel, BaseNuclearPropertiesBrass ]
-  name: "латунний газоканальний стрижень"
+  name: brass gas channel rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -291,7 +291,7 @@
 - type: entity
   id: PlasteelReactorGasChannel
   parent: [ BaseReactorGasChannel, BaseNuclearPropertiesPlasteel ]
-  name: "пласталевий газоканальний стрижень"
+  name: plasteel gas channel rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -301,7 +301,7 @@
 - type: entity
   id: GlassReactorGasChannel
   parent: [ BaseReactorGasChannel, BaseNuclearPropertiesGlass ]
-  name: "скляний газоканальний стрижень"
+  name: glass gas channel rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -311,7 +311,7 @@
 - type: entity
   id: PlasmaGlassReactorGasChannel
   parent: [ BaseReactorGasChannel, BaseNuclearPropertiesPlasmaGlass ]
-  name: "плазмово-скляний газоканальний стрижень"
+  name: plasma glass gas channel rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -321,7 +321,7 @@
 - type: entity
   id: DiamondReactorGasChannel
   parent: [ BaseReactorGasChannel, BaseNuclearPropertiesDiamond ]
-  name: "діамантовий газоканальний стрижень"
+  name: diamond gas channel rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -333,8 +333,8 @@
   id: BaseReactorHeatExchanger
   parent: BaseReactorPart
   categories: [ HideSpawnMenu ]
-  name: "теплообмінний стрижень"
-  description: "Теплообмінник для ядерного реактора."
+  name: heat exchanger rod
+  description: A heat exchanger for a nuclear reactor.
   components:
   - type: ReactorPart
     iconStateInserted: "heat"
@@ -348,7 +348,7 @@
 - type: entity
   id: SteelReactorHeatExchanger
   parent: [ BaseReactorHeatExchanger, BaseNuclearPropertiesSteel ]
-  name: "сталевий теплообмінний стрижень"
+  name: steel heat exchanger rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -357,7 +357,7 @@
 - type: entity
   id: GoldReactorHeatExchanger
   parent: [ BaseReactorHeatExchanger, BaseNuclearPropertiesGold ]
-  name: "золотий теплообмінний стрижень"
+  name: gold heat exchanger rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -367,7 +367,7 @@
 - type: entity
   id: SilverReactorHeatExchanger
   parent: [ BaseReactorHeatExchanger, BaseNuclearPropertiesSilver ]
-  name: "срібний теплообмінний стрижень"
+  name: silver heat exchanger rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -377,7 +377,7 @@
 - type: entity
   id: BrassReactorHeatExchanger
   parent: [ BaseReactorHeatExchanger, BaseNuclearPropertiesBrass ]
-  name: "латунний теплообмінний стрижень"
+  name: brass heat exchanger rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -387,7 +387,7 @@
 - type: entity
   id: PlasteelReactorHeatExchanger
   parent: [ BaseReactorHeatExchanger, BaseNuclearPropertiesPlasteel ]
-  name: "пласталевий теплообмінний стрижень"
+  name: plasteel heat exchanger rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -397,7 +397,7 @@
 - type: entity
   id: GlassReactorHeatExchanger
   parent: [ BaseReactorHeatExchanger, BaseNuclearPropertiesGlass ]
-  name: "скляний теплообмінний стрижень"
+  name: glass heat exchanger rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -407,7 +407,7 @@
 - type: entity
   id: PlasmaGlassReactorHeatExchanger
   parent: [ BaseReactorHeatExchanger, BaseNuclearPropertiesPlasmaGlass ]
-  name: "плазмово-скляний теплообмінний стрижень"
+  name: plasma glass heat exchanger rod
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -417,7 +417,7 @@
 - type: entity
   id: DiamondReactorHeatExchanger
   parent: [ BaseReactorHeatExchanger, BaseNuclearPropertiesDiamond ]
-  name: "діамантовий теплообмінний стрижень"
+  name: diamond heat exchanger rod
   components:
   - type: PhysicalComposition
     materialComposition:
