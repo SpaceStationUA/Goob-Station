@@ -3,8 +3,8 @@
 - type: entity
   id: CrateNPCSecDog
   parent: CrateLivestock
-  name: "вантажний ящик зі службовим псом"
-  description: "Містить одного безпородного собаку, навченого для роботи в службі безпеки."
+  name: вантажний ящик зі службовим псом
+  description: Містить одного безпородного собаку, навченого для роботи в службі безпеки.
   components:
   - type: EntityTableContainerFill
     containers:

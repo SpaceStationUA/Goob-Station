@@ -5,7 +5,7 @@
 
 - type: strangeMoodDefinition
   id: ThavenMoods
-  name: "Настрої тавенів"
+  name: Thaven Moods
   shared: Thaven
   datasets:
     ThavenMoodsYesAnd: 1
@@ -16,11 +16,11 @@
 # ADMIN TOOL MOODS
 - type: strangeMoodDefinition
   id: EmptyMoods
-  name: "Порожньо"
+  name: Empty
 
 - type: strangeMoodDefinition
   id: ThavenMoodsEmpty
-  name: "Настрої тавенів (порожньо)"
+  name: Thaven Moods (Empty)
   shared: Thaven
   components:
   - type: ThavenMoods

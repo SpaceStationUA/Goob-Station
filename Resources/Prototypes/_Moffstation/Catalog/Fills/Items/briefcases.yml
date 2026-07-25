@@ -2,7 +2,7 @@
 - type: entity
   parent: MarkerBase
   id: SyndieDeadDropSpawner
-  name: "Верховне командування Синдикату" # Used for radio announcement
+  name: Syndicate High Command # Used for radio announcement
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTableSpawner
@@ -14,7 +14,7 @@
 - type: entity
   parent: [ BaseSubfloorAnchorStorageAnchored, BriefcaseSyndie, BaseSyndicateContraband ]
   id: BriefcaseSyndieDeadDrop
-  name: "портфель Синдикату"
+  name: syndicate briefcase
   suffix: Dead Drop, Do Not Map
   components:
   - type: EntityTableContainerFill
