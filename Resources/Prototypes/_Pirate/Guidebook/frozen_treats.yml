@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: guideEntry
+  id: FrozenTreats
+  name: guide-entry-frozentreat-recipes
+  text: "/ServerInfo/Guidebook/_Pirate/Service/FrozenTreats.xml"
+  filterEnabled: True

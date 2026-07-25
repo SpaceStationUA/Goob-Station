@@ -34,6 +34,8 @@ public sealed partial class CorticalBorerInfestedComponent : Component
 
     public List<EntityUid> RemoveAbilities = new();
 
+    public EntityUid? LayEggAction;
+
     public EntityUid? RemovedReformAction;
 
     [ViewVariables]
@@ -41,6 +43,12 @@ public sealed partial class CorticalBorerInfestedComponent : Component
 
     [ViewVariables]
     public ProtoId<CollectiveMindPrototype>? OldDefault;
+
+    [ViewVariables]
+    public bool AddedControlThermalVision;
+
+    [ViewVariables]
+    public bool IsPolymorphing;
 }
 
 [RegisterComponent, NetworkedComponent]

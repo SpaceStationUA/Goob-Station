@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: CrateNPCSecDog
+  parent: CrateLivestock
+  name: вантажний ящик зі службовим псом
+  description: Містить одного безпородного собаку, навченого для роботи в службі безпеки.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MobSecDog

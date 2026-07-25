@@ -4,11 +4,13 @@
   id: CorticalBorer
   name: collective-mind-borer
   keycode: 'z'
-  color: "#d842fc"
+  # Pirate: keep borer messages readable in the standard chat color.
+  color: "#D3D3D3"
 
 - type: radioChannel
   id: CorticalBorer
   name: chat-radio-cortical-borer
   keycode: 'z'
-  color: "#d842fc"
+  # Pirate: keep borer messages readable in the standard chat color.
+  color: "#D3D3D3"
   longRange: true

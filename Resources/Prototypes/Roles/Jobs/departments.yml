@@ -133,6 +133,8 @@
   - Warden
   - Brigmedic # Goob
   - SecurityClown # event-restricted, Goob
+  - RoleLaika # Pirate: HoS security dog.
+  - RoleK9Officer # Pirate: cargo security dog.
 
 - type: department
   id: Science

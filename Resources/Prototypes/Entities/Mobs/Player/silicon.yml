@@ -459,6 +459,9 @@
     - Silicon
   - type: Eye
     drawFov: false
+    visMask: # Pirate - Cyberdeck network visibility
+    - Normal
+    - StationAiNetwork
   - type: Examiner
   - type: InputMover
   - type: BlockMovement
@@ -568,14 +571,18 @@
   - type: StationAiHolo # DOWNSTREAM-TPirates: ghost follow menu update
   - type: Eye
     pvsScale: 1.5
+    visMask: # Pirate - Cyberdeck network visibility
+    - Normal
+    - StationAiNetwork
   - type: Visibility
-    layer: 2
+    layer: 4096 # Pirate - Cyberdeck network visibility
   - type: Sprite
     sprite: Mobs/Silicon/station_ai.rsi
     layers:
     - state: ai_camera
       shader: unshaded
       map: ["base"]
+  - type: AiDetectable # Pirate: hitman AI detector
 
 # The holographic representation of the AI that is projected from a holopad.
 - type: entity

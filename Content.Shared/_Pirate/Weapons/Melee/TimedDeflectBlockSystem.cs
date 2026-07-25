@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Shared._Goobstation.Wizard.Projectiles;
-using Content.Shared._Pirate.Projectiles;
 using Content.Shared._Pirate.Weapons.Melee.Components;
 using Content.Shared._Pirate.Weapons.Ranged.Events;
 using Content.Shared._Shitmed.ItemSwitch;
@@ -212,13 +211,13 @@ public sealed class TimedDeflectBlockSystem : EntitySystem
 
         if (ent.Comp.DeflectToSource &&
             args.Args.Component.Shooter is { } shooter &&
-            TryDeflectProjectileToSource(args.Args.Target, ent.Owner, ent.Comp, shooter, GetDamageTotal(args.Args.Component.Damage), args.Args.ProjUid, args.Args.Component))
+            TryDeflectProjectileToSource(args.Source, ent.Owner, ent.Comp, shooter, GetDamageTotal(args.Args.Component.Damage), args.Args.ProjUid, args.Args.Component))
         {
             args.Args.Cancelled = true;
             return;
         }
 
-        if (!ApplyDefense(args.Args.Target, ent.Owner, ent.Comp, args.Args.Component.Shooter, GetDamageTotal(args.Args.Component.Damage), args.Args.ProjUid, isRanged: true, out _))
+        if (!ApplyDefense(args.Source, ent.Owner, ent.Comp, args.Args.Component.Shooter, GetDamageTotal(args.Args.Component.Damage), args.Args.ProjUid, isRanged: true, out _))
             return;
 
         args.Args.Cancelled = true;
@@ -233,12 +232,12 @@ public sealed class TimedDeflectBlockSystem : EntitySystem
             args.Args.Shooter == null ||
             !TryComp<WieldableComponent>(ent, out var wieldable) ||
             !wieldable.Wielded ||
-            !TryApplyDirectedDeflect(args.Args.Target, ent.Owner, ent.Comp, args.Args.Shooter.Value, GetDamageTotal(args.Args.Damage), isRanged: true))
+            !TryApplyDirectedDeflect(args.Source, ent.Owner, ent.Comp, args.Args.Shooter.Value, GetDamageTotal(args.Args.Damage), isRanged: true))
         {
             return;
         }
 
-        var direction = GetDirectionToEntity(args.Args.Target, args.Args.Shooter.Value);
+        var direction = GetDirectionToEntity(args.Source, args.Args.Shooter.Value);
         args.Args.Direction = direction == Vector2.Zero
             ? -args.Args.Direction
             : direction;
@@ -442,11 +441,7 @@ public sealed class TimedDeflectBlockSystem : EntitySystem
         RevealDefender(defender);
 
         if (projectile is { } projectileUid && !Deleted(projectileUid))
-        {
-            var deleteEv = new DeletingProjectileEvent(projectileUid);
-            RaiseLocalEvent(ref deleteEv);
             PredictedQueueDel(projectileUid);
-        }
 
         return true;
     }

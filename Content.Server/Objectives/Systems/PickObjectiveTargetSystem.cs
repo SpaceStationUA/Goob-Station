@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._Pirate.Mind.Filters;
+using Content.Server._Pirate.Objectives.Components; // Pirate: honor target-objective immunity.
 using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
@@ -53,6 +55,13 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
             return;
         }
 
+        // Pirate: immune entities and their minds cannot be assigned as specific targets.
+        if (IsTargetObjectiveImmune(targetComp.Target.Value))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
         _target.SetTarget(ent.Owner, targetComp.Target.Value);
     }
 
@@ -69,13 +78,33 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
         if (target.Target != null)
             return;
 
+        // Pirate: filter immune candidates before picking so one bad roll cannot cancel the objective.
+        var filters = ent.Comp.Filters.ToList();
+        filters.Add(new ObjectiveImmuneFilter());
+
         // couldn't find a target :(
-        if (_mind.PickFromPool(ent.Comp.Pool, ent.Comp.Filters, args.MindId) is not {} picked)
+        if (_mind.PickFromPool(ent.Comp.Pool, filters, args.MindId) is not {} picked)
         {
             args.Cancelled = true;
             return;
         }
 
         _target.SetTarget(ent, picked, target);
+    }
+
+    // Pirate: target overrides may point at either a body or a mind.
+    private bool IsTargetObjectiveImmune(EntityUid target)
+    {
+        if (HasComp<TargetObjectiveImmuneComponent>(target))
+            return true;
+
+        if (TryComp<MindComponent>(target, out var targetMind))
+        {
+            return targetMind.OwnedEntity is { } owned &&
+                   HasComp<TargetObjectiveImmuneComponent>(owned);
+        }
+
+        return _mind.TryGetMind(target, out var mindId, out _) &&
+               HasComp<TargetObjectiveImmuneComponent>(mindId);
     }
 }

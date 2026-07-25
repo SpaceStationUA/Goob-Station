@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Server.Administration.Logs;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Ghost;
 using Content.Server.Popups;
@@ -10,7 +9,6 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Components;
 using Content.Shared.IdentityManagement;
@@ -22,18 +20,20 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Power;
 using Content.Shared.Repairable;
 using Content.Shared.Stacks;
+using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Shared.Humanoid;
 
 namespace Content.Server.Materials;
 
 /// <inheritdoc/>
 public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 {
+    private static readonly TimeSpan EmaggedMobStunDuration = TimeSpan.FromSeconds(10);
+
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
@@ -44,8 +44,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly SharedBodySystem _body = default!; //bobby
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly StackSystem _stack = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -184,25 +184,20 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         base.Reclaim(uid, item, completion, component);
 
+        // Pirate: emagged recyclers disable mobs without destroying them.
+        if (CanProcessMob(uid, item, component))
+        {
+            _stun.TryUpdateStunDuration(item, EmaggedMobStunDuration);
+            return;
+        }
+
         var xform = Transform(uid);
 
         if (component.ReclaimMaterials)
             SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
 
-        if (CanGib(uid, item, component))
-        {
-            var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
-            _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
-            if (component.ReclaimSolutions)
-                SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
-            _body.GibBody(item, true);
-            _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
-        }
-        else
-        {
-            if (component.ReclaimSolutions)
-                SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
-        }
+        if (component.ReclaimSolutions)
+            SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
 
         QueueDel(item);
     }

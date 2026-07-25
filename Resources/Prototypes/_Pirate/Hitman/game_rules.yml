@@ -1,0 +1,115 @@
+- type: entity
+  parent: BaseGameRule
+  id: HitmanRule
+  components:
+  - type: GameRule
+  - type: HitmanRule
+  - type: AntagObjectives
+    objectives:
+    - HitmanEscapeShuttleObjective
+    - HitmanTeachLessonRandomPersonObjective
+  - type: AntagRandomObjectives
+    sets:
+    - groups: HitmanObjectiveGroup
+      maxPicks: 2
+    maxDifficulty: 300
+  - type: AntagSelection
+    agentName: hitman-round-end-agent-name
+    definitions:
+    - min: 1
+      max: 2
+      pickPlayer: true
+      startingGear: HitmanGear
+      briefing:
+        text: hitman-role-greeting-human
+        color: yellow
+        sound: /Audio/_Pirate/Ambience/Antag/hitman_briefing_piano_between.ogg
+      mindRoles:
+      - MindRoleHitman
+      components:
+      - type: AutoImplant
+        implants:
+        - HitmanCardImplant
+
+- type: entity
+  parent: HitmanRule
+  id: Hitman
+  components:
+  - type: AntagSelection
+    agentName: hitman-round-end-agent-name
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ Hitman ]
+      max: 2
+      playerRatio: 30
+      chaosScore: 100 # Pirate: required by the local chaos scheduler.
+      lateJoinAdditional: true
+      allowNonHumans: true
+      multiAntagSetting: NotExclusive
+      startingGear: HitmanGear
+      mindRoles:
+      - MindRoleHitman
+      components:
+      - type: AutoImplant
+        implants:
+        - HitmanCardImplant
+      briefing:
+        text: hitman-role-greeting-human
+        color: yellow
+        sound: /Audio/_Pirate/Ambience/Antag/hitman_briefing_piano_between.ogg
+  - type: DynamicRuleCost
+    cost: 100
+
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: HitmanShuttle
+  components:
+  - type: StationEvent
+    weight: 2
+    minimumPlayers: 25
+    maxOccurrences: 1
+    duration: null
+    chaos:
+      Hostile: 100
+      Medical: 50
+      Death: 50
+    eventType: HostilesSpawn
+  - type: GameRule
+    chaosScore: 100
+  # Pirate: PrecognitionResult is unavailable in the local psionics implementation.
+  - type: LoadMapRule
+    gridPath: /Maps/_Pirate/Shuttles/Event/Professional.yml
+  - type: AntagSpawner
+    prototype: MobHuman
+  - type: AntagObjectives
+    objectives:
+    - HitmanSurviveObjective
+    - HitmanTeachLessonRandomPersonObjective
+  - type: AntagRandomObjectives
+    sets:
+    - groups: HitmanObjectiveGroup
+      maxPicks: 2
+    maxDifficulty: 300
+  - type: AntagSelection
+    agentName: hitman-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostHitman
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: HitmanGhostGear
+      roleLoadout:
+      - RoleSurvivalStandard
+      components:
+      - type: AutoImplant
+        implants:
+        - HitmanCardImplant
+      - type: RandomMetadata
+        nameSegments:
+        - NamesFakeHumanFirst
+        - NamesFakeHumanLast
+        nameFormat: name-format-standard
+      - type: RandomHumanoidAppearance
+        randomizeName: false
+      mindRoles:
+      - MindRoleHitman

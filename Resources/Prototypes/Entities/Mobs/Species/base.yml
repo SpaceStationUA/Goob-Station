@@ -352,6 +352,7 @@
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 2
   - type: Perishable
+    rotAfter: 900 # Pirate: player corpses start rotting after 15 minutes
   - type: Butcherable
     butcheringType: Spike # TODO human.
     spawned:
@@ -370,6 +371,7 @@
   - type: GrabIntent
   - type: Grabbable
   - type: Carriable
+  - type: GrappleTarget # Pirate: allow humanoids to be grappled
   - type: FootprintOwner # Corvax-Next-Footprints
   - type: CPRTraining # Goobstation - Just give to everyone! This ain't MRP.
   #- type: BloodstreamAffectedByMass # Goobstation: port EE height/width sliders. Also, lol at the comment above. # todo marty otherwise folk instadie

@@ -109,9 +109,9 @@ selectable-set-blueshield-syringe-description = Ідеально підходи�
     Включає: бойовий інжектор та кілька флаконів з ліками
 selectable-set-blueshield-hardsuit-light-name = броньований скафандр
 selectable-set-blueshield-hardsuit-light-description = Броньований скафандр, що дає змогу рухатися швидше ціною захисту.
-# Pirate: legacy MODsuit choices use the new modular suit system.
-selectable-set-blueshield-modsuit-name = корпоративний MOD-костюм
-selectable-set-blueshield-modsuit-description = Попередньо зібраний MOD-костюм для високопоставлених офіцерів Нанотрейзен із посиленим захистом, мобільністю та блюспейс-сховищем.
+# Pirate: Blueshield uses the new modular Praetorian suit.
+selectable-set-blueshield-modsuit-name = модульний костюм «Преторіанець»
+selectable-set-blueshield-modsuit-description = Попередньо зібраний модульний костюм для офіцерів «Синього щита», що поєднує посилений захист із передовими модулями.
 
 # ERT
 selectable-set-ert-ballistic-name = набір «Балістика»

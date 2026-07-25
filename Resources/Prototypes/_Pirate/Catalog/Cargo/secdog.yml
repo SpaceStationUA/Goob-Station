@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: cargoProduct
+  id: LivestockSecDog
+  icon:
+    sprite: _Pirate/Mobs/Pets/secdog.rsi
+    state: secdog
+  product: CrateNPCSecDog
+  cost: 3500
+  category: cargoproduct-category-name-livestock
+  group: market

@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: job
+  id: RoleLaika
+  name: role-name-laika
+  description: role-description-laika
+  setPreference: false
+  canBeAntag: false
+  playTimeTracker: RoleLaika
+  icon: JobIconSecurityK9Officer
+  supervisors: job-supervisors-hos
+  access:
+  - Security
+  - Maintenance
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 4h

@@ -430,10 +430,10 @@
   name: selectable-set-blueshield-modsuit-name
   description: selectable-set-blueshield-modsuit-description
   sprite:
-    sprite: _Pirate/Clothing/Modular/Corporate/control.rsi # Pirate: use the new modular suit system.
+    sprite: _Pirate/Clothing/Modular/Praetorian/control.rsi # Pirate: use the modular Praetorian suit.
     state: icon
   content:
-    - ClothingModularControllerCorporatePreassembled # Pirate: use the new modular suit system.
+    - ClothingModularControllerPraetorianPreassembled # Pirate: use the modular Praetorian suit.
 
 # ERT
 

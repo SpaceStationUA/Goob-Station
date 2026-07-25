@@ -173,10 +173,10 @@ selectable-set-blueshield-hardsuit-light-name = blueshield hardsuit
 selectable-set-blueshield-hardsuit-light-description =
     An armoured hardsuit, allowing for more speed at the cost of protection.
 
-# Pirate: legacy MODsuit choices use the new modular suit system.
-selectable-set-blueshield-modsuit-name = corporate MODsuit
+# Pirate: Blueshield uses the new modular Praetorian suit.
+selectable-set-blueshield-modsuit-name = Praetorian modular suit
 selectable-set-blueshield-modsuit-description =
-    A preassembled MODsuit for high-ranking Nanotrasen officers, with enhanced protection, mobility, and bluespace storage.
+    A preassembled modular suit for Blueshield Officers, combining heavy protection with advanced modules.
 
 # ERT
 

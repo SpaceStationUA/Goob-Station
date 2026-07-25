@@ -25,6 +25,7 @@ using Content.Shared.Chat;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Goobstation.Shared.Overlays;
 using Content.Shared.Inventory;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mind;
@@ -83,6 +84,8 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
     {
         foreach (var actionId in ent.Comp.InitialCorticalBorerActions)
             Actions.AddAction(ent, actionId);
+
+        EnsureThermalVisionAction(ent);
 
         _alerts.ShowAlert(ent.Owner, ent.Comp.ChemicalAlert);
         UpdateUiState(ent);
@@ -291,7 +294,6 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         }
 
         infested.BorerMindId = wormMind;
-        comp.ControlingHost = true;
 
         if (_mind.TryGetMind(host, out var controlledMind, out _))
         {
@@ -306,6 +308,10 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
             infested.OriginalMindId = null;
         }
 
+        // Pirate: mark control only after moving the host's original mind. The move raises MindRemovedMessage,
+        // which must not be treated as an unexpected loss of the host's mind during takeover.
+        comp.ControlingHost = true;
+        AddControlThermalVision(worm, host, infested);
         _mind.TransferTo(wormMind, host);
 
         if (TryComp<GhostRoleComponent>(worm, out var ghostRole))
@@ -314,9 +320,10 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         if (Actions.AddAction(host, EndControlAction) is { } endControl)
             infested.RemoveAbilities.Add(endControl);
 
-        if (comp.CanReproduce && infested.ControlTimeEnd is not null &&
+        if (comp.CanReproduce && !comp.HasLaidEgg &&
             Actions.AddAction(host, LayEggAction) is { } layEgg)
         {
+            infested.LayEggAction = layEgg;
             infested.RemoveAbilities.Add(layEgg);
         }
 
@@ -341,7 +348,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         _chat.SendAdminAlert(logMessage);
     }
 
-    public void EndControl(Entity<CorticalBorerComponent> worm)
+    public void EndControl(Entity<CorticalBorerComponent> worm, EntityUid? originalMindTarget = null)
     {
         var (uid, comp) = worm;
         if (comp.Host is not { } host ||
@@ -353,9 +360,12 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
 
         comp.ControlingHost = false;
 
+        RemoveControlThermalVision(host, infested);
+
         foreach (var ability in infested.RemoveAbilities)
             Actions.RemoveAction(host, ability);
         infested.RemoveAbilities.Clear();
+        infested.LayEggAction = null;
 
         if (infested.RemovedReformAction is not null && TryComp<ReformComponent>(host, out var reform))
         {
@@ -369,8 +379,13 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         if (!TerminatingOrDeleted(infested.BorerMindId))
             _mind.TransferTo(infested.BorerMindId, infested.Borer);
 
-        if (infested.OriginalMindId is { } originalMind && !TerminatingOrDeleted(originalMind))
-            _mind.TransferTo(originalMind, host);
+        var mindTarget = originalMindTarget ?? host;
+        if (infested.OriginalMindId is { } originalMind &&
+            !TerminatingOrDeleted(originalMind) &&
+            !TerminatingOrDeleted(mindTarget))
+        {
+            _mind.TransferTo(originalMind, mindTarget);
+        }
 
         if (TryComp<CollectiveMindComponent>(host, out var collective))
         {
@@ -384,6 +399,57 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
 
         infested.ControlTimeEnd = null;
         Container.CleanContainer(infested.ControlContainer);
+    }
+
+    private void EnsureThermalVisionAction(Entity<CorticalBorerComponent> ent)
+    {
+        if (!TryComp<ThermalVisionComponent>(ent, out var thermal) ||
+            thermal.ToggleAction is not { } toggleAction ||
+            thermal.ToggleActionEntity is not null)
+        {
+            return;
+        }
+
+        Actions.AddAction(ent, ref thermal.ToggleActionEntity, toggleAction);
+    }
+
+    private void AddControlThermalVision(EntityUid worm,
+        EntityUid host,
+        CorticalBorerInfestedComponent infested)
+    {
+        if (HasComp<ThermalVisionComponent>(host))
+            return;
+
+        var thermal = EnsureComp<ThermalVisionComponent>(host);
+        if (TryComp<ThermalVisionComponent>(worm, out var borerThermal))
+        {
+            thermal.Color = borerThermal.Color;
+            thermal.LightRadius = borerThermal.LightRadius;
+            thermal.ThermalShader = borerThermal.ThermalShader;
+            thermal.DrawOverlay = borerThermal.DrawOverlay;
+            thermal.OverlayOpacity = borerThermal.OverlayOpacity;
+        }
+
+        thermal.IsEquipment = false;
+        thermal.IsActive = true;
+        thermal.ActivateSound = null;
+        thermal.DeactivateSound = null;
+        if (thermal.ToggleAction is { } toggleAction)
+        {
+            Actions.AddAction(host, ref thermal.ToggleActionEntity, toggleAction);
+            Actions.SetToggled(thermal.ToggleActionEntity, true);
+        }
+        infested.AddedControlThermalVision = true;
+        Dirty(host, thermal);
+    }
+
+    private void RemoveControlThermalVision(EntityUid host, CorticalBorerInfestedComponent infested)
+    {
+        if (!infested.AddedControlThermalVision)
+            return;
+
+        infested.AddedControlThermalVision = false;
+        RemCompDeferred<ThermalVisionComponent>(host);
     }
 
     private void OnMindRemoved(Entity<CorticalBorerComponent> ent, ref MindRemovedMessage args)

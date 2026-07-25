@@ -76790,7 +76790,7 @@ entities:
     - type: Transform
       pos: 17.5,19.5
       parent: 2
-- proto: SpawnMobShiva
+- proto: SpawnMobSecLaikaOrShiva
   entities:
   - uid: 11300
     components:

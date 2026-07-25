@@ -50,10 +50,9 @@
   - type: EmptySlotsRequirement
     slots: [ outerclothing ]
     blacklist:
-      # Pirate: local large outerwear replaces Wega's per-prototype ModNotEquipable tags.
-      sizes:
-      - Huge
-      - Ginormous
+      # Pirate: allow ordinary armor to be stored while blocking nested pressure suits.
+      components:
+      - PressureProtection
       tags:
       - ModNotEquipable
   - type: SlotBlock

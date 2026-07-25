@@ -13,7 +13,9 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerComponent>
 {
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -22,6 +24,12 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
 
     protected override void OnTrigger(Entity<ScramOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
+        EntityCoordinates? targetCoords = null;
+
+        // Pirate: only commit the server-side trigger when there is somewhere to teleport.
+        if (_net.IsServer && (targetCoords = SelectRandomTileInRange(target, ent.Comp.TeleportRadius)) == null)
+            return;
+
         // We need stop the user from being pulled so they don't just get "attached" with whoever is pulling them.
         // This can for example happen when the user is cuffed and being pulled.
         if (TryComp<PullableComponent>(target, out var pull) && _pulling.IsPulled(target, pull))
@@ -32,56 +40,52 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
             _pulling.TryStopPull(puller.Pulling.Value, pullable);
 
         _audio.PlayPredicted(ent.Comp.TeleportSound, ent, args.User);
+        args.Handled = true;
 
         // Can't predict picking random grids and the target location might be out of PVS range.
         if (_net.IsClient)
             return;
 
-        var targetCoords = SelectRandomTileInRange(target, ent.Comp.TeleportRadius);
-
-        if (targetCoords != null)
-        {
-            _transform.SetCoordinates(target, targetCoords.Value);
-            args.Handled = true;
-        }
+        _transform.SetCoordinates(target, targetCoords!.Value);
     }
+
     /// <summary>
-    /// Method to find a random empty tile within a certain radius. Will not select off-grid tiles. Returns
-    /// null if no tile is found within a certain number of tries.
+    /// Finds a random empty tile within a certain radius. Will not select off-grid tiles or the current tile.
     /// </summary>
-    /// <remarks> Trends towards the outer radius. Compensates for small grids. </remarks>
-    private EntityCoordinates? SelectRandomTileInRange(EntityUid uid, float radius, int tries = 40, PhysicsComponent? physicsComponent = null)
+    private EntityCoordinates? SelectRandomTileInRange(EntityUid uid, float radius, PhysicsComponent? physicsComponent = null)
     {
         var userCoords = Transform(uid).Coordinates;
-        EntityCoordinates? targetCoords = null;
-
         if (!Resolve(uid, ref physicsComponent))
-            return targetCoords;
+            return null;
 
+        var userMapCoords = _transform.ToMapCoordinates(userCoords);
+        var currentTile = _turfSystem.GetTileRef(userCoords);
+        var radiusSquared = radius * radius;
+        var candidates = new List<TileRef>();
 
-        for (var i = 0; i < tries; i++)
+        // Pirate: sample actual tiles so a large radius cannot randomly miss every grid.
+        foreach (var grid in _mapManager.GetAllGrids(userMapCoords.MapId))
         {
-            // distance = r * sq(x) * i
-            // r = the radius of the search area.
-            // sq(x) = the square root of [0 - 1]. Gives a number trending to the
-            // upper range of [0, 1] so that you tend to teleport further.
-            // i = A percentage based on the current try count, which results in each
-            // subsequent try landing closer and closer towards the entity.
-            // Beneficial for smaller maps, especially when the radius is large.
-            var distance = radius * MathF.Sqrt(_random.NextFloat()) * (1 - (float)i / tries);
+            foreach (var tile in _mapSystem.GetAllTiles(grid.Owner, grid.Comp))
+            {
+                if (_turfSystem.IsSpace(tile)
+                    || currentTile is { } current && tile.GridUid == current.GridUid && tile.GridIndices == current.GridIndices)
+                    continue;
 
-            // We then offset the user coords from a random angle * distance
-            var tempTargetCoords = userCoords.Offset(_random.NextAngle().ToVec() * distance);
-
-            if (!_turfSystem.TryGetTileRef(tempTargetCoords, out var tileRef)
-                || _turfSystem.IsSpace(tileRef.Value)
-                || _turfSystem.IsTileBlocked(tileRef.Value, (CollisionGroup)physicsComponent.CollisionMask))
-                continue;
-
-            targetCoords = tempTargetCoords;
-            break;
+                var tilePosition = _mapSystem.GridTileToWorldPos(grid.Owner, grid.Comp, tile.GridIndices);
+                if ((tilePosition - userMapCoords.Position).LengthSquared() <= radiusSquared)
+                    candidates.Add(tile);
+            }
         }
 
-        return targetCoords;
+        _random.Shuffle(candidates);
+
+        foreach (var tile in candidates)
+        {
+            if (!_turfSystem.IsTileBlocked(tile, (CollisionGroup)physicsComponent.CollisionMask))
+                return _turfSystem.GetTileCenter(tile);
+        }
+
+        return null;
     }
 }

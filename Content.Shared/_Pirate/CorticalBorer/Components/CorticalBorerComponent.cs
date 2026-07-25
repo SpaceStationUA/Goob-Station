@@ -46,6 +46,9 @@ public sealed partial class CorticalBorerComponent : Component
     public bool CanReproduce = true;
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
+    public bool HasLaidEgg;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public EntProtoId EggProto = "CorticalBorerEgg";
 
     [ViewVariables(VVAccess.ReadWrite), DataField]

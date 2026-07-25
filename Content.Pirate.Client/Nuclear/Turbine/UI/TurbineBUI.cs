@@ -23,6 +23,7 @@ public sealed partial class TurbineBUI(EntityUid owner, Enum uiKey) : BoundUserI
 
         _window.OnChangeFlowRate += val => SendPredictedMessage(new TurbineChangeFlowRateMessage(val));
         _window.OnChangeStatorLoad += val => SendPredictedMessage(new TurbineChangeStatorLoadMessage(val));
+        _window.OnEmergencyShutdown += () => SendPredictedMessage(new TurbineChangeFlowRateMessage(0f));
 
         if (State is TurbineBuiState state)
             _window.Update(state);

@@ -22,5 +22,6 @@ namespace Content.Shared.Eye
         PsionicInvisibility = 1 << 8, // DeltaV - Psionic Invisibility, Pirate: local bit adapted to avoid Subfloor collision.
         Ethereal = 1 << 10, // pirate from Einstein Engines
         TargetingGhost = 1 << 11, // Pirate - для ghost targeting system
+        StationAiNetwork = 1 << 12, // Pirate - Cyberdeck traces and projections
     }
 }

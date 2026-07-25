@@ -73,6 +73,10 @@
     lightRadius: 15
     activateSound: null
     deactivateSound: null
+  - type: NightVision
+    color: "#808080"
+    activateSound: null
+    deactivateSound: null
   - type: CorticalBorer
     eggProto: CorticalBorerEgg
     addOnInfest:
@@ -91,6 +95,14 @@
     defaultChannel: CorticalBorer
   - type: Speech
     enabled: false
+  # Pirate: keep borer speech on the standard font while retaining universal understanding.
+  - type: LanguageSpeaker
+    currentLanguage: TauCetiBasic
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    understands:
+    - TauCetiBasic
   - type: HealthAnalyzer
     scanningEndSound:
       path: /Audio/Voice/Slime/slime_squish.ogg

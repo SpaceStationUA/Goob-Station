@@ -27,6 +27,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared._DV.Silicons.Laws; // DOWNSTREAM-TPirates: borg wireless access
+using Content.Pirate.Common.Cyberdeck.Components; // Pirate - Cyberdeck
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -201,10 +202,15 @@ public abstract partial class SharedStationAiSystem
         if (!_uiSystem.HasUi(args.Target, AiUi.Key))
             return;
 
+        var cyberdeckProjection = TryComp(args.User, out CyberdeckUserComponent? cyberdeck)
+            && cyberdeck.InProjection;
+
         if (!args.CanComplexInteract
             || !HasComp<StationAiHeldComponent>(args.User)
             && !HasComp<RemoteInteractionComponent>(args.User) // DOWNSTREAM-TPirates: borg wireless access
-            || !args.CanInteract)
+            && !cyberdeckProjection // Pirate - Cyberdeck
+            || !args.CanInteract
+            || cyberdeckProjection && !args.CanAccess) // Pirate - Cyberdeck
         {
             return;
         }
@@ -212,8 +218,20 @@ public abstract partial class SharedStationAiSystem
         var user = args.User;
 
         var target = args.Target;
+        var uiOwner = target;
+        if (cyberdeckProjection)
+        {
+            if (cyberdeck?.AiUiProxyEntity is not { } proxyEntity
+                || !TryComp(proxyEntity, out CyberdeckAiUiProxyComponent? proxy))
+                return;
 
-        var isOpen = _uiSystem.IsUiOpen(target, AiUi.Key, user);
+            uiOwner = proxyEntity;
+        }
+
+        var isOpen = _uiSystem.IsUiOpen(uiOwner, AiUi.Key, user)
+            && (!cyberdeckProjection
+                || TryComp(uiOwner, out CyberdeckAiUiProxyComponent? currentProxy)
+                && currentProxy.TargetEntity == target);
 
         var verb = new AlternativeVerb
         {
@@ -222,11 +240,27 @@ public abstract partial class SharedStationAiSystem
             {
                 if (isOpen)
                 {
-                    _uiSystem.CloseUi(ent.Owner, AiUi.Key, user);
+                    _uiSystem.CloseUi(uiOwner, AiUi.Key, user);
+
+                    if (TryComp(uiOwner, out CyberdeckAiUiProxyComponent? proxy))
+                    {
+                        proxy.TargetEntity = null;
+                        Dirty(uiOwner, proxy);
+                    }
                 }
                 else
                 {
-                    _uiSystem.OpenUi(ent.Owner, AiUi.Key, user);
+                    if (cyberdeckProjection)
+                    {
+                        if (!TryComp(uiOwner, out CyberdeckAiUiProxyComponent? proxy))
+                            return;
+
+                        _uiSystem.CloseUi(uiOwner, AiUi.Key, user);
+                        proxy.TargetEntity = target;
+                        Dirty(uiOwner, proxy);
+                    }
+
+                    _uiSystem.OpenUi(uiOwner, AiUi.Key, user);
                 }
             }
         };
@@ -276,6 +310,8 @@ public abstract class BaseStationAiAction
 {
     [field:NonSerialized]
     public EntityUid User { get; set; }
+
+    public bool Cancelled; // Pirate - Cyberdeck can reject an AI action before it executes
 }
 
 // No idea if there's a better way to do this.

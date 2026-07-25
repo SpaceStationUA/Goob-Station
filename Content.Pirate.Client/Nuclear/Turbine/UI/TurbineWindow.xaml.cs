@@ -63,6 +63,7 @@ public sealed partial class TurbineWindow : FancyWindow
     #region Events
     public event Action<float>? OnChangeFlowRate;
     public event Action<float>? OnChangeStatorLoad;
+    public event Action? OnEmergencyShutdown;
     #endregion
 
     public TurbineWindow()
@@ -112,6 +113,8 @@ public sealed partial class TurbineWindow : FancyWindow
         StatorLoadIncreaseLarge.OnPressed += _ => OnChangeStatorLoad?.Invoke(_statorLoad + 1000);
         StatorLoadIncreaseLarge.OnButtonDown += _ => _repeatQueue[StatorLoadIncreaseLarge] = _repeatDelay;
         StatorLoadIncreaseLarge.OnButtonUp += _ => _repeatQueue.Remove(StatorLoadIncreaseLarge);
+
+        EmergencyShutdown.OnPressed += _ => OnEmergencyShutdown?.Invoke();
 
         CTabContainer.SetTabTitle(0, Loc.GetString("comp-turbine-ui-tab-main"));
         CTabContainer.SetTabTitle(1, Loc.GetString("comp-turbine-ui-tab-parts"));
@@ -200,6 +203,7 @@ public sealed partial class TurbineWindow : FancyWindow
         TurbineFlowRateSlider.MaxValue = state.MaximumFlowRate;
         TurbineFlowRateSlider.Value = state.FlowRate;
         _suppressSliderEvents = false;
+        EmergencyShutdown.Disabled = state.FlowRate <= 0f;
 
         _speedLevel = ContentHelpers.RoundToNearestLevels(state.Rpm, state.BestRpm * 1.2, _speedMeter.Length);
 

@@ -779,6 +779,7 @@
       - RoleSurvivalNukie
       components:
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: lone ops are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesSyndicatePrefix

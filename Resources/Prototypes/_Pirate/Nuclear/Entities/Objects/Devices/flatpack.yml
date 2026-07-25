@@ -43,6 +43,7 @@
   components:
   - type: Flatpack
     entity: NuclearReactorEmpty
+    checkObstruction: false
 
 - type: entity
   parent: HeavyFlatpackBase # DeltaV - was CrateEngineering
@@ -52,6 +53,7 @@
   components:
   - type: Flatpack
     entity: Turbine
+    checkObstruction: false
 
 - type: entity
   parent: HeavyFlatpackBase

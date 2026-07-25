@@ -124,6 +124,7 @@
       - EldritchInfluenceSpent
       - Admin
       - TargetingGhost # Pirate, so they can see
+      - StationAiNetwork # Pirate - Cyberdeck traces
   - type: OwnInteractionVerbs
     allowedVerbs: []
   - type: ExplosionResistance

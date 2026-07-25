@@ -2,6 +2,7 @@
 
 
 using Content.Client.UserInterface.Controls;
+using Content.Pirate.Common.Cyberdeck.Components; // Pirate - Cyberdeck
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.UserInterface;
 
@@ -74,6 +75,11 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
         var controlled = CachedPlayerManager.LocalPlayer?.ControlledEntity;
 
         if (controlled is null)
+            return false;
+
+        // Pirate: Cyberdeck projections use the complete AI radial.
+        if (EntMan.TryGetComponent(controlled.Value, out CyberdeckUserComponent? cyberdeck)
+            && cyberdeck.InProjection)
             return false;
 
         if (EntMan.System<AccessReaderSystem>().IsAllowed(controlled.Value, Owner))
