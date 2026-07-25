@@ -10,6 +10,8 @@ namespace Content.Server.Trigger.Systems;
 
 public sealed partial class PolymorphOnTriggerSystem : EntitySystem
 {
+    private const int MaxUnlimitedCollisionPolymorphsPerTick = 32;
+
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
 
     /// <summary>
@@ -18,6 +20,9 @@ public sealed partial class PolymorphOnTriggerSystem : EntitySystem
     /// Also makes sure other trigger effects don't activate in nullspace after we have polymorphed.
     /// </summary>
     private readonly Queue<(EntityUid Uid, ProtoId<PolymorphPrototype> Polymorph)> _queuedPolymorphUpdates = new();
+
+    // Pirate: spread unlimited collision fan-out across ticks instead of polymorphing every stacked target at once.
+    private readonly Queue<(EntityUid Uid, ProtoId<PolymorphPrototype> Polymorph)> _queuedUnlimitedCollisionPolymorphUpdates = new();
 
     // Pirate: multiple contacts in one physics step must not polymorph the same hidden parent repeatedly.
     private readonly HashSet<EntityUid> _queuedPolymorphTargets = [];
@@ -45,7 +50,9 @@ public sealed partial class PolymorphOnTriggerSystem : EntitySystem
             return;
 
         var targetUid = target.Value;
-        if (TryComp<TriggerOnCollideComponent>(ent.Owner, out var collision) && collision.MaxTriggers == null)
+        var unlimitedCollision = TryComp<TriggerOnCollideComponent>(ent.Owner, out var collision) &&
+                                 collision.MaxTriggers == null;
+        if (unlimitedCollision)
         {
             var root = GetPolymorphRoot(targetUid);
             if (!_collisionPolymorphRootsBySource.TryGetValue(ent.Owner, out var roots))
@@ -62,7 +69,13 @@ public sealed partial class PolymorphOnTriggerSystem : EntitySystem
         }
 
         if (_queuedPolymorphTargets.Add(targetUid))
-            _queuedPolymorphUpdates.Enqueue((targetUid, ent.Comp.Polymorph));
+        {
+            var update = (targetUid, ent.Comp.Polymorph);
+            if (unlimitedCollision)
+                _queuedUnlimitedCollisionPolymorphUpdates.Enqueue(update);
+            else
+                _queuedPolymorphUpdates.Enqueue(update);
+        }
 
         args.Handled = true;
     }
@@ -88,18 +101,30 @@ public sealed partial class PolymorphOnTriggerSystem : EntitySystem
     public override void Update(float frametime)
     {
         while (_queuedPolymorphUpdates.TryDequeue(out var data))
-        {
-            try
-            {
-                if (TerminatingOrDeleted(data.Uid))
-                    continue;
+            ProcessPolymorph(data);
 
-                _polymorph.PolymorphEntity(data.Uid, data.Polymorph);
-            }
-            finally
-            {
-                _queuedPolymorphTargets.Remove(data.Uid);
-            }
+        var processed = 0;
+        while (processed < MaxUnlimitedCollisionPolymorphsPerTick &&
+               _queuedUnlimitedCollisionPolymorphUpdates.TryDequeue(out var data))
+        {
+            if (ProcessPolymorph(data))
+                processed++;
+        }
+    }
+
+    private bool ProcessPolymorph((EntityUid Uid, ProtoId<PolymorphPrototype> Polymorph) data)
+    {
+        try
+        {
+            if (TerminatingOrDeleted(data.Uid))
+                return false;
+
+            _polymorph.PolymorphEntity(data.Uid, data.Polymorph);
+            return true;
+        }
+        finally
+        {
+            _queuedPolymorphTargets.Remove(data.Uid);
         }
     }
 }
