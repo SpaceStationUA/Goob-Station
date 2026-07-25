@@ -111,8 +111,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private bool EmbedAttach(EntityUid uid, EntityUid target, EntityUid? user, EmbeddableProjectileComponent component)
     {
-        // Pirate: one physics step can report multiple contacts before the throw is stopped.
-        if (component.EmbeddedIntoUid != null)
+        // Pirate: one contact batch can repeat an attachment or chain stacked embeddables through each other.
+        if (component.EmbeddedIntoUid != null || HasComp<EmbeddableProjectileComponent>(target))
             return false;
 
         TryComp<PhysicsComponent>(uid, out var physics);
