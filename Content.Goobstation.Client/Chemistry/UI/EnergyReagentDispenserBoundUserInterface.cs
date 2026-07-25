@@ -3,6 +3,7 @@
 using Content.Client.Guidebook.Components;
 using Content.Client.UserInterface.Controls;
 using Content.Goobstation.Shared.Chemistry;
+using Content.Shared.Chemistry; // Pirate: chem recipes
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -40,7 +41,28 @@ namespace Content.Goobstation.Client.Chemistry.UI
 
             _window.OnDispenseReagentButtonPressed += (reagentId) => SendMessage(new EnergyReagentDispenserDispenseReagentMessage(reagentId));
             _window.OnToggleValveButtonPressed += () => SendMessage(new EnergyReagentDispenserToggleValveMessage()); // Pirate: chem plumbing
+            BindPirateRecipeActions(); // Pirate: chem recipes
         }
+
+        #region Pirate: chem recipes
+        private void BindPirateRecipeActions()
+        {
+            if (_window == null)
+                return;
+
+            _window.OnStartRecipeRecordingPressed += () => SendMessage(new ReagentDispenserStartRecipeRecordingMessage());
+            _window.OnCancelRecipeRecordingPressed += () => SendMessage(new ReagentDispenserCancelRecipeRecordingMessage());
+            _window.OnSaveRecipePressed += name => SendMessage(new ReagentDispenserSaveRecipeMessage(name));
+            _window.OnClearRecipesPressed += () => SendMessage(new ReagentDispenserClearRecipesMessage());
+            _window.OnDispenseRecipePressed += name => SendMessage(new ReagentDispenserDispenseRecipeMessage(name));
+            _window.OnDeleteRecipePressed += name => SendMessage(new ReagentDispenserDeleteRecipeMessage(name));
+            _window.OnSaveRecipeToDiskPressed += name => SendMessage(new ReagentDispenserSaveRecipeToDiskMessage(name));
+            _window.OnCopyDiskRecipePressed += name => SendMessage(new ReagentDispenserCopyDiskRecipeMessage(name));
+            _window.OnDispenseDiskRecipePressed += name => SendMessage(new ReagentDispenserDispenseDiskRecipeMessage(name));
+            _window.OnDeleteDiskRecipePressed += name => SendMessage(new ReagentDispenserDeleteDiskRecipeMessage(name));
+            _window.OnEjectRecipeDiskPressed += () => SendMessage(new ItemSlotButtonPressedEvent(SharedEnergyReagentDispenser.RecipeDiskSlotName));
+        }
+        #endregion
 
         protected override void UpdateState(BoundUserInterfaceState message)
         {

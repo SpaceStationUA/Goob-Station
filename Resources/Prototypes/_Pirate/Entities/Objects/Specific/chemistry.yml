@@ -1,0 +1,25 @@
+- type: entity
+  id: ChemRecipeDisk
+  parent: BaseItem
+  name: recipe disk
+  description: A floppy disk for storing custom dispenser recipes.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    layers:
+    - state: datadisk_base
+      map: ["enum.DamageStateVisualLayers.Base"]
+    - state: datadisk_label
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        datadisk_base: Sixteen
+  - type: Item
+    size: Tiny
+    sprite: Objects/Misc/module.rsi
+  - type: Tag
+    tags:
+    - ChemRecipeDisk
+  - type: ChemRecipeDisk
+  - type: StaticPrice
+    price: 50

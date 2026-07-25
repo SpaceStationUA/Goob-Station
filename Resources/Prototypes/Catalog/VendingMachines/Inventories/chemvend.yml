@@ -24,6 +24,7 @@
     JugSodium: 2
     JugSugar: 3
     JugSulfur: 2 #Goob edit
+    ChemRecipeDisk: 4 # Pirate: chem recipes
     RPLD: 2 # Pirate: chem plumbing
   contrabandInventory:
     DrinkLithiumFlask: 1
@@ -57,6 +58,7 @@
     JugSodium: 2
     JugSugar: 3
     JugSulfur: 2 #Goob edit
+    ChemRecipeDisk: 4 # Pirate: chem recipes
     JugWeldingFuel: 2 #Goob edit
     PlasmaChemistryVial: 2 #Goob edit
   contrabandInventory:

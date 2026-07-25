@@ -17,6 +17,9 @@
   id: SpaceCash
 
 - type: Tag
+  id: ChemRecipeDisk
+
+- type: Tag
   id: OreTitanium
 
 - type: Tag
