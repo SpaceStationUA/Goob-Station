@@ -92,3 +92,66 @@
         Piercing: 0.7
         Heat: 0.4
         Caustic: 0.4
+
+- type: entity
+  parent: ClothingOuterCoatAMG
+  id: ClothingOuterCoatSecurity
+  name: "халат служби безпеки"
+  description: "Посилено кевларовими бронеплитами, для захисту життєво важливих органів"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/security.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/security.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.7
+        Piercing: 0.6
+
+- type: entity
+  parent: ClothingOuterCoatAMG
+  id: ClothingOuterCoatHOP
+  name: "халат Голови Персоналу"
+  description: "Посилено кевларовими бронеплитами, для захисту життєво важливих органів"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/HOP.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/HOP.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.8
+        Piercing: 0.6
+
+- type: entity
+  parent: ClothingOuterCoatAMG
+  id: ClothingOuterCoatCaptain
+  name: "халат Капітана"
+  description: "Посилено кевларовими бронеплитами, для захисту життєво важливих органів"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/captain.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/captain.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.8
+        Piercing: 0.7
+        Heat: 0.5
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatAtmos
+  name: "халат атмосферного техніка"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/atmos.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/atmos.rsi
