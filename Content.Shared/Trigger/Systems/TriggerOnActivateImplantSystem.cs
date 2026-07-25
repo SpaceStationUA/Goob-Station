@@ -14,7 +14,7 @@ public sealed partial class TriggerOnActivateImplantSystem : TriggerOnXSystem
 
     private void OnActivateImplant(Entity<TriggerOnActivateImplantComponent> ent, ref ActivateImplantEvent args)
     {
-        Trigger.Trigger(ent.Owner, args.Performer, ent.Comp.KeyOut);
-        args.Handled = true;
+        // Pirate: failed effects must not start the cooldown or consume a limited charge.
+        args.Handled = Trigger.Trigger(ent.Owner, args.Performer, ent.Comp.KeyOut);
     }
 }
