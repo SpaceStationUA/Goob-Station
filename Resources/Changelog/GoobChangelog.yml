@@ -23338,33 +23338,33 @@ Entries:
   changes:
     - type: Add
       message: >-
-        Added all the lobby art from art contest, Check out all of them in the
-        Lobby art channel in discord
+        Додано всі ілюстрації лобі з конкурсу художників. Переглянути їх можна
+        в каналі ілюстрацій лобі в Дискорді.
     - type: Add
-      message: 'New Lobby and jukebox song: CHUDSHIFT by deerdestroyer'
+      message: 'Нова композиція для лобі та музичного автомата: ЧАДШИФТ авторства Дірдестроєра.'
   id: 2757
   time: '2026-07-21T21:52:52.0000000+00:00'
 - author: Baptr0b0t
   changes:
     - type: Fix
-      message: Fixed mech not shooting
+      message: Виправлено стрільбу мехів.
   id: 2758
   time: '2026-07-24T09:57:39.0000000+00:00'
 - author: Kenkaitos
   changes:
     - type: Tweak
-      message: Shadow anomaly is harder to spawn now
+      message: Тіньову аномалію тепер складніше створити.
   id: 2759
   time: '2026-07-24T10:39:52.0000000+00:00'
 - author: elioskmil
   changes:
     - type: Add
-      message: adds material silo flatpacks to CMO, CE, and HoS lockers.
+      message: До шаф головного лікаря, старшого інженера та голови служби безпеки додано запаковані силоси матеріалів.
   id: 2760
   time: '2026-07-24T10:40:56.0000000+00:00'
 - author: bobbble
   changes:
     - type: Add
-      message: More suit and hardsuit sprites for hydrakin!
+      message: Додано більше спрайтів костюмів і скафандрів для гідракінів!
   id: 2761
   time: '2026-07-24T16:03:10.0000000+00:00'
