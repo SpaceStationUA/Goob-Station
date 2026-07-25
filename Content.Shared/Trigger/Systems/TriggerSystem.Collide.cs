@@ -1,4 +1,6 @@
-﻿using Content.Shared.Trigger.Components.Triggers;
+﻿using Content.Shared.Projectiles;
+using Content.Shared.Trigger.Components.Effects;
+using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.Physics.Events;
 
@@ -6,6 +8,10 @@ namespace Content.Shared.Trigger.Systems;
 
 public sealed partial class TriggerSystem
 {
+    // Pirate: pure disposable polybolts share the first successful target hit within a physics batch.
+    private readonly HashSet<EntityUid> _handledDisposablePolymorphTargets = [];
+    private readonly Dictionary<EntityUid, bool> _disposablePolymorphSources = [];
+
     private void InitializeCollide()
     {
         SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnCollide);
@@ -24,6 +30,10 @@ public sealed partial class TriggerSystem
             && (ent.Comp.MaxTriggers == null || ent.Comp.MaxTriggers > 0)
         )
         {
+            var deduplicatePolymorph = ShouldDeduplicateDisposablePolymorph(ent);
+            if (deduplicatePolymorph && _handledDisposablePolymorphTargets.Contains(args.OtherEntity))
+                return;
+
             if (ent.Comp.MaxTriggers != null)
             {
                 ent.Comp.MaxTriggers--;
@@ -31,8 +41,37 @@ public sealed partial class TriggerSystem
                 if (ent.Comp.MaxTriggers <= 0)
                     RemCompDeferred<TriggerOnCollideComponent>(ent);
             }
-            Trigger(ent.Owner, args.OtherEntity, ent.Comp.KeyOut);
+
+            if (Trigger(ent.Owner, args.OtherEntity, ent.Comp.KeyOut) && deduplicatePolymorph)
+                _handledDisposablePolymorphTargets.Add(args.OtherEntity);
         }
+    }
+
+    private bool ShouldDeduplicateDisposablePolymorph(Entity<TriggerOnCollideComponent> ent)
+    {
+        if (_disposablePolymorphSources.TryGetValue(ent, out var cached))
+            return cached;
+
+        var result = ent.Comp.MaxTriggers == null &&
+                     TryComp<ProjectileComponent>(ent, out var projectile) &&
+                     projectile.DeleteOnCollide &&
+                     TryComp<PolymorphOnTriggerComponent>(ent, out var polymorph) &&
+                     polymorph.TargetUser;
+
+        if (result)
+        {
+            foreach (var component in EntityManager.GetComponents(ent))
+            {
+                if (component is BaseXOnTriggerComponent and not PolymorphOnTriggerComponent)
+                {
+                    result = false;
+                    break;
+                }
+            }
+        }
+
+        _disposablePolymorphSources.Add(ent, result);
+        return result;
     }
 
     private void OnStepTriggered(Entity<TriggerOnStepTriggerComponent> ent, ref StepTriggeredOffEvent args)
@@ -68,6 +107,9 @@ public sealed partial class TriggerSystem
 
     private void UpdateTimedCollide()
     {
+        _handledDisposablePolymorphTargets.Clear();
+        _disposablePolymorphSources.Clear();
+
         var curTime = _timing.CurTime;
         var query = EntityQueryEnumerator<ActiveTriggerOnTimedCollideComponent, TriggerOnTimedCollideComponent>();
         while (query.MoveNext(out var uid, out _, out var triggerOnTimedCollide))
