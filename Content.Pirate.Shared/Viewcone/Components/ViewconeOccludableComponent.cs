@@ -14,8 +14,8 @@ namespace Content.Pirate.Shared.Viewcone.Components;
 public sealed partial class ViewconeOccludableComponent : Component, IComponentTreeEntry<ViewconeOccludableComponent>
 {
     /// <summary>
-    /// If true, prevents being hidden if this is anchored.
-    /// Useful for unanchorable structures so they can hide if being moved.
+    /// If true, the entity can be hidden even while anchored.
+    /// If false, anchoring exempts it from viewcone occlusion.
     /// </summary>
     [DataField]
     public bool OccludeIfAnchored;

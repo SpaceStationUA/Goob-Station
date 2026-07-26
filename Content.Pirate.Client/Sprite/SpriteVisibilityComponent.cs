@@ -16,4 +16,9 @@ public sealed partial class SpriteVisibilityComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<string, float> VisibilityModifiers = new();
+
+    /// <summary>
+    /// Last aggregate alpha applied by this system, used to detect visibility changes made outside it.
+    /// </summary>
+    public float AppliedAlpha = 1f;
 }

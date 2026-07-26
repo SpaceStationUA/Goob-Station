@@ -46,7 +46,9 @@ public sealed partial class SpriteVisibilitySystem : CommonSpriteVisibilitySyste
         modifier = MathF.Max(modifier, 0f);
 
         // Pirate perf: overlays re-apply the same alpha every frame; skip the no-op recalculation.
-        if (comp.VisibilityModifiers.TryGetValue(key, out var existing) && existing.Equals(modifier))
+        if (comp.VisibilityModifiers.TryGetValue(key, out var existing) &&
+            existing.Equals(modifier) &&
+            IsAppliedStateCurrent(ent.Comp, comp.AppliedAlpha))
             return;
 
         comp.VisibilityModifiers[key] = modifier;
@@ -94,6 +96,12 @@ public sealed partial class SpriteVisibilitySystem : CommonSpriteVisibilitySyste
             _sprite.SetColor(e, ent.Comp.Color.WithAlpha(visibility));
     }
 
+    private static bool IsAppliedStateCurrent(SpriteComponent sprite, float alpha)
+    {
+        return sprite.Visible == (alpha > 0f) &&
+               (alpha <= 0f || MathHelper.CloseTo(sprite.Color.A, alpha));
+    }
+
     private void ReCalculateSpriteVisibility(Entity<SpriteComponent, SpriteVisibilityComponent> ent)
     {
         // Pirate perf: manual loop instead of LINQ Aggregate to avoid boxing the enumerator per call.
@@ -103,6 +111,7 @@ public sealed partial class SpriteVisibilitySystem : CommonSpriteVisibilitySyste
             visibility *= modifier;
         }
 
+        ent.Comp2.AppliedAlpha = Math.Clamp(visibility, 0f, 1f);
         SetSpriteVisibility(ent, visibility);
     }
 }

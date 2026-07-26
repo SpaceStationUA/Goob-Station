@@ -66,7 +66,7 @@ public sealed partial class ViewconeEffectSystem : EntitySystem
     /// </summary>
     /// <param name="source">The player that originated the effect, or the entity to spawn next to if a relevant player doesn't exist</param>
     /// <param name="effect">The prototype ID of an effect entity to spawn (see viewcone_effects.yml)</param>
-    /// <param name="angleOverride">The local rotation to set the effect to, instead of the parent rotation.</param>
+    /// <param name="angleOverride">The world-space rotation to apply to the effect.</param>
     public void SpawnEffect(EntityUid source, [ForbidLiteral] EntProtoId effect, Angle? angleOverride = null)
     {
         // Pirate: the source also gated on IsFirstTimePredicted, but in this engine prediction resets

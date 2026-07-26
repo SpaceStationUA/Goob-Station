@@ -3,6 +3,7 @@
 using Content.Client.Effects;
 using Content.Client.Smoking;
 using Content.Shared.Chemistry.Components;
+using Content.Pirate.Common.Sprite; // Pirate: viewcone visibility modifiers
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Polymorph.Systems;
 using Robust.Client.GameObjects;
@@ -12,17 +13,15 @@ namespace Content.Client.Polymorph.Systems;
 public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly CommonSpriteVisibilitySystem _spriteVis = default!; // Pirate: viewcone
 
     private EntityQuery<AppearanceComponent> _appearanceQuery;
-    private EntityQuery<SpriteComponent> _spriteQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
         _appearanceQuery = GetEntityQuery<AppearanceComponent>();
-        _spriteQuery = GetEntityQuery<SpriteComponent>();
 
         SubscribeLocalEvent<ChameleonDisguiseComponent, AfterAutoHandleStateEvent>(OnHandleState);
 
@@ -45,17 +44,12 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
 
     private void OnStartup(Entity<ChameleonDisguisedComponent> ent, ref ComponentStartup args)
     {
-        if (!_spriteQuery.TryComp(ent, out var sprite))
-            return;
-
-        ent.Comp.WasVisible = sprite.Visible;
-        _sprite.SetVisible((ent.Owner, sprite), false);
+        _spriteVis.UpdateVisibilityModifiers(ent, nameof(ChameleonDisguisedComponent), 0f);
     }
 
     private void OnShutdown(Entity<ChameleonDisguisedComponent> ent, ref ComponentShutdown args)
     {
-        if (_spriteQuery.TryComp(ent, out var sprite))
-            _sprite.SetVisible((ent.Owner, sprite), ent.Comp.WasVisible);
+        _spriteVis.UpdateVisibilityModifiers(ent, nameof(ChameleonDisguisedComponent), 1f);
     }
 
     private void OnGetFlashEffectTargetEvent(Entity<ChameleonDisguisedComponent> ent, ref GetFlashEffectTargetEvent args)

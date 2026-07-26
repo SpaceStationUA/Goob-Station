@@ -849,6 +849,14 @@ public abstract partial class SharedMoverController : VirtualController
                 {
                     _audio.PlayPredicted(sound, uid, uid, audioParams);
                 }
+
+                // Pirate: viewcone footstep effects. Convert the local slide direction to world space.
+                var stepDir = tileMovement.Destination - tileMovement.Origin.Position;
+                if (XformQuery.TryGetComponent(targetTransform.ParentUid, out var parentTransform))
+                    stepDir = _transform.GetWorldRotation(parentTransform).RotateVec(stepDir);
+
+                var stepEv = new FootStepEvent(uid, stepDir.ToWorldAngle());
+                RaiseLocalEvent(uid, ref stepEv);
             }
 
             // If we're sliding...
@@ -863,12 +871,6 @@ public abstract partial class SharedMoverController : VirtualController
                     tileMovement,
                     movementSpeed))
                 {
-                    // Pirate: viewcone footstep effects. Use world positions: at slide end
-                    // LocalPosition ~= Destination, so their difference is a near-zero residual.
-                    var stepDir = _transform.GetWorldPosition(targetTransform) - _transform.ToMapCoordinates(tileMovement.Origin).Position;
-                    var stepEv = new FootStepEvent(uid, stepDir.ToWorldAngle());
-                    RaiseLocalEvent(uid, ref stepEv);
-
                     EndSlide(uid, tileMovement);
 
                     // After ending the slide, check for immediately starting a new slide.

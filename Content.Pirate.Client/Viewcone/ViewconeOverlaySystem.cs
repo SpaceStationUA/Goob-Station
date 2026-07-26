@@ -47,6 +47,7 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
     private float _grainScale;
     private bool _reducedMotion;
     private bool _active;
+    private bool _overlaysAdded;
     private bool _disabled;
 
     public override void Initialize()
@@ -172,6 +173,9 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
     /// </summary>
     public bool IsVisible(Entity<ViewconeComponent> ent, Vector2 eyePos, Vector2 pos)
     {
+        if (ent.Comp.CurrentConeAngle >= 360f)
+            return true;
+
         var dist = pos - eyePos;
         var r = ent.Comp.ConeIgnoreRadius;
         var r2 = r * r;
@@ -232,11 +236,12 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
         // so re-enabling the cvar can restore the overlays (SetConesDisabled checks _active).
         _active = true;
 
-        if (_disabled)
+        if (_disabled || _overlaysAdded)
             return;
 
         _overlay.AddOverlay(_coneOverlay);
         _overlay.AddOverlay(_setAlphaOverlay);
+        _overlaysAdded = true;
     }
 
     private void RemoveOverlays(bool setActive = true)
@@ -244,8 +249,12 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
         if (setActive) // keep its value if cvar is changed live
             _active = false;
 
-        _overlay.RemoveOverlay(_coneOverlay);
-        _overlay.RemoveOverlay(_setAlphaOverlay);
+        if (_overlaysAdded)
+        {
+            _overlay.RemoveOverlay(_coneOverlay);
+            _overlay.RemoveOverlay(_setAlphaOverlay);
+            _overlaysAdded = false;
+        }
 
         // hide memories
         var query = EntityQueryEnumerator<ViewconeOccludableComponent>();
@@ -253,7 +262,7 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
         {
             // Pirate fix: occludables hidden through the simplified (no-memory) branch never get a
             // ViewconeOccludedComponent marker, so restore their alpha here too or they stay invisible.
-            SetAlpha(uid, 1f);
+            SetAlpha(uid, comp.Inverted ? 0f : 1f);
 
             if (comp.Memory is { } memory && !TerminatingOrDeleted(memory))
                 SetAlpha(memory, 0f);
@@ -263,7 +272,7 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
         var query2 = EntityQueryEnumerator<ViewconeOccludedComponent>();
         while (query2.MoveNext(out var uid, out var comp))
         {
-            SetAlpha(uid, 1f);
+            SetAlpha(uid, TryComp<ViewconeOccludableComponent>(uid, out var occludable) && occludable.Inverted ? 0f : 1f);
             RemCompDeferred(uid, comp);
         }
     }
@@ -278,6 +287,7 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
     {
         if (ent.Comp.Memory is { } memory && !TerminatingOrDeleted(memory))
             Del(memory);
+        ent.Comp.Memory = null;
     }
 
     private void OnOccludableParentChanged(Entity<ViewconeOccludableComponent> ent, ref EntParentChangedMessage args)

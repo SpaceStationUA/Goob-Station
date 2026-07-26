@@ -113,7 +113,10 @@ public sealed partial class ViewconeSetAlphaOverlay : Overlay
 
             // dynamic clientside disabling, for effects like pulled entities
             if (_cone.IgnoresViewcone(uid))
+            {
+                RestoreExemptOccludable(uid, comp);
                 continue;
+            }
 
             if (!_spriteQuery.TryComp(uid, out var sprite))
                 continue;
@@ -122,7 +125,10 @@ public sealed partial class ViewconeSetAlphaOverlay : Overlay
                 continue; // sentient walls should be allowed to see things
 
             if (!comp.OccludeIfAnchored && xform.Anchored)
+            {
+                RestoreExemptOccludable(uid, comp);
                 continue;
+            }
 
             // floor goblin and maybe other things set ContainerOccluded without being inside a container
             if (sprite.ContainerOccluded || _container.IsEntityInContainer(uid))
@@ -138,8 +144,10 @@ public sealed partial class ViewconeSetAlphaOverlay : Overlay
             var distLength = dist.Length();
             var angleDist = Math.Abs(Angle.ShortestDistance(dist.ToWorldAngle(), eyeRot).Theta);
 
-            // calculate opacity for the actual entity first
-            var angleAlpha = (float) Math.Clamp((angleDist - halfAngle) + (radConeFeather * 0.5f), 0f, radConeFeather) / radConeFeather;
+            // A full circle has no rear feather band.
+            var angleAlpha = cone.CurrentConeAngle >= 360f
+                ? 0f
+                : (float) Math.Clamp((angleDist - halfAngle) + (radConeFeather * 0.5f), 0f, radConeFeather) / radConeFeather;
             var distAlpha = Math.Clamp((distLength - cone.ConeIgnoreRadius) + (cone.ConeIgnoreFeather * 0.5f), 0f, cone.ConeIgnoreFeather) / cone.ConeIgnoreFeather;
             var targetAlpha = 1f - Math.Min(angleAlpha, distAlpha);
 
@@ -214,5 +222,15 @@ public sealed partial class ViewconeSetAlphaOverlay : Overlay
             // now actually fade the memory out
             _cone.SetAlpha(memory, memoryAlpha);
         }
+    }
+
+    private void RestoreExemptOccludable(EntityUid uid, ViewconeOccludableComponent comp)
+    {
+        _cone.SetAlpha(uid, comp.Inverted ? 0f : 1f);
+        if (comp.Memory is { } memory && _ent.EntityExists(memory))
+            _cone.SetAlpha(memory, 0f);
+
+        if (_occludedQuery.TryComp(uid, out var occluded))
+            _ent.RemoveComponent(uid, occluded);
     }
 }
