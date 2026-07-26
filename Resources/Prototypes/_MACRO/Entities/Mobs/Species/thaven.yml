@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McThaven
+  name: "Уріст МакТавен"
   parent: BaseMobHuman
   id: MobThavenBase
   abstract: true
@@ -72,11 +72,11 @@
 
 - type: entity
   save: false
-  name: Urist McHands
+  name: "Уріст МакГендс"
   parent: MobHumanDummy
   id: MobThavenDummy
   categories: [ HideSpawnMenu ]
-  description: A dummy thaven meant to be used in character setup.
+  description: "Макет тавена для налаштування персонажа."
   components:
   - type: HumanoidAppearance
     species: Thaven

@@ -69,7 +69,7 @@
 
 - type: entity
   save: false
-  name: Urist McAvali
+  name: "авалі"
   parent: [BaseColdBird, BaseMobSpeciesOrganic, BaseInventoryAvali]
   id: BaseMobAvali
   abstract: true
@@ -193,7 +193,7 @@
 
 - type: entity
   save: false
-  name: Urist McSpaceRaptor
+  name: "авалі"
   suffix: Urist McAvali
   parent: BaseMobAvali
   id: MobAvali
@@ -203,7 +203,7 @@
   parent: [BaseSpeciesDummy, BaseInventoryAvali]
   id: AppearanceAvali
   categories: [HideSpawnMenu]
-  description: A dummy avali meant to be used in character setup.
+  description: "Макет авалі для налаштування персонажа."
   components:
   - type: HumanoidAppearance
     species: Avali
