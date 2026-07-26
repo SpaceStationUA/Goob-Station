@@ -12,6 +12,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared._Pirate.Clothing.Events; // Pirate: gear step sounds
+using Content.Pirate.Common.Movement; // Pirate: viewcone footstep effects
 using Content.Shared._DV.StepTrigger.Components; // DeltaV - NoShoesSilentFootstepsComponent
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
@@ -447,6 +448,10 @@ public abstract partial class SharedMoverController : VirtualController
                 {
                     _audio.PlayPredicted(sound, uid, uid, audioParams);
                 }
+
+                // Pirate: viewcone footstep effects
+                var stepEv = new FootStepEvent(uid, wishDir.ToWorldAngle());
+                RaiseLocalEvent(uid, ref stepEv);
             }
         }
     }
@@ -858,6 +863,11 @@ public abstract partial class SharedMoverController : VirtualController
                     tileMovement,
                     movementSpeed))
                 {
+                    // Pirate: viewcone footstep effects
+                    var dir = targetTransform.LocalPosition - tileMovement.Destination;
+                    var stepEv = new FootStepEvent(uid, dir.ToWorldAngle());
+                    RaiseLocalEvent(uid, ref stepEv);
+
                     EndSlide(uid, tileMovement);
 
                     // After ending the slide, check for immediately starting a new slide.
