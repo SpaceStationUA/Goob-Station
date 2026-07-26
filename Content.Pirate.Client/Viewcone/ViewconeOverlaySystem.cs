@@ -9,7 +9,6 @@ using Content.Pirate.Common.CCVar;
 using Content.Pirate.Common.Popups;
 using Content.Pirate.Shared.Viewcone;
 using Content.Pirate.Shared.Viewcone.Components;
-using Content.Shared.CCVar;
 using Content.Shared.MouseRotator;
 using Content.Shared.Movement.Pulling.Components;
 using Robust.Client.Graphics;
@@ -74,7 +73,8 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
 
         Subs.CVar(_cfg, PirateCVars.VisionGrainScale, SetGrainScale, true);
         Subs.CVar(_cfg, PirateCVars.DisableVisionCones, SetConesDisabled, true);
-        Subs.CVar(_cfg, CCVars.ReducedMotion, SetReducedMotion, true);
+        // Full qualification: Content.Pirate.Common.CCVar also declares a CCVars class.
+        Subs.CVar(_cfg, Content.Shared.CCVar.CCVars.ReducedMotion, SetReducedMotion, true);
     }
 
     public override void FrameUpdate(float frameTime)
