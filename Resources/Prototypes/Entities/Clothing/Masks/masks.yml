@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: ClothingMaskPullableBase
+  parent: [ClothingMaskPullableBase, BaseClothingViewconeSmall] # Pirate: viewcone
   id: ClothingMaskGas
   name: gas mask
   description: A face-covering mask that can be connected to an air supply.
@@ -48,6 +48,8 @@
   name: security gas mask
   description: A standard issue Security gas mask.
   components:
+  - type: ViewconeModifier # Pirate: specialized mask keeps full vision
+    angleModifier: 1.0
   - type: Item
     size: Tiny
   - type: Sprite
@@ -79,6 +81,8 @@
   name: syndicate gas mask
   description: A close-fitting tactical mask that can be connected to an air supply.
   components:
+  - type: ViewconeModifier # Pirate: specialized mask keeps full vision
+    angleModifier: 1.0
   - type: Sprite
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: Clothing
@@ -161,6 +165,8 @@
   name: explorer gas mask
   description: A military-grade gas mask that can be connected to an air supply.
   components:
+  - type: ViewconeModifier # Pirate: viewcone
+    angleModifier: 0.90
   - type: Sprite
     sprite: Clothing/Mask/gasexplorer.rsi
   - type: Clothing
@@ -542,6 +548,8 @@
   name: swat gas mask
   description: A elite issue Security gas mask.
   components:
+  - type: ViewconeModifier # Pirate: specialized mask keeps full vision
+    angleModifier: 1.0
   - type: Sprite
     sprite: Clothing/Mask/swat.rsi
   - type: Clothing
@@ -576,6 +584,8 @@
   name: mercenary gas mask
   description: Slightly outdated, but reliable military-style gas mask.
   components:
+  - type: ViewconeModifier # Pirate: viewcone
+    angleModifier: 0.90
   - type: Sprite
     sprite: Clothing/Mask/merc.rsi
   - type: Clothing
@@ -604,6 +614,8 @@
   name: ert gas mask
   description: The gas mask of the elite squad of the ERT.
   components:
+  - type: ViewconeModifier # Pirate: specialized mask keeps full vision
+    angleModifier: 1.0
   - type: Sprite
     sprite: Clothing/Mask/ert.rsi
   - type: Clothing
@@ -637,6 +649,8 @@
   name: death squad gas mask
   description: A unique gas mask for the NT's most elite squad.
   components:
+  - type: ViewconeModifier # Pirate: enhanced optics widen the viewcone
+    angleModifier: 1.5
   - type: Sprite
     sprite: Clothing/Mask/squadron.rsi
   - type: Clothing
@@ -960,7 +974,7 @@
     - IPCMaskWearable # EE - IPCs
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: [ClothingMaskBase, BaseClothingViewconeSmall] # Pirate: viewcone
   id: ClothingMaskWeldingGas
   name: welding gas mask
   description: A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd.

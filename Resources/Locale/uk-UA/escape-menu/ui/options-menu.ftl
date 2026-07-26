@@ -46,6 +46,7 @@ ui-options-colorblind-friendly = Дружній режим для дальтон
 ui-options-reduced-motion = Зменшити рух візуальних ефектів
 ui-options-arachnophobia = Режим арахнофобії
 ui-options-screen-shake-intensity = Інтенсивність тремтіння екрана
+ui-options-viewcone-grain-scale = Зернистість поза конусом огляду
 ui-options-screen-shake-percent = { TOSTRING($intensity, "P0") }
 ui-options-vsync = Вертикальна синхронізація
 ui-options-fullscreen = Повноекранний

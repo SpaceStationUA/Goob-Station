@@ -45,8 +45,8 @@ void fragment(){
 
     mask = 1.0 - clamp(mask, 0.0, 1.0);
 
-    // So grim.. so dark
-    highp float grain = GrainScale * zRandom(coords * sin(TIME * 0.01)).x;
+    // Pirate: keep the grain fixed in world space so the unseen area does not shimmer.
+    highp float grain = GrainScale * zRandom(coords).x;
 
     // Lil bit of grayscale for good measure, too
     highp float grayscale = zGrayscale(color.rgb) * (grain * grainMult + grainBase);

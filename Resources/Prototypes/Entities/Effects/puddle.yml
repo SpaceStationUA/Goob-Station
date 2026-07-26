@@ -158,6 +158,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: ViewconeOccludable # Pirate: newly formed puddles should not reveal activity behind the viewer.
+    occludeIfAnchored: true
   - type: Clickable
   - type: Slippery
     staminaDamage: 0

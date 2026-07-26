@@ -5,6 +5,7 @@
   id: WeaponArcStatic
   categories: [ HideSpawnMenu ]
   components:
+    - type: ViewconeOccludable # Pirate: attack arcs have separate out-of-view indicators.
     - type: TimedDespawn
       lifetime: 2.0
     - type: Sprite
@@ -22,6 +23,7 @@
   id: WeaponArcAnimated
   categories: [ HideSpawnMenu ]
   components:
+    - type: ViewconeOccludable # Pirate: attack arcs have separate out-of-view indicators.
     - type: Sprite
       sprite: Effects/arcs.rsi
       state: disarm

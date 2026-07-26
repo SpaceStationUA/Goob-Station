@@ -23,5 +23,5 @@ public sealed partial class PirateCVars
     /// Scale for how strong out-of-vision graininess is, 0 is just pure greyscale.
     /// </summary>
     public static readonly CVarDef<float> VisionGrainScale =
-        CVarDef.Create("pirate.vision_grain_scale", 0.75f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("pirate.vision_grain_scale", 0.25f, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

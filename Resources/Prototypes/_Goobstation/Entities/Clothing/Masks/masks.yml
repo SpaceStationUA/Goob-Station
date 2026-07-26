@@ -88,6 +88,8 @@
     graph: GasMaskHalf
     node: end
     deconstructionTarget: null
+  - type: ViewconeModifier # Pirate: half mask keeps full vision
+    angleModifier: 1.0
 
 - type: entity # TODO: Whenever vampirism is ported, make this block it.
   parent: ClothingMaskBase
