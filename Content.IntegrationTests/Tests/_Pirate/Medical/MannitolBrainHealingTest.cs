@@ -18,6 +18,8 @@ namespace Content.IntegrationTests.Tests._Pirate.Medical;
 [TestFixture]
 public sealed class MannitolBrainHealingTest
 {
+    private static readonly ProtoId<ReagentPrototype> MannitolProto = "Mannitol";
+
     /// <summary>
     /// Organ integrity is the clamped sum of the organ's integrity modifiers
     /// (see TraumaSystem.UpdateOrganIntegrity), so a single small modifier lowers
@@ -87,6 +89,8 @@ public sealed class MannitolBrainHealingTest
 
             entMan.DeleteEntity(human);
         });
+
+        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -103,7 +107,7 @@ public sealed class MannitolBrainHealingTest
         });
 
         var protoMan = pair.Server.ProtoMan;
-        var mannitol = protoMan.Index<ReagentPrototype>("Mannitol");
+        var mannitol = protoMan.Index(MannitolProto);
 
         Assert.That(mannitol.Metabolisms, Is.Not.Null);
         var healsBrain = mannitol.Metabolisms!.Values
@@ -112,5 +116,7 @@ public sealed class MannitolBrainHealingTest
             .Any(effect => effect.SlotId == "brain" && effect.Amount > FixedPoint2.Zero);
 
         Assert.That(healsBrain, Is.True, "Mannitol must heal brain organ integrity");
+
+        await pair.CleanReturnAsync();
     }
 }
