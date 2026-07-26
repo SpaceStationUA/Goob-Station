@@ -1848,7 +1848,7 @@
         messages: [ "mannitol-effect-enlightened" ]
         probability: 0.2
       - !type:Vomit
-          probability: 0.1 # Pirate - rapid brain tissue change causes vomiting
+        probability: 0.1 # Pirate - rapid brain tissue change causes vomiting
 
 - type: reagent
   id: Psicodine
