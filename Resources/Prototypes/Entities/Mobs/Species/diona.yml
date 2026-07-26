@@ -132,6 +132,8 @@
       - Shard
   - type: SpeedModifierImmunity
   - type: Rootable
+  - type: Viewcone # Pirate - viewcone
+    baseConeAngle: 360
 
 - type: entity
   parent: BaseSpeciesDummy

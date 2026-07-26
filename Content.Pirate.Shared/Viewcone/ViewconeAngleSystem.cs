@@ -39,11 +39,15 @@ public sealed partial class ViewconeAngleSystem : EntitySystem
 
     private void OnExamined(Entity<ViewconeModifierComponent> ent, ref ExaminedEvent args)
     {
+        // 1.25 -> 25, 0.6 -> 40
+        // Pirate fix: round instead of truncating (0.53 showed "48%"), and skip a no-op modifier.
+        var percent = Math.Abs((int) Math.Round(ent.Comp.AngleModifier * 100f) - 100);
+        if (percent == 0)
+            return;
+
         var dir = ent.Comp.AngleModifier < 1f ? "decrease" : "increase";
         var loc = "viewcone-modifier-examine-" + dir;
 
-        // 1.25 -> 25, 0.6 -> 40
-        var percent = Math.Abs((int) (ent.Comp.AngleModifier * 100f) - 100);
         args.PushMarkup(Loc.GetString(loc, ("percent", percent)));
     }
 

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Pirate - ported from Trauma Station
 
+using Content.Client.Eye;
 using Content.Pirate.Shared.Viewcone.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -22,7 +23,7 @@ public sealed partial class ViewconeConeOverlay : Overlay
     public static ProtoId<ShaderPrototype> ShaderPrototype = "Viewcone";
     private readonly ShaderInstance _viewconeShader;
 
-    private Entity<ViewconeComponent, EyeComponent, TransformComponent>? _eyeEntity;
+    private Entity<ViewconeComponent, EyeComponent>? _eyeEntity;
     private float _coneAngle;
     private float _coneFeather;
     private float _coneIgnoreRadius;
@@ -46,9 +47,10 @@ public sealed partial class ViewconeConeOverlay : Overlay
 
         // TODO: engine thing
         // This is really stupid but there isn't another way to reverse an eye entity from just an IEye afaict
-        // It's not really inefficient though. theres barely any of those fuckin things anyway
-        var enumerator = _ent.AllEntityQueryEnumerator<ViewconeComponent, EyeComponent, TransformComponent>();
-        while (enumerator.MoveNext(out var uid, out var viewcone, out var eye, out var xform))
+        // Pirate perf: iterate LerpingEyeComponent first (only actively-rendered eyes have it) —
+        // ViewconeComponent is on every mob in PVS, so leading with it scans hundreds of entities.
+        var enumerator = _ent.AllEntityQueryEnumerator<LerpingEyeComponent, EyeComponent, ViewconeComponent>();
+        while (enumerator.MoveNext(out var uid, out _, out var eye, out var viewcone))
         {
             if (args.Viewport.Eye != eye.Eye)
                 continue;
@@ -57,7 +59,7 @@ public sealed partial class ViewconeConeOverlay : Overlay
             _coneFeather = viewcone.ConeFeather;
             _coneIgnoreRadius = (viewcone.ConeIgnoreRadius - viewcone.ConeIgnoreFeather) * 50f;
             _coneIgnoreFeather = Math.Max(viewcone.ConeIgnoreFeather * 200f, 8f);
-            _eyeEntity = (uid, viewcone, eye, xform);
+            _eyeEntity = (uid, viewcone, eye);
             break;
         }
 
@@ -73,7 +75,7 @@ public sealed partial class ViewconeConeOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var viewport = args.WorldBounds;
 
-        var (_, viewcone, eye, _) = _eyeEntity.Value;
+        var (_, viewcone, eye) = _eyeEntity.Value;
         var zoom = eye.Zoom.X;
         var viewAngle = (float) viewcone.ViewAngle.Theta;
 

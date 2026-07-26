@@ -82,7 +82,12 @@ public sealed partial class ViewconeEffectSystem : EntitySystem
         Dirty(ent, viewconeEffect);
 
         // set rotation
-        _xform.SetLocalRotation(ent, angleOverride ?? Transform(source).LocalRotation);
+        // Pirate fix: angleOverride comes from FootStepEvent as a world-space angle, so apply it
+        // in world space or footstep effects face the wrong way on rotated grids.
+        if (angleOverride is { } worldAngle)
+            _xform.SetWorldRotation(ent, worldAngle);
+        else
+            _xform.SetLocalRotation(ent, Transform(source).LocalRotation);
 
         // also ensure this in case somehow something without it gets here.
         EnsureComp<TimedDespawnComponent>(ent);

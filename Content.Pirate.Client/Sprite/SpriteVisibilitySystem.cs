@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Pirate - ported from Trauma Station
 
-using System.Linq;
 using Content.Pirate.Common.Sprite;
 using Robust.Client.GameObjects;
 
@@ -44,7 +43,13 @@ public sealed partial class SpriteVisibilitySystem : CommonSpriteVisibilitySyste
     private void AddVisibilityModifier(Entity<SpriteComponent> ent, string key, float modifier)
     {
         var comp = EnsureComp<SpriteVisibilityComponent>(ent);
-        comp.VisibilityModifiers[key] = MathF.Max(modifier, 0f);
+        modifier = MathF.Max(modifier, 0f);
+
+        // Pirate perf: overlays re-apply the same alpha every frame; skip the no-op recalculation.
+        if (comp.VisibilityModifiers.TryGetValue(key, out var existing) && existing.Equals(modifier))
+            return;
+
+        comp.VisibilityModifiers[key] = modifier;
         ReCalculateSpriteVisibility((ent, ent.Comp, comp));
     }
 
@@ -55,7 +60,8 @@ public sealed partial class SpriteVisibilitySystem : CommonSpriteVisibilitySyste
 
         if (!Resolve(ent, ref ent.Comp2, false))
         {
-            SetSpriteVisibility(ent!, 1f);
+            // Pirate fix: no modifiers means we never touched this sprite — don't force alpha
+            // back to 1 and clobber visibility state owned by other systems.
             return;
         }
 
@@ -90,7 +96,13 @@ public sealed partial class SpriteVisibilitySystem : CommonSpriteVisibilitySyste
 
     private void ReCalculateSpriteVisibility(Entity<SpriteComponent, SpriteVisibilityComponent> ent)
     {
-        var visibility = ent.Comp2.VisibilityModifiers.Values.Aggregate(1f, (x, y) => x * y);
+        // Pirate perf: manual loop instead of LINQ Aggregate to avoid boxing the enumerator per call.
+        var visibility = 1f;
+        foreach (var modifier in ent.Comp2.VisibilityModifiers.Values)
+        {
+            visibility *= modifier;
+        }
+
         SetSpriteVisibility(ent, visibility);
     }
 }

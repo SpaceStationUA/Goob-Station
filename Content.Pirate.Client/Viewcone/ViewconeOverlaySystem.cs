@@ -179,6 +179,10 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
             return true; // within cone ignore radius so always visible regardless of angle
 
         var eyeRot = ent.Comp.ViewAngle;
+        // Pirate fix: ViewAngle includes the eye rotation; subtract it to compare against the
+        // world-space direction, same as ViewconeSetAlphaOverlay does when drawing.
+        if (TryComp<EyeComponent>(ent, out var eye))
+            eyeRot -= eye.Rotation;
         var angleDist = Math.Abs(Angle.ShortestDistance(dist.ToWorldAngle(), eyeRot).Theta);
         return angleDist < MathHelper.DegreesToRadians(ent.Comp.CurrentConeAngle) * 0.5f;
     }
@@ -209,6 +213,10 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
 
     private void OnShowPopupAttempt(Entity<ViewconeComponent> ent, ref ShowPopupAttemptEvent args)
     {
+        // Pirate fix: don't cull popups when the cone overlays aren't actually rendering.
+        if (_disabled || !_active)
+            return;
+
         args.Cancelled |= !IsVisible(ent, args.ViewerPos, args.WorldPos);
     }
 
@@ -220,10 +228,12 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
 
     private void AddOverlays()
     {
+        // Pirate fix: track the desired state even while the cvar has cones disabled,
+        // so re-enabling the cvar can restore the overlays (SetConesDisabled checks _active).
+        _active = true;
+
         if (_disabled)
             return;
-
-        _active = true;
 
         _overlay.AddOverlay(_coneOverlay);
         _overlay.AddOverlay(_setAlphaOverlay);
@@ -239,8 +249,12 @@ public sealed partial class ViewconeOverlaySystem : EntitySystem
 
         // hide memories
         var query = EntityQueryEnumerator<ViewconeOccludableComponent>();
-        while (query.MoveNext(out var comp))
+        while (query.MoveNext(out var uid, out var comp))
         {
+            // Pirate fix: occludables hidden through the simplified (no-memory) branch never get a
+            // ViewconeOccludedComponent marker, so restore their alpha here too or they stay invisible.
+            SetAlpha(uid, 1f);
+
             if (comp.Memory is { } memory && !TerminatingOrDeleted(memory))
                 SetAlpha(memory, 0f);
         }

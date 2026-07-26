@@ -863,9 +863,10 @@ public abstract partial class SharedMoverController : VirtualController
                     tileMovement,
                     movementSpeed))
                 {
-                    // Pirate: viewcone footstep effects
-                    var dir = targetTransform.LocalPosition - tileMovement.Destination;
-                    var stepEv = new FootStepEvent(uid, dir.ToWorldAngle());
+                    // Pirate: viewcone footstep effects. Use world positions: at slide end
+                    // LocalPosition ~= Destination, so their difference is a near-zero residual.
+                    var stepDir = _transform.GetWorldPosition(targetTransform) - _transform.ToMapCoordinates(tileMovement.Origin).Position;
+                    var stepEv = new FootStepEvent(uid, stepDir.ToWorldAngle());
                     RaiseLocalEvent(uid, ref stepEv);
 
                     EndSlide(uid, tileMovement);

@@ -106,6 +106,8 @@
       board: !type:Container
   - type: RequireProjectileTarget
   # </Goob>
+  - type: Viewcone # Pirate - prevent camera vision being messed up
+    baseConeAngle: 360
   placement:
     mode: SnapgridCenter
     snap:

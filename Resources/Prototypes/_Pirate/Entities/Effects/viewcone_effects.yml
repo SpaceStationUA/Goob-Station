@@ -33,6 +33,9 @@
     # copied when it's spawned
     sprite: error.rsi
     state: error
+  - type: Tag # Pirate fix - client-only memories should not show up in context menus
+    tags:
+    - HideContextMenu
 
 - type: entity
   parent: BaseViewconeEffect

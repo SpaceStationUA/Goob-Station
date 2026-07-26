@@ -42,6 +42,9 @@ public sealed partial class ViewconeSetAlphaOverlay : Overlay
     // slightly sus but cached from beforedraw to use in draw.
     private Entity<EyeComponent, ViewconeComponent>? _nextEye;
 
+    // Pirate perf: reused between frames to avoid a per-frame HashSet allocation in QueryAabb.
+    private readonly HashSet<Entity<ViewconeOccludableComponent, TransformComponent>> _occludables = new();
+
     public ViewconeSetAlphaOverlay()
     {
         IoCManager.InjectDependencies(this);
@@ -98,13 +101,15 @@ public sealed partial class ViewconeSetAlphaOverlay : Overlay
         var halfAngle = radConeAngle * 0.5f;
         var radConeFeather = MathHelper.DegreesToRadians(cone.ConeFeather);
 
-        var occludables = _tree.QueryAabb(args.MapId, args.WorldBounds);
+        _occludables.Clear();
+        _tree.QueryAabb(_occludables, args.MapId, args.WorldBounds);
         var fadeTime = cone.FadeTime.TotalSeconds;
         var now = _timing.CurTime;
-        foreach (var entry in occludables)
+        foreach (var entry in _occludables)
         {
-            var (comp, xform) = entry;
-            var uid = entry.Uid;
+            var uid = entry.Owner;
+            var comp = entry.Comp1;
+            var xform = entry.Comp2;
 
             // dynamic clientside disabling, for effects like pulled entities
             if (_cone.IgnoresViewcone(uid))
