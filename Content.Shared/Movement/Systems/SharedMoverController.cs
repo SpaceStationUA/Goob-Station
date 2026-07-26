@@ -274,6 +274,21 @@ public abstract partial class SharedMoverController : VirtualController
         Vector2 wishDir;
         var velocity = physicsComponent.LinearVelocity;
 
+        // Pirate: slow grounded backpedalling relative to the entity's facing direction.
+        var speedScale = 1f;
+        if (!weightless)
+        {
+            var backwardsAngle = moveSpeedComponent?.BackwardsAngle
+                ?? MovementSpeedModifierComponent.DefaultBackwardsAngle;
+            var backwardsSpeed = moveSpeedComponent?.BackwardsSpeed
+                ?? MovementSpeedModifierComponent.DefaultBackwardsSpeed;
+            var worldRotation = _transform.GetWorldRotation(xform);
+            var velocityAngle = velocity.ToWorldAngle();
+
+            if (Math.Abs(Angle.ShortestDistance(velocityAngle, worldRotation).Theta) > backwardsAngle.Theta)
+                speedScale = backwardsSpeed;
+        }
+
         // Get current tile def for things like speed/friction mods
         ContentTileDefinition? tileDef = null;
 
@@ -353,7 +368,7 @@ public abstract partial class SharedMoverController : VirtualController
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
-            wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
+            wishDir = AssertValidWish(mover, walkSpeed * speedScale, sprintSpeed * speedScale); // Pirate: backpedalling
 
             if (wishDir != Vector2.Zero)
             {

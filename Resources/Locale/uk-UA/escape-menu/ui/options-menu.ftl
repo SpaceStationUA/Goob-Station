@@ -109,6 +109,7 @@ ui-options-function-move-left = Рухатися Ліворуч
 ui-options-function-move-down = Рухатися Вниз
 ui-options-function-move-right = Рухатися Праворуч
 ui-options-function-walk = Ходьба
+ui-options-function-strafe = Стрейф (погляд за курсором)
 ui-options-function-camera-rotate-left = Повернути Ліворуч
 ui-options-function-camera-rotate-right = Повернути Праворуч
 ui-options-function-camera-reset = Скинути
