@@ -3455,3 +3455,9 @@ Entries:
       message: Додано стрейф на Shift та повільніший рух задом.
   id: 331
   time: '2026-07-26T16:02:58.0000000+00:00'
+- author: inhat-d
+  changes:
+    - type: Add
+      message: '`- !type:Vomit` до Mannitol'
+  id: 332
+  time: '2026-07-26T16:03:30.0000000+00:00'
