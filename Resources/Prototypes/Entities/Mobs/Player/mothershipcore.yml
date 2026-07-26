@@ -280,6 +280,8 @@
     - Sign
     - Schechi
     - NewKinPidgin
+  - type: Viewcone # Pirate - viewcone
+    baseConeAngle: 360
 
 - type: entity
   parent: BaseAGhostAction

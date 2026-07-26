@@ -12,6 +12,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared._Pirate.Clothing.Events; // Pirate: gear step sounds
+using Content.Pirate.Common.Movement; // Pirate: viewcone footstep effects
 using Content.Shared._DV.StepTrigger.Components; // DeltaV - NoShoesSilentFootstepsComponent
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
@@ -273,6 +274,21 @@ public abstract partial class SharedMoverController : VirtualController
         Vector2 wishDir;
         var velocity = physicsComponent.LinearVelocity;
 
+        // Pirate: slow grounded backpedalling relative to the entity's facing direction.
+        var speedScale = 1f;
+        if (!weightless)
+        {
+            var backwardsAngle = moveSpeedComponent?.BackwardsAngle
+                ?? MovementSpeedModifierComponent.DefaultBackwardsAngle;
+            var backwardsSpeed = moveSpeedComponent?.BackwardsSpeed
+                ?? MovementSpeedModifierComponent.DefaultBackwardsSpeed;
+            var worldRotation = _transform.GetWorldRotation(xform);
+            var velocityAngle = velocity.ToWorldAngle();
+
+            if (Math.Abs(Angle.ShortestDistance(velocityAngle, worldRotation).Theta) > backwardsAngle.Theta)
+                speedScale = backwardsSpeed;
+        }
+
         // Get current tile def for things like speed/friction mods
         ContentTileDefinition? tileDef = null;
 
@@ -352,7 +368,7 @@ public abstract partial class SharedMoverController : VirtualController
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
-            wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
+            wishDir = AssertValidWish(mover, walkSpeed * speedScale, sprintSpeed * speedScale); // Pirate: backpedalling
 
             if (wishDir != Vector2.Zero)
             {
@@ -447,6 +463,10 @@ public abstract partial class SharedMoverController : VirtualController
                 {
                     _audio.PlayPredicted(sound, uid, uid, audioParams);
                 }
+
+                // Pirate: viewcone footstep effects
+                var stepEv = new FootStepEvent(uid, wishDir.ToWorldAngle());
+                RaiseLocalEvent(uid, ref stepEv);
             }
         }
     }
@@ -844,6 +864,14 @@ public abstract partial class SharedMoverController : VirtualController
                 {
                     _audio.PlayPredicted(sound, uid, uid, audioParams);
                 }
+
+                // Pirate: viewcone footstep effects. Convert the local slide direction to world space.
+                var stepDir = tileMovement.Destination - tileMovement.Origin.Position;
+                if (XformQuery.TryGetComponent(targetTransform.ParentUid, out var parentTransform))
+                    stepDir = _transform.GetWorldRotation(parentTransform).RotateVec(stepDir);
+
+                var stepEv = new FootStepEvent(uid, stepDir.ToWorldAngle());
+                RaiseLocalEvent(uid, ref stepEv);
             }
 
             // If we're sliding...

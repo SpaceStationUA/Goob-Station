@@ -21,6 +21,8 @@
     - type: HideLayerClothing
       slots:
       - Snout
+    - type: ViewconeModifier # Pirate: chameleon mask keeps full vision
+      angleModifier: 1.0
 
 - type: entity
   parent: ClothingMaskGasChameleon

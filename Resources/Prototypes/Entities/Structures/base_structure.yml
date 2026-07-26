@@ -39,6 +39,8 @@
   parent: BaseStructure
   abstract: true
   components:
+  - type: ViewconeOccludable # Pirate: false hides only while unanchored; anchored entities are restored.
+    occludeIfAnchored: false
 # These might/might not be a good idea
   #  - type: MovedByPressure
   #  - type: DamageOnHighSpeedImpact

@@ -132,7 +132,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseClothingViewconeSmall] # Pirate: viewcone
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:
@@ -173,7 +173,7 @@
 
 - type: entity
   abstract: true
-  # No parent since we aren't actually an item.
+  parent: BaseClothingViewconeSmall # Pirate: viewcone; intentionally not an item parent
   id: ClothingHeadHardsuitBase
   name: base hardsuit helmet
   categories: [ HideSpawnMenu ]

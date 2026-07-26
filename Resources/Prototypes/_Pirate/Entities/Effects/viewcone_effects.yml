@@ -1,0 +1,67 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Effects spawned when certain things happen
+# that only appear to viewcone users when out of vision.
+
+- type: entity
+  id: BaseViewconeEffect
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ViewconeOccludable
+    inverted: true
+    useMemory: false # this is the memory
+  - type: Sprite
+    sprite: _Pirate/Effects/viewcone_effects.rsi
+    drawdepth: Effects
+    loop: false
+  - type: Transform
+    anchored: true
+  - type: TimedDespawn
+    lifetime: 3.0
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: ViewconeMemory
+  name: memory
+  description: You remember this being here very recently.
+  components:
+  - type: Sprite
+    # copied when it's spawned
+    sprite: error.rsi
+    state: error
+  - type: Tag # Pirate fix - client-only memories should not show up in context menus
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: BaseViewconeEffect
+  id: ViewconeEffectFootstep
+  components:
+  - type: Sprite
+    state: footstep
+
+- type: entity
+  parent: BaseViewconeEffect
+  id: ViewconeEffectAttack
+  components:
+  - type: Sprite
+    state: attack
+
+# TODO UNUSED
+- type: entity
+  parent: BaseViewconeEffect
+  id: ViewconeEffectForcefield
+  components:
+  - type: Sprite
+    state: forcefield
+
+- type: entity
+  parent: BaseViewconeEffect
+  id: ViewconeEffectTalk
+  components:
+  - type: Sprite
+    state: talk

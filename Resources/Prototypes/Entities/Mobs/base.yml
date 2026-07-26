@@ -7,6 +7,12 @@
   save: false
   id: BaseControllable
   components:
+  # Pirate - viewcone
+  - type: Viewcone
+  - type: ViewconeOccludable # if it can move, you probably can't remember it forever?
+    useMemory: false # forgor
+  - type: ViewconeFootstepsEffect # if you can hear it move you will see steps effects on screen
+  # Pirate - end
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -168,6 +174,7 @@
   id: MobCombat
   abstract: true
   components:
+  - type: ViewconeMeleeEffect # Pirate - viewcone
   - type: CombatMode
   - type: MeleeWeapon
     hidden: true

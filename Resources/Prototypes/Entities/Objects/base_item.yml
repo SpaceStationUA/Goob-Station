@@ -20,6 +20,7 @@
     # sound:
       # collection: GenericDrop
   # Goobstation edit end
+  - type: ViewconeOccludable # Pirate: movable items should not remain visible outside the cone.
   - type: Item
     size: Small
   - type: Animateable

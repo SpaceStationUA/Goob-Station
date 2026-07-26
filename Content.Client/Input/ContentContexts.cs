@@ -2,6 +2,7 @@
 
 using Content.Shared.Input;
 using Content.Shared._Pirate.Input; // Pirate: multiz
+using Content.Pirate.Common.Input; // Pirate: strafe
 using Robust.Shared.Input;
 
 namespace Content.Client.Input
@@ -61,6 +62,7 @@ namespace Content.Client.Input
             human.AddFunction(EngineKeyFunctions.MoveLeft);
             human.AddFunction(EngineKeyFunctions.MoveRight);
             human.AddFunction(EngineKeyFunctions.Walk);
+            human.AddFunction(PirateKeyFunctions.Strafe); // Pirate: face the cursor while held
             human.AddFunction(ContentKeyFunctions.ToggleKnockdown);
             human.AddFunction(ContentKeyFunctions.Sprint);
             human.AddFunction(ContentKeyFunctions.SwapHands);

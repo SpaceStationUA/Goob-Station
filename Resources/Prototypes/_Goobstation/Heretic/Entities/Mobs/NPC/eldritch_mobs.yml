@@ -170,6 +170,8 @@
     drawOverlay: false
   - type: Eye
     drawFov: false
+  - type: Viewcone # Pirate - viewcone
+    baseConeAngle: 360
   - type: ContentEye
     maxZoom: 1.25, 1.25
     targetZoom: 1.25, 1.25
