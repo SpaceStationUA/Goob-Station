@@ -8,6 +8,8 @@
   name: base modsuit helmet
   categories: [ HideSpawnMenu ]
   components:
+  - type: Item # Pirate: match the initial unsealed modsuit state
+    heldPrefix: off
   - type: Sprite
     state: icon
   - type: Clickable
