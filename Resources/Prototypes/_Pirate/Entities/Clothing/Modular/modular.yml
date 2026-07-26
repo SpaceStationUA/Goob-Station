@@ -9,8 +9,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerStandard
-  name: "стандартний контролер МОД-костюма"
-  description: "Стандартний контролер модульних костюмів від «Накамура Інжиніринг». Керує розподілом живлення та інтеграцією модулів."
+  name: standard modsuit controller
+  description: A standard controller for modular suits from Nakamura Engineering. Manages power distribution and module integration.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Standard/control.rsi
@@ -29,8 +29,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetStandard
-  name: "стандартний шолом МОД-костюма"
-  description: "Герметичний шолом із базовим захистом. Оснащений висувним візором із бірюзовим підсвічуванням."
+  name: standard modsuit helmet
+  description: A sealed helmet with basic protection. Features a retractable visor with cyan lighting.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -64,8 +64,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateStandard
-  name: "стандартний нагрудник МОД-костюма"
-  description: "Базова бронепластина для модульних костюмів. Забезпечує стандартний захист і слугує основною точкою кріплення модулів."
+  name: standard modsuit chestplate
+  description: A basic armor plate for modular suits. Provides standard protection and serves as the main mounting point for modules.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -80,8 +80,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsStandard
-  name: "стандартні рукавиці МОД-костюма"
-  description: "Посилені рукавиці з інтегрованими сервосистемами. Дають змогу встановлювати модулі для рук."
+  name: standard modsuit gauntlets
+  description: Reinforced gauntlets with integrated servo systems. Allow installation of hand-related modules.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -96,8 +96,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsStandard
-  name: "стандартні чоботи МОД-костюма"
-  description: "Герметичні чоботи із системами магнітного кріплення. Слугують основою для модулів мобільності."
+  name: standard modsuit boots
+  description: Sealed boots with magnetic anchoring systems. Serve as the foundation for mobility-related modules.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -113,8 +113,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerAdvanced
-  name: "удосконалений контролер МОД-костюма"
-  description: "Удосконалений контролер із поліпшеною терморегуляцією. Належить старшому інженеру."
+  name: advanced modsuit controller
+  description: An upgraded controller with enhanced thermal regulation. Belongs to the Chief Engineer.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Advanced/control.rsi
@@ -153,8 +153,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetAdvanced
-  name: "удосконалений шолом МОД-костюма"
-  description: "Удосконалений шолом із полірованим білим покриттям. Забезпечує посилений захист і має бурштиновий візор."
+  name: advanced modsuit helmet
+  description: An advanced helmet with a polished white finish. Features enhanced protection and an amber visor.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -188,8 +188,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateAdvanced
-  name: "удосконалений нагрудник МОД-костюма"
-  description: "Удосконалена бронепластина з чудовим захистом від жару та вибухів. Має виразне біле покриття."
+  name: advanced modsuit chestplate
+  description: An upgraded armor plate with superior protection against heat and explosions. Features a distinctive white finish.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -215,8 +215,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsAdvanced
-  name: "удосконалені рукавиці МОД-костюма"
-  description: "Удосконалені рукавиці з повною електроізоляцією. Ідеальні для роботи з небезпечним обладнанням."
+  name: advanced modsuit gauntlets
+  description: Advanced gauntlets with complete electrical insulation. Perfect for working with hazardous equipment.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -232,8 +232,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsAdvanced
-  name: "удосконалені чоботи МОД-костюма"
-  description: "Удосконалені чоботи з посиленими магнітними кріпленнями та поліпшеними системами зчеплення."
+  name: advanced modsuit boots
+  description: Advanced boots with enhanced magnetic anchoring and improved traction systems.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -249,8 +249,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerApocryphal
-  name: "апокрифічний контролер МОД-костюма"
-  description: "Високотехнологічний контролер броньованого костюма, створений у співпраці між «Нанотрейзен» та «Ападайн Текнолоджіз» і законний лише суто технічно."
+  name: apocryphal modsuit controller
+  description: A high-tech, only technically legal, armored suit controller created by a collaboration between Nanotrasen and Apadyne Technologies.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Apocryphal/control.rsi
@@ -293,8 +293,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetApocryphal
-  name: "апокрифічний шолом МОД-костюма"
-  description: "Високотехнологічний шолом із бірюзовим візором і винятковими захисними можливостями. Вершина оборонних технологій."
+  name: apocryphal modsuit helmet
+  description: A high-tech helmet with a cyan visor and exceptional protective capabilities. The pinnacle of defensive technology.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -337,8 +337,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateApocryphal
-  name: "апокрифічний нагрудник МОД-костюма"
-  description: "Надзвичайно міцний нагрудник, що забезпечує майже непробивний захист від усіх типів ушкоджень. Стерилізований для медичного використання."
+  name: apocryphal modsuit chestplate
+  description: An incredibly durable chestplate offering near-impenetrable protection against all forms of damage. Sterilized for medical applications.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -367,8 +367,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsApocryphal
-  name: "апокрифічні рукавиці МОД-костюма"
-  description: "Високотехнологічні рукавиці з повною електроізоляцією. Спроєктовані для максимального захисту."
+  name: apocryphal modsuit gauntlets
+  description: High-tech gauntlets with complete electrical insulation. Engineered for maximum protection.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -384,8 +384,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsApocryphal
-  name: "апокрифічні чоботи МОД-костюма"
-  description: "Удосконалені чоботи особливо міцної конструкції. Кожен крок владно сповіщає про вашу присутність."
+  name: apocryphal modsuit boots
+  description: Advanced boots with heavy-duty construction. Each step announces your presence with authority.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -404,8 +404,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerAsteroid
-  name: "астероїдний контролер МОД-костюма"
-  description: "Міцний контролер, оптимізований для шахтарських робіт. Розрахований на суворі умови астероїдних полів."
+  name: asteroid modsuit controller
+  description: A rugged controller optimized for mining operations. Designed to withstand the harsh conditions of asteroid fields.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Asteroid/control.rsi
@@ -460,8 +460,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetAsteroid
-  name: "астероїдний шолом МОД-костюма"
-  description: "Міцний шахтарський шолом із посиленим освітленням. Захищає від попелястих бур і ударів."
+  name: asteroid modsuit helmet
+  description: A rugged mining helmet with enhanced lighting. Protects against ash storms and impacts.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -495,8 +495,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateAsteroid
-  name: "астероїдний нагрудник МОД-костюма"
-  description: "Міцний шахтарський нагрудник із добрим захистом від кінетичних ударів і помірних небезпек довкілля."
+  name: asteroid modsuit chestplate
+  description: A durable mining chestplate with good protection against kinetic impacts and moderate environmental hazards.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -522,8 +522,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsAsteroid
-  name: "астероїдні рукавиці МОД-костюма"
-  description: "Міцні шахтарські рукавиці з частковою електроізоляцією. Призначені для роботи з видобувним обладнанням."
+  name: asteroid modsuit gauntlets
+  description: Rugged mining gauntlets with partial electrical insulation. Designed for handling excavation equipment.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -540,8 +540,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsAsteroid
-  name: "астероїдні чоботи МОД-костюма"
-  description: "Міцні шахтарські чоботи з посиленими підошвами для ходіння нерівною місцевістю."
+  name: asteroid modsuit boots
+  description: Sturdy mining boots with reinforced soles for walking on rough terrain.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -557,8 +557,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerAtmospheric
-  name: "атмосферний контролер МОД-костюма"
-  description: "Спеціалізований контролер з екстремальною терморегуляцією для атмосферних техніків. Здатний витримувати найгарячіші середовища."
+  name: atmospheric modsuit controller
+  description: A specialized controller with extreme thermal regulation for atmospheric technicians. Capable of withstanding the hottest environments.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Atmospheric/control.rsi
@@ -602,8 +602,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetAtmospheric
-  name: "атмосферний шолом МОД-костюма"
-  description: "Термостійкий шолом із бірюзовим візором. Незамінний для роботи за екстремальних температур."
+  name: atmospheric modsuit helmet
+  description: A heat-resistant helmet with a cyan visor. Essential for working in extreme temperature environments.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -637,8 +637,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateAtmospheric
-  name: "атмосферний нагрудник МОД-костюма"
-  description: "Вогнестійкий нагрудник для атмосферних техніків. Забезпечує чудовий тепловий захист."
+  name: atmospheric modsuit chestplate
+  description: A fire-resistant chestplate designed for atmospheric technicians. Provides excellent thermal protection.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -663,8 +663,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsAtmospheric
-  name: "атмосферні рукавиці МОД-костюма"
-  description: "Термостійкі рукавиці з повною електроізоляцією. Призначені для роботи поблизу плазмових пожеж."
+  name: atmospheric modsuit gauntlets
+  description: Heat-resistant gauntlets with complete electrical insulation. Designed for working near plasma fires.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -680,8 +680,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsAtmospheric
-  name: "атмосферні чоботи МОД-костюма"
-  description: "Термостійкі чоботи зі стандартними магнітними кріпленнями. Зберігають стійкість навіть за найвищих температур."
+  name: atmospheric modsuit boots
+  description: Heat-resistant boots with standard magnetic anchoring. Stable even in the hottest conditions.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -697,8 +697,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerChrono
-  name: "хроно-контролер МОД-костюма"
-  description: "Загадковий контролер із часовими артефактами. Де ви взагалі це взяли?"
+  name: chrono modsuit controller
+  description: A mysterious controller with temporal artifacts. Where did you even get this?
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Chrono/control.rsi
@@ -716,8 +716,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetChrono
-  name: "хроно-шолом МОД-костюма"
-  description: "Дивний шолом із синьо-бірюзовим візором. Здається, він викривляє світло навколо себе."
+  name: chrono modsuit helmet
+  description: A strange helmet with a blue-cyan visor. It seems to distort light around it.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -751,8 +751,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateChrono
-  name: "хроно-нагрудник МОД-костюма"
-  description: "Загадковий нагрудник із невідомими властивостями. Здається, час навколо нього плине інакше."
+  name: chrono modsuit chestplate
+  description: A mysterious chestplate with unknown properties. Time seems to flow differently around it.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -767,8 +767,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsChrono
-  name: "хроно-рукавиці МОД-костюма"
-  description: "Таємничі рукавиці, що, здається, існують трохи не синхронно з реальністю."
+  name: chrono modsuit gauntlets
+  description: Mysterious gauntlets that seem to exist slightly out of sync with reality.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -783,8 +783,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsChrono
-  name: "хроно-чоботи МОД-костюма"
-  description: "Дивні чоботи, що не залишають слідів. Чи все-таки залишають?"
+  name: chrono modsuit boots
+  description: Strange boots that leave no footprints. Or do they?
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -800,8 +800,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerCivilian
-  name: "цивільний контролер МОД-костюма"
-  description: "Легкий контролер для цивільного використання."
+  name: civilian modsuit controller
+  description: A lightweight controller for civilian use.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Civilian/control.rsi
@@ -822,8 +822,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetCivilian
-  name: "цивільний шолом МОД-костюма"
-  description: "Легкий цивільний шолом із бірюзовим візором. Не розрахований на перебування у вакуумі."
+  name: civilian modsuit helmet
+  description: A lightweight civilian helmet with a cyan visor. Not rated for vacuum exposure.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -864,8 +864,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateCivilian
-  name: "цивільний нагрудник МОД-костюма"
-  description: "Легкий цивільний нагрудник. Забезпечує мінімальний захист, але максимальну рухливість."
+  name: civilian modsuit chestplate
+  description: A lightweight civilian chestplate. Provides minimal protection but maximum mobility.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -887,8 +887,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsCivilian
-  name: "цивільні рукавиці МОД-костюма"
-  description: "Легкі цивільні рукавиці. Добрі для повсякденних справ, але не для бою."
+  name: civilian modsuit gauntlets
+  description: Lightweight civilian gauntlets. Good for everyday tasks, not for combat.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -903,8 +903,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsCivilian
-  name: "цивільні чоботи МОД-костюма"
-  description: "Легкі цивільні чоботи. Зручні для тривалого носіння."
+  name: civilian modsuit boots
+  description: Lightweight civilian boots. Comfortable for extended wear.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -920,8 +920,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerCorporate
-  name: "корпоративний контролер МОД-костюма"
-  description: "Престижний контролер для високопоставлених офіцерів «Нанотрейзен». Поєднує стиль із передовим захистом."
+  name: corporate modsuit controller
+  description: A prestigious controller for high-ranking Nanotrasen officers. Combines style with advanced protection.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Corporate/control.rsi
@@ -958,8 +958,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetCorporate
-  name: "корпоративний шолом МОД-костюма"
-  description: "Стильний корпоративний шолом із бірюзовим візором. Підкреслює авторитет і водночас забезпечує чудовий захист."
+  name: corporate modsuit helmet
+  description: A stylish corporate helmet with a cyan visor. Projects authority while providing excellent protection.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -993,8 +993,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateCorporate
-  name: "корпоративний нагрудник МОД-костюма"
-  description: "Вишуканий корпоративний нагрудник зі збалансованим захистом. Створений, щоб вражати й захищати."
+  name: corporate modsuit chestplate
+  description: A refined corporate chestplate with balanced protection. Designed to impress and protect.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1022,8 +1022,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsCorporate
-  name: "корпоративні рукавиці МОД-костюма"
-  description: "Стильні корпоративні рукавиці з повною електроізоляцією. Форма відповідає функції."
+  name: corporate modsuit gauntlets
+  description: Stylish corporate gauntlets with complete electrical insulation. Form meets function.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1039,8 +1039,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsCorporate
-  name: "корпоративні чоботи МОД-костюма"
-  description: "Поліровані корпоративні чоботи зі стандартними магнітними кріпленнями. Кожен крок свідчить про серйозні наміри."
+  name: corporate modsuit boots
+  description: Polished corporate boots with standard magnetic anchoring. Every step means business.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1056,8 +1056,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerCorpsman
-  name: "контролер МОД-костюма бойового медика"
-  description: "Медичний контролер з альтернативною кольоровою схемою. Розроблений для польових медиків."
+  name: corpsman modsuit controller
+  description: A medical controller with an alternate color scheme. Designed for field medics.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Corpsman/control.rsi
@@ -1075,8 +1075,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetCorpsman
-  name: "шолом МОД-костюма бойового медика"
-  description: "Медичний шолом із білим візором. Варіант для бойового медика має виразний вигляд."
+  name: corpsman modsuit helmet
+  description: A medical helmet with a white visor. The corpsman variant offers a distinct look.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1108,8 +1108,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateCorpsman
-  name: "нагрудник МОД-костюма бойового медика"
-  description: "Медичний нагрудник у виразній кольоровій схемі бойового медика."
+  name: corpsman modsuit chestplate
+  description: A medical chestplate with a distinct corpsman color scheme.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1124,8 +1124,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsCorpsman
-  name: "рукавиці МОД-костюма бойового медика"
-  description: "Медичні рукавиці в кольорах бойового медика. Розроблені для догляду за пацієнтами."
+  name: corpsman modsuit gauntlets
+  description: Medical gauntlets in corpsman colors. Designed for patient care.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1140,8 +1140,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsCorpsman
-  name: "чоботи МОД-костюма бойового медика"
-  description: "Медичні чоботи в кольорах бойового медика. Готові до швидкого реагування."
+  name: corpsman modsuit boots
+  description: Medical boots in corpsman colors. Ready for rapid response.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1157,8 +1157,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerCosmohonk
-  name: "космохонковий контролер МОД-костюма"
-  description: "Контролер від «Хонк Лтд.». Більшість технологій витрачено на зниження енергоспоживання. Захищає від середовищ із низьким вмістом гумору."
+  name: cosmohonk modsuit controller
+  description: A controller from Honk Ltd. Most of the tech went into reducing power consumption. Protects against low-humor environments.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Cosmohonk/control.rsi
@@ -1195,8 +1195,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetCosmohonk
-  name: "космохонковий шолом МОД-костюма"
-  description: "Клоунський шолом із червоним візором. Хонк!"
+  name: cosmohonk modsuit helmet
+  description: A clown-themed helmet with a red visor. Honk!
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1230,8 +1230,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateCosmohonk
-  name: "космохонковий нагрудник МОД-костюма"
-  description: "Клоунський нагрудник. Напрочуд міцний як на щось настільки безглузде."
+  name: cosmohonk modsuit chestplate
+  description: A clown-themed chestplate. Surprisingly durable for something so silly.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1255,8 +1255,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsCosmohonk
-  name: "космохонкові рукавиці МОД-костюма"
-  description: "Клоунські рукавиці. Ідеальні для гучних хонків."
+  name: cosmohonk modsuit gauntlets
+  description: Clown-themed gauntlets. Perfect for delivering honks.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1271,8 +1271,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsCosmohonk
-  name: "космохонкові чоботи МОД-костюма"
-  description: "Клоунські чоботи, що видають характерний звук із кожним кроком. Хонк-хонк!"
+  name: cosmohonk modsuit boots
+  description: Clown-themed boots that make a distinctive sound with every step. Honk honk!
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1293,8 +1293,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerElite
-  name: "елітний контролер МОД-костюма"
-  description: "Удосконалений контролер від «Кіберсан Індастріз» із поліпшеними робочими характеристиками."
+  name: elite modsuit controller
+  description: An upgraded controller from Cybersun Industries with enhanced performance characteristics.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Elite/control.rsi
@@ -1338,8 +1338,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetElite
-  name: "елітний шолом МОД-костюма"
-  description: "Елітний шолом із золотим візором. Посилений захист для найнебезпечніших завдань."
+  name: elite modsuit helmet
+  description: An elite helmet with a golden visor. Enhanced protection for the most dangerous missions.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1380,8 +1380,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateElite
-  name: "елітний нагрудник МОД-костюма"
-  description: "Елітний нагрудник із чудовим захистом від більшості типів ушкоджень. Вершина захисної інженерії."
+  name: elite modsuit chestplate
+  description: An elite chestplate with superior protection against most damage types. The pinnacle of defensive engineering.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1414,8 +1414,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsElite
-  name: "елітні рукавиці МОД-костюма"
-  description: "Елітні рукавиці з повною електроізоляцією. Створені для оперативників, які вимагають найкращого."
+  name: elite modsuit gauntlets
+  description: Elite gauntlets with complete electrical insulation. Designed for operatives who demand the best.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1431,8 +1431,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsElite
-  name: "елітні чоботи МОД-костюма"
-  description: "Елітні чоботи з удосконаленими системами мобільності. Рухайтеся швидше, ніж будь-коли."
+  name: elite modsuit boots
+  description: Elite boots with enhanced mobility systems. Move faster than ever before.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1448,8 +1448,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerEnchanted
-  name: "зачарований контролер МОД-костюма"
-  description: "Порівняно низькотехнологічний контролер від Федерації Чарівників. Напрочуд добре захищає, попри своє магічне походження."
+  name: enchanted modsuit controller
+  description: A relatively low-tech controller from the Wizard Federation. Surprisingly protective despite its arcane origins.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Enchanted/control.rsi
@@ -1483,8 +1483,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetEnchanted
-  name: "зачарований шолом МОД-костюма"
-  description: "Магічний шолом із синьо-бірюзовим візором. Під час творення заклять зараховується як чаклунська мантія."
+  name: enchanted modsuit helmet
+  description: A magical helmet with a cyan-blue visor. Counts as wizard robes for spellcasting purposes.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1525,8 +1525,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateEnchanted
-  name: "зачарований нагрудник МОД-костюма"
-  description: "Магічний нагрудник із потужними захисними чарами. Протистоїть фізичним і стихійним ушкодженням."
+  name: enchanted modsuit chestplate
+  description: A magical chestplate with strong protective enchantments. Resists physical and elemental damage.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1552,8 +1552,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsEnchanted
-  name: "зачаровані рукавиці МОД-костюма"
-  description: "Магічні рукавиці, що спрямовують таємничу енергію. Вважаються чаклунським вбранням."
+  name: enchanted modsuit gauntlets
+  description: Magical gauntlets that channel arcane energy. Counts as wizard robes.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1568,8 +1568,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsEnchanted
-  name: "зачаровані чоботи МОД-костюма"
-  description: "Магічні чоботи, що м'яко сяють таємничим світлом. Вважаються чаклунським вбранням."
+  name: enchanted modsuit boots
+  description: Magical boots that softly glow with arcane light. Counts as wizard robes.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1585,8 +1585,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerEngineering
-  name: "інженерний контролер МОД-костюма"
-  description: "Класичний інженерний контролер від «Накамура Інжиніринг». Має чудову стійкість до жару й електрики."
+  name: engineering modsuit controller
+  description: Nakamura Engineering's classic engineer controller. Features excellent heat and electrical resistance.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Engineering/control.rsi
@@ -1623,8 +1623,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetEngineering
-  name: "інженерний шолом МОД-костюма"
-  description: "Інженерний шолом із бірюзовим візором. Незамінний для технічних робіт у небезпечних середовищах."
+  name: engineering modsuit helmet
+  description: An engineering helmet with a cyan visor. Essential for maintenance work in hazardous environments.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1658,8 +1658,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateEngineering
-  name: "інженерний нагрудник МОД-костюма"
-  description: "Інженерний нагрудник із добрим захистом від ураження струмом і помірних небезпек довкілля."
+  name: engineering modsuit chestplate
+  description: An engineering chestplate with good protection against electrical shocks and moderate environmental hazards.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1685,8 +1685,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsEngineering
-  name: "інженерні рукавиці МОД-костюма"
-  description: "Ізольовані інженерні рукавиці. Ідеальні для роботи з дротами під напругою."
+  name: engineering modsuit gauntlets
+  description: Insulated engineering gauntlets. Perfect for working with live wires.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1702,8 +1702,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsEngineering
-  name: "інженерні чоботи МОД-костюма"
-  description: "Інженерні чоботи зі стандартними магнітними кріпленнями. Надійні за будь-яких технічних робіт."
+  name: engineering modsuit boots
+  description: Engineering boots with standard magnetic anchoring. Reliable in any maintenance situation.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1719,8 +1719,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerInquisitory
-  name: "інквізиторський контролер МОД-костюма"
-  description: "Швидкісний рятувальний контролер з альтернативною кольоровою схемою. Для тих, хто судить швидко."
+  name: inquisitory modsuit controller
+  description: A high-speed rescue controller with an alternate color scheme. For those who judge swiftly.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Inquisitory/control.rsi
@@ -1757,8 +1757,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetInquisitory
-  name: "інквізиторський шолом МОД-костюма"
-  description: "Виразний шолом із бірюзовим візором. Залякує тих, хто стає свідком вашого правосуддя."
+  name: inquisitory modsuit helmet
+  description: A striking helmet with a cyan visor. Intimidates those who witness your judgment.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1799,8 +1799,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateInquisitory
-  name: "інквізиторський нагрудник МОД-костюма"
-  description: "Добре збалансований нагрудник із надійним всебічним захистом. Суддя, присяжний і захисник."
+  name: inquisitory modsuit chestplate
+  description: A well-balanced chestplate with good all-around protection. Judge, jury, and protector.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1828,8 +1828,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsInquisitory
-  name: "інквізиторські рукавиці МОД-костюма"
-  description: "Ізольовані рукавиці з владним виглядом."
+  name: inquisitory modsuit gauntlets
+  description: Insulated gauntlets with a commanding presence.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1845,8 +1845,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsInquisitory
-  name: "інквізиторські чоботи МОД-костюма"
-  description: "Чоботи, що стрімко несуть вас вершити правосуддя."
+  name: inquisitory modsuit boots
+  description: Boots that carry you swiftly to deliver judgment.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1862,8 +1862,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerLoader
-  name: "вантажний контролер МОД-костюма"
-  description: "Негерметична експериментальна механізована упряж від «Скарборо Армз» для ефективного постачання боєприпасів."
+  name: loader modsuit controller
+  description: An unsealed experimental motorized harness from Scarborough Arms for efficient munition supplies.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Loader/control.rsi
@@ -1881,8 +1881,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetLoader
-  name: "вантажний шолом МОД-костюма"
-  description: "Практичний шолом із бірюзово-зеленим візором. Розроблений для вантажних робіт."
+  name: loader modsuit helmet
+  description: A practical helmet with a cyan-green visor. Designed for cargo operations.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1916,8 +1916,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateLoader
-  name: "вантажний нагрудник МОД-костюма"
-  description: "Міцний нагрудник для підіймання важких речей і роботи з вантажами."
+  name: loader modsuit chestplate
+  description: A durable chestplate designed for heavy lifting and cargo handling.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1932,8 +1932,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsLoader
-  name: "вантажні рукавиці МОД-костюма"
-  description: "Посилені рукавиці для роботи з вантажними ящиками. Створені для працьовитого квартирмейстера."
+  name: loader modsuit gauntlets
+  description: Reinforced gauntlets for handling cargo crates. Built for the hardworking quartermaster.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1948,8 +1948,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsLoader
-  name: "вантажні чоботи МОД-костюма"
-  description: "Міцні чоботи для пересування вантажними відсіками й завантажувальними платформами."
+  name: loader modsuit boots
+  description: Sturdy boots for navigating cargo bays and loading docks.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1965,8 +1965,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerMagnate
-  name: "магнатський контролер МОД-костюма"
-  description: "Елегантний контролер із високим рівнем захисту для капітанів «Нанотрейзен». Захищений від електрики, вогню та кислоти, має високу місткість і швидкість."
+  name: magnate modsuit controller
+  description: A fancy, highly protective controller for Nanotrasen captains. Shock, fire, and acid-proof with high capacity and speed.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Magnate/control.rsi
@@ -2000,8 +2000,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetMagnate
-  name: "магнатський шолом МОД-костюма"
-  description: "Величний шолом із фіолетовим візором. Підкреслює авторитет і вселяє впевненість."
+  name: magnate modsuit helmet
+  description: A regal helmet with a purple visor. Projects authority and inspires confidence.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2035,8 +2035,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateMagnate
-  name: "магнатський нагрудник МОД-костюма"
-  description: "Престижний нагрудник із винятковим захистом. Гідний капітана станції «Нанотрейзен»."
+  name: magnate modsuit chestplate
+  description: A prestigious chestplate with exceptional protection. Fit for the captain of a Nanotrasen station.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2062,8 +2062,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsMagnate
-  name: "магнатські рукавиці МОД-костюма"
-  description: "Елегантні рукавиці з повною електроізоляцією. Командуйте впевнено."
+  name: magnate modsuit gauntlets
+  description: Elegant gauntlets with complete electrical insulation. Command with confidence.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2079,8 +2079,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsMagnate
-  name: "магнатські чоботи МОД-костюма"
-  description: "Поліровані чоботи, кожен крок у яких викликає повагу."
+  name: magnate modsuit boots
+  description: Polished boots that command respect with every step.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2096,8 +2096,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerMedical
-  name: "медичний контролер МОД-костюма"
-  description: "Легкий контролер від медичної корпорації «ДеФорест». Надає перевагу рухливості, зберігаючи достатній захист."
+  name: medical modsuit controller
+  description: A lightweight controller from DeForest Medical Corporation. Prioritizes mobility while maintaining adequate protection.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Medical/control.rsi
@@ -2136,8 +2136,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetMedical
-  name: "медичний шолом МОД-костюма"
-  description: "Медичний шолом із фіолетовим візором. Захищає від хвороб і забезпечує чіткий огляд пацієнтів."
+  name: medical modsuit helmet
+  description: A medical helmet with a purple visor. Provides disease protection and a clear view of your patients.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2176,8 +2176,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateMedical
-  name: "медичний нагрудник МОД-костюма"
-  description: "Легкий медичний нагрудник із захистом від хвороб. Розроблений для швидкого реагування."
+  name: medical modsuit chestplate
+  description: A lightweight medical chestplate with disease protection. Designed for rapid response.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2201,8 +2201,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsMedical
-  name: "медичні рукавиці МОД-костюма"
-  description: "Медичні рукавиці для догляду за пацієнтами. Достатньо гнучкі для делікатних процедур."
+  name: medical modsuit gauntlets
+  description: Medical gauntlets for patient care. Dexterous enough for delicate procedures.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2217,8 +2217,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsMedical
-  name: "медичні чоботи МОД-костюма"
-  description: "Легкі медичні чоботи для швидкого реагування на надзвичайні ситуації."
+  name: medical modsuit boots
+  description: Lightweight medical boots for quick response to emergencies.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2234,8 +2234,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerMining
-  name: "шахтарський контролер МОД-костюма"
-  description: "Потужний шахтарський контролер із численними вбудованими модулями. Енергоощадний і міцний."
+  name: mining modsuit controller
+  description: A powerful mining controller with numerous built-in modules. Power-efficient and rugged.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Mining/control.rsi
@@ -2275,8 +2275,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetMining
-  name: "шахтарський шолом МОД-костюма"
-  description: "Міцний шахтарський шолом із бірюзовим візором. Має захист від попелу й потужний ліхтар."
+  name: mining modsuit helmet
+  description: A rugged mining helmet with a cyan visor. Features ash protection and a powerful light.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2310,8 +2310,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateMining
-  name: "шахтарський нагрудник МОД-костюма"
-  description: "Міцний шахтарський нагрудник із добрим захистом від ударів і небезпек довкілля."
+  name: mining modsuit chestplate
+  description: A durable mining chestplate with good protection against impacts and environmental hazards.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2337,8 +2337,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsMining
-  name: "шахтарські рукавиці МОД-костюма"
-  description: "Посилені шахтарські рукавиці з частковою електроізоляцією. Ідеальні для роботи з видобувними інструментами."
+  name: mining modsuit gauntlets
+  description: Reinforced mining gauntlets with partial electrical insulation. Perfect for handling excavation tools.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2355,8 +2355,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsMining
-  name: "шахтарські чоботи МОД-костюма"
-  description: "Міцні шахтарські чоботи для пересування астероїдною місцевістю. Добре тримаються на сипких поверхнях."
+  name: mining modsuit boots
+  description: Sturdy mining boots for traversing asteroid terrain. Good grip on loose surfaces.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2474,8 +2474,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerPrototype
-  name: "прототип контролера МОД-костюма"
-  description: "Прототип модульного костюма, що живиться від локомотивів. Хоч він зручний і просторий, він усе ще громіздкий та енергетично неефективний."
+  name: prototype modsuit controller
+  description: A prototype modular suit powered by locomotives. While comfortable and spacious, it remains bulky and power-inefficient.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Prototype/control.rsi
@@ -2509,8 +2509,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetPrototype
-  name: "прототип шолома МОД-костюма"
-  description: "Громіздкий прототип шолома з бірюзовим візором. Не надто компактний, але свою роботу виконує."
+  name: prototype modsuit helmet
+  description: A bulky prototype helmet with a cyan visor. Not exactly space-efficient, but it gets the job done.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2544,8 +2544,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlatePrototype
-  name: "прототип нагрудника МОД-костюма"
-  description: "Громіздкий прототип нагрудника з добрим захистом від вибухів. Вибір наукового керівника."
+  name: prototype modsuit chestplate
+  description: A bulky prototype chestplate with good explosion resistance. The research director's choice.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2568,8 +2568,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsPrototype
-  name: "прототип рукавиць МОД-костюма"
-  description: "Громіздкі прототипні рукавиці з частковою ізоляцією. Не найвитонченіші, зате функціональні."
+  name: prototype modsuit gauntlets
+  description: Bulky prototype gauntlets with partial insulation. Not the most refined, but functional.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2586,8 +2586,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsPrototype
-  name: "прототип чобіт МОД-костюма"
-  description: "Важкі прототипні чоботи. Зрештою вони доправлять вас куди треба."
+  name: prototype modsuit boots
+  description: Heavy prototype boots. They'll get you where you need to go, eventually.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2603,8 +2603,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerRescue
-  name: "рятувальний контролер МОД-костюма"
-  description: "Удосконалена версія медичного костюма від медичної корпорації «ДеФорест», призначена для швидкого порятунку тіл із найнебезпечніших середовищ."
+  name: rescue modsuit controller
+  description: An advanced version of DeForest Medical Corporation's medical suit, designed for quick rescue of bodies from the most dangerous environments.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Rescue/control.rsi
@@ -2625,8 +2625,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetRescue
-  name: "рятувальний шолом МОД-костюма"
-  description: "Медичний рятувальний шолом із ніжно-рожевим візором. Призначений для евакуації пацієнтів із небезпечних середовищ."
+  name: rescue modsuit helmet
+  description: A medical rescue helmet with a soft pink visor. Designed for extracting patients from hazardous environments.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2670,8 +2670,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateRescue
-  name: "рятувальний нагрудник МОД-костюма"
-  description: "Рятувальний нагрудник із чудовим захистом від небезпек довкілля. Створений для найнебезпечніших рятувальних операцій."
+  name: rescue modsuit chestplate
+  description: A rescue chestplate with excellent environmental protection. Built for the most dangerous rescue operations.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2697,8 +2697,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsRescue
-  name: "рятувальні рукавиці МОД-костюма"
-  description: "Рятувальні рукавиці з частковою ізоляцією. Призначені для роботи з пацієнтами в небезпечних умовах."
+  name: rescue modsuit gauntlets
+  description: Rescue gauntlets with partial insulation. Designed for patient handling in dangerous conditions.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2715,8 +2715,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsRescue
-  name: "рятувальні чоботи МОД-костюма"
-  description: "Рятувальні чоботи для швидкого реагування та евакуації пацієнтів."
+  name: rescue modsuit boots
+  description: Rescue boots designed for rapid response and patient evacuation.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2732,8 +2732,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerResearch
-  name: "дослідницький контролер МОД-костюма"
-  description: "Приватний військовий контролер для знешкодження вибухонебезпечних предметів від «Ауссек Арморі», призначений для вибухових досліджень. Громіздкий, зате місткий."
+  name: research modsuit controller
+  description: A private military EOD controller from Aussec Armory, intended for explosive research. Bulky, but expansive.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Research/control.rsi
@@ -2772,8 +2772,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetResearch
-  name: "дослідницький шолом МОД-костюма"
-  description: "Дослідницький шолом із бірюзовим візором. Створений витримувати силу вибухів."
+  name: research modsuit helmet
+  description: A research helmet with a cyan visor. Built to withstand explosive forces.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2812,8 +2812,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateResearch
-  name: "дослідницький нагрудник МОД-костюма"
-  description: "Дослідницький нагрудник із винятковою стійкістю до вибухів. Ідеальний для вивчення нестабільних матеріалів."
+  name: research modsuit chestplate
+  description: A research chestplate with exceptional explosion resistance. Perfect for studying unstable materials.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2839,8 +2839,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsResearch
-  name: "дослідницькі рукавиці МОД-костюма"
-  description: "Дослідницькі рукавиці з частковою ізоляцією. Призначені для роботи з експериментальним обладнанням."
+  name: research modsuit gauntlets
+  description: Research gauntlets with partial insulation. Designed for handling experimental equipment.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2857,8 +2857,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsResearch
-  name: "дослідницькі чоботи МОД-костюма"
-  description: "Міцні дослідницькі чоботи для пересування як зонами вибухів, так і лабораторіями."
+  name: research modsuit boots
+  description: Sturdy research boots for navigating blast zones and laboratories alike.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2874,8 +2874,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerResponsory
-  name: "контролер швидкого реагування МОД-костюма"
-  description: "Швидкісний рятувальний контролер від «Нанотрейзен», призначений для її загонів аварійного реагування."
+  name: responsory modsuit controller
+  description: A high-speed rescue controller from Nanotrasen, intended for its emergency response teams.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Responsory/control.rsi
@@ -2912,8 +2912,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetResponsory
-  name: "шолом швидкого реагування МОД-костюма"
-  description: "Обтічний рятувальний шолом із бірюзовим візором. Призначений для швидкого реагування на надзвичайні ситуації."
+  name: responsory modsuit helmet
+  description: A sleek rescue helmet with a cyan visor. Designed for rapid emergency response.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2954,8 +2954,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateResponsory
-  name: "нагрудник швидкого реагування МОД-костюма"
-  description: "Добре збалансований рятувальний нагрудник із чудовим всебічним захистом."
+  name: responsory modsuit chestplate
+  description: A well-balanced rescue chestplate with excellent all-around protection.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -2983,8 +2983,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsResponsory
-  name: "рукавиці швидкого реагування МОД-костюма"
-  description: "Ізольовані рятувальні рукавиці для операцій швидкого реагування."
+  name: responsory modsuit gauntlets
+  description: Insulated rescue gauntlets for rapid response operations.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3000,8 +3000,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsResponsory
-  name: "чоботи швидкого реагування МОД-костюма"
-  description: "Швидкісні рятувальні чоботи для загонів аварійного реагування."
+  name: responsory modsuit boots
+  description: High-speed rescue boots for emergency response teams.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3017,8 +3017,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerSafeguard
-  name: "контролер вартового МОД-костюма"
-  description: "Удосконалений охоронний контролер від «Ападайн Текнолоджіз». Належить голові служби безпеки."
+  name: safeguard modsuit controller
+  description: An advanced security controller from Apadyne Technologies. Belongs to the Head of Security.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Safeguard/control.rsi
@@ -3052,8 +3052,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetSafeguard
-  name: "шолом вартового МОД-костюма"
-  description: "Удосконалений охоронний шолом із золотим візором. Підкреслює авторитет і забезпечує чудовий захист."
+  name: safeguard modsuit helmet
+  description: An advanced security helmet with a golden visor. Projects authority and offers superior protection.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3094,8 +3094,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateSafeguard
-  name: "нагрудник вартового МОД-костюма"
-  description: "Удосконалений охоронний нагрудник із чудовим захистом від усіх видів атак."
+  name: safeguard modsuit chestplate
+  description: An advanced security chestplate with excellent protection against all forms of attack.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3121,8 +3121,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsSafeguard
-  name: "рукавиці вартового МОД-костюма"
-  description: "Удосконалені охоронні рукавиці з повною електроізоляцією."
+  name: safeguard modsuit gauntlets
+  description: Advanced security gauntlets with complete electrical insulation.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3138,8 +3138,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsSafeguard
-  name: "чоботи вартового МОД-костюма"
-  description: "Удосконалені охоронні чоботи для підтримання порядку."
+  name: safeguard modsuit boots
+  description: Advanced security boots for maintaining order.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3155,8 +3155,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerSecurity
-  name: "охоронний контролер МОД-костюма"
-  description: "Охоронний контролер від «Ападайн Текнолоджіз». Забезпечує високий рівень захисту коштом вантажопідйомності."
+  name: security modsuit controller
+  description: A security controller from Apadyne Technologies. Offers high protection at the cost of carrying capacity.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Security/control.rsi
@@ -3193,8 +3193,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetSecurity
-  name: "охоронний шолом МОД-костюма"
-  description: "Охоронний шолом із помаранчевим візором. Підкреслює авторитет у будь-якій ситуації."
+  name: security modsuit helmet
+  description: A security helmet with an orange visor. Projects authority in any situation.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3235,8 +3235,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateSecurity
-  name: "охоронний нагрудник МОД-костюма"
-  description: "Охоронний нагрудник із надійним захистом від фізичних атак."
+  name: security modsuit chestplate
+  description: A security chestplate with solid protection against physical attacks.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3261,8 +3261,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsSecurity
-  name: "охоронні рукавиці МОД-костюма"
-  description: "Охоронні рукавиці з частковою ізоляцією. Призначені для підтримання порядку."
+  name: security modsuit gauntlets
+  description: Security gauntlets with partial insulation. Designed for maintaining order.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3279,8 +3279,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsSecurity
-  name: "охоронні чоботи МОД-костюма"
-  description: "Охоронні чоботи для патрулювання станції."
+  name: security modsuit boots
+  description: Security boots for patrolling the station.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3296,8 +3296,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerSyndicate
-  name: "контролер МОД-костюма Синдикату"
-  description: "Контролер, розроблений Мародерами Горлекса, з бронею, забороненою в більшій частині Спінварду."
+  name: syndicate modsuit controller
+  description: A controller designed by Gorlex Marauders, offering armor ruled illegal in most of Spinward Stellar.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Syndicate/control.rsi
@@ -3334,8 +3334,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetSyndicate
-  name: "шолом МОД-костюма Синдикату"
-  description: "Обтічний шолом Синдикату із зеленим візором. Заборонений у більшості систем."
+  name: syndicate modsuit helmet
+  description: A sleek syndicate helmet with a green visor. Illegal in most systems.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3376,8 +3376,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateSyndicate
-  name: "нагрудник МОД-костюма Синдикату"
-  description: "Нагрудник Синдикату з чудовим всебічним захистом. Створений для оперативників."
+  name: syndicate modsuit chestplate
+  description: A syndicate chestplate with excellent all-around protection. Built for operatives.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3405,8 +3405,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsSyndicate
-  name: "рукавиці МОД-костюма Синдикату"
-  description: "Рукавиці Синдикату з повною електроізоляцією."
+  name: syndicate modsuit gauntlets
+  description: Syndicate gauntlets with complete electrical insulation.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -3422,8 +3422,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsSyndicate
-  name: "чоботи МОД-костюма Синдикату"
-  description: "Чоботи Синдикату для таємних операцій."
+  name: syndicate modsuit boots
+  description: Syndicate boots for covert operations.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
