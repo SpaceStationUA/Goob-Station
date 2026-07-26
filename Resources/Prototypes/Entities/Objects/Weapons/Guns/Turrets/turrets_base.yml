@@ -6,8 +6,6 @@
   name: turret
   abstract: true
   components:
-  - type: ViewconeOccludable # Pirate: turrets can visibly rotate and fire while anchored.
-    occludeIfAnchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Actions

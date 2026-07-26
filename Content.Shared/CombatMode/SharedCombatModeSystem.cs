@@ -91,7 +91,7 @@ public abstract class SharedCombatModeSystem : EntitySystem
         SetMouseRotatorComponents(entity, value);
     }
 
-    public void SetMouseRotatorComponents(EntityUid uid, bool value) // Pirate: shared with the hold-to-strafe input.
+    private void SetMouseRotatorComponents(EntityUid uid, bool value)
     {
         if (value)
         {

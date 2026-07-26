@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
-using Content.Pirate.Common.Popups; // Pirate: viewcone popup culling
 using Content.Shared.Examine;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -94,15 +93,6 @@ public sealed class PopupOverlay : Overlay
 
             if (mapPos.MapId != args.MapId)
                 continue;
-
-            // Pirate: don't render popups outside the viewcone
-            if (ourEntity != null)
-            {
-                var ev = new ShowPopupAttemptEvent(mapPos.Position, ourPos);
-                _entManager.EventBus.RaiseLocalEvent(ourEntity.Value, ref ev);
-                if (ev.Cancelled)
-                    continue;
-            }
 
             var distance = (mapPos.Position - ourPos).Length();
 

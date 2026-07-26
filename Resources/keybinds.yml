@@ -46,9 +46,6 @@ binds:
 - function: Walk
   type: State
   key: Shift
-- function: Strafe # Pirate: also face the cursor while walking
-  type: State
-  key: Shift
 - function: Sprint
   type: State
   key: Space

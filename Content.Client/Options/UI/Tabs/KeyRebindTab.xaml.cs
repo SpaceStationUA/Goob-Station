@@ -2,7 +2,6 @@
 
 using System.Numerics;
 using Content.Client.Stylesheets;
-using Content.Pirate.Common.Input; // Pirate: strafe
 using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared._Pirate.Input; // Pirate: multiz
@@ -163,7 +162,6 @@ namespace Content.Client.Options.UI.Tabs
             AddCheckBox("ui-options-hotkey-keymap", _cfg.GetCVar(CVars.DisplayUSQWERTYHotkeys), HandleToggleUSQWERTYCheckbox);
 
             AddHeader("ui-options-header-movement");
-            AddButton(PirateKeyFunctions.Strafe); // Pirate: face the cursor while held
             AddButton(EngineKeyFunctions.MoveUp);
             AddButton(EngineKeyFunctions.MoveLeft);
             AddButton(EngineKeyFunctions.MoveDown);

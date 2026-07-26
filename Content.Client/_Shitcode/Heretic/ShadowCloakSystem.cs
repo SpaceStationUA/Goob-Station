@@ -7,14 +7,13 @@ using Content.Shared._Shitcode.Heretic.Components;
 using Content.Shared._Shitcode.Heretic.SpriteOverlay;
 using Content.Shared._Shitcode.Heretic.Systems;
 using Content.Shared.Heretic;
-using Content.Pirate.Common.Sprite; // Pirate: viewcone visibility modifiers
 using Robust.Client.GameObjects;
 
 namespace Content.Client._Shitcode.Heretic;
 
 public sealed class ShadowCloakSystem : SharedShadowCloakSystem
 {
-    [Dependency] private readonly CommonSpriteVisibilitySystem _spriteVis = default!; // Pirate: viewcone
+    [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -56,12 +55,19 @@ public sealed class ShadowCloakSystem : SharedShadowCloakSystem
     protected override void Startup(Entity<ShadowCloakedComponent> ent)
     {
         base.Startup(ent);
-        _spriteVis.UpdateVisibilityModifiers(ent, nameof(ShadowCloakedComponent), 0f);
+
+        if (!TryComp(ent, out SpriteComponent? sprite))
+            return;
+
+        ent.Comp.WasVisible = sprite.Visible;
+        _sprite.SetVisible((ent, sprite), false);
     }
 
     protected override void Shutdown(Entity<ShadowCloakedComponent> ent)
     {
         base.Shutdown(ent);
-        _spriteVis.UpdateVisibilityModifiers(ent, nameof(ShadowCloakedComponent), 1f);
+
+        if (TryComp(ent, out SpriteComponent? sprite))
+            _sprite.SetVisible((ent, sprite), ent.Comp.WasVisible);
     }
 }

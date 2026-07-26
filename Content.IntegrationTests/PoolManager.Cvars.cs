@@ -13,9 +13,6 @@ public static partial class PoolManager
     public static readonly (string cvar, string value)[] TestCvars =
     {
         // @formatter:off
-        // Pirate: viewcone effects spawn timed entities that break entity count tests.
-        // Fully qualified because Content.Pirate.Common.CCVar also declares a CCVars class.
-        (Content.Pirate.Common.CCVar.PirateCVars.DisableVisionEffects.Name, "true"),
         (CCVars.DatabaseSynchronous.Name,     "true"),
         (CCVars.DatabaseSqliteDelay.Name,     "0"),
         (CCVars.HolidaysEnabled.Name,         "false"),
