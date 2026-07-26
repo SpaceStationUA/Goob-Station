@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 #nullable enable
+using Content.Pirate.Common.CCVar; // Pirate
 using Content.Shared.CCVar;
 
 namespace Content.IntegrationTests;
@@ -13,6 +14,7 @@ public static partial class PoolManager
     public static readonly (string cvar, string value)[] TestCvars =
     {
         // @formatter:off
+        (PirateCVars.DisableVisionEffects.Name, "true"), // Pirate: viewcone effects spawn timed entities that break entity count tests
         (CCVars.DatabaseSynchronous.Name,     "true"),
         (CCVars.DatabaseSqliteDelay.Name,     "0"),
         (CCVars.HolidaysEnabled.Name,         "false"),
