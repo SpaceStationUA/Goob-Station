@@ -1843,6 +1843,8 @@
         - !type:ReagentCondition
           reagent: Mannitol
           min: 15
+      - !type:Vomit
+          probability: 0.1 # Pirate - rapid brain tissue change causes vomiting
         type: Local
         visualType: Medium
         messages: [ "mannitol-effect-enlightened" ]
