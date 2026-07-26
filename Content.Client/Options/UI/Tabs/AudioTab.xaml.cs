@@ -66,6 +66,10 @@ public sealed partial class AudioTab : Control
             SliderVolumeCassettes);
 
         Control.AddOptionPercentSlider(
+            PirateVars.StationRadioReceiverVolume,
+            SliderVolumeStationRadio); // Pirate: station radio receiver volume
+
+        Control.AddOptionPercentSlider(
             CCVars.InterfaceVolume,
             SliderVolumeInterface,
             scale: ContentAudioSystem.InterfaceMultiplier);
