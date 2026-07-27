@@ -110,8 +110,8 @@ public sealed partial class PolymorphOnTriggerSystem : EntitySystem
         while (processed < MaxUnlimitedCollisionPolymorphsPerTick &&
                _queuedUnlimitedCollisionPolymorphUpdates.TryDequeue(out var data))
         {
-            if (ProcessPolymorph(data))
-                processed++;
+            processed++;
+            ProcessPolymorph(data);
         }
     }
 
