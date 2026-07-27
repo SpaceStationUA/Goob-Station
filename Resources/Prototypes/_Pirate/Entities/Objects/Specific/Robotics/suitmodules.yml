@@ -342,6 +342,9 @@
   - type: ModularSuitModuleEffect
     activeComponents:
     - type: EyeProtection
+  - type: ModularSuitModuleWearerEffect
+    activeComponents:
+    - type: MesonVision
   - type: ModularSuitModule
     tags: [ VisorSuitModule, WeldingModuleConflict ]
     verbIcon:
