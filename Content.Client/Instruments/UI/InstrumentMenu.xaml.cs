@@ -207,8 +207,21 @@ namespace Content.Client.Instruments.UI
             container.TryGetContainingContainer((Entity, null, null), out var conMan);
 
             // If the instrument is handheld and we're not holding it, we return.
-            if (instrument.Handheld && (conMan == null || conMan.Owner != localEntity))
-                return false;
+            if (instrument.Handheld)
+            {
+                if (conMan == null)
+                    return false;
+
+                // Check the full container chain: the instrument might be inside a borg module
+                // container, which is inside a borg chassis that the player controls.
+                var currentOwner = conMan.Owner;
+                while (currentOwner != localEntity)
+                {
+                    if (!container.TryGetContainingContainer((currentOwner, null, null), out var parentContainer))
+                        return false;
+                    currentOwner = parentContainer.Owner;
+                }
+            }
 
             if (!_entManager.System<ActionBlockerSystem>().CanInteract(localEntity.Value, Entity))
                 return false;

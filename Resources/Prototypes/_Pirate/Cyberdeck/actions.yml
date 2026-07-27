@@ -1,0 +1,54 @@
+# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+# SPDX-FileCopyrightText: 2025 Roudenn <romabond091@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: ActionCyberdeckHack
+  parent: BaseAction
+  name: Hack Device
+  description: Hack electronics in your field of view with the Cyberdeck implant. Some targets may react explosively.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    icon:
+      sprite: /Textures/_Pirate/Actions/cyberdeck.rsi
+      state: hack
+    priority: -24
+  - type: TargetAction
+    range: 20
+  - type: EntityTargetAction
+    event: !type:CyberdeckHackActionEvent
+    rotateOnUse: false
+
+- type: entity
+  id: ActionCyberdeckVision
+  parent: BaseMentalAction
+  name: Activate Cyber Vision
+  description: Connect your brain directly to the station network and project yourself through it.
+  components:
+  - type: Action
+    useDelay: 2
+    startDelay: true
+    icon:
+      sprite: /Textures/_Pirate/Actions/cyberdeck.rsi
+      state: vision
+    priority: -25
+  - type: InstantAction
+    event: !type:CyberdeckVisionEvent
+
+- type: entity
+  id: ActionCyberdeckVisionReturn
+  parent: BaseMentalAction
+  name: Return
+  description: Disconnect from the station network and return to your body.
+  components:
+  - type: Action
+    useDelay: 2
+    startDelay: true
+    icon:
+      sprite: /Textures/_Pirate/Actions/cyberdeck.rsi
+      state: return
+    priority: -25
+  - type: InstantAction
+    event: !type:CyberdeckVisionReturnEvent

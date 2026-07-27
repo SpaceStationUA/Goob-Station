@@ -33,7 +33,7 @@ public sealed class GoobHandsSystem : EntitySystem
 
     private HeldRelayedEvent<T> CoreRelayEvent<T>(Entity<HandsComponent> entity, ref T args)
     {
-        var ev = new HeldRelayedEvent<T>(args);
+        var ev = new HeldRelayedEvent<T>(entity.Owner, args);
 
         foreach (var held in _hands.EnumerateHeld(entity.AsNullable()))
         {

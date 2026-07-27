@@ -11,6 +11,8 @@
 //   * Tracks projections per source so looped audio's projections die with the source.
 
 using System.Numerics;
+using Content.Goobstation.Shared.StationRadio.Components;
+using Content.Shared._Pirate.Audio;
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Content.Shared.CCVar;
@@ -344,6 +346,12 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
             {
                 if (_debug) Log.Info($"[crossz-audio]   FAILED to project {source.Comp.FileName} to {ToPrettyString(targetMap)} @ {sourcePosition}");
                 return null;
+            }
+
+            if (HasComp<StationRadioReceiverAudioComponent>(source.Owner) ||
+                HasComp<StationRadioReceiverComponent>(Transform(source.Owner).ParentUid))
+            {
+                EnsureComp<StationRadioReceiverAudioComponent>(projected.Entity);
             }
 
             _projections.Add(projected.Entity);

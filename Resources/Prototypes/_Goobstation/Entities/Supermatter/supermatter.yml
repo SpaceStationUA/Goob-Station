@@ -15,6 +15,7 @@
         components:
           - Body
           - Item
+    - type: PirateSupermatterSound # Pirate
     - type: RadiationSource
     - type: AmbientSound
       range: 5

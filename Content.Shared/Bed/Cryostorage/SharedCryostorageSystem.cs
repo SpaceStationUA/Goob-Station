@@ -29,7 +29,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
     [Dependency] protected readonly SharedMindSystem Mind = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
 
-    protected EntityUid? PausedMap { get; private set; }
+    public EntityUid? PausedMap { get; private set; } // Pirate - shared storage for Cyberdeck projections
 
     protected bool CryoSleepRejoiningEnabled;
 
@@ -165,7 +165,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
         PausedMap = null;
     }
 
-    protected void EnsurePausedMap()
+    public void EnsurePausedMap() // Pirate - shared storage for Cyberdeck projections
     {
         if (PausedMap != null && Exists(PausedMap))
             return;

@@ -213,6 +213,15 @@ public abstract partial class SharedCassetteSystem : EntitySystem
 
     private void OnPlayerGetEquipmentVisuals(Entity<CassettePlayerComponent> ent, ref GetEquipmentVisualsEvent args)
     {
+        // Only show the worn overlay in the slots the player is actually worn in (ears).
+        // Rendering it for pockets inserts the fixed "cassette" layer key under another
+        // slot's bookmark, orphaning the old layer and leaving it stuck on the character.
+        if (!_inventory.TryGetSlot(args.Equipee, args.Slot, out var slotDef) ||
+            (slotDef.SlotFlags & ent.Comp.Slots) == 0)
+        {
+            return;
+        }
+
         args.Layers.Add(("cassette", new PrototypeLayerData
         {
             RsiPath = ent.Comp.WornSprite.RsiPath.ToString(),

@@ -394,10 +394,12 @@ namespace Content.Shared.Hands
     [ByRefEvent]
     public sealed class HeldRelayedEvent<TEvent> : EntityEventArgs
     {
+        public readonly EntityUid Source;
         public TEvent Args;
 
-        public HeldRelayedEvent(TEvent args)
+        public HeldRelayedEvent(EntityUid source, TEvent args)
         {
+            Source = source;
             Args = args;
         }
     }

@@ -1,0 +1,102 @@
+# SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+# SPDX-FileCopyrightText: 2025 Roudenn <romabond091@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: [BasicCyberneticEyes, BaseSyndicateContraband]
+  id: OrganCyberdeckEyes
+  name: cyberdeck eyes
+  description: Cybernetic eyes with integrated intrusion software and a direct neural link.
+  components:
+  - type: CyberdeckSource
+  - type: LimitedCharges
+    maxCharges: 8
+  - type: AutoRecharge
+    rechargeDuration: 15
+  - type: Organ
+    intCap: 21
+    integrity: 21
+    integrityThresholds:
+      Normal: 21
+      Damaged: 11
+      Destroyed: 0
+    onAdd:
+    - type: CyberdeckUser
+
+- type: entity
+  parent: BaseAutosurgeonSyndicateSingle
+  id: AutosurgeonCyberdeck
+  name: syndicate autosurgeon (cyberdeck)
+  components:
+  - type: AutoSurgeon
+    targetBodyPart: Head
+    targetOrgan: eyes # Pirate - current Shitmed organ slot id
+    newPartProto: OrganCyberdeckEyes
+
+- type: entity
+  id: CyberdeckAfterHackingEffect
+  name: syndicate hacking trace
+  description: A trace left by an intrusion through illegal Syndicate technology.
+  components:
+  - type: Transform
+    anchored: true
+  - type: InteractionOutline
+  - type: Visibility
+    layer: 4096
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: /Textures/Interface/Misc/ai_hud.rsi
+    state: apc_hacked
+  - type: Fixtures
+    fixtures:
+      traceFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+  - type: TimedDespawn
+    lifetime: 45
+
+- type: entity
+  parent: [Incorporeal, BaseMob]
+  id: CyberdeckProjection
+  name: cyberdeck eye
+  description: A projection of a Cyberdeck user inside the station network.
+  categories: [HideSpawnMenu, DoNotMap]
+  components:
+  - type: Sprite
+    sprite: /Textures/_Pirate/Mobs/Silicon/cyberdeck.rsi
+    layers:
+    - state: hack_camera
+      shader: unshaded
+      map: ["base"]
+  - type: Eye
+    pvsScale: 1.5
+    visMask:
+    - Normal
+    - StationAiNetwork
+  - type: Visibility
+    layer: 4096
+  - type: LagCompensation
+  - type: StationAiWhitelist
+  - type: NoFTL
+  - type: CEZLevelPhysicsExempt # Pirate: multiz
+  - type: CEZViewSource # Pirate: multiz
+
+- type: entity
+  id: CyberdeckAiUiProxy
+  name: cyberdeck AI interface proxy
+  categories: [HideSpawnMenu, DoNotMap]
+  components:
+  - type: Transform
+  - type: CyberdeckAiUiProxy
+  - type: UserInterface
+    interfaces:
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface

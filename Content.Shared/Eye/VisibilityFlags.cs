@@ -21,5 +21,6 @@ namespace Content.Shared.Eye
         Admin = 1 << 7, // Reserved for admins in stealth mode and admin tools.
         Ethereal = 1 << 10, // pirate from Einstein Engines
         TargetingGhost = 1 << 11, // Pirate - для ghost targeting system
+        StationAiNetwork = 1 << 12, // Pirate - Cyberdeck traces and projections
     }
 }

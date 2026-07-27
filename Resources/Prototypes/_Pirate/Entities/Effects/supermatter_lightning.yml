@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: PirateSupermatterLightning
+  parent: Lightning
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Beam
+    sound: /Audio/_Pirate/Supermatter/emitter2.ogg
+
+- type: entity
+  id: PirateSupermatterLightningCharged
+  parent: ChargedLightning
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Beam
+    sound: /Audio/_Pirate/Supermatter/emitter2.ogg
+
+- type: entity
+  id: PirateSupermatterLightningSupercharged
+  parent: SuperchargedLightning
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Beam
+    sound: /Audio/_Pirate/Supermatter/emitter2.ogg
+
+- type: entity
+  id: PirateSupermatterLightningHypercharged
+  parent: HyperchargedLightning
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Beam
+    sound: /Audio/_Pirate/Supermatter/emitter2.ogg

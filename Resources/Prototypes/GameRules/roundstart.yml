@@ -24,6 +24,8 @@
     rules:
     - id: Thief
       prob: 0.5
+    - id: Hitman # Pirate
+      prob: 0.2
     - id: Heretic # goob edit
       prob: 0.2
     - id: Devil # Goob
@@ -47,6 +49,8 @@
     rules:
     - id: Thief
       prob: 0.5
+    - id: Hitman # Pirate
+      prob: 0.2
     - id: Heretic # goob edit
       prob: 0.2
     - id: Devil # Goob
@@ -68,6 +72,8 @@
     rules:
     - id: Thief
       prob: 0.5
+    - id: Hitman # Pirate
+      prob: 0.2
 
 - type: entity
   parent: BaseGameRule
@@ -172,6 +178,7 @@
       - RoleSurvivalNukie
       components:
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: nukies are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesSyndicateElite
@@ -191,6 +198,7 @@
       - RoleSurvivalNukie
       components:
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: nukies are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesSyndicateNormal
@@ -214,6 +222,7 @@
       - RoleSurvivalNukie
       components:
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: nukies are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesSyndicateNormal

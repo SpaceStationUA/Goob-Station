@@ -245,20 +245,16 @@ public abstract partial class SharedGunSystem
             if (ent.Comp.Entities.Count > 0)
             {
                 var existingEnt = ent.Comp.Entities[^1];
+                ent.Comp.Entities.RemoveAt(ent.Comp.Entities.Count - 1);
+                DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
+                Containers.Remove(existingEnt, ent.Comp.Container);
                 ammoEntity = existingEnt;
-
-                if (ent.Comp.AutoCycle)
-                {
-                    ent.Comp.Entities.RemoveAt(ent.Comp.Entities.Count - 1);
-                    DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
-                    Containers.Remove(existingEnt, ent.Comp.Container);
-                }
             }
             else if (ent.Comp.UnspawnedCount > 0)
             {
                 ent.Comp.UnspawnedCount--;
                 DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.UnspawnedCount));
-                ammoEntity = EntityManager.PredictedSpawnAttachedTo(ent.Comp.Proto, args.Coordinates); // Pirate: gunplay
+                ammoEntity = Spawn(ent.Comp.Proto, args.Coordinates);
             }
 
             if (ammoEntity is not { } ammoEnt)
@@ -270,11 +266,11 @@ public abstract partial class SharedGunSystem
                 PauseSelfRefill((ent, refiller));
             }
             // Goobstation - put spent ammo back in the gun if it doesn't autocycle
-            if (!ent.Comp.AutoCycle && !ent.Comp.Entities.Contains(ammoEnt))
+            if (!ent.Comp.AutoCycle)
             {
                 ent.Comp.Entities.Add(ammoEnt);
                 Containers.Insert(ammoEnt, ent.Comp.Container);
-                DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
+                DirtyField(ent.Owner, ent.Comp, nameof(BallisticAmmoProviderComponent.Entities));
             }
             // Goobstation - end
         }

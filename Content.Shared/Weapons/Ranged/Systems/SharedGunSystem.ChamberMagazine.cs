@@ -104,8 +104,15 @@ public abstract partial class SharedGunSystem
 
         if (TryTakeChamberEntity(uid, out var chamberEnt))
         {
-            // Pirate: gunplay
-            EjectCartridgePredicted(PredictedRandom(uid), user, chamberEnt.Value);
+            if (_netManager.IsServer)
+            {
+                EjectCartridge(chamberEnt.Value);
+            }
+            else
+            {
+                // Similar to below just due to prediction.
+                TransformSystem.DetachEntity(chamberEnt.Value, Transform(chamberEnt.Value));
+            }
         }
 
         if (!CycleCartridge(uid, component, user))
@@ -167,8 +174,18 @@ public abstract partial class SharedGunSystem
         {
             if (TryTakeChamberEntity(uid, out var chambered))
             {
-                // Pirate: gunplay
-                EjectCartridgePredicted(PredictedRandom(uid), user, chambered.Value);
+                if (_netManager.IsServer)
+                {
+                    EjectCartridge(chambered.Value);
+                }
+                else
+                {
+                    // Prediction moment
+                    // The problem is client will dump the cartridge on the ground and the new server state
+                    // won't correspond due to randomness so looks weird
+                    // but we also need to always take it from the chamber or else ammocount won't be correct.
+                    TransformSystem.DetachEntity(chambered.Value, Transform(chambered.Value));
+                }
 
                 UpdateAmmoCount(uid);
             }
@@ -217,7 +234,17 @@ public abstract partial class SharedGunSystem
                 FinaliseMagazineTakeAmmo(uid, component, ammoEv.Count, ammoEv.Capacity, user, appearance);
                 UpdateAmmoCount(uid);
 
-                // Pirate: gunplay
+                // Clientside reconciliation things
+                if (_netManager.IsClient)
+                {
+                    foreach (var (ent, _) in relayedArgs.Ammo)
+                    {
+                        if (!IsClientSide(ent!.Value))
+                            continue;
+
+                        Del(ent.Value);
+                    }
+                }
             }
             else
             {

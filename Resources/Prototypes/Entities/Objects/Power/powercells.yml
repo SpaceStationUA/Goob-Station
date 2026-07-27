@@ -47,6 +47,8 @@
     stealGroup: Battery
   - type: BatteryDrinkerSource # Goobstation - Energycrit
     maxAmount: 360
+  - type: CyberdeckHackable # Pirate - Cyberdeck
+    cost: 2
 
 - type: entity
   name: potato battery

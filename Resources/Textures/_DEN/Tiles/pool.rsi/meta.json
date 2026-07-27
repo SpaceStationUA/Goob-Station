@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Sprites by portfiend (GitHub)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "rsic": false,
+  "states": [
+    {
+      "name": "pool"
+    },
+    {
+      "name": "pool-dark"
+    }
+  ]
+}
