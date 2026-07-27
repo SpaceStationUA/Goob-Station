@@ -114,6 +114,7 @@ public sealed partial class CEZLevelsSystem
         foreach (var (added, depth) in addedMaps)
         {
             RaiseLocalEvent(added, new CEMapAddedIntoZNetworkEvent(network, depth));
+            ActivateEligibleBodiesOnMap(added);
         }
 
         RaiseLocalEvent(network, new CEZLevelNetworkUpdatedEvent());
