@@ -94,7 +94,7 @@
   - BorgModuleMusique
   - BorgModuleService
   - BorgModuleGardening
-  - BorgModuleHarvesting
+  - BorgModuleCooking
   - BorgModuleLollypop # Goobstation
   lawset: Clown
   radioChannels:

@@ -230,7 +230,7 @@
   - BorgModuleService
   # - BorgModuleClowning # goobedit
   - BorgModuleGardening
-  - BorgModuleHarvesting
+  - BorgModuleCooking
   - BorgModuleLollypop # Goobstation
 
   lawset: Clown # DeltaV: Custom lawset
@@ -240,7 +240,7 @@
   - Service
 
   # Visual
-  inventoryTemplateId: borgTall
+  inventoryTemplateId: borgShort
   spriteBodyState: service
   spriteHasMindState: service_e
   spriteNoMindState: service_e_r
