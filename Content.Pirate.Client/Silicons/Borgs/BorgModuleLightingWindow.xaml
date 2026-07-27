@@ -1,0 +1,29 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls;assembly=Content.Client"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls;assembly=Content.Client"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="Content.Pirate.Client.Silicons.Borgs.BorgModuleLightingWindow"
+    Title="{Loc 'borg-module-lighting-ui-title'}" MinSize="400 300" SetSize="400 300">
+
+    <BoxContainer Orientation="Vertical" Margin="10">
+
+        <Label Text="{Loc 'borg-module-lighting-ui-color'}" StyleClasses="LabelHeading" Margin="0 0 0 5"/>
+        <ColorSelectorSliders Name="ColorSelector" IsAlphaVisible="False" Margin="0 0 0 10"/>
+
+        <CheckBox Name="DiscoCheckbox" Text="{Loc 'borg-module-lighting-ui-disco'}" Margin="0 5"/>
+
+        <Label Name="SpeedLabel" Text="{Loc 'borg-module-lighting-ui-speed'}" StyleClasses="LabelHeading" Margin="0 5 0 0"/>
+        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
+            <Button Name="SpeedSlow" Text="{Loc 'borg-module-lighting-ui-speed-slow'}" MinSize="80 30" ToggleMode="True"/>
+            <Button Name="SpeedNormal" Text="{Loc 'borg-module-lighting-ui-speed-normal'}" MinSize="80 30" ToggleMode="True" Margin="5 0"/>
+            <Button Name="SpeedFast" Text="{Loc 'borg-module-lighting-ui-speed-fast'}" MinSize="80 30" ToggleMode="True"/>
+        </BoxContainer>
+
+        <customControls:HSeparator StyleClasses="LowDivider" Margin="0 0 0 10"/>
+
+        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5">
+            <Button Name="ConfirmationButton" Text="{Loc 'borg-module-lighting-ui-confirm'}" MinSize="80 30"/>
+        </BoxContainer>
+
+    </BoxContainer>
+</controls:FancyWindow>
