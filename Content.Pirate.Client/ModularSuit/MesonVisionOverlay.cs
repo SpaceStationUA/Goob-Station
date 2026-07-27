@@ -34,7 +34,7 @@ public sealed class MesonVisionOverlay : Overlay
 
     private readonly EntityQuery<SpriteComponent> _spriteQuery;
     private readonly EntityQuery<TransformComponent> _transformQuery;
-    private readonly List<Entity<MapGridComponent>> _grids = new();
+    private List<Entity<MapGridComponent>> _grids = new();
     private readonly HashSet<Entity<OccluderComponent>> _structures = new();
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
