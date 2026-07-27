@@ -58,9 +58,9 @@
 - type: entity
   id: CultPylon
   parent: CultBaseStructure
-  name: "пілон"
+  name: pylon
   suffix: Cult
-  description: "Плавучий кристал, що повільно зцілює вірних Нар'Сі."
+  description: A floating crystal that slowly heals those faithful to Nar'Sie.
   components:
   - type: CultHealingSource
   - type: Construction
@@ -143,8 +143,8 @@
 - type: entity
   id: CultForge
   parent: CultBaseFactory
-  name: "кузня"
-  description: "Кузня для створення нечестивої зброї, якою озброюватимуться армії Нар'Сі."
+  name: daemon forge
+  description: A forge used in crafting the unholy weapons wielded by the armies of Nar'Sie.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Structures/Factories/forge.rsi
@@ -162,8 +162,8 @@
 - type: entity
   id: CultArchives
   parent: CultBaseFactory
-  name: "архіви"
-  description: "Стіл, укритий окультними рукописами та томами, написаними невідомими мовами. Від погляду на текст шкіра вкривається мурашками."
+  name: archives
+  description: A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Structures/Factories/archives.rsi
@@ -180,8 +180,8 @@
 - type: entity
   id: CultAltar
   parent: CultBaseFactory
-  name: "вівтар"
-  description: "Закривавлений вівтар, присвячений Нар'Сі."
+  name: altar
+  description: A bloodstained altar dedicated to Nar'Sie.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Structures/Factories/altar.rsi

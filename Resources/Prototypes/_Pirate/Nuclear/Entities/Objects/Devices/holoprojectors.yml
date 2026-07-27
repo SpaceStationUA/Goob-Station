@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: RadiationBlockingProjector
-  name: "проєктор радіаційного бар'єра"
-  description: "Дає змогу ненадовго стримати смертельну радіацію від деламінації або розплавлення реактора."
+  name: radiation barrier projector
+  description: Stop the deadly radiation from a delamination or meltdown, at least for a little while.
   components:
   - type: ChargeHolosignProjector
     signProto: HolosignRadiationBlocking
