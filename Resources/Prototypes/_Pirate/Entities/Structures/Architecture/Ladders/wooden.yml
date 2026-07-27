@@ -1,7 +1,7 @@
 - type: entity
   id: CEZLevelsStairsWoodenBase
   abstract: true
-  name: "дерев'яні сходи"
+  name: wooden stairs
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Architecture/Ladders/wooden.rsi

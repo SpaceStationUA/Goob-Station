@@ -44,8 +44,8 @@
 - type: entity
   parent: BaseStorageSuitModule
   id: StorageSuitModule
-  name: "модуль зберігання Синдикату"
-  description: "Низка вбудованих відсіків і спеціалізованих кишень по всій поверхні костюма, корисних для зберігання різноманітних дрібничок і всілякого мотлоху."
+  name: storage suit module
+  description: "What amounts to a series of integrated storage compartments and specialized pockets installed across the surface of the suit, useful for storing various bits, and or bobs."
   components:
   - type: Sprite
     state: storage
@@ -57,8 +57,8 @@
 - type: entity
   parent: BaseStorageSuitModule
   id: StorageLargeSuitModule
-  name: "великий модуль зберігання"
-  description: "Відтворена «Накамура Інжиніринг» за розробками корпорації «Донк» система прихованих відсіків повністю міститься всередині костюма й рівномірно розподіляє предмети та вагу для зручності користувача під час контрабанди чи звичайного перевезення вантажів."
+  name: large storage suit module
+  description: "Reverse engineered by Nakamura Engineering from Donk Corporation designs, this system of hidden compartments is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user; whether smuggling, or simply hauling."
   components:
   - type: Sprite
     state: storage_large
@@ -73,8 +73,8 @@
 - type: entity
   parent: BaseStorageSuitModule
   id: StorageSyndicateSuitModule
-  name: "модуль зберігання Синдикату"
-  description: "Нанотехнологічна система зберігання від «Кіберсан Індастріз». Ці відсіки використовують езотеричну технологію для стискання фізичної матерії вкладених предметів, фактично зменшуючи їх задля значно зручнішого перенесення."
+  name: storage suit module
+  description: "A storage system using nanotechnology developed by Cybersun Industries, these compartments use esoteric technology to compress the physical matter of items put inside of them, essentially shrinking items for much easier and more portable storage."
   components:
   - type: Sprite
     state: storage_syndi
@@ -90,8 +90,8 @@
 - type: entity
   parent: BaseStorageSuitModule
   id: StorageHoldingSuitModule
-  name: "блюспейс-модуль зберігання"
-  description: "Система зберігання, розроблена «Нанотрейзен». Ці відсіки використовують мініатюрні блюспейс-кишені як вершину складських технологій незалежно від ваги вкладених предметів."
+  name: bluespace storage suit module
+  description: "A storage system developed by Nanotrasen, these compartments employ miniaturized bluespace pockets for the ultimate in storage technology; regardless of the weight of objects put inside."
   components:
   - type: Sprite
     state: storage_holding
@@ -145,14 +145,14 @@
 - type: entity
   parent: BaseFlashlightSuitModule
   id: FlashlightSuitModule
-  name: "модуль ліхтарика"
-  description: "Проста пара ліхтариків, установлених ліворуч і праворуч на шоломі, корисна для освітлення на різній відстані та різними кольорами. Дехто з виживальників із невідомих причин віддає перевагу зеленому світлу."
+  name: flashlight suit module
+  description: "A simple pair of flashlights installed on the left and right sides of the helmet, useful for providing light in a variety of ranges and colors. Some survivalists prefer the color green for their illumination, for reasons unknown."
 
 - type: entity
   parent: BaseAdvancedFlashlightSuitModule
   id: AdvancedFlashlightSuitModule
-  name: "удосконалений модуль ліхтарика"
-  description: "Удосконалена система освітлення з регульованою яскравістю та широким спектром кольорів. Має датчики навколишнього освітлення для автоматичного регулювання й режим аварійної сигналізації. Ідеальна для темних коридорів, технічних тунелів і надзвичайних ситуацій. Колір світла можна налаштувати на будь-який смак."
+  name: advanced flashlight suit module
+  description: "An advanced illumination system with adjustable brightness and a wide spectrum of colors. Includes ambient light sensors for automatic adjustment, as well as an emergency signaling mode. Perfect for exploring dark corridors, maintenance tunnels, and emergency situations. The light color can be customized to any preference."
 
 - type: entity
   parent: FlashlightSuitModule
@@ -277,8 +277,8 @@
 - type: entity
   parent: BaseVisorSuitModule
   id: VisorMedicalSuitModule
-  name: "модуль медичного візора"
-  description: "Проєкційний дисплей, установлений у візор костюма. Він зіставляє дані сенсорів костюма із сучасним комплексом біологічного сканування, даючи змогу бачити поточний стан здоров'я органічних істот і зручно переглядати дані на кшталт карток пацієнтів. Кажуть, такі візори також дозволяють бачити, що коїться за спиною."
+  name: medical visor suit module
+  description: "A heads-up display installed into the visor of the suit. This cross-references suit sensor data with a modern biological scanning suite, allowing the user to visualize the current health of organic lifeforms, as well as access data such as patient files in a convenient readout. They say these also let you see behind you."
   components:
   - type: Sprite
     state: medhud_visor
@@ -294,8 +294,8 @@
 - type: entity
   parent: BaseVisorSuitModule
   id: VisorDiagnosticSuitModule
-  name: "модуль діагностичного візора"
-  description: "Проєкційний дисплей, установлений у візор костюма. Низка передових сенсорів отримує дані зі складних машин, екзокостюмів та інших пристроїв, даючи змогу бачити їхній заряд і цілісність. Кажуть, такі візори також дозволяють бачити, що коїться за спиною."
+  name: diagnostic visor suit module
+  description: "A heads-up display installed into the visor of the suit. This uses a series of advanced sensors to access data from advanced machinery, exosuits, and other devices, allowing the user to visualize current power levels and integrity of such. They say these also let you see behind you."
   components:
   - type: Sprite
     state: diaghud_visor
@@ -314,8 +314,8 @@
 - type: entity
   parent: BaseVisorSuitModule
   id: VisorSecuritySuitModule
-  name: "модуль охоронного візора"
-  description: "Проєкційний дисплей, установлений у візор костюма. Цей модуль є глибоко переробленою системою наведення, під'єднаною до різних кримінальних баз даних, щоб переглядати записи про арешти, керувати простими охоронними роботами й загалом знати, в кого стріляти. Кажуть, такі візори також дозволяють бачити, що коїться за спиною."
+  name: security visor suit module
+  description: "A heads-up display installed into the visor of the suit. This module is a heavily-retrofitted targeting system, plugged into various criminal databases to be able to view arrest records, command simple security-oriented robots, and generally know who to shoot. They say these also let you see behind you."
   components:
   - type: Sprite
     state: sechud_visor
@@ -334,8 +334,8 @@
 - type: entity
   parent: BaseVisorSuitModule
   id: VisorMesonSuitModule
-  name: "модуль мезонного візора"
-  description: "Проєкційний дисплей, установлений у візор костюма. Модуль заснований на перевіреній технології мезонних сканерів, завдяки якій будівельники та шахтарі всієї галактики бачать крізь стіни основні конструкції й рельєф незалежно від освітлення. Кажуть, такі візори також дозволяють бачити, що коїться за спиною."
+  name: meson visor suit module
+  description: "A heads-up display installed into the visor of the suit. This module is based off well-loved meson scanner technology, used by construction workers and miners across the galaxy to see basic structural and terrain layouts through walls, regardless of lighting conditions. They say these also let you see behind you."
   components:
   - type: Sprite
     state: meson_visor
@@ -355,8 +355,8 @@
 - type: entity
   parent: BaseVisorSuitModule
   id: SolutionScannerSuitModule
-  name: "модуль сканера реагентів"
-  description: "Модуль на основі дослідницьких проєкційних дисплеїв «Нанотрейзен». Сканує вміст контейнерів і показує інформацію у зручному для читання форматі на дисплеї носія. Смаків не розпізнає, це вже на ваш розсуд."
+  name: solution scanner suit module
+  description: "A module based off research-oriented Nanotrasen HUDs, this is capable of scanning the contents of containers and projecting the information in an easy-to-read format on the wearer's display. It cannot detect flavors, so that's up to you."
   components:
   - type: Sprite
     state: scanner
@@ -373,8 +373,8 @@
 - type: entity
   parent: BaseSuitModule
   id: AntiGravitySuitModule
-  name: "антигравітаційний модуль"
-  description: "Модуль використовує гравітаційне ядро, щоб зробити користувача повністю невагомим."
+  name: antigravity suit module
+  description: "A module that uses a gravitational core to make the user completely weightless."
   components:
   - type: Sprite
     state: antigrav
@@ -412,8 +412,8 @@
 - type: entity
   parent: BaseSuitModule
   id: TeleporterSuitModule
-  name: "телепортаційний модуль"
-  description: "Модуль використовує блюспейс-ядро, щоб переносити частинки користувача в інше місце."
+  name: teleporter suit module
+  description: "A module that uses a bluespace core to let the user transport their particles elsewhere."
   components:
   - type: Sprite
     state: teleporter
@@ -451,8 +451,8 @@
 - type: entity
   parent: BaseSuitModule
   id: WeldingSuitModule
-  name: "зварювальний модуль"
-  description: "Установлений у візор костюма модуль проєктує перед очима користувача поляризовану голографічну накладку. Її рівень захисту достатній проти таких крайнощів, як точкове й дугове зварювання, сонячні затемнення та ручні ліхтарики."
+  name: welding suit module
+  description: "A module installed into the visor of the suit, this projects a polarized, holographic overlay in front of the user's eyes. It's rated high enough for immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
   components:
   - type: Sprite
     state: welding
@@ -476,8 +476,8 @@
 - type: entity
   parent: BaseSuitModule
   id: TRaySuitModule
-  name: "т-променевий модуль"
-  description: "Установлений у візор костюма модуль дає змогу імпульсом терагерцового випромінювання фактично ехолокувати об'єкти під підлогою, переважно кабелі й труби. Незамінний для атмосферних робіт і протидії контрабанді."
+  name: tray suit module
+  description: "A module installed into the visor of the suit, allowing the user to use a pulse of terahertz radiation to essentially echolocate things beneath the floor, mostly cables and pipes. A staple of atmospherics work, and counter-smuggling work."
   components:
   - type: Sprite
     state: tray
@@ -494,8 +494,8 @@
 - type: entity
   parent: BaseSuitModule
   id: HealthAnalyzerSuitModule
-  name: "модуль аналізатора здоров'я"
-  description: "Установлений у рукавицю костюма високотехнологічний комплекс біологічного сканування. Одним рухом зап'ястка дає докладну інформацію про життєві показники й травми інших навіть на відстані. Дані зручно показуються на проєкційному дисплеї шолома, але скористатися ними маєте ви."
+  name: health analyzer suit module
+  description: "A module installed into the glove of the suit. This is a high-tech biological scanning suite, allowing the user in-depth information on the vitals and injuries of others even at a distance, all with the flick of the wrist. Data is displayed in a convenient package on HUD in the helmet, but it's up to you to do something with it."
   components:
   - type: Sprite
     state: health
@@ -512,8 +512,8 @@
 - type: entity
   parent: BaseSuitModule
   id: DefibrillatorSuitModule
-  name: "модуль дефібрилятора"
-  description: "Установлений у рукавицю костюма компактний дефібрилятор, здатний урятувати пацієнта із зупинкою серця електричним розрядом. «Нанотрейзен» радить не використовувати його як зброю, але зупинити вас не може."
+  name: defibrillator suit module
+  description: "A module installed into the glove of the suit, this compact defibrillator can deliver a life-saving shock to a patient in cardiac arrest. Nanotrasen recommends not using it as a weapon, but they can't stop you."
   components:
   - type: Sprite
     state: defibrillator
@@ -530,8 +530,8 @@
 - type: entity
   parent: BaseSuitModule
   id: JetpackSuitModule
-  name: "модуль іонного джетпака"
-  description: "Низка електричних рушіїв, установлених по всьому костюму. Цей модуль дуже чекають інженери-стажери. Замість спалювання газів для створення тяги рушії розганяють іони зарядом батареї костюма. Кажуть, це не перша спроба «Накамура Інжиніринг» створити костюм із реактивною тягою."
+  name: jetpack suit module
+  description: "A series of electric thrusters installed across the suit, this is a module highly anticipated by trainee Engineers. Rather than using gasses for combustion thrust, these jets are capable of accelerating ions using charge from the suit's cell. Some say this isn't Nakamura Engineering's first foray into jet-enabled suits."
   components:
   - type: Sprite
     state: jetpack
@@ -552,8 +552,8 @@
 - type: entity
   parent: BaseSuitModule
   id: MagnetSuitModule
-  name: "магнітний модуль"
-  description: "Потужні електромагніти в чоботах костюма забезпечують чудове зчеплення в приміщеннях за будь-яких умов і дають змогу фактично їхати ззовні на корпусі корабля. Однак ці базові моделі не мають комп'ютерних систем автоматичного перемикання, тому багато користувачів скаржаться на певну липкість кроків."
+  name: magnet suit module
+  description: "These are powerful electromagnets fitted into the suit's boots, allowing users both excellent traction no matter the condition indoors, and to essentially hitch a ride on the exterior of a hull. However, these basic models do not feature computerized systems to automatically toggle them on and off, so numerous users report a certain stickiness to their steps."
   components:
   - type: Sprite
     state: magnet
@@ -579,8 +579,8 @@
 - type: entity
   parent: BaseSuitModule
   id: HolsterSuitModule
-  name: "модуль кобури"
-  description: "Заснована на звичайних відсіках зберігання система дає змогу закріпити стандартну вогнепальну зброю на поверхні костюма й надзвичайно швидко її діставати. Одні користувачі надають перевагу грудям, інші передпліччю, а деякі правоохоронці полюбляють кобуру, що висувається зі стегна."
+  name: holster suit module
+  description: "Based off typical storage compartments, this system allows the suit to holster a standard firearm across its surface and allow for extremely quick retrieval. While some users prefer the chest, others the forearm for quick deployment, some law enforcement prefer the holster to extend from the thigh."
   components:
   - type: Sprite
     state: holster
@@ -609,8 +609,8 @@
 - type: entity
   parent: BaseSuitModule
   id: TetherSuitModule
-  name: "модуль аварійного фала"
-  description: "Спеціально виготовлений гак-кішка з лебідкою, здатною тягнути користувача. Хоч старі вантажні моделі гаків витримують кілька тонн, ці працюють лише в невагомості, що для деяких інженерів є справжнім благословенням."
+  name: tether suit module
+  description: "A custom-built grappling-hook powered by a winch capable of hauling the user. While some older models of cargo-oriented grapples have capacities of a few tons, these are only capable of working in zero-gravity environments, a blessing to some Engineers."
   components:
   - type: Sprite
     state: tether
@@ -626,8 +626,8 @@
 - type: entity
   parent: BaseSuitModule
   id: RadiationShieldSuitModule
-  name: "модуль радіаційного захисту"
-  description: "Модуль використовує полімери й відбивне екранування для захисту користувача від поширеної в космосі небезпеки — іонізувального випромінювання. Програмне забезпечення сповіщає носія про перебування в радіоактивній зоні, надаючи голос безмовному вбивці."
+  name: radshield suit module
+  description: "A module utilizing polymers and reflective shielding to protect the user against ionizing radiation; a common danger in space. This comes with software to notify the wearer that they're even in a radioactive area, giving a voice to an otherwise silent killer."
   components:
   - type: Sprite
     state: radshield
@@ -646,8 +646,8 @@
 - type: entity
   parent: BaseSuitModule
   id: EMPShieldSuitModule
-  name: "модуль ЕМІ-захисту"
-  description: "Установлений у костюм польовий інгібітор захищає його від впливів на кшталт електромагнітних імпульсів, які інакше пошкодили б електронні системи костюма або пристрої носія. Для цього він споживає енергію костюма. На щастя, ваш КПК уже має такий захист."
+  name: empshield suit module
+  description: "A field inhibitor installed into the suit, protecting it against feedback such as electromagnetic pulses that would otherwise damage the electronic systems of the suit or devices on the wearer. However, it will take from the suit's power to do so. Luckily, your PDA already has one of these."
   components:
   - type: Sprite
     state: empshield
@@ -670,8 +670,8 @@
 - type: entity
   parent: BaseSuitModule
   id: TemperatureRegulatorSuitModule
-  name: "модуль терморегулятора"
-  description: "Удосконалена система клімат-контролю з натільним костюмом, пронизаним тисячами крихітних гнучких охолоджувальних трубок. Вона циркулює охолоджувач із температурою, заданою користувачем, забезпечуючи максимальний комфорт навіть любителям спеки. Після встановлення модуль стає невіддільною частиною костюма й не може бути вилучений. Несумісний із деякими моделями МОД-костюмів."
+  name: temperature regulator suit module
+  description: "Advanced climate control, using an inner body glove interwoven with thousands of tiny, flexible cooling lines. This circulates coolant at various user-controlled temperatures, ensuring maximum comfort even for those who like it hot. Once installed, this module becomes an integral part of the suit and cannot be removed. Incompatible with certain MODsuit models."
   components:
   - type: Sprite
     state: regulator
@@ -697,8 +697,8 @@
 - type: entity
   parent: BaseSuitModule
   id: GPSSuitModule
-  name: "модуль глобального позиціювання"
-  description: "Модуль використовує звичайні технології «Нанотрейзен», щоб визначати точне положення користувача будь-де в космосі аж до координат. Ці дані надходять до центральної бази, яку можна переглядати із самого пристрою, хоча допомагати ними людям чи ні — вирішувати вам."
+  name: gps suit module
+  description: "This module uses common Nanotrasen technology to calculate the user's position anywhere in space, down to the exact coordinates. This information is fed to a central database viewable from the device itself, though using it to help people is up to you."
   components:
   - type: Sprite
     state: gps
@@ -713,8 +713,8 @@
 - type: entity
   parent: BaseSuitModule
   id: ConstructorSuitModule
-  name: "модуль конструктора"
-  description: "Модуль повністю займає передпліччя носія, через що конфліктує з удосконаленими сервоприводами рук для перенесення членів екіпажу. Водночас він працює як надзвичайно сучасний сканер будівельних голограм і містить найновіші інженерні креслення та вбудовану пам'ять, що допомагають користувачеві зводити конструкції."
+  name: constructor suit module
+  description: "This module entirely occupies the wearer's forearm, notably causing conflict with advanced arm servos meant to carry crewmembers. However, it functions as an extremely advanced construction hologram scanner, as well as containing the latest engineering schematics combined with inbuilt memory to help the user build structures."
   components:
   - type: Sprite
     state: constructor
@@ -735,8 +735,8 @@
 - type: entity
   parent: BaseSuitModule
   id: QuickCarrySuitModule
-  name: "модуль швидкого перенесення"
-  description: "Набір удосконалених сервоприводів, що спрямовують енергію на руки костюма для перенесення поранених або просто заради розваги. Однак «Нанотрейзен» заблокувала здатність модуля допомагати в рукопашному бою."
+  name: quick carry suit module
+  description: "A suite of advanced servos, redirecting power from the suit's arms to help carry the wounded; or simply for fun. However, Nanotrasen has locked the module's ability to assist in hand-to-hand combat."
   components:
   - type: Sprite
     state: carry
@@ -757,8 +757,8 @@
 - type: entity
   parent: BaseSuitModule
   id: GrabberSuitModule
-  name: "модуль гідравлічного захоплення"
-  description: "Низка приводів в обох руках костюма з вантажопідйомністю майже в тонну. Однак «Нанотрейзен» заблокувала цю конструкцію так, щоб її використовували переважно для підіймання різних ящиків. Багато хто сказав би, що вантаження — нудна робота, але ви категорично не згодні."
+  name: grabber module
+  description: "A series of actuators installed into both arms of the suit, boasting a lifting capacity of almost a ton. However, this design has been locked by Nanotrasen to be primarily utilized for lifting various crates. A lot of people would say that loading cargo is a dull job, but you could not disagree more."
   components:
   - type: Sprite
     state: clamp
@@ -776,8 +776,8 @@
 - type: entity
   parent: BaseItem
   id: ModularSuitGrabberTool
-  name: "маніпулятор"
-  description: "Потужний гідравлічний маніпулятор, що висувається з руки костюма. Легко підіймає та переміщує вантажні ящики. «Нанотрейзен» радить завжди тримати ящик обома руками, але в кого є на це час?"
+  name: manipulator
+  description: "A heavy-duty hydraulic manipulator that extends from the suit's arm. Capable of lifting and moving cargo crates with ease. Nanotrasen recommends keeping both hands on the crate at all times, but who has time for that?"
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -788,8 +788,8 @@
 - type: entity
   parent: BaseSuitModule
   id: DrillSuitModule
-  name: "модуль бура"
-  description: "Вбудований бур, що зазвичай висувається над рукою користувача. Він корисний для буріння породи, але саме ваш бур, безперечно, і пронизує небеса, і створює їх."
+  name: drill module
+  description: "An integrated drill, typically extending over the user's hand. While useful for drilling through rock, your drill is surely the one that both pierces and creates the heavens."
   components:
   - type: Sprite
     state: drill
@@ -806,8 +806,8 @@
 - type: entity
   parent: BaseSuitModule
   id: InjectorSuitModule
-  name: "модуль інжектора"
-  description: "Установлений у зап'ясток костюма модуль працює як місткий шприц із голкою, достатньо тонкою, щоб знаходити аварійні ін'єкційні порти будь-якого броньованого костюма й легко їх проколювати. Навіть вашого."
+  name: injector suit module
+  description: "A module installed into the wrist of the suit, this functions as a high-capacity syringe, with a tip fine enough to locate the emergency injection ports on any suit of armor, penetrating it with ease. Even yours."
   components:
   - type: Sprite
     state: injector
@@ -824,8 +824,8 @@
 - type: entity
   parent: BaseSuitModule
   id: BikeHornSuitModule
-  name: "модуль велогудка"
-  description: "Плечова установка важкої звукової артилерії. Модуль використовує найкращі фемтоманіпуляторні технології, щоб точно й майже смертельно стиснути... велосипедний гудок, видавши надзвичайно пам'ятний звук."
+  name: bike horn suit module
+  description: "A shoulder-mounted piece of heavy sonic artillery, this module uses the finest femto-manipulator technology to precisely deliver an almost lethal squeeze to... a bike horn, producing a significantly memorable sound."
   components:
   - type: Sprite
     state: bikehorn
@@ -841,8 +841,8 @@
 - type: entity
   parent: BaseSuitModule
   id: OreBagSuitModule
-  name: "модуль мішка для руди"
-  description: "Установлена в костюм вбудована система зберігання руди використовує точні електромагніти й відсіки, щоб автоматично збирати та складати руду. «Накамура Інжиніринг» радить усе-таки здавати її на місцеві переробні заводи."
+  name: ore suit module
+  description: "An integrated ore storage system installed into the suit, this utilizes precise electromagnets and storage compartments to automatically collect and deposit ore. It's recommended by Nakamura Engineering to actually deposit that ore at local refineries."
   components:
   - type: Sprite
     state: ore
@@ -858,8 +858,8 @@
 - type: entity
   parent: BaseSuitModule
   id: MicrowaveBeamSuitModule
-  name: "модуль НВЧ-променя"
-  description: "Цей напрочуд побутовий пристрій установлюється в долоню користувача й під'єднується до кулінарних сканерів у шоломі, щоб точно опромінювати їжу мікрохвилями та надзвичайно легко готувати її на відстані. Не рекомендовано використовувати проти винограду."
+  name: microwave beam suit module
+  description: "An oddly domestic device, this module is installed into the user's palm, hooking up with culinary scanners located in the helmet to blast food with precise microwave radiation, allowing them to cook food from a distance, with the greatest of ease. Not recommended for use against grapes."
   components:
   - type: Sprite
     state: microwave_beam
@@ -876,8 +876,8 @@
 - type: entity
   parent: BaseItem
   id: ModularSuitMicrowaveBeam
-  name: "нВЧ-випромінювач"
-  description: "Компактний мікрохвильовий випромінювач, установлений у долоні костюма. Використовує точне випромінювання для приготування їжі на відстані. Ідеальний для кухаря, який ніколи не хоче залишати свій пост, або для того, хто прагне дратувати кухаря з іншого кінця кухні."
+  name: microwave
+  description: "A compact microwave emitter mounted on the palm of the suit. Uses precise radiation to cook food from a distance. Perfect for the chef who never wants to leave their post. Or the one who wants to annoy the chef from across the kitchen."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -888,8 +888,8 @@
 - type: entity
   parent: BaseSuitModule
   id: KinesisSuitModule
-  name: "модуль кінезису"
-  description: "Цей модульний додаток для передпліччя багато років вважали втраченим, хоча костюми, на яких його колись установлювали, досі подекуди трапляються. Пристрій дає змогу створювати точні антигравітаційні поля й переміщувати предмети від маленького титанового стрижня до великого промислового обладнання. Дивно, але на живих істот він, схоже, не діє."
+  name: kinesis suit module
+  description: "A modular plug-in to the forearm, this module was presumed lost for many years, despite the suits it used to be mounted on still seeing some circulation. This piece of technology allows the user to generate precise anti-gravity fields, letting them move objects as small as a titanium rod to as large as industrial machinery. Oddly enough, it doesn't seem to work on living creatures."
   components:
   - type: Sprite
     state: kinesis
@@ -906,8 +906,8 @@
 - type: entity
   parent: BaseItem
   id: KinesisSuitModuleHand
-  name: "кінезис"
-  description: "Вбудований у передпліччя костюма пристрій точної гравітаційної маніпуляції. Створює сфокусовані антигравітаційні поля для переміщення предметів на відстані. Заборонений у кількох системах за «надмірну зручність»."
+  name: kinesis
+  description: "A precision gravity-manipulation device integrated into the suit's forearm. Generates focused anti-gravity fields to move objects at a distance. Banned in several systems for being 'too convenient'."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -926,8 +926,8 @@
 - type: entity
   parent: BaseSuitModule
   id: ApparatusSuitModule
-  name: "модуль харчового апарата"
-  description: "Улюблена шахтарями модифікація шолома використовує нанотехнологічний бар'єр перед ротом, щоб дозволити їсти й пити, зберігаючи захист та атмосферу всередині костюма. Утім, смак стейка з голіафа вона ніяк не поліпшить."
+  name: apparatus suit module
+  description: "A favorite by Miners, this modification to the helmet utilizes a nanotechnology barrier in front of the mouth to allow eating and drinking while retaining protection and atmosphere. However, it will do nothing to improve the taste of a goliath steak."
   components:
   - type: Sprite
     state: apparatus
@@ -951,8 +951,8 @@
 - type: entity
   parent: BaseSuitModule
   id: PaperDispenserSuitModule
-  name: "модуль видачі паперу"
-  description: "Компактний синтезатор паперу використовує ті самі передові технології факсів і принтерів, що й офіси «Нанотрейзен». Перетворює електроенергію на високоякісний папір, щоб у вас ніколи не закінчувалися бланки, накладні чи матеріали для нотаток. Однаково популярний серед вантажних техніків і бюрократів."
+  name: paper dispenser suit module
+  description: "A compact paper synthesizer utilizing the same advanced fax and printer technology found in Nanotrasen offices. Converts electrical energy into high-quality paper stock, ensuring you never run out of forms, manifests, or note-taking materials. Popular among cargo technicians and bureaucrats alike."
   components:
   - type: Sprite
     state: paper_maker
@@ -971,8 +971,8 @@
 - type: entity
   parent: BaseSuitModule
   id: SpringlockSuitModule
-  name: "пружинний модуль"
-  description: "Модуль простягається під зовнішньою оболонкою по всьому МОД-костюму. Цей механічний екзоскелет відсувається, коли користувач заходить усередину, і допомагає під час запуску, але його прибрали із сучасних костюмів через схильність пружинного механізму різко замикатися під дією вологи. Ви знаєте, як це — коли цілий екзоскелет входить у вас?"
+  name: springlock suit module
+  description: "A module that spans the entire size of the MOD unit, sitting under the outer shell. This mechanical exoskeleton pushes out of the way when the user enters and it helps in booting up, but was taken out of modern suits because of the springlock's tendency to 'snap' back into place when exposed to humidity. You know what it's like to have an entire exoskeleton enter you?"
   components:
   - type: Sprite
     state: springlock
@@ -987,8 +987,8 @@
 - type: entity
   parent: BaseVisorSuitModule
   id: RaveVisorSuitModule
-  name: "модуль рейв-візора"
-  description: "Суперкрутий неймовірний візор, призначений для модульних костюмів."
+  name: rave visor suit module
+  description: "A Super Cool Awesome Visor (SCAV), intended for modular suits."
   components:
   - type: Sprite
     state: rave_visor
@@ -1006,8 +1006,8 @@
 - type: entity
   parent: BaseSuitModule
   id: TanningSuitModule
-  name: "модуль засмаги"
-  description: "Модуль засмаги для модульних костюмів. Наявність функції «рак шкіри» ніколи не була доведена, хоча з огляду на чутки — хто знає..."
+  name: tanning suit module
+  description: "A tanning module for modular suits. Skin cancer functionality has not been ever proven, although who knows with the rumors..."
   components:
   - type: Sprite
     state: tanning
@@ -1024,8 +1024,8 @@
 - type: entity
   parent: BaseSuitModule
   id: AtrocinatorSuitModule
-  name: "модуль атроцинатора"
-  description: "Таємнича сфера, що має загадкові ефекти після встановлення в МОД-костюм. Дивіться під ноги, інакше вас підкине до небес!"
+  name: atrocinator suit module
+  description: "A mysterious orb that has mysterious effects when inserted in a MODsuit. Watch your step, or you'll be sent sky high!"
   components:
   - type: Sprite
     state: atrocinator
@@ -1043,8 +1043,8 @@
 - type: entity
   parent: BaseSuitModule
   id: ArmorBossterSuitModule
-  name: "модуль посилення броні"
-  description: "Переобладнана низка висувних бронеплит дає костюму змогу фактично працювати як силова броня й забезпечує користувачеві неймовірний захист від звичайної вогнепальної зброї та повсякденних атак у ближньому бою. Однак додаткова обшивка не може розгортатися разом із частинами костюма для вакуумної герметизації, тому в розгорнутому стані ця броня зовсім не придатна для позакорабельної діяльності."
+  name: armor booster suit module
+  description: "A retrofitted series of retractable armor plates, allowing the suit to function as essentially power armor, giving the user incredible protection against conventional firearms, or everyday attacks in close-quarters. However, the additional plating cannot deploy alongside parts of the suit used for vacuum sealing, so this extra armor provides zero ability for extravehicular activity while deployed."
   components:
   - type: Sprite
     state: armor_booster
@@ -1077,8 +1077,8 @@
 - type: entity
   parent: ArmorBossterSuitModule
   id: AdvancedArmorBossterSuitModule
-  name: "удосконалений модуль посилення броні"
-  description: "Удосконалена версія модуля посилення броні забезпечує чудовий захист від усіх видів ушкоджень і водночас зберігає цілісність костюма в найсуворіших середовищах. Вершина захисних технологій «Кіберсан Індастріз»."
+  name: advanced armor booster suit module
+  description: "An advanced version of the armor booster, this module provides superior protection against all forms of damage while also maintaining suit integrity in the harshest environments. The pinnacle of Cybersun Industries defensive technology."
   components:
   - type: ModularSuitModuleEffect
     activeComponents:
@@ -1098,8 +1098,8 @@
 - type: entity
   parent: BaseSuitModule
   id: EnergyShieldSuitModule
-  name: "модуль енергетичного щита"
-  description: "Персональне захисне силове поле, яке зазвичай застосовують у військовій сфері. Цей удосконалений дефлекторний щит фактично є зменшеною версією корабельних, і його енергоспоживання легко це підтверджує. Він здатний заблокувати майже будь-яку вхідну атаку, але через невелику кількість окремих зарядів користувач усе ще залишається смертним."
+  name: energy shield suit module
+  description: "A personal, protective forcefield typically seen in military applications. This advanced deflector shield is essentially a scaled down version of those seen on starships, and the power cost can be an easy indicator of this. However, it is capable of blocking nearly any incoming attack, though with its' low amount of separate charges, the user remains mortal."
   components:
   - type: Sprite
     state: energy_shield
@@ -1117,8 +1117,8 @@
 - type: entity
   parent: EMPShieldSuitModule
   id: EMPShieldAdvancedSuitModule
-  name: "удосконалений модуль ЕМІ-захисту"
-  description: "Польовий інгібітор нового покоління, що повністю нейтралізує електромагнітні перешкоди без жодного споживання енергії. Принцип його роботи є комерційною таємницею «Кіберсан Індастріз»."
+  name: advanced empshield suit module
+  description: "A next-generation field inhibitor that completely negates electromagnetic interference without any power draw. How it works is a trade secret of Cybersun Industries."
   components:
   - type: ModularSuitModule
     modulePrefix: 'C'
@@ -1127,8 +1127,8 @@
 - type: entity
   parent: BaseSuitModule
   id: NoSlipSuitModule
-  name: "модуль захисту від ковзання"
-  description: "Засекречений прототип «Кіберсан Індастріз», створений зворотним проєктуванням трофейного обладнання Синдикату. Ці передові п'єзоелектричні стабілізатори забезпечують ідеальне зчеплення з будь-якою поверхнею без енергоспоживання чи магнітного сліду стандартних магнітних чобіт. Спочатку їх розробили для таємних оперативників, яким потрібно безшумно рухатися будь-яким середовищем, не залишаючи слідів. «Нанотрейзен» оголосила ці модулі контрабандою, але вони залишаються улюбленими серед тих, хто працює проти інтересів корпорації. «Хонк Ко.» подала численні протести щодо законності модулів, посилаючись на нечесну конкурентну перевагу на ринку запобігання ковзанню."
+  name: noslip suit module
+  description: "A classified Cybersun Industries prototype, reverse-engineered from salvaged Syndicate equipment. These advanced piezoelectric stabilizers provide perfect traction on any surface without the power drain or magnetic signature of standard magboots. Originally designed for covert operatives who need to move silently through any environment without leaving traces. Nanotrasen has declared these modules contraband, but they remain a favorite among those who work against the corporation's interests. Honk Co. has filed numerous protests regarding the legality of these modules, citing unfair competitive advantage in the slip-prevention market."
   components:
   - type: Sprite
     state: noslip
@@ -1149,8 +1149,8 @@
 - type: entity
   parent: BaseSuitModule
   id: PlateCompressionSuitModule
-  name: "модуль стиснення броні"
-  description: "Заборонена розробка «Кіберсан Індастріз». Нанокомпресори тимчасово зменшують об'єм бронеплит і сервоприводів, даючи носієві змогу протискуватися вентиляцією та іншими вузькими проходами. Поки модуль активний, механізм зняття костюма заблокований, тому без сторонньої допомоги його неможливо зняти. Несумісний із модулями посилення броні через перевантаження системи стиснення."
+  name: plate compression suit module
+  description: "A banned Cybersun Industries development. Nanocompressors temporarily reduce the volume of armor plates and servos, allowing the wearer to squeeze through vents and other narrow passages. The suit's removal mechanism is locked while the module is active, making it impossible to take off without external assistance. Incompatible with armor booster modules due to compression system overload."
   components:
   - type: Sprite
     state: plate_compression
@@ -1176,8 +1176,8 @@
 - type: entity
   parent: BaseSuitModule
   id: BurgerDispenserSuitModule
-  name: "модуль видачі бургерів"
-  description: "Рідкісна технологія, відтворена з прототипу, знайденого на судні корпорації «Донк». Вона може споживати неймовірну кількість енергії батареї костюма, щоб створювати їстівну органічну матерію в долоні рукавиці носія, але дослідження, схоже, повністю зупинилися на бургерах. Примітно, що всі спроби змусити пристрій видавати чай «Ерл Ґрей» провалилися."
+  name: burger dispenser suit module
+  description: "A rare piece of technology reverse-engineered from a prototype found in a Donk Corporation vessel. This can draw incredible amounts of power from the suit's cell to create edible organic matter in the palm of the wearer's glove; however, research seemed to have entirely stopped at burgers. Notably, all attempts to get it to dispense Earl Grey tea have failed."
   components:
   - type: Sprite
     state: dispenser
@@ -1195,8 +1195,8 @@
 - type: entity
   parent: JetpackSuitModule
   id: JetpackAdvancedSuitModule
-  name: "удосконалений модуль іонного джетпака"
-  description: "Високопродуктивна іонна рушійна система, якій надають перевагу сили безпеки «Нанотрейзен». Має посилену тягу й кращу паливну ефективність порівняно зі стандартною моделлю. Ідеальна для переслідування або швидкого реагування на надзвичайні ситуації."
+  name: advanced jetpack suit module
+  description: "A high-performance ion propulsion system favored by Nanotrasen security forces. Features enhanced thrust output and improved fuel efficiency compared to the standard model. Perfect for pursuit operations or rapid emergency response."
   components:
   - type: Sprite
     state: jetpack_advanced
@@ -1211,8 +1211,8 @@
 - type: entity
   parent: MagnetSuitModule
   id: MagnetAdvancedSuitModule
-  name: "удосконалений магнітний модуль"
-  description: "Складне поліпшення системи магнітної стабілізації «Накамура Інжиніринг» із комп'ютерним автоматичним перемиканням і точнішим налаштуванням зчеплення. На відміну від базової моделі, ці електромагніти розумно регулюють силу поля залежно від поверхні та намірів користувача, усуваючи «липкість» старих версій. Нейроінтерфейс інтуїтивно вмикає магнітне зчеплення лише за потреби й забезпечує плавні переходи між рухами. Спочатку модуль створили для удосконаленого костюма старшого інженера, а згодом відкрили для інженерів, які вимагають найкращого керування рухливістю."
+  name: advanced magnet suit module
+  description: "A sophisticated upgrade to Nakamura Engineering's magnetic stability system, featuring computerized auto-toggling and enhanced grip calibration. Unlike the basic model, these electromagnets intelligently adjust their field strength based on surface conditions and user intent, eliminating the 'stickiness' reported with older versions. Includes a neural-link interface that intuitively engages magnetic grip only when needed, allowing for seamless movement transitions. Originally developed for the Chief Engineer's advanced suit, this module has since been made available to engineering personnel who demand the best in mobility control."
   components:
   - type: ModularSuitModuleEffect
     activeComponents:

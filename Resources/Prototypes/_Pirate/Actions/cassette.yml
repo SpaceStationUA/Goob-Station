@@ -10,8 +10,8 @@
 - type: entity
   parent: RMCActionCassetteBase
   id: RMCActionCassettePlayPause
-  name: "Відтворити / призупинити"
-  description: "Починає або призупиняє відтворення музики."
+  name: Play/Pause
+  description: Starts or stops playing music.
   components:
   - type: Action
     icon:
@@ -23,8 +23,8 @@
 - type: entity
   parent: RMCActionCassetteBase
   id: RMCActionCassetteNext
-  name: "Наступна композиція"
-  description: "Переходить до наступної доріжки."
+  name: Next song
+  description: Moves to the next track.
   components:
   - type: Action
     icon:
@@ -36,8 +36,8 @@
 - type: entity
   parent: RMCActionCassetteBase
   id: RMCActionCassetteRestart
-  name: "Перезапустити композицію"
-  description: "Перезапускає поточну доріжку."
+  name: Restart song
+  description: Restarts the current track.
   components:
   - type: Action
     icon:
