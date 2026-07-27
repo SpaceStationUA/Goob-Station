@@ -35,6 +35,7 @@ public sealed class MesonVisionOverlay : Overlay
     private readonly EntityQuery<SpriteComponent> _spriteQuery;
     private readonly EntityQuery<TransformComponent> _transformQuery;
     private List<Entity<MapGridComponent>> _grids = new();
+    private readonly List<Box2> _tileBounds = new();
     private readonly HashSet<Entity<OccluderComponent>> _structures = new();
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -81,6 +82,7 @@ public sealed class MesonVisionOverlay : Overlay
         foreach (var grid in _grids)
         {
             handle.SetTransform(_transform.GetWorldMatrix(grid.Owner));
+            _tileBounds.Clear();
             var tiles = _map.GetTilesEnumerator(grid.Owner, grid.Comp, args.WorldBounds);
 
             while (tiles.MoveNext(out var tile))
@@ -88,10 +90,14 @@ public sealed class MesonVisionOverlay : Overlay
                 if (tile.Tile.IsEmpty)
                     continue;
 
-                var bounds = _lookup.GetLocalBounds(tile, grid.Comp.TileSize);
-                handle.DrawRect(bounds, TerrainFill);
-                handle.DrawRect(bounds, TerrainOutline, filled: false);
+                _tileBounds.Add(_lookup.GetLocalBounds(tile, grid.Comp.TileSize));
             }
+
+            foreach (var bounds in _tileBounds)
+                handle.DrawRect(bounds, TerrainFill);
+
+            foreach (var bounds in _tileBounds)
+                handle.DrawRect(bounds, TerrainOutline, filled: false);
         }
 
         handle.SetTransform(Matrix3x2.Identity);
