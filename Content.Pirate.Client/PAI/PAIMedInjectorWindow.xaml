@@ -1,0 +1,23 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls;assembly=Content.Client"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls;assembly=Content.Client"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="Content.Pirate.Client.PAI.PAIMedInjectorWindow"
+    Title="{Loc 'pai-med-injector-title'}" MinSize="380 400" SetSize="380 400">
+
+    <BoxContainer Orientation="Vertical" Margin="10">
+
+        <Label Text="{Loc 'pai-med-injector-capacity'}" StyleClasses="LabelHeading"/>
+        <ProgressBar Name="CapacityBar" MinValue="0" MaxValue="1" Value="1" Margin="0 5"/>
+
+        <customControls:HSeparator StyleClasses="LowDivider" Margin="0 5"/>
+
+        <Label Name="StatusLabel" Text="" Visible="False" HorizontalAlignment="Center" Margin="0 5"/>
+
+        <Label Text="{Loc 'pai-med-injector-meds'}" StyleClasses="LabelHeading" Margin="0 5 0 0"/>
+        <ScrollContainer VerticalExpand="True" Margin="0 5">
+            <BoxContainer Name="MedsContainer" Orientation="Vertical"/>
+        </ScrollContainer>
+
+    </BoxContainer>
+</controls:FancyWindow>

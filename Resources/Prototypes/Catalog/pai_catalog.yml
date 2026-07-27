@@ -9,7 +9,7 @@
   description: pai-mass-scanner-desc
   productAction: ActionPAIMassScanner
   cost:
-    SiliconMemory: 10
+    SiliconMemory: 5
   categories:
   - PAIAbilities
   conditions:
@@ -36,6 +36,135 @@
   productAction: ActionPAIOpenMap
   cost:
     SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAIAtmosScanner
+  name: pai-atmos-scanner-name
+  description: pai-atmos-scanner-desc
+  productAction: ActionPAIAtmosScanner
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAILightFlicker
+  name: pai-light-flicker-name
+  description: pai-light-flicker-desc
+  productAction: ActionPAILightFlicker
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - Syndicate
+
+- type: listing
+  id: PAINightVision
+  name: pai-night-vision-name
+  description: pai-night-vision-desc
+  productAction: ActionPAINightVision
+  cost:
+    SiliconMemory: 10
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - Syndicate
+
+- type: listing
+  id: PAIThermalVision
+  name: pai-thermal-vision-name
+  description: pai-thermal-vision-desc
+  productAction: ActionPAIThermalVision
+  cost:
+    SiliconMemory: 10
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - Syndicate
+
+- type: listing
+  id: PAIHealthScan
+  name: pai-health-scan-name
+  description: pai-health-scan-desc
+  productAction: ActionPAIHealthScan
+  cost:
+    SiliconMemory: 10
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAIGps
+  name: pai-gps-name
+  description: pai-gps-desc
+  productAction: ActionPAIGps
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAIFlashlight
+  name: pai-flashlight-name
+  description: pai-flashlight-desc
+  productAction: ActionPAIFlashlight
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAIMedHud
+  name: pai-med-hud-name
+  description: pai-med-hud-desc
+  productAction: ActionPAIMedHud
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: PAIMedInjector
+  name: pai-med-injector-name
+  description: pai-med-injector-desc
+  productAction: ActionPAIMedInjector
+  cost:
+    SiliconMemory: 15
   categories:
   - PAIAbilities
   conditions:

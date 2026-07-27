@@ -27,6 +27,18 @@
       enum.StationMapUiKey.Key:
         type: StationMapBoundUserInterface
         requireInputValidation: false
+      enum.GasAnalyzerUiKey.Key:
+        type: GasAnalyzerBoundUserInterface
+        requireInputValidation: false
+      enum.HealthAnalyzerUiKey.Key:
+        type: HealthAnalyzerBoundUserInterface
+        requireInputValidation: false
+      enum.GpsUiKey.Key:
+        type: GpsBoundUserInterface
+        requireInputValidation: false
+      enum.PAIMedInjectorUiKey.Key:
+        type: PAIMedInjectorBoundUserInterface
+        requireInputValidation: false
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:
@@ -78,7 +90,7 @@
     currencyWhitelist:
     - SiliconMemory
     balance:
-      SiliconMemory: 30
+      SiliconMemory: 40
   - type: RadarConsole
     maxRange: 256
     followEntity: true
@@ -102,6 +114,24 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: GasAnalyzer
+  - type: GPS
+  - type: PAIMedInjector
+  - type: PointLight
+    enabled: false
+    radius: 3
+    energy: 1.5
+    color: "#FFFFFF"
+  - type: EncryptionKeyHolder
+    keysUnlocked: false
+    keySlots: 3
+  - type: ContainerContainer
+    containers:
+      key_slots: !type:Container { }
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
   - type: ChangeVoiceInContainer
     whitelist:
       components:
@@ -191,11 +221,18 @@
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
           On: { state: syndicate-pai-on-overlay }
+  - type: ContainerFill
+    containers:
+      key_slots: []
   - type: StaticPrice
     price: 500
   - type: Vocal
     sounds:
       Unsexed: UnisexSiliconSyndicate
+  - type: Tag
+    tags:
+    - SiliconEmotes
+    - Syndicate
 
 - type: entity
   parent: PersonalAI
@@ -289,3 +326,115 @@
   - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.StationMapUiKey.Key
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIAtmosScanner
+  name: Atmos Scanner
+  description: Scan nearby atmosphere to assist your owner.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: node-scanner-module }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.GasAnalyzerUiKey.Key
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAINightVision
+  name: Night Vision
+  description: Toggle night vision to see in the dark.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:PAIToggleNightVisionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIThermalVision
+  name: Thermal Vision
+  description: Toggle thermal vision to see heat signatures.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye2-module }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:PAIToggleThermalVisionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAILightFlicker
+  name: Flicker Lights
+  description: Flicker nearby lights for a short time.
+  components:
+  - type: Action
+    icon: Interface/Actions/overloadlight.png
+    itemIconStyle: NoItem
+    useDelay: 20
+  - type: InstantAction
+    event: !type:PAILightFlickerEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIHealthScan
+  name: Health Scan
+  description: Scan the health status of your owner.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:PAIHealthScanEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIGps
+  name: Internal GPS
+  description: View your current GPS coordinates.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: gps-module }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.GpsUiKey.Key
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIFlashlight
+  name: Flashlight
+  description: Toggle your built-in flashlight.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_mecha.rsi, state: mech_lights_on }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:PAIToggleFlashlightEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIMedHud
+  name: Medical HUD
+  description: Toggle medical HUD to see health status.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:PAIToggleMedHudEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIMedInjector
+  name: Medical Injector
+  description: Inject medicine into your owner.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: chem-module }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.PAIMedInjectorUiKey.Key
