@@ -76,6 +76,9 @@ public sealed partial class CEClientZLevelsSystem : CESharedZLevelsSystem
 
     private void OnZPhysicsHandleState(Entity<CEZPhysicsComponent> ent, ref AfterAutoHandleStateEvent args)
     {
+        // Dynamically-added Z-physics components do not receive the entity's earlier MapInit.
+        RefreshBody(ent);
+
         if (!ZDebugStairsEnabled ||
             _player.LocalEntity != ent.Owner)
         {

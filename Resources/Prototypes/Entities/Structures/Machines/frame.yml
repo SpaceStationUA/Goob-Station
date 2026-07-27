@@ -28,7 +28,7 @@
     - type: Anchorable
     - type: Rotatable
     - type: Pullable
-    - type: CEZPhysics # Pirate: multiz
+    - type: CEZPhysicsEligible # Pirate: multiz
     - type: Construction
       containers:
         - machine_board
@@ -96,7 +96,7 @@
     - type: Anchorable
     - type: Rotatable
     - type: Pullable
-    - type: CEZPhysics # Pirate: multiz
+    - type: CEZPhysicsEligible # Pirate: multiz
     - type: Construction
       graph: Machine
       node: machineFrame

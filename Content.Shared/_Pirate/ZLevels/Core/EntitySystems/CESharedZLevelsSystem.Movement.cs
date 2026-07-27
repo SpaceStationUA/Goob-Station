@@ -513,7 +513,7 @@ public abstract partial class CESharedZLevelsSystem
         var xform = args.Component;
         if (!HasTraversalContext(xform))
         {
-            ResetInactiveZPhysics(ent);
+            DeactivateOutsideTraversal(ent);
             return;
         }
 
@@ -1066,7 +1066,7 @@ public abstract partial class CESharedZLevelsSystem
 
             if (!HasTraversalContext(xform))
             {
-                ResetInactiveZPhysics((uid, zPhys));
+                DeactivateOutsideTraversal((uid, zPhys));
                 continue;
             }
 

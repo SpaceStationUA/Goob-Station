@@ -74,13 +74,32 @@ public abstract partial class CESharedZLevelsSystem
 
     private void InitializeActivation()
     {
+        SubscribeLocalEvent<CEZPhysicsEligibleComponent, MapInitEvent>(OnEligibleMapInit);
+        SubscribeLocalEvent<CEZPhysicsEligibleComponent, EntParentChangedMessage>(OnEligibleParentChanged);
         SubscribeLocalEvent<CEZPhysicsComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<CEZPhysicsComponent, ComponentShutdown>(OnZPhysicsShutdown);
         SubscribeLocalEvent<CEZPhysicsComponent, AnchorStateChangedEvent>(OnAnchorStateChange);
         SubscribeLocalEvent<CEZPhysicsComponent, PhysicsBodyTypeChangedEvent>(OnPhysicsBodyTypeChange);
         SubscribeLocalEvent<CEZPhysicsComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<CEZPhysicsComponent, CEZPhysicsGhostStateChangedEvent>(OnGhostStateChanged);
         SubscribeLocalEvent<CEZLevelGhostMoverComponent, ComponentStartup>(OnGhostMoverStartup);
         SubscribeLocalEvent<CEZLevelGhostMoverComponent, ComponentShutdown>(OnGhostMoverShutdown);
+    }
+
+    private void OnEligibleMapInit(Entity<CEZPhysicsEligibleComponent> ent, ref MapInitEvent args)
+    {
+        if (_net.IsClient || ZPhysQuery.HasComp(ent))
+            return;
+
+        TryActivateEligibleBody(ent, Transform(ent));
+    }
+
+    private void OnEligibleParentChanged(Entity<CEZPhysicsEligibleComponent> ent, ref EntParentChangedMessage args)
+    {
+        if (_net.IsClient || ZPhysQuery.HasComp(ent))
+            return;
+
+        TryActivateEligibleBody(ent, args.Transform);
     }
 
     private void OnAnchorStateChange(Entity<CEZPhysicsComponent> ent, ref AnchorStateChangedEvent args)
@@ -90,14 +109,67 @@ public abstract partial class CESharedZLevelsSystem
 
     private void OnMapInit(Entity<CEZPhysicsComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.StartupSuppressedUntil = _timing.CurTime + StartupActivationDelay;
+        InitializeZPhysicsBody(ent, Transform(ent), suppressStartup: true);
+    }
+
+    private void OnZPhysicsShutdown(Entity<CEZPhysicsComponent> ent, ref ComponentShutdown args)
+    {
+        SleepBody(ent);
+    }
+
+    private void InitializeZPhysicsBody(
+        Entity<CEZPhysicsComponent> ent,
+        TransformComponent xform,
+        bool suppressStartup)
+    {
+        if (suppressStartup)
+            ent.Comp.StartupSuppressedUntil = _timing.CurTime + StartupActivationDelay;
+
         RefreshBody(ent);
 
-        if (!TryGetTraversalDepth(Transform(ent), out var depth))
+        if (!TryGetTraversalDepth(xform, out var depth))
             return;
 
         ent.Comp.CurrentZLevel = depth;
         DirtyField(ent, ent.Comp, nameof(CEZPhysicsComponent.CurrentZLevel));
+    }
+
+    private void TryActivateEligibleBody(
+        Entity<CEZPhysicsEligibleComponent> ent,
+        TransformComponent xform)
+    {
+        if (TerminatingOrDeleted(ent) || !HasTraversalContext(xform))
+            return;
+
+        var alreadyPresent = ZPhysQuery.TryComp(ent, out var zPhysics);
+        zPhysics ??= EnsureComp<CEZPhysicsComponent>(ent);
+
+        if (!alreadyPresent)
+        {
+            zPhysics.Bounciness = ent.Comp.Bounciness;
+            zPhysics.GravityMultiplier = ent.Comp.GravityMultiplier;
+            zPhysics.AutoStep = ent.Comp.AutoStep;
+        }
+
+        InitializeZPhysicsBody((ent, zPhysics), xform, suppressStartup: !alreadyPresent);
+    }
+
+    /// <summary>
+    /// Activates eligible entities that were already initialized when their map became a Z-level.
+    /// </summary>
+    protected void ActivateEligibleBodiesOnMap(EntityUid mapUid)
+    {
+        if (_net.IsClient)
+            return;
+
+        var query = EntityQueryEnumerator<CEZPhysicsEligibleComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var eligible, out var xform))
+        {
+            if (xform.MapUid != mapUid || LifeStage(uid) < EntityLifeStage.MapInitialized)
+                continue;
+
+            TryActivateEligibleBody((uid, eligible), xform);
+        }
     }
 
     private void OnPhysicsBodyTypeChange(Entity<CEZPhysicsComponent> ent, ref PhysicsBodyTypeChangedEvent args)
@@ -192,7 +264,7 @@ public abstract partial class CESharedZLevelsSystem
 
         if (!HasTraversalContext(xform))
         {
-            ResetInactiveZPhysics(ent);
+            DeactivateOutsideTraversal(ent);
             return;
         }
 
@@ -225,6 +297,19 @@ public abstract partial class CESharedZLevelsSystem
 
         DebugZ(ent, "z-physics active");
         WakeBody(ent);
+    }
+
+    private void DeactivateOutsideTraversal(Entity<CEZPhysicsComponent> ent)
+    {
+        if (_net.IsServer && HasComp<CEZPhysicsEligibleComponent>(ent))
+        {
+            SleepBody(ent);
+            SetZGravityInfluenced(ent, false);
+            RemComp<CEZPhysicsComponent>(ent);
+            return;
+        }
+
+        ResetInactiveZPhysics(ent);
     }
 
     private void ResetInactiveZPhysics(Entity<CEZPhysicsComponent> ent)

@@ -10,6 +10,7 @@ using Content.Shared.Station.Components;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
 using Content.Server.Shuttles.Systems;
+using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization.Systems;
@@ -38,6 +39,8 @@ public sealed partial class CEZLevelsSystem : CESharedZLevelsSystem
         InitItems(); // Pirate: multiz
         InitTransitionBudget();
 
+        SubscribeLocalEvent<CEZLevelMapComponent, CEMapAddedIntoZNetworkEvent>(OnMapAddedIntoZNetwork);
+
         // Run before round-start variation so floor grids are linked before it spreads across them.
         SubscribeLocalEvent<CEStationZLevelsComponent, StationPostInitEvent>(OnStationPostInit,
             before:
@@ -47,6 +50,11 @@ public sealed partial class CEZLevelsSystem : CESharedZLevelsSystem
                 typeof(ArrivalsSystem),
                 typeof(EmergencyShuttleSystem),
             ]);
+    }
+
+    private void OnMapAddedIntoZNetwork(Entity<CEZLevelMapComponent> ent, ref CEMapAddedIntoZNetworkEvent args)
+    {
+        ActivateEligibleBodiesOnMap(ent);
     }
 
     private void OnStationPostInit(Entity<CEStationZLevelsComponent> ent, ref StationPostInitEvent args)
