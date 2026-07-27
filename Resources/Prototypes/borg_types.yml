@@ -232,6 +232,7 @@
   - BorgModuleGardening
   - BorgModuleCooking
   - BorgModuleLollypop # Goobstation
+  - BorgModuleLighting # Pirate
 
   lawset: Clown # DeltaV: Custom lawset
 

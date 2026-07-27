@@ -1161,6 +1161,20 @@
         whitelist:
           components:
           - Instrument
+    - item: BassGuitarInstrument
+      hand:
+        emptyLabel: borg-slot-instruments-empty
+        emptyRepresentative: BassGuitarInstrument
+        whitelist:
+          components:
+          - Instrument
+    - item: AccordionInstrument
+      hand:
+        emptyLabel: borg-slot-instruments-empty
+        emptyRepresentative: AccordionInstrument
+        whitelist:
+          components:
+          - Instrument
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: musical-module }
 
