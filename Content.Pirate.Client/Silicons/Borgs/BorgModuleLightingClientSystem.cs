@@ -7,6 +7,7 @@ namespace Content.Pirate.Client.Silicons.Borgs;
 public sealed class BorgModuleLightingClientSystem : EntitySystem
 {
     [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -24,11 +25,11 @@ public sealed class BorgModuleLightingClientSystem : EntitySystem
     {
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
-            if (sprite.LayerMapTryGet(BorgVisualLayers.Light, out var eyeLayer, false))
-                sprite.LayerSetColor(eyeLayer, Color.White);
+            if (_sprite.LayerMapTryGet((uid, sprite), BorgVisualLayers.Light, out var eyeLayer, false))
+                _sprite.LayerSetColor((uid, sprite), eyeLayer, Color.White);
 
-            if (sprite.LayerMapTryGet(BorgVisualLayers.LightStatus, out var statusLayer, false))
-                sprite.LayerSetColor(statusLayer, Color.White);
+            if (_sprite.LayerMapTryGet((uid, sprite), BorgVisualLayers.LightStatus, out var statusLayer, false))
+                _sprite.LayerSetColor((uid, sprite), statusLayer, Color.White);
         }
 
         if (TryComp<PointLightComponent>(uid, out var pointLight))
@@ -45,11 +46,11 @@ public sealed class BorgModuleLightingClientSystem : EntitySystem
 
             var color = installed.CurrentColor;
 
-            if (sprite.LayerMapTryGet(BorgVisualLayers.Light, out var eyeLayer, false))
-                sprite.LayerSetColor(eyeLayer, color);
+            if (_sprite.LayerMapTryGet((uid, sprite), BorgVisualLayers.Light, out var eyeLayer, false))
+                _sprite.LayerSetColor((uid, sprite), eyeLayer, color);
 
-            if (sprite.LayerMapTryGet(BorgVisualLayers.LightStatus, out var statusLayer, false))
-                sprite.LayerSetColor(statusLayer, color);
+            if (_sprite.LayerMapTryGet((uid, sprite), BorgVisualLayers.LightStatus, out var statusLayer, false))
+                _sprite.LayerSetColor((uid, sprite), statusLayer, color);
 
             if (TryComp<PointLightComponent>(uid, out var pointLight))
                 _light.SetColor(uid, color, pointLight);
