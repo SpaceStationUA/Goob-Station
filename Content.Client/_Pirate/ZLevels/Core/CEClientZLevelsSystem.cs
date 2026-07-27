@@ -49,6 +49,7 @@ public sealed partial class CEClientZLevelsSystem : CESharedZLevelsSystem
         _cfg.OnValueChanged(CCVars.CEZLevelsRenderOffset, value => ZLevelOffset = value, invokeImmediately: true);
 
         SubscribeLocalEvent<CEZPhysicsComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<CEZPhysicsComponent, ComponentRemove>(OnZPhysicsRemove);
         SubscribeLocalEvent<CEZPhysicsComponent, AfterAutoHandleStateEvent>(OnZPhysicsHandleState);
         SubscribeLocalEvent<CEZPhysicsComponent, GetEyeOffsetEvent>(OnEyeOffset);
         SubscribeLocalEvent<CEZPhysicsComponent, CEZPhysicsActivationChangedEvent>(OnActivationChanged);
@@ -89,6 +90,18 @@ public sealed partial class CEClientZLevelsSystem : CESharedZLevelsSystem
             "client_z_state_handle",
             $"state={args.State.GetType().Name},local={StairCsvFloat(ent.Comp.LocalPosition)},vel={StairCsvFloat(ent.Comp.Velocity)},current_z={ent.Comp.CurrentZLevel}",
             $"{args.State.GetType().Name}|{StairCsvFloat(ent.Comp.LocalPosition)}|{StairCsvFloat(ent.Comp.Velocity)}|{ent.Comp.CurrentZLevel}|{Transform(ent).ParentUid}|{Transform(ent).GridUid}|{Transform(ent).MapUid}");
+    }
+
+    private void OnZPhysicsRemove(Entity<CEZPhysicsComponent> ent, ref ComponentRemove args)
+    {
+        SleepBody(ent);
+
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
+            return;
+
+        sprite.NoRotation = ent.Comp.NoRotDefault;
+        _sprite.SetOffset((ent.Owner, sprite), ent.Comp.SpriteOffsetDefault);
+        _sprite.SetDrawDepth((ent.Owner, sprite), ent.Comp.DrawDepthDefault);
     }
 
     public override void Update(float frameTime)

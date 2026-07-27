@@ -77,7 +77,6 @@ public abstract partial class CESharedZLevelsSystem
         SubscribeLocalEvent<CEZPhysicsEligibleComponent, MapInitEvent>(OnEligibleMapInit);
         SubscribeLocalEvent<CEZPhysicsEligibleComponent, EntParentChangedMessage>(OnEligibleParentChanged);
         SubscribeLocalEvent<CEZPhysicsComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<CEZPhysicsComponent, ComponentShutdown>(OnZPhysicsShutdown);
         SubscribeLocalEvent<CEZPhysicsComponent, AnchorStateChangedEvent>(OnAnchorStateChange);
         SubscribeLocalEvent<CEZPhysicsComponent, PhysicsBodyTypeChangedEvent>(OnPhysicsBodyTypeChange);
         SubscribeLocalEvent<CEZPhysicsComponent, EntParentChangedMessage>(OnParentChanged);
@@ -110,11 +109,6 @@ public abstract partial class CESharedZLevelsSystem
     private void OnMapInit(Entity<CEZPhysicsComponent> ent, ref MapInitEvent args)
     {
         InitializeZPhysicsBody(ent, Transform(ent), suppressStartup: true);
-    }
-
-    private void OnZPhysicsShutdown(Entity<CEZPhysicsComponent> ent, ref ComponentShutdown args)
-    {
-        SleepBody(ent);
     }
 
     private void InitializeZPhysicsBody(
