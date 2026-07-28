@@ -116,11 +116,10 @@ public sealed class LastRefugeSystem : EntitySystem
             return;
 
         var stealth = EnsureComp<StealthComponent>(ent);
-        stealth.ExamineThreshold = 0f;
-        stealth.ExaminedDesc = ent.Comp.ExamineMessage;
-        stealth.RevealOnAttack = false;
-        stealth.RevealOnDamage = false;
-        stealth.ThermalsImmune = true;
+        _stealth.SetExamineSettings((ent.Owner, stealth), 0f, ent.Comp.ExamineMessage);
+        _stealth.SetRevealOnAttack((ent.Owner, stealth), false);
+        _stealth.SetRevealOnDamage((ent.Owner, stealth), false);
+        _stealth.SetThermalsImmune(ent.Owner, true, stealth);
         Dirty(ent, stealth);
 
         _stealth.SetVisibility(ent.Owner, ent.Comp.Visibility, stealth);

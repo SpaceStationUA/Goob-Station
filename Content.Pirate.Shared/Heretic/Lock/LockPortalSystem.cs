@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Common.BlockTeleport;
+using Content.Goobstation.Common.Grab;
+using Content.Goobstation.Shared.GrabIntent;
 using Content.Shared._Shitcode.Heretic.Systems;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
@@ -108,7 +110,8 @@ public sealed class LockPortalSystem : EntitySystem
         if (TryComp(uid, out PullerComponent? puller) && puller.Pulling != null)
         {
             pulling = puller.Pulling.Value;
-            grabStage = puller.GrabStage;
+            if (TryComp(uid, out GrabIntentComponent? grabIntent))
+                grabStage = grabIntent.GrabStage;
         }
 
         if (Resolve(destination, ref destination.Comp3, false))
