@@ -15,9 +15,6 @@
     snapCardinals: true
   - type: Transform
     anchored: true
-    noRot: false # Pirate: chem plumbing
-  - type: Rotatable # Pirate: chem plumbing
-    rotateWhileAnchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -78,38 +75,6 @@
     - Chemist
   - type: StealTarget
     stealGroup: ChemDispenser
-  # Pirate: chem plumbing
-  - type: PlumbingConnectorAppearance
-    offset: 0.09375
-  - type: AtmosPipeColor
-  - type: NodeContainer
-    nodes:
-      outletNorth:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: North
-      outletEast:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: East
-      outletSouth:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: South
-      outletWest:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: West
-  - type: PlumbingOutlet
-    solutionName: beaker
-    connectedOutlets: true
-    outletNames:
-    - outletNorth
-    - outletEast
-    - outletSouth
-    - outletWest
-    containerSlotId: energyBeakerSlot
-    enabled: false
   - type: Machine
     board: EnergyChemDispenserMachineCircuitboard
   - type: ActivatableUI
@@ -174,9 +139,6 @@
     snapCardinals: true
   - type: Transform
     anchored: true
-    noRot: false # Pirate: chem plumbing
-  - type: Rotatable # Pirate: chem plumbing
-    rotateWhileAnchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -232,38 +194,6 @@
   - type: WiresPanel
   - type: StealTarget
     stealGroup: ChemDispenser
-  # Pirate: chem plumbing
-  - type: PlumbingConnectorAppearance
-    offset: 0.09375
-  - type: AtmosPipeColor
-  - type: NodeContainer
-    nodes:
-      outletNorth:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: North
-      outletEast:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: East
-      outletSouth:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: South
-      outletWest:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: West
-  - type: PlumbingOutlet
-    solutionName: beaker
-    connectedOutlets: true
-    outletNames:
-    - outletNorth
-    - outletEast
-    - outletSouth
-    - outletWest
-    containerSlotId: energyBeakerSlot
-    enabled: false
   - type: Machine
     board: ServiceEnergyChemMachineCircuitboard
   - type: ActivatableUI

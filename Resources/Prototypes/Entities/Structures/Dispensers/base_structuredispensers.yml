@@ -9,15 +9,9 @@
   components:
   - type: Transform
     anchored: true
-    noRot: false # Pirate: chem plumbing
-  - type: Rotatable # Pirate: chem plumbing
-    rotateWhileAnchored: true
+    noRot: true
   - type: Clickable
   - type: InteractionOutline
-  # Pirate: chem plumbing
-  - type: PlumbingConnectorAppearance
-    offset: 0.09375
-  - type: AtmosPipeColor
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -96,37 +90,4 @@
       storagebase: !type:Container
   - type: StaticPrice
     price: 1000
-  - type: WiresPanel
-  # Pirate: chem plumbing
-  - type: NodeContainer
-    nodes:
-      outletNorth:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: North
-      outletEast:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: East
-      outletSouth:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: South
-      outletWest:
-        !type:PlumbingNode
-        nodeGroupID: Plumbing
-        pipeDirection: West
-  - type: PlumbingOutlet
-    solutionName: beaker
-    connectedOutlets: true
-    outletNames:
-    - outletNorth
-    - outletEast
-    - outletSouth
-    - outletWest
-    containerSlotId: beakerSlot
-    enabled: false
-  - type: EmptyOnMachineDeconstruct
-    containers:
-    - storagebase
-    - beakerSlot
+  - type: WiresPanel 

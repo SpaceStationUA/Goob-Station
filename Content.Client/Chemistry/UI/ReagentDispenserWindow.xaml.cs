@@ -25,7 +25,6 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private readonly IEntityManager _entityManager = default!;
         public event Action<ItemStorageLocation>? OnDispenseReagentButtonPressed;
         public event Action<ItemStorageLocation>? OnEjectJugButtonPressed;
-        public event Action? OnToggleValveButtonPressed; // Pirate: chem plumbing
 
         #region Pirate: chem recipes
         private AudioSystem _audioSystem = default!;
@@ -52,7 +51,6 @@ namespace Content.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            ValveButton.OnPressed += _ => OnToggleValveButtonPressed?.Invoke(); // Pirate: chem plumbing
             #region Pirate: chem recipes
             _audioSystem = _entityManager.System<AudioSystem>();
 
@@ -129,8 +127,6 @@ namespace Content.Client.Chemistry.UI
             // Disable the Clear & Eject button if no beaker
             ClearButton.Disabled = castState.OutputContainer is null;
             EjectButton.Disabled = castState.OutputContainer is null;
-
-            ValveButton.Text = GetValveText(castState.ValveOpen); // Pirate: chem plumbing
 
             AmountGrid.Selected = ((int)castState.SelectedDispenseAmount).ToString();
         }
@@ -221,13 +217,6 @@ namespace Content.Client.Chemistry.UI
                 RecipeList,
                 RecipeDiskList,
                 ref _recordButtonIsCancel);
-        }
-        #endregion
-
-        #region Pirate: chem plumbing
-        private static string GetValveText(bool open)
-        {
-            return $"{Loc.GetString("gas-canister-window-valve-label")} {Loc.GetString(open ? "gas-canister-window-valve-open-text" : "gas-canister-window-valve-closed-text")}";
         }
         #endregion
     }

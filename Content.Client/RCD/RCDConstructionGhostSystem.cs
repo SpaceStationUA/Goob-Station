@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Client.Hands.Systems;
-using Content.Client._Pirate.RCD; // Pirate: chem plumbing
-using Content.Shared.Atmos.Components; // Pirate: chem plumbing
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
@@ -23,7 +21,6 @@ namespace Content.Client.RCD;
 public sealed class RCDConstructionGhostSystem : EntitySystem
 {
     private const string PlacementMode = nameof(AlignRCDConstruction);
-    private const string RpdPlacementMode = nameof(AlignRPDAtmosPipeLayers); // Pirate: chem plumbing
 
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPlacementManager _placementManager = default!;
@@ -31,7 +28,6 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
     [Dependency] private readonly HandsSystem _hands = default!;
 
     private Direction _placementDirection = default;
-    private EntityUid? _lastHeldRcd; // Pirate: chem plumbing
     private bool _useMirrorPrototype = false;
     public event EventHandler? FlipConstructionPrototype;
 
@@ -71,7 +67,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
             _useMirrorPrototype = !rcd.UseMirrorPrototype;
 
             var useProto = _useMirrorPrototype ? prototype.MirrorPrototype : prototype.Prototype;
-            CreatePlacer(placerEntity.Value, useProto, prototype.Mode, GetPlacementMode(rcd, prototype)); // Pirate: chem plumbing
+            CreatePlacer(placerEntity.Value, rcd, useProto, prototype.Mode);
 
             // tell the server
 
@@ -100,61 +96,39 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
 
         var heldEntity = _hands.GetActiveItem(player);
 
-        // Don't open the placement overlay for client-side RCDs.
-        // This may happen when predictively spawning one in your hands.
-        if (heldEntity != null && IsClientSide(heldEntity.Value))
-            return;
-
         if (!TryComp<RCDComponent>(heldEntity, out var rcd))
         {
             // If the player was holding an RCD, but is no longer, cancel placement
             if (placerIsRCD)
                 _placementManager.Clear();
 
-            _lastHeldRcd = null; // Pirate: chem plumbing
             return;
         }
-        #region Pirate: chem plumbing
         var prototype = _protoManager.Index(rcd.ProtoId);
-        var useProto = (_useMirrorPrototype && !string.IsNullOrEmpty(prototype.MirrorPrototype)) ? prototype.MirrorPrototype : prototype.Prototype;
-        var isLayered = (rcd.IsRpd || rcd.IsRPLD) && prototype.HasLayers;
-        var desiredMode = GetPlacementMode(rcd, prototype);
-        #endregion
 
-        #region Pirate: chem plumbing
-        if (_lastHeldRcd != heldEntity)
-        {
-            _lastHeldRcd = heldEntity;
-            _placementDirection = _placementManager.Direction;
-            RaiseNetworkEvent(new RCDConstructionGhostRotationEvent(GetNetEntity(heldEntity.Value), _placementDirection));
-        }
-        #endregion
         // Update the direction the RCD prototype based on the placer direction
-        else if (_placementDirection != _placementManager.Direction) // Pirate: chem plumbing
+        if (_placementDirection != _placementManager.Direction)
         {
             _placementDirection = _placementManager.Direction;
             RaiseNetworkEvent(new RCDConstructionGhostRotationEvent(GetNetEntity(heldEntity.Value), _placementDirection));
         }
 
         // If the placer has not changed build it.
-        #region Pirate: chem plumbing
-        if (heldEntity != placerEntity ||
-            _placementManager.CurrentPermission?.PlacementOption != desiredMode ||
-            !PrototypeMatchesCurrentPlacer(useProto, placerProto, isLayered))
-        #endregion
+        var useProto = (_useMirrorPrototype && !string.IsNullOrEmpty(prototype.MirrorPrototype)) ? prototype.MirrorPrototype : prototype.Prototype;
+        if (heldEntity != placerEntity || useProto != placerProto)
         {
-            CreatePlacer(heldEntity.Value, useProto, prototype.Mode, desiredMode); // Pirate: chem plumbing
+            CreatePlacer(heldEntity.Value, rcd, useProto, prototype.Mode);
         }
 
     }
 
-    private void CreatePlacer(EntityUid uid, string? prototype, RcdMode mode, string placementMode) // Pirate: chem plumbing
+    private void CreatePlacer(EntityUid uid, RCDComponent component, string? prototype, RcdMode mode)
     {
         // Create a new placer
         var newObjInfo = new PlacementInformation
         {
             MobUid = uid,
-            PlacementOption = placementMode, // Pirate: chem plumbing
+            PlacementOption = PlacementMode,
             EntityType = prototype,
             Range = (int) Math.Ceiling(SharedInteractionSystem.InteractionRange),
             IsTile = (mode == RcdMode.ConstructTile),
@@ -164,36 +138,4 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
         _placementManager.Clear();
         _placementManager.BeginPlacing(newObjInfo);
     }
-
-    #region Pirate: chem plumbing
-    private static string GetPlacementMode(RCDComponent component, RCDPrototype prototype)
-    {
-        return (component.IsRpd || component.IsRPLD) && prototype.HasLayers
-            ? RpdPlacementMode
-            : PlacementMode;
-    }
-
-    private bool PrototypeMatchesCurrentPlacer(string? expectedProto, string? currentProto, bool isLayered)
-    {
-        if (expectedProto == currentProto)
-            return true;
-
-        if (!isLayered || expectedProto == null || currentProto == null)
-            return false;
-
-        if (!_protoManager.TryIndex<EntityPrototype>(expectedProto, out var entityProto))
-            return false;
-
-        if (!entityProto.TryGetComponent<AtmosPipeLayersComponent>(out var atmosPipeLayers, EntityManager.ComponentFactory))
-            return false;
-
-        foreach (var alternative in atmosPipeLayers.AlternativePrototypes.Values)
-        {
-            if (alternative.Id == currentProto)
-                return true;
-        }
-
-        return false;
-    }
-    #endregion
 }

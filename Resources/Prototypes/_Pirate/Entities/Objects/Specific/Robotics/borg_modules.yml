@@ -1,25 +1,4 @@
 - type: entity
-  id: BorgModuleAdvancedPlumbing
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: advanced plumbing cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: generic
-    # Pirate: local borgmodule.rsi has no plumbing layer yet.
-    - state: icon-rcd
-  - type: ItemBorgModule
-    hands:
-    - item: RPLDRecharging
-    - item: Crowbar
-    - item: Wrench
-    - item: trayScanner
-    - item: CableApcStack10
-    - item: Plunger
-  - type: BorgModuleIcon
-    icon: { sprite: _Pirate/Interface/Actions/actions_borg.rsi, state: plumbing-module }
-
-- type: entity
   id: BorgModuleLighting
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   name: "модуль освітлення кіборга"

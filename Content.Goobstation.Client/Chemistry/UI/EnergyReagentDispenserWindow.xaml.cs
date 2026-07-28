@@ -44,7 +44,6 @@ namespace Content.Goobstation.Client.Chemistry.UI
         private float _lastBatteryCharge = -1;
         private bool _cardsNeedUpdate = true;
         public event Action<string>? OnDispenseReagentButtonPressed;
-        public event Action? OnToggleValveButtonPressed; // Pirate: chem plumbing
         #region Pirate: chem recipes
         public event Action? OnStartRecipeRecordingPressed;
         public event Action? OnCancelRecipeRecordingPressed;
@@ -62,7 +61,6 @@ namespace Content.Goobstation.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            ValveButton.OnPressed += _ => OnToggleValveButtonPressed?.Invoke(); // Pirate: chem plumbing
             #region Pirate: chem recipes
             _audioSystem = _entityManager.System<AudioSystem>();
             RecordRecipeButton.OnPressed += _ =>
@@ -136,8 +134,6 @@ namespace Content.Goobstation.Client.Chemistry.UI
 
             ClearButton.Disabled = state.OutputContainer is null;
             EjectButton.Disabled = state.OutputContainer is null;
-
-            ValveButton.Text = GetValveText(state.ValveOpen); // Pirate: chem plumbing
 
             AmountGrid.Selected = ((int) state.SelectedDispenseAmount).ToString();
             _cardsNeedUpdate = true;
@@ -287,11 +283,6 @@ namespace Content.Goobstation.Client.Chemistry.UI
             UpdateCardStates();
         }
         // Pirate: chem plumbing
-        private static string GetValveText(bool open)
-        {
-            return $"{Loc.GetString("gas-canister-window-valve-label")} {Loc.GetString(open ? "gas-canister-window-valve-open-text" : "gas-canister-window-valve-closed-text")}";
-        }
-
         #region Pirate: chem recipes
         private void UpdateRecipes(EnergyReagentDispenserBoundUserInterfaceState state)
         {
