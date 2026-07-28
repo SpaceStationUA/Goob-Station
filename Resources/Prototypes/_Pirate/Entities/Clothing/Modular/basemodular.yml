@@ -168,6 +168,9 @@
       - state: visor-unshaded-vox
         shader: unshaded
   - type: Armor
+    # Pirate: Shitmed applies armor only to explicitly covered body parts.
+    coverage:
+    - Head
     modifiers:
       coefficients:
         Blunt: 0.90
@@ -249,6 +252,16 @@
       outerClothing-vox:
       - state: sealed-equipped-OUTERCLOTHING-vox
   - type: Armor
+    # Pirate: The chestplate protects the wearer outside the helmet coverage.
+    coverage:
+    - Chest
+    - Groin
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    - Other
     modifiers:
       coefficients:
         Blunt: 0.90
