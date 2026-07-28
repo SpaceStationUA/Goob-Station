@@ -218,6 +218,15 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
     {
+        // Pirate: unshot projectiles should not create sensor contacts, but thrown items still need hit events.
+        if (!args.OurFixture.Hard &&
+            component is { Weapon: null, OnlyCollideWhenShot: true } &&
+            !HasComp<ThrownItemComponent>(uid))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
         // Goobstation - Crawling fix
         if (TryComp<RequireProjectileTargetComponent>(args.OtherEntity, out var requireTarget) && requireTarget.IgnoreThrow && requireTarget.Active)
             return;
