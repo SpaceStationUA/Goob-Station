@@ -18,10 +18,10 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     [Dependency] private IMidiManager _midiManager = default!;
     [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private ILogManager _logManager = default!;
-    [Dependency] private InstrumentSystem _instruments = default!;
-    [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private InteractionSystem _interactionSystem = default!;
-    [Dependency] private SharedContainerSystem _sharedContainerSystem = default!;
+    private InstrumentSystem _instruments = default!;
+    private ActionBlockerSystem _actionBlockerSystem = default!;
+    private InteractionSystem _interactionSystem = default!;
+    private SharedContainerSystem _sharedContainerSystem = default!;
     private readonly ISawmill _sawmill = default!;
 
     private readonly FileMidiSource _fileSource = new();
@@ -36,6 +36,10 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         _sawmill = _logManager.GetSawmill(SawmillCategory);
+        _instruments = EntMan.System<InstrumentSystem>();
+        _actionBlockerSystem = EntMan.System<ActionBlockerSystem>();
+        _interactionSystem = EntMan.System<InteractionSystem>();
+        _sharedContainerSystem = EntMan.System<SharedContainerSystem>();
     }
 
     protected override void Open()

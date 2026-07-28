@@ -1,121 +1,141 @@
-﻿#nullable enable
-
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Content.Client.Audio.Midi;
-using Content.IntegrationTests.Fixtures;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Audio.Midi;
 
 [TestFixture]
-public sealed partial class MidiFileCollectionManagerTests : GameTest
+public sealed class MidiFileCollectionManagerTests
 {
     private static readonly byte[] TestBytes = [1, 2, 3, 4, 5, 6];
-    private static readonly ResPath TestFileName = new ResPath("unit_test.midi");
-    private static ResPath TestUserDataDir => new ResPath("/UserMidis/");
+    private static readonly ResPath TestFileName = new("unit_test.midi");
+    private static ResPath TestUserDataDir => new("/UserMidis/");
     private static ResPath TestFullPath => TestUserDataDir / TestFileName;
-
-    private IResourceManager ResManager => Pair.Client.ResolveDependency<IResourceManager>();
-    private MidiFileCollectionManager MidiLibManager => Pair.Client.ResolveDependency<MidiFileCollectionManager>();
-
-    [TearDown]
-    public void CleanUserData()
-    {
-        foreach (var file in ResManager.UserData.DirectoryEntries(TestUserDataDir))
-        {
-            ResManager.UserData.Delete(new ResPath(TestUserDataDir + file));
-        }
-
-        MidiLibManager.ReloadLibrary();
-    }
 
     [Test]
     public async Task TestAddMidiFile()
     {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings());
+        var client = pair.Client;
+        var resManager = client.ResolveDependency<IResourceManager>();
+        var midiLibManager = client.ResolveDependency<MidiFileCollectionManager>();
+
         var addedFileName = new ResPath("");
         Stream stream = new MemoryStream(TestBytes);
-        MidiLibManager.MidiFileAdded += s => { addedFileName = s; };
+        midiLibManager.MidiFileAdded += s => { addedFileName = s; };
 
-        await MidiLibManager.AddMidiFile(TestFileName, stream);
-        var outputBytes = ResManager.UserData.ReadAllBytes(TestFullPath);
+        await midiLibManager.AddMidiFile(TestFileName, stream);
+        var outputBytes = resManager.UserData.ReadAllBytes(TestFullPath);
 
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(MidiLibManager.GetMidiFiles(), Contains.Item(TestFileName));
+            Assert.That(midiLibManager.GetMidiFiles(), Contains.Item(TestFileName));
             Assert.That(outputBytes, Is.EqualTo(TestBytes));
             Assert.That(addedFileName, Is.EqualTo(TestFileName));
         }
+
+        midiLibManager.RemoveAllMidiFiles();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
-    public void TestGetMidiData()
+    public async Task TestGetMidiData()
     {
-        ResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
-        var midiBytes = MidiLibManager.GetMidiData(TestFileName);
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings());
+        var client = pair.Client;
+        var resManager = client.ResolveDependency<IResourceManager>();
+        var midiLibManager = client.ResolveDependency<MidiFileCollectionManager>();
+
+        resManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
+        var midiBytes = midiLibManager.GetMidiData(TestFileName);
 
         Assert.That(TestBytes, Is.EqualTo(midiBytes));
+
+        midiLibManager.RemoveAllMidiFiles();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
-    public void TestRemoveMidiFile()
+    public async Task TestRemoveMidiFile()
     {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings());
+        var client = pair.Client;
+        var resManager = client.ResolveDependency<IResourceManager>();
+        var midiLibManager = client.ResolveDependency<MidiFileCollectionManager>();
+
         var removedFileName = new ResPath("");
-        MidiLibManager.MidiFileRemoved += s => { removedFileName = s; };
+        midiLibManager.MidiFileRemoved += s => { removedFileName = s; };
 
-        ResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
-        Assert.That(ResManager.UserData.Exists(TestFullPath), Is.True);
+        resManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
+        Assert.That(resManager.UserData.Exists(TestFullPath), Is.True);
 
-        MidiLibManager.RemoveMidiFile(TestFileName);
+        midiLibManager.RemoveMidiFile(TestFileName);
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(ResManager.UserData.Exists(TestFullPath), Is.False);
-            Assert.That(MidiLibManager.GetMidiFiles(), Is.Empty);
+            Assert.That(resManager.UserData.Exists(TestFullPath), Is.False);
+            Assert.That(midiLibManager.GetMidiFiles(), Is.Empty);
             Assert.That(removedFileName, Is.EqualTo(TestFileName));
         }
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestRemoveAllMidiFiles()
     {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings());
+        var client = pair.Client;
+        var midiLibManager = client.ResolveDependency<MidiFileCollectionManager>();
+
         var resetFired = false;
 
-        MidiLibManager.MidiFilesReset += () => { resetFired = true; };
-        await MidiLibManager.AddMidiFile(new ResPath("1_unit_test.midi"), TestBytes);
-        await MidiLibManager.AddMidiFile(new ResPath("2_unit_test.midi"), TestBytes);
-        await MidiLibManager.AddMidiFile(new ResPath("3_unit_test.midi"), TestBytes);
+        midiLibManager.MidiFilesReset += () => { resetFired = true; };
+        await midiLibManager.AddMidiFile(new ResPath("1_unit_test.midi"), TestBytes);
+        await midiLibManager.AddMidiFile(new ResPath("2_unit_test.midi"), TestBytes);
+        await midiLibManager.AddMidiFile(new ResPath("3_unit_test.midi"), TestBytes);
 
-        Assert.That(MidiLibManager.GetMidiFiles().Count(), Is.EqualTo(3));
+        Assert.That(midiLibManager.GetMidiFiles().Count(), Is.EqualTo(3));
 
-        MidiLibManager.RemoveAllMidiFiles();
+        midiLibManager.RemoveAllMidiFiles();
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(MidiLibManager.GetMidiFiles(), Is.Empty);
+            Assert.That(midiLibManager.GetMidiFiles(), Is.Empty);
             Assert.That(resetFired, Is.True);
         }
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
-    public void TestRenameMidiFile()
+    public async Task TestRenameMidiFile()
     {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings());
+        var client = pair.Client;
+        var resManager = client.ResolveDependency<IResourceManager>();
+        var midiLibManager = client.ResolveDependency<MidiFileCollectionManager>();
+
         var renamedFileName = new ResPath("unit_test_renamed.midi");
         var removedFileName = new ResPath("");
         var addedFileName = new ResPath("");
 
-        MidiLibManager.MidiFileRemoved += s => { removedFileName = s; };
-        MidiLibManager.MidiFileAdded += s => { addedFileName = s; };
+        midiLibManager.MidiFileRemoved += s => { removedFileName = s; };
+        midiLibManager.MidiFileAdded += s => { addedFileName = s; };
 
-        ResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
-        Assert.That(ResManager.UserData.Exists(TestFullPath), Is.True);
+        resManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
+        Assert.That(resManager.UserData.Exists(TestFullPath), Is.True);
 
-        MidiLibManager.RenameMidiFile(TestFileName, renamedFileName);
+        midiLibManager.RenameMidiFile(TestFileName, renamedFileName);
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(ResManager.UserData.Exists(TestUserDataDir / renamedFileName), Is.True);
-            Assert.That(ResManager.UserData.Exists(TestFullPath), Is.False);
+            Assert.That(resManager.UserData.Exists(TestUserDataDir / renamedFileName), Is.True);
+            Assert.That(resManager.UserData.Exists(TestFullPath), Is.False);
             Assert.That(removedFileName, Is.EqualTo(TestFileName));
             Assert.That(addedFileName, Is.EqualTo(renamedFileName));
         }
+
+        midiLibManager.RemoveAllMidiFiles();
+        await pair.CleanReturnAsync();
     }
 }

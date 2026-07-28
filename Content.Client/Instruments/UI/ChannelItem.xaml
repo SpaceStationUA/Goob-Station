@@ -10,10 +10,10 @@
             <controls:VSpacer Spacing="10" />
             <Label Name="ChannelNameLabel" HorizontalAlignment="Center" />
             <controls:VSpacer HorizontalExpand="True" />
-            <controls:SwitchButton Name="ChannelEnableSwitchButton"
-                                   HorizontalAlignment="Right"
-                                   OnStateText=""
-                                   OffStateText="" />
+            <Button Name="ChannelEnableSwitchButton"
+                    ToggleMode="True"
+                    HorizontalAlignment="Right"
+                    MinSize="30 20" />
         </BoxContainer>
     </PanelContainer>
 </Control>
