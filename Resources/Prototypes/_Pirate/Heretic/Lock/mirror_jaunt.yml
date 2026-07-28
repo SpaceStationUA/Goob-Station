@@ -13,7 +13,7 @@
     useDelay: 6
     itemIconStyle: NoItem
     icon:
-      sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+      sprite: _Pirate/Heretic/Mobs/mirror_maid.rsi
       state: maid
   - type: InstantAction
     event: !type:EventMirrorJaunt

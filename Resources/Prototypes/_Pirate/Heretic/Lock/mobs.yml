@@ -32,7 +32,7 @@
     raffle:
       settings: short
   - type: Sprite
-    sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+    sprite: _Pirate/Heretic/Mobs/mirror_maid.rsi
     state: maid
   - type: MirrorMaid
   - type: ActionGrant
@@ -243,7 +243,7 @@
   description: A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly.
   components:
   - type: Sprite
-    sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+    sprite: _Pirate/Heretic/Mobs/mirror_maid.rsi
     state: maid
   - type: MirrorMaid
   - type: ActionGrant

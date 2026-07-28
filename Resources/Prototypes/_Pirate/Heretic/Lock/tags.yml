@@ -14,3 +14,9 @@
 
 - type: Tag
   id: ForceHereticMinion
+
+- type: Tag
+  id: GlovesLatex
+
+- type: Tag
+  id: GlovesNitrile

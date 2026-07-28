@@ -111,17 +111,17 @@
     tags:
     - ForceHereticMinion
   - type: TileEntityEffect
-    conditions:
-    - !type:WhitelistCondition
-      checkMind: true
-      blacklist:
-        components:
-        - Heretic
-        - Ghoul
-      guidebookText: entity-condition-guidebook-not-heretic-or-ghoul
     effects:
     - !type:GenericStatusEffect
       key: TemporaryBlindness
       component: TemporaryBlindness
       type: Update
       time: 20
+      conditions:
+      - !type:HasComponentCondition
+        checkMind: true
+        inverted: true
+        components:
+        - type: Heretic
+        - type: Ghoul
+        guidebookComponentName: reagent-comp-condition-heretic-or-ghoul
