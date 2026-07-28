@@ -3529,3 +3529,9 @@ Entries:
       message: Виправлено доступ до ghost roles з вимогами до профілю персонажа.
   id: 338
   time: '2026-07-28T17:49:33.0000000+00:00'
+- author: VCStudio2
+  changes:
+    - type: Remove
+      message: Видалено Гейт ТП та Snowball Station з голосування вибору мапи.
+  id: 339
+  time: '2026-07-28T17:49:53.0000000+00:00'
