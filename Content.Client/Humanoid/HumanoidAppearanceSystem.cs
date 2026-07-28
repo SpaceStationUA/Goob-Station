@@ -554,6 +554,9 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     {
         base.SetLayerVisibility(ent, layer, visible, slot, ref dirty);
 
+        // Pirate: keep visuals hidden until every equipped source releases the layer.
+        visible &= !IsHidden(ent.Comp, layer);
+
         var sprite = Comp<SpriteComponent>(ent);
         if (!_sprite.LayerMapTryGet((ent.Owner, sprite), layer, out var index, false))
         {
