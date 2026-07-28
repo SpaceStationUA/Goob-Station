@@ -20,7 +20,7 @@
     requiredLegs: 2
     gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
-    damageContainer: InorganicMetaphysical # DeltaV
+    damageContainer: Skeleton # Pirate: allow skeleton-specific medical treatment.
     damageModifierSet: Skeleton # If we get non-Holy metaphysical damage types in the future, the Skeleton set might need to be adjusted to provide immunity to them (depends on what exactly the new types are)
   #  - type: DamageVisuals
   #    damageOverlayGroups:
@@ -95,6 +95,7 @@
       methods: [ Touch ]
       effects: # TODO: when magic is around - make a milk transformation to a skeleton monster
       - !type:HealthChange
+        splitDamage: SplitEnsureAll # Pirate: skeleton body parts are inorganic.
         damage:
           groups: # these groups are the only 3 possible ways to damage a skeleton. numerical values obviously up to discussion
             Burn: -4 # healing obviously up to discussion # Shitmed value
