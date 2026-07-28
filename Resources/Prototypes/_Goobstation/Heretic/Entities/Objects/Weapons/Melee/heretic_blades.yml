@@ -138,6 +138,7 @@
   components:
   - type: HereticBlade
     path: Lock
+  - type: OpeningBlade # Pirate: Trauma Lock blade wound effect.
   - type: Sprite
     sprite: _Goobstation/Heretic/Blades/blade_lock.rsi
     state: icon

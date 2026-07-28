@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Pirate.Shared.Heretic.Lock;
 using Content.Shared._Goobstation.Wizard.Projectiles;
 using Content.Shared._Shitmed.Medical.Surgery.Steps.Parts;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds;
@@ -12,7 +13,6 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Heretic;
-using Content.Shared.Heretic.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
@@ -44,12 +44,12 @@ public sealed class OpeningBladeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HereticBladeComponent, MeleeHitEvent>(OnMeleeHit);
+        SubscribeLocalEvent<OpeningBladeComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
-    private void OnMeleeHit(Entity<HereticBladeComponent> ent, ref MeleeHitEvent args)
+    private void OnMeleeHit(Entity<OpeningBladeComponent> ent, ref MeleeHitEvent args)
     {
-        if (!args.IsHit || ent.Comp.Path != "Lock" ||
+        if (!args.IsHit ||
             !TryComp(args.User, out HereticComponent? heretic) ||
             heretic is not { CurrentPath: "Lock", PathStage: >= 7 })
             return;
