@@ -24,7 +24,12 @@
         color: "#555555AA"
       Burn:
         sprite: _Shitmed/Mobs/Effects/burn_damage.rsi
+    bleedingOverlay: null # Pirate: skeletons have no blood.
+  - type: Woundable
+    damageContainer: Skeleton # Pirate: match the skeleton body's damage container.
+    canBleed: false # Pirate: skeletons have no blood.
   - type: Damageable # Shitmed
+    damageContainer: Skeleton # Pirate: match the skeleton body's damage container.
     damageModifierSet: Skeleton
 
 - type: entity

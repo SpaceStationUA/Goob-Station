@@ -199,7 +199,8 @@ public sealed class PartStatusSystem : EntitySystem
             titlestring += "-styleless";
         }
 
-        message.AddText(Loc.GetString(titlestring, ("entity", Identity.Name(entity, EntityManager))));
+        // Pirate: status locale strings contain markup and entity names are already escaped by Identity.Name.
+        message.AddMarkupOrThrow(Loc.GetString(titlestring, ("entity", Identity.Name(entity, EntityManager))));
         message.PushNewline();
         AddLine(message);
         CreateBodyPartMessage(partStatusSet, entity == examiner, ref message, !styling);
@@ -238,10 +239,12 @@ public sealed class PartStatusSystem : EntitySystem
                 locString += "-styleless";
             }
 
-            message.AddText("    " + Loc.GetString(locString,
-                ("possessive", possessive),
-                ("part", partStatus.PartName),
-                ("status", statusDescription)));
+            message.AddText("    ");
+            // Pirate: parse locale markup while keeping interpolated text literal.
+            message.AddMarkupOrThrow(Loc.GetString(locString,
+                ("possessive", FormattedMessage.EscapeText(possessive)),
+                ("part", FormattedMessage.EscapeText(partStatus.PartName)),
+                ("status", FormattedMessage.EscapeText(statusDescription))));
 
             message.PushNewline();
         }
