@@ -47,3 +47,4 @@
     interfaces:
       enum.WizardMirrorUiKey.Key:
         type: WizardMirrorBoundUserInterface
+  - type: ReflectiveSurface # Pirate - Heretic Lock Path

@@ -78,6 +78,10 @@
   - type: GuideHelp
     guides:
     - ExpandingRepairingStation
+  - type: Tag # Pirate: Lock path ritual ingredient.
+    tags:
+    - RodMetal
+    - DroneUsable
 
 - type: entity
   parent: PartRodMetal
@@ -87,6 +91,7 @@
   components:
   - type: Tag
     tags:
+    - RodMetal # Pirate: Lock path ritual ingredient.
     - ConstructionMaterial
     - DroneUsable # Goobstation
   - type: Sprite
@@ -102,6 +107,7 @@
   components:
   - type: Tag
     tags:
+    - RodMetal # Pirate: Lock path ritual ingredient.
     - ConstructionMaterial
     - DroneUsable # Goobstation
   - type: Sprite

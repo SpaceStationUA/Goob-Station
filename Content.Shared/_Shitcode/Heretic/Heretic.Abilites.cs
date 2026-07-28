@@ -238,8 +238,8 @@ public sealed partial class HereticChampionStanceEvent : HereticKnowledgeEvent;
 public sealed partial class EventHereticFuriousSteel : InstantActionEvent { }
 
 // lock
-public sealed partial class EventHereticBulglarFinesse : InstantActionEvent { }
-public sealed partial class EventHereticLastRefugee : InstantActionEvent { }
+// Pirate: Burglar's Finesse targets another entity.
+public sealed partial class EventHereticBulglarFinesse : EntityTargetActionEvent { }
 
 public sealed partial class EventHereticShapeshift : InstantActionEvent;
 

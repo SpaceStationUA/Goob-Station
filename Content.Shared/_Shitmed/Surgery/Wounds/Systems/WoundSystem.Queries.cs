@@ -624,7 +624,8 @@ public sealed partial class WoundSystem
         string woundId,
         FixedPoint2 severity,
         [NotNullWhen(true)] out Entity<WoundComponent>? woundInduced,
-        WoundableComponent? woundable = null)
+        WoundableComponent? woundable = null,
+        ProtoId<DamageGroupPrototype>? damageGroup = null) // Pirate: support custom wound prototypes such as WeepingAvulsion.
     {
         woundInduced = null;
         if (!Resolve(uid, ref woundable))
@@ -638,7 +639,7 @@ public sealed partial class WoundSystem
             woundId,
             severity,
             out woundInduced,
-            GetDamageGroupByType(woundId)?.ID,
+            damageGroup ?? GetDamageGroupByType(woundId)?.ID,
             woundable);
         return wound;
     }
@@ -703,11 +704,10 @@ public sealed partial class WoundSystem
             || !Resolve(uid, ref woundable))
             return false;
 
-        var proto = _prototype.Index(id);
         foreach (var wound in GetWoundableWounds(uid, woundable))
         {
-            if (proto.ID != wound.Comp.DamageType
-                || wound.Comp.IsScar)
+            // Pirate: custom wound entity IDs do not have to match their damage type.
+            if (Prototype(wound)?.ID != id || wound.Comp.IsScar)
                 continue;
 
             ApplyWoundSeverity(wound, severity, wound);
