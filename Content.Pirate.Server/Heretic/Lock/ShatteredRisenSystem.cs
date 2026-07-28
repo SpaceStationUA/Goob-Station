@@ -41,13 +41,13 @@ public sealed class ShatteredRisenSystem : EntitySystem
         foreach (var held in _hands.EnumerateHeld(handsEnt))
         {
             var prototype = Prototype(held)?.ID;
-            if (prototype == ent.Comp.Weapon1)
+            if (prototype == ent.Comp.Weapon1.Id)
             {
                 hasWeapon1 = true;
                 continue;
             }
 
-            if (prototype == ent.Comp.Weapon2)
+            if (prototype == ent.Comp.Weapon2.Id)
                 continue;
 
             if (!_hands.TryDrop(handsEnt, held, null, false, false))

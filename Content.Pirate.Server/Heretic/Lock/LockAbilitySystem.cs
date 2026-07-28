@@ -8,6 +8,7 @@ using Content.Server.Heretic.Abilities;
 using Content.Server.Heretic.EntitySystems;
 using Content.Server.Polymorph.Components;
 using Content.Server.Polymorph.Systems;
+using Content.Goobstation.Common.Religion;
 using Content.Pirate.Shared.Heretic.Lock;
 using Content.Shared._Goobstation.Heretic.Components;
 using Content.Shared._Shitcode.Heretic.Components;
@@ -69,7 +70,10 @@ public sealed class LockAbilitySystem : EntitySystem
 
         var ev = new BeforeCastTouchSpellEvent(args.Target);
         RaiseLocalEvent(args.Target, ev, true);
-        if (ev.Cancelled || !_inventory.TryGetSlotEntity(args.Target, "back", out var backpack))
+        if (ev.Cancelled)
+            return;
+
+        if (!_inventory.TryGetSlotEntity(args.Target, "back", out var backpack))
             return;
 
         var toSteal = backpack.Value;
