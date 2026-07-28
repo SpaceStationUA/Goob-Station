@@ -7,7 +7,7 @@
   - Bagel
   - BoxTP # Pirate
   #- Box # Pirate
-  - GateTP # Pirate
+  #- GateTP # Pirate - will be re-added after the rework
   - Cluster
   #- Core
   - Fland
@@ -26,7 +26,7 @@
   - FlandHighPop
   - OasisHighPop
   - Barratry # Goobstation - Re-add barratry
-  - KettleTP # Pirate - Попа.
+  - KettleTP # Pirate
   #- Kettle # Pirate
   - Leonid # Goobstation - for goob by goob
   - Delta # Goobstation - ported from Corvax
@@ -37,4 +37,4 @@
   - PiramideTP # Pirate
   #- Plasma # Goob - No. Leave it to the mappers.
   #- Exo # Goobstation - Just no
-  - Snowball
+  #- Snowball # Pirate - not even Goob station map, nuh uh
