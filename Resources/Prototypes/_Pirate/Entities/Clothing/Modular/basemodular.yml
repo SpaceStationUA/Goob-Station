@@ -221,7 +221,7 @@
     unlockOnClick: false
 
 - type: entity
-  parent: [ BaseItem, BaseClothingModularToggler, AllowSuitStorageClothing ]
+  parent: [ BaseItem, BaseClothingModularToggler, AllowSuitStorageClothing, ClothingArmorPlate ] # Pirate: armor plates.
   id: ClothingModularChestPlateBase
   abstract: true
   components:
