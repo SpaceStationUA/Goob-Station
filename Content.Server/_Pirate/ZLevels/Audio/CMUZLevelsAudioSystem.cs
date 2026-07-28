@@ -64,9 +64,15 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
 
     private void OnCrossZAudioChanged(bool enabled)
     {
+        var wasEnabled = _crossZAudioEnabled;
         _crossZAudioEnabled = enabled;
         if (enabled)
+        {
+            if (!wasEnabled)
+                RefreshActiveSources();
+
             return;
+        }
 
         // Disabling mid-round: tear down live projections so looped audio stops on adjacent decks
         // immediately. QueueDel is deferred, so iterating the dictionary here is safe.
@@ -78,6 +84,32 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
 
         _projectionsBySource.Clear();
         _processed.Clear();
+    }
+
+    private void RefreshActiveSources()
+    {
+        // Collect UIDs first because projecting a source creates AudioComponents and may change
+        // the storage being enumerated.
+        var sources = new List<EntityUid>();
+        var query = EntityQueryEnumerator<CMUZLevelAudioActiveComponent>();
+        while (query.MoveNext(out var uid, out _))
+            sources.Add(uid);
+
+        foreach (var source in sources)
+        {
+            if (TerminatingOrDeleted(source))
+                continue;
+
+            if (!TryComp<AudioComponent>(source, out var audio) ||
+                !TryComp<TransformComponent>(source, out var xform))
+            {
+                RemComp<CMUZLevelAudioActiveComponent>(source);
+                ClearSourceProjections(source);
+                continue;
+            }
+
+            RefreshAudioSource((source, audio), xform);
+        }
     }
 
     private void OnAudioMove(Entity<CMUZLevelAudioActiveComponent> active, ref MoveEvent args)
@@ -295,9 +327,10 @@ public sealed class CMUZLevelsAudioSystem : EntitySystem
             {
                 var projection = remaining[i];
                 if (TerminatingOrDeleted(projection) ||
+                    !_projections.Contains(projection) ||
                     !TryComp<TransformComponent>(projection, out var projectionXform))
                 {
-                    _projections.Remove(projection);
+                    RemoveProjection(projection);
                     remaining.RemoveAt(i);
                     continue;
                 }
