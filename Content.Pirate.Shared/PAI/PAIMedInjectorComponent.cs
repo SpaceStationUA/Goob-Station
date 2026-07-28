@@ -7,19 +7,19 @@ namespace Content.Pirate.Shared.PAI;
 public sealed partial class PAIMedInjectorComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public float MaxCapacity = 15f;
+    public float MaxCapacity = 12f;
 
     [DataField, AutoNetworkedField]
-    public float CurrentCapacity = 15f;
+    public float CurrentCapacity = 12f;
 
     [DataField]
     public float RechargeAmount = 1f;
 
     [DataField]
-    public float RechargeTime = 12f;
+    public float RechargeTime = 10f;
 
     [DataField]
-    public float MedCooldown = 30f;
+    public float MedCooldown = 20f;
 
     [DataField, AutoNetworkedField]
     public Dictionary<string, TimeSpan> LastUsed = new();

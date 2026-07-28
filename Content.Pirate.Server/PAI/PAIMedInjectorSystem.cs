@@ -25,22 +25,22 @@ public sealed class PAIMedInjectorSystem : EntitySystem
 
     private static readonly Dictionary<string, MedDef> RegularMeds = new()
     {
-        { "bicaridine", new("pai-med-bicaridine", "pai-med-bicaridine-desc", "Bicaridine", 5f) },
-        { "kelotane", new("pai-med-kelotane", "pai-med-kelotane-desc", "Kelotane", 5f) },
-        { "dylovene", new("pai-med-dylovene", "pai-med-dylovene-desc", "Dylovene", 5f) },
-        { "dexalin", new("pai-med-dexalin", "pai-med-dexalin-desc", "Dexalin", 5f) },
-        { "arithrazine", new("pai-med-arithrazine", "pai-med-arithrazine-desc", "Arithrazine", 5f) },
+        { "bicaridine", new("pai-med-bicaridine", "pai-med-bicaridine-desc", "Bicaridine", 3f) },
+        { "kelotane", new("pai-med-kelotane", "pai-med-kelotane-desc", "Kelotane", 3f) },
+        { "dylovene", new("pai-med-dylovene", "pai-med-dylovene-desc", "Dylovene", 3f) },
+        // { "dexalin", new("pai-med-dexalin", "pai-med-dexalin-desc", "Dexalin", 3f) },
+        // { "arithrazine", new("pai-med-arithrazine", "pai-med-arithrazine-desc", "Arithrazine", 3f) },
     };
 
     private static readonly Dictionary<string, MedDef> SyndicateMeds = new()
     {
-        { "tricordrazine", new("pai-med-tricordrazine", "pai-med-tricordrazine-desc", "Tricordrazine", 5f) },
-        { "ephedrine", new("pai-med-ephedrine", "pai-med-ephedrine-desc", "Ephedrine", 5f) },
-        { "bicaridine", new("pai-med-bicaridine", "pai-med-bicaridine-desc", "Bicaridine", 5f) },
-        { "kelotane", new("pai-med-kelotane", "pai-med-kelotane-desc", "Kelotane", 5f) },
-        { "dylovene", new("pai-med-dylovene", "pai-med-dylovene-desc", "Dylovene", 5f) },
-        { "dexalin", new("pai-med-dexalin", "pai-med-dexalin-desc", "Dexalin", 5f) },
-        { "arithrazine", new("pai-med-arithrazine", "pai-med-arithrazine-desc", "Arithrazine", 5f) },
+        { "tricordrazine", new("pai-med-tricordrazine", "pai-med-tricordrazine-desc", "Tricordrazine", 3f) },
+        { "ephedrine", new("pai-med-ephedrine", "pai-med-ephedrine-desc", "Ephedrine", 3f) },
+        { "bicaridine", new("pai-med-bicaridine", "pai-med-bicaridine-desc", "Bicaridine", 3f) },
+        { "kelotane", new("pai-med-kelotane", "pai-med-kelotane-desc", "Kelotane", 3f) },
+        { "dylovene", new("pai-med-dylovene", "pai-med-dylovene-desc", "Dylovene", 3f) },
+        // { "dexalin", new("pai-med-dexalin", "pai-med-dexalin-desc", "Dexalin", 3f) },
+        // { "arithrazine", new("pai-med-arithrazine", "pai-med-arithrazine-desc", "Arithrazine", 3f) },
     };
 
     public override void Initialize()

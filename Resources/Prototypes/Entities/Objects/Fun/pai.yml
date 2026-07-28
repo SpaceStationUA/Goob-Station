@@ -438,3 +438,16 @@
   - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.PAIMedInjectorUiKey.Key
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAISmoke
+  name: Smoke Generator
+  description: Create a smokescreen to conceal yourself and your owner.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_mecha.rsi, state: mech_smoke }
+    itemIconStyle: NoItem
+    useDelay: 60
+  - type: InstantAction
+    event: !type:PAISmokeEvent

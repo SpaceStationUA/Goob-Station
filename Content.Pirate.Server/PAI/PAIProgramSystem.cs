@@ -1,10 +1,15 @@
 using Content.Pirate.Shared.PAI;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Actions;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Overlays;
+using Content.Shared.Popups;
 using Content.Goobstation.Shared.Overlays;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Pirate.Server.PAI;
@@ -12,6 +17,9 @@ namespace Content.Pirate.Server.PAI;
 public sealed class PAIProgramSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SmokeSystem _smoke = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -23,6 +31,7 @@ public sealed class PAIProgramSystem : EntitySystem
         SubscribeLocalEvent<PAIHealthScanEvent>(OnHealthScan);
         SubscribeLocalEvent<PAIToggleFlashlightEvent>(OnToggleFlashlight);
         SubscribeLocalEvent<PAIToggleMedHudEvent>(OnToggleMedHud);
+        SubscribeLocalEvent<PAISmokeEvent>(OnSmoke);
     }
 
     private void OnToggleNightVision(PAIToggleNightVisionEvent args)
@@ -106,5 +115,27 @@ public sealed class PAIProgramSystem : EntitySystem
             RemComp<ShowHealthBarsComponent>(uid);
         else
             AddComp<ShowHealthBarsComponent>(uid);
+    }
+
+    private void OnSmoke(PAISmokeEvent args)
+    {
+        var uid = args.Performer;
+        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/smoke.ogg"), uid);
+        _popup.PopupClient(Loc.GetString("pai-smoke-start"), uid, uid);
+
+        for (var i = 0; i < 5; i++)
+        {
+            var delay = i * 0.6f;
+            Timer.Spawn(TimeSpan.FromSeconds(delay), () =>
+            {
+                if (!Exists(uid))
+                    return;
+                var xform = Transform(uid);
+                var ent = Spawn("Smoke", xform.Coordinates);
+                _smoke.StartSmoke(ent, new Solution(), 3f, 1);
+            });
+        }
+
+        args.Handled = true;
     }
 }

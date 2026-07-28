@@ -32,6 +32,10 @@ pai-med-hud-desc = Увімкнути медичний HUD для перегля
 pai-med-injector-name = Медичний ін'єктор
 pai-med-injector-desc = Ввести ліки в кров вашого власника.
 
+pai-smoke-name = Генератор диму
+pai-smoke-desc = Створіть димову завісу, щоб приховати себе та свого власника.
+pai-smoke-start = З пШІ пішов дим.
+
 pai-med-injector-title = Медичний ін'єктор
 pai-med-injector-capacity = Ємність
 pai-med-injector-meds = Ліки

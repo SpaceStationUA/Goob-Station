@@ -15,3 +15,5 @@ public sealed partial class PAIHealthScanEvent : InstantActionEvent;
 public sealed partial class PAIToggleFlashlightEvent : InstantActionEvent;
 
 public sealed partial class PAIToggleMedHudEvent : InstantActionEvent;
+
+public sealed partial class PAISmokeEvent : InstantActionEvent;

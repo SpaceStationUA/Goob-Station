@@ -34,6 +34,10 @@ pai-med-hud-desc = Toggle medical HUD to see health status of nearby people.
 pai-med-injector-name = Medical Injector
 pai-med-injector-desc = Inject medicine into your owner's bloodstream.
 
+pai-smoke-name = Smoke Generator
+pai-smoke-desc = Create a smokescreen to conceal yourself and your owner.
+pai-smoke-start = You emit smoke.
+
 pai-med-injector-title = Medical Injector
 pai-med-injector-capacity = Capacity
 pai-med-injector-meds = Medicines

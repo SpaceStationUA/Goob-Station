@@ -170,3 +170,16 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: PAISmoke
+  name: pai-smoke-name
+  description: pai-smoke-desc
+  productAction: ActionPAISmoke
+  cost:
+    SiliconMemory: 10
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
