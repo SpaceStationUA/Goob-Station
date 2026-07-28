@@ -141,13 +141,14 @@ public sealed partial class TerrorSpiderRuleSystem : GameRuleSystem<TerrorSpider
             ruleComp.Status = win ? TerrorSpidersWinStatus.Win : TerrorSpidersWinStatus.Lose;
             ruleComp.LoseProcessed = true;
             ruleComp.AnnouncementTime = _timing.CurTime + ruleComp.AnnouncementDelay;
-            ruleComp.EndRoundTime = _timing.CurTime + ruleComp.RoundEndDelay;
+            if (win)
+                ruleComp.EndRoundTime = _timing.CurTime + ruleComp.RoundEndDelay;
         }
 
         if (count == 0)
             return;
 
-        if (_roundEnd.IsRoundEndRequested())
+        if (!lose && _roundEnd.IsRoundEndRequested())
             _roundEnd.CancelRoundEndCountdown(null, false);
     }
 
@@ -156,7 +157,8 @@ public sealed partial class TerrorSpiderRuleSystem : GameRuleSystem<TerrorSpider
         if (!component.LoseProcessed)
             return;
 
-        if (component.AlreadyAnnounced && component.RoundAlreadyEnded)
+        if (component.AlreadyAnnounced
+            && (component.Status == TerrorSpidersWinStatus.Lose || component.RoundAlreadyEnded))
             return;
 
         if (GameTicker.RunLevel != GameRunLevel.InRound)
@@ -194,7 +196,9 @@ public sealed partial class TerrorSpiderRuleSystem : GameRuleSystem<TerrorSpider
             }
         }
 
-        if (component.RoundAlreadyEnded || component.EndRoundTime >= _timing.CurTime)
+        if (component.Status == TerrorSpidersWinStatus.Lose
+            || component.RoundAlreadyEnded
+            || component.EndRoundTime >= _timing.CurTime)
             return;
 
         _roundEnd.EndRound();
