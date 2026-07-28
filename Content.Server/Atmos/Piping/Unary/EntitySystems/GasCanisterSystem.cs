@@ -88,13 +88,16 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
             MixContainerWithPipeNet(canister.Air, net.Air);
         }
 
+        // Pirate: Small tanks barely affect canister pressure, so track their transfer separately for UI updates.
+        var tankPressureChanged = false;
+
         // Release valve is open, release gas.
         if (canister.ReleaseValve)
         {
             if (canister.GasTankSlot.Item != null)
             {
                 var gasTank = Comp<GasTankComponent>(canister.GasTankSlot.Item.Value);
-                _atmos.ReleaseGasTo(canister.Air, gasTank.Air, canister.ReleasePressure);
+                tankPressureChanged = _atmos.ReleaseGasTo(canister.Air, gasTank.Air, canister.ReleasePressure);
             }
             else
             {
@@ -104,7 +107,7 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
         }
 
         // If last pressure is very close to the current pressure, do nothing.
-        if (MathHelper.CloseToPercent(canister.Air.Pressure, canister.LastPressure))
+        if (!tankPressureChanged && MathHelper.CloseToPercent(canister.Air.Pressure, canister.LastPressure))
             return;
 
         DirtyUI(uid, canister, nodeContainer);
