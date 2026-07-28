@@ -3583,3 +3583,11 @@ Entries:
         залежності та псіоніку.
   id: 345
   time: '2026-07-28T20:26:04.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: Dragon і Coral Chicken більше не стають error-спрайтами після смерті.
+    - type: Fix
+      message: Здібності від Zappy Egg знову можна використовувати.
+  id: 346
+  time: '2026-07-28T20:29:18.0000000+00:00'
