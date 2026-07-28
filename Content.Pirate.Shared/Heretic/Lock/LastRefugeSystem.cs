@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Common.Movement;
+using Content.Goobstation.Maths.FixedPoint;
 using Content.Pirate.Common.Heretic;
 using Content.Shared.Actions;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
-using Content.Shared.FixedPoint;
 using Content.Shared.Heretic;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
@@ -34,7 +34,7 @@ public sealed class LastRefugeSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
 
-    private readonly HashSet<Entity<HumanoidProfileComponent>> _lookupHumanoid = new();
+    private readonly HashSet<Entity<HumanoidAppearanceComponent>> _lookupHumanoid = new();
 
     public override void Initialize()
     {

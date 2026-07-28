@@ -2,7 +2,7 @@
 
 using Content.Shared._Goobstation.Heretic.Systems;
 using Content.Shared._Shitcode.Heretic.Systems;
-using Content.Shared.Damage.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Effects;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;

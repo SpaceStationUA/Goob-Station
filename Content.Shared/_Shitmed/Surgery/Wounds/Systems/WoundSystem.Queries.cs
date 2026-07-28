@@ -634,13 +634,14 @@ public sealed partial class WoundSystem
         if (TryContinueWound(uid, woundId, severity, out woundInduced, woundable))
             return true;
 
-        var wound = TryCreateWound(
-            uid,
-            woundId,
-            severity,
-            out woundInduced,
-            damageGroup ?? GetDamageGroupByType(woundId)?.ID,
-            woundable);
+        var protoId = damageGroup?.Id ?? GetDamageGroupByType(woundId)?.ID;
+        var wound = protoId != null && TryCreateWound(
+                uid,
+                woundId,
+                severity,
+                out woundInduced,
+                protoId,
+                woundable);
         return wound;
     }
 
