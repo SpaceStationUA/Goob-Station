@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseAction
   id: ActionMirrorJaunt
-  name: heretic-ability-mirror-jaunt
-  description: heretic-ability-mirror-jaunt-desc
+  name: Mirror Walk
+  description: Traverse invisibly and freely through the mirror realm. You can enter or leave it only near reflective items and surfaces, such as windows or mirrors.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action

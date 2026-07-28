@@ -21,7 +21,7 @@ public sealed partial class LabyrinthPortalComponent : Component
     public float ChanceReduction = 0.1f;
 
     [DataField]
-    public EntityUid HereticMind;
+    public EntityUid? HereticMind;
 
     [DataField]
     public List<EntityUid> SpawnedMobs = new();

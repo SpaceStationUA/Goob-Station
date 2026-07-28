@@ -3,8 +3,10 @@
 - type: entity
   parent: BaseAction
   id: ActionHereticBurglarsFinesse
-  name: knowledge-path-lock-s7-name
-  description: knowledge-path-lock-s7-desc
+  name: Burglar's Finesse
+  description: >-
+    Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors.
+    Grants you Burglar's Finesse, a single-target spell that puts a random item from the victims backpack into your hand.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -31,8 +33,12 @@
 - type: entity
   parent: BaseAction
   id: ActionHereticLastRefuge
-  name: knowledge-path-lock-s9-name
-  description: knowledge-path-lock-s9-desc
+  name: Caretaker's Last Refuge
+  description: >-
+    Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable.
+    Gives you a spell that makes you transparent and not dense. Cannot be used near living sentient beings.
+    While in refuge, you cannot use your hands or spells, and you are immune to slowdown.
+    You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -52,8 +58,8 @@
 - type: entity
   parent: BaseAction
   id: ActionHereticShapeshiftLock
-  name: heretic-ability-shapeshift
-  description: heretic-ability-shapeshift-desc
+  name: Shapechange
+  description: Take the form of another creature and gain its abilities.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action

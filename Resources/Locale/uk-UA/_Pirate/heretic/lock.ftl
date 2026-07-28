@@ -3,6 +3,15 @@
 ent-LabyrinthHandbook = довідник Лабіринту
     .desc = Книга законів і правил Замкненого Лабіринту, написана на невідомій речовині. Її сторінки звиваються й напружуються, ніби прагнуть вирватися назовні.
 
+ent-ActionHereticBurglarsFinesse = { knowledge-path-lock-s7-name }
+    .desc = { knowledge-path-lock-s7-desc }
+ent-ActionHereticLastRefuge = { knowledge-path-lock-s9-name }
+    .desc = { knowledge-path-lock-s9-desc }
+ent-ActionHereticShapeshiftLock = { heretic-ability-shapeshift }
+    .desc = { heretic-ability-shapeshift-desc }
+ent-ActionMirrorJaunt = { heretic-ability-mirror-jaunt }
+    .desc = { heretic-ability-mirror-jaunt-desc }
+
 ent-WallLabyrinth = сторінки Лабіринту
     .desc = Поле паперів, що літають у повітрі та з незбагненною силою відштовхують язичників.
 ent-RealityCrack = тріщина в реальності

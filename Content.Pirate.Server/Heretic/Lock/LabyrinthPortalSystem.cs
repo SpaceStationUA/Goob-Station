@@ -45,7 +45,8 @@ public sealed class LabyrinthPortalSystem : EntitySystem
         var query = EntityQueryEnumerator<LabyrinthPortalComponent, TransformComponent>();
         while (query.MoveNext(out _, out var portal, out var transform))
         {
-            if (!TryComp(portal.HereticMind, out MindComponent? mind) ||
+            if (portal.HereticMind is not { } hereticMind ||
+                !TryComp(hereticMind, out MindComponent? mind) ||
                 mind.OwnedEntity is not { } heretic ||
                 TerminatingOrDeleted(heretic) ||
                 _mobState.IsDead(heretic) ||
