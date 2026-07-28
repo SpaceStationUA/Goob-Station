@@ -2,9 +2,11 @@
 
 using System.Linq;
 using Content.Client.Eui;
+using Content.Client.Lobby; // Pirate
 using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Preferences; // Pirate
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -91,13 +93,15 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             var sysManager = entityManager.EntitySysManager;
             var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
             var requirementsManager = IoCManager.Resolve<JobRequirementsManager>();
+            var profile = (HumanoidCharacterProfile?) IoCManager.Resolve<IClientPreferencesManager>()
+                .Preferences?.SelectedCharacter; // Pirate: mirror the server-side ghost role requirement check.
 
             // Grouping roles
             var groupedRoles = ghostState.GhostRoles.GroupBy(role => (
                     role.Name,
                     role.Description,
                     //  Check the prototypes for role requirements and bans
-                    requirementsManager.IsAllowed(role.RolePrototypes.Item1, role.RolePrototypes.Item2, null, out var reason),
+                    requirementsManager.IsAllowed(role.RolePrototypes.Item1, role.RolePrototypes.Item2, profile, out var reason),
                     reason));
 
             // Add a new entry for each role group
