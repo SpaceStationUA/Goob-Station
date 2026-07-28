@@ -22,7 +22,6 @@ using Content.Shared.Popups;
 using Robust.Shared.Random;
 using Content.Shared.Body.Systems;
 using Robust.Server.GameObjects;
-using Robust.Server.GameStates;
 using Content.Shared.Stunnable;
 using Robust.Shared.Map;
 using Content.Shared.StatusEffect;
@@ -105,7 +104,6 @@ public sealed partial class HereticAbilitySystem : SharedHereticAbilitySystem
     [Dependency] private readonly MansusGraspSystem _mansusGrasp = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly PvsOverrideSystem _pvs = default!;
     [Dependency] private readonly CloningSystem _cloning = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _modifier = default!;
     [Dependency] private readonly InventorySystem _inventory = default!; // Pirate
@@ -128,7 +126,7 @@ public sealed partial class HereticAbilitySystem : SharedHereticAbilitySystem
         SubscribeLocalEvent<EventHereticMansusLink>(OnMansusLink);
         SubscribeLocalEvent<HereticMansusLinkDoAfter>(OnMansusLinkDoafter);
 
-        SubscribeLock();
+        // Pirate: Lock and ghoul shapeshift subscriptions live in Content.Pirate.Server.
     }
 
     public override void InvokeTouchSpell<T>(Entity<T> ent, EntityUid user)

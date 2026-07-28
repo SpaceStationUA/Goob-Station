@@ -15,6 +15,8 @@ using Content.Shared._Shitcode.Heretic.Components;
 using Content.Shared._Shitcode.Heretic.Systems;
 using Content.Shared.Actions.Components;
 using Content.Shared.Chat;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Heretic;
 using Content.Shared.Popups;
@@ -34,6 +36,7 @@ public sealed class LockAbilitySystem : EntitySystem
 
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly HereticAbilitySystem _abilities = default!;
@@ -41,7 +44,6 @@ public sealed class LockAbilitySystem : EntitySystem
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PvsOverrideSystem _pvs = default!;
-    [Dependency] private readonly SharedHereticSystem _heretic = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly Content.Shared.Inventory.InventorySystem _inventory = default!;
 
@@ -85,8 +87,7 @@ public sealed class LockAbilitySystem : EntitySystem
 
     private void OnShapeshift(EventHereticShapeshift args)
     {
-        if (!TryGetAscendedLockHeretic(args.Performer) ||
-            !HasComp<ShapeshiftActionComponent>(args.Action) ||
+        if (!HasComp<ShapeshiftActionComponent>(args.Action) ||
             !CanShapeshift(args.Performer) ||
             !_abilities.TryUseAbility(args, false))
             return;
@@ -97,8 +98,7 @@ public sealed class LockAbilitySystem : EntitySystem
     private void OnShapeshiftMessage(Entity<ShapeshiftActionComponent> ent, ref HereticShapeshiftMessage args)
     {
         var user = args.Actor;
-        if (!TryGetAscendedLockHeretic(user) ||
-            !ent.Comp.Polymorphs.Contains(args.ProtoId) ||
+        if (!ent.Comp.Polymorphs.Contains(args.ProtoId) ||
             !CanShapeshift(user) ||
             !TryComp(user, out ActorComponent? actor))
             return;
@@ -119,7 +119,15 @@ public sealed class LockAbilitySystem : EntitySystem
             return;
         }
 
+        if (HasComp<GhoulComponent>(user) && HasComp<GhoulComponent>(polymorphed.Value) &&
+            TryComp(user, out DamageableComponent? userDamage) &&
+            TryComp(polymorphed.Value, out DamageableComponent? polymorphedDamage))
+            _damage.SetDamage(polymorphed.Value, polymorphedDamage, userDamage.Damage);
+
         _npcFaction.AddFaction(polymorphed.Value, HereticSystem.HereticFactionId);
+
+        if (TryComp(polymorphed, out GhoulComponent? ghoul))
+            ghoul.ExamineMessage = null;
 
         var speech = Loc.GetString(ent.Comp.Speech);
         Timer.Spawn(200, () =>
@@ -131,13 +139,6 @@ public sealed class LockAbilitySystem : EntitySystem
             if (!TerminatingOrDeleted(polymorphed.Value))
                 _chat.TrySendInGameICMessage(polymorphed.Value, speech, InGameICChatType.Speak, false);
         });
-    }
-
-    private bool TryGetAscendedLockHeretic(EntityUid user)
-    {
-        return _heretic.TryGetHereticComponent(user, out var heretic, out _) &&
-               heretic.CurrentPath == "Lock" &&
-               heretic.Ascended;
     }
 
     private bool CanShapeshift(EntityUid user)
