@@ -13,10 +13,6 @@
           sprite: Objects/Misc/candles.rsi
           state: candle-big
         doAfter: 2
-      completed:
-      - !type:SpawnPrototype
-        prototype: SpiritCandle
-      - !type:DeleteEntity {}
 
   - node: spiritCandle
-    entity: SpiritCandle
+    entity: SpiritCandle # Pirate: Use graph replacement to preserve hands and container state.
