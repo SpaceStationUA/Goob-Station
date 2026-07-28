@@ -1784,6 +1784,15 @@
     - MobDragonRooster
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-dragon.rsi
+  # Pirate: closed-source sprites have no dead states, so keep the available breed sprite.
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: chick
+      Critical:
+        Base: chick
+      Dead:
+        Base: chick
 
 - type: entity
   parent: [BaseChickenDragon, BaseMobHenRanch]
@@ -1792,6 +1801,14 @@
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-dragon.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: hen
+      Critical:
+        Base: hen
+      Dead:
+        Base: hen
 
 - type: entity
   parent: [BaseChickenDragon, BaseMobRoosterRanch]
@@ -1800,6 +1817,14 @@
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-dragon.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: rooster
+      Critical:
+        Base: rooster
+      Dead:
+        Base: rooster
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 1
   - type: BasicEntityAmmoProvider
@@ -1844,6 +1869,15 @@
     - MobCoralRooster
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-coral.rsi
+  # Pirate: closed-source sprites have no dead states, so keep the available breed sprite.
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: chick
+      Critical:
+        Base: chick
+      Dead:
+        Base: chick
 
 - type: entity
   parent: [BaseChickenCoral, BaseMobHenRanch]
@@ -1852,6 +1886,14 @@
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-coral.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: hen
+      Critical:
+        Base: hen
+      Dead:
+        Base: hen
 
 - type: entity
   parent: [BaseChickenCoral, BaseMobRoosterRanch]
@@ -1860,3 +1902,11 @@
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-coral.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: rooster
+      Critical:
+        Base: rooster
+      Dead:
+        Base: rooster

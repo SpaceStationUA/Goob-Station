@@ -33,8 +33,8 @@ public sealed class RanchingEffectActionSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<EffectActionComponent, ActionPerformedEvent>(OnActionPerformed);
-        SubscribeLocalEvent<EffectActionComponent, EffectInstantActionEvent>(OnInstantAction);
-        SubscribeLocalEvent<EffectActionComponent, EffectTargetActionEvent>(OnTargetAction);
+        SubscribeLocalEvent<EffectInstantActionEvent>(OnInstantAction);
+        SubscribeLocalEvent<EffectTargetActionEvent>(OnTargetAction);
     }
 
     private void OnActionPerformed(Entity<EffectActionComponent> ent, ref ActionPerformedEvent args)
@@ -43,15 +43,21 @@ public sealed class RanchingEffectActionSystem : EntitySystem
             _effects.ApplyEffects(args.Performer, ent.Comp.Effects);
     }
 
-    private void OnInstantAction(Entity<EffectActionComponent> ent, ref EffectInstantActionEvent args)
+    private void OnInstantAction(EffectInstantActionEvent args)
     {
-        _effects.ApplyEffects(args.Performer, ent.Comp.Effects);
+        if (args.Handled || !TryComp<EffectActionComponent>(args.Action, out var action))
+            return;
+
+        _effects.ApplyEffects(args.Performer, action.Effects);
         args.Handled = true;
     }
 
-    private void OnTargetAction(Entity<EffectActionComponent> ent, ref EffectTargetActionEvent args)
+    private void OnTargetAction(EffectTargetActionEvent args)
     {
-        _effects.ApplyEffects(args.Target, ent.Comp.Effects);
+        if (args.Handled || !TryComp<EffectActionComponent>(args.Action, out var action))
+            return;
+
+        _effects.ApplyEffects(args.Target, action.Effects);
         args.Handled = true;
     }
 }
