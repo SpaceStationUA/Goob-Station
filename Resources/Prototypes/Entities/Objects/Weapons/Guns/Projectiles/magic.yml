@@ -200,6 +200,7 @@
     - state: magicm_green # Goob edit
       shader: unshaded
   - type: Projectile
+    onlyCollideWhenShot: true # Pirate: unshot polybolts must not trigger against stacked entities.
     damage:
       types:
         Poison: 0 # Goob edit

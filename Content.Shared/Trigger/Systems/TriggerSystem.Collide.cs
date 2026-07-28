@@ -24,6 +24,13 @@ public sealed partial class TriggerSystem
 
     private void OnCollide(Entity<TriggerOnCollideComponent> ent, ref StartCollideEvent args)
     {
+        // Pirate: trigger effects on projectiles must obey the same pre-shot collision guard as ProjectileSystem.
+        if (TryComp<ProjectileComponent>(ent, out var projectile) &&
+            projectile is { Weapon: null, OnlyCollideWhenShot: true })
+        {
+            return;
+        }
+
         if (
             args.OurFixtureId == ent.Comp.FixtureID
             && (!ent.Comp.IgnoreOtherNonHard || args.OtherFixture.Hard)
