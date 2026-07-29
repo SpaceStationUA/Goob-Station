@@ -22,6 +22,9 @@
   sprites:
     Head: MobPlasmamanHead
     Face: MobHumanoidAnyMarking
+    # Pirate: enable underwear customization.
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobPlasmamanChest
     Groin: MobPlasmamanGroin
     Eyes: MobPlasmamanEyes
@@ -54,6 +57,13 @@
       points: 1
       required: false
     Chest:
+      points: 1
+      required: false
+    # Pirate: enable underwear customization.
+    UndergarmentTop:
+      points: 1
+      required: false
+    UndergarmentBottom:
       points: 1
       required: false
     Legs:

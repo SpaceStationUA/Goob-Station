@@ -35,6 +35,9 @@
     HeadSide: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking
     Hair: MobHumanoidMarkingMatchSkin
+    # Pirate: enable underwear customization.
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobIPCChest
     Groin: MobIPCGroin
     LArm: MobIPCLArm
@@ -64,6 +67,13 @@
       points: 1
       required: true
       defaultMarkings: [ MobIPCChestDefault ]
+    # Pirate: enable underwear customization.
+    UndergarmentTop:
+      points: 1
+      required: false
+    UndergarmentBottom:
+      points: 1
+      required: false
     HeadSide:
       points: 1
       required: false
