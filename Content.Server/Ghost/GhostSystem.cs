@@ -311,6 +311,19 @@ namespace Content.Server.Ghost
                 return;
             }
 
+            // Pirate: Attaching to a body hidden in entity storage leaves the client without a usable eye.
+            if (_mind.TryGetMind(actor.PlayerSession, out _, out var mind)
+                && mind.OwnedEntity is { } body
+                && HasComp<InsideEntityStorageComponent>(body))
+            {
+                _popup.PopupEntity(
+                    Loc.GetString("ghost-return-to-body-in-container"),
+                    attached,
+                    actor.PlayerSession,
+                    PopupType.MediumCaution);
+                return;
+            }
+
             _mind.UnVisit(actor.PlayerSession);
         }
 
