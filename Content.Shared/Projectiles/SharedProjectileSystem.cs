@@ -218,9 +218,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
     {
-        // Pirate: unshot projectiles should not create sensor contacts, but thrown items still need hit events.
+        // Pirate: dormant projectiles should not create sensor contacts, but thrown items still need hit events.
         if (!args.OurFixture.Hard &&
-            component is { Weapon: null, OnlyCollideWhenShot: true } &&
+            component.Weapon == null &&
+            (component.OnlyCollideWhenShot ||
+             component.Shooter == null && args.OurBody.LinearVelocity == Vector2.Zero) &&
             !HasComp<ThrownItemComponent>(uid))
         {
             args.Cancelled = true;
