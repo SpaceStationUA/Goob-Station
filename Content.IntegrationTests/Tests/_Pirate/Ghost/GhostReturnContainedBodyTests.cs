@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Content.IntegrationTests.Pair;
+using Content.Server.EUI;
 using Content.Server.Ghost;
 using Content.Server.Mind;
 using Content.Server.Storage.EntitySystems;
@@ -28,6 +29,7 @@ public sealed class GhostReturnContainedBodyTests
         });
         var map = await pair.CreateTestMap();
         var entMan = pair.Server.EntMan;
+        var euiManager = pair.Server.ResolveDependency<EuiManager>();
         var ghostSystem = pair.Server.System<GhostSystem>();
         var mindSystem = pair.Server.System<MindSystem>();
         var mobState = pair.Server.System<MobStateSystem>();
@@ -62,7 +64,15 @@ public sealed class GhostReturnContainedBodyTests
         {
             Assert.That(session.AttachedEntity, Is.EqualTo(ghost));
             Assert.That(mindSystem.TryGetMind(session.UserId, out _, out var mind), Is.True);
-            Assert.That(mind!.VisitingEntity, Is.EqualTo(ghost));
+            var mindComponent = mind!;
+            Assert.That(mindComponent.VisitingEntity, Is.EqualTo(ghost));
+
+            var returnEui = new ReturnToBodyEui(mindComponent, ghostSystem, pair.Server.PlayerMan);
+            euiManager.OpenEui(returnEui, session);
+            returnEui.HandleMessage(new ReturnToBodyMessage(true));
+
+            Assert.That(session.AttachedEntity, Is.EqualTo(ghost));
+            Assert.That(mindComponent.VisitingEntity, Is.EqualTo(ghost));
         });
 
         await pair.Server.WaitAssertion(() =>

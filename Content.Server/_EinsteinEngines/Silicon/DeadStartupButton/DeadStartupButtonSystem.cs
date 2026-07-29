@@ -40,6 +40,7 @@ public sealed class DeadStartupButtonSystem : SharedDeadStartupButtonSystem
 
      // Goobstation - Revive notification
     [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!; // Pirate
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
 
@@ -110,7 +111,7 @@ public sealed class DeadStartupButtonSystem : SharedDeadStartupButtonSystem
         {
             // notify them they're being revived
             if (mind.CurrentEntity != uid)
-                _euiManager.OpenEui(new ReturnToBodyEui(mind, _mind, _player), playerSession);
+                _euiManager.OpenEui(new ReturnToBodyEui(mind, _ghostSystem, _player), playerSession);
         }
     }
 

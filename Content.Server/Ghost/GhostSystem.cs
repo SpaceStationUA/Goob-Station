@@ -311,20 +311,32 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            // Pirate: Attaching to a body hidden in entity storage leaves the client without a usable eye.
-            if (_mind.TryGetMind(actor.PlayerSession, out _, out var mind)
-                && mind.OwnedEntity is { } body
+            TryReturnToBody(actor.PlayerSession);
+        }
+
+        // Pirate: Keep every player-facing return path from attaching to a body hidden in entity storage.
+        public bool TryReturnToBody(ICommonSession session)
+        {
+            if (!_mind.TryGetMind(session, out _, out var mind)
+                || mind.VisitingEntity == null
+                || session.AttachedEntity is not { Valid: true } attached)
+            {
+                return false;
+            }
+
+            if (mind.OwnedEntity is { } body
                 && HasComp<InsideEntityStorageComponent>(body))
             {
                 _popup.PopupEntity(
                     Loc.GetString("ghost-return-to-body-in-container"),
                     attached,
-                    actor.PlayerSession,
+                    session,
                     PopupType.MediumCaution);
-                return;
+                return false;
             }
 
-            _mind.UnVisit(actor.PlayerSession);
+            _mind.UnVisit(session);
+            return true;
         }
 
         #region Warp
