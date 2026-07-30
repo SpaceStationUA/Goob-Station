@@ -67,7 +67,7 @@
     - id: BingleSpawn #Goobstation - Bingle
     - id: SlaughterDemonMidround # Goobstation - Slaughter Demon
     - id: XenomorphsInfestation # WD EDIT
-    - id: SlasherSpawn # Goobstation - The Slasher
+    # - id: SlasherSpawn # Pirate disable
     - id: TerrorSpidersSpawn # Pirate - Starlight terror spiders
     - id: SpacePirates # Goobstation - you probably can read whom this rule spawns
     - id: SingulothKnightsMidround # Goobstation - New Midrounds
