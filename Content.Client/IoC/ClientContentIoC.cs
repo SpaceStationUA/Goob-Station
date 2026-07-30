@@ -2,7 +2,6 @@
 
 using Content.Client._RMC14.LinkAccount;
 using Content.Client.Administration.Managers;
-using Content.Client.Audio.Midi;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
@@ -67,7 +66,6 @@ namespace Content.Client.IoC
             collection.Register<TitleWindowManager>();
             collection.Register<LinkAccountManager>(); // RMC14
             collection.Register<ClientsidePlaytimeTrackingManager>();
-            collection.Register<MidiFileCollectionManager>();
         }
     }
 }
