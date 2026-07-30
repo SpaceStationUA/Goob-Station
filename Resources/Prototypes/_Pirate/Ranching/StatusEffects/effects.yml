@@ -3,14 +3,14 @@
 - type: entity
   parent: MobStatusEffectDebuff
   id: StatusEffectShink
-  name: "зменшення"
+  name: shrunk
   components:
   - type: ShrunkStatusEffect
 
 - type: entity
   parent: MobStatusEffectDebuff
   id: StatusEffectDamageMod
-  name: "змінена стійкість"
+  name: damage mod changed
   components:
   - type: ChangeDamageModiferSetStatusEffect
 
@@ -24,7 +24,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectDreamEgg
-  name: "регенеративний сон"
+  name: dream egg effect
   components:
   - type: StunnedStatusEffect
   - type: StatusEffectAlert
@@ -48,7 +48,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectCockatricePower
-  name: "сила кокатриса"
+  name: cockatrice egg effect
   components:
   - type: TemporaryActionGrantEffect
     actionPrototypes:
@@ -57,7 +57,7 @@
 - type: entity
   parent: MobStatusEffectDebuff
   id: StatusEffectMedusa
-  name: "скам'яніння"
+  name: Turned into stone
   components:
   - type: StunnedStatusEffect
   - type: AddShaderStatusEffect
@@ -75,7 +75,7 @@
 - type: entity
   parent: MobStatusEffectDebuff
   id: SnowEggEffect
-  name: "сніговий слід"
+  name: Snow trail!
   components:
   - type: Trail
     color: "#ffffff"
@@ -96,7 +96,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: DreamsicleEggEffect
-  name: "апельсинове марення"
+  name: Orange Dreamsicle High
   components:
   - type: TemporaryActionGrantEffect
     actionPrototypes:
@@ -111,7 +111,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectZappyPower
-  name: "сила блискавичної курки"
+  name: zappy egg effect
   components:
   - type: TemporaryActionGrantEffect
     actionPrototypes:
@@ -121,7 +121,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: SnowEggEffectNoDamage
-  name: "сніговий слід"
+  name: Snow trail!
   components:
   - type: Trail
     color: "#ffffff"
@@ -134,7 +134,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectPhoenixHeal
-  name: "зцілення фенікса"
+  name: phoenix heal
   components:
   - type: StatusEffectEffects
     effects:
@@ -150,7 +150,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectPhoenixPower
-  name: "сила фенікса"
+  name: phoenix egg effect
   components:
   - type: TemporaryActionGrantEffect
     actionPrototypes:
@@ -159,7 +159,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectDragonPower
-  name: "сила дракона"
+  name: dragon's power
   components:
   - type: TemporaryActionGrantEffect
     actionPrototypes:
@@ -183,7 +183,7 @@
 - type: entity
   parent: MobStatusEffectDebuff
   id: StatusEffectDragonFear
-  name: "драконячий жах"
+  name: dragon fear
   components:
   - type: StatusEffectEffectsApply
     effectsOnApply:
@@ -202,7 +202,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: SugarRushEffect
-  name: "цукровий приплив"
+  name: sugar rush!
   components:
   - type: StatusEffectEffects
     effects:

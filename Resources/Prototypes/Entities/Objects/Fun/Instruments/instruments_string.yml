@@ -23,8 +23,8 @@
 - type: entity
   parent: BaseStringInstrumentClothing
   id: ElectricGuitarInstrument
-  name: "електрогітара"
-  description: "Тепер ви відчуєте себе рок-зіркою!"
+  name: electric guitar
+  description: Now this makes you feel like a rock star!
   components:
   - type: Instrument
     program: 27
@@ -39,8 +39,8 @@
 - type: entity
   parent: BaseStringInstrumentClothing
   id: BassGuitarInstrument
-  name: "бас-гітара"
-  description: "Ти відчуваєш себе справді круто, тримаючи це в руках. Шкода, що ти єдиний, хто так думає."
+  name: bass guitar
+  description: You feel really cool holding this. Shame you're the only one that thinks that.
   components:
   - type: Instrument
     program: 33
@@ -85,8 +85,8 @@
 - type: entity
   parent: BaseStringInstrumentClothing
   id: RockGuitarInstrument
-  name: "рок-гітара"
-  description: "Яка сокира!"
+  name: rock guitar
+  description: What an axe!
   components:
   - type: Instrument
     program: 29
@@ -117,8 +117,8 @@
 - type: entity
   parent: BaseStringInstrumentClothing
   id: AcousticGuitarInstrument
-  name: "акустична гітара"
-  description: "Так чи інакше, ось Чудо-стіна."
+  name: acoustic guitar
+  description: Anyway, here's Wonderwall.
   components:
   - type: Instrument
     program: 24
@@ -166,8 +166,8 @@
 - type: entity
   parent: BaseStringInstrument
   id: GuitarlessFretsInstrument
-  name: "безкорпусні лади"
-  description: "Кому взагалі потрібен корпус?"
+  name: guitarless frets
+  description: Who even needs a body?
   suffix: Admeme #the sound is awful
   components:
   - type: Instrument
@@ -178,7 +178,7 @@
 - type: entity
   parent: BaseStringInstrumentClothing
   id: BanjoInstrument
-  name: "банджо"
+  name: banjo
   components:
   - type: Instrument
     program: 105
@@ -188,8 +188,8 @@
 - type: entity
   parent: BaseStringInstrument
   id: ViolinInstrument
-  name: "скрипка"
-  description: "Улюбленець музичних віртуозів і блюграсс-бендів."
+  name: violin
+  description: The favorite of musical virtuosos and bluegrass bands.
   components:
   - type: Instrument
     program: 40
@@ -203,8 +203,8 @@
 - type: entity
   parent: BaseStringInstrument
   id: ViolaInstrument
-  name: "альт"
-  description: "Як скрипка, тільки гірше."
+  name: viola
+  description: Like a violin, but worse.
   components:
   - type: Instrument
     program: 41
@@ -214,8 +214,8 @@
 - type: entity
   parent: BaseStringInstrument
   id: CelloInstrument
-  name: "віолончель"
-  description: "Ботаніки називають їх віолончелями."
+  name: cello
+  description: The nerds call these violoncellos.
   components:
   - type: Instrument
     program: 42
