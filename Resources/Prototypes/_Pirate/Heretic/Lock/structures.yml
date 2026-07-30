@@ -27,6 +27,7 @@
         - SpecialWallLayer
         layer:
         - SpecialWallLayer
+        hard: false
   - type: Airtight
   - type: Sprite
     sprite: _Pirate/Heretic/Entities/paper_wall.rsi

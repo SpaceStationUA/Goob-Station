@@ -13,9 +13,15 @@ public sealed class EldritchIdCardSystem : SharedEldritchIdCardSystem
     {
         base.Initialize();
         SubscribeLocalEvent<EldritchIdCardComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<EldritchIdCardComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
     }
 
     private void OnStartup(Entity<EldritchIdCardComponent> ent, ref ComponentStartup args)
+    {
+        UpdateSprite(ent);
+    }
+
+    private void OnAfterAutoHandleState(Entity<EldritchIdCardComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite(ent);
     }

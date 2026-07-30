@@ -3,6 +3,7 @@
 using System.Linq;
 using Content.Pirate.Shared.Heretic.Lock;
 using Content.Shared._Goobstation.Wizard.Projectiles;
+using Content.Shared._Shitcode.Heretic.Systems;
 using Content.Shared._Shitmed.Medical.Surgery.Steps.Parts;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
@@ -12,7 +13,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Heretic;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
@@ -33,6 +33,7 @@ public sealed class OpeningBladeSystem : EntitySystem
 
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly SharedHereticSystem _heretic = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
@@ -50,7 +51,7 @@ public sealed class OpeningBladeSystem : EntitySystem
     private void OnMeleeHit(Entity<OpeningBladeComponent> ent, ref MeleeHitEvent args)
     {
         if (!args.IsHit ||
-            !TryComp(args.User, out HereticComponent? heretic) ||
+            !_heretic.TryGetHereticComponent(args.User, out var heretic, out _) ||
             heretic is not { CurrentPath: "Lock", PathStage: >= 7 })
             return;
 

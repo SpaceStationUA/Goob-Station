@@ -160,6 +160,9 @@
   # Pirate: Lock path Shattered ritual ingredient.
   - type: Tag
     tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
     - GlovesLatex
 
 - type: entity
@@ -178,6 +181,9 @@
   # Pirate: Lock path Shattered ritual ingredient.
   - type: Tag
     tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
     - GlovesNitrile
 ####
 - type: entity
