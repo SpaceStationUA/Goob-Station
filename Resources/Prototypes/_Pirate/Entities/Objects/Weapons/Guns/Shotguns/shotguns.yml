@@ -43,6 +43,6 @@
     capacity: 7
   - type: GunRequiresWield
   - type: Gun
-    fireRate: 4
+    fireRate: 3.3
     soundGunshot:
       path: /Audio/_Pirate/Weapons/Guns/Gunshots/shotgun2.ogg
