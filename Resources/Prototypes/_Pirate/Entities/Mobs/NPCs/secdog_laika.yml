@@ -30,6 +30,8 @@
     - K9
   - type: StealTarget
     stealGroup: AnimalSecurity
+  - type: Temperature
+    atmosTemperatureTransferEfficiency: 0.01
   - type: TemperatureDamage
     heatDamageThreshold: 315
     coldDamageThreshold: 240
