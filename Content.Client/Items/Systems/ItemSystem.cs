@@ -2,9 +2,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared._Pirate.Item; // Pirate
 using Content.Shared.Hands;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Wieldable.Components; // Pirate
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -55,14 +57,34 @@ public sealed class ItemSystem : SharedItemSystem
     /// </summary>
     private void OnGetVisuals(EntityUid uid, ItemComponent item, GetInhandVisualsEvent args)
     {
-        var defaultKey = $"inhand-{args.Location.ToString().ToLowerInvariant()}";
+        // Pirate -  wielded in-hand visual start
+        var useWieldedVisuals = TryComp<WieldedInhandVisualsComponent>(uid, out var wieldedVisuals) &&
+                                TryComp<WieldableComponent>(uid, out var wieldable) &&
+                                item.HeldPrefix == wieldable.WieldedInhandPrefix;
+        var defaultKey = useWieldedVisuals
+            ? $"wielded-inhand-{args.Location.ToString().ToLowerInvariant()}"
+            : $"inhand-{args.Location.ToString().ToLowerInvariant()}";
+        List<PrototypeLayerData>? layers = null;
 
-        // try get explicit visuals
-        if (!item.InhandVisuals.TryGetValue(args.Location, out var layers))
+        if (useWieldedVisuals)
         {
-            // get defaults
-            if (!TryGetDefaultVisuals(uid, item, defaultKey, out layers))
-                return;
+            if (!wieldedVisuals!.WieldedInhandVisuals.TryGetValue(args.Location, out layers) &&
+                !item.InhandVisuals.TryGetValue(args.Location, out layers))
+            {
+                if (!TryGetDefaultVisuals(uid, item, defaultKey, out layers))
+                    return;
+            }
+        }
+        else
+        {
+            // try get explicit visuals
+            if (!item.InhandVisuals.TryGetValue(args.Location, out layers))
+            {
+                // get defaults
+                if (!TryGetDefaultVisuals(uid, item, defaultKey, out layers))
+                    return;
+            }
+        // Pirate -  wielded in-hand visual end
         }
 
         var i = 0;
