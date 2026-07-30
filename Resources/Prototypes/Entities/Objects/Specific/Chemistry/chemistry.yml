@@ -519,6 +519,8 @@
     damage:
       types:
         Piercing: 3
+  - type: Physics # Pirate: dormant syringe projectiles stay out of physics until fired.
+    canCollide: false
   - type: Reflective
     reflective:
     - NonEnergy
