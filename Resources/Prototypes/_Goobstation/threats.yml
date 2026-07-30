@@ -50,10 +50,11 @@
   announcement: terror-wizard
   rule: WizardMidround
 
-- type: ninjaHackingThreat
-  id: Slasher
-  announcement: terror-slasher
-  rule: SlasherSpawn
+# Pirate: Slasher gamerule is disabled.
+#- type: ninjaHackingThreat
+#  id: Slasher
+#  announcement: terror-slasher
+#  rule: SlasherSpawn
 
 #- type: ninjaHackingThreat
 #  id: Wraith
