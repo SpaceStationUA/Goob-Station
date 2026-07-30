@@ -46,6 +46,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         UpdatesBefore.Add(typeof(SharedPhysicsSystem));
 
         SubscribeLocalEvent<ProjectileComponent, ComponentStartup>(OnProjectileStartup);
+        SubscribeLocalEvent<ProjectileComponent, ComponentShutdown>(OnProjectileShutdown);
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
         SubscribeLocalEvent<EmbeddableProjectileComponent, PreventCollideEvent>(EmbeddablePreventCollision); // Goobstation - Crawl Fix
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
@@ -66,6 +67,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         }
 
         _pendingDormantProjectiles.Add(projectile);
+    }
+
+    private void OnProjectileShutdown(Entity<ProjectileComponent> projectile, ref ComponentShutdown args)
+    {
+        _pendingDormantProjectiles.Remove(projectile);
     }
 
     public override void Update(float frameTime)
