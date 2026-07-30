@@ -4,7 +4,9 @@ using Content.Server.Popups;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Tag;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Goobstation.Server.Wraith.SaltLines;
 
@@ -16,7 +18,10 @@ public sealed class SaltLineSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    
+    [Dependency] private readonly TagSystem _tag = default!;
+
+    private static readonly ProtoId<TagPrototype>[] SaltLineBlockingTags = ["Wall", "Window"];
+
     public override void Initialize()
     {
         base.Initialize();
@@ -55,7 +60,8 @@ public sealed class SaltLineSystem : EntitySystem
         var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, snapPos);
         while (anchored.MoveNext(out var entity))
         {
-            if (HasComp<SaltLineComponent>(entity.Value)) // dont place in same tile
+            // Pirate: salt lines must remain visible and reachable instead of being hidden under walls or windows.
+            if (HasComp<SaltLineComponent>(entity.Value) || _tag.HasAnyTag(entity.Value, SaltLineBlockingTags))
                 return;
         }
 
