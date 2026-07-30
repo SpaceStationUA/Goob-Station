@@ -35,11 +35,15 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
+    private readonly HashSet<EntityUid> _pendingDormantProjectiles = [];
+
     private static readonly ProtoId<TagPrototype> GunCanAimShooterTag = "GunCanAimShooter";
 
     public override void Initialize()
     {
         base.Initialize();
+
+        UpdatesBefore.Add(typeof(SharedPhysicsSystem));
 
         SubscribeLocalEvent<ProjectileComponent, ComponentStartup>(OnProjectileStartup);
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
@@ -61,8 +65,27 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
         }
 
-        // Pirate: keep unshot projectiles out of the broadphase until firing or throwing wakes their body.
-        _physics.SetCanCollide(projectile, false, body: physics);
+        _pendingDormantProjectiles.Add(projectile);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var uid in _pendingDormantProjectiles)
+        {
+            if (!TryComp<ProjectileComponent>(uid, out var projectile) ||
+                !TryComp<PhysicsComponent>(uid, out var physics) ||
+                !IsDormantProjectile(uid, projectile, physics))
+            {
+                continue;
+            }
+
+            // Pirate: keep unshot projectiles out of the broadphase until firing or throwing wakes their body.
+            _physics.SetCanCollide(uid, false, body: physics);
+        }
+
+        _pendingDormantProjectiles.Clear();
     }
 
     private void OnEmbedActivate(Entity<EmbeddableProjectileComponent> embeddable, ref ActivateInWorldEvent args)
