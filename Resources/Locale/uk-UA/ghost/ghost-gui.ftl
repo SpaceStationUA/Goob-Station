@@ -16,6 +16,7 @@ ghost-roles-window-no-roles-available-label = Наразі немає досту
 ghost-roles-window-rules-footer = Кнопка буде активна після {$time} секунд (затримка зроблена для того, щоб ви встигли прочитали правила).
 ghost-return-to-body-title = Повернутися у тіло
 ghost-return-to-body-text = Вас реанімують! Повернутися у тіло?
+ghost-return-to-body-in-container = Спочатку ваше тіло мають дістати з контейнера.
 ghost-gui-return-to-round-button = Респавн
 ghost-target-window-warp-to-most-followed = До найвідстежуванішого
 ghost-roles-window-join-raffle-button = Приєднатися до розіграшу ролі
