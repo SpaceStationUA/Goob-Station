@@ -411,8 +411,8 @@
 - type: entity
   parent: DrinkBottleGlassBaseFull
   id: DrinkAngobittersBottleFull
-  name: angobitters bottle
-  description: Commonly used for mixed drinks, not drunk neat.
+  name: "пляшка ангобітера"
+  description: "Зазвичай його додають до коктейлів, а не п'ють нерозбавленим."
   components:
   - type: SolutionContainerManager
     solutions:
@@ -429,8 +429,8 @@
 - type: entity
   parent: [DrinkVisualsOpenable, DrinkBottlePlasticSmallBaseFull]
   id: DrinkCaramelBottleFull
-  name: caramel bottle
-  description: A bottle of what is essentially molten sugar with enough water to keep it somewhat fluid.
+  name: "пляшка карамелі"
+  description: "Пляшка майже розплавленого цукру з достатньою кількістю води, щоб він залишався рідким."
   components:
   - type: SolutionContainerManager
     solutions:

@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: Silvia
+  name: "Сільвія"
   id: MobCobraSilvia
   parent: MobSpaceBasic
-  description: With needle-sharp fangs and an alluring gaze, will you let her bite you?
+  description: "З голкоподібними іклами та чарівним поглядом. Дозволите їй вас вкусити?"
   components:
   - type: Body # Pirate: dedicated body preserves Delta-V stealth timing through local cobra organs.
     prototype: SpaceCobraSilvia
