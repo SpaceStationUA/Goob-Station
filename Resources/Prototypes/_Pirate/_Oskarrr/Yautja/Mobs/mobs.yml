@@ -11,7 +11,7 @@
     - Hair
   - type: Icon
     sprite: _Oskarrr/Yautja/body.rsi
-    state: full
+    state: full # admin spawn menu
   - type: MeleeWeapon
     soundHit:
       collection: Punch
@@ -38,7 +38,10 @@
     prototype: GoobYautjaBody
     requiredLegs: 2
   - type: Bloodstream
-    bloodReagent: GoobYautjaBlood
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: GoobYautjaBlood
+        Quantity: 300
   - type: Speech
     speechSounds: GoobYautjaSpeech
   - type: Vocal

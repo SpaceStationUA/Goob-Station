@@ -62,6 +62,7 @@
   components:
   - type: Icon
     sprite: _Oskarrr/Yautja/body.rsi
+    state: full
   - type: BodyPart
     species: Yautja
   - type: Extractable
