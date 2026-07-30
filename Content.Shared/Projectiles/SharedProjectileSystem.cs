@@ -41,6 +41,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ProjectileComponent, ComponentStartup>(OnProjectileStartup);
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
         SubscribeLocalEvent<EmbeddableProjectileComponent, PreventCollideEvent>(EmbeddablePreventCollision); // Goobstation - Crawl Fix
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
@@ -50,6 +51,18 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         SubscribeLocalEvent<EmbeddableProjectileComponent, ComponentShutdown>(OnEmbeddableCompShutdown);
 
         SubscribeLocalEvent<EmbeddedContainerComponent, EntityTerminatingEvent>(OnEmbeddableTermination);
+    }
+
+    private void OnProjectileStartup(Entity<ProjectileComponent> projectile, ref ComponentStartup args)
+    {
+        if (!TryComp<PhysicsComponent>(projectile, out var physics) ||
+            !IsDormantProjectile(projectile, projectile.Comp, physics))
+        {
+            return;
+        }
+
+        // Pirate: keep unshot projectiles out of the broadphase until firing or throwing wakes their body.
+        _physics.SetCanCollide(projectile, false, body: physics);
     }
 
     private void OnEmbedActivate(Entity<EmbeddableProjectileComponent> embeddable, ref ActivateInWorldEvent args)
@@ -220,10 +233,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     {
         // Pirate: dormant projectiles should not create sensor contacts, but thrown items still need hit events.
         if (!args.OurFixture.Hard &&
-            component.Weapon == null &&
-            (component.OnlyCollideWhenShot ||
-             component.Shooter == null && args.OurBody.LinearVelocity == Vector2.Zero) &&
-            !HasComp<ThrownItemComponent>(uid))
+            IsDormantProjectile(uid, component, args.OurBody))
         {
             args.Cancelled = true;
             return;
@@ -249,6 +259,14 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         {
             args.Cancelled = true;
         }
+    }
+
+    private bool IsDormantProjectile(EntityUid uid, ProjectileComponent component, PhysicsComponent physics)
+    {
+        return component.Weapon == null &&
+               (component.OnlyCollideWhenShot ||
+                component.Shooter == null && physics.LinearVelocity == Vector2.Zero) &&
+               !HasComp<ThrownItemComponent>(uid);
     }
 
     // Goobstation - Crawling fix
