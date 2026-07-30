@@ -11,7 +11,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Pirate.Shared.Heretic.Lock;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true, fieldDeltas: true)]
 public sealed partial class EldritchIdCardComponent : Component
 {
     [DataField, AutoNetworkedField]
