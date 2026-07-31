@@ -16,7 +16,6 @@ public sealed class CommandLineArguments
     public bool ArgumentsAreFileNames { get; set; } = false;
     public bool ShowMarkers { get; set; } = false;
     public bool OutputParallax { get; set; } = false;
-    public bool RenderZMaps { get; set; } = false; // Pirate: multiz
 
     public static bool TryParse(IReadOnlyList<string> args, [NotNullWhen(true)] out CommandLineArguments? parsed)
     {
@@ -78,13 +77,6 @@ public sealed class CommandLineArguments
                     parsed.OutputParallax = true;
                     break;
 
-                #region Pirate: multiz
-                case "-z":
-                case "--zmap":
-                    parsed.RenderZMaps = true;
-                    break;
-                #endregion
-
                 default:
                     if (argument.StartsWith('-'))
                     {
@@ -128,12 +120,6 @@ Options:
         Output images and data used for map viewer parallax.
     -h / --help
         Displays this help text");
-
-        #region Pirate: multiz
-        Console.WriteLine(@"    -z / --zmap
-        Treat the given ids as zMap (z-level network) prototypes. Each level is rendered on top of
-        the levels below it (dimmed and parallax-shifted). With no ids, lists zMaps to pick from.");
-        #endregion
     }
 }
 

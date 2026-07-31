@@ -187,16 +187,11 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         // Similar to the inrange check but more optimised so server doesn't die.
         var targetXform = Transform(args.Target);
 
-        #region Pirate: multiz - validate the target against the AI eye's current deck, not the contained brain
-        var viewer = TryComp<RelayInputMoverComponent>(args.Actor, out var relay)
-            ? relay.RelayEntity
-            : args.Actor.Owner;
-
-        if (targetXform.GridUid != Transform(viewer).GridUid)
+        // No cross-grid
+        if (targetXform.GridUid != args.Actor.Comp.GridUid)
         {
             return;
         }
-        #endregion Pirate: multiz
 
         if (!_broadphaseQuery.TryComp(targetXform.GridUid, out var broadphase) || !_gridQuery.TryComp(targetXform.GridUid, out var grid))
         {
@@ -219,25 +214,18 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         args.Handled = true;
 
         // Shitmed - Starlight Abductors Change Start
-        #region Pirate: multiz - station AI camera access follows the relayed eye between decks
         var target = args.Target;
-        var viewer = args.User;
-        if (TryComp(ent, out RelayInputMoverComponent? relay))
-        {
-            viewer = relay.RelayEntity;
-            if (ent.Comp.AllowCrossGrid)
-                target = relay.RelayEntity;
-        }
+        if (ent.Comp.AllowCrossGrid && TryComp(ent, out RelayInputMoverComponent? relay))
+            target = relay.RelayEntity;
+        // Shitmed Change End
 
         var targetXform = Transform(target);
 
         // No cross-grid
-        if (targetXform.GridUid != Transform(viewer).GridUid && !ent.Comp.AllowCrossGrid)
+        if (targetXform.GridUid != Transform(args.User).GridUid && !ent.Comp.AllowCrossGrid) // Shitmed Change
         {
             return;
         }
-        #endregion Pirate: multiz
-        // Shitmed Change End
 
         // Validate it's in camera range yes this is expensive.
         // Yes it needs optimising

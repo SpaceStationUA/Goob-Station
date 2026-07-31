@@ -24,7 +24,6 @@
   - type: Tag
     tags:
     - Catwalk
-  - type: WaterBridge # Pirate: wetness - disable water effects under catwalks
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

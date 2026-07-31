@@ -675,10 +675,3 @@ binds:
   type: State
   key: R
   mod1: Shift
-
-# Pirate: multiz
-- function: CEToggleShootDownZLevel
-  type: State
-  key: Z
-  mod1: Shift
-  mod2: Control

@@ -22,9 +22,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public event Action<MapCoordinates, Angle>? RequestFTL;
     public event Action<NetEntity, Angle>? RequestBeaconFTL;
 
-    public event Action? RequestFlyUp; // Pirate: multiz
-    public event Action? RequestFlyDown; // Pirate: multiz
-
     public event Action<NetEntity, NetEntity>? DockRequest;
     public event Action<NetEntity>? UndockRequest;
 
@@ -57,11 +54,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             RequestBeaconFTL?.Invoke(ent, angle);
         };
-
-        #region Pirate: multiz
-        MapContainer.RequestFlyUp += () => RequestFlyUp?.Invoke();
-        MapContainer.RequestFlyDown += () => RequestFlyDown?.Invoke();
-        #endregion
 
         DockContainer.DockRequest += (entity, netEntity) =>
         {

@@ -156,71 +156,58 @@ namespace Content.IntegrationTests.Tests
             var settings = new PoolSettings { Dirty = true };
             await using var pair = await PoolManager.GetServerClient(settings);
             var server = pair.Server;
+            var map = await pair.CreateTestMap();
 
             var entityMan = server.ResolveDependency<IEntityManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
 
-            var protoIds = prototypeMan
-                .EnumeratePrototypes<EntityPrototype>()
-                .Where(p => !p.Abstract)
-                .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
-                .Where(p => !p.Components.ContainsKey("Supermatter")) // Goobstation - Supermatter eats everything, oh no!
-                .Where(p => !p.Components.ContainsKey("RoomFill")) // This comp can delete all entities, and spawn others
-                .Where(p => !p.Components.ContainsKey("SoundCollection")) // Omu
-                .Where(p => !p.Components.ContainsKey("RandomSpawner")) // Omu
-                .Where(p => !p.Components.ContainsKey("Marker")) // Omu - we spawn ALL entities including the ones the fucking markers spawn
-                .Where(p => !p.Components.ContainsKey("GameRule")) // Trauma - are you stupid why would you do this
-                .Where(p => !p.Components.ContainsKey("DarkLord")) // 25 % chance to fail tests because the system is fucking shitcoded
-                .Where(p => !p.Components.ContainsKey("GrapplingProjectile")) // shitcode double-embeds or something, fails test
-                .Where(p => !p.Components.ContainsKey("PolymorphOnTrigger")) // Pirate: stacked projectiles can polymorph mobs into incompatible sentient entities
-                .Where(p => !p.Components.ContainsKey("EmbeddableProjectile")) // Pirate: stacked thrown items can embed into the same target twice
-                .Where(p => !p.Components.ContainsKey("SpawnOnDespawn")) // it leaves entities behind if lifetime is under 15s
-                .Where(p => !p.Components.ContainsKey("Chasm")) // probably not the best idea for a bunch of entities stacked ontop of each other?
-                .Select(p => p.ID)
-                .ToList();
-
-            // Pirate: bound same-position physics work without dropping prototype coverage.
-            const int batchSize = 500;
-
-            for (var batchStart = 0; batchStart < protoIds.Count; batchStart += batchSize)
+            await server.WaitPost(() =>
             {
-                var map = await pair.CreateTestMap();
-                var batchProtoIds = protoIds
-                    .Skip(batchStart)
-                    .Take(batchSize)
+
+                var protoIds = prototypeMan
+                    .EnumeratePrototypes<EntityPrototype>()
+                    .Where(p => !p.Abstract)
+                    .Where(p => !pair.IsTestPrototype(p))
+                    .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
+                    .Where(p => !p.Components.ContainsKey("Supermatter")) // Goobstation - Supermatter eats everything, oh no!
+                    .Where(p => !p.Components.ContainsKey("RoomFill")) // This comp can delete all entities, and spawn others
+                    .Where(p => !p.Components.ContainsKey("SoundCollection")) // Omu
+                    .Where(p => !p.Components.ContainsKey("RandomSpawner")) // Omu
+                    .Where(p => !p.Components.ContainsKey("Marker")) // Omu - we spawn ALL entities including the ones the fucking markers spawn
+                    .Where(p => !p.Components.ContainsKey("GameRule")) // Trauma - are you stupid why would you do this
+                    .Where(p => !p.Components.ContainsKey("DarkLord")) // 25 % chance to fail tests because the system is fucking shitcoded
+                    .Where(p => !p.Components.ContainsKey("GrapplingProjectile")) // shitcode double-embeds or something, fails test
+                    .Where(p => !p.Components.ContainsKey("SpawnOnDespawn")) // it leaves entities behind if lifetime is under 15s
+                    .Where(p => !p.Components.ContainsKey("Chasm")) // probably not the best idea for a bunch of entities stacked ontop of each other?
+                    .Select(p => p.ID)
                     .ToList();
-
-                await server.WaitPost(() =>
+                foreach (var protoId in protoIds)
                 {
-                    foreach (var protoId in batchProtoIds)
-                    {
-                        entityMan.SpawnEntity(protoId, map.GridCoords);
-                    }
-                });
-                await server.WaitRunTicks(15);
-                await server.WaitPost(() =>
+                    entityMan.SpawnEntity(protoId, map.GridCoords);
+                }
+            });
+            await server.WaitRunTicks(15);
+            await server.WaitPost(() =>
+            {
+                static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)
+                    where TComp : Component
                 {
-                    static IEnumerable<(EntityUid, TComp)> Query<TComp>(IEntityManager entityMan)
-                        where TComp : Component
+                    var query = entityMan.AllEntityQueryEnumerator<TComp>();
+                    while (query.MoveNext(out var uid, out var meta))
                     {
-                        var query = entityMan.AllEntityQueryEnumerator<TComp>();
-                        while (query.MoveNext(out var uid, out var meta))
-                        {
-                            yield return (uid, meta);
-                        }
+                        yield return (uid, meta);
                     }
+                }
 
-                    var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
-                    foreach (var (uid, meta) in entityMetas)
-                    {
-                        if (!meta.EntityDeleted)
-                            entityMan.DeleteEntity(uid);
-                    }
+                var entityMetas = Query<MetaDataComponent>(entityMan).ToList();
+                foreach (var (uid, meta) in entityMetas)
+                {
+                    if (!meta.EntityDeleted)
+                        entityMan.DeleteEntity(uid);
+                }
 
-                    Assert.That(entityMan.EntityCount, Is.Zero);
-                });
-            }
+                Assert.That(entityMan.EntityCount, Is.Zero);
+            });
 
             await pair.CleanReturnAsync();
         }

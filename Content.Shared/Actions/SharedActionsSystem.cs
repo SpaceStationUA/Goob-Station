@@ -3,7 +3,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared._Goobstation.Wizard;
-using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Events;
@@ -496,25 +495,6 @@ public abstract partial class SharedActionsSystem : EntitySystem
         return ValidateBaseTarget(user, target, (ent, targetAction));
     }
 
-    #region Pirate: multiz
-    private bool TargetOnZPeerMap(EntityUid? userMap, EntityCoordinates coords)
-    {
-        if (userMap == null
-            || !TryComp<CEZLevelMapComponent>(userMap.Value, out var userZ)
-            || !TryComp<CEZLevelsNetworkComponent>(userZ.NetworkUid, out var network))
-            return false;
-
-        var targetMapId = _transform.GetMapId(coords);
-        foreach (var map in network.ZLevels.Values)
-        {
-            if (map is { } m && Transform(m).MapID == targetMapId)
-                return true;
-        }
-
-        return false;
-    }
-    #endregion
-
     private bool ValidateBaseTarget(EntityUid user, EntityCoordinates coords, Entity<TargetActionComponent> ent)
     {
         var comp = ent.Comp;
@@ -523,7 +503,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
 
         // even if we don't check for obstructions, we may still need to check the range.
         var xform = Transform(user);
-        if (xform.MapID != _transform.GetMapId(coords) && !TargetOnZPeerMap(xform.MapUid, coords)) // Pirate: multiz
+        if (xform.MapID != _transform.GetMapId(coords))
         {
             _popup.PopupCursor(Loc.GetString("world-target-out-of-range"), user); // Goobstation Change
             return false;
