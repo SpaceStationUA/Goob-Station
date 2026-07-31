@@ -20,6 +20,8 @@
   - type: Clothing
     sprite: _Pirate/Clothing/Uniforms/Jumpskirt/headmaid.rsi
 
+## Security / СБ
+#
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtSecurityCorrectionofficer
@@ -30,6 +32,7 @@
   - type: Clothing
     sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/correction_officer.rsi
 
+# Голова СБ
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtSecurityHosBlue
@@ -40,6 +43,7 @@
   - type: Clothing
     sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/hos_elite.rsi
 
+# СБ
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpskirtSecurityBlue
@@ -50,3 +54,14 @@
   - type: Clothing
     sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/security_elite.rsi
 
+# інструктор СБ
+- type: entity
+  parent: [ClothingUniformBase, BaseSecurityContraband]
+  id: ClothingUniformInstructorSkirt
+  name: спідниця інструктора
+  description: Укорочена уніформа висококваліфікованого співробітника служби безпеки. Вони є гарантом безпеки цієї станції.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/instructor.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/instructor.rsi

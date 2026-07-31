@@ -36,3 +36,6 @@
 
 - type: playTimeTracker
   id: RoleK9Officer
+
+- type: playTimeTracker
+  id: JobSecurityInstructor

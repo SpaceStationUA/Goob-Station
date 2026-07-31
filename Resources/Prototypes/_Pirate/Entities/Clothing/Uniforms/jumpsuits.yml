@@ -42,6 +42,8 @@
   - type: Clothing
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/jeans_brown.rsi
 
+## Security / СБ
+# correction officer (хз як перекласти, перекладіть будь ласка)
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSecurityCorrectionofficer
@@ -51,3 +53,16 @@
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/correction_officer.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/correction_officer.rsi
+
+# Інструктор СБ
+- type: entity
+  parent: [ClothingUniformBase, BaseSecurityContraband]
+  id: ClothingUniformInstructorUniform
+  name: уніформа інструктора
+  description: Уніформа висококваліфікованого співробітника служби безпеки. Вони є гарантом безпеки цієї станції.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/instructor.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/instructor.rsi
+

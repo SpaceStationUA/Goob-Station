@@ -27,13 +27,6 @@
 # Security - Служба Безпеки
 - type: jobIcon
   parent: JobIcon
-  id: JobIconSecurityInstructor
-  icon:
-    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
-    state: SecurityInstructor
-
-- type: jobIcon
-  parent: JobIcon
   id: JobIconSecurityPilot
   icon:
     sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
