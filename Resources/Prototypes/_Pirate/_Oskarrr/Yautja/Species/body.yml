@@ -84,7 +84,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: Chest
-    bleedingColor: "#39FF14"
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
     damageOverlayGroups:
       Brute:
@@ -111,7 +110,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: Groin
-    bleedingColor: "#39FF14"
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
     damageOverlayGroups:
       Brute:
@@ -138,7 +136,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: Head
-    bleedingColor: "#39FF14"
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
     damageOverlayGroups:
       Brute:
@@ -165,7 +162,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: LArm
-    bleedingColor: "#39FF14"
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
     damageOverlayGroups:
       Brute:
@@ -185,7 +181,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: RArm
-    bleedingColor: "#39FF14"
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
     damageOverlayGroups:
       Brute:
@@ -205,7 +200,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: LHand
-    bleedingColor: "#39FF14"
     bleedingOverlay: null
     damageOverlayGroups:
       Brute:
@@ -225,7 +219,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: RHand
-    bleedingColor: "#39FF14"
     bleedingOverlay: null
     damageOverlayGroups:
       Brute:
@@ -245,7 +238,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: LLeg
-    bleedingColor: "#39FF14"
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
     damageOverlayGroups:
       Brute:
@@ -265,7 +257,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: RLeg
-    bleedingColor: "#39FF14"
     bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
     damageOverlayGroups:
       Brute:
@@ -285,7 +276,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: LFoot
-    bleedingColor: "#39FF14"
     bleedingOverlay: null
     damageOverlayGroups:
       Brute:
@@ -305,7 +295,6 @@
   - type: WoundableVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     occupiedLayer: RFoot
-    bleedingColor: "#39FF14"
     bleedingOverlay: null
     damageOverlayGroups:
       Brute:
