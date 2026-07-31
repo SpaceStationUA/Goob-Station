@@ -2,6 +2,7 @@
 
 # Parameters are stored alphabetically in marking colors. The fallback color
 # contains the default slider values encoded as RGBA.
+# Arachnids and IPC only expose HairSpecial, so facial gradients omit them.
 
 - type: marking
   id: HairGradientRGB2Col
@@ -38,7 +39,7 @@
   markingCategory: FacialHairSpecial
   canBeDisplaced: false
   shader: GradientRGB2Col
-  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Arachnid, IPC, Yowie, BananaMen, Shadow]
+  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Yowie, BananaMen, Shadow]
   coloring:
     layers:
       col1:
@@ -102,7 +103,7 @@
   markingCategory: FacialHairSpecial
   canBeDisplaced: false
   shader: GradientRGB3Col
-  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Arachnid, IPC, Yowie, BananaMen, Shadow]
+  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Yowie, BananaMen, Shadow]
   coloring:
     layers:
       col1:
@@ -166,7 +167,7 @@
   markingCategory: FacialHairSpecial
   canBeDisplaced: false
   shader: GradientHSV
-  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Arachnid, IPC, Yowie, BananaMen, Shadow]
+  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Yowie, BananaMen, Shadow]
   coloring:
     layers:
       col1:
