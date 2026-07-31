@@ -22,9 +22,8 @@
     subverted: true
   - type: IntrinsicRadioTransmitter
     channels:
-    - Binary
+    # Pirate: Binary is provided by BaseBorgChassis through CollectiveMind.
     - Freelance
   - type: ActiveRadio
     channels:
-    - Binary
     - Freelance

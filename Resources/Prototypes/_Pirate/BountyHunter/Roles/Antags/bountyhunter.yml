@@ -3,7 +3,6 @@
   name: roles-antag-bounty-hunter-name
   antagonist: false
   setPreference: false
-  playTimeTracker: AntagBountyHunter # Pirate
   objective: roles-antag-bounty-hunter-objective
   requirements: # Requiring some sec playtime, mainly to ensure people know escalation rules
   - !type:DepartmentTimeRequirement
