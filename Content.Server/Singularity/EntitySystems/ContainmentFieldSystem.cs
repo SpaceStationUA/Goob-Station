@@ -33,7 +33,7 @@ public sealed class ContainmentFieldSystem : EntitySystem
         // Goobstation
         // Pirate: pass both the collider and the containment field to listeners.
         var ev = new ContainmentFieldThrowEvent(otherBody, uid);
-        RaiseLocalEvent(otherBody, ref ev);
+        RaiseLocalEvent(otherBody, ref ev, true);
         if (ev.Cancelled)
             return;
 
