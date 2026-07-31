@@ -42,6 +42,28 @@
   - GroupSpeciesBreathTool
 
 # Security
+- type: roleLoadout
+  id: JobSecurityInstructor
+  groups:
+  - InstructorHead
+  - InstructorJumpsuit
+  - SecurityBackpack
+  - SecurityMelee
+  - SecurityOuterClothing
+  - SecurityShoes
+  - SecurityGloves
+  - InstructorNeck
+  - SecurityInstructorPDA
+  - InstructorBelt
+  - SurvivalSecurity
+  - Trinkets
+  - SecurityStar
+  - Animals
+  - GroupSpeciesBreathToolSecurity
+  # Плазмамен
+  - SecurityOfficerEnvirohelm
+  - SecurityOfficerEnvirosuit
+  - SecurityOfficerEnvirogloves
 
 # Medical
 

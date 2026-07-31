@@ -11,3 +11,15 @@
       - state: green
       - sprite: _Pirate/Markers/jobs.rsi
         state: adminassistant
+
+- type: entity
+  id: SpawnPointSecurityInstructor
+  parent: SpawnPointJobBase
+  name: securityinstructor
+  components:
+  - type: SpawnPoint
+    job_id: SecurityInstructor
+  - type: Sprite
+    layers:
+      - state: green
+      - state: security_officer
