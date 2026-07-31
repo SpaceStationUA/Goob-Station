@@ -43,6 +43,13 @@
   id: MobVoxMarkingLimits
   onlyWhitelisted: true
   points:
+    # Pirate - Trauma Station hair gradients
+    HairSpecial:
+      points: 1
+      required: false
+    FacialHairSpecial:
+      points: 1
+      required: false
     Hair:
       points: 1
       required: false
