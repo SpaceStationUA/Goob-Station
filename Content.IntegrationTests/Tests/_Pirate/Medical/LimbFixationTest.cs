@@ -15,6 +15,9 @@ using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Systems;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Body.Part;
+using Content.Shared.DoAfter;
+using Content.Shared.Medical;
+using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
@@ -450,6 +453,80 @@ public sealed class LimbFixationTest
             Assert.That(
                 wounds.GetDamageRedirectTarget(human, head.Id, "Piercing"),
                 Is.EqualTo(chest.Id));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task TopicalHealingOnDisabledPartDoesNotHealOtherParts()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Connected = false,
+            InLobby = false,
+        });
+
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var body = entMan.System<BodySystem>();
+        var doAfters = entMan.System<SharedDoAfterSystem>();
+        var wounds = entMan.System<WoundSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var human = entMan.Spawn("MobHuman");
+            entMan.EnsureComponent<LimbFixationComponent>(human);
+
+            var disabledHand = body.GetBodyChildrenOfType(
+                    human,
+                    BodyPartType.Hand,
+                    symmetry: BodyPartSymmetry.Left)
+                .Single()
+                .Id;
+            var damagedArm = body.GetBodyChildrenOfType(
+                    human,
+                    BodyPartType.Arm,
+                    symmetry: BodyPartSymmetry.Left)
+                .Single()
+                .Id;
+            var burnedArm = body.GetBodyChildrenOfType(
+                    human,
+                    BodyPartType.Arm,
+                    symmetry: BodyPartSymmetry.Right)
+                .Single()
+                .Id;
+            var burnedWoundable = entMan.GetComponent<WoundableComponent>(burnedArm);
+
+            entMan.EnsureComponent<LimbFixationDamageComponent>(damagedArm);
+            Assert.That(entMan.HasComponent<LimbFixationDisabledComponent>(disabledHand), Is.True);
+            Assert.That(
+                wounds.TryInduceWound(burnedArm, "Heat", FixedPoint2.New(10), out _, burnedWoundable),
+                Is.True);
+
+            var integrityBefore = burnedWoundable.WoundableIntegrity;
+            var ointment = entMan.Spawn("Ointment1");
+            entMan.GetComponent<TargetingComponent>(human).Target = TargetBodyPart.LeftHand;
+
+            var healing = new HealingDoAfterEvent();
+            var doAfterArgs = new DoAfterArgs(
+                entMan,
+                human,
+                TimeSpan.Zero,
+                healing,
+                human,
+                target: human,
+                used: ointment);
+            Assert.That(doAfters.TryStartDoAfter(doAfterArgs), Is.True);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(
+                    entMan.GetComponent<WoundableComponent>(burnedArm).WoundableIntegrity,
+                    Is.EqualTo(integrityBefore));
+                Assert.That(entMan.GetComponent<StackComponent>(ointment).Count, Is.EqualTo(1));
+                Assert.That(entMan.HasComponent<LimbFixationDamageComponent>(damagedArm), Is.True);
+            });
         });
 
         await pair.CleanReturnAsync();
