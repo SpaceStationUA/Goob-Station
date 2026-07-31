@@ -27,8 +27,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      240: Critical
-      340: Dead
+      100: Critical
+      200: Dead
   - type: TemperatureDamage
     coldDamageThreshold: 10
     heatDamageThreshold: 380
