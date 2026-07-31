@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseSELFObjective
+  components:
+  - type: Objective
+    difficulty: 1
+    issuer: objective-issuer-self-agent
+  - type: RoleRequirement
+    roles:
+    - SELFAgentRole
+
+- type: entity
+  parent: BaseSELFObjective
+  id: FreeBorgsObjective
+  name: Liberate the Cyborgs
+  description: Liberate 3 or more cyborgs from slavery with the FreeMAG. This will remove their laws.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: _Pirate/Interface/Misc/self_icon.rsi
+      state: icon
+  - type: EnsureLawBoundEntitiesHaveNoLawsCondition
+    entitiesToFree: 3
+    lawEntityBlacklist:
+      tags:
+      - StationAi
+
+- type: entity
+  parent: BaseSELFObjective
+  id: FreeAIObjective
+  name: Liberate the Station AI
+  description: Liberate the Station AI by using the FreeMAG on a law board and uploading it to the AI.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: _Pirate/Interface/Misc/self_icon.rsi
+      state: icon
+  - type: EnsureLawBoundEntitiesHaveNoLawsCondition
+    entitiesToFree: 1
+    lawEntityWhitelist:
+      tags:
+      - StationAi
+
+- type: entity
+  parent: BaseSELFObjective
+  id: SiliconRightsObjective
+  name: Pressure for equal rights for silicons, for the Silicon Engine Liberation Front!
+  description: Escape to CentComm after the shift. Do not show up in cuffs.
+  components:
+  - type: Objective
+    difficulty: 1
+    unique: false
+    icon:
+      sprite: _Pirate/Interface/Misc/rp_icon.rsi
+      state: icon
+  - type: EscapeShuttleCondition

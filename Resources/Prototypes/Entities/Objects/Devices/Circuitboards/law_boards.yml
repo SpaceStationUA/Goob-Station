@@ -9,6 +9,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NTDefault
+  - type: FreeMagLawboard # Pirate: SELF
   - type: GuideHelp
     guides:
     - Lawsets

@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleSELFAgent
+  name: S.E.L.F. Agent Role
+  components:
+  - type: MindRole
+    antagPrototype: SELFAgent
+    subtype: roles-antag-selfagent-name
+    exclusiveAntag: true
+  - type: SELFAgentRole

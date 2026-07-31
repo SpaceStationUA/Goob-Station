@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: guideEntry
+  id: SELFAgent
+  name: roles-antag-selfagent-name
+  text: "/ServerInfo/_Pirate/Guidebook/Antagonist/SiliconLiberation.xml"

@@ -11,6 +11,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: HelpimovLawset
+  - type: FreeMagLawboard # Pirate: SELF
 
 - type: entity
   id: GambamovCircuitBoard
@@ -23,6 +24,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: GambamovLawset
+  - type: FreeMagLawboard # Pirate: SELF
 
 - type: entity
   id: PlayerBorgDerelictSyndicateAssaultBattery
