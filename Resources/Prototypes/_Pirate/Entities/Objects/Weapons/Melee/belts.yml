@@ -10,7 +10,7 @@
   - type: Clothing
     sprite: _Pirate/Clothing/Belt/instructordisciplinary.rsi
     equipSound:
-       path: /Audio/_PIrate/Items/Belts/BeltBuckle.ogg
+       path: /Audio/_Pirate/Items/Belts/BeltBuckle.ogg
        params:
          volume: -3
   - type: MeleeWeapon
