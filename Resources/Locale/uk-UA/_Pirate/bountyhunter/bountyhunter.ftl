@@ -126,6 +126,7 @@ ent-WeaponBountyHunterLaser = пошарпаний лазерний пістол
 ent-ReinforcementRadioBountyHunterParrot = радіо виклику піратського папуги
     .desc = ЙО-ХО-ХО!
 ent-CrateBountyHunterPirate = піратська скриня мисливця за головами
+    .desc = Піратська скриня з добіркою спорядження для мисливця за головами.
     .suffix = Заповнена, мисливець за головами
 ent-RecallImplanter = імплантер повернення
     .desc = Одноразовий імплантер із імплантом повернення зброї.
