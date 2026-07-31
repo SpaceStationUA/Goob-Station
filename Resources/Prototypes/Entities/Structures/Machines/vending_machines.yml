@@ -63,7 +63,7 @@
   - type: UserInterface
     interfaces:
       enum.VendingMachineUiKey.Key:
-        type: VendingMachineBoundUserInterface
+        type: VendingMachineKeypadBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: WiresPanel
@@ -176,7 +176,7 @@
   - type: UserInterface
     interfaces:
       enum.VendingMachineUiKey.Key:
-        type: VendingMachineBoundUserInterface
+        type: VendingMachineKeypadBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: WiresPanel
