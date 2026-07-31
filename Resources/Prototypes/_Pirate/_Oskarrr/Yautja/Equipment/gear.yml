@@ -203,6 +203,13 @@
   - type: Storage
     grid:
     - 0,0,3,1
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
 
 - type: entity
   parent: BaseItem
