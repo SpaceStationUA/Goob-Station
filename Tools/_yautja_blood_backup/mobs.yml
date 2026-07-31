@@ -1,0 +1,50 @@
+- type: entity
+  save: false
+  parent: MobHuman
+  id: GoobMobYautja
+  name: "Мисливець Яутжа"
+  suffix: Yautja, Event
+  components:
+  - type: HumanoidAppearance
+    species: Yautja
+    hideLayersOnEquip:
+    - Hair
+  - type: Icon
+    sprite: _Oskarrr/Yautja/body.rsi
+    state: full
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    angle: 0
+    animation: WeaponArcFist
+    attackRate: 1.15
+    damage:
+      types:
+        Blunt: 15
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4.4
+    baseSprintSpeed: 8.4
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      240: Critical
+      340: Dead
+  - type: Temperature
+    coldDamageThreshold: 10
+    heatDamageThreshold: 380
+  - type: Damageable
+    damageModifierSet: GoobYautjaDamageModifier
+  - type: Body
+    prototype: GoobYautjaBody
+    requiredLegs: 2
+  - type: Bloodstream
+    bloodReagent: GoobYautjaBlood
+  - type: BreathingImmunity
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.25
+        Heat: 0.05
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 2

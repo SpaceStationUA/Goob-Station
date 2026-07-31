@@ -1,0 +1,53 @@
+# Mask base + default mask only (bracer entities land in yautja-03).
+
+- type: entity
+  parent: ClothingMaskGas
+  id: GoobYautjaMaskBase
+  abstract: true
+  suffix: Yautja, Abstract
+  components:
+  - type: IngestionBlocker
+    blockSmokeIngestion: true
+  - type: NightVision
+    isEquipment: true
+    color: white
+    drawOverlay: false
+    strength: 0
+    noise: 0
+    tint: 3, 3, 3
+    activateSound:
+      path: /Audio/_Oskarrr/Yautja/Equipment/pred_vision.wav
+    deactivateSound: null
+  - type: ThermalVision
+    isEquipment: true
+    toggleAction: ToggleThermalVisionXenomorph
+    color: white
+    drawOverlay: false
+    lightRadius: 10
+    strength: 0
+    noise: 0
+    tint: 3, 3, 3
+    activateSound:
+      path: /Audio/_Oskarrr/Yautja/Equipment/pred_vision.wav
+    deactivateSound: null
+
+- type: entity
+  parent: GoobYautjaMaskBase
+  id: GoobYautjaMask
+  name: "біомаска"
+  description: "Прибулецька мисливська маска з вбудованим тактичним візором."
+  components:
+  - type: Sprite
+    sprite: _Oskarrr/Yautja/mask.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: _Oskarrr/Yautja/mask.rsi
+    slots:
+    - Mask
+    - SuitStorage
+  - type: Item
+    size: Small
+  - type: Mask
+  - type: EyeProtection
+    protectionTime: 20
