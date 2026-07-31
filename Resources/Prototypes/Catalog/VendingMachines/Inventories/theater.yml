@@ -68,6 +68,7 @@
     ClothingOuterSuitPickle: 1
     ClothingOuterSuitTutu: 2 # Goob
     ClothingHeadHatTinfoilHat: 2 # Goobstation
+    ClothingHeadHatBunnyearsClown: 1 # Pirate
   contrabandInventory:
     ClothingHeadHatRichard: 1
     ClothingShoesBling: 1
