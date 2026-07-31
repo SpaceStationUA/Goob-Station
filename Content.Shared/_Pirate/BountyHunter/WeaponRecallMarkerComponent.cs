@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._Pirate.BountyHunter;
@@ -16,4 +17,10 @@ public sealed partial class WeaponRecallMarkerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? MarkedByAction;
+
+    /// <summary>
+    /// The player whose PVS override must be removed when the action is detached.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public NetUserId? MarkedByUser;
 }

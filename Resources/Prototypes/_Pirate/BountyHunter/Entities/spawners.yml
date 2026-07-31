@@ -11,6 +11,7 @@
     - MindRoleBountyHunter
     raffle:
       settings: default
+  - type: BountyHunterSpawner
 
 - type: entity
   id: SpawnPointBountyHunter

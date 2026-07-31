@@ -7,6 +7,7 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Shared._Pirate.BountyHunter;
@@ -31,6 +32,7 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
 
         SubscribeLocalEvent<WeaponRecallComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<WeaponRecallComponent, OnWeaponRecallActionEvent>(OnWeaponRecallActionUse);
+        SubscribeLocalEvent<WeaponRecallComponent, ComponentShutdown>(OnRecallActionShutdown);
 
         SubscribeLocalEvent<WeaponRecallMarkerComponent, ComponentShutdown>(OnRecallMarkerShutdown);
     }
@@ -69,9 +71,11 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
                 return;
             }
 
+            if (!TryMarkItem(ent, markItem.Value))
+                return;
 
             _popups.PopupClient(Loc.GetString("weapon-recall-item-marked", ("item", markItem.Value)), args.Performer, args.Performer);
-            TryMarkItem(ent, markItem.Value);
+            args.Handled = true;
             return;
         }
 
@@ -106,24 +110,30 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
         TryUnmarkItem(ent);
     }
 
-    private void TryMarkItem(Entity<WeaponRecallComponent> ent, EntityUid item)
+    private void OnRecallActionShutdown(Entity<WeaponRecallComponent> ent, ref ComponentShutdown args)
+    {
+        if (ent.Comp.MarkedEntity is { } item)
+            TryUnmarkItem(item);
+    }
+
+    private bool TryMarkItem(Entity<WeaponRecallComponent> ent, EntityUid item)
     {
         if (_actions.GetAction(ent.Owner) is not {} action)
-            return;
+            return false;
 
         if (action.Comp.AttachedEntity is not {} user)
-            return;
-
-        AddToPvsOverride(item, user);
+            return false;
 
         ent.Comp.MarkedEntity = item;
         Dirty(ent);
 
         var marker = AddComp<WeaponRecallMarkerComponent>(item);
         marker.MarkedByAction = ent;
+        marker.MarkedByUser = AddToPvsOverride(item, user);
         Dirty(item, marker);
 
         UpdateActionAppearance((action, action, ent));
+        return true;
     }
 
     private void TryUnmarkItem(EntityUid item)
@@ -131,10 +141,11 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
         if (!TryComp<WeaponRecallMarkerComponent>(item, out var marker))
             return;
 
-        if (_actions.GetAction(marker.MarkedByAction) is not {} action)
-            return;
+        if (marker.MarkedByUser is { } userId)
+            RemoveFromPvsOverride(item, userId);
 
-        if (TryComp<WeaponRecallComponent>(action, out var itemRecall))
+        if (_actions.GetAction(marker.MarkedByAction, false) is { } action &&
+            TryComp<WeaponRecallComponent>(action, out var itemRecall))
         {
             // For some reason client thinks the station grid owns the action on client and this doesn't work. It doesn't work in PopupEntity(mispredicts) and PopupPredicted either(doesnt show).
             // I don't have the heart to move this code to server because of this small thing.
@@ -142,15 +153,18 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
             if (action.Comp.AttachedEntity is {} user)
             {
                 _popups.PopupClient(Loc.GetString("weapon-recall-item-unmark", ("item", item)), user, user, PopupType.MediumCaution);
-                RemoveFromPvsOverride(item, user);
             }
 
             itemRecall.MarkedEntity = null;
-            UpdateActionAppearance((action, action, itemRecall));
-            Dirty(action, itemRecall);
+            if (!TerminatingOrDeleted(action))
+            {
+                UpdateActionAppearance((action, action, itemRecall));
+                Dirty(action, itemRecall);
+            }
         }
 
-        RemCompDeferred<WeaponRecallMarkerComponent>(item);
+        if (marker.LifeStage < ComponentLifeStage.Stopping)
+            RemCompDeferred<WeaponRecallMarkerComponent>(item);
     }
 
     private void UpdateActionAppearance(Entity<ActionComponent, WeaponRecallComponent> action)
@@ -175,17 +189,18 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
         }
     }
 
-    private void AddToPvsOverride(EntityUid uid, EntityUid user)
+    private NetUserId? AddToPvsOverride(EntityUid uid, EntityUid user)
     {
         if (!_player.TryGetSessionByEntity(user, out var mindSession))
-            return;
+            return null;
 
         _pvs.AddSessionOverride(uid, mindSession);
+        return mindSession.UserId;
     }
 
-    private void RemoveFromPvsOverride(EntityUid uid, EntityUid user)
+    private void RemoveFromPvsOverride(EntityUid uid, NetUserId userId)
     {
-        if (!_player.TryGetSessionByEntity(user, out var mindSession))
+        if (!_player.TryGetSessionById(userId, out var mindSession))
             return;
 
         _pvs.RemoveSessionOverride(uid, mindSession);

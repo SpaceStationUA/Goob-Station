@@ -4,6 +4,7 @@ using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Robust.Shared.Enums;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -20,6 +21,14 @@ public sealed partial class BountyHunterTargetCondition : EntityTableCondition
     protected override bool EvaluateImplementation(EntityTableSelector root, IEntityManager entMan,
         IPrototypeManager proto, EntityTableContext ctx)
     {
+        return HasEligibleTarget(entMan);
+    }
+
+    /// <summary>
+    /// Returns whether a live, connected antagonist can currently receive the bounty objective.
+    /// </summary>
+    public static bool HasEligibleTarget(IEntityManager entMan, NetUserId? excludedUser = null)
+    {
         _playerManager ??= IoCManager.Resolve<ISharedPlayerManager>();
 
         var minds = entMan.System<SharedMindSystem>().GetAliveHumans();
@@ -27,14 +36,16 @@ public sealed partial class BountyHunterTargetCondition : EntityTableCondition
 
         foreach (var mind in minds)
         {
+            if (mind.Comp.UserId is not { } userId || userId == excludedUser)
+                continue;
+
             if (!roles.MindIsAntagonist(mind))
                 continue;
 
             if (IsObjectiveImmune(mind, entMan))
                 continue;
 
-            if (mind.Comp.UserId is { } userId &&
-                _playerManager.TryGetSessionById(userId, out var session) &&
+            if (_playerManager.TryGetSessionById(userId, out var session) &&
                 session.Status == SessionStatus.InGame)
                 return true;
         }
