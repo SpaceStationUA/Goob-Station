@@ -24,7 +24,7 @@
     velocityLerpAmount: 0.2
     velocityLerpTarget: 0
     sprite:
-      sprite: _Pirate/Heretic/Effects/blood.rsi
+      sprite: /Textures/_Pirate/Heretic/Effects/blood.rsi
       state: blood
   - type: Animateable
   - type: Appearance
