@@ -46,6 +46,9 @@
     # - id: RevenantSpawn # Goob
     - id: EeepEvent # Harmony Eeep Port - imp
     - id: SyndicateDeadDrop
+    - id: BountyHunterSpawn # Pirate
+      conditions:
+      - !type:BountyHunterTargetCondition
     - !type:NestedSelector
       tableId: DerelictBorgEventTable
 
