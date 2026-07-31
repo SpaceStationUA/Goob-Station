@@ -1,18 +1,3 @@
--create-3rd-person = { $chance ->
-        [1] створює
-        *[other] створює
-    }
-
--cause-3rd-person = { $chance ->
-        [1] Причини
-        *[other] причина
-    }
-
--satiate-3rd-person = { $chance ->
-        [1] насичує
-        *[other] насичує
-    }
-
 reagent-effect-guidebook-create-entity-reaction-effect = { $chance ->
         *[other] створює
     } { $amount ->
@@ -360,20 +345,6 @@ reagent-effect-guidebook-chem-restorereroll-psionic = { $chance ->
         [1] Відновлює
         *[other] відновити
     } здатність отримувати користь від реагентів, що відкривають розум
-reagent-effect-guidebook-add-to-chemicals = { $chance ->
-        [1] { $deltasign ->
-                [1] Додає
-                *[-1] Видаляє
-            }
-        *[other]
-            { $deltasign ->
-                [1] додати
-                *[-1] видалити
-            }
-    } {NATURALFIXED($amount, 2)}u {$reagent} { $deltasign ->
-        [1] до
-        *[-1] з
-    } розчину
 reagent-effect-guidebook-remove-moodlet = Видаляє мудлет {$name}.
 reagent-effect-guidebook-purge-moodlets = Видаляє всі активні непостійні мудлети.
 reagent-effect-guidebook-flash-reaction-effect = { $chance ->

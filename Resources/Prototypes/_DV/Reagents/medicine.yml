@@ -35,37 +35,6 @@
             Cold: 1 # plan to change this when holy counterpart damage exists
 
 - type: reagent
-  id: Arcryox
-  name: reagent-name-arcryox
-  group: Medicine
-  desc: reagent-desc-arcryox
-  physicalDesc: reagent-physical-desc-arcryox
-  flavor: medicine
-  color: "#0cbfe9"
-  worksOnTheDead: true
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:EvenHealthChange
-        conditions:
-        - !type:Temperature
-          max: 213.0
-        - !type:TotalDamage
-          min: 199.9
-        damage:
-          Brute: -2
-          Burn: -2
-      - !type:EvenHealthChange
-        conditions:
-        - !type:Temperature
-          max: 213.0
-        - !type:TotalDamage
-          min: 500
-        damage:
-          Brute: -4
-          Burn: -4
-
-- type: reagent
   id: SanctusSal
   name: reagent-name-sanctussal
   group: Medicine

@@ -99,4 +99,4 @@
   - BasicStationEventScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate (PsionicEventsScheduler was removed upstream)

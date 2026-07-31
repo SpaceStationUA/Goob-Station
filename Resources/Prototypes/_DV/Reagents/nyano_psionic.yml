@@ -23,8 +23,6 @@
         factor: -3
       - !type:SatiateHunger
         factor: -3
-      - !type:ModifyBleedAmount
-        amount: -1
       - !type:ModifyBloodLevel
         amount: 2
       - !type:EvenHealthChange
@@ -39,12 +37,12 @@
             Bloodloss: -3
       - !type:CureZombieInfection
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Prometheum
           min: 20
-      - !type:ChemHealEyeDamage
+      - !type:EyeDamage
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Prometheum
           min: 10
 
@@ -69,7 +67,7 @@
             Toxin: 2
       - !type:RemovePsionicAbilities
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: SoulbreakerToxin
           min: 5
 

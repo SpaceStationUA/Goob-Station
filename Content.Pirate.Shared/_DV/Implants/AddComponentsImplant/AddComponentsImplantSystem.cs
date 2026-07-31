@@ -15,9 +15,10 @@ public sealed class AddComponentsImplantSystem : EntitySystem
 
     private void OnImplantImplantedEvent(Entity<AddComponentsImplantComponent> ent, ref ImplantImplantedEvent args)
     {
-        if (args.Implanted is not { } target)
+        if (!(args.Implanted is { } target))
+        {
             return;
-
+        }
         // Pirate: local EntityManager adds registry entries in bulk, not raw component instances.
         var added = new ComponentRegistry();
 

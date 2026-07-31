@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Numerics;
-using Content.Server.Light.Components;
+using Content.Shared.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared.Physics;

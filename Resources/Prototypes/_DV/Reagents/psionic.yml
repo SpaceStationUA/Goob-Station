@@ -13,7 +13,7 @@
       - !type:RollPsionicAbility
         bonusMultiplier: 2.5
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: PureOil
           min: 20
 
@@ -32,6 +32,6 @@
       - !type:RollPsionicAbility
         bonusMultiplier: 1
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Claridisol
           min: 40

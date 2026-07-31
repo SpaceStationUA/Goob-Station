@@ -20,7 +20,7 @@
       - !type:RollPsionicAbility
         bonusMultiplier: 4
         conditions:
-        # Pirate: local reagent conditions use ReagentThreshold; StatusEffectScrambled is not ported.
-        - !type:ReagentThreshold
+        # Pirate: local reagent conditions use ReagentCondition; StatusEffectScrambled is not ported.
+        - !type:ReagentCondition
           reagent: LotophagoiOil
           min: 20

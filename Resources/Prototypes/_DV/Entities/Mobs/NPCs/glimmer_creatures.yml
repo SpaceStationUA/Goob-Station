@@ -136,7 +136,9 @@
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
-  - type: HitscanBatteryAmmoProvider # Pirate: local battery ammo provider split keeps the DV hitscan behavior.
+    minAngle: 0.17453
+    maxAngle: 0.52359
+  - type: BatteryAmmoProvider
     proto: WispLash
     fireCost: 1
     # TODO: implement upstream or make it use a proper thing, maybe copy dragon

@@ -1,8 +1,7 @@
 using Content.Server.Electrocution;
 using Content.Server.Lightning;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.PowerCell;
+using Content.Shared.Power.Components;
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared._DV.Psionics.Events.PowerActionEvents;
@@ -53,23 +52,23 @@ public sealed class NoosphericZapPowerSystem : SharedNoosphericZapPowerSystem
 
     private void OnBatterySlotZapped(Entity<PowerCellSlotComponent> batterySlot, ref NoosphericallyZappedEvent args)
     {
-        if (!_powerCell.TryGetBatteryFromSlot(batterySlot.Owner, out var batteryUid, out var battery, batterySlot.Comp))
+        if (!_powerCell.TryGetBatteryFromSlot(batterySlot.Owner, out Entity<BatteryComponent>? batteryUid))
             return;
 
-        ChargeBattery(batteryUid.Value, battery, args.RechargeAmount, batterySlot);
+        ChargeBattery(batteryUid.Value, args.RechargeAmount, batterySlot);
         args.CanZap = true;
     }
 
     private void OnBatteryZapped(Entity<BatteryComponent> battery, ref NoosphericallyZappedEvent args)
     {
-        ChargeBattery(battery.Owner, battery.Comp, args.RechargeAmount, battery);
+        ChargeBattery(battery.Owner, args.RechargeAmount, battery);
         args.CanZap = true;
     }
 
-    private void ChargeBattery(EntityUid battery, BatteryComponent batteryComp, float amount, EntityUid container)
+    private void ChargeBattery(EntityUid battery, float amount, EntityUid container)
     {
         var message = Loc.GetString("psionic-power-noospheric-zap-battery", ("battery", Identity.Entity(container, EntityManager)));
         Popup.PopupEntity(message, battery, PopupType.Medium);
-        _battery.ChangeCharge(battery, amount, batteryComp);
+        _battery.ChangeCharge(battery, amount);
     }
 }

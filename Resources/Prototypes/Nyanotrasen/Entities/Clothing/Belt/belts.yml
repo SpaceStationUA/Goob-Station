@@ -25,5 +25,5 @@
         - NodeScanner
         - Flash
         - HandLabeler
-        - TinfoilHat
+        - PossessionImmune # TinfoilHat component removed in psionics port; the hat now grants PossessionImmune
         - Handcuff
