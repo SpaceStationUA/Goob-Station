@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original sprite by Abby, animation by JAXONDUDE2010",
+  "size": {
+    "x": 64,
+    "y": 45
+  },
+  "states": [
+    {
+      "name": "Table-Frame" 
+    },
+    {
+      "name": "engiholo",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },     
+    {
+      "name": "Holo-Table-Lights",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }     
+  ]
+}
