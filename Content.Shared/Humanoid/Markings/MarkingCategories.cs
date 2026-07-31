@@ -7,6 +7,8 @@ namespace Content.Shared.Humanoid.Markings
     [Serializable, NetSerializable]
     public enum MarkingCategories : byte
     {
+        HairSpecial, // Pirate - Trauma Station hair gradients
+        FacialHairSpecial, // Pirate - Trauma Station hair gradients
         Special,
         Hair,
         FacialHair,

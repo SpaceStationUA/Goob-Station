@@ -190,6 +190,11 @@ public sealed partial class MarkingPicker : Control
     private List<string> GetMarkingStateNames(MarkingPrototype marking)
     {
         List<string> result = new();
+
+        // Pirate - shader markings expose their parameters as coloring layers.
+        if (marking.Sprites.Count == 0 && marking.Coloring.Layers is { } layers)
+            return layers.Keys.Order().Select(x => Loc.GetString($"marking-{marking.ID}-{x}")).ToList();
+
         foreach (var markingState in marking.Sprites)
         {
             switch (markingState)
@@ -233,7 +238,10 @@ public sealed partial class MarkingPicker : Control
                 continue;
             }
 
-            var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", _sprite.Frame0(marking.Sprites[0]));
+            if (GetMarkingTexture(marking) is not { } texture) // Pirate - shader markings borrow the hair icon
+                continue;
+
+            var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", texture);
             item.Metadata = marking;
         }
 
@@ -261,13 +269,16 @@ public sealed partial class MarkingPicker : Control
                 continue;
             }
 
+            if (GetMarkingTexture(newMarking) is not { } texture) // Pirate - shader markings borrow the hair icon
+                continue;
+
             var text = Loc.GetString(marking.Forced ? "marking-used-forced" : "marking-used", ("marking-name", $"{GetMarkingName(newMarking)}"),
                 ("marking-category", Loc.GetString($"markings-category-{newMarking.MarkingCategory}")));
 
             var _item = new ItemList.Item(CMarkingsUsed)
             {
                 Text = text,
-                Icon = _sprite.Frame0(newMarking.Sprites[0]),
+                Icon = texture,
                 Selectable = true,
                 Metadata = newMarking,
                 IconModulate = marking.MarkingColors[0]
@@ -411,11 +422,11 @@ public sealed partial class MarkingPicker : Control
         _currentMarkingColors.Clear();
         CMarkingColors.RemoveAllChildren();
         List<ColorSelectorSliders> colorSliders = new();
-        for (int i = 0; i < prototype.Sprites.Count; i++)
+        for (int i = 0; i < prototype.ColorCount; i++) // Pirate - shader markings have no sprites
         {
             // Pirate start - port Floofstation custom layers
             var skipDraw = false;
-            if (prototype.ColorLinks?.Count > 0)
+            if (i < prototype.Sprites.Count && prototype.ColorLinks?.Count > 0)
             {
                 var name = prototype.Sprites[i] switch
                 {
@@ -442,6 +453,9 @@ public sealed partial class MarkingPicker : Control
                 CMarkingColors.AddChild(colorContainer);
             }
             // Pirate end - port Floofstation custom layers
+
+            if (TryCreateShaderParamSliders(prototype, i, colorContainer)) // Pirate - hair gradients
+                continue;
 
             ColorSelectorSliders colorSelector = new ColorSelectorSliders();
             colorSelector.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv; // defaults color selector to HSV
@@ -503,6 +517,9 @@ public sealed partial class MarkingPicker : Control
         var marking = (MarkingPrototype) _selectedUnusedMarking.Metadata!;
         var markingObject = marking.AsMarking();
 
+        if (GetMarkingTexture(marking) is not { } texture) // Pirate - shader markings borrow the hair icon
+            return;
+
         // We need add hair markings in cloned set manually because _currentMarkings doesn't have it
         var markingSet = new MarkingSet(_currentMarkings);
         if (HairMarking != null)
@@ -514,7 +531,8 @@ public sealed partial class MarkingPicker : Control
             markingSet.AddBack(MarkingCategories.FacialHair, FacialHairMarking);
         }
 
-        if (!_markingManager.MustMatchSkin(_currentSpecies, marking.BodyPart, out var _, _prototypeManager))
+        if (marking.MarkingCategory.IgnoresMatchSkin() || // Pirate - gradient colors are always user-selectable
+            !_markingManager.MustMatchSkin(_currentSpecies, marking.BodyPart, out var _, _prototypeManager))
         {
             // Do default coloring
             var colors = MarkingColoring.GetMarkingLayerColors(
@@ -547,7 +565,7 @@ public sealed partial class MarkingPicker : Control
         var item = new ItemList.Item(CMarkingsUsed)
         {
             Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(marking)}"), ("marking-category", Loc.GetString($"markings-category-{marking.MarkingCategory}"))),
-            Icon = _sprite.Frame0(marking.Sprites[0]),
+            Icon = texture,
             Selectable = true,
             Metadata = marking,
         };
@@ -571,8 +589,11 @@ public sealed partial class MarkingPicker : Control
 
         if (marking.MarkingCategory == _selectedMarkingCategory)
         {
-            var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", _sprite.Frame0(marking.Sprites[0]));
-            item.Metadata = marking;
+            if (GetMarkingTexture(marking) is { } texture) // Pirate - shader markings borrow the hair icon
+            {
+                var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", texture);
+                item.Metadata = marking;
+            }
         }
         _selectedMarking = null;
         CMarkingColors.Visible = false;

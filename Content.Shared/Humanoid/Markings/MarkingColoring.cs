@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 
+using System.Linq;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings;
@@ -49,6 +50,13 @@ public static class MarkingColoring
                 colors.Add(defaultColor);
             }
             return colors;
+        }
+        // Pirate - shader markings store colors and parameters without sprite layers.
+        else if (prototype.Sprites.Count == 0)
+        {
+            return prototype.Coloring.Layers.OrderBy(x => x.Key)
+                .Select(x => x.Value.GetColor(skinColor, eyeColor, markingSet))
+                .ToList();
         }
         else
         {
