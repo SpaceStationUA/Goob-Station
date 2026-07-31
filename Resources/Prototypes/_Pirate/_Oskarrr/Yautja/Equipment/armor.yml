@@ -5,6 +5,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan.rsi
     equipDelay: 1
@@ -35,6 +36,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_heavy_clan.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_heavy_clan.rsi
   # Кам'яна броня трохи міцніша, але сповільнюватиме (баланс Goob)
@@ -60,6 +62,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_bronze.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_bronze.rsi
 
@@ -70,6 +73,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_silver.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_silver.rsi
 
@@ -80,6 +84,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_crimson.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_crimson.rsi
 
@@ -90,6 +95,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_bone.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_bone.rsi
 
@@ -100,6 +106,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_2.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_2.rsi
 
@@ -110,6 +117,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_3.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_3.rsi
 
@@ -120,6 +128,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_4.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_4.rsi
 
@@ -130,6 +139,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_5.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_5.rsi
 
@@ -140,6 +150,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_6.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_6.rsi
 
@@ -150,6 +161,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_7.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_7.rsi
 
@@ -160,6 +172,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_8.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_8.rsi
 
@@ -170,6 +183,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_bronze_2.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_bronze_2.rsi
 
@@ -180,6 +194,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_bronze_3.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_bronze_3.rsi
 
@@ -190,6 +205,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_bronze_4.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_bronze_4.rsi
 
@@ -200,6 +216,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_bronze_5.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_bronze_5.rsi
 
@@ -210,6 +227,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_bronze_6.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_bronze_6.rsi
 
@@ -220,6 +238,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_bronze_7.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_bronze_7.rsi
 
@@ -230,6 +249,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_bronze_8.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_bronze_8.rsi
 
@@ -240,6 +260,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_silver_2.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_silver_2.rsi
 
@@ -250,6 +271,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_silver_3.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_silver_3.rsi
 
@@ -260,6 +282,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_silver_4.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_silver_4.rsi
 
@@ -270,6 +293,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_silver_5.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_silver_5.rsi
 
@@ -280,6 +304,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_silver_6.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_silver_6.rsi
 
@@ -290,6 +315,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_silver_7.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_silver_7.rsi
 
@@ -300,6 +326,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_silver_8.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_silver_8.rsi
 
@@ -310,6 +337,7 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_crimson_2.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_crimson_2.rsi
 
@@ -320,5 +348,6 @@
   components:
   - type: Sprite
     sprite: _Oskarrr/Yautja/armor_clan_crimson_3.rsi
+    state: icon
   - type: Clothing
     sprite: _Oskarrr/Yautja/armor_clan_crimson_3.rsi

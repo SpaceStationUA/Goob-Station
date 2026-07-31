@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 
@@ -68,11 +66,5 @@ public sealed partial class YautjaSmartDiscComponent : Component
     public float HomingTimer;
 
     [DataField]
-    public DamageSpecifier OrbitDamage = new()
-    {
-        DamageDict = new Dictionary<string, FixedPoint2>
-        {
-            { "Slash", 10 },
-        },
-    };
+    public DamageSpecifier OrbitDamage = new();
 }

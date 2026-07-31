@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 
@@ -16,11 +14,5 @@ public sealed partial class YautjaHuntingTrapComponent : Component
     public bool Used;
 
     [DataField]
-    public DamageSpecifier TriggerDamage = new()
-    {
-        DamageDict = new Dictionary<string, FixedPoint2>
-        {
-            { "Slash", 50 },
-        },
-    };
+    public DamageSpecifier TriggerDamage = new();
 }

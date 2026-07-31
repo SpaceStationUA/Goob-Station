@@ -39,6 +39,8 @@
     clothingVisuals:
       belt:
       - state: equipped
+  - type: Item
+    size: Huge
   - type: Storage
     maxItemSize: Large
     grid:

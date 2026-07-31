@@ -77,15 +77,17 @@ public sealed partial class YautjaBracerComponent : Component
 [RegisterComponent, NetworkedComponent]
 public sealed partial class YautjaBracerClawsComponent : Component
 {
+    /// <summary>Runtime link to the owning bracer. Nullable so prototype save tests do not serialize invalid Uids.</summary>
     [DataField]
-    public EntityUid Bracer;
+    public EntityUid? Bracer;
 }
 
 [RegisterComponent]
 public sealed partial class YautjaBracerCloakTrackerComponent : Component
 {
+    /// <summary>Runtime link to the owning bracer. Nullable so prototype save tests do not serialize invalid Uids.</summary>
     [DataField]
-    public EntityUid Bracer;
+    public EntityUid? Bracer;
 }
 
 /// <summary>

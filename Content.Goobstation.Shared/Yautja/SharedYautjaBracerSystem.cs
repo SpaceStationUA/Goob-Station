@@ -54,7 +54,9 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
 
     private void OnCloakTrackerMove(Entity<YautjaBracerCloakTrackerComponent> ent, ref MoveEvent args)
     {
-        if (!TryComp(ent.Comp.Bracer, out YautjaBracerComponent? bracer) || !bracer.Cloaked)
+        if (ent.Comp.Bracer is not { } bracerUid
+            || !TryComp(bracerUid, out YautjaBracerComponent? bracer)
+            || !bracer.Cloaked)
             return;
 
         if (!TryComp<StealthComponent>(ent, out var stealth))
@@ -273,14 +275,15 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
 
     private void OnClawsShutdown(Entity<YautjaBracerClawsComponent> ent, ref ComponentShutdown args)
     {
-        if (!TryComp(ent.Comp.Bracer, out YautjaBracerComponent? bracer)
+        if (ent.Comp.Bracer is not { } bracerUid
+            || !TryComp(bracerUid, out YautjaBracerComponent? bracer)
             || bracer.ClawsEntity != ent)
         {
             return;
         }
 
         bracer.ClawsEntity = null;
-        Dirty(ent.Comp.Bracer, bracer);
+        Dirty(bracerUid, bracer);
     }
 
     private void Detonate(Entity<YautjaBracerComponent> ent)

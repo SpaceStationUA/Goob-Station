@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseToggleAction
   id: ActionYautjaToggleClaws
-  name: yautja-bracer-toggle-claws-name
-  description: yautja-bracer-toggle-claws-desc
+  name: Extend Claws
+  description: Extend or retract the wrist blades built into your bracer.
   components:
   - type: Action
     icon:
@@ -14,8 +14,8 @@
 - type: entity
   parent: BaseToggleAction
   id: ActionYautjaToggleCloak
-  name: yautja-bracer-toggle-cloak-name
-  description: yautja-bracer-toggle-cloak-desc
+  name: Cloak
+  description: Toggles the predator cloaking field. Requires a Yautja cloak in the backpack slot.
   components:
   - type: Action
     icon:
@@ -27,8 +27,8 @@
 - type: entity
   parent: BaseAction
   id: ActionYautjaSelfDestruct
-  name: yautja-bracer-self-destruct-name
-  description: yautja-bracer-self-destruct-desc
+  name: Self Destruct
+  description: Initiates the bracer self-destruct protocol. Detonates with macro-bomb force after the countdown.
   components:
   - type: Action
     priority: -20

@@ -1,13 +1,16 @@
-yautja-bracer-toggle-claws-name = Висунути кігті
-yautja-bracer-toggle-claws-desc = Висуває або забирає зап'ясткові клинки вбудовані в наручник.
+ent-ActionYautjaToggleClaws = Висунути кігті
+    .desc = Висуває або забирає зап'ясткові клинки вбудовані в наручник.
+
+ent-ActionYautjaToggleCloak = Плащ
+    .desc = Вмикає або вимикає поле маскування. Потрібен плащ у слоті рюкзака.
+
+ent-ActionYautjaSelfDestruct = Самознищення
+    .desc = Запускає протокол самознищення наручника. Після відліку — вибух як у макро-бомби.
 
 yautja-bracer-claws-extend = Висунути кігті
 yautja-bracer-claws-retract = Забрати кігті
 
 yautja-bracer-claws-no-hands = Немає вільних рук для клинків.
-
-yautja-bracer-toggle-cloak-name = Плащ
-yautja-bracer-toggle-cloak-desc = Вмикає або вимикає поле маскування. Потрібен плащ у слоті рюкзака.
 
 yautja-bracer-cloak-need-pack = Для невидимості потрібен плащ Яутжа в слоті рюкзака.
 
@@ -21,7 +24,5 @@ yautja-hunting-trap-already-used = Ця пастка вже використан
 yautja-hunting-trap-sprung = Пастка спрацювала!
 
 
-yautja-bracer-self-destruct-name = Самознищення
-yautja-bracer-self-destruct-desc = Запускає протокол самознищення наручника. Після відліку — вибух як у макро-бомби.
 yautja-bracer-self-destruct-started = УВАГА: протокол самознищення активовано!
 yautja-bracer-self-destruct-countdown = Відлік до самознищення: 8 секунд!

@@ -133,6 +133,9 @@
   - type: Item
     size: Small
   - type: YautjaHuntingTrap
+    triggerDamage:
+      types:
+        Slash: 50
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/click.ogg
