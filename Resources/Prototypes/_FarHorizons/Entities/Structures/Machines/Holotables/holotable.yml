@@ -1,0 +1,289 @@
+- type: entity
+  id: HolotableBase
+  parent: BaseStructure
+  name: Holotable
+  description: Holographic display table. Does absolutely nothing but look cool at the moment.
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: _FarHorizons/Structures/Machines/HoloTables/holotable.rsi
+      layers:
+        - state: Table-Frame
+          type: Icon
+          sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+        - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+          state: holotable
+          shader: unshaded
+          type: Icon
+          sprite: _FarHorizons/Structures/Machines/HoloTables/holotable.rsi
+    - type: Anchorable
+    - type: Transform
+      noRot: true
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 2
+              max: 5
+            SheetGlass1:
+              min: 1
+              max: 2
+    - type: PlaceableSurface
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 55
+          mask:
+          - TableMask
+          layer:
+          - TableLayer
+          - Opaque
+    - type: Climbable
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Damageable
+      damageContainer: StructuralInorganic
+      damageModifierSet: Metallic
+    - type: Appearance
+    - type: ApcPowerReceiver
+      powerLoad: 50
+      needsPower: false
+    - type: LitOnPowered
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { visible: true }
+            False: { visible: false }
+
+- type: entity
+  id: GenericHolotable
+  parent: HolotableBase
+  name: Generic Holotable
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/HoloTables/holotable.rsi
+    layers:
+      - state: Table-Frame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: holotable
+        shader: unshaded
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/holotable.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#66ccde"
+
+- type: entity
+  id: EngineeringHolotable
+  parent: HolotableBase
+  name: Engineering Holotable
+  components:
+    - type: Sprite
+      sprite: _FarHorizons/Structures/Machines/HoloTables/engineering_holotable.rsi
+      layers:
+      - state: Table-Frame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: engiholo
+        shader: unshaded
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/engineering_holotable.rsi
+    - type: Appearance
+    - type: PointLight
+      radius: 3
+      energy: 2
+      color: "#d9b12e"
+    - type: PowerMonitoringConsole
+    - type: PowerMonitoringCableNetworks
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        hv:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+    - type: ActivatableUI
+      singleUser: true
+      key: enum.PowerMonitoringConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+        enum.PowerMonitoringConsoleUiKey.Key:
+          type: PowerMonitoringConsoleBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
+
+- type: entity
+  id: MedicalHolotable
+  parent: HolotableBase
+  name: Medical Holotable
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+    layers:
+      - state: Table-Frame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: HoloMed
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#66ccde"
+
+- type: entity
+  id: AlertLevelHolotable
+  parent: HolotableBase
+  name: Alert Level Holotable
+  description: Shows the current security alert level on station. If it's red that means you should stay in your department as much as possible.
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
+    layers:
+      - state: TableFrame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#66ccde"
+  - type: AlertLevelDisplay
+    alertVisuals:
+      green: green
+      blue: blue
+      red: red
+      violet: violet
+      yellow: yellow
+      delta: delta
+      epsilon: epsilon
+      gamma: gamma
+      omega: omega
+      omicron: psi
+      orange: orange
+      octarine: red
+      white: gamma
+      amber: gamma
+      honk: gamma
+  - type: ApcPowerReceiver
+    powerLoad: 0
+
+- type: entity
+  id: WantedHolotable
+  parent: [ HolotableBase, ComputerCriminalRecords ]
+  name: Wanted Holotable
+  description: Shows the current wanted people on station, or at least it was supposed to before Security told the designers not to announce wanted suspects and it became a security records kiosk instead.
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
+    layers:
+      - state: TableFrame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: Wanted
+        shader: unshaded
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#66ccde"
+
+#region NeoSol
+
+- type: entity
+  parent: HolotableBase
+  id: MedicalHolotableNS
+  name: Medical Holotable
+  suffix: NS
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/NS/HoloTables/medical_holotable.rsi
+    layers:
+      - state: Table-Frame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/NS/HoloTables/medical_holotable.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: HoloMed
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/NS/HoloTables/medical_holotable.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#9e4fe3"
+
+- type: entity
+  parent: EngineeringHolotable
+  id: EngineeringHolotableNS
+  name: Engineering Holotable
+  suffix: NS
+  components:
+    - type: Sprite
+      sprite: _FarHorizons/Structures/Machines/NS/HoloTables/engineering_holotable.rsi
+      layers:
+      - state: Table-Frame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/NS/HoloTables/engineering_holotable.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: engiholo
+        shader: unshaded
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/engineering_holotable.rsi
+
+- type: entity
+  parent: HolotableBase
+  id: AlertLevelHolotableNS
+  name: Alert Level Holotable
+  suffix: NS
+  description: Shows the current security alert level on station. If it's red that means you should stay in your department as much as possible.
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/NS/HoloTables/sec_holotables.rsi
+    layers:
+      - state: TableFrame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/NS/HoloTables/sec_holotables.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#ffbdcc"
+  - type: AlertLevelDisplay
+    alertVisuals:
+      green: green
+      blue: blue
+      red: red
+      violet: violet
+      yellow: yellow
+      delta: delta
+      epsilon: epsilon
+      gamma: gamma
+      omega: omega
+      omicron: psi
+      orange: orange
+      octarine: red
+      white: gamma
+      amber: gamma
+      honk: gamma
+  - type: ApcPowerReceiver
+    powerLoad: 0
