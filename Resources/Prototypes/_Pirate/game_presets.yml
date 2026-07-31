@@ -25,6 +25,47 @@
     - SecretSalt
     - PsionicEventsScheduler # Pirate
 
+# Pirate: Admin-only decoy presets run Greenshift while showing another mode in the lobby.
+- type: gamePreset
+  id: SecretCosmicCultGreenshift
+  alias:
+    - secretcosmiccultgreenshift
+    - secretentropygreenshift
+    - entropygreenshift
+  name: secret-title
+  description: secret-description
+  showInVote: false
+  rules:
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
+    - PsionicEventsScheduler # Pirate
+
+- type: gamePreset
+  id: SecretTPGreenshift
+  alias:
+    - secrettpgreenshift
+    - tpsecretgreenshift
+  name: secrettp-title
+  description: secrettp-description
+  showInVote: false
+  rules:
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
+    - PsionicEventsScheduler # Pirate
+
+- type: gamePreset
+  id: SecretSaltGreenshift
+  alias:
+    - secretsaltgreenshift
+    - saltsecretgreenshift
+  name: secretsalt-title
+  description: secretsalt-description
+  showInVote: false
+  rules:
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
+    - PsionicEventsScheduler # Pirate
+
 - type: gamePreset
   id: PirateGreenshift
   alias:
