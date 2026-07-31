@@ -231,6 +231,7 @@
   parent: Airlock
   name: glass airlock
   components:
+  - type: ReflectiveSurface # Pirate: Mirror Maid jaunt surface.
   - type: MeleeSound
     soundGroups:
       Brute:

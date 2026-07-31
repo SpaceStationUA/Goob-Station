@@ -33,6 +33,7 @@
       - Hammer # Goobstation
       - Nailgun # Goobstation
       - MagazineNailgun # Goobstation
+      - HereticBladeLock # Pirate: Lock path key blade.
       - MesonGoggles # Goobstation
       components:
       - StationMap

@@ -157,6 +157,13 @@
   - type: Fiber
     fiberMaterial: fibers-latex
   - type: FingerprintMask
+  # Pirate: Lock path Shattered ritual ingredient.
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+    - GlovesLatex
 
 - type: entity
   parent: ClothingHandsButcherable
@@ -171,6 +178,13 @@
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask
+  # Pirate: Lock path Shattered ritual ingredient.
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+    - GlovesNitrile
 ####
 - type: entity
   parent: ClothingHandsButcherable

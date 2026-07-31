@@ -1,0 +1,77 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: [BaseItem, BaseMagicalContraband]
+  id: LabyrinthHandbook
+  name: labyrinth handbook
+  description: A book containing the laws and regulations of the Locked Labyrinth, penned on an unknown substance. Its pages squirm and strain, looking to lash out and escape.
+  components:
+  - type: UnholyItem
+  - type: Sprite
+    sprite: _Pirate/Heretic/Entities/heretichandbook.rsi
+    layers:
+    - state: icon
+  - type: Item
+    size: Small
+    sprite: _Goobstation/Heretic/book.rsi
+  - type: UseDelay
+  - type: HolosignProjector
+    signProto: WallLabyrinth
+  - type: LimitedCharges
+    maxCharges: 5
+  - type: AutoRecharge
+    rechargeDuration: 15
+  - type: LabyrinthHandbook
+  - type: Tag
+    tags:
+    - HereticItem
+
+- type: entity
+  parent: ArmBladeChangeling
+  id: ArmBladeShattered
+  components:
+  - type: Sprite
+    sprite: _Pirate/Heretic/Entities/arm_blade.rsi
+    state: icon
+  - type: Item
+    sprite: _Pirate/Heretic/Entities/arm_blade.rsi
+  - type: MeleeWeapon
+    soundHit:
+      collection: GlassBreak
+
+- type: entity
+  parent: ArmBladeShattered
+  id: ArmBladeShatteredEmpowered
+  components:
+  - type: Tag
+    tags:
+    - EmpoweredShatteredWeapon
+  - type: Multihit
+    multihitWhitelist:
+      tags:
+      - EmpoweredShatteredWeapon
+
+- type: entity
+  parent: ArmHammerChangeling
+  id: ArmHammerShattered
+  components:
+  - type: Sprite
+    sprite: _Pirate/Heretic/Entities/hammer.rsi
+    state: icon
+  - type: Item
+    sprite: _Pirate/Heretic/Entities/hammer.rsi
+  - type: MeleeWeapon
+    soundHit:
+      collection: GlassBreak
+
+- type: entity
+  parent: ArmHammerShattered
+  id: ArmHammerShatteredEmpowered
+  components:
+  - type: Tag
+    tags:
+    - EmpoweredShatteredWeapon
+  - type: Multihit
+    multihitWhitelist:
+      tags:
+      - EmpoweredShatteredWeapon

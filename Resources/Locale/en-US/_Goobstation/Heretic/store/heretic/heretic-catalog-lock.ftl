@@ -22,6 +22,8 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+# Pirate: Trauma Lock path.
+
 knowledge-path-lock-s1-name = A Steward's Secret
 knowledge-path-lock-s1-desc =
     The Locked Labyrinth leads to freedom. But only the trapped Stewards know the correct path.
@@ -41,14 +43,14 @@ knowledge-path-lock-s2-desc =
 
 knowledge-path-lock-s3-name = Key Keeper's Burden
 knowledge-path-lock-s3-desc =
-    The Keeper sneered. These plastic rectangles are a mockery of keys, and I curse every door that desires them.
+    The Keeper sneered. "These plastic rectangles are a mockery of keys, and I curse every door that desires them."
 
-    Allows you to use your mansus grasp on an ID card to transform it into an Eldritch Card.
-    Hit a pair of airlocks with it to create a pair of portals, which will teleport you between them, but teleport non-heretics randomly.
+    Allows you to transmute a door, a metal rod, and an ID card to create an Eldritch Card.
+    Use it on a pair of airlocks to create linked portals, which teleport heretics between them but send non-heretics to a random airlock.
+    Alt-click the card to invert this behavior for newly created portals.
     Each card may only sustain a single pair of portals at the same time.
-    It also functions and appears the same as a regular ID Card.
-    Attacking a normal ID card with it consumes the card and gains its access.
-    Does not preserve the originally used card.
+    It also functions and appears like a regular ID card.
+    Using it on a normal ID card consumes that card and copies its access. Use the Eldritch Card in hand to assume the appearance of a consumed card.
 
 knowledge-path-lock-s4-name = Mark of Lock
 knowledge-path-lock-s4-desc =
@@ -62,8 +64,8 @@ knowledge-path-lock-s6-name = Concierge's Rite
 knowledge-path-lock-s6-desc =
     The Concierge scribbled my name into the Handbook. Welcome to your new home, fellow Steward.
 
-    Allows you to transmute a stick of chalk, a wooden plank, and a multitool to create a Labyrinth Handbook.
-    It can materialize a barricade at range that only you and people resistant to magic can pass. Has limited uses.
+    Allows you to transmute a crayon, a wooden plank, and a multitool to create a Labyrinth Handbook.
+    It can materialize a barricade at range that only heretics and people resistant to magic can pass. It has 5 charges that regenerate over time.
 
 knowledge-path-lock-s7-name = Burglar's Finesse
 knowledge-path-lock-s7-desc =
@@ -75,7 +77,8 @@ knowledge-path-lock-s8-name = Opening Blade
 knowledge-path-lock-s8-desc =
     The Pilgrim-Surgeon was not an Steward. Nonetheless, its blades and sutures proved a match for their keys.
 
-    Your blade has a chance to remove a random organ on attack.
+    Your blade causes stronger wounds and has a chance to inflict a weeping avulsion on attack.
+    Your Mansus Grasp no longer goes on cooldown when used to open a door, locker, mech, or access-controlled machine.
 
 knowledge-path-lock-s9-name = Caretaker's Last Refuge
 knowledge-path-lock-s9-desc =
@@ -88,6 +91,8 @@ knowledge-path-lock-s9-desc =
 knowledge-path-lock-s10-name = Unlock the Labyrinth
 knowledge-path-lock-s10-desc =
     The ascension ritual of the Path of Lock.
-    Bring 3 corpses without organs in their torso to a transmutation rune to complete the ritual.
-    When completed, you will create a tear to the Labyrinth's heart; a tear in reality located at the site of this ritual.
+    Bring 3 corpses without hearts to a transmutation rune to complete the ritual.
+    When completed, you gain the ability to transform into empowered eldritch creatures, and your key blades become even deadlier.
+    You also create a tear to the Labyrinth's heart at the site of the ritual.
     Eldritch creatures will endlessly pour from this rift who are bound to obey your instructions.
+    You gain x-ray vision and immunity to extreme pressure and temperature.

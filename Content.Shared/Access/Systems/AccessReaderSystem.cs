@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Content.Pirate.Common.Access; // Pirate - Cyberdeck
+using Content.Pirate.Common.Heretic; // Pirate - Lock path
 using Content.Shared._Pirate.Access.Components;
 using Content.Shared._Pirate.Access.Systems;
 using Content.Shared.Access.Components;
@@ -210,6 +211,12 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         if (!Resolve(target, ref reader, false))
             return true;
+
+        // Pirate: Lock path can temporarily deny every access reader to a marked target.
+        var check = new BeforeAccessReaderCheckEvent(target);
+        RaiseLocalEvent(user, ref check, true);
+        if (check.Cancelled)
+            return false;
 
         if (!reader.Enabled)
             return true;

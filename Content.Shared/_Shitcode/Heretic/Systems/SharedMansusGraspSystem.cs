@@ -6,6 +6,8 @@ using Content.Shared._Goobstation.Heretic.Systems;
 using Content.Shared._Shitcode.Heretic.Components;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared._White.BackStab;
+using Content.Shared.Access.Components; // Pirate: Lock path
+using Content.Shared.Access.Systems; // Pirate: Lock path
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Doors.Components;
@@ -14,6 +16,8 @@ using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Heretic;
 using Content.Shared.Heretic.Components;
 using Content.Shared.Mind;
+using Content.Shared.Mech.Components; // Pirate: Lock path
+using Content.Shared.Mech.EntitySystems; // Pirate: Lock path
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Systems;
@@ -52,6 +56,8 @@ public abstract class SharedMansusGraspSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStarMarkSystem _starMark = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!; // Pirate: Lock path
+    [Dependency] private readonly SharedMechSystem _mech = default!; // Pirate: Lock path
 
     public bool TryApplyGraspEffectAndMark(EntityUid user,
         HereticComponent hereticComp,
@@ -73,7 +79,9 @@ public abstract class SharedMansusGraspSystem : EntitySystem
                 return true;
         }
 
-        if (hereticComp.PathStage >= 4 && HasComp<StatusEffectsComponent>(target))
+        // Pirate: Lock receives its combat mark at its third path knowledge, unlike the older paths.
+        var markStage = hereticComp.CurrentPath == "Lock" ? 3 : 4;
+        if (hereticComp.PathStage >= markStage && HasComp<StatusEffectsComponent>(target))
         {
             var markComp = EnsureComp<HereticCombatMarkComponent>(target);
             markComp.DisappearTime = markComp.MaxDisappearTime;
@@ -141,16 +149,37 @@ public abstract class SharedMansusGraspSystem : EntitySystem
 
             case "Lock":
             {
-                if (!TryComp<DoorComponent>(target, out var door))
+                // Pirate: Trauma Lock path can unlock machinery as well as doors.
+                if (TryComp<MechComponent>(target, out var mech) && mech.PilotSlot.ContainedEntity is { } pilot)
+                {
+                    _mech.TryEject(target, mech, pilot);
+                    _stun.TryUpdateParalyzeDuration(pilot, TimeSpan.FromSeconds(5));
+                }
+                else if (TryComp<DoorComponent>(target, out var door))
+                {
+                    if (TryComp<DoorBoltComponent>(target, out var doorBolt))
+                        _door.SetBoltsDown((target, doorBolt), false);
+
+                    _door.StartOpening(target, door);
+                }
+                else if (TryComp<AccessReaderComponent>(target, out var access) &&
+                         !HasComp<MobStateComponent>(target))
+                {
+                    _access.TryClearAccesses((target, access));
+                }
+                else
                     break;
 
-                if (TryComp<DoorBoltComponent>(target, out var doorBolt))
-                    _door.SetBoltsDown((target, doorBolt), false);
-
-                _door.StartOpening(target, door);
                 _audio.PlayPredicted(new SoundPathSpecifier("/Audio/_Goobstation/Heretic/hereticknock.ogg"),
                     target,
                     performer);
+
+                _popup.PopupClient(Loc.GetString("heretic-lock-unlocked"), target, performer);
+
+                // Pirate: Opening Blade lets utility unlocks preserve the Grasp.
+                if (heretic.PathStage >= 7)
+                    return false;
+
                 break;
             }
 

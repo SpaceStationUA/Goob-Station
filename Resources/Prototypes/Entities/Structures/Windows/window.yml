@@ -10,6 +10,7 @@
     snap:
     - Window
   components:
+  - type: ReflectiveSurface # Pirate: Mirror Maid jaunt surface.
   - type: Anchorable
     flags:
     - Anchorable
@@ -155,6 +156,7 @@
     snap:
     - Window
   components:
+  - type: ReflectiveSurface # Pirate: Mirror Maid jaunt surface.
   - type: WallMount
     arc: 360 # interact despite grilles
   - type: Tag

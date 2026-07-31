@@ -433,6 +433,7 @@
       reflectProb: 0.95
       reflects:
         - Energy
+    - type: ReflectiveSurface # Pirate - Heretic Lock Path
     - type: Blocking #Mirror shield reflects heat/laser, but is relatively weak to everything else.
       passiveBlockModifier:
         coefficients:

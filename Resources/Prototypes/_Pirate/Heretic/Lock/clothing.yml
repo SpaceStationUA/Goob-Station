@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: ClothingOuterArmorHeretic
+  id: ClothingOuterArmorHereticLock
+  suffix: Lock
+  components:
+  - type: Sprite
+    sprite: _Pirate/Heretic/Clothing/OuterClothing/lock_armor.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Heretic/Clothing/OuterClothing/lock_armor.rsi
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingHeadHatHoodHereticLock
+
+- type: entity
+  parent: ClothingHeadHatHoodHeretic
+  id: ClothingHeadHatHoodHereticLock
+  suffix: Lock
+  components:
+  - type: Sprite
+    sprite: _Pirate/Heretic/Clothing/Head/lock_hood.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Heretic/Clothing/Head/lock_hood.rsi

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Goobstation.Common.Religion;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Pirate.Common.Heretic; // Pirate: Lock path cast blocking.
 using Content.Shared._Goobstation.Heretic.Systems;
 using Content.Shared._Shitcode.Heretic.Components;
 using Content.Shared._Shitmed.Body;
@@ -171,6 +172,15 @@ public abstract partial class SharedHereticAbilitySystem : EntitySystem
 
     private void OnBeforeCast(Entity<HereticActionComponent> ent, ref BeforeCastSpellEvent args)
     {
+        // Pirate: Last Refuge and similar states can block all Heretic magic.
+        var attempt = new HereticMagicCastAttemptEvent(ent);
+        RaiseLocalEvent(args.Performer, ref attempt);
+        if (attempt.Cancelled)
+        {
+            args.Cancelled = true;
+            return;
+        }
+
         if (HasComp<RustChargeComponent>(args.Performer))
         {
             args.Cancelled = true;

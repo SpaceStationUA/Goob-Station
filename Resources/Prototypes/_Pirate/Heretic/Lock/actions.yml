@@ -1,0 +1,98 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseAction
+  id: ActionHereticBurglarsFinesse
+  name: Burglar's Finesse
+  description: >-
+    Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors.
+    Grants you Burglar's Finesse, a single-target spell that puts a random item from the victims backpack into your hand.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    predicted: false
+    useDelay: 15
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: bulglar_finesse
+  - type: TargetAction
+    checkCanAccess: false
+    range: 6
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Inventory
+    canTargetSelf: false
+    event: !type:EventHereticBulglarFinesse
+  - type: HereticAction
+    requireMagicItem: true
+  - type: SpeakOnAction
+    sentence: heretic-speech-bulglar-finesse
+
+- type: entity
+  parent: BaseAction
+  id: ActionHereticLastRefuge
+  name: Caretaker's Last Refuge
+  description: >-
+    Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable.
+    Gives you a spell that makes you transparent and not dense. Cannot be used near living sentient beings.
+    While in refuge, you cannot use your hands or spells, and you are immune to slowdown.
+    You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    checkCanInteract: false
+    useDelay: 6
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: last_refuge
+  - type: InstantAction
+    event: !type:EventHereticCloak
+      status: LastRefugeStatusEffect
+  - type: HereticAction
+    requireMagicItem: true
+  - type: LastRefugeAction
+
+- type: entity
+  parent: BaseAction
+  id: ActionHereticShapeshiftLock
+  name: Shapechange
+  description: Take the form of another creature and gain its abilities.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 10
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: shapeshift
+  - type: InstantAction
+    event: !type:EventHereticShapeshift
+  - type: ShapeshiftAction
+    polymorphs:
+    - ShapeshiftStalkerLock
+    - ShapeshiftProphetLock
+    - ShapeshiftMaidLock
+    - ShapeshiftFireSharkLock
+    - ShapeshiftRustWalkerLock
+    - ShapeshiftShatteredLock
+  - type: UserInterface
+    interfaces:
+      enum.HereticShapeshiftUiKey.Key:
+        type: HereticShapeshiftBoundUserInterface
+        requireInputValidation: false
+        interactionRange: -1
+  - type: HereticAction
+
+- type: entity
+  parent: ActionHereticRustCharge
+  id: ActionHereticRustChargeShort
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 10
+  - type: WorldTargetAction
+    event: !type:EventHereticRustCharge
+      distance: 3

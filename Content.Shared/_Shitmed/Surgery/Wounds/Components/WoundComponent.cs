@@ -92,7 +92,10 @@ public sealed partial class WoundComponent : Component
     /// String of text used for displaying things about the wound in popups and self inspects.
     /// </summary>
     [DataField]
-    public string TextString = "wound";
+    public string? TextString; // Pirate: custom Lock Path wounds use their own inspect text.
+
+    [DataField]
+    public bool AlwaysShowInInspects; // Pirate: show custom wounds alongside their damage group.
 
     /// <summary>
     /// Multiplier for self-healing.
