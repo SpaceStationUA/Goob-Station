@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/Aurorastation/Aurora.3/blob/master/icons/obj/guns/faction/sol_alliance/sol_shotgun.dmi",
+    "size": {
+        "x": 35,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-unshaded"
+        },
+        {
+            "name": "bolt-open"
+        }
+    ]
+}

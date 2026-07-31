@@ -128,7 +128,25 @@
     - type: ContainerFill
       containers:
         board: [DoorElectronicsSAN]
-        
+
+- type: entity
+  parent: AirlockExternalGlassShuttleSyndicateLocked
+  id: AirlockExternalGlassShuttleSANLocked
+  suffix: SAN, Locked, Glass
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSAN ]
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalSANLocked
+  suffix: External, SAN, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSAN ]
+
 # Medical Alternative
 - type: entity
   parent: AirlockMedicalAlt
