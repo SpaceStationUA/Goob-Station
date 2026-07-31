@@ -148,33 +148,6 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("indestructible")] public bool Indestructible = false;
 
-        #region Pirate: multiz
-        /// <summary>
-        /// Visual-only see-through for rendering, look-up, and roof coverage.
-        /// Does not affect cross-Z sight, sound, or shooting.
-        /// </summary>
-        [DataField]
-        public bool ZTransparent = false;
-
-        /// <summary>
-        /// Allows cross-Z PVS and light through this tile.
-        /// </summary>
-        [DataField]
-        public bool ZSightPermeable = false;
-
-        /// <summary>
-        /// Allows cross-Z audio through this tile.
-        /// </summary>
-        [DataField]
-        public bool ZSoundPermeable = false;
-
-        /// <summary>
-        /// Allows cross-Z projectiles through this tile.
-        /// </summary>
-        [DataField]
-        public bool ZShotPermeable = false;
-        #endregion
-
         public void AssignTileId(ushort id)
         {
             TileId = id;

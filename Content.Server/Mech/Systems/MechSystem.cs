@@ -4,7 +4,6 @@ using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Mech.Components;
-using Content.Shared._Pirate.ZLevels.Damage; // Pirate: multiz - CEZFallDamageInProgressComponent
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -282,8 +281,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
         if (args.DamageIncreased &&
             args.DamageDelta != null &&
-            component.PilotSlot.ContainedEntity != null &&
-            !HasComp<CEZFallDamageInProgressComponent>(uid)) // Pirate: multiz - the mech takes z-level fall damage itself, don't pass it to the pilot
+            component.PilotSlot.ContainedEntity != null)
         {
             var damage = args.DamageDelta * component.MechToPilotDamageMultiplier;
             _damageable.TryChangeDamage(component.PilotSlot.ContainedEntity, damage);

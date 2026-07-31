@@ -20,8 +20,6 @@ using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
-using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.NodeContainer;
 
@@ -36,8 +34,6 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
     // Private variables
     // Note: this data does not need to be saved
     private Dictionary<EntityUid, Dictionary<Vector2i, AtmosPipeChunk>> _gridAtmosPipeChunks = new();
-    private readonly Dictionary<EntityUid, EntityUid> _selectedMonitorGrids = new(); // Pirate: multiz
-    private readonly Dictionary<EntityUid, EntityUid> _appliedMonitorGrids = new(); // Pirate: multiz
     private float _updateTimer = 1.0f;
 
     // Constants
@@ -52,8 +48,6 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         SubscribeLocalEvent<AtmosMonitoringConsoleComponent, ComponentInit>(OnConsoleInit);
         SubscribeLocalEvent<AtmosMonitoringConsoleComponent, AnchorStateChangedEvent>(OnConsoleAnchorChanged);
         SubscribeLocalEvent<AtmosMonitoringConsoleComponent, EntParentChangedMessage>(OnConsoleParentChanged);
-        SubscribeLocalEvent<AtmosMonitoringConsoleComponent, ComponentShutdown>(OnConsoleShutdown); // Pirate: multiz
-        SubscribeLocalEvent<AtmosMonitoringConsoleComponent, CEZMonitoringConsoleLevelSelectedMessage>(OnZLevelSelected); // Pirate: multiz
 
         // Tracked device events
         SubscribeLocalEvent<AtmosMonitoringConsoleDeviceComponent, NodeGroupsRebuilt>(OnEntityNodeGroupsRebuilt);
@@ -82,72 +76,6 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         component.ForceFullUpdate = true;
         InitializeAtmosMonitoringConsole(uid, component);
     }
-
-    #region Pirate: multiz
-    private void OnConsoleShutdown(EntityUid uid, AtmosMonitoringConsoleComponent component, ComponentShutdown args)
-    {
-        _selectedMonitorGrids.Remove(uid);
-        _appliedMonitorGrids.Remove(uid);
-    }
-
-    private void OnZLevelSelected(EntityUid uid, AtmosMonitoringConsoleComponent component, CEZMonitoringConsoleLevelSelectedMessage args)
-    {
-        var targetGrid = GetEntity(args.Grid);
-        if (targetGrid == null)
-            return;
-
-        var xform = Transform(uid);
-        if (xform.GridUid == null || !IsValidZMonitoringGrid(xform.GridUid.Value, targetGrid.Value))
-            return;
-
-        _selectedMonitorGrids[uid] = targetGrid.Value;
-        EnsureComp<NavMapComponent>(targetGrid.Value);
-        UpdateAtmosMonitoringConsoleGridData(uid, component, targetGrid.Value);
-        _appliedMonitorGrids[uid] = targetGrid.Value;
-        UpdateUIState(uid, component, xform);
-    }
-    private EntityUid GetSelectedMonitoringGrid(EntityUid consoleUid, TransformComponent xform)
-    {
-        if (xform.GridUid == null)
-            return EntityUid.Invalid;
-
-        if (_selectedMonitorGrids.TryGetValue(consoleUid, out var selectedGrid) &&
-            IsValidZMonitoringGrid(xform.GridUid.Value, selectedGrid))
-        {
-            return selectedGrid;
-        }
-
-        _selectedMonitorGrids.Remove(consoleUid);
-        return xform.GridUid.Value;
-    }
-
-    private bool IsValidZMonitoringGrid(EntityUid sourceGrid, EntityUid targetGrid)
-    {
-        if (sourceGrid == targetGrid)
-            return true;
-
-        return TryComp<CEZLinkedGridComponent>(sourceGrid, out var sourceLinked) &&
-               TryComp<CEZLinkedGridComponent>(targetGrid, out var targetLinked) &&
-               sourceLinked.ZNetwork.IsValid() &&
-               sourceLinked.ZNetwork == targetLinked.ZNetwork;
-    }
-
-    private void UpdateAtmosMonitoringConsoleGridData(EntityUid uid, AtmosMonitoringConsoleComponent component, EntityUid gridUid)
-    {
-        component.AtmosDevices = GetAllAtmosDeviceNavMapData(gridUid);
-
-        if (!_gridAtmosPipeChunks.TryGetValue(gridUid, out var chunks))
-        {
-            if (TryComp<MapGridComponent>(gridUid, out var map))
-                RebuildAtmosPipeGrid(gridUid, map);
-
-            _gridAtmosPipeChunks.TryGetValue(gridUid, out chunks);
-        }
-
-        component.AtmosPipeChunks = chunks ?? new Dictionary<Vector2i, AtmosPipeChunk>();
-        Dirty(uid, component);
-    }
-    #endregion
 
     private void OnEntityNodeGroupsRebuilt(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component, NodeGroupsRebuilt args)
     {
@@ -228,7 +156,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         if (!_userInterfaceSystem.IsUiOpen(uid, AtmosMonitoringConsoleUiKey.Key))
             return;
 
-        var gridUid = GetSelectedMonitoringGrid(uid, xform); // Pirate: multiz
+        var gridUid = xform.GridUid!.Value;
 
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
@@ -236,18 +164,8 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         if (!TryComp<GridAtmosphereComponent>(gridUid, out var atmosphere))
             return;
 
-        #region Pirate: multiz
-        // If the resolved grid differs from what we last populated for (e.g. selection was invalidated and
-        // GetSelectedMonitoringGrid fell back to the console's grid), repopulate cached chunks/devices.
-        if (!_appliedMonitorGrids.TryGetValue(uid, out var appliedGrid) || appliedGrid != gridUid)
-        {
-            UpdateAtmosMonitoringConsoleGridData(uid, component, gridUid);
-            _appliedMonitorGrids[uid] = gridUid;
-        }
-        #endregion
-
-        // Console init, selection changes, and pipe/device rebuild paths already populate AtmosDevices/AtmosPipeChunks
-        // and dirty the component; redoing it every 1-second UI refresh turned an idle console into a constant resender.
+        // The grid must have a NavMapComponent to visualize the map in the UI
+        EnsureComp<NavMapComponent>(gridUid);
 
         // Gathering data to be send to the client
         var atmosNetworks = new List<AtmosMonitoringConsoleEntry>();
@@ -255,7 +173,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
         while (query.MoveNext(out var ent, out var entSensor, out var entXform))
         {
-            if (entXform?.GridUid != gridUid) // Pirate: multiz
+            if (entXform?.GridUid != xform.GridUid)
                 continue;
 
             if (!entXform.Anchored)
@@ -434,11 +352,10 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         var queryConsoles = AllEntityQuery<AtmosMonitoringConsoleComponent, TransformComponent>();
         while (queryConsoles.MoveNext(out var ent, out var entConsole, out var entXform))
         {
-            if (gridUid != GetSelectedMonitoringGrid(ent, entXform)) // Pirate: multiz
+            if (gridUid != entXform.GridUid)
                 continue;
 
             entConsole.AtmosPipeChunks = allChunks;
-            entConsole.AtmosDevices = GetAllAtmosDeviceNavMapData(gridUid); // Pirate: multiz
             Dirty(ent, entConsole);
         }
     }
@@ -488,11 +405,10 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
         while (query.MoveNext(out var ent, out var entConsole, out var entXform))
         {
-            if (gridUid != GetSelectedMonitoringGrid(ent, entXform)) // Pirate: multiz
+            if (gridUid != entXform.GridUid)
                 continue;
 
             entConsole.AtmosPipeChunks = allChunks;
-            entConsole.AtmosDevices = GetAllAtmosDeviceNavMapData(gridUid); // Pirate: multiz
             Dirty(ent, entConsole);
         }
     }
@@ -572,12 +488,23 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         if (xform.GridUid == null)
             return;
 
-        var grid = GetSelectedMonitoringGrid(uid, xform); // Pirate: multiz
+        var grid = xform.GridUid.Value;
 
         if (!TryComp<MapGridComponent>(grid, out var map))
             return;
 
-        UpdateAtmosMonitoringConsoleGridData(uid, component, grid); // Pirate: multiz
+        component.AtmosDevices = GetAllAtmosDeviceNavMapData(grid);
+
+        if (!_gridAtmosPipeChunks.TryGetValue(grid, out var chunks))
+        {
+            RebuildAtmosPipeGrid(grid, map);
+        }
+
+        else
+        {
+            component.AtmosPipeChunks = chunks;
+            Dirty(uid, component);
+        }
     }
 
     private void InitializeAtmosMonitoringDevice(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component)
@@ -601,7 +528,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             var isDirty = entConsole.AtmosDevices.Remove(netEntity);
 
             if (gridUid != null &&
-                gridUid == GetSelectedMonitoringGrid(ent, entXform) && // Pirate: multiz
+                gridUid == entXform.GridUid &&
                 xform.Anchored &&
                 TryGetAtmosDeviceNavMapData(uid, component, xform, gridUid.Value, out var data))
             {

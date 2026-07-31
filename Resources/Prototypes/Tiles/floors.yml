@@ -1257,7 +1257,6 @@
   id: FloorGlass
   parent: BaseStationTile
   name: tiles-glass-floor
-  zTransparent: true # Pirate: multiz
   sprite: /Textures/Tiles/glass.png
   variants: 4
   placementVariants:
@@ -1274,7 +1273,6 @@
   id: FloorRGlass
   parent: BaseStationTile
   name: tiles-reinforced-glass-floor
-  zTransparent: true # Pirate: multiz
   sprite: /Textures/Tiles/rglass.png
   variants: 4
   placementVariants:

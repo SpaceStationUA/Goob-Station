@@ -26,7 +26,6 @@ public sealed class FireControlConsoleBoundUserInterface : BoundUserInterface
         _window = this.CreateWindow<FireControlWindow>();
 
         _window.OnServerRefresh += OnRefreshServer;
-        _window.OnLayerSelected += depth => SendMessage(new FireControlConsoleSelectLayerMessage(depth)); // Pirate: multiz
 
         _window.Radar.OnRadarClick += (coords) =>
         {

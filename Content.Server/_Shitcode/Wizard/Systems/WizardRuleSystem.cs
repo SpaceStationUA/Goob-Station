@@ -41,7 +41,6 @@ namespace Content.Server._Goobstation.Wizard.Systems;
 public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
 {
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly Content.Server._Pirate.ZLevels.Spawning.CEZLevelFloorGridsSystem _zFloors = default!; // Pirate: multiz
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _role = default!;
@@ -127,51 +126,9 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         return grid == null ? null : Transform(grid.Value).MapUid;
     }
 
-    #region Pirate: multiz
-    /// <summary>
-    /// Returns every z-level map occupied by the wizard target station.
-    /// </summary>
-    public List<EntityUid> GetTargetMaps()
-    {
-        var maps = new List<EntityUid>();
-
-        EntityUid? targetStation = null;
-        var rule = GameTicker.GetActiveGameRules().Where(HasComp<WizardRuleComponent>).FirstOrNull();
-        if (rule != null)
-            targetStation = Comp<WizardRuleComponent>(rule.Value).TargetStation;
-
-        // Pick a target station if the rule has not assigned one yet.
-        if (targetStation == null)
-        {
-            var stations = GetWizardTargetStations().ToList();
-            if (stations.Count > 0)
-                targetStation = _random.Pick(stations).Owner;
-        }
-
-        if (targetStation is { } station)
-        {
-            foreach (var grid in _zFloors.GetStationFloorGrids(station))
-            {
-                if (Transform(grid).MapUid is { } map && !maps.Contains(map))
-                    maps.Add(map);
-            }
-        }
-
-        // Final fallback when no station can be resolved.
-        if (maps.Count == 0 && GetTargetMap() is { } fallback)
-            maps.Add(fallback);
-
-        return maps;
-    }
-    #endregion
-
     private void OnDimensionShift(DimensionShiftEvent ev)
     {
-        #region Pirate: multiz
-        var maps = GetTargetMaps();
-        EntityUid? map = maps.Count == 0 ? null : maps[0];
-        #endregion
-
+        var map = GetTargetMap();
         if (map == null)
             return;
 
@@ -190,23 +147,6 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         var mixture = new GasMixture(moles, ev.Temperature);
 
         _atmos.SetMapAtmosphere(map.Value, false, mixture);
-
-        #region Pirate: multiz
-        foreach (var zMap in maps)
-        {
-            if (zMap == map.Value)
-                continue;
-
-            if (ev.Parallax != null)
-            {
-                var parallax = EnsureComp<ParallaxComponent>(zMap);
-                parallax.Parallax = ev.Parallax;
-                Dirty(zMap, parallax);
-            }
-
-            _atmos.SetMapAtmosphere(zMap, false, mixture);
-        }
-        #endregion
 
         var message = Loc.GetString("dimension-shift-message");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
@@ -302,16 +242,10 @@ public sealed class WizardRuleSystem : GameRuleSystem<WizardRuleComponent>
         }
     }
 
-    #region Pirate: multiz
     public IEnumerable<EntityUid?> GetWizardTargetStationGrids()
     {
-        foreach (var station in GetWizardTargetStations())
-        {
-            foreach (var grid in _zFloors.GetStationFloorGrids(station.Owner))
-                yield return grid;
-        }
+        return GetWizardTargetStations().Select(station => _station.GetLargestGrid(station.Owner));
     }
-    #endregion
 
     public EntityUid? GetWizardTargetRandomStationGrid()
     {

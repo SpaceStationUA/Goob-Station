@@ -45,7 +45,6 @@
     - ActionOpenRemoteDevicesMenu # Corvax-Next-AiRemoteControl
     - ActionOpenCameraWarpMenu # Goobstation-Ai-Camera-Jumping
     - ActionAIRedPhone # Pirate-AI-RedPhone
-  - type: CEZLevelEyeMover # Pirate: multiz
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
@@ -557,8 +556,6 @@
     baseSprintSpeed: 14
     baseWalkSpeed: 28
   - type: AiEye # Pirate: audio muffle
-  - type: CEZLevelPhysicsExempt # Pirate: multiz
-  - type: CEZViewSource # Pirate: multiz
   - type: NoFTL
   - type: Tag
     tags:
