@@ -1338,7 +1338,7 @@
   - HeadofSecurityFormalSkirt
   - HoSSummerShirt # goob
   - HeadOfSecurityBlueSkirt # Pirate
-  - HoSMJ # goob
+  #- HoSMJ # goob # Pirate disable
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
@@ -1421,10 +1421,10 @@
   - SecurityJumpskirtGrey
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
-  - TrooperUniform
+  #- TrooperUniform # Pirate disable
   - VeteranOfficerBlackJumpsuit # Goobstation
-  - SecurityMJ # Goob
-  - SecurityMJSenior # Goob
+  #- SecurityMJ # Goob # Pirate disable
+  #- SecurityMJSenior # Goob # Pirate disable
   - SecurityOfficerBlueSkirt # Pirate
 
 - type: loadoutGroup
