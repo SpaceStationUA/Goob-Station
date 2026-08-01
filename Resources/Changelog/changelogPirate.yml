@@ -3841,3 +3841,13 @@ Entries:
       message: ГШР і Дед Сквад тепер можуть бути лише людьми.
   id: 375
   time: '2026-08-01T20:13:41.0000000+00:00'
+- author: AgentMaper
+  changes:
+    - type: Tweak
+      message: Piramide Island переназвана в Piramide Station
+    - type: Tweak
+      message: Оновлена мапа Perdition Island
+    - type: Fix
+      message: проблеми зі світлом на Perdition Island
+  id: 376
+  time: '2026-08-01T20:50:00.0000000+00:00'
