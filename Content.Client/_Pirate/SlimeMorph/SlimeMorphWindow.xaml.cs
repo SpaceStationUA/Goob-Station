@@ -254,6 +254,13 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
                 ? new List<Marking>(list)
                 : new List<Marking>();
             var total = state.MarkingSet.PointsLeft(category) + markings.Count;
+            // Give the picker the whole set so gradient (HairSpecial/FacialHairSpecial) pickers can borrow
+            // the current hair sprite for their list icon.
+            picker.GradientContext = state.MarkingSet;
+            // Morph is about wearing any race's features, so offer every species' markings (ears/horns/etc.
+            // are all species-locked and would otherwise leave HeadTop/Snout empty and hidden for a slime).
+            picker.IgnoreSpecies = true;
+            picker.Sex = state.Sex;
             picker.UpdateData(markings, pickerSpecies, total);
         }
 

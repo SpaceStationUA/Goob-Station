@@ -118,6 +118,9 @@
     Groin:
       points: 2
       required: false
+    Overlay: # Pirate: slime morph - let morph menu offer tattoos/bandages (Накладання)
+      points: 4
+      required: false
     # Pirate: slime morph end
 
 - type: humanoidBaseSprite

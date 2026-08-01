@@ -61,6 +61,7 @@ public sealed class SlimeMorphSystem : EntitySystem
         MarkingCategories.LeftFoot,
         MarkingCategories.UndergarmentTop,
         MarkingCategories.UndergarmentBottom,
+        MarkingCategories.Overlay,
     };
 
     public override void Initialize()
@@ -419,6 +420,8 @@ public sealed class SlimeMorphSystem : EntitySystem
         for (var i = 0; i < marking.MarkingColors.Count && i < list[args.Slot].MarkingColors.Count; i++)
             marking.SetColor(i, list[args.Slot].MarkingColors[i]);
 
+        // Keep the slot's forced flag (morph markings are forced) so a foreign pick isn't dropped on apply.
+        marking.Forced = list[args.Slot].Forced;
         staged.Markings.Replace(args.Category, args.Slot, marking);
     }
 
@@ -441,15 +444,19 @@ public sealed class SlimeMorphSystem : EntitySystem
             || !TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
             return;
 
-        // Add from the loaded target's palette when mimicking, else the slime's own.
+        // Seed the new slot from the loaded target's palette when mimicking, else the slime's own, else
+        // (categories the species has no markings for, e.g. HeadTop ears/horns) any marking in the
+        // category - the menu offers every species' markings, so Add must be able to seed one too.
         var pickerSpecies = staged.PickerSpecies ?? humanoid.Species;
-        var markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, pickerSpecies).Keys.FirstOrDefault();
+        var markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, pickerSpecies).Keys.FirstOrDefault()
+            ?? _markings.MarkingsByCategory(args.Category).Keys.FirstOrDefault();
         if (string.IsNullOrEmpty(markingId) || !_markings.Markings.TryGetValue(markingId, out var proto))
             return;
 
         var marking = proto.AsMarking();
-        // Target markings are foreign to the slime; add forced so they bypass slime point/species limits.
-        marking.Forced = staged.FromTarget;
+        // Slime can wear any race's markings; force so foreign ones bypass the slime's own point/species
+        // limits when added and applied (CommitStaged assigns the set verbatim, no EnsureSpecies).
+        marking.Forced = true;
         staged.Markings.AddBack(args.Category, marking);
         UpdateUi(ent);
     }
