@@ -42,7 +42,7 @@ public sealed class MakePsionicCommand : IConsoleCommand
         }
 
         if (!_prototype.TryIndex<EntityPrototype>(args[1], out var powerPrototype)
-            || !IsPsionicPowerPrototype(powerPrototype))
+            || !PsionicPowerCommandHelpers.IsPsionicPowerPrototype(powerPrototype))
         {
             shell.WriteError("Invalid psionic power entity prototype");
             return;
@@ -79,23 +79,8 @@ public sealed class MakePsionicCommand : IConsoleCommand
     {
         return args.Length switch
         {
-            2 => CompletionResult.FromHintOptions(GetPsionicPowerPrototypeIds(), "Тип псіонічної здібності"),
+            2 => CompletionResult.FromHintOptions(PsionicPowerCommandHelpers.GetPsionicPowerPrototypeIds(_prototype), "Тип псіонічної здібності"),
             _ => CompletionResult.Empty
         };
-    }
-
-    private string[] GetPsionicPowerPrototypeIds()
-    {
-        return _prototype.EnumeratePrototypes<EntityPrototype>()
-            .Where(IsPsionicPowerPrototype)
-            .Select(prototype => prototype.ID)
-            .OrderBy(id => id)
-            .ToArray();
-    }
-
-    private static bool IsPsionicPowerPrototype(EntityPrototype prototype)
-    {
-        return !prototype.Abstract
-            && prototype.Components.Values.Any(component => component.Component is BasePsionicPowerComponent);
     }
 }
