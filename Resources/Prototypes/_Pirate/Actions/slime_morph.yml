@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: slime morph
+
+- type: entity
+  parent: BaseAction
+  id: ActionSlimeMorph
+  name: Morph
+  description: Reshape your body - recolor yourself, or take on the look of someone you have studied.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 3
+    itemIconStyle: BigAction
+    priority: -19
+    icon:
+      sprite: _Pirate/Actions/slime_morph.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:OpenSlimeMorphUiEvent
