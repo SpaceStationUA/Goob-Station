@@ -9,6 +9,8 @@
     damageModifierSet: Oni
   - type: BodyPart
     species: Oni
+  - type: Damageable # Goob-Fixes
+    damageModifierSet: Oni
 
 - type: entity
   id: HeadOni
