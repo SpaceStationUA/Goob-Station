@@ -64,6 +64,9 @@ public sealed class SlimeMorphUiState : BoundUserInterfaceState
     /// <summary>Opacity multiplier for an opaque copied head so it matches translucent slime body art.</summary>
     public float HeadColorAlpha = 1f;
 
+    /// <summary>Species used to populate marking pickers.</summary>
+    public string? PickerSpecies;
+
     /// <summary>Currently selected remembered target (the preview/mimic subject), if any.</summary>
     public NetEntity? SelectedTarget;
 

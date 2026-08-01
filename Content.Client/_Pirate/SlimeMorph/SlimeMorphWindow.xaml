@@ -52,11 +52,7 @@
                             <Label Text="{Loc 'slime-morph-label-eyes'}" FontColorOverride="#9AA1B0" Margin="0 4 0 0" />
                             <ColorSelectorSliders Name="EyeColorSelector" />
 
-                            <humanoid:SingleMarkingPicker Name="HairPicker" Category="Hair" />
-                            <humanoid:SingleMarkingPicker Name="FacialHairPicker" Category="FacialHair" />
-                            <humanoid:SingleMarkingPicker Name="HeadSidePicker" Category="HeadSide" />
-                            <humanoid:SingleMarkingPicker Name="TailPicker" Category="Tail" />
-                            <humanoid:SingleMarkingPicker Name="ChestPicker" Category="Chest" />
+                            <BoxContainer Name="MarkingPickers" Orientation="Vertical" />
                         </BoxContainer>
                     </ScrollContainer>
 

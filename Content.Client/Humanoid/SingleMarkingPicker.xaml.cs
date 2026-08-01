@@ -161,7 +161,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         _totalPoints = totalPoints;
 
         var ckey = _playerManager.LocalSession?.Name; // Pirate ckey for restricted players
-        _markingPrototypeCache = _markingManager.MarkingsByCategoryAndSpecies(Category, _species, ckey); // Pirate ckey for restricted players
+        _markingPrototypeCache = ResolveCategoryMarkings(ckey); // Pirate: slime morph - IgnoreSpecies support
 
         Visible = _markingPrototypeCache.Count != 0;
         if (_markingPrototypeCache.Count == 0)
@@ -182,7 +182,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         }
 
         var ckey = _playerManager.LocalSession?.Name; // Pirate ckey for restricted players
-        _markingPrototypeCache ??= _markingManager.MarkingsByCategoryAndSpecies(Category, _species, ckey); // Pirate ckey for restricted players
+        _markingPrototypeCache ??= ResolveCategoryMarkings(ckey); // Pirate: slime morph - IgnoreSpecies support
 
         MarkingSelectorContainer.Visible = _markings != null && _markings.Count != 0;
         if (_markings == null || _markings.Count == 0)
@@ -234,6 +234,16 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         for (var i = 0; i < marking.MarkingColors.Count; i++)
         {
+            // Pirate start - hair gradients: a shader-parameter layer (blur/proportion) gets named sliders,
+            // not a color wheel. Ordinary layers return false here and fall through to the wheel below.
+            var shaderBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical };
+            if (TryCreateShaderParamSliders(proto, i, marking, shaderBox))
+            {
+                ColorSelectorContainer.AddChild(shaderBox);
+                continue;
+            }
+            // Pirate end - hair gradients
+
             var selector = new ColorSelectorSliders
             {
                 HorizontalExpand = true

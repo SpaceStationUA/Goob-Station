@@ -9,11 +9,10 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Inventory;
+using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -31,24 +30,10 @@ public sealed class SlimeMorphSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-
-    private static readonly ProtoId<TagPrototype> HidesHairTag = "HidesHair";
-
-    /// <summary>Marking categories the slime may freely tweak on itself via the menu.</summary>
-    private static readonly MarkingCategories[] SelfEditCategories =
-    {
-        MarkingCategories.Hair,
-        MarkingCategories.FacialHair,
-        MarkingCategories.HeadSide,
-        MarkingCategories.Tail,
-        MarkingCategories.Chest,
-    };
 
     public override void Initialize()
     {
@@ -130,6 +115,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             Width = working.Width,
             Markings = new MarkingSet(working.Markings),
             HeadLayer = working.HeadLayer,
+            PickerSpecies = working.PickerSpecies,
             FromTarget = working.FromTarget,
             SelectedTarget = working.SelectedTarget,
         };
@@ -264,6 +250,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             Width = appearance.Width,
             Markings = new MarkingSet(),
             HeadLayer = appearance.HeadLayer,
+            PickerSpecies = appearance.Species,
             FromTarget = true,
             SelectedTarget = netTarget,
         };
@@ -404,6 +391,8 @@ public sealed class SlimeMorphSystem : EntitySystem
         for (var i = 0; i < marking.MarkingColors.Count && i < list[args.Slot].MarkingColors.Count; i++)
             marking.SetColor(i, list[args.Slot].MarkingColors[i]);
 
+        // Preserve the slot's forced status.
+        marking.Forced = list[args.Slot].Forced;
         staged.Markings.Replace(args.Category, args.Slot, marking);
     }
 
@@ -426,11 +415,17 @@ public sealed class SlimeMorphSystem : EntitySystem
             || !TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
             return;
 
-        var markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, humanoid.Species).Keys.FirstOrDefault();
+        // Fall back to an all-species marking when the category is absent from the species.
+        var pickerSpecies = staged.PickerSpecies ?? humanoid.Species;
+        var markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, pickerSpecies).Keys.FirstOrDefault()
+            ?? _markings.MarkingsByCategory(args.Category).Keys.FirstOrDefault();
         if (string.IsNullOrEmpty(markingId) || !_markings.Markings.TryGetValue(markingId, out var proto))
             return;
 
-        staged.Markings.AddBack(args.Category, proto.AsMarking());
+        var marking = proto.AsMarking();
+        // Allow cross-species selections.
+        marking.Forced = true;
+        staged.Markings.AddBack(args.Category, marking);
         UpdateUi(ent);
     }
 
@@ -490,7 +485,7 @@ public sealed class SlimeMorphSystem : EntitySystem
 
     private static bool IsSelfEditable(MarkingCategories category)
     {
-        return Array.IndexOf(SelfEditCategories, category) >= 0;
+        return Array.IndexOf(SlimeMorphCategories.Editable, category) >= 0;
     }
 
     // ---- Body commit helpers ----
@@ -509,8 +504,16 @@ public sealed class SlimeMorphSystem : EntitySystem
         humanoid.EyeColor = staged.EyeColor;
         _humanoid.SetScale(uid, new Vector2(staged.Width, staged.Height), false, humanoid);
 
-        // Baked head shapes (muzzles etc.) are base sprites, not markings - override the slime's own
-        // head with the target's, tinted to slime skin, or drop back to the slime head.
+        // SetSkinColor does not update custom body-part layers.
+        foreach (var layer in humanoid.CustomBaseLayers.Keys.ToList())
+        {
+            if (layer is HumanoidVisualLayers.Eyes or HumanoidVisualLayers.Head)
+                continue;
+
+            _humanoid.SetBaseLayerColor(uid, layer, staged.SkinColor, false, humanoid);
+        }
+
+        // Apply the copied baked head sprite.
         if (staged.HeadLayer is { } headLayer)
         {
             _humanoid.SetBaseLayerId(uid, HumanoidVisualLayers.Head, headLayer, false, humanoid);
@@ -624,6 +627,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             MinWidth = species.MinWidth,
             MaxWidth = species.MaxWidth,
             MarkingSet = staged?.Markings ?? humanoid.MarkingSet,
+            PickerSpecies = staged?.PickerSpecies,
             HeadLayer = staged?.HeadLayer,
             HeadColorFactor = HeadFactor(ent.Comp, staged?.HeadLayer),
             HeadColorAlpha = ent.Comp.HeadColorAlpha,
@@ -648,22 +652,11 @@ public sealed class SlimeMorphSystem : EntitySystem
         return new Color(color.R * factor, color.G * factor, color.B * factor, color.A);
     }
 
+    /// <summary>Returns whether the target's identity is hidden.</summary>
     private bool IsConcealed(EntityUid target)
     {
-        if (!TryComp<InventoryComponent>(target, out var inventory))
-            return false;
-
-        if (_inventory.TryGetSlotEntity(target, "head", out _, inventory)
-            || _inventory.TryGetSlotEntity(target, "mask", out _, inventory))
-            return true;
-
-        var slots = _inventory.GetSlotEnumerator((target, inventory), SlotFlags.WITHOUT_POCKET);
-        while (slots.MoveNext(out var slot))
-        {
-            if (slot.ContainedEntity != null && _tag.HasTag(slot.ContainedEntity.Value, HidesHairTag))
-                return true;
-        }
-
-        return false;
+        var ev = new SeeIdentityAttemptEvent();
+        RaiseLocalEvent(target, ev);
+        return ev.Cancelled;
     }
 }

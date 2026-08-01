@@ -68,10 +68,10 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
         _markingManager = IoCManager.Resolve<MarkingManager>();
         _humanoidSystem = _entManager.System<HumanoidAppearanceSystem>();
 
-        _pickers = new[] { HairPicker, FacialHairPicker, HeadSidePicker, TailPicker, ChestPicker };
-        foreach (var picker in _pickers)
+        var pickers = new List<SingleMarkingPicker>();
+        foreach (var category in SlimeMorphCategories.Editable)
         {
-            var category = picker.Category;
+            var picker = new SingleMarkingPicker { Category = category };
             picker.OnMarkingSelect += args =>
             {
                 OnMarkingSelected?.Invoke((category, args.slot, args.id));
@@ -84,7 +84,18 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
             };
             picker.OnSlotAdd += () => OnMarkingSlotAdded?.Invoke(category);
             picker.OnSlotRemove += slot => OnMarkingSlotRemoved?.Invoke((category, slot));
+
+            if (FindColorContainer(picker) is { } colorBox)
+            {
+                colorBox.Orientation = BoxContainer.LayoutOrientation.Vertical;
+                colorBox.SeparationOverride = 4;
+            }
+
+            MarkingPickers.AddChild(picker);
+            pickers.Add(picker);
         }
+
+        _pickers = pickers.ToArray();
 
         SkinColorSelector.OnColorChanged += color =>
         {
@@ -160,6 +171,20 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
         RestyleButtons();
     }
 
+    private static BoxContainer? FindColorContainer(Control control)
+    {
+        foreach (var child in control.Children)
+        {
+            if (child is BoxContainer { Name: "ColorSelectorContainer" } box)
+                return box;
+
+            if (FindColorContainer(child) is { } found)
+                return found;
+        }
+
+        return null;
+    }
+
     private void OnListSelectionChanged()
     {
         if (_updating)
@@ -190,6 +215,8 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
         WidthSlider.Value = state.Width;
         WidthValue.Text = state.Width.ToString("0.00");
 
+        // Use the target species while mimicking.
+        var pickerSpecies = state.PickerSpecies ?? state.Species;
         foreach (var picker in _pickers)
         {
             var category = picker.Category;
@@ -197,7 +224,11 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
                 ? new List<Marking>(list)
                 : new List<Marking>();
             var total = state.MarkingSet.PointsLeft(category) + markings.Count;
-            picker.UpdateData(markings, state.Species, total);
+            // Used to resolve gradient icons.
+            picker.GradientContext = state.MarkingSet;
+            picker.IgnoreSpecies = true;
+            picker.Sex = state.Sex;
+            picker.UpdateData(markings, pickerSpecies, total);
         }
 
         UpdateRemembered(state);
