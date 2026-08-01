@@ -54,6 +54,34 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
     private readonly HumanoidAppearanceSystem _humanoidSystem;
     private readonly MarkingManager _markingManager;
 
+    private static readonly MarkingCategories[] EditableCategories =
+    {
+        MarkingCategories.Hair,
+        MarkingCategories.HairSpecial,
+        MarkingCategories.FacialHair,
+        MarkingCategories.FacialHairSpecial,
+        MarkingCategories.Head,
+        MarkingCategories.HeadTop,
+        MarkingCategories.HeadSide,
+        MarkingCategories.Snout,
+        MarkingCategories.Face,
+        MarkingCategories.Chest,
+        MarkingCategories.Groin,
+        MarkingCategories.Tail,
+        MarkingCategories.Wings,
+        MarkingCategories.RightArm,
+        MarkingCategories.LeftArm,
+        MarkingCategories.RightHand,
+        MarkingCategories.LeftHand,
+        MarkingCategories.RightLeg,
+        MarkingCategories.LeftLeg,
+        MarkingCategories.RightFoot,
+        MarkingCategories.LeftFoot,
+        MarkingCategories.UndergarmentTop,
+        MarkingCategories.UndergarmentBottom,
+        MarkingCategories.Overlay,
+    };
+
     private readonly SingleMarkingPicker[] _pickers;
     private bool _updating;
     private NetEntity? _selected;
@@ -68,10 +96,10 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
         _markingManager = IoCManager.Resolve<MarkingManager>();
         _humanoidSystem = _entManager.System<HumanoidAppearanceSystem>();
 
-        _pickers = new[] { HairPicker, FacialHairPicker, HeadSidePicker, TailPicker, ChestPicker };
-        foreach (var picker in _pickers)
+        var pickers = new List<SingleMarkingPicker>();
+        foreach (var category in EditableCategories)
         {
-            var category = picker.Category;
+            var picker = new SingleMarkingPicker { Category = category };
             picker.OnMarkingSelect += args =>
             {
                 OnMarkingSelected?.Invoke((category, args.slot, args.id));
@@ -84,7 +112,18 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
             };
             picker.OnSlotAdd += () => OnMarkingSlotAdded?.Invoke(category);
             picker.OnSlotRemove += slot => OnMarkingSlotRemoved?.Invoke((category, slot));
+
+            if (FindColorContainer(picker) is { } colorBox)
+            {
+                colorBox.Orientation = BoxContainer.LayoutOrientation.Vertical;
+                colorBox.SeparationOverride = 4;
+            }
+
+            MarkingPickers.AddChild(picker);
+            pickers.Add(picker);
         }
+
+        _pickers = pickers.ToArray();
 
         SkinColorSelector.OnColorChanged += color =>
         {
@@ -160,6 +199,21 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
         RestyleButtons();
     }
 
+    /// <summary>Finds the shared marking picker's color-selector container so we can restyle its layout.</summary>
+    private static BoxContainer? FindColorContainer(Control control)
+    {
+        foreach (var child in control.Children)
+        {
+            if (child is BoxContainer { Name: "ColorSelectorContainer" } box)
+                return box;
+
+            if (FindColorContainer(child) is { } found)
+                return found;
+        }
+
+        return null;
+    }
+
     private void OnListSelectionChanged()
     {
         if (_updating)
@@ -190,6 +244,9 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
         WidthSlider.Value = state.Width;
         WidthValue.Text = state.Width.ToString("0.00");
 
+        // When a target is loaded, show that species' marking groups (so all of theirs are visible and
+        // pickable); for free self-edits, show the slime's own.
+        var pickerSpecies = state.PickerSpecies ?? state.Species;
         foreach (var picker in _pickers)
         {
             var category = picker.Category;
@@ -197,7 +254,7 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
                 ? new List<Marking>(list)
                 : new List<Marking>();
             var total = state.MarkingSet.PointsLeft(category) + markings.Count;
-            picker.UpdateData(markings, state.Species, total);
+            picker.UpdateData(markings, pickerSpecies, total);
         }
 
         UpdateRemembered(state);

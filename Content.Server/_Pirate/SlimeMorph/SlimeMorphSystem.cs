@@ -9,11 +9,10 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Inventory;
+using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -31,23 +30,37 @@ public sealed class SlimeMorphSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
-    private static readonly ProtoId<TagPrototype> HidesHairTag = "HidesHair";
-
-    /// <summary>Marking categories the slime may freely tweak on itself via the menu.</summary>
+    /// <summary>Marking categories the slime may tweak via the menu (mirrors the client's picker list).</summary>
     private static readonly MarkingCategories[] SelfEditCategories =
     {
         MarkingCategories.Hair,
+        MarkingCategories.HairSpecial,
         MarkingCategories.FacialHair,
+        MarkingCategories.FacialHairSpecial,
+        MarkingCategories.Head,
+        MarkingCategories.HeadTop,
         MarkingCategories.HeadSide,
-        MarkingCategories.Tail,
+        MarkingCategories.Snout,
+        MarkingCategories.Face,
         MarkingCategories.Chest,
+        MarkingCategories.Groin,
+        MarkingCategories.Tail,
+        MarkingCategories.Wings,
+        MarkingCategories.RightArm,
+        MarkingCategories.LeftArm,
+        MarkingCategories.RightHand,
+        MarkingCategories.LeftHand,
+        MarkingCategories.RightLeg,
+        MarkingCategories.LeftLeg,
+        MarkingCategories.RightFoot,
+        MarkingCategories.LeftFoot,
+        MarkingCategories.UndergarmentTop,
+        MarkingCategories.UndergarmentBottom,
     };
 
     public override void Initialize()
@@ -130,6 +143,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             Width = working.Width,
             Markings = new MarkingSet(working.Markings),
             HeadLayer = working.HeadLayer,
+            PickerSpecies = working.PickerSpecies,
             FromTarget = working.FromTarget,
             SelectedTarget = working.SelectedTarget,
         };
@@ -264,6 +278,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             Width = appearance.Width,
             Markings = new MarkingSet(),
             HeadLayer = appearance.HeadLayer,
+            PickerSpecies = appearance.Species,
             FromTarget = true,
             SelectedTarget = netTarget,
         };
@@ -426,11 +441,16 @@ public sealed class SlimeMorphSystem : EntitySystem
             || !TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
             return;
 
-        var markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, humanoid.Species).Keys.FirstOrDefault();
+        // Add from the loaded target's palette when mimicking, else the slime's own.
+        var pickerSpecies = staged.PickerSpecies ?? humanoid.Species;
+        var markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, pickerSpecies).Keys.FirstOrDefault();
         if (string.IsNullOrEmpty(markingId) || !_markings.Markings.TryGetValue(markingId, out var proto))
             return;
 
-        staged.Markings.AddBack(args.Category, proto.AsMarking());
+        var marking = proto.AsMarking();
+        // Target markings are foreign to the slime; add forced so they bypass slime point/species limits.
+        marking.Forced = staged.FromTarget;
+        staged.Markings.AddBack(args.Category, marking);
         UpdateUi(ent);
     }
 
@@ -508,6 +528,17 @@ public sealed class SlimeMorphSystem : EntitySystem
         _humanoid.SetSkinColor(uid, staged.SkinColor, false, humanoid: humanoid);
         humanoid.EyeColor = staged.EyeColor;
         _humanoid.SetScale(uid, new Vector2(staged.Width, staged.Height), false, humanoid);
+
+        // The Shitmed body system registers each body part as a CUSTOM base layer (colored by a
+        // captured skin color), which SetSkinColor doesn't touch - so recolor them to the new skin
+        // here, or only the head would follow the color. Eyes/Head are handled separately.
+        foreach (var layer in humanoid.CustomBaseLayers.Keys.ToList())
+        {
+            if (layer is HumanoidVisualLayers.Eyes or HumanoidVisualLayers.Head)
+                continue;
+
+            _humanoid.SetBaseLayerColor(uid, layer, staged.SkinColor, false, humanoid);
+        }
 
         // Baked head shapes (muzzles etc.) are base sprites, not markings - override the slime's own
         // head with the target's, tinted to slime skin, or drop back to the slime head.
@@ -624,6 +655,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             MinWidth = species.MinWidth,
             MaxWidth = species.MaxWidth,
             MarkingSet = staged?.Markings ?? humanoid.MarkingSet,
+            PickerSpecies = staged?.PickerSpecies,
             HeadLayer = staged?.HeadLayer,
             HeadColorFactor = HeadFactor(ent.Comp, staged?.HeadLayer),
             HeadColorAlpha = ent.Comp.HeadColorAlpha,
@@ -648,22 +680,15 @@ public sealed class SlimeMorphSystem : EntitySystem
         return new Color(color.R * factor, color.G * factor, color.B * factor, color.A);
     }
 
+    /// <summary>
+    /// Whether we can't make out the target - true only when their identity is fully hidden (both mouth
+    /// and eyes covered by an <see cref="IdentityBlockerComponent"/>, e.g. a sealed helmet or full mask),
+    /// exactly when the game shows them as "Unknown". A plain hat or breath mask no longer blocks study.
+    /// </summary>
     private bool IsConcealed(EntityUid target)
     {
-        if (!TryComp<InventoryComponent>(target, out var inventory))
-            return false;
-
-        if (_inventory.TryGetSlotEntity(target, "head", out _, inventory)
-            || _inventory.TryGetSlotEntity(target, "mask", out _, inventory))
-            return true;
-
-        var slots = _inventory.GetSlotEnumerator((target, inventory), SlotFlags.WITHOUT_POCKET);
-        while (slots.MoveNext(out var slot))
-        {
-            if (slot.ContainedEntity != null && _tag.HasTag(slot.ContainedEntity.Value, HidesHairTag))
-                return true;
-        }
-
-        return false;
+        var ev = new SeeIdentityAttemptEvent();
+        RaiseLocalEvent(target, ev);
+        return ev.Cancelled;
     }
 }

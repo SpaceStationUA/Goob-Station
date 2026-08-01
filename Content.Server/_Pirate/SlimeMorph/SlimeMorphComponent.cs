@@ -134,6 +134,9 @@ public sealed class SlimeMorphWorking
     /// <summary>Head base-sprite override (baked head shapes like muzzles); null = slime's own head.</summary>
     public string? HeadLayer;
 
+    /// <summary>Species whose marking groups the pickers should offer while this buffer is loaded (target's).</summary>
+    public string? PickerSpecies;
+
     /// <summary>True when this buffer holds a look derived from a studied target (mimic), not free self-edits.</summary>
     public bool FromTarget;
 
