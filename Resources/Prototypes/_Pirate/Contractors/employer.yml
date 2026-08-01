@@ -1,10 +1,12 @@
-- type: employer
-  id: NanoTrasen
-  nameKey: employer_name_nanotrasen
-
+### Безробітній
 - type: employer
   id: Unemployed
   nameKey: employer_name_unemployed
+
+### Зоряний Корпоративний Конгромерат
+- type: employer
+  id: NanoTrasen
+  nameKey: employer_name_nanotrasen
 
 - type: employer
   id: IdrisIncorporated
@@ -30,6 +32,7 @@
   id: PMCG
   nameKey: employer_name_pmcg
 
+### Інші корпорації
 - type: employer
   id: EinsteinEngines
   nameKey: employer_name_einsteinengines

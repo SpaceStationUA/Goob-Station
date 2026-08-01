@@ -35,7 +35,8 @@
   # Pirate contractor start
     - !type:CharacterEmployerRequirement
       employers:
-      - NanoTrasen
+      - IdrisIncorporated
+      - ZavodskiyInterstellar
       - PMCG
   # Pirate contractor end
   guides:

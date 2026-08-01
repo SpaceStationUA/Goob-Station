@@ -9,8 +9,8 @@
   requirements: 
     - !type:CharacterEmployerRequirement
       employers:
-      - NanoTrasen
       - OrionExpress
+      - HephaestusIndustries
   # Pirate contractor end
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"
