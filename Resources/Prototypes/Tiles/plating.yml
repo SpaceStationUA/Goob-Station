@@ -113,7 +113,6 @@
 - type: tile
   id: Lattice
   name: tiles-lattice
-  zTransparent: true # Pirate: multiz
   sprite: /Textures/Tiles/lattice.png
   baseTurf: Space
   isSubfloor: true

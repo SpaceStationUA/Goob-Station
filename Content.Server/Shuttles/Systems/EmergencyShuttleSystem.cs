@@ -42,8 +42,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-using Content.Server._Pirate.ZLevels.Spawning; // Pirate: multiz
-
 namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSystem
@@ -71,7 +69,6 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly CEZLevelFloorGridsSystem _floorGrids = default!; // Pirate: multiz
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!; // Goob edit
@@ -191,8 +188,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
             return;
         }
 
-        var targetGrid = _floorGrids.FindStationFloorWithPriorityDock(station.Value, DockTag) // Pirate: multiz
-            ?? _floorGrids.GetStationDefaultGrid(station.Value); // Pirate: multiz
+        var targetGrid = _station.GetLargestGrid(station.Value);
         if (targetGrid == null)
             return;
 
@@ -281,8 +277,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
             return null;
         }
 
-        var targetGrid = _floorGrids.FindStationFloorWithPriorityDock(stationUid, DockTag) // Pirate: multiz
-            ?? _floorGrids.GetStationDefaultGrid(stationUid); // Pirate: multiz
+        var targetGrid = _station.GetLargestGrid(stationUid);
 
         // UHH GOOD LUCK
         if (targetGrid == null)

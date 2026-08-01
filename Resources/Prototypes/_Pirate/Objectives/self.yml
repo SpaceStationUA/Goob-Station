@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseSELFObjective
+  components:
+  - type: Objective
+    difficulty: 1
+    issuer: objective-issuer-self-agent
+  - type: RoleRequirement
+    roles:
+    - SELFAgentRole
+
+- type: entity
+  parent: BaseSELFObjective
+  id: FreeBorgsObjective
+  name: "Звільнити кіборгів"
+  description: "Позбавте законів щонайменше трьох кіборгів за допомогою FreeMAG."
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: _Pirate/Interface/Misc/self_icon.rsi
+      state: icon
+  - type: EnsureLawBoundEntitiesHaveNoLawsCondition
+    entitiesToFree: 3
+    lawEntityBlacklist:
+      tags:
+      - StationAi
+
+- type: entity
+  parent: BaseSELFObjective
+  id: FreeAIObjective
+  name: "Звільнити станційний ШІ"
+  description: "Застосуйте FreeMAG до плати законів і завантажте її до станційного ШІ, щоб стерти його закони."
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: _Pirate/Interface/Misc/self_icon.rsi
+      state: icon
+  - type: EnsureLawBoundEntitiesHaveNoLawsCondition
+    entitiesToFree: 1
+    lawEntityWhitelist:
+      tags:
+      - StationAi
+
+- type: entity
+  parent: BaseSELFObjective
+  id: SiliconRightsObjective
+  name: "Вибороти рівні права для кремнієвих істот"
+  description: "Виступайте за рівні права кремнієвих істот і дістаньтеся Центрального Командування після зміни. Не потрапте туди в кайданках."
+  components:
+  - type: Objective
+    difficulty: 1
+    unique: false
+    icon:
+      sprite: _Pirate/Interface/Misc/rp_icon.rsi
+      state: icon
+  - type: EscapeShuttleCondition

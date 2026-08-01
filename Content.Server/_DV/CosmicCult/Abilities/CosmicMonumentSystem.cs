@@ -27,7 +27,6 @@ public sealed class CosmicMonumentSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly Content.Server._Pirate.ZLevels.Spawning.CEZLevelFloorGridsSystem _zFloors = default!; // Pirate: multiz
 
     private static readonly EntProtoId MonumentCollider = "MonumentCollider";
     private static readonly EntProtoId MonumentCosmicCultMoveEnd = "MonumentCosmicCultMoveEnd";
@@ -137,9 +136,12 @@ public sealed class CosmicMonumentSystem : EntitySystem
         //CHECK IF WE'RE ON THE STATION OR IF SOMEONE'S TRYING TO SNEAK THIS ONTO SOMETHING SMOL
         var station = _station.GetStationInMap(xform.MapID);
 
-        var stationFloors = _zFloors.GetStationFloorGrids(station ?? EntityUid.Invalid); // Pirate: multiz
+        EntityUid? stationGrid = null;
 
-        if (stationFloors.Count == 0 || !stationFloors.Contains(xform.GridUid.Value)) // Pirate: multiz
+        if (TryComp<StationDataComponent>(station, out _))
+            stationGrid = _station.GetLargestGrid(station.Value);
+
+        if (stationGrid is not null && stationGrid != xform.GridUid)
         {
             _popup.PopupEntity(Loc.GetString("cosmicability-monument-spawn-error-station"), uid, uid);
             return false;

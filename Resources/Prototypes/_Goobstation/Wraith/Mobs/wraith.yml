@@ -5,8 +5,8 @@
   parent:
   - Incorporeal
   - BaseMob
-  name: Wraith
-  description: A VERY spooky ghostie.
+  name: "Примара"
+  description: "ДУЖЕ моторошне привиддя."
   components:
   - type: MindContainer
   - type: MindExaminable #show that its dead
@@ -64,7 +64,6 @@
     castShadows: false
   - type: ContentEye
     maxZoom: 1.2, 1.2
-  - type: CEZLevelGhostMover # Pirate: multiz
   - type: Visibility
     layer: 2 #ghost vis layer
   - type: Speech
@@ -154,7 +153,7 @@
 - type: entity
   id: MobWraithPlague
   parent: MobWraith
-  name: Plaguebringer
+  name: "Чумоносець"
   components:
   - type: Wraith
     abilities: PlaguebringerAbilities
@@ -179,7 +178,7 @@
 - type: entity
   id: MobWraithHarbinger
   parent: MobWraith
-  name: Harbinger of the Void
+  name: "Провісник Порожнечі"
   components:
   - type: Wraith
     abilities: HarbingerAbilities
@@ -203,7 +202,7 @@
 - type: entity
   id: MobWraithTrickster
   parent: MobWraith
-  name: Trickster
+  name: "Обманщик"
   components:
   - type: Sprite
     sprite: _Goobstation/Wraith/wraith.rsi

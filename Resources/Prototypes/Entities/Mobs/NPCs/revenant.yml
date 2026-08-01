@@ -5,8 +5,8 @@
   parent:
   - Incorporeal
   - BaseMob
-  name: revenant
-  description: A spooky ghostie.
+  name: "ревенант"
+  description: "Моторошний привид."
   components:
   - type: Emag
     emagType: All
@@ -34,7 +34,6 @@
       - Ghost
   - type: ContentEye
     maxZoom: 1.2, 1.2
-  - type: CEZLevelGhostMover # Pirate: multiz
   - type: NameIdentifier
     group: GenericNumber
   - type: GhostRole

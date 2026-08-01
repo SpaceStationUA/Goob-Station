@@ -6,7 +6,9 @@ inspect-wound-Brute-moderate = побитий
 inspect-wound-Brute-severe = понівечений
 inspect-wound-Burn-minor = почервонілий
 inspect-wound-Burn-moderate = вкритий пухирями
-inspect-wound-Burn-severe = шкіра злазить
+inspect-wound-Burn-severe = обвуглений
+
+# Pirate: Trauma Lock path.
 inspect-wound-weeping-avulsion-minor = розірваний
 inspect-wound-weeping-avulsion-moderate = повністю розірваний
 inspect-wound-weeping-avulsion-severe = повністю розірваний зі значною втратою тканин

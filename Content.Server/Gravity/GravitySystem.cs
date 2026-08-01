@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Gravity;
-using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 
@@ -24,12 +23,32 @@ namespace Content.Server.Gravity
             if (!GravityQuery.Resolve(uid, ref gravity))
                 return;
 
-            if (gravity.Inherent && !TryComp<CEZLinkedGridComponent>(uid, out _)) // Pirate: multiz
+            if (gravity.Inherent)
                 return;
 
-            var targets = GetGravityTargets(uid); // Pirate: multiz
-            var enabled = LinkedTargetsHaveInherentGravity(targets) || LinkedTargetsHaveActiveGravityGenerator(targets); // Pirate: multiz
-            ApplyGravityState(targets, enabled); // Pirate: multiz
+            var enabled = false;
+
+            foreach (var (comp, xform) in EntityQuery<GravityGeneratorComponent, TransformComponent>(true))
+            {
+                if (!comp.GravityActive || xform.ParentUid != uid)
+                    continue;
+
+                enabled = true;
+                break;
+            }
+
+            if (enabled != gravity.Enabled)
+            {
+                gravity.Enabled = enabled;
+                var ev = new GravityChangedEvent(uid, enabled);
+                RaiseLocalEvent(uid, ref ev, true);
+                Dirty(uid, gravity);
+
+                if (HasComp<MapGridComponent>(uid))
+                {
+                    StartGridShake(uid);
+                }
+            }
         }
 
         private void OnGravityInit(EntityUid uid, GravityComponent component, ComponentInit args)
@@ -47,12 +66,6 @@ namespace Content.Server.Gravity
             if (!GravityQuery.Resolve(uid, ref gravity))
                 return;
 
-            if (TryComp<CEZLinkedGridComponent>(uid, out _)) // Pirate: multiz
-            {
-                RefreshGravity(uid, gravity); // Pirate: multiz
-                return;
-            }
-
             if (gravity.Enabled || gravity.Inherent)
                 return;
 
@@ -66,70 +79,5 @@ namespace Content.Server.Gravity
                 StartGridShake(uid);
             }
         }
-
-        #region Pirate: multiz
-        private List<EntityUid> GetGravityTargets(EntityUid uid)
-        {
-            var targets = new List<EntityUid> { uid };
-
-            if (!TryComp<CEZLinkedGridComponent>(uid, out var linked))
-                return targets;
-
-            foreach (var (_, peerUid) in linked.PeerGrids)
-            {
-                if (!targets.Contains(peerUid))
-                    targets.Add(peerUid);
-            }
-
-            return targets;
-        }
-
-        private bool LinkedTargetsHaveInherentGravity(List<EntityUid> targets)
-        {
-            foreach (var targetUid in targets)
-            {
-                if (TryComp<GravityComponent>(targetUid, out var gravity) && gravity.Inherent)
-                    return true;
-            }
-
-            return false;
-        }
-
-        private bool LinkedTargetsHaveActiveGravityGenerator(List<EntityUid> targets)
-        {
-            var query = EntityQueryEnumerator<GravityGeneratorComponent, TransformComponent>();
-            while (query.MoveNext(out _, out var comp, out var xform))
-            {
-                if (!comp.GravityActive)
-                    continue;
-
-                if (targets.Contains(xform.ParentUid))
-                    return true;
-            }
-
-            return false;
-        }
-
-        private void ApplyGravityState(List<EntityUid> targets, bool enabled)
-        {
-            foreach (var targetUid in targets)
-            {
-                if (!TryComp<GravityComponent>(targetUid, out var targetGravity) ||
-                    targetGravity.Inherent ||
-                    targetGravity.Enabled == enabled)
-                {
-                    continue;
-                }
-
-                targetGravity.Enabled = enabled;
-                var ev = new GravityChangedEvent(targetUid, enabled);
-                RaiseLocalEvent(targetUid, ref ev, true);
-                Dirty(targetUid, targetGravity);
-
-                if (enabled && HasComp<MapGridComponent>(targetUid))
-                    StartGridShake(targetUid);
-            }
-        }
-        #endregion
     }
 }

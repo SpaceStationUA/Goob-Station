@@ -1,9 +1,9 @@
 - type: entity
   parent: [ClothingHeadHelmetBasic, BaseClothingRadio]
   id: ClothingHeadHelmetTCAFNoVisor
-  name: тактичний шолом TCAF
+  name: "тактичний шолом TCAF"
   suffix: TCAF
-  description: Базовий тактичний шолом, який носять військовослужбовці збройних сил Тау-Кита.
+  description: "Базовий тактичний шолом, який носять військовослужбовці збройних сил Тау-Кита."
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Head/Helmet/TCAF_tactical_helmet_novisor.rsi
@@ -18,9 +18,9 @@
 - type: entity
   parent: [ClothingHeadHelmetBasic, ShowSecurityIcons, BaseClothingRadio]
   id: ClothingHeadHelmetTCAFVisor
-  name: тактичний шолом TCAF з візором
+  name: "тактичний шолом TCAF з візором"
   suffix: TCAF
-  description: Базовий тактичний шолом з встроєним тактичним візором, який носять військовослужбовці збройних сил Тау-Кита.
+  description: "Базовий тактичний шолом із вбудованим тактичним візором, який носять військовослужбовці збройних сил Тау-Кита."
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Head/Helmet/TCAF_tactical_helmet_visor.rsi
@@ -38,9 +38,9 @@
 - type: entity
   parent: [ClothingHeadHelmetBasic, ShowSecurityIcons, BaseClothingRadio]
   id: ClothingHeadHelmetTCAFHeavy
-  name: важкий тактичний шолом TCAF
+  name: "важкий тактичний шолом TCAF"
   suffix: TCAF
-  description: Значна частина спорядження, яке використовує TCAF, була перероблена зі старішого соляріанського військового спорядження. Цей передовий шолом оснащений балістичним полімерним лицевим щитком з встроєним візором.
+  description: "Значну частину спорядження TCAF перероблено зі старішого соларіанського військового спорядження. Цей передовий шолом оснащено балістичним полімерним лицевим щитком із вбудованим візором."
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Head/Helmet/TCAF_tactical_helmet_full.rsi

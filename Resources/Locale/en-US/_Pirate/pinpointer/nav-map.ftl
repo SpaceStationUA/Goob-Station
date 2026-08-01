@@ -1,1 +1,0 @@
-pinpointer-z-label = Z:

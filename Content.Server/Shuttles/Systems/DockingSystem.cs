@@ -4,7 +4,6 @@ using Content.Server.Doors.Systems;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Popups;
@@ -181,14 +180,7 @@ namespace Content.Server.Shuttles.Systems
             if (!args.Anchored)
             {
                 Undock(entity);
-                // Pirate: multiz — Undock early-returns when DockedWith is already null, so its
-                // own RefreshShuttleConsoles is skipped on the not-currently-docked unanchor path.
-                // The available-docks list still changed, so refresh unconditionally.
-                _console.RefreshShuttleConsoles();
-                return;
             }
-
-            _console.RefreshShuttleConsoles();
         }
 
         private void OnDockingReAnchor(Entity<DockingComponent> entity, ref ReAnchorEvent args)
@@ -411,7 +403,7 @@ namespace Content.Server.Shuttles.Systems
 
             // Cheating?
             if (!TryComp(ourDock, out TransformComponent? xformA) ||
-                !IsDockOnConsoleNetwork(xformA.GridUid, shuttleUid)) // Pirate: multiz
+                xformA.GridUid != shuttleUid)
             {
                 _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
                 return;
@@ -427,34 +419,6 @@ namespace Content.Server.Shuttles.Systems
 
             Dock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp));
         }
-
-        #region Pirate: multiz
-        /// <summary>
-        /// True if <paramref name="dockGridUid"/> is the same grid the console is mounted on,
-        /// or one of its z-network peers. Used so a shuttle console can drive docks on any deck
-        /// of a multi-level shuttle.
-        /// </summary>
-        private bool IsDockOnConsoleNetwork(EntityUid? dockGridUid, EntityUid? consoleGridUid)
-        {
-            if (dockGridUid is null || consoleGridUid is null)
-                return false;
-
-            if (dockGridUid == consoleGridUid)
-                return true;
-
-            if (!TryComp<CEZLinkedGridComponent>(consoleGridUid, out var consoleLinked))
-                return false;
-
-            if (!TryComp<CEZLinkedGridComponent>(dockGridUid, out var dockLinked))
-                return false;
-
-            // Treat unassigned/default ZNetwork as not-equal so two ungrouped grids don't appear linked.
-            if (!consoleLinked.ZNetwork.IsValid() || !dockLinked.ZNetwork.IsValid())
-                return false;
-
-            return consoleLinked.ZNetwork == dockLinked.ZNetwork;
-        }
-        #endregion
 
         public bool CanUndock(Entity<DockingComponent?> dock)
         {

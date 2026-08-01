@@ -19,6 +19,8 @@
 - type: speciesBaseSprites
   id: MobVoxSprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking # floof
+    TailOversuit: MobHumanoidAnyMarking # floof
     Head: MobVoxHead
     Face: MobHumanoidAnyMarking #Pirate Changes
     Snout: MobHumanoidAnyMarking
@@ -43,6 +45,13 @@
   id: MobVoxMarkingLimits
   onlyWhitelisted: true
   points:
+    # Pirate - Trauma Station hair gradients
+    HairSpecial:
+      points: 1
+      required: false
+    FacialHairSpecial:
+      points: 1
+      required: false
     Hair:
       points: 1
       required: false

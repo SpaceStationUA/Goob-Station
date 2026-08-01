@@ -3,7 +3,6 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Shared._Pirate.CCVars; // Pirate: multiz
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
@@ -132,27 +131,8 @@ public sealed partial class GameTicker
         if (MetaData(ruleEntity).EntityPrototype?.ID is not { } id) // you really fucked up
             return false;
 
-        #region Pirate: multiz
-        // pirate.events.delay_override: -1 prototype, 0 instant, >0 forced seconds.
-        var delayOverride = _cfg.GetCVar(PirateVars.EventsDelayOverride);
-        if (delayOverride >= 0f)
-        {
-            // RemComp tells the next call that the override delay already elapsed.
-            if (!RemComp<DelayedStartRuleComponent>(ruleEntity) && delayOverride > 0f)
-            {
-                var overrideTime = TimeSpan.FromSeconds(delayOverride);
-                _sawmill.Info($"Queued start for game rule {ToPrettyString(ruleEntity)} with override delay {overrideTime}");
-                _adminLogger.Add(LogType.EventStarted,
-                    $"Queued start for game rule {ToPrettyString(ruleEntity)} with override delay {overrideTime}");
-
-                var overrideDelayed = EnsureComp<DelayedStartRuleComponent>(ruleEntity);
-                overrideDelayed.RuleStartTime = _gameTiming.CurTime + overrideTime;
-                return true;
-            }
-        }
-        #endregion
         // If we already have it, then we just skip the delay as it has already happened.
-        else if (!RemComp<DelayedStartRuleComponent>(ruleEntity) && ruleData.Delay != null) // Pirate: multiz
+        if (!RemComp<DelayedStartRuleComponent>(ruleEntity) && ruleData.Delay != null)
         {
             var delayTime = TimeSpan.FromSeconds(ruleData.Delay.Value.Next(_robustRandom));
 

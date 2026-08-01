@@ -22,6 +22,7 @@ void-ascend-restart = Хуртовина раптово з'являється з
 cosmic-field-component-bomb-defused-message = {$bomb} раптово вимикається!
 ghoul-weapon-comp-examine = [color=red]Ця зброя виглядає надзвичайно крихкою. При детальнішому огляді видно, що вона виготовлена з плоті й крові. Вона належить одній із істот Мансусу й зникне, коли істота помре.[/color]
 
+# Pirate: Trauma Lock path.
 species-name-shattered = розколотий повсталий
 
 mirror-maid-examine-message-user = {$ent}, здається, ледь помітно зникає та знову виникає.

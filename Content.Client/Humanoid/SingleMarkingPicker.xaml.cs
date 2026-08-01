@@ -199,7 +199,10 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         foreach (var (id, marking) in sortedMarkings)
         {
-            var item = MarkingList.AddItem(Loc.GetString($"marking-{id}"), _sprite.Frame0(marking.Sprites[0]));
+            if (GetMarkingTexture(marking) is not { } texture) // Pirate - shader markings borrow the hair icon
+                continue;
+
+            var item = MarkingList.AddItem(Loc.GetString($"marking-{id}"), texture);
             item.Metadata = marking.ID;
 
             if (_markings[Slot].MarkingId == id)
@@ -224,9 +227,9 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         ColorSelectorContainer.RemoveAllChildren();
 
-        if (marking.MarkingColors.Count != proto.Sprites.Count)
+        if (marking.MarkingColors.Count != proto.ColorCount) // Pirate - shader markings have no sprites
         {
-            marking = new Marking(marking.MarkingId, proto.Sprites.Count);
+            marking = new Marking(marking.MarkingId, proto.ColorCount);
         }
 
         for (var i = 0; i < marking.MarkingColors.Count; i++)

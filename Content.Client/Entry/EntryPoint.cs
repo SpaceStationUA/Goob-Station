@@ -155,7 +155,6 @@ namespace Content.Client.Entry
             _configManager.SetCVar("interface.resolutionAutoScaleLowerCutoffY", 240);
             _configManager.SetCVar("interface.resolutionAutoScaleMinimum", 0.5f);
 
-            _configManager.OverrideDefault(CVars.MaxShadowcastingLights, 256); // Pirate: light-flicker
 #if FULL_RELEASE
             _configManager.SetCVar(CVars.NetPredictLagBias, 0.1f); // Pirate
 #endif

@@ -11,7 +11,6 @@ using Content.Shared.Shuttles.Systems;
 using Content.Client._Mono.Radar;
 using Content.Shared._Mono.Radar;
 using Content.Shared._Pirate.ShipShields; // Pirate port - Monolith shields
-using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Robust.Shared.Physics.Collision.Shapes; // Pirate port - Monolith shields
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -34,8 +33,6 @@ public sealed class FireControlNavControl : BaseShuttleControl
     private readonly RadarBlipsSystem _blips;
     private readonly SharedPhysicsSystem _physics;
 
-    private const float AdjacentZLevelAlphaMultiplier = 0.4f; // Pirate: multiz
-
     private EntityCoordinates? _coordinates;
     private EntityUid? _consoleEntity;
     private Angle? _rotation;
@@ -45,8 +42,6 @@ public sealed class FireControlNavControl : BaseShuttleControl
     private HashSet<NetEntity> _selectedWeapons = new();
 
     private List<Entity<MapGridComponent>> _grids = new();
-    private readonly HashSet<EntityUid> _zLevelGrids = new(); // Pirate: multiz — marks grids pulled from adjacent z-layers so we can dim them.
-    private List<Entity<MapGridComponent>> _adjGrids = new(); // Pirate: multiz — reused per-frame scratch for adjacent-z grid query.
 
     #region Mono
 
@@ -241,34 +236,8 @@ public sealed class FireControlNavControl : BaseShuttleControl
         DrawShields(handle, xform, worldToShuttle); // Pirate port - Monolith shields
 
         _grids.Clear();
-        _zLevelGrids.Clear(); // Pirate: multiz
         var maxRange = new Vector2(WorldRange, WorldRange);
-        var queryBox = new Box2(mapPos.Position - maxRange, mapPos.Position + maxRange); // Pirate: multiz
-        _mapManager.FindGridsIntersecting(xform.MapID, queryBox, ref _grids, approx: true, includeMap: false); // Pirate: multiz
-
-        #region Pirate: multiz — overlay grids from the ±1 adjacent z-layers, marked for dimming
-        var zLevels = EntManager.System<CESharedZLevelsSystem>();
-        if (xform.MapUid is { } radarMapUid)
-        {
-            for (var zOff = -1; zOff <= 1; zOff++)
-            {
-                if (zOff == 0)
-                    continue;
-                if (!zLevels.TryMapOffset(radarMapUid, zOff, out var adjMap))
-                    continue;
-                if (!EntManager.TryGetComponent<MapComponent>(adjMap.Value, out var adjMapComp))
-                    continue;
-
-                _adjGrids.Clear();
-                _mapManager.FindGridsIntersecting(adjMapComp.MapId, queryBox, ref _adjGrids, approx: true, includeMap: false);
-                foreach (var g in _adjGrids)
-                {
-                    _zLevelGrids.Add(g.Owner);
-                    _grids.Add(g);
-                }
-            }
-        }
-        #endregion
+        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - maxRange, mapPos.Position + maxRange), ref _grids, approx: true, includeMap: false);
 
         foreach (var grid in _grids)
         {
@@ -286,16 +255,11 @@ public sealed class FireControlNavControl : BaseShuttleControl
             var curGridToView = curGridToWorld * worldToShuttle * shuttleToView;
 
             var labelColor = _shuttles.GetIFFColor(grid, self: false, iff);
-            if (_zLevelGrids.Contains(gUid)) // Pirate: multiz — dim z-adjacent grids
-                labelColor = labelColor.WithAlpha(labelColor.A * AdjacentZLevelAlphaMultiplier);
             var coordColor = new Color(labelColor.R * 0.8f, labelColor.G * 0.8f, labelColor.B * 0.8f, 0.5f);
 
             DrawGrid(handle, curGridToView, grid, labelColor);
 
-            // Pirate: multiz — only render IFF labels for the focused layer's grids. Adjacent
-            // layers stay visible as dimmed silhouettes, but their labels are suppressed so the
-            // operator sees one name per ship instead of duplicates from every deck.
-            if (ShowIFF && !_zLevelGrids.Contains(gUid))
+            if (ShowIFF)
             {
                 var labelName = _shuttles.GetIFFLabel(grid, self: false, iff);
                 if (labelName != null)
