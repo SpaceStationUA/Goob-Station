@@ -33,8 +33,6 @@ ghost-role-information-bounty-hunter-parrot-description = Мисливцю за 
 
 guide-entry-bounty-hunter = Мисливець за головами
 
-bounty-hunter-backpack-window-title = Минуле мисливця за головами
-
 bounty-hunter-category-raider-name = Рейдер
 bounty-hunter-category-raider-description =
     Ви не прихильник витончених методів.
