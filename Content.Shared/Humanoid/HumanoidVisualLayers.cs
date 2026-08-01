@@ -23,6 +23,7 @@ namespace Content.Shared.Humanoid
         HeadSide, // side parts (i.e., frills)
         HeadTop,  // top parts (i.e., ears)
         TailBehind, // Pirate - port Floofstation custom layers: For tails that render behind the body, such as when wearing a tail slot item
+        TailBehindBackpack, // Pirate - upstream Imp layer for markings behind backpacks
         TailOversuit, // Pirate - port Floofstation custom layers: For tails that render over a suit, such as when wearing a tail slot item
         Eyes,
         RArm,

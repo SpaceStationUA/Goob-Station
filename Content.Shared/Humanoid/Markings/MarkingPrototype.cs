@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings
 {
-    [Prototype]
+    [Prototype("marking")] // Pirate: retain upstream explicit prototype kind
     public sealed partial class MarkingPrototype : IPrototype
     {
         [IdDataField]
