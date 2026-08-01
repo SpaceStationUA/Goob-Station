@@ -92,17 +92,14 @@ public sealed class ChangelingLastResortTests
             var layEgg = new StingLayEggsEvent { Target = corpse };
             changeling.OnLayEgg(headslug.Value, headslugIdentity, ref layEgg);
             Assert.That(layEgg.Handled, Is.True);
-        });
 
-        await server.WaitRunTicks(5);
-
-        await server.WaitPost(() =>
-        {
             var egg = entMan.GetComponent<ChangelingEggComponent>(corpse);
+            Assert.That(egg.Active, Is.False);
             eggSystem.Cycle(corpse, egg);
             Assert.That(egg.Active, Is.True);
             eggSystem.Cycle(corpse, egg);
             Assert.That(entMan.HasComponent<ChangelingEggComponent>(corpse), Is.False);
+            eggSystem.Cycle(corpse, egg);
         });
 
         await server.WaitRunTicks(5);

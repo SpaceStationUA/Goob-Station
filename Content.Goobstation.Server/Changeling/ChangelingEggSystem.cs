@@ -33,6 +33,9 @@ public sealed class ChangelingEggSystem : EntitySystem
 
     public void Cycle(EntityUid uid, ChangelingEggComponent comp)
     {
+        if (!TryComp<ChangelingEggComponent>(uid, out var current) || current != comp)
+            return;
+
         if (!comp.Active)
         {
             comp.Active = true;
