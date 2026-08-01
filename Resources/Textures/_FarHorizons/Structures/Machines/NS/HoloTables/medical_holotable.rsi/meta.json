@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by ItsAbby, Animations by JAXONDUDE2010, Modified by CorruptOmega to get power wizardry to work",
+  "size": {
+    "x": 64,
+    "y": 45
+  },
+  "states": [
+    {
+      "name": "Table-Frame" 
+    },
+	{
+      "name": "HoloMed",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]  
+    },
+    {
+      "name": "Holo-Table-Lights",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]  
+    },
+    {
+      "name": "Holo-Proyector",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]  
+}

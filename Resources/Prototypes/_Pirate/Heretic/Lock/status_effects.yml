@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: LockMarkedStatusEffect
+  name: "позначений Замком"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AccessDeniedStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: LastRefugeStatusEffect
+  name: "останній притулок Доглядача"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HereticCloakedStatusEffect
+    loseFocusMessage: heretic-ability-lose-focus-last-refuge
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: LastRefuge
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: ExaminedMirrorMaidStatusEffect
+  name: "погляд дзеркальної служниці"
+  categories: [ HideSpawnMenu ]

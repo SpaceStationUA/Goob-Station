@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Server._Lavaland.Procedural.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
@@ -22,8 +21,8 @@ using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Shared.Station.Components;
 using Content.Server.Cargo.Components;
+using Content.Shared._Lavaland.Procedural.Components;
 using Content.Shared.Cargo.Components;
-using Content.Server._Pirate.ZLevels.Spawning; // Pirate: multiz
 
 namespace Content.Server._Lavaland.Shuttles.Systems;
 
@@ -36,7 +35,6 @@ public sealed class DockingConsoleSystem : SharedDockingConsoleSystem
     [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly CEZLevelFloorGridsSystem _floorGrids = default!; // Pirate: multiz
 
     public override void Initialize()
     {
@@ -234,18 +232,9 @@ public sealed class DockingConsoleSystem : SharedDockingConsoleSystem
             if (xform.MapID != map)
                 continue;
 
-            #region Pirate: multiz
-            // Prefer the station floor on the selected z-map.
             if (TryComp<StationMemberComponent>(gridUid, out var stationMember) &&
                 TryComp<StationDataComponent>(stationMember.Station, out _))
-            {
-                foreach (var floor in _floorGrids.GetStationFloorGrids(stationMember.Station))
-                {
-                    if (Transform(floor).MapID == map)
-                        return floor;
-                }
-            }
-            #endregion
+                return _station.GetLargestGrid(stationMember.Station);
 
             if (HasComp<LavalandStationComponent>(gridUid))
                 return gridUid;

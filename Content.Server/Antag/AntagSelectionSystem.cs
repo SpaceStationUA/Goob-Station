@@ -89,7 +89,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
     private void OnTakeGhostRole(Entity<GhostRoleAntagSpawnerComponent> ent, ref TakeGhostRoleEvent args)
     {
-        if (args.TookRole)
+        if (args.TookRole || args.Cancelled) // Pirate: role-specific takeover validation.
             return;
 
         if (ent.Comp.Rule is not { } rule || ent.Comp.Definition is not { } def)

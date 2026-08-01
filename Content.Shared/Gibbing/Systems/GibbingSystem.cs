@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Numerics;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Gibbing.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
@@ -140,8 +138,7 @@ public sealed class GibbingSystem : EntitySystem
             {
                 foreach (var container in validContainers)
                 {
-                    // Pirate: dropping contents removes them from the container while iterating.
-                    foreach (var ent in container.ContainedEntities.ToArray())
+                    foreach (var ent in container.ContainedEntities)
                     {
                         DropEntity(new Entity<GibbableComponent?>(ent, null), outerEntity, randomSpreadMod,
                             ref droppedEntities, launchGibs,
@@ -155,7 +152,7 @@ public sealed class GibbingSystem : EntitySystem
             {
                 foreach (var container in validContainers)
                 {
-                    foreach (var ent in container.ContainedEntities.ToArray())
+                    foreach (var ent in container.ContainedEntities)
                     {
                         GibEntity(new Entity<GibbableComponent?>(ent, null), outerEntity, randomSpreadMod,
                             ref droppedEntities, launchGibs,
@@ -324,14 +321,10 @@ public sealed class GibbingSystem : EntitySystem
     private void FlingDroppedEntity(EntityUid target, Vector2? direction, float impulse, float impulseVariance,
         Angle scatterConeAngle)
     {
-        // Pirate: container contents such as action entities may not have physics.
-        if (!TryComp<PhysicsComponent>(target, out var physics))
-            return;
-
         var scatterAngle = direction?.ToAngle() ?? _random.NextAngle();
         var scatterVector = _random.NextAngle(scatterAngle - scatterConeAngle / 2, scatterAngle + scatterConeAngle / 2)
             .ToVec() * (impulse + _random.NextFloat(impulseVariance));
-        _physicsSystem.ApplyLinearImpulse(target, scatterVector, body: physics);
+        _physicsSystem.ApplyLinearImpulse(target, scatterVector);
     }
 
     private bool TryCreateRandomGiblet(GibbableComponent gibbable, EntityCoordinates coords,

@@ -62,7 +62,7 @@ public sealed partial class ShuttleSystem
         if (!_cfg.GetCVar(CCVars.GridFill))
             return;
 
-        var targetGrid = _zFloorGrids.GetStationDefaultGrid(uid); // Pirate: multiz
+        var targetGrid = _station.GetLargestGrid(uid);
 
         if (targetGrid == null)
             return;
@@ -162,7 +162,7 @@ public sealed partial class ShuttleSystem
         if (!_cfg.GetCVar(CCVars.GridFill))
             return;
 
-        var targetGrid = _zFloorGrids.GetStationDefaultGrid(uid); // Pirate: multiz
+        var targetGrid = _station.GetLargestGrid(uid);
 
         if (targetGrid == null)
             return;

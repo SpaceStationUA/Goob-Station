@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Input;
-using Content.Shared._Pirate.Input; // Pirate: multiz
 using Robust.Shared.Input;
 
 namespace Content.Client.Input
@@ -93,7 +92,6 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.FlipObject);
             human.AddFunction(ContentKeyFunctions.OfferItem); // Pirate - port EE item offesr
             human.AddFunction(ContentKeyFunctions.ToggleCrawlingUnder); // Pirate - togglable under-table crawling
-            human.AddFunction(CEKeyFunctions.CEToggleShootDownZLevel); // Pirate: multiz
             human.AddFunction(ContentKeyFunctions.ArcadeUp);
             human.AddFunction(ContentKeyFunctions.ArcadeDown);
             human.AddFunction(ContentKeyFunctions.ArcadeLeft);

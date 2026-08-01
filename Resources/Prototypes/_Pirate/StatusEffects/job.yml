@@ -60,3 +60,11 @@
   icon:
     sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
     state: InterdyneShaftMiners
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSecurityInstructor
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SecurityInstructor
+  jobName: job-name-security-instructor

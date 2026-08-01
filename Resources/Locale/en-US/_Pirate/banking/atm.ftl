@@ -1,0 +1,15 @@
+atm-ui-enter-pin = Enter PIN
+atm-ui-select-withdraw-amount = Select withdraw amount.
+atm-ui-insert-card = Insert card.
+atm-ui-balance = Balance: { $balance }¥
+atm-keypad-clear = CLR
+atm-keypad-enter = ENT
+atm-keypad-insert-card = INSERT CARD
+atm-keypad-enter-amount = ENTER AMOUNT
+atm-keypad-enter-pin = ENTER PIN
+atm-keypad-mode-amount = AMOUNT
+atm-keypad-mode-pin = PIN
+atm-keypad-no-amount = [ NO AMOUNT ]
+atm-keypad-pin-4-digits = [ 4 DIGITS ]
+atm-keypad-no-funds = [ NO FUNDS ]
+atm-keypad-processing = [ PROCESSING ]

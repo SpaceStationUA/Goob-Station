@@ -5,3 +5,7 @@ guide-entry-plumbingmachines = Трубопровідні машини
 guidebook-pirate-plumbing = Реагентні трубопроводи
 guidebook-pirate-plumbing-flow = Потік реагентів
 guidebook-pirate-plumbing-machines = Трубопровідні машини
+
+## Ролі
+# Security / СБ
+guide-entry-sop-security-instructor = Інструктор СБ

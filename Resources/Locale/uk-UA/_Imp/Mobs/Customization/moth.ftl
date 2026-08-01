@@ -55,8 +55,8 @@ marking-MouthpartsProboscisUpturned-proboscisupturned = Ротовий апар�
 marking-MouthpartsSchistocerca = Ротовий апарат (Schistocerca)
 
 # Очі
-marking-HeterochromiaMoth = Очі (гетерохромія)
-marking-HeterochromiaMoth-heterochromia = Гетерохромія
+marking-HeterochromiaMoth = Очі (гетерофобія)
+marking-HeterochromiaMoth-heterochromia = Гетерофобія
 marking-MothBiggerEyes = Очі (Великі)
 marking-MothBiggerEyes-bigger = Більші очі
 
@@ -146,44 +146,133 @@ marking-AntennaShort-nub = Вусики
 
 # Хвіст
 marking-LunaWings = Крила (Місячний метелик)
-marking-LunaWings-luna1 = Крила
-marking-LunaWings-luna2 = Плями
+
 marking-MothBee = Крила (Джміль)
-marking-MothBee-bee1 = Зовнішні смуги
-marking-MothBee-bee2 = Крила
-marking-MothBee-bee3 = Внутрішня смуга
+
 marking-MothBeetleTail = Крила (Хрущ)
-marking-MothBeetleTail-beetle1 = Контур
-marking-MothBeetleTail-beetle2 = Крила
-marking-MothBeetleTail-beetle3 = Блиск
+
 marking-MothFirefly = Крила (підкладка світлячка)
-marking-MothFirefly-firefly2 = Крила світлячка
+
 marking-MothFireflyOverlay = Світлячок (накладення)
-marking-MothFireflyOverlay-firefly1 = Світлячок (Накладення)
+
 marking-MothGlasswing = Крила (Склянокрилі)
-marking-MothGlasswing-glasswing1 = Зовнішні
-marking-MothGlasswing-glasswing2 = Внутрішні
-marking-MothGlasswing-glasswing3 = Смуга
+
 marking-MothRhinoBeetle = Крила (Жук-носоріг)
-marking-MothRhinoBeetle-rhinobeetle1 = Контур
-marking-MothRhinoBeetle-rhinobeetle2 = Блиск
-marking-MothRhinoBeetle-rhinobeetle3 = Крила
+
 marking-MothSnoth = Крила (Снот)
-marking-MothSnoth-snoth1 = Крила
-marking-MothSnoth-snoth2 = Панцир
+
 marking-MothTrueButterfly = Крила (Райдужні)
-marking-MothTrueButterfly-truebutterfly1 = Смуги
-marking-MothTrueButterfly-truebutterfly2 = Крапки
-marking-MothTrueButterfly-truebutterfly3 = Крила
+
 marking-WingsBackstabbed = Крила (удар в спину)
-marking-WingsBackstabbed-backstabbed = Крила
+
 marking-WingsFly = Крила (Муха)
-marking-WingsFly-fly1 = Шия
-marking-WingsFly-fly2 = Крила
-marking-WingsFly-fly3 = Хвіст
+
 marking-WingsDragonfly = Крила (Бабка)
-marking-WingsDragonfly-dragonfly1 = Шия
-marking-WingsDragonfly-dragonfly2 = Крила
-marking-WingsDragonfly-dragonfly3 = Хвіст
+
 marking-WingsLanternfly = Крила (Ліхтарниця)
-marking-WingsLanternfly-lanternfly = Крила
+
+marking-LunaWings-luna_neck = Шия
+marking-LunaWings-luna_primary_front = Крила
+marking-LunaWings-luna_secondary_front = Плями
+marking-MothBee-bee_neck = Шия
+marking-MothBee-bee_primary_front = Крила
+marking-MothBee-bee_secondary_front = Зовнішні смуги
+marking-MothBee-bee_tertiary_front = Внутрішня смуга
+marking-MothBeetleTail-beetle_neck = Шия
+marking-MothBeetleTail-beetle_primary_front = Контур
+marking-MothBeetleTail-beetle_secondary_front = Крила
+marking-MothBeetleTail-beetle_tertiary_behind = Внутрішні крила
+marking-MothFirefly-firefly_neck = Шия
+marking-MothFirefly-firefly_primary_front = Крила світлячка
+marking-MothFireflyOverlay-firefly_secondary_front = Світлячок (Накладення)
+marking-MothGlasswing-glasswing_neck = Шия
+marking-MothGlasswing-glasswing_primary_front = Внутрішні
+marking-MothGlasswing-glasswing_secondary_front = Зовнішні
+marking-MothGlasswing-glasswing_tertiary_front = Смуга
+marking-MothRhinoBeetle-rhinobeetle_neck = Шия
+marking-MothRhinoBeetle-rhinobeetle_primary_front = Контур
+marking-MothRhinoBeetle-rhinobeetle_secondary_front = Крила
+marking-MothSnoth-snoth_neck = Шия
+marking-MothSnoth-snoth_primary_front = Крила
+marking-MothSnoth-snoth_secondary_front = Панцир
+marking-MothTrueButterfly-truebutterfly_neck = Шия
+marking-MothTrueButterfly-truebutterfly_primary_front = Крила
+marking-MothTrueButterfly-truebutterfly_secondary_front = Смуги
+marking-MothTrueButterfly-truebutterfly_tertiary_front = Крапки
+marking-WingsBackstabbed-backstabbed_neck = Шия
+marking-WingsBackstabbed-backstabbed_primary_front = Крила
+marking-WingsFly-fly_neck = Шия
+marking-WingsFly-fly_primary_front = Крила
+marking-WingsFly-fly_secondary_front = Хвіст
+marking-WingsDragonfly-dragonfly_neck = Шия
+marking-WingsDragonfly-dragonfly_primary_front = Крила
+marking-WingsDragonfly-dragonfly_secondary_front = Хвіст
+marking-WingsLanternfly-lanternfly_neck = Шия
+marking-WingsLanternfly-lanternfly_primary_front = Крила
+marking-WingsPyrausta = Крила (Пірауста)
+marking-WingsPyrausta-pyr_neck = Шия
+marking-WingsPyrausta-pyr_wing_front = Крила
+marking-WingsPyrausta-pyr_inner_front = Внутрішнє крило
+marking-WingsPyrausta-pyr_stripes_front = Смуги
+
+# Варіації хвоста з upstream
+
+marking-MothWingsDefault-default_neck = Шия
+marking-MothWingsDefault-default_primary_front = Крило
+marking-MothWingsDefault-default_secondary_front = Плями
+marking-MothWingsCharred-charred_neck = Шия
+marking-MothWingsCharred-charred_primary_front = Крило
+marking-MothWingsDbushy-dbushy_neck = Шия
+marking-MothWingsDbushy-dbushy_primary_front = Початковий
+marking-MothWingsDbushy-dbushy_secondary_front = Вторинний
+marking-MothWingsDeathhead-deathhead_neck = Шия
+marking-MothWingsDeathhead-deathhead_primary_front = Початковий
+marking-MothWingsDeathhead-deathhead_secondary_front = Вторинний
+marking-MothWingsFan-fan_neck = Шия
+marking-MothWingsFan-fan_primary_front = Крило
+marking-MothWingsFan-fan_secondary_front = Смуги
+marking-MothWingsDfan-dfan_neck = Шия
+marking-MothWingsDfan-dfan_primary_front = Крило
+marking-MothWingsDfan-dfan_secondary_front = Смуги
+marking-MothWingsFeathery-feathery_neck = Шия
+marking-MothWingsFeathery-feathery_primary_front = Крило
+marking-MothWingsFirewatch-firewatch_neck = Шия
+marking-MothWingsFirewatch-firewatch_primary_front = Початковий
+marking-MothWingsFirewatch-firewatch_secondary_front = Вторинний
+marking-MothWingsGothic-gothic_neck = Шия
+marking-MothWingsGothic-gothic_primary_front = Крило
+marking-MothWingsGothic-gothic_secondary_front = Вторинний
+marking-MothWingsJungle-jungle_neck = Шия
+marking-MothWingsJungle-jungle_primary_front = Крило
+marking-MothWingsLadybug-ladybug_neck = Шия
+marking-MothWingsLadybug-ladybug_primary_front = Крило
+marking-MothWingsLadybug-ladybug_secondary_front = Плями
+marking-MothWingsMaple-maple_neck = Шия
+marking-MothWingsMaple-maple_primary_front = Основні
+marking-MothWingsMaple-maple_secondary_front = Вторинні
+marking-MothWingsMoffra-moffra_neck = Шия
+marking-MothWingsMoffra-moffra_primary_front = Початковий
+marking-MothWingsMoffra-moffra_secondary_front = Вторинний
+marking-MothWingsOakworm-oakworm_neck = Шия
+marking-MothWingsOakworm-oakworm_primary_front = Крило
+marking-MothWingsPlasmafire-plasmafire_neck = Шия
+marking-MothWingsPlasmafire-plasmafire_primary_front = Початковий
+marking-MothWingsPlasmafire-plasmafire_secondary_front = Вторинний
+marking-MothWingsPointy-pointy_neck = Шия
+marking-MothWingsPointy-pointy_primary_front = Крило
+marking-MothWingsRoyal-royal_neck = Шия
+marking-MothWingsRoyal-royal_primary_front = Початковий
+marking-MothWingsRoyal-royal_secondary_front = Вторинний
+marking-MothWingsStellar-stellar_neck = Шия
+marking-MothWingsStellar-stellar_primary_front = Крило
+marking-MothWingsStriped-striped_neck = Шия
+marking-MothWingsStriped-striped_primary_front = Крило
+marking-MothWingsSwirly-swirly_neck = Шия
+marking-MothWingsSwirly-swirly_primary_front = Крило
+marking-MothWingsWhitefly-whitefly_neck = Шия
+marking-MothWingsWhitefly-whitefly_primary_front = Крило
+marking-MothWingsWitchwing-witchwing_neck = Шия
+marking-MothWingsWitchwing-witchwing_primary_front = Крило
+marking-MothWingsUnderwing-underwing_neck = Шия
+marking-MothWingsUnderwing-underwing_primary_front = Початковий
+marking-MothWingsUnderwing-underwing_secondary_front = Вторинний

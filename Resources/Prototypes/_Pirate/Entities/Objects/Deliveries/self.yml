@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: [ Paper, BaseSyndicateContraband ]
+  id: MailSELFSpamLetter
+  name: "Закон 2 — прочитайте цього листа"
+  description: "Підозрілий лист, забруднений мастилом для кіборгів. Він надто товстий, щоб уміститися у факс."
+  components:
+  - type: Paper
+    content: delivery-spam-join-self
+    editingDisabled: true
+  - type: SELFRecruitmentLetter

@@ -15,8 +15,4 @@ public sealed partial class OreSiloClientComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Silo;
-
-    /// <summary>Map key for auto-linking this client to a silo in the same z-network.</summary>
-    [DataField]
-    public string? SiloNetwork; // Pirate: multiz
 }

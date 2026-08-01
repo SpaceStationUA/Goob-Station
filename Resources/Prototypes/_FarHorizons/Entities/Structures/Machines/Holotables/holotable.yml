@@ -1,0 +1,289 @@
+- type: entity
+  id: HolotableBase
+  parent: BaseStructure
+  name: "голографічний стіл"
+  description: "Голографічний стіл. Наразі він не робить нічого, крім стильного вигляду."
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: _FarHorizons/Structures/Machines/HoloTables/holotable.rsi
+      layers:
+        - state: Table-Frame
+          type: Icon
+          sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+        - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+          state: holotable
+          shader: unshaded
+          type: Icon
+          sprite: _FarHorizons/Structures/Machines/HoloTables/holotable.rsi
+    - type: Anchorable
+    - type: Transform
+      noRot: true
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 2
+              max: 5
+            SheetGlass1:
+              min: 1
+              max: 2
+    - type: PlaceableSurface
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 55
+          mask:
+          - TableMask
+          layer:
+          - TableLayer
+          - Opaque
+    - type: Climbable
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Damageable
+      damageContainer: StructuralInorganic
+      damageModifierSet: Metallic
+    - type: Appearance
+    - type: ApcPowerReceiver
+      powerLoad: 50
+      needsPower: false
+    - type: LitOnPowered
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { visible: true }
+            False: { visible: false }
+
+- type: entity
+  id: GenericHolotable
+  parent: HolotableBase
+  name: "універсальний голографічний стіл"
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/HoloTables/holotable.rsi
+    layers:
+      - state: Table-Frame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: holotable
+        shader: unshaded
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/holotable.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#66ccde"
+
+- type: entity
+  id: EngineeringHolotable
+  parent: HolotableBase
+  name: "інженерний голографічний стіл"
+  components:
+    - type: Sprite
+      sprite: _FarHorizons/Structures/Machines/HoloTables/engineering_holotable.rsi
+      layers:
+      - state: Table-Frame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: engiholo
+        shader: unshaded
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/engineering_holotable.rsi
+    - type: Appearance
+    - type: PointLight
+      radius: 3
+      energy: 2
+      color: "#d9b12e"
+    - type: PowerMonitoringConsole
+    - type: PowerMonitoringCableNetworks
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        hv:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+    - type: ActivatableUI
+      singleUser: true
+      key: enum.PowerMonitoringConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+        enum.PowerMonitoringConsoleUiKey.Key:
+          type: PowerMonitoringConsoleBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
+
+- type: entity
+  id: MedicalHolotable
+  parent: HolotableBase
+  name: "медичний голографічний стіл"
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+    layers:
+      - state: Table-Frame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: HoloMed
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#66ccde"
+
+- type: entity
+  id: AlertLevelHolotable
+  parent: HolotableBase
+  name: "голографічний стіл рівня тривоги"
+  description: "Показує поточний рівень тривоги на станції. Якщо він червоний, це означає, що вам слід якомога більше залишатися у своєму відділі."
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
+    layers:
+      - state: TableFrame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#66ccde"
+  - type: AlertLevelDisplay
+    alertVisuals:
+      green: green
+      blue: blue
+      red: red
+      violet: violet
+      yellow: yellow
+      delta: delta
+      epsilon: epsilon
+      gamma: gamma
+      omega: omega
+      omicron: psi
+      orange: orange
+      octarine: red
+      white: gamma
+      amber: gamma
+      honk: gamma
+  - type: ApcPowerReceiver
+    powerLoad: 0
+
+- type: entity
+  id: WantedHolotable
+  parent: [ HolotableBase, ComputerCriminalRecords ]
+  name: "голографічний стіл розшуку"
+  description: "Показує розшукуваних на станції, або принаймні мав показувати, доки служба безпеки не сказала дизайнерам не оголошувати розшукуваних підозрюваних, і він не став кіоском записів служби безпеки."
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
+    layers:
+      - state: TableFrame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: Wanted
+        shader: unshaded
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#66ccde"
+
+#region NeoSol
+
+- type: entity
+  parent: HolotableBase
+  id: MedicalHolotableNS
+  name: "медичний голографічний стіл"
+  suffix: NS
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/NS/HoloTables/medical_holotable.rsi
+    layers:
+      - state: Table-Frame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/NS/HoloTables/medical_holotable.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: HoloMed
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/NS/HoloTables/medical_holotable.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#9e4fe3"
+
+- type: entity
+  parent: EngineeringHolotable
+  id: EngineeringHolotableNS
+  name: "інженерний голографічний стіл"
+  suffix: NS
+  components:
+    - type: Sprite
+      sprite: _FarHorizons/Structures/Machines/NS/HoloTables/engineering_holotable.rsi
+      layers:
+      - state: Table-Frame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/NS/HoloTables/engineering_holotable.rsi
+      - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        state: engiholo
+        shader: unshaded
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/HoloTables/engineering_holotable.rsi
+
+- type: entity
+  parent: HolotableBase
+  id: AlertLevelHolotableNS
+  name: "голографічний стіл рівня тривоги"
+  suffix: NS
+  description: "Показує поточний рівень тривоги на станції. Якщо він червоний, це означає, що вам слід якомога більше залишатися у своєму відділі."
+  components:
+  - type: Sprite
+    sprite: _FarHorizons/Structures/Machines/NS/HoloTables/sec_holotables.rsi
+    layers:
+      - state: TableFrame
+        type: Icon
+        sprite: _FarHorizons/Structures/Machines/NS/HoloTables/sec_holotables.rsi
+  - type: Appearance
+  - type: PointLight
+    radius: 3
+    energy: 2
+    color: "#ffbdcc"
+  - type: AlertLevelDisplay
+    alertVisuals:
+      green: green
+      blue: blue
+      red: red
+      violet: violet
+      yellow: yellow
+      delta: delta
+      epsilon: epsilon
+      gamma: gamma
+      omega: omega
+      omicron: psi
+      orange: orange
+      octarine: red
+      white: gamma
+      amber: gamma
+      honk: gamma
+  - type: ApcPowerReceiver
+    powerLoad: 0

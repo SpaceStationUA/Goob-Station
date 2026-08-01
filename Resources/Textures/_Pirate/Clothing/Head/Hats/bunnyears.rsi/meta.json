@@ -20,6 +20,216 @@
     {
       "name": "dark-equipped-HELMET",
       "directions": 4
+    },
+    {
+      "name": "atmos"
+    },
+    {
+      "name": "atmos-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "botany"
+    },
+    {
+      "name": "botany-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "captain"
+    },
+    {
+      "name": "captain-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "cargo"
+    },
+    {
+      "name": "cargo-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "ce"
+    },
+    {
+      "name": "ce-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "centcom"
+    },
+    {
+      "name": "centcom-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "chaplain"
+    },
+    {
+      "name": "chaplain-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "chef"
+    },
+    {
+      "name": "chef-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "chem"
+    },
+    {
+      "name": "chem-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "clown"
+    },
+    {
+      "name": "clown-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "cmo"
+    },
+    {
+      "name": "cmo-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "detective"
+    },
+    {
+      "name": "detective-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "detective_noir"
+    },
+    {
+      "name": "detective_noir-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "doctor"
+    },
+    {
+      "name": "doctor-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "engi"
+    },
+    {
+      "name": "engi-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "genetics"
+    },
+    {
+      "name": "genetics-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "hop"
+    },
+    {
+      "name": "hop-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "hos"
+    },
+    {
+      "name": "hos-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "janitor"
+    },
+    {
+      "name": "janitor-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "lawyer"
+    },
+    {
+      "name": "lawyer-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "paramedic"
+    },
+    {
+      "name": "paramedic-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "qm"
+    },
+    {
+      "name": "qm-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "rd"
+    },
+    {
+      "name": "rd-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "roboticist"
+    },
+    {
+      "name": "roboticist-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "salvage"
+    },
+    {
+      "name": "salvage-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "science"
+    },
+    {
+      "name": "science-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "security"
+    },
+    {
+      "name": "security-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "syndi"
+    },
+    {
+      "name": "syndi-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "virologist"
+    },
+    {
+      "name": "virologist-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "warden"
+    },
+    {
+      "name": "warden-equipped-HELMET",
+      "directions": 4
     }
   ]
 }

@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Prototypes;
 
@@ -12,14 +11,13 @@ namespace Content.Client._Pirate.ShipShields;
 public sealed class ShipShieldOverlaySystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        _overlayManager.AddOverlay(new ShipShieldOverlay(EntityManager, _playerManager, _prototypeManager, _resourceCache));
+        _overlayManager.AddOverlay(new ShipShieldOverlay(EntityManager, _prototypeManager, _resourceCache));
     }
 
     public override void Shutdown()

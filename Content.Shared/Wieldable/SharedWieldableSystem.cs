@@ -8,6 +8,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
+using Content.Shared._Pirate.Item; // Pirate
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Inventory.VirtualItem;
@@ -316,6 +317,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         }
 
         SetWielded((used, component), true);
+        _item.VisualsChanged(used); // Pirate -  wielded in-hand visual
 
         if (component.WieldSound != null)
             _audio.PlayPredicted(component.WieldSound, used, user);
@@ -375,6 +377,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         }
 
         SetWielded((used, component), false);
+        _item.VisualsChanged(used); // Pirate -  wielded in-hand visual
 
         var ev = new ItemUnwieldedEvent(user, force);
         RaiseLocalEvent(used, ref ev);

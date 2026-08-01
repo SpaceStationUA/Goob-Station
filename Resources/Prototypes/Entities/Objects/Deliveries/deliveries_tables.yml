@@ -79,6 +79,8 @@
       - id: MailVoyageAdvertisementSpam
       - id: MailEvilLizardSpam
       - id: MailParentsNeedMoneySpam
+      - id: MailSELFSpamLetter # Pirate: SELF
+        weight: 0.4
 
 - type: entityTable # TODO: Add more variety!
   id: LetterUncommonEntityTable # Some more varied things, should never be more expensive than 100 spesos
