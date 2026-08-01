@@ -7,7 +7,6 @@ psionic-power-name-mindswap-return = Mind Swap Return
 psionic-power-name-metapsionic = Metapsionic Pulse
 psionic-power-name-noospheric-zap = Noospheric Zap
 psionic-power-name-psychokinetic = Psychokinetic Scream
-psionic-power-name-psionic-invisibility = Psionic Invisibility
 psionic-power-name-psionic-regeneration = Psionic Regeneration
 psionic-power-name-pyrokinesis = Pyrokinesis
 psionic-power-name-telegnosis = Telegnosis

@@ -25,20 +25,6 @@
   - type: TelegnosisPower
 
 - type: entity
-  id: BedsheetInvisibilityCloak
-  parent:
-  - BedsheetBase
-  - PsionicClothingBase
-  name: tattered bedsheet
-  description: A tattered bedsheet, It looks like its been through hell and back.
-  components:
-  - type: Sprite
-    state: sheetblack
-  - type: Clothing
-    sprite: Clothing/Neck/Bedsheets/black.rsi
-  - type: PsionicInvisibilityPower
-
-- type: entity
   parent:
   - ClothingHandsBase
   - PsionicClothingBase

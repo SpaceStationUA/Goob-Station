@@ -173,21 +173,6 @@
 
 - type: entity
   parent: BasePsionicAction
-  id: ActionPsionicInvisibility
-  name: Psionic Invisibility
-  description: Render yourself invisible to any entity that could potentially be psychic. Borgs, animals, and so on are not affected.
-  components:
-  - type: Action
-    icon:
-      sprite: _DV/Interface/Actions/actions_psionics.rsi
-      state: invisibility
-    useDelay: 120
-    checkCanInteract: false
-  - type: InstantAction
-    event: !type:PsionicInvisibilityPowerActionEvent
-
-- type: entity
-  parent: BasePsionicAction
   id: ActionPsychokineticScream
   name: Psychokinetic Scream
   description: Emit a blood-curdling scream that shatters all lights in the area.
