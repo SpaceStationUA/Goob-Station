@@ -1,6 +1,6 @@
 - type: entity
   id: WaistBeltInstructorBelt
-  parent: [BaseSecurityContraband, ClothingBeltBase]
+  parent: [BaseSecurityContraband, ClothingBeltSecurity]
   name: дисциплінарний пояс
   description: Дуже важкий пояс. "Дивись, що ти накоїв! Кадет, від пола п'ять разів віджатися! ЗАРАЗ!""
   components:
@@ -44,3 +44,38 @@
       path: /Audio/_Pirate/Items/Belts/BeltPickup.ogg
       params:
         volume: -3
+  - type: Storage
+    grid:
+    - 0,0,5,1
+    whitelist:
+      tags:
+      - CigPack
+      - Taser
+      - SecBeltEquip
+      - Radio
+      - Sidearm
+      - MagazinePistol
+      - MagazineMagnum
+      - CombatKnife
+      - Truncheon
+      - BolaEnergy
+      - EnergySpeedloader
+      - MilitaryPowerCell
+      - EnergyMagAmmo
+      - HandGrenade
+      components:
+      - FlashOnTrigger
+      - SmokeOnTrigger
+      - Flash
+      - Handcuff
+      - BallisticAmmoProvider
+      - CartridgeAmmo
+      - DoorRemote
+      - Whistle
+      - BalloonPopper
+      - ScatteringGrenade
+  - type: EmitsSoundOnMove
+    soundCollection:
+      collection: PirateFootstepTacticalWebbing
+      params:
+        volume: -10 
