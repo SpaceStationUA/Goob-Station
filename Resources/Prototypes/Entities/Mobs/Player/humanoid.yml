@@ -89,6 +89,7 @@
 - type: randomHumanoidSettings
   id: DeathSquad
   parent: CentcommHumanoid # Goobstation
+  speciesWhitelist: Human # Pirate - Death Squad equipment is human-only.
   components:
     - type: AutoImplant
       implants: [ FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant, DeathRattleImplantCentcomm] # Goobstation
@@ -128,6 +129,7 @@
 - type: randomHumanoidSettings
   id: ERTLeader
   parent: CentcommHumanoid # Goobstation
+  speciesWhitelist: Human # Pirate - ERT equipment is human-only.
   components:
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
