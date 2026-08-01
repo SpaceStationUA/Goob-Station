@@ -30,4 +30,4 @@
 - type: loadout
   id: InstructorBelt
   equipment:
-    belt: WaistBeltInstructorBelt
+    belt: WaistBeltInstructorBeltFilled
