@@ -492,9 +492,9 @@
   description: Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit. # Goob edit
   components:
   - type: Sprite
-    sprite: _Pirate/_StarWars/Clothing/OuterClothing/Hardsuits/shturmBody.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
   - type: Clothing
-    sprite: _Pirate/_StarWars/Clothing/OuterClothing/Hardsuits/shturmBody.rsi
+    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
