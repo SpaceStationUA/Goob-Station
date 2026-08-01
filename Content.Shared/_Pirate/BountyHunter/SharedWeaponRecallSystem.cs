@@ -178,6 +178,7 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
                 _metaData.SetEntityDescription(action, Loc.GetString(desc, ("item", marked)));
 
             _actions.SetEntityIcon((action, action), marked);
+            _actions.SetItemIconStyle((action, action), ItemActionIconStyle.BigItem);
         }
         else
         {
@@ -186,6 +187,7 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
             if (action.Comp2.InitialDescription is {} desc)
                 _metaData.SetEntityDescription(action, desc);
             _actions.SetEntityIcon((action, action), null);
+            _actions.SetItemIconStyle((action, action), ItemActionIconStyle.BigAction);
         }
     }
 
