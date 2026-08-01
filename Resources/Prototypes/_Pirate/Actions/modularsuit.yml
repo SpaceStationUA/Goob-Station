@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseAction
   id: ToggleModularSuitDeployAction
-  name: "[color=#58c4e8]Розгорнути костюм[/color]"
-  description: "Розкриває модульний костюм і вдягає на тіло всі встановлені частини. Повторне натискання згортає костюм назад у компактний стан."
+  name: "[color=#58c4e8]Expand Suit[/color]"
+  description: "Opens the modular suit, placing all the installed parts on the body. When pressed again, it closes the suit back into a compact state."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -16,7 +16,7 @@
 - type: entity
   parent: BaseAction
   id: ToggleModularSuitUiAction
-  name: "[color=#58c4e8]Відкрити інтерфейс МОД-костюма[/color]"
+  name: "[color=#58c4e8]Open MODSuit interface[/color]"
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -28,8 +28,8 @@
 - type: entity
   parent: BaseAction
   id: ToggleLightModuleAction
-  name: "[color=#58c4e8]Перемкнути освітлення[/color]"
-  description: "Вмикає або вимикає вбудовану систему освітлення костюма."
+  name: "[color=#58c4e8]Toggle Light[/color]"
+  description: "Turns the suit's integrated lighting system on or off."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -42,8 +42,8 @@
 - type: entity
   parent: BaseAction
   id: ActivateTeleporterModuleAction
-  name: "[color=#58c4e8]Активувати телепортер[/color]"
-  description: "Миттєво телепортує користувача до випадкової істоти поблизу. Для роботи потребує блюспейс-ядра."
+  name: "[color=#58c4e8]Activate Teleporter[/color]"
+  description: "Instantly teleports the user to the location of a random nearby creature. Requires a bluespace core to function."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -56,8 +56,8 @@
 - type: entity
   parent: BaseAction
   id: ToggleHolsterModuleAction
-  name: "[color=#58c4e8]Перемкнути кобуру[/color]"
-  description: "Висуває або ховає кобуру для швидкого доступу до вогнепальної зброї."
+  name: "[color=#58c4e8]Toggle Holster[/color]"
+  description: "Deploys or retracts the weapon holster for quick firearm access."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -71,8 +71,8 @@
 - type: entity
   parent: BaseAction
   id: ActivatePaperDispenserModuleAction
-  name: "[color=#58c4e8]Активувати видавач паперу[/color]"
-  description: "Синтезує свіжий папір за допомогою передових технологій факсів і принтерів. Перетворює енергію костюма на високоякісне канцелярське приладдя. Ідеально для надзвичайних паперових справ або коли просто потрібно залишити записку."
+  name: "[color=#58c4e8]Activate Paper Dispenser[/color]"
+  description: "Synthesizes fresh paper using advanced fax and printer technology. Converts suit power into high-quality stationery. Perfect for paperwork emergencies or when you just need to leave a note."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -90,8 +90,8 @@
 - type: entity
   parent: BaseAction
   id: ActivateEnergyShieldModuleAction
-  name: "[color=#58c4e8]Активувати енергетичний щит[/color]"
-  description: "Створює персональне захисне силове поле, що блокує вхідні атаки. Споживає значну кількість енергії."
+  name: "[color=#58c4e8]Activate Energy Shield[/color]"
+  description: "Generates a personal protective forcefield that blocks incoming attacks. Consumes significant power."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -104,8 +104,8 @@
 - type: entity
   parent: BaseAction
   id: ActivateBurgerDispenserModuleAction
-  name: "[color=#58c4e8]Активувати видавач бургерів[/color]"
-  description: "Створює їстівний бургер, використовуючи енергію костюма. Точний вид бургера може відрізнятися. Чай «Ерл Ґрей» недоступний."
+  name: "[color=#58c4e8]Activate Burger Dispenser[/color]"
+  description: "Creates an edible burger using the suit's power. The exact type of burger may vary. Earl Grey tea not available."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -149,8 +149,8 @@
 - type: entity
   parent: BaseAction
   id: ActivateTanningModuleAction
-  name: "[color=#58c4e8]Активувати засмагу[/color]"
-  description: "Вмикає ультрафіолетові лампи для безпечної засмаги. Наявність функції «рак шкіри» не доведена."
+  name: "[color=#58c4e8]Activate Tanning[/color]"
+  description: "Activates UV lamps for a safe tan. Skin cancer functionality has not been proven."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -163,8 +163,8 @@
 - type: entity
   parent: BaseAction
   id: ActivateAtrocinatorModuleAction
-  name: "[color=#58c4e8]Активувати атроцинатор[/color]"
-  description: "Активує таємничу сферу. Ефекти можуть відрізнятися. Дивіться під ноги!"
+  name: "[color=#58c4e8]Activate Atrocinator[/color]"
+  description: "Activates the mysterious orb. Effects vary. Watch your step!"
   categories: [ HideSpawnMenu ]
   components:
   - type: Action

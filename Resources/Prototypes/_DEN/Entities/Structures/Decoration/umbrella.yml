@@ -2,8 +2,8 @@
   abstract: true
   parent: BaseStructure
   id: BeachUmbrellaBase
-  name: "пляжна парасоля"
-  description: "Стояча парасоля, що захищає від сонця й дощу тих, хто сидить під нею. Хоча... якби тут були сонце й дощ..."
+  name: beach umbrella
+  description: A standing umbrella that blocks the sun and rain for those sitting underneath. Well, if there WAS sun and rain...
   placement:
     mode: SnapgridBorder
   components:

@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "медіпен виживання"
+  name: survival medipen
   parent: ChemicalMedipen
   id: SurvivalMedipen
-  description: "Містить суміш потужних лікувальних хімікатів. Повільно лікує пошкодження та стабілізує температуру тіла. Ви можете отримати передозування, якщо використаєте більше одного поспіль."
+  description: A cocktail of powerful healing chemicals. Slowly heals damage and stabilizes body temperature. You can overdose on these if you use more than one in quick succession.
   components:
   - type: Sprite
     sprite: /Textures/_Lavaland/Objects/Specific/Medical/medipen.rsi
@@ -30,10 +30,10 @@
 
 # doesn't get any better than this
 - type: entity
-  name: "люксовий медіпен"
+  name: luxury medipen
   parent: ChemicalMedipen
   id: LuxuryMedipen
-  description: "Містить потужні хімікати, що допомагають досліджувати суворі середовища. Хімікати відносно шкідливі та менш ефективні поза умовами низького тиску."
+  description: Contains powerful chemicals used to aid in exploration of harsh environments. Chemicals relatively harmful and not as effective when used outside of low pressure.
   components:
   - type: Sprite
     sprite: /Textures/_Lavaland/Objects/Specific/Medical/luxmedipen.rsi
