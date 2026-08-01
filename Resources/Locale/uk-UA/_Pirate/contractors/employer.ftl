@@ -2,7 +2,7 @@ humanoid-profile-editor-employer-label = Роботодавець:
 character-employer-requirement = Ви повинні{$inverted ->
     [true]{" "}{" "}не
     *[other]{""}
-} бути працевлаштовані в одній із цих корпорацій:: {$employers}
+} бути працевлаштовані в одній із цих корпорацій: {$employers}
 
 employer_name_nanotrasen = NanoTrasen
 employer_name_hephaestusindustries = Hephaestus Industries
