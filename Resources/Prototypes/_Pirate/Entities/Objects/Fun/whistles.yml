@@ -1,8 +1,8 @@
 - type: entity
   parent: [BaseWhistle, BaseSecurityContraband]
   id: SecurityInstructorWhistle
-  name: окопний свисток
-  description: Свисток, який використовують інструктори для привернення уваги. До бою!!
+  name: "окопний свисток"
+  description: "Свисток, який використовують інструктори для привернення уваги. До бою!!"
   components:
   - type: Sprite
     state: trench

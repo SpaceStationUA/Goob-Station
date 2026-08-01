@@ -1,8 +1,8 @@
 - type: entity
   parent: [ClothingHeadBase, BaseInterdyneContraband]
   id: ClothingHeadHatBeretInterdyneWhite
-  name: Берет Інтердайну
-  description: Від цього берета віє ліками та лікарнею
+  name: "Берет Інтердайну"
+  description: "Від цього берета віє ліками та лікарнею"
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hats/interdyne_beret.rsi
@@ -52,8 +52,8 @@
 - type: entity
   parent: ClothingHeadHatInterdyneOfficerBase
   id: ClothingHeadHatInterdyneOfficer
-  name: Офіцерський капелюх
-  description: Цей капелюх належить офіцеру Інтердайну, думаю не треба говорити що з вами стане якщо він не в відповідних руках
+  name: "Офіцерський капелюх"
+  description: "Цей капелюх належить офіцеру Інтердайну, думаю не треба говорити що з вами стане якщо він не в відповідних руках"
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hats/officer_interdyne_black.rsi
@@ -63,8 +63,8 @@
 - type: entity
   parent: ClothingHeadHatInterdyneOfficerBase
   id: ClothingHeadHatInterdyneOfficerWhite
-  name: Офіцерський капелюх
-  description: Цей капелюх належить офіцеру Інтердайну, думаю не треба говорити що з вами стане якщо він не в відповідних руках
+  name: "Офіцерський капелюх"
+  description: "Цей капелюх належить офіцеру Інтердайну, думаю не треба говорити що з вами стане якщо він не в відповідних руках"
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hats/officer_interdyne_white.rsi
@@ -88,8 +88,8 @@
 - type: entity
   parent: [ClothingHeadHatBeret, BaseSecurityContraband]
   id: ClothingHeadHatBeretInstructor
-  name: берет інструктора
-  description: Берет інструктора СБ. Обов'язково віддайте їм честь, можливо, саме завдяки їм ви досі живі.
+  name: "берет інструктора"
+  description: "Берет інструктора СБ. Обов'язково віддайте їм честь, можливо, саме завдяки їм ви досі живі."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hats/beret_instructor.rsi
@@ -122,8 +122,8 @@
 - type: entity
   parent: ClothingHeadHatBeretInstructor
   id: ClothingHeadHatCapInstructor
-  name: капелюх інструктора
-  description: Капелюх інструктора. "Сер! Так сер!"
+  name: "капелюх інструктора"
+  description: "Капелюх інструктора. \"Сер! Так сер!\""
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hats/instructor_hat.rsi
@@ -134,8 +134,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatTony
-  name: tony
-  description: 'Man, this party stinks, I fucking hate these people.'
+  name: "тоні"
+  description: "Чоловіче, ця вечірка смердить, я ненавиджу цих людей."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Misc/tony.rsi
