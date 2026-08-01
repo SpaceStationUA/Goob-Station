@@ -3759,3 +3759,23 @@ Entries:
       message: Додано роль мисливця за головами, шатл Heron та набори спорядження.
   id: 365
   time: '2026-07-31T23:41:21.0000000+00:00'
+- author: Vareniko
+  changes:
+    - type: Add
+      message: Крапельниці в мед відділ і БМа [БоксТП]
+    - type: Add
+      message: Камера для страти в бригу [БоксТП]
+    - type: Remove
+      message: Суд [БоксТП]
+    - type: Tweak
+      message: Кім.Бригмедика [БоксТП]
+    - type: Tweak
+      message: Вхідна зона бригу  [БоксТП]
+    - type: Tweak
+      message: Тир бригу [БоксТП]
+    - type: Tweak
+      message: Карцери в бригу [БоксТП]
+    - type: Fix
+      message: Доступи сцені в барі [БоксТП]
+  id: 366
+  time: '2026-08-01T07:50:55.0000000+00:00'
