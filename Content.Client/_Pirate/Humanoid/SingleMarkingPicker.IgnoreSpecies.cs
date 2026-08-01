@@ -7,10 +7,10 @@ namespace Content.Client.Humanoid;
 
 public sealed partial class SingleMarkingPicker
 {
-    /// <summary>When true, list markings from all species in the category (still sex/player filtered).</summary>
+    /// <summary>Lists category markings for all species.</summary>
     public bool IgnoreSpecies;
 
-    /// <summary>Sex used to filter markings when <see cref="IgnoreSpecies"/> is set.</summary>
+    /// <summary>Sex filter for all-species markings.</summary>
     public Sex Sex = Sex.Unsexed;
 
     private IReadOnlyDictionary<string, MarkingPrototype> ResolveCategoryMarkings(string? ckey)

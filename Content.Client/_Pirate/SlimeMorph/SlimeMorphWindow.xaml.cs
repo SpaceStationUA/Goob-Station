@@ -54,34 +54,6 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
     private readonly HumanoidAppearanceSystem _humanoidSystem;
     private readonly MarkingManager _markingManager;
 
-    private static readonly MarkingCategories[] EditableCategories =
-    {
-        MarkingCategories.Hair,
-        MarkingCategories.HairSpecial,
-        MarkingCategories.FacialHair,
-        MarkingCategories.FacialHairSpecial,
-        MarkingCategories.Head,
-        MarkingCategories.HeadTop,
-        MarkingCategories.HeadSide,
-        MarkingCategories.Snout,
-        MarkingCategories.Face,
-        MarkingCategories.Chest,
-        MarkingCategories.Groin,
-        MarkingCategories.Tail,
-        MarkingCategories.Wings,
-        MarkingCategories.RightArm,
-        MarkingCategories.LeftArm,
-        MarkingCategories.RightHand,
-        MarkingCategories.LeftHand,
-        MarkingCategories.RightLeg,
-        MarkingCategories.LeftLeg,
-        MarkingCategories.RightFoot,
-        MarkingCategories.LeftFoot,
-        MarkingCategories.UndergarmentTop,
-        MarkingCategories.UndergarmentBottom,
-        MarkingCategories.Overlay,
-    };
-
     private readonly SingleMarkingPicker[] _pickers;
     private bool _updating;
     private NetEntity? _selected;
@@ -97,7 +69,7 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
         _humanoidSystem = _entManager.System<HumanoidAppearanceSystem>();
 
         var pickers = new List<SingleMarkingPicker>();
-        foreach (var category in EditableCategories)
+        foreach (var category in SlimeMorphCategories.Editable)
         {
             var picker = new SingleMarkingPicker { Category = category };
             picker.OnMarkingSelect += args =>
@@ -199,7 +171,6 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
         RestyleButtons();
     }
 
-    /// <summary>Finds the shared marking picker's color-selector container so we can restyle its layout.</summary>
     private static BoxContainer? FindColorContainer(Control control)
     {
         foreach (var child in control.Children)
@@ -244,8 +215,7 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
         WidthSlider.Value = state.Width;
         WidthValue.Text = state.Width.ToString("0.00");
 
-        // When a target is loaded, show that species' marking groups (so all of theirs are visible and
-        // pickable); for free self-edits, show the slime's own.
+        // Use the target species while mimicking.
         var pickerSpecies = state.PickerSpecies ?? state.Species;
         foreach (var picker in _pickers)
         {
@@ -254,11 +224,8 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
                 ? new List<Marking>(list)
                 : new List<Marking>();
             var total = state.MarkingSet.PointsLeft(category) + markings.Count;
-            // Give the picker the whole set so gradient (HairSpecial/FacialHairSpecial) pickers can borrow
-            // the current hair sprite for their list icon.
+            // Used to resolve gradient icons.
             picker.GradientContext = state.MarkingSet;
-            // Morph is about wearing any race's features, so offer every species' markings (ears/horns/etc.
-            // are all species-locked and would otherwise leave HeadTop/Snout empty and hidden for a slime).
             picker.IgnoreSpecies = true;
             picker.Sex = state.Sex;
             picker.UpdateData(markings, pickerSpecies, total);

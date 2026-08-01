@@ -10,11 +10,7 @@ namespace Content.Client.Humanoid;
 
 public sealed partial class SingleMarkingPicker
 {
-    /// <summary>
-    ///     Full marking set the picker lives in (set by hosts that allow gradients, e.g. slime morph).
-    ///     Used to borrow the parent hair/facial-hair sprite as a gradient's list icon, mirroring the
-    ///     full <see cref="MarkingPicker"/>. Null hosts fall back to any sprite of the parent category.
-    /// </summary>
+    /// <summary>Marking set used to resolve gradient icons.</summary>
     public MarkingSet? GradientContext;
 
     private Texture? GetMarkingTexture(MarkingPrototype marking)
@@ -22,8 +18,7 @@ public sealed partial class SingleMarkingPicker
         if (marking.Sprites.Count > 0)
             return _sprite.Frame0(marking.Sprites[0]);
 
-        // Shader/gradient markings (HairSpecial/FacialHairSpecial) have no sprites of their own - they
-        // recolor the parent hair. Borrow the parent's sprite for the icon so the marking isn't skipped.
+        // Shader-only markings use the parent hair sprite.
         var parentCategory = MarkingCategoriesConversion.FromHumanoidVisualLayers(marking.BodyPart);
 
         var parent = GradientContext?.Markings.GetValueOrDefault(parentCategory)?.FirstOrDefault();
@@ -32,8 +27,7 @@ public sealed partial class SingleMarkingPicker
             && parentProto.Sprites.Count > 0)
             return _sprite.Frame0(parentProto.Sprites[0]);
 
-        // No parent hair selected - fall back to any sprite of the parent category so gradients still
-        // list (an icon that at least reads as "hair"), never returning null (which would skip them).
+        // Fall back to a category sprite when no parent is selected.
         foreach (var proto in _markingManager.MarkingsByCategory(parentCategory).Values)
             if (proto.Sprites.Count > 0)
                 return _sprite.Frame0(proto.Sprites[0]);
@@ -41,15 +35,10 @@ public sealed partial class SingleMarkingPicker
         return null;
     }
 
-    /// <summary>
-    ///     Builds the blur/proportion sliders for a gradient's shader-parameter color layer instead of a
-    ///     plain color wheel, packing the slider values back into that layer's color. Mirrors the full
-    ///     <see cref="MarkingPicker"/>. Returns false for ordinary color layers so they keep the wheel.
-    /// </summary>
+    /// <summary>Creates gradient parameter sliders; returns false for color layers.</summary>
     private bool TryCreateShaderParamSliders(MarkingPrototype prototype, int colorIndex, Marking marking, BoxContainer container)
     {
-        // GetMarkingShaderParams reads the marking's current packed values out of the set, so hand it a
-        // one-entry set holding this marking under its own category.
+        // Shader parameters are read from the marking set.
         var set = new MarkingSet();
         set.AddBack(prototype.MarkingCategory, marking);
 

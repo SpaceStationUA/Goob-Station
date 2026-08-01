@@ -35,35 +35,6 @@ public sealed class SlimeMorphSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
-    /// <summary>Marking categories the slime may tweak via the menu (mirrors the client's picker list).</summary>
-    private static readonly MarkingCategories[] SelfEditCategories =
-    {
-        MarkingCategories.Hair,
-        MarkingCategories.HairSpecial,
-        MarkingCategories.FacialHair,
-        MarkingCategories.FacialHairSpecial,
-        MarkingCategories.Head,
-        MarkingCategories.HeadTop,
-        MarkingCategories.HeadSide,
-        MarkingCategories.Snout,
-        MarkingCategories.Face,
-        MarkingCategories.Chest,
-        MarkingCategories.Groin,
-        MarkingCategories.Tail,
-        MarkingCategories.Wings,
-        MarkingCategories.RightArm,
-        MarkingCategories.LeftArm,
-        MarkingCategories.RightHand,
-        MarkingCategories.LeftHand,
-        MarkingCategories.RightLeg,
-        MarkingCategories.LeftLeg,
-        MarkingCategories.RightFoot,
-        MarkingCategories.LeftFoot,
-        MarkingCategories.UndergarmentTop,
-        MarkingCategories.UndergarmentBottom,
-        MarkingCategories.Overlay,
-    };
-
     public override void Initialize()
     {
         base.Initialize();
@@ -420,7 +391,7 @@ public sealed class SlimeMorphSystem : EntitySystem
         for (var i = 0; i < marking.MarkingColors.Count && i < list[args.Slot].MarkingColors.Count; i++)
             marking.SetColor(i, list[args.Slot].MarkingColors[i]);
 
-        // Keep the slot's forced flag (morph markings are forced) so a foreign pick isn't dropped on apply.
+        // Preserve the slot's forced status.
         marking.Forced = list[args.Slot].Forced;
         staged.Markings.Replace(args.Category, args.Slot, marking);
     }
@@ -444,9 +415,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             || !TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
             return;
 
-        // Seed the new slot from the loaded target's palette when mimicking, else the slime's own, else
-        // (categories the species has no markings for, e.g. HeadTop ears/horns) any marking in the
-        // category - the menu offers every species' markings, so Add must be able to seed one too.
+        // Fall back to an all-species marking when the category is absent from the species.
         var pickerSpecies = staged.PickerSpecies ?? humanoid.Species;
         var markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, pickerSpecies).Keys.FirstOrDefault()
             ?? _markings.MarkingsByCategory(args.Category).Keys.FirstOrDefault();
@@ -454,8 +423,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             return;
 
         var marking = proto.AsMarking();
-        // Slime can wear any race's markings; force so foreign ones bypass the slime's own point/species
-        // limits when added and applied (CommitStaged assigns the set verbatim, no EnsureSpecies).
+        // Allow cross-species selections.
         marking.Forced = true;
         staged.Markings.AddBack(args.Category, marking);
         UpdateUi(ent);
@@ -517,7 +485,7 @@ public sealed class SlimeMorphSystem : EntitySystem
 
     private static bool IsSelfEditable(MarkingCategories category)
     {
-        return Array.IndexOf(SelfEditCategories, category) >= 0;
+        return Array.IndexOf(SlimeMorphCategories.Editable, category) >= 0;
     }
 
     // ---- Body commit helpers ----
@@ -536,9 +504,7 @@ public sealed class SlimeMorphSystem : EntitySystem
         humanoid.EyeColor = staged.EyeColor;
         _humanoid.SetScale(uid, new Vector2(staged.Width, staged.Height), false, humanoid);
 
-        // The Shitmed body system registers each body part as a CUSTOM base layer (colored by a
-        // captured skin color), which SetSkinColor doesn't touch - so recolor them to the new skin
-        // here, or only the head would follow the color. Eyes/Head are handled separately.
+        // SetSkinColor does not update custom body-part layers.
         foreach (var layer in humanoid.CustomBaseLayers.Keys.ToList())
         {
             if (layer is HumanoidVisualLayers.Eyes or HumanoidVisualLayers.Head)
@@ -547,8 +513,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             _humanoid.SetBaseLayerColor(uid, layer, staged.SkinColor, false, humanoid);
         }
 
-        // Baked head shapes (muzzles etc.) are base sprites, not markings - override the slime's own
-        // head with the target's, tinted to slime skin, or drop back to the slime head.
+        // Apply the copied baked head sprite.
         if (staged.HeadLayer is { } headLayer)
         {
             _humanoid.SetBaseLayerId(uid, HumanoidVisualLayers.Head, headLayer, false, humanoid);
@@ -687,11 +652,7 @@ public sealed class SlimeMorphSystem : EntitySystem
         return new Color(color.R * factor, color.G * factor, color.B * factor, color.A);
     }
 
-    /// <summary>
-    /// Whether we can't make out the target - true only when their identity is fully hidden (both mouth
-    /// and eyes covered by an <see cref="IdentityBlockerComponent"/>, e.g. a sealed helmet or full mask),
-    /// exactly when the game shows them as "Unknown". A plain hat or breath mask no longer blocks study.
-    /// </summary>
+    /// <summary>Returns whether the target's identity is hidden.</summary>
     private bool IsConcealed(EntityUid target)
     {
         var ev = new SeeIdentityAttemptEvent();
