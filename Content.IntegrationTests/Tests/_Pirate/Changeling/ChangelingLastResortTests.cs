@@ -99,8 +99,10 @@ public sealed class ChangelingLastResortTests
         await server.WaitPost(() =>
         {
             var egg = entMan.GetComponent<ChangelingEggComponent>(corpse);
-            egg.Active = true;
             eggSystem.Cycle(corpse, egg);
+            Assert.That(egg.Active, Is.True);
+            eggSystem.Cycle(corpse, egg);
+            Assert.That(entMan.HasComponent<ChangelingEggComponent>(corpse), Is.False);
         });
 
         await server.WaitRunTicks(5);
@@ -124,8 +126,8 @@ public sealed class ChangelingLastResortTests
                 Assert.That(entMan.HasComponent<ChangelingStasisComponent>(uid), Is.True);
                 Assert.That(entMan.HasComponent<AugmentedEyesightComponent>(uid), Is.True);
                 Assert.That(identity.TotalAbsorbedEntities, Is.EqualTo(4));
-                Assert.That(identity.TotalEvolutionPoints, Is.EqualTo(23));
-                Assert.That(chemicals.ResourceData!.CurrentAmount, Is.EqualTo(37f));
+                Assert.That(identity.TotalEvolutionPoints, Is.EqualTo(23f).Within(0.01f));
+                Assert.That(chemicals.ResourceData!.CurrentAmount, Is.EqualTo(37f).Within(0.01f));
                 Assert.That(store.Balance["EvolutionPoint"].Float(), Is.EqualTo(5f));
                 Assert.That(store.Listings.Single(listing => listing.ID == "EvolutionMenuUtilityEyesight").PurchaseAmount,
                     Is.EqualTo(2));

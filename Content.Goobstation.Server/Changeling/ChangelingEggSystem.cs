@@ -54,6 +54,8 @@ public sealed class ChangelingEggSystem : EntitySystem
         EnsureComp<MindContainerComponent>(newUid);
         _mind.TransferTo(comp.LingMind, newUid);
 
+        comp.LingComponents.Clear();
+        RemComp<ChangelingEggComponent>(uid);
         _bodySystem.GibBody(uid);
     }
 }
