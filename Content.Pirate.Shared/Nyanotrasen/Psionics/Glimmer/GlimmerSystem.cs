@@ -25,6 +25,11 @@ namespace Content.Shared.Psionics.Glimmer
                 RaiseNetworkEvent(new GlimmerChangedEvent(_glimmer));
             }
         }
+
+        /// <summary>
+        /// Pirate - The maximum possible glimmer value, used to normalize the current glimmer.
+        /// </summary>
+        public int MaxGlimmer => 1000;
         private bool _enabled;
         public override void Initialize()
         {
@@ -32,6 +37,10 @@ namespace Content.Shared.Psionics.Glimmer
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             _enabled = _cfg.GetCVar(PirateVars.GlimmerEnabled);
             _cfg.OnValueChanged(PirateVars.GlimmerEnabled, value => _enabled = value, true);
+
+            // Pirate - Keep the client-side glimmer value in sync so client prediction (e.g. xenoarch glimmer display) is accurate.
+            // The server never receives its own RaiseNetworkEvent, so this only affects the client.
+            SubscribeNetworkEvent<GlimmerChangedEvent>(ev => _glimmer = ev.Glimmer);
         }
 
         private void Reset(RoundRestartCleanupEvent args)

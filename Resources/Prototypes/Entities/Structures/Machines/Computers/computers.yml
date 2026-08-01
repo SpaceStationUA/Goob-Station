@@ -557,6 +557,7 @@
       state: generic_panel_open
   - type: ResearchClient
   - type: AnalysisConsole
+  - type: AnalysisConsoleGlimmer # Pirate - xenoarchaeology glimmer (DeltaV Acceleration PR #74)
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired

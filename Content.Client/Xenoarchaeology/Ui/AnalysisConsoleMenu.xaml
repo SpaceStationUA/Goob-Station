@@ -34,6 +34,7 @@ SPDX-License-Identifier: MIT
                         </ScrollContainer>
                         <Control MinHeight="5"/>
                         <RichTextLabel Name="ExtractionSumLabel" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                        <RichTextLabel Name="GlimmerSumLabel" VerticalAlignment="Bottom" HorizontalAlignment="Left"/> <!-- Pirate - Glimmer/Artifact Interactions -->
                     </BoxContainer>
                 </PanelContainer>
             </BoxContainer>

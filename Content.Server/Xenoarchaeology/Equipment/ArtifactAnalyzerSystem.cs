@@ -3,6 +3,7 @@ using Content.Server.Xenoarchaeology.Artifact;
 using Content.Shared.Popups;
 using Content.Shared.Xenoarchaeology.Equipment;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
+using Content.Shared._Pirate.Xenoarchaeology.Systems; // Pirate - glimmer/artifact interaction
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Xenoarchaeology.Equipment;
@@ -43,9 +44,14 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         if (sumResearch <= 0)
             return;
 
+        // Pirate - Begin: glimmer/artifact interactions
+        var ev = new GetGlimmerModifiedResearchEvent(sumResearch, updateGlimmer: true);
+        RaiseLocalEvent(ent, ref ev);
+        sumResearch += ev.BonusResearch;
+        // Pirate - End
+
         _research.ModifyServerPoints(server.Value, sumResearch, serverComponent);
         _audio.PlayPvs(ent.Comp.ExtractSound, artifact.Value);
         _popup.PopupEntity(Loc.GetString("analyzer-artifact-extract-popup"), artifact.Value, PopupType.Large);
     }
 }
-
