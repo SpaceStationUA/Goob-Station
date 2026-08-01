@@ -1,6 +1,6 @@
 - type: gameMap
   id: PiramideTP
-  mapName: 'Piramide Island'
+  mapName: 'Piramide Station'
   mapPath: /Maps/_Pirate/piramide.yml
   minPlayers: 0
   maxPlayers: 55
