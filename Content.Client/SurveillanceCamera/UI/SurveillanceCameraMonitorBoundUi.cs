@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Client.Eye;
-using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
 using Content.Shared.SurveillanceCamera;
 using Robust.Client.UserInterface;
 
@@ -35,17 +34,9 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         _window.SubnetRefresh += OnSubnetRefresh;
         _window.CameraSwitchTimer += OnCameraSwitchTimer;
         _window.CameraDisconnect += OnCameraDisconnect;
-        _window.ZLevelSelected += OnZLevelSelected; // Pirate: multiz
 
         _window.SetEntity(Owner); // Goobstation
     }
-
-    #region Pirate: multiz
-    private void OnZLevelSelected(NetEntity? grid, int depth)
-    {
-        SendMessage(new CEZMonitoringConsoleLevelSelectedMessage(grid, depth));
-    }
-    #endregion
 
     private void OnCameraSelected(string address)
     {
@@ -87,7 +78,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
         if (active == null)
         {
-            _window.UpdateState(null, null, cast.ActiveAddress, cast.Cameras, cast.MobileCameras, monitor, monitorCoords); // Pirate: multiz
+            _window.UpdateState(null, cast.ActiveAddress, cast.Cameras, cast.MobileCameras, monitor, monitorCoords); // Goobstation
 
             if (_currentCamera != null)
             {
@@ -112,7 +103,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
             if (EntMan.TryGetComponent<EyeComponent>(active, out var eye))
             {
-                _window.UpdateState(eye.Eye, active, cast.ActiveAddress, cast.Cameras, cast.MobileCameras, monitor, monitorCoords); // Pirate: multiz
+                _window.UpdateState(eye.Eye, cast.ActiveAddress, cast.Cameras, cast.MobileCameras, monitor, monitorCoords); // Goobstation
             }
         }
     }

@@ -120,55 +120,47 @@ public sealed partial class ShuttleConsoleSystem
 
         var shuttleUid = _xformQuery.GetComponent(consoleUid.Value).GridUid;
 
-        if (shuttleUid == null) // Pirate: multiz
+        if (!TryComp(shuttleUid, out ShuttleComponent? shuttleComp))
             return;
 
-        #region Pirate: multiz
-        // Resolve deck consoles through root shuttle FTL state.
-        var selectedShuttleUid = shuttleUid.Value;
-        var actualShuttleUid = _shuttle.ResolveFTLShuttle(selectedShuttleUid);
-
-        if (!TryComp(actualShuttleUid, out ShuttleComponent? actualShuttleComp))
-            return;
-
-        if (actualShuttleComp.Enabled == false)
+        if (shuttleComp.Enabled == false)
             return;
 
         // Check shuttle can even FTL
-        if (!_shuttle.CanFTL(actualShuttleUid, out _))
+        if (!_shuttle.CanFTL(shuttleUid.Value, out var reason))
+        {
+            // TODO: Session popup
             return;
+        }
 
-        if (_ztravel.IsTraversing(actualShuttleUid))
+        // Check shuttle can FTL to this target.
+        if (!_shuttle.CanFTLTo(shuttleUid.Value, targetMap, ent))
+        {
             return;
+        }
 
         List<ShuttleExclusionObject>? exclusions = null;
         GetExclusions(ref exclusions);
 
-        if (!TryComp(actualShuttleUid, out PhysicsComponent? shuttlePhysics))
+        if (!_shuttle.FTLFree(shuttleUid.Value, targetCoordinates, targetAngle, exclusions))
+        {
             return;
+        }
+
+        if (!TryComp(shuttleUid.Value, out PhysicsComponent? shuttlePhysics))
+        {
+            return;
+        }
 
         // Client sends the "adjusted" coordinates and we adjust it back to get the actual transform coordinates.
         var adjustedCoordinates = targetCoordinates.Offset(targetAngle.RotateVec(-shuttlePhysics.LocalCenter));
-        var actualTargetCoordinates = _shuttle.ResolveFTLTargetCoordinates(selectedShuttleUid, adjustedCoordinates);
-        var actualTargetMap = _transform.GetMapId(actualTargetCoordinates);
-        var selectedMapId = _xformQuery.GetComponent(selectedShuttleUid).MapID;
-        // Use the requested target map; resolved coordinates can land back on the root.
-        var allowResolvedSameMap = selectedShuttleUid != actualShuttleUid && selectedMapId != targetMap;
-
-        // Check shuttle can FTL to this target.
-        if (!_shuttle.CanFTLTo(actualShuttleUid, actualTargetMap, ent))
-            return;
-
-        if (!_shuttle.FTLFree(actualShuttleUid, actualTargetCoordinates, targetAngle, exclusions, allowSameMap: allowResolvedSameMap))
-            return;
-        #endregion
 
         var tagEv = new FTLTagEvent();
-        RaiseLocalEvent(actualShuttleUid, ref tagEv); // Pirate: multiz
+        RaiseLocalEvent(shuttleUid.Value, ref tagEv);
 
         var ev = new ShuttleConsoleFTLTravelStartEvent(ent.Owner);
         RaiseLocalEvent(ref ev);
 
-        _shuttle.FTLToCoordinates(actualShuttleUid, actualShuttleComp, actualTargetCoordinates, targetAngle); // Pirate: multiz
+        _shuttle.FTLToCoordinates(shuttleUid.Value, shuttleComp, adjustedCoordinates, targetAngle);
     }
 }

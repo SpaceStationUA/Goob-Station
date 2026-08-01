@@ -63,11 +63,4 @@ public sealed partial class FTLComponent : Component
 
     [DataField]
     public EntityUid? TravelStream;
-
-    #region Pirate: multiz
-    /// <summary>
-    /// Active looping travel audio streams spawned for linked peer grids.
-    /// </summary>
-    public List<EntityUid>? ZPeerTravelStreams;
-    #endregion Pirate: multiz
 }

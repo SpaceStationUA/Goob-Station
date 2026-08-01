@@ -40,8 +40,6 @@ using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-using Content.Server._Pirate.ZLevels.Spawning; // Pirate: multiz
-
 namespace Content.Server.Shuttles.Systems;
 
 /// <summary>
@@ -66,7 +64,6 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly CEZLevelFloorGridsSystem _floorGrids = default!; // Pirate: multiz
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
 
     private EntityQuery<PendingClockInComponent> _pendingQuery;
@@ -230,7 +227,7 @@ public sealed class ArrivalsSystem : EntitySystem
 
             if (component.FirstRun)
             {
-                var station = _floorGrids.GetStationDefaultGrid(component.Station); // Pirate: multiz
+                var station = _station.GetLargestGrid(component.Station);
                 sourceMap = station == null ? null : Transform(station.Value)?.MapUid;
                 arrivalsDelay += RoundStartFTLDuration;
                 component.FirstRun = false;
@@ -515,8 +512,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 // Go to station
                 else
                 {
-                    var targetGrid = _floorGrids.FindStationFloorWithPriorityDock(comp.Station, "DockArrivals") // Pirate: multiz
-                        ?? _floorGrids.GetStationDefaultGrid(comp.Station); // Pirate: multiz
+                    var targetGrid = _station.GetLargestGrid(comp.Station);
 
                     if (targetGrid != null)
                         _shuttles.FTLToDock(uid, shuttle, targetGrid.Value);

@@ -12,7 +12,6 @@ public sealed class RenderedGridImage<T> where T : unmanaged, IPixel<T>
 {
     public Image<T> Image;
     public Vector2 Offset { get; set; } = Vector2.Zero;
-    public Vector2 WorldBottomLeft { get; set; } = Vector2.Zero; // Pirate: multiz
     public EntityUid? GridUid { get; set; }
 
     public RenderedGridImage(Image<T> image)

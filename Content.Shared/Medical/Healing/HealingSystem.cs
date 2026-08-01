@@ -18,6 +18,8 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
 
+using Content.Shared._Pirate.Medical.LimbFixation; // Pirate
+
 // Shitmed Change
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas.Components;
@@ -371,15 +373,25 @@ public sealed class HealingSystem : EntitySystem
             // Create parts to go over queue: targetted part -> head -> torso -> groin -> everything else
             // Iterate over the parts in the predefined order until we run out of parts or run out of healing
             var woundablesQueue = new Queue<EntityUid>();
-            woundablesQueue.Enqueue(targetedWoundable);
-            for (var i = 0; i < _partHealingOrder.Length; i++)
+            // Pirate: restore function before treating the part or spreading its healing.
+            if (HasComp<LimbFixationDamageComponent>(targetedWoundable)
+                || HasComp<LimbFixationDisabledComponent>(targetedWoundable))
             {
-                var (partType, symmetry) = _bodySystem.ConvertTargetBodyPart(_partHealingOrder[i]);
-                var targetedBodyPart = _bodySystem.GetBodyChildrenOfType(ent, partType, comp, symmetry).ToList().FirstOrDefault();
-                if (targetedBodyPart.Id == targetedWoundable)
-                    continue;
-                woundablesQueue.Enqueue(targetedBodyPart.Id);
+                leftoverHealAndTrauma = true;
             }
+            else
+            {
+                woundablesQueue.Enqueue(targetedWoundable);
+                for (var i = 0; i < _partHealingOrder.Length; i++)
+                {
+                    var (partType, symmetry) = _bodySystem.ConvertTargetBodyPart(_partHealingOrder[i]);
+                    var targetedBodyPart = _bodySystem.GetBodyChildrenOfType(ent, partType, comp, symmetry).ToList().FirstOrDefault();
+                    if (targetedBodyPart.Id == targetedWoundable)
+                        continue;
+                    woundablesQueue.Enqueue(targetedBodyPart.Id);
+                }
+            }
+
             while (woundablesQueue.Count > 0 && healingLeft.GetTotal() < 0.0)
             {
                 canHeal = true;

@@ -8,10 +8,3 @@
   - type: Item
     size: Ginormous # no storage insertion visuals
   - type: VirtualItem
-  #region Pirate: multiz
-  # Hand/slot-held marker, never loose on a grid. Skip grid traversal so spawning one while
-  # its holder is mid-move (e.g. crossing z-levels while pulling) doesn't trip the re-entrant
-  # grid-traversal guard ("handle movement of VIRTUAL ITEM while moving ...").
-  - type: Transform
-    gridTraversal: false
-  #endregion Pirate: multiz

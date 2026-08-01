@@ -35,7 +35,6 @@
   - type: Examiner
   - type: ContentEye
     maxZoom: 1.2, 1.2
-  - type: CEZLevelGhostMover # Pirate: multiz
   - type: Speech
     enabled: false
   - type: PointLight
@@ -63,11 +62,11 @@
   - type: Visibility
     layer: 2 #ghost vis layer
 
-# Pirate: multiz - shared base for hovering cosmic mobs
 - type: entity
-  abstract: true # Pirate: multiz - shared movement base
   parent: [ BaseSimpleMob ]
-  id: BaseMobCosmicAscended # Pirate: multiz - shared movement base
+  id: MobCosmicAstralAscended
+  name: astral ascended
+  description: Transcendant, ascendant.
   components:
   - type: Puller
     needsHands: false
@@ -86,12 +85,17 @@
         - FlyingMobMask
         layer:
         - FlyingMobLayer
+  - type: Sprite
+    sprite: _DV/CosmicCult/Mobs/astralform.rsi
+    layers:
+    - state: effect-underlay
+      shader: unshaded
+    - state: ascended-body
+      shader: unshaded
   - type: Physics
     bodyStatus: InAir
   - type: NoSlip
   - type: CanMoveInAir
-  - type: MovementIgnoreGravity # Pirate: multiz - fly in zero gravity
-  - type: CEZLevelPhysicsExempt # Pirate: multiz - prevent falling through openings
   - type: Eye
     drawFov: true
   - type: ContentEye
@@ -120,27 +124,11 @@
        reverseWhenFinished: true
 
 - type: entity
-  parent: BaseMobCosmicAscended # Pirate: multiz - inherit z-level flight
-  id: MobCosmicAstralAscended
-  name: astral ascended
-  description: Transcendant, ascendant.
-  components:
-  - type: Sprite
-    sprite: _DV/CosmicCult/Mobs/astralform.rsi
-    layers:
-    - state: effect-underlay
-      shader: unshaded
-    - state: ascended-body
-      shader: unshaded
-  - type: CEZLevelGhostMover # Pirate: multiz - unrestricted z-movement
-
-- type: entity
-  parent: BaseMobCosmicAscended # Pirate: multiz - inherit z-level flight
+  parent: MobCosmicAstralAscended
   id: MobCosmicCustodian
   name: malign custodian
   description: An abomination wrought of malign mass. It floats with a weightless, unnerving grace.
   components:
-  - type: CEZLevelContextualMover # Pirate: multiz - openings-only z-movement
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 3
@@ -163,12 +151,11 @@
         BaseUnshaded: dead_unshaded
 
 - type: entity
-  parent: BaseMobCosmicAscended # Pirate: multiz - inherit z-level flight
+  parent: MobCosmicAstralAscended
   id: MobCosmicOracle
   name: malign oracle
   description: An abomination wrought of malign mass. Its gaze seeks relentlessly.
   components:
-  - type: CEZLevelContextualMover # Pirate: multiz - openings-only z-movement
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 3
@@ -191,12 +178,11 @@
         BaseUnshaded: dead_unshaded
 
 - type: entity
-  parent: BaseMobCosmicAscended # Pirate: multiz - inherit z-level flight
+  parent: MobCosmicAstralAscended
   id: MobCosmicLodestar
   name: malign lodestar
   description: An abomination wrought of malign mass. A searing light glimmers within.
   components:
-  - type: CEZLevelContextualMover # Pirate: multiz - openings-only z-movement
   - type: Sprite
     sprite: _DV/CosmicCult/Mobs/lodestar.rsi
     layers:

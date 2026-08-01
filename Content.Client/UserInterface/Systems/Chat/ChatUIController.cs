@@ -454,32 +454,16 @@ public sealed partial class ChatUIController : UIController
 
     private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
     {
-        if (!TryResolveChatSenderEntity(msg, out var ent)) // Pirate: multiz
-            return; // Pirate: multiz
+        var ent = EntityManager.GetEntity(msg.SenderEntity);
+
+        if (!EntityManager.EntityExists(ent))
+        {
+            _sawmill.Debug("Got local chat message with invalid sender entity: {0}", msg.SenderEntity);
+            return;
+        }
 
         EnqueueSpeechBubble(ent, msg, speechType);
     }
-
-    #region Pirate: multiz
-    private bool TryResolveChatSenderEntity(ChatMessage msg, out EntityUid ent)
-    {
-        ent = EntityUid.Invalid;
-
-        if (msg.SenderEntity == NetEntity.Invalid)
-            return false;
-
-        if (!EntityManager.TryGetEntity(msg.SenderEntity, out EntityUid? resolved) ||
-            resolved == null ||
-            !EntityManager.EntityExists(resolved.Value))
-        {
-            _sawmill.Debug("Got chat message with invalid sender entity: {0}", msg.SenderEntity);
-            return false;
-        }
-
-        ent = resolved.Value;
-        return true;
-    }
-    #endregion
 
     private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
     {
@@ -898,10 +882,9 @@ public sealed partial class ChatUIController : UIController
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
         // color the name unless it's something like "the old man"
-        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled && // Pirate: multiz
-            TryResolveChatSenderEntity(msg, out var grammarUid)) // Pirate: multiz
+        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled)
         {
-            var grammar = _ent.GetComponentOrNull<GrammarComponent>(grammarUid); // Pirate: multiz
+            var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
             if (grammar != null && grammar.ProperNoun == true)
                 msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
         }
