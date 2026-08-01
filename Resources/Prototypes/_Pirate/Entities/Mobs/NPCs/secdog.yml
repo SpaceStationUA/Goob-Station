@@ -4,8 +4,8 @@
   parent: SimpleMobBase
   abstract: true
   id: MobSecDogBase
-  name: "службовий пес"
-  description: "Кумедно, але ця свиня насправді собака."
+  name: security dog
+  description: Funnily enough, this pig is actually a dog.
   components:
   - type: GhostRole
     makeSentient: true

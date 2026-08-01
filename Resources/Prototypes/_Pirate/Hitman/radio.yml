@@ -9,8 +9,8 @@
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeyTraffic
-  name: "ключ зв'язку диспетчерської"
-  description: "Ключ шифрування каналу космічного руху."
+  name: traffic control encryption key
+  description: An encryption key for the space traffic control channel.
   components:
   - type: EncryptionKey
     channels:
