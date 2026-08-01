@@ -4,6 +4,7 @@
   id: Origin
   mapName: 'Оріждин'
   mapPath: /Maps/_Goobstation/origin.yml
+  mapPreview: PirateMapPreviewOrigin # Pirate - map vote preview
   minPlayers: 50
   maxPlayers: 85
   stations:

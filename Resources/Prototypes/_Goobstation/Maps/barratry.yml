@@ -4,6 +4,7 @@
   id: Barratry
   mapName: 'Баратрія'
   mapPath: /Maps/_Goobstation/barratry.yml
+  mapPreview: PirateMapPreviewBarratry # Pirate - map vote preview
   minPlayers: 30
   maxPlayers: 60
   stations:

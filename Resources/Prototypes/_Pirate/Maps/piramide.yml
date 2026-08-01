@@ -2,6 +2,8 @@
   id: PiramideTP
   mapName: 'Piramide Station'
   mapPath: /Maps/_Pirate/piramide.yml
+  mapIcon: /Textures/Structures/Wallmounts/flags.rsi/pirate_flag.png
+  mapPreview: PirateMapPreviewPiramideTP
   minPlayers: 0
   maxPlayers: 55
   stations:

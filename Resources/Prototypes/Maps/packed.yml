@@ -4,6 +4,7 @@
   id: Packed
   mapName: 'Пакед'
   mapPath: /Maps/_Goobstation/packed.yml # Goobstation
+  mapPreview: PirateMapPreviewPacked # Pirate - map vote preview
   minPlayers: 7
   maxPlayers: 35
   stations:
