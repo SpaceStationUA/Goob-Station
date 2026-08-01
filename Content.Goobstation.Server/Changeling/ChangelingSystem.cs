@@ -725,9 +725,9 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
                 RestoreResourceData(resourceData, biomass.ResourceData);
                 Dirty(uid, biomass);
                 break;
-            case StoreComponent store when listings != null:
-                RestoreListings(store, listings);
-                Dirty(uid, store);
+            case StoreComponent restoredStore when listings != null:
+                RestoreListings(restoredStore, listings);
+                Dirty(uid, restoredStore);
                 break;
         }
     }
