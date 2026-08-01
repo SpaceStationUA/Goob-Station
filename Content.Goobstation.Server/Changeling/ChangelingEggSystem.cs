@@ -33,13 +33,13 @@ public sealed class ChangelingEggSystem : EntitySystem
 
     public void Cycle(EntityUid uid, ChangelingEggComponent comp)
     {
-        if (comp.active == false)
+        if (!comp.Active)
         {
-            comp.active = true;
+            comp.Active = true;
             return;
         }
 
-        if (TerminatingOrDeleted(comp.lingMind))
+        if (TerminatingOrDeleted(comp.LingMind))
         {
             _bodySystem.GibBody(uid);
             return;
@@ -47,12 +47,12 @@ public sealed class ChangelingEggSystem : EntitySystem
 
         var newUid = Spawn("MobMonkey", Transform(uid).Coordinates);
 
+        // Pirate: initialize the complete body before attaching a connected or reconnecting player.
+        foreach (var component in comp.LingComponents)
+            _changeling.RestoreLastResortComponent(newUid, component);
+
         EnsureComp<MindContainerComponent>(newUid);
-        _mind.TransferTo(comp.lingMind, newUid);
-
-        EnsureComp<ChangelingIdentityComponent>(newUid);
-
-        EntityManager.AddComponent(newUid, comp.lingStore);
+        _mind.TransferTo(comp.LingMind, newUid);
 
         _bodySystem.GibBody(uid);
     }
