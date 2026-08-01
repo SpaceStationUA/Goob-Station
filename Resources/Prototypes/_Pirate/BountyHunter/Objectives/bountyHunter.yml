@@ -13,7 +13,7 @@
 - type: entity
   parent: [BaseKillObjective, BaseBountyHunterObjective]
   id: BountyHunterKillRandomAntagObjective
-  description: You don't know who wants them or why, and you don't care. You'll be paid more if they're alive, as long as they end up on your shuttle.
+  description: "Ви не знаєте, хто її замовив і навіщо, та вам байдуже. За живу ціль заплатять більше, якщо вона опиниться на вашому шатлі."
   components:
   - type: TargetObjective
     title: objective-condition-kill-person-title
@@ -27,8 +27,8 @@
 - type: entity
   parent: [BaseBountyHunterObjective, BaseSurviveObjective]
   id: BountyHunterSurviveObjective
-  name: Survive
-  description: You can't get paid if you die.
+  name: "Вижити"
+  description: "Мертвим не платять."
   components:
   - type: Objective
     icon:

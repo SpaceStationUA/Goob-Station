@@ -2,8 +2,8 @@
 - type: entity
   parent: ToolboxThief
   id: BountyHunterGear
-  name: bounty hunter toolbox
-  description: An assortment of contraband you've collected over your career, some more illegal than others.
+  name: "ящик мисливця за головами"
+  description: "Набір контрабанди, яку ви зібрали за свою кар'єру; деякі речі незаконніші за інші."
   components:
   - type: ThiefUndeterminedBackpack
     maxSelectedSets: 2
@@ -25,8 +25,8 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesBountyHunterGlasses
-  name: bounty hunter glasses
-  description: High-tech sunglasses that provide flash immunity and thermal vision.
+  name: "окуляри мисливця за головами"
+  description: "Високотехнологічні сонцезахисні окуляри, що забезпечують імунітет до спалахів і тепловий зір."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Eyes/Glasses/bountyhunterglasses.rsi
@@ -44,8 +44,8 @@
 - type: entity
   parent: ReinforcementRadio
   id: ReinforcementRadioBountyHunterCyborg
-  name: reclaimed cyborg reinforcement radio
-  description: Call in a rebuilt cyborg, kitted out with all the latest tech!
+  name: "радіо підкріплення переробленого кіборга"
+  description: "Викличте перебудованого кіборга, оснащеного найновішими технологіями!"
   components:
     - type: GhostRole
       name: ghost-role-information-bounty-hunter-cyborg-name
@@ -59,10 +59,10 @@
       prototype: PlayerBorgBountyHunter
 
 - type: entity
-  name: disabler
+  name: "дизейблер"
   parent: [ WeaponDisablerPractice, BaseMajorContraband ]
   id: WeaponBorgDisabler
-  description: A disabler modified to slowly recharge off a cyborg's internal battery.
+  description: "Дизейблер, модифікований для повільного перезаряджання від внутрішньої батареї кіборга."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -80,10 +80,10 @@
     autoRechargeRate: 5
 
 - type: entity
-  name: stun baton
+  name: "електрошокова палиця"
   parent: [BaseItem, BaseMajorContraband]
   id: WeaponBorgStunBaton
-  description: An internally-stored implement capable of safely incapacitating any criminal, modified to self-charge at the cost of battery life.
+  description: "Пристрій із внутрішнім зберіганням, здатний безпечно знерухомити будь-якого злочинця; модифікований для самозаряджання ціною заряду батареї."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -149,7 +149,7 @@
 - type: entity
   id: BorgModuleDisabler
   parent: [ BaseBorgModule, BaseProviderBorgModule, BaseMajorContraband ]
-  name: disabler cyborg module
+  name: "модуль дизейблера кіборга"
   components:
   - type: Sprite
     layers:
@@ -167,8 +167,8 @@
 - type: entity
   parent: [ ClothingOuterHardsuitBase, BaseMajorContraband ]
   id: ClothingOuterHardsuitMercenary
-  name: mercenary hardsuit
-  description: A stylish hardsuit lined with lightweight armor-plating.
+  name: "скафандр найманця"
+  description: "Стильний скафандр із легкою бронею."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/OuterClothing/Hardsuits/bounty_merc.rsi
@@ -203,8 +203,8 @@
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadHardsuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitMercenary
-  name: mercenary hardsuit helmet
-  description: A stylish helmet lined with lightweight armor-plating.
+  name: "шолом скафандра найманця"
+  description: "Стильний шолом із легкою бронею."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hardsuits/bounty_merc.rsi
@@ -229,8 +229,8 @@
 - type: entity
   parent: [ClothingShoesBootsMagBase, BaseJetpack, BaseMajorContraband]
   id: ClothingShoesBootsMagRocket
-  name: rocket magboots
-  description: Custom-built magnetic boots with integrated thrusters. Can hold 0.75 L of gas.
+  name: "ракетні магнітні чоботи"
+  description: "Спеціально виготовлені магнітні чоботи з вбудованими рушіями. Містять 0.75 л газу."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Shoes/Boots/bountyhuntermagboots.rsi
@@ -259,10 +259,10 @@
 
 # Damaged Laser Pistol
 - type: entity
-  name: dilapidated laser pistol
+  name: "занедбаний лазерний пістолет"
   parent: [BaseWeaponBatterySmall, BaseMajorContraband]
   id: WeaponBountyHunterLaser
-  description: A worn-down laser pistol that's clearly seen a lot of use. The battery has been damaged.
+  description: "Зношений лазерний пістолет, який явно багато використовували. Батарею пошкоджено."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Lasers/bountyhunterantiquelaser.rsi # Pirate
@@ -293,8 +293,8 @@
 - type: entity
   parent: ReinforcementRadio
   id: ReinforcementRadioBountyHunterParrot
-  name: pirate parrot reinforcement radio
-  description: YARGH!
+  name: "радіо підкріплення пірата-папуги"
+  description: "ЙАРР!"
   components:
     - type: GhostRole
       name: ghost-role-information-bounty-hunter-parrot-name
@@ -334,7 +334,7 @@
 # Weapon recall implant
 - type: entity
   id: RecallImplanter
-  name: recall implanter
+  name: "імплантер повернення"
   parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
@@ -343,8 +343,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: RecallImplant
-  name: recall implant
-  description: This implant lets the user mark a weapon then call it to their hand at will.
+  name: "імплант повернення"
+  description: "Цей імплант дозволяє позначити зброю, а потім за бажанням викликати її до руки."
   categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
@@ -352,11 +352,11 @@
 
 # Chloral and Mute Toxin medipens
 - type: entity
-  name: emergency medipen
+  name: "аварійний медіпен"
   parent: ChemicalMedipen
   id: ChloralAutoInjector
   suffix: Chloral Hydrate
-  description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine and tranexamic acid.
+  description: "Швидкий і безпечний спосіб стабілізувати пацієнтів у критичному стані для персоналу без поглиблених медичних знань. Обережно: епінефрином і транексамовою кислотою легко передозуватися."
   components:
   - type: Item
     inhandVisuals:
@@ -393,11 +393,11 @@
           Quantity: 15
 
 - type: entity
-  name: emergency medipen
+  name: "аварійний медіпен"
   parent: ChemicalMedipen
   id: MuteAutoInjector
   suffix: Mute Toxin
-  description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine and tranexamic acid.
+  description: "Швидкий і безпечний спосіб стабілізувати пацієнтів у критичному стані для персоналу без поглиблених медичних знань. Обережно: епінефрином і транексамовою кислотою легко передозуватися."
   components:
   - type: Item
     inhandVisuals:
@@ -439,8 +439,8 @@
 - type: entity
   parent: [ BaseItem, BaseMajorContraband ]
   id: ChloralInjectorBox
-  name: sedative injector box
-  description: A small box containing a chloral hydrate injector disguised as an emergency medipen. Packaging disintegrates when opened, leaving no evidence behind.
+  name: "коробка ін'єкторів заспокійливого"
+  description: "Невелика коробка з ін'єктором хлоралгідрату, замаскованим під аварійний медіпен. Упаковка розпадається після відкриття, не залишаючи доказів."
   components:
   - type: Item
     size: Tiny
@@ -456,8 +456,8 @@
 - type: entity
   parent: [ BaseItem, BaseMajorContraband ]
   id: MuteInjectorBox
-  name: mute injector box
-  description: A small box containing a mute toxin injector disguised as an emergency medipen. Packaging disintegrates when opened, leaving no evidence behind.
+  name: "коробка ін'єкторів токсину німоти"
+  description: "Невелика коробка з ін'єктором токсину німоти, замаскованим під аварійний медіпен. Упаковка розпадається після відкриття, не залишаючи доказів."
   components:
   - type: Item
     size: Tiny
@@ -473,8 +473,8 @@
 - type: entity
   parent: PhoneInstrument
   id: PhoneInstrumentBountyHunter
-  name: old phone
-  description: For freelancers to call their anonymous employer.
+  name: "старий телефон"
+  description: "Для фрилансерів, щоб телефонувати своєму анонімному роботодавцю."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Fun/tanphone.rsi
