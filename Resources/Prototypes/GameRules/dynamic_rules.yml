@@ -57,6 +57,13 @@
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
+        - id: SiliconLiberation # Pirate: SELF
+          prob: 0.15
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 5
       # Midround rules
       - !type:GroupSelector
         conditions:

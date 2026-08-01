@@ -63,6 +63,7 @@
   - SurveillanceWirelessCameraAnchoredCircuitboard
   - SurveillanceCameraMonitorCircuitboard
   - SurveillanceWirelessCameraMonitorCircuitboard
+  - SurveillanceWirelessCameraHandheld # Pirate: SELF
   - TelecomServerCircuitboard
   - HolopadMachineCircuitboard
   - BladeServerRackMachineCircuitboard # Pirate
