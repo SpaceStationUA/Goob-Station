@@ -89433,6 +89433,10 @@ entities:
         1061:
           position: 1,0
           _rotation: South
+    - type: UserInterface
+      actors:
+        enum.StorageUiKey.Key:
+        - invalid
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -159735,6 +159739,9 @@ entities:
     - type: Transform
       pos: 6.5,26.5
       parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
   - uid: 40736
     components:
     - type: Transform
@@ -160788,6 +160795,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 7.5,23.5
       parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
     - type: SignalSwitch
       state: True
     - type: DeviceLinkSource
