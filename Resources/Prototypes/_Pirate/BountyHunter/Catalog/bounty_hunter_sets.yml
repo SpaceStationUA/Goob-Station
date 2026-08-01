@@ -1,4 +1,4 @@
-- type: thiefBackpackSet
+- type: selectableSet
   id: BountyHunterRaider
   name: bounty-hunter-category-raider-name
   description: bounty-hunter-category-raider-description
@@ -14,7 +14,7 @@
   - FreedomImplanter
   - ClothingOuterVestWebMerc
 
-- type: thiefBackpackSet
+- type: selectableSet
   id: BountyHunterHardsuit
   name: bounty-hunter-category-hardsuit-name
   description: bounty-hunter-category-hardsuit-description
@@ -27,7 +27,7 @@
   - HandHeldMassScanner
   - WeaponGrapplingGun
 
-- type: thiefBackpackSet
+- type: selectableSet
   id: BountyHunterDisguise
   name: bounty-hunter-category-infiltrator-name
   description: bounty-hunter-category-infiltrator-description
@@ -45,7 +45,7 @@
   - ChloralInjectorBox
 
 
-- type: thiefBackpackSet
+- type: selectableSet
   id: BountyHunterSubverter
   name: bounty-hunter-category-subverter-name
   description: bounty-hunter-category-subverter-description
@@ -64,7 +64,7 @@
   - TraitorCodePaper
 
 
-- type: thiefBackpackSet
+- type: selectableSet
   id: BountyHunterRoboticist
   name: bounty-hunter-category-roboticist-name
   description: bounty-hunter-category-roboticist-description
@@ -76,7 +76,7 @@
   - BorgModuleSyndicateWeapon
 
 
-- type: thiefBackpackSet
+- type: selectableSet
   id: BountyHunterSamurai
   name: bounty-hunter-category-samurai-name
   description: bounty-hunter-category-samurai-description
@@ -92,7 +92,7 @@
   - ScramImplanter
   - RecallImplanter
 
-- type: thiefBackpackSet
+- type: selectableSet
   id: BountyHunterSyndie
   name: bounty-hunter-category-syndie-name
   description: bounty-hunter-category-syndie-description
@@ -109,7 +109,7 @@
   - ClothingMaskGasSyndicate
   - AccessBreaker
 
-- type: thiefBackpackSet
+- type: selectableSet
   id: BountyHunterCaptain
   name: bounty-hunter-category-captain-name
   description: bounty-hunter-category-captain-description
@@ -124,7 +124,7 @@
   - ClothingUniformJumpsuitCaptain
   - ClothingHeadHatCapcap
 
-- type: thiefBackpackSet
+- type: selectableSet
   id: BountyHunterClown
   name: bounty-hunter-category-clown-name
   description: bounty-hunter-category-clown-description
@@ -150,7 +150,7 @@
   - FoodPieBananaCream
   - BikeHorn
 
-- type: thiefBackpackSet
+- type: selectableSet
   id: BountyHunterPirate
   name: bounty-hunter-category-pirate-name
   description: bounty-hunter-category-pirate-description

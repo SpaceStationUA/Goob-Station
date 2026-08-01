@@ -5,9 +5,8 @@
   name: bounty hunter toolbox
   description: An assortment of contraband you've collected over your career, some more illegal than others.
   components:
-  - type: ThiefUndeterminedBackpack
+  - type: SetSelector
     maxSelectedSets: 2
-    toolName: bounty-hunter-backpack-window-title
     possibleSets:
     - BountyHunterRaider
     - BountyHunterHardsuit
@@ -20,6 +19,9 @@
     - BountyHunterCaptain
     - BountyHunterClown
     spawnedStoragePrototype: ClothingBackpackDuffelCargo
+    spawnedStorageContainer: storagebase
+    approveSound:
+      collection: storageRustle
 
 # Bounty Hunter Thermal + Flash Protection Glasses
 - type: entity
