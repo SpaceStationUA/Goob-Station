@@ -848,7 +848,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 6
-  - type: ZombieImmune #Goob -  zombie nerf
   - type: Sprite
     drawdepth: Mobs
     layers:
