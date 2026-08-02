@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 - files: ["hitman_briefing_piano_between.ogg"]
   license: "CC-BY-3.0"
   copyright: "Created by Kevin Macleod."
@@ -12,3 +16,8 @@
   license: "CC-BY-3.0"
   copyright: "Conflee (Discord)"
   source: "https://discord.com/invite/HyDhPwAmUq"
+
+- files: ["asakimbriefing.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "By kotobdev (GitHub) for DeltaV"
+  source: "https://github.com/DeltaV-Station/Delta-v/blob/226d164f9843c65095b86e5d8927a2e7c65cd893/Resources/Audio/_DV/Ambience/Antag/asakimbriefing.ogg"

@@ -18,4 +18,8 @@ public sealed partial class TypingIndicatorComponent : Component
     /// </summary>
     [DataField("proto"), AutoNetworkedField]
     public ProtoId<TypingIndicatorPrototype> TypingIndicatorPrototype = "default";
+
+    // Pirate: temporary indicator used by interfaces such as the AAC tablet.
+    [DataField, AutoNetworkedField]
+    public ProtoId<TypingIndicatorPrototype>? TypingIndicatorOverridePrototype;
 }
