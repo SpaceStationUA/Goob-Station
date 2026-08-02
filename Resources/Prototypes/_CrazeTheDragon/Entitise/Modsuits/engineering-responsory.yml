@@ -1,0 +1,12 @@
+﻿# SPDX-FileCopyrightText: 2026 CrazeTheDragon
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: ClothingModsuitResponsoryEngineering
+  id: ClothingModsuitResponsoryEngineeringLS
+  components:
+  - type: Storage
+    maxItemSize: Ginormous
+    grid:
+    - 0,0,14,5

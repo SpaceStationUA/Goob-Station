@@ -1,0 +1,68 @@
+﻿# SPDX-FileCopyrightText: 2026 CrazeTheDragon
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: IDCardStandard
+  id: CentComOperatorIDCard
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idcentcom
+  - type: Item
+    heldPrefix: blue
+  - type: PresetIdCard
+    job: CentralCommandOCC
+
+- type: entity
+  parent: IDCardStandard
+  id: CentComRepresentativeIDCard
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idcentcom
+  - type: Item
+    heldPrefix: blue
+  - type: PresetIdCard
+    job: CentralCommandRep
+
+- type: entity
+  parent: IDCardStandard
+  id: CentComInspecotrIDCard
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idcentcom
+  - type: Item
+    heldPrefix: blue
+  - type: PresetIdCard
+    job: CentralCommandIns
+
+- type: entity
+  parent: IDCardStandard
+  id: CentComLSIDCard
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idcentcom
+  - type: Item
+    heldPrefix: blue
+  - type: PresetIdCard
+    job: CentralCommandLS
+
+- type: entity
+  parent: IDCardStandard
+  id: CentComHeadCentComIDCard
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+    - state: idcentcom
+  - type: Item
+    heldPrefix: blue
+  - type: PresetIdCard
+    job: CentralCommandHeadCentCom

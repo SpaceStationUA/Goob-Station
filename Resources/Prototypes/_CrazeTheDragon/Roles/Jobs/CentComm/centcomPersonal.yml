@@ -1,0 +1,333 @@
+﻿# SPDX-FileCopyrightText: 2026 CrazeTheDragon
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+#CentCom Operator start
+- type: job
+  id: CentralCommandOCC
+  name: job-name-centcomocc
+  description: job-description-centcomocc
+  playTimeTracker: JobCentralCommandOperator
+  setPreference: false
+  startingGear: CentComGearOCC
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  requirements:
+  - !type:AgeRequirement
+    requiredAge: 21
+  - !type:SpeciesRequirement
+    inverted: true
+    species:
+    - Felinid
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  - NanotrasenRepresentative
+  - BlueshieldOfficer
+  special:
+  - !type:AddImplantSpecial
+    implants: [ StypticStimulatorImplant, NutrimentPumpImplant, MindShieldImplant, RadioImplantCentcomm, FreedomImplant, DeathRattleImplantCentcomm, BluespaceLifelineImplant, TrackingImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: CommandStaff
+
+- type: startingGear
+  id: CentComGearOCC
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    shoes: ClothingShoesBootsCombatFilled
+    outerClothing: ClothingOuterJacketCentralCommandIke
+    head: ClothingHeadHatCentcomcap
+    eyes: ClothingEyesGlassesCentComm
+    gloves: ClothingHandsGlovesHeavyGoldenTrim
+    back: ClothingBackpackSatchelLeather
+    neck: ClothingNeckCloakCentComPoncho #OCC dont need executive access because they sitting on CentCom station only.
+    id: CCOparetorPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltHolsterFilledCentComm
+    pocket1: BoxFolderCentComThreePapers
+    pocket2: PenCentcom
+  storage:
+    back:
+    - BoxFolderCentComClipboardThreePapers
+    - DeterrentCaseFilled
+    - WeaponDisablerAdvanced
+    - WeaponPulsePistol
+#CentCom Operator end
+
+#CentCom Representative start
+- type: job
+  id: CentralCommandRep
+  name: job-name-centcomrep
+  description: job-description-centcomrep
+  playTimeTracker: JobCentralCommandRepresentative
+  setPreference: false
+  startingGear: CentComGearRep
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  requirements:
+  - !type:AgeRequirement
+    requiredAge: 21
+  - !type:SpeciesRequirement
+    inverted: true
+    species:
+    - Felinid
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  - NanotrasenRepresentative
+  - BlueshieldOfficer
+  special:
+  - !type:AddImplantSpecial
+    implants: [ StypticStimulatorImplant, NutrimentPumpImplant, MindShieldImplant, RadioImplantCentcomm, FreedomImplant, DeathRattleImplantCentcomm, BluespaceLifelineImplant, TrackingImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: CommandStaff
+
+- type: startingGear
+  id: CentComGearRep
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficial
+    shoes: ClothingShoesBootsCombatFilled
+    outerClothing: ClothingOuterArmourInvisibleChameleon
+    head: ClothingHeadHatCentcomcap
+    eyes: ClothingEyesGlassesCentComm
+    gloves: ClothingHandsGlovesHeavyGoldenTrim
+    back: ClothingModsuitCorporate
+    neck: ExecutiveIDCard
+    id: CCRepresentativePDA
+    ears: ClothingHeadsetCentCom
+    belt: ClothingBeltHolsterFilledCentComm
+    pocket1: WeaponPulsePistol
+    pocket2: WeaponDisablerAdvanced
+  storage:
+    back:
+    - BoxFolderCentComClipboardThreePapers
+    - DeterrentCaseFilled
+    - BoxFolderCentComThreePapers
+    - PenCentcom
+    - RubberStampCentcom
+    - HandheldFaxOfficial
+    - ClothingMaskGasCentcom
+    - JawsOfLife
+    - PowerDrill
+    - WelderExperimental
+    - Multitool
+    - CentralCommandBusinessCard
+    - CentralCommandBusinessCard
+    - CentralCommandBusinessCard
+    - CentralCommandBusinessCard
+    - OxygenTankFilled
+    - MedkitCombatFilled
+#CentCom Representative end
+
+#CentCom Inspector Start
+- type: job
+  id: CentralCommandIns
+  name: job-name-centcomins
+  description: job-description-centcomrins
+  playTimeTracker: JobCentralCommandInspector
+  setPreference: false
+  startingGear: CentComGearIns
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  requirements:
+  - !type:AgeRequirement
+    requiredAge: 21
+  - !type:SpeciesRequirement
+    inverted: true
+    species:
+    - Felinid
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  - NanotrasenRepresentative
+  - BlueshieldOfficer
+  special:
+  - !type:AddImplantSpecial
+    implants: [ StypticStimulatorImplant, NutrimentPumpImplant, MindShieldImplant, RadioImplantCentcomm, FreedomImplant, DeathRattleImplantCentcomm, BluespaceLifelineImplant, TrackingImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: CommandStaff
+
+- type: startingGear
+  id: CentComGearIns
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitNavyGold
+    shoes: ClothingShoesBootsCombatFilled
+    outerClothing: ClothingOuterArmourInvisibleChameleon
+    head: ClothingHeadHatBeretNavyOfficer
+    eyes: ClothingEyesGlassesCentComm
+    gloves: ClothingHandsGlovesHeavyGoldenTrim
+    back: ClothingModsuitCorporate
+    neck: ExecutiveIDCard
+    id: CCInspectorPDA
+    ears: ClothingHeadsetCentCom
+    belt: ClothingBeltHolsterFilledCentComm
+    pocket1: WeaponPulsePistol
+    pocket2: WeaponDisablerAdvanced
+  storage:
+    back:
+    - BoxFolderCentComClipboardThreePapers
+    - DeterrentCaseFilled
+    - BoxFolderCentComThreePapers
+    - PenCentcom
+    - RubberStampCentcom
+    - HandheldFaxOfficial
+    - ClothingMaskGasCentcom
+    - JawsOfLife
+    - PowerDrill
+    - WelderExperimental
+    - Multitool
+    - CentralCommandBusinessCard
+    - CentralCommandBusinessCard
+    - CentralCommandBusinessCard
+    - CentralCommandBusinessCard
+    - OxygenTankFilled
+    - MedkitCombatFilled
+#CentCom Inspector end
+
+#CentCom Lead Specialist start
+- type: job
+  id: CentralCommandLS
+  name: job-name-centcomls
+  description: job-description-centcomrls
+  playTimeTracker: JobCentralCommandLS
+  setPreference: false
+  startingGear: CentComGearLS
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  requirements:
+  - !type:AgeRequirement
+    requiredAge: 21
+  - !type:SpeciesRequirement
+    inverted: true
+    species:
+    - Felinid
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  - NanotrasenRepresentative
+  - BlueshieldOfficer
+  special:
+  - !type:AddImplantSpecial
+    implants: [ StypticStimulatorImplant, NutrimentPumpImplant, MindShieldImplant, RadioImplantCentcomm, FreedomImplant, DeathRattleImplantCentcomm, BluespaceLifelineImplant, TrackingImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: CommandStaff
+
+- type: startingGear
+  id: CentComGearLS
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTEngineer
+    shoes: ClothingShoesBootsMagAdv
+    outerClothing: ClothingOuterHardsuitEngineeringWhite
+    eyes: ClothingEyesGlassesCentComm
+    gloves: ClothingHandsGlovesAtmosInsulated
+    back: ClothingModsuitResponsoryEngineeringLS
+    neck: ExecutiveIDCard
+    id: CCLSPDA
+    ears: ClothingHeadsetCentCom
+    belt: ClothingBeltChiefEngineerFilled
+    pocket1: WeaponPulsePistol
+    pocket2: WeaponDisablerAdvanced
+  storage:
+    back:
+    - DeterrentCaseFilled
+    - ClothingMaskGasCentcom
+    - OxygenTankFilled
+    - MedkitCombatFilled
+    - AccessConfigurator
+    - JetpackVoidFilled
+    - BaseHandheldStationMapPowerCe
+    - RCDRecharging
+    - RPDRecharging
+    - RPLDRecharging
+#CentCom Lead Specialist end
+
+#CentCom Head CC start
+- type: job
+  id: CentralCommandHeadCentCom
+  name: job-name-centcomhead
+  description: job-description-centcomhead
+  playTimeTracker: JobCentralCommandHeadCentCom
+  setPreference: false
+  startingGear: CentComGearHead
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  requirements:
+  - !type:AgeRequirement
+    requiredAge: 21
+  - !type:SpeciesRequirement
+    inverted: true
+    species:
+    - Felinid
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  - NanotrasenRepresentative
+  - BlueshieldOfficer
+  special:
+  - !type:AddImplantSpecial
+    implants: [ StypticStimulatorImplant, NutrimentPumpImplant, MindShieldImplant, RadioImplantCentcomm, FreedomImplant, DeathRattleImplantCentcomm, BluespaceLifelineImplant, TrackingImplant, LibrarianTranslatorImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: AntagImmune
+    - type: CommandStaff
+
+- type: startingGear
+  id: CentComGearHead
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentralCommandLiaison
+    shoes: ClothingShoesBootsLaceup
+    outerClothing: ClothingOuterArmourInvisibleChameleon
+    head: ClothingHeadHatCentcomcap
+    eyes: ClothingEyesGlassesCentComm
+    gloves: ClothingHandsGlovesHeavyGoldenTrim
+    back: ClothingModsuitCorporate
+    neck: ClothingNeckCloakHighCommand
+    id: CCRepresentativePDA
+    ears: ClothingHeadsetCentCom
+    belt: ClothingBeltHolsterFilledCentComm
+    pocket1: HyperFlash
+    pocket2: TelescopicBatonAdvanced
+  storage:
+    back:
+    - BoxFolderCentComClipboardThreePapers
+    - DeterrentCaseFilled
+    - BoxFolderCentComThreePapers
+    - PenCentcom
+    - RubberStampCentcom
+    - HandheldFaxOfficial
+    - ClothingMaskGasCentcom
+    - JawsOfLife
+    - PowerDrill
+    - WelderExperimental
+    - Multitool
+    - CentralCommandBusinessCard
+    - CentralCommandBusinessCard
+    - CentralCommandBusinessCard
+    - CentralCommandBusinessCard
+    - OxygenTankFilled
+    - MedkitCombatFilled
+    - WeaponPulsePistol
+    - WeaponDisablerAdvanced
+    - ExecutiveIDCard
+    - CigPackBlueshield
+    - CentcommStimpack
+    - CentCommFlippo
+#CentCom Head CC end

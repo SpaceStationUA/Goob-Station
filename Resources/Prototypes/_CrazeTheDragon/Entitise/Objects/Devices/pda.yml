@@ -1,0 +1,38 @@
+﻿# SPDX-FileCopyrightText: 2026 CrazeTheDragon
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: CentcomPDA
+  id: CCOparetorPDA
+  components:
+  - type: Pda
+    id: CentComOperatorIDCard
+
+- type: entity
+  parent: CentcomPDA
+  id: CCRepresentativePDA
+  components:
+  - type: Pda
+    id: CentComRepresentativeIDCard
+
+- type: entity
+  parent: CentcomPDA
+  id: CCInspectorPDA
+  components:
+  - type: Pda
+    id: CentComInspecotrIDCard
+
+- type: entity
+  parent: CentcomPDA
+  id: CCLSPDA
+  components:
+  - type: Pda
+    id: CentComLSIDCard
+
+- type: entity
+  parent: CentcomPDA
+  id: HeadCCPDA
+  components:
+  - type: Pda
+    id: CentComHeadCentComIDCard
