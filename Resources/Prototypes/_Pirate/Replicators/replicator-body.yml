@@ -13,6 +13,10 @@
       - left arm # Pirate: BodyPart slots now use arm symmetry names.
     left arm:
       part: LeftArmBorg
+      connections:
+      - left hand
+    left hand:
+      part: LeftHandHuman # Pirate: Shitmed requires a separate hand part.
 
 - type: body
   id: Replicator2
@@ -26,8 +30,16 @@
       - right arm
     left arm:
       part: LeftArmBorg
+      connections:
+      - left hand
     right arm:
       part: RightArmBorg
+      connections:
+      - right hand
+    left hand:
+      part: LeftHandHuman # Pirate: Shitmed requires separate hand parts.
+    right hand:
+      part: RightHandHuman
 
 - type: body
   id: Replicator3
@@ -40,3 +52,7 @@
       - left arm # Pirate: BodyPart slots now use arm symmetry names.
     left arm:
       part: LeftArmBorg
+      connections:
+      - left hand
+    left hand:
+      part: LeftHandHuman # Pirate: Shitmed requires a separate hand part.
