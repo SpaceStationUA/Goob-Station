@@ -33,7 +33,7 @@
   id: OmegaTP
   mapName: 'Омега'
   mapPath: /Maps/_Pirate/omega.yml
-  mapIcon: /Textures/Structures/Wallmounts/flags.rsi/pirate_flag.png
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
   mapPreview: PirateMapPreviewOmegaTP
   minPlayers: 0
   maxPlayers: 40

@@ -37,7 +37,7 @@
   id: KettleTP
   mapName: 'Чайник'
   mapPath: /Maps/_Pirate/kettle.yml
-  mapIcon: /Textures/Structures/Wallmounts/flags.rsi/pirate_flag.png
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
   mapPreview: PirateMapPreviewKettleTP
   minPlayers: 35
   stations:
