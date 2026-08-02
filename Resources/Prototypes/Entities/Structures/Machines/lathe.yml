@@ -628,6 +628,7 @@
     # Einstein Engines Packs
     - SyringeCase
     - PirateStraightjacketLatheRecipePackStatic # Pirate - tweak recipes | Add straint-jacket to med and sec fabs.
+    - MedicalEquipmentStaticPirate # Pirate: AAC tablet.
     dynamicPacks:
     - Chemistry
     # Goobstation Packs

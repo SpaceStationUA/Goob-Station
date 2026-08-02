@@ -82,6 +82,14 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
             return;
         }
 
+        // Pirate: preserve the AAC override while changing to idle, and clear it on submit/timeout.
+        if (ev.State != TypingIndicatorState.Idle)
+        {
+            var component = EnsureComp<TypingIndicatorComponent>(uid.Value);
+            component.TypingIndicatorOverridePrototype = ev.OverrideIndicator;
+            Dirty(uid.Value, component);
+        }
+
         SetTypingIndicatorState(uid.Value, ev.State);
     }
 

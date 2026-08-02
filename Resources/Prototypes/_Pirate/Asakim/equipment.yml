@@ -1,0 +1,157 @@
+# SPDX-FileCopyrightText: 2025 Arcticular1
+# SPDX-FileCopyrightText: 2025 Avalon
+# SPDX-FileCopyrightText: 2025 Coenx-flex
+# SPDX-FileCopyrightText: 2025 Cojoke
+# SPDX-FileCopyrightText: 2025 HungryCuban
+# SPDX-FileCopyrightText: 2025 Ilya246
+# SPDX-FileCopyrightText: 2025 UnicornOnLSD
+# SPDX-FileCopyrightText: 2025 core-mene
+# SPDX-FileCopyrightText: 2025 starch
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: [ClothingHeadHardsuitBase, ShowMedicalIcons]
+  id: ClothingHelmetHardsuitAsakim
+  name: combat harness helmet
+  description: Part of an advanced combat harness.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Asakim/Clothing/Head/Hardsuits/asakim.rsi
+  - type: Clothing
+    sprite: _Pirate/Asakim/Clothing/Head/Hardsuits/asakim.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.85
+        Heat: 0.8
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 15
+  - type: ThermalVision
+    pulseTime: 1
+    isEquipment: true
+    toggleAction: PulseThermalVision
+  - type: RadarConsole
+    maxRange: 1024
+    followEntity: true
+  - type: ActivatableUI
+    key: enum.RadarConsoleUiKey.Key
+    singleUser: true
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitAsakim
+  name: combat harness
+  description: An advanced combat harness. Incredibly rare, and practically alien in technology compared to modern hardsuits. Once equipped, the armor binds itself with the wearer and cannot be removed without external release.
+  suffix: SelfUnremovable
+  components:
+  - type: Sprite
+    sprite: _Pirate/Asakim/Clothing/OuterClothing/Hardsuits/asakim.rsi
+  - type: Clothing
+    sprite: _Pirate/Asakim/Clothing/OuterClothing/Hardsuits/asakim.rsi
+    stripDelay: 60
+    equipDelay: 5
+  - type: SelfUnremovableClothing
+  - type: PressureProtection
+    highPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.35
+  - type: FireProtection
+    reduction: 0.7
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10
+    slots: OUTERCLOTHING
+  - type: StaticPrice
+    price: 50000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.85
+        Piercing: 0.4
+        Heat: 0.6
+        Radiation: 0
+        Shock: 0.8
+        Poison: 0.4
+        Caustic: 0.4
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    requiredSlot: outerclothing
+    clothingPrototypes:
+      head: ClothingHelmetHardsuitAsakim
+  - type: StaminaResistance
+    damageCoefficient: 0.4
+  - type: DamageOnUnequip
+    unequipDamage:
+      types:
+        Blunt: 20
+        Slash: 30
+        Piercing: 40
+    unequipSound: /Audio/_Pirate/Effects/breakingbones.ogg
+    screamOnUnequip: true
+
+- type: entity
+  parent: ClothingOuterHardsuitAsakim
+  id: ClothingOuterHardsuitAsakimUnremoveable
+  description: An advanced combat harness. Incredibly rare, and practically alien in technology compared to modern hardsuits. Once equipped, the armor binds itself with the wearer and cannot be removed without external release. This one is fully bound to a warrior, and will take a long time to remove.
+  suffix: 120 stripDelay
+  components:
+  - type: Clothing
+    stripDelay: 120
+    equipDelay: 120
+
+- type: entity
+  parent: ClothingShoesBootsMagAdv
+  id: ClothingShoesBootsMagAsakim
+  name: combat magboots
+  description: State-of-the-art magnetic boots made for combat with advanced harnesses.
+  components:
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.35
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackAdvancedTactical
+  name: advanced tactical backpack
+  description: A spacious backpack with lots of pockets.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertleader.rsi
+  - type: Storage
+    grid:
+    - 0,0,10,3
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAsakim
+  name: combat jumpsuit
+  description: A comfortable and flexible jumpsuit, designed to be worn under a hardsuit.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ninja.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ninja.rsi

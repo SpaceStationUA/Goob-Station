@@ -1,0 +1,59 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: body
+  id: Asakim
+  name: asakim
+  root: chest
+  slots:
+    head:
+      part: HeadAsakim
+      connections:
+      - chest
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganAsakimEyes
+    chest:
+      part: ChestAsakim
+      connections:
+      - groin
+      - right arm
+      - left arm
+      - head
+      organs:
+        heart: OrganAnimalHeart
+        lungs: OrganHumanLungs
+    groin:
+      part: GroinAsakim
+      connections:
+      - right leg
+      - left leg
+      organs:
+        stomach: OrganReptilianStomach
+        liver: OrganAnimalLiver
+        kidneys: OrganHumanKidneys
+    right arm:
+      part: RightArmAsakim
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmAsakim
+      connections:
+      - left hand
+    right hand:
+      part: RightHandAsakim
+    left hand:
+      part: LeftHandAsakim
+    right leg:
+      part: RightLegAsakim
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegAsakim
+      connections:
+      - left foot
+    right foot:
+      part: RightFootAsakim
+    left foot:
+      part: LeftFootAsakim

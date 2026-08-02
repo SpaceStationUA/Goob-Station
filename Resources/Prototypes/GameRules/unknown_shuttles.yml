@@ -28,6 +28,7 @@
     children:
     - id: UnknownShuttleSyndieEvacPod
     - id: HitmanShuttle # Pirate
+    - id: AsakimShuttle # Pirate
 
 - type: entityTable
   id: UnknownShuttlesHostileTable
