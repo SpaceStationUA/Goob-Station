@@ -86,6 +86,8 @@
   - type: LagCompensation
   - type: StationAiWhitelist
   - type: NoFTL
+  - type: CEZLevelPhysicsExempt # Pirate: multiz
+  - type: CEZViewSource # Pirate: multiz
 
 - type: entity
   id: CyberdeckAiUiProxy

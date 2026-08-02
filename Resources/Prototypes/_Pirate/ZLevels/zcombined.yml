@@ -1,0 +1,6 @@
+# Resources/Prototypes/_Pirate/ZLevels/test_maps.yml
+- type: zMap
+  id: ZCombined
+  maps:
+  - /Maps/Test/ZTest0.yml  # depth 0
+  - /Maps/Test/ZTest1.yml  # depth 1

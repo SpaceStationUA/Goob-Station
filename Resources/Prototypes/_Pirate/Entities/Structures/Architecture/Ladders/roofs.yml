@@ -1,0 +1,80 @@
+- type: entity
+  id: CEZLevelsStairsRoofBase
+  name: roof tile
+  description: Roof tiles, for covering building roofs.
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent:
+  - CEZLevelStairsBase
+  - CEZLevelsStairsRoofBase
+  id: CEZLevelsStairsRoofRed
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Architecture/Ladders/roof_red.rsi
+
+- type: entity
+  parent:
+  - CEZLevelStairsCornerBase
+  - CEZLevelsStairsRoofBase
+  id: CEZLevelsStairsRoofRedCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Architecture/Ladders/roof_red.rsi
+
+- type: entity
+  parent:
+  - CEZLevelStairsCornerInnerBase
+  - CEZLevelsStairsRoofBase
+  id: CEZLevelsStairsRoofRedCornerInner
+  suffix: Inner Corner
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Architecture/Ladders/roof_red.rsi
+
+- type: entity
+  parent:
+  - CEZLevelStairsBase
+  - CEZLevelsStairsRoofBase
+  id: CEZLevelsStairsRoofGreen
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Architecture/Ladders/roof_green.rsi
+
+- type: entity
+  parent:
+  - CEZLevelStairsCornerBase
+  - CEZLevelsStairsRoofBase
+  id: CEZLevelsStairsRoofGreenCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Architecture/Ladders/roof_green.rsi
+
+- type: entity
+  parent:
+  - CEZLevelStairsCornerInnerBase
+  - CEZLevelsStairsRoofBase
+  id: CEZLevelsStairsRoofGreenCornerInner
+  suffix: Inner Corner
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Architecture/Ladders/roof_green.rsi

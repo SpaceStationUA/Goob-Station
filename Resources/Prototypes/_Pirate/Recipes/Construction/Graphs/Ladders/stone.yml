@@ -1,0 +1,46 @@
+- type: constructionGraph
+  id: CEZLevelStairsStone
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: CEZLevelStairsStone
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+
+    - node: CEZLevelStairsStone
+      entity: CEZLevelStairsStone
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+        - to: CEZLevelStairsStoneCorner
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: CEZLevelStairsStoneCorner
+      entity: CEZLevelStairsStoneCorner
+      edges:
+        - to: CEZLevelStairsStoneCornerInner
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: CEZLevelStairsStoneCornerInner
+      entity: CEZLevelStairsStoneCornerInner
+      edges:
+        - to: CEZLevelStairsStone
+          steps:
+            - tool: Prying
+              doAfter: 2

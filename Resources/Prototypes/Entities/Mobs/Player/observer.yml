@@ -90,6 +90,7 @@
         type: RevivalContractBoundUserInterface
         requireInputValidation: false
   - type: Sprinter # Goob Change
+  - type: CEZLevelGhostMover # Pirate: multiz
 
 # proto for player ghosts specifically
 - type: entity

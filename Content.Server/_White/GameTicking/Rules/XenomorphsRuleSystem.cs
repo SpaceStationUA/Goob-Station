@@ -44,6 +44,7 @@ public sealed class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRuleComponen
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly Content.Server._Pirate.ZLevels.Spawning.CEZLevelFloorGridsSystem _zFloors = default!; // Pirate: multiz
     [Dependency] private readonly AudioSystem _audioSystem = default!; // Goobstation - Play music on announcement
 
     public override void Initialize()
@@ -360,7 +361,7 @@ public sealed class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRuleComponen
         var stationGrids = new HashSet<EntityUid>();
         foreach (var station in _gameTicker.GetSpawnableStations())
         {
-            if (TryComp<StationDataComponent>(station, out var _) && _station.GetLargestGrid(station) is { } grid)
+            foreach (var grid in _zFloors.GetStationFloorGrids(station)) // Pirate: multiz
                 stationGrids.Add(grid);
         }
 

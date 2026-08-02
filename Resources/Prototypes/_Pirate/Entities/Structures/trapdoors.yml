@@ -1,0 +1,63 @@
+- type: entity
+  id: PirateTrapdoor
+  name: trapdoor
+  description: A wired floor mechanism that can open into the level below.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: FloorTiles
+    noRot: true
+    sprite: _Pirate/Structures/Trapdoors/trapdoor.rsi
+    layers:
+    - state: closed
+      map: [ "enum.PirateTrapdoorVisualLayers.Base" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PirateTrapdoorVisuals.State:
+        enum.PirateTrapdoorVisualLayers.Base:
+          True: { state: open }
+          False: { state: closed }
+  - type: PirateTrapdoor
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Toggle
+    - Trigger
+    - Open
+    - Close
+    - On
+    - Off
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      trapdoor:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        hard: false
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
+        density: 100
+
+- type: entity
+  parent: PirateTrapdoor
+  id: PirateTrapdoorOpen
+  suffix: Open
+  components:
+  - type: PirateTrapdoor
+    startsOpen: true
