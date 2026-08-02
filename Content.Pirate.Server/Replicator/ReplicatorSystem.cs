@@ -16,6 +16,8 @@ using Content.Pirate.Shared.SpawnedFromTracker;
 using Content.Shared.Actions;
 using Content.Shared.CombatMode;
 using Content.Shared.Emp;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
@@ -36,6 +38,7 @@ public sealed class ReplicatorSystem : EntitySystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -55,6 +58,7 @@ public sealed class ReplicatorSystem : EntitySystem
         SubscribeLocalEvent<ReplicatorComponent, ReplicatorSpawnNestActionEvent>(OnSpawnNestAction);
         SubscribeLocalEvent<ReplicatorComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<ReplicatorComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<ReplicatorComponent, EntityTerminatingEvent>(OnTerminating);
     }
 
     private void OnMindAdded(Entity<ReplicatorComponent> ent, ref MindAddedMessage args)
@@ -208,5 +212,13 @@ public sealed class ReplicatorSystem : EntitySystem
         args.Affected = true;
         args.Disabled = true;
         _stun.TryUpdateParalyzeDuration(ent, ent.Comp.EmpStunTime);
+    }
+
+    private void OnTerminating(Entity<ReplicatorComponent> ent, ref EntityTerminatingEvent args)
+    {
+        foreach (var held in _hands.EnumerateHeld(ent.Owner))
+        {
+            RemComp<UnremoveableComponent>(held);
+        }
     }
 }

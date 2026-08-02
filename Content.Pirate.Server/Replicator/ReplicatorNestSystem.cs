@@ -80,6 +80,7 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
         SubscribeLocalEvent<ReplicatorNestComponent, StepTriggeredOffEvent>(OnStepTriggered);
         SubscribeLocalEvent<ReplicatorNestFallingComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
         SubscribeLocalEvent<ReplicatorNestComponent, DestructionEventArgs>(OnDestroyed);
+        SubscribeLocalEvent<ReplicatorNestComponent, EntityTerminatingEvent>(OnTerminating);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
     }
 
@@ -206,7 +207,14 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
 
     private void OnDestroyed(Entity<ReplicatorNestComponent> ent, ref DestructionEventArgs args)
     {
+        ent.Comp.PreservePointsStorage = true;
         HandleDestruction(ent);
+    }
+
+    private void OnTerminating(Entity<ReplicatorNestComponent> ent, ref EntityTerminatingEvent args)
+    {
+        if (!ent.Comp.PreservePointsStorage && Exists(ent.Comp.PointsStorage))
+            QueueDel(ent.Comp.PointsStorage);
     }
 
     private void HandleDestruction(Entity<ReplicatorNestComponent> ent)

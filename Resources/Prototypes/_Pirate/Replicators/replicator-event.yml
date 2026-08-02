@@ -12,5 +12,7 @@
     duration: null
     minimumPlayers: 30
     maxOccurrences: 1
+  - type: GameRule
+    chaosScore: 600
   - type: RandomSpawnRule
     prototype: SpawnPointGhostReplicatorQueen

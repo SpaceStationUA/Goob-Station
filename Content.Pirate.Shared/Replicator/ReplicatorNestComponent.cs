@@ -153,6 +153,7 @@ public sealed partial class ReplicatorNestComponent : Component
     [DataField, AutoNetworkedField]
     public bool NeedsUpdate;
     public EntityUid PointsStorage;
+    public bool PreservePointsStorage;
 }
 
 [Serializable, NetSerializable]
