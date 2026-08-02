@@ -492,7 +492,12 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
                 continue;
 
             entConsole.AtmosPipeChunks = allChunks;
-            entConsole.AtmosDevices = GetAllAtmosDeviceNavMapData(gridUid); // Pirate: multiz
+            // Pirate: multiz - deliberately NOT refreshing AtmosDevices here. This runs once per
+            // rebuilt tile, and NodeGroupsRebuilt fires for every device in a rebuilt pipe net, so
+            // a full device rescan here is O(devices^2 * consoles) - that is what froze the server
+            // when pipes were built, unanchored or blown up on a large station. The device list is
+            // already maintained incrementally by InitializeAtmosMonitoringDevice, and a z-level
+            // selection change repopulates it through UpdateAtmosMonitoringConsoleGridData.
             Dirty(ent, entConsole);
         }
     }

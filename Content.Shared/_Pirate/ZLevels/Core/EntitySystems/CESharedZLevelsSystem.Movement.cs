@@ -2946,6 +2946,18 @@ public abstract partial class CESharedZLevelsSystem
             return true;
         }
 
+        // Pirate: multiz - the chasm fallback means "there is a hole here and no deck below to
+        // catch you". That only has meaning inside a z-network. On a plain single-level map there
+        // is no "below" at all, so a hole in the floor must never delete what is standing on it —
+        // otherwise e.g. an open trapdoor voids every entity sharing its tile.
+        if (!HasTraversalContext(Transform(ent)))
+        {
+            if (ZDebugEnabled)
+                DebugZ(ent, "downward transfer failed and chasm fallback skipped: no traversal context");
+
+            return false;
+        }
+
         //welp, that default Chasm behavior. Not really good, but ok for now.
         if (HasComp<ChasmFallingComponent>(ent))
         {
