@@ -1,8 +1,8 @@
 - type: entity
   parent: Rickenbacker4003Instrument
   id: Rickenbacker4003InstrumentBlack
-  name: Rickenbacker
-  description: Swinging this thing around makes your palms sting.
+  name: "Рікенбекер"
+  description: "Якщо розмахувати цим, долоні почнуть пекти."
   components:
   - type: Sprite
     sprite: _starcup/Objects/Fun/Instruments/rickenbacker_black.rsi
@@ -14,8 +14,8 @@
 - type: entity
   parent: Rickenbacker4003Instrument
   id: Rickenbacker4003InstrumentRed
-  name: Rickenbacker
-  description: It takes an idiot to do cool things. That's why it's cool. And this bass makes you feel cool.
+  name: "Рікенбекер"
+  description: "Лише дурень робить круті речі. Тому це круто. А цей бас змусить вас відчути себе крутим."
   components:
   - type: Sprite
     sprite: _starcup/Objects/Fun/Instruments/rickenbacker_red.rsi
@@ -27,8 +27,8 @@
 - type: entity
   parent: Rickenbacker4003Instrument
   id: Rickenbacker4003InstrumentPink
-  name: Rickenbacker
-  description: Amazing things can happen with this.
+  name: "Рікенбекер"
+  description: "З цим можуть траплятися дивовижні речі."
   components:
   - type: Sprite
     sprite: _starcup/Objects/Fun/Instruments/rickenbacker_pink.rsi
@@ -40,8 +40,8 @@
 - type: entity
   parent: Rickenbacker4003Instrument
   id: Rickenbacker4003InstrumentSlime
-  name: Rickenbacker
-  description: A well-loved instrument that smells faintly of candy.
+  name: "Рікенбекер"
+  description: "Улюблений інструмент, що ледь пахне цукерками."
   components:
   - type: Sprite
     sprite: _starcup/Objects/Fun/Instruments/glishenbacker.rsi
