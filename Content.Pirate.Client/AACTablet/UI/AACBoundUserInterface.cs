@@ -6,6 +6,7 @@ using Content.Client.Chat.TypingIndicator;
 using Content.Pirate.Shared.AACTablet;
 using Content.Pirate.Shared.QuickPhrase;
 using Content.Shared.Chat.TypingIndicator;
+using Content.Shared.Radio;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
@@ -32,15 +33,17 @@ public sealed class AACBoundUserInterface : BoundUserInterface
             _window.Close();
 
         _window = this.CreateWindow<AACWindow>();
-        _window.OnClose += Close;
+        _window.OnClose += OnSubmit;
         _window.PhraseButtonPressed += OnPhraseButtonPressed;
         _window.Typing += OnTyping;
         _window.SubmitPressed += OnSubmit;
     }
 
-    private void OnPhraseButtonPressed(List<ProtoId<QuickPhrasePrototype>> phraseId, string prefix)
+    private void OnPhraseButtonPressed(
+        List<ProtoId<QuickPhrasePrototype>> phraseId,
+        ProtoId<RadioChannelPrototype>? channel)
     {
-        SendMessage(new AACTabletSendPhraseMessage(phraseId, prefix));
+        SendMessage(new AACTabletSendPhraseMessage(phraseId, channel));
     }
 
     private void OnTyping()

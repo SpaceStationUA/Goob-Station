@@ -19,6 +19,7 @@ public sealed class SyllableObfuscationAccentSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<SyllableObfuscationAccentComponent, AccentGetEvent>(OnAccent);
     }
 
@@ -28,10 +29,17 @@ public sealed class SyllableObfuscationAccentSystem : EntitySystem
     }
 
     // stolen and slightly modified from EE: Content.Shared/_EinsteinEngines/Language/ObfuscationMethods.cs
-    public string ApplyReplacements(string message, string accent)
+    public string ApplyReplacements(string message, ProtoId<SyllableObfuscationAccentPrototype> accent)
     {
         if (!_proto.TryIndex<SyllableObfuscationAccentPrototype>(accent, out var prototype))
             return message;
+
+        if (prototype.Replacement.Count == 0
+            || prototype.MinSyllables < 0
+            || prototype.MinSyllables > prototype.MaxSyllables)
+        {
+            return message;
+        }
 
         StringBuilder builder = new();
 
@@ -96,8 +104,12 @@ public sealed class SyllableObfuscationAccentSystem : EntitySystem
     // EE function, doesn't use IRobustRandom for perf reasons, see Content.Shared/_EinsteinEngines/Language/Systems/SharedLanguageSystem.cs
     internal int PseudoRandomNumber(int seed, int min, int max)
     {
-        seed = seed ^ (_ticker.RoundId * 127);
-        var random = seed * 1103515245 + 12345;
-        return min + Math.Abs(random) % (max - min + 1);
+        if (min > max)
+            return min;
+
+        var mixedSeed = unchecked(seed ^ (_ticker.RoundId * 127));
+        var random = unchecked((uint) (mixedSeed * 1103515245 + 12345));
+        var range = (ulong) ((long) max - min + 1);
+        return (int) ((long) min + (long) (random % range));
     }
 }

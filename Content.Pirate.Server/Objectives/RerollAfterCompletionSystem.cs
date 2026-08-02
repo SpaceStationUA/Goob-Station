@@ -69,6 +69,9 @@ public sealed class RerollAfterCompletionSystem : EntitySystem
             // Create a new objective with the specified prototype.
             if (_objectives.TryCreateObjective(mind, mindComponent, component.RerollObjectivePrototype) is not { } newObjUid)
                 continue;
+
+            _mind.AddObjective(mind, mindComponent, newObjUid);
+
             if (component.RerollObjectiveMessage is null)
                 continue;
 
@@ -77,7 +80,7 @@ public sealed class RerollAfterCompletionSystem : EntitySystem
             // Check if this has a target component, and if so, get it's name for Localization.
             if (TryComp<TargetObjectiveComponent>(newObjUid, out var targetComp) && TryComp<MindComponent>(targetComp.Target, out var targetMindComp))
             {
-                var newTarget = targetMindComp.CharacterName ?? "Unknown";
+                var newTarget = targetMindComp.CharacterName ?? Loc.GetString("generic-unknown");
                 var targetJob = _job.MindTryGetJobName(targetComp.Target);
                 _popup.PopupEntity(Loc.GetString(component.RerollObjectiveMessage, ("targetName", newTarget), ("job", targetJob)), bodyUid, bodyUid, PopupType.Large);
             }
@@ -85,7 +88,6 @@ public sealed class RerollAfterCompletionSystem : EntitySystem
             {
                 _popup.PopupEntity(Loc.GetString(component.RerollObjectiveMessage), bodyUid, bodyUid, PopupType.Large);
             }
-            _mind.AddObjective(mind, mindComponent, newObjUid);
         }
     }
 

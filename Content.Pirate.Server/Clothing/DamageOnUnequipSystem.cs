@@ -33,7 +33,7 @@ public sealed class DamageOnUnequipSystem : SharedDamageOnUnequipSystem
     private void OnUnequip(Entity<DamageOnUnequipComponent> ent, ref ClothingGotUnequippedEvent args)
     {
         // terminating check to avoid evil exception. bit weird but it's how a similar issue was fixed upstream
-        if (ent.Comp.UnequipDamage == null || !TryComp<DamageableComponent>(args.Wearer, out var damageable) || MetaData(args.Wearer).EntityLifeStage >= EntityLifeStage.Terminating)
+        if (MetaData(args.Wearer).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
         _popup.PopupEntity(Loc.GetString("damage-on-unequip-finish", ("item", ent), ("wearer", args.Wearer)), ent, PopupType.LargeCaution);
@@ -47,6 +47,7 @@ public sealed class DamageOnUnequipSystem : SharedDamageOnUnequipSystem
             _jittering.DoJitter(args.Wearer, TimeSpan.FromSeconds(15), false);
         }
 
-        _damageable.TryChangeDamage(args.Wearer, ent.Comp.UnequipDamage, true, true, damageable);
+        if (ent.Comp.UnequipDamage != null && TryComp<DamageableComponent>(args.Wearer, out var damageable))
+            _damageable.TryChangeDamage(args.Wearer, ent.Comp.UnequipDamage, true, true, damageable);
     }
 }

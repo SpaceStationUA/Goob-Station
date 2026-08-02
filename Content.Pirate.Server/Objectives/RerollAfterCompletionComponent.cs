@@ -24,7 +24,6 @@ public sealed partial class RerollAfterCompletionComponent : Component
     /// Tracks a reference of the owner of this objective.
     /// From what I can see, there is no normaly way to get a mind from an objective, as they're usually passed together.
     /// </summary>
-    [DataField]
     public EntityUid MindUid = default!;
 
     /// <summary>

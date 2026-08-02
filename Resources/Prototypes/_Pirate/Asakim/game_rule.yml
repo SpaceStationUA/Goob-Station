@@ -21,7 +21,7 @@
       Hostile: 100
       Medical: 50
       Death: 50
-    eventType: HostilesSpawn
+    eventType: Neutral # Pirate: Asakim is a free agent, not universally hostile.
   - type: GameRule
     chaosScore: 100
   # Pirate: PrecognitionResult is unavailable in the local psionics implementation.

@@ -67,6 +67,20 @@ public sealed class AACTabletSystem : EntitySystem
         if (ent.Comp.NextPhrase > _timing.CurTime || message.PhraseIds.Count > MaxPhrases)
             return;
 
+        var availableChannels = GetAvailableChannels(message.Actor);
+        var prefix = SharedChatSystem.LocalPrefix.ToString();
+
+        if (message.Channel is { } channel)
+        {
+            if (!availableChannels.Contains(channel)
+                || !_prototype.Resolve(channel, out RadioChannelPrototype? channelPrototype))
+            {
+                return;
+            }
+
+            prefix = string.Concat(SharedChatSystem.RadioChannelPrefix, channelPrototype.KeyCode);
+        }
+
         var senderName = Identity.Entity(message.Actor, EntityManager);
         var speakerName = Loc.GetString("speech-name-relay",
             ("speaker", Name(ent)),
@@ -89,13 +103,13 @@ public sealed class AACTabletSystem : EntitySystem
 
         // Set the player's currently available channels before sending the message
         EnsureComp(ent, out IntrinsicRadioTransmitterComponent transmitter);
-        transmitter.Channels = GetAvailableChannels(message.Actor);
+        transmitter.Channels = availableChannels;
 
         // Pirate: save the message for logging.
         var messageToSend = string.Join(" ", _localisedPhrases);
 
         _chat.TrySendInGameICMessage(ent,
-            message.Prefix + messageToSend,
+            prefix + messageToSend,
             InGameICChatType.Speak,
             hideChat: false,
             nameOverride: speakerName);

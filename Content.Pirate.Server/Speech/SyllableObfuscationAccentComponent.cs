@@ -3,13 +3,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Pirate.Shared.Speech.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Server.Speech;
 
 [RegisterComponent]
 public sealed partial class SyllableObfuscationAccentComponent : Component
 {
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SyllableObfuscationAccentPrototype>), required: true)]
-    public string Accent = default!;
+    [DataField(required: true)]
+    public ProtoId<SyllableObfuscationAccentPrototype> Accent;
 }
