@@ -1,0 +1,11 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="Elevator"
+               SetSize="280 360"
+               MinSize="240 200">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="6">
+        <Label Name="StatusLabel" HorizontalAlignment="Center" Margin="0 0 0 6"/>
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Name="FloorList" Orientation="Vertical" HorizontalExpand="True"/>
+        </ScrollContainer>
+    </BoxContainer>
+</DefaultWindow>

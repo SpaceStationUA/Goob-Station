@@ -28,8 +28,15 @@
   name: air vent
   description: Has a valve and a pump attached to it.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers # Pirate: pipe layer placement
   components:
+    #region Pirate: pipe layer placement - let mappers place vents/scrubbers onto pipe layers 1-3
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: GasVentPump
+        Secondary: GasVentPumpAlt1
+        Tertiary: GasVentPumpAlt2
+    #endregion Pirate: pipe layer placement
     - type: VentCrawlerTube  # Goobstation - ventcrawl
       containerId: VentCrawlerTube
     - type: VentCrawlerEntry
@@ -94,8 +101,15 @@
   name: passive vent
   description: It's an open vent.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers # Pirate: pipe layer placement
   components:
+    #region Pirate: pipe layer placement - let mappers place vents/scrubbers onto pipe layers 1-3
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: GasPassiveVent
+        Secondary: GasPassiveVentAlt1
+        Tertiary: GasPassiveVentAlt2
+    #endregion Pirate: pipe layer placement
     - type: SubFloorHide
       visibleLayers:
       - enum.SubfloorLayers.FirstLayer
@@ -135,8 +149,15 @@
   name: air scrubber
   description: Has a valve and pump attached to it.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers # Pirate: pipe layer placement
   components:
+    #region Pirate: pipe layer placement - let mappers place vents/scrubbers onto pipe layers 1-3
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: GasVentScrubber
+        Secondary: GasVentScrubberAlt1
+        Tertiary: GasVentScrubberAlt2
+    #endregion Pirate: pipe layer placement
     - type: VentCrawlerTube # Goobstation - ventcrawl
       containerId: VentCrawlerTube
     - type: VentCrawlerEntry  # Goobstation - ventcrawl
@@ -201,8 +222,15 @@
   name: air injector
   description: Has a valve and pump attached to it.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers # Pirate: pipe layer placement
   components:
+    #region Pirate: pipe layer placement - let mappers place vents/scrubbers onto pipe layers 1-3
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: GasOutletInjector
+        Secondary: GasOutletInjectorAlt1
+        Tertiary: GasOutletInjectorAlt2
+    #endregion Pirate: pipe layer placement
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/outletinjector.rsi

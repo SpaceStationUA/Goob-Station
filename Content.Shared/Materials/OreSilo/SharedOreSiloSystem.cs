@@ -1,3 +1,5 @@
+using System.Numerics; // Pirate: multiz
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -13,6 +15,7 @@ public abstract class SharedOreSiloSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!; // Pirate: multiz - link across z-levels
 
     private EntityQuery<OreSiloClientComponent> _clientQuery;
 
@@ -165,6 +168,39 @@ public abstract class SharedOreSiloSystem : EntitySystem
         return GetLinkResult(silo, client) == OreSiloLinkResult.Success;
     }
 
+    #region Pirate: multiz - auto-link keyed clients across linked decks
+    /// <summary>Links an unlinked keyed client to a silo in the same z-network.</summary>
+    /// <remarks>Ignores power and range because transmission validates both.</remarks>
+    public bool TryAutoLinkClient(Entity<OreSiloClientComponent> client)
+    {
+        if (client.Comp.Silo != null || string.IsNullOrEmpty(client.Comp.SiloNetwork))
+            return false;
+
+        if (_transform.GetGrid(client.Owner) is not { } clientGrid)
+            return false;
+
+        var linkedGrids = _zLevels.GetLinkedGrids(clientGrid);
+
+        var query = EntityQueryEnumerator<OreSiloComponent, TransformComponent>();
+        while (query.MoveNext(out var siloUid, out var silo, out var siloXform))
+        {
+            if (silo.SiloNetwork != client.Comp.SiloNetwork)
+                continue;
+            if (siloXform.GridUid is not { } siloGrid || !linkedGrids.Contains(siloGrid))
+                continue;
+
+            silo.Clients.Add(client.Owner);
+            Dirty(siloUid, silo);
+            client.Comp.Silo = siloUid;
+            Dirty(client.Owner, client.Comp);
+            UpdateOreSiloUi((siloUid, silo));
+            return true;
+        }
+
+        return false;
+    }
+    #endregion
+
     private OreSiloLinkResult GetLinkResult(Entity<OreSiloComponent?, TransformComponent?> silo, EntityUid client)
     {
         if (!Resolve(silo, ref silo.Comp1, ref silo.Comp2))
@@ -173,13 +209,35 @@ public abstract class SharedOreSiloSystem : EntitySystem
         if (!_powerReceiver.IsPowered(silo.Owner))
             return OreSiloLinkResult.Unpowered;
 
-        if (_transform.GetGrid(client) != _transform.GetGrid(silo.Owner))
-            return OreSiloLinkResult.DifferentGrid;
+        var siloGrid = _transform.GetGrid(silo.Owner);
+        var clientGrid = _transform.GetGrid(client);
+
+        #region Pirate: multiz - link aligned peer grids
+        if (siloGrid != clientGrid)
+        {
+            if (siloGrid is not { } sg || clientGrid is not { } cg || !_zLevels.AreGridsLinked(sg, cg))
+                return OreSiloLinkResult.DifferentGrid;
+
+            // Compare local positions because peer decks use different maps.
+            if (!InFootprintRange(silo.Owner, client, sg, cg, silo.Comp1.Range))
+                return OreSiloLinkResult.OutOfRange;
+
+            return OreSiloLinkResult.Success;
+        }
+        #endregion
 
         if (!_transform.InRange((silo.Owner, silo.Comp2), client, silo.Comp1.Range))
             return OreSiloLinkResult.OutOfRange;
 
         return OreSiloLinkResult.Success;
+    }
+
+    // Pirate: multiz - compare horizontal positions across aligned peer grids.
+    private bool InFootprintRange(EntityUid silo, EntityUid client, EntityUid siloGrid, EntityUid clientGrid, float range)
+    {
+        var siloLocal = Vector2.Transform(_transform.GetWorldPosition(silo), _transform.GetInvWorldMatrix(siloGrid));
+        var clientLocal = Vector2.Transform(_transform.GetWorldPosition(client), _transform.GetInvWorldMatrix(clientGrid));
+        return (siloLocal - clientLocal).LengthSquared() < range * range;
     }
 
     // Pirate: surface server-side link rejection instead of silently ignoring the click.

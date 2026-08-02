@@ -51,6 +51,14 @@ shuttle-console-ftl-button = FTL
 shuttle-console-map-rebuild = Scan for objects
 shuttle-console-map-beacons = Show beacons
 
+# Pirate: multiz
+shuttle-console-ztravel-label = Change Floor
+shuttle-console-ztravel-state-Available = Available
+shuttle-console-ztravel-state-Starting = Ascending/Descending
+shuttle-console-ztravel-state-Cooldown = Stabilizing
+shuttle-console-ztravel-up = Ascend
+shuttle-console-ztravel-down = Descend
+
 shuttle-console-no-signal = No signal
 
 shuttle-console-map-objects = Sector objects

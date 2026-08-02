@@ -10,6 +10,14 @@ namespace Content.Shared.Shuttles.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class FTLMapComponent : Component
 {
+    #region Pirate: multiz
+    /// <summary>
+    /// Relative z-depth for this runtime FTL map.
+    /// </summary>
+    [AutoNetworkedField]
+    public int Depth;
+    #endregion
+
     /// <summary>
     /// Offset for FTLing shuttles so they don't overlap each other.
     /// </summary>
