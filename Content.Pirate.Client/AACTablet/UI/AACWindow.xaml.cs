@@ -134,11 +134,11 @@ public sealed partial class AACWindow : FancyWindow
         // take ALL phrases and turn them into tabs and groups, so the buttons are sorted and tabbed
         var sortedTabs = _phrases
             .GroupBy(p => p.Tab)
-            .OrderBy(g => Loc.GetString(g.Key), StringComparer.CurrentCultureIgnoreCase)
+            .OrderBy(g => Loc.GetString(g.Key))
             .ToDictionary(
                 g => g.Key,
                 g => g.GroupBy(p => p.Group)
-                    .OrderBy(gg => Loc.GetString(gg.Key), StringComparer.CurrentCultureIgnoreCase)
+                    .OrderBy(gg => Loc.GetString(gg.Key))
                     .ToDictionary(
                         gg => gg.Key,
                         gg => gg.OrderBy(p => Loc.GetString(p.Text)).ToList()

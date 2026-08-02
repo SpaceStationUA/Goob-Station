@@ -14,7 +14,8 @@
     outerClothing: ClothingOuterHardsuitAsakimUnremoveable
     shoes: ClothingShoesBootsMagAsakim
     pocket2: DoubleEmergencyOxygenTankFilled
-    belt: ClothingBeltSecurityWebbing
+    # Pirate: security webbing rejects the supplied tools; merc webbing has unrestricted storage.
+    belt: ClothingBeltMercWebbing
     suitStorage: OxygenTankFilled
   inhand:
   - WeaponRifleAsakimAutopulser
