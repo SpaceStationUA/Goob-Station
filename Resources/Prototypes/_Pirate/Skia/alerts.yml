@@ -1,0 +1,37 @@
+- type: alertCategory
+  id: SkiaLight
+
+- type: alert
+  id: SkiaLightLevelDark
+  category: SkiaLight
+  icons:
+  - sprite: /Textures/_Pirate/Skia/Interface/Alerts/light_level.rsi
+    state: dark
+  name: skia-alert-light-dark-name
+  description: skia-alert-light-dark-desc
+
+- type: alert
+  id: SkiaLightLevelNeutral
+  category: SkiaLight
+  icons:
+  - sprite: /Textures/_Pirate/Skia/Interface/Alerts/light_level.rsi
+    state: neutral
+  name: skia-alert-light-neutral-name
+  description: skia-alert-light-neutral-desc
+
+- type: alert
+  id: SkiaLightLevelBright
+  category: SkiaLight
+  icons:
+  - sprite: /Textures/_Pirate/Skia/Interface/Alerts/light_level.rsi
+    state: bright
+  name: skia-alert-light-bright-name
+  description: skia-alert-light-bright-desc
+
+- type: alert
+  id: SkiaResurrecting
+  icons:
+  - sprite: /Textures/_Pirate/Skia/Interface/Alerts/resurrecting.rsi
+    state: icon
+  name: skia-alert-resurrecting-name
+  description: skia-alert-resurrecting-desc

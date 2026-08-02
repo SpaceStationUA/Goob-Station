@@ -18,6 +18,9 @@
     iconStateSpent: glowstick_unlit
     litSound:
       path: /Audio/Items/Handcuffs/rope_breakout.ogg
+  - type: SkiaExpendableLight # Pirate: server-side values for Skia light reactions.
+    litRadius: 5.0
+    litEnergy: 3.0
   - type: Sprite
     sprite: Objects/Misc/glowstick.rsi
     layers:

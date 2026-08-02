@@ -49,6 +49,7 @@
     - id: BountyHunterSpawn # Pirate
       conditions:
       - !type:BountyHunterTargetCondition
+    - id: SkiaSpawn # Pirate
     - !type:NestedSelector
       tableId: DerelictBorgEventTable
 
