@@ -14,7 +14,7 @@
   components:
   - type: Puller
     needsHands: false
-    applySpeedModifier: false
+    # Pirate: current Puller API always applies its standard pulling modifier.
   - type: ZombieImmune
   - type: Replicator
   - type: NameIdentifier
@@ -66,10 +66,8 @@
   - type: ReplacementAccent
     accent: silicon
   - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: ActiveRadio
+  - type: CollectiveMind
+    defaultChannel: Binary
     channels:
     - Binary
   - type: Actions

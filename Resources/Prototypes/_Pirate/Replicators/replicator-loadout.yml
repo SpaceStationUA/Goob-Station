@@ -168,9 +168,11 @@
     sprite: _Pirate/Objects/Devices/pinpointer_replicator.rsi
     state: pinpointer-replicator
   - type: Pinpointer
-    component: ReplicatorNest
+    whitelist:
+      components:
+      - ReplicatorNest
     updateTargetName: true
-    activateImmediately: true
+    isActive: true
 
 - type: entity
   parent: PinpointerReplicator
