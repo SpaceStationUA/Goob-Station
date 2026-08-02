@@ -103,7 +103,9 @@ public sealed partial class AACWindow : FancyWindow
     }
 
     private ProtoId<RadioChannelPrototype>? Channel =>
-        RadioChannels.SelectedMetadata is ProtoId<RadioChannelPrototype> channel ? channel : null;
+        RadioChannels.SelectedMetadata is ProtoId<RadioChannelPrototype> channel
+            ? channel
+            : (ProtoId<RadioChannelPrototype>?) null;
 
     private void FilterSearch(LineEdit.LineEditEventArgs? obj)
     {
