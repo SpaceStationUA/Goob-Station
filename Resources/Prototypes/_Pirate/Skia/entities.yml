@@ -1,8 +1,6 @@
 - type: entity
   parent: [ SimpleSpaceMobBase, MobCombat ]
   id: MobSkia
-  name: skia-name
-  description: skia-description
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -139,8 +137,6 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodSkiaHood
   categories: [ HideSpawnMenu ]
-  name: skia-hood-name
-  description: skia-hood-description
   components:
   - type: Sprite
     sprite: _Pirate/Skia/Clothing/Head/Hoods/skia_hoodie.rsi
@@ -156,8 +152,6 @@
 - type: entity
   parent: ClothingOuterBaseToggleable
   id: ClothingOuterHoodieSkia
-  name: skia-hoodie-name
-  description: skia-hoodie-description
   components:
   - type: Sprite
     sprite: _Pirate/Skia/Clothing/OuterClothing/Misc/skia_hoodie.rsi
@@ -178,7 +172,6 @@
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointSkia
-  name: skia-spawn-point-name
   components:
   - type: GhostRole
     name: ghost-role-information-skia-name

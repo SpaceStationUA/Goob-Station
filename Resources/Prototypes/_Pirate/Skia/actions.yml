@@ -1,8 +1,6 @@
 - type: entity
   parent: BaseAction
   id: ActionPsychokineticScreamSkia
-  name: skia-action-scream-name
-  description: skia-action-scream-description
   components:
   - type: Action
     itemIconStyle: BigAction
@@ -16,8 +14,6 @@
 
 - type: entity
   id: ActionTechnokineticPulse
-  name: skia-action-pulse-name
-  description: skia-action-pulse-description
   components:
   - type: Action
     icon:

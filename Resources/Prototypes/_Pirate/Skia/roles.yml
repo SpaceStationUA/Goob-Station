@@ -10,7 +10,6 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleSkia
-  name: skia-mind-role-name
   components:
   - type: MindRole
     roleType: TeamAntagonist

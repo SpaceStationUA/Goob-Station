@@ -1,8 +1,6 @@
 - type: entity
   parent: BaseObjective
   id: SkiaReapObjective
-  name: skia-objective-reap-name
-  description: skia-objective-reap-description
   components:
   - type: Objective
     difficulty: 1.5

@@ -2,10 +2,10 @@ roles-antag-skia-name = Скія
 roles-antag-skia-objective = Розривайте душі живих.
 damage-type-soul = Душевна
 
-skia-name = скія
-skia-description = Тінь, що набула форми й кидається на кожного, хто підійде надто близько.
-skia-mind-role-name = Роль Скії
-skia-spawn-point-name = точка появи скії
+ent-MobSkia = скія
+    .desc = Тінь, що набула форми й кидається на кожного, хто підійде надто близько.
+ent-MindRoleSkia = Роль Скії
+ent-SpawnPointSkia = точка появи скії
 
 ghost-role-information-skia-name = Скія
 ghost-role-information-skia-description = Долі перерізали нитку душі. Вистежуйте її в тінях і заберіть те, що вам належить.
@@ -21,10 +21,10 @@ skia-role-briefing =
 skia-round-end-name = Скія
 skia-resurrecting-desc = [color=red]Її форма змінюється, схоже, вона намагається відновитися![/color]
 
-skia-action-scream-name = Психокінетичний крик
-skia-action-scream-description = Видайте моторошний крик, що розбиває лампи навколо вас.
-skia-action-pulse-name = Технокінетичний імпульс
-skia-action-pulse-description = Вивільніть сплеск технокінетичної енергії, що вимикає або руйнує електроніку поруч.
+ent-ActionPsychokineticScreamSkia = Психокінетичний крик
+    .desc = Видайте моторошний крик, що розбиває лампи навколо вас.
+ent-ActionTechnokineticPulse = Технокінетичний імпульс
+    .desc = Вивільніть сплеск технокінетичної енергії, що вимикає або руйнує електроніку поруч.
 
 skia-alert-light-dark-name = Темрява
 skia-alert-light-dark-desc = Ви перебуваєте в дуже темному місці.
@@ -36,14 +36,14 @@ skia-alert-resurrecting-name = Відновлення
 skia-alert-resurrecting-desc = Ви мертві, але невдовзі воскреснете.
 
 objective-issuer-skia = [color=#c7e1eb]Долі[/color]
-skia-objective-reap-name = Забрати прокляту душу
-skia-objective-reap-description = Переконайтеся, що ця душа залишила тіло хоча б раз.
+ent-SkiaReapObjective = Забрати прокляту душу
+    .desc = Переконайтеся, що ця душа залишила тіло хоча б раз.
 objective-condition-reap-soul-title = Перервіть душу {$targetName}, {CAPITALIZE($job)}.
 objective-condition-reap-soul-reroll-message = Долі перервали ще одну душу. Ваша нова ціль: {$targetName}, {CAPITALIZE($job)}.
 
-skia-hood-name = каптур скії
-skia-hood-description = Пахне Тартаром.
-skia-hoodie-name = худі скії
-skia-hoodie-description = Шати, які носить тінь.
+ent-ClothingHeadHatHoodSkiaHood = каптур скії
+    .desc = Пахне Тартаром.
+ent-ClothingOuterHoodieSkia = худі скії
+    .desc = Шати, які носить тінь.
 
 construction-graph-tag-hoodie = худі
