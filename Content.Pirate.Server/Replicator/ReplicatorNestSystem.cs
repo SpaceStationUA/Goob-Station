@@ -28,6 +28,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Pinpointer;
+using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
@@ -319,7 +320,7 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
                 continue;
 
             _pinpointer.SetTarget(pocket1.Value, queen, pinpointer);
-            _popup.PopupEntity(Loc.GetString("replicator-nest-destroyed"), uid, uid, Shared.Popups.PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString("replicator-nest-destroyed"), uid, uid, PopupType.LargeCaution);
         }
     }
 
