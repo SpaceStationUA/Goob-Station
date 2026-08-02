@@ -6,8 +6,8 @@
 - type: entity
   id: MirrorShieldBloodCult
   parent: [ BaseShield, BaseBloodCultContraband ]
-  name: "дзеркальний щит"
-  description: "Обтяжений дзеркальний щит, який повертається після кидка та дезорієнтує ворогів."
+  name: mirror shield
+  description: A mirrored shield weighted for throwing and charged with disorienting magic.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Objects/Shields/mirror_shield.rsi
@@ -74,8 +74,8 @@
 - type: entity
   id: EldritchLongsword
   parent: [ BaseSword, BaseBloodCultContraband ]
-  name: "потойбічний довгий меч"
-  description: "Меч, що гуде від нечестивої енергії та тьмяно світиться червоним."
+  name: eldritch longsword
+  description: A sword humming with unholy energy and glowing with dim red light.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Objects/Weapons/Melee/blood_cult_sword.rsi
@@ -127,8 +127,8 @@
 - type: entity
   id: ShuttleCurse
   parent: [ BaseItem, BaseBloodCultContraband ]
-  name: "проклята куля"
-  description: "У її димній глибині видно жахливі долі, що спіткають аварійний шатл."
+  name: cursed orb
+  description: Its smoky depths show terrible fates befalling the emergency shuttle.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Objects/Misc/shuttle_curse.rsi
@@ -141,8 +141,8 @@
 - type: entity
   id: VeilShifter
   parent: [ BaseItem, BaseBloodCultContraband ]
-  name: "зміщувач завіси"
-  description: "Реліквія, що переносить власника й того, кого він тягне, на кілька кроків уперед."
+  name: veil shifter
+  description: A relic that carries its user and anything they pull several paces forward.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Objects/Misc/veil_shifter.rsi
@@ -164,8 +164,8 @@
 - type: entity
   id: VoidTorch
   parent: [ Torch, BaseBloodCultContraband ]
-  name: "смолоскип порожнечі"
-  description: "Пересилає предмет крізь завісу іншому культисту."
+  name: void torch
+  description: Sends an item through the veil to another cultist.
   components:
   - type: Sprite
     sprite: Objects/Misc/torch.rsi
@@ -195,8 +195,8 @@
 - type: entity
   id: BloodCultWhetstone
   parent: [ BaseItem, BaseBloodCultContraband ]
-  name: "потойбічне точило"
-  description: "Темний брусок, який загострює клинкову зброю понад межі звичайного ремесла."
+  name: eldritch whetstone
+  description: A darkly empowered block that sharpens bladed weapons beyond mortal craft.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Objects/Misc/Whetstone/blood_cult_whetstone.rsi
