@@ -805,7 +805,7 @@ entities:
       parent: 567
     - type: Physics
       canCollide: False
-- proto: AlwaysPoweredlightCyan
+- proto: AlwaysPoweredLightListeningPostFrostyBlue
   entities:
   - uid: 16
     components:
@@ -813,7 +813,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -0.5,-2.5
       parent: 1
-- proto: AlwaysPoweredlightRed
+- proto: AlwaysPoweredLightListeningPostSoftRed
   entities:
   - uid: 17
     components:
@@ -6598,7 +6598,7 @@ entities:
     - type: Transform
       pos: 8.5,-2.5
       parent: 1
-- proto: PoweredlightRed
+- proto: PoweredLightListeningPostSoftRed
   entities:
   - uid: 20
     components:
@@ -6912,7 +6912,7 @@ entities:
       linkedPorts:
         1217:
         - Pressed: Toggle
-- proto: PaperOffice
+- proto: ListeningPostGamingLoreSpawner
   entities:
   - uid: 801
     components:
