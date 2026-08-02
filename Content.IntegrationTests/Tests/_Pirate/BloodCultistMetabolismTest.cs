@@ -16,17 +16,19 @@ public sealed class BloodCultistMetabolismTest : InteractionTest
     {
         var bloodstreamSystem = SEntMan.System<BloodstreamSystem>();
         var bloodstream = Comp<BloodstreamComponent>(Player);
-        var originalReferenceVolume = bloodstream.BloodReferenceSolution.Volume;
-        var originalBloodVolume = bloodstream.BloodReferenceSolution.GetTotalPrototypeQuantity("Blood");
+        var referenceBlood = bloodstream.BloodReferenceSolution;
+        var originalReferenceVolume = referenceBlood.Volume;
+        var originalBloodVolume = referenceBlood.GetTotalPrototypeQuantity("Blood");
 
         await Server.WaitPost(() => SEntMan.EnsureComponent<BloodCultistComponent>(SPlayer));
 
         bloodstream = Comp<BloodstreamComponent>(Player);
+        referenceBlood = bloodstream.BloodReferenceSolution;
         Assert.Multiple(() =>
         {
-            Assert.That(bloodstream.BloodReferenceSolution.Volume, Is.EqualTo(originalReferenceVolume));
+            Assert.That(referenceBlood.Volume, Is.EqualTo(originalReferenceVolume));
             Assert.That(
-                bloodstream.BloodReferenceSolution.GetTotalPrototypeQuantity("SanguinePerniculate"),
+                referenceBlood.GetTotalPrototypeQuantity("SanguinePerniculate"),
                 Is.EqualTo(originalReferenceVolume));
             Assert.That(bloodstreamSystem.GetBloodLevel((SPlayer, bloodstream)), Is.EqualTo(1f).Within(0.001f));
         });
@@ -34,11 +36,12 @@ public sealed class BloodCultistMetabolismTest : InteractionTest
         await Server.WaitPost(() => SEntMan.RemoveComponent<BloodCultistComponent>(SPlayer));
 
         bloodstream = Comp<BloodstreamComponent>(Player);
+        referenceBlood = bloodstream.BloodReferenceSolution;
         Assert.Multiple(() =>
         {
-            Assert.That(bloodstream.BloodReferenceSolution.Volume, Is.EqualTo(originalReferenceVolume));
+            Assert.That(referenceBlood.Volume, Is.EqualTo(originalReferenceVolume));
             Assert.That(
-                bloodstream.BloodReferenceSolution.GetTotalPrototypeQuantity("Blood"),
+                referenceBlood.GetTotalPrototypeQuantity("Blood"),
                 Is.EqualTo(originalBloodVolume));
             Assert.That(bloodstreamSystem.GetBloodLevel((SPlayer, bloodstream)), Is.EqualTo(1f).Within(0.001f));
         });

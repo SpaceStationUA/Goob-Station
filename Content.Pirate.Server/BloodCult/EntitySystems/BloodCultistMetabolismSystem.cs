@@ -40,8 +40,8 @@ public sealed class BloodCultistMetabolismSystem : EntitySystem
         if (!TryComp<BloodstreamComponent>(uid, out var bloodstream))
             return;
 
-        var originalBlood = bloodstream.BloodReferenceSolution.Clone();
-        component.OriginalBloodReagents = originalBlood;
+        var originalBlood = bloodstream.BloodReferenceSolution;
+        component.OriginalBloodReagents = originalBlood.Clone();
         // Keep the reference volume intact so rejuvenation cannot reduce the bloodstream to 1u.
         var cultBlood = new Solution("SanguinePerniculate", originalBlood.Volume);
 
