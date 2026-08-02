@@ -76,7 +76,6 @@
       components:
       - type: RandomHumanoidAppearance
         randomizeName: false
-        keepGender: true
       - type: RandomMetadata
         nameSegments:
         - NamesDeathCommando
