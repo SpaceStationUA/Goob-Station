@@ -1,0 +1,185 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  parent: BaseSign
+  id: BasePirateMapPreview
+  components:
+  - type: Sprite
+    sprite: _Pirate/Interface/MapVote/map_previews.rsi
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewAtlas
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: atlas
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewBagel
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: bagel
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewBoxTP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: box_tp
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewCluster
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: cluster
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewFland
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: fland
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewGlacierTP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: glacier_tp
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewMarathon
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: marathon
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewMeta
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: meta
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewOasis
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: oasis
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewOmegaTP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: omega_tp
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewOrigin
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: origin
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewSaltern
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: saltern
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewPacked
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: packed
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewBarratry
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: barratry
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewKettleTP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: kettle_tp
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewLeonid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: leonid
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewDelta
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: delta
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewChloris
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: chloris
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewCog
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: cog
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewSerpentcrest
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: serpentcrest
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewPerditionTP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: perdition_tp
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewPiramideTP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: piramide_tp

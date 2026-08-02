@@ -2,6 +2,7 @@
 
 using Lidgren.Network;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Voting
@@ -16,7 +17,8 @@ namespace Content.Shared.Voting
         public string VoteInitiator = string.Empty;
         public TimeSpan StartTime; // Server RealTime.
         public TimeSpan EndTime; // Server RealTime.
-        public (ushort votes, string name)[] Options = default!;
+        // Pirate - map vote previews
+        public (ushort votes, string name, string? icon, EntProtoId? preview)[] Options = default!;
         public bool IsYourVoteDirty;
         public byte? YourVote;
         public bool DisplayVotes;
@@ -38,10 +40,16 @@ namespace Content.Shared.Voting
             DisplayVotes = buffer.ReadBoolean();
             TargetEntity = buffer.ReadVariableInt32();
 
-            Options = new (ushort votes, string name)[buffer.ReadByte()];
+            Options = new (ushort votes, string name, string? icon, EntProtoId? preview)[buffer.ReadByte()];
             for (var i = 0; i < Options.Length; i++)
             {
-                Options[i] = (buffer.ReadUInt16(), buffer.ReadString());
+                var votes = buffer.ReadUInt16();
+                var name = buffer.ReadString();
+                var icon = buffer.ReadBoolean() ? buffer.ReadString() : null;
+                EntProtoId? preview = buffer.ReadBoolean()
+                    ? new EntProtoId(buffer.ReadString())
+                    : default;
+                Options[i] = (votes, name, icon, preview);
             }
 
             IsYourVoteDirty = buffer.ReadBoolean();
@@ -68,10 +76,17 @@ namespace Content.Shared.Voting
             buffer.WriteVariableInt32(TargetEntity);
 
             buffer.Write((byte) Options.Length);
-            foreach (var (votes, name) in Options)
+            foreach (var (votes, name, icon, preview) in Options)
             {
                 buffer.Write(votes);
                 buffer.Write(name);
+                buffer.Write(icon is not null);
+                if (icon is not null)
+                    buffer.Write(icon);
+
+                buffer.Write(preview is not null);
+                if (preview is { } previewId)
+                    buffer.Write(previewId.Id);
             }
 
             buffer.Write(IsYourVoteDirty);

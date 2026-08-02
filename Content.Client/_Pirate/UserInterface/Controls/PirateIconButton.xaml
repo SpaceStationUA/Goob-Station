@@ -1,0 +1,40 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Button
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="Content.Client._Pirate.UserInterface.Controls.PirateIconButton"
+    MinSize="0 24"
+    Margin="1"
+>
+    <BoxContainer Orientation="Horizontal" SeparationOverride="4">
+        <TextureRect
+            Name="IconLeft"
+            Access="Public"
+            Stretch="KeepAspect"
+            MaxSize="24 24"
+            MinSize="0 24"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+        />
+        <RichTextLabel
+            Name="IconLabel"
+            Access="Public"
+            HorizontalExpand="True"
+            VerticalExpand="True"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+        />
+        <TextureRect
+            Name="IconRight"
+            Access="Public"
+            Stretch="KeepAspect"
+            MaxSize="24 24"
+            MinSize="0 24"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+        />
+    </BoxContainer>
+</Button>

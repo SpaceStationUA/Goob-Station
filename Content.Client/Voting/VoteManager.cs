@@ -8,6 +8,7 @@ using Robust.Client.Console;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio.Sources;
 
@@ -149,7 +150,7 @@ namespace Content.Client.Voting
                 var vote = new ActiveVote(voteId)
                 {
                     Entries = message.Options
-                        .Select(c => new VoteEntry(c.name))
+                        .Select(c => new VoteEntry(c.name, c.icon, c.preview))
                         .ToArray()
                 };
 
@@ -253,11 +254,16 @@ namespace Content.Client.Voting
         public sealed class VoteEntry
         {
             public string Text { get; }
+            // Pirate - map vote previews
+            public string? Icon { get; }
+            public EntProtoId? Preview { get; }
             public int Votes { get; set; }
 
-            public VoteEntry(string text)
+            public VoteEntry(string text, string? icon, EntProtoId? preview)
             {
                 Text = text;
+                Icon = icon;
+                Preview = preview;
             }
         }
     }

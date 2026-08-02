@@ -4,6 +4,7 @@
   id: Chloris
   mapName: 'Хлоріс'
   mapPath: /Maps/_Goobstation/chloris.yml
+  mapPreview: PirateMapPreviewChloris # Pirate - map vote preview
   minPlayers: 80
   stations:
     Chloris:
