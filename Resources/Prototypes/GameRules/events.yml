@@ -68,6 +68,7 @@
     - id: LoneAbductorSpawn # Shitmed - Starlight Abductors
     - id: DuoAbductorSpawn # Shitmed - Starlight Abductors
     - id: BingleSpawn #Goobstation - Bingle
+    - id: ReplicatorSpawn # Pirate - Replicators
     - id: SlaughterDemonMidround # Goobstation - Slaughter Demon
     - id: XenomorphsInfestation # WD EDIT
     # - id: SlasherSpawn # Pirate disable
