@@ -48,6 +48,8 @@
   parent: BaseGameRule
   id: ListeningPost
   components:
+  - type: GameRule
+    chaosScore: 300
   - type: StationEvent
     earliestStart: 30
     weight: 4
@@ -136,6 +138,24 @@
     appearanceDataInit:
       enum.PdaVisuals.PdaType: !type:String
         pda-syndi-agent
+  - type: Sprite
+    layers:
+    - sprite: _Pirate/Objects/Devices/pda_syndi_agent.rsi
+      state: pda-syndi-agent
+      map: [ "enum.PdaVisualLayers.Base" ]
+    - state: light_overlay
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: unshaded
+      visible: false
+    - state: id_overlay
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: unshaded
+      visible: false
+    - state: insert_overlay
+      map: [ "enum.PdaVisualLayers.Pen" ]
+  - type: Icon
+    sprite: _Pirate/Objects/Devices/pda_syndi_agent.rsi
+    state: pda-syndi-agent
 
 - type: entity
   parent: ClothingBeltUtility
