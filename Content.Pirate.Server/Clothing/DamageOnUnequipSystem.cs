@@ -6,6 +6,7 @@ using Content.Server.Chat.Systems;
 using Content.Pirate.Shared.Clothing;
 using Content.Pirate.Shared.Clothing.Components;
 using Content.Shared.Clothing;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Jittering;
