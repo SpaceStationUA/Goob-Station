@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Pirate.Common.Cyberdeck.Components;
+using Content.Shared._Pirate.ZLevels.View;
 using Content.Shared.Eye;
 using Content.Shared.Movement.Components;
 using Content.Shared.Silicons.StationAi;
@@ -91,6 +92,7 @@ public abstract partial class SharedCyberdeckSystem
                 eye);
         }
 
+        EnsureComp<CEZLevelEyeMoverComponent>(user);
         _mover.SetRelay(user, projectionEntity);
         user.Comp.InProjection = true;
         Dirty(user);
@@ -130,6 +132,7 @@ public abstract partial class SharedCyberdeckSystem
         }
 
         RemComp<RelayInputMoverComponent>(user);
+        RemComp<CEZLevelEyeMoverComponent>(user);
         user.Comp.InProjection = false;
         Dirty(user);
 

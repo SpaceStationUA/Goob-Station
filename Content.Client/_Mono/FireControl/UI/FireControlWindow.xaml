@@ -51,8 +51,14 @@
         </BoxContainer>
 
         <!-- Radar Display -->
-        <BoxContainer Name="RadarContainer" Orientation="Horizontal" HorizontalExpand="True" Margin="50 50 50 50">
-            <ui:FireControlNavControl Name="NavRadar" />
+        <BoxContainer Name="RadarContainer" Orientation="Vertical" HorizontalExpand="True" Margin="50 8 50 50">
+            <!-- Pirate: multiz layer selector -->
+            <BoxContainer Name="LayerSelectorRow"
+                          Visible="False"
+                          Orientation="Horizontal"
+                          HorizontalAlignment="Center"
+                          Margin="0 0 0 4"/>
+            <ui:FireControlNavControl Name="NavRadar" VerticalExpand="True" HorizontalExpand="True" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

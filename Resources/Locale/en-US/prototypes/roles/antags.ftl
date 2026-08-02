@@ -21,6 +21,9 @@
 ## goob edited
 roles-antag-syndicate-agent-name = Traitor
 
+roles-antag-listening-post-name = Listening Post Operative
+roles-antag-listening-post-objective = Observe the station and gather valuable intelligence for Syndicate command.
+
 roles-antag-generic-solo-antagonist-name = Solo Antagonist
 
 roles-antag-generic-free-agent-name = Free Agent

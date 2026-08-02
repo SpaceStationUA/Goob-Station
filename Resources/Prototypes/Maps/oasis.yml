@@ -4,6 +4,7 @@
   id: Oasis
   mapName: 'Оазис'
   mapPath: /Maps/_Goobstation/oasis.yml # Goobstation - SM
+  mapPreview: PirateMapPreviewOasis # Pirate - map vote preview
   minPlayers: 30 # Goobstation return minPlayers requirement for maps
   maxPlayers: 85 # Goobstation - Limit mappool to highpop versions of maps only
   stations:

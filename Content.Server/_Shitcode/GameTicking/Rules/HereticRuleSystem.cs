@@ -57,14 +57,12 @@ public sealed class HereticRuleSystem : GameRuleSystem<HereticRuleComponent>
         if (!TryGetRandomStation(out var station))
             return;
 
-        var grid = GetStationMainGrid(Comp<StationDataComponent>(station.Value));
-
-        if (grid == null)
+        if (!TryComp<StationDataComponent>(station.Value, out var stationData)) // Pirate: multiz
             return;
 
         for (var i = 0; i < ent.Comp.RealityShiftPerHeretic.Next(_rand); i++)
         {
-            if (TryFindTileOnGrid(grid.Value, out _, out var coords))
+            if (TryFindRandomTileOnStation((station.Value, stationData), out _, out _, out var coords)) // Pirate: multiz
                 Spawn(ent.Comp.RealityShift, coords);
         }
     }

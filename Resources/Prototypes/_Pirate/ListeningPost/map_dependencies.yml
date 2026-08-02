@@ -1,0 +1,106 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Map-only dependencies ported from DeltaV's listening post.
+
+- type: entity
+  parent: LightTube
+  id: LightTubeListeningPostSoftRed
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LightBulb
+    bulb: Tube
+    color: "#FF6666"
+    lightEnergy: 0.9
+    lightRadius: 10
+    lightSoftness: 0.5
+    PowerUse: 25
+
+- type: entity
+  parent: Poweredlight
+  id: PoweredLightListeningPostSoftRed
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightTubeListeningPostSoftRed
+  - type: PointLight
+    radius: 10
+    energy: 0.9
+    softness: 0.5
+    color: "#FF6666"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
+
+- type: entity
+  parent: AlwaysPoweredWallLight
+  id: AlwaysPoweredLightListeningPostSoftRed
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 0.9
+    softness: 0.5
+    color: "#FF6666"
+
+- type: entity
+  parent: AlwaysPoweredWallLight
+  id: AlwaysPoweredLightListeningPostFrostyBlue
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 0.8
+    softness: 1
+    color: "#00FFFF"
+
+- type: entity
+  id: ListeningPostGamingLoreSpawner
+  parent: MarkerBase
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/bureaucracy.rsi
+      state: paper_words
+  - type: RandomSpawner
+    prototypes:
+    - ListeningPostGamingLorePaper1
+    - ListeningPostGamingLorePaper2
+    - ListeningPostGamingLorePaper3
+    - ListeningPostGamingLorePaper4
+    offset: 0.1
+
+- type: entity
+  id: ListeningPostGamingLorePaper1
+  parent: Paper
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    content: book-text-gaming1
+
+- type: entity
+  id: ListeningPostGamingLorePaper2
+  parent: Paper
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    content: book-text-gaming2
+
+- type: entity
+  id: ListeningPostGamingLorePaper3
+  parent: Paper
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    content: book-text-gaming3
+
+- type: entity
+  id: ListeningPostGamingLorePaper4
+  parent: Paper
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    content: book-text-gaming4

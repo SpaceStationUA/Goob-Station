@@ -1,0 +1,17 @@
+- type: gameMap
+  id: ZCombined
+  mapName: ZCombined
+  mapPath: /Maps/Test/ZTest0.yml
+  minPlayers: 0
+  stations:
+    Empty:
+      stationProto: StandardNanotrasenStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "ZCombined"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+      - type: CEStationZLevels
+        mapsAbove:
+        - /Maps/Test/ZTest1.yml

@@ -1,0 +1,47 @@
+- type: entity
+  id: WeaponArcSkiaLunge
+  parent: WeaponArcStatic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WeaponArcVisuals
+  - type: Sprite
+    scale: .5, .5
+    layers:
+    - sprite: _Pirate/Skia/Effects/arcs.rsi
+      state: skialunge
+      shader: unshaded
+  - type: TimedDespawn
+    lifetime: 0.399
+
+- type: entity
+  id: WeaponArcSkiaSwipe
+  parent: WeaponArcSlash
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WeaponArcVisuals
+  - type: Sprite
+    scale: .5, .5
+    layers:
+    - sprite: _Pirate/Skia/Effects/arcs.rsi
+      state: skiaswipe
+      shader: unshaded
+  - type: TimedDespawn
+    lifetime: 0.399
+
+# Pirate: Skia-specific port of the Delta-v/RMC screech visual.
+- type: entity
+  id: SkiaScreechEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 3.2
+  - type: SkiaScreechShockWave
+  - type: Sprite
+    sprite: _Pirate/Skia/Effects/screech.rsi
+    noRot: true
+    state: screech
+    drawdepth: Effects
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+    - HideContextMenu

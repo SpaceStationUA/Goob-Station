@@ -1,0 +1,60 @@
+- type: entity
+  id: CEZLevelsStairsStoneBase
+  abstract: true
+  name: stone stairs
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Architecture/Ladders/stone.rsi
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  parent:
+  - CEZLevelStairsBase
+  - CEZLevelsStairsStoneBase
+  id: CEZLevelStairsStone
+  components:
+  - type: Construction
+    graph: CEZLevelStairsStone
+    node: CEZLevelStairsStone
+
+- type: entity
+  parent:
+  - CEZLevelStairsCornerBase
+  - CEZLevelsStairsStoneBase
+  id: CEZLevelStairsStoneCorner
+  suffix: Corner
+  components:
+  - type: Construction
+    graph: CEZLevelStairsStone
+    node: CEZLevelStairsStoneCorner
+
+- type: entity
+  parent:
+  - CEZLevelStairsCornerInnerBase
+  - CEZLevelsStairsStoneBase
+  id: CEZLevelStairsStoneCornerInner
+  suffix: Inner Corner
+  components:
+  - type: Construction
+    graph: CEZLevelStairsStone
+    node: CEZLevelStairsStoneCornerInner

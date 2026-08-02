@@ -39,6 +39,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 
     public event Action<NetEntity?>? SendFocusChangeMessageAction;
     public event Action<NetEntity, bool>? SendDeviceSilencedMessageAction;
+    public event Action<NetEntity?, int>? SendZLevelSelectedMessageAction; // Pirate: multiz
 
     private bool _autoScrollActive = false;
     private bool _autoScrollAwaitsUpdate = false;
@@ -78,6 +79,10 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
         {
             NavMap.MapUid = xform.GridUid;
+            NavMap.ZLevelSelectorEnabled = true; // Pirate: multiz
+            NavMap.ZFilterTrackedBlipsToDisplayedMap = true; // Pirate: multiz
+            NavMap.SetZLevelSelectorRoot(xform.GridUid); // Pirate: multiz
+            NavMap.ZLevelSelectedAction += OnZLevelSelected; // Pirate: multiz
 
             // Assign station name      
             if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
@@ -116,6 +121,15 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         SendFocusChangeMessageAction += userInterface.SendFocusChangeMessage;
         SendDeviceSilencedMessageAction += userInterface.SendDeviceSilencedMessage;
     }
+
+    #region Pirate: multiz
+    private void OnZLevelSelected(EntityUid gridUid, int depth)
+    {
+        _trackedEntity = null;
+        SendFocusChangeMessageAction?.Invoke(null);
+        SendZLevelSelectedMessageAction?.Invoke(_entManager.GetNetEntity(gridUid), depth);
+    }
+    #endregion
 
     #region Toggle handling
 
@@ -293,9 +307,9 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         NavMap.RegionOverlays.Clear();
         var prioritizedRegionOverlays = new Dictionary<NavMapRegionOverlay, int>();
 
-        if (_owner != null &&
-            _entManager.TryGetComponent<TransformComponent>(_owner, out var xform) &&
-            _entManager.TryGetComponent<NavMapComponent>(xform.GridUid, out var navMap))
+        if (_owner != null && // Pirate: multiz
+            NavMap.MapUid != null && // Pirate: multiz
+            _entManager.TryGetComponent<NavMapComponent>(NavMap.MapUid.Value, out var navMap)) // Pirate: multiz
         {
             var regionOverlays = _navMapSystem.GetNavMapRegionOverlays(_owner.Value, navMap, AtmosAlertsComputerUiKey.Key);
 

@@ -118,6 +118,7 @@ public abstract class SharedGasCanisterSystem : EntitySystem
         {
             args.Cancelled = true;
         }
+        // Pirate: ItemSlotsSystem logs successful insertions after the container accepts the tank.
     }
 
     protected abstract void DirtyUI(EntityUid uid, GasCanisterComponent? component = null, NodeContainerComponent? nodes = null);

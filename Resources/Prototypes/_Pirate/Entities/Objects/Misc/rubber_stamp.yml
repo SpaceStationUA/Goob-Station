@@ -37,3 +37,92 @@
     stampState: "paper_stamp-interdyne"
   - type: Sprite
     state: stamp-syndicate
+
+# Listening post
+
+- type: entity
+  name: notary stamp
+  parent: RubberStampBase
+  id: RubberStampNotary
+  suffix: DO NOT MAP
+  description: An old-fashioned seal for marking important documents, made of polished bronze.
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-notary
+    stampedColor: "#a81f3d"
+    stampState: "paper_stamp-notary"
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/stamps.rsi
+    state: stamp-notary
+
+- type: entity
+  name: chief justice stamp
+  parent: RubberStampBase
+  id: RubberStampChiefJustice
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-chiefjustice
+    stampedColor: "#6b2833"
+    stampState: "paper_stamp-notary"
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/stamps.rsi
+    state: stamp-cj
+
+- type: entity
+  name: prosecutor's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampProsec
+  suffix: DO NOT MAP
+  description: A rubber stamp for stamping important documents. A more legal way to annoy Security.
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-prosec
+    stampedColor: "#562D3D"
+    stampState: "paper_stamp-prosec"
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/stamps.rsi
+    state: stamp-prosec
+
+- type: entity
+  name: chemist's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampChemist
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-chemist
+    stampedColor: "#ff7900"
+    stampState: "paper_stamp-chemist"
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/stamps.rsi
+    state: stamp-chemist
+
+- type: entity
+  name: doctor's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampDoctor
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-doctor
+    stampedColor: "#2ea5e6"
+    stampState: "paper_stamp-doctor"
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/doctor_stamp.rsi
+    state: stamp-doctor
+
+- type: entity
+  name: legal carp stamp
+  parent: RubberStampBase
+  id: RubberStampCarpy
+  suffix: DO NOT MAP
+  description: A stamp specially designed for legal carps, to mark documents that aren't fishy.
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-carpy
+    stampedColor: "#a81f3d"
+    stampState: "paper_stamp-notary"
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/stamps.rsi
+    state: stamp-notary

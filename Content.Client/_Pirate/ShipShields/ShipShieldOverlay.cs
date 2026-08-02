@@ -5,6 +5,7 @@
 using Content.Shared._Pirate.ShipShields;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics;
@@ -21,16 +22,18 @@ public sealed class ShipShieldOverlay : Overlay
 {
     private readonly IResourceCache _resourceCache;
     private readonly IEntityManager _entManager;
+    private readonly IPlayerManager _player;
     private readonly FixtureSystem _fixture;
     private readonly SharedPhysicsSystem _physics;
     private readonly ShaderInstance _unshadedShader;
     private readonly List<DrawVertexUV2D> _verts = new(128);
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
 
-    public ShipShieldOverlay(IEntityManager entityManager, IPrototypeManager prototypeManager, IResourceCache resourceCache)
+    public ShipShieldOverlay(IEntityManager entityManager, IPlayerManager playerManager, IPrototypeManager prototypeManager, IResourceCache resourceCache)
     {
         _resourceCache = resourceCache;
         _entManager = entityManager;
+        _player = playerManager;
         _fixture = _entManager.EntitySysManager.GetEntitySystem<FixtureSystem>();
         _physics = _entManager.EntitySysManager.GetEntitySystem<Robust.Client.Physics.PhysicsSystem>();
 
@@ -41,6 +44,7 @@ public sealed class ShipShieldOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        // Per-entity xform.MapID vs args.MapId filtering below handles map scoping; don't gate on the player's map (Draw is per-viewport).
         var handle = args.WorldHandle;
 
         handle.UseShader(_unshadedShader);

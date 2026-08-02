@@ -4,6 +4,7 @@
   id: Marathon
   mapName: 'Марафон'
   mapPath: /Maps/_Goobstation/marathon.yml # Goobstation
+  mapPreview: PirateMapPreviewMarathon # Pirate - map vote preview
   minPlayers: 25
   maxPlayers: 70
   stations:
