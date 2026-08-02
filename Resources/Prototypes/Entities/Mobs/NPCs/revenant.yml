@@ -34,6 +34,7 @@
       - Ghost
   - type: ContentEye
     maxZoom: 1.2, 1.2
+  - type: CEZLevelGhostMover # Pirate: multiz
   - type: NameIdentifier
     group: GenericNumber
   - type: GhostRole

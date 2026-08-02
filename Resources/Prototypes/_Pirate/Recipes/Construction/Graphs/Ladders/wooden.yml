@@ -1,0 +1,38 @@
+- type: constructionGraph
+  id: CEZLevelStairsWooden
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: CEZLevelStairsWooden
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: WoodPlank
+              amount: 2
+              doAfter: 2
+
+    - node: CEZLevelStairsWooden
+      entity: CEZLevelStairsWooden
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+        - to: CEZLevelStairsWoodenCorner
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: CEZLevelStairsWoodenCorner
+      entity: CEZLevelStairsWoodenCorner
+      edges:
+        - to: CEZLevelStairsWooden
+          steps:
+            - tool: Prying
+              doAfter: 2

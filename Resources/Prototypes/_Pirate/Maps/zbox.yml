@@ -1,0 +1,18 @@
+- type: gameMap
+  id: ZBox
+  mapName: ZBox
+  mapPath: /Maps/Test/ZBox0.yml
+  minPlayers: 0
+  stations:
+    Empty:
+      stationProto: StandardNanotrasenStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "ZBox"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+      - type: CEStationZLevels
+        mapsAbove:
+        - /Maps/Test/ZBox1.yml
+        - /Maps/Test/ZBox2.yml

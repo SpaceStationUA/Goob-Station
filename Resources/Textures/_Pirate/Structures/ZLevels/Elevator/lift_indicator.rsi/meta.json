@@ -1,0 +1,111 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "lift_indo-base",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-down",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "lift_indo-downe",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "lift_indo-up",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "lift_indo-upe",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "lift_indo-e",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-num0",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-num1",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-num2",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-num3",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-num4",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-num5",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-num6",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-num7",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-num8",
+            "directions": 1
+        },
+        {
+            "name": "lift_indo-num9",
+            "directions": 1
+        }
+    ]
+}

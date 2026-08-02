@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared._Pirate.ListeningPost; // Pirate: listening post long-range monitor
+using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
 using Content.Shared.Medical.CrewMonitoring;
 using Robust.Client.UserInterface;
 
@@ -38,6 +39,7 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
         }
 
         _menu = this.CreateWindow<CrewMonitoringWindow>();
+        _menu.SendZLevelSelectedMessageAction += SendZLevelSelectedMessage; // Pirate: multiz
         _menu.Set(stationName, gridUid);
     }
 
@@ -53,4 +55,11 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
                 break;
         }
     }
+
+    #region Pirate: multiz
+    private void SendZLevelSelectedMessage(NetEntity? grid, int depth)
+    {
+        SendMessage(new CEZMonitoringConsoleLevelSelectedMessage(grid, depth));
+    }
+    #endregion
 }

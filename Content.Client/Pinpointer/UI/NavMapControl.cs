@@ -21,6 +21,7 @@ using JetBrains.Annotations;
 using Content.Shared.Atmos;
 using System.Linq;
 using Robust.Shared.Utility;
+using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -36,12 +37,15 @@ public partial class NavMapControl : MapGridControl
 
     public EntityUid? Owner;
     public EntityUid? MapUid;
+    public bool ZLevelSelectorEnabled; // Pirate: multiz
+    public bool ZFilterTrackedBlipsToDisplayedMap; // Pirate: multiz
 
     protected override bool Draggable => true;
 
     // Actions
     public event Action<NetEntity?>? TrackedEntitySelectedAction;
     public event Action<DrawingHandleScreen>? PostWallDrawingAction;
+    public event Action<EntityUid, int>? ZLevelSelectedAction; // Pirate: multiz
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
@@ -115,6 +119,10 @@ public partial class NavMapControl : MapGridControl
         Pressed = true,
     };
 
+    private PanelContainer? _zLevelSelectorPanel; // Pirate: multiz
+    private BoxContainer? _zLevelSelectorRow; // Pirate: multiz
+    private EntityUid? _zLevelSelectorRoot; // Pirate: multiz
+
     public NavMapControl() : base(MinDisplayedRange, MaxDisplayedRange, DefaultDisplayedRange)
     {
         IoCManager.InjectDependencies(this);
@@ -149,6 +157,32 @@ public partial class NavMapControl : MapGridControl
             }
         };
 
+        #region Pirate: multiz
+        _zLevelSelectorRow = new BoxContainer()
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            HorizontalAlignment = HAlignment.Center,
+            HorizontalExpand = true,
+            Margin = new Thickness(4f, 2f),
+        };
+        _zLevelSelectorPanel = new PanelContainer()
+        {
+            PanelOverride = new StyleBoxFlat()
+            {
+                BackgroundColor = StyleNano.ButtonColorContext.WithAlpha(1f),
+                BorderColor = StyleNano.PanelDark
+            },
+            VerticalExpand = false,
+            HorizontalExpand = true,
+            SetWidth = 650f,
+            Visible = false,
+            Children =
+            {
+                _zLevelSelectorRow
+            }
+        }; // Pirate: multiz
+        #endregion
+
         var topContainer = new BoxContainer()
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
@@ -156,6 +190,7 @@ public partial class NavMapControl : MapGridControl
             Children =
             {
                 topPanel,
+                _zLevelSelectorPanel, // Pirate: multiz
                 new Control()
                 {
                     Name = "DrawingControl",
@@ -185,7 +220,69 @@ public partial class NavMapControl : MapGridControl
         EntManager.TryGetComponent(MapUid, out _fixtures);
 
         UpdateNavMap();
+        RefreshZLevelSelector(); // Pirate: multiz
     }
+
+    #region Pirate: multiz
+    public void SetZLevelSelectorRoot(EntityUid? gridUid) // Pirate: multiz
+    {
+        _zLevelSelectorRoot = gridUid;
+        RefreshZLevelSelector();
+    }
+
+    private void RefreshZLevelSelector()
+    {
+        if (_zLevelSelectorPanel == null || _zLevelSelectorRow == null)
+            return;
+
+        _zLevelSelectorRow.RemoveAllChildren();
+
+        if (!ZLevelSelectorEnabled || _zLevelSelectorRoot == null ||
+            !EntManager.TryGetComponent<CEZLinkedGridComponent>(_zLevelSelectorRoot.Value, out var linked))
+        {
+            _zLevelSelectorPanel.Visible = false;
+            return;
+        }
+
+        var levels = new SortedDictionary<int, EntityUid>(linked.PeerGrids);
+        levels[linked.Depth] = _zLevelSelectorRoot.Value;
+
+        if (levels.Count <= 1)
+        {
+            _zLevelSelectorPanel.Visible = false;
+            return;
+        }
+
+        _zLevelSelectorPanel.Visible = true;
+        _zLevelSelectorRow.AddChild(new Label
+        {
+            Text = Loc.GetString("pinpointer-z-label"),
+            VerticalAlignment = VAlignment.Center,
+            Margin = new Thickness(0f, 0f, 4f, 0f),
+        });
+
+        foreach (var (depth, gridUid) in levels)
+        {
+            var selected = MapUid == gridUid;
+            var button = new Button
+            {
+                Text = depth.ToString(),
+                Disabled = selected,
+                Margin = new Thickness(2f, 0f),
+                MinSize = new Vector2(28f, 0f),
+            };
+
+            button.OnPressed += _ =>
+            {
+                MapUid = gridUid;
+                ForceNavMapUpdate();
+                ZLevelSelectedAction?.Invoke(gridUid, depth);
+            };
+
+            _zLevelSelectorRow.AddChild(button);
+        }
+    } // Pirate: multiz
+    #endregion
 
     public void CenterToCoordinates(EntityCoordinates coordinates)
     {
@@ -228,7 +325,12 @@ public partial class NavMapControl : MapGridControl
                 if (!blip.Selectable)
                     continue;
 
-                var currentDistance = (_transformSystem.ToMapCoordinates(blip.Coordinates).Position - worldPosition).Length();
+                #region Pirate: multiz
+                var blipMapPos = _transformSystem.ToMapCoordinates(blip.Coordinates);
+                if (ZFilterTrackedBlipsToDisplayedMap && blipMapPos.MapId != _xform.MapID)
+                    continue;
+                var currentDistance = (blipMapPos.Position - worldPosition).Length();
+                #endregion
 
                 if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
@@ -396,6 +498,9 @@ public partial class NavMapControl : MapGridControl
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
+                    if (ZFilterTrackedBlipsToDisplayedMap && mapPos.MapId != _xform.MapID) // Pirate: multiz
+                        continue; // Pirate: multiz
+
                     var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
                     position = ScalePosition(new Vector2(position.X, -position.Y));
 
@@ -417,6 +522,9 @@ public partial class NavMapControl : MapGridControl
 
             if (mapPos.MapId != MapId.Nullspace)
             {
+                if (ZFilterTrackedBlipsToDisplayedMap && mapPos.MapId != _xform.MapID) // Pirate: multiz
+                    continue; // Pirate: multiz
+
                 var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
                 position = ScalePosition(new Vector2(position.X, -position.Y));
 
