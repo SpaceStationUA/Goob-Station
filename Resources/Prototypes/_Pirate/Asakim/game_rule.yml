@@ -3,11 +3,6 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-- type: preloadedGrid
-  id: AsakimSmall
-  path: /Maps/_Pirate/Shuttles/ShuttleEvent/asakim_small.yml
-  copies: 1
-
 - type: entity
   parent: BaseUnknownShuttleRule
   id: AsakimShuttle
@@ -26,7 +21,7 @@
     chaosScore: 100
   # Pirate: PrecognitionResult is unavailable in the local psionics implementation.
   - type: LoadMapRule
-    preloadedGrid: AsakimSmall
+    gridPath: /Maps/_Pirate/Shuttles/ShuttleEvent/asakim_small.yml
   - type: AntagSpawner
     prototype: MobAsakim
   - type: AntagRandomObjectives
