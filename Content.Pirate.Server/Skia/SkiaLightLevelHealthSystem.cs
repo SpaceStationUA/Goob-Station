@@ -37,6 +37,18 @@ public sealed class SkiaLightLevelHealthSystem : SharedSkiaLightLevelHealthSyste
                 _movementSpeed.RefreshMovementSpeedModifiers(uid);
             }
 
+            if (TryComp<SkiaResurrectWhenAbleComponent>(uid, out var resurrect))
+            {
+                // Dead Skia can only begin or continue recovery while standing in darkness.
+                var canResurrect = !_mobState.IsDead(uid) || currentThreshold == -1;
+                if (resurrect.CanResurrect != canResurrect || (!canResurrect && resurrect.ResurrectAt is not null))
+                {
+                    resurrect.CanResurrect = canResurrect;
+                    resurrect.ResurrectAt = canResurrect ? resurrect.ResurrectAt : null;
+                    Dirty(uid, resurrect);
+                }
+            }
+
             if (currentThreshold == 0)
                 continue;
 

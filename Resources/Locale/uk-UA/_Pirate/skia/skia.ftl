@@ -23,6 +23,8 @@ skia-resurrecting-desc = [color=red]Її форма змінюється, схо
 
 ent-ActionPsychokineticScreamSkia = Психокінетичний крик
     .desc = Видайте моторошний крик, що розбиває лампи навколо вас.
+ent-ActionSkiaJaunt = Ефірний ривок
+    .desc = Розчиніться в ефірному плані для швидкої втечі.
 ent-ActionTechnokineticPulse = Технокінетичний імпульс
     .desc = Вивільніть сплеск технокінетичної енергії, що вимикає або руйнує електроніку поруч.
 

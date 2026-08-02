@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleSpaceMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
   id: MobSkia
   components:
   - type: Sprite
@@ -38,9 +38,9 @@
           radius: 0.35
         density: 160
         mask:
-        - SmallMobMask
+        - FlyingMobMask
         layer:
-        - SmallMobLayer
+        - FlyingMobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.75
@@ -114,6 +114,7 @@
     energyConsumption: 20000
     disableDuration: 20.0
   - type: Jaunt
+    jauntAction: ActionSkiaJaunt
   - type: VentCrawler
     enterDelay: 0.5
   - type: Butcherable

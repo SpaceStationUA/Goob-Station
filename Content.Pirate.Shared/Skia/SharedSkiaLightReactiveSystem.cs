@@ -94,15 +94,16 @@ public abstract class SharedSkiaLightReactiveSystem : EntitySystem
                 continue;
             }
 
-            var ray = new CollisionRay(position, (lightPosition - position).Normalized(), (int) CollisionGroup.Opaque);
+            // Cast from the light toward Skia, like Shadowling light detection. Starting at Skia
+            // can hit Skia's own fixture first and let light pass through an opaque wall.
+            var ray = new CollisionRay(lightPosition, (position - lightPosition).Normalized(), (int) CollisionGroup.Opaque);
             var hits = _physics.IntersectRay(
                 _transform.GetMapId((uid, xform)),
                 ray,
-                MathF.Sqrt(squaredDistance) - 0.5f,
+                MathF.Sqrt(squaredDistance),
                 ignoredEnt: lightUid,
                 returnOnFirstHit: true);
-            var firstHit = hits.FirstOrDefault();
-            if (firstHit.Distance != 0)
+            if (hits.Any(hit => hit.HitEntity != uid))
                 continue;
 
             if (lightComp.MaskPath == "/Textures/Effects/LightMasks/cone.png")

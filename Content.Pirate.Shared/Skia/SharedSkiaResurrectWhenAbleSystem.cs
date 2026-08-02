@@ -37,6 +37,12 @@ public sealed class SharedSkiaResurrectWhenAbleSystem : EntitySystem
                 continue;
             }
 
+            if (!comp.CanResurrect)
+            {
+                comp.ResurrectAt = null;
+                continue;
+            }
+
             if (!_mobThreshold.TryGetThresholdForState(uid, MobState.Dead, out var threshold))
                 continue;
 

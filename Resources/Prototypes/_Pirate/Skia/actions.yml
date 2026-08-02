@@ -13,6 +13,22 @@
     event: !type:SkiaScreamActionEvent
 
 - type: entity
+  parent: BaseActionPolymorph
+  id: ActionSkiaJaunt
+  components:
+  - type: Magic
+    blockedBySpectral: false
+    school: Translocation
+  - type: Action
+    useDelay: 30
+    icon:
+      sprite: _Goobstation/Wizard/actions.rsi
+      state: jaunt
+  - type: InstantAction
+    event: !type:PolymorphSpellEvent
+      protoId: Jaunt
+
+- type: entity
   id: ActionTechnokineticPulse
   components:
   - type: Action

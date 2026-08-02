@@ -13,6 +13,9 @@ public sealed partial class SkiaResurrectWhenAbleComponent : Component
     [DataField, AutoNetworkedField]
     public TimeSpan? ResurrectAt;
 
+    [DataField, AutoNetworkedField]
+    public bool CanResurrect;
+
     [DataField]
     public LocId? ResurrectDesc;
 }
