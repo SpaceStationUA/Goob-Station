@@ -1,5 +1,3 @@
-roles-antag-listening-post-name = Оперативник станції прослуховування
-roles-antag-listening-post-objective = Шпигуйте за станцією та збирайте важливі розвіддані для вищого командування Синдикату.
 role-subtype-lpo = Опер. прослуховування
 listening-post-round-end-agent-name = оперативник станції прослуховування
 ent-MindRoleListeningPost = Роль оперативника станції прослуховування
