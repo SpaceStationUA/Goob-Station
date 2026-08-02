@@ -44,7 +44,6 @@ aac-quick-group-hostiles = Вороги
 
 # Keys used by phrases imported from DeltaV that are not present in this build.
 damage-type-radiant = Променеві
-damage-type-soul = Душевні
 job-name-cargo-assistant = Вантажний асистент
 job-name-centcomintern = Стажер Центрального командування
 job-name-centcommoff = Представник Центрального командування
