@@ -14,6 +14,9 @@ public sealed partial class LoadFarGridRuleComponent : Component
     [DataField(required: true)]
     public float DistanceModifier;
 
+    /// <summary>
+    /// Reference station width in map units used to scale the loaded grid offset.
+    /// </summary>
     [DataField]
-    public float Sousk = 123.44f;
+    public float ReferenceWidth = 123.44f;
 }

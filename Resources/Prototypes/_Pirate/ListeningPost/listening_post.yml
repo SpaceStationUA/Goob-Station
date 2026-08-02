@@ -56,6 +56,10 @@
     minimumPlayers: 25
     maxOccurrences: 1
     duration: null
+    chaos:
+      Hostile: 20
+      Friend: 20
+    eventType: HostilesSpawn
   # Pirate: PrecognitionResult is unavailable in the local psionics implementation.
   - type: RuleGrids
   - type: LoadFarGridRule
@@ -93,6 +97,8 @@
       - type: TargetObjectiveImmune
       mindRoles:
       - MindRoleListeningPost
+  - type: DynamicRuleCost
+    cost: 50
 
 # Operative equipment
 
@@ -217,8 +223,6 @@
         !type:DamageTrigger
         damage: 300
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
@@ -612,7 +616,6 @@
           True: { visible: false }
           False: { visible: true }
   - type: ToggleableVisuals
-    spriteLayer: lighter_flame
     inhandVisuals:
       left:
       - state: inhand-left-lit

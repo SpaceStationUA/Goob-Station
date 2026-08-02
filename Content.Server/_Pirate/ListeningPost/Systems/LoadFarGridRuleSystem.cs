@@ -41,7 +41,7 @@ public sealed class LoadFarGridRuleSystem : StationEventSystem<LoadFarGridRuleCo
             aabb = aabb.Union(gridAabb);
         }
 
-        var scale = comp.Sousk / aabb.Width;
+        var scale = comp.ReferenceWidth / aabb.Width;
         var modifier = comp.DistanceModifier * scale;
         var dist = MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * modifier;
         var offset = RobustRandom.NextVector2(dist, dist * 2.5f);

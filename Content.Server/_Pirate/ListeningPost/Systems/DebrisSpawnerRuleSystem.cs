@@ -42,14 +42,16 @@ public sealed class DebrisSpawnerRuleSystem : StationEventSystem<DebrisSpawnerRu
         if (salvageMaps.Count == 0)
             return;
 
-        for (var i = 0; i < ent.Comp.Count; i++)
+        var spawnCount = Math.Min(ent.Comp.Count, salvageMaps.Count);
+        for (var i = 0; i < spawnCount; i++)
         {
             var aabb = RobustRandom.Pick(boxes);
             var dist = MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * ent.Comp.DistanceModifier;
             var offset = RobustRandom.NextVector2(dist, dist * 2.5f);
             var randomer = RobustRandom.NextVector2(dist, dist * 5f);
             var salvage = RobustRandom.PickAndTake(salvageMaps);
-            _mapLoader.TryLoadGrid(args.Map, salvage.MapPath, out _, offset: aabb.Center + offset + randomer);
+            if (!_mapLoader.TryLoadGrid(args.Map, salvage.MapPath, out _, offset: aabb.Center + offset + randomer))
+                Log.Error($"{ToPrettyString(ent):rule} failed to load debris grid {salvage.MapPath}.");
         }
     }
 }
