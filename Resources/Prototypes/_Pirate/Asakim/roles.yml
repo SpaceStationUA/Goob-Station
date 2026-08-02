@@ -57,10 +57,6 @@
     mindRoles:
     - MindRoleAsakim
   - type: GhostTakeoverAvailable
-  - type: RandomMetadata
-    nameSegments:
-    - NamesFirst
-    - NamesLast
   - type: NpcFactionMember
     factions:
     - Syndicate
