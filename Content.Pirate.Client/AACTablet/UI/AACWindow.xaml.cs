@@ -275,7 +275,7 @@ public sealed partial class AACWindow : FancyWindow
         }
     }
 
-    internal void Update(AACTabletBuiState msg)
+    internal void Update(AACTabletUpdateChannelsMessage msg)
     {
         InitializePhraseUi();
         RadioChannels.Clear();

@@ -58,8 +58,8 @@ public sealed class AACTabletSystem : EntitySystem
 
     private void OnBoundUIOpened(Entity<AACTabletComponent> ent, ref BoundUIOpenedEvent args)
     {
-        var state = new AACTabletBuiState(GetAvailableChannels(args.Actor));
-        _userInterface.SetUiState(args.Entity, AACTabletKey.Key, state);
+        var message = new AACTabletUpdateChannelsMessage(GetAvailableChannels(args.Actor));
+        _userInterface.ServerSendUiMessage(args.Entity, AACTabletKey.Key, message, args.Actor);
     }
 
     private void OnSendPhrase(Entity<AACTabletComponent> ent, ref AACTabletSendPhraseMessage message)

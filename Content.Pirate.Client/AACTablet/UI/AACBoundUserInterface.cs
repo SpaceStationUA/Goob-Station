@@ -58,11 +58,9 @@ public sealed class AACBoundUserInterface : BoundUserInterface
         _typing?.ClientSubmittedChatText();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
-        base.UpdateState(state);
-
-        if (state is not AACTabletBuiState msg)
+        if (message is not AACTabletUpdateChannelsMessage msg)
             return;
 
         _window?.Update(msg);

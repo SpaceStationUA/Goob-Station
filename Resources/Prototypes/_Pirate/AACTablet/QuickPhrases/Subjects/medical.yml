@@ -88,11 +88,6 @@
   text: damage-type-radiant
 
 - type: quickPhrase
-  id: DamageSoulPhrase
-  parent: BaseDamageTypePhrase
-  text: damage-type-soul
-
-- type: quickPhrase
   id: TopicalPhrase
   parent: BaseMedicinePhrase
   text: phrase-topical
