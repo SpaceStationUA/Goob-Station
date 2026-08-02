@@ -36,9 +36,6 @@
     rules: ghost-role-information-asakim-rules
     mindRoles:
     - MindRoleAsakim
-    requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 172800
 
 # Kept for administrators who need to spawn a fully equipped warrior directly.
 - type: entity
@@ -57,9 +54,6 @@
     rules: ghost-role-information-asakim-rules
     raffle:
       settings: default
-    requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 172800
     mindRoles:
     - MindRoleAsakim
   - type: GhostTakeoverAvailable
