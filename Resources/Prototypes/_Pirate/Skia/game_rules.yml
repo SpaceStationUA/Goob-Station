@@ -2,6 +2,8 @@
   parent: BaseGameRule
   id: SkiaSpawn
   components:
+  - type: GameRule
+    chaosScore: 100 # Pirate - Secret+ requires a chaos score for fireable rules.
   - type: StationEvent
     weight: 5
     duration: null
