@@ -38,6 +38,7 @@ public sealed partial class AACWindow : FancyWindow
 
     private readonly List<ProtoId<QuickPhrasePrototype>> _phraseBuffer = [];
     private readonly List<ProtoId<QuickPhrasePrototype>> _phraseSingle = [];
+    private bool _phraseUiInitialized;
 
     public AACWindow()
     {
@@ -54,6 +55,14 @@ public sealed partial class AACWindow : FancyWindow
         SendButton.OnPressed += SendBuffer;
         ClearButton.OnPressed += BackspaceBuffer;
         RadioChannels.OnItemSelected += OnChannelSelected;
+    }
+
+    private void InitializePhraseUi()
+    {
+        if (_phraseUiInitialized)
+            return;
+
+        _phraseUiInitialized = true;
         PopulateGui();
         FilterSearch(null);
     }
@@ -263,6 +272,7 @@ public sealed partial class AACWindow : FancyWindow
 
     internal void Update(AACTabletBuiState msg)
     {
+        InitializePhraseUi();
         RadioChannels.Clear();
 
         var id = 0;
