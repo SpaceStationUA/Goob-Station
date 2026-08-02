@@ -10,8 +10,8 @@
     torso:
       part: TorsoBorg
       connections:
-      - hand 1
-    hand 1:
+      - left arm # Pirate: BodyPart slots now use arm symmetry names.
+    left arm:
       part: LeftArmBorg
 
 - type: body
@@ -22,11 +22,11 @@
     torso:
       part: TorsoBorg
       connections:
-      - hand 1
-      - hand 2
-    hand 1:
+      - left arm # Pirate: BodyPart slots now use arm symmetry names.
+      - right arm
+    left arm:
       part: LeftArmBorg
-    hand 2:
+    right arm:
       part: RightArmBorg
 
 - type: body
@@ -37,6 +37,6 @@
     torso:
       part: TorsoBorg
       connections:
-      - hand 1
-    hand 1:
+      - left arm # Pirate: BodyPart slots now use arm symmetry names.
+    left arm:
       part: LeftArmBorg
