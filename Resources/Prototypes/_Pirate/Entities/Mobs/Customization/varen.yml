@@ -50,11 +50,11 @@
     susie_wag_BACK: susie_wag
     susie_wag_BACK-tip: susie_wag-tip
   sprites:
-    - sprite: _Pirate/Mobs/Customization/varen/tail.rsi
+    - sprite: _Pirate/Mobs/Customization/varen/tail-wag.rsi
       state: susie_wag_BACK
-    - sprite: _Pirate/Mobs/Customization/varen/tail.rsi
+    - sprite: _Pirate/Mobs/Customization/varen/tail-wag.rsi
       state: susie_wag_BACK-tip
-    - sprite: _Pirate/Mobs/Customization/varen/tail.rsi
+    - sprite: _Pirate/Mobs/Customization/varen/tail-wag.rsi
       state: susie_wag
-    - sprite: _Pirate/Mobs/Customization/varen/tail.rsi
+    - sprite: _Pirate/Mobs/Customization/varen/tail-wag.rsi
       state: susie_wag-tip
