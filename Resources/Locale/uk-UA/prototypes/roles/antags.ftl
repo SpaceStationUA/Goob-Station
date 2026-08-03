@@ -1,5 +1,7 @@
 roles-antag-syndicate-agent-name = Зрадник
 roles-antag-syndicate-agent-objective = Виконайте свої завдання і залишайтеся непоміченим.
+roles-antag-listening-post-name = Оперативник станції прослуховування
+roles-antag-listening-post-objective = Шпигуйте за станцією та збирайте важливі розвіддані для вищого командування Синдикату.
 roles-antag-initial-infected-name = Перший інфікований
 roles-antag-initial-infected-objective = Як тільки ви обернетесь, заразіть якомога більше інших членів екіпажу.
 roles-antag-zombie-name = Зомбі
