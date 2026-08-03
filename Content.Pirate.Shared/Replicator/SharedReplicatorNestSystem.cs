@@ -216,13 +216,18 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
         // and dirty so the client knows if it's supposed to update the nest visuals
         Dirty(ent);
 
-        // finally, update the PointsStorage entity.
-        if (!TryComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage, out var pointsStorageComponent))
-            pointsStorageComponent = EnsureComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage);
+        SyncPointsStorage(ent);
+    }
 
-        pointsStorageComponent.Level = ent.Comp.CurrentLevel;
-        pointsStorageComponent.TotalPoints = ent.Comp.TotalPoints;
-        pointsStorageComponent.TotalReplicators = ent.Comp.SpawnedMinions.Count;
+    public void SyncPointsStorage(Entity<ReplicatorNestComponent> ent)
+    {
+        if (!Exists(ent.Comp.PointsStorage))
+            return;
+
+        var pointsStorage = EnsureComp<ReplicatorNestPointsStorageComponent>(ent.Comp.PointsStorage);
+        pointsStorage.Level = ent.Comp.CurrentLevel;
+        pointsStorage.TotalPoints = ent.Comp.TotalPoints;
+        pointsStorage.TotalReplicators = ent.Comp.SpawnedMinions.Count;
     }
 
     private void SpawnNew(Entity<ReplicatorNestComponent> ent)
@@ -277,6 +282,8 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
             return null;
 
         var upgraded = UpgradeReplicator(ent, nextStage);
+        if (upgraded == null)
+            return null;
 
         QueueDel(ent);
         foreach (var action in ent.Comp.Actions)

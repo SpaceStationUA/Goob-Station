@@ -6,7 +6,6 @@
 // all credit for the core gameplay concepts and a lot of the core functionality of the code goes to the folks over at Goob, but I re-wrote enough of it to justify putting it in our filestructure.
 // the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
 
-using Content.Server.Actions;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
@@ -35,7 +34,6 @@ public sealed class ReplicatorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -63,22 +61,23 @@ public sealed class ReplicatorSystem : EntitySystem
 
     private void OnMindAdded(Entity<ReplicatorComponent> ent, ref MindAddedMessage args)
     {
-        if (ent.Comp.HasSpawnedNest)
+        if (ent.Comp.Actions.Count > 0 ||
+            !TryComp<MindContainerComponent>(ent, out var mindContainer) ||
+            mindContainer.Mind is not { } mind)
             return;
 
-        if (ent.Comp.Queen) // if you're the queen, which you'll only be if you're the first one spawned,
+        if (ent.Comp.Queen)
         {
-            // give the action to spawn a nest.
-            if (!TryComp<MindContainerComponent>(ent, out var mindContainer) || mindContainer.Mind == null)
-                return;
-
-            if (!mindContainer.HasMind)
-                ent.Comp.Actions.Add(_actions.AddAction((EntityUid)ent, ent.Comp.SpawnNewNestAction));
-            else
-                ent.Comp.Actions.Add(_actionContainer.AddAction((EntityUid)mindContainer.Mind, ent.Comp.SpawnNewNestAction));
+            ent.Comp.Actions.Add(_actionContainer.AddAction(mind, ent.Comp.SpawnNewNestAction));
 
             ent.Comp.HasSpawnedNest = true;
         }
+
+        if (!ent.Comp.HasBeenGivenUpgradeActions)
+            return;
+
+        foreach (var action in ent.Comp.UpgradeActions)
+            ent.Comp.Actions.Add(_actionContainer.AddAction(mind, action));
     }
 
     private void OnMindRemoved(Entity<ReplicatorComponent> ent, ref MindRemovedMessage args)
@@ -88,6 +87,7 @@ public sealed class ReplicatorSystem : EntitySystem
         {
             QueueDel(action);
         }
+        ent.Comp.Actions.Clear();
     }
 
     private void OnSpawnNestAction(Entity<ReplicatorComponent> ent, ref ReplicatorSpawnNestActionEvent args)
@@ -133,6 +133,7 @@ public sealed class ReplicatorSystem : EntitySystem
         // make sure the nest knows who we are, and vice versa.
         myNestComp.SpawnedMinions.Add(ent);
         ent.Comp.MyNest = myNest;
+        _replicatorNest.SyncPointsStorage((myNest, myNestComp));
         // and we don't need the RelatedReplicators list anymore, so,
         ent.Comp.RelatedReplicators.Clear();
 
@@ -155,6 +156,7 @@ public sealed class ReplicatorSystem : EntitySystem
             return;
         // add the spawned replicator to the nest's list when someone takes the ghostrole.
         nestComp.SpawnedMinions.Add(ent);
+        _replicatorNest.SyncPointsStorage((tracker.SpawnedFrom, nestComp));
         // then remove the spawner from the nest's list of unclaimed spawners.
         nestComp.UnclaimedSpawners.Remove(args.Spawner);
 

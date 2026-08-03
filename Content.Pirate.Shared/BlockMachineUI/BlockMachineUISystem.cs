@@ -34,7 +34,7 @@ public sealed class SharedBlockMachineUISystem : EntitySystem
 
         args.Cancel();
 
-        if (_net.IsClient && _timing.IsFirstTimePredicted && ent.Comp.PopupText != null)
+        if (_net.IsClient && _timing.IsFirstTimePredicted && !args.Silent && ent.Comp.PopupText != null)
             _popup.PopupEntity(Loc.GetString(ent.Comp.PopupText), ent, ent);
     }
 }

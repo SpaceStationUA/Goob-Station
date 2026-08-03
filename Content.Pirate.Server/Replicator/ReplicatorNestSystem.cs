@@ -6,7 +6,6 @@
 // all credit for the core gameplay concepts and a lot of the core functionality of the code goes to the folks over at Goob, but I re-wrote enough of it to justify putting it in our filestructure.
 // the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
 
-using Content.Server.Actions;
 using Content.Server.Audio;
 using Content.Server.Buckle.Systems;
 using Content.Server.Chat.Systems;
@@ -52,7 +51,6 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
 
     [Dependency] private readonly SharedReplicatorNestSystem _sharedNest = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
@@ -101,7 +99,7 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
             if (!nestComp.HasAnnounced && nestComp.CurrentLevel >= nestComp.AnnounceAtLevel)
             {
                 nestComp.HasAnnounced = true;
-                _chat.DispatchGlobalAnnouncement(nestComp.Announcement, colorOverride: Color.Red);
+                _chat.DispatchGlobalAnnouncement(Loc.GetString(nestComp.Announcement), colorOverride: Color.Red);
             }
 
             // Delete blacklisted entities, or entities that are neither preserved nor controlled by a player.
@@ -141,6 +139,7 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
         EnsureComp<ReplicatorNestPointsStorageComponent>(pointsStorageEnt);
 
         ent.Comp.PointsStorage = pointsStorageEnt;
+        _sharedNest.SyncPointsStorage(ent);
     }
 
     private void OnStepTriggerAttempt(Entity<ReplicatorNestComponent> ent, ref StepTriggerAttemptEvent args)
@@ -269,66 +268,91 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
         // if there are living replicators, select one and give the action to create a new nest.
         if (livingReplicators.Count > 0)
         {
-            // if queen isn't null, assign it to queenNotNull. if it is, pick a random EntityUid from the list and assign it to queenNotNull
-            if (queen is not { } queenNotNull)
-                queenNotNull = _random.Pick(livingReplicators);
+            var queenEntity = queen is { } existingQueen
+                ? livingReplicators.First(rep => rep.Owner == existingQueen)
+                : _random.Pick(livingReplicators);
+            var controlledReplicators = livingReplicators
+                .Where(rep => TryComp<MindContainerComponent>(rep.Owner, out var mind) && mind.HasMind)
+                .ToList();
 
-            var comp = EnsureComp<ReplicatorComponent>(queenNotNull);
-            comp.Queen = true;
-            livingReplicators.Add((queenNotNull, comp));
-            comp.RelatedReplicators = livingReplicators; // make sure we know who belongs to our nest
+            if ((!TryComp<MindContainerComponent>(queenEntity.Owner, out var queenMind) || !queenMind.HasMind) &&
+                controlledReplicators.Count > 0)
+                queenEntity = _random.Pick(controlledReplicators);
 
-            var upgradedQueen = ForceUpgrade((queenNotNull, comp), comp.FinalStage);
-            if (!TryComp<ReplicatorComponent>(upgradedQueen, out var upgradedComp))
-                return;
+            foreach (var replicator in livingReplicators)
+                replicator.Comp.Queen = false;
 
-            if (upgradedQueen is not { } upgradedQueenNotNull || !TryComp<MindContainerComponent>(upgradedQueen, out var mindContainer) || mindContainer.Mind is not { } mind)
-                return;
+            queenEntity.Comp.Queen = true;
+            queenEntity.Comp.RelatedReplicators = livingReplicators;
 
-            if (!TryComp<ReplicatorComponent>(upgradedQueenNotNull, out var upgradedQueenReplicatorComp))
-                return;
+            var queenSource = queenEntity.Owner;
+            EntityUid? replacedQueenSource = null;
+            var finalLivingReplicators = new HashSet<Entity<ReplicatorComponent>>();
+            var upgradedQueen = ForceUpgrade(queenEntity, queenEntity.Comp.FinalStage);
 
-            queen = upgradedQueenNotNull;
-            livingReplicators.Add((upgradedQueenNotNull, upgradedQueenReplicatorComp));
+            if (upgradedQueen is { } upgradedQueenUid &&
+                TryComp<ReplicatorComponent>(upgradedQueenUid, out var upgradedQueenComp))
+            {
+                queen = upgradedQueenUid;
+                replacedQueenSource = queenSource;
+                upgradedQueenComp.Queen = true;
+                finalLivingReplicators.Add((upgradedQueenUid, upgradedQueenComp));
 
-            if (!mindContainer.HasMind)
-                upgradedComp.Actions.Add(_actions.AddAction(upgradedQueenNotNull, upgradedComp.SpawnNewNestAction));
+                if (TryComp<MindContainerComponent>(upgradedQueenUid, out var mindContainer) &&
+                    mindContainer.Mind is { } mind)
+                {
+                    upgradedQueenComp.Actions.Add(_actionContainer.AddAction(mind, upgradedQueenComp.SpawnNewNestAction));
+
+                    upgradedQueenComp.HasSpawnedNest = true;
+                }
+            }
             else
-                upgradedComp.Actions.Add(_actionContainer.AddAction(mind, upgradedComp.SpawnNewNestAction));
+            {
+                // A mindless takeover body cannot be replaced yet, but it must remain claimable.
+                queen = queenSource;
+            }
 
-            // then add the Crown.
-            EnsureComp<ReplicatorSignComponent>(upgradedQueenNotNull);
-        }
+            EnsureComp<ReplicatorSignComponent>(queen.Value);
 
-        // finally, loop over our living replicators and set their pinpointers to target the queen, then downgrade them to level 1 and stun them.
-        List<(EntityUid, ReplicatorComponent)> finalLivingReps = [];
-        var repQuery2 = EntityQueryEnumerator<ReplicatorComponent>();
-        while (repQuery2.MoveNext(out var uid, out var comp))
-        {
-            if (!_mobState.IsAlive(uid))
-                continue;
+            // Downgrade the remaining living members. A temporarily mindless takeover body stays intact.
+            foreach (var (uid, comp) in livingReplicators)
+            {
+                if (uid == replacedQueenSource || TerminatingOrDeleted(uid))
+                    continue;
 
-            finalLivingReps.Add((uid, comp));
-            if (HasComp<ReplicatorSignComponent>(uid))
-                queen = uid;
-        }
-        foreach (var (uid, comp) in finalLivingReps)
-        {
-            EntityUid? upgraded;
-            if (HasComp<ReplicatorSignComponent>(uid))
-                upgraded = uid;
-            else
-                upgraded = ForceUpgrade((uid, comp), comp.FirstStage);
-            if (upgraded is not { } upgradedNotNull)
-                return;
+                Entity<ReplicatorComponent> activeReplicator = (uid, comp);
+                if (uid != queen &&
+                    ForceUpgrade((uid, comp), comp.FirstStage) is { } upgradedUid &&
+                    TryComp<ReplicatorComponent>(upgradedUid, out var upgradedComp))
+                {
+                    activeReplicator = (upgradedUid, upgradedComp);
+                }
 
-            _movementMod.TryUpdateMovementSpeedModDuration(upgradedNotNull, "HoleDestroyedSlowdownStatusEffect", TimeSpan.FromSeconds(3), 0.8f);
+                finalLivingReplicators.Add(activeReplicator);
+            }
 
-            if (!_inventory.TryGetSlotEntity(upgradedNotNull, "pocket1", out var pocket1) || !TryComp<PinpointerComponent>(pocket1, out var pinpointer))
-                continue;
+            if (TryComp<ReplicatorComponent>(queen.Value, out var finalQueenComp))
+                finalQueenComp.RelatedReplicators = finalLivingReplicators;
 
-            _pinpointer.SetTarget(pocket1.Value, queen, pinpointer);
-            _popup.PopupEntity(Loc.GetString("replicator-nest-destroyed"), uid, uid, PopupType.LargeCaution);
+            foreach (var replicator in finalLivingReplicators)
+            {
+                _movementMod.TryUpdateMovementSpeedModDuration(
+                    replicator.Owner,
+                    "HoleDestroyedSlowdownStatusEffect",
+                    TimeSpan.FromSeconds(3),
+                    0.8f);
+                _popup.PopupEntity(
+                    Loc.GetString("replicator-nest-destroyed"),
+                    replicator.Owner,
+                    replicator.Owner,
+                    PopupType.LargeCaution);
+
+                if (!_inventory.TryGetSlotEntity(replicator.Owner, "pocket1", out var pocket1) ||
+                    !TryComp<PinpointerComponent>(pocket1, out var pinpointer))
+                    continue;
+
+                _pinpointer.SetTarget(pocket1.Value, queen, pinpointer);
+            }
         }
     }
 
@@ -350,28 +374,18 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
         var totalPoints = 0;
         var totalSpawned = 0;
         HashSet<int> levels = [];
-        var locationsList = "";
+        List<string> locations = [];
 
         // generate a summary of locations, levels, points, and total spawned replicators across all nests
-        var i = 0;
         foreach (var ent in nests)
         {
-            i++;
             var pointsStorage = ent.Comp;
             var location = Loc.GetString("replicator-location-unknown");
             var mapCoords = _xform.ToMapCoordinates(Transform(ent).Coordinates);
             if (_navMap.TryGetNearestBeacon(mapCoords, out var beacon, out _) && beacon?.Comp.Text != null)
                 location = beacon?.Comp.Text!;
 
-            if (nests.Count == 1)
-                locationsList = string.Concat(locationsList, "[color=#d70aa0]", location, "[/color].");
-            else if (nests.Count == 2 && i == 1)
-                locationsList = string.Concat(locationsList, "[color=#d70aa0]", location, " ");
-            else if (i != nests.Count)
-                locationsList = string.Concat(locationsList, "[color=#d70aa0]", location, "[/color], ");
-            else
-                locationsList = string.Concat(locationsList,
-                    $"[/color]{Loc.GetString("replicator-list-and")} [color=#d70aa0]{location}[/color].");
+            locations.Add($"[color=#d70aa0]{location}[/color]");
 
             totalPoints += pointsStorage.TotalPoints / 10; // dividing by ten gives us a slightly more manageable number + keeps it consistent with pre-stackcount point calculation.
 
@@ -380,6 +394,13 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
             levels.Add(pointsStorage.Level);
         }
 
+        var conjunction = Loc.GetString("replicator-list-and");
+        var locationsList = locations.Count switch
+        {
+            1 => $"{locations[0]}.",
+            2 => $"{locations[0]} {conjunction} {locations[1]}.",
+            _ => $"{string.Join(", ", locations.Take(locations.Count - 1))}, {conjunction} {locations[^1]}.",
+        };
         var highestLevel = levels.Max();
 
         // then push that summary.

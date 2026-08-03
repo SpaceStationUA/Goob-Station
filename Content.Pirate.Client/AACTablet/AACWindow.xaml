@@ -15,8 +15,8 @@
             <Button Name="ClearButton" Text="{Loc 'aac-tablet-backspace'}" TextAlign="Center"/>
             <Button Name="SendButton" Text="{Loc 'aac-tablet-send'}" TextAlign="Center"/>
         </BoxContainer>
-        <TabContainer Name="WindowBody" TabTitle="{Loc 'aac-tablet-search'}" VerticalExpand="True" MouseFilter="Pass">
-            <BoxContainer Orientation="Vertical" Name="Search" MinSize="540 200">
+        <TabContainer Name="WindowBody" VerticalExpand="True" MouseFilter="Pass">
+            <BoxContainer Orientation="Vertical" Name="Search" TabTitle="{Loc 'aac-tablet-search'}" MinSize="540 200">
                 <LineEdit Name="SearchBar" PlaceHolder="{Loc 'aac-tablet-search'}" HorizontalExpand="True" Margin="4 4" />
                 <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
                     <BoxContainer Name="SearchResults" Orientation="Vertical" HorizontalExpand="True" />
