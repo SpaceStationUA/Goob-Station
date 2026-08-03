@@ -6,9 +6,11 @@ namespace Content.Shared._DV.Psionics.Events;
 /// <param name="user">The performer who used the power.</param>
 /// <param name="psionicSource">The source of the psionic power.</param>
 /// <param name="power">The psionic power used.</param>
-public sealed class PsionicPowerUsedEvent(EntityUid user, EntityUid psionicSource, string power) : HandledEntityEventArgs
+/// <param name="actionEntity">The action entity that was used, if it exists.</param>
+public sealed class PsionicPowerUsedEvent(EntityUid user, EntityUid psionicSource, string power, EntityUid? actionEntity) : HandledEntityEventArgs
 {
     public EntityUid User = user;
     public EntityUid PsionicSource = psionicSource;
     public string Power = power;
+    public EntityUid? ActionEntity = actionEntity;
 }

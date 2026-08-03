@@ -8,7 +8,11 @@ public sealed partial class PyrokinesisPowerComponent : BasePsionicPowerComponen
 {
     public override EntProtoId ActionProtoId { get; set; } = "ActionPyrokinesis";
 
-    public override string PowerName { get; set; } = "psionic-power-name-Pyrokinesis";
+    public override string PowerName { get; set; } = "psionic-power-name-pyrokinesis";
+
+    public override string? PowerInitFeedback { get; set; } = "pyrokinesis-power-initialization-feedback";
+
+    public override string? PowerMetapsionicFeedback { get; set; } = "pyrokinesis-power-metapsionic-feedback";
 
     public override int MinGlimmerChanged { get; set; } = 5;
 

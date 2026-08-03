@@ -876,6 +876,15 @@
     accentVColor: "#8900c9"
   - type: Icon
     state: pda-rd
+  - type: CartridgeLoader # Pirate because of Glimmer monitor
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
+    - GlimmerMonitorCartridge # Pirate end
 
 - type: entity
   parent: BasePDA

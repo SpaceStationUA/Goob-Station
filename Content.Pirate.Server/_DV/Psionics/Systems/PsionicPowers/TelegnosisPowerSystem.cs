@@ -35,6 +35,8 @@ public sealed class TelegnosisPowerSystem : SharedTelegnosisPowerSystem
         // TODO: Fix this. MindSwapSystem cannot handle popups when called from serverside while the performer is the cause.
         if (HasComp<MindShieldComponent>(psionic))
         {
+            // Blocked by mindshield - don't consume the cooldown.
+            args.Handled = false;
             Popup.PopupEntity(Loc.GetString("psionic-power-mindswap-own-mindshield"), psionic, psionic, PopupType.SmallCaution);
             return;
         }
@@ -45,6 +47,7 @@ public sealed class TelegnosisPowerSystem : SharedTelegnosisPowerSystem
         if (!_mindSwap.SwapMinds(args.Performer, projection))
         {
             // If swap didn't work out, delete the spawned projection.
+            args.Handled = false; // Blocked - don't consume the cooldown.
             QueueDel(projection);
             return;
         }

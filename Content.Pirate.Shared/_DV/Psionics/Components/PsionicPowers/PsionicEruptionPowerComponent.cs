@@ -11,6 +11,10 @@ public sealed partial class PsionicEruptionPowerComponent : BasePsionicPowerComp
 
     public override string PowerName { get; set; } = "psionic-power-name-eruption";
 
+    public override string? PowerInitFeedback { get; set; } = "psionic-eruption-power-initialization-feedback";
+
+    public override string? PowerMetapsionicFeedback { get; set; } = "psionic-eruption-power-metapsionic-feedback";
+
     public override int MinGlimmerChanged { get; set; } = -200;
 
     public override int MaxGlimmerChanged { get; set; } = -100;

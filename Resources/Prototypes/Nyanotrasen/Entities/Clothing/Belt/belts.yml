@@ -5,9 +5,9 @@
   description: Perfect for storing all of your equipment.
   components:
   - type: Sprite
-    sprite: _EinsteinEngines/Clothing/Belt/mantis_belt.rsi
+    sprite: Nyanotrasen/Clothing/Belt/mantis_belt.rsi
   - type: Clothing
-    sprite: _EinsteinEngines/Clothing/Belt/mantis_belt.rsi
+    sprite: Nyanotrasen/Clothing/Belt/mantis_belt.rsi
   - type: Storage
     whitelist:
       tags:

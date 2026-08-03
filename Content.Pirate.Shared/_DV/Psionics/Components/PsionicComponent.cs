@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._DV.Psionics.Components;
 
@@ -13,6 +14,14 @@ public sealed partial class PsionicComponent : Component
     /// </summary>
     [DataField]
     public HashSet<EntityUid?> PsionicPowersActionEntities = [];
+
+    /// <summary>
+    /// Extra powers added to this psionic's random pull, keyed by power entity prototype id -> weight.
+    /// Populated when the psionic gains a power that unlocks another (e.g. Healing Word unlocks Revivify).
+    /// Merged into the base power table whenever a new power is rolled.
+    /// </summary>
+    [DataField]
+    public Dictionary<EntProtoId, float> PowerPoolAdditions = new();
 
     /// <summary>
     /// Whether the psionic gets stunned when a psionic power gets removed. This doesn't mean they lost all psionic powers.

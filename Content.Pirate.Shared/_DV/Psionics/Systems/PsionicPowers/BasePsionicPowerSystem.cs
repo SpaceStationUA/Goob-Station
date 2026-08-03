@@ -7,6 +7,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Psionics.Glimmer;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -55,6 +56,22 @@ public abstract class BasePsionicPowerSystem<T, T1> : EntitySystem where T : Bas
         var psionicComp = EnsureComp<PsionicComponent>(power);
         psionicComp.PsionicPowersActionEntities.Add(power.Comp.ActionEntity);
         Dirty(power);
+
+        // Merge any powers this power unlocks into the psionic's random pull
+        if (power.Comp.PowerPoolAdditions.Count > 0)
+        {
+            foreach (var (protoId, weight) in power.Comp.PowerPoolAdditions)
+                psionicComp.PowerPoolAdditions[protoId] = weight;
+
+            Dirty(power, psionicComp);
+        }
+
+        // Feedback shown to the player when they first gain this power.
+        if (power.Comp.PowerInitFeedback is { } feedback
+            && TryComp<ActorComponent>(power, out _))
+        {
+            RaiseLocalEvent(power, new PsionicPowerGainedEvent(power, Loc.GetString(feedback)));
+        }
     }
 
     /// <summary>
@@ -67,16 +84,23 @@ public abstract class BasePsionicPowerSystem<T, T1> : EntitySystem where T : Bas
         if (Timing.ApplyingState || args.Handled)
             return;
 
-        args.Handled = true;
-
-        if (Psionic.CanUsePsionicAbility(psionic))
+        if (CanUsePower(psionic))
         {
+            args.Handled = true;
             OnPowerUsed(psionic, ref args);
             return;
         }
 
         Popup.PopupClient(Loc.GetString("psionic-cannot-use-psionics"), args.Performer, args.Performer);
     }
+
+    /// <summary>
+    /// Whether the psionic entity is allowed to use this specific power.
+    /// Override this if a power must bypass the generic psionic-use gate
+    /// (e.g. DarkSwap has to stay usable while in the shadow realm so the user can return).
+    /// </summary>
+    /// <param name="psionic">The source of the power.</param>
+    protected virtual bool CanUsePower(Entity<T> psionic) => Psionic.CanUsePsionicAbility(psionic);
 
     /// <summary>
     /// This is the creme of the system. If you add a new power, you will want to call this.
@@ -179,7 +203,7 @@ public abstract class BasePsionicPowerSystem<T, T1> : EntitySystem where T : Bas
         var power = Loc.GetString(psionicSource.Comp.PowerName);
         _adminLogger.Add(Database.LogType.Psionics, Database.LogImpact.Medium, $"{ToPrettyString(psionicSource):player} used {power}");
 
-        var ev = new PsionicPowerUsedEvent(performer, psionicSource, power);
+        var ev = new PsionicPowerUsedEvent(performer, psionicSource, power, psionicSource.Comp.ActionEntity);
         RaiseLocalEvent(psionicSource, ev);
 
         _glimmer.Glimmer += Random.Next(psionicSource.Comp.MinGlimmerChanged, psionicSource.Comp.MaxGlimmerChanged);

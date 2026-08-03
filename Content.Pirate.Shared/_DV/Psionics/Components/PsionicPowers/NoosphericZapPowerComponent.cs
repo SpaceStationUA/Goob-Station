@@ -10,6 +10,10 @@ public sealed partial class NoosphericZapPowerComponent : BasePsionicPowerCompon
 
     public override string PowerName { get; set; } = "psionic-power-name-noospheric-zap";
 
+    public override string? PowerInitFeedback { get; set; } = "noospheric-zap-power-initialization-feedback";
+
+    public override string? PowerMetapsionicFeedback { get; set; } = "noospheric-zap-power-metapsionic-feedback";
+
     public override int MinGlimmerChanged { get; set; } = 5;
 
     public override int MaxGlimmerChanged { get; set; } = 15;

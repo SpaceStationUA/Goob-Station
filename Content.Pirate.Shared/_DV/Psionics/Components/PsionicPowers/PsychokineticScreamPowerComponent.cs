@@ -11,6 +11,10 @@ public sealed partial class PsychokineticScreamPowerComponent : BasePsionicPower
 
     public override string PowerName { get; set; } = "psionic-power-name-psychokinetic";
 
+    public override string? PowerInitFeedback { get; set; } = "psychokinetic-scream-power-initialization-feedback";
+
+    public override string? PowerMetapsionicFeedback { get; set; } = "psychokinetic-scream-power-metapsionic-feedback";
+
     public override int MinGlimmerChanged { get; set; } = 10;
 
     public override int MaxGlimmerChanged { get; set; } = 20;

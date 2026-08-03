@@ -22,7 +22,8 @@ public sealed class MetapsionicPulsePowerSystem : BasePsionicPowerSystem<Metapsi
 
     protected override void OnPowerUsed(Entity<MetapsionicPulsePowerComponent> psionic, ref MetapsionicPulsePowerActionEvent args)
     {
-        foreach (var target in _lookupSystem.GetEntitiesInRange<PsionicComponent>(args.Target, psionic.Comp.Range))
+        // Scan around the caster, not the cursor point.
+        foreach (var target in _lookupSystem.GetEntitiesInRange<PsionicComponent>(Transform(args.Performer).Coordinates, psionic.Comp.Range))
         {
             if (target.Owner == args.Performer
                 || Transform(target).ParentUid == args.Performer)

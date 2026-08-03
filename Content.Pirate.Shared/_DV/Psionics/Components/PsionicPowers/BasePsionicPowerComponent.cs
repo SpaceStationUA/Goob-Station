@@ -28,6 +28,19 @@ public abstract partial class BasePsionicPowerComponent : Component
     public abstract string PowerName { get; set; }
 
     /// <summary>
+    /// The Loc string shown to the player as a popup when they first gain this power.
+    /// </summary>
+    [DataField]
+    public abstract string? PowerInitFeedback { get; set; }
+
+    /// <summary>
+    /// The Loc string describing the holder of this power when scanned by a
+    /// metapsionic or Assay. Can use the "entity" parameter.
+    /// </summary>
+    [DataField]
+    public abstract string? PowerMetapsionicFeedback { get; set; }
+
+    /// <summary>
     /// The minimum glimmer amount that will be changed upon use of the psionic power.
     /// Should be lower than <see cref="MaxGlimmerChanged"/>.
     /// </summary>
@@ -40,6 +53,17 @@ public abstract partial class BasePsionicPowerComponent : Component
     /// </summary>
     [DataField]
     public abstract int MaxGlimmerChanged { get; set; }
+
+    /// <summary>
+    /// Additional powers added to this psionic's random pull when they gain this power.
+    /// Keyed by power entity prototype id -> weight in the pull.
+    /// </summary>
+    /// <example>
+    /// Healing Word is the "weak" version of Revivify: gaining it adds Revivify to the
+    /// random pull at a high weight, so only psionics with Healing Word can roll Revivify.
+    /// </example>
+    [DataField]
+    public Dictionary<EntProtoId, float> PowerPoolAdditions = new();
 
     /// <summary>
     /// Whether this ability can be removed via mindbreaking.

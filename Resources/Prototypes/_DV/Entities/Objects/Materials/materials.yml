@@ -183,3 +183,141 @@
     componentsToAdd:
     - type: PyrokinesisPower
     - type: Psionic
+
+# Pirate: Ported from upstream PR #34 (SpaceStationUA/Goob-Station)
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalAnoigo
+  name: anoigo crystal
+  description: A small psionic crystal. Doors seem to swing open at your approach.
+  components:
+  - type: Sprite
+    color: "#d4c9a0"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: AnoigoPower
+    - type: Psionic
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalHeal
+  name: healing crystal
+  description: A small psionic crystal. Wounds seem less threatening while holding it.
+  components:
+  - type: Sprite
+    color: "#7ee081"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: HealingWord
+      healingAmount:
+        groups:
+          Genetic: -2.5
+          Toxin: -5
+          Airloss: -5
+          Brute: -7.5
+          Burn: -10
+      rotReduction: 10
+      useDelay: 1
+      doRevive: false
+    - type: Psionic
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalRevivify
+  name: revivify crystal
+  description: A small psionic crystal. It hums with the pulse of life itself.
+  components:
+  - type: Sprite
+    color: "#4fe0ff"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: RevivifyPower
+      healingAmount:
+        groups:
+          Genetic: -15
+          Toxin: -30
+          Airloss: -60
+          Brute: -45
+          Burn: -60
+      rotReduction: 60
+      useDelay: 8
+      doRevive: true
+    - type: Psionic
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalDarkSwap
+  name: darkswap crystal
+  description: A small psionic crystal. Shadows cling to it even in bright light.
+  components:
+  - type: Sprite
+    color: "#7100bd"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: DarkSwapPower
+    - type: Psionic
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalAssay
+  name: assay crystal
+  description: A small psionic crystal. You can almost feel the knowledge radiating from it.
+  components:
+  - type: Sprite
+    color: "#8a00c2"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: AssayPower
+    - type: Psionic
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalShadeskip
+  name: shadeskip crystal
+  description: A small psionic crystal. Kudzu vines seem to reach toward it.
+  components:
+  - type: Sprite
+    color: "#3c6e47"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: ShadeskipPower
+    - type: Psionic
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalMassSleep
+  name: mass sleep crystal
+  description: A small psionic crystal. Gazing into it makes your eyelids feel heavy.
+  components:
+  - type: Sprite
+    color: "#4a63d1"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: MassSleepPower
+    - type: Psionic
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalMindSwap
+  name: mind swap crystal
+  description: A small psionic crystal. Your reflection in it seems just... off.
+  components:
+  - type: Sprite
+    color: "#e6a23c"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: MindSwapPower
+    - type: Psionic
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalEruption
+  name: eruption crystal
+  description: A small psionic crystal. It thrums with barely-contained energy.
+  components:
+  - type: Sprite
+    color: "#c2571a"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: PsionicEruptionPower
+    - type: Psionic

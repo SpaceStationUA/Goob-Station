@@ -17,6 +17,8 @@
   - type: Speech
     speechSounds: Tenor
   - type: Psionic
+  - type: AssayResponse
+    replaceMessage: oracle-feedback
   - type: SolutionContainerManager
     solutions:
       fountain:

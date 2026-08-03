@@ -8,3 +8,12 @@
     id: ForensicMantisIDCard
   - type: Pager
     autoLinkJobs: [ForensicMantis]
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - NanoChatCartridge # DeltaV
+    - WalletCartridge # Pirate banking
+    - GlimmerMonitorCartridge

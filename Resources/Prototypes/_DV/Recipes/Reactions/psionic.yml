@@ -1,17 +1,3 @@
-# why is this commented
-# - type: reaction
-#  id: LotophagoiOil
-#  reactants:
-#    SpaceDrugs:
-#      amount: 1
-#    Cognizine:
-#      amount: 1
-#    Plasma:
-#      amount: 5
-#      catalyst: true
-#  products:
-#    LotophagoiOil: 1
-
 - type: reaction
   id: CrystalNormality
   impact: Low
@@ -77,8 +63,6 @@
     entity: PsionCrystalTeleg
   - !type:AffectsGlimmer
     amount: -3
-
-# Pirate: Precognition power was not ported, so omit Delta-V's precognition crystal reaction.
 
 - type: reaction
   id: CreateScreamCrystal
@@ -157,5 +141,117 @@
   effects:
   - !type:SpawnEntity
     entity: PsionCrystalPyro
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateAnoigoCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Iron:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalAnoigo
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateHealCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Bicaridine:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalHeal
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateAssayCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Cognizine:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalAssay
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateShadeskipCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Plasma:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalShadeskip
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateMassSleepCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    ChloralHydrate:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalMassSleep
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateMindSwapCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    MindbreakerToxin:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalMindSwap
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateEruptionCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Uranium:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalEruption
   - !type:AffectsGlimmer
     amount: -3

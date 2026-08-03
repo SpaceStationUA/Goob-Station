@@ -1,3 +1,4 @@
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.NPC.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -49,4 +50,13 @@ public sealed partial class EtherealComponent : Component
 
     public List<ProtoId<NpcFactionPrototype>> SuppressedFactions = new();
     public bool HasDoorBumpTag;
+
+    /// <summary>
+    ///     Whether this ethereal state added the <see cref="PacifiedComponent"/> to the
+    ///     entity itself (i.e. it wasn't already pacified), so it can be safely removed
+    ///     when the ethereal state ends for any reason.
+    ///     Used by the DarkSwap psionic power (Pirate).
+    /// </summary>
+    [DataField]
+    public bool RemovePacifiedOnEnd;
 }

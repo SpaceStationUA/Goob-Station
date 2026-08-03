@@ -37,7 +37,11 @@
       sprite: _DV/Interface/Actions/actions_psionics.rsi
       state: mass_sleep
     useDelay: 60
-  - type: InstantAction
+    checkCanInteract: false
+  - type: TargetAction
+    checkCanAccess: false
+    range: -1 # You can cast it anywhere on your screen.
+  - type: WorldTargetAction
     event: !type:MassSleepPowerActionEvent
 
 - type: entity
@@ -112,7 +116,7 @@
   parent: BasePsionicAction
   id: ActionMetapsionicPulse
   name: Metapsionic Pulse
-  description: Send a mental pulse through a specified area to see if there are any psychics.
+  description: Send a mental pulse around yourself to see if there are any psychics nearby.
   components:
   - type: Action
     icon:
@@ -120,10 +124,7 @@
       state: metapsionic
     useDelay: 45
     checkCanInteract: false
-  - type: TargetAction
-    checkCanAccess: false
-    range: -1 # You can cast it anywhere on your screen.
-  - type: WorldTargetAction
+  - type: InstantAction
     event: !type:MetapsionicPulsePowerActionEvent
 
 - type: entity
@@ -182,3 +183,114 @@
     useDelay: 60
   - type: InstantAction
     event: !type:PsychokineticScreamPowerActionEvent
+
+# Pirate: Ported from upstream PR #34 (SpaceStationUA/Goob-Station)
+- type: entity
+  parent: BasePsionicAction
+  id: ActionAnoigo
+  name: Anoigo
+  description: Open and unbolt nearby doors.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: anoigo
+    useDelay: 40
+    checkCanInteract: false
+  - type: TargetAction
+    range: 6
+    checkCanAccess: false
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:AnoigoPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionHealingWord
+  name: Healing Word
+  description: Heal the wounds of a nearby target.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: healing_word
+    useDelay: 10
+    checkCanInteract: false
+  - type: TargetAction
+    range: 6
+    checkCanAccess: false
+  - type: EntityTargetAction
+    canTargetSelf: true
+    event: !type:HealingWordActionEvent
+  - type: ForceSpeech
+    speechText: healing-word-begin
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionRevivify
+  name: Revivify
+  description: Bring a dead target back from the brink.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: revivify
+    useDelay: 120
+    checkCanInteract: false
+  - type: TargetAction
+    range: 2
+    checkCanAccess: false
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:RevivifyPowerActionEvent
+  - type: ForceSpeech
+    speechText: revivify-begin
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionDarkSwap
+  name: DarkSwap
+  description: Phase into the shadow realm to pass through obstacles.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: darkswap
+    useDelay: 10
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:DarkSwapPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionAssay
+  name: Assay
+  description: Scan a target to learn about their psionic abilities.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: assay
+    useDelay: 45
+    checkCanInteract: false
+  - type: TargetAction
+    range: 2
+    checkCanAccess: false
+  - type: EntityTargetAction
+    canTargetSelf: true
+    event: !type:AssayPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionShadeskip
+  name: Shadeskip
+  description: Cover the surrounding area in shadow kudzu.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: shadeskip
+    useDelay: 45
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:ShadeskipPowerActionEvent

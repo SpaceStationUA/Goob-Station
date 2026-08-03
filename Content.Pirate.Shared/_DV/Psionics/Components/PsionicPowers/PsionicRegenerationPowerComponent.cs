@@ -11,6 +11,10 @@ public sealed partial class PsionicRegenerationPowerComponent : BasePsionicPower
 
     public override string PowerName { get; set; } = "psionic-power-name-psionic-regeneration";
 
+    public override string? PowerInitFeedback { get; set; } = "psionic-regeneration-power-initialization-feedback";
+
+    public override string? PowerMetapsionicFeedback { get; set; } = "psionic-regeneration-power-metapsionic-feedback";
+
     public override int MinGlimmerChanged { get; set; } = 10;
 
     public override int MaxGlimmerChanged { get; set; } = 20;

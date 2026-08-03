@@ -32,14 +32,20 @@ public sealed class NoosphericZapPowerSystem : SharedNoosphericZapPowerSystem
     {
         // As this can target batteries, it doesn't require the target to be psionic.
         if (!Psionic.CanBeTargeted(args.Target, ignorePsionicRequirement: true, hasAggressor: args.Performer))
+        {
+            args.Handled = false;
             return;
+        }
 
         var ev = new NoosphericallyZappedEvent(psionic.Comp.AddedBatteryCharge, args.Performer);
         RaiseLocalEvent(args.Target, ref ev);
 
         // If they don't have anything else, we check if they're a potential psionic.
         if (!ev.CanZap && !Psionic.CanBeTargeted(args.Target, hasAggressor: args.Performer))
+        {
+            args.Handled = false;
             return;
+        }
 
         var message = Loc.GetString("psionic-power-noospheric-zap-user", ("user", Identity.Entity(args.Performer, EntityManager)));
         Popup.PopupEntity(message, args.Performer, PopupType.LargeCaution);

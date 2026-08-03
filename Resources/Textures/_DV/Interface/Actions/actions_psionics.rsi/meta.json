@@ -42,6 +42,24 @@
         },
         {
             "name": "eruption"
+        },
+        {
+            "name": "anoigo"
+        },
+        {
+            "name": "healing_word"
+        },
+        {
+            "name": "revivify"
+        },
+        {
+            "name": "darkswap"
+        },
+        {
+            "name": "assay"
+        },
+        {
+            "name": "shadeskip"
         }
     ]
 }

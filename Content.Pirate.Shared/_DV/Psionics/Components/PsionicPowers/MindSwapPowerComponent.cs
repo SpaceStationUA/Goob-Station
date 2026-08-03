@@ -10,6 +10,10 @@ public sealed partial class MindSwapPowerComponent : BasePsionicPowerComponent
 
     public override string PowerName { get; set; } = "psionic-power-name-mindswap";
 
+    public override string? PowerInitFeedback { get; set; } = "mind-swap-power-initialization-feedback";
+
+    public override string? PowerMetapsionicFeedback { get; set; } = "mind-swap-power-metapsionic-feedback";
+
     public override int MinGlimmerChanged { get; set; } = 5;
 
     public override int MaxGlimmerChanged { get; set; } = 15;

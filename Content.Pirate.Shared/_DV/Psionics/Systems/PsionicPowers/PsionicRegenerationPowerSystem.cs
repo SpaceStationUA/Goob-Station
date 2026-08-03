@@ -3,6 +3,7 @@ using Content.Shared._DV.Psionics.Events.PowerActionEvents;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Jittering;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Pirate.Shared.Psionics;
 using Content.Shared.Popups;
@@ -16,6 +17,7 @@ public sealed class PsionicRegenerationPowerSystem : BasePsionicPowerSystem<Psio
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly PiratePsionicBloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private readonly SharedJitteringSystem _jittering = default!;
 
     public override void Initialize()
     {
@@ -39,6 +41,8 @@ public sealed class PsionicRegenerationPowerSystem : BasePsionicPowerSystem<Psio
             performer,
             performer,
             PopupType.Medium);
+
+        _jittering.DoJitter(performer, TimeSpan.FromSeconds(3), true, amplitude: 4f, frequency: 8f);
 
         _audioSystem.PlayPredicted(psionic.Comp.SoundUse, args.Performer, args.Performer, AudioParams.Default.WithVolume(8f).WithMaxDistance(1.5f).WithRolloffFactor(3.5f));
         AfterPowerUsed(psionic, args.Performer);

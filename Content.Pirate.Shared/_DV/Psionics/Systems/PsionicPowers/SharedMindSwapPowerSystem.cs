@@ -26,7 +26,11 @@ public abstract class SharedMindSwapPowerSystem : BasePsionicPowerSystem<MindSwa
     protected override void OnPowerUsed(Entity<MindSwapPowerComponent> psionic, ref MindSwapPowerActionEvent args)
     {
         if (!SwapMinds(args.Performer, args.Target))
+        {
+            // Blocked (mindshield/shielded target) - don't consume the cooldown.
+            args.Handled = false;
             return;
+        }
 
         AfterPowerUsed(psionic, args.Performer);
     }

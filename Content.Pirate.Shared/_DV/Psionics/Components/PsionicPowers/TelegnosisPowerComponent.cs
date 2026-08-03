@@ -11,6 +11,10 @@ public sealed partial class TelegnosisPowerComponent : BasePsionicPowerComponent
 
     public override string PowerName { get; set; } = "psionic-power-name-telegnosis";
 
+    public override string? PowerInitFeedback { get; set; } = "telegnosis-power-initialization-feedback";
+
+    public override string? PowerMetapsionicFeedback { get; set; } = "telegnosis-power-metapsionic-feedback";
+
     public override int MinGlimmerChanged { get; set; } = 5;
 
     public override int MaxGlimmerChanged { get; set; } = 25;

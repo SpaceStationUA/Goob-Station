@@ -10,6 +10,10 @@ public sealed partial class MetapsionicPulsePowerComponent : BasePsionicPowerCom
 
     public override string PowerName { get; set; } = "psionic-power-name-metapsionic";
 
+    public override string? PowerInitFeedback { get; set; } = "metapsionic-power-initialization-feedback";
+
+    public override string? PowerMetapsionicFeedback { get; set; } = "metapsionic-power-metapsionic-feedback";
+
     public override int MinGlimmerChanged { get; set; } = 1;
 
     public override int MaxGlimmerChanged { get; set; } = 10;

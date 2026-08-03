@@ -9,6 +9,8 @@
   - type: Construction
     graph: GlimmerDevices
     node: glimmerProber
+  - type: AssayResponse
+    replaceMessage: prober-feedback
   - type: ResearchPointSource
     pointspersecond: 20
     active: true
@@ -96,6 +98,8 @@
   - type: Construction
     graph: GlimmerDevices
     node: glimmerDrain
+  - type: AssayResponse
+    replaceMessage: drain-feedback
   - type: Sprite
     sprite: _DV/Structures/Machines/glimmer_machines.rsi # DeltaV reskin
     noRot: true

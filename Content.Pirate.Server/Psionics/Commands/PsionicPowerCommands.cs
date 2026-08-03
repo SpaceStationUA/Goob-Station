@@ -6,6 +6,7 @@ using Content.Shared._DV.Psionics.Components.PsionicPowers;
 using Content.Shared.Administration;
 using Content.Shared.Actions;
 using Content.Shared.Ghost;
+using Content.Shared.Shadowkin;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -248,6 +249,10 @@ public sealed class PsionicRemoveCommand : IConsoleCommand
             {
                 case MetapsionicPulsePowerComponent:
                     _entManager.RemoveComponent<PsionicPowerDetectorComponent>(target.Value);
+                    break;
+                // Pirate: DarkSwap leaves the target ethereal, so exit the shadow realm when the power is removed.
+                case DarkSwapPowerComponent:
+                    _entManager.RemoveComponent<EtherealComponent>(target.Value);
                     break;
             }
         }

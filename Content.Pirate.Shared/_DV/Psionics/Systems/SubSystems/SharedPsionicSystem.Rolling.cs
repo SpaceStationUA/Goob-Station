@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared._DV.Psionics.Components;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -67,10 +68,11 @@ public abstract partial class SharedPsionicSystem
             return;
 
         var random = Random.GetRandom(); // This is called in GetSpawns(). We simply call it once to avoid calling it multiple times.
+        var table = BuildRollTable(powerTable, psionic); // Pirate: merge per-psionic pool additions.
         var attempts = 0;
         while (attempts < 20) // 20 attempts to get a unique psionic power.
         {
-            var spawns = _entityTable.GetSpawns(powerTable, random);
+            var spawns = _entityTable.GetSpawns(table, random);
 
             foreach (var entProtoId in spawns)
             {
@@ -82,6 +84,28 @@ public abstract partial class SharedPsionicSystem
         }
 
         Popup.PopupEntity(Loc.GetString("psionic-roll-failed"), psionic, psionic, PopupType.Medium);
+    }
+
+    /// <summary>
+    /// Pirate: Builds the table used for a roll, merging the base power table with any
+    /// per-psionic pool additions (powers unlocked by other powers, e.g. Healing Word -> Revivify).
+    /// Weights are preserved relative to the base table's own weights.
+    /// </summary>
+    private EntityTableSelector BuildRollTable(EntityTablePrototype baseTable, Entity<PotentialPsionicComponent> psionic)
+    {
+        if (!TryComp<PsionicComponent>(psionic, out var psionicComp)
+            || psionicComp.PowerPoolAdditions.Count == 0)
+            return baseTable.Table;
+
+        // Only flat group tables can be merged cleanly; otherwise just roll the base table.
+        if (baseTable.Table is not GroupSelector group)
+            return baseTable.Table;
+
+        var children = new List<EntityTableSelector>(group.Children);
+        foreach (var (protoId, weight) in psionicComp.PowerPoolAdditions)
+            children.Add(new EntSelector { Id = protoId, Weight = weight });
+
+        return new GroupSelector { Children = children };
     }
 
     private bool TryAddPsionicPower(Entity<PotentialPsionicComponent> psionic, bool midRound, EntProtoId entProtoId)

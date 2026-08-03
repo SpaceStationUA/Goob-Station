@@ -13,6 +13,8 @@
       - state: sophie
       - map: ["enum.SolutionContainerLayers.Fill"]
   - type: SophicScribe
+  - type: AssayResponse
+    replaceMessage: sophic-grammateus-feedback
   - type: Speech
     speechSounds: Tenor
   - type: IntrinsicRadioReceiver
