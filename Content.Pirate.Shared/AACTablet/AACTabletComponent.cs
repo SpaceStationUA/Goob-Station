@@ -2,9 +2,11 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Pirate.Shared.QuickPhrase;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Pirate.Server.AACTablet;
+namespace Content.Pirate.Shared.AACTablet;
 
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class AACTabletComponent : Component
@@ -16,4 +18,10 @@ public sealed partial class AACTabletComponent : Component
     // Time that the next phrase can be sent.
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextPhrase;
+
+    /// <summary>
+    /// Limits this tablet to a custom phrase set. A null value exposes the full catalog.
+    /// </summary>
+    [DataField]
+    public ProtoId<QuickPhraseGroupPrototype>? PhraseGroup;
 }

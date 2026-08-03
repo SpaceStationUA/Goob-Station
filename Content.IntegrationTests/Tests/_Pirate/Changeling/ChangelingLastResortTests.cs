@@ -55,6 +55,7 @@ public sealed class ChangelingLastResortTests
 
             var chemicals = entMan.GetComponent<ChangelingChemicalComponent>(ling);
             Assert.That(chemicals.ResourceData, Is.Not.Null);
+            chemicals.ResourceData!.RegenerationRate = 0f;
             resources.TryUpdateResourcesAmount(
                 ling,
                 chemicals.ResourceData!,

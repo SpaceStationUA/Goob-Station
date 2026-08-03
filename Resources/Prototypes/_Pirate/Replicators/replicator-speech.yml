@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2025 beck <163376292+widgetbeck@users.noreply.github.com>
+
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: typingIndicator
+  id: replicator
+  spritePath: /Textures/_Pirate/Mobs/Replicator/replicator.rsi
+  typingState: replicator0
+  idleState: replicator0 # TODO: new idle state
+
+- type: speechSounds
+  id: Replicator
+  saySound:
+    path: /Audio/_Pirate/Effects/replicator_speak.ogg
+  askSound:
+    path: /Audio/_Pirate/Effects/replicator_ask.ogg
+  exclaimSound:
+    path: /Audio/_Pirate/Effects/replicator_exclaim.ogg

@@ -45,7 +45,9 @@ public sealed partial class AACWindow : FancyWindow
         IoCManager.InjectDependencies(this);
         WindowBody.SetTabTitle(0, Loc.GetString("aac-tablet-search-tab"));
 
-        _phrases = _prototype.EnumeratePrototypes<QuickPhrasePrototype>().ToList();
+        _phrases = _prototype.EnumeratePrototypes<QuickPhrasePrototype>()
+            .Where(phrase => !phrase.HiddenFromDefault)
+            .ToList();
         _phrases.Sort((a, b) => string.Compare(
             Loc.GetString(a.Group),
             Loc.GetString(b.Group),
@@ -277,6 +279,21 @@ public sealed partial class AACWindow : FancyWindow
 
     internal void Update(AACTabletUpdateChannelsMessage msg)
     {
+        if (msg.PhraseIds is { } phraseIds)
+        {
+            _phrases.Clear();
+            foreach (var phraseId in phraseIds)
+            {
+                if (_prototype.TryIndex(phraseId, out var phrase))
+                    _phrases.Add(phrase);
+            }
+
+            _phrases.Sort((a, b) => string.Compare(
+                Loc.GetString(a.Group),
+                Loc.GetString(b.Group),
+                StringComparison.CurrentCultureIgnoreCase));
+        }
+
         InitializePhraseUi();
         RadioChannels.Clear();
 

@@ -52,4 +52,30 @@ public sealed partial class QuickPhrasePrototype : IPrototype, IInheritingProtot
     /// </summary>
     [DataField]
     public string StyleClass = string.Empty;
+
+    /// <summary>
+    /// Keeps role-specific phrases out of the general AAC catalog.
+    /// </summary>
+    [DataField]
+    public bool HiddenFromDefault;
+}
+
+[Prototype]
+public sealed partial class QuickPhraseGroupPrototype : IPrototype, IInheritingPrototype
+{
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
+    [ViewVariables]
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<QuickPhraseGroupPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    [ViewVariables]
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
+
+    [DataField]
+    public List<ProtoId<QuickPhrasePrototype>> Prototypes { get; private set; } = [];
 }

@@ -2,15 +2,19 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Shared.Chat;
+using System.Linq;
+using Content.Pirate.Shared.AACTablet;
+using Content.Pirate.Shared.QuickPhrase;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
+using Content.Server.Popups;
 using Content.Server.Speech.Components;
-using Content.Pirate.Shared.AACTablet;
+using Content.Shared.Abilities.Mime;
+using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Radio.Components;
 using Content.Shared.Radio;
+using Content.Shared.Radio.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -23,6 +27,7 @@ public sealed class AACTabletSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
     private readonly List<string> _localisedPhrases = [];
@@ -56,9 +61,33 @@ public sealed class AACTabletSystem : EntitySystem
         return channels;
     }
 
+    private List<ProtoId<QuickPhrasePrototype>>? GetAvailablePhrases(Entity<AACTabletComponent> ent)
+    {
+        if (ent.Comp.PhraseGroup is not { } phraseGroup)
+            return null;
+
+        return _prototype.Resolve(phraseGroup, out QuickPhraseGroupPrototype? group)
+            ? group.Prototypes
+            : [];
+    }
+
+    private bool IsPhraseAllowed(Entity<AACTabletComponent> ent, ProtoId<QuickPhrasePrototype> phraseId)
+    {
+        if (ent.Comp.PhraseGroup is { } phraseGroup)
+        {
+            return _prototype.Resolve(phraseGroup, out QuickPhraseGroupPrototype? group) &&
+                   group.Prototypes.Contains(phraseId);
+        }
+
+        return _prototype.Resolve(phraseId, out QuickPhrasePrototype? phrase) &&
+               !phrase.HiddenFromDefault;
+    }
+
     private void OnBoundUIOpened(Entity<AACTabletComponent> ent, ref BoundUIOpenedEvent args)
     {
-        var message = new AACTabletUpdateChannelsMessage(GetAvailableChannels(args.Actor));
+        var message = new AACTabletUpdateChannelsMessage(
+            GetAvailableChannels(args.Actor),
+            GetAvailablePhrases(ent));
         _userInterface.ServerSendUiMessage(args.Entity, AACTabletKey.Key, message, args.Actor);
     }
 
@@ -66,6 +95,15 @@ public sealed class AACTabletSystem : EntitySystem
     {
         if (ent.Comp.NextPhrase > _timing.CurTime || message.PhraseIds.Count > MaxPhrases)
             return;
+
+        if (message.PhraseIds.Any(phrase => !IsPhraseAllowed(ent, phrase)))
+            return;
+
+        if (TryComp<MimePowersComponent>(message.Actor, out var mimePowers) && mimePowers.Enabled)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("mime-cant-use-AAC-tablet"), message.Actor, message.Actor);
+            return;
+        }
 
         var availableChannels = GetAvailableChannels(message.Actor);
         var prefix = SharedChatSystem.LocalPrefix.ToString();

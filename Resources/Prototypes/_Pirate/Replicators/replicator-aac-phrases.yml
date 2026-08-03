@@ -1,0 +1,243 @@
+# SPDX-FileCopyrightText: 2025 beck <163376292+widgetbeck@users.noreply.github.com>
+
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: quickPhraseGroup
+  id: ReplicatorPhrases
+  prototypes:
+# Laws
+    - ReplicatorLaw1Phrase
+    - ReplicatorLaw2Phrase
+    - ReplicatorLaw3Phrase
+# Directions
+    - LocationNearPhrase
+    - LocationFarPhrase
+    - LocationNorthPhrase
+    - LocationEastPhrase
+    - LocationSouthPhrase
+    - LocationWestPhrase
+# Nouns
+    - RepYouPhrase
+    - RepWePhrase
+    - RepUnitPhrase
+    - RepUnitsPhrase
+    - RepThisUnitPhrase
+    - RepTheNestPhrase
+    - RepTheHivePhrase
+# Verbs
+    - RepArePhrase
+    - RepIsPhrase
+    - RepWillPhrase
+    - RepNotPhrase
+    - RepLeavePhrase
+    - RepAttackPhrase
+    - RepDismantlePhrase
+    - RepConsumePhrase
+    - RepEndangerPhrase
+    - RepCeasePhrase
+    - RepSuspendPhrase
+# Alignment
+    - RepHostilePhrase
+    - RepCombatantPhrase
+    - RepNoncombatantPhrase
+    - RepAllyPhrase
+    - RepHazardousPhrase
+# Confirmation
+    - RepAffirmativePhrase
+    - RepNegativePhrase
+    - RepQueryPhrase
+    - RepQuestionMarkPhrase
+# Questions
+    - WherePhrase
+    - WhatPhrase
+    - WhyPhrase
+    - HowPhrase
+    - WhenPhrase
+# Show It
+    - ShowMePhrase
+    - ItPhrase
+
+# Laws
+- type: quickPhrase
+  id: ReplicatorLaw1Phrase
+  hiddenFromDefault: true
+  tab: Laws
+  text: law-replicator-1
+
+- type: quickPhrase
+  id: ReplicatorLaw2Phrase
+  hiddenFromDefault: true
+  tab: Laws
+  text: law-replicator-2
+
+- type: quickPhrase
+  id: ReplicatorLaw3Phrase
+  hiddenFromDefault: true
+  tab: Laws
+  text: law-replicator-3
+
+# Nouns
+- type: quickPhrase
+  id: RepYouPhrase
+  hiddenFromDefault: true
+  tab: Nouns
+  text: rep-phrase-you
+
+- type: quickPhrase
+  id: RepWePhrase
+  hiddenFromDefault: true
+  tab: Nouns
+  text: rep-phrase-we
+
+- type: quickPhrase
+  id: RepUnitPhrase
+  hiddenFromDefault: true
+  tab: Nouns
+  text: rep-phrase-unit
+
+- type: quickPhrase
+  id: RepUnitsPhrase
+  hiddenFromDefault: true
+  tab: Nouns
+  text: rep-phrase-units
+
+- type: quickPhrase
+  id: RepThisUnitPhrase
+  hiddenFromDefault: true
+  tab: Nouns
+  text: rep-phrase-i
+
+- type: quickPhrase
+  id: RepTheNestPhrase
+  hiddenFromDefault: true
+  tab: Nouns
+  text: rep-phrase-the-nest
+
+- type: quickPhrase
+  id: RepTheHivePhrase
+  hiddenFromDefault: true
+  tab: Nouns
+  text: rep-phrase-the-hive
+
+# Verbs
+- type: quickPhrase
+  id: RepArePhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-are
+
+- type: quickPhrase
+  id: RepIsPhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-is
+
+- type: quickPhrase
+  id: RepWillPhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-will
+
+- type: quickPhrase
+  id: RepNotPhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-not
+
+- type: quickPhrase
+  id: RepLeavePhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-leave
+
+- type: quickPhrase
+  id: RepAttackPhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-attack
+
+- type: quickPhrase
+  id: RepDismantlePhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-dismantle
+
+- type: quickPhrase
+  id: RepConsumePhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-consume
+
+- type: quickPhrase
+  id: RepEndangerPhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-endanger
+
+- type: quickPhrase
+  id: RepCeasePhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-cease
+
+- type: quickPhrase
+  id: RepSuspendPhrase
+  hiddenFromDefault: true
+  tab: Verbs
+  text: rep-phrase-suspend
+
+# Confirmation
+- type: quickPhrase
+  id: RepAffirmativePhrase
+  hiddenFromDefault: true
+  tab: Confirmation
+  text: rep-phrase-affirmative
+
+- type: quickPhrase
+  id: RepNegativePhrase
+  hiddenFromDefault: true
+  tab: Confirmation
+  text: rep-phrase-negative
+
+- type: quickPhrase
+  id: RepQueryPhrase
+  hiddenFromDefault: true
+  tab: Confirmation
+  text: rep-phrase-query
+
+- type: quickPhrase
+  id: RepQuestionMarkPhrase
+  hiddenFromDefault: true
+  tab: Confirmation
+  text: rep-phrase-questionmark
+
+# Alignment
+- type: quickPhrase
+  id: RepHostilePhrase
+  hiddenFromDefault: true
+  tab: Alignment
+  text: rep-phrase-hostile
+
+- type: quickPhrase
+  id: RepCombatantPhrase
+  hiddenFromDefault: true
+  tab: Alignment
+  text: rep-phrase-combatant
+
+- type: quickPhrase
+  id: RepNoncombatantPhrase
+  hiddenFromDefault: true
+  tab: Alignment
+  text: rep-phrase-noncombatant
+
+- type: quickPhrase
+  id: RepAllyPhrase
+  hiddenFromDefault: true
+  tab: Alignment
+  text: rep-phrase-ally
+
+- type: quickPhrase
+  id: RepHazardousPhrase
+  hiddenFromDefault: true
+  tab: Alignment
+  text: rep-phrase-hazardous

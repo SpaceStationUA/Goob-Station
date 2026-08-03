@@ -17,9 +17,11 @@ public enum AACTabletKey : byte
 
 [Serializable, NetSerializable]
 public sealed class AACTabletUpdateChannelsMessage(
-    HashSet<ProtoId<RadioChannelPrototype>> radioChannels) : BoundUserInterfaceMessage
+    HashSet<ProtoId<RadioChannelPrototype>> radioChannels,
+    List<ProtoId<QuickPhrasePrototype>>? phraseIds) : BoundUserInterfaceMessage
 {
     public HashSet<ProtoId<RadioChannelPrototype>> RadioChannels = radioChannels;
+    public List<ProtoId<QuickPhrasePrototype>>? PhraseIds = phraseIds;
 }
 
 [Serializable, NetSerializable]
