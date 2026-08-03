@@ -3881,3 +3881,69 @@ Entries:
         або космосу.
   id: 380
   time: '2026-08-02T10:40:20.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: Піратський прапор у голосуванні за мапу знову відображається коректно.
+  id: 381
+  time: '2026-08-02T11:19:52.0000000+00:00'
+- author: Vareniko
+  changes:
+    - type: Fix
+      message: >-
+        Виправлені вимоги щодо роботодавців детективу: Прибрано НТ і додано
+        Ідріс
+  id: 382
+  time: '2026-08-02T12:51:03.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Tweak
+      message: Оновлено upstream.
+  id: 383
+  time: '2026-08-02T13:17:33.0000000+00:00'
+- author: CyberLanos
+  changes:
+    - type: Fix
+      message: поломані інтеграційні тести через люки
+    - type: Fix
+      message: зависання труб після поломки через скан мережі, доданий в мультиз
+  id: 384
+  time: '2026-08-02T14:36:37.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Add
+      message: Додано midround-антагоніста Скію.
+  id: 385
+  time: '2026-08-02T15:00:17.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Add
+      message: Додано оперативників станції прослуховування.
+  id: 386
+  time: '2026-08-02T15:55:28.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: Після деконверсії колишній культист більше не залишається з 1u крові.
+  id: 387
+  time: '2026-08-02T20:55:11.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Add
+      message: Додано midround роль Асакима та її шатл
+    - type: Add
+      message: Додано AAC-планшет і швидкі фрази
+  id: 388
+  time: '2026-08-02T20:55:44.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: Виправлено зависання клієнта на екрані підключення після входу в гру.
+  id: 389
+  time: '2026-08-02T21:13:09.0000000+00:00'
+- author: Vareniko
+  changes:
+    - type: Tweak
+      message: Градієнт волосся тепер доступний вульпканінам
+  id: 390
+  time: '2026-08-02T21:37:12.0000000+00:00'

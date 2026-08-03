@@ -42,6 +42,9 @@
 - type: markingPoints
   id: MobVulpkaninMarkingLimits
   points:
+    HairSpecial: # Pirate - Trauma Station hair gradients
+      points: 1
+      required: false
     Hair:
       points: 1
       required: false

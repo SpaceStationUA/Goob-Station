@@ -2,7 +2,7 @@
   id: GlacierTP
   mapName: 'Льодовик'
   mapPath: /Maps/_Pirate/glacier.yml
-  mapIcon: /Textures/Structures/Wallmounts/flags.rsi/pirate_flag.png
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
   mapPreview: PirateMapPreviewGlacierTP
   minPlayers: 0
   maxPlayers: 50

@@ -1,0 +1,119 @@
+/*
+ * This file is sublicensed under MIT License
+ * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
+ */
+
+using System.Linq;
+using Content.Server.Administration;
+using Content.Shared._Pirate.ZLevels.Core.Components;
+using Content.Shared.Administration;
+using Robust.Server.GameObjects;
+using Robust.Shared.Console;
+using Robust.Shared.EntitySerialization.Systems;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Utility;
+
+namespace Content.Server._Pirate.ZLevels.Mapping.Commands;
+
+[AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
+public sealed class CESaveZNetworkCommand : LocalizedEntityCommands
+{
+    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
+
+    public override string Command => "znetwork-save";
+    public override string Description => "Save all zNetwork maps to default server folder";
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            var options = new List<CompletionOption>();
+            var query = _entities.EntityQueryEnumerator<CEZLevelsNetworkComponent, MetaDataComponent>();
+            while (query.MoveNext(out var uid, out _, out var meta))
+            {
+                options.Add(new CompletionOption(_entities.GetNetEntity(uid).ToString(), meta.EntityName));
+            }
+            return CompletionResult.FromHintOptions(options, "zNetwork net entity");
+        }
+        if (args.Length == 2)
+        {
+            return CompletionResult.FromHint("ZNetwork name (for example: `Dev`)");
+        }
+        return CompletionResult.Empty;
+    }
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 2)
+        {
+            shell.WriteError("Wrong arguments count. Usage: znetwork-save <zNetwork> <saveName>");
+            return;
+        }
+
+        // Reject names that could escape the saves dir or break path parsing.
+        var saveName = args[1];
+        if (string.IsNullOrWhiteSpace(saveName) ||
+            !saveName.All(c => char.IsLetterOrDigit(c) || c == '-' || c == '_'))
+        {
+            shell.WriteError($"Invalid save name '{saveName}'. Use alphanumerics, dashes, or underscores only.");
+            return;
+        }
+
+        // get the target
+        EntityUid? target;
+
+        if (!NetEntity.TryParse(args[0], out var targetNet) ||
+            !_entities.TryGetEntity(targetNet, out target))
+        {
+            shell.WriteError($"Unable to find entity {args[0]}");
+            return;
+        }
+
+        if (!_entities.TryGetComponent<CEZLevelsNetworkComponent>(target, out var levelComp))
+        {
+            shell.WriteError($"Target entity doesnt have CEZLevelsNetworkComponent {args[0]}");
+            return;
+        }
+
+        foreach (var (depth, mapUid) in levelComp.ZLevels)
+        {
+            if (!_entities.TryGetComponent<MapComponent>(mapUid, out var mapComp))
+            {
+                shell.WriteError($"Map entity {mapUid} doesnt have MapComponent.");
+                continue;
+            }
+
+            var mapId = mapComp.MapId;
+
+            // no saving null space
+            if (mapId == MapId.Nullspace)
+                continue;
+
+            if (!_map.MapExists(mapId))
+            {
+                shell.WriteError($"Map {mapId} doesnt exist!");
+                continue;
+            }
+
+            if (_map.IsInitialized(mapId))
+            {
+                shell.WriteError($"Map {mapId} is already initialized, cannot save initialized maps!");
+                continue;
+            }
+
+            var savePath = new ResPath($"/ZNetworkSaves/{saveName}/{saveName}{depth}.yml");
+            shell.WriteLine(Loc.GetString("cmd-savemap-attempt", ("mapId", mapId), ("path", savePath)));
+            if (_mapLoader.TrySaveMap(mapId, savePath))
+            {
+                shell.WriteLine(Loc.GetString("cmd-savemap-success"));
+            }
+            else
+            {
+                shell.WriteError(Loc.GetString("cmd-savemap-error"));
+            }
+        }
+    }
+}

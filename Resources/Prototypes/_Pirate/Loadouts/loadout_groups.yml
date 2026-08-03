@@ -1,8 +1,13 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 ## Різне
 - type: loadoutGroup
   id: PirateTrinkets
   name: loadout-group-trinkets
   loadouts:
+  - AACTabletLoadout
   - TrinketsClothingHeadPaperSack
   - TrinketsPhotoAlbum
   - TrinketsPhotoCameraFilled

@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 Impstation contributors
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Pirate: only the Replicator vocabulary is ported; the general DeltaV AAC catalog is not present in Goob.
+# Pirate: keep the Replicator vocabulary isolated from the general AAC catalog.
 - type: entity
   parent: BaseItem
   id: BaseReplicatorAACTablet

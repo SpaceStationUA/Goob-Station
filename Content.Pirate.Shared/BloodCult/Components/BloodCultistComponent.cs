@@ -5,13 +5,14 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
 
+using Content.Shared.BloodCult.Prototypes;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Content.Shared.BloodCult.Prototypes;
 
 namespace Content.Shared.BloodCult;
 
@@ -90,10 +91,10 @@ public sealed partial class BloodCultistComponent : Component
 	[DataField] public EntityUid? ReviverUid = null;
 
 	/// <summary>
-	/// The original blood reagent before becoming a cultist.
-	/// Used to restore the blood type when deconverted.
+	/// The original blood composition before becoming a cultist.
+	/// Used to restore the blood type and reference volume when deconverted.
 	/// </summary>
-	[DataField] public string OriginalBloodReagent = "Blood";
+	[DataField] public Solution? OriginalBloodReagents;
 
 	[DataField] public SacrificingData? Sacrifice = null;
 	[DataField] public ConvertingData? Convert = null;

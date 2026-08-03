@@ -1,6 +1,7 @@
 - type: tile
   id: LatticeDiagonalNW
   name: tiles-lattice-diagonal-NW
+  zTransparent: true # Pirate: multiz
   sprite: /Textures/_Goobstation/Tiles/latticeDiagonalNW.png
   baseTurf: Space
   isSubfloor: true
@@ -18,6 +19,7 @@
 - type: tile
   id: LatticeDiagonalNE
   name: tiles-lattice-diagonal-NE
+  zTransparent: true # Pirate: multiz
   sprite: /Textures/_Goobstation/Tiles/latticeDiagonalNE.png
   baseTurf: Space
   isSubfloor: true
@@ -35,6 +37,7 @@
 - type: tile
   id: LatticeDiagonalSW
   name: tiles-lattice-diagonal-SW
+  zTransparent: true # Pirate: multiz
   sprite: /Textures/_Goobstation/Tiles/latticeDiagonalSW.png
   baseTurf: Space
   isSubfloor: true
@@ -52,6 +55,7 @@
 - type: tile
   id: LatticeDiagonalSE
   name: tiles-lattice-diagonal-SE
+  zTransparent: true # Pirate: multiz
   sprite: /Textures/_Goobstation/Tiles/latticeDiagonalSE.png
   baseTurf: Space
   isSubfloor: true

@@ -1,0 +1,76 @@
+- type: entity
+  id: CEZLevelVerticalLadderBase
+  abstract: true
+  name: ladder
+  description: A vertical ladder for moving between floors.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: _Pirate/Structures/ZLevels/Ladders/tg_ladders.rsi
+    state: ladder01
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      ladder:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.22,-0.45,0.22,0.45"
+        density: 60
+        hard: false
+        mask:
+        - MachineMask
+        layer:
+        - LowImpassable
+  - type: UserInterface
+    interfaces:
+      enum.RadialSelectorUiKey.Key:
+        type: CEZLevelLadderRadialMenuBUI
+  - type: ActivatableUI
+    key: enum.RadialSelectorUiKey.Key
+    singleUser: true
+  - type: CEZLevelLadder
+
+- type: entity
+  parent: CEZLevelVerticalLadderBase
+  id: CEZLevelVerticalLadder
+
+- type: entity
+  parent: CEZLevelVerticalLadderBase
+  id: CEZLevelVerticalLadderAperture
+  name: ladder with opening
+  description: A vertical ladder running through a floor opening.
+  suffix: Aperture
+  components:
+  - type: CEZLevelAperture
+  - type: CEZLevelAscentPassage
+
+- type: entity
+  parent: CEZLevelVerticalLadderBase
+  id: CEZLevelVerticalLadderTallBase
+  abstract: true
+  name: tall ladder
+  components:
+  - type: Sprite
+    state: ladder11
+
+- type: entity
+  parent: CEZLevelVerticalLadderTallBase
+  id: CEZLevelVerticalLadderTall
+
+- type: entity
+  parent: CEZLevelVerticalLadderTallBase
+  id: CEZLevelVerticalLadderTallAperture
+  name: tall ladder with opening
+  description: A tall vertical ladder running through a floor opening.
+  suffix: Aperture
+  components:
+  - type: CEZLevelAperture
+  - type: CEZLevelAscentPassage

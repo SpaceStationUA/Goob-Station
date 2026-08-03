@@ -14,10 +14,15 @@ namespace Content.Shared.Chat.TypingIndicator;
 public sealed class TypingChangedEvent : EntityEventArgs
 {
     public readonly TypingIndicatorState State;
+    // Pirate: AAC tablets use their own typing indicator while composing phrases.
+    public readonly ProtoId<TypingIndicatorPrototype>? OverrideIndicator;
 
-    public TypingChangedEvent(TypingIndicatorState state)
+    public TypingChangedEvent(
+        TypingIndicatorState state,
+        ProtoId<TypingIndicatorPrototype>? overrideIndicator = null)
     {
         State = state;
+        OverrideIndicator = overrideIndicator;
     }
 }
 

@@ -53,12 +53,6 @@ ghost-role-information-replicator-rules = Ви є [color=red][bold]команд�
 block-machine-ui-cant-use = Ви не можете користуватися цим пристроєм.
 mime-cant-use-AAC-tablet = Обітниця мовчання не дозволяє вам користуватися цим планшетом.
 
-aac-tablet-title = Вербальний інтерфейс
-aac-tablet-combine = Поєднувати
-aac-tablet-backspace = Стерти
-aac-tablet-send = Надіслати
-aac-tablet-search = Пошук
-
 Laws = Закони
 Nouns = Іменники
 Verbs = Дієслова
@@ -100,20 +94,6 @@ rep-phrase-suspend = Призупинити
 
 rep-phrase-the-nest = Гніздо
 rep-phrase-the-hive = Вулик
-
-phrase-location-near = Поруч
-phrase-location-far = Далеко
-phrase-location-north = На північ
-phrase-location-east = На схід
-phrase-location-south = На південь
-phrase-location-west = На захід
-phrase-where = Де
-phrase-what = Що
-phrase-why = Чому
-phrase-how = Як
-phrase-when = Коли
-phrase-show = Покажіть
-phrase-it = Це
 
 ent-ReplicatorSpawn = поява Реплікаторів
 

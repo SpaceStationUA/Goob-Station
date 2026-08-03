@@ -3,6 +3,7 @@
 using Content.Client.Shuttles.UI;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
+using Content.Shared._Pirate.ZLevels.Shuttles; // Pirate: multiz
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Map;
@@ -28,6 +29,10 @@ public sealed partial class ShuttleConsoleBoundUserInterface : BoundUserInterfac
         _window.RequestBeaconFTL += OnFTLBeaconRequest;
         _window.DockRequest += OnDockRequest;
         _window.UndockRequest += OnUndockRequest;
+        #region Pirate: multiz
+        _window.RequestFlyUp += () => SendMessage(new CEShuttleConsoleFlyUpMessage());
+        _window.RequestFlyDown += () => SendMessage(new CEShuttleConsoleFlyDownMessage());
+        #endregion
         NfOpen(); // Frontier
     }
 

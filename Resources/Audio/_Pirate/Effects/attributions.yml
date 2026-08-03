@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 - files: ["thermite_burning.ogg"]
   license: "CC-BY-NC-4.0"
   copyright: "Taken from bzakirasantjago via freesound.org"
@@ -43,3 +47,8 @@
   license: "Custom"
   copyright: "Made by Widgetbeck"
   source: "https://github.com/impstation/imp-station-14/pull/2490"
+
+- files: ["breakingbones.ogg"]
+  license: "CC0-1.0"
+  copyright: "Freesound user Sheyvan"
+  source: "https://freesound.org/people/Sheyvan/sounds/523250/"

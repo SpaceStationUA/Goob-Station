@@ -1,5 +1,5 @@
-// SPDX-FileCopyrightText: 2025 Impstation contributors
-
+// SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Pirate.Shared.QuickPhrase;
@@ -20,8 +20,8 @@ public sealed partial class AACTabletComponent : Component
     public TimeSpan NextPhrase;
 
     /// <summary>
-    /// Imp. Which group of phrases the AAC tablet has access to.
+    /// Limits this tablet to a custom phrase set. A null value exposes the full catalog.
     /// </summary>
-    [DataField(required: true)]
-    public ProtoId<QuickPhraseGroupPrototype> PhraseGroup;
+    [DataField]
+    public ProtoId<QuickPhraseGroupPrototype>? PhraseGroup;
 }

@@ -9,62 +9,52 @@
   - sprite: _Pirate/Mobs/Customization/varen/hair.rsi
     state: susie
 
-- type: marking
-  id: VarenHairSusieTwoLong
-  bodyPart: Hair
-  markingCategory: Hair
-  speciesRestriction: [Vulpkanin]
-  playerRestriction: [Vareniko]
-  sprites:
-  - sprite: _Pirate/Mobs/Customization/varen/hair.rsi
-    state: susie_two_long
-
 # Хвостики
 - type: marking
-  id: VulpQueenTail
+  id: VulpSusieTail
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Vulpkanin]
   playerRestriction: [Vareniko, v0id_]
   layering:
-    queen_BACK: TailBehind
-    queen_BACK-tip: TailBehind
-    queen: TailOversuit
-    queen-tip: TailOversuit
+    susie_BACK: TailBehind
+    susie_BACK-tip: TailBehind
+    susie: TailOversuit
+    susie-tip: TailOversuit
   colorLinks:
-    queen_BACK: queen
-    queen_BACK-tip: queen-tip
+    susie_BACK: susie
+    susie_BACK-tip: susie-tip
   sprites:
-    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
-      state: queen_BACK
-    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
-      state: queen_BACK-tip
-    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
-      state: queen
-    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
-      state: queen-tip
+    - sprite: _Pirate/Mobs/Customization/varen/tail.rsi
+      state: susie_BACK
+    - sprite: _Pirate/Mobs/Customization/varen/tail.rsi
+      state: susie_BACK-tip
+    - sprite: _Pirate/Mobs/Customization/varen/tail.rsi
+      state: susie
+    - sprite: _Pirate/Mobs/Customization/varen/tail.rsi
+      state: susie-tip
 
 # Анімація
 - type: marking
-  id: VulpQueenTailAnimated
+  id: VulpSusieTailAnimated
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: []
   playerRestriction: [Vareniko, v0id_]
   layering:
-    queen_wag_BACK: TailBehind
-    queen_wag_BACK-tip: TailBehind
-    queen_wag: TailOversuit
-    queen_wag-tip: TailOversuit
+    susie_wag_BACK: TailBehind
+    susie_wag_BACK-tip: TailBehind
+    susie_wag: TailOversuit
+    susie_wag-tip: TailOversuit
   colorLinks:
-    queen_wag_BACK: queen_wag
-    queen_wag_BACK-tip: queen_wag-tip
+    susie_wag_BACK: susie_wag
+    susie_wag_BACK-tip: susie_wag-tip
   sprites:
-    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
-      state: queen_wag_BACK
-    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
-      state: queen_wag_BACK-tip
-    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
-      state: queen_wag
-    - sprite: _Pirate/Mobs/Customization/varen/tail_queen.rsi
-      state: queen_wag-tip
+    - sprite: _Pirate/Mobs/Customization/varen/tail-wag.rsi
+      state: susie_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/varen/tail-wag.rsi
+      state: susie_wag_BACK-tip
+    - sprite: _Pirate/Mobs/Customization/varen/tail-wag.rsi
+      state: susie_wag
+    - sprite: _Pirate/Mobs/Customization/varen/tail-wag.rsi
+      state: susie_wag-tip

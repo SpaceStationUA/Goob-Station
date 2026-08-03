@@ -1,0 +1,652 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Role and event
+
+- type: antag
+  id: ListeningPost
+  name: roles-antag-listening-post-name
+  antagonist: true
+  objective: roles-antag-listening-post-objective
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 72h
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 11.1h
+  - !type:DepartmentTimeRequirement
+    department: Civilian
+    time: 11.1h
+  - !type:DepartmentTimeRequirement
+    department: Command
+    time: 11.1h
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleListeningPost
+  name: Listening Post Role
+  components:
+  - type: MindRole
+    roleType: TeamAntagonist
+    subtype: role-subtype-lpo
+    antagPrototype: ListeningPost
+    exclusiveAntag: true
+  - type: ListeningPostRole
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostSyndicateListener
+  components:
+  - type: GhostRole
+    name: ghost-role-information-listeningop-name
+    description: ghost-role-information-listeningop-description
+    rules: ghost-role-information-listeningop-rules
+    mindRoles:
+    - MindRoleListeningPost
+
+- type: entity
+  parent: BaseGameRule
+  id: ListeningPost
+  components:
+  - type: GameRule
+    chaosScore: 300
+  - type: StationEvent
+    earliestStart: 30
+    weight: 4
+    minimumPlayers: 25
+    maxOccurrences: 1
+    duration: null
+    chaos:
+      Hostile: 20
+      Friend: 20
+    eventType: HostilesSpawn
+  # Pirate: PrecognitionResult is unavailable in the local psionics implementation.
+  - type: RuleGrids
+  - type: LoadFarGridRule
+    path: /Maps/_Pirate/Nonstations/listening_post.yml
+    distanceModifier: 13
+  - type: DebrisSpawnerRule
+    count: 6
+    distanceModifier: 3
+  - type: AntagLoadProfileRule
+  - type: AntagSelection
+    agentName: listening-post-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostSyndicateListener
+      min: 2
+      max: 2
+      pickPlayer: false
+      startingGear: SyndicateListenerGear
+      roleLoadout:
+      - RoleSurvivalStandard
+      components:
+      - type: RandomHumanoidAppearance
+        randomizeName: false
+      - type: RandomMetadata
+        nameSegments:
+        - NamesDeathCommando
+      - type: AutoImplant
+        implants:
+        - DeathAcidifierImplant
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      # Pirate: Binary is a collective-mind channel here, not a radio channel.
+      - type: ReceiveOnlyCollectiveMind
+        channel: Binary
+      - type: TargetObjectiveImmune
+      mindRoles:
+      - MindRoleListeningPost
+  - type: DynamicRuleCost
+    cost: 50
+
+# Operative equipment
+
+- type: startingGear
+  id: SyndicateListenerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPyjamaSyndicateBlack
+    head: ClothingHeadPyjamaSyndicateBlack
+    ears: ClothingHeadsetAltSyndicateListening
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesSlippers
+    id: SyndiListeningPostPDA
+    back: ClothingBackpackSyndicate
+    pocket1: AgentIDCard
+    pocket2: HandheldStationMapRecordsTablet
+
+- type: entity
+  parent: ClothingHeadsetAltSyndicate
+  id: ClothingHeadsetAltSyndicateListening
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySyndie
+      - EncryptionKeyStationMaster
+  - type: Sprite
+    sprite: _Pirate/Clothing/Ears/Headsets/syndicate_listening.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Ears/Headsets/syndicate_listening.rsi
+
+- type: entity
+  parent: SyndiPDA
+  id: SyndiListeningPostPDA
+  components:
+  - type: Pda
+    id: SyndicateIDCard
+    penSlot:
+      startingItem: CyberPen
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType: !type:String
+        pda-syndi-agent
+  - type: Sprite
+    layers:
+    - sprite: _Pirate/Objects/Devices/pda_syndi_agent.rsi
+      state: pda-syndi-agent
+      map: [ "enum.PdaVisualLayers.Base" ]
+    - state: light_overlay
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: unshaded
+      visible: false
+    - state: id_overlay
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: unshaded
+      visible: false
+    - state: insert_overlay
+      map: [ "enum.PdaVisualLayers.Pen" ]
+  - type: Icon
+    sprite: _Pirate/Objects/Devices/pda_syndi_agent.rsi
+    state: pda-syndi-agent
+
+- type: entity
+  parent: ClothingBeltUtility
+  id: ClothingBeltSyndicateUtility
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/syndbelt_overlay.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/syndbelt_overlay.rsi
+
+# Listening post machines
+
+- type: entity
+  parent: ComputerCrewMonitoring
+  id: ComputerCrewMonitoringSyndicate
+  suffix: Syndicate, Long Range
+  # Pirate: DeltaV's mapper-only MappingCategories component is unavailable here.
+  components:
+  - type: LongRangeCrewMonitor
+
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: SyndicateMonitoringServer
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/server.rsi
+    snapCardinals: true
+    layers:
+    - state: server-off
+    - state: server-on
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: variant-crew
+    - state: server_o
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Machine
+    board: CrewMonitoringServerMachineCircuitboard
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: LongRangeCrewMonitoringServer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    enabled: false
+    sound:
+      path: /Audio/Ambience/Objects/server_fans.ogg
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineListeningSyndie
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/syndicate_fax_machine.rsi
+    layers:
+    - state: icon
+      map: [ "base" ]
+      color: "#a3a3a3"
+  - type: FaxMachine
+    name: "Невідомо?"
+    responsePings: false
+  - type: Emagged
+
+# Guard
+
+- type: startingGear
+  id: RadioGuardGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack
+    shoes: ClothingShoesBootsLaceup
+    id: SyndiListeningPostPDA
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingEyesHudSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorPlateCarrierUnremoveable
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: ClothingOuterBaseMedium
+  id: ClothingOuterArmorPlateCarrierUnremoveable
+  suffix: Unremoveable
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Armor/platecarrier.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Armor/platecarrier.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.80
+        Piercing: 0.50
+        Heat: 0.80
+  - type: StaminaResistance
+    damageCoefficient: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.90
+    sprintModifier: 0.90
+  - type: ExplosionResistance
+    damageCoefficient: 0.70
+  - type: AllowSuitStorage
+  - type: Unremoveable
+
+- type: entity
+  parent: MobHuman
+  id: MobRadioGuard
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: MindContainer
+  - type: MindExaminable
+  - type: Loadout
+    prototypes:
+    - RadioGuardGear
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHumanoidHostileCompound
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0
+    damageRecovery:
+      types:
+        Asphyxiation: -1
+  - type: Gun
+    fireRate: 2
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: CombatMode
+  - type: BasicEntityAmmoProvider
+    proto: CartridgePistol
+    capacity: 10
+    count: 10
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 1
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: AutoImplant
+    implants:
+    - DeathAcidifierImplant
+  - type: Sprite
+    layers:
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ]
+    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - shader: StencilClear
+      sprite: Mobs/Species/Human/parts.rsi
+      state: l_leg
+    - shader: StencilMask
+      map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+      sprite: Mobs/Customization/masking_helpers.rsi
+      state: unisex_full
+      visible: false
+    - map: [ "jumpsuit" ]
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+    - map: [ "enum.HumanoidVisualLayers.LHand" ]
+    - map: [ "enum.HumanoidVisualLayers.RHand" ]
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "id" ]
+    - map: [ "neck" ]
+    - map: [ "back" ]
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+    - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "clownedon" ]
+      sprite: Effects/creampie.rsi
+      state: creampie_human
+      visible: false
+    - sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+      state: inhand-left
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobRadioGuard
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobRadioGuard
+
+# Modernisation props
+
+- type: entity
+  parent: CratePlastic
+  id: CrateFoodDonkpocketSavory
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: FoodBoxDonkpocket
+          amount: 2
+        - id: FoodBoxDonkpocketPizza
+        - id: FoodBoxDonkpocketSpicy
+        - id: FoodBoxDonkpocketTeriyaki
+        - id: FoodBoxDonkpocketDink
+          prob: 0.1
+
+- type: entity
+  parent: BoxFolderRed
+  id: BoxFolderFakeNukeCodes
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/folders.rsi
+    layers:
+    - state: folder-colormap
+      color: "#cc2323"
+    - state: folder-base
+    - state: folder-stamp-inverse
+      color: "#1dff00"
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FakeNukeCodePaper
+
+- type: entity
+  parent: Paper
+  id: FakeNukeCodePaper
+  suffix: Fake
+  components:
+  - type: Paper
+    content: paper-fake-nuke-codes
+
+- type: Tag
+  id: StickyNoteYellow
+
+- type: entity
+  parent: Paper
+  id: PaperStickyNote
+  suffix: yellow
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/stickies.rsi
+    layers:
+    - state: sticky_note
+      color: "#dad71a"
+    - state: sticky_note_words
+      map: [ "enum.PaperVisualLayers.Writing" ]
+      color: "#dad71a"
+      visible: false
+    - state: paper_stamp-generic
+      map: [ "enum.PaperVisualLayers.Stamp" ]
+      visible: false
+      sprite: Objects/Misc/bureaucracy.rsi
+  - type: PaperVisuals
+    contentMargin: 0, 0, 0, 0
+    maxWritableArea: 368, 368
+    backgroundModulate: "#fde663"
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+    - StickyNoteYellow
+  - type: EmbeddableProjectile
+    removalTime: 0.2
+
+- type: entity
+  parent: DisposalUnit
+  id: SpaceDisposalUnit
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Piping/disposal.rsi # Pirate: isolate DeltaV's disposal sprite replacement to this unit.
+    layers:
+    - state: condisposal
+      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+    - state: disposal
+      map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-charging
+      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
+    - state: disposal-flush
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
+    - state: dispover-charge
+      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+    - state: dispover-ready
+      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+    - state: dispover-full
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+    - state: dispover-handle
+      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+    - state: space
+
+- type: entity
+  parent: ClosetWallBlack
+  id: StampLockerListeningPost
+  suffix: DO NOT MAP
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampCaptain
+        - id: RubberStampCE
+        - id: RubberStampChiefJustice
+        - id: RubberStampChaplain
+        - id: RubberStampCMO
+        - id: RubberStampClown
+        - id: RubberStampDetective
+        - id: RubberStampHop
+        - id: RubberStampHos
+        - id: RubberStampLawyer
+        - id: RubberStampQm
+        - id: RubberStampMime
+        - id: RubberStampRd
+        - id: RubberStampNotary
+        - id: RubberStampProsec
+        - id: RubberStampMantis
+        - id: RubberStampPsychologist
+        - id: RubberStampChemist
+        - id: RubberStampDoctor
+        - id: RubberStampSyndicate
+        - id: RubberStampTrader
+        - id: RubberStampWarden
+        - id: RubberStampGreytide
+        - id: RubberStampCarpy
+
+- type: entity
+  parent: CigCartonGreen
+  id: CigCartonSyndicate
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Consumable/Smokeables/Cigarettes/Cartons/syndicate.rsi
+  - type: Item
+    sprite: _Pirate/Objects/Consumable/Smokeables/Cigarettes/Cartons/syndicate.rsi
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: CigPackSyndicate
+          amount: 6
+        - id: SyndicateFlippoDV
+  - type: Storage
+    grid:
+    - 0,0,5,1
+    - 6,1,6,1
+  # Pirate: DeltaV's unrelated ReverseEngineering subsystem is unavailable here.
+
+- type: entity
+  parent: FlippoLighter
+  id: SyndicateFlippoDV
+  suffix: Gun, Regenerates Fuel
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/syndielighter.rsi
+    layers:
+    - state: icon
+      map: [ "base" ]
+    - state: top
+      map: [ "top" ]
+      visible: false
+    - state: open
+      map: [ "open" ]
+      visible: false
+    - state: fire
+      map: [ "flame" ]
+      visible: false
+      shader: unshaded
+  - type: Item
+    sprite: _Pirate/Objects/Tools/syndielighter.rsi
+  - type: Welder
+    fuelConsumption: 0
+    fuelLitCost: 0
+    tankSafe: false
+  - type: SolutionAmmoProvider
+    proto: BulletLighterIncendiary
+    fireCost: 3
+    solutionId: Welder
+  - type: ComponentToggler
+    components:
+    - type: Gun
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+      soundEmpty:
+        path: /Audio/_Pirate/Weapons/Guns/Empty/dry_fire.ogg
+      showExamineText: false
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        flame:
+          True: { visible: true }
+          False: { visible: false }
+        open:
+          True: { visible: true }
+          False: { visible: false }
+        top:
+          True: { visible: true }
+          False: { visible: false }
+        base:
+          True: { visible: false }
+          False: { visible: true }
+  - type: ToggleableVisuals
+    inhandVisuals:
+      left:
+      - state: inhand-left-lit
+        shader: unshaded
+      right:
+      - state: inhand-right-lit
+        shader: unshaded
+  - type: ItemTogglePointLight
+  - type: PointLight
+    enabled: false
+    netsync: false
+    radius: 2
+    color: green
+  - type: SolutionRegeneration
+    solution: Welder
+    generated:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 0.1
+
+- type: entity
+  parent: BulletPistolIncendiary
+  id: BulletLighterIncendiary
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    enabled: true
+    color: green
+    radius: 2
+    energy: 7
+  - type: Projectile
+    damage:
+      types:
+        Heat: 5

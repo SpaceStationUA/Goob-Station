@@ -603,77 +603,77 @@
   storage:
     back:
     - PlushieArachind
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieCarp
   storage:
     back:
     - PlushieCarp
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieHampter
   storage:
     back:
     - PlushieHampter
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieHuman
   storage:
     back:
     - PlushieHuman
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieMoth
   storage:
     back:
     - PlushieMoth
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieRouny
   storage:
     back:
     - PlushieRouny
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSharkBlue
   storage:
     back:
     - PlushieSharkBlue
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSharkGrey
   storage:
     back:
     - PlushieSharkGrey
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSharkPink
   storage:
     back:
     - PlushieSharkPink
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSlime
   storage:
     back:
     - PlushieSlime
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieVox
   storage:
     back:
     - PlushieVox
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 # EE generic neck, outer clothing, shoes, and uniform
 - type: loadout

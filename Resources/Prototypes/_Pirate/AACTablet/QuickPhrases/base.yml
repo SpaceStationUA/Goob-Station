@@ -1,0 +1,90 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Tabs
+
+- type: quickPhrase
+  id: BaseCommonPhrase
+  tab: aac-quick-tab-common
+  abstract: true
+
+- type: quickPhrase
+  id: BaseJobPhrase
+  tab: aac-quick-tab-jobs
+  abstract: true
+
+- type: quickPhrase
+  id: BaseLocationPhrase
+  tab: aac-quick-tab-locations
+  abstract: true
+
+- type: quickPhrase
+  id: BaseSubjectPhrase
+  tab: aac-quick-tab-subjects
+  abstract: true
+
+- type: quickPhrase
+  id: BaseThreatPhrase
+  tab: aac-quick-tab-safety
+  abstract: true
+
+- type: quickPhrase
+  id: BaseSpeciesPhrase
+  tab: aac-quick-tab-species
+  abstract: true
+
+# Departments
+
+- type: quickPhrase
+  id: BaseCivilianPhrase
+  group: aac-quick-group-civilian
+  abstract: true
+
+- type: quickPhrase
+  id: BaseCommandPhrase
+  group: aac-quick-group-command
+  styleClass: CommandButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseEngineeringPhrase
+  group: aac-quick-group-engineering
+  styleClass: EngineeringButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseEpistemicsPhrase
+  group: aac-quick-group-epistemics
+  styleClass: EpistemicsButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseJusticePhrase
+  group: aac-quick-group-justice
+  styleClass: JusticeButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseLogisticsPhrase
+  group: aac-quick-group-logistics
+  styleClass: LogisticsButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseMedicalPhrase
+  group: aac-quick-group-medical
+  styleClass: MedicalButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseSecurityPhrase
+  group: aac-quick-group-security
+  styleClass: SecurityButton
+  abstract: true
+
+- type: quickPhrase
+  id: BaseServicePhrase
+  group: aac-quick-group-service
+  styleClass: ServiceButton
+  abstract: true

@@ -3,6 +3,7 @@
 using System.Numerics;
 using Robust.Shared.Map;
 using Content.Shared._EinsteinEngines.Flight.Events; // Goobstation
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 
 namespace Content.Shared.Gravity;
 
@@ -19,6 +20,7 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
 
         SubscribeLocalEvent<FloatingVisualsComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<FloatingVisualsComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
+        SubscribeLocalEvent<FloatingVisualsComponent, EntParentChangedMessage>(OnEntParentChanged); // Pirate: multiz - recompute z-gravity suppression on move
         SubscribeLocalEvent<FloatingVisualsComponent, FlightEvent>(OnFlight); // Goobstation
     }
 
@@ -30,6 +32,16 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
     protected bool CanFloat(Entity<FloatingVisualsComponent> entity)
     {
         entity.Comp.CanFloat = _gravity.IsWeightless(entity.Owner);
+
+        #region Pirate: multiz - z-gravity from a floor below suppresses floating
+        if (entity.Comp.CanFloat &&
+            EntityManager.TrySystem<CESharedZLevelsSystem>(out var zLevels) &&
+            zLevels.HasZGravityInfluenceFromBelow(entity.Owner))
+        {
+            entity.Comp.CanFloat = false;
+        }
+        #endregion
+
         Dirty(entity);
         return entity.Comp.CanFloat;
     }
@@ -51,6 +63,14 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
         if (args.Weightless)
             FloatAnimation(entity, entity.Comp.Offset, entity.Comp.AnimationKey, entity.Comp.AnimationTime);
     }
+
+    #region Pirate: multiz - re-evaluate floating when the entity changes parent so z-gravity from a floor below can suppress it
+    private void OnEntParentChanged(Entity<FloatingVisualsComponent> entity, ref EntParentChangedMessage args)
+    {
+        if (CanFloat(entity))
+            FloatAnimation(entity, entity.Comp.Offset, entity.Comp.AnimationKey, entity.Comp.AnimationTime);
+    }
+    #endregion
 
     // Goobstation Start
     private void OnFlight(EntityUid uid, FloatingVisualsComponent component, FlightEvent args)
