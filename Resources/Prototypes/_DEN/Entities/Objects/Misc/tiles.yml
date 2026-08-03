@@ -1,7 +1,7 @@
 - type: entity
   parent: FloorTileItemSteel
   id: FloorTileItemPool
-  name: pool tile
+  name: "плитка для басейну"
   components:
   - type: Sprite
     sprite: _DEN/Objects/Tiles/pool.rsi
@@ -18,7 +18,7 @@
 - type: entity
   parent: FloorTileItemPool
   id: FloorTileItemPoolDark
-  name: dark pool tile
+  name: "темна плитка для басейну"
   components:
   - type: Sprite
     state: pool-dark

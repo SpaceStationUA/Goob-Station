@@ -1,5 +1,5 @@
 - type: entity
-  name: eeep lightning
+  name: "блискавка ііпа"
   id: EeepGunBullet
   parent: TeslaGunBullet
   categories: [ HideSpawnMenu ]

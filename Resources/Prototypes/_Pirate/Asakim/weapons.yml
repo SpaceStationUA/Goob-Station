@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: plasma autopulser
+  name: "плазмовий автомат"
   parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponRifleAsakimAutopulser
-  description: An advanced handheld plasma rifle.
+  description: "Вдосконалена ручна плазмова гвинтівка."
   components:
   - type: Sprite
     sprite: _Pirate/Asakim/Objects/Weapons/Guns/Battery/asakimrifle.rsi
@@ -53,7 +53,7 @@
 
 - type: entity
   id: HandheldAutopulserProjectile
-  name: plasma projectile
+  name: "плазмовий заряд"
   parent: BaseBullet
   categories: [HideSpawnMenu]
   components:
@@ -76,7 +76,7 @@
 
 - type: entity
   id: HandheldAutopulserDisablerProjectile
-  name: disabling plasma projectile
+  name: "паралізувальний плазмовий заряд"
   parent: BulletDisablerSmg
   categories: [HideSpawnMenu]
   components:
@@ -92,10 +92,10 @@
     color: "#00a6ff"
 
 - type: entity
-  name: high-frequency blade
+  name: "високочастотний клинок"
   parent: Katana
   id: WeaponHFKatana
-  description: A high-frequency blade. It is incredibly powerful.
+  description: "Надзвичайно потужний клинок, що вібрує з високою частотою."
   components:
   - type: Sprite
     sprite: _Pirate/Asakim/Objects/Weapons/Melee/hfblade.rsi
