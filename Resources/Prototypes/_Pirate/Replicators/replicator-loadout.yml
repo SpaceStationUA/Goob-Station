@@ -205,7 +205,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: HitscanStaminaDamage
-    staminaDamage: 18
+    staminaDamage: 20
   - type: HitscanBasicVisuals
     muzzleFlash:
       sprite: _Pirate/Mobs/Replicator/replicator_gun.rsi
@@ -223,7 +223,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: HitscanStaminaDamage
-    staminaDamage: 32
+    staminaDamage: 34
   - type: HitscanBasicVisuals
     muzzleFlash:
       sprite: _Pirate/Mobs/Replicator/replicator_gun.rsi

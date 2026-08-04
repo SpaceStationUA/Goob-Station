@@ -133,7 +133,7 @@ public sealed partial class ReplicatorNestComponent : Component
     public EntProtoId SpawnNewNestAction = "ActionReplicatorSpawnNest";
 
     [DataField]
-    public SoundSpecifier FallingSound = new SoundPathSpecifier("/Audio/_Pirate/Effects/falling.ogg");
+    public SoundSpecifier FallingSound = new SoundPathSpecifier("/Audio/Effects/falling.ogg");
     [DataField]
     public SoundSpecifier LevelUpSound = new SoundPathSpecifier("/Audio/_Pirate/Ambience/hole_2.ogg");
     [DataField]

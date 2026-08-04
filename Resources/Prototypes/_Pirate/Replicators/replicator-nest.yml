@@ -15,7 +15,7 @@
   components:
   - type: ReplicatorNest
     fallingSound:
-      path: /Audio/_Pirate/Effects/falling.ogg
+      path: /Audio/Effects/falling.ogg
       params:
         variation: 0.1
     blacklist:
@@ -95,6 +95,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: RequireProjectileTarget
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
   - type: SolutionContainerManager
     solutions:
       drainBuffer:
