@@ -8,15 +8,15 @@ namespace Content.Shared._Pirate.CCVars;
 [CVarDefs]
 public sealed class PirateGoobcoinCVars
 {
-    /// <summary>Set to 0 to disable the round-start bonus.</summary>
+    /// <summary>Sign-on bonus paid at round end. Set to 0 to disable.</summary>
     public static readonly CVarDef<int> RoundStartBonus =
         CVarDef.Create("pirate.goobcoin.round_start_bonus", 50, CVar.SERVERONLY);
 
-    /// <summary>Set to 0 to disable the early-cryo penalty.</summary>
+    /// <summary>Maximum early-cryo penalty. Set to 0 to disable.</summary>
     public static readonly CVarDef<int> EarlyCryoPenalty =
         CVarDef.Create("pirate.goobcoin.early_cryo_penalty", 100, CVar.SERVERONLY);
 
-    /// <summary>Minutes after round start when entering cryo still counts as early.</summary>
+    /// <summary>Minutes after pod entry over which the penalty tapers to zero.</summary>
     public static readonly CVarDef<float> EarlyCryoWindowMinutes =
         CVarDef.Create("pirate.goobcoin.early_cryo_window_minutes", 10f, CVar.SERVERONLY);
 }
