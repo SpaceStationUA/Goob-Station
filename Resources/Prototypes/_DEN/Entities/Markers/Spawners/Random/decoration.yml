@@ -1,7 +1,7 @@
 - type: entity
   parent: MarkerBase
   id: RandomBeachUmbrellaSpawner
-  name: random beach umbrella spawner
+  name: "спавнер випадкових пляжних парасоль"
   placement:
     mode: SnapgridBorder
   components:
