@@ -34,12 +34,14 @@
       - AltarsGolemancy # Pirate
   - type: EnchantingTable # Goobstation
   - type: RecallPrayable # Goobstation
-  
+
 - type: entity
   id: AltarNanotrasen
   parent: AltarBase
   name: nanotrasen altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-nanotrasen-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: nanotrasen
@@ -59,6 +61,8 @@
   parent: AltarNanotrasen
   name: chaos altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-chaos-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: chaos
@@ -101,6 +105,8 @@
   parent: AltarNanotrasen
   name: toolbox altar
   components:
+  - type: AssayResponse  # Pirate
+    replaceMessage: altar-toolbox-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: toolbox
@@ -120,6 +126,8 @@
   parent: AltarNanotrasen
   name: space-Christian altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-space-christian-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     layers:
@@ -146,6 +154,8 @@
   parent: AltarNanotrasen
   name: satanic altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-satanic-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     layers:
@@ -165,6 +175,8 @@
   parent: AltarNanotrasen
   name: technology altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-technology-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     layers:
@@ -191,6 +203,8 @@
   parent: AltarBase
   name: festival altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-festival-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     state: festival
@@ -206,6 +220,8 @@
   parent: AltarConvertFestival
   name: maint altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-maint-feedback
   - type: Sprite
     sprite: _ShitChap/Structures/convertaltar.rsi
     layers:
@@ -231,6 +247,8 @@
   parent: AltarConvertFestival
   name: blue altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-blue-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
@@ -257,6 +275,8 @@
   parent: AltarConvertFestival
   name: burden altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-burden-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
@@ -276,6 +296,8 @@
   parent: AltarConvertFestival
   name: convert altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-convert-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
@@ -298,6 +320,8 @@
   parent: AltarConvertFestival
   name: orange altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-orange-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
@@ -324,6 +348,8 @@
   parent: AltarConvertFestival
   name: red altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-red-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
@@ -343,6 +369,8 @@
   parent: AltarConvertFestival
   name: white altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-white-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
@@ -362,6 +390,8 @@
   parent: AltarConvertFestival
   name: yellow altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-yellow-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
@@ -381,6 +411,8 @@
   parent: AltarBase
   name: heaven altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-heaven-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/heaven.rsi
     layers:
@@ -407,6 +439,8 @@
   parent: AltarHeaven
   name: fanged altar
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-fangs-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/fangs.rsi
   - type: Icon
@@ -425,6 +459,8 @@
   name: honkmother altar
   description: A bananium altar dedicated to the honkmother.
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-honkmother-feedback
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/bananium.rsi
     state: full

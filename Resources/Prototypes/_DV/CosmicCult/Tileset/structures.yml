@@ -409,6 +409,8 @@
   name: cosmic altar
   description: Altar of.. Something.
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: altar-cosmic-feedback
   - type: Sprite
     sprite: _DV/CosmicCult/Tileset/altar.rsi
     layers:

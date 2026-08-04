@@ -12,6 +12,12 @@
       collection: RadiationPulse
       params:
         volume: 5
+  # Pirate: anomalies are noöspheric entities - psionic, and a dormant glimmer source.
+  # The glimmer source only activates while an anomaly vessel is harvesting them
+  # (connected and powered), see GlimmerStructuresSystem.
+  - type: Psionic
+  - type: GlimmerSource
+    active: false
   - type: AmbientSound
     range: 5
     volume: -5
