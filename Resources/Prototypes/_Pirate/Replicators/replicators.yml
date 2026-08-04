@@ -230,6 +230,9 @@
     upgradeActions:
     - ActionReplicatorUpgrade2
     - ActionReplicatorUpgrade2Alt
+  - type: HTN
+    rootTask:
+      task: SimpleHumanoidHostileCompound
   - type: CombatMode
   - type: StaminaDamageOnHit
     damage: 20
@@ -337,6 +340,9 @@
   categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   suffix: Level 2 Alt
   components:
+  - type: HTN
+    rootTask:
+      task: SimpleHumanoidHostileCompound
   - type: CombatMode
   - type: Replicator
     upgradeStage: 1
@@ -389,6 +395,9 @@
   description: "Повільна й надзвичайно міцна форма Реплікатора."
   suffix: Level 3
   components:
+  - type: HTN
+    rootTask:
+      task: SimpleHumanoidHostileCompound
   - type: CombatMode
   - type: Replicator
     upgradeStage: 2
