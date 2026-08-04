@@ -13,8 +13,8 @@
 - type: entity
   parent: [ClothingHeadHardsuitBase, ShowMedicalIcons]
   id: ClothingHelmetHardsuitAsakim
-  name: "шолом бойової системи"
-  description: "Частина вдосконаленої бойової системи."
+  name: combat harness helmet
+  description: Part of an advanced combat harness.
   components:
   - type: Sprite
     sprite: _Pirate/Asakim/Clothing/Head/Hardsuits/asakim.rsi
@@ -57,8 +57,8 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitAsakim
-  name: "бойова система"
-  description: "Вдосконалена бойова система. Надзвичайно рідкісна й майже чужинська порівняно із сучасними скафандрами технологія. Після вдягання броня з’єднується з тілом носія, і зняти її можна лише за зовнішньої допомоги."
+  name: combat harness
+  description: An advanced combat harness. Incredibly rare, and practically alien in technology compared to modern hardsuits. Once equipped, the armor binds itself with the wearer and cannot be removed without external release.
   suffix: SelfUnremovable
   components:
   - type: Sprite
@@ -117,7 +117,7 @@
 - type: entity
   parent: ClothingOuterHardsuitAsakim
   id: ClothingOuterHardsuitAsakimUnremoveable
-  description: "Вдосконалена бойова система. Надзвичайно рідкісна й майже чужинська порівняно із сучасними скафандрами технологія. Цей екземпляр повністю з’єднався з воїном, тому його зняття триватиме дуже довго."
+  description: An advanced combat harness. Incredibly rare, and practically alien in technology compared to modern hardsuits. Once equipped, the armor binds itself with the wearer and cannot be removed without external release. This one is fully bound to a warrior, and will take a long time to remove.
   suffix: 120 stripDelay
   components:
   - type: Clothing
@@ -127,8 +127,8 @@
 - type: entity
   parent: ClothingShoesBootsMagAdv
   id: ClothingShoesBootsMagAsakim
-  name: "бойові магнітні черевики"
-  description: "Найсучасніші магнітні черевики для використання з удосконаленими бойовими системами."
+  name: combat magboots
+  description: State-of-the-art magnetic boots made for combat with advanced harnesses.
   components:
   - type: ClothingSlowOnDamageModifier
     modifier: 0.35
@@ -136,8 +136,8 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackAdvancedTactical
-  name: "удосконалений тактичний рюкзак"
-  description: "Місткий рюкзак із великою кількістю кишень."
+  name: advanced tactical backpack
+  description: A spacious backpack with lots of pockets.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertleader.rsi
@@ -148,8 +148,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAsakim
-  name: "бойовий комбінезон"
-  description: "Зручний і гнучкий комбінезон для носіння під скафандром."
+  name: combat jumpsuit
+  description: A comfortable and flexible jumpsuit, designed to be worn under a hardsuit.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ninja.rsi
