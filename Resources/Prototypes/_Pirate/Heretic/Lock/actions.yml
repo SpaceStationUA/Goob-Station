@@ -3,7 +3,7 @@
 - type: entity
   parent: BaseAction
   id: ActionHereticBurglarsFinesse
-  name: "Спритність Грабіжника"
+  name: Burglar's Finesse
   description: >-
     Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors.
     Grants you Burglar's Finesse, a single-target spell that puts a random item from the victims backpack into your hand.
@@ -33,7 +33,7 @@
 - type: entity
   parent: BaseAction
   id: ActionHereticLastRefuge
-  name: "Останній Притулок Доглядача"
+  name: Caretaker's Last Refuge
   description: >-
     Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable.
     Gives you a spell that makes you transparent and not dense. Cannot be used near living sentient beings.
@@ -58,8 +58,8 @@
 - type: entity
   parent: BaseAction
   id: ActionHereticShapeshiftLock
-  name: "Перевтілення"
-  description: "Набудьте форми іншої істоти та отримайте її здібності."
+  name: Shapechange
+  description: Take the form of another creature and gain its abilities.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
