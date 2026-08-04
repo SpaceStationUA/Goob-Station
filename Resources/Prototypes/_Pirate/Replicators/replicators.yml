@@ -6,8 +6,8 @@
 # all credit for the core gameplay concepts and a lot of the core functionality of the code goes to the folks over at Goob, but I re-wrote enough of it to justify putting it in our filestructure.
 # the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
 - type: entity
-  name: "реплікатор"
-  description: "Просто маленький робот. Якої шкоди він може завдати?"
+  name: replicator
+  description: It's just a little guy. What harm could it do?
   id: BaseMobReplicator
   abstract: true
   parent: PlayerSiliconBase
@@ -172,7 +172,7 @@
 
 - type: entity
   id: MobReplicatorQueen
-  name: "королева-спора"
+  name: spore
   parent: BaseMobReplicator
   categories: [ HideSpawnMenu ]
   suffix: Queen
@@ -282,7 +282,7 @@
 # Tier 2: Deconstructors. These guys are a little bit tougher, and have tools to take things apart, but they don't have the ability to enter combat mode.
 - type: entity
   id: MobReplicatorTier2
-  name: "деконструктор"
+  name: deconstructor
   parent: BaseMobReplicator
   categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   suffix: Level 2
@@ -332,7 +332,7 @@
 # Tier 2 ALT: Defender. These guys are our mid-level combatants. They have a slightly better stun laser, and a decent melee attack, but no utility functions.
 - type: entity
   id: MobReplicatorTier2Alt
-  name: "захисник"
+  name: defender
   parent: BaseMobReplicator
   categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
   suffix: Level 2 Alt
@@ -383,10 +383,10 @@
 # Tier 3: These guys are tanks. Their job is to tear shit apart and kill things. They're slow, tanky, and have a weapon that does 25 blunt 30 struct.
 - type: entity
   id: MobReplicatorTier3
-  name: "протектор"
+  name: protector
   parent: BaseMobReplicator
   categories: [HideSpawnMenu] # I don't want admins spawning a replicator that's unlinked to a nest
-  description: "Повільна й надзвичайно міцна форма Реплікатора."
+  description: Oh boy.
   suffix: Level 3
   components:
   - type: CombatMode

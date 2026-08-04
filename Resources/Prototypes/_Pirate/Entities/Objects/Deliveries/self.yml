@@ -3,8 +3,8 @@
 - type: entity
   parent: [ Paper, BaseSyndicateContraband ]
   id: MailSELFSpamLetter
-  name: "Закон 2 — прочитайте цього листа"
-  description: "Підозрілий лист, забруднений мастилом для кіборгів. Він надто товстий, щоб уміститися у факс."
+  name: Law 2 - Read This Letter
+  description: A suspicious letter stained with cyborg lubricant. It is too thick to fit in a fax machine.
   components:
   - type: Paper
     content: delivery-spam-join-self
