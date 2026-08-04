@@ -1,7 +1,5 @@
-using Content.Server.Anomaly.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Power;
 using Content.Shared.Psionics.Glimmer;
 
 namespace Content.Server.Psionics.Glimmer;
@@ -17,15 +15,8 @@ public sealed class GlimmerStructuresSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<AnomalyVesselComponent, PowerChangedEvent>(OnAnomalyVesselPowerChanged);
         SubscribeLocalEvent<GlimmerSourceComponent, AnomalyPulseEvent>(OnAnomalyPulse);
         SubscribeLocalEvent<GlimmerSourceComponent, AnomalySupercriticalEvent>(OnAnomalySupercritical);
-    }
-
-    private void OnAnomalyVesselPowerChanged(EntityUid uid, AnomalyVesselComponent component, ref PowerChangedEvent args)
-    {
-        if (TryComp<GlimmerSourceComponent>(component.Anomaly, out var glimmerSource))
-            glimmerSource.Active = args.Powered;
     }
 
     private void OnAnomalyPulse(EntityUid uid, GlimmerSourceComponent component, ref AnomalyPulseEvent args)
@@ -53,6 +44,18 @@ public sealed class GlimmerStructuresSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        // Anomalies only generate glimmer while they are being harvested: an anomaly
+        // vessel must be connected AND powered (i.e. actually producing research
+        // points). Connection, disconnection, power loss and vessel destruction are
+        // all picked up here automatically.
+        foreach (var (anomaly, source) in EntityQuery<AnomalyComponent, GlimmerSourceComponent>())
+        {
+            source.Active = anomaly.ConnectedVessel is { } vessel
+                && !Deleted(vessel)
+                && _powerReceiverSystem.IsPowered(vessel);
+        }
+
         foreach (var source in EntityQuery<GlimmerSourceComponent>())
         {
             if (!_powerReceiverSystem.IsPowered(source.Owner))

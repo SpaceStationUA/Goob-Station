@@ -1,18 +1,27 @@
 using Content.Shared._DV.CosmicCult;
 using Content.Shared._DV.Psionics.Events;
-using Content.Shared._DV.Psionics.Systems.PsionicPowers;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
-using Robust.Shared.Random;
+using Content.Shared.Popups;
 
 namespace Content.Shared._DV.Anomaly;
 
 // Pirate: source patches SharedAnomalySystem partial, but DV psionics lives in Content.Pirate.Shared here.
 public sealed class AnomalyPsionicsSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    /// <summary>
+    /// The stability a dispelled unstable anomaly is settled to. Must stay below the
+    /// anomaly's growth threshold so it counts as stable.
+    /// </summary>
+    private const float AnomalyStabilizedStability = 0.3f;
+
+    /// <summary>
+    /// Health removed from a stable anomaly when it is dispelled (anomaly health is 0-1).
+    /// </summary>
+    private const float AnomalyDispelHealthDamage = 0.2f;
+
     [Dependency] private readonly SharedAnomalySystem _anomaly = default!;
-    [Dependency] private readonly SharedDispelPowerSystem _dispel = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -26,8 +35,18 @@ public sealed class AnomalyPsionicsSystem : EntitySystem
         if (HasComp<CosmicCultExamineComponent>(anomaly))
             return;
 
-        _dispel.DealDispelDamage(anomaly.Owner, dispeller: args.Dispeller);
-        _anomaly.ChangeAnomalyHealth(anomaly.Owner, -_random.NextFloat(0.4f, 0.8f), anomaly.Comp);
+        // A dispel settles an unstable anomaly, but cracks the shell of a stable one.
+        if (anomaly.Comp.Stability > anomaly.Comp.GrowthThreshold)
+        {
+            _anomaly.ChangeAnomalyStability(anomaly.Owner, AnomalyStabilizedStability - anomaly.Comp.Stability, anomaly.Comp);
+            _popup.PopupPredicted(Loc.GetString("anomaly-dispel-stabilized"), anomaly.Owner, args.Dispeller, PopupType.Medium);
+        }
+        else
+        {
+            _anomaly.ChangeAnomalyHealth(anomaly.Owner, -AnomalyDispelHealthDamage, anomaly.Comp);
+            _popup.PopupPredicted(Loc.GetString("anomaly-dispel-damaged"), anomaly.Owner, args.Dispeller, PopupType.MediumCaution);
+        }
+
         args.Handled = true;
     }
 }
