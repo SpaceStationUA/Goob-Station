@@ -1,0 +1,21 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical"
+              HorizontalExpand="True"
+              Margin="0 0 0 10">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="4 4 6 5">
+        <PanelContainer Name="AccentBar" SetWidth="4" SetHeight="22"/>
+        <Label Name="DepartmentLabel"
+               StyleClasses="font-large"
+               Margin="8 0 0 0"
+               VerticalAlignment="Center"/>
+        <Control HorizontalExpand="True"/>
+        <Label Name="VisibleCountLabel"
+               StyleClasses="LabelSubText"
+               VerticalAlignment="Center"/>
+    </BoxContainer>
+    <BoxContainer Name="EntriesContainer" Orientation="Vertical" HorizontalExpand="True"/>
+</BoxContainer>

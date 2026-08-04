@@ -1,0 +1,73 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls;assembly=Content.Client"
+               Title="{Loc job-slots-title}"
+               Resizable="True"
+               SetSize="760 680"
+               MinSize="640 440">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="8">
+        <BoxContainer Orientation="Horizontal" Margin="0 0 0 8">
+            <Label Text="{Loc job-slots-station}" SetWidth="80" VerticalAlignment="Center"/>
+            <OptionButton Name="StationSelector" HorizontalExpand="True" Filterable="True"/>
+            <Button Name="RefreshButton"
+                    SetSize="36 32"
+                    StyleClasses="OpenBoth"
+                    Margin="4 0 12 0"
+                    ToolTip="{Loc job-slots-refresh}">
+                <TextureRect MouseFilter="Ignore"
+                             SetSize="18 18"
+                             Stretch="KeepAspectCentered"
+                             TexturePath="/Textures/Interface/VerbIcons/refresh.svg.192dpi.png"/>
+            </Button>
+            <Label Text="{Loc job-slots-step}" Margin="0 0 6 0" VerticalAlignment="Center"/>
+            <SpinBox Name="AdjustmentSpinBox" Value="1" SetWidth="130"/>
+        </BoxContainer>
+
+        <LineEdit Name="JobSearch"
+                  StyleClasses="actionSearchBox"
+                  HorizontalExpand="True"
+                  PlaceHolder="{Loc job-slots-search-placeholder}"
+                  Margin="0 0 0 8"/>
+
+        <PanelContainer StyleClasses="BackgroundDark" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="6">
+                <BoxContainer Orientation="Horizontal" Margin="8 2 10 6">
+                    <Label Text="{Loc job-slots-column-job}" HorizontalExpand="True"/>
+                    <Label Text="{Loc job-slots-column-available}"
+                           SetWidth="112"
+                           HorizontalAlignment="Center"
+                           ClipText="True"/>
+                    <Control SetWidth="82"/>
+                </BoxContainer>
+                <PanelContainer StyleClasses="LowDivider" SetHeight="2" Margin="0 0 0 4"/>
+                <ScrollContainer Name="JobsScroll"
+                                 HScrollEnabled="False"
+                                 ReserveScrollbarSpace="True"
+                                 HorizontalExpand="True"
+                                 VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                        <Label Name="EmptyLabel"
+                               Text="{Loc job-slots-no-stations}"
+                               HorizontalAlignment="Center"
+                               Margin="8 18"/>
+                        <BoxContainer Name="JobContainer"
+                                      Orientation="Vertical"
+                                      HorizontalExpand="True"/>
+                    </BoxContainer>
+                </ScrollContainer>
+            </BoxContainer>
+        </PanelContainer>
+
+        <controls:StripeBack Margin="0 8 0 0">
+            <Label Name="StatusLabel"
+                   Text=" "
+                   HorizontalAlignment="Center"
+                   HorizontalExpand="True"
+                   ClipText="True"
+                   Margin="6 4"/>
+        </controls:StripeBack>
+    </BoxContainer>
+</DefaultWindow>
