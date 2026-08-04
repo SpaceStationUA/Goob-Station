@@ -33,6 +33,9 @@
     TriggerNitrium: 0.05
     TriggerPluoxium: 0.05
     # </Goobstation>
+    # <Pirate>
+    TriggerPsionicUsage: 0.5
+    # </Pirate>
 
 - type: xenoArchTrigger
   id: TriggerMusic
