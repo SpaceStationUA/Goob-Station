@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Content.Pirate.Shared.Administration.JobSlots;
+using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
