@@ -1,0 +1,44 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<PanelContainer xmlns="https://spacestation14.io"
+                StyleClasses="BackgroundPanel"
+                HorizontalExpand="True"
+                MinHeight="48"
+                Margin="0 0 0 3">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <PanelContainer Name="DepartmentStripe" SetWidth="4" VerticalExpand="True"/>
+        <TextureRect Name="JobIcon"
+                     SetSize="32 32"
+                     TextureScale="2 2"
+                     VerticalAlignment="Center"
+                     Margin="8 4"/>
+        <BoxContainer Orientation="Vertical"
+                      HorizontalExpand="True"
+                      VerticalAlignment="Center"
+                      Margin="0 4 6 4">
+            <Label Name="JobNameLabel" HorizontalExpand="True" ClipText="True"/>
+            <Label Name="JobIdLabel"
+                   HorizontalExpand="True"
+                   ClipText="True"
+                   StyleClasses="LabelSubText"/>
+        </BoxContainer>
+        <Label Name="SlotsLabel"
+               SetWidth="112"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               ClipText="True"/>
+        <BoxContainer Orientation="Horizontal" SetWidth="82" VerticalAlignment="Center">
+            <Button Name="DecreaseButton"
+                    Text="-"
+                    SetSize="38 32"
+                    ToolTip="{Loc job-slots-decrease-tooltip}"/>
+            <Button Name="IncreaseButton"
+                    Text="+"
+                    SetSize="38 32"
+                    Margin="4 0 0 0"
+                    ToolTip="{Loc job-slots-increase-tooltip}"/>
+        </BoxContainer>
+    </BoxContainer>
+</PanelContainer>
