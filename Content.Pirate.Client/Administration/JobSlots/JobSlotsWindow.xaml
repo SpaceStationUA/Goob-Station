@@ -13,14 +13,14 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <Label Text="{Loc job-slots-station}" SetWidth="80" VerticalAlignment="Center"/>
             <OptionButton Name="StationSelector" HorizontalExpand="True" Filterable="True"/>
             <Button Name="RefreshButton"
-                    SetSize="34 28"
+                    SetSize="36 32"
+                    StyleClasses="OpenBoth"
                     Margin="4 0 12 0"
                     ToolTip="{Loc job-slots-refresh}">
-                <TextureButton MouseFilter="Ignore"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Scale="0.9 0.9"
-                               StyleClasses="RefreshButton"/>
+                <TextureRect MouseFilter="Ignore"
+                             SetSize="18 18"
+                             Stretch="KeepAspectCentered"
+                             TexturePath="/Textures/Interface/VerbIcons/refresh.svg.192dpi.png"/>
             </Button>
             <Label Text="{Loc job-slots-step}" Margin="0 0 6 0" VerticalAlignment="Center"/>
             <SpinBox Name="AdjustmentSpinBox" Value="1" SetWidth="130"/>
