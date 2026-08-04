@@ -336,6 +336,8 @@
     - id: MMI # Goobstation
     - id: PrinterDocFlatpack  # Pirate document printer
     - id: PhotoAlbumDepartmentScience
+    - id: ClothingEyesHudEpistemics # Pirate
+    - id: GlimmerMonitorCartridge # Pirate
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
