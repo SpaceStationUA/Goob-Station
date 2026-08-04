@@ -1,7 +1,7 @@
 - type: entity
   id: CEMultizCableHub
-  name: multiz cable hub
-  description: A compact relay for bridging matching power cable networks between linked floors.
+  name: "багаторівневий кабельний концентратор"
+  description: "Компактне реле для з'єднання відповідних мереж силових кабелів між пов'язаними поверхами."
   placement:
     mode: SnapgridCenter
   components:

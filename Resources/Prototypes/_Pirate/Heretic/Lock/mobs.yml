@@ -12,8 +12,8 @@
 - type: entity
   parent: [SimpleSpaceMobBase, FlyingMobBase, MobCombat]
   id: MobGhoulMirrorMaid
-  name: maid in the mirror
-  description: A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly.
+  name: "дзеркальна служниця"
+  description: "Летючий струмінь холодного повітря, що постійно змінює форму. Від погляду він ледь помітно мерехтить."
   components:
   - type: Ghoul
     spawnOnDeathPrototype: ShardGlass
@@ -142,7 +142,7 @@
 - type: entity
   parent: MobShattered
   id: MobShatteredLock
-  name: empowered shattered risen
+  name: "посилений розколотий повсталий"
   components:
   - type: ShatteredRisen
     weapon1: ArmBladeShatteredEmpowered
@@ -156,7 +156,7 @@
 - type: entity
   parent: [SimpleSpaceMobBase, MobCombat, BaseMobHereticLockForm]
   id: MobGhoulStalkerLock
-  name: empowered flesh stalker
+  name: "посилений плотський переслідувач"
   components:
   - type: Sprite
     sprite: _Goobstation/Heretic/eldritch_mobs.rsi
@@ -190,7 +190,7 @@
 - type: entity
   parent: [SimpleSpaceMobBase, MobCombat, BaseMobHereticLockForm]
   id: MobGhoulProphetLock
-  name: empowered raw prophet
+  name: "посилений сирий пророк"
   components:
   - type: Sprite
     noRot: true
@@ -239,8 +239,8 @@
 - type: entity
   parent: [SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseMobHereticLockForm]
   id: MobGhoulMirrorMaidLock
-  name: empowered maid in the mirror
-  description: A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly.
+  name: "посилена дзеркальна служниця"
+  description: "Летючий струмінь холодного повітря, що постійно змінює форму. Від погляду він ледь помітно мерехтить."
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/mirror_maid.rsi
@@ -321,7 +321,7 @@
 - type: entity
   parent: [SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseMobHereticLockForm]
   id: MobGhoulFireSharkLock
-  name: empowered fire shark
+  name: "посилена вогняна акула"
   components:
   - type: Sprite
     sprite: _Goobstation/Heretic/eldritch_mobs.rsi
@@ -369,7 +369,7 @@
 - type: entity
   parent: [SimpleSpaceMobBase, MobCombat, BaseMobHereticLockForm]
   id: MobGhoulRustWalkerLock
-  name: empowered rust walker
+  name: "посилений іржавий ходок"
   components:
   - type: Sprite
     sprite: _Goobstation/Heretic/eldritch_mobs.rsi
