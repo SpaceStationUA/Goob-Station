@@ -6,3 +6,8 @@ gs-balanceui-shop-buy-major-token-antag-desc = Дозволяє стати ма�
 gs-balanceui-shop-buy-minor-token-antag-desc = Дозволяє стати мінорним антагоністом
 gs-balanceui-remark-major-token-antag = Куплено жетон мажорного антагоніста.
 gs-balanceui-remark-minor-token-antag = Куплено жетон мінорного антагоніста.
+
+## Виплати протягом зміни
+
+pirate-goobcoin-round-start-bonus = Вам нараховано {$amount} за прибуття на початку зміни.
+pirate-goobcoin-early-cryo-penalty = З вас стягнуто {$amount} за залишення посту протягом перших {$minutes} хвилин зміни.

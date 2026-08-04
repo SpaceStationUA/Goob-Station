@@ -6,3 +6,8 @@ gs-balanceui-shop-buy-minor-token-antag-desc = Allows you to become a minor anta
 
 gs-balanceui-remark-major-token-antag = Bought a major antag token.
 gs-balanceui-remark-minor-token-antag = Bought a minor antag token.
+
+## Mid-round payouts
+
+pirate-goobcoin-round-start-bonus = You have been awarded {$amount} for showing up at the start of the shift.
+pirate-goobcoin-early-cryo-penalty = You have been docked {$amount} for abandoning your post within the first {$minutes} minutes of the shift.
