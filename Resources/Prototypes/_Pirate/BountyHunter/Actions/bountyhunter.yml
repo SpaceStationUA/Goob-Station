@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseAction
   id: ActionWeaponRecall
-  name: Mark Weapon
-  description: Mark a held weapon to later summon into your hand.
+  name: "Позначити зброю"
+  description: "Позначте зброю в руці, щоб згодом викликати її назад."
   components:
   - type: Action
     useDelay: 0.5

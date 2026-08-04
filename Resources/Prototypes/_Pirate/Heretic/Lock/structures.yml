@@ -2,8 +2,8 @@
 
 - type: entity
   id: WallLabyrinth
-  name: labyrinth pages
-  description: A field of papers flying in the air, repulsing heathens with impossible force.
+  name: "сторінки Лабіринту"
+  description: "Поле паперів, що літають у повітрі та з незбагненною силою відштовхують язичників."
   placement:
     mode: SnapgridCenter
     snap:
@@ -45,8 +45,8 @@
 
 - type: entity
   id: RealityCrack
-  name: crack in reality
-  description: A crack in space, impossibly deep and painful to the eyes. Definitely not safe.
+  name: "тріщина в реальності"
+  description: "Неймовірно глибока тріщина в просторі, від якої болять очі. Це точно небезпечно."
   placement:
     mode: SnapgridCenter
   components:
@@ -76,8 +76,8 @@
 
 - type: entity
   id: LabyrinthTear
-  name: ???
-  description: It stares back. There's no reason to remain. Run.
+  name: "???"
+  description: "Воно дивиться у відповідь. Залишатися немає сенсу. Тікайте."
   placement:
     mode: SnapgridCenter
   components:

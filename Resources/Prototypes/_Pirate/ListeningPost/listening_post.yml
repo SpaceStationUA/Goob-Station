@@ -23,7 +23,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleListeningPost
-  name: Listening Post Role
+  name: "Роль оперативника станції прослуховування"
   components:
   - type: MindRole
     roleType: TeamAntagonist
