@@ -34,6 +34,11 @@ public abstract partial class SharedPsionicSystem
 
     public bool CanRollPsionic(EntityUid uid)
     {
+        // Pirate: entities without psionic potential cannot receive psionic powers.
+        // Admin commands bypass this by ensuring the PotentialPsionicComponent first.
+        if (!HasComp<PotentialPsionicComponent>(uid))
+            return false;
+
         // Pirate: lets downstream insulation rules block psionic awakening without forking DV roll callers.
         var ev = new PsionicRollAttemptEvent();
         RaiseLocalEvent(uid, ref ev);

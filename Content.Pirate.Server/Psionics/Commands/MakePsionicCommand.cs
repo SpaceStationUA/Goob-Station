@@ -54,9 +54,17 @@ public sealed class MakePsionicCommand : IConsoleCommand
             return;
         }
 
+        var hadPotential = _entManager.HasComponent<PotentialPsionicComponent>(target.Value);
+        if (!hadPotential)
+            _entManager.AddComponent<PotentialPsionicComponent>(target.Value);
+
         var psionicSystem = _entManager.System<PsionicSystem>();
         if (!psionicSystem.CanRollPsionic(target.Value))
         {
+            // Restore the previous state when the command is rejected.
+            if (!hadPotential)
+                _entManager.RemoveComponent<PotentialPsionicComponent>(target.Value);
+
             shell.WriteError("Entity cannot receive psionic powers.");
             return;
         }
@@ -69,7 +77,6 @@ public sealed class MakePsionicCommand : IConsoleCommand
             return;
         }
 
-        _entManager.EnsureComponent<PotentialPsionicComponent>(target.Value);
         _entManager.AddComponents(target.Value, powerPrototype, removeExisting: false);
 
         shell.WriteLine($"Granted {powerPrototype.ID} to {target.Value}.");

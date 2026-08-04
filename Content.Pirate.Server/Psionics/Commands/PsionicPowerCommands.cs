@@ -59,9 +59,18 @@ public sealed class PsionicAddCommand : IConsoleCommand
             return;
         }
 
+        // Pirate: admin commands bypass the psionic potential requirement by ensuring it.
+        var hadPotential = _entManager.HasComponent<PotentialPsionicComponent>(target.Value);
+        if (!hadPotential)
+            _entManager.AddComponent<PotentialPsionicComponent>(target.Value);
+
         var psionicSystem = _entManager.System<PsionicSystem>();
         if (!psionicSystem.CanRollPsionic(target.Value))
         {
+            // Restore the previous state when the command is rejected.
+            if (!hadPotential)
+                _entManager.RemoveComponent<PotentialPsionicComponent>(target.Value);
+
             shell.WriteError("Entity cannot receive psionic powers.");
             return;
         }
@@ -74,7 +83,6 @@ public sealed class PsionicAddCommand : IConsoleCommand
             return;
         }
 
-        _entManager.EnsureComponent<PotentialPsionicComponent>(target.Value);
         _entManager.AddComponents(target.Value, powerPrototype, removeExisting: false);
 
         shell.WriteLine($"Granted {powerPrototype.ID} to {target.Value}.");
@@ -129,14 +137,23 @@ public sealed class PsionicAddRandomCommand : IConsoleCommand
             return;
         }
 
+        // Pirate: admin commands bypass the psionic potential requirement by ensuring it.
+        var hadPotential = _entManager.HasComponent<PotentialPsionicComponent>(target.Value);
+        if (!hadPotential)
+            _entManager.AddComponent<PotentialPsionicComponent>(target.Value);
+
         var psionicSystem = _entManager.System<PsionicSystem>();
         if (!psionicSystem.CanRollPsionic(target.Value))
         {
+            // Restore the previous state when the command is rejected.
+            if (!hadPotential)
+                _entManager.RemoveComponent<PotentialPsionicComponent>(target.Value);
+
             shell.WriteError("Entity cannot receive psionic powers.");
             return;
         }
 
-        var potential = _entManager.EnsureComponent<PotentialPsionicComponent>(target.Value);
+        var potential = _entManager.GetComponent<PotentialPsionicComponent>(target.Value);
         var before = _entManager.TryGetComponent<PsionicComponent>(target.Value, out var beforeComp)
             ? beforeComp.PsionicPowersActionEntities.Count
             : 0;

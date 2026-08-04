@@ -1,3 +1,4 @@
+using Content.Shared._DV.Psionics.Components;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
@@ -18,6 +19,11 @@ public sealed partial class AddPsionicComponentSpecial : JobSpecial
     public override void AfterEquip(EntityUid mob)
     {
         var entMan = IoCManager.Resolve<IEntityManager>();
+
+        // Pirate: only entities with psionic potential may receive granted psionic powers.
+        if (!entMan.HasComponent<PotentialPsionicComponent>(mob))
+            return;
+
         var ev = new PsionicRollAttemptEvent();
         entMan.EventBus.RaiseLocalEvent(mob, ref ev);
 

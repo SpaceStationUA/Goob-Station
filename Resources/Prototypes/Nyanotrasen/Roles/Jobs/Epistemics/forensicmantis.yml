@@ -35,6 +35,7 @@
     components:
       - type: CanEnchant
       - type: MetapsionicPulsePower # DeltaV
+      - type: AssayPower
 
 - type: startingGear
   id: ForensicMantisGear

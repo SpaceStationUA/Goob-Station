@@ -229,6 +229,9 @@
     maxSaturation: 30
     saturation: 30 #Goob Edit end
   - type: Shadowkin # Pirate
+  - type: Psionic # Pirate
+  - type: PotentialPsionic # Pirate
+    speciesBonusChance: 0.1
 
 - type: entity
   save: false
