@@ -37,6 +37,10 @@ public abstract class SharedDispelPowerSystem : BasePsionicPowerSystem<DispelPow
     protected override void OnPowerInit(Entity<DispelPowerComponent> power, ref MapInitEvent args)
     {
         base.OnPowerInit(power, ref args);
+
+        // If the power was stripped (e.g. entity without psionic potential), skip the extras.
+        if (!HasComp<DispelPowerComponent>(power))
+            return;
         // Dispell psionics can now see invisible entities to dispell them.
         Psionic.SetCanSeePsionicInvisiblity(power.Owner, true);
     }

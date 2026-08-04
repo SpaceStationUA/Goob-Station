@@ -22,8 +22,22 @@ public sealed partial class PsionicSystem : SharedPsionicSystem
 
         SubscribeLocalEvent<PotentialPsionicComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
         SubscribeLocalEvent<PsionicPowerGainedEvent>(OnPsionicPowerGained);
+        SubscribeLocalEvent<PotentialPsionicComponent, ComponentRemove>(OnPotentialRemoved);
 
         InitializeItems();
+    }
+
+    /// <summary>
+    /// When an entity loses its psionic potential, all of its removable psionic powers
+    /// self-delete (unremovable, innate powers stay).
+    /// </summary>
+    private void OnPotentialRemoved(EntityUid uid, PotentialPsionicComponent component, ComponentRemove args)
+    {
+        // Skip when the entity itself is being deleted.
+        if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+            return;
+
+        RemovePsionicPowers(uid);
     }
 
     private void OnPlayerSpawnComplete(Entity<PotentialPsionicComponent> potPsionic, ref PlayerSpawnCompleteEvent args)

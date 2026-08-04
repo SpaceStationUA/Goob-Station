@@ -104,7 +104,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: NoosphericZapPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -117,7 +116,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: TelegnosisPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -130,7 +128,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: PsychokineticScreamPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -143,7 +140,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: DispelPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -156,7 +152,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: MetapsionicPulsePower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -169,7 +164,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: PsionicRegenerationPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -182,7 +176,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: PyrokinesisPower
-    - type: Psionic
 
 # Pirate: Ported from upstream PR #34 (SpaceStationUA/Goob-Station)
 - type: entity
@@ -196,7 +189,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: AnoigoPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -219,7 +211,6 @@
       rotReduction: 10
       useDelay: 1
       doRevive: false
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -242,7 +233,6 @@
       rotReduction: 60
       useDelay: 8
       doRevive: true
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -255,7 +245,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: DarkSwapPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -268,7 +257,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: AssayPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -281,7 +269,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: ShadeskipPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -294,7 +281,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: MassSleepPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -307,7 +293,6 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: MindSwapPower
-    - type: Psionic
 
 - type: entity
   parent: BasePsionCrystal
@@ -320,4 +305,3 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: PsionicEruptionPower
-    - type: Psionic

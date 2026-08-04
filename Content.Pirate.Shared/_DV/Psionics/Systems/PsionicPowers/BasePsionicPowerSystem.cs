@@ -51,6 +51,15 @@ public abstract class BasePsionicPowerSystem<T, T1> : EntitySystem where T : Bas
     /// <param name="args">The args from the event.</param>
     protected virtual void OnPowerInit(Entity<T> power, ref MapInitEvent args)
     {
+        // Pirate: removable psionic powers require psionic potential to persist on the entity.
+        // Powers granted to an entity without potential (e.g. a crystal implanted into a
+        // non-potential host) self-delete immediately. Unremovable (innate) powers are exempt.
+        if (power.Comp.CanBeRemoved && !HasComp<PotentialPsionicComponent>(power.Owner))
+        {
+            RemComp<T>(power);
+            return;
+        }
+
         Action.AddAction(power, ref power.Comp.ActionEntity, power.Comp.ActionProtoId);
 
         var psionicComp = EnsureComp<PsionicComponent>(power);

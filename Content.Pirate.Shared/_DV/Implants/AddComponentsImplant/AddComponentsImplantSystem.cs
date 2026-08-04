@@ -19,6 +19,7 @@ public sealed class AddComponentsImplantSystem : EntitySystem
         {
             return;
         }
+
         // Pirate: local EntityManager adds registry entries in bulk, not raw component instances.
         var added = new ComponentRegistry();
 

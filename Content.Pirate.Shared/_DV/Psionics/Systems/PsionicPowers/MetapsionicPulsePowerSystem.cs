@@ -17,6 +17,10 @@ public sealed class MetapsionicPulsePowerSystem : BasePsionicPowerSystem<Metapsi
     {
         base.OnPowerInit(power, ref args);
 
+        // If the power was stripped (e.g. entity without psionic potential), skip the extras.
+        if (!HasComp<MetapsionicPulsePowerComponent>(power))
+            return;
+
         EnsureComp<PsionicPowerDetectorComponent>(power);
     }
 

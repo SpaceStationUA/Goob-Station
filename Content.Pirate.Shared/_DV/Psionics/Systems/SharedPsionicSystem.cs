@@ -81,6 +81,23 @@ public abstract partial class SharedPsionicSystem : EntitySystem
         Popup.PopupClient(Loc.GetString("psionic-mindbroken"), psionic, PopupType.Medium);
     }
 
+    /// <summary>
+    /// Strips all removable psionic powers from an entity without the mindbreak side effects
+    /// (stun, popup and glimmer loss). Unremovable (innate) powers are kept.
+    /// If no powers remain, the PsionicComponent is removed so the entity is no longer psionic.
+    /// </summary>
+    /// <param name="uid">The entity whose psionic powers should be removed.</param>
+    [PublicAPI]
+    public void RemovePsionicPowers(EntityUid uid)
+    {
+        var ev = new PsionicMindBrokenEvent(force: false);
+        RaiseLocalEvent(uid, ref ev);
+
+        // If all powers were removed (or there were none), the entity is no longer psionic.
+        if (ev.AllRemoved)
+            RemComp<PsionicComponent>(uid);
+    }
+
     // TODO: Fix prediction issues. When calling from a server side, there is no popups.
     // Introducing server-side popups will cause them to be spammed client-side.
     // PopupPredicted() cannot be used or it'll not show any popups clientside when called serverside.
