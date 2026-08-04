@@ -1,7 +1,7 @@
 - type: entity
   id: ActionStasisEnter
-  name: "Увійти в стазис"
-  description: "Увійти у стан призупиненої анімації, який поступово лікує шкоду, але перешкоджає руху та більшості дій."
+  name: Enter Stasis
+  description: Enter a state of suspended animation, healing damage over time but preventing movement and most actions.
   components:
   - type: Action
     itemIconStyle: BigAction
@@ -13,8 +13,8 @@
 
 - type: entity
   id: ActionStasisExit
-  name: "Вийти зі стазису"
-  description: "Вийти зі стану призупиненої анімації."
+  name: Exit Stasis
+  description: Exit the state of suspended animation.
   components:
   - type: Action
     itemIconStyle: BigAction
