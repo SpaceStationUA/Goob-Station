@@ -9,7 +9,4 @@ public sealed partial class PirateEmoteCooldownComponent : Component
 {
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextEmote;
-
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    public TimeSpan NextFlipEmote;
 }

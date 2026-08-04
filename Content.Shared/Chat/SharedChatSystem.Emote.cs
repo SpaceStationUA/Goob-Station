@@ -216,7 +216,7 @@ public abstract partial class SharedChatSystem
             return true;
 
         // Pirate: emote cooldown
-        var cooldownAttempt = new PirateEmoteCooldownAttemptEvent(source, emote.ID);
+        var cooldownAttempt = new PirateEmoteCooldownAttemptEvent(source);
         RaiseLocalEvent(source, ref cooldownAttempt);
         if (cooldownAttempt.Cancelled)
             return false;
@@ -224,7 +224,7 @@ public abstract partial class SharedChatSystem
         if (!TryInvokeEmoteEvent(source, emote, voluntary: !forced))
             return false;
 
-        var cooldownCommit = new PirateEmoteCooldownCommitEvent(source, emote.ID);
+        var cooldownCommit = new PirateEmoteCooldownCommitEvent(source);
         RaiseLocalEvent(source, ref cooldownCommit);
         return true;
         // Pirate end

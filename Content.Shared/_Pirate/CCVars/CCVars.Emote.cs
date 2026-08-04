@@ -6,7 +6,4 @@ public sealed partial class CCVars
 {
     public static readonly CVarDef<float> PirateEmoteCooldownSeconds =
         CVarDef.Create("pirate.emote_cooldown_seconds", 1.5f, CVar.SERVER | CVar.REPLICATED);
-
-    public static readonly CVarDef<float> PirateFlipEmoteCooldownSeconds =
-        CVarDef.Create("pirate.flip_emote_cooldown_seconds", 30f, CVar.SERVER | CVar.REPLICATED);
 }

@@ -30,10 +30,10 @@ public sealed partial class EmotesMenuSystem : EntitySystem
         if (!_prototypeManager.Resolve(msg.ProtoId, out var proto) || proto.ChatTriggers.Count == 0)
             return;
 
-        if (!_pirateEmoteCooldown.CanEmote(player.Value, msg.ProtoId)) // Pirate: emote cooldown
+        if (!_pirateEmoteCooldown.CanEmote(player.Value)) // Pirate: emote cooldown
             return; // Pirate: emote cooldown
 
         if (_chat.TryEmoteWithChat(player.Value, msg.ProtoId)) // Pirate: emote cooldown
-            _pirateEmoteCooldown.CommitEmote(player.Value, msg.ProtoId); // Pirate: emote cooldown
+            _pirateEmoteCooldown.CommitEmote(player.Value); // Pirate: emote cooldown
     }
 }
