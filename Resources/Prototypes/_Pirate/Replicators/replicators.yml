@@ -149,6 +149,10 @@
   - type: ThermalVision
     lightRadius: 7
     color: "#d70aa0"
+  - type: NightVision
+    color: "#d70aa0"
+    activateSound: null
+    deactivateSound: null
   - type: Prying
     pryPowered: true
     force: true
@@ -244,6 +248,17 @@
     weightlessFrictionNoInput: 200
     weightlessAcceleration: 1.8
   - type: NoSlip
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: Sprite
     granularLayersRendering: true
     drawdepth: SmallMobs
