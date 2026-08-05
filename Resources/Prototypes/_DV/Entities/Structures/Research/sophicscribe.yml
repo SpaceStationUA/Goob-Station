@@ -32,6 +32,3 @@
       gender: female
       proper: true
   - type: SpriteFade
-  - type: GuideHelp
-    guides:
-    - Psionics
