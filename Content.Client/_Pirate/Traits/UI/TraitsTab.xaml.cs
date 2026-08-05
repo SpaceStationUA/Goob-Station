@@ -382,7 +382,8 @@ public sealed partial class TraitsTab : BoxContainer
 
             if (trait.Category != null && _categoryUis.TryGetValue(trait.Category.Value, out var categoryUi))
             {
-                categoryUi.SetTraitSelected(traitId, true);
+                // Conditions still describe the previously displayed profile until UpdateConditions runs.
+                categoryUi.SetTraitSelected(traitId, true, respectConditions: false);
             }
         }
 
