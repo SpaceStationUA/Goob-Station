@@ -1116,6 +1116,8 @@
   - type: Battery
     maxCharge: 1200 # Goobstation
     startingCharge: 1200 # Goobstation
+  - type: StealTarget # Pirate: Restore the energy shotgun steal objective target.
+    stealGroup: WeaponEnergyShotgun
 
 - type: entity
   name: energy magnum
