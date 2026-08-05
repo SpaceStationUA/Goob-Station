@@ -20,7 +20,7 @@
     blockedBySpectral: false
     school: Translocation
   - type: Action
-    useDelay: 30
+    useDelay: 60
     icon:
       sprite: _Goobstation/Wizard/actions.rsi
       state: jaunt
