@@ -39,6 +39,20 @@ namespace Content.Shared.Psionics.Glimmer
         public bool Locked = false;
 
         /// <summary>
+        /// Pirate - The power disabled state the device had before it was locked
+        /// by dangerous glimmer, restored when the device unlocks.
+        /// </summary>
+        [DataField]
+        public bool PreLockPowerDisabled = false;
+
+        /// <summary>
+        /// Pirate - The power load (watts drawn) the device had before it was
+        /// locked by dangerous glimmer. While locked the prober runs for free.
+        /// </summary>
+        [DataField]
+        public float PreLockPowerLoad = 0f;
+
+        /// <summary>
         /// If true, this component will scale its research generation based on the glimmer tier, as well as its glimmer generation.
         /// </summary>
         [DataField]

@@ -48,7 +48,6 @@ namespace Content.Server.Psionics.Glimmer
 
         public float Accumulator = 0;
         public const float UpdateFrequency = 15f;
-        public float BeamCooldown = 3;
         public GlimmerTier LastGlimmerTier = GlimmerTier.Minimal;
         public bool GhostsVisible = false;
         public override void Initialize()
@@ -199,13 +198,18 @@ namespace Content.Server.Psionics.Glimmer
             if (args.Origin == null)
                 return;
 
+            var tier = _glimmerSystem.GetGlimmerTier();
+            if (tier < GlimmerTier.Dangerous)
+                return;
+
+            // Pirate: at dangerous+ glimmer (500+) the prober has a chance to retaliate
+            // against whoever damaged it, like a noospheric zap.
             if (!_random.Prob((float) _glimmerSystem.Glimmer / 1000))
                 return;
 
-            var tier = _glimmerSystem.GetGlimmerTier();
-            if (tier < GlimmerTier.High)
-                return;
             Beam(uid, args.Origin.Value, tier);
+            _electrocutionSystem.TryDoElectrocution(args.Origin.Value, uid, _glimmerSystem.Glimmer / 50,
+                TimeSpan.FromSeconds((float) _glimmerSystem.Glimmer / 100), true, ignoreInsulation: true);
         }
 
         private void OnDestroyed(EntityUid uid, SharedGlimmerReactiveComponent component, DestructionEventArgs args)
@@ -216,9 +220,24 @@ namespace Content.Server.Psionics.Glimmer
             if (tier < GlimmerTier.High)
                 return;
 
-            var totalIntensity = (float) (_glimmerSystem.Glimmer * 2);
-            var slope = (float) (11 - _glimmerSystem.Glimmer / 100);
-            var maxIntensity = 20;
+            float totalIntensity;
+            float slope;
+            float maxIntensity;
+
+            // Pirate: at critical glimmer the collapsing prober detonates with the force of
+            // about 2.5 holy hand grenades (holy grenade: 3500 intensity, slope 15, max 70).
+            if (tier >= GlimmerTier.Critical)
+            {
+                totalIntensity = 8750f;
+                slope = 15f;
+                maxIntensity = 70f;
+            }
+            else
+            {
+                totalIntensity = (float) (_glimmerSystem.Glimmer * 2);
+                slope = (float) (11 - _glimmerSystem.Glimmer / 100);
+                maxIntensity = 20;
+            }
 
             var removed = (float) _glimmerSystem.Glimmer * _random.NextFloat(0.06f, 0.08f);
             _glimmerSystem.Glimmer -= (int) removed;
@@ -254,8 +273,11 @@ namespace Content.Server.Psionics.Glimmer
                     targetList.Add(target);
             }
 
-            foreach(var reactive in _entityLookupSystem.GetEntitiesInRange<SharedGlimmerReactiveComponent>(coords, range))
+            foreach (var reactive in _entityLookupSystem.GetEntitiesInRange<SharedGlimmerReactiveComponent>(coords, range))
             {
+                if (reactive.Owner == prober)
+                    continue;
+
                 targetList.Add(reactive);
             }
 
@@ -265,16 +287,13 @@ namespace Content.Server.Psionics.Glimmer
                 if (targets <= 0)
                     return;
 
-                Beam(prober, target, _glimmerSystem.GetGlimmerTier(), false);
+                Beam(prober, target, _glimmerSystem.GetGlimmerTier());
                 targets--;
             }
         }
 
-        private void Beam(EntityUid prober, EntityUid target, GlimmerTier tier, bool obeyCD = true)
+        private void Beam(EntityUid prober, EntityUid target, GlimmerTier tier)
         {
-            if (obeyCD && BeamCooldown != 0)
-                return;
-
             if (Deleted(prober) || Deleted(target))
                 return;
 
@@ -303,7 +322,6 @@ namespace Content.Server.Psionics.Glimmer
 
 
             _lightning.ShootLightning(prober, target, beamproto);
-            BeamCooldown += 3f;
         }
 
         public void LockProber(EntityUid uid)
@@ -314,15 +332,48 @@ namespace Content.Server.Psionics.Glimmer
             if (!Transform(uid).Anchored)
                 AnchorOrExplode(uid);
 
+            // AnchorOrExplode can destroy the prober if there's no free tile to
+            // anchor it to - don't keep mutating a doomed entity.
+            if (EntityManager.IsQueuedForDeletion(uid))
+                return;
+
+            if (!TryComp<SharedGlimmerReactiveComponent>(uid, out var glimmerReactive))
+                return;
+
+            // Remember the player's power state so UnlockProber can restore it.
+            glimmerReactive.PreLockPowerDisabled = powerReceiver.PowerDisabled;
+            glimmerReactive.PreLockPowerLoad = powerReceiver.Load;
+
+            // Pirate: while locked the prober runs for free - it draws no power
+            // from the grid and doesn't need any, so cutting power can't stop it.
+            powerReceiver.Load = 0;
             powerReceiver.PowerDisabled = false;
             powerReceiver.NeedsPower = false;
+            glimmerReactive.Locked = true;
 
-            if (TryComp<SharedGlimmerReactiveComponent>(uid, out var glimmerReactive))
-            {
-                glimmerReactive.Locked = true;
-                UpdateEntityState(uid, glimmerReactive, _glimmerSystem.GetGlimmerTier(), 0);
-            }
+            UpdateEntityState(uid, glimmerReactive, _glimmerSystem.GetGlimmerTier(), 0);
         }
+
+        /// <summary>
+        /// Reverses <see cref="LockProber"/> - the prober can be toggled off and
+        /// unanchored again once glimmer is no longer dangerous.
+        /// </summary>
+        public void UnlockProber(EntityUid uid)
+        {
+            if (!TryComp<SharedGlimmerReactiveComponent>(uid, out var glimmerReactive))
+                return;
+
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiver))
+            {
+                powerReceiver.PowerDisabled = glimmerReactive.PreLockPowerDisabled;
+                powerReceiver.Load = glimmerReactive.PreLockPowerLoad;
+                powerReceiver.NeedsPower = true;
+            }
+
+            glimmerReactive.Locked = false;
+            UpdateEntityState(uid, glimmerReactive, _glimmerSystem.GetGlimmerTier(), 0);
+        }
+
         private void AnchorOrExplode(EntityUid uid)
         {
             var xform = Transform(uid);
@@ -384,7 +435,6 @@ namespace Content.Server.Psionics.Glimmer
         {
             base.Update(frameTime);
             Accumulator += frameTime;
-            BeamCooldown = Math.Max(0, BeamCooldown - frameTime);
 
             if (Accumulator > UpdateFrequency)
             {
@@ -403,20 +453,68 @@ namespace Content.Server.Psionics.Glimmer
 
                     LastGlimmerTier = currentGlimmerTier;
                 }
+                // Snapshot the probers before mutating anything, since locking and
+                // collapsing can destroy entities mid-iteration.
+                var probers = new List<EntityUid>();
+                foreach (var reactive in reactives)
+                    probers.Add(reactive.Owner);
+
+                // Pirate: while glimmer is dangerous (500+) probers lock themselves,
+                // becoming impossible to turn off or unanchor. They unlock again once
+                // glimmer drops back below the threshold.
+                if (currentGlimmerTier >= GlimmerTier.Dangerous)
+                {
+                    foreach (var prober in probers)
+                    {
+                        if (TryComp<SharedGlimmerReactiveComponent>(prober, out var reactive) && !reactive.Locked)
+                            LockProber(prober);
+                    }
+                }
+                else
+                {
+                    foreach (var prober in probers)
+                    {
+                        if (TryComp<SharedGlimmerReactiveComponent>(prober, out var reactive) && reactive.Locked)
+                            UnlockProber(prober);
+                    }
+                }
+
+                // Pirate: at 800+ glimmer probers start firing on random nearby
+                // entities, escalating as glimmer climbs towards critical.
+                if (_glimmerSystem.Glimmer >= 800)
+                {
+                    var targetCount = currentGlimmerTier == GlimmerTier.Critical ? 3 : 2;
+                    foreach (var prober in probers)
+                    {
+                        BeamRandomNearProber(prober, targetCount, 12);
+                    }
+                }
+
                 if (currentGlimmerTier == GlimmerTier.Critical)
                 {
                     _ghostSystem.MakeVisible(true);
                     _revenantSystem.MakeVisible(true);
                     GhostsVisible = true;
-                    foreach (var reactive in reactives)
-                    {
-                        BeamRandomNearProber(reactive.Owner, 1, 12);
-                    }
                 } else if (GhostsVisible == true)
                 {
                     _ghostSystem.MakeVisible(false);
                     _revenantSystem.MakeVisible(false);
                     GhostsVisible = false;
+                }
+
+                // Pirate: at maximum glimmer the probers collapse, detonating with the
+                // force of ~2.5 holy hand grenades (see OnDestroyed). Deletion is queued,
+                // so a prober already doomed this tick (e.g. by AnchorOrExplode) is skipped
+                // to avoid a double explosion.
+                if (_glimmerSystem.Glimmer >= _glimmerSystem.MaxGlimmer)
+                {
+                    foreach (var prober in probers)
+                    {
+                        if (EntityManager.IsQueuedForDeletion(prober))
+                            continue;
+
+                        _destructibleSystem.DestroyEntity(prober);
+                    }
                 }
                 Accumulator = 0;
             }
