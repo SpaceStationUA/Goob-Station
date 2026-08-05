@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Collections.Generic;
 using Content.Client._Pirate.Traits.UI;
 using Content.Shared.Preferences;
 using Content.Shared.Traits;
@@ -22,29 +23,22 @@ public sealed class TraitSelectionPersistenceTest
         await client.WaitAssertion(() =>
         {
             var traitsTab = new TraitsTab();
-            try
-            {
-                var previousProfile = HumanoidCharacterProfile.DefaultWithSpecies(previousSpecies);
-                var selectedTrait = new ProtoId<TraitPrototype>(traitId);
-                var nextProfile = HumanoidCharacterProfile.DefaultWithSpecies("Human")
-                    .WithTraitPreferences([selectedTrait]);
+            var previousProfile = HumanoidCharacterProfile.DefaultWithSpecies(previousSpecies);
+            var selectedTrait = new ProtoId<TraitPrototype>(traitId);
+            var nextProfile = HumanoidCharacterProfile.DefaultWithSpecies("Human")
+                .WithTraitPreferences([selectedTrait]);
 
-                traitsTab.UpdateConditions(previousProfile);
+            traitsTab.UpdateConditions(previousProfile);
 
-                HashSet<ProtoId<TraitPrototype>> changedTraits = null;
-                traitsTab.OnTraitsChanged += traits => changedTraits = new HashSet<ProtoId<TraitPrototype>>(traits);
+            HashSet<ProtoId<TraitPrototype>> changedTraits = null;
+            traitsTab.OnTraitsChanged += traits => changedTraits = new HashSet<ProtoId<TraitPrototype>>(traits);
 
-                traitsTab.SetSelectedTraits(nextProfile.TraitPreferences);
-                traitsTab.UpdateConditions(nextProfile);
+            traitsTab.SetSelectedTraits(nextProfile.TraitPreferences);
+            traitsTab.UpdateConditions(nextProfile);
 
-                Assert.That(changedTraits,
-                    Is.Null,
-                    $"Loading {traitId} must not clear it using conditions from {previousSpecies}");
-            }
-            finally
-            {
-                traitsTab.Dispose();
-            }
+            Assert.That(changedTraits,
+                Is.Null,
+                $"Loading {traitId} must not clear it using conditions from {previousSpecies}");
         });
     }
 }
