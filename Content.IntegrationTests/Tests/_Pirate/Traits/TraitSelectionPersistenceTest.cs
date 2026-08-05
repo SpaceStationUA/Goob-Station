@@ -40,5 +40,7 @@ public sealed class TraitSelectionPersistenceTest
                 Is.Null,
                 $"Loading {traitId} must not clear it using conditions from {previousSpecies}");
         });
+
+        await pair.CleanReturnAsync();
     }
 }
