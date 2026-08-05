@@ -166,7 +166,7 @@ public sealed partial class PsionicsRecordsConsoleSystem
         if (TryComp<IdExaminablePsionicsComponent>(ent, out var psionicsRadioComp))
             radioChannel = psionicsRadioComp.RadioChannel;
 
-        _radio.SendRadioMessage(msg.Actor, Loc.GetString($"psionics-records-console-{statusString}", args),
+        _radio.SendRadioMessage(ent, Loc.GetString($"psionics-records-console-{statusString}", args),
             radioChannel, ent);
 
         UpdateUserInterface(ent);

@@ -147,8 +147,8 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
         };
         // Get radio channel from IdExaminablePsionicsComponent or use default
         var radioChannel = "Science";
-        _radio.SendRadioMessage(ent, Loc.GetString($"psionics-records-console-{statusString}", args),
-            radioChannel, ent);
+        var message = Loc.GetString($"psionics-records-console-{statusString}", args);
+        _radio.SendRadioMessage(ent, message, radioChannel, ent);
 
         UpdateUserInterface(ent);
         UpdatePsionicsIdentity(name, msg.Status);

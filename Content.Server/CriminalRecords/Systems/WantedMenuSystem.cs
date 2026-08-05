@@ -172,7 +172,8 @@ public sealed partial class CriminalRecordsConsoleSystem
             // this is impossible
             _ => "not-wanted"
         };
-        _radio.SendRadioMessage(msg.Actor, Loc.GetString($"criminal-records-console-{statusString}", args),
+        // Pirate: said by the console / ID card rather than the officer
+        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args),
             ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
