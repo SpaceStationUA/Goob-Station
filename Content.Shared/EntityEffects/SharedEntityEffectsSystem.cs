@@ -31,6 +31,9 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         using var legacyReaction = LegacyEntityEffectContext.PushReaction(EntityManager, args);
 
         var scale = args.ReagentQuantity.Quantity.Float();
+        // Pirate: one-unit reactions must not scale entity effects by injected volume.
+        if (entity.Comp.OneUnitReaction)
+            scale = 1f;
 
         if (args.Reagent.ReactiveEffects != null && entity.Comp.ReactiveGroups != null)
         {

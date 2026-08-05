@@ -21,9 +21,10 @@
         messages: [ "xeno-extract-reaction-reagent" ]
       - !type:PlaySoundEffect
         sound: /Audio/Effects/Chemistry/bubbles.ogg
-      - !type:AdjustReagent
+      - !type:AddReagentToSolution
         reagent: Tilenol
-        amount: 100
+        solution: extract
+        strengthModifier: 100
     - reagents: [ Plasma ]
       methods: [ Touch, Injection ]
       effects:
