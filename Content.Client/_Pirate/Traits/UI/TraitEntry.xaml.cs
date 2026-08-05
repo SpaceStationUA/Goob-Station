@@ -215,10 +215,10 @@ public sealed partial class TraitEntry : PanelContainer
         OnToggled?.Invoke(args.Pressed);
     }
 
-    public void SetSelected(bool selected)
+    public void SetSelected(bool selected, bool respectConditions = true)
     {
         _isUpdating = true;
-        TraitCheckbox.Pressed = selected && MeetsConditions;
+        TraitCheckbox.Pressed = selected && (!respectConditions || MeetsConditions);
         UpdateSelectedStyle();
         _isUpdating = false;
     }
@@ -231,4 +231,3 @@ public sealed partial class TraitEntry : PanelContainer
             RemoveStyleClass("TraitsEntrySelected");
     }
 }
-
