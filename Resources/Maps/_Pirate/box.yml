@@ -4,7 +4,7 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/05/2026 23:22:23
+  time: 08/05/2026 23:26:08
   entityCount: 30693
 maps:
 - 1
@@ -14376,7 +14376,7 @@ entities:
       pos: -13.5,18.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -227918.6
+      secondsUntilStateChange: -227941.47
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -15801,7 +15801,7 @@ entities:
       pos: 35.5,-56.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -88911.164
+      secondsUntilStateChange: -88934.04
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16701,6 +16701,8 @@ entities:
     - type: Transform
       pos: -17.5,28.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 41060
     components:
     - type: Transform
@@ -79655,7 +79657,7 @@ entities:
       pos: 28.5,-5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -255080.86
+      secondsUntilStateChange: -255103.73
       state: Opening
   - uid: 11643
     components:
@@ -140224,6 +140226,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: -10.5,26.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        40680:
+        - - Pressed
+          - DoorBolt
     - type: Fixtures
       fixtures: {}
   - uid: 40690
@@ -140232,6 +140239,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: -8.5,26.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        40692:
+        - - Pressed
+          - DoorBolt
     - type: Fixtures
       fixtures: {}
   - uid: 42500
