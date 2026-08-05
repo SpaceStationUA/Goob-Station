@@ -34,9 +34,10 @@
         messages: [ "xeno-extract-reaction-reagent" ]
       - !type:PlaySoundEffect
         sound: /Audio/Effects/Chemistry/bubbles.ogg
-      - !type:AdjustReagent
+      - !type:AddReagentToSolution
         reagent: FrostOil
-        amount: 30
+        solution: extract
+        strengthModifier: 30
     - reagents: [ Blood ]
       methods: [ Touch, Injection ]
       effects:
@@ -46,9 +47,9 @@
         messages: [ "xeno-extract-reaction-reagent" ]
       - !type:PlaySoundEffect
         sound: /Audio/Effects/Chemistry/bubbles.ogg
-      - !type:AdjustReagent
+      - !type:AddReagentToSolution
         reagent: XenobioJellyBlue
-        amount: 1
+        solution: extract
   - type: Tag
     tags:
     - XenobiologyBlueExtract
