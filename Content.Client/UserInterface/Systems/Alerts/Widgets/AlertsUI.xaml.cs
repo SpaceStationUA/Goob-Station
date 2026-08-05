@@ -22,6 +22,8 @@ public sealed partial class AlertsUI : UIWidget
     public AlertsUI()
     {
         RobustXamlLoader.Load(this);
+        // Pirate: Keep wrapped alert columns inside the right edge of the screen.
+        LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
     }
 
     public void SyncControls(AlertsSystem alertsSystem,
