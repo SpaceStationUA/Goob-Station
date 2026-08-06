@@ -106,25 +106,25 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
         await AddAtmosphere();
 
         FixedPoint2 initialSoulDamage = 3;
-        FixedPoint2 healAmount = 0;
-        var recoveryDelay = 0f;
 
         await Server.WaitAssertion(() =>
         {
             var damageable = SEntMan.System<DamageableSystem>();
+            var regenerationSystem = SEntMan.System<SoulDamageRegenerationSystem>();
             var playerDamage = Comp<DamageableComponent>(Player);
             var storedDamage = new DamageSpecifier(playerDamage.Damage);
             storedDamage.DamageDict[SoulDamageType.Id] = initialSoulDamage;
             damageable.SetDamage(SPlayer, playerDamage, storedDamage);
 
             var regeneration = SEntMan.GetComponent<SoulDamageRegenerationComponent>(SPlayer);
-            healAmount = regeneration.HealAmount;
-            recoveryDelay = (float) regeneration.RecoveryDelay.TotalSeconds;
-        });
+            // Parent-only damage is transient on complex bodies, so exercise the fallback before body aggregation
+            // rewrites it.
+            regeneration.NextHeal = STiming.CurTime;
+            regenerationSystem.Update(TickPeriod);
 
-        await RunSeconds(recoveryDelay + TickPeriod * 2);
-        await Server.WaitAssertion(() => Assert.That(
-            Comp<DamageableComponent>(Player).Damage.DamageDict[SoulDamageType.Id],
-            Is.EqualTo(initialSoulDamage - healAmount)));
+            Assert.That(
+                Comp<DamageableComponent>(Player).Damage.DamageDict[SoulDamageType.Id],
+                Is.EqualTo(initialSoulDamage - regeneration.HealAmount));
+        });
     }
 }
