@@ -6,11 +6,15 @@ using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests._Pirate.Damage;
 
 public sealed class SoulDamageRegenerationTest : InteractionTest
 {
+    private static readonly ProtoId<DamageTypePrototype> SoulDamageType = "Soul";
+    private static readonly ProtoId<DamageTypePrototype> BluntDamageType = "Blunt";
+
     protected override string PlayerPrototype => "MobHuman";
 
     [TestCase(false)]
@@ -19,66 +23,81 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
     {
         await AddAtmosphere();
 
-        var body = SEntMan.System<BodySystem>();
-        var damageable = SEntMan.System<DamageableSystem>();
-        var mobState = SEntMan.System<MobStateSystem>();
-        var soulType = ProtoMan.Index<DamageTypePrototype>("Soul");
         FixedPoint2 initialSoulDamage = 9;
         FixedPoint2 additionalSoulDamage = 3;
+        FixedPoint2 healAmount = 0;
+        var halfRecoveryDelay = 0f;
 
-        var applied = damageable.TryChangeDamage(
-            SPlayer,
-            new DamageSpecifier(soulType, initialSoulDamage),
-            ignoreResistances: true,
-            canMiss: false);
-
-        Assert.That(applied?.DamageDict["Soul"], Is.EqualTo(initialSoulDamage));
-
-        var playerDamage = Comp<DamageableComponent>(Player);
-        var regeneration = SEntMan.GetComponent<SoulDamageRegenerationComponent>(SPlayer);
-        foreach (var part in body.GetBodyChildren(SPlayer))
+        await Server.WaitAssertion(() =>
         {
-            Assert.That(
-                SEntMan.HasComponent<SoulDamageRegenerationComponent>(part.Id),
-                Is.False,
-                $"Attached body part {part.Id} should not regenerate Soul damage separately");
-        }
+            var body = SEntMan.System<BodySystem>();
+            var damageable = SEntMan.System<DamageableSystem>();
+            var mobState = SEntMan.System<MobStateSystem>();
+            var soulType = ProtoMan.Index(SoulDamageType);
 
-        if (dead)
-        {
-            var bluntType = ProtoMan.Index<DamageTypePrototype>("Blunt");
+            var applied = damageable.TryChangeDamage(
+                SPlayer,
+                new DamageSpecifier(soulType, initialSoulDamage),
+                ignoreResistances: true,
+                canMiss: false);
+
+            Assert.That(applied?.DamageDict[SoulDamageType.Id], Is.EqualTo(initialSoulDamage));
+
+            var regeneration = SEntMan.GetComponent<SoulDamageRegenerationComponent>(SPlayer);
+            healAmount = regeneration.HealAmount;
+            halfRecoveryDelay = (float) regeneration.RecoveryDelay.TotalSeconds / 2f;
+
+            foreach (var part in body.GetBodyChildren(SPlayer))
+            {
+                Assert.That(
+                    SEntMan.HasComponent<SoulDamageRegenerationComponent>(part.Id),
+                    Is.False,
+                    $"Attached body part {part.Id} should not regenerate Soul damage separately");
+            }
+
+            if (!dead)
+                return;
+
             damageable.TryChangeDamage(
                 SPlayer,
-                new DamageSpecifier(bluntType, 210),
+                new DamageSpecifier(ProtoMan.Index(BluntDamageType), 210),
                 ignoreResistances: true,
                 targetPart: TargetBodyPart.Vital,
                 canMiss: false);
-
             Assert.That(mobState.IsDead(SPlayer), Is.True);
-        }
+        });
 
-        var halfRecoveryDelay = (float) regeneration.RecoveryDelay.TotalSeconds / 2f;
         await RunSeconds(halfRecoveryDelay);
 
-        var additionalApplied = damageable.TryChangeDamage(
-            SPlayer,
-            new DamageSpecifier(soulType, additionalSoulDamage),
-            ignoreResistances: true,
-            canMiss: false);
+        await Server.WaitAssertion(() =>
+        {
+            var damageable = SEntMan.System<DamageableSystem>();
+            var soulType = ProtoMan.Index(SoulDamageType);
+            var additionalApplied = damageable.TryChangeDamage(
+                SPlayer,
+                new DamageSpecifier(soulType, additionalSoulDamage),
+                ignoreResistances: true,
+                canMiss: false);
 
-        Assert.That(additionalApplied?.DamageDict["Soul"], Is.EqualTo(additionalSoulDamage));
+            Assert.That(additionalApplied?.DamageDict[SoulDamageType.Id], Is.EqualTo(additionalSoulDamage));
+        });
 
         var expectedSoulDamage = initialSoulDamage + additionalSoulDamage;
         await RunSeconds(halfRecoveryDelay);
-        Assert.That(playerDamage.Damage.DamageDict["Soul"], Is.EqualTo(expectedSoulDamage));
+        await Server.WaitAssertion(() => Assert.That(
+            Comp<DamageableComponent>(Player).Damage.DamageDict[SoulDamageType.Id],
+            Is.EqualTo(expectedSoulDamage)));
 
         await RunSeconds(halfRecoveryDelay + TickPeriod * 2);
-        Assert.That(
-            playerDamage.Damage.DamageDict["Soul"],
-            Is.EqualTo(expectedSoulDamage - regeneration.HealAmount));
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(
+                Comp<DamageableComponent>(Player).Damage.DamageDict[SoulDamageType.Id],
+                Is.EqualTo(expectedSoulDamage - healAmount));
 
-        if (dead)
-            Assert.That(mobState.IsDead(SPlayer), Is.True);
+            if (dead)
+                Assert.That(SEntMan.System<MobStateSystem>().IsDead(SPlayer), Is.True);
+        });
     }
 
     [Test]
@@ -86,20 +105,26 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
     {
         await AddAtmosphere();
 
-        var damageable = SEntMan.System<DamageableSystem>();
-        var soulType = ProtoMan.Index<DamageTypePrototype>("Soul");
-        var playerDamage = Comp<DamageableComponent>(Player);
         FixedPoint2 initialSoulDamage = 3;
+        FixedPoint2 healAmount = 0;
+        var recoveryDelay = 0f;
 
-        var storedDamage = new DamageSpecifier(playerDamage.Damage);
-        storedDamage.DamageDict[soulType.ID] = initialSoulDamage;
-        damageable.SetDamage(SPlayer, playerDamage, storedDamage);
+        await Server.WaitAssertion(() =>
+        {
+            var damageable = SEntMan.System<DamageableSystem>();
+            var playerDamage = Comp<DamageableComponent>(Player);
+            var storedDamage = new DamageSpecifier(playerDamage.Damage);
+            storedDamage.DamageDict[SoulDamageType.Id] = initialSoulDamage;
+            damageable.SetDamage(SPlayer, playerDamage, storedDamage);
 
-        var regeneration = SEntMan.GetComponent<SoulDamageRegenerationComponent>(SPlayer);
-        await RunSeconds((float) regeneration.RecoveryDelay.TotalSeconds + TickPeriod * 2);
+            var regeneration = SEntMan.GetComponent<SoulDamageRegenerationComponent>(SPlayer);
+            healAmount = regeneration.HealAmount;
+            recoveryDelay = (float) regeneration.RecoveryDelay.TotalSeconds;
+        });
 
-        Assert.That(
-            playerDamage.Damage.DamageDict[soulType.ID],
-            Is.EqualTo(initialSoulDamage - regeneration.HealAmount));
+        await RunSeconds(recoveryDelay + TickPeriod * 2);
+        await Server.WaitAssertion(() => Assert.That(
+            Comp<DamageableComponent>(Player).Damage.DamageDict[SoulDamageType.Id],
+            Is.EqualTo(initialSoulDamage - healAmount)));
     }
 }
