@@ -43,7 +43,7 @@ public sealed partial class SpawnEntityEntityEffectSystem : EntityEffectSystem<T
 public sealed partial class SpawnEntity : BaseSpawnEntityEntityEffect<SpawnEntity>
 {
     /// <summary>
-    /// Pirate: initialize the spawned entity at the target's map/grid position.
+    /// Pirate: initialize the spawned entity at the target's map/grid position before MapInit.
     /// </summary>
     [DataField]
     public bool SpawnAtPosition;
