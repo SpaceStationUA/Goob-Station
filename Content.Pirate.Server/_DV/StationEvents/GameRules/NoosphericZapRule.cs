@@ -39,11 +39,10 @@ internal sealed class NoosphericZapRule : StationEventSystem<NoosphericZapRuleCo
             if (!_psionic.CanBeTargeted(potPsion))
                 continue;
 
-            // Zap non-psionics only if they spent their roll already.
-            if (potPsionComponent.Rolled)
-                Zap(potPsion, potPsionComponent);
-            // Then zap all other psionics regardless.
-            else if (HasComp<PsionicComponent>(potPsion))
+            // Zap psionics and re-open spent drug rolls. Potential-only entities are never
+            // zapped - they can only become psionic via crystals, jobs, species, traits
+            // or a random roundstart roll, and drugs don't work without the Psionic component.
+            if (potPsionComponent.Rolled || HasComp<PsionicComponent>(potPsion))
                 Zap(potPsion, potPsionComponent);
         }
     }

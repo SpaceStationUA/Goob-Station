@@ -40,7 +40,6 @@ assay-body = Виявлено псіонічні здібності у {$entity}
 ## Mindbroken
 mindbroken-examine = Очі не кліпають, дивлячись вглиб горизонту. Важко позбутися відчуття, що реальність забула про одну важливу частину {CAPITALIZE($entity)}.
 mindbroken-assay = Благословення, що колись жило в {CAPITALIZE($entity)}, залишило лише холодний попіл.
-examine-mindbroken-psionic = Розум {CAPITALIZE($entity)} колись торкався Ноосфери, але тепер залишився лише порожній погляд.
 
 healing-word-begin = Слово, що зігріває всіх довкола.
 revivify-begin = Лагідні слова, що зігрівають душу.

@@ -17,8 +17,6 @@
   - type: Construction
     graph: TinfoilHat
     node: tinfoilhat
-  - type: GuideHelp
-    guides: [ Psionics ]
 
 - type: entity
   parent: ClothingHeadBase
@@ -37,9 +35,6 @@
   - type: PsionicallyInsulative
     shieldsFromPsionics: false
     canBeFried: true
-  - type: GuideHelp
-    guides:
-    - Psionics
   - type: Tag
     tags:
     - ForensicBeltEquip
@@ -62,8 +57,6 @@
         Slash: 0.85
         Piercing: 0.95
         Radiation: 0.95
-  - type: GuideHelp
-    guides: [ Psionics ]
 
 - type: entity
   parent: ClothingHeadBase

@@ -67,6 +67,8 @@
     components:
     - type: SurgerySpeedModifier
       speedModifier: 2
+  - !type:ModifyPsionicChanceSpecial # Pirate - Commands are much more likely to be psionic.
+    jobBonusChance: 0.1
 
 - type: startingGear
   id: CMOGear

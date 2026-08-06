@@ -17,7 +17,7 @@
     - id: MinorMassMindSwap # Delta V
     - id: NoosphericStorm
     - id: GlimmerFoxfireSpawn
-    - id: GlimmerRestyle
+    #- id: GlimmerRestyle
 
 - type: entity
   parent: BaseGameRule
@@ -214,11 +214,11 @@
     - yellow
 
 
-- type: entity
-  id: GlimmerRestyle
-  parent: BaseGlimmerSignaturesEvent
-  components:
-  - type: GlimmerEvent
-    minimumGlimmer: 300
-    maximumGlimmer: 700
-  - type: GlimmerRestyleRule
+#- type: entity
+#  id: GlimmerRestyle
+#  parent: BaseGlimmerSignaturesEvent
+#  components:
+#  - type: GlimmerEvent
+#    minimumGlimmer: 300
+#    maximumGlimmer: 700
+#  - type: GlimmerRestyleRule

@@ -60,10 +60,12 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
-  - !type:AddPsionicComponentSpecial # Pirate: IPC insulation blocks direct-start psionics without banning the job.
+  - !type:AddPsionicComponentSpecial # Pirate
     components:
       - type: Psionic # DeltaV - They start with telepathic chat.
       - type: DispelPower # DeltaV - They get the Dispel psionic power on spawn.
+  - !type:ModifyPsionicChanceSpecial # Pirate - Commands are much more likely to be psionic.
+    jobBonusChance: 0.1
 
 - type: startingGear
   id: ResearchDirectorGear

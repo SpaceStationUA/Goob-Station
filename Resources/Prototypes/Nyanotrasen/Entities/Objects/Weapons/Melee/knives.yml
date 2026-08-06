@@ -19,6 +19,21 @@
         Slash: 1.2
         Piercing: 1.2
         Holy: 1.2
+  # Pirate: the knife delivers Cryptobiolin on hit, psionically insulating the target.
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 15
+        reagents:
+        - ReagentId: Cryptobiolin
+          Quantity: 15
+  - type: MeleeChemicalInjector
+    transferAmount: 5
+    solution: melee
+  - type: RefillableSolution
+    solution: melee
+  - type: InjectableSolution
+    solution: melee
   - type: Sprite
     sprite: Nyanotrasen/Objects/Weapons/Melee/anti_psychic_knife.rsi
     state: icon

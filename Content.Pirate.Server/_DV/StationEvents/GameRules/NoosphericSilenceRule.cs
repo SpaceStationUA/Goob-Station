@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server._DV.StationEvents.Components;
 using Content.Server.StationEvents.Events;
 using Content.Shared._DV.Psionics.Components;
@@ -11,7 +12,7 @@ using Robust.Shared.Random;
 namespace Content.Server._DV.StationEvents.GameRules;
 
 /// <summary>
-/// Mutes everyone for a random amount of time.
+/// Mutes a random amount of psionics for a random amount of time.
 /// </summary>
 internal sealed class NoosphericSilenceRule : StationEventSystem<NoosphericSilenceRuleComponent>
 {
@@ -24,26 +25,36 @@ internal sealed class NoosphericSilenceRule : StationEventSystem<NoosphericSilen
     {
         base.Started(uid, component, gameRule, args);
 
-        var query = EntityQueryEnumerator<PotentialPsionicComponent, MobStateComponent>();
-        while (query.MoveNext(out var potPsion, out _, out _))
+        // Collect all eligible psionics.
+        var psionics = new List<EntityUid>();
+        var query = EntityQueryEnumerator<PsionicComponent, MobStateComponent>();
+        while (query.MoveNext(out var psion, out _, out var mobState))
         {
-            if (!_mobStateSystem.IsAlive(potPsion))
+            if (!_mobStateSystem.IsAlive(psion, mobState))
                 continue;
 
-            if (_psionic.CanBeTargeted(potPsion))
-                Silence(potPsion, component);
+            if (!_psionic.CanBeTargeted(psion))
+                continue;
+
+            psionics.Add(psion);
         }
-    }
 
-    private void Silence(EntityUid potPsion, NoosphericSilenceRuleComponent ruleComp)
-    {
-        var duration = _robustRandom.Next(ruleComp.MinDuration, ruleComp.MaxDuration);
+        if (psionics.Count == 0)
+            return;
 
-        // TODO Replace with statusEffectSystemNew when Upstream makes a muted prototype.
-        _statusEffectsSystem.TryAddStatusEffect(potPsion,
-            "Muted",
-            duration,
-            false,
-            "Muted");
+        // Mute a random amount of them for a random amount of time.
+        _robustRandom.Shuffle(psionics);
+        var toSilence = Math.Min(_robustRandom.Next(component.MinAffected, component.MaxAffected + 1), psionics.Count);
+        var duration = _robustRandom.Next(component.MinDuration, component.MaxDuration);
+
+        foreach (var psion in psionics.Take(toSilence))
+        {
+            // TODO Replace with statusEffectSystemNew when Upstream makes a muted prototype.
+            _statusEffectsSystem.TryAddStatusEffect(psion,
+                "Muted",
+                duration,
+                false,
+                "Muted");
+        }
     }
 }
