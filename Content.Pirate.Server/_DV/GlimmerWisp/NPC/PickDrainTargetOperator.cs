@@ -1,5 +1,6 @@
 using Content.Server._DV.GlimmerWisp;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Interaction;
 using Content.Shared.NPC.Systems;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,18 +59,21 @@ public sealed partial class PickDrainTargetOperator : HTNOperator
         if (!blackboard.TryGetValue<float>(RangeKey, out var range, _entMan))
             return (false, null);
 
-        // find crit psionics nearby
+        // find crit psionics nearby. Planning doesn't require adjacency - the
+        // MoveToOperator in the compound will walk us to the target first.
         foreach (var target in _faction.GetNearbyHostiles(owner, range))
         {
-            if (!_drainer.CanDrain(ent, target))
+            if (!_drainer.CanTarget(ent, target))
                 continue;
 
             if (!_xformQuery.TryComp(target, out var xform))
                 continue;
 
-            // pathfind to the first crit psionic in range to start draining
+            // pathfind all the way up to the target so we're in range to start
+            // draining once we arrive (don't use the search range here - that
+            // would leave us short of the target).
             var targetCoords = xform.Coordinates;
-            var path = await _pathfinding.GetPath(owner, target, range, cancelToken);
+            var path = await _pathfinding.GetPath(owner, target, SharedInteractionSystem.InteractionRange, cancelToken);
             if (path.Result != PathResult.Path)
                 continue;
 

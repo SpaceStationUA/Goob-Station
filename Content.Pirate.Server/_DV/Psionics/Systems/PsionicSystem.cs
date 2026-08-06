@@ -6,6 +6,7 @@ using Content.Shared._DV.Psionics.Events;
 using Content.Shared._DV.Psionics.Systems;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
+using Content.Shared.NPC.Systems;
 using Robust.Server.Player;
 
 namespace Content.Server._DV.Psionics.Systems;
@@ -15,6 +16,7 @@ public sealed partial class PsionicSystem : SharedPsionicSystem
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly NpcFactionSystem _faction = default!;
 
     public override void Initialize()
     {
@@ -24,7 +26,24 @@ public sealed partial class PsionicSystem : SharedPsionicSystem
         SubscribeLocalEvent<PsionicPowerGainedEvent>(OnPsionicPowerGained);
         SubscribeLocalEvent<PotentialPsionicComponent, ComponentRemove>(OnPotentialRemoved);
 
+        // Pirate: crew psionics join the PsionicInterloper faction so glimmer creatures
+        // (GlimmerMonster faction, e.g. the glimmer wisp) will always try to fight them.
+        // Glimmer creatures themselves have Psionic but no psionic potential, so they stay out.
+        SubscribeLocalEvent<PsionicComponent, ComponentStartup>(OnPsionicStartup);
+        SubscribeLocalEvent<PsionicComponent, ComponentShutdown>(OnPsionicShutdown);
+
         InitializeItems();
+    }
+
+    private void OnPsionicStartup(Entity<PsionicComponent> ent, ref ComponentStartup args)
+    {
+        if (HasComp<PotentialPsionicComponent>(ent))
+            _faction.AddFaction(ent.Owner, "PsionicInterloper");
+    }
+
+    private void OnPsionicShutdown(Entity<PsionicComponent> ent, ref ComponentShutdown args)
+    {
+        _faction.RemoveFaction(ent.Owner, "PsionicInterloper");
     }
 
     /// <summary>

@@ -81,6 +81,8 @@
     whitelist:
       components:
       - Psionic
+  # Pirate: can't be pulled, grabbed, or stuffed into closets/crates.
+  - type: Uncapturable
   # damage
   - type: Reactive
     groups:

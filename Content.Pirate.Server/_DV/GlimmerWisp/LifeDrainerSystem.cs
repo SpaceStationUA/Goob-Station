@@ -95,12 +95,21 @@ public sealed class LifeDrainerSystem : EntitySystem
 
     public bool CanDrain(Entity<LifeDrainerComponent> ent, EntityUid target)
     {
+        return CanTarget(ent, target) &&
+            _interaction.InRangeAndAccessible(ent.Owner, target);
+    }
+
+    /// <summary>
+    /// Checks whether the target is a valid drain target regardless of distance.
+    /// Used by the AI when planning so it can path to crit psionics it isn't adjacent to yet.
+    /// </summary>
+    public bool CanTarget(Entity<LifeDrainerComponent> ent, EntityUid target)
+    {
         var (uid, comp) = ent;
         return !IsDraining(comp) &&
             uid != target &&
             _whitelist.IsWhitelistPass(comp.Whitelist, target) &&
-            _mob.IsCritical(target) &&
-            _interaction.InRangeAndAccessible(uid, target);
+            _mob.IsCritical(target);
     }
 
     public bool IsDraining(LifeDrainerComponent comp)
