@@ -10,7 +10,9 @@
       - id: FlashlightLantern # DeltaV - To replace their lost flashlight
       - id: BoxZiptie # DeltaV - Give the mantis some zipties
       - id: WeaponPistolPsiBreaker # DeltaV - Mantis mindbreaker pistol.
-      - id: PillMindbreakerToxin # DeltaV - non-loadout mindbreaker available
+      - id: PillMindbreakerToxin # Pirate - 2 mindbreaker pills for dealing with psionics
+        amount: 2
+      - id: PillSoulbreakerToxin # Pirate - one pill for permanently mindbreaking a psionic
       - id: ClaridisolSynth
         amount: 2
       - id: ClothingHeadTinfoil

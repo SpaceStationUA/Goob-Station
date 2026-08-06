@@ -82,6 +82,60 @@ public abstract partial class SharedPsionicSystem : EntitySystem
     }
 
     /// <summary>
+    /// Permanently mindbreaks an entity: strips all psionic abilities and psionic potential,
+    /// and marks them as mindbroken (fully psionically insulated, unrollable forever).
+    /// Only manifested psionics can be permanently mindbroken - unmanifested potential
+    /// psionics are immune to this effect.
+    /// </summary>
+    /// <param name="uid">The psionic to permanently mindbreak.</param>
+    /// <param name="stun">Whether this should stun the entity.</param>
+    /// <example>Soulbreaker Toxin uses this to permanently lobotomize a psionic.</example>
+    [PublicAPI]
+    public void MakeMindBroken(EntityUid uid, bool stun = true)
+    {
+        if (HasComp<MindBrokenComponent>(uid))
+            return;
+
+        // Only actual psionics can be mindbroken.
+        if (!HasComp<PsionicComponent>(uid))
+            return;
+
+        // Permanent mindbreak removes even unremovable (innate) powers.
+        var ev = new PsionicMindBrokenEvent(force: true);
+        RaiseLocalEvent(uid, ref ev);
+
+        // Reduce glimmer a bit, like a regular mindbreak.
+        if (ev.Success)
+            Glimmer.Glimmer -= Random.Next(50, 70);
+        // Stun like a regular mindbreak.
+        if (stun && TryComp<PsionicComponent>(uid, out var psionic) && psionic.StunOnRemoval)
+        {
+            _stuttering.DoStutter(uid, TimeSpan.FromMinutes(1), false);
+            _stun.TryKnockdown(uid, TimeSpan.FromSeconds(5), false, drop: false);
+            _jittering.DoJitter(uid, TimeSpan.FromSeconds(5), false);
+        }
+
+        RemComp<PsionicComponent>(uid);
+        // This triggers the MindBrokenComponent startup effects (insulation, assay response, examine desc, etc).
+        AddComp<MindBrokenComponent>(uid);
+
+        Popup.PopupClient(Loc.GetString("psionic-mindbroken"), uid, PopupType.Medium);
+    }
+
+    /// <summary>
+    /// Pirate: completes an accepted roundstart psionic offer - grants a random power.
+    /// Adding the power makes the entity a full psionic (via <see cref="BasePsionicPowerSystem"/>)
+    /// and the roll stays open, so the new psionic can gain further powers via drugs.
+    /// </summary>
+    /// <param name="potPsionic">The potential psionic that accepted the offer.</param>
+    /// <param name="midRound">Whether the offer happened mid-round (stuns the entity).</param>
+    [PublicAPI]
+    public void AcceptPsionicOffer(Entity<PotentialPsionicComponent> potPsionic, bool midRound)
+    {
+        AddRandomPsionicPower(potPsionic, midRound);
+    }
+
+    /// <summary>
     /// Strips all removable psionic powers from an entity without the mindbreak side effects
     /// (stun, popup and glimmer loss). Unremovable (innate) powers are kept.
     /// If no powers remain, the PsionicComponent is removed so the entity is no longer psionic.

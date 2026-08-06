@@ -302,6 +302,10 @@ reagent-effect-guidebook-chem-roll-psionic = { $chance ->
         [1] Дає
         *[other] дає
     } шанс отримати псіонічну силу з множником x{$multiplier}
+reagent-effect-guidebook-chem-mindbreak = { $chance ->
+        [1] Назавжди руйнує
+        *[other] назавжди руйнує
+    } свідомість цілі, позбавляючи всієї псіоніки та псіонічного потенціалу
 
 reagent-effect-guidebook-add-moodlet = змінює настрій на {$amount}
     { $timeout ->

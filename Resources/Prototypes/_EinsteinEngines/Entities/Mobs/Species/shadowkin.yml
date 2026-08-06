@@ -229,9 +229,11 @@
     maxSaturation: 30
     saturation: 30 #Goob Edit end
   - type: Shadowkin # Pirate
-  - type: Psionic # Pirate
+  - type: Psionic # Pirate - shadowkin are naturally psionic; powers come from drugs or crystals.
   - type: PotentialPsionic # Pirate
     speciesBonusChance: 0.1
+    mindbrokenExamineDesc: examine-mindbroken-shadowkin-message # Pirate - custom examine desc used if/when a shadowkin gets permanently mindbroken.
+
 
 - type: entity
   save: false

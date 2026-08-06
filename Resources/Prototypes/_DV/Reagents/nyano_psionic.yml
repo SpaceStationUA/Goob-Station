@@ -65,11 +65,11 @@
         damage:
           groups:
             Toxin: 2
-      - !type:RemovePsionicAbilities
+      - !type:MindBreak # Pirate: permanently mindbreaks the target (only works on actual psionics).
         conditions:
         - !type:ReagentCondition
           reagent: SoulbreakerToxin
-          min: 5
+          min: 10
 
 - type: reagent
   id: Ectoplasm

@@ -43,4 +43,13 @@ public sealed partial class PotentialPsionicComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<EntityTablePrototype> PsionicPowerTableId = "PsionicPowerTable";
+
+    /// <summary>
+    /// Locale string used as this entity's examine description if/when it becomes permanently
+    /// mindbroken. Copied onto <see cref="MindBrokenComponent"/> when the entity is mindbroken,
+    /// so it survives the removal of this component.
+    /// </summary>
+    /// <example>Shadowkin species set this to describe their dark-eyed mindbroken look.</example>
+    [DataField]
+    public LocId? MindbrokenExamineDesc = "mindbroken-examine";
 }

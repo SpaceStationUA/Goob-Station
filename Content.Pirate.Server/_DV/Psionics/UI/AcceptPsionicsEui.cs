@@ -19,7 +19,7 @@ public sealed class AcceptPsionicsEui(Entity<PotentialPsionicComponent> potPsion
             return;
         }
 
-        psionicsSystem.AddRandomPsionicPower(potPsionic, midRound);
+        psionicsSystem.AcceptPsionicOffer(potPsionic, midRound);
         Close();
     }
 }

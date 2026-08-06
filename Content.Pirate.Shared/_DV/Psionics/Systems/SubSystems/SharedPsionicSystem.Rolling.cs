@@ -16,6 +16,12 @@ public abstract partial class SharedPsionicSystem
 
     public bool TryRollPsionic(Entity<PotentialPsionicComponent> potPsionic, float multiplier = 1.0f)
     {
+        // Pirate: drugs only grant additional powers to entities that are already psionic.
+        // Potential-only entities (e.g. roundstart losers) are unaffected by them - they can
+        // only become psionic through crystals, jobs, species, traits or a random roundstart roll.
+        if (!HasComp<PsionicComponent>(potPsionic))
+            return false;
+
         if (potPsionic.Comp.Rolled)
             return false;
 
