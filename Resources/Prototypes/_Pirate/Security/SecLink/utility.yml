@@ -45,8 +45,8 @@
     slots:
     - Back
     - suitStorage
-  - type: DamageOtherOnHit
-    soundHit:
+  - type: EmitSoundOnCollide
+    sound:
       collection: MetalThud
       params:
         variation: 0.65
