@@ -3,8 +3,8 @@
 using Content.Server.Store.Systems;
 using Content.Shared.Item;
 using Content.Shared.Popups;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Containers;
 
 namespace Content.Server._Pirate.Security.SecLink;
