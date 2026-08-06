@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformHitmanSuit
-  name: contract killer suit
-  description: The perfect outfit for blending in at any event, office, or space station.
+  name: "костюм контрактного убивці"
+  description: "Ідеальне вбрання для маскування на заході, в офісі чи на космічній станції."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/hitmansuit.rsi
@@ -127,8 +127,8 @@
         - id: PassengerPDA
 
 - type: entity
-  name: medium-frequency blade
-  description: An incredibly sharp katana with a heated blade, able to cut through both flesh and steel.
+  name: "середньочастотна катана"
+  description: "Надзвичайно гостра катана з нагрітим лезом, здатна різати плоть і сталь."
   parent: Katana
   id: WeaponMFKatana
   components:
@@ -160,8 +160,8 @@
 - type: entity
   parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponLeverActionSKL93
-  name: SKL93
-  description: A modernized variant of the L93, manufactured in limited amounts by Waffle Corp, lightweight materials are used for the furniture. It has an extended barrel and magazine, along side a WZR-4X Scope. Uses .45 Magnum rounds.
+  name: "SKL93"
+  description: "Модернізований варіант L93, який компанія «Ваффл Корп» виробляє обмеженими партіями. У ложі використано легкі матеріали. Має подовжені ствол і магазин, а також приціл WZR-4X. Використовує набої .45 Magnum."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Rifles/skl93.rsi
@@ -241,8 +241,8 @@
 - type: entity
   parent: [ClothingNeckPonchoSyndicate, BaseSecurityContraband]
   id: ClothingNeckCWPGorlex
-  name: gorlex cold weather poncho
-  description: A stylish red and black poncho made of heavy, cut-proof weave. Protects the wearer from the harshest weather conditions (and more!)
+  name: "пончо «Горлекс» для холодної погоди"
+  description: "Стильне червоно-чорне пончо з важкої тканини, стійкої до порізів. Захищає власника від найсуворіших погодних умов (і не тільки!)"
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Neck/Misc/cwpgorlex.rsi
@@ -262,8 +262,8 @@
 - type: entity
   parent: BaseMagazinePistolCaselessRifle
   id: MagazinePistolCaselessRiflePoison
-  name: pistol magazine (.25 caseless toxin)
-  description: 10-round magazine for the Cobra pistol. Intended to hold poisonous ammunition.
+  name: "магазин пістолета (.25 безгільзовий токсин)"
+  description: "Десятизарядний магазин для пістолета «Кобра», призначений для отруйних набоїв."
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePoison
@@ -278,8 +278,8 @@
 - type: entity
   parent: BaseMagazinePistolCaselessRifle
   id: MagazinePistolCaselessRifleTranquilizer
-  name: pistol magazine (.25 caseless tranq)
-  description: 10-round magazine for the Cobra pistol. Intended to hold tranquilizer ammunition.
+  name: "магазин пістолета (.25 безгільзовий транквілізатор)"
+  description: "Десятизарядний магазин для пістолета «Кобра», призначений для транквілізаторних набоїв."
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifleTranquilizer
@@ -294,8 +294,8 @@
 - type: entity
   parent: BaseCartridgeCaselessRifle
   id: CartridgeCaselessRifleTranquilizer
-  name: cartridge (.25 caseless tranq)
-  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. A reservoir injects a mix of sedative and mute toxin into the target for true silent takedowns.
+  name: "набій (.25 безгільзовий транквілізатор)"
+  description: "Малокаліберний набій, що використовує безгільзову технологію: замість звичайної латунної гільзи застосовано затверділий метальний заряд. Резервуар вводить у ціль суміш седативної речовини й німого токсину для справді безшумного усунення."
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifleTranquilizer
@@ -321,8 +321,8 @@
 - type: entity
   parent: BaseCartridgeCaselessRifle
   id: CartridgeCaselessRiflePoison
-  name: cartridge (.25 caseless toxin)
-  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. A toxic payload is installed to kill the target over time.
+  name: "набій (.25 безгільзовий токсин)"
+  description: "Малокаліберний набій, що використовує безгільзову технологію: замість звичайної латунної гільзи застосовано затверділий метальний заряд. Токсичний заряд повільно вбиває ціль."
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRiflePoison
@@ -345,7 +345,7 @@
 
 - type: entity
   id: BulletCaselessRifleTranquilizer
-  name: bullet (.25 caseless tranq)
+  name: "куля (.25 безгільзовий транквілізатор)"
   parent: BaseBullet
   categories: [HideSpawnMenu]
   components:
@@ -370,7 +370,7 @@
 
 - type: entity
   id: BulletCaselessRiflePoison
-  name: bullet (.25 caseless toxin)
+  name: "куля (.25 безгільзовий токсин)"
   parent: BaseBullet
   categories: [HideSpawnMenu]
   components:
@@ -396,8 +396,8 @@
 - type: entity
   parent: ClothingMaskPullableBase
   id: ClothingMaskOniBlue
-  name: blue oni mask
-  description: A mask depicting a ferocious creature from Japanese myth.
+  name: "синя маска оні"
+  description: "Маска, що зображає люту істоту з японських міфів."
   components:
   - type: IngestionBlocker
   - type: IdentityBlocker
@@ -409,8 +409,8 @@
 - type: entity
   parent: Emag
   id: Doorjack
-  name: airlock access override
-  description: A specialized cryptographic sequencer with a distinctive battery tray, specifically designed to override station airlock access codes.
+  name: "відмичка повітряних шлюзів"
+  description: "Спеціалізований криптографічний секвенсор із характерним відсіком для батареї, створений для обходу кодів доступу повітряних шлюзів станції."
   components:
   - type: Emag
     emagType: Access
@@ -424,8 +424,8 @@
 - type: entity
   parent: RemoteSignaller
   id: DeadMansSignaler
-  name: dead man's signaler
-  description: A device that if armed will send signals to objects within 50 meters when dropped or put away.
+  name: "сигналізатор смертника"
+  description: "Після активації пристрій надсилає сигнали об'єктам у радіусі 50 метрів, якщо його впустити або прибрати."
   components:
   - type: DeadMansSignaller
   - type: ItemToggle
@@ -447,8 +447,8 @@
 
 - type: entity
   id: SpyCrewMonitor
-  name: spy monitor
-  description: A spy device capable of connecting to crew monitoring servers.
+  name: "шпигунський монітор"
+  description: "Шпигунський пристрій, здатний під'єднуватися до серверів моніторингу екіпажу."
   parent: HandheldCrewMonitor
   components:
   - type: Sprite
@@ -520,6 +520,6 @@
 - type: entity
   parent: HandheldStationMapStatic
   id: HandheldStationMapRecordsTablet
-  name: station map
-  description: Displays a readout of the current station.
+  name: "карта станції"
+  description: "Показує поточну карту станції."
   suffix: Hitman
