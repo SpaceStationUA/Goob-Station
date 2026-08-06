@@ -1,7 +1,7 @@
 - type: entity
   id: CEZLevelAperture
-  name: "отвір у підлозі"
-  description: "Невеликий укріплений отвір, що відкриває доступ до рівня нижче."
+  name: floor aperture
+  description: A small reinforced opening that exposes the level below.
   categories: [ HideSpawnMenu ]
   placement:
     mode: SnapgridCenter
