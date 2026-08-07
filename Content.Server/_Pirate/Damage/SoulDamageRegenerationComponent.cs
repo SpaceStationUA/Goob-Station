@@ -20,6 +20,6 @@ public sealed partial class SoulDamageRegenerationComponent : Component
     [DataField]
     public FixedPoint2 HealAmount = 1;
 
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, Access(Other = AccessPermissions.ReadWrite)]
     public TimeSpan NextHeal;
 }
