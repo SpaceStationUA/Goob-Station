@@ -132,8 +132,8 @@ ent-ClothingEyesSurplusNVGoggles = списані окуляри нічного 
 flavor-complex-secticket = як тухлі яйця
 
 code-violation =
-    [head=2]ШТРАФНА КВИТАНЦІЯ[/head]
-    [bold]Порушник:[/bold]
-    [bold]Порушення:[/bold]
-    [bold]Сума штрафу:[/bold]
-    [bold]Офіцер:[/bold]
+    {"[head=2]ШТРАФНА КВИТАНЦІЯ[/head]"}
+    {"[bold]Порушник:[/bold]"}
+    {"[bold]Порушення:[/bold]"}
+    {"[bold]Сума штрафу:[/bold]"}
+    {"[bold]Офіцер:[/bold]"}
