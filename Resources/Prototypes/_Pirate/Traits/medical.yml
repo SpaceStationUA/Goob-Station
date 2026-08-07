@@ -53,6 +53,22 @@
   - type: VampireHolyWaterWeakness
   - type: WeakToHoly
     alwaysTakeHoly: true
+
+- type: trait
+  id: BloodDeficiency
+  name: trait-blood-deficiency-name
+  description: trait-blood-deficiency-desc
+  category: Medical
+  cost: -2
+  conditions:
+    - !type:IsSpeciesCondition
+      invert: true
+      species:
+        - IPC
+        - Plasmaman
+  components:
+  - type: BloodDeficiency
+    drainPerTick: -0.05
 #endregion
 
 #region Hearing

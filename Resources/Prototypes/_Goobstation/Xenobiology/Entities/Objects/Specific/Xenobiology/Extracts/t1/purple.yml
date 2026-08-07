@@ -32,9 +32,9 @@
         messages: [ "xeno-extract-reaction-reagent" ]
       - !type:PlaySoundEffect
         sound: /Audio/Effects/Chemistry/bubbles.ogg
-      - !type:AdjustReagent
+      - !type:AddReagentToSolution
         reagent: XenobioJellyPurple
-        amount: 1
+        solution: extract
     - reagents: [ Blood ]
       methods: [ Touch, Injection ]
       effects:
@@ -44,9 +44,10 @@
         messages: [ "xeno-extract-reaction-reagent" ]
       - !type:PlaySoundEffect
         sound: /Audio/Effects/Chemistry/bubbles.ogg
-      - !type:AdjustReagent
+      - !type:AddReagentToSolution
         reagent: Omnizine
-        amount: 15
+        solution: extract
+        strengthModifier: 15
   - type: Tag
     tags:
     - XenobiologyPurpleExtract

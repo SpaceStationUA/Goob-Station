@@ -43,9 +43,14 @@
     - id: ClosetSkeleton
     - id: KingRatMigration
     - id: BorerSpawn # Pirate
+    - id: ListeningPost # Pirate
     # - id: RevenantSpawn # Goob
     - id: EeepEvent # Harmony Eeep Port - imp
     - id: SyndicateDeadDrop
+    - id: BountyHunterSpawn # Pirate
+      conditions:
+      - !type:BountyHunterTargetCondition
+    - id: SkiaSpawn # Pirate
     - !type:NestedSelector
       tableId: DerelictBorgEventTable
 
@@ -65,9 +70,10 @@
     - id: LoneAbductorSpawn # Shitmed - Starlight Abductors
     - id: DuoAbductorSpawn # Shitmed - Starlight Abductors
     - id: BingleSpawn #Goobstation - Bingle
+    - id: ReplicatorSpawn # Pirate - Replicators
     - id: SlaughterDemonMidround # Goobstation - Slaughter Demon
     - id: XenomorphsInfestation # WD EDIT
-    - id: SlasherSpawn # Goobstation - The Slasher
+    # - id: SlasherSpawn # Pirate disable
     - id: TerrorSpidersSpawn # Pirate - Starlight terror spiders
     - id: SpacePirates # Goobstation - you probably can read whom this rule spawns
     - id: SingulothKnightsMidround # Goobstation - New Midrounds
@@ -779,6 +785,7 @@
       - RoleSurvivalNukie
       components:
       - type: NukeOperative
+      - type: TargetObjectiveImmune # Pirate: lone ops are not valid target-objective targets.
       - type: RandomMetadata
         nameSegments:
         - NamesSyndicatePrefix

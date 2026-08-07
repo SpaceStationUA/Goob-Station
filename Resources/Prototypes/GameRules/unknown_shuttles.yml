@@ -27,6 +27,8 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: UnknownShuttleSyndieEvacPod
+    - id: HitmanShuttle # Pirate
+    - id: AsakimShuttle # Pirate
 
 - type: entityTable
   id: UnknownShuttlesHostileTable
@@ -260,4 +262,3 @@
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/spacebus.yml
-

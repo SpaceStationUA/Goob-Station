@@ -30,3 +30,12 @@
 
 - type: playTimeTracker
   id: RoleSilvia
+
+- type: playTimeTracker
+  id: RoleLaika
+
+- type: playTimeTracker
+  id: RoleK9Officer
+
+- type: playTimeTracker
+  id: JobSecurityInstructor

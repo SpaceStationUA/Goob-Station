@@ -1,0 +1,52 @@
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsFreelance
+  suffix: Freelance, Locked
+  components:
+  - type: AccessReader
+    access: [["Freelance"]]
+
+- type: entity
+  parent: Airlock
+  id: AirlockFreelanceLocked
+  suffix: Freelance, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsFreelance ]
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockGlassFreelanceLocked
+  suffix: Freelance, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsFreelance ]
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockShuttleFreelanceLocked
+  suffix: Freelance, Docking, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsFreelance ]
+
+- type: entity
+  parent: Windoor
+  id: WindoorFreelanceLocked
+  suffix: Freelance, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsFreelance ]
+
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureFreelanceLocked
+  suffix: Freelance, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsFreelance ]

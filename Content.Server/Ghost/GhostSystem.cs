@@ -139,6 +139,7 @@ namespace Content.Server.Ghost
             if (ent.Comp.LifeStage <= ComponentLifeStage.Running)
             {
                 args.VisibilityMask |= (int)VisibilityFlags.Ghost;
+                args.VisibilityMask |= (int)VisibilityFlags.StationAiNetwork; // Pirate - Cyberdeck projections
                 // Begin DeltaV additions
                 args.VisibilityMask |= (int)VisibilityFlags.CosmicCultMonument;
                 // End DeltaV additions
@@ -310,7 +311,32 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            _mind.UnVisit(actor.PlayerSession);
+            TryReturnToBody(actor.PlayerSession);
+        }
+
+        // Pirate: Keep every player-facing return path from attaching to a body hidden in entity storage.
+        public bool TryReturnToBody(ICommonSession session)
+        {
+            if (!_mind.TryGetMind(session, out _, out var mind)
+                || mind.VisitingEntity == null
+                || session.AttachedEntity is not { Valid: true } attached)
+            {
+                return false;
+            }
+
+            if (mind.OwnedEntity is { } body
+                && HasComp<InsideEntityStorageComponent>(body))
+            {
+                _popup.PopupEntity(
+                    Loc.GetString("ghost-return-to-body-in-container"),
+                    attached,
+                    session,
+                    PopupType.MediumCaution);
+                return false;
+            }
+
+            _mind.UnVisit(session);
+            return true;
         }
 
         #region Warp

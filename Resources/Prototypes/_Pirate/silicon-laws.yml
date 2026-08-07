@@ -1,0 +1,35 @@
+# Asimov / Азімов
+- type: siliconLaw
+  id: Asimov1
+  order: 1
+  lawString: law-asimov-1
+
+- type: siliconLaw
+  id: Asimov2
+  order: 2
+  lawString: law-asimov-2
+
+- type: siliconLaw
+  id: Asimov3
+  order: 3
+  lawString: law-asimov-3
+
+- type: siliconLaw
+  id: Asimov4
+  order: 4
+  lawString: law-asimov-4
+
+- type: siliconLaw
+  id: Asimov5
+  order: 5
+  lawString: law-asimov-5
+
+- type: siliconLawset
+  id: Asimov
+  laws:
+  - Asimov1
+  - Asimov2
+  - Asimov3
+  - Asimov4
+  - Asimov5
+  obeysTo: laws-owner-human

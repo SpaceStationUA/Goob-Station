@@ -3,31 +3,53 @@ instrument-component-finger-cramps-light-message = Ваші пальці тро�
 instrument-component-finger-cramps-serious-message = Ваші пальці починають боліти сильніше!
 instrument-component-finger-cramps-max-message = Ваші пальці судомить через гру!
 instruments-component-menu-no-midi-support = Підтримка MIDI наразі не
-                                             у вашій системі.
+                                             доступна у вашій системі.
                                              Якщо ви використовуєте Linux, вам може знадобитися встановити
-                                             FluidSynth або пакет розробки
+                                             FluidSynth або пакунок розробника
                                              для FluidSynth.
-instruments-component-menu-input-button = MIDI Вхід
-instruments-component-menu-band-button = Доєднатися до групи
-instruments-component-menu-play-button = Грати MIDI файл
-instruments-component-menu-loop-button = Повторення
-instruments-component-menu-channels-button = Канали
-instruments-component-menu-stop-button = Зупинити
-instruments-component-band-menu = Обрати лідера групи
-instrument-component-band-refresh = Оновити
-instruments-component-channels-menu = MIDI Вибір Каналу
-instrument-component-channel-name = MIDI канал {$number}
-instruments-component-channels-all-button = Всі
-instruments-component-channels-clear-button = Очистити
+instruments-component-menu-play-tab-title = Гра
+instruments-component-menu-config-tab-title = Налаштування
+instruments-component-menu-midi-source-button = MIDI Джерело
+instruments-component-menu-unknown-midi-source-button = Невідомо
+instruments-component-menu-input-midi-source-button = Вхід
+instruments-component-menu-band-midi-source-button = Гурт
+instruments-component-menu-file-midi-source-button = Файли
+instruments-component-menu-play-stop-button = Грати
+instruments-component-menu-loop-button = Повтор
+instruments-component-menu-shuffle-button = Перемішати
+instruments-component-menu-channels-label = Канали [italic](оновлюється під час відтворення)[/italic]
+instruments-component-menu-files-track-playtime-seconds-minutes = {$currentMinutes}:{$currentSeconds}/{$totalMinutes}:{$totalSeconds}
+instruments-component-menu-files-track-playtime-seconds-minutes-hours = {$currentHours}:{$currentMinutes}:{$currentSeconds}/{$totalHours}:{$totalMinutes}:{$totalSeconds}
+instruments-component-menu-files-file-remove-disabled-info = Зупиніть відтворення та оберіть елемент для видалення.
+instruments-component-menu-files-add-button = Додати
+instruments-component-menu-files-remove-button = Видалити
+instruments-component-menu-files-rename-button = Перейменувати
+instruments-component-menu-files-rename-dialog-title = Перейменувати файл
+instruments-component-menu-files-rename-dialog-prompt = Нова назва
+instruments-component-menu-files-filter = Фільтр...
+instruments-component-menu-files-error = Операцію не виконано через неочікувану помилку.
+instruments-component-menu-input-notice-label = Підключіть MIDI-пристрій до вашого ПК
+                                                та грайте музику.
+instruments-component-band-title-label = Гурти
+instruments-component-band-refresh = Оновити
+instruments-component-channels-menu = Вибір MIDI каналів
+instruments-component-channels-all-button = Увімк.
+instruments-component-channels-clear-button = Вимк.
+instruments-component-channels-all-channels-label = Всі канали
+instruments-component-channels-name-display-selector-label = Відображення назв
+instruments-component-channels-name-display-selector-track-button = Доріжка
+instruments-component-channels-name-display-selector-program-button = Програма
+instruments-component-channels-name-display-selector-instrument-button = Інструмент
+instruments-component-midi-file-collection-label = MIDI Колекція
+instruments-component-midi-file-collection-size-label = Завантажено {$count} MIDI файлів
+instruments-component-midi-file-collection-open-dir-button = Відкрити теку
+instruments-component-midi-file-collection-reload-button = Перезавантажити колекцію
+instruments-component-midi-file-collection-delete-all-button = Очистити колекцію
+instruments-component-menu-midi-min-volume-slider-label = Мін. гучність MIDI входу
 
 # SwappableInstrumentComponent
 swappable-instrument-component-style-set = Встановлено стиль: "{$style}"
-instruments-component-channels-track-names-toggle = Показати назви доріжок
-instruments-component-channels-single = {$channel} {$name}
-instruments-component-channels-multi = {$channel} {$name} ({$other})
 
-
-# SwappableInstrumentComponent
 instruments-component-menu-midi-channel-acoustic-grand-piano = Акустичний рояль
 instruments-component-menu-midi-channel-bright-acoustic-piano = Яскраве акустичне піаніно
 instruments-component-menu-midi-channel-electric-grand-piano = Електричний рояль

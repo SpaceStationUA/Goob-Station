@@ -49,9 +49,9 @@
   components:
   - type: Organ
     onAdd:
-    - type: ActionGun
-      action: ActionDragonsBreath
-      gunProto: DragonsBreathGun
+    - type: ActionGrant # Pirate: expose the breath cooldown instead of using a hidden gun.
+      actions:
+      - ActionDragonsBreath
 
 - type: entity
   parent: OrganHumanEyes

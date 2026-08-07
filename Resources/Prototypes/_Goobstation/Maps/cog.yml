@@ -4,6 +4,7 @@
   id: Cog
   mapName: 'Ког'
   mapPath: /Maps/_Goobstation/cog.yml
+  mapPreview: PirateMapPreviewCog # Pirate - map vote preview
   minPlayers: 40
   stations:
     Cog:

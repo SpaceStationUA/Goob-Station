@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.ListeningPost; // Pirate: listening post long-range monitor
 using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
 using Content.Shared.Medical.CrewMonitoring;
 using Robust.Client.UserInterface;
@@ -25,6 +26,11 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
         if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
         {
             gridUid = xform.GridUid;
+
+            if (EntMan.HasComponent<LongRangeCrewMonitorComponent>(Owner))
+            {
+                gridUid = EntMan.System<LongRangeCrewMonitorSystem>().FindLargestStationGridInMap(xform.MapID) ?? xform.GridUid;
+            }
 
             if (EntMan.TryGetComponent<MetaDataComponent>(gridUid, out var metaData))
             {

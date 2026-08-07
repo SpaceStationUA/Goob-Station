@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  name: Laika
+  parent: MobSecDogBase
+  id: MobSecDogLaika
+  description: Much like her namesake, Laika is a specimen of indeterminate breed, fresh off the streets and ready to tussle.
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-laika-name
+    description: ghost-role-information-laika-description
+    job: RoleLaika
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    successChance: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: Loadout
+    prototypes: [ MobSecDogLaikaGear ]
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
+    - DoorBumpOpener
+    - K9
+  - type: StealTarget
+    stealGroup: AnimalSecurity
+  - type: Temperature
+    atmosTemperatureTransferEfficiency: 0.01
+  - type: TemperatureDamage
+    heatDamageThreshold: 315
+    coldDamageThreshold: 240

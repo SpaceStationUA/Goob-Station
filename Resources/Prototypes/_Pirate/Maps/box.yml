@@ -1,7 +1,9 @@
 - type: gameMap
   id: BoxTP
-  mapName: 'Бокс ТП'
+  mapName: 'Бокс'
   mapPath: /Maps/_Pirate/box.yml
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
+  mapPreview: PirateMapPreviewBoxTP
   minPlayers: 15
   maxPlayers: 85
   stations:
@@ -54,6 +56,7 @@
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
+            SecurityInstructor: [ 1, 1 ]
             SecurityOfficer: [ 5, 5 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]

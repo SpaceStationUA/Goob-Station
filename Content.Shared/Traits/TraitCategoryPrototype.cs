@@ -32,6 +32,7 @@ public sealed partial class TraitCategoryPrototype : IPrototype
     // Pirate start: port and modified DV traits system
     [DataField] public int? MaxTraits;
     [DataField] public int? MaxPoints;
+    [DataField] public bool CountsTowardsGlobalLimit = true;
     [DataField] public bool DefaultExpanded = true;
     [DataField] public Color? AccentColor;
 

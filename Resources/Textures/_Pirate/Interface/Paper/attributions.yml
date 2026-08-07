@@ -1,0 +1,4 @@
+- files: ["paper_heading_fine.svg.96dpi.png"]
+  license: "Custom"
+  copyright: "AGPL-3.0-only, made by kipdotnet for Impstation"
+  source: "https://github.com/impstation/imp-station-14/commit/5a926816c5bb73f78c07193479dbc2cbe69355a4"

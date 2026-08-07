@@ -42,6 +42,9 @@
 - type: markingPoints
   id: MobVulpkaninMarkingLimits
   points:
+    HairSpecial: # Pirate - Trauma Station hair gradients
+      points: 1
+      required: false
     Hair:
       points: 1
       required: false
@@ -85,6 +88,13 @@
       defaultMarkings: [ VulpEar ]
     HeadSide:
       points: 2
+      required: false
+    # Pirate: enable underwear customization.
+    UndergarmentTop:
+      points: 1
+      required: false
+    UndergarmentBottom:
+      points: 1
       required: false
     Overlay:
       points: 2

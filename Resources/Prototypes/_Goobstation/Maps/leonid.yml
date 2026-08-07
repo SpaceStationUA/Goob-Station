@@ -4,6 +4,7 @@
   id: Leonid
   mapName: 'Станція Леонід'
   mapPath: /Maps/_Goobstation/leonid.yml
+  mapPreview: PirateMapPreviewLeonid # Pirate - map vote preview
   minPlayers: 50
   stations:
     Leonid:

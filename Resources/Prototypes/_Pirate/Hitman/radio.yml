@@ -1,0 +1,25 @@
+- type: radioChannel
+  id: Traffic
+  name: chat-radio-traffic
+  keycode: 'd'
+  frequency: 1022
+  color: "#CC6633"
+  longRange: true
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyTraffic
+  name: traffic control encryption key
+  description: An encryption key for the space traffic control channel.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Traffic
+    defaultChannel: Traffic
+  - type: Item
+    sprite: _Pirate/Objects/Devices/encryption_keys_traffic.rsi
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/encryption_keys_traffic.rsi
+    layers:
+    - state: crypt_gray
+    - state: stc_label

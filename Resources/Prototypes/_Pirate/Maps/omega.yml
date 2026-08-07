@@ -31,8 +31,10 @@
 
 - type: gameMap
   id: OmegaTP
-  mapName: 'Омега ТП'
+  mapName: 'Омега'
   mapPath: /Maps/_Pirate/omega.yml
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
+  mapPreview: PirateMapPreviewOmegaTP
   minPlayers: 0
   maxPlayers: 40
   stations:

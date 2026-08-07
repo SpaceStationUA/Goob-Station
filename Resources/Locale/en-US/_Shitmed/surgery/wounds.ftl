@@ -13,3 +13,8 @@ inspect-wound-Brute-severe = heavily bruised
 inspect-wound-Burn-minor = red
 inspect-wound-Burn-moderate = blistering
 inspect-wound-Burn-severe = charred
+
+# Pirate: Trauma Lock path.
+inspect-wound-weeping-avulsion-minor = torn open
+inspect-wound-weeping-avulsion-moderate = completely torn open
+inspect-wound-weeping-avulsion-severe = completely torn open, with significant tissue loss

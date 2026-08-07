@@ -650,16 +650,17 @@ public sealed partial class ChangelingSystem
         var mind = _mind.GetMind(uid);
         if (mind == null)
             return;
-        if (!TryComp<StoreComponent>(uid, out var storeComp))
+        if (!HasComp<StoreComponent>(uid))
             return;
 
         comp.IsInLastResort = false;
         comp.IsInLesserForm = true;
 
         var eggComp = EnsureComp<ChangelingEggComponent>(target);
-        eggComp.lingComp = comp;
-        eggComp.lingMind = (EntityUid) mind;
-        eggComp.lingStore = _serialization.CreateCopy(storeComp, notNullableOverride: true);
+        eggComp.LingComponents = CopyLastResortComponents(uid, CurrentLastResortComponentTypes);
+        eggComp.LingComponents.AddRange(comp.LastResortComponents);
+        eggComp.LingMind = (EntityUid) mind;
+        comp.LastResortComponents.Clear();
 
         EnsureComp<AbsorbedComponent>(target);
         var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
@@ -812,6 +813,8 @@ public sealed partial class ChangelingSystem
         if (args.Handled)
             return;
 
+        var lastResortComponents = CopyLastResortComponents(uid, LastResortComponentTypes);
+        var store = CopyLastResortComponent<StoreComponent>(uid);
         comp.IsInLastResort = true;
 
         var newUid = TransformEntity(
@@ -827,6 +830,11 @@ public sealed partial class ChangelingSystem
             UpdateChemicals((uid, comp), Comp<InternalResourcesActionComponent>(args.Action).UseAmount);
             return;
         }
+
+        // Pirate: carry the suppressed state through the temporary headslug body.
+        Comp<ChangelingIdentityComponent>(newUid.Value).LastResortComponents = lastResortComponents;
+        if (store != null)
+            RestoreLastResortComponent(newUid.Value, store);
 
         _explosionSystem.QueueExplosion(
             (EntityUid) newUid,

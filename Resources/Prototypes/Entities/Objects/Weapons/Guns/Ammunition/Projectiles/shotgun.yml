@@ -157,6 +157,7 @@
     fixedRotation: false
   - type: EmbeddableProjectile
     deleteOnRemove: true
+  - type: SkiaFlareGunPellet # Pirate: Skia scream destroys active flare pellets.
   - type: Fixtures
     fixtures:
       projectile:

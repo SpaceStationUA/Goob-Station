@@ -1,0 +1,69 @@
+- type: job
+  id: SecurityInstructor
+  name: job-name-security-instructor
+  description: job-description-security-instructor
+  playTimeTracker: JobSecurityInstructor
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobWarden
+      time: 10h
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 30h
+    - !type:RoleTimeRequirement
+      role: JobDetective
+      time: 1h
+    - !type:CharacterEmployerRequirement
+      employers:
+      - IdrisIncorporated
+      - ZavodskiyInterstellar
+      - PMCG
+  startingGear: SecurityInstructorGear
+  icon: "JobIconSecurityInstructor"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  whitelisted: true
+  guides:
+  - Security
+  - LegalSOP
+  - OfficerCadetSOP
+  - SecurityInstructorSOP
+  - CorporateJudo
+  - AlertLevels
+  goobcoins: 45
+  access:
+  - Security
+  - Brig
+  - Maintenance
+  - Service
+  - External
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: SecurityStaff
+
+- type: startingGear
+  id: SecurityInstructorGear
+  equipment:
+    eyes: ClothingEyesGlassesSecurity
+    id: SecurityInstructorPDA
+    ears: ClothingHeadsetAltSecurityRegular
+    pocket1: WeaponPistolUniversalSecurity
+  storage:
+    back:
+    - MagazineUniversalMagnum
+    - SecurityInstructorWhistle
+    - BaseSeclinkRadio
+
+- type: chameleonOutfit
+  id: SecurityInstructorChameleonOutfit
+  job: SecurityInstructor
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatCapInstructor
+    mask: ClothingMaskGasSecurity
+    neck: ClothingNeckCloakInstructor
+    gloves: ClothingHandsGlovesColorBlack

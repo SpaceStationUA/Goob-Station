@@ -123,5 +123,6 @@ public sealed class CorticalBorerInfestedSystem : EntitySystem
         _borer.EndControl(borer, args.NewEntity);
         _borer.TryEjectBorer(borer);
         _borer.InfestTarget(borer, args.NewEntity);
+        _borer.SyncHostVision(borer);
     }
 }

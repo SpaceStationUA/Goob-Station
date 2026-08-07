@@ -1,0 +1,10 @@
+- type: entity
+  parent: SurveillanceWirelessCameraBodySecurity
+  id: ClothingNeckCloakInstructor
+  name: наплічник інструктора
+  description: Розкішний плащ інструктора СБ. Оснащений нагрудною камерою на шпильці.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Cloaks/instructorcloak.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Cloaks/instructorcloak.rsi

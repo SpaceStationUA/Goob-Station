@@ -43,6 +43,7 @@ public sealed class ShadowlingBlackRecuperationSystem : EntitySystem
     [Dependency] private readonly ISharedPlayerManager _playerMan = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!; // Pirate
 
     public override void Initialize()
     {
@@ -104,7 +105,7 @@ public sealed class ShadowlingBlackRecuperationSystem : EntitySystem
             {
                 // notify them they're being revived.
                 if (mind.CurrentEntity != target)
-                    _euiManager.OpenEui(new ReturnToBodyEui(mind, _mind, _playerMan), session);
+                    _euiManager.OpenEui(new ReturnToBodyEui(mind, _ghostSystem, _playerMan), session);
             }
             else
             {

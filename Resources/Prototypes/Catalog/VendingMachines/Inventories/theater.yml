@@ -58,6 +58,7 @@
     ClothingShoesBootsCowboyBrown: 1
     ClothingShoesBootsCowboyBlack: 1
     ClothingShoesBootsCowboyWhite: 1
+    ClothingUniformHitmanSuit: 1 # Pirate: ported DeltaV Hitman suit.
     ClothingCostumeAbductorHead: 1
     ClothingCostumeAbductor: 1
     ClothingHeadSanabi: 1 # Goobstation
@@ -67,6 +68,7 @@
     ClothingOuterSuitPickle: 1
     ClothingOuterSuitTutu: 2 # Goob
     ClothingHeadHatTinfoilHat: 2 # Goobstation
+    ClothingHeadHatBunnyearsClown: 1 # Pirate
   contrabandInventory:
     ClothingHeadHatRichard: 1
     ClothingShoesBling: 1

@@ -19,7 +19,6 @@
     gridPath: /Maps/_Pirate/Shuttles/ShuttleEvent/SANDropship.yml
 
 - type: entity
-  categories: [HideSpawnMenu]
   id: SpawnPointGhostSANDeserter
   name: ghost role spawn point
   suffix: SAN Deserter

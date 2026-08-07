@@ -21,3 +21,28 @@ void-ascend-end = Хуртовина починає вщухати...
 void-ascend-restart = Хуртовина раптово з'являється знову...
 cosmic-field-component-bomb-defused-message = {$bomb} раптово вимикається!
 ghoul-weapon-comp-examine = [color=red]Ця зброя виглядає надзвичайно крихкою. При детальнішому огляді видно, що вона виготовлена з плоті й крові. Вона належить одній із істот Мансусу й зникне, коли істота помре.[/color]
+
+# Pirate: Trauma Lock path.
+species-name-shattered = розколотий повсталий
+
+mirror-maid-examine-message-user = {$ent}, здається, ледь помітно зникає та знову виникає.
+mirror-maid-examine-message-maid = Погляд {$user} пронизує все ваше єство!
+
+eldritch-id-card-component-examine-inverted = Поточний ефект [color=yellow]інвертовано[/color].
+eldritch-id-card-component-examine-message =
+    Зачаровано Мансусом!
+    Використання іншої ID-картки на цій або цієї картки на іншій поглинає іншу картку та копіює її доступ.
+    Використання цієї картки в руці дозволяє змінити її вигляд.
+    Використання на парі дверей пов'язує їх. Єретик, що входить в одні двері, потрапляє до інших, а язичник - до випадкового шлюзу.
+    Клацання правою кнопкою змушує нові портали працювати навпаки: єретик потрапляє до випадкового шлюзу станції, а язичник - до пов'язаного виходу.
+
+eldritch-id-card-component-on-invert =
+    { $inverted ->
+      [true] Картка тепер створюватиме інвертовані розломи.
+     *[false] Картка більше не створюватиме інвертовані розломи.
+    }
+
+eldritch-id-card-component-invert = Інвертувати
+eldritch-id-card-component-invert-message = Перемкнути інвертовані портали, які відправляють вас до випадкового шлюзу станції, а язичників - до пов'язаного виходу.
+eldritch-id-card-component-link-one = Пов'язано 1/2
+eldritch-id-card-component-link-two = Пов'язано 2/2

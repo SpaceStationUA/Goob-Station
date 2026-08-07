@@ -3,7 +3,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared._Shitmed.Weapons.Ranged.Events; // Shitmed Change
-using Content.Shared._Lavaland.Weapons.Ranged.Events; // Pirate: gunplay
 using Content.Shared._Pirate.ZLevels.Shooting; // Pirate: multiz
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -165,11 +164,16 @@ public abstract partial class SharedGunSystem : EntitySystem
         var user = args.SenderSession.AttachedEntity;
 
         if (user == null ||
-            !_combatMode.IsInCombatMode(user) ||
-            !TryGetGun(user.Value, out var gun))
-        {
+            !_combatMode.IsInCombatMode(user))
             return;
-        }
+
+        // Goobstation - mechs
+        if (TryComp<MechPilotComponent>(user.Value, out var mechPilot))
+            user = mechPilot.Mech;
+
+        if (!TryGetGun(user.Value, out var gun) ||
+            HasComp<ItemComponent>(user)) // Goobstation - carryable entities (e.g. felinids) can't shoot while held
+            return;
 
         if (gun.Owner != GetEntity(msg.Gun))
             return;
@@ -181,23 +185,25 @@ public abstract partial class SharedGunSystem : EntitySystem
             gun.Comp.Target = potentialTarget;
         // Goob edit end
         AttemptShoot(user.Value, gun);
-        // Pirate: gunplay
-        if (msg.Continuous)
-            gun.Comp.ShotCounter = 0;
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
     {
         var gunUid = GetEntity(ev.Gun);
 
-        if (args.SenderSession.AttachedEntity == null ||
-            !TryComp<GunComponent>(gunUid, out var gun) ||
-            !TryGetGun(args.SenderSession.AttachedEntity.Value, out var userGun))
-        {
-            return;
-        }
+        var user = args.SenderSession.AttachedEntity;
 
-        if (userGun != (gunUid, gun))
+        if (user == null)
+            return;
+
+        // Goobstation - mechs
+        if (TryComp<MechPilotComponent>(user.Value, out var mechPilot))
+            user = mechPilot.Mech;
+
+        if (!TryGetGun(user.Value, out var userGun))
+            return;
+
+        if (userGun.Owner != gunUid)
             return;
 
         StopShooting(userGun);
@@ -220,6 +226,15 @@ public abstract partial class SharedGunSystem : EntitySystem
     public bool TryGetGun(EntityUid entity, out Entity<GunComponent> gun)
     {
         gun = default;
+
+        // Goobstation - mech equipment guns
+        if (TryComp<MechComponent>(entity, out var mech) &&
+            mech.CurrentSelectedEquipment.HasValue &&
+            TryComp<GunComponent>(mech.CurrentSelectedEquipment.Value, out var mechGun))
+        {
+            gun = (mech.CurrentSelectedEquipment.Value, mechGun);
+            return true;
+        }
 
         if (_hands.GetActiveItem(entity) is { } held &&
             TryComp(held, out GunComponent? gunComp))
@@ -395,8 +410,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         {
             // Same safety throttle a cancelled attempt uses, so a latched ShootDown/LookUp with no
             // valid target doesn't burn the trigger at full fire rate (popup/sound spam).
-            gun.Comp.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.Comp.NextFire.TotalSeconds)); // Pirate: multiz - gun is Entity<GunComponent> upstream, use .Comp
-            return false; // Pirate: multiz - method became bool upstream; abort path returns false
+            gun.Comp.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.Comp.NextFire.TotalSeconds));
+            return false;
         }
         toCoordinates = zAdjustedTo;
 
@@ -424,7 +439,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (ev.Ammo.Count <= 0)
         {
-            _zLevelShooting.EndShotOffset(); // Pirate: multiz — every return in this block skips the normal EndShotOffset below
+            _zLevelShooting.EndShotOffset(); // Pirate: multiz
 
             // triggers effects on the gun if it's empty
             var emptyGunShotEvent = new OnEmptyGunShotEvent(user);
@@ -538,31 +553,11 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (shooter != null)
             Projectiles.SetShooter(uid, projectile, shooter.Value);
 
-        // Pirate: gunplay
-        Physics.UpdateIsPredicted(uid, physics);
-
-        // Pirate: gunplay (fix projectile rotation on fire, it had 0 angle(south) regardless of gun target)
-        TransformSystem.SetWorldRotationNoLerp((uid, Transform(uid)), direction.ToWorldAngle() + projectile.Angle);
+        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle() + projectile.Angle);
         if (targetCoordinates.HasValue) // Goobstation
             projectile.TargetCoordinates = targetCoordinates.Value; // Goobstation
 
-        #region Pirate: gunplay
-        if (user is { } userUid)
-        {
-            var ev = new Content.Shared._Pirate.Projectiles.PlayerShotProjectileEvent(uid, userUid);
-            RaiseLocalEvent(ref ev);
-        }
-
-        // Pirate: gunplay
-        if (gunUid is { } gun)
-        {
-            var shotEv = new ProjectileShotEvent
-            {
-                FiredProjectile = uid,
-            };
-            RaiseLocalEvent(gun, shotEv);
-        }
-        #endregion
+        _zLevelShooting.ApplyPendingProjectileVisualOffset(uid); // Pirate: multiz
     }
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);

@@ -116,6 +116,9 @@
         reagents:
           - ReagentId: ChloralHydrate
             Quantity: 200
+      # Pirate: restore intended Eep blood recovery.
+      bleedReductionAmount: 1
+      bloodRefreshAmount: 2
     - type: Sprite
       sprite: _Impstation/Mobs/Aliens/eeeplet.rsi
       noRot: true
@@ -198,6 +201,11 @@
         reagents:
           - ReagentId: ChloralHydrate
             Quantity: 400
+      # Pirate: restore intended Eep blood recovery.
+      bleedReductionAmount: 1
+      bloodRefreshAmount: 4
+    - type: ExplosionResistance # Pirate: protect the Eeep from its lightning-triggered explosions.
+      damageCoefficient: 0.2
     - type: Electrified
       requirePower: false
       shockDamage: 4

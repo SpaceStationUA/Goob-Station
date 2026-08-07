@@ -1,0 +1,132 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  id: K9ClothingBase
+  components:
+  - type: SpecialisedClothing
+    whitelist:
+      tags:
+      - K9
+
+- type: entity
+  parent: [K9ClothingBase, ClothingOuterHardsuitBase]
+  id: ClothingOuterHardsuitCombatK9
+  name: K9 бойовий скафандр
+  description: Бойовий скафандр для собак, створений для захисту від будь-яких ворогів у середовищі з низьким тиском. Має позначки служби безпеки станції.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Hardsuits/Combat/k9.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Hardsuits/Combat/k9.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Radiation: 0.75
+        Caustic: 0.75
+        Heat: 0.75
+  - type: NonLocationalArmor
+  - type: StaminaResistance
+    damageCoefficient: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: ToggleableClothing # Pirate: local API stores toggled clothing by slot.
+    clothingPrototypes:
+      head: ClothingHeadHelmetHardsuitCombatK9
+  - type: AllowSuitStorage
+  - type: Insulated
+  - type: Tag
+    tags:
+    - K9Armor
+
+- type: entity
+  parent: [K9ClothingBase, ClothingHeadHardsuitWithLightBase]
+  id: ClothingHeadHelmetHardsuitCombatK9
+  name: шолом бойового скафандра K9
+  description: Шолом для бойового скафандра службового пса.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Hardsuits/Combat/k9.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Hardsuits/Combat/k9.rsi
+  - type: Tag
+    tags:
+    - K9Armor
+
+- type: entity
+  parent: ClothingOuterHardsuitCombatK9
+  id: ClothingOuterHardsuitCombatRiotK9
+  name: протиударний скафандр K9
+  description: Собачий бойовий скафандр для контролю натовпу та протидії озброєним противникам у середовищі з низьким тиском.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Hardsuits/Combat/k9_riot.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Hardsuits/Combat/k9_riot.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.65
+        Radiation: 0.8
+        Caustic: 0.8
+        Heat: 0.8
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingOuterHardsuitCombatRiotK9Helmet
+
+- type: entity
+  parent: [K9ClothingBase, ClothingHeadHardsuitWithLightBase]
+  id: ClothingOuterHardsuitCombatRiotK9Helmet
+  name: шолом протиударного скафандра K9
+  description: Шолом для протиударного скафандра службового пса.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Hardsuits/Combat/k9_riot.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Hardsuits/Combat/k9_riot.rsi
+  - type: Tag
+    tags:
+    - K9Armor
+
+- type: entity
+  # Pirate: DeltaV's ClothingOuterArmorDuraVest is absent locally; keep its effective components on the K9-only item.
+  parent: [K9ClothingBase, ClothingOuterBaseMedium]
+  id: ClothingOuterArmorDuraVestK9
+  name: дюратканинний жилет K9
+  description: Щільний і міцний бронежилет для собак, укріплений дюратканиною для захисту від гострих предметів і ударів.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Armor/duravest.rsi
+    state: icon-secdog
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Armor/duravest.rsi
+  - type: Armor
+    coverage:
+    - Chest
+    - Groin
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.9
+        Heat: 0.9
+  - type: NonLocationalArmor
+  - type: StaminaResistance
+    damageCoefficient: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: AllowSuitStorage
+  - type: Tag
+    tags:
+    - K9Armor

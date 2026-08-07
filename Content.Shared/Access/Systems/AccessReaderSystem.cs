@@ -3,6 +3,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using Content.Pirate.Common.Access; // Pirate - Cyberdeck
+using Content.Pirate.Common.Heretic; // Pirate - Lock path
+using Content.Shared._Pirate.Access.Components;
+using Content.Shared._Pirate.Access.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Systems;
@@ -13,6 +17,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Localizations;
 using Content.Shared.Lock;
+using Content.Shared.Mind;
 using Content.Shared.NameIdentifier;
 using Content.Shared.PDA;
 using Content.Shared.StationRecords;
@@ -36,6 +41,8 @@ public sealed class AccessReaderSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedStationRecordsSystem _recordsSystem = default!;
+    [Dependency] private readonly SharedSubdermalIdCardSystem _subdermalId = default!; // Pirate
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!; // Pirate
 
     private static readonly ProtoId<TagPrototype> PreventAccessLoggingTag = "PreventAccessLogging";
 
@@ -205,7 +212,17 @@ public sealed class AccessReaderSystem : EntitySystem
         if (!Resolve(target, ref reader, false))
             return true;
 
+        // Pirate: Lock path can temporarily deny every access reader to a marked target.
+        var check = new BeforeAccessReaderCheckEvent(target);
+        RaiseLocalEvent(user, ref check, true);
+        if (check.Cancelled)
+            return false;
+
         if (!reader.Enabled)
+            return true;
+
+        // Pirate - Cyberdeck backdoor.
+        if (TryComp<IgnoreAccessComponent>(target, out var ignore) && ignore.Ignore.Contains(user))
             return true;
 
         var accessSources = FindPotentialAccessItems(user);
@@ -213,6 +230,10 @@ public sealed class AccessReaderSystem : EntitySystem
         FindStationRecordKeys(user, out var stationKeys, accessSources);
 
         if (!IsAllowed(access, stationKeys, target, reader))
+            return false;
+
+        // Pirate: NPC K9s must not receive the access stored in their ID implant.
+        if (HasComp<MindOnlyAccessComponent>(user) && !_mindSystem.TryGetMind(user, out _, out _))
             return false;
 
         if (!_tag.HasTag(user, PreventAccessLoggingTag))
@@ -856,6 +877,10 @@ public sealed class AccessReaderSystem : EntitySystem
         {
             items.Add(idUid.Value);
         }
+
+        // Pirate: include ID cards embedded in subdermal implants.
+        if (_subdermalId.TryGetIdCard(uid, out var idEntity))
+            items.Add(idEntity.Value);
 
         return items.Any();
     }

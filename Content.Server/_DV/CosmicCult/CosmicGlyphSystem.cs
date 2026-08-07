@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Popups;
+using Content.Server._Pirate.GameTicking.Rules; // Pirate
 using Content.Shared._DV.CosmicCult.Components.Examine;
 using Content.Shared._DV.CosmicCult.Components;
 using Content.Shared._DV.CosmicCult;
@@ -77,10 +78,7 @@ public sealed class CosmicGlyphSystem : SharedCosmicGlyphSystem
             return;
 
         var cultists = GatherCultists(uid, uid.Comp.ActivationRange);
-        var requiredCultists = uid.Comp.RequiredCultists;
-
-        if (TryComp(args.User, out LoneCosmicCultLeadComponent? leadComp))
-            requiredCultists = Math.Max(requiredCultists - leadComp.CultAbilityDeduction, 1);
+        var requiredCultists = GetRequiredCultists(uid, args.User); // Pirate
 
         if (cultists.Count < requiredCultists)
         {
@@ -124,10 +122,17 @@ public sealed class CosmicGlyphSystem : SharedCosmicGlyphSystem
 
         if (ent.Comp.User is not { } user) return;
         var cultists = GatherCultists(ent, ent.Comp.ActivationRange);
+        var requiredCultists = GetRequiredCultists(ent, user); // Pirate
+        var tgtpos = Transform(ent).Coordinates;
+        if (cultists.Count < requiredCultists)
+        {
+            _audio.PlayPvs(ent.Comp.FailSFX, tgtpos);
+            return;
+        }
+
         var tryInvokeEv = new TryActivateGlyphEvent(user, cultists);
         RaiseLocalEvent(ent, ref tryInvokeEv);
-        var tgtpos = Transform(ent).Coordinates;
-        if (tryInvokeEv.Cancelled || cultists.Count < ent.Comp.RequiredCultists)
+        if (tryInvokeEv.Cancelled)
         {
             _audio.PlayPvs(ent.Comp.FailSFX, tgtpos);
             return;
@@ -140,6 +145,18 @@ public sealed class CosmicGlyphSystem : SharedCosmicGlyphSystem
         _audio.PlayPvs(ent.Comp.TriggerSFX, tgtpos, AudioParams.Default.WithVolume(+1f));
         Spawn(ent.Comp.GlyphVFX, tgtpos);
         ent.Comp.User = null;
+    }
+
+    // Pirate: let downstream rules adjust requirements and recheck them when activation completes.
+    private int GetRequiredCultists(Entity<CosmicGlyphComponent> glyph, EntityUid user)
+    {
+        var requiredCultists = glyph.Comp.RequiredCultists;
+        if (TryComp(user, out LoneCosmicCultLeadComponent? leadComp))
+            requiredCultists = Math.Max(requiredCultists - leadComp.CultAbilityDeduction, 1);
+
+        var ev = new GetCosmicGlyphCultistRequirementEvent(requiredCultists);
+        RaiseLocalEvent(glyph, ref ev);
+        return Math.Max(ev.RequiredCultists, 1);
     }
     #endregion
 

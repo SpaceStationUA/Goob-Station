@@ -4,6 +4,7 @@
   id: Delta
   mapName: 'Станція Дельта'
   mapPath: /Maps/_Goobstation/delta.yml
+  mapPreview: PirateMapPreviewDelta # Pirate - map vote preview
   minPlayers: 55
   stations:
     Delta:

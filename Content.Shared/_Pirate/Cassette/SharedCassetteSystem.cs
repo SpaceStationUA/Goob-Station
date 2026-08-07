@@ -17,6 +17,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._Pirate.Cassette;
@@ -31,6 +32,7 @@ public abstract partial class SharedCassetteSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private INetConfigurationManager _netConfig = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -158,7 +160,9 @@ public abstract partial class SharedCassetteSystem : EntitySystem
             return;
         }
 
-        StopAllAudio(player);
+        // Pirate: custom tracks are client-only, so replay must not stop the predicted stream.
+        if (_net.IsServer || _timing.IsFirstTimePredicted)
+            StopAllAudio(player);
 
         tape ??= player.Comp.Tape;
         if (tape < 0 || tape >= tapeComp.Songs.Count)
@@ -213,6 +217,15 @@ public abstract partial class SharedCassetteSystem : EntitySystem
 
     private void OnPlayerGetEquipmentVisuals(Entity<CassettePlayerComponent> ent, ref GetEquipmentVisualsEvent args)
     {
+        // Only show the worn overlay in the slots the player is actually worn in (ears).
+        // Rendering it for pockets inserts the fixed "cassette" layer key under another
+        // slot's bookmark, orphaning the old layer and leaving it stuck on the character.
+        if (!_inventory.TryGetSlot(args.Equipee, args.Slot, out var slotDef) ||
+            (slotDef.SlotFlags & ent.Comp.Slots) == 0)
+        {
+            return;
+        }
+
         args.Layers.Add(("cassette", new PrototypeLayerData
         {
             RsiPath = ent.Comp.WornSprite.RsiPath.ToString(),

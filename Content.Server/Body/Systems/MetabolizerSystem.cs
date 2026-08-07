@@ -239,6 +239,15 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
                 var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
 
+                // Pirate: bridge metabolism to legacy downstream reagent-effect handlers.
+                using var legacyReagent = LegacyEntityEffectContext.PushReagent(
+                    EntityManager,
+                    ent.Owner,
+                    solution,
+                    new ReagentQuantity(reagent, mostToRemove),
+                    proto,
+                    null);
+
                 // do all effects, if conditions apply
                 foreach (var effect in entry.Effects)
                 {

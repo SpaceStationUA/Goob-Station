@@ -28,7 +28,7 @@ public sealed class BloodRegenerationTest : InteractionTest
         """;
 
     [Test]
-    public async Task NaturalRegenerationRestoresSmallDeficitWithoutNutritionCost()
+    public async Task NaturalRegenerationRestoresSmallDeficitWithNutritionCost()
     {
         await AddAtmosphere();
 
@@ -46,6 +46,9 @@ public sealed class BloodRegenerationTest : InteractionTest
             "Could not remove blood before testing regeneration");
         Assert.That(bloodstreamSystem.GetBloodLevel((SPlayer, bloodstream)), Is.LessThan(1f));
 
+        var hungerBefore = hungerSystem.GetHunger(hunger);
+        var thirstBefore = thirst.CurrentThirst;
+
         var secondsUntilUpdate = Math.Max(
             TickPeriod,
             (float) (bloodstream.NextUpdate - STiming.CurTime).TotalSeconds + TickPeriod);
@@ -53,9 +56,43 @@ public sealed class BloodRegenerationTest : InteractionTest
 
         Assert.Multiple(() =>
         {
+            // Blood should be restored to full
             Assert.That(bloodstreamSystem.GetBloodLevel((SPlayer, bloodstream)), Is.EqualTo(1f).Within(0.001f));
-            Assert.That(hungerSystem.GetHunger(hunger), Is.EqualTo(InitialHunger).Within(0.001f));
-            Assert.That(thirst.CurrentThirst, Is.EqualTo(InitialThirst).Within(0.001f));
+            // Hunger should have decreased (cost of blood regeneration)
+            Assert.That(hungerSystem.GetHunger(hunger), Is.LessThan(hungerBefore));
+            // Thirst should have decreased (cost of blood regeneration)
+            Assert.That(thirst.CurrentThirst, Is.LessThan(thirstBefore));
+        });
+    }
+
+    [Test]
+    public async Task NoRegenerationWhenFullySaturated()
+    {
+        await AddAtmosphere();
+
+        var bloodstream = Comp<BloodstreamComponent>(Player);
+        var hunger = Comp<HungerComponent>(Player);
+        var thirst = Comp<ThirstComponent>(Player);
+        var bloodstreamSystem = SEntMan.System<BloodstreamSystem>();
+        var hungerSystem = SEntMan.System<HungerSystem>();
+
+        // Blood is already full at spawn
+        var hungerBefore = hungerSystem.GetHunger(hunger);
+        var thirstBefore = thirst.CurrentThirst;
+
+        var secondsUntilUpdate = Math.Max(
+            TickPeriod,
+            (float) (bloodstream.NextUpdate - STiming.CurTime).TotalSeconds + TickPeriod);
+        await RunSeconds(secondsUntilUpdate);
+
+        Assert.Multiple(() =>
+        {
+            // Blood should remain full
+            Assert.That(bloodstreamSystem.GetBloodLevel((SPlayer, bloodstream)), Is.EqualTo(1f).Within(0.001f));
+            // Hunger should NOT have decreased (no regeneration needed, no cost)
+            Assert.That(hungerSystem.GetHunger(hunger), Is.EqualTo(hungerBefore).Within(0.001f));
+            // Thirst should NOT have decreased
+            Assert.That(thirst.CurrentThirst, Is.EqualTo(thirstBefore).Within(0.001f));
         });
     }
 }

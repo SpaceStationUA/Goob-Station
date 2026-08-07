@@ -7,6 +7,23 @@
   components:
   - type: RattleOnTrigger
     radioChannel: InterdynePrivat
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: K9IDCardImplant
+  categories: [HideSpawnMenu]
+  name: ID-імплант K9
+  description: Підшкірний імплант із попередньо завантаженою ID-карткою.
+  components:
+  - type: SubdermalImplant
+    whitelist:
+      tags:
+      - K9
+  - type: ContainerContainer
+    containers:
+      subdermalIdCard: !type:Container { }
+  - type: SubdermalIdCard
+    idCardProto: K9OfficerIDCard
     
 - type: entity
   parent: BaseSubdermalImplant

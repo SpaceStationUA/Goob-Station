@@ -11,6 +11,7 @@ namespace Content.Server.Silicons.StationAi;
 public sealed partial class StationAiFixerConsoleSystem : SharedStationAiFixerConsoleSystem
 {
     [Dependency] private readonly EuiManager _eui = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!; // Pirate
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -29,7 +30,7 @@ public sealed partial class StationAiFixerConsoleSystem : SharedStationAiFixerCo
                         mind.IsVisitingEntity &&
                         _player.TryGetSessionById(mind.UserId, out var session))
                     {
-                        _eui.OpenEui(new ReturnToBodyEui(mind, _mind, _player), session);
+                        _eui.OpenEui(new ReturnToBodyEui(mind, _ghostSystem, _player), session);
                         _popup.PopupEntity(Loc.GetString("station-ai-fixer-console-repair-finished"), ent);
                     }
                     else

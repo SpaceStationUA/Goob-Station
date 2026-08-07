@@ -27,14 +27,15 @@
 # Security - Служба Безпеки
 - type: jobIcon
   parent: JobIcon
-  id: JobIconSecurityInstructor
-  icon:
-    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
-    state: SecurityInstructor
-
-- type: jobIcon
-  parent: JobIcon
   id: JobIconSecurityPilot
   icon:
     sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
     state: SecurityPilot
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSecurityK9Officer
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SecurityK9Officer
+  jobName: role-name-k9-officer

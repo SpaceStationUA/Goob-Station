@@ -1,0 +1,525 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformHitmanSuit
+  name: contract killer suit
+  description: The perfect outfit for blending in at any event, office, or space station.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/hitmansuit.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/hitmansuit.rsi
+
+- type: entity
+  parent: ClothingHeadsetGrey
+  id: ClothingHeadsetGreyHitman
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyTraffic
+      - EncryptionKeyFreelance
+
+- type: entity
+  parent: AgentIDCard
+  id: HitmanIDCard
+  components:
+  - type: Access
+    tags:
+    - External
+    - Maintenance
+
+- type: entity
+  parent: PassengerPDA
+  id: HitmanPDA
+  components:
+  - type: Pda
+    id: HitmanIDCard
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineHitman
+  suffix: Hitman
+  components:
+  - type: FaxMachine
+    name: "Unknown?"
+    responsePings: false
+
+- type: entity
+  categories: [HideSpawnMenu, Spawner]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostHitman
+  components:
+  - type: GhostRole
+    name: ghost-role-information-hitman-name
+    description: ghost-role-information-hitman-description
+    rules: ghost-role-information-hitman-rules
+    mindRoles:
+    - MindRoleHitman
+
+- type: entity
+  parent: LockerBaseSecure
+  id: ClosetHitmanOutfitFilledRandom
+  suffix: Hitman
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: HitmanOutfitLockerLoot
+
+- type: entityTable
+  id: HitmanOutfitLockerLoot
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector
+      children:
+      # Pirate: DeltaV's clerk outfit is unavailable; use the local lawyer equivalent.
+      - !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitLawyerBlack
+        - id: ClothingUniformJumpskirtLawyerBlack
+        - id: ClothingNeckTieRed
+        - id: ClothingNeckLawyerbadge
+        - id: ClothingShoesBootsLaceup
+        - id: ClothingBackpackSatchel
+        - id: LawyerPDA
+      - !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitClown
+        - id: ClothingUniformJumpskirtClown
+        - id: ClothingShoesClown
+        - id: ClothingBackpackSatchelClown
+        - id: ClownPDA
+      - !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitEngineering
+        - id: ClothingUniformJumpskirtEngineering
+        - id: ClothingShoesBootsWork
+        - id: ClothingBackpackSatchelEngineering
+        - id: EngineerPDA
+      - !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitCargo
+        - id: ClothingUniformJumpskirtCargo
+        - id: ClothingShoesColorBrown
+        - id: ClothingBackpackSatchelCargo
+        - id: CargoPDA
+      - !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitScientist
+        - id: ClothingUniformJumpskirtScientist
+        - id: ClothingShoesColorWhite
+        - id: ClothingBackpackSatchelScience
+        - id: SciencePDA
+      - !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitMedicalDoctor
+        - id: ClothingUniformJumpskirtMedicalDoctor
+        - id: ClothingShoesColorWhite
+        - id: ClothingBackpackSatchelMedical
+        - id: MedicalPDA
+      - !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitColorGrey
+        - id: ClothingUniformJumpskirtColorGrey
+        - id: ClothingShoesColorBlack
+        - id: ClothingBackpackSatchel
+        - id: PassengerPDA
+
+- type: entity
+  name: medium-frequency blade
+  description: An incredibly sharp katana with a heated blade, able to cut through both flesh and steel.
+  parent: Katana
+  id: WeaponMFKatana
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/mfkatana.rsi
+  - type: MeleeWeapon
+    attackRate: 1.25
+    wideAnimationRotation: -60
+    damage:
+      types:
+        Slash: 19
+        Heat: 6
+        Structural: 25
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Melee/mfkatana.rsi
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Melee/mfkatana.rsi
+    slots:
+    - Back
+    - Belt
+    - suitStorage
+  - type: Reflect
+    reflectProb: 0.1
+  - type: DisarmMalus
+    malus: 0.9
+  - type: StaticPrice
+    price: 3000
+
+- type: entity
+  parent: [BaseItem, BaseGunWieldable, BaseSyndicateContraband]
+  id: WeaponLeverActionSKL93
+  name: SKL93
+  description: A modernized variant of the L93, manufactured in limited amounts by Waffle Corp, lightweight materials are used for the furniture. It has an extended barrel and magazine, along side a WZR-4X Scope. Uses .45 Magnum rounds.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/skl93.rsi
+    layers:
+    - state: icon
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: Large
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/skl93.rsi
+    shape:
+    - 0,0,4,1
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/skl93.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: GunRequiresWield
+  - type: Gun
+    fireRate: 3
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/LeverAction/gunshot.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: GunSpreadModifier
+    spread: 0.1
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeMagnum
+    capacity: 10
+    proto: CartridgeMagnum
+    soundInsert:
+      path: /Audio/_Pirate/Weapons/Guns/LeverAction/insert.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 2
+    pvsIncrease: 0.3
+  - type: StaticPrice
+    price: 670
+
+- type: entity
+  parent: WeaponLeverActionSKL93
+  id: WeaponLeverActionSKL93AP
+  suffix: armor-piercing
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumAP
+
+- type: entity
+  parent: BriefcaseSyndie
+  id: BriefcaseSyndieSKL93BundleFilled
+  suffix: Syndicate, Lever Action Bundle
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,6,1
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: WeaponLeverActionSKL93AP
+        - id: MagazineBoxMagnum
+        - id: ClothingHeadHatCowboyBlack
+
+- type: entity
+  parent: [ClothingNeckPonchoSyndicate, BaseSecurityContraband]
+  id: ClothingNeckCWPGorlex
+  name: gorlex cold weather poncho
+  description: A stylish red and black poncho made of heavy, cut-proof weave. Protects the wearer from the harshest weather conditions (and more!)
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Misc/cwpgorlex.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Misc/cwpgorlex.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Cold: 0.80
+        Heat: 0.90
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 0.95
+
+- type: entity
+  parent: BaseMagazinePistolCaselessRifle
+  id: MagazinePistolCaselessRiflePoison
+  name: pistol magazine (.25 caseless toxin)
+  description: 10-round magazine for the Cobra pistol. Intended to hold poisonous ammunition.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRiflePoison
+  - type: Sprite
+    layers:
+    - state: poison
+      sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazinePistolCaselessRifle
+  id: MagazinePistolCaselessRifleTranquilizer
+  name: pistol magazine (.25 caseless tranq)
+  description: 10-round magazine for the Cobra pistol. Intended to hold tranquilizer ammunition.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifleTranquilizer
+  - type: Sprite
+    layers:
+    - state: tranq
+      sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseCartridgeCaselessRifle
+  id: CartridgeCaselessRifleTranquilizer
+  name: cartridge (.25 caseless tranq)
+  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. A reservoir injects a mix of sedative and mute toxin into the target for true silent takedowns.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletCaselessRifleTranquilizer
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+    - state: tip
+      map: ["enum.AmmoVisualLayers.Tip"]
+      color: "#49cece"
+  - type: ChemicalAmmo
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        reagents:
+        - ReagentId: Nocturine
+          Quantity: 2.5
+        - ReagentId: MuteToxin
+          Quantity: 1
+  - type: SolutionTransfer
+    maxTransferAmount: 3.5
+
+- type: entity
+  parent: BaseCartridgeCaselessRifle
+  id: CartridgeCaselessRiflePoison
+  name: cartridge (.25 caseless toxin)
+  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. A toxic payload is installed to kill the target over time.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletCaselessRiflePoison
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+    - state: tip
+      map: ["enum.AmmoVisualLayers.Tip"]
+      color: "#5f959c"
+  - type: ChemicalAmmo
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        reagents:
+        - ReagentId: Lexorin
+          Quantity: 1.5
+  - type: SolutionTransfer
+    maxTransferAmount: 1.5
+
+- type: entity
+  id: BulletCaselessRifleTranquilizer
+  name: bullet (.25 caseless tranq)
+  parent: BaseBullet
+  categories: [HideSpawnMenu]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 5
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 3.5
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
+  - type: SolutionInjectOnProjectileHit
+    transferAmount: 3.5
+    blockSlots: NONE
+    solution: ammo
+  - type: InjectableSolution
+    solution: ammo
+
+- type: entity
+  id: BulletCaselessRiflePoison
+  name: bullet (.25 caseless toxin)
+  parent: BaseBullet
+  categories: [HideSpawnMenu]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 10
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 2.5
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
+  - type: SolutionInjectOnProjectileHit
+    transferAmount: 2.5
+    blockSlots: NONE
+    solution: ammo
+  - type: InjectableSolution
+    solution: ammo
+
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskOniBlue
+  name: blue oni mask
+  description: A mask depicting a ferocious creature from Japanese myth.
+  components:
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: Sprite
+    sprite: _Pirate/Clothing/Mask/mask_oni_blue.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Mask/mask_oni_blue.rsi
+
+- type: entity
+  parent: Emag
+  id: Doorjack
+  name: airlock access override
+  description: A specialized cryptographic sequencer with a distinctive battery tray, specifically designed to override station airlock access codes.
+  components:
+  - type: Emag
+    emagType: Access
+    emagImmuneTag: AccessBreakerImmune
+    # Pirate: local Emag has no inherited blacklist to clear.
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/doorjack.rsi
+  - type: Item
+    sprite: _Pirate/Objects/Tools/doorjack.rsi
+
+- type: entity
+  parent: RemoteSignaller
+  id: DeadMansSignaler
+  name: dead man's signaler
+  description: A device that if armed will send signals to objects within 50 meters when dropped or put away.
+  components:
+  - type: DeadMansSignaller
+  - type: ItemToggle
+  - type: Sprite
+    drawdepth: Items
+    sprite: _Pirate/Objects/Devices/deadmanssignaller.rsi
+    layers:
+    - state: inactive
+      map: ["enum.ToggleableVisuals.Layer"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {state: active}
+          False: {state: inactive}
+  - type: WirelessNetworkConnection
+    range: 50
+
+- type: entity
+  id: SpyCrewMonitor
+  name: spy monitor
+  description: A spy device capable of connecting to crew monitoring servers.
+  parent: HandheldCrewMonitor
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/spy_device.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/spy_device.rsi
+  - type: PowerCellDraw
+    useCharge: 10
+  - type: StaticPrice
+    price: 750
+  - type: Tag
+    tags: []
+  # Pirate: CrewMonitoringConsole.alertsEnabled is unavailable locally.
+
+- type: entity
+  parent: Multitool
+  id: MultitoolAiDetector
+  suffix: AI Detector
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: green-unlit
+      shader: unshaded
+      map: ["enum.AiDetectorVisuals.Layer"]
+  - type: Physics
+    canCollide: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      yellow:
+        shape: !type:PhysShapeCircle
+          radius: 12
+        density: 0
+        hard: false
+        mask:
+        - GhostImpassable
+      red:
+        shape: !type:PhysShapeCircle
+          radius: 5
+        density: 0
+        hard: false
+        mask:
+        - GhostImpassable
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AiDetectorVisuals.Light:
+        enum.AiDetectorVisuals.Layer:
+          none: {state: green-unlit}
+          yellow: {state: yellow-unlit}
+          red: {state: red-unlit}
+  - type: AiDetector
+    ranges:
+    - state: red
+      range: 5
+    - state: yellow
+      range: 12
+
+# Pirate: CharacterRecordConsole is unavailable; retain the portable station-map function.
+- type: entity
+  parent: HandheldStationMapStatic
+  id: HandheldStationMapRecordsTablet
+  name: station map
+  description: Displays a readout of the current station.
+  suffix: Hitman

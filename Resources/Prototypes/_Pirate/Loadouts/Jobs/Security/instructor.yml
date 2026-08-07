@@ -1,0 +1,33 @@
+# Уніформа
+- type: loadout
+  id: InstructorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformInstructorUniform
+
+- type: loadout
+  id: InstructorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformInstructorSkirt
+
+# Головний убір 
+- type: loadout
+  id: InstructorBeret
+  equipment:
+    head: ClothingHeadHatBeretInstructor
+
+- type: loadout
+  id: InstructorHat
+  equipment:
+    head: ClothingHeadHatCapInstructor
+
+# Шийна прикраса
+- type: loadout
+  id: InstructorCloak
+  equipment:
+    neck: ClothingNeckCloakInstructor
+
+# Ремінь
+- type: loadout
+  id: InstructorBelt
+  equipment:
+    belt: WaistBeltInstructorBeltFilled

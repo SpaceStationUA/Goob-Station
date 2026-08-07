@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- files: ["charge.ogg", "emitter2.ogg"]
+  copyright: "Taken from tgstation"
+  license: "CC-BY-SA-3.0"
+  source: "https://github.com/tgstation/tgstation/pull/87191"

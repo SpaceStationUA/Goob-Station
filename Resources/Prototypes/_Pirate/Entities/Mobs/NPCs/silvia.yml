@@ -100,6 +100,7 @@
       reagents:
       - ReagentId: Omnizine
         Quantity: 1
+  - type: SilviaOmnizine
   - type: ReplacementAccent
     accent: xeno
   - type: PointLight
@@ -130,6 +131,7 @@
       gender: female
   - type: Access # Pirate: Silvia must be able to reach patients throughout medical.
     tags:
+    - ChiefMedicalOfficer
     - Medical
     - Maintenance
   - type: Tag

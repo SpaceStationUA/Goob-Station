@@ -245,7 +245,6 @@ ui-options-function-save-item-location = Зберегти розташуванн
 ui-options-announcer-disable-multiple-sounds = Вимкнути звуки диктора, що накладаються один на одного
 ui-options-announcer-disable-multiple-sounds-tooltip = Деякі оголошення будуть звучати неправильно, це налаштування не рекомендується
 ui-options-hotkey-default-walk = Ходити за замовчуванням
-ui-options-no-filters = Вимкнути расові візуальні фільтри
 ui-options-function-look-up = Подивіться вгору/Цільтеся
 ui-options-function-hold-look-up = Утримуйте клавішу, щоб прицілитися
 ui-options-vp-vertical-fit = Вертикальне кріплення оглядового вікна

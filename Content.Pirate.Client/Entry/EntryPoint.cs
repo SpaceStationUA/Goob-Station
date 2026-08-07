@@ -4,6 +4,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Pirate.Client.Humanoid.HairGradients;
 using Content.Pirate.Client.IoC;
 using Robust.Shared.ContentPack;
 using Robust.Shared.IoC;
@@ -12,6 +13,8 @@ namespace Content.Pirate.Client.Entry;
 
 public sealed class EntryPoint : GameClient
 {
+    [Dependency] private readonly ShaderMarkingManager _shaderMarkingManager = default!;
+
     public override void PreInit()
     {
         base.PreInit();
@@ -28,5 +31,14 @@ public sealed class EntryPoint : GameClient
     public override void PostInit()
     {
         base.PostInit();
+
+        _shaderMarkingManager.Initialize();
+    }
+
+    public override void Shutdown()
+    {
+        _shaderMarkingManager.Shutdown();
+
+        base.Shutdown();
     }
 }

@@ -16,6 +16,12 @@ public abstract partial class SharedStationAiSystem
 
     private void OnLight(EntityUid ent, ItemTogglePointLightComponent component, StationAiLightEvent args)
     {
+        if (args.Cancelled) // Pirate - Cyberdeck
+        {
+            ShowDeviceNotRespondingPopup(args.User);
+            return;
+        }
+
         if (args.Enabled)
             _toggles.TryActivate(ent, user: args.User);
         else

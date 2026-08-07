@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# The standard baton deliberately inherits the local Pirate/Goobstation baton.  The
+# SecLink variant only adds its token price so the global Stunbaton stays unchanged.
+- type: entity
+  name: stun baton
+  parent: Stunbaton
+  id: StunbatonSeclink
+  components:
+  - type: Currency
+    price:
+      BatonToken: 1
+
+- type: entity
+  name: fun baton
+  parent: StunbatonSeclink
+  id: Funbaton
+  description: A powered implement capable of safely entertaining any criminal, just be mindful of the 'on' switch.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/funbaton.rsi
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: StaminaDamageOnHit
+    sound: /Audio/_Pirate/Items/Security/SecLink/funbaton.ogg
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Melee/funbaton.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Currency
+    price:
+      BatonToken: 1
+
+- type: entity
+  name: stun bat
+  parent: StunbatonSeclink
+  id: Stunbat
+  description: A Stun Baton designed with the athletic security officer in mind. Using this unpowered is sure to have a foul called.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/stunbat.rsi
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Melee/stunbat.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Currency
+    price:
+      BatonToken: 1
+
+- type: entity
+  name: stun sabre
+  parent: StunbatonSeclink
+  id: Stunsabre
+  description: A state-of-the-art Stun Baton derived from the signature weapons of underground assassins. Unpowered, it's no better than hitting someone with a stick.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/stunsabre.rsi
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Melee/stunsabre.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Currency
+    price:
+      BatonToken: 1

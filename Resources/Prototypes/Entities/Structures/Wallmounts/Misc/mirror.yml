@@ -8,6 +8,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: ReflectiveSurface # Pirate: Mirror Maid jaunt surface.
   - type: Sprite
     sprite: Structures/Wallmounts/mirror.rsi
     state: mirror

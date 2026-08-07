@@ -209,7 +209,12 @@ namespace Content.Server.Voting.Managers
         {
             var id = _nextVoteId++;
 
-            var entries = options.Options.Select(o => new VoteEntry(o.data, o.text)).ToArray();
+            // Pirate - map vote previews
+            var entries = options.Options.Select(o =>
+            {
+                options.OptionVisuals.TryGetValue(o.data, out var visual);
+                return new VoteEntry(o.data, o.text, visual);
+            }).ToArray();
 
             var start = _timing.RealTime;
             var end = start + options.Duration;
@@ -289,11 +294,12 @@ namespace Content.Server.Voting.Managers
                 msg.DisplayVotes = true;
             }
 
-            msg.Options = new (ushort votes, string name)[v.Entries.Length];
+            // Pirate - map vote previews
+            msg.Options = new (ushort votes, string name, string? icon, EntProtoId? preview)[v.Entries.Length];
             for (var i = 0; i < msg.Options.Length; i++)
             {
                 ref var entry = ref v.Entries[i];
-                msg.Options[i] = (msg.DisplayVotes ? (ushort) entry.Votes : (ushort) 0, entry.Text);
+                msg.Options[i] = (msg.DisplayVotes ? (ushort) entry.Votes : (ushort) 0, entry.Text, entry.Icon, entry.Preview);
             }
 
             player.Channel.SendMessage(msg);
@@ -544,12 +550,17 @@ namespace Content.Server.Voting.Managers
         {
             public object Data;
             public string Text;
+            // Pirate - map vote previews
+            public string? Icon;
+            public EntProtoId? Preview;
             public int Votes;
 
-            public VoteEntry(object data, string text)
+            public VoteEntry(object data, string text, VoteOptionVisuals visual)
             {
                 Data = data;
                 Text = text;
+                Icon = visual.Icon;
+                Preview = visual.Preview;
                 Votes = 0;
             }
         }

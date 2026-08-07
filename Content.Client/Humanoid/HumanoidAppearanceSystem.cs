@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Humanoid;
 
-public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
+public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem // Pirate - hair gradient extension
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
@@ -306,13 +306,12 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     private void ClearAllMarkings(Entity<HumanoidAppearanceComponent, SpriteComponent> entity)
     {
         var humanoid = entity.Comp1;
-        var sprite = entity.Comp2;
 
         foreach (var markingList in humanoid.ClientOldMarkings.Markings.Values)
         {
             foreach (var marking in markingList)
             {
-                RemoveMarking(marking, (entity, sprite));
+                RemoveMarking(marking, entity); // Pirate - gradient cleanup needs humanoid data
             }
         }
 
@@ -322,17 +321,20 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         {
             foreach (var marking in markingList)
             {
-                RemoveMarking(marking, (entity, sprite));
+                RemoveMarking(marking, entity); // Pirate - gradient cleanup needs humanoid data
             }
         }
     }
 
-    private void RemoveMarking(Marking marking, Entity<SpriteComponent> spriteEnt)
+    private void RemoveMarking(Marking marking, Entity<HumanoidAppearanceComponent, SpriteComponent> entity)
     {
         if (!_markingManager.TryGetMarking(marking, out var prototype))
         {
             return;
         }
+
+        TryRemoveParentShader(prototype, entity); // Pirate - hair gradients
+        Entity<SpriteComponent> spriteEnt = (entity, entity.Comp2);
 
         foreach (var sprite in prototype.Sprites)
         {
@@ -432,6 +434,10 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         visible &= humanoid.BaseLayers.TryGetValue(markingPrototype.BodyPart, out var setting)
            && setting.AllowsMarkings;
 
+        var hasParentShader = markingPrototype.BodyPart is HumanoidVisualLayers.Hair or HumanoidVisualLayers.FacialHair &&
+                              HasParentShaderMarking(markingPrototype.BodyPart, humanoid.MarkingSet); // Pirate - hair gradients
+        TryApplyParentShader(markingPrototype, targetLayer, entity); // Pirate - hair gradients
+
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
             var markingSprite = markingPrototype.Sprites[j];
@@ -498,7 +504,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             {
                 sprite.LayerSetShader(layerId, info.Shader);
             }
-            else
+            else if (!hasParentShader) // Pirate - retain hair gradient
             {
                 if (_sprite.LayerMapTryGet((entity.Owner, sprite), layerId, out var shaderLayerIndex, false)) // Pirate - Floof Station layering
                     sprite.LayerSetShader(shaderLayerIndex, null, null); // Pirate - Floof Station layering
@@ -553,6 +559,9 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         ref bool dirty)
     {
         base.SetLayerVisibility(ent, layer, visible, slot, ref dirty);
+
+        // Pirate: keep visuals hidden until every equipped source releases the layer.
+        visible &= !IsHidden(ent.Comp, layer);
 
         var sprite = Comp<SpriteComponent>(ent);
         if (!_sprite.LayerMapTryGet((ent.Owner, sprite), layer, out var index, false))

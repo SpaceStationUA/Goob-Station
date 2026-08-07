@@ -28,6 +28,12 @@ public sealed partial class GhoulComponent : Component
     [DataField]
     public bool GiveBlade;
 
+    /// <summary>
+    ///     Whether ghoulification should replace humanoid colors with the default grey appearance.
+    /// </summary>
+    [DataField]
+    public bool ChangeAppearance = true; // Pirate: Shattered must preserve its glass appearance.
+
     [DataField]
     public LocId? ExamineMessage = "examine-system-cant-see-entity";
 

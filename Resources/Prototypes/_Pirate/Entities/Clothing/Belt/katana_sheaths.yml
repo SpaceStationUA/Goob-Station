@@ -57,9 +57,6 @@
         whitelist:
           tags:
           - KatanaSheathable
-  - type: Construction
-    graph: ClothingBeltKatanaSheath
-    node: sheath
 
 - type: entity
   parent: ClothingBeltKatanaSheath
@@ -91,9 +88,6 @@
         whitelist:
           tags:
           - KatanaSheathable
-  - type: Construction
-    graph: ClothingBeltDarkKatanaSheath
-    node: sheath
 
 - type: entity
   parent: ClothingBeltDarkKatanaSheath

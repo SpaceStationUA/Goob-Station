@@ -18,6 +18,9 @@ heretic-ability-fail-tile-occupied = Цільова плитка зайнята!
 heretic-ability-fail-rust-stage-low = Ви недостатньо могутні, щоб покрити іржею цю поверхню!
 heretic-ability-fail-target-ghoul = Ціль вже є упирем!
 heretic-ability-fail-target-no-mind = Ціль не має душі!
+heretic-ability-fail-mirror-jaunt-no-mirrors = Поруч немає дзеркальних поверхонь!
+heretic-ability-fail-other-minds-nearby = Поруч є інші живі розумні істоти!
+heretic-ability-lose-focus-last-refuge = Без концентрації ваш притулок слабшає та розсіюється!
 heretic-magicitem-examine = [color=yellow]Дозволяє використовувати просунуті закляття, коли тримаєте або екіпіровані.[/color]
 mansus-grasp-trigger-fail = Щось заважає вам це активувати!
 
@@ -32,6 +35,13 @@ heretic-cant-shoot = Я не можу використовувати {THE($entit
 heretic-rust-mark-itembreak = {$name} розсипається на пил!
 heretic-blade-void-examine = [color=cyan]Поки в великому радіусі є хоча б один позначений язичник, телепортуйтеся йому за спину, не ламаючи лезо.[/color]
 mansus-infused-item-examine = [color=purple]Сама присутність цього предмета викликає у вас тремтіння. Чи варто його піднімати?[/color]
+heretic-lock-unlocked = Відімкнено!
+heretic-last-refuge-examine-message = [color=purple]{CAPITALIZE(SUBJECT($target))} оповитий нечестивим серпанком![/color]
+
+heretic-ability-mirror-jaunt = Хода Дзеркалами
+heretic-ability-mirror-jaunt-desc = Дозволяє невидимо й вільно пересуватися царством дзеркал. Увійти до нього або вийти можна лише біля дзеркальних предметів і поверхонь, як-от вікна чи дзеркала.
+heretic-ability-shapeshift = Перевтілення
+heretic-ability-shapeshift-desc = Набудьте форми іншої істоти та отримайте її здібності.
 
 ## посилання на мансус
 heretic-manselink-fail-exists = Ця істота вже під'єднана!
@@ -84,6 +94,7 @@ heretic-speech-star-touch = З'Р'Н' 'Н'РГ'Я!!
 heretic-speech-star-blast = ГН'ВН' З'Р'!!
 heretic-speech-cosmic-expansion = К'СМ'С Р'ЗШ'Р'С'!
 heretic-speech-stargaze = Ф'РМ'Й Б'Т'Г
+heretic-speech-bulglar-finesse = Й'О'К!
 heretic-speech-shapeshft = ЗМ'ІН'Ю
 heretic-blade-break-fail-acended-message = Ви не можете ламати леза після вознесіння!
 heretic-speech-void-prison = ТЮР'МА П'СТКТ!

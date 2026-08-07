@@ -15,4 +15,7 @@ ghost-role-information-silvia-rules = Складіть компанію меди
 role-name-silvia = Сільвія
 role-description-silvia = Ш-ш-ш!
 
+alerts-silvia-omnizine-name = Омнізин
+alerts-silvia-omnizine-desc = Кількість омнізину, доступного для укусу Сільвії.
+
 steal-target-groups-silvia = Сільвія

@@ -121,6 +121,9 @@
           sprite: Mobs/Customization/masking_helpers.rsi
           state: female_full
           visible: false
+        # Pirate: underwear customization.
+        - map: ["enum.HumanoidVisualLayers.UndergarmentBottom"]
+        - map: ["enum.HumanoidVisualLayers.UndergarmentTop"]
         - map: ["enum.HumanoidVisualLayers.LFoot"]
         - map: ["enum.HumanoidVisualLayers.RFoot"]
         - map: ["socks"]
@@ -365,3 +368,7 @@
     - type: CombatMode
       canDisarm: true
     - type: ExaminableCharacter # WWDP
+    - type: CyberdeckSiliconTarget # Pirate - Cyberdeck
+      penaltyTime: 0
+    - type: CyberdeckHackable # Pirate - Cyberdeck
+      delay: 8

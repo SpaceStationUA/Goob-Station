@@ -3,6 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Server._Pirate.Access.Systems; // Pirate: subdermal ID cards
 using Content.Server.Administration.Components;
 using Content.Server.Atmos.Components;
 using Content.Server.Cargo.Components;
@@ -67,6 +68,8 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly SharedPassportSystem _passportSystem = default!;
     [Dependency] private readonly SharedJobSystem _jobSystem = default!;
     // Pirate end
+
+    [Dependency] private readonly SubdermalIdCardSystem _subdermalId = default!; // Pirate
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -838,6 +841,7 @@ public sealed partial class AdminVerbSystem
                 yield return ent;
             }
         }
+
     }
 
     private EntityUid? FindActiveId(EntityUid target)
@@ -864,6 +868,10 @@ public sealed partial class AdminVerbSystem
                 }
             }
         }
+
+        // Pirate: include an implanted ID card in admin ID-card operations.
+        if (_subdermalId.TryGetIdCard(target, out var idEntity))
+            return idEntity;
 
         return null;
     }

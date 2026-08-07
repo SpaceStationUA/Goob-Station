@@ -586,6 +586,14 @@
   ritualPrototypes:
   - CarvingKnife
 
+# Pirate: Shattered side ritual from the Trauma Lock path.
+- type: hereticKnowledge
+  id: ShatteredRitual
+  sideKnowledge: true
+  stage: 6
+  ritualPrototypes:
+  - ShatteredRitual
+
 - type: hereticKnowledge
   id: MysteriesOfCreation
   sideKnowledge: true

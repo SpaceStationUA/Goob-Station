@@ -1,0 +1,81 @@
+- type: entity
+  id: HitmanCase
+  name: hitman case
+  description: A case containing the tools of the trade of a hitman.
+  parent: ToolboxThief
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/hitman-case.rsi
+    state: icon
+  - type: SetSelector
+    maxSelectedSets: 2
+    possibleSets:
+    - HitmanSharpshooterKit
+    - HitmanBountyHunterKit
+    - HitmanAssassinKit
+    - HitmanNinjaKit
+    - HitmanPoisonerKit
+    - HitmanSaboteurKit
+    - HitmanTrackerKit
+
+- type: entity
+  id: HitmanBusinessCard
+  name: hitman business card
+  description: A black card with a crosshair. There's something on the back.
+  parent: [Paper, BaseMajorContraband]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/hitman_card.rsi
+    layers:
+    - state: hitman_card
+    - state: hitman_card
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      sprite: Objects/Misc/bureaucracy.rsi
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/_Pirate/Interface/Paper/paper_heading_hitman_logo.png"
+    headerMargin: 0.0, 0.0, 0.0, 2.0
+    backgroundImagePath: "/Textures/_Pirate/Interface/Paper/paper_background_hitman.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 4.0, 4.0, 4.0, 4.0
+    maxWritableArea: 400.0, 256.0
+  - type: Paper
+    content: paper-hitman-business-card
+
+- type: entity
+  parent: BaseImplantAction
+  id: ActionCreateHitmanCard
+  name: Create hitman card
+  description: creates a calling card you can write on
+  components:
+  - type: Action
+    checkCanInteract: false
+    useDelay: 120
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: _Pirate/Objects/Misc/hitman_card.rsi
+      state: hitman_card
+
+- type: entity
+  id: HitmanCardImplanter
+  name: hitman card implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: HitmanCardImplant
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: HitmanCardImplant
+  name: hitman card implant
+  description: This implant lets the user make a calling card at will
+  categories: [HideSpawnMenu]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionCreateHitmanCard
+  - type: TriggerOnActivateImplant
+  - type: CreateHitmanCardOnTrigger

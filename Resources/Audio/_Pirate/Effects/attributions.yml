@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 - files: ["thermite_burning.ogg"]
   license: "CC-BY-NC-4.0"
   copyright: "Taken from bzakirasantjago via freesound.org"
@@ -34,3 +38,17 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from NovaSector, added by Manatee."
   source: "https://github.com/NovaSector/NovaSector/blob/ab979ae8f8e0c65bdce45f368837148d064da32f/modular_nova/modules/emotes/sound/voice/blink.ogg"
+
+- files:
+  - falling.ogg
+  - replicator_ask.ogg
+  - replicator_speak.ogg
+  - replicator_exclaim.ogg
+  license: "Custom"
+  copyright: "Made by Widgetbeck"
+  source: "https://github.com/impstation/imp-station-14/pull/2490"
+
+- files: ["breakingbones.ogg"]
+  license: "CC0-1.0"
+  copyright: "Freesound user Sheyvan"
+  source: "https://freesound.org/people/Sheyvan/sounds/523250/"

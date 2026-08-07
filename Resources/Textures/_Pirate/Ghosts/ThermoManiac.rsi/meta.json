@@ -1,0 +1,14 @@
+{
+    "version": 1,
+      "license": "CC-BY-SA-3.0",
+      "copyright": "Taken from Internet",
+    "size": {
+      "x": 100,
+      "y": 137
+    },
+    "states": [
+        {
+          "name": "animated"
+        }
+      ]
+  }

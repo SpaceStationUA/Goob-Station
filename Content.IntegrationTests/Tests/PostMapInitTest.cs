@@ -130,7 +130,7 @@ namespace Content.IntegrationTests.Tests
             "Exo",          // okay fine fuck it.
             "Fland",
             "FlandHighPop",
-            "GateTP",         // Pirate
+            // "GateTP",         // Pirate - re-add after the rework
             "GlacierTP",      // Pirate
             "Kettle",
             "KettleTP",       // Pirate
@@ -198,7 +198,7 @@ namespace Content.IntegrationTests.Tests
               "GlacierTP", // Pirate
               "OmegaTP", // Pirate
               "KettleTP", // Pirate
-              "GateTP", // Pirate
+            //"GateTP", // Pirate - re-add after the rework
               "PerditionTP", // Pirate
               "PiramideTP", // Pirate
               "Packed",

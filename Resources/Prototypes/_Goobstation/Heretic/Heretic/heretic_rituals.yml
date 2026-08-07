@@ -363,6 +363,7 @@
       Blade: ClothingOuterArmorHereticBlade
       Cosmos: ClothingOuterArmorHereticCosmos
       Rust: ClothingOuterArmorHeretic
+      Lock: ClothingOuterArmorHereticLock # Pirate: Lock path armor.
 
 - type: hereticRitual
   id: PriestRitual
@@ -451,3 +452,15 @@
     Knife: 1
   output:
     CarvingKnife: 1
+
+# Pirate: Shattered side ritual from the Trauma Lock path.
+- type: hereticRitual
+  id: ShatteredRitual
+  locName: heretic-ritual-side-ghoul
+  locDesc: knowledge-path-side-s6-shattered-ritual-desc
+  icon:
+    sprite: _Goobstation/Heretic/abilities_heretic.rsi
+    state: ghoul_shattered
+  limit: 1
+  customBehaviors:
+  - !type:RitualShatteredBehavior

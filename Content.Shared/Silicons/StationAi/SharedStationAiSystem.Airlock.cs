@@ -3,6 +3,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
+using Content.Pirate.Common.Cyberdeck.Components; // Pirate - Cyberdeck access bypass
 using Robust.Shared.Serialization;
 using Content.Shared.Electrocution;
 
@@ -25,7 +26,7 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnAirlockBolt(EntityUid ent, DoorBoltComponent component, StationAiBoltEvent args)
     {
-        if (component.BoltWireCut || !PowerReceiver.IsPowered(ent))
+        if (args.Cancelled || component.BoltWireCut || !PowerReceiver.IsPowered(ent)) // Pirate - Cyberdeck
         {
             ShowDeviceNotRespondingPopup(args.User);
             _adminLogger.Add(LogType.Action,
@@ -33,7 +34,7 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
-        if (!_access.IsAllowed(args.User, ent))
+        if (!_access.IsAllowed(args.User, ent) && !HasCyberdeckAccess(args.User, ent)) // Pirate - Cyberdeck actions spend a charge before this check
         {
             ShowDeviceNoAccessPopup(args.User);
             _adminLogger.Add(LogType.Action,
@@ -59,7 +60,7 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnAirlockEmergencyAccess(EntityUid ent, AirlockComponent component, StationAiEmergencyAccessEvent args)
     {
-        if (!PowerReceiver.IsPowered(ent))
+        if (args.Cancelled || !PowerReceiver.IsPowered(ent)) // Pirate - Cyberdeck
         {
             ShowDeviceNotRespondingPopup(args.User);
             _adminLogger.Add(LogType.Action,
@@ -67,7 +68,7 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
-        if (!_access.IsAllowed(args.User, ent))
+        if (!_access.IsAllowed(args.User, ent) && !HasCyberdeckAccess(args.User, ent)) // Pirate - Cyberdeck actions spend a charge before this check
         {
             ShowDeviceNoAccessPopup(args.User);
             _adminLogger.Add(LogType.Action,
@@ -84,7 +85,7 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnElectrified(EntityUid ent, ElectrifiedComponent component, StationAiElectrifiedEvent args)
     {
-        if (component.IsWireCut || !PowerReceiver.IsPowered(ent))
+        if (args.Cancelled || component.IsWireCut || !PowerReceiver.IsPowered(ent)) // Pirate - Cyberdeck
         {
             ShowDeviceNotRespondingPopup(args.User);
             _adminLogger.Add(LogType.Action,
@@ -92,7 +93,7 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
-        if (!_access.IsAllowed(args.User, ent))
+        if (!_access.IsAllowed(args.User, ent) && !HasCyberdeckAccess(args.User, ent)) // Pirate - Cyberdeck actions spend a charge before this check
         {
             ShowDeviceNoAccessPopup(args.User);
             _adminLogger.Add(LogType.Action,
@@ -106,6 +107,13 @@ public abstract partial class SharedStationAiSystem
             ? component.AirlockElectrifyEnabled
             : component.AirlockElectrifyDisabled;
         _audio.PlayLocal(soundToPlay, ent, args.User);
+    }
+
+    private bool HasCyberdeckAccess(EntityUid user, EntityUid target)
+    {
+        return TryComp(user, out CyberdeckUserComponent? cyberdeck)
+               && cyberdeck.InProjection
+               && HasComp<CyberdeckHackableComponent>(target);
     }
 }
 

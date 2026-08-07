@@ -1,0 +1,169 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: SimpleMobBase
+  abstract: true
+  id: MobSecDogBase
+  name: security dog
+  description: Funnily enough, this pig is actually a dog.
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-secdog-name
+    description: ghost-role-information-secdog-description
+    job: RoleK9Officer
+  - type: GhostTakeoverAvailable
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5.0
+  - type: Sprinter
+  - type: ScentTracker
+  - type: NpcFactionMember
+    factions:
+    - PetsNT
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Pirate/Mobs/Pets/secdog.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: base
+    - map: ["outerClothing"]
+    - map: ["eyes"]
+    - map: ["mask"]
+    - map: ["head"]
+    - map: ["enum.DamageStateVisualLayers.Tail"]
+      state: tail_animated
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: base
+        Tail: tail_animated
+      Critical:
+        Base: base
+        Tail: tail_static
+      Dead:
+        Base: base
+        Tail: tail_static
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: Physics
+  - type: Speech
+    allowedEmotes: ["Bark", "Snarl", "Whine", "Awoo"] # Pirate: Howl is disabled in the local emote prototypes.
+    speechVerb: Canine
+    speechSounds: Vulpkanin
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      200: Dead
+  - type: StaminaDamageOnHit
+    damage: 22
+  - type: MeleeWeapon
+    hidden: true
+    altDisarm: false
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    attackRate: 1
+    damage:
+      types:
+        Slash: 10
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      40: 0.70
+      80: 0.30
+  - type: Appearance
+  - type: Inventory
+    speciesId: secdog
+    templateId: secdog
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 2
+  - type: ReplacementAccent
+    accent: dog
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-dog
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/_DV/Voice/Vulpkanin/dog_bark2.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 150
+  - type: Puller
+    needsHands: false
+  - type: MobPrice
+    price: 400
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - VimPilot
+    - K9
+  - type: MindOnlyAccess
+  - type: Access
+    tags:
+    - Security
+    - Maintenance
+  - type: AutoImplant
+    implants:
+    - TrackingImplant
+    - K9IDCardImplant
+  - type: Vocal
+    sounds:
+      Unsexed: MobDog
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
+  - type: Grappler
+    handDisabling: None
+    cooldown: 15
+    grapplingPart: grapple-part-jaws
+    proneOnGrapple: true
+    grappleSound:
+      collection: VulpkaninGrowls
+    activationMode:
+      !type:GrapplerActivationStaminaDrain
+        staminaDrainRate: 5
+        movementSpeedModifier: 0.2
+        initialKnockdownTime: 1.5
+        initialDamage:
+          types:
+            Slash: 5
+            Piercing: 10
+          woundSeverityMultipliers:
+            Slash: 2
+            Piercing: 2
+
+- type: entity
+  parent: MobSecDogBase
+  id: MobSecDog
+  components:
+  - type: RandomMetadata
+    nameSegments: [NamesSecDogs]

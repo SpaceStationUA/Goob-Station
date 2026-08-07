@@ -1,0 +1,37 @@
+- type: entity
+  parent: FloorWaterEntity
+  id: FloorWaterEntityPool
+  name: pool water
+  description: You do NOT want to drink this.
+  components:
+  - type: Sprite
+    sprite: _DEN/Tiles/Planet/water.rsi
+    layers:
+    - state: pool_water
+  - type: FishingSpot
+    fishList: !type:NestedSelector
+      tableId: ToiletFishingLootTable # TODO: Make a unique loot pool for pool water
+  - type: SolutionContainerManager
+    solutions:
+      pool:
+        maxVol: 10000
+        reagents:
+        - ReagentId: Water
+          Quantity: 9900
+        - ReagentId: Chlorine
+          Quantity: 100 # about 1/100 chlorine
+  # Chlorinated pool water is actually supposed to be 1-5 ppm of chlorine, but solution
+  # transfers and metabolism round to the nearest 0.01. A full stomach is about 2 toxin damage.
+  - type: SolutionRegeneration
+    solution: pool
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 99
+      - ReagentId: Chlorine
+        Quantity: 1
+  - type: Edible
+    edible: Drink
+    solution: pool
+    transferAmount: 1
+    destroyOnEmpty: false

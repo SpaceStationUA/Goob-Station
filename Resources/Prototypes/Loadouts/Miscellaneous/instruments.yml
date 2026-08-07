@@ -55,6 +55,42 @@
     - BassGuitarInstrument
 
 - type: loadout
+  id: FretlessBassGuitar
+  storage:
+    back:
+    - FretlessBassGuitarInstrument
+
+- type: loadout
+  id: Rickenbacker
+  storage:
+    back:
+    - Rickenbacker4003Instrument
+
+- type: loadout
+  id: RickenbackerBlack
+  storage:
+    back:
+    - Rickenbacker4003InstrumentBlack
+
+- type: loadout
+  id: RickenbackerRed
+  storage:
+    back:
+    - Rickenbacker4003InstrumentRed
+
+- type: loadout
+  id: RickenbackerPink
+  storage:
+    back:
+    - Rickenbacker4003InstrumentPink
+
+- type: loadout
+  id: RickenbackerSlime
+  storage:
+    back:
+    - Rickenbacker4003InstrumentSlime
+
+- type: loadout
   id: RockGuitar
   storage:
     back:

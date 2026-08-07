@@ -209,3 +209,25 @@
       - ContractorUplink
       - NukeOpsUplink
       - ContravendUplink
+
+- type: listing
+  id: UplinkAutosurgeonCyberdeck
+  name: uplink-autosurgeon-cyberdeck-name
+  description: uplink-autosurgeon-cyberdeck-desc
+  icon:
+    sprite: _EinsteinEngines/Mobs/Species/IPC/organs.rsi
+    state: eyes
+  productEntity: AutosurgeonCyberdeck
+  cost:
+    Telecrystal: 66
+  categories:
+  - UplinkImplants
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle

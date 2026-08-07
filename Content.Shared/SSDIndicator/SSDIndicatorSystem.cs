@@ -4,6 +4,7 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.CCVar;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -19,6 +20,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     private bool _icSsdSleep;
@@ -26,6 +28,12 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
+        // Pirate: SSD state and sleep are server-authoritative.
+        if (!_net.IsServer)
+            return;
+
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<SSDIndicatorComponent, MapInitEvent>(OnMapInit);
@@ -84,7 +92,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (!_icSsdSleep)
+        if (!_net.IsServer || !_icSsdSleep)
             return;
 
         var curTime = _timing.CurTime;

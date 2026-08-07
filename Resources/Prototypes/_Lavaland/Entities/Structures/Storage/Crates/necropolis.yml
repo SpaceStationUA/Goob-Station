@@ -29,7 +29,6 @@
     - id: LavalandCursedHeart
     - id: ClothingOuterArmorCult
     - id: LavalandVampirismCrystal
-    - id: DarkShard # Pirate: katana
     # TODO add more interesting obtain methods for crusher upgrades (from megafauna, ruins, etc.)
     - id: CrusherUpgradeMainRudeBuster
 

@@ -2,6 +2,7 @@
 
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Client.GameObjects; // Pirate
 using Robust.Shared.Map;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -35,8 +36,14 @@ public sealed partial class GunSystem
             var existing = ent.Comp.Entities[^1];
             ent.Comp.Entities.RemoveAt(ent.Comp.Entities.Count - 1);
 
-            Containers.Remove(existing, ent.Comp.Container);
-            EnsureShootable(existing);
+        // Pirate -  wielded in-hand visual start
+            if (Exists(existing) &&
+                TryComp(existing, out TransformComponent? _))
+            {
+                Containers.Remove(existing, ent.Comp.Container);
+                EnsureShootable(existing);
+            }
+        // Pirate -  wielded in-hand visual end
         }
         else if (ent.Comp.UnspawnedCount > 0)
         {

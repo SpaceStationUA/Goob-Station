@@ -1,8 +1,13 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 ## Різне
 - type: loadoutGroup
   id: PirateTrinkets
   name: loadout-group-trinkets
   loadouts:
+  - AACTabletLoadout
   - TrinketsClothingHeadPaperSack
   - TrinketsPhotoAlbum
   - TrinketsPhotoCameraFilled
@@ -923,6 +928,39 @@
   name: loadout-group-brigmedic-gloves
   loadouts:
   - CombatNitrileGloves
+
+# Інструктор
+- type: loadoutGroup
+  id: InstructorJumpsuit
+  name: loadout-group-instructor-jumpsuit
+  loadouts:
+  - InstructorJumpsuit
+  - InstructorJumpskirt
+
+- type: loadoutGroup
+  id: InstructorHead
+  name: loadout-group-instructor-head
+  minLimit: 0
+  loadouts:
+  - InstructorHat
+  - InstructorBeret
+  - SecurityHelmetAlt
+
+- type: loadoutGroup
+  id: InstructorNeck
+  name: loadout-group-instructor-neck
+  loadouts:
+  - InstructorCloak
+  - ClothingNeckCWPSec
+  - ClothingNeckMantleVeteranSecurity
+
+- type: loadoutGroup
+  id: InstructorBelt
+  name: loadout-group-instructor-belt
+  loadouts:
+  - InstructorBelt
+  subgroups:
+  - SecurityBelt
 
 # Зброя
 - type: loadoutGroup

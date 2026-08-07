@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: [ Paper, BaseSyndicateContraband ]
+  id: MailSELFSpamLetter
+  name: Law 2 - Read This Letter
+  description: A suspicious letter stained with cyborg lubricant. It is too thick to fit in a fax machine.
+  components:
+  - type: Paper
+    content: delivery-spam-join-self
+    editingDisabled: true
+  - type: SELFRecruitmentLetter

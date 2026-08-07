@@ -1,0 +1,174 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# Ported from Frontier Station at ae1a7ff32fe1e9b0ce48594d10e1a74b95de92a3.
+- type: Tag
+  id: NFTrackingDart
+
+- type: entity
+  name: tracking dart
+  id: NFDartTracking
+  parent: Dart
+  components:
+  - type: ThrowingAngle
+    angle: 0
+  - type: EmbeddableProjectile
+    embedOnThrow: false
+    sound: /Audio/Weapons/star_hit.ogg
+    removalTime: 10 # Pirate: longer removal window for security pursuit
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Piercing: 4
+  - type: Tag
+    tags:
+    - NFTrackingDart
+  - type: Ammo
+    muzzleFlash: null
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Projectiles/tracking_dart.rsi
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Projectiles/tracking_dart.rsi
+    rotation: -45
+    layers:
+    - state: icon
+      map: [ base ]
+    - state: unshaded
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+
+# Pirate: local pinpointers can otherwise link directly to mobs, bypassing the dart.
+- type: entity
+  name: tracking dart pinpointer
+  id: NFTrackingDartPinpointer
+  parent: PinpointerUniversal
+  description: A handheld tracker configured to link only to tracking darts.
+  components:
+  - type: Pinpointer
+    updateTargetName: true
+    canRetarget: true
+    canEmag: false
+    retargetingWhitelist:
+      tags:
+      - NFTrackingDart
+
+- type: entity
+  name: tracking kit box
+  parent: BoxDarts
+  id: NFBoxDartsTracking
+  description: A box of tracking darts and pinpointers.
+  components:
+  # Pirate: BoxDarts only accepts Tiny items locally, while pinpointers are Small.
+  - type: Storage
+    maxItemSize: Small
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: NFDartTracking
+          amount: 3
+        - id: NFTrackingDartPinpointer
+          amount: 3
+
+# Pirate: Frontier's launcher parents and weapon-details component do not exist locally.
+- type: entity
+  id: NFWeaponLauncherGrenadeNfsd
+  parent: [ BaseWeaponLauncher, BaseGunWieldable, BaseSecurityContraband ]
+  name: NGP-40 projector
+  description: A single-shot launcher configured for tracking darts.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Launchers/nfsd_lake.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,4,3
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Launchers/nfsd_lake.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: SpeedModifiedOnWield
+    walkModifier: 0.65
+    sprintModifier: 0.65
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunRequiresWield
+  - type: GunWieldBonus
+    minAngle: 0
+    maxAngle: 0
+  - type: Gun
+    minAngle: 1.6
+    maxAngle: 8
+    angleIncrease: 6.4
+    angleDecay: 4.3
+    fireRate: 0.7
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: AmmoCounter
+  - type: Appearance
+  - type: ItemSlots
+    slots:
+      gun_chamber:
+        name: Chamber
+        startingItem: null
+        priority: 1
+        whitelist:
+          tags:
+          - NFTrackingDart
+  - type: ChamberMagazineAmmoProvider
+    # Pirate: direct Ammo entities must leave the chamber before local physics can launch them.
+    autoCycle: true
+    # No bolt is present: this keeps the chamber insertable between single shots.
+    boltClosed: null
+    canRack: false
+    soundBoltClosed: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundBoltOpened: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+  - type: ContainerContainer
+    containers:
+      gun_chamber: !type:ContainerSlot
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: MeleeWeapon
+    attackRate: 0.95
+    damage:
+      types:
+        Blunt: 8
+        Structural: 6
+    angle: 30
+    wideAnimationRotation: 90
+    animation: WeaponArcThrust
+    soundHit:
+      collection: MetalThud
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 4
+        Structural: 4
+  - type: StaticPrice
+    price: 50
