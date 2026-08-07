@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using System.Linq;
 using System.Numerics;
 using Content.Client._Pirate.Photo;
 using Content.Client.Stealth;
@@ -30,12 +29,13 @@ public sealed class SharkVisionOverlay : Overlay
     private readonly SharedSolutionContainerSystem _solution;
     private readonly SpriteSystem _sprite;
     private readonly PhotoCaptureFilterSystem _photoCaptureFilter;
+    private readonly EntityLookupSystem _lookup;
 
-    public override bool RequestScreenTexture => true;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private readonly List<SharkVisionRenderEntry> _entries = [];
     private readonly HashSet<EntityUid> _seen = [];
+    private readonly HashSet<Entity<SolutionContainerManagerComponent>> _candidates = [];
 
     public SharkVisionComponent? Comp;
 
@@ -49,6 +49,7 @@ public sealed class SharkVisionOverlay : Overlay
         _solution = _entity.System<SharedSolutionContainerSystem>();
         _sprite = _entity.System<SpriteSystem>();
         _photoCaptureFilter = _entity.System<PhotoCaptureFilterSystem>();
+        _lookup = _entity.System<EntityLookupSystem>();
 
         ZIndex = -1;
     }
@@ -63,7 +64,7 @@ public sealed class SharkVisionOverlay : Overlay
         if (_photoCaptureFilter.IsSuppressedForEye(args.Viewport.Eye, PhotoCaptureSuppressionMask.VisionEffects))
             return;
 
-        if (ScreenTexture is null || Comp is null)
+        if (Comp is null)
             return;
 
         var worldHandle = args.WorldHandle;
@@ -78,7 +79,7 @@ public sealed class SharkVisionOverlay : Overlay
         var mapId = eye.Position.MapId;
         var eyeRot = eye.Rotation;
 
-        GetVisionEntities(Comp.BloodPrototypes, mapId, eyeRot);
+        GetVisionEntities(Comp.BloodPrototypes, mapId, args.WorldAABB, eyeRot);
 
         foreach (var entry in _entries)
         {
@@ -88,15 +89,30 @@ public sealed class SharkVisionOverlay : Overlay
         worldHandle.SetTransform(Matrix3x2.Identity);
     }
 
-    private void GetVisionEntities(ProtoId<ReagentPrototype>[] bloodPrototypes, MapId mapId, Angle eyeRot)
+    private void GetVisionEntities(ProtoId<ReagentPrototype>[] bloodPrototypes,
+        MapId mapId,
+        Box2 worldAabb,
+        Angle eyeRot)
     {
         _entries.Clear();
         _seen.Clear();
-        var entities = _entity.EntityQueryEnumerator<SolutionContainerManagerComponent, SpriteComponent, TransformComponent>();
-        while (entities.MoveNext(out var uid, out var solutionContainer, out var sprite, out var xform))
+        _candidates.Clear();
+
+        // Limit the search to the viewport, including contained entities.
+        _lookup.GetEntitiesIntersecting(mapId, worldAabb, _candidates);
+
+        foreach (var candidate in _candidates)
         {
-            if (!HasExposedBlood((uid, solutionContainer), bloodPrototypes))
+            if (!HasExposedBlood(candidate, bloodPrototypes))
                 continue;
+
+            var uid = candidate.Owner;
+
+            if (!_entity.TryGetComponent<TransformComponent>(uid, out var xform))
+                continue;
+
+            // Draw contained blood on its carrier.
+            _entity.TryGetComponent<SpriteComponent>(uid, out var sprite);
 
             // Highlight the outermost container.
             if (_container.TryGetOuterContainer(uid, xform, out var container)
@@ -108,7 +124,7 @@ public sealed class SharkVisionOverlay : Overlay
                 xform = ownerXform;
             }
 
-            if (!_seen.Add(uid) || xform.MapID != mapId || !CanSee(uid, sprite))
+            if (sprite is null || !_seen.Add(uid) || xform.MapID != mapId || !CanSee(uid, sprite))
                 continue;
 
             _entries.Add(new SharkVisionRenderEntry((uid, sprite, xform), eyeRot));
@@ -139,8 +155,11 @@ public sealed class SharkVisionOverlay : Overlay
 
             foreach (var reagent in solution.GetReagentPrototypes(_proto).Keys)
             {
-                if (bloodPrototypes.Any(blood => reagent.ID == blood))
-                    return true;
+                foreach (var blood in bloodPrototypes)
+                {
+                    if (reagent.ID == blood)
+                        return true;
+                }
             }
         }
 

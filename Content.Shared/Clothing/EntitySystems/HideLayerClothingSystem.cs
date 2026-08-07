@@ -23,6 +23,7 @@ public sealed class HideLayerClothingSystem : EntitySystem
         #region Pirate: modsuit hidden layer restore
         SubscribeLocalEvent<HideLayerClothingComponent, ComponentStartup>(OnHideStartup);
         SubscribeLocalEvent<HideLayerClothingComponent, ComponentShutdown>(OnHideShutdown);
+        SubscribeLocalEvent<HideLayerClothingComponent, EntityTerminatingEvent>(OnHideTerminating);
         #endregion Pirate: modsuit hidden layer restore
     }
 
@@ -33,6 +34,12 @@ public sealed class HideLayerClothingSystem : EntitySystem
     }
 
     private void OnHideShutdown(Entity<HideLayerClothingComponent> ent, ref ComponentShutdown args)
+    {
+        RefreshWornLayers(ent, hideLayers: false);
+    }
+
+    // Entity termination is the last time the wearer can be resolved.
+    private void OnHideTerminating(Entity<HideLayerClothingComponent> ent, ref EntityTerminatingEvent args)
     {
         RefreshWornLayers(ent, hideLayers: false);
     }
