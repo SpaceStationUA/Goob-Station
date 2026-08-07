@@ -19,5 +19,6 @@
 - type: traitCategory
   id: Meta
   name: trait-category-meta
+  countsTowardsGlobalLimit: false
   priority: 30
   accentColor: "#eab308"

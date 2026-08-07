@@ -194,6 +194,15 @@ public sealed class SlimeMorphSystem : EntitySystem
             return;
         }
 
+        // slime morph immunity trait - start
+        var attempt = new SlimeMorphStudyAttemptEvent(user.Owner);
+        RaiseLocalEvent(target, attempt);
+        if (attempt.Cancelled)
+        {
+            return;
+        }
+        // slime morph immunity trait - end
+
         var netTarget = GetNetEntity(target);
         var appearance = new SlimeMorphAppearance
         {
