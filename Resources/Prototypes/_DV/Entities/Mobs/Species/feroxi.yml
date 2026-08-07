@@ -121,6 +121,7 @@
     activateSound: null
     deactivateSound: null
   # Pirate: port shark vision end
+  - type: WaterAdapted # Pirate: feroxi water adaptation
   - type: LanguageKnowledge # The Den, give Feroxi their own language.
     speaks:
     - TauCetiBasic
