@@ -81,15 +81,15 @@
     lightThreshold: 0.7
     darkDamage:
       types:
-        Blunt: -0.69
-        Piercing: -0.69
-        Slash: -0.69
-        Heat: -0.69
-        Poison: -0.69
-        Asphyxiation: -0.36
-        Bloodloss: -0.36
-        Cellular: -0.69
-        Soul: -0.14
+        Blunt: -0.35
+        Piercing: -0.35
+        Slash: -0.35
+        Heat: -0.35
+        Poison: -0.35
+        Asphyxiation: -0.17
+        Bloodloss: -0.17
+        Cellular: -0.35
+        Soul: -0.06
     lightDamage:
       types:
         Blunt: 1.5
