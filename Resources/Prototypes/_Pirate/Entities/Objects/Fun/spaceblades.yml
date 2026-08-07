@@ -213,6 +213,7 @@
   description: Let it mama mia, not safe for ages under 3.
   components:
   - type: Sprite
+    sprite: _Pirate/Objects/Fun/spaceblade.rsi
     state: pizza
 
 - type: entity
@@ -261,7 +262,7 @@
       - 0
       - 0
       - 0
-      - 0.4101137219
+      - 0.4101137219 # Atmospherics.Gas.NitrousOxide
       temperature: 293.15
 
 - type: entity
