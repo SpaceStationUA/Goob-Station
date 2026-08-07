@@ -55,6 +55,7 @@
     back:
     - Flash
     - ClownRecorder
+    - BaseSeclinkRadio # Pirate: SecLink for security staff
 
 - type: chameleonOutfit
   id: SecurityClownChameleonOutfit

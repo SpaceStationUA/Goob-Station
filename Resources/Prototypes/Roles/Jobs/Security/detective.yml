@@ -61,6 +61,7 @@
   storage:
     back:
     - Flash
+    - BaseSeclinkRadio # Pirate: SecLink for security staff
     - ForensicPad
     - ForensicScanner
     - ClothingMaskGasSecurity # Goobstation
