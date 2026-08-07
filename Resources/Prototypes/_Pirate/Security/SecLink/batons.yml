@@ -23,7 +23,6 @@
     - state: stunbaton_off
       map: [ "enum.ToggleableVisuals.Layer" ]
   - type: StaminaDamageOnHit
-    damage: 35
     sound: /Audio/_Pirate/Items/Security/SecLink/funbaton.ogg
   - type: Clothing
     sprite: _Pirate/Objects/Weapons/Melee/funbaton.rsi
