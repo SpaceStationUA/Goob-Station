@@ -1154,6 +1154,13 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+  - type: SecurityAlertGatedVending # Pirate: alert-gated pursuit gear
+    gatedItems:
+    - NFWeaponLauncherGrenadeNfsd
+    - NFBoxDartsTracking
+    allowedAlertLevels:
+    - blue
+    - red
   - type: DatasetVocalizer
     dataset: SecTechAds
   - type: SpeakOnUIClosed

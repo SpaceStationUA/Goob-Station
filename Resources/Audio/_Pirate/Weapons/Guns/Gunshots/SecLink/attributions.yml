@@ -1,0 +1,14 @@
+- files: ["autodisabler.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Made by flyingsaucerinvasion on Freesound and edited by DVD Player"
+  source: "https://freesound.org/people/flyingsaucerinvasion/sounds/615811/"
+
+- files: ["disablermagnum.ogg"]
+  license: "Custom"
+  copyright: "Sourced from pre-existing files-- taser2 and blasterpist-- edited and mixed together by DVDPlayerOfDiscordFame for Impstation"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Weapons/Guns/Gunshots/taser2.ogg"
+
+- files: ["clowndisabler.ogg"]
+  license: "Custom"
+  copyright: "AGPL-3.0-only, made by DVDPlayerOfDiscordFame for Impstation"
+  source: "https://github.com/impstation/imp-station-14/commit/47a903568a122446d75c1b87aa22a91b5b006f56"

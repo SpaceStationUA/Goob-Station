@@ -60,6 +60,7 @@
   storage:
     back:
     - Flash
+    - BaseSeclinkRadio # Pirate: bonus equipment; existing security loadouts remain unchanged
 #    - MagazinePistol # PIRATE, moved to loadouts
 
 - type: chameleonOutfit
