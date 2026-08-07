@@ -31,6 +31,7 @@ slime-morph-verb-study = Вивчити зовнішність
 slime-morph-study-success = Ви запам'ятовуєте зовнішність {$name}.
 slime-morph-study-refreshed = Ви оновлюєте в пам'яті зовнішність {$name}.
 slime-morph-study-concealed = Ви не можете достатньо роздивитися їхню зовнішність, щоб запам'ятати.
+slime-morph-study-immunity = Ви не можете вивчити цю зовнішність.
 
 slime-morph-mimic-success = Ваше тіло перетікає у форму {$name}.
 slime-morph-mimic-hungry = Ви надто голодні, щоб перетворитися.

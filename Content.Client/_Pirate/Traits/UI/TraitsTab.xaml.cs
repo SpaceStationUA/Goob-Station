@@ -113,10 +113,11 @@ public sealed partial class TraitsTab : BoxContainer
     private void OnTraitToggled(ProtoId<TraitPrototype> traitId, bool selected)
     {
         var trait = _prototype.Index(traitId);
+        var countsTowardsGlobalLimit = CountsTowardsGlobalLimit(trait);
 
         if (selected)
         {
-            if (_currentTraitCount >= _maxGlobalTraits)
+            if (countsTowardsGlobalLimit && _currentTraitCount >= _maxGlobalTraits)
             {
                 RevertTraitToggle(traitId);
                 return;
@@ -162,7 +163,8 @@ public sealed partial class TraitsTab : BoxContainer
             }
 
             _selectedTraits.Add(traitId);
-            _currentTraitCount++;
+            if (countsTowardsGlobalLimit)
+                _currentTraitCount++;
             _currentPointsSpent += trait.Cost;
             }
             else
@@ -187,7 +189,8 @@ public sealed partial class TraitsTab : BoxContainer
             }
 
             _selectedTraits.Remove(traitId);
-            _currentTraitCount--;
+            if (countsTowardsGlobalLimit)
+                _currentTraitCount--;
             _currentPointsSpent -= trait.Cost;
         }
 
@@ -197,6 +200,13 @@ public sealed partial class TraitsTab : BoxContainer
 
         UpdateAllConditions();
         OnTraitsChanged?.Invoke(_selectedTraits);
+    }
+
+    private bool CountsTowardsGlobalLimit(TraitPrototype trait)
+    {
+        return trait.Category == null
+            || !_prototype.TryIndex<TraitCategoryPrototype>(trait.Category.Value, out var category)
+            || category.CountsTowardsGlobalLimit;
     }
 
     private void RevertTraitToggle(ProtoId<TraitPrototype> traitId)
@@ -340,7 +350,8 @@ public sealed partial class TraitsTab : BoxContainer
                     continue;
 
                 _selectedTraits.Add(traitId);
-                _currentTraitCount++;
+                if (CountsTowardsGlobalLimit(trait))
+                    _currentTraitCount++;
                 _currentPointsSpent += trait.Cost;
             }
         }
@@ -377,7 +388,8 @@ public sealed partial class TraitsTab : BoxContainer
                 continue;
 
             _selectedTraits.Add(traitId);
-            _currentTraitCount++;
+            if (CountsTowardsGlobalLimit(trait))
+                _currentTraitCount++;
             _currentPointsSpent += trait.Cost;
 
             if (trait.Category != null && _categoryUis.TryGetValue(trait.Category.Value, out var categoryUi))

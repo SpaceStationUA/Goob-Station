@@ -901,22 +901,23 @@ namespace Content.Shared.Preferences
                 if (!protoManager.TryIndex(traitId, out var traitProto))
                     continue;
 
-                if (totalCount + 1 > maxGlobalCount)
-                    continue;
-
                 if (totalPoints + traitProto.Cost > maxGlobalPoints)
                     continue;
 
                 if (traitProto.Category == null)
                 {
+                    if (totalCount + 1 > maxGlobalCount)
+                        continue;
                     result.Add(traitId);
                     totalPoints += traitProto.Cost;
                     totalCount++;
                     continue;
                 }
 
-                // No category so dump it.
                 if (!protoManager.Resolve(traitProto.Category, out var category))
+                    continue;
+
+                if (category.CountsTowardsGlobalLimit && totalCount + 1 > maxGlobalCount)
                     continue;
 
                 var existingPoints = groups.GetValueOrDefault(category.ID, 0);
@@ -935,7 +936,8 @@ namespace Content.Shared.Preferences
                 counts[category.ID] = existingCount + 1;
                 result.Add(traitId);
                 totalPoints += traitProto.Cost;
-                totalCount++;
+                if (category.CountsTowardsGlobalLimit)
+                    totalCount++;
             }
 
             return result;

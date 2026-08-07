@@ -194,6 +194,15 @@ public sealed class SlimeMorphSystem : EntitySystem
             return;
         }
 
+        // slime morph immunity trait - start
+        var attempt = new SlimeMorphStudyAttemptEvent(user.Owner);
+        RaiseLocalEvent(target, attempt);
+        if (attempt.Cancelled)
+        {
+            return;
+        }
+        // slime morph immunity trait - end
+
         var netTarget = GetNetEntity(target);
         var appearance = new SlimeMorphAppearance
         {
@@ -275,6 +284,18 @@ public sealed class SlimeMorphSystem : EntitySystem
         if (ent.Comp.Staged is not { FromTarget: true } staged
             || !TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
             return;
+
+        // slime morph immunity trait - start
+        if (staged.SelectedTarget is { } selectedTarget
+            && TryGetEntity(selectedTarget, out var target)
+            && target is { } targetUid)
+        {
+            var attempt = new SlimeMorphMimicAttemptEvent(ent.Owner);
+            RaiseLocalEvent(targetUid, attempt);
+            if (attempt.Cancelled)
+                return;
+        }
+        // slime morph immunity trait - end
 
         if (TryComp<HungerComponent>(ent.Owner, out var hunger)
             && _hunger.IsHungerBelowState(ent.Owner, HungerThreshold.Okay, null, hunger))
