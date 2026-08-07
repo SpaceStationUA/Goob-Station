@@ -14,9 +14,4 @@ public sealed class SlimeMorphStudyAttemptEvent(EntityUid user) : CancellableEnt
 {
     public readonly EntityUid User = user;
 }
-
-public sealed class SlimeMorphMimicAttemptEvent(EntityUid user) : CancellableEntityEventArgs
-{
-    public readonly EntityUid User = user;
-}
 // slime morph immunity trait - end

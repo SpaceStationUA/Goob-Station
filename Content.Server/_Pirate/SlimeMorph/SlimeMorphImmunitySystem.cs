@@ -10,7 +10,6 @@ public sealed class SlimeMorphImmunitySystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SlimeMorphImmunityComponent, SlimeMorphStudyAttemptEvent>(OnStudyAttempt);
-        SubscribeLocalEvent<SlimeMorphImmunityComponent, SlimeMorphMimicAttemptEvent>(OnMimicAttempt);
     }
 
     private void OnStudyAttempt(Entity<SlimeMorphImmunityComponent> ent, ref SlimeMorphStudyAttemptEvent args)
@@ -19,9 +18,4 @@ public sealed class SlimeMorphImmunitySystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("slime-morph-study-immunity"), args.User, args.User);
     }
 
-    private void OnMimicAttempt(Entity<SlimeMorphImmunityComponent> ent, ref SlimeMorphMimicAttemptEvent args)
-    {
-        args.Cancel();
-        _popup.PopupEntity(Loc.GetString("slime-morph-study-immunity"), args.User, args.User);
-    }
 }
