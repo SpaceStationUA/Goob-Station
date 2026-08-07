@@ -20,7 +20,7 @@
       - left arm
       - head # Shitmed Change
       organs:
-        heart: OrganAnimalHeart
+        heart: OrganFeroxiHeart # Pirate: feroxi carpotoxin immunity
         lungs: OrganFeroxiLungs
     groin:
       part: GroinFeroxi

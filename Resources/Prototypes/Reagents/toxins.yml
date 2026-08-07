@@ -46,16 +46,16 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerTypeCondition # Goobstation - Yowie
-          type: [ Yowie ]
+        - !type:MetabolizerTypeCondition # Goobstation - Yowie # Pirate: feroxi carpotoxin immunity
+          type: [ Yowie, Feroxi ]
           inverted: true
         damage:
           types:
             Poison: 4
       - !type:PopupMessage
         conditions:
-        - !type:MetabolizerTypeCondition # Goobstation - Yowie
-          type: [ Yowie ]
+        - !type:MetabolizerTypeCondition # Goobstation - Yowie # Pirate: feroxi carpotoxin immunity
+          type: [ Yowie, Feroxi ]
           inverted: true
         type: Local
         visualType: MediumCaution
