@@ -4,7 +4,7 @@
 
 - type: body
   id: Replicator1
-  name: "реплікатор рівня 1"
+  name: "replicator t1"
   root: torso
   slots:
     torso:
@@ -20,7 +20,7 @@
 
 - type: body
   id: Replicator2
-  name: "реплікатор рівня 2"
+  name: "replicator t2"
   root: torso
   slots:
     torso:
@@ -43,7 +43,7 @@
 
 - type: body
   id: Replicator3
-  name: "реплікатор рівня 3"
+  name: "replicator t3"
   root: torso
   slots:
     torso:

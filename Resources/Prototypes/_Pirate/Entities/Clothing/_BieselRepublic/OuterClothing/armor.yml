@@ -1,9 +1,9 @@
 - type: entity
   parent: [ClothingOuterArmorBase, ClothingOuterStorageBase, AllowSuitStorageClothing]
   id: ClothingOuterArmorTCAFHeavy
-  name: "важка броня TCAF"
+  name: важка броня TCAF
   suffix: TCAF
-  description: "Комплект важкої броні на озброєнні збройних сил Тау-Кита. Раніше це спорядження широко використовував Соларіанський альянс, але тепер його часто виробляють місцеві компанії - зокрема Файв-Пойнтс Арморі, BRDI і навіть Нанотрейзен."
+  description: Комплект важкої броні на озброєнні збройних сил Тау-Кита. Раніше це спорядження широко використовувалося Соларіанським Альянсом, але тепер його часто виробляють місцеві компанії - зокрема Five-Points Armory, BRDI і навіть NanoTrasen.
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/OuterClothing/Armor/TCAF_plate_carrier_heavy.rsi
@@ -37,9 +37,9 @@
 - type: entity
   parent: [ClothingOuterArmorBase, ClothingOuterStorageBase, AllowSuitStorageClothing]
   id: ClothingOuterArmorTCAFLight
-  name: "легкий бронежилет TCAF"
+  name: легкий бронежилет TCAF
   suffix: TCAF
-  description: "Бронежилет-плитоноска на озброєнні збройних сил Тау-Кита. Раніше це спорядження широко використовував Соларіанський альянс, але тепер його часто виробляють місцеві компанії - зокрема Файв-Пойнтс Арморі, BRDI і навіть Нанотрейзен."
+  description: Бронежилет-плитоноска на озброєнні Збройних сил Тау Кита. Раніше це спорядження широко використовувалося Соларіанським Альянсом, але тепер його часто виробляють місцеві компанії - зокрема Five-Points Armory, BRDI і навіть NanoTrasen.
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/OuterClothing/Armor/TCAF_plate_carrier_light.rsi
