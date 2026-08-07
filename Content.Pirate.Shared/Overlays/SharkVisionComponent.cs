@@ -27,5 +27,9 @@ public sealed partial class SharkVisionComponent : SwitchableVisionOverlayCompon
         "AmmoniaBlood",
         "CopperBlood",
         "ZombieBlood",
+        "AvaliBlood",
+        "BlackBlood",
+        "AlienBlood",
+        "BloodChangeling",
     ];
 }
