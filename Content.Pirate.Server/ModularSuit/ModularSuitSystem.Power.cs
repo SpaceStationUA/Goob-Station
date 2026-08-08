@@ -43,6 +43,7 @@ public sealed partial class ModularSuitSystem
         if (active && !ent.Comp.Assembled)
         {
             Popup.PopupEntity(Loc.GetString("modsuit-not-assembled"), ent, ent.Comp.Wearer ?? ent);
+            _audio.PlayPvs(ent.Comp.BuzzSound, ent.Owner);
             UpdateUiState(ent);
             return;
         }
@@ -50,13 +51,19 @@ public sealed partial class ModularSuitSystem
         if (active && !HasCore(ent))
         {
             Popup.PopupEntity(Loc.GetString("modsuit-no-core"), ent, ent.Comp.Wearer ?? ent);
+            _audio.PlayPvs(ent.Comp.BuzzSound, ent.Owner);
             UpdateUiState(ent);
             return;
         }
 
-        if (active && !ent.Comp.Active)
+        if (active)
         {
+            _audio.PlayPvs(ent.Comp.ActivateSound, ent.Owner);
             _audio.PlayPvs(ent.Comp.NominalSound, ent.Owner);
+        }
+        else
+        {
+            _audio.PlayPvs(ent.Comp.DeactivateSound, ent.Owner);
         }
 
         if (HasComp<ItemToggleComponent>(ent))
@@ -200,7 +207,7 @@ public sealed partial class ModularSuitSystem
 
         if (!suit.Comp.Active)
         {
-            if (core.Charge < core.MaxCharge && TryChargeFromBattery(suit, core))
+            if (core.Charge < core.MaxCharge && TryChargeFromBattery((coreEnt, core), suit))
                 UpdateUiState(suit);
 
             return;
@@ -221,6 +228,7 @@ public sealed partial class ModularSuitSystem
         var newCharge = Math.Max(0, core.Charge - chargeToUse);
         var used = core.Charge - newCharge;
         core.Charge = newCharge;
+        Dirty(coreEnt, core);
 
         if (used > 0)
         {
@@ -228,7 +236,7 @@ public sealed partial class ModularSuitSystem
             RaiseLocalEvent(suit.Owner, ref ev);
         }
 
-        if (core.Charge < core.MaxCharge && TryChargeFromBattery(suit, core))
+        if (core.Charge < core.MaxCharge && TryChargeFromBattery((coreEnt, core), suit))
             UpdateUiState(suit);
 
         if (core.Charge <= 0)
@@ -249,13 +257,13 @@ public sealed partial class ModularSuitSystem
         }
     }
 
-    private bool TryChargeFromBattery(Entity<ModularSuitComponent> suit, ModularSuitCoreComponent core)
+    private bool TryChargeFromBattery(Entity<ModularSuitCoreComponent> core, Entity<ModularSuitComponent> suit)
     {
         if (!_powerCell.TryGetBatteryFromSlot(suit.Owner, out _))
             return false;
 
-        var needed = core.MaxCharge - core.Charge;
-        var maxTransfer = core.ChargeRate * (float)suit.Comp.UpdateInterval.TotalSeconds;
+        var needed = core.Comp.MaxCharge - core.Comp.Charge;
+        var maxTransfer = core.Comp.ChargeRate * (float)suit.Comp.UpdateInterval.TotalSeconds;
         var transfer = Math.Min(needed, maxTransfer);
 
         if (transfer <= 0)
@@ -263,8 +271,10 @@ public sealed partial class ModularSuitSystem
 
         if (_powerCell.TryUseCharge(suit.Owner, transfer, predicted: false))
         {
-            core.Charge += transfer;
-            var ev = new ModularSuitChargeChangedEvent(core.Charge, core.MaxCharge);
+            core.Comp.Charge += transfer;
+            Dirty(core.Owner, core.Comp);
+
+            var ev = new ModularSuitChargeChangedEvent(core.Comp.Charge, core.Comp.MaxCharge);
             RaiseLocalEvent(suit.Owner, ref ev);
             return true;
         }
@@ -295,6 +305,7 @@ public sealed partial class ModularSuitSystem
             return false;
 
         core.Charge -= amount;
+        Dirty(coreEnt, core);
 
         var ev = new ModularSuitChargeChangedEvent(core.Charge, core.MaxCharge);
         RaiseLocalEvent(suit.Owner, ref ev);
