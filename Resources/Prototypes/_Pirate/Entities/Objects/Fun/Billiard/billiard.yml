@@ -117,6 +117,9 @@
     whitelist:
       components:
       - BilliardBall
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
