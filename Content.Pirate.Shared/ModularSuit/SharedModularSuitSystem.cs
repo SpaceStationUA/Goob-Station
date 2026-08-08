@@ -127,11 +127,20 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
     {
         if (!sealed_)
         {
-            RemComp<UnremoveableComponent>(ent.Owner);
+            if (ent.Comp.AddedUnremoveable)
+            {
+                RemComp<UnremoveableComponent>(ent.Owner);
+                ent.Comp.AddedUnremoveable = false;
+            }
+
             return;
         }
 
+        if (HasComp<UnremoveableComponent>(ent.Owner))
+            return;
+
         EnsureComp<UnremoveableComponent>(ent.Owner).DeleteOnDrop = false;
+        ent.Comp.AddedUnremoveable = true;
     }
 
     private void SyncDeployAction(Entity<ModularSuitComponent> ent)
@@ -150,6 +159,8 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
     {
         if (ent.Comp.ToggleActivateActionEntity is not { } action)
             return;
+
+        _actions.SetToggled(action, false);
 
         var key = ent.Comp.Active ? "deactivate" : "activate";
         _metaData.SetEntityName(action, Loc.GetString($"modsuit-action-{key}-name"));

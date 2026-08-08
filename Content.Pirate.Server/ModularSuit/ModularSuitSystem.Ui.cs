@@ -36,6 +36,9 @@ public sealed partial class ModularSuitSystem
 
     private void RequestSetActive(Entity<ModularSuitComponent> ent, EntityUid user, bool active)
     {
+        if (ent.Comp.Wearer != user)
+            return;
+
         if (active && !ent.Comp.Assembled && TryStartSuitSealing(ent, user))
         {
             UpdateUiState(ent);

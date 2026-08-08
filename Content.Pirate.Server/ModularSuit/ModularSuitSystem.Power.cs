@@ -1,5 +1,6 @@
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Pirate.Shared.ModularSuit;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
 using Robust.Shared.Containers;
 
@@ -8,6 +9,7 @@ namespace Content.Pirate.Server.ModularSuit;
 public sealed partial class ModularSuitSystem
 {
     [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
 
     public const string CellContainer = "cell_slot";
 
@@ -143,7 +145,6 @@ public sealed partial class ModularSuitSystem
                 if (!TryComp<ModularSuitModuleComponent>(module, out var mod) || !mod.WasActive)
                     continue;
 
-                mod.WasActive = false;
                 if (mod.IsActive || !mod.CanBeDisabled)
                     continue;
 
@@ -151,6 +152,7 @@ public sealed partial class ModularSuitSystem
                     continue;
 
                 mod.IsActive = true;
+                mod.WasActive = false;
                 Dirty(module, mod);
             }
 
@@ -283,17 +285,22 @@ public sealed partial class ModularSuitSystem
 
     private bool TryChargeFromBattery(Entity<ModularSuitCoreComponent> core, Entity<ModularSuitComponent> suit)
     {
-        if (!_powerCell.TryGetBatteryFromSlot(suit.Owner, out _))
+        if (!_powerCell.TryGetBatteryFromSlot(suit.Owner, out var battery))
+            return false;
+
+        if (core.Comp.DrawMultiplier <= 0)
             return false;
 
         var needed = core.Comp.MaxCharge - core.Comp.Charge;
         var maxTransfer = core.Comp.ChargeRate * (float)suit.Comp.UpdateInterval.TotalSeconds;
         var transfer = Math.Min(needed, maxTransfer);
+        var batteryCharge = Math.Min(transfer * core.Comp.DrawMultiplier, _battery.GetCharge(battery.Value.AsNullable()));
+        transfer = batteryCharge / core.Comp.DrawMultiplier;
 
-        if (transfer <= 0)
+        if (batteryCharge <= 0)
             return false;
 
-        if (_powerCell.TryUseCharge(suit.Owner, transfer, predicted: false))
+        if (_powerCell.TryUseCharge(suit.Owner, batteryCharge, predicted: false))
         {
             core.Comp.Charge += transfer;
             Dirty(core.Owner, core.Comp);

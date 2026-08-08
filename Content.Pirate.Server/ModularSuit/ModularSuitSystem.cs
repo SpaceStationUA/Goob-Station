@@ -490,7 +490,8 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
 
     private bool TryStartSuitUnsealing(Entity<ModularSuitComponent> suit, EntityUid user)
     {
-        if (suit.Comp.Wearer != user || !TryComp<ModularSuitEquippedComponent>(suit, out var equipped))
+        if (!suit.Comp.Deployed || suit.Comp.Wearer != user ||
+            !TryComp<ModularSuitEquippedComponent>(suit, out var equipped))
             return false;
 
         foreach (var partUid in equipped.EquippedParts.Values)
@@ -540,25 +541,19 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
             if (partUid == part.Owner)
                 continue;
 
-            if (!TryComp<ItemToggleComponent>(partUid, out var toggle))
+            if (!TryComp<ModularSuitPartComponent>(partUid, out var nextPart) ||
+                !TryComp<ItemToggleComponent>(partUid, out var toggle))
                 continue;
 
             if (Toggle.IsActivated((partUid, toggle)) == args.Activate)
                 continue;
 
-            var delay = part.Comp.ToggleDelay;
-            if (TryComp<AffectedModuleSpringlockComponent>(args.User, out var springlock))
-                delay /= springlock.SpeedMultiplier;
-
-            var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay,
-                new ModularSuitPartSealDoAfterEvent(args.Activate, args.ActivateSuit, args.DeactivateSuit),
-                partUid,
-                partUid)
-            {
-                BreakOnDamage = true
-            };
-
-            _doAfter.TryStartDoAfter(doAfterArgs);
+            StartPartToggleDoAfter(
+                args.User,
+                (partUid, nextPart),
+                args.Activate,
+                args.ActivateSuit,
+                args.DeactivateSuit);
             Popup.PopupEntity(
                 Loc.GetString(args.Activate ? "modsuit-continue-sealing" : "modsuit-continue-unsealing"),
                 args.User,

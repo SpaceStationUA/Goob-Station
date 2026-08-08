@@ -48,6 +48,8 @@ public sealed partial class ModularSuitComponent : Component
     [ViewVariables, AutoNetworkedField]
     public bool Active;
 
+    public bool AddedUnremoveable;
+
     [DataField("autoActivate")]
     public bool AutoActivateOnAssemble = true;
 

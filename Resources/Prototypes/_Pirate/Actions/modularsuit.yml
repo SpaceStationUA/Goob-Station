@@ -87,7 +87,6 @@
   components:
   - type: Action
     icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: magnet }
-    iconOn: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: magnet }
   - type: InstantAction
     event: !type:ToggleMagbootsModuleEvent
 
