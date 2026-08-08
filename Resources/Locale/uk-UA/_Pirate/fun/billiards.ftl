@@ -1,10 +1,24 @@
 # SPDX-License-Identifier: MIT
 
-construction-billiard-pyramid = Більярдна піраміда
-construction-billiard-pyramid-description = Розставити 15 куль і биток для піраміди. Використані кулі автоматично підготуються до гри.
-construction-billiard-american = Американський пул
-construction-billiard-american-description = Розставити 15 куль і биток для пулу. Використані кулі автоматично набудуть потрібного кольору.
-construction-graph-component-billiard-ball = більярдна куля
+billiard-table-verb = Налаштувати більярдний стіл
+billiard-table-window-title = Більярдний стіл
+billiard-table-window-ball-count = Кулі у сховищі: {$count}/{$required}
+billiard-table-window-status-ready = Стіл готовий до розстановки
+billiard-table-window-status-not-enough-balls = Додайте кулі до сховища столу
+billiard-table-window-status-surface-occupied = Приберіть кулі з поверхні столу
+billiard-table-window-status-not-anchored = Спочатку закріпіть стіл
+billiard-table-window-pyramid = Розставити піраміду
+billiard-table-window-american-pool = Розставити американський пул
+billiard-table-window-open-storage = Відкрити сховище куль
+billiard-table-mode-pyramid = піраміда
+billiard-table-mode-american-pool = американський пул
+billiard-table-popup-invalid-mode = Невідомий режим більярду.
+billiard-table-popup-not-anchored = Закріпіть більярдний стіл перед розстановкою куль.
+billiard-table-popup-unavailable = Більярдний стіл зараз недоступний.
+billiard-table-popup-surface-occupied = Спочатку приберіть усі кулі з поверхні столу.
+billiard-table-popup-not-enough-balls = У сховищі лише {$count} куль. Потрібно {$required}.
+billiard-table-popup-rack-failed = Не вдалося забрати кулі зі сховища. Спробуйте ще раз.
+billiard-table-popup-racked = Розставлено: {$mode}.
 
 construction-condition-billiard-table-storage-not-empty = Сховище не порожнє!
 construction-step-billiard-table-empty-storage = Спорожніть сховище столу!
@@ -15,8 +29,6 @@ ent-BilliardBall = більярдна куля
     .desc = Важка й гладка куля для гри в більярд.
 ent-BilliardCue = більярдний кий
     .desc = Кий для ударів по більярдних кулях.
-ent-SpawnBilliardTriangle = спавнер піраміди більярдних куль
-ent-SpawnBilliardAmericanPool = спавнер трикутної розстановки куль для американського пулу
 ent-BilliardTableFlatpack = флетпак більярдного столу
     .desc = Флетпак для конструювання більярдного столу. Використайте мультитул, щоб його розпакувати.
 ent-BoxBilliardBalls = коробка для більярдних куль
