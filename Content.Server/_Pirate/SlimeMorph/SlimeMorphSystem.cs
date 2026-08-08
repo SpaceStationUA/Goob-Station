@@ -16,6 +16,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Pirate.SlimeMorph;
@@ -28,7 +29,9 @@ public sealed class SlimeMorphSystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly GrammarSystem _grammar = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -55,6 +58,12 @@ public sealed class SlimeMorphSystem : EntitySystem
             subs.Event<SlimeMorphSetGenderMessage>(OnSetGender);
             subs.Event<SlimeMorphSetHeightMessage>(OnSetHeight);
             subs.Event<SlimeMorphSetWidthMessage>(OnSetWidth);
+            subs.Event<SlimeMorphSetXenotypeMessage>(OnSetXenotype);
+            subs.Event<SlimeMorphAdaptColorsMessage>(OnAdaptColors);
+            subs.Event<SlimeMorphSaveAppearanceMessage>(OnSaveAppearance);
+            subs.Event<SlimeMorphSelectSavedMessage>(OnSelectSaved);
+            subs.Event<SlimeMorphDeleteSavedMessage>(OnDeleteSaved);
+            subs.Event<SlimeMorphImportMessage>(OnImport);
             subs.Event<SlimeMorphApplyMessage>(OnApply);
             subs.Event<SlimeMorphResetMessage>(OnReset);
             subs.Event<SlimeMorphSelectTargetMessage>(OnSelectTarget);
@@ -100,6 +109,8 @@ public sealed class SlimeMorphSystem : EntitySystem
             HeadLayer = humanoid.CustomBaseLayers.TryGetValue(HumanoidVisualLayers.Head, out var head)
                 ? head.Id?.Id
                 : null,
+            // Default the pickers to the slime's own species (there is no "Any" scope).
+            PickerSpecies = humanoid.Species,
         };
     }
 
@@ -391,7 +402,7 @@ public sealed class SlimeMorphSystem : EntitySystem
     {
         if (!IsSelfEditable(args.Category)
             || ent.Comp.Staged is not { } staged
-            || !_markings.MarkingsByCategory(args.Category).TryGetValue(args.MarkingId, out var proto)
+            || !TryResolveMarking(staged, args.Category, args.MarkingId, out var proto)
             || !staged.Markings.TryGetCategory(args.Category, out var list)
             || args.Slot < 0 || args.Slot >= list.Count)
             return;
@@ -403,6 +414,19 @@ public sealed class SlimeMorphSystem : EntitySystem
         // Preserve the slot's forced status.
         marking.Forced = list[args.Slot].Forced;
         staged.Markings.Replace(args.Category, args.Slot, marking);
+    }
+
+    /// <summary>
+    /// Resolve a marking id from the pool the pickers currently offer: scoped to the chosen xenotype
+    /// when one is selected, otherwise every species' markings (the free "Any" mode).
+    /// </summary>
+    private bool TryResolveMarking(SlimeMorphWorking staged, MarkingCategories category, string id,
+        [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out MarkingPrototype? proto)
+    {
+        IReadOnlyDictionary<string, MarkingPrototype> pool = staged.PickerSpecies is { } species
+            ? _markings.MarkingsByCategoryAndSpecies(category, species)
+            : _markings.MarkingsByCategory(category);
+        return pool.TryGetValue(id, out proto);
     }
 
     private void OnChangeColor(Entity<SlimeMorphComponent> ent, ref SlimeMorphChangeColorMessage args)
@@ -424,16 +448,27 @@ public sealed class SlimeMorphSystem : EntitySystem
             || !TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
             return;
 
-        // Fall back to an all-species marking when the category is absent from the species.
-        var pickerSpecies = staged.PickerSpecies ?? humanoid.Species;
-        var markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, pickerSpecies).Keys.FirstOrDefault()
-            ?? _markings.MarkingsByCategory(args.Category).Keys.FirstOrDefault();
+        string? markingId;
+        bool forced;
+        if (staged.PickerSpecies is { } scoped)
+        {
+            // Scoped to a xenotype: only that race's markings, gated by its marking points.
+            markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, scoped).Keys.FirstOrDefault();
+            forced = false;
+        }
+        else
+        {
+            // Free "Any" mode: any species' marking, forced so cross-species picks survive.
+            markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, humanoid.Species).Keys.FirstOrDefault()
+                ?? _markings.MarkingsByCategory(args.Category).Keys.FirstOrDefault();
+            forced = true;
+        }
+
         if (string.IsNullOrEmpty(markingId) || !_markings.Markings.TryGetValue(markingId, out var proto))
             return;
 
         var marking = proto.AsMarking();
-        // Allow cross-species selections.
-        marking.Forced = true;
+        marking.Forced = forced;
         staged.Markings.AddBack(args.Category, marking);
         UpdateUi(ent);
     }
@@ -492,6 +527,153 @@ public sealed class SlimeMorphSystem : EntitySystem
         staged.Width = Math.Clamp(args.Width, species.MinWidth, species.MaxWidth);
     }
 
+    /// <summary>
+    /// Scope the marking pickers to a whitelisted xenotype (rebuilding the staged look to that race's
+    /// defaults + limits, like the character editor's species switch), or clear it for the free
+    /// "Any" mode that offers every species' markings.
+    /// </summary>
+    private void OnSetXenotype(Entity<SlimeMorphComponent> ent, ref SlimeMorphSetXenotypeMessage args)
+    {
+        if (ent.Comp.Staged is not { } staged)
+            return;
+
+        // Ignore an unknown/non-whitelisted species (the UI only offers whitelisted xenotypes).
+        var wantSpecies = args.Species;
+        if (string.IsNullOrEmpty(wantSpecies)
+            || !ent.Comp.MorphableSpecies.Any(s => s.Id == wantSpecies)
+            || !_proto.TryIndex<SpeciesPrototype>(wantSpecies, out var speciesProto))
+            return;
+
+        // Reset to the race: fresh set under its marking points, filtered to the species, seeded with
+        // its default markings. The player then customizes within that race's options.
+        var set = new MarkingSet(speciesProto.MarkingPoints, _markings, _proto);
+        set.EnsureSpecies(wantSpecies, null, _markings, _proto);
+        set.EnsureSexes(staged.Sex, _markings);
+        set.EnsureDefault(staged.SkinColor, staged.EyeColor, _markings);
+
+        staged.Markings = set;
+        staged.PickerSpecies = wantSpecies;
+        staged.HeadLayer = GetHeadLayer(ent.Comp, wantSpecies, staged.Sex);
+        UpdateUi(ent);
+    }
+
+    /// <summary>Store the current staged look under a name, overwriting any saved look with the same name + xenotype.</summary>
+    private void OnSaveAppearance(Entity<SlimeMorphComponent> ent, ref SlimeMorphSaveAppearanceMessage args)
+    {
+        if (ent.Comp.Staged is not { } staged || !TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
+            return;
+
+        var name = args.Name.Trim();
+        if (string.IsNullOrEmpty(name))
+            return;
+
+        var species = staged.PickerSpecies ?? humanoid.Species;
+        var appearance = new SlimeMorphAppearance
+        {
+            Target = NetEntity.Invalid,
+            Name = name,
+            Species = species,
+            Sex = staged.Sex,
+            Gender = staged.Gender,
+            SkinColor = staged.SkinColor,
+            EyeColor = staged.EyeColor,
+            Height = staged.Height,
+            Width = staged.Width,
+            Markings = staged.Markings.GetForwardEnumerator().ToList(),
+            HeadLayer = staged.HeadLayer,
+        };
+
+        ent.Comp.Saved.RemoveAll(a => a.Name == name && a.Species == species);
+        ent.Comp.Saved.Add(appearance);
+
+        _popup.PopupEntity(Loc.GetString("slime-morph-save-success", ("name", name)), ent.Owner, ent.Owner);
+        UpdateUi(ent);
+    }
+
+    /// <summary>Load a saved look into the editor as a free, editable staged look (committed later via Apply).</summary>
+    private void OnSelectSaved(Entity<SlimeMorphComponent> ent, ref SlimeMorphSelectSavedMessage args)
+    {
+        if (ent.Comp.Staged == null || !TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
+            return;
+
+        var (wantName, wantSpecies) = (args.Name, args.Species);
+        var saved = ent.Comp.Saved.FirstOrDefault(a => a.Name == wantName && a.Species == wantSpecies);
+        if (saved == null)
+            return;
+
+        var working = ToWorking(saved);
+        working.FromTarget = false;
+        // Scope to the species it was saved under (a whitelisted xenotype, or the slime's own).
+        working.PickerSpecies = ent.Comp.MorphableSpecies.Any(s => s.Id == saved.Species)
+            ? saved.Species
+            : humanoid.Species;
+        working.HeadLayer = saved.HeadLayer;
+        ent.Comp.Staged = working;
+        UpdateUi(ent);
+    }
+
+    /// <summary>Remove a saved look.</summary>
+    private void OnDeleteSaved(Entity<SlimeMorphComponent> ent, ref SlimeMorphDeleteSavedMessage args)
+    {
+        var (wantName, wantSpecies) = (args.Name, args.Species);
+        if (ent.Comp.Saved.RemoveAll(a => a.Name == wantName && a.Species == wantSpecies) > 0)
+            UpdateUi(ent);
+    }
+
+    /// <summary>Apply an appearance imported from a .yml file to the staged look (as a free, editable look).</summary>
+    private void OnImport(Entity<SlimeMorphComponent> ent, ref SlimeMorphImportMessage args)
+    {
+        if (ent.Comp.Staged == null || !TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
+            return;
+
+        var appearance = args.Appearance;
+        var working = ToWorking(appearance);
+        working.FromTarget = false;
+
+        var morphable = ent.Comp.MorphableSpecies.Any(s => s.Id == appearance.Species);
+        working.PickerSpecies = morphable ? appearance.Species : humanoid.Species;
+        working.HeadLayer = morphable ? GetHeadLayer(ent.Comp, appearance.Species, appearance.Sex) : null;
+
+        // Keep the imported body within the slime's own size limits.
+        var species = _proto.Index<SpeciesPrototype>(humanoid.Species);
+        working.Height = Math.Clamp(working.Height, species.MinHeight, species.MaxHeight);
+        working.Width = Math.Clamp(working.Width, species.MinWidth, species.MaxWidth);
+
+        ent.Comp.Staged = working;
+        UpdateUi(ent);
+    }
+
+    /// <summary>
+    /// Recolor every staged marking toward the staged body color, exactly like mimic tints copied
+    /// features. Lets the player match a hand-picked palette to their slime skin in one click.
+    /// </summary>
+    private void OnAdaptColors(Entity<SlimeMorphComponent> ent, ref SlimeMorphAdaptColorsMessage args)
+    {
+        if (ent.Comp.Staged is not { } staged)
+            return;
+
+        var slimeSkin = staged.SkinColor;
+
+        // Eyes are opaque, so tint at full alpha (matches the mimic eye tint).
+        staged.EyeColor = Tint(staged.EyeColor, slimeSkin, ent.Comp.TintFactor, 1f);
+
+        foreach (var (category, list) in staged.Markings.Markings)
+        {
+            // Gradient categories pack shader params (blur/proportion) into a color layer; tinting
+            // that would corrupt them, so leave gradients alone (mirrors MarkingSet.EnsureSpecies).
+            if (category.IgnoresMatchSkin())
+                continue;
+
+            foreach (var marking in list)
+            {
+                for (var i = 0; i < marking.MarkingColors.Count; i++)
+                    marking.SetColor(i, Tint(marking.MarkingColors[i], slimeSkin, ent.Comp.TintFactor, ent.Comp.TintAlpha));
+            }
+        }
+
+        UpdateUi(ent);
+    }
+
     private static bool IsSelfEditable(MarkingCategories category)
     {
         return Array.IndexOf(SlimeMorphCategories.Editable, category) >= 0;
@@ -509,6 +691,13 @@ public sealed class SlimeMorphSystem : EntitySystem
         humanoid.MarkingSet = new MarkingSet(staged.Markings);
         _humanoid.SetSex(uid, staged.Sex, false, humanoid);
         _humanoid.SetGender(uid, staged.Gender, false, humanoid);
+        // SetGender only touches the humanoid component; the grammatical pronoun shown on examine
+        // reads GrammarComponent, so keep it in sync (mirrors CloneAppearance / LoadProfile).
+        if (TryComp<GrammarComponent>(uid, out var grammar))
+            _grammar.SetGender((uid, grammar), staged.Gender);
+        // Examine localizes against the identity entity, whose grammar is a copy; refresh it so the
+        // new pronoun actually shows (nothing else here renames the slime to trigger this).
+        _identity.QueueIdentityUpdate(uid);
         _humanoid.SetSkinColor(uid, staged.SkinColor, false, humanoid: humanoid);
         humanoid.EyeColor = staged.EyeColor;
         _humanoid.SetScale(uid, new Vector2(staged.Width, staged.Height), false, humanoid);
@@ -641,6 +830,8 @@ public sealed class SlimeMorphSystem : EntitySystem
             HeadColorFactor = HeadFactor(ent.Comp, staged?.HeadLayer),
             HeadColorAlpha = ent.Comp.HeadColorAlpha,
             Remembered = ent.Comp.Remembered.Values.ToList(),
+            Saved = ent.Comp.Saved.ToList(),
+            MorphableSpecies = ent.Comp.MorphableSpecies.Select(s => s.Id).ToList(),
             SelectedTarget = staged?.SelectedTarget,
             CanApply = staged is { FromTarget: false },
             CanMimic = staged is { FromTarget: true },

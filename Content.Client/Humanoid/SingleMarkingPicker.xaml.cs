@@ -192,10 +192,15 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         MarkingList.Clear();
 
-        var sortedMarkings = _markingPrototypeCache.Where(m =>
+        var filtered = _markingPrototypeCache.Where(m =>
             m.Key.ToLower().Contains(filter.ToLower()) ||
-            GetMarkingName(m.Value).ToLower().Contains(filter.ToLower())
-        ).OrderBy(p => Loc.GetString($"marking-{p.Key}"));
+            GetMarkingName(m.Value).ToLower().Contains(filter.ToLower()));
+
+        // Pirate: slime morph - name sorting
+        var sortedMarkings = GradientContext != null
+            ? filtered.OrderBy(p => HasCyrillicName(Loc.GetString($"marking-{p.Key}")) ? 0 : 1)
+                .ThenBy(p => Loc.GetString($"marking-{p.Key}"))
+            : filtered.OrderBy(p => Loc.GetString($"marking-{p.Key}"));
 
         foreach (var (id, marking) in sortedMarkings)
         {
