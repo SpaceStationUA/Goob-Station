@@ -8,6 +8,8 @@
   name: Urist McShadow
   abstract: true
   components:
+  - type: Inventory # TheDen - So they can have -shadowkin clothing sprites
+    speciesId: shadowkin
   - type: LanguageKnowledge # Einstein Engines - Language
     speaks:
     - TauCetiBasic
@@ -242,6 +244,8 @@
   categories: [ HideSpawnMenu ]
   description: A dummy shadowkin meant to be used in character setup.
   components:
+    - type: Inventory # TheDen - So they can have -shadowkin clothing sprites
+      speciesId: shadowkin
     - type: HumanoidAppearance
       species: Shadowkin
       customBaseLayers: # Pirate: glowing eyes patch

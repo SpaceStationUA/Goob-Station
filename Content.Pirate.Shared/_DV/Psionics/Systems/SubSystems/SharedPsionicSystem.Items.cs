@@ -4,6 +4,7 @@ using Content.Shared._DV.Psionics.Systems.PsionicPowers;
 using Content.Shared.Damage.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Popups;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
@@ -101,8 +102,15 @@ public abstract partial class SharedPsionicSystem
             }
 
             if (!weapon.Comp.Punish
+                || HasComp<PsionicComponent>(target))
+                continue;
+
+            // Test feedback: the pendulum grows hot in the wielder's hand if the subject lacks the gift.
+            if (weapon.Comp.PunishMessage is { } punishMessage)
+                Popup.PopupEntity(Loc.GetString(punishMessage), args.User, args.User, PopupType.MediumCaution);
+
+            if (!weapon.Comp.PunishStatusEffects
                 || !HasComp<PotentialPsionicComponent>(target)
-                || HasComp<PsionicComponent>(target)
                 || !Random.Prob(weapon.Comp.PunishChance))
                 continue;
 

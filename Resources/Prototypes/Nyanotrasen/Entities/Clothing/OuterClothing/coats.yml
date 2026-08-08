@@ -8,6 +8,7 @@
     sprite: Nyanotrasen/Clothing/OuterClothing/Coats/mantis_jacket.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/OuterClothing/Coats/mantis_jacket.rsi
+  - type: AllowSuitStorage # So the greatsword sheath / guns can be worn on the suit storage slot
   - type: Armor
     modifiers:
       coefficients:

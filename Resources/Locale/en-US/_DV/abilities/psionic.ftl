@@ -188,3 +188,6 @@ psionic-eruption-power-metapsionic-feedback = {CAPITALIZE($entity)} is a storm a
 # Psychokinetic Scream
 psychokinetic-scream-power-initialization-feedback = A wordless scream grows in my throat, older than language. When I release it, the light around me will shatter.
 psychokinetic-scream-power-metapsionic-feedback = {CAPITALIZE($entity)} has a voice that shatters light itself.
+
+# Mantis pendulum
+mantis-pendulum-hot-message = The pendulum grows uncomfortably hot in your hand.

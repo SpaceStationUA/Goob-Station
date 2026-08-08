@@ -1,0 +1,210 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+# SPDX-FileCopyrightText: 2025 Jakumba
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (Resources/Prototypes/_DEN/Entities/Objects/Specific/chemistry.yml,
+# chemistry-bottles.yml and Medical/pills.yml, Mantis sections only)
+# Adapted for this fork: the MaterialEidolite1/ScrapElectrum spawns and PhysicalComposition on
+# destruction are dropped (those materials aren't in this fork).
+
+- type: entity
+  parent: BaseSyringe
+  id: SyringeMantis
+  name: electrum syringe
+  description: "An electrum syringe with an eidolite barrel. Naturally antimicrobial."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Specific/Mantis/syringemantis.rsi
+  - type: Item
+    sprite: _DEN/Objects/Specific/Mantis/syringemantis.rsi
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic # Metal shell
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak # There's still a crystal interior
+          params:
+            volume: -4
+      - !type:SpillBehavior { }
+      # Eidolite/electrum shard spawn dropped - those materials aren't in this fork
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Syringe
+    - MantisBeltStorable
+    - MantisBoxChemicalsStorable
+
+- type: entity
+  parent: BaseChemistryEmptyBottle
+  id: ChemistryEmptyBottleMantis
+  name: electrum bottle
+  description: "An eidolite bottle in a durable electrum shell. Useful for your rituals."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Specific/Mantis/bottlemantis.rsi
+    layers:
+    - state: bottle
+    - state: bottle-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Item
+    sprite: _DEN/Objects/Specific/Mantis/bottlemantis.rsi
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: bottle-
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 0 # Metal shell
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 0 # Metal shell
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 1 # Doink
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic # Metal shell
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak # There's still a crystal interior
+          params:
+            volume: -4
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Bottle
+    - MantisBeltStorable
+    - MantisBoxChemicalsStorable
+
+# Pill canisters
+- type: entity
+  parent: PillCanister
+  id: PillCanisterMantis
+  name: mantis pill canister
+  description: "An electrum pill canister with an eidolite window, etched with a Greek psi."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Specific/Mantis/pillcanistermantis.rsi
+    layers:
+    - state: pill_canister
+  - type: Item
+    sprite: _DEN/Objects/Specific/Mantis/pillcanistermantis.rsi
+  - type: Tag
+    tags:
+    - PillCanister
+    - MantisBeltStorable
+    - MantisBoxChemicalsStorable
+
+- type: entity
+  parent: PillCanisterMantis
+  id: PillCanisterSpaceDrugsMantis
+  suffix: LSD, 5
+  description: "A potent psychedelic that may awaken psionic abilities in those with potential, coloquially called \"space drugs.\""
+  components:
+  - type: Label
+    currentLabel: LSD 15u
+  - type: Sprite
+    layers:
+    - state: pill_canister
+    - state: pill_canister-spacedrugs # A greenish gray stripe
+  - type: StorageFill
+    contents:
+    - id: PillSpaceDrugs
+      amount: 5
+
+- type: entity
+  parent: [PillCanisterMantis, BaseMantisContraband]
+  id: PillCanisterMindbreakerToxinMantis
+  suffix: mindbreaker toxin, 5
+  description: "Permanently removes psionics when ingested. Not to be taken lightly."
+  components:
+  - type: Label
+    currentLabel: mindbreaker toxin 20u
+  - type: Sprite
+    layers:
+    - state: pill_canister
+    - state: pill_canister-mindbreaker # A cool red stripe - not the color of mindbreaker, the label is a warning
+  - type: StorageFill
+    contents:
+    - id: PillMindbreakerToxin
+      amount: 5
+
+- type: entity # Not obtainable by players, unless we want to prevent them from making heartbreaker out of their roundstart mindbreaker in MantisCaseChemicals
+  parent: [PillCanisterMantis, BaseMantisContraband]
+  id: PillCanisterSoulbreakerToxinMantis
+  suffix: soulbreaker toxin, 5
+  description: "Permanently removes psionics when ingested. Not to be taken lightly. Four times stronger than mindbreaker toxin."
+  components:
+  - type: Label
+    currentLabel: soulbreaker toxin 5u
+  - type: Sprite
+    layers:
+    - state: pill_canister
+    - state: pill_canister-soulbreaker # A cool pink stripe - not the color of soulbreaker, the label is a warning
+  - type: StorageFill
+    contents:
+    - id: PillSoulbreakerToxin
+      amount: 5
+
+# Cryptobiolin pill + canister (temporary psionic insulation)
+- type: entity
+  name: pill
+  suffix: cryptobiolin 15u
+  parent: Pill
+  id: PillCryptobiolin
+  description: "A temporary anti-psionic."
+  components:
+  - type: Label
+    currentLabel: cryptobiolin 15u
+  - type: Sprite
+    sprite: _DEN/Objects/Specific/Chemistry/pills.rsi
+    state: cryptopill
+  - type: Pill # state field isn't in this fork's PillComponent; the sprite state above handles it
+  - type: Item
+    size: Tiny
+    sprite: _DEN/Objects/Specific/Chemistry/pills.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Cryptobiolin
+          Quantity: 15
+
+- type: entity
+  parent: PillCanisterMantis
+  id: PillCanisterCryptobiolinMantis
+  suffix: cryptobiolin, 10
+  description: "A drug which causes mild confusion, but renders you psionically insulated. Each pill lasts about five minutes."
+  components:
+  - type: Label
+    currentLabel: cryptobiolin 15u
+  - type: Sprite
+    layers:
+    - state: pill_canister
+    - state: pill_canister-crypto # A blue stripe
+  - type: StorageFill
+    contents:
+    - id: PillCryptobiolin
+      amount: 10

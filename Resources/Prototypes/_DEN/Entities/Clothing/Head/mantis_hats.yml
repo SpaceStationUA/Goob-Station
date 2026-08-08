@@ -14,6 +14,7 @@
       visible: false
   - type: Clothing
     sprite: _DEN/Clothing/Head/Hats/mantis_fez_insulative.rsi
+  - type: PsionicallyInsulative
   #- type: GuideHelp
   #  guides: [ PsionicInsulation ]
   - type: Tag
@@ -97,3 +98,21 @@
 #  - type: Clothing
 #    sprite: _DEN/Clothing/Head/Hats/cagemantis.rsi
 #
+
+# Mantis mati hat (TheDen PR #2669 port - only spawned by the wolfskin's ToggleableClothing)
+- type: entity
+  parent: ClothingHeadHatFezMantis
+  id: ClothingHeadHatMantisShroud
+  name: mantis mati
+  description: "A broad traveler's hat with a hanging veil, keeping sun and rain at bay while the world fades at the edges. So named for the watchful eye engraved into its crown."
+  categories: [ HideSpawnMenu ] # Really should only come from ClothingNeckCloakMantisShroud
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Head/Hats/mantis_shroud_hat.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Head/Hats/mantis_shroud_hat.rsi
+  - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+

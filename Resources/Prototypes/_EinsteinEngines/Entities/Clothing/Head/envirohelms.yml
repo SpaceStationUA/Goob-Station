@@ -762,54 +762,6 @@
 
 - type: entity
   parent: ClothingHeadEnvirohelmCustomBase
-  id: ClothingHeadEnvirohelmMantis
-  name: mantis' envirosuit helmet
-  description: An envirosuit helmet for the forensic mantis with a fancy gold stripe.
-  components:
-  - type: Sprite
-    layers:
-    - state: icon
-      color: "#46566d"
-    - state: accent-icon
-      color: "#7d2322"
-    - state: midaccent-icon
-      color: "#d4af48"
-    - state: visor-icon
-    - state: icon-flash
-      visible: false
-      shader: unshaded
-      map: [ "light" ]
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#46566d"
-      - state: accent-inhand-left
-        color: "#7d2322"
-      - state: midaccent-inhand-left
-        color: "#d4af48"
-      - state: visor-inhand-left
-      right:
-      - state: inhand-right
-        color: "#46566d"
-      - state: accent-inhand-right
-        color: "#7d2322"
-      - state: midaccent-inhand-right
-        color: "#d4af48"
-      - state: visor-inhand-right
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        color: "#46566d"
-      - state: accent-equipped-HELMET
-        color: "#7d2322"
-      - state: midaccent-equipped-HELMET
-        color: "#d4af48"
-      - state: visor-equipped-HELMET
-
-- type: entity
-  parent: ClothingHeadEnvirohelmCustomBase
   id: ClothingHeadEnvirohelmSafari
   name: safari envirosuit helmet
   description: Makes you a target for the locals.

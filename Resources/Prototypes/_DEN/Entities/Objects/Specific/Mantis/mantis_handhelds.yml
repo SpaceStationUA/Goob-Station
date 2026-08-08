@@ -1,0 +1,132 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+# SPDX-FileCopyrightText: 2026 RosySaturniidae
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (Resources/Prototypes/_DEN/Entities/Objects/Specific/Mantis/handheldcomputers.yml)
+# Adapted for this fork: only the psionics registry and crew monitor sections.
+
+# REGISTRY (i.e mantis criminal records)
+
+- type: entity
+  parent: [BaseHandheldComputer, BaseMantisContraband] # Spawns in the mantis's pocket, contraband so they can't really give it away
+  id: HandheldPsionicsRegistry
+  name: handheld psion registry
+  description: "A stone tablet that grants access to the psion registry without having to return to your office."
+  components:
+  - type: Item
+    sprite: _DEN/Objects/Specific/Mantis/handheldpsionicsregistry.rsi
+  - type: Sprite # den
+    sprite: _DEN/Objects/Specific/Mantis/handheldpsionicsregistry.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: psion_registry
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
+  - type: Tag
+    tags:
+    - MantisBeltStorable
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: ActivatableUI
+    key: enum.PsionicsRecordsConsoleKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.PsionicsRecordsConsoleKey.Key:
+        type: PsionicsRecordsConsoleBoundUserInterface
+  - type: PsionicsRecordsConsole
+  - type: AccessReader # Same as the psion registry computer
+    access:
+      - [ Chapel ]
+#      - [ Library ]
+      - [ Mantis ]
+
+# Handheld crew monitor, mantis reskin
+
+- type: entity # Sometimes mapped in mantis offices, but not otherwise part of the mantis's kit
+  parent: [BaseHandheldComputer, BaseMantisContraband] # Not parented to the handheld crew monitor because it should never fulfill a steal objective
+  id: HandheldCrewMonitorMantis
+  name: psion vitals monitor # If this is ever updated to only track registered psions, rename it the "handheld psion monitor" or something | <- this hasnt been done yet but its been renamed so it cant be confused with the CMO's one
+  description: "Ostensibly used to monitor the health and safety of registered psions aboard the station, although a system update seems to have incorrectly increased its access to see all crew. Oh well." # Like above, if functionality changes, update this description
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Specific/Mantis/handheldcrewmonitormantis.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: psion_monitor
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
+  - type: Tag
+    tags:
+    - MantisBeltStorable
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: ActivatableUI
+    key: enum.CrewMonitoringUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+  - type: CrewMonitoringConsole # HandheldCrewMonitor component isn't in this fork
+  - type: DeviceNetwork # Needed for the crew monitor to receive suit sensor data
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitor
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: StationLimitedNetwork
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        blacklist:
+          tags:
+          - MantisCaster
+
+- type: entity
+  parent: HandheldCrewMonitorMantis
+  id: HandheldCrewMonitorMantisEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Specific/Mantis/handheldcrewmonitormantis.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: psion_monitor
+        shader: unshaded
+        visible: false
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        blacklist:
+          tags:
+          - MantisCaster

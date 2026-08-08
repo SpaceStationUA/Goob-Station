@@ -20,6 +20,7 @@
         - Syringe
         - MagazinePistol
         - PillCanister
+        - MantisBeltStorable
       components:
         - AnomalyScanner
         - NodeScanner

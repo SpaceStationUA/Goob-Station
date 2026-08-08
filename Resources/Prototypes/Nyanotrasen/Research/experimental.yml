@@ -12,6 +12,10 @@
   - ClothingHeadCage
   - MagazineBoxPistolCryptobiolin
   - MagazinePistolCryptobiolin
+  - MantisCasterPistolFrame # Pirate - mantis psionic caster frames (fuse with an anomaly core to finish)
+  - MantisCasterRevolverFrame
+  - MantisCasterShotgunFrame
+  - MantisCasterSubMachineGunFrame
   position: -2,-3
   technologyPrerequisites:
   - BasicRobotics

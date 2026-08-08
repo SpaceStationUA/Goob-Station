@@ -13,6 +13,7 @@
       inverted: true
       species:
         - IPC
+        - Plasmaman
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
       employers:
@@ -24,8 +25,7 @@
   supervisors: job-supervisors-rd
   whitelisted: true # Pirate
   goobcoins: 25 #Goob content
-  antagAdvantage: 2 # DeltaV - Psionics, has an objective item.
-  canBeAntag: true # DeltaV - Mantis is no longer a Detective.
+  canBeAntag: false # Pirate - like security, mindshielded, no antag roles
   access:
   - Research
   - Maintenance
@@ -36,28 +36,25 @@
       - type: CanEnchant
       - type: MetapsionicPulsePower # DeltaV
       - type: AssayPower
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: ForensicMantisGear
   equipment:
-    id: PsionicMantisPDA
-    eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetScience # DeltaV - Mantis is part of Epistemics
-    belt: ClothingBeltMantis
+    id: ForensicMantisPDA
+    pocket1: HandheldPsionicsRegistry
   storage:
     back:
-    - HandLabeler
-    - PillMindbreakerToxin
-    - BoxFolderGrey
-    - RubberStampMantis
     - ClaridisolSynth
 
 - type: chameleonOutfit
   id: ForensicMantisChameleonOutfit
   job: ForensicMantis
   startingGear: ForensicMantisGear
+  hasMindShield: true
   equipment:
-    id: PsionicMantisPDA
+    id: ForensicMantisPDA
     eyes: ClothingEyesGlassesSunglasses
     ears: ClothingHeadsetScience
     belt: ClothingBeltMantis

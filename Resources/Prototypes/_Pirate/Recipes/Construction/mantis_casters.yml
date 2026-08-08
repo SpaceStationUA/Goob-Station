@@ -1,0 +1,117 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Mantis caster "fusing" recipes (Pirate)
+#
+# Craft a psionic caster frame (Protolathe, PsionicCountermeasures tech) together with a
+# whitelisted anomaly core to produce the finished caster. Crafted from the crafting menu.
+
+# Pistol
+- type: construction
+  id: MantisCasterPistolCryptoCraft
+  name: recipe-mantis-caster-pistol-crypto
+  graph: MantisCasterPistolFuse
+  startNode: cryptoStart
+  targetNode: crypto
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: MantisCasterPistolHolyCraft
+  name: recipe-mantis-caster-pistol-holy
+  graph: MantisCasterPistolFuse
+  startNode: holyStart
+  targetNode: holy
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: MantisCasterPistolLethalCraft
+  name: recipe-mantis-caster-pistol-lethal
+  graph: MantisCasterPistolFuse
+  startNode: lethalStart
+  targetNode: lethal
+  category: construction-category-weapons
+  objectType: Item
+
+# Revolver
+- type: construction
+  id: MantisCasterRevolverCryptoCraft
+  name: recipe-mantis-caster-revolver-crypto
+  graph: MantisCasterRevolverFuse
+  startNode: cryptoStart
+  targetNode: crypto
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: MantisCasterRevolverHolyCraft
+  name: recipe-mantis-caster-revolver-holy
+  graph: MantisCasterRevolverFuse
+  startNode: holyStart
+  targetNode: holy
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: MantisCasterRevolverLethalCraft
+  name: recipe-mantis-caster-revolver-lethal
+  graph: MantisCasterRevolverFuse
+  startNode: lethalStart
+  targetNode: lethal
+  category: construction-category-weapons
+  objectType: Item
+
+# Shotgun
+- type: construction
+  id: MantisCasterShotgunCryptoCraft
+  name: recipe-mantis-caster-shotgun-crypto
+  graph: MantisCasterShotgunFuse
+  startNode: cryptoStart
+  targetNode: crypto
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: MantisCasterShotgunHolyCraft
+  name: recipe-mantis-caster-shotgun-holy
+  graph: MantisCasterShotgunFuse
+  startNode: holyStart
+  targetNode: holy
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: MantisCasterShotgunLethalCraft
+  name: recipe-mantis-caster-shotgun-lethal
+  graph: MantisCasterShotgunFuse
+  startNode: lethalStart
+  targetNode: lethal
+  category: construction-category-weapons
+  objectType: Item
+
+# Submachine gun
+- type: construction
+  id: MantisCasterSubMachineGunCryptoCraft
+  name: recipe-mantis-caster-submachinegun-crypto
+  graph: MantisCasterSubMachineGunFuse
+  startNode: cryptoStart
+  targetNode: crypto
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: MantisCasterSubMachineGunHolyCraft
+  name: recipe-mantis-caster-submachinegun-holy
+  graph: MantisCasterSubMachineGunFuse
+  startNode: holyStart
+  targetNode: holy
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: MantisCasterSubMachineGunLethalCraft
+  name: recipe-mantis-caster-submachinegun-lethal
+  graph: MantisCasterSubMachineGunFuse
+  startNode: lethalStart
+  targetNode: lethal
+  category: construction-category-weapons
+  objectType: Item

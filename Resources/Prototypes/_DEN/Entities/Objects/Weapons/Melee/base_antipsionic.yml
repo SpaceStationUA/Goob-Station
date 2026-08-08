@@ -1,0 +1,41 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (Resources/Prototypes/_DEN/Entities/Objects/Weapons/Melee/baseantipsionic.yml)
+# Adapted for this fork:
+# - BaseObjectVerbsCuteness doesn't exist here, so the base parents BaseItem only.
+# - AntiPsionicWeaponComponent here has no punishSelfDamage/punishStunDuration fields (see MantisMeleeGreatsword).
+# - GuideHelp to the MantisGuide entry is commented out - there is no MantisGuide guide entry in this fork.
+- type: entity
+  parent: BaseItem
+  id: BaseAntiPsionicWeapon
+  abstract: true
+  components:
+  - type: AntiPsionicWeapon
+    punish: false
+    # A standard anti-psionic weapon is 25% stronger against psionic enemies across the board.
+    modifiers:
+      coefficients:
+        Blunt: 1.25
+        Slash: 1.25
+        Piercing: 1.25
+        Heat: 1.25
+        Cold: 1.25
+        Holy: 1.25
+  # These values get overridden by real weapons, they're just here as a baseline.
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 1
+        Holy: 0.5
+  - type: DamageOtherOnHit # Explicit damage required - this fork has no MeleeWeapon damage fallback
+    damage:
+      types:
+        Slash: 1
+        Holy: 0.5
+  - type: LandAtCursor
+  - type: ThrowingAngle
+    angularVelocity: false
+  # - type: GuideHelp
+  #   guides: [ MantisGuide ]

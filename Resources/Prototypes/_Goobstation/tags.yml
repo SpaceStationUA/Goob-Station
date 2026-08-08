@@ -782,4 +782,61 @@
   id: MantisBeltStorable
 
 - type: Tag
+  id: MantisBoxCandlesStorable
+
+- type: Tag
+  id: MantisBoxChemicalsStorable
+
+- type: Tag
   id: MantisBoxRestraintsStorable
+
+- type: Tag
+  id: HandLabeler # TheDen _DV/tags.yml - for belt/case whitelists (mantis sigillator)
+
+- type: Tag
+  id: MantisBoxFolderStorable # TheDen - only the mantis pen and stamp have this (mantis folder/papers were removed)
+
+- type: Tag
+  id: MantisCane
+
+- type: Tag
+  id: MantisCaster
+
+- type: Tag
+  id: MantisCasterPistol
+
+- type: Tag
+  id: MantisCasterRevolver
+
+- type: Tag
+  id: MantisCasterShotgun
+
+- type: Tag
+  id: MantisCasterSubMachineGun
+
+- type: Tag
+  id: MantisCasterFrame
+
+- type: Tag
+  id: MantisCasterFramePistol
+
+- type: Tag
+  id: MantisCasterFrameRevolver
+
+- type: Tag
+  id: MantisCasterFrameShotgun
+
+- type: Tag
+  id: MantisCasterFrameSubMachineGun
+
+- type: Tag
+  id: MantisFist
+
+- type: Tag
+  id: MantisGreatsword
+
+- type: Tag
+  id: MantisKnife
+
+- type: Tag
+  id: MantisSickle
