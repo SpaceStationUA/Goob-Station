@@ -231,7 +231,8 @@ public abstract class SharedStorageSystem : EntitySystem
             StoredItems = storedItems,
             SavedLocations = component.SavedLocations,
             Whitelist = component.Whitelist,
-            Blacklist = component.Blacklist
+            Blacklist = component.Blacklist,
+            IgnoreLock = component.IgnoreLock // Pirate: modsuit item transfer fix
         };
     }
 
@@ -429,7 +430,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         // if the target is storage, add a verb to transfer storage.
         if (TryComp(args.Target, out StorageComponent? targetStorage)
-            && (!TryComp(args.Target, out LockComponent? targetLock) || !targetLock.Locked))
+            && (!TryComp(args.Target, out LockComponent? targetLock) || !targetLock.Locked || targetStorage.IgnoreLock)) // Pirate: modsuit item transfer fix
         {
             UtilityVerb verb = new()
             {
@@ -965,8 +966,8 @@ public abstract class SharedStorageSystem : EntitySystem
         if (entities.Count == 0)
             return;
 
-        if (Resolve(source, ref sourceLock, false) && sourceLock.Locked
-            || Resolve(target, ref targetLock, false) && targetLock.Locked)
+        if (Resolve(source, ref sourceLock, false) && sourceLock.Locked && !sourceComp.IgnoreLock // Pirate: modsuit item transfer fix
+            || Resolve(target, ref targetLock, false) && targetLock.Locked && !targetComp.IgnoreLock) // Pirate: modsuit item transfer fix
             return;
 
         foreach (var entity in entities.ToArray())
@@ -1969,5 +1970,7 @@ public abstract class SharedStorageSystem : EntitySystem
         public EntityWhitelist? Whitelist;
 
         public EntityWhitelist? Blacklist;
+
+        public bool IgnoreLock; // Pirate: modsuit item transfer fix
     }
 }

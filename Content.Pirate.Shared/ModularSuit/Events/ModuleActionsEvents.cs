@@ -21,6 +21,15 @@ public sealed partial class ActivateTeleporterModuleEvent : InstantActionEvent
     public SoundSpecifier ActivationSound = new SoundCollectionSpecifier("RadiationPulse");
 }
 
+public sealed partial class ToggleMagbootsModuleEvent : InstantActionEvent
+{
+    [DataField]
+    public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Mecha/mechmove03.ogg");
+
+    [DataField]
+    public SoundSpecifier TurnOffSound = new SoundPathSpecifier("/Audio/Mecha/mechmove03.ogg");
+}
+
 public sealed partial class ToggleHolsterModuleEvent : InstantActionEvent
 {
     [DataField]
