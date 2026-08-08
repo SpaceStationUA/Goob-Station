@@ -14,6 +14,9 @@ namespace Content.Client.Instruments;
 
 public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
+    private const int MidiMinVolume = 0;
+    private const int MidiMaxVolume = 127;
+
     [Dependency] private readonly IClientNetManager _netManager = default!;
     [Dependency] private readonly IMidiManager _midiManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -37,6 +40,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentMidiEventEvent>(OnMidiEventRx);
         SubscribeNetworkEvent<InstrumentStartMidiEvent>(OnMidiStart);
         SubscribeNetworkEvent<InstrumentStopMidiEvent>(OnMidiStop);
+        SubscribeNetworkEvent<InstrumentSetMidiMinVolumeEvent>(OnSetMidiMinVolume);
 
         SubscribeLocalEvent<InstrumentComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<InstrumentComponent, ComponentHandleState>(OnHandleState);
@@ -74,6 +78,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         component.AllowProgramChange = state.AllowProgramChange;
         component.RespectMidiLimits = state.RespectMidiLimits;
         component.Master = EnsureEntity<InstrumentComponent>(state.Master, uid);
+        component.MinVolume = state.MinVolume;
         component.FilteredChannels = state.FilteredChannels;
 
         if (component.Playing)
@@ -93,6 +98,18 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             return;
 
         RaiseNetworkEvent(new InstrumentSetMasterEvent(GetNetEntity(uid), GetNetEntity(masterUid)));
+    }
+
+    public void SetMinVolume(EntityUid uid, int volume)
+    {
+        if (!TryComp(uid, out InstrumentComponent? instrument))
+            return;
+
+        var byteMinVolume = (byte)Math.Min(Math.Max(MidiMinVolume, volume), MidiMaxVolume);
+        instrument.MinVolume = byteMinVolume;
+
+        RaiseNetworkEvent(new InstrumentSetMidiMinVolumeEvent(GetNetEntity(uid), byteMinVolume));
+        UpdateRenderer(uid);
     }
 
     public void SetFilteredChannel(EntityUid uid, int channel, bool value)
@@ -185,6 +202,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         UpdateRendererMaster(instrument);
 
         instrument.Renderer.LoopMidi = instrument.LoopMidi;
+        instrument.Renderer.MinVolume = instrument.MinVolume;
     }
 
     private void UpdateRendererMaster(InstrumentComponent instrument)
@@ -415,6 +433,15 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     private void OnMidiStop(InstrumentStopMidiEvent ev)
     {
         EndRenderer(GetEntity(ev.Uid), true);
+    }
+
+    private void OnSetMidiMinVolume(InstrumentSetMidiMinVolumeEvent ev)
+    {
+        if (!TryComp(GetEntity(ev.Uid), out InstrumentComponent? instrument))
+            return;
+
+        instrument.MinVolume = ev.MinVolume;
+        UpdateRenderer(GetEntity(ev.Uid), instrument);
     }
 
     public override void Update(float frameTime)

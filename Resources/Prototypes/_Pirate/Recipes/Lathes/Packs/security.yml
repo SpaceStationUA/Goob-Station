@@ -31,3 +31,8 @@
   - MagazineUniversalMagnumUranium
   - MagazineUniversalMagnumIncendiary
   - MagazineMagnumUranium
+
+- type: latheRecipePack
+  id: SecurityUtilityPirate
+  recipes:
+  - EnergyDomeTurtle

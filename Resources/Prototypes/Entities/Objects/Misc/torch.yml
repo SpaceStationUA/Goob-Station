@@ -17,6 +17,10 @@
       # Sounds legit nuff
       litSound:
         path: /Audio/Items/Flare/flare_on.ogg
+    - type: SkiaExpendableLight # Pirate: server-side values for Skia light reactions.
+      litRadius: 6.0
+      litEnergy: 5.0
+      fadeInDuration: 8.0
     - type: Sprite
       sprite: Objects/Misc/torch.rsi
       layers:

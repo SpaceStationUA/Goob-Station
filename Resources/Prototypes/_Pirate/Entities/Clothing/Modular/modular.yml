@@ -952,8 +952,8 @@
           heatingCoefficient: 0.01
           coolingCoefficient: 0.01
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 0.95
+    sprintModifier: 0.95
 
 - type: entity
   parent: ClothingModularHelmetBase
@@ -1617,8 +1617,8 @@
           heatingCoefficient: 0.01
           coolingCoefficient: 0.01
   - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
+    walkModifier: 0.75
+    sprintModifier: 0.75
 
 - type: entity
   parent: ClothingModularHelmetBase
@@ -3187,8 +3187,8 @@
           heatingCoefficient: 0.01
           coolingCoefficient: 0.01
   - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
+    walkModifier: 0.8
+    sprintModifier: 0.8
 
 - type: entity
   parent: ClothingModularHelmetBase
@@ -3328,8 +3328,8 @@
           heatingCoefficient: 0.01
           coolingCoefficient: 0.01
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 0.95
+    sprintModifier: 0.95
 
 - type: entity
   parent: ClothingModularHelmetBase
@@ -3366,6 +3366,13 @@
   - type: PointLight
     color: "#83db2b"
   - type: Armor
+    # Pirate: matches the trauma protection of the nuclear operative hardsuit.
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0
+      NerveDamage: 0
     modifiers:
       coefficients:
         Blunt: 0.9
@@ -3389,6 +3396,13 @@
       sprite: _Pirate/Clothing/Modular/Syndicate/chestplate.rsi
       state: icon-sealed
   - type: Armor
+    # Pirate: matches the trauma protection of the nuclear operative hardsuit.
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0
+      NerveDamage: 0
     modifiers:
       coefficients:
         Blunt: 0.5

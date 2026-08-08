@@ -69,6 +69,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         base.Initialize();
 
         SubscribeAbilities();
+        SubscribeVision();
         SubscribeLocalEvent<CorticalBorerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<CorticalBorerComponent, CorticalBorerDispenserInjectMessage>(OnInjectReagentMessage);
         SubscribeLocalEvent<CorticalBorerComponent, CorticalBorerDispenserSetInjectAmountMessage>(OnSetInjectAmountMessage);
@@ -78,6 +79,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         SubscribeLocalEvent<CorticalBorerComponent, ModifyChangedTemperatureEvent>(OnTemperatureChange);
         SubscribeLocalEvent<CorticalBorerComponent, TryIgniteEvent>(OnIgniteAttempt);
         SubscribeLocalEvent<CorticalBorerComponent, CorticalBorerEjectingEvent>(OnEjecting);
+        SubscribeLocalEvent<CorticalBorerComponent, CorticalBorerEjectedEvent>(OnEjected);
     }
 
     private void OnStartup(Entity<CorticalBorerComponent> ent, ref ComponentStartup args)
@@ -417,10 +419,20 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         EntityUid host,
         CorticalBorerInfestedComponent infested)
     {
-        if (HasComp<ThermalVisionComponent>(host))
-            return;
+        ThermalVisionComponent thermal;
+        if (TryComp<ThermalVisionComponent>(host, out var existingThermal))
+        {
+            if (!infested.AddedBorerThermalVision)
+                return;
 
-        var thermal = EnsureComp<ThermalVisionComponent>(host);
+            thermal = existingThermal;
+        }
+        else
+        {
+            thermal = EnsureComp<ThermalVisionComponent>(host);
+        }
+
+        infested.AddedControlThermalVision = true;
         if (TryComp<ThermalVisionComponent>(worm, out var borerThermal))
         {
             thermal.Color = borerThermal.Color;
@@ -428,6 +440,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
             thermal.ThermalShader = borerThermal.ThermalShader;
             thermal.DrawOverlay = borerThermal.DrawOverlay;
             thermal.OverlayOpacity = borerThermal.OverlayOpacity;
+            thermal.ToggleAction = borerThermal.ToggleAction;
         }
 
         thermal.IsEquipment = false;
@@ -439,7 +452,6 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
             Actions.AddAction(host, ref thermal.ToggleActionEntity, toggleAction);
             Actions.SetToggled(thermal.ToggleActionEntity, true);
         }
-        infested.AddedControlThermalVision = true;
         Dirty(host, thermal);
     }
 
@@ -449,6 +461,16 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
             return;
 
         infested.AddedControlThermalVision = false;
+
+        if (infested.AddedBorerThermalVision &&
+            TryComp<ThermalVisionComponent>(infested.Borer, out var borerThermal) &&
+            TryComp<ThermalVisionComponent>(host, out var hostThermal))
+        {
+            ConfigureGrantedVision(host, hostThermal, borerThermal);
+            SetVisionActive(host, hostThermal, true);
+            return;
+        }
+
         RemCompDeferred<ThermalVisionComponent>(host);
     }
 
@@ -477,5 +499,14 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
 
         if (ent.Comp.ControlingHost)
             EndControl(ent);
+    }
+
+    private void OnEjected(Entity<CorticalBorerComponent> ent, ref CorticalBorerEjectedEvent args)
+    {
+        if (TryComp<CorticalBorerInfestedComponent>(args.Host, out var infested) &&
+            infested.Borer.Owner == ent.Owner)
+        {
+            ClearHostVision(args.Host, infested);
+        }
     }
 }

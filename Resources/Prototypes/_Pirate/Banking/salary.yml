@@ -15,22 +15,25 @@
     ResearchDirector: 680
     AdministrativeAssistant: 400
     # Служба Безпеки
-    Warden: 580
+    Warden: 600
+    SecurityInstructor: 600
     SecurityOfficer: 540
     Brigmedic: 500
     Detective: 470
     SecurityCadet: 290
     # Карго
     SalvageSpecialist: 490
+    ShaftMiner: 490
     CargoTechnician: 360
     # Інженерний відділ
     AtmosphericTechnician: 500
     StationEngineer: 430
     TechnicalAssistant: 270
     # Мед відділ
-    MedicalDoctor: 470
     Paramedic: 470
-    Chemist: 450
+    Chemist: 470
+    MedicalDoctor: 425
+    Virologist: 425
     MedicalIntern: 270
     Psychologist: 270
     # Науковий Відділ
@@ -43,6 +46,7 @@
     Botanist: 330
     Bartender: 320
     Janitor: 270
+    RadioHost: 270
     Reporter: 270
     Zookeeper: 270
     ServiceWorker: 270

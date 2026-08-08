@@ -1,0 +1,398 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# SecLink token tags and flavor prototypes.
+- type: Tag
+  id: Pribar
+
+- type: Tag
+  id: SecTicket
+
+- type: Tag
+  id: SpaceBladeSec
+
+- type: flavor
+  id: secticket
+  flavorType: Complex
+  description: flavor-complex-secticket
+
+# Token entities.
+- type: entity
+  name: baton token
+  parent: [BaseItem, BaseSecurityContraband]
+  id: BatonToken
+  suffix: 3 BT
+  description: This is a Baton Token, used in the SecLink radio to purchase a stun baton. It is not lemon flavored.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Security/seclink.rsi
+    state: batontoken
+  - type: Item
+    sprite: _Pirate/Objects/Specific/Security/seclink.rsi
+    size: Tiny
+  - type: Stack
+    count: 3
+    stackType: BatonToken
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      BatonToken: 1
+
+- type: entity
+  parent: BatonToken
+  id: BatonToken1
+  suffix: 1 BT
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: BatonToken
+  id: BatonToken5
+  suffix: 5 BT
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  name: disabler token
+  parent: [BaseItem, BaseSecurityContraband]
+  id: DisablerToken
+  suffix: 3 DT
+  description: This is a Disabler Token, used in the SecLink radio to purchase a disabler. CentComm would like to remind you that these tokens are not edible, and that this token is not blue raspberry flavored.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Security/seclink.rsi
+    state: disablertoken
+  - type: Item
+    sprite: _Pirate/Objects/Specific/Security/seclink.rsi
+    size: Tiny
+  - type: Stack
+    count: 3
+    stackType: DisablerToken
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      DisablerToken: 1
+
+- type: entity
+  parent: DisablerToken
+  id: DisablerToken1
+  suffix: 1 DT
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: DisablerToken
+  id: DisablerToken5
+  suffix: 5 DT
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  name: utility token
+  parent: [BaseItem, BaseSecurityContraband]
+  id: UtilityToken
+  suffix: 3 UT
+  description: This is a Utility Token, used in the SecLink radio to purchase a utility option. Due to several hospitalization from "accidental" consumption, R&D has given this token an artificial grape flavor to dissuade officers from eating it.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Security/seclink.rsi
+    state: utilitytoken
+  - type: Item
+    sprite: _Pirate/Objects/Specific/Security/seclink.rsi
+    size: Tiny
+  - type: Stack
+    count: 3
+    stackType: UtilityToken
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      UtilityToken: 1
+
+- type: entity
+  parent: UtilityToken
+  id: UtilityToken1
+  suffix: 1 UT
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: UtilityToken
+  id: UtilityToken5
+  suffix: 5 UT
+  components:
+  - type: Stack
+    count: 5
+
+# Currency and stack prototypes are kept Pirate-owned so the global IDs remain untouched.
+- type: stack
+  id: BatonToken
+  name: stack-baton-token
+  icon: _Pirate/Objects/Specific/Security/seclink.rsi
+  spawn: BatonToken1
+
+- type: stack
+  id: DisablerToken
+  name: stack-disabler-token
+  icon: _Pirate/Objects/Specific/Security/seclink.rsi
+  spawn: DisablerToken1
+
+- type: stack
+  id: UtilityToken
+  name: stack-utility-token
+  icon: _Pirate/Objects/Specific/Security/seclink.rsi
+  spawn: UtilityToken1
+
+- type: currency
+  id: BatonToken
+  displayName: store-currency-display-batontoken
+  cash:
+    1: BatonToken1
+  canWithdraw: true
+
+- type: currency
+  id: DisablerToken
+  displayName: store-currency-display-disablertoken
+  cash:
+    1: DisablerToken1
+  canWithdraw: true
+
+- type: currency
+  id: UtilityToken
+  displayName: store-currency-display-utilitytoken
+  cash:
+    1: UtilityToken1
+  canWithdraw: true
+
+# SecLink store categories and preset.
+- type: storeCategory
+  id: SeclinkBaton
+  name: store-category-secbaton
+  priority: 0
+
+- type: storeCategory
+  id: SeclinkDisabler
+  name: store-category-secdisabler
+  priority: 1
+
+- type: storeCategory
+  id: SeclinkUtility
+  name: store-category-secutility
+  priority: 2
+
+- type: entity
+  id: StorePresetSeclink
+  abstract: true
+  components:
+  - type: Store
+    name: store-preset-name-seclink
+    categories:
+    - SeclinkBaton
+    - SeclinkDisabler
+    - SeclinkUtility
+    currencyWhitelist:
+    - BatonToken
+    - DisablerToken
+    - UtilityToken
+    balance:
+      BatonToken: 0
+      DisablerToken: 0
+      UtilityToken: 0
+
+- type: entity
+  parent: [BaseItem, StorePresetSeclink, BaseSecurityContraband]
+  id: BaseSeclinkRadio
+  name: SecLink radio
+  description: Housing a miniature teleporter, you can use this to trade your SecLink Tokens for useful equipment! It's a little suspiciously familiar, but it's probably nothing to worry about.
+  suffix: 1OfEach
+  components:
+  - type: SecLinkStore
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Security/seclink.rsi
+    layers:
+    - state: seclinkradio
+  - type: Item
+    sprite: _Pirate/Objects/Specific/Security/seclink.rsi
+    heldPrefix: seclinkradio
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      BatonToken: 1
+      DisablerToken: 1
+      UtilityToken: 1
+
+# Listings intentionally cannot be refunded; the radio's battery validation still protects
+# any legacy currency-bearing item inserted into the store.
+- type: listing
+  id: SeclinkBaton
+  name: seclink-stun-baton-name
+  description: seclink-stun-baton-desc
+  productEntity: StunbatonSeclink
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+  disableRefund: true
+
+- type: listing
+  id: SeclinkFunBaton
+  name: seclink-fun-baton-name
+  description: seclink-fun-baton-desc
+  productEntity: Funbaton
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+  disableRefund: true
+
+- type: listing
+  id: SeclinkBat
+  name: seclink-stun-bat-name
+  description: seclink-stun-bat-desc
+  productEntity: Stunbat
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+  disableRefund: true
+
+- type: listing
+  id: SeclinkSabre
+  name: seclink-stun-sabre-name
+  description: seclink-stun-sabre-desc
+  productEntity: Stunsabre
+  cost:
+    BatonToken: 1
+  categories:
+  - SeclinkBaton
+  disableRefund: true
+
+- type: listing
+  id: SeclinkDisabler
+  name: seclink-disabler-name
+  description: seclink-disabler-desc
+  productEntity: WeaponDisablerSeclink
+  cost:
+    DisablerToken: 1
+  categories:
+  - SeclinkDisabler
+  disableRefund: true
+
+- type: listing
+  id: SeclinkFunnyDisabler
+  name: seclink-funny-disabler-name
+  description: seclink-funny-disabler-desc
+  productEntity: WeaponFunnyDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+  - SeclinkDisabler
+  disableRefund: true
+
+- type: listing
+  id: SeclinkPocketDisabler
+  name: seclink-pocket-disabler-name
+  description: seclink-pocket-disabler-desc
+  productEntity: WeaponPocketDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+  - SeclinkDisabler
+  disableRefund: true
+
+- type: listing
+  id: SeclinkAutoDisabler
+  name: seclink-auto-disabler-name
+  description: seclink-auto-disabler-desc
+  productEntity: WeaponAutoDisabler
+  cost:
+    DisablerToken: 1
+  categories:
+  - SeclinkDisabler
+  disableRefund: true
+
+- type: listing
+  id: SeclinkStunProjector
+  name: seclink-stun-projector-name
+  description: seclink-stun-projector-desc
+  productEntity: WeaponStunProjector
+  cost:
+    DisablerToken: 1
+  categories:
+  - SeclinkDisabler
+  disableRefund: true
+
+- type: listing
+  id: SeclinkSpaceBladeSec
+  name: seclink-spaceblade-name
+  description: seclink-spaceblade-desc
+  productEntity: SpaceBladeSec
+  cost:
+    UtilityToken: 1
+  categories:
+  - SeclinkUtility
+  disableRefund: true
+
+- type: listing
+  id: SeclinkCrowbar
+  name: seclink-crowbar-name
+  description: seclink-crowbar-desc
+  productEntity: Pribar
+  cost:
+    UtilityToken: 1
+  categories:
+  - SeclinkUtility
+  disableRefund: true
+
+- type: listing
+  id: SeclinkCitationator
+  name: seclink-citationator-name
+  description: seclink-citationator-desc
+  icon:
+    sprite: _Pirate/Objects/Weapons/Guns/Launchers/citationator.rsi
+    state: icon
+  productEntity: LauncherCitationator
+  cost:
+    UtilityToken: 1
+  categories:
+  - SeclinkUtility
+  disableRefund: true
+
+- type: listing
+  id: SeclinkCompactShield
+  name: seclink-shield-name
+  description: seclink-shield-desc
+  productEntity: CompactShield
+  cost:
+    UtilityToken: 1
+  categories:
+  - SeclinkUtility
+  disableRefund: true
+
+- type: listing
+  id: SeclinkSurplusGoggles
+  name: seclink-nvgoggles-name
+  description: seclink-nvgoggles-desc
+  productEntity: ClothingEyesSurplusNVGoggles
+  cost:
+    UtilityToken: 1
+  categories:
+  - SeclinkUtility
+  disableRefund: true

@@ -1,0 +1,62 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseAction
+  id: ActionMirrorJaunt
+  name: Mirror Walk
+  description: Traverse invisibly and freely through the mirror realm. You can enter or leave it only near reflective items and surfaces, such as windows or mirrors.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    predicted: false
+    checkCanInteract: false
+    useDelay: 6
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Pirate/Heretic/Mobs/mirror_maid.rsi
+      state: maid
+  - type: InstantAction
+    event: !type:EventMirrorJaunt
+  - type: HereticAction
+    requireMagicItem: true
+
+- type: entity
+  id: PolymorphMirrorJaunt
+  name: unknown
+  description: You cannot figure out what that is.
+  parent: BaseMobJaunt
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Muted
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/ice_core.rsi
+    state: core
+  - type: CollectiveMind
+    defaultChannel: MansusLink
+    channels:
+    - MansusLink
+  - type: NightVision
+    color: white
+    activateSound: null
+    deactivateSound: null
+    drawOverlay: false
+  - type: ActionGrant
+    actions:
+    - ActionMirrorJaunt
+  - type: Eye
+    visMask:
+    - Ghost
+    - Normal
+
+- type: polymorph
+  id: MirrorJaunt
+  configuration:
+    entity: PolymorphMirrorJaunt
+    forced: true
+    attachToGridOrMap: true
+    showPopup: false
+    allowRepeatedMorphs: true
+    polymorphSound:
+      path: /Audio/_Pirate/Heretic/glass_reverse.ogg
+    exitPolymorphSound:
+      path: /Audio/_Pirate/Heretic/glass_reverse.ogg

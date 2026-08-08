@@ -19,6 +19,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <cc:CommandButton Command="adminlogs" Text="{Loc admin-player-actions-window-admin-logs}"/>
             <cc:CommandButton Command="faxui" Text="{Loc admin-player-actions-window-admin-fax}"/>
             <cc:CommandButton Command="timetransferpanel" Text="{Loc admin-player-actions-window-time-transfer}"/>
+            <!-- Pirate: station job slot editor -->
+            <cc:CommandButton Command="jobslots" Text="{Loc admin-player-actions-window-job-slots}"/>
             <cc:CommandButton Command="achatwindow" Text="{Loc admin-player-actions-window-admin-chat}"/>
         </GridContainer>
     </BoxContainer>

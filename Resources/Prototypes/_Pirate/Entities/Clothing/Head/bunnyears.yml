@@ -25,3 +25,400 @@
       head:
       - state: dark-equipped-HELMET
         offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsSyndicate
+  name: кролячі вушка синдикату
+  components:
+  - type: Sprite
+    state: syndi
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: syndi-equipped-HELMET
+        offset: "0, 0.5"
+
+### Engi / Інжа
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsCE
+  name: кролячі вушка головного інженера
+  components:
+  - type: Sprite
+    state: ce
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: ce-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsEngineers
+  name: кролячі вушка інженера
+  components:
+  - type: Sprite
+    state: engi
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: engi-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsAtmos
+  name: кролячі вушка атмосферного техніка
+  components:
+  - type: Sprite
+    state: atmos
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: atmos-equipped-HELMET
+        offset: "0, 0.5"
+
+### Med / Мед
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsCMO
+  name: кролячі вушка головного лікаря
+  components:
+  - type: Sprite
+    state: cmo
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: cmo-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsDoctor
+  name: кролячі вушка лікаря
+  components:
+  - type: Sprite
+    state: doctor
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: doctor-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsGenetics
+  name: кролячі вушка генетика
+  components:
+  - type: Sprite
+    state: genetics
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: genetics-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsVirologist
+  name: кролячі вушка вірусолога
+  components:
+  - type: Sprite
+    state: virologist
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: virologist-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsParamedic
+  name: кролячі вушка парамедика
+  components:
+  - type: Sprite
+    state: paramedic
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: paramedic-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsChem
+  name: кролячі вушка хіміка
+  components:
+  - type: Sprite
+    state: chem
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: chem-equipped-HELMET
+        offset: "0, 0.5"
+
+### R&D / НВ
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsRD
+  name: кролячі вушка директора наукового відділу
+  components:
+  - type: Sprite
+    state: rd
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: rd-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsScience
+  name: кролячі вушка науковця
+  components:
+  - type: Sprite
+    state: science
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: science-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsRoboticist
+  name: кролячі вушка робототехніка
+  components:
+  - type: Sprite
+    state: roboticist
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: roboticist-equipped-HELMET
+        offset: "0, 0.5"
+
+### Cargo / Карго
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsQM
+  name: кролячі вушка квартмейстера
+  components:
+  - type: Sprite
+    state: qm
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: qm-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsCargo
+  name: кролячі вушка вантажника
+  components:
+  - type: Sprite
+    state: cargo
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: cargo-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsSalvage
+  name: кролячі вушка утилізатора
+  components:
+  - type: Sprite
+    state: salvage
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: salvage-equipped-HELMET
+        offset: "0, 0.5"
+
+### Sec / СБ
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsHOS
+  name: кролячі вушка голови служби безпеки
+  components:
+  - type: Sprite
+    state: hos
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: hos-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsWarden
+  name: кролячі вушка наглядача
+  components:
+  - type: Sprite
+    state: warden
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: warden-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsDetective
+  name: кролячі вушка детектива
+  components:
+  - type: Sprite
+    state: detective
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: detective-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsDetectiveNoir
+  name: нуарні кролячі вушка детектива
+  components:
+  - type: Sprite
+    state: detective_noir
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: detective_noir-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsSecurity
+  name: кролячі вушка охорони
+  components:
+  - type: Sprite
+    state: security
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: security-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsLawyer
+  name: кролячі вушка адвоката
+  components:
+  - type: Sprite
+    state: lawyer
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: lawyer-equipped-HELMET
+        offset: "0, 0.5"
+
+### Command / Командування
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsCentcom
+  name: кролячі вушка центрального командування
+  components:
+  - type: Sprite
+    state: centcom
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: centcom-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsCaptain
+  name: кролячі вушка капітана
+  components:
+  - type: Sprite
+    state: captain
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: captain-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsHOP
+  name: кролячі вушка голови персоналу
+  components:
+  - type: Sprite
+    state: hop
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: hop-equipped-HELMET
+        offset: "0, 0.5"
+
+### Service / Сервіс
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsBotany
+  name: кролячі вушка ботаніка
+  components:
+  - type: Sprite
+    state: botany
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: botany-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsChaplain
+  name: кролячі вушка капелана
+  components:
+  - type: Sprite
+    state: chaplain
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: chaplain-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsChef
+  name: кролячі вушка кухаря
+  components:
+  - type: Sprite
+    state: chef
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: chef-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsClown
+  name: кролячі вушка клоуна
+  components:
+  - type: Sprite
+    state: clown
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: clown-equipped-HELMET
+        offset: "0, 0.5"
+
+- type: entity
+  parent: ClothingHeadHatBunnyears
+  id: ClothingHeadHatBunnyearsJanitor
+  name: кролячі вушка прибиральника
+  components:
+  - type: Sprite
+    state: janitor
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: janitor-equipped-HELMET
+        offset: "0, 0.5"

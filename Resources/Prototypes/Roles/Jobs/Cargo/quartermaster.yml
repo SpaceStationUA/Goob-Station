@@ -30,8 +30,8 @@
   # Pirate contractor start
     - !type:CharacterEmployerRequirement
       employers:
-      - NanoTrasen
       - OrionExpress
+      - HephaestusIndustries
   # Pirate contractor end
   weight: 10
   startingGear: QuartermasterGear

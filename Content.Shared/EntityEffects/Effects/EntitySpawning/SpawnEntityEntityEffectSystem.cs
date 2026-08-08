@@ -20,18 +20,31 @@ public sealed partial class SpawnEntityEntityEffectSystem : EntityEffectSystem<T
         {
             for (var i = 0; i < quantity; i++)
             {
-                PredictedSpawnNextToOrDrop(proto, entity, entity.Comp);
+                if (args.Effect.SpawnAtPosition)
+                    PredictedSpawnAtPosition(proto, entity.Comp.Coordinates);
+                else
+                    PredictedSpawnNextToOrDrop(proto, entity, entity.Comp);
             }
         }
         else if (_net.IsServer)
         {
             for (var i = 0; i < quantity; i++)
             {
-                SpawnNextToOrDrop(proto, entity, entity.Comp);
+                if (args.Effect.SpawnAtPosition)
+                    SpawnAtPosition(proto, entity.Comp.Coordinates);
+                else
+                    SpawnNextToOrDrop(proto, entity, entity.Comp);
             }
         }
     }
 }
 
 /// <inheritdoc cref="BaseSpawnEntityEntityEffect{T}"/>
-public sealed partial class SpawnEntity : BaseSpawnEntityEntityEffect<SpawnEntity>;
+public sealed partial class SpawnEntity : BaseSpawnEntityEntityEffect<SpawnEntity>
+{
+    /// <summary>
+    /// Pirate: initialize the spawned entity at the target's map/grid position before MapInit.
+    /// </summary>
+    [DataField]
+    public bool SpawnAtPosition;
+}

@@ -1,0 +1,55 @@
+# SPDX-FileCopyrightText: 2025 Redrover1760
+# SPDX-FileCopyrightText: 2025 starch
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: AsakimShuttle
+  components:
+  - type: StationEvent
+    weight: 1.5
+    minimumPlayers: 25
+    maxOccurrences: 1
+    duration: null
+    chaos:
+      Hostile: 100
+      Medical: 50
+      Death: 50
+    eventType: Neutral # Pirate: Asakim is a free agent, not universally hostile.
+  - type: GameRule
+    chaosScore: 100
+  # Pirate: PrecognitionResult is unavailable in the local psionics implementation.
+  - type: LoadMapRule
+    gridPath: /Maps/_Pirate/Shuttles/ShuttleEvent/asakim_small.yml
+  - type: AntagSpawner
+    prototype: MobAsakim
+  - type: AntagRandomObjectives
+    sets:
+    - groups: AsakimObjectiveGroup
+      maxPicks: 2
+    maxDifficulty: 100
+  - type: AntagSelection
+    agentName: roles-antag-asakim-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostAsakim
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: AsakimGear
+      roleLoadout:
+      - RoleSurvivalStandard
+      briefing:
+        text: asakim-role-briefing
+        color: "#5085fa"
+        sound: /Audio/_Pirate/Ambience/Antag/asakimbriefing.ogg
+      components:
+      - type: RandomHumanoidAppearance
+        randomizeName: true
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      - type: SurgerySpeedModifier
+        speedModifier: 1.5
+      mindRoles:
+      - MindRoleAsakim

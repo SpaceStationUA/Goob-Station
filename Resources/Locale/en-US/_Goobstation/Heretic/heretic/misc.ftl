@@ -31,3 +31,28 @@ void-ascend-end = The snowstorm begins to fade away...
 void-ascend-restart = The snowstorm suddenly appears again...
 
 ghoul-weapon-comp-examine = [color=red]This weapon seems extremely fragile. On further inspection it appears to be made of flesh and blood. It belongs to one of the creatures of the mansus and will disappear when the creature dies.[/color]
+
+# Pirate: Trauma Lock path.
+species-name-shattered = shattered risen
+
+mirror-maid-examine-message-user = {$ent} seems to fade in and out slightly.
+mirror-maid-examine-message-maid = {$user}'s gaze pierces your entire being!
+
+eldritch-id-card-component-examine-inverted = Current effect is [color=yellow]inverted[/color].
+eldritch-id-card-component-examine-message =
+    Enchanted by the Mansus!
+    Using an ID card on this card, or this card on another ID card, consumes the other card and copies its access.
+    Using this card in hand lets you change its appearance.
+    Using it on a pair of doors links them. Entering one transports heretics to the other, while heathens are sent to a random airlock.
+    Alt-clicking the card makes newly created portals inverted: heretics are sent to a random station airlock, while heathens are sent to the linked destination.
+
+eldritch-id-card-component-on-invert =
+    { $inverted ->
+      [true] The card will now create inverted rifts.
+     *[false] The card will no longer create inverted rifts.
+    }
+
+eldritch-id-card-component-invert = Invert
+eldritch-id-card-component-invert-message = Toggle inverted portals, which send you to a random station airlock while sending heathens to the linked destination.
+eldritch-id-card-component-link-one = Linked 1/2
+eldritch-id-card-component-link-two = Linked 2/2

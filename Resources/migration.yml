@@ -30,7 +30,7 @@ AirlockReporterGlassLocked: AirlockServiceGlassLocked
 AirlockZookeeperGlassLocked: AirlockServiceGlassLocked
 AirlockZookeeperLocked: AirlockServiceLocked
 AlwaysPoweredLightPostSmallRed: null
-AsteroidAltRock: AsteroidRock
+# AsteroidAltRock: AsteroidRock # Pirate: local prototype restored.
 BenchParkBambooMiddle: null
 BenchParkLeft: null
 BenchParkMiddle: null
@@ -1025,4 +1025,5 @@ PosterContrabandCommunistState: PosterContrabandSolAlliance
 MagazinePistolMindbreaker: MagazinePistolCryptobiolin
 SpawnMobGoidaBot: SpawnMobPotyzhnobot
 PinkHandcuffs: null
+AsimovCircuitBoard: CrewsimovCircuitBoard
 # PIRATE END

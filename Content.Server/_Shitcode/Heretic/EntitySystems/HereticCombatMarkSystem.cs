@@ -1,11 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Body.Systems;
-using Content.Shared.Doors.Components;
-using Content.Shared.Doors.Systems;
 using Content.Shared.Heretic;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
@@ -22,6 +18,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Medical;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Pulling.Systems;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 
 namespace Content.Server.Heretic.EntitySystems;
@@ -29,9 +26,7 @@ namespace Content.Server.Heretic.EntitySystems;
 public sealed class HereticCombatMarkSystem : SharedHereticCombatMarkSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedDoorSystem _door = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedStaminaSystem _stamina = default!;
@@ -45,6 +40,7 @@ public sealed class HereticCombatMarkSystem : SharedHereticCombatMarkSystem
     [Dependency] private readonly StarMarkSystem _starMark = default!;
     [Dependency] private readonly HereticAbilitySystem _ability = default!;
     [Dependency] private readonly HereticSystem _heretic = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
     {
@@ -92,15 +88,10 @@ public sealed class HereticCombatMarkSystem : SharedHereticCombatMarkSystem
                 break;
 
             case "Lock":
-                // bolts nearby doors
-                var lookup = _lookup.GetEntitiesInRange(target, 5f);
-                foreach (var door in lookup)
-                {
-                    if (!TryComp<DoorBoltComponent>(door, out var doorComp))
-                        continue;
-                    _door.SetBoltsDown((door, doorComp), true);
-                }
-                _audio.PlayPvs(new SoundPathSpecifier("/Audio/Magic/knock.ogg"), target);
+                // Pirate: Trauma's current Lock mark denies all access instead of bolting nearby doors.
+                _statusEffects.TryUpdateStatusEffectDuration(target,
+                    "LockMarkedStatusEffect",
+                    TimeSpan.FromSeconds(20));
                 break;
 
             case "Rust":

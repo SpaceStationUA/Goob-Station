@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: selectableSet
+  id: SaboteurSELF
+  name: self-kit-saboteur-name
+  description: self-kit-saboteur-description
+  sprite:
+    sprite: _Pirate/Objects/Tools/jaws_of_life.rsi
+    state: proto_jaws_pry
+  content:
+  - PrototypeJawsOfLife
+  - WelderIndustrialAdvanced
+  - PowerDrill
+  - Multitool
+  - ClothingHandsGlovesColorYellow
+  - RadioJammer
+  - FreedomImplanter
+  - ClothingHeadHatWelding
+
+- type: selectableSet
+  id: PressSELF
+  name: self-kit-press-name
+  description: self-kit-press-description
+  sprite:
+    sprite: _Pirate/Objects/Tools/handheld_camera.rsi
+    state: icon
+  content:
+  - SurveillanceWirelessCameraHandheld
+  - EncryptionKeyBinarySyndicate
+  - MicrophoneInstrument
+  - VoiceMaskImplanter
+  - ScramImplanter
+
+- type: selectableSet
+  id: LiberatorSELF
+  name: self-kit-liberator-name
+  description: self-kit-liberator-description
+  sprite:
+    sprite: Objects/Tools/access_breaker.rsi
+    state: icon
+  content:
+  - AccessBreaker
+  - ClothingHandsGlovesColorYellow
+  - Screwdriver
+
+- type: selectableSet
+  id: SpySELF
+  name: self-kit-spy-name
+  description: self-kit-spy-description
+  sprite:
+    sprite: Objects/Devices/camera_bug.rsi
+    state: camera_bug
+  content:
+  - ClothingBackpackChameleonFillAgent
+  - ChameleonControllerImplanter
+  - DnaScramblerImplanter
+  - CameraBug

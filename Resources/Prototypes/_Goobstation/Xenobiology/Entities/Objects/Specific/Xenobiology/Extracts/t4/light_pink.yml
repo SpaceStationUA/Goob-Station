@@ -37,9 +37,10 @@
         messages: [ "xeno-extract-reaction-reagent" ]
       - !type:PlaySoundEffect
         sound: /Audio/Effects/Chemistry/bubbles.ogg
-      - !type:AdjustReagent
+      - !type:AddReagentToSolution
         reagent: Cognizine
-        amount: 10
+        solution: extract
+        strengthModifier: 10
     - reagents: [ Blood ]
       methods: [ Touch, Injection ]
       effects:

@@ -48,6 +48,18 @@ public sealed partial class CorticalBorerInfestedComponent : Component
     public bool AddedControlThermalVision;
 
     [ViewVariables]
+    public bool AddedBorerNightVision;
+
+    [ViewVariables]
+    public bool? PreviousHostNightVisionActive;
+
+    [ViewVariables]
+    public bool AddedBorerThermalVision;
+
+    [ViewVariables]
+    public bool? PreviousHostThermalVisionActive;
+
+    [ViewVariables]
     public bool IsPolymorphing;
 }
 

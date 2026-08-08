@@ -6,6 +6,7 @@ REM SPDX-License-Identifier: AGPL-3.0-or-later
 @echo off
 cd ../../
 
-call dotnet run --project Content.Server --no-build %*
+REM Pirate: launch the downstream entry project.
+call dotnet run --project Content.Pirate.Server --no-build %*
 
 pause

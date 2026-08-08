@@ -431,7 +431,7 @@ public abstract partial class CESharedZLevelsSystem : EntitySystem
         return false;
     }
 
-    private bool HasTraversalContext(TransformComponent xform)
+    protected bool HasTraversalContext(TransformComponent xform) // Pirate: multiz - also used by server-side z systems
     {
         if (xform.MapUid is { } mapUid &&
             (_zMapQuery.HasComp(mapUid) || _ftlMapQuery.HasComp(mapUid)))
@@ -440,6 +440,17 @@ public abstract partial class CESharedZLevelsSystem : EntitySystem
         }
 
         return xform.GridUid is { } gridUid && HasComp<CEZLinkedGridComponent>(gridUid);
+    }
+
+    /// <summary>
+    /// True when this entity sits on a map/grid that participates in a z-network, i.e. when "up"
+    /// and "down" mean anything for it. Multiz features must no-op when this is false, otherwise
+    /// they act on plain single-level maps where there is nothing above or below. // Pirate: multiz
+    /// </summary>
+    [PublicAPI]
+    public bool IsInTraversalContext(Entity<TransformComponent?> ent)
+    {
+        return Resolve(ent, ref ent.Comp, false) && HasTraversalContext(ent.Comp);
     }
 
     /// <summary>

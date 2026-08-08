@@ -4,6 +4,7 @@
   id: OasisHighPop
   mapName: 'Оазис'
   mapPath: /Maps/_Goobstation/oasis.yml
+  mapPreview: PirateMapPreviewOasis # Pirate - map vote preview
   minPlayers: 85
   stations:
     Oasis:

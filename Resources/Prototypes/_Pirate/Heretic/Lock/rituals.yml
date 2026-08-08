@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: hereticRitual
+  id: BladeLock
+  locName: knowledge-path-lock-s1-name
+  locDesc: knowledge-path-lock-s1-desc
+  icon:
+    sprite: _Goobstation/Heretic/Blades/blade_lock.rsi
+    state: icon
+  requiredTags:
+    Knife: 1
+    Crowbar: 1
+  output:
+    HereticBladeLock: 1
+  limit: 2
+
+- type: hereticRitual
+  id: EldritchId
+  locName: knowledge-path-lock-s3-name
+  locDesc: knowledge-path-lock-s3-desc
+  icon:
+    sprite: Objects/Misc/id_cards.rsi
+    state: gold
+  customBehaviors:
+  - !type:RitualEldritchIdBehavior
+  requiredTags:
+    RodMetal: 1
+
+- type: hereticRitual
+  id: Concierge
+  locName: knowledge-path-lock-s6-name
+  locDesc: knowledge-path-lock-s6-desc
+  icon:
+    sprite: _Pirate/Heretic/Entities/heretichandbook.rsi
+    state: icon
+  requiredTags:
+    Crayon: 1
+    WoodPlank: 1
+    Multitool: 1
+  output:
+    LabyrinthHandbook: 1
+
+- type: hereticRitual
+  id: AscensionLock
+  locName: knowledge-path-lock-s10-name
+  locDesc: knowledge-path-lock-s10-desc
+  icon:
+    sprite: _Goobstation/Heretic/abilities_heretic.rsi
+    state: labyrinth
+  customBehaviors:
+  - !type:RitualCanAscend
+  - !type:RitualLockAscendBehavior
+    min: 3
+    max: 3
+  - !type:RitualLabyrinthPortalBehavior
+  outputKnowledge: UnlockTheLabyrinth
+  outputEvent: !type:EventHereticAscension

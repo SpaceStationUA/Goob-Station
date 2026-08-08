@@ -90,6 +90,16 @@ knowledge-path-side-s6-knife-desc =
     The Carving Knife allows you to etch difficult to see traps that trigger on heathens who walk overhead.
     Also makes for a handy throwing weapon.
 
+knowledge-path-side-s6-shattered-ritual-name = Shattered Ritual
+knowledge-path-side-s6-shattered-ritual-desc =
+    I witnessed a cold, rending force drag this corpse back to near-life.
+    When it moves, it crunches like broken glass.
+    Its hands are no longer recognizable as human - each clenched fist contains a brutal nest of sharp bone-shards instead.
+
+    Allows you to transmute a corpse, a pair of latex or nitrile gloves, and outer armor clothing to create a Shattered Risen.
+    Shattered Risen are strong ghouls that have 250 health and slight regeneration, but cannot hold items and wear clothes, instead having two brutal weapons for hands.
+    You can only create one at a time.
+
 ## stage 7
 knowledge-path-side-s7-uncuff-name = Wave of Desperation
 knowledge-path-side-s7-uncuff-desc =

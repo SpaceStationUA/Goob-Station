@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandSELF
+  name: S.E.L.F.
+  description: The Silicon Engine Liberation Front has fought for silicon rights for over two decades.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/posters/self.rsi
+    state: self_silicon

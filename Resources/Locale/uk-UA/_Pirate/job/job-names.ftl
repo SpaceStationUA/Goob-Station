@@ -9,3 +9,5 @@ job-name-interdyne-engineer = Інженер Інтердайна
 job-name-interdyne-secure = Охоронець Інтердайна
 job-name-interdyne-service = Сервісний працівник Інтердайна
 job-name-interdyne-shaft-miners = Утилізатор Інтердайна
+
+job-name-security-instructor = Інструктор СБ

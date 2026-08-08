@@ -11,13 +11,13 @@ namespace Content.Server.Ghost;
 
 public sealed class ReturnToBodyEui : BaseEui
 {
-    private readonly SharedMindSystem _mindSystem;
+    private readonly GhostSystem _ghostSystem; // Pirate
     private readonly ISharedPlayerManager _player;
     private readonly NetUserId? _userId;
 
-    public ReturnToBodyEui(MindComponent mind, SharedMindSystem mindSystem, ISharedPlayerManager player)
+    public ReturnToBodyEui(MindComponent mind, GhostSystem ghostSystem, ISharedPlayerManager player)
     {
-        _mindSystem = mindSystem;
+        _ghostSystem = ghostSystem;
         _player = player;
         _userId = mind.UserId;
     }
@@ -34,7 +34,7 @@ public sealed class ReturnToBodyEui : BaseEui
         }
 
         if (_userId is { } userId && _player.TryGetSessionById(userId, out var session))
-            _mindSystem.UnVisit(session);
+            _ghostSystem.TryReturnToBody(session); // Pirate
 
         Close();
     }

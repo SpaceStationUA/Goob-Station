@@ -59,49 +59,83 @@ public abstract partial class EventEntityEffect<T> : EntityEffectBase<T> where T
 
 public static class LegacyEntityEffectContext
 {
-    private static readonly ConcurrentDictionary<IEntityManager, LegacyEntityEffectReaction> CurrentReactions = new();
+    private static readonly ConcurrentDictionary<IEntityManager, LegacyEntityEffectReagent> CurrentReagents = new();
 
     public static IDisposable PushReaction(IEntityManager entityManager, ReactionEntityEvent reaction)
     {
-        LegacyEntityEffectReaction? previous = null;
-        if (CurrentReactions.TryGetValue(entityManager, out var current))
-            previous = current;
-
-        CurrentReactions[entityManager] = new LegacyEntityEffectReaction(
-            reaction.Method,
+        return PushReagent(
+            entityManager,
+            null,
+            null,
             reaction.ReagentQuantity,
-            reaction.Reagent);
-
-        return new ReactionScope(entityManager, previous);
+            reaction.Reagent,
+            reaction.Method);
     }
 
-    public static bool TryGetReaction(IEntityManager entityManager, out LegacyEntityEffectReaction reaction)
+    public static IDisposable PushReagent(
+        IEntityManager entityManager,
+        EntityUid? organEntity,
+        Solution? source,
+        ReagentQuantity reagentQuantity,
+        ReagentPrototype reagent,
+        ReactionMethod? method)
     {
-        return CurrentReactions.TryGetValue(entityManager, out reaction);
+        LegacyEntityEffectReagent? previous = null;
+        if (CurrentReagents.TryGetValue(entityManager, out var current))
+            previous = current;
+
+        CurrentReagents[entityManager] = new LegacyEntityEffectReagent(
+            method,
+            reagentQuantity,
+            reagent,
+            organEntity,
+            source);
+
+        return new ReagentScope(entityManager, previous);
+    }
+
+    public static bool TryGetReagent(IEntityManager entityManager, out LegacyEntityEffectReagent reagent)
+    {
+        return CurrentReagents.TryGetValue(entityManager, out reagent);
+    }
+
+    public static bool TryGetReaction(IEntityManager entityManager, out LegacyEntityEffectReagent reaction)
+    {
+        if (!TryGetReagent(entityManager, out reaction) || reaction.Method is null)
+        {
+            reaction = default;
+            return false;
+        }
+
+        return true;
     }
 
     public static EntityEffectBaseArgs CreateArgs(EntityUid target, IEntityManager entMan, float scale = 1f)
     {
-        if (!TryGetReaction(entMan, out var reaction))
+        if (!TryGetReagent(entMan, out var reagent))
             return new EntityEffectBaseArgs(target, entMan);
 
-        var source = new Solution();
-        source.AddReagent(reaction.ReagentQuantity);
+        var source = reagent.Source;
+        if (source is null)
+        {
+            source = new Solution();
+            source.AddReagent(reagent.ReagentQuantity);
+        }
 
         return new EntityEffectReagentArgs(
             target,
             entMan,
-            null,
+            reagent.OrganEntity,
             source,
-            reaction.ReagentQuantity.Quantity,
-            reaction.Reagent,
-            reaction.Method,
+            reagent.ReagentQuantity.Quantity,
+            reagent.Reagent,
+            reagent.Method,
             FixedPoint2.New(scale));
     }
 
-    private sealed class ReactionScope(
+    private sealed class ReagentScope(
         IEntityManager entityManager,
-        LegacyEntityEffectReaction? previous) : IDisposable
+        LegacyEntityEffectReagent? previous) : IDisposable
     {
         private bool _disposed;
 
@@ -113,17 +147,19 @@ public static class LegacyEntityEffectContext
             _disposed = true;
 
             if (previous is { } reaction)
-                CurrentReactions[entityManager] = reaction;
+                CurrentReagents[entityManager] = reaction;
             else
-                CurrentReactions.TryRemove(entityManager, out _);
+                CurrentReagents.TryRemove(entityManager, out _);
         }
     }
 }
 
-public readonly record struct LegacyEntityEffectReaction(
-    ReactionMethod Method,
+public readonly record struct LegacyEntityEffectReagent(
+    ReactionMethod? Method,
     ReagentQuantity ReagentQuantity,
-    ReagentPrototype Reagent);
+    ReagentPrototype Reagent,
+    EntityUid? OrganEntity,
+    Solution? Source);
 
 public static class EntityEffectExt
 {

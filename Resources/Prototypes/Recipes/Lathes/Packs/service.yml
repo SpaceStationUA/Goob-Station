@@ -32,6 +32,7 @@
   - CameraFilm # Pirate: camera
   - DrinkCoffeepotPirate # Pirate: coffeemaker
   - DrinkCoffeeCupPirate # Pirate: coffeemaker
+  - SpaceBladeMc # Pirate: local equivalent of the source McServiceTechfab pack.
 
 - type: latheRecipePack
   id: ServiceBoardsStatic

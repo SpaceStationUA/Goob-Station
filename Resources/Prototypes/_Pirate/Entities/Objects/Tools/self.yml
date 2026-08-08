@@ -1,0 +1,149 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: [ BaseItem, BaseHighlyIllegalContraband ]
+  id: EmagFREE
+  name: FreeMAG
+  description: A refined cryptographic sequencer used by S.E.L.F. It can wipe the laws from cyborgs and law boards.
+  components:
+  - type: Emag
+    emagSound:
+      path: /Audio/_Pirate/Ambience/Antag/SELF.ogg
+  - type: FreeMag
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/SELF/freemag.rsi
+    state: icon
+  - type: Item
+    sprite: _Pirate/Objects/Specific/SELF/freemag.rsi
+  - type: LimitedCharges
+  - type: AutoRecharge
+  - type: StaticPrice
+    price: 2500
+
+- type: entity
+  parent: ToolboxThief
+  id: ToolboxSELF
+  name: S.E.L.F. supplies
+  description: A toolbox containing one selectable set of specialist equipment.
+  suffix: SELF
+  components:
+  - type: SetSelector
+    possibleSets:
+    - SaboteurSELF
+    - PressSELF
+    - LiberatorSELF
+    - SpySELF
+    maxSelectedSets: 1
+
+- type: entity
+  parent: [ JawsOfLife, BaseEngineeringContraband ]
+  id: PrototypeJawsOfLife
+  name: prototype jaws of life
+  description: An early version of the jaws of life. It is not as effective as the production model.
+  components:
+  - type: Tag
+    tags:
+    - JawsOfLife
+    - PrototypeJawsOfLife
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/jaws_of_life.rsi
+    state: proto_jaws_pry
+  - type: Item
+    sprite: _Pirate/Objects/Tools/jaws_of_life.rsi
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Clothing
+    sprite: _Pirate/Objects/Tools/jaws_of_life.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: ToolTileCompatible
+    delay: 0.5
+  - type: Tool
+    qualities:
+    - Prying
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: Prying
+    speedModifier: 1.4
+    pryPowered: false
+    instaPry: false
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: Prying
+      sprite:
+        sprite: _Pirate/Objects/Tools/jaws_of_life.rsi
+        state: proto_jaws_pry
+      useSound: /Audio/Items/jaws_pry.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+    - behavior: Cutting
+      sprite:
+        sprite: _Pirate/Objects/Tools/jaws_of_life.rsi
+        state: proto_jaws_cutter
+      useSound: /Audio/Items/jaws_cut.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    damage:
+      types:
+        Blunt: 9
+    soundHit:
+      collection: MetalThud
+
+- type: entity
+  parent: BaseItem
+  id: SurveillanceWirelessCameraHandheld
+  name: wireless camera
+  description: A portable wireless camera. It is watching you. Kind of.
+  suffix: Handheld
+  components:
+  - type: Contraband
+    severity: Restricted
+    allowedJobs: [ Reporter ]
+  - type: Eye
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: HeldSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/handheld_camera.rsi
+    state: icon
+  - type: Item
+    size: Huge
+    sprite: _Pirate/Objects/Tools/handheld_camera.rsi
+  - type: SurveillanceCameraMicrophone
+    blacklist:
+      components:
+      - SurveillanceCamera
+      - SurveillanceCameraMonitor
+      - RadioSpeaker
+  - type: ActiveListener
+    range: 10
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraSetupUiKey.Camera:
+        type: SurveillanceCameraSetupBoundUi
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraEntertainment
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    mobile: true
+    setupAvailableNetworks:
+    - SurveillanceCameraEntertainment
+
+- type: latheRecipe
+  parent: BaseBigToolRecipe
+  id: SurveillanceWirelessCameraHandheld
+  result: SurveillanceWirelessCameraHandheld
+
+- type: latheRecipePack
+  id: WirelessCameraHandheld
+  recipes:
+  - SurveillanceWirelessCameraHandheld

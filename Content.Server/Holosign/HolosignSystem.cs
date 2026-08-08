@@ -2,6 +2,9 @@
 
 using Content.Shared.Examine;
 using Content.Shared.Coordinates.Helpers;
+using Content.Pirate.Common.Heretic; // Pirate: Lock path handbook validation.
+using Content.Shared.Charges.Components; // Pirate: Lock path handbook charges.
+using Content.Shared.Charges.Systems; // Pirate: Lock path handbook charges.
 using Content.Shared.PowerCell;
 using Content.Shared.Interaction;
 using Content.Shared.Physics; // Goobstation
@@ -16,6 +19,7 @@ namespace Content.Server.Holosign;
 public sealed class HolosignSystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!; // Pirate: Lock path handbook charges.
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     // Goobstation start
@@ -43,6 +47,10 @@ public sealed class HolosignSystem : EntitySystem
         var charges = _powerCell.GetRemainingUses(uid, component.ChargeUse);
         var maxCharges = _powerCell.GetMaxUses(uid, component.ChargeUse);
 
+        // Pirate: Limited-charge projectors have their own examine output.
+        if (maxCharges == 0)
+            return;
+
         using (args.PushGroup(nameof(HolosignProjectorComponent)))
         {
             args.PushMarkup(Loc.GetString("limited-charges-charges-remaining", ("charges", charges)));
@@ -58,8 +66,13 @@ public sealed class HolosignSystem : EntitySystem
     {
         // Goob edit start
         if (args.Handled
-            || !args.CanReach // prevent placing out of range
             || HasComp<StorageComponent>(args.Target)) // if it's a storage component like a bag, we ignore usage so it can be stored
+            return;
+
+        // Pirate: allow specialized projectors to validate or handle placement.
+        var attempt = new BeforeHolosignUsedEvent(args.User, args.ClickLocation);
+        RaiseLocalEvent(uid, ref attempt);
+        if (attempt.Cancelled || !attempt.Handled && !args.CanReach)
             return;
 
         // places the holographic sign at the click location, snapped to grid.
@@ -73,7 +86,7 @@ public sealed class HolosignSystem : EntitySystem
             if (_tag.HasTag(entity, component.HolosignTag))
                 return;
 
-            if (!_physicsQuery.TryComp(entity, out var physics))
+            if (!_physicsQuery.TryComp(entity, out var physics) || !physics.CanCollide || !physics.Hard) // Goob
                 continue;
 
             if ((physics.CollisionLayer &
@@ -83,7 +96,10 @@ public sealed class HolosignSystem : EntitySystem
                         CollisionGroup.HighImpassable)) != 0)
                 return;
         }
-        if (!_powerCell.TryUseCharge(uid, component.ChargeUse, user: args.User)) // if no battery or no charge, doesn't work
+        // Pirate: the Labyrinth Handbook uses regenerating discrete charges instead of a battery.
+        EntityUid? chargeUser = TryComp(uid, out LimitedChargesComponent? limitedCharges) ? null : args.User;
+        if (!_powerCell.TryUseCharge(uid, component.ChargeUse, user: chargeUser) &&
+            !_charges.TryUseCharge((uid, limitedCharges)))
             return;
         var holoUid = Spawn(component.SignProto, coords);
         // Goob edit end

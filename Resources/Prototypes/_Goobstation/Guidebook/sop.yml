@@ -140,6 +140,7 @@
   - WardenSOP
   - OfficerCadetSOP
   - DetectiveSOP
+  - SecurityInstructorSOP # Pirate
 
 - type: guideEntry
   id: ServiceSOP

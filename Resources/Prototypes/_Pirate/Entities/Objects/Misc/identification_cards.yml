@@ -206,3 +206,18 @@
     - type: Access
       tags:
         - SAN
+
+- type: entity
+  parent: SecurityIDCard
+  id: SecurityInstructorIDCard
+  name: instructor ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idseniorofficer
+  - type: PresetIdCard
+    job: SecurityInstructor
+  - type: IdCard
+    jobTitle: job-name-security-instructor
+    jobIcon: JobIconSecurityInstructor

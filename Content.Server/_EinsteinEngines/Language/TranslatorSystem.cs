@@ -32,6 +32,7 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         SubscribeLocalEvent<IntrinsicTranslatorComponent, DetermineEntityLanguagesEvent>(OnDetermineLanguages);
         SubscribeLocalEvent<HoldsTranslatorComponent, DetermineEntityLanguagesEvent>(OnProxyDetermineLanguages);
 
+        SubscribeLocalEvent<HandheldTranslatorComponent, MapInitEvent>(OnTranslatorMapInit);
         SubscribeLocalEvent<HandheldTranslatorComponent, EntGotInsertedIntoContainerMessage>(OnTranslatorInserted);
         SubscribeLocalEvent<HandheldTranslatorComponent, EntParentChangedMessage>(OnTranslatorParentChanged);
         SubscribeLocalEvent<HandheldTranslatorComponent, ActivateInWorldEvent>(OnTranslatorToggle);
@@ -45,7 +46,7 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         if (!component.Enabled
             || component.LifeStage >= ComponentLifeStage.Removing
             || !TryComp<LanguageKnowledgeComponent>(uid, out var knowledge)
-            || !_powerCell.HasActivatableCharge(uid))
+            || !_powerCell.HasDrawCharge(uid))
             return;
 
         CopyLanguages(component, ev, knowledge);
@@ -58,7 +59,9 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
 
         foreach (var (translator, translatorComp) in component.Translators.ToArray())
         {
-            if (!translatorComp.Enabled || !_powerCell.HasActivatableCharge(uid))
+            // Pirate: The power check must target the translator itself, not its holder - checking the holder
+            // always succeeded, which let translators with a dead cell keep translating forever.
+            if (!translatorComp.Enabled || !_powerCell.HasDrawCharge(translator))
                 continue;
 
             if (!_containers.TryGetContainingContainer(translator, out var container) || container.Owner != uid)
@@ -69,6 +72,13 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
 
             CopyLanguages(translatorComp, ev, knowledge);
         }
+    }
+
+    // Pirate: PowerCellDraw.Enabled defaults to true, so translators spawned turned-off would still
+    // drain their cell from round start. Align the draw state with the translator state on spawn.
+    private void OnTranslatorMapInit(Entity<HandheldTranslatorComponent> translator, ref MapInitEvent args)
+    {
+        _powerCell.SetDrawEnabled(translator.Owner, translator.Comp.Enabled);
     }
 
     private void OnTranslatorInserted(EntityUid translator, HandheldTranslatorComponent component, EntGotInsertedIntoContainerMessage args)
@@ -115,7 +125,7 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
             return;
 
         // This will show a popup if false
-        var hasPower = _powerCell.HasDrawCharge(translator);
+        var hasPower = _powerCell.HasDrawCharge(translator, args.User);
         var isEnabled = !translatorComp.Enabled && hasPower;
 
         Entity<LanguageSpeakerComponent?>? holderEntity = null;
@@ -154,13 +164,16 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
 
     private void OnPowerCellChanged(EntityUid translator, HandheldTranslatorComponent component, PowerCellChangedEvent args)
     {
-        var hasCharge = _powerCell.HasActivatableCharge(translator);
+        // Pirate: HasActivatableCharge checks UseCharge (0 for translators), so it passed even for a fully
+        // drained cell - re-inserting a dead cell force-enabled the translator, and since an already-empty
+        // battery never transitions to Empty, PowerCellSlotEmptyEvent never fired to turn it back off.
+        var hasCharge = _powerCell.HasDrawCharge(translator);
         SetEnabled((translator, component), hasCharge);
     }
 
     private void OnItemToggled(EntityUid translator, HandheldTranslatorComponent component, ItemToggledEvent args)
     {
-        var hasCharge = _powerCell.HasActivatableCharge(translator);
+        var hasCharge = _powerCell.HasDrawCharge(translator);
         var shouldEnable = args.Activated && hasCharge;
 
         SetEnabled((translator, component), shouldEnable);

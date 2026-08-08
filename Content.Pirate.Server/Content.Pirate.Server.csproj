@@ -13,6 +13,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
       <IsPackable>false</IsPackable>
       <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
       <OutputPath>..\bin\Content.Server\</OutputPath>
+      <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
       <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
       <NoWarn>1998</NoWarn>
       <WarningsAsErrors>nullable</WarningsAsErrors>

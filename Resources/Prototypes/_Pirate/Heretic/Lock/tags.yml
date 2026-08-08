@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: Tag
+  id: EmpoweredShatteredWeapon
+
+- type: Tag
+  id: HereticBladeLock
+
+- type: Tag
+  id: RodMetal
+
+- type: Tag
+  id: WoodPlank
+
+- type: Tag
+  id: ForceHereticMinion
+
+- type: Tag
+  id: GlovesLatex
+
+- type: Tag
+  id: GlovesNitrile

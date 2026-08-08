@@ -38,6 +38,14 @@
 - type: markingPoints
   id: MobFeroxiMarkingLimits
   points:
+    #region Pirate - Trauma Station hair gradients
+    HairSpecial:
+      points: 1
+      required: false
+    FacialHairSpecial:
+      points: 1
+      required: false
+    #endregion Pirate - Trauma Station hair gradients
     Hair:
       points: 1
       required: false
@@ -57,6 +65,13 @@
       defaultMarkings: [ FeroxiSnout ]
     Chest:
       points: 3
+      required: false
+    # Pirate: enable underwear customization.
+    UndergarmentTop:
+      points: 1
+      required: false
+    UndergarmentBottom:
+      points: 1
       required: false
     Arms:
       points: 4

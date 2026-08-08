@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Varenik for personal use",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	  {
+      "name": "susie",
+      "directions": 4
+    },
+	  {
+      "name": "susie-tip",
+      "directions": 4
+    },
+	  {
+      "name": "susie_BACK",
+      "directions": 4
+	  },
+	  {
+      "name": "susie_BACK-tip",
+      "directions": 4
+	  }
+  ]
+}

@@ -6,4 +6,5 @@ namespace Content.Goobstation.Common.Singularity;
 /// Raised on an entity that just collided with a containment field
 /// </summary>
 [ByRefEvent]
-public record struct ContainmentFieldThrowEvent(EntityUid Field, bool Cancelled = false);
+// Pirate: include the collider so field effects can target the entity that crossed it.
+public record struct ContainmentFieldThrowEvent(EntityUid Entity, EntityUid Field, bool Cancelled = false);

@@ -1,0 +1,13 @@
+vending-machine-keypad-sold-out = SOLD OUT
+vending-machine-keypad-clear = CLR
+vending-machine-keypad-enter = ENT
+vending-machine-keypad-credits = CR: {$credits}¥
+vending-machine-keypad-insert-credits = INSERT CREDITS
+vending-machine-keypad-error = [ ERROR ]
+vending-machine-keypad-sold = [ SOLD ]
+vending-machine-keypad-denied = [ DENIED ]
+vending-machine-keypad-low-funds = [ FUNDS ]
+vending-machine-keypad-success-enjoy = [ ENJOY ]
+vending-machine-keypad-success-thx = [ THX! ]
+vending-machine-keypad-success-yum = [ YUM! ]
+vending-machine-keypad-success-vend = [ VEND ]

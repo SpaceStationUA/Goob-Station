@@ -12,6 +12,7 @@ namespace Content.Pirate.Shared.ModularSuit;
 public sealed partial class ModularSuitComponent : Component
 {
     public EntProtoId<InstantActionComponent> ToggleDeployAction = "ToggleModularSuitDeployAction";
+    public EntProtoId<InstantActionComponent> ToggleActivateAction = "ToggleModularSuitActivateAction";
     public EntProtoId<InstantActionComponent> ToggleUiAction = "ToggleModularSuitUiAction";
 
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
@@ -22,6 +23,9 @@ public sealed partial class ModularSuitComponent : Component
 
     [ViewVariables, AutoNetworkedField]
     public EntityUid? ToggleDeployActionEntity;
+
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? ToggleActivateActionEntity;
 
     [ViewVariables, AutoNetworkedField]
     public EntityUid? ToggleUiActionEntity;
@@ -43,6 +47,8 @@ public sealed partial class ModularSuitComponent : Component
 
     [ViewVariables, AutoNetworkedField]
     public bool Active;
+
+    public bool AddedUnremoveable;
 
     [DataField("autoActivate")]
     public bool AutoActivateOnAssemble = true;
@@ -79,6 +85,15 @@ public sealed partial class ModularSuitComponent : Component
 
     [DataField]
     public SoundSpecifier NominalSound = new SoundPathSpecifier("/Audio/_Pirate/Effects/Modsuit/nominal.ogg", AudioParams.Default.WithVolume(-2));
+
+    [DataField]
+    public SoundSpecifier ActivateSound = new SoundPathSpecifier("/Audio/_Pirate/Effects/Modsuit/activate.ogg", AudioParams.Default.WithVolume(-6));
+
+    [DataField]
+    public SoundSpecifier DeactivateSound = new SoundPathSpecifier("/Audio/_Pirate/Effects/Modsuit/deactivate.ogg", AudioParams.Default.WithVolume(-2));
+
+    [DataField]
+    public SoundSpecifier BuzzSound = new SoundPathSpecifier("/Audio/_Goobstation/Machines/ErrorBeep2.wav");
 
     [DataField]
     public TimeSpan LowPowerCooldown = TimeSpan.FromSeconds(30);

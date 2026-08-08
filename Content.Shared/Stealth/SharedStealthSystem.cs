@@ -235,5 +235,14 @@ public abstract class SharedStealthSystem : EntitySystem
 
         Dirty(ent);
     }
+
+    // Pirate: expose writable examine settings to systems configuring stealth.
+    public void SetExamineSettings(Entity<StealthComponent> ent, float threshold, string description)
+    {
+        ent.Comp.ExamineThreshold = threshold;
+        ent.Comp.ExaminedDesc = description;
+
+        Dirty(ent);
+    }
     // Goobstation end
 }

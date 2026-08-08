@@ -43,6 +43,12 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
+      - ZengHuPharmaceuticals
+      - HephaestusIndustries
+      - ZavodskiyInterstellar
+      - PMCG
     # Pirate contractor end
   guides: # goobstation
   - Command

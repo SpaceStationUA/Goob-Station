@@ -48,8 +48,8 @@
           heatingCoefficient: 0.01
           coolingCoefficient: 0.01
   - type: ClothingSpeedModifier
-    walkModifier: 0.95
-    sprintModifier: 0.95
+    walkModifier: 0.75
+    sprintModifier: 0.75
 
 - type: entity
   parent: ClothingModularHelmetBase
@@ -177,9 +177,6 @@
         Radiation: 0.5
         Heat: 0.45
         Caustic: 0.5
-  - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
   - type: StaminaResistance
     damageCoefficient: 0.9
   - type: FireProtection
@@ -252,9 +249,6 @@
       - state: sealed-equipped-FEET-reptilian
       shoes-vox:
       - state: sealed-equipped-FEET-vox
-  - type: ClothingSpeedModifier
-    walkModifier: 0.95
-    sprintModifier: 0.9
 
 - type: entity
   parent: [ ClothingModularControllerLockedBase, ClothingModularControllerPraetorian ]

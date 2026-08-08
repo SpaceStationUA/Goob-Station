@@ -114,6 +114,9 @@ public abstract partial class SharedCorticalBorerSystem : EntitySystem
         if (comp.ControlingHost || !Container.TryRemoveFromContainer(uid))
             return false;
 
+        var ejected = new CorticalBorerEjectedEvent(host);
+        RaiseLocalEvent(uid, ref ejected);
+
         if (TryComp<UserInterfaceComponent>(uid, out var userInterface))
         {
             Ui.CloseUi((uid, userInterface), HealthAnalyzerUiKey.Key);
@@ -187,6 +190,9 @@ public sealed class InfestHostAttempt : CancellableEntityEventArgs
 
 [ByRefEvent]
 public record struct CorticalBorerEjectingEvent;
+
+[ByRefEvent]
+public readonly record struct CorticalBorerEjectedEvent(EntityUid Host);
 
 [Serializable, NetSerializable]
 public enum CorticalBorerDispenserUiKey

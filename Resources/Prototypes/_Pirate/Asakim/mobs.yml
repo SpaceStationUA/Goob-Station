@@ -1,0 +1,217 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  save: false
+  name: Urist McAsakim
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobAsakim
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Asakim
+    hideLayersOnEquip:
+    - Snout
+    - HeadSide
+  - type: Hunger
+  - type: Puller
+    needsHands: false
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.7
+    baseSprintSpeed: 4.65
+    weightlessAcceleration: 1.5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.48
+        density: 275
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Sprite
+    scale: 1.2, 1.2
+  - type: PlayerToolModifier
+    pryTimeMultiplier: 0.7
+  - type: BonusMeleeDamage
+    damageModifierSet:
+      coefficients:
+        Blunt: 1.1
+        Slash: 1.1
+        Piercing: 1.1
+        Asphyxiation: 1
+  - type: Thirst
+  - type: Icon
+    sprite: _Pirate/Asakim/Mobs/Species/parts.rsi
+    state: full
+  - type: Body
+    prototype: Asakim
+    requiredLegs: 2
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatLizard
+      amount: 7
+  - type: Speech
+    speechSounds: Lizard
+    speechVerb: Reptilian
+    allowedEmotes: [Thump]
+  - type: TypingIndicator
+    proto: lizard
+  - type: Vocal
+    sounds:
+      Male: MaleReptilian
+      Female: FemaleReptilian
+      Unsexed: MaleReptilian
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    understands:
+    - TauCetiBasic
+  - type: BodyEmotes
+    soundsId: ReptilianBodyEmotes
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: GenemoddedScale
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 15
+        Structural: 24
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: GastroToxin
+          Quantity: 20
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: GastroToxin
+        Quantity: 20
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 1
+  - type: Temperature
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: TemperatureDamage
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    coldDamage:
+      types:
+        Cold: 0.05
+    heatDamage:
+      types:
+        Heat: 0.6
+  - type: TemperatureSpeed
+    thresholds:
+      301: 0.8
+      295: 0.6
+      285: 0.4
+  - type: Wagging
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: Inventory
+    speciesId: asakim
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: jumpsuit-female
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: shoes
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: shoes
+  - type: SyllableObfuscationAccent
+    accent: draconian
+  - type: BlockWriting
+
+- type: entity
+  save: false
+  name: Urist McAsakim
+  suffix: Urisst' MzAsakim
+  parent: BaseMobAsakim
+  id: MobAsakim
+
+- type: entity
+  parent: BaseMobAsakim
+  id: MobAsakimRandom
+  name: Urist McAsakim
+  suffix: Random Appearance
+  components:
+  - type: RandomHumanoidAppearance
+  - type: RandomMetadata
+    nameSegments:
+    - NamesReptilianMale
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobAsakimDummy
+  categories: [HideSpawnMenu]
+  description: A dummy Asakim meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: Asakim
+    hideLayersOnEquip:
+    - Snout
+    - HeadSide
+  - type: Inventory
+    speciesId: asakim
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: jumpsuit-female
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: shoes
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/displacement.rsi
+            state: shoes
+
+- type: damageModifierSet
+  id: GenemoddedScale
+  coefficients:
+    Cold: 1.2
+    Radiation: 1.2
+    Poison: 1.2
+    Piercing: 0.8
+    Slash: 0.95
+    Blunt: 0.75
+    Heat: 1.1
+    Shock: 1.1

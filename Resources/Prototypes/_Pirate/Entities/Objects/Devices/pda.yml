@@ -136,3 +136,25 @@
     - NewsReaderCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+
+- type: entity
+  parent: BaseSecurityPDA
+  id: SecurityInstructorPDA
+  name: instructor PDA
+  description: Побитий та пошарпаний, але все ще придатний для використання.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/pda.rsi
+  - type: Pda
+    id: SecurityInstructorIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-securityinstructor
+  - type: PdaBorderColor
+    borderColor: "#324155"
+    accentVColor: "#447987"
+  - type: Icon
+    sprite: _Pirate/Objects/Devices/pda.rsi
+    state: pda-securityinstructor

@@ -60,6 +60,7 @@ public sealed class ATMSystem : SharedATMSystem
         {
             _popupSystem.PopupEntity(Loc.GetString("atm-trying-insert-cash-error"), args.Target, args.User, PopupType.Medium);
             _audioSystem.PlayPvs(component.SoundDeny, uid);
+            args.Handled = true;
             return;
         }
 
@@ -71,6 +72,7 @@ public sealed class ATMSystem : SharedATMSystem
         {
             _popupSystem.PopupEntity(Loc.GetString("atm-deposit-failed"), uid, args.User, PopupType.Medium);
             _audioSystem.PlayPvs(component.SoundDeny, uid);
+            args.Handled = true;
             return;
         }
 
@@ -78,6 +80,7 @@ public sealed class ATMSystem : SharedATMSystem
 
         _audioSystem.PlayPvs(component.SoundInsertCurrency, uid);
         UpdateUiState(uid, _bankCardSystem.GetBalance(bankCard.AccountId.Value), true, Loc.GetString("atm-ui-select-withdraw-amount"));
+        args.Handled = true;
     }
 
     private void OnCardInserted(EntityUid uid, ATMComponent component, EntInsertedIntoContainerMessage args)

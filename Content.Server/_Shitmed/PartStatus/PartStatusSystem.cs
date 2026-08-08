@@ -19,6 +19,7 @@ using Robust.Shared.Utility;
 
 using Content.Goobstation.Common.Examine; // Goobstation Change
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.IdentityManagement;
@@ -168,9 +169,12 @@ public sealed class PartStatusSystem : EntitySystem
                 || wound.Comp.WoundSeverity == WoundSeverity.Healed)
                 continue;
 
-            if (!damageSeverities.TryGetValue(wound.Comp.DamageType, out var existingSeverity) ||
+            // Pirate: Lock Path wounds can have a distinct inspect description.
+            var damageKey = wound.Comp.TextString ?? _proto.Index(wound.Comp.DamageGroup).ID;
+            if (wound.Comp.AlwaysShowInInspects ||
+                !damageSeverities.TryGetValue(damageKey, out var existingSeverity) ||
                 wound.Comp.WoundSeverity > existingSeverity)
-                damageSeverities[_proto.Index(wound.Comp.DamageGroup).LocalizedName] = wound.Comp.WoundSeverity;
+                damageSeverities[damageKey] = wound.Comp.WoundSeverity;
 
             if (TryComp<BleedInflicterComponent>(wound, out var bleeds) && bleeds.IsBleeding)
                 isBleeding = true;
@@ -199,7 +203,8 @@ public sealed class PartStatusSystem : EntitySystem
             titlestring += "-styleless";
         }
 
-        message.AddText(Loc.GetString(titlestring, ("entity", Identity.Name(entity, EntityManager))));
+        // Pirate: status locale strings contain markup and entity names are already escaped by Identity.Name.
+        message.AddMarkupOrThrow(Loc.GetString(titlestring, ("entity", Identity.Name(entity, EntityManager))));
         message.PushNewline();
         AddLine(message);
         CreateBodyPartMessage(partStatusSet, entity == examiner, ref message, !styling);
@@ -238,10 +243,12 @@ public sealed class PartStatusSystem : EntitySystem
                 locString += "-styleless";
             }
 
-            message.AddText("    " + Loc.GetString(locString,
-                ("possessive", possessive),
-                ("part", partStatus.PartName),
-                ("status", statusDescription)));
+            message.AddText("    ");
+            // Pirate: parse locale markup while keeping interpolated text literal.
+            message.AddMarkupOrThrow(Loc.GetString(locString,
+                ("possessive", FormattedMessage.EscapeText(possessive)),
+                ("part", FormattedMessage.EscapeText(partStatus.PartName)),
+                ("status", FormattedMessage.EscapeText(statusDescription))));
 
             message.PushNewline();
         }
@@ -298,8 +305,7 @@ public sealed class PartStatusSystem : EntitySystem
         var maxSeverity = WoundSeverity.Healed;
         foreach (var (type, severity) in damageSeverities)
         {
-            if (type is not ("Brute" or "Burn") // At some point we gonna de-hardcode this, but i doubt that day is soon.
-                || severity <= maxSeverity)
+            if (!IsVisibleWoundType(type) || severity <= maxSeverity)
                 continue;
 
             maxSeverity = severity;
@@ -312,7 +318,7 @@ public sealed class PartStatusSystem : EntitySystem
         var descriptions = new List<string>();
         foreach (var (type, severity) in damageSeverities)
         {
-            if (type is not ("Brute" or "Burn"))
+            if (!IsVisibleWoundType(type))
                 continue;
 
             var cappedSeverity = severity > WoundSeverity.Severe ? WoundSeverity.Severe : severity;
@@ -327,6 +333,12 @@ public sealed class PartStatusSystem : EntitySystem
         }
 
         return descriptions;
+    }
+
+    // Pirate: unknown damage-group IDs are custom wound text keys.
+    private bool IsVisibleWoundType(string type)
+    {
+        return !_proto.HasIndex<DamageGroupPrototype>(type) || type is "Brute" or "Burn";
     }
 
     private List<string> GetTraumaDescriptions(PartStatus partStatus, bool inspectingSelf)

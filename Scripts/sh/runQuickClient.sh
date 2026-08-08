@@ -11,4 +11,5 @@ if [ "$(dirname $0)" != "." ]; then
 fi
 
 cd ../../
-dotnet run --project Content.Goobstation.Client --no-build
+# Pirate: launch the downstream entry project.
+dotnet run --project Content.Pirate.Client --no-build

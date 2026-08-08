@@ -18,3 +18,20 @@
     - item: Plunger
   - type: BorgModuleIcon
     icon: { sprite: _Pirate/Interface/Actions/actions_borg.rsi, state: plumbing-module }
+
+- type: entity
+  id: BorgModuleLighting
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: "модуль освітлення кіборга"
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-tools
+  - type: BorgModuleLighting
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: rcd-module }
+  - type: UserInterface
+    interfaces:
+      enum.BorgModuleLightingUiKey.Key:
+        type: BorgModuleLightingBoundUserInterface

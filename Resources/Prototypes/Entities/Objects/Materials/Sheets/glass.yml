@@ -7,6 +7,7 @@
   name: glass
   description: A sheet of glass, used often on the station in various applications.
   components:
+  - type: ReflectiveSurface # Pirate: Mirror Maid jaunt surface.
   - type: Sprite
     sprite: Objects/Materials/Sheets/glass.rsi
   - type: Item

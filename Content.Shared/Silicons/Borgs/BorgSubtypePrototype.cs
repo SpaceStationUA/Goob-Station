@@ -31,4 +31,20 @@ public sealed partial class BorgSubtypePrototype : IPrototype
     /// </summary>
     [DataField]
     public required ProtoId<BorgTypePrototype> ParentBorgType = "generic";
+
+    // Pirate: some downstream subtype RSIs use skin-specific state names.
+    /// <summary>
+    /// Optional sprite states for subtype RSIs whose state names differ from the parent borg type.
+    /// </summary>
+    [DataField]
+    public string? SpriteBodyState { get; set; }
+
+    [DataField]
+    public string? SpriteHasMindState { get; set; }
+
+    [DataField]
+    public string? SpriteNoMindState { get; set; }
+
+    [DataField]
+    public string? SpriteToggleLightState { get; set; }
 }

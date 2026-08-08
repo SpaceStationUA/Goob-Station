@@ -1,0 +1,42 @@
+- type: entity
+  parent: BaseGameRule
+  id: BountyHunterSpawn
+  components:
+  - type: StationEvent
+    weight: 7
+    duration: null
+    earliestStart: 25
+    reoccurrenceDelay: 20
+    minimumPlayers: 15
+  - type: AntagLoadProfileRule
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Pirate/Shuttles/ShuttleEvent/hunter.yml
+  - type: AntagObjectives
+    objectives:
+    - BountyHunterKillRandomAntagObjective
+    - BountyHunterSurviveObjective
+  - type: AntagSelection
+    agentName: bounty-hunter-roundend-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostBountyHunter
+      min: 1
+      max: 1
+      chaosScore: 150
+      pickPlayer: false
+      startingGear: BountyHunterGear
+      roleLoadout:
+      - RoleSurvivalEVA
+      briefing:
+        text: bounty-hunter-role-greeting
+        color: Orange
+      mindRoles:
+      - MindRoleBountyHunter
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - NamesBountyHunterTitle
+        - NamesBountyHunter
+        nameFormat: name-format-bounty-hunter
+      - type: RandomHumanoidAppearance
+        randomizeName: false

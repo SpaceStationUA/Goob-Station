@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "security created by EmoGarbage404 (GitHub) for Space Station 14; icon-nt created by Rinary",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "security"
+    },
+    {
+      "name": "icon-nt"
+    }
+  ]
+}

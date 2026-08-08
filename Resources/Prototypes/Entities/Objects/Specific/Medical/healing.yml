@@ -33,6 +33,7 @@
   - type: Healing
     damageContainers:
       - Biological
+      - Skeleton # Pirate: allow treating skeleton burns.
     damage:
       types:
         Heat: -10
@@ -81,6 +82,7 @@
   - type: Healing
     damageContainers:
       - Biological
+      - Skeleton # Pirate: allow treating skeleton burns.
     damage:
       types:
         Heat: -15
@@ -129,6 +131,7 @@
   - type: Healing
     damageContainers:
       - Biological
+      - Skeleton # Pirate: allow treating skeleton injuries.
     damage:
       groups:
         Brute: -30 # was 5 (-15 Brute) for each, Buffed due to limb damage changes (Goobstation)
@@ -175,6 +178,7 @@
   - type: Healing
     damageContainers:
       - Biological
+      - Skeleton # Pirate: allow treating skeleton injuries.
     damage:
       groups:
         Brute: -45 # was 10 for each, Buffed due to Limb Damage Changes (Goobstation)
@@ -312,6 +316,7 @@
   - type: Healing
     damageContainers:
       - Biological
+      - Skeleton # Pirate: allow treating skeleton injuries.
     damage:
       types:
         Slash: -10 # Was 5

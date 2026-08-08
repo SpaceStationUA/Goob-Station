@@ -188,6 +188,9 @@ public sealed partial class MarkingSet
         {
             foreach (var (category, list) in Markings)
             {
+                if (category.IgnoresMatchSkin()) // Pirate - keep user-selected gradient data
+                    continue;
+
                 foreach (var marking in list)
                 {
                     if (markingManager.TryGetMarking(marking, out var prototype) &&
@@ -253,9 +256,9 @@ public sealed partial class MarkingSet
                     continue;
                 }
 
-                if (marking.Sprites.Count != list[i].MarkingColors.Count)
+                if (marking.ColorCount != list[i].MarkingColors.Count) // Pirate - shader markings have no sprites
                 {
-                    list[i] = new Marking(marking.ID, marking.Sprites.Count);
+                    list[i] = new Marking(marking.ID, marking.ColorCount);
                 }
             }
 

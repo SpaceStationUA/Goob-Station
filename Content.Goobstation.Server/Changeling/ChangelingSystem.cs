@@ -67,6 +67,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Polymorph;
 using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Store.Components;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -86,6 +87,26 @@ namespace Content.Goobstation.Server.Changeling;
 
 public sealed partial class ChangelingSystem : SharedChangelingSystem
 {
+    // Pirate: these components are deliberately not polymorphed onto a headslug, but must return after hatching.
+    private static readonly Type[] LastResortComponentTypes =
+    [
+        typeof(ChangelingRegenerateComponent),
+        typeof(ChangelingStasisComponent),
+        typeof(ChangelingBiomassComponent),
+        typeof(AugmentedEyesightComponent),
+        typeof(ChameleonSkinComponent),
+        typeof(DarknessAdaptionComponent),
+        typeof(VoidAdaptionComponent),
+    ];
+
+    private static readonly Type[] CurrentLastResortComponentTypes =
+    [
+        typeof(ChangelingComponent),
+        typeof(ChangelingIdentityComponent),
+        typeof(ChangelingChemicalComponent),
+        typeof(StoreComponent),
+    ];
+
     // this is one hell of a star wars intro text
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -653,6 +674,101 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
         return newUid;
     }
 
+    private List<Component> CopyLastResortComponents(EntityUid uid, IEnumerable<Type> componentTypes)
+    {
+        var components = new List<Component>();
+
+        foreach (var type in componentTypes)
+        {
+            if (!EntityManager.TryGetComponent(uid, type, out var component))
+                continue;
+
+            components.Add((Component) _serialization.CreateCopy(component, notNullableOverride: true));
+        }
+
+        return components;
+    }
+
+    private T? CopyLastResortComponent<T>(EntityUid uid) where T : Component
+    {
+        return TryComp<T>(uid, out var component)
+            ? _serialization.CreateCopy(component, notNullableOverride: true)
+            : null;
+    }
+
+    public void RestoreLastResortComponent(EntityUid uid, Component component)
+    {
+        var resourceData = component switch
+        {
+            ChangelingChemicalComponent chemicals => CopyResourceData(chemicals.ResourceData),
+            ChangelingBiomassComponent biomass => CopyResourceData(biomass.ResourceData),
+            _ => null,
+        };
+
+        Dictionary<string, ListingState>? listings = null;
+        if (component is StoreComponent store)
+        {
+            listings = store.Listings.ToDictionary(
+                listing => listing.ID,
+                listing => new ListingState(listing.PurchaseAmount, listing.RestockTime, listing.ProductActionEntity));
+        }
+
+        EntityManager.AddComponent(uid, component, true);
+
+        switch (component)
+        {
+            case ChangelingChemicalComponent chemicals when resourceData != null:
+                RestoreResourceData(resourceData, chemicals.ResourceData);
+                Dirty(uid, chemicals);
+                break;
+            case ChangelingBiomassComponent biomass when resourceData != null:
+                RestoreResourceData(resourceData, biomass.ResourceData);
+                Dirty(uid, biomass);
+                break;
+            case StoreComponent restoredStore when listings != null:
+                RestoreListings(restoredStore, listings);
+                Dirty(uid, restoredStore);
+                break;
+        }
+    }
+
+    private InternalResourcesData? CopyResourceData(InternalResourcesData? data)
+    {
+        return data == null
+            ? null
+            : _serialization.CreateCopy(data, notNullableOverride: true);
+    }
+
+    private static void RestoreResourceData(InternalResourcesData source, InternalResourcesData? target)
+    {
+        if (target == null)
+            return;
+
+        target.CurrentAmount = source.CurrentAmount;
+        target.MaxAmount = source.MaxAmount;
+        target.RegenerationRate = source.RegenerationRate;
+        target.Thresholds = source.Thresholds?.ToDictionary(entry => entry.Key, entry => entry.Value);
+        target.InternalResourcesType = source.InternalResourcesType;
+    }
+
+    private static void RestoreListings(StoreComponent store, Dictionary<string, ListingState> states)
+    {
+        foreach (var listing in store.Listings)
+        {
+            if (!states.TryGetValue(listing.ID, out var state))
+                continue;
+
+            listing.PurchaseAmount = state.PurchaseAmount;
+            listing.RestockTime = state.RestockTime;
+            listing.ProductActionEntity = state.ProductActionEntity;
+        }
+    }
+
+    private readonly record struct ListingState(
+        int PurchaseAmount,
+        TimeSpan RestockTime,
+        EntityUid? ProductActionEntity);
+
     public bool TryTransform(EntityUid target, ChangelingIdentityComponent comp, bool sting = false, bool persistentDna = false)
     {
         if (HasComp<AbsorbedComponent>(target))
@@ -722,8 +838,12 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
         foreach (var actionId in ent.Comp.BaseChangelingActions)
             _actions.AddAction(ent, actionId);
 
-        // make sure its set to the default
-        ent.Comp.TotalEvolutionPoints = _changelingRuleSystem.StartingCurrency;
+        // Pirate: copied identities already have their lifetime evolution total.
+        if (!ent.Comp.EvolutionPointsInitialized)
+        {
+            ent.Comp.TotalEvolutionPoints = _changelingRuleSystem.StartingCurrency;
+            ent.Comp.EvolutionPointsInitialized = true;
+        }
 
         // make their blood unreal
         _blood.ChangeBloodReagent(ent.Owner, "BloodChangeling");

@@ -95,6 +95,12 @@ public sealed class PirateTrapdoorSystem : EntitySystem
         if (ent.Comp.Open)
             return false;
 
+        // Pirate: multiz - a trapdoor is a hole between decks. On a map that is not part of a
+        // z-network there is no deck below, so opening one must not tear out the floor tile or
+        // shove everything standing on it downwards - there is nowhere for it to go.
+        if (!_zLevels.IsInTraversalContext(ent.Owner))
+            return false;
+
         if (!TryGetTile(ent, out var gridUid, out var grid, out var indices, out var tileRef))
             return false;
 

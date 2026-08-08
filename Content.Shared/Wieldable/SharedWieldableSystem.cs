@@ -7,7 +7,9 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction.Components; // Pirate: modsuit item modules
 using Content.Shared.Interaction.Events;
+using Content.Shared._Pirate.Item; // Pirate
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Inventory.VirtualItem;
@@ -122,8 +124,19 @@ public abstract class SharedWieldableSystem : EntitySystem
 
     private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
     {
-        if (_hands.GetHandCount(args.User) > 2)
+        #region Pirate: modsuit item modules
+        var usableHands = 0;
+        foreach (var hand in _hands.EnumerateHands(args.User))
+        {
+            if (_hands.GetHeldItem(args.User, hand) is { } held && HasComp<UnremoveableComponent>(held))
+                continue;
+
+            usableHands++;
+        }
+
+        if (usableHands > 2)
             return;
+        #endregion Pirate: modsuit item modules
 
         TryUnwield(uid, component, args.User);
     }
@@ -316,6 +329,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         }
 
         SetWielded((used, component), true);
+        _item.VisualsChanged(used); // Pirate -  wielded in-hand visual
 
         if (component.WieldSound != null)
             _audio.PlayPredicted(component.WieldSound, used, user);
@@ -375,6 +389,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         }
 
         SetWielded((used, component), false);
+        _item.VisualsChanged(used); // Pirate -  wielded in-hand visual
 
         var ev = new ItemUnwieldedEvent(user, force);
         RaiseLocalEvent(used, ref ev);

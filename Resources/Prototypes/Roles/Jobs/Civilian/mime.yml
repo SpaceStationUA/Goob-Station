@@ -8,6 +8,13 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 4h
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
+    # Pirate contractor end
   startingGear: MimeGear
   icon: "JobIconMime"
   supervisors: job-supervisors-hop

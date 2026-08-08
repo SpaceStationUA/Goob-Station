@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid.Markings
 {
-    public sealed class MarkingManager
+    public sealed partial class MarkingManager // Pirate - hair gradient extension
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -220,7 +220,7 @@ namespace Content.Shared.Humanoid.Markings
                 return false;
             }
 
-            if (marking.MarkingColors.Count != proto.Sprites.Count)
+            if (marking.MarkingColors.Count != proto.ColorCount) // Pirate - shader markings have no sprites
             {
                 return false;
             }

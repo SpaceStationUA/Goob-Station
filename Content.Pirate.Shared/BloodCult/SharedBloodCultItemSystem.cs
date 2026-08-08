@@ -41,7 +41,8 @@ public sealed class SharedBloodCultItemSystem : EntitySystem
 
     private void OnActivate(Entity<BloodCultItemComponent> item, ref ActivateInWorldEvent args)
     {
-        if (_whitelist.IsWhitelistPass(item.Comp.Whitelist, args.User))
+        if (_whitelist.IsWhitelistPass(item.Comp.Whitelist, args.User) ||
+            TryComp<EmbeddableProjectileComponent>(item, out var embeddable) && embeddable.EmbeddedIntoUid != null)
             return;
 
         args.Handled = true;

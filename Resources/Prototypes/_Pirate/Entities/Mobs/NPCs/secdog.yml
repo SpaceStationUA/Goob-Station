@@ -127,6 +127,10 @@
     - VimPilot
     - K9
   - type: MindOnlyAccess
+  - type: Access
+    tags:
+    - Security
+    - Maintenance
   - type: AutoImplant
     implants:
     - TrackingImplant

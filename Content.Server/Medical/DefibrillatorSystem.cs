@@ -47,6 +47,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!; // Pirate
     [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -261,7 +262,7 @@ public sealed class DefibrillatorSystem : EntitySystem
                 // notify them they're being revived.
                 if (mind.CurrentEntity != target)
                 {
-                    _euiManager.OpenEui(new ReturnToBodyEui(mind, _mind, _player), session);
+                    _euiManager.OpenEui(new ReturnToBodyEui(mind, _ghostSystem, _player), session);
                 }
             }
             else

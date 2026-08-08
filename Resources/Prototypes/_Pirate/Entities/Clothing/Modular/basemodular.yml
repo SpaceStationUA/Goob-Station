@@ -78,12 +78,15 @@
     interfaces:
       enum.ModularSuitUiKey.Key:
         type: ModularSuitBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: WiresPanel
     open: true
   - type: LockedWiresPanel
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot { }
+      storagebase: !type:Container { }
       suit_core: !type:ContainerSlot { }
       suit_module: !type:Container { }
       suit_part: !type:Container { }
@@ -168,6 +171,9 @@
       - state: visor-unshaded-vox
         shader: unshaded
   - type: Armor
+    # Pirate: Shitmed applies armor only to explicitly covered body parts.
+    coverage:
+    - Head
     modifiers:
       coefficients:
         Blunt: 0.90
@@ -218,7 +224,7 @@
     unlockOnClick: false
 
 - type: entity
-  parent: [ BaseItem, BaseClothingModularToggler, AllowSuitStorageClothing ]
+  parent: [ BaseItem, BaseClothingModularToggler, AllowSuitStorageClothing, ClothingArmorPlate ] # Pirate: armor plates.
   id: ClothingModularChestPlateBase
   abstract: true
   components:
@@ -249,6 +255,16 @@
       outerClothing-vox:
       - state: sealed-equipped-OUTERCLOTHING-vox
   - type: Armor
+    # Pirate: The chestplate protects the wearer outside the helmet coverage.
+    coverage:
+    - Chest
+    - Groin
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+    - Other
     modifiers:
       coefficients:
         Blunt: 0.90

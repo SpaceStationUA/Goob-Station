@@ -1,0 +1,413 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: BaseMobHereticLockForm
+  abstract: true
+  components:
+  - type: Aura
+    auraColor: "#53277e"
+    auraFarm: 1
+    distortion: 0.03
+
+- type: entity
+  parent: [SimpleSpaceMobBase, FlyingMobBase, MobCombat]
+  id: MobGhoulMirrorMaid
+  name: maid in the mirror
+  description: A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly.
+  components:
+  - type: Ghoul
+    spawnOnDeathPrototype: ShardGlass
+    totalHealth: 80
+    ghostRoleName: ghostrole-maid-name
+    ghostRoleDesc: ghostrole-maid-desc
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghostrole-maid-name
+    description: ghostrole-maid-desc
+    rules: ghostrole-ghoul-rules
+    mindRoles:
+    - MindRoleGhoul
+    raffle:
+      settings: short
+  - type: Sprite
+    sprite: _Pirate/Heretic/Mobs/mirror_maid.rsi
+    state: maid
+  - type: MirrorMaid
+  - type: ActionGrant
+    actions:
+    - ActionMirrorJaunt
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5
+    baseSprintSpeed: 5
+  - type: FlashImmunity
+  - type: NightVision
+    color: aquamarine
+    activateSound: null
+    deactivateSound: null
+  - type: MeleeWeapon
+    animation: WeaponArcPunch
+    soundHit:
+      collection: GlassBreak
+    damage:
+      types:
+        Slash: 10
+        Piercing: 10
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection: GlassBreak
+    soundTypes:
+      Heat:
+        collection: MeatLaserImpact
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 25
+        mask:
+        - Opaque
+        layer:
+        - FlyingMobLayer
+  - type: Reflect
+    reflectProb: 1
+    reflects:
+    - Energy
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damage:
+      types:
+        Blunt: -1
+        Slash: -1
+        Piercing: -1
+        Heat: -1
+        Cold: -1
+        Shock: -1
+        Asphyxiation: -1
+        Bloodloss: -1
+        Caustic: -1
+        Poison: -1
+        Radiation: -1
+        Cellular: -1
+        Holy: -1
+  - type: Insulated
+  - type: Damageable
+    damageContainer: InorganicMetaphysical
+    damageModifierSet: MirrorMaid
+  - type: MovementIgnoreGravity
+  - type: NpcFactionMember
+    factions:
+    - Heretic
+  - type: HTN
+    rootTask:
+      task: HereticSummonCompound
+    blackboard:
+      NavSmash: !type:Bool
+        true
+
+- type: entity
+  parent: MobShattered
+  id: MobGhoulShattered
+  components:
+  - type: Ghoul
+    giveBlade: false
+    totalHealth: 250
+    changeAppearance: false
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghostrole-ghoul-name
+    description: ghostrole-ghoul-desc
+    rules: ghostrole-ghoul-rules
+    mindRoles:
+    - MindRoleGhoul
+    raffle:
+      settings: short
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirst
+    - NamesLast
+    nameFormat: name-format-standard
+  - type: HTN
+    rootTask:
+      task: HereticSummonCompound
+    blackboard:
+      NavSmash: !type:Bool
+        true
+
+- type: entity
+  parent: MobShattered
+  id: MobShatteredLock
+  name: empowered shattered risen
+  components:
+  - type: ShatteredRisen
+    weapon1: ArmBladeShatteredEmpowered
+    weapon2: ArmHammerShatteredEmpowered
+  - type: Aura
+    auraColor: "#53277e"
+    auraFarm: 1
+    distortion: 0.03
+
+# Ascended forms intentionally do not inherit Ghoul: the heretic keeps their own role and state.
+- type: entity
+  parent: [SimpleSpaceMobBase, MobCombat, BaseMobHereticLockForm]
+  id: MobGhoulStalkerLock
+  name: empowered flesh stalker
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+    state: stalker
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5.5
+    baseSprintSpeed: 5.5
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      250: Critical
+      260: Dead
+  - type: FlashImmunity
+  - type: ThermalVision
+    thermalShader: null
+    isActive: true
+    color: white
+    drawOverlay: false
+    lightRadius: 0
+    toggleAction: null
+  - type: MeleeWeapon
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 20
+        Piercing: 15
+  - type: NpcFactionMember
+    factions:
+    - Heretic
+
+- type: entity
+  parent: [SimpleSpaceMobBase, MobCombat, BaseMobHereticLockForm]
+  id: MobGhoulProphetLock
+  name: empowered raw prophet
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+    layers:
+    - map: [ "movement" ]
+      state: raw_prophet
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: raw_prophet-move
+    noMovementLayers:
+      movement:
+        state: raw_prophet
+  - type: HealingAura
+    selfHealMultiplier: 2
+    componentHealMultipliers:
+      FleshPassive: 1
+      Ghoul: 3
+  - type: NightVision
+    color: white
+    activateSound: null
+    deactivateSound: null
+    drawOverlay: false
+  - type: Eye
+    drawFov: false
+  - type: ContentEye
+    maxZoom: 1.25, 1.25
+    targetZoom: 1.25, 1.25
+  - type: ShowHealthBars
+  - type: ShowHealthIcons
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      110: Dead
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 20
+        Piercing: 15
+  - type: NpcFactionMember
+    factions:
+    - Heretic
+
+- type: entity
+  parent: [SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseMobHereticLockForm]
+  id: MobGhoulMirrorMaidLock
+  name: empowered maid in the mirror
+  description: A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Heretic/Mobs/mirror_maid.rsi
+    state: maid
+  - type: MirrorMaid
+  - type: ActionGrant
+    actions:
+    - ActionMirrorJaunt
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5
+    baseSprintSpeed: 5
+  - type: FlashImmunity
+  - type: NightVision
+    color: aquamarine
+    activateSound: null
+    deactivateSound: null
+  - type: MeleeWeapon
+    animation: WeaponArcPunch
+    soundHit:
+      collection: GlassBreak
+    damage:
+      types:
+        Slash: 10
+        Piercing: 10
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection: GlassBreak
+    soundTypes:
+      Heat:
+        collection: MeatLaserImpact
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 25
+        mask:
+        - Opaque
+        layer:
+        - FlyingMobLayer
+  - type: Reflect
+    reflectProb: 1
+    reflects:
+    - Energy
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damage:
+      types:
+        Blunt: -1
+        Slash: -1
+        Piercing: -1
+        Heat: -1
+        Cold: -1
+        Shock: -1
+        Asphyxiation: -1
+        Bloodloss: -1
+        Caustic: -1
+        Poison: -1
+        Radiation: -1
+        Cellular: -1
+        Holy: -1
+  - type: Insulated
+  - type: Damageable
+    damageContainer: InorganicMetaphysical
+    damageModifierSet: MirrorMaid
+  - type: MovementIgnoreGravity
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Critical
+      130: Dead
+  - type: NpcFactionMember
+    factions:
+    - Heretic
+
+- type: entity
+  parent: [SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseMobHereticLockForm]
+  id: MobGhoulFireSharkLock
+  name: empowered fire shark
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+    state: fire_shark
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 7
+    baseSprintSpeed: 7
+  - type: IgniteOnMeleeHit
+    fireStacks: 4
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Heat: 8
+        Slash: 8
+        Piercing: 8
+  - type: Flammable
+    canResistFire: false
+    damage:
+      types:
+        Heat: 0
+  - type: TemperatureDamage
+    heatDamage:
+      types:
+        Heat: 0
+  - type: PointLight
+    radius: 3
+    energy: 3
+    color: "#ff8227"
+  - type: Damageable
+    damageModifierSet: FireShark
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Critical
+      90: Dead
+  - type: NpcFactionMember
+    factions:
+    - Heretic
+
+- type: entity
+  parent: [SimpleSpaceMobBase, MobCombat, BaseMobHereticLockForm]
+  id: MobGhoulRustWalkerLock
+  name: empowered rust walker
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/eldritch_mobs.rsi
+    layers:
+    - map: [ "movement" ]
+      state: rust_walker
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: rust_walker-move
+    noMovementLayers:
+      movement:
+        state: rust_walker
+  - type: LeechingWalk
+  - type: MeleeWeapon
+    soundHit:
+      collection: MetalThud
+    damage:
+      types:
+        Blunt: 25
+        Ion: 25
+        Structural: 200
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Critical
+      160: Dead
+  - type: RustObjectsInRadius
+    rustStrength: -1
+    rustRadius: 3
+  - type: ActionGrant
+    actions:
+    - ActionHereticRustChargeShort
+  - type: NoSlip
+  - type: Insulated
+  - type: FlashImmunity
+  - type: NpcFactionMember
+    factions:
+    - Heretic

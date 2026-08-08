@@ -7,6 +7,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: ReflectiveSurface # Pirate: Mirror Maid jaunt surface.
   - type: Anchorable
     flags:
     - Anchorable

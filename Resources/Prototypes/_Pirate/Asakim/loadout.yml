@@ -1,0 +1,35 @@
+# SPDX-FileCopyrightText: 2025 Arcticular1
+# SPDX-FileCopyrightText: 2025 Onezero0
+# SPDX-FileCopyrightText: 2025 significant harassment
+# SPDX-FileCopyrightText: 2025 starch
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: startingGear
+  id: AsakimGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAsakim
+    back: ClothingBackpackAdvancedTactical
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitAsakimUnremoveable
+    shoes: ClothingShoesBootsMagAsakim
+    pocket2: DoubleEmergencyOxygenTankFilled
+    # Pirate: security webbing rejects the supplied tools; merc webbing has unrestricted storage.
+    belt: ClothingBeltMercWebbing
+    suitStorage: OxygenTankFilled
+  inhand:
+  - WeaponRifleAsakimAutopulser
+  - WeaponHFKatana
+  storage:
+    back:
+    - DoubleEmergencyOxygenTankFilled
+    - BoxSurvival
+    - JetpackMiniFilled
+    - MedkitCombatFilled
+    - MedkitCombatFilled
+    belt:
+    - Screwdriver
+    - Wrench
+    - WelderIndustrial
+    - JawsOfLife
+    - Multitool

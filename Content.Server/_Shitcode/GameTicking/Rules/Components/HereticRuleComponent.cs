@@ -20,7 +20,7 @@ public sealed partial class HereticRuleComponent : Component
     public readonly List<ProtoId<StoreCategoryPrototype>> StoreCategories = new()
     {
         "HereticPathAsh",
-        //"HereticPathLock",
+        "HereticPathLock", // Pirate: port Trauma's completed Lock path.
         "HereticPathFlesh",
         "HereticPathBlade",
         "HereticPathVoid",

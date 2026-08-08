@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipe
+  id: SpaceBladeMc
+  result: SpaceBladeMc
+  completetime: 2
+  applyMaterialDiscount: false
+  categories:
+  - General
+  materials:
+    Steel: 300

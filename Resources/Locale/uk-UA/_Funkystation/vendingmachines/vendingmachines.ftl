@@ -1,0 +1,13 @@
+vending-machine-keypad-sold-out = НЕМАЄ
+vending-machine-keypad-clear = CLR
+vending-machine-keypad-enter = ENT
+vending-machine-keypad-credits = КР: { $credits }¥
+vending-machine-keypad-insert-credits = ВНЕСІТЬ КОШТИ
+vending-machine-keypad-error = [ ПОМИЛКА ]
+vending-machine-keypad-sold = [ НЕМАЄ ]
+vending-machine-keypad-denied = [ ВІДМОВЛЕНО ]
+vending-machine-keypad-low-funds = [ КОШТИ ]
+vending-machine-keypad-success-enjoy = [ СМАЧНОГО ]
+vending-machine-keypad-success-thx = [ ДЯКУЮ ]
+vending-machine-keypad-success-yum = [ НЯМ! ]
+vending-machine-keypad-success-vend = [ ВИДАЧА ]

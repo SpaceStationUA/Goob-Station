@@ -15,7 +15,7 @@
   # Pirate contractor start
   - !type:CharacterEmployerRequirement
     employers:
-    - NanoTrasen
+    - IdrisIncorporated
     - PMCG
   # Pirate contractor end
   startingGear: BrigmedicGear

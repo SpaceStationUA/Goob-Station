@@ -180,7 +180,8 @@ public sealed class GhoulSystem : EntitySystem
             _htn.Replan(htn);
         }
 
-        if (TryComp<HumanoidAppearanceComponent>(ent, out var humanoid))
+        // Pirate: some source-specific ghouls, such as Shattered, keep their own appearance.
+        if (ent.Comp.ChangeAppearance && TryComp<HumanoidAppearanceComponent>(ent, out var humanoid))
         {
             // make them "have no eyes" and grey
             // this is clearly a reference to grey tide

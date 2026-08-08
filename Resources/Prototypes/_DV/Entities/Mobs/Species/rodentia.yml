@@ -10,7 +10,7 @@
   - type: HumanoidAppearance
     species: Rodentia
   - type: Hunger
-    baseDecayRate: 0.0467 # 33% faster than usual
+    baseDecayRate: 0.054166 # Goobstation base rate changed, 33% faster than base
   - type: Thirst # // Goob Station //
   - type: Carriable # Carrying system from nyanotrasen.
   - type: Inventory
@@ -59,6 +59,9 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+      # Pirate: underwear customization.
+      - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
+      - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
       - map: [ "jumpsuit" ]
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
       - map: [ "enum.HumanoidVisualLayers.RHand" ]

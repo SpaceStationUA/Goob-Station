@@ -138,11 +138,28 @@
   components:
   - type: HereticBlade
     path: Lock
+  - type: OpeningBlade # Pirate: Trauma Lock blade wound effect.
   - type: Sprite
     sprite: _Goobstation/Heretic/Blades/blade_lock.rsi
     state: icon
   - type: Item
     sprite: _Goobstation/Heretic/Blades/blade_lock-inhand.rsi
+  # Pirate: Trauma Lock blade doubles as a fast crowbar.
+  - type: Prying
+    speedModifier: 1.5
+  - type: ToolTileCompatible
+  - type: Tool
+    qualities:
+    - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: UseDelay
+    delay: 0.5
+  - type: Tag
+    tags:
+    - HereticItem
+    - HereticBlade
+    - HereticBladeLock
 
 - type: entity
   parent: HereticBladeBase

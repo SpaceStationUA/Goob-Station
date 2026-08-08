@@ -1,0 +1,81 @@
+- type: entity
+  id: WaistBeltInstructorBelt
+  parent: [BaseSecurityContraband, ClothingBeltSecurity]
+  name: дисциплінарний пояс
+  description: Дуже важкий пояс. "Дивись, що ти накоїв! Кадет, від пола п'ять разів віджатися! ЗАРАЗ!""
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/instructordisciplinary.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/instructordisciplinary.rsi
+    equipSound:
+       path: /Audio/_Pirate/Items/Belts/BeltBuckle.ogg
+       params:
+         volume: -3
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    bluntStaminaDamageFactor: 1.5
+    angle: 0
+    damage:
+      types:
+        Blunt: 5
+    attackRate: 0.7
+    soundHit:
+      path: /Audio/_Goobstation/Weapons/Effects/whip.ogg
+      params:
+        variation: 0.125
+        volume: -0.5
+  - type: TelescopicBaton
+  - type: KnockdownOnHit
+    duration: .1
+    dropItems: false
+  - type: StaminaDamageOnHit
+    damage: 12
+  - type: UseDelay
+    delays:
+      default:
+        length: 1
+  - type: UseDelayBlockMelee
+    delays:
+    - default
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Pirate/Items/Belts/BeltPickup.ogg
+      params:
+        volume: -3
+  - type: Storage
+    grid:
+    - 0,0,5,1
+    whitelist:
+      tags:
+      - CigPack
+      - Taser
+      - SecBeltEquip
+      - Radio
+      - Sidearm
+      - MagazinePistol
+      - MagazineMagnum
+      - CombatKnife
+      - Truncheon
+      - BolaEnergy
+      - EnergySpeedloader
+      - MilitaryPowerCell
+      - EnergyMagAmmo
+      - HandGrenade
+      components:
+      - FlashOnTrigger
+      - SmokeOnTrigger
+      - Flash
+      - Handcuff
+      - BallisticAmmoProvider
+      - CartridgeAmmo
+      - DoorRemote
+      - Whistle
+      - BalloonPopper
+      - ScatteringGrenade
+  - type: EmitsSoundOnMove
+    soundCollection:
+      collection: PirateFootstepTacticalWebbing
+      params:
+        volume: -10 

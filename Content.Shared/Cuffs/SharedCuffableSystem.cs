@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared._Pirate.Silicons; // Pirate: reusable security borg holocuffs.
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode;
@@ -499,9 +500,49 @@ namespace Content.Shared.Cuffs
             // Shitmed Change End
 
             // Success!
+            // Pirate: module tools are normally undroppable, but cuffs must enter the target's cuff container.
+            TryComp<BorgHandcuffComponent>(handcuff, out var borgCuff);
+            if (borgCuff != null)
+                RemComp<UnremoveableComponent>(handcuff);
+
             _hands.TryDrop(user, handcuff);
 
-            _container.Insert(handcuff, component.Container);
+            var inserted = _container.Insert(handcuff, component.Container);
+            if (!inserted)
+            {
+                if (borgCuff != null)
+                    EnsureComp<UnremoveableComponent>(handcuff);
+
+                return false;
+            }
+
+            // Pirate: immediately replace applied holocuffs in their original borg module hand.
+            if (_net.IsServer &&
+                borgCuff?.OwnerChassis is { } borgChassis &&
+                borgCuff.HandId is { } handId &&
+                Exists(borgChassis) &&
+                TryComp<HandsComponent>(borgChassis, out var chassisHands))
+            {
+                var prototype = MetaData(handcuff).EntityPrototype?.ID;
+                if (prototype != null &&
+                    _hands.TryGetHand((borgChassis, chassisHands), handId, out _) &&
+                    !_hands.TryGetHeldItem((borgChassis, chassisHands), handId, out _))
+                {
+                    var replacement = Spawn(prototype, Transform(borgChassis).Coordinates);
+                    var replacementCuff = EnsureComp<BorgHandcuffComponent>(replacement);
+                    replacementCuff.OwnerChassis = borgChassis;
+                    replacementCuff.HandId = handId;
+                    Dirty(replacement, replacementCuff);
+                    EnsureComp<UnremoveableComponent>(replacement);
+                    _hands.DoPickup(borgChassis, handId, replacement, chassisHands);
+
+                    if (!_hands.TryGetHeldItem((borgChassis, chassisHands), handId, out var held) ||
+                        held != replacement)
+                    {
+                        QueueDel(replacement);
+                    }
+                }
+            }
 
             var ev = new TargetHandcuffedEvent();
             RaiseLocalEvent(target, ref ev);
@@ -531,7 +572,8 @@ namespace Content.Shared.Cuffs
                 return true;
             }
 
-            if (!_hands.CanDrop(user, handcuff))
+            // Pirate: reusable borg holocuffs are allowed to leave their generated module hand only while cuffing.
+            if (!HasComp<BorgHandcuffComponent>(handcuff) && !_hands.CanDrop(user, handcuff))
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-cannot-drop-cuffs", ("target", Identity.Name(target, EntityManager, user))), user, user);
                 return false;
@@ -742,8 +784,36 @@ namespace Content.Shared.Cuffs
 
             if (_net.IsServer)
             {
+                // Pirate: applied holocuffs return to their module hand, or vanish if its replacement is present.
+                if (TryComp<BorgHandcuffComponent>(cuffsToRemove, out var borgCuff) &&
+                    borgCuff.OwnerChassis is { } borgChassis &&
+                    borgCuff.HandId is { } handId &&
+                    Exists(borgChassis) &&
+                    TryComp<HandsComponent>(borgChassis, out var chassisHands))
+                {
+                    if (_hands.TryGetHeldItem((borgChassis, chassisHands), handId, out _) ||
+                        !_hands.TryGetHand((borgChassis, chassisHands), handId, out _))
+                    {
+                        QueueDel(cuffsToRemove);
+                    }
+                    else
+                    {
+                        EnsureComp<UnremoveableComponent>(cuffsToRemove);
+                        _hands.DoPickup(borgChassis, handId, cuffsToRemove, chassisHands);
+
+                        if (!_hands.TryGetHeldItem((borgChassis, chassisHands), handId, out var held) ||
+                            held != cuffsToRemove)
+                        {
+                            QueueDel(cuffsToRemove);
+                        }
+                    }
+                }
+                else if (HasComp<BorgHandcuffComponent>(cuffsToRemove))
+                {
+                    QueueDel(cuffsToRemove);
+                }
                 // Handles spawning broken cuffs on server to avoid client misprediction
-                if (cuff.BreakOnRemove)
+                else if (cuff.BreakOnRemove)
                 {
                     QueueDel(cuffsToRemove);
                     var trash = Spawn(cuff.BrokenPrototype, Transform(cuffsToRemove).Coordinates);

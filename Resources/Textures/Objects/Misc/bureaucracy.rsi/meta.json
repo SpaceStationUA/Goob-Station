@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. paper_stamp-syndicate by Veritius. paper_receipt, paper_receipt_horizontal by eoineoineoin. paper_stamp-greytide by ubaser. paper_stamp-psychologist by clinux. syndicate_card by Aserovich, paper_stamp-signature by Mnemotechnician, Nanotrasen card by SolsticOfTheWinter. paper_stamp_wizard by brassicaprime69 (Discord), acquisition_form acquisition_form_words and acquisition_form_header by sowelipililimute (GitHub), station-report-paper by johnjjohn (GitHub). paper_stamp-wizard is a recolored stamp-rd by brassicaprime69 (Discord).hamster by atdoop (github) for impstation.",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. paper_stamp-syndicate by Veritius. paper_receipt, paper_receipt_horizontal by eoineoineoin. paper_stamp-greytide by ubaser. paper_stamp-psychologist by clinux. syndicate_card by Aserovich, paper_stamp-signature by Mnemotechnician, Nanotrasen card by SolsticOfTheWinter. paper_stamp_wizard by brassicaprime69 (Discord), acquisition_form acquisition_form_words and acquisition_form_header by sowelipililimute (GitHub), station-report-paper by johnjjohn (GitHub). paper_stamp-wizard is a recolored stamp-rd by brassicaprime69 (Discord). hamster by atdoop (GitHub) for Impstation. paper_stamp-prosec is a recolored version of paper_stamp-lawyer. paper_stamp-notary is taken from tgstation at https://github.com/tgstation/tgstation/commit/fb1012102257b7b0a08d861fd2b8ba963c416e93 and modified by leonardo-dabepis. paper_stamp-chemist by BriBrooo (GitHub) for DeltaV. paper_stamp-doctor by whatston3 (GitHub) for Frontier Station.",
   "size": {
     "x": 32,
     "y": 32
@@ -244,7 +244,19 @@
       "name": "paper_stamp-wizard"
     },
     {
-        "name": "paper_stamp-hamster"
+      "name": "paper_stamp-hamster"
+    },
+    {
+      "name": "paper_stamp-notary"
+    },
+    {
+      "name": "paper_stamp-prosec"
+    },
+    {
+      "name": "paper_stamp-chemist"
+    },
+    {
+      "name": "paper_stamp-doctor"
     },
     {
       "name": "paper_stamp-interdyne"

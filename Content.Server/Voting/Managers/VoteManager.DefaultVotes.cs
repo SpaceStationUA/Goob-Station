@@ -282,6 +282,7 @@ namespace Content.Server.Voting.Managers
             foreach (var (k, v) in maps)
             {
                 options.Options.Add((v, k));
+                options.OptionVisuals[k] = new(k.MapIcon, k.MapPreview); // Pirate - map vote previews
             }
 
             WirePresetVoteInitiator(options, initiator);

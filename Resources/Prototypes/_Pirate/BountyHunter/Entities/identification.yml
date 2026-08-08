@@ -1,0 +1,24 @@
+- type: entity
+  parent: IDCardStandard
+  id: BountyHunterIDCard
+  name: visitor ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idvisitor
+  - type: IdCard
+    jobTitle: job-title-visitor
+    jobIcon: JobIconVisitor
+  - type: Access
+    tags:
+    - Maintenance
+    - Freelance
+
+- type: entity
+  parent: VisitorPDA
+  id: BountyHunterPDA
+  name: bounty hunter PDA
+  components:
+  - type: Pda
+    id: BountyHunterIDCard

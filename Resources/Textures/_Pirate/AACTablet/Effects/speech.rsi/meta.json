@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "AAC sprites by _.requiem._ (Discord)",
+  "states": [
+    {
+      "name": "aac0",
+      "delays": [
+        [
+          0.2,
+          0.3,
+          0.3,
+          0.5
+        ]
+      ]
+    }
+  ]
+}

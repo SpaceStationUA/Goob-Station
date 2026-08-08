@@ -82,6 +82,12 @@ public sealed partial class TrailComponent : Component
     public Angle EndAngle;
 
     /// <summary>
+    /// Random variation in degrees applied to the particle direction.
+    /// </summary>
+    [DataField]
+    public float AngleVariation; // Pirate: Trauma Lock path blood trail.
+
+    /// <summary>
     /// The less this value is, the more frequent the particles will be. This is basically time of each cycle.
     /// </summary>
     [DataField, AutoNetworkedField]

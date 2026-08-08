@@ -1,0 +1,51 @@
+- type: entity
+  parent: Rickenbacker4003Instrument
+  id: Rickenbacker4003InstrumentBlack
+  name: Rickenbacker
+  description: Swinging this thing around makes your palms sting.
+  components:
+  - type: Sprite
+    sprite: _starcup/Objects/Fun/Instruments/rickenbacker_black.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: _starcup/Objects/Fun/Instruments/rickenbacker_black.rsi
+
+- type: entity
+  parent: Rickenbacker4003Instrument
+  id: Rickenbacker4003InstrumentRed
+  name: Rickenbacker
+  description: It takes an idiot to do cool things. That's why it's cool. And this bass makes you feel cool.
+  components:
+  - type: Sprite
+    sprite: _starcup/Objects/Fun/Instruments/rickenbacker_red.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: _starcup/Objects/Fun/Instruments/rickenbacker_red.rsi
+
+- type: entity
+  parent: Rickenbacker4003Instrument
+  id: Rickenbacker4003InstrumentPink
+  name: Rickenbacker
+  description: Amazing things can happen with this.
+  components:
+  - type: Sprite
+    sprite: _starcup/Objects/Fun/Instruments/rickenbacker_pink.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: _starcup/Objects/Fun/Instruments/rickenbacker_pink.rsi
+
+- type: entity
+  parent: Rickenbacker4003Instrument
+  id: Rickenbacker4003InstrumentSlime
+  name: Rickenbacker
+  description: A well-loved instrument that smells faintly of candy.
+  components:
+  - type: Sprite
+    sprite: _starcup/Objects/Fun/Instruments/glishenbacker.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: _starcup/Objects/Fun/Instruments/glishenbacker.rsi

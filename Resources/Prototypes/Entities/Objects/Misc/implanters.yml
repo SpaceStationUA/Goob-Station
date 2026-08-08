@@ -58,8 +58,11 @@
     - BinaryImplant # Goobstation?
     deimplantFailureDamage:
       types:
-        Cellular: 50 # NotGoobstation its 50 genetic to prevent you from randomly extracting implants.
-        Heat: 10
+        # Pirate start
+        #Cellular: 50 # NotGoobstation its 50 genetic to prevent you from randomly extracting implants.
+        #Heat: 10
+        Caustic: 15
+        # Pirate end
   - type: Sprite
     sprite: Objects/Specific/Medical/implanter.rsi
     state: implanter0
