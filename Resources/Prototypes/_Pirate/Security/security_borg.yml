@@ -59,7 +59,12 @@
     safeMode: 0
     lethalMode: 1
     allowedAlertLevels:
+    - amber
     - red
+    - gamma
+    - delta
+    - violet
+    - omicron
   - type: Unremoveable
   - type: GunExecutionBlacklist
 
