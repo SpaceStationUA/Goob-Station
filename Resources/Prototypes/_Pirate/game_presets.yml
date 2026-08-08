@@ -32,7 +32,7 @@
     - secretcosmiccultgreenshift
     - secretentropygreenshift
     - entropygreenshift
-  name: secret-title
+  name: monument-interface-entropy-title
   description: secret-description
   showInVote: false
   rules:
