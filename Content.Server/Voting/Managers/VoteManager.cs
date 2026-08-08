@@ -417,6 +417,7 @@ namespace Content.Server.Voting.Managers
 
             v.Finished = true;
             v.Dirty = true;
+            SendAdminVoteResults(v); // Pirate - show admins who voted for each option.
             var args = new VoteFinishedEventArgs(winners.Length == 1 ? winners[0] : null, winners, voteTally);
             v.OnFinished?.Invoke(_voteHandles[v.Id], args);
             DirtyCanCallVoteAll();
