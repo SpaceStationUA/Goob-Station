@@ -19,8 +19,8 @@
   abstract: true
   parent: BaseGasTurbinePart
   id: BaseGasTurbineBlade
-  name: gas turbine blade
-  description: A replacement blade for the gas turbine.
+  name: "лопаті газової турбіни"
+  description: "Змінні лопаті для газової турбіни."
   components:
   - type: GasTurbineBlade
   - type: Tag
@@ -30,7 +30,7 @@
 - type: entity
   parent: [ BaseGasTurbineBlade, BaseNuclearPropertiesSteel ]
   id: SteelGasTurbineBlade
-  name: steel gas turbine blade
+  name: "сталеві лопаті газової турбіни"
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -39,7 +39,7 @@
 - type: entity
   parent: [ BaseGasTurbineBlade, BaseNuclearPropertiesBrass ]
   id: BrassGasTurbineBlade
-  name: brass gas turbine blade
+  name: "латунні лопаті газової турбіни"
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -48,7 +48,7 @@
 - type: entity
   parent: [ BaseGasTurbineBlade, BaseNuclearPropertiesDiamond ]
   id: DiamondGasTurbineBlade
-  name: diamond gas turbine blade
+  name: "діамантові лопаті газової турбіни"
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -57,7 +57,7 @@
 - type: entity
   parent: [ BaseGasTurbineBlade, BaseNuclearPropertiesGold ]
   id: GoldGasTurbineBlade
-  name: gold gas turbine blade
+  name: "золоті лопаті газової турбіни"
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -66,7 +66,7 @@
 - type: entity
   parent: [ BaseGasTurbineBlade, BaseNuclearPropertiesPlasteel ]
   id: PlasteelGasTurbineBlade
-  name: plasteel gas turbine blade
+  name: "пласталеві лопаті газової турбіни"
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -78,8 +78,8 @@
   abstract: true
   parent: BaseGasTurbinePart
   id: BaseGasTurbineStator
-  name: gas turbine stator
-  description: A replacement stator for the gas turbine.
+  name: "статор газової турбіни"
+  description: "Змінний статор для газової турбіни."
   components:
   - type: Sprite
     state: turbine_stator
@@ -91,7 +91,7 @@
 - type: entity
   parent: [ BaseGasTurbineStator, BaseNuclearPropertiesSteel ]
   id: SteelGasTurbineStator
-  name: steel gas turbine stator
+  name: "сталевий статор газової турбіни"
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -100,7 +100,7 @@
 - type: entity
   parent: [ BaseGasTurbineStator, BaseNuclearPropertiesSilver ]
   id: SilverGasTurbineStator
-  name: silver gas turbine stator
+  name: "срібний статор газової турбіни"
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -109,7 +109,7 @@
 - type: entity
   parent: [ BaseGasTurbineStator, BaseNuclearPropertiesGold ]
   id: GoldGasTurbineStator
-  name: gold gas turbine stator
+  name: "золотий статор газової турбіни"
   components:
   - type: PhysicalComposition
     materialComposition:

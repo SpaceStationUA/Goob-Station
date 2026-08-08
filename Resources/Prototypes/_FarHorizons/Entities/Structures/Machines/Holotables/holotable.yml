@@ -1,8 +1,8 @@
 - type: entity
   id: HolotableBase
   parent: BaseStructure
-  name: Holotable
-  description: Holographic display table. Does absolutely nothing but look cool at the moment.
+  name: "голографічний стіл"
+  description: "Голографічний стіл. Наразі він не робить нічого, крім стильного вигляду."
   abstract: true
   components:
     - type: Sprite
@@ -69,7 +69,7 @@
 - type: entity
   id: GenericHolotable
   parent: HolotableBase
-  name: Generic Holotable
+  name: "універсальний голографічний стіл"
   components:
   - type: Sprite
     sprite: _FarHorizons/Structures/Machines/HoloTables/holotable.rsi
@@ -91,7 +91,7 @@
 - type: entity
   id: EngineeringHolotable
   parent: HolotableBase
-  name: Engineering Holotable
+  name: "інженерний голографічний стіл"
   components:
     - type: Sprite
       sprite: _FarHorizons/Structures/Machines/HoloTables/engineering_holotable.rsi
@@ -130,7 +130,7 @@
 - type: entity
   id: MedicalHolotable
   parent: HolotableBase
-  name: Medical Holotable
+  name: "медичний голографічний стіл"
   components:
   - type: Sprite
     sprite: _FarHorizons/Structures/Machines/HoloTables/medical_holotable.rsi
@@ -151,8 +151,8 @@
 - type: entity
   id: AlertLevelHolotable
   parent: HolotableBase
-  name: Alert Level Holotable
-  description: Shows the current security alert level on station. If it's red that means you should stay in your department as much as possible.
+  name: "голографічний стіл рівня тривоги"
+  description: "Показує поточний рівень тривоги на станції. Якщо він червоний, це означає, що вам слід якомога більше залишатися у своєму відділі."
   components:
   - type: Sprite
     sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
@@ -188,8 +188,8 @@
 - type: entity
   id: WantedHolotable
   parent: [ HolotableBase, ComputerCriminalRecords ]
-  name: Wanted Holotable
-  description: Shows the current wanted people on station, or at least it was supposed to before Security told the designers not to announce wanted suspects and it became a security records kiosk instead.
+  name: "голографічний стіл розшуку"
+  description: "Показує розшукуваних на станції, або принаймні мав показувати, доки служба безпеки не сказала дизайнерам не оголошувати розшукуваних підозрюваних, і він не став кіоском записів служби безпеки."
   components:
   - type: Sprite
     sprite: _FarHorizons/Structures/Machines/HoloTables/sec_holotables.rsi
@@ -213,7 +213,7 @@
 - type: entity
   parent: HolotableBase
   id: MedicalHolotableNS
-  name: Medical Holotable
+  name: "медичний голографічний стіл"
   suffix: NS
   components:
   - type: Sprite
@@ -235,7 +235,7 @@
 - type: entity
   parent: EngineeringHolotable
   id: EngineeringHolotableNS
-  name: Engineering Holotable
+  name: "інженерний голографічний стіл"
   suffix: NS
   components:
     - type: Sprite
@@ -253,9 +253,9 @@
 - type: entity
   parent: HolotableBase
   id: AlertLevelHolotableNS
-  name: Alert Level Holotable
+  name: "голографічний стіл рівня тривоги"
   suffix: NS
-  description: Shows the current security alert level on station. If it's red that means you should stay in your department as much as possible.
+  description: "Показує поточний рівень тривоги на станції. Якщо він червоний, це означає, що вам слід якомога більше залишатися у своєму відділі."
   components:
   - type: Sprite
     sprite: _FarHorizons/Structures/Machines/NS/HoloTables/sec_holotables.rsi
