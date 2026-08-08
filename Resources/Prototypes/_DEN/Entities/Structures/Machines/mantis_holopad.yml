@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (_DEN/Entities/Structures/Machines/holopad.yml,
+# Gloomy holopad family - only the base and the mantis-labelled epistemics one).
+
+- type: entity
+  parent: Holopad
+  id: GloomyHolopad
+  name: gloomy holopad
+  suffix:
+  description: "A somber holopad with an esoteric eye motif."
+  components:
+  - type: Sprite
+    sprite: _DEN/Structures/Machines/somberholopad.rsi
+  - type: EtherealLight # Dims around ethereal entities
+  - type: PointLight
+    radius: 1.75
+    energy: 2
+    color: "#8d7cbf" # A mix of the two colors of lights it has
+  - type: Speech
+    speechVerb: Electricity # Crackles, buzzes, screeches since it's a weirder holopad
+    speechSounds: SyndieBorg # Identical to borg, only slightly deeper, same reason as above
+
+- type: entity
+  parent: GloomyHolopad
+  id: GloomyHolopadEpistemicsMantis
+  suffix: Mantis, Somber # The source of my suffering
+  components: # Hopefully they can infer that the rest are called "gloomy" if they want them
+  - type: Label # I specifically chose a word that appears alphabetically after standard holopads
+    currentLabel: holopad-epistemics-mantis

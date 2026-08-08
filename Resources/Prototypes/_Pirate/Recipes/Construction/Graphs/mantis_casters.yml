@@ -18,7 +18,7 @@
       - tag: MantisCasterFramePistol
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -35,7 +35,7 @@
       - tag: MantisCasterFramePistol
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -52,7 +52,7 @@
       - tag: MantisCasterFramePistol
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -74,7 +74,7 @@
       - tag: MantisCasterFrameRevolver
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -91,7 +91,7 @@
       - tag: MantisCasterFrameRevolver
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -108,7 +108,7 @@
       - tag: MantisCasterFrameRevolver
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -130,7 +130,7 @@
       - tag: MantisCasterFrameShotgun
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -147,7 +147,7 @@
       - tag: MantisCasterFrameShotgun
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -164,7 +164,7 @@
       - tag: MantisCasterFrameShotgun
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -186,7 +186,7 @@
       - tag: MantisCasterFrameSubMachineGun
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -203,7 +203,7 @@
       - tag: MantisCasterFrameSubMachineGun
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name
@@ -220,7 +220,7 @@
       - tag: MantisCasterFrameSubMachineGun
         name: recipe-mantis-caster-frame-name
         icon:
-          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-capgun.rsi
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-frame.rsi
           state: base
       - component: AnomalyCore
         name: recipe-anomaly-core-name

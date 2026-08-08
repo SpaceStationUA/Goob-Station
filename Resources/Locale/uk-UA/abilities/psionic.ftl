@@ -45,3 +45,5 @@ healing-word-begin = Слово, що зігріває всіх довкола.
 revivify-begin = Лагідні слова, що зігрівають душу.
 
 entity-anomaly-no-grid = Ви повинні стояти на твердій поверхні, щоб використати цю здібність!
+
+reliquary-feedback = Я БАЧУ ТЕБЕ, ПОСТОРОННІЙ. ТВОЇ ДУМКИ ВТОРГАЮТЬСЯ У СВЯЩЕННІ МАТРИЦІ. # TheDen - mantis reliquary conduit

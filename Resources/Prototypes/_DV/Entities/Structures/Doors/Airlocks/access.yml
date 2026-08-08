@@ -6,6 +6,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMantis ]
+  - type: Sprite # TheDen - mantis airlock
+    sprite: _DEN/Structures/Doors/Airlocks/Standard/mantis.rsi
 
 
 - type: entity
@@ -16,3 +18,5 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMantis ]
+  - type: Sprite # TheDen - mantis glass airlock
+    sprite: _DEN/Structures/Doors/Airlocks/Glass/mantis.rsi

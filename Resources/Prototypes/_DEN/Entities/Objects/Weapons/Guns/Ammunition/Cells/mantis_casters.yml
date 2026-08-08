@@ -488,7 +488,7 @@
   description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
   components:
   - type: Sprite
-    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-capgun.rsi
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-frame.rsi
     layers:
     - state: base
       map: [ "enum.PowerCellVisualLayers.Base" ]
@@ -510,7 +510,7 @@
   description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
   components:
   - type: Sprite
-    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-capgun.rsi
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-frame.rsi
     layers:
     - state: base
       map: [ "enum.PowerCellVisualLayers.Base" ]
@@ -532,7 +532,7 @@
   description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
   components:
   - type: Sprite
-    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-capgun.rsi
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-frame.rsi
     layers:
     - state: base
       map: [ "enum.PowerCellVisualLayers.Base" ]
@@ -554,7 +554,7 @@
   description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it."
   components:
   - type: Sprite
-    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-capgun.rsi
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-frame.rsi
     layers:
     - state: base
       map: [ "enum.PowerCellVisualLayers.Base" ]
