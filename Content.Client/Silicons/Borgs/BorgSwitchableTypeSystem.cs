@@ -96,7 +96,7 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
             TryComp(entity, out SpriteMovementComponent? movement) &&
             movement.MovementLayers.TryGetValue("movement", out var movementLayer))
         {
-            movementLayer.State = prototype.SpriteBodyState;
+            movementLayer.State = bodyState;
         }
     }
 }
