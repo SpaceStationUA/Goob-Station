@@ -55,6 +55,12 @@ public sealed class SlimeMorphUiState : BoundUserInterfaceState
     public MarkingSet MarkingSet = new();
     public List<SlimeMorphAppearance> Remembered = new();
 
+    /// <summary>Named looks the slime has saved from the menu (right-side list, alongside studied ones).</summary>
+    public List<SlimeMorphAppearance> Saved = new();
+
+    /// <summary>Species the slime may scope its marking pickers to (the morph whitelist). Empty = Any.</summary>
+    public List<string> MorphableSpecies = new();
+
     /// <summary>Head base-sprite override for the staged look (baked head shapes like muzzles).</summary>
     public string? HeadLayer;
 
@@ -196,6 +202,77 @@ public sealed class SlimeMorphSetWidthMessage : BoundUserInterfaceMessage
     public SlimeMorphSetWidthMessage(float width)
     {
         Width = width;
+    }
+}
+
+/// <summary>
+/// Scope the marking pickers to a whitelisted species (loading that race's default look), or pass
+/// null/empty to return to the free "Any" mode that offers every species' markings.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class SlimeMorphSetXenotypeMessage : BoundUserInterfaceMessage
+{
+    public string? Species;
+
+    public SlimeMorphSetXenotypeMessage(string? species)
+    {
+        Species = species;
+    }
+}
+
+/// <summary>Recolor every staged marking toward the staged body color (same tint as mimic), free.</summary>
+[Serializable, NetSerializable]
+public sealed class SlimeMorphAdaptColorsMessage : BoundUserInterfaceMessage;
+
+/// <summary>Store the current staged look under a name (overwrites any saved look with the same name + xenotype).</summary>
+[Serializable, NetSerializable]
+public sealed class SlimeMorphSaveAppearanceMessage : BoundUserInterfaceMessage
+{
+    public string Name;
+
+    public SlimeMorphSaveAppearanceMessage(string name)
+    {
+        Name = name;
+    }
+}
+
+/// <summary>Load a saved look into the editor as a free, editable staged look (no cost until applied).</summary>
+[Serializable, NetSerializable]
+public sealed class SlimeMorphSelectSavedMessage : BoundUserInterfaceMessage
+{
+    public string Name;
+    public string Species;
+
+    public SlimeMorphSelectSavedMessage(string name, string species)
+    {
+        Name = name;
+        Species = species;
+    }
+}
+
+/// <summary>Delete a saved look identified by its name + xenotype.</summary>
+[Serializable, NetSerializable]
+public sealed class SlimeMorphDeleteSavedMessage : BoundUserInterfaceMessage
+{
+    public string Name;
+    public string Species;
+
+    public SlimeMorphDeleteSavedMessage(string name, string species)
+    {
+        Name = name;
+        Species = species;
+    }
+}
+
+/// <summary>Apply an appearance imported from a .yml file to the staged look.</summary>
+[Serializable, NetSerializable]
+public sealed class SlimeMorphImportMessage : BoundUserInterfaceMessage
+{
+    public SlimeMorphAppearance Appearance;
+
+    public SlimeMorphImportMessage(SlimeMorphAppearance appearance)
+    {
+        Appearance = appearance;
     }
 }
 
