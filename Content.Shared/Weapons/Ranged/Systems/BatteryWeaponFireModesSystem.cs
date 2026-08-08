@@ -108,6 +108,12 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         if (user != null && !_accessReaderSystem.IsAllowed(user.Value, ent))
             return false;
 
+        // Pirate: let server-side alert-level restrictions reject lethal borg fire modes.
+        var attempt = new BatteryWeaponFireModeChangeAttemptEvent(user, index);
+        RaiseLocalEvent(ent.Owner, ref attempt);
+        if (attempt.Cancelled)
+            return false;
+
         SetFireMode(ent, index, user);
 
         return true;

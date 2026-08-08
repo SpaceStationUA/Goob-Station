@@ -52,6 +52,13 @@ public sealed partial class BatteryWeaponFireMode
     public bool PacifismAllowedMode = false;
 }
 
+// Pirate: red-alert restriction hook for integrated security borg weapons.
+/// <summary>
+/// Raised before a battery weapon changes fire mode so downstream rules can reject the change.
+/// </summary>
+[ByRefEvent]
+public record struct BatteryWeaponFireModeChangeAttemptEvent(EntityUid? User, int NewMode, bool Cancelled = false);
+
 [Serializable, NetSerializable]
 public enum BatteryWeaponFireModeVisuals : byte
 {

@@ -99,3 +99,14 @@
     Plastic: 50
     Uranium: 100
     Gold: 50
+
+# Security utility pack
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: EnergyDomeTurtle
+  result: EnergyDomeTurtle
+  completetime: 12
+  materials:
+    Steel: 1000
+    Plastic: 500
+    Silver: 150

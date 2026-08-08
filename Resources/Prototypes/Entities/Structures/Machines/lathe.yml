@@ -531,6 +531,7 @@
     # Pirate Packs
     - SecurityHardsuitsPirate # Pirate: K9 combat hardsuits.
     - SecurityAmmoPirate
+    - SecurityUtilityPirate # Pirate: BR-40c energy dome generator.
     - ModesuitModuleSecReach # Pirate: Wega modular suit port.
     - ArmorPlates # Pirate: Monolith armor plates.
   - type: EmagLatheRecipes # Goobstation
