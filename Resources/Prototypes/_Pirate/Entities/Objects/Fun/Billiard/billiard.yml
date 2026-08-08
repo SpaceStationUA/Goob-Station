@@ -395,7 +395,7 @@
   id: CrateBilliardComplect
   parent: CrateGenericSteel
   name: billiards set crate
-  description: A billiard table flatpack, a box of balls, and two cues: everything needed for a good evening.
+  description: "A billiard table flatpack, a box of balls, and two cues: everything needed for a good evening."
   components:
   - type: EntityTableContainerFill
     containers:
