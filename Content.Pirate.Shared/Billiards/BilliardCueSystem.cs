@@ -16,6 +16,9 @@ public sealed class BilliardCueSystem : EntitySystem
     private void OnAttemptMeleeThrowOnHit(Entity<BilliardCueComponent> ent, ref AttemptMeleeThrowOnHitEvent args)
     {
         if (!HasComp<BilliardBallComponent>(args.Target))
+        {
             args.Cancelled = true;
+            args.Handled = true;
+        }
     }
 }

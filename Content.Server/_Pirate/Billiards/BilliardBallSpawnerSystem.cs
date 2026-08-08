@@ -14,6 +14,7 @@ public sealed class BilliardBallSpawnerSystem : EntitySystem
     private const int EightBallIndex = 4;
     private const int BackLeftCornerIndex = 10;
     private const int BackRightCornerIndex = 14;
+    private const float MaxCueBallOffset = 0.58f;
 
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -68,7 +69,8 @@ public sealed class BilliardBallSpawnerSystem : EntitySystem
             }
         }
 
-        var cueBallOffset = new Vector2(0f, ent.Comp.BallSpacing * 5f);
+        // Keep the ball inside the table's 0.62 m north rail after accounting for its 0.035 m radius.
+        var cueBallOffset = new Vector2(0f, MathF.Min(ent.Comp.BallSpacing * 5f, MaxCueBallOffset));
         var cueBallPosition = origin.Position + worldRotation.RotateVec(cueBallOffset);
         var cueBall = Spawn(ent.Comp.BallPrototype, new MapCoordinates(cueBallPosition, origin.MapId));
         ApplyBallAppearance(cueBall, Color.White, false);
