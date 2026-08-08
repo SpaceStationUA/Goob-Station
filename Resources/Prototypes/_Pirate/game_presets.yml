@@ -32,8 +32,8 @@
     - secretcosmiccultgreenshift
     - secretentropygreenshift
     - entropygreenshift
-  name: monument-interface-entropy-title
-  description: secret-description
+  name: secretplus-mid-title
+  description: secretplus-mid-description
   showInVote: false
   rules:
     - SpaceTrafficControlFriendlyEventScheduler
