@@ -3,7 +3,7 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryRestoreLimbFunction
-  name: "Відновлення функції частини тіла"
+  name: Restore body part function
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -19,7 +19,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepRestoreLimbFunction
-  name: "Стабілізувати з'єднання частини тіла"
+  name: Stabilize body part connection
   components:
   - type: SurgeryStep
     tool:
