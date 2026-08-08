@@ -10,6 +10,7 @@ ent-HandheldBrigmedicCrewMonitor = BrigBuddy 5000
     .desc = Портативний монітор стану, який відстежує лише співробітників служби безпеки.
 
 ent-HandheldBrigmedicCrewMonitorEmpty = { ent-HandheldBrigmedicCrewMonitor }
+    .desc = { ent-HandheldBrigmedicCrewMonitor.desc }
     .suffix = Порожній
 
 ent-RMCMotionDetector = імпульсний детектор руху
