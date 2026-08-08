@@ -44,16 +44,19 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
     private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
     {
+        ClearSSDState(uid, component);
+    }
+
+    private void ClearSSDState(EntityUid uid, SSDIndicatorComponent component)
+    {
+        var stateChanged = component.IsSSD || component.FallAsleepTime != TimeSpan.Zero;
+
         component.IsSSD = false;
+        component.FallAsleepTime = TimeSpan.Zero;
+        _statusEffects.TryRemoveStatusEffect(uid, StatusEffectSSDSleeping);
 
-        // Removes force sleep and resets the time to zero
-        if (_icSsdSleep)
-        {
-            component.FallAsleepTime = TimeSpan.Zero;
-            _statusEffects.TryRemoveStatusEffect(uid, StatusEffectSSDSleeping);
-        }
-
-        Dirty(uid, component);
+        if (stateChanged)
+            Dirty(uid, component);
     }
 
     private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
@@ -92,7 +95,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (!_net.IsServer || !_icSsdSleep)
+        if (!_net.IsServer)
             return;
 
         var curTime = _timing.CurTime;
@@ -100,6 +103,16 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var ssd))
         {
+            // Pirate: ActorComponent is authoritative when an attach event leaves stale SSD state behind.
+            if (HasComp<ActorComponent>(uid))
+            {
+                ClearSSDState(uid, ssd);
+                continue;
+            }
+
+            if (!_icSsdSleep)
+                continue;
+
             // _Pirate: Don't force NPCs to sleep via SSD
             if (HasComp<NOSSDSleepComponent>(uid))
                 continue;
