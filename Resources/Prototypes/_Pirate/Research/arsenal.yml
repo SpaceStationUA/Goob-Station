@@ -27,4 +27,4 @@
   - EnergyDomeTurtle
   technologyPrerequisites:
   - AdvancedRiotControl
-  position: 3,4
+  position: 7,1 # Pirate: keep downstream technologies on unique graph positions.

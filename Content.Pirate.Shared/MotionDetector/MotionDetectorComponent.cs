@@ -39,13 +39,13 @@ public sealed partial class MotionDetectorComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextScanAt;
 
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public TimeSpan LastScan;
 
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public List<MotionDetectorBlip> Blips = new();
 
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public EntityUid? LastUser;
 
     [DataField]

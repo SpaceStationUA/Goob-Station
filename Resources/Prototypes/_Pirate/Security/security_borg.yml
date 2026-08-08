@@ -48,6 +48,7 @@
   - type: BatterySelfRecharger
     autoRechargeRate: 20
   - type: BatteryWeaponFireModes
+    predictable: false
     fireModes:
     - proto: BulletDisablerSmg
       fireCost: 25
@@ -55,6 +56,8 @@
     - proto: RedMediumLaser
       fireCost: 100
   - type: SecurityBorgLethalMode
+    safeMode: 0
+    lethalMode: 1
     allowedAlertLevels:
     - red
   - type: Unremoveable
@@ -329,9 +332,3 @@
 
 - type: Tag
   id: BorgContrabandBag
-
-- type: Tag
-  id: BrigmedicBeltEquip
-
-- type: Tag
-  id: RMCDetector

@@ -28,6 +28,10 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
     [DataField]
     [AutoNetworkedField]
     public int CurrentFireMode;
+
+    // Pirate: server-side alert restrictions make some mode changes non-predictable.
+    [DataField]
+    public bool Predictable = true;
 }
 
 [DataDefinition, Serializable, NetSerializable]

@@ -12,6 +12,10 @@ namespace Content.Pirate.Client.MotionDetector;
 
 public sealed class MotionDetectorOverlay : Overlay
 {
+    private static readonly SpriteSpecifier.Rsi BlipSprite = new(
+        new ResPath("/Textures/_Pirate/Objects/Tools/motion_detector.rsi"),
+        "detector_blip");
+
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -32,11 +36,7 @@ public sealed class MotionDetectorOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var frame = _sprite.GetFrame(
-            new SpriteSpecifier.Rsi(
-                new ResPath("/Textures/_Pirate/Objects/Tools/motion_detector.rsi"),
-                "detector_blip"),
-            _timing.CurTime);
+        var frame = _sprite.GetFrame(BlipSprite, _timing.CurTime);
 
         _system.DrawBlips(args.WorldHandle, ref _detector, ref _lastScan, _blips, frame);
     }

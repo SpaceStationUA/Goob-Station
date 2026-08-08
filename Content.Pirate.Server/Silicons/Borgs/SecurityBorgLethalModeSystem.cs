@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using Content.Server.AlertLevel;
 using Content.Server.Station.Systems;
 using Content.Shared.Popups;
@@ -33,7 +34,7 @@ public sealed class SecurityBorgLethalModeSystem : EntitySystem
 
         args.Cancelled = true;
         if (args.User is { } user)
-            _popup.PopupClient(Loc.GetString("security-borg-lethal-mode-denied"), ent, user);
+            _popup.PopupEntity(Loc.GetString("security-borg-lethal-mode-denied"), ent, user);
     }
 
     private void OnShootAttempt(Entity<SecurityBorgLethalModeComponent> ent, ref AttemptShootEvent args)
@@ -56,7 +57,7 @@ public sealed class SecurityBorgLethalModeSystem : EntitySystem
         while (query.MoveNext(out var uid, out var restriction, out var fireModes))
         {
             if (fireModes.CurrentFireMode != restriction.LethalMode ||
-                restriction.AllowedAlertLevels.Contains(args.AlertLevel) ||
+                IsAlertLevelAllowed(restriction, args.AlertLevel) ||
                 _station.GetOwningStation(uid) != args.Station)
             {
                 continue;
@@ -69,7 +70,12 @@ public sealed class SecurityBorgLethalModeSystem : EntitySystem
     private bool IsLethalAllowed(Entity<SecurityBorgLethalModeComponent> ent)
     {
         return _station.GetOwningStation(ent.Owner) is { } station &&
-               ent.Comp.AllowedAlertLevels.Contains(_alertLevel.GetLevel(station));
+               IsAlertLevelAllowed(ent.Comp, _alertLevel.GetLevel(station));
+    }
+
+    private static bool IsAlertLevelAllowed(SecurityBorgLethalModeComponent component, string alertLevel)
+    {
+        return component.AllowedAlertLevels.Contains(alertLevel, StringComparer.OrdinalIgnoreCase);
     }
 
     private void ResetToSafeMode(

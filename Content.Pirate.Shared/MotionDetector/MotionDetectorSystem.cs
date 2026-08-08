@@ -28,6 +28,7 @@ public sealed class MotionDetectorSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    private readonly HashSet<EntityUid> _activeDetectors = new();
     private readonly Dictionary<EntityUid, TimeSpan> _lastMoves = new();
     private readonly HashSet<Entity<MobStateComponent>> _tracked = new();
 
@@ -40,9 +41,23 @@ public sealed class MotionDetectorSystem : EntitySystem
         SubscribeLocalEvent<MotionDetectorComponent, DroppedEvent>(OnDropped);
         SubscribeLocalEvent<MotionDetectorComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<MotionDetectorComponent, PowerCellSlotEmptyEvent>(OnPowerCellEmpty);
+        SubscribeLocalEvent<MotionDetectorComponent, ComponentStartup>(OnDetectorStartup);
+        SubscribeLocalEvent<MotionDetectorComponent, ComponentShutdown>(OnDetectorShutdown);
 
         SubscribeLocalEvent<MobStateComponent, MoveEvent>(OnMobMoved);
         SubscribeLocalEvent<MobStateComponent, ComponentShutdown>(OnMobShutdown);
+    }
+
+    private void OnDetectorStartup(Entity<MotionDetectorComponent> ent, ref ComponentStartup args)
+    {
+        if (!_net.IsClient && ent.Comp.Enabled)
+            _activeDetectors.Add(ent.Owner);
+    }
+
+    private void OnDetectorShutdown(Entity<MotionDetectorComponent> ent, ref ComponentShutdown args)
+    {
+        if (!_net.IsClient)
+            RemoveActiveDetector(ent.Owner);
     }
 
     private void OnUseInHand(Entity<MotionDetectorComponent> ent, ref UseInHandEvent args)
@@ -108,7 +123,7 @@ public sealed class MotionDetectorSystem : EntitySystem
 
     private void OnMobMoved(Entity<MobStateComponent> ent, ref MoveEvent args)
     {
-        if (_net.IsClient || args.OldPosition == args.NewPosition)
+        if (_net.IsClient || _activeDetectors.Count == 0 || args.OldPosition == args.NewPosition)
             return;
 
         _lastMoves[ent.Owner] = _timing.CurTime;
@@ -133,12 +148,27 @@ public sealed class MotionDetectorSystem : EntitySystem
         ent.Comp.Blips.Clear();
 
         if (enabled)
+        {
             ent.Comp.NextScanAt = _timing.CurTime + GetRefreshRate(ent.Comp);
+            if (!_net.IsClient)
+                _activeDetectors.Add(ent.Owner);
+        }
         else
+        {
             ent.Comp.LastUser = null;
+            if (!_net.IsClient)
+                RemoveActiveDetector(ent.Owner);
+        }
 
         Dirty(ent);
         UpdateAppearance(ent);
+    }
+
+    private void RemoveActiveDetector(EntityUid uid)
+    {
+        _activeDetectors.Remove(uid);
+        if (_activeDetectors.Count == 0)
+            _lastMoves.Clear();
     }
 
     private void UpdateAppearance(Entity<MotionDetectorComponent> ent)

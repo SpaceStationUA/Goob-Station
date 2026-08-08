@@ -214,3 +214,9 @@
   - type: Tag
     tags:
     - RMCDetector
+
+- type: Tag
+  id: BrigmedicBeltEquip
+
+- type: Tag
+  id: RMCDetector
