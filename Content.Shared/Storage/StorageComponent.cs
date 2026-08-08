@@ -90,7 +90,7 @@ namespace Content.Shared.Storage
         public bool OpenOnActivate = true;
 
         [DataField]
-        public bool IgnoreLock; // Pirate: slime morph
+        public bool IgnoreLock; // Pirate: modsuit item transfer fix
 
         /// <summary>
         /// How many entities area pickup can pickup at once.
