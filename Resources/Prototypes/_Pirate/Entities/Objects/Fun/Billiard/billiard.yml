@@ -195,6 +195,7 @@
 - type: entity
   id: SpawnBilliardTriangle
   parent: BaseItem
+  categories: [ Spawner ]
   name: billiard ball pyramid spawner
   components:
   - type: Sprite
@@ -213,6 +214,7 @@
 - type: entity
   id: SpawnBilliardAmericanPool
   parent: SpawnBilliardTriangle
+  categories: [ Spawner ]
   name: American pool rack spawner
   components:
   - type: Construction
