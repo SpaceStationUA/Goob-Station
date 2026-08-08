@@ -28,6 +28,7 @@ ent-BorgChassisSecurity = охоронний кіборг
     .desc = Спеціалізований кіборг служби безпеки з нелетальним спорядженням.
 
 ent-BorgChassisSecurityPowered = { ent-BorgChassisSecurity }
+    .desc = { ent-BorgChassisSecurity.desc }
     .suffix = Із зарядом
 
 borg-type-security-name = Служба безпеки
