@@ -6,6 +6,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
+    useDelay: 0.5
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: deploy }
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: retract }
     itemIconStyle: BigAction
@@ -76,6 +77,19 @@
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: holster-out }
   - type: InstantAction
     event: !type:ToggleHolsterModuleEvent
+
+- type: entity
+  parent: BaseAction
+  id: ToggleMagbootsModuleAction
+  name: "[color=#58c4e8]Toggle Magboots[/color]"
+  description: "Engages the suit boots' electromagnets, holding you to the floor at the cost of speed."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: magnet }
+    iconOn: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: magnet }
+  - type: InstantAction
+    event: !type:ToggleMagbootsModuleEvent
 
 - type: entity
   parent: BaseAction

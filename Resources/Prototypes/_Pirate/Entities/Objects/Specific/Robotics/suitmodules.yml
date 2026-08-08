@@ -554,13 +554,30 @@
 
 - type: entity
   parent: BaseSuitModule
+  id: BaseMagnetSuitModule
+  abstract: true
+  components:
+  - type: Sprite
+    state: magnet
+  - type: ModularSuitModule
+    tags: [ MagneticSuitModule, NoSlipModuleConflict ]
+    modulePart: Boots
+    verbIcon:
+      sprite: *modules-rsi
+      state: magnet
+  - type: Tag
+    tags:
+    - MagneticSuitModule
+
+- type: entity
+  parent: BaseMagnetSuitModule
   id: MagnetSuitModule
   name: magnet suit module
   description: "These are powerful electromagnets fitted into the suit's boots, allowing users both excellent traction no matter the condition indoors, and to essentially hitch a ride on the exterior of a hull. However, these basic models do not feature computerized systems to automatically toggle them on and off, so numerous users report a certain stickiness to their steps."
   components:
-  - type: Sprite
-    state: magnet
-  - type: ModularSuitModuleEffect
+  - type: ModularSuitActionModule
+    action: ToggleMagbootsModuleAction
+  - type: ModularSuitMagbootsModule
     targetSlot: shoes
     activeComponents:
     - type: NoSlip
@@ -569,12 +586,7 @@
       walkModifier: 0.8
       sprintModifier: 0.8
   - type: ModularSuitModule
-    tags: [ MagneticSuitModule, NoSlipModuleConflict ]
-    modulePart: Boots
     powerUsage: 0.4
-    verbIcon:
-      sprite: *modules-rsi
-      state: magnet
   - type: Tag
     tags:
     - MagneticSuitModule
@@ -1212,12 +1224,13 @@
       state: jetpack_advanced
 
 - type: entity
-  parent: MagnetSuitModule
+  parent: BaseMagnetSuitModule
   id: MagnetAdvancedSuitModule
   name: advanced magnet suit module
   description: "A sophisticated upgrade to Nakamura Engineering's magnetic stability system, featuring computerized auto-toggling and enhanced grip calibration. Unlike the basic model, these electromagnets intelligently adjust their field strength based on surface conditions and user intent, eliminating the 'stickiness' reported with older versions. Includes a neural-link interface that intuitively engages magnetic grip only when needed, allowing for seamless movement transitions. Originally developed for the Chief Engineer's advanced suit, this module has since been made available to engineering personnel who demand the best in mobility control."
   components:
   - type: ModularSuitModuleEffect
+    targetSlot: shoes
     activeComponents:
     - type: NoSlip
     - type: Magboots

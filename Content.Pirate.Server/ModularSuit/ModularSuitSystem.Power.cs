@@ -127,6 +127,7 @@ public sealed partial class ModularSuitSystem
             {
                 if (TryComp<ModularSuitModuleComponent>(module, out var mod) && mod.IsActive && mod.CanBeDisabled)
                 {
+                    mod.WasActive = true;
                     mod.IsActive = false;
                     Dirty(module, mod);
 
@@ -139,6 +140,22 @@ public sealed partial class ModularSuitSystem
         {
             foreach (var module in modules)
             {
+                if (!TryComp<ModularSuitModuleComponent>(module, out var mod) || !mod.WasActive)
+                    continue;
+
+                mod.WasActive = false;
+                if (mod.IsActive || !mod.CanBeDisabled)
+                    continue;
+
+                if (!CanActivateModule(ent, module))
+                    continue;
+
+                mod.IsActive = true;
+                Dirty(module, mod);
+            }
+
+            foreach (var module in modules)
+            {
                 if (TryComp<ModularSuitModuleComponent>(module, out var mod) && (mod.IsActive || !mod.CanBeDisabled))
                 {
                     var ev = new ModularSuitModuleToggledEvent(ent, ent.Comp.Wearer, true);
@@ -146,6 +163,13 @@ public sealed partial class ModularSuitSystem
                 }
             }
         }
+    }
+
+    private bool CanActivateModule(Entity<ModularSuitComponent> suit, EntityUid module)
+    {
+        var attempt = new ModularSuitModuleAttemptEvent(suit.Owner);
+        RaiseLocalEvent(module, ref attempt);
+        return !attempt.Cancelled;
     }
 
     private void OnModuleInstalledRefresh(Entity<ModularSuitComponent> ent, ref ModularSuitInstalledEvent args)

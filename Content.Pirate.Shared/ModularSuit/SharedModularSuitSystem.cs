@@ -3,6 +3,7 @@ using Content.Shared.Actions;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Systems;
@@ -120,6 +121,17 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
 
     protected virtual void ToggleActive(Entity<ModularSuitComponent> ent, EntityUid user)
     {
+    }
+
+    private void SetSealedToWearer(Entity<ModularSuitComponent> ent, bool sealed_)
+    {
+        if (!sealed_)
+        {
+            RemComp<UnremoveableComponent>(ent.Owner);
+            return;
+        }
+
+        EnsureComp<UnremoveableComponent>(ent.Owner).DeleteOnDrop = false;
     }
 
     private void SyncDeployAction(Entity<ModularSuitComponent> ent)
@@ -470,6 +482,7 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
             return;
 
         ent.Comp.Active = active;
+        SetSealedToWearer(ent, active);
         SyncActivateAction(ent);
         Dirty(ent.Owner, ent.Comp);
     }

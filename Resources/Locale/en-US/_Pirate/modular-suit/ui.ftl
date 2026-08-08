@@ -9,4 +9,6 @@ modsuit-action-deactivate-desc = Powers the suit down and unseals its parts. Pre
 
 modsuit-continue-sealing = Sealing the next part...
 modsuit-continue-unsealing = Unsealing the next part...
+modsuit-magboots-on = The suit's magnetic boots engage.
+modsuit-magboots-off = The suit's magnetic boots disengage.
 modsuit-retract-blocked-active = Power the suit down first.

@@ -81,6 +81,8 @@ modsuit-verb-auto-activate-off = Автоактивація: вимкнено
 modsuit-verb-auto-activate-toggled = Автоактивацію перемкнено
 modsuit-continue-sealing = Триває герметизація наступної частини...
 modsuit-continue-unsealing = Триває розгерметизація наступної частини...
+modsuit-magboots-on = Магнітні чоботи костюма вмикаються.
+modsuit-magboots-off = Магнітні чоботи костюма вимикаються.
 modsuit-retract-blocked-active = Спершу вимкніть костюм.
 
 modsuit-action-deploy-name = [color=#58c4e8]Розгорнути MOD-костюм[/color]

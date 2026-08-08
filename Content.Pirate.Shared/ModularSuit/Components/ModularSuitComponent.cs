@@ -91,7 +91,7 @@ public sealed partial class ModularSuitComponent : Component
     public SoundSpecifier DeactivateSound = new SoundPathSpecifier("/Audio/_Pirate/Effects/Modsuit/deactivate.ogg", AudioParams.Default.WithVolume(-2));
 
     [DataField]
-    public SoundSpecifier BuzzSound = new SoundPathSpecifier("/Audio/Machines/scanbuzz.ogg", AudioParams.Default.WithVolume(-8));
+    public SoundSpecifier BuzzSound = new SoundPathSpecifier("/Audio/_Goobstation/Machines/ErrorBeep2.wav");
 
     [DataField]
     public TimeSpan LowPowerCooldown = TimeSpan.FromSeconds(30);
