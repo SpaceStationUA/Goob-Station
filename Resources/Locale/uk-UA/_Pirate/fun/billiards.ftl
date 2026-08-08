@@ -4,6 +4,7 @@ construction-billiard-pyramid = Більярдна піраміда
 construction-billiard-pyramid-description = Розставити 15 куль і биток для піраміди. Використані кулі автоматично підготуються до гри.
 construction-billiard-american = Американський пул
 construction-billiard-american-description = Розставити 15 куль і биток для пулу. Використані кулі автоматично набудуть потрібного кольору.
+construction-graph-component-billiard-ball = більярдна куля
 
 construction-condition-billiard-table-storage-not-empty = Сховище не порожнє!
 construction-step-billiard-table-empty-storage = Спорожніть сховище столу!

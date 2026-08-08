@@ -230,36 +230,52 @@
     - to: triangle
       steps:
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
   - node: triangle
     entity: SpawnBilliardTriangle
@@ -273,36 +289,52 @@
     - to: AmericanPool
       steps:
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
       - component: BilliardBall
+        name: construction-graph-component-billiard-ball
         doAfter: 0.1
   - node: AmericanPool
     entity: SpawnBilliardAmericanPool
