@@ -11,6 +11,7 @@
   - type: Sprite
     sprite: _Pirate/Objects/Fun/Billiards/billiard_table.rsi
     state: table
+    scale: 2,2
   - type: Physics
     bodyType: Static
   - type: Construction
@@ -21,7 +22,7 @@
       border_north:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.34,0.62,0.34,0.72"
+          bounds: "-0.68,1.24,0.68,1.44"
         density: 100
         mask: [ MachineMask, DoorPassable ]
         layer: [ TableLayer ]
@@ -29,7 +30,7 @@
       border_south:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.34,-0.75,0.34,-0.66"
+          bounds: "-0.68,-1.50,0.68,-1.32"
         density: 100
         mask: [ MachineMask, DoorPassable ]
         layer: [ TableLayer ]
@@ -37,7 +38,7 @@
       border_west_top:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.50,0.06,-0.40,0.56"
+          bounds: "-1.00,0.12,-0.80,1.12"
         density: 100
         mask: [ MachineMask, DoorPassable ]
         layer: [ TableLayer ]
@@ -45,7 +46,7 @@
       border_west_bottom:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.50,-0.59,-0.40,-0.09"
+          bounds: "-1.00,-1.18,-0.80,-0.18"
         density: 100
         mask: [ MachineMask, DoorPassable ]
         layer: [ TableLayer ]
@@ -53,7 +54,7 @@
       border_east_top:
         shape:
           !type:PhysShapeAabb
-          bounds: "0.40,0.06,0.50,0.56"
+          bounds: "0.80,0.12,1.00,1.12"
         density: 100
         mask: [ MachineMask, DoorPassable ]
         layer: [ TableLayer ]
@@ -61,7 +62,7 @@
       border_east_bottom:
         shape:
           !type:PhysShapeAabb
-          bounds: "0.40,-0.59,0.50,-0.09"
+          bounds: "0.80,-1.18,1.00,-0.18"
         density: 100
         mask: [ MachineMask, DoorPassable ]
         layer: [ TableLayer ]
@@ -69,48 +70,49 @@
       pocket_nw:
         shape:
           !type:PhysShapeCircle
-          radius: 0.06
-          position: -0.44,0.66
+          radius: 0.12
+          position: -0.88,1.32
         hard: false
         mask: [ DoorPassable ]
       pocket_ne:
         shape:
           !type:PhysShapeCircle
-          radius: 0.06
-          position: 0.44,0.66
+          radius: 0.12
+          position: 0.88,1.32
         hard: false
         mask: [ DoorPassable ]
       pocket_sw:
         shape:
           !type:PhysShapeCircle
-          radius: 0.06
-          position: -0.44,-0.69
+          radius: 0.12
+          position: -0.88,-1.38
         hard: false
         mask: [ DoorPassable ]
       pocket_se:
         shape:
           !type:PhysShapeCircle
-          radius: 0.06
-          position: 0.44,-0.69
+          radius: 0.12
+          position: 0.88,-1.38
         hard: false
         mask: [ DoorPassable ]
       pocket_w:
         shape:
           !type:PhysShapeCircle
-          radius: 0.06
-          position: -0.466,-0.01
+          radius: 0.12
+          position: -0.932,-0.02
         hard: false
         mask: [ DoorPassable ]
       pocket_e:
         shape:
           !type:PhysShapeCircle
-          radius: 0.06
-          position: 0.46,-0.01
+          radius: 0.12
+          position: 0.92,-0.02
         hard: false
         mask: [ DoorPassable ]
   - type: Damageable
     damageContainer: StructuralInorganic # Pirate: Injurable is unavailable in this branch.
   - type: Storage
+    openOnActivate: false
     grid:
     - 0,0,4,3
     maxItemSize: Small
@@ -124,7 +126,13 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+      enum.BilliardTableUiKey.Key:
+        type: BilliardTableBoundUserInterface
   - type: BilliardTable
+  - type: ActivatableUI
+    key: enum.BilliardTableUiKey.Key
+    singleUser: true
+    verbText: billiard-table-verb
   - type: Anchorable
   - type: Rotatable
 
@@ -142,7 +150,7 @@
     - state: ball_second
       map: [ "enum.BilliardVisualLayers.Stripe" ]
       visible: false
-    scale: 0.08,0.08
+    scale: 0.16,0.16
   - type: Appearance
   - type: Item
     size: Tiny
@@ -160,7 +168,7 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.035
+          radius: 0.07
         density: 5
         restitution: 0.45
         friction: 0.01
@@ -190,181 +198,10 @@
         Structural: 1
   - type: BilliardCue
   - type: MeleeThrowOnHit
-    speed: 5
-    distance: 0.4
+    speed: 7
+    distance: 0.8
     cameraRecoilOnThrown: false
     throwInAir: false
-
-- type: entity
-  id: SpawnBilliardTriangle
-  parent: BaseItem
-  categories: [ Spawner ]
-  name: billiard ball pyramid spawner
-  components:
-  - type: Sprite
-    sprite: _Pirate/Objects/Fun/Billiards/billiard_ball.rsi
-    state: ball_triangle
-    drawdepth: Effects
-  - type: Construction
-    graph: BilliardTriangleGraph
-    node: triangle
-  - type: BilliardSpawner
-    ballPrototype: BilliardBall
-    ballSpacing: 0.082
-    rows: 5
-    gameType: Pyramid
-
-- type: entity
-  id: SpawnBilliardAmericanPool
-  parent: SpawnBilliardTriangle
-  categories: [ Spawner ]
-  name: American pool rack spawner
-  components:
-  - type: Construction
-    graph: BilliardAmericanPoolGraph
-    node: AmericanPool
-  - type: BilliardSpawner
-    gameType: AmericanPool
-
-- type: constructionGraph
-  id: BilliardTriangleGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: triangle
-      steps:
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-  - node: triangle
-    entity: SpawnBilliardTriangle
-
-- type: constructionGraph
-  id: BilliardAmericanPoolGraph
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: AmericanPool
-      steps:
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-      - component: BilliardBall
-        name: construction-graph-component-billiard-ball
-        doAfter: 0.1
-  - node: AmericanPool
-    entity: SpawnBilliardAmericanPool
-
-- type: construction
-  id: SpawnBilliardTriangle
-  name: construction-billiard-pyramid
-  description: construction-billiard-pyramid-description
-  graph: BilliardTriangleGraph
-  startNode: start
-  targetNode: triangle
-  category: construction-category-misc
-  objectType: Structure
-  placementMode: PlaceFree
-
-- type: construction
-  id: SpawnBilliardAmericanPool
-  name: construction-billiard-american
-  description: construction-billiard-american-description
-  graph: BilliardAmericanPoolGraph
-  startNode: start
-  targetNode: AmericanPool
-  category: construction-category-misc
-  objectType: Structure
-  placementMode: PlaceFree
 
 - type: entity
   id: BilliardTableFlatpack

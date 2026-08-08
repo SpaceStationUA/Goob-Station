@@ -18,7 +18,7 @@ namespace Content.Pirate.Client.Billiards;
 
 public sealed class BilliardAimOverlay : Overlay
 {
-    private const float AimDistance = 0.4f;
+    private const float AimDistance = 0.8f;
     private const float DashLength = 0.05f;
     private const float GapLength = 0.05f;
 

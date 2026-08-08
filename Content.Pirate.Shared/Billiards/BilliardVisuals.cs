@@ -18,6 +18,7 @@ public enum BilliardVisualLayers : byte
     Stripe,
 }
 
+[Serializable, NetSerializable]
 public enum BilliardGameType : byte
 {
     Pyramid,
