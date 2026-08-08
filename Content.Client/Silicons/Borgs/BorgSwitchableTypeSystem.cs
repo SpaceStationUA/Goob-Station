@@ -46,13 +46,18 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
         BorgTypePrototype prototype,
         BorgSubtypePrototype subtypePrototype)
     {
+        // Pirate: allow subtype RSIs to use skin-specific state names.
+        var bodyState = subtypePrototype.SpriteBodyState ?? prototype.SpriteBodyState;
+        var hasMindState = subtypePrototype.SpriteHasMindState ?? prototype.SpriteHasMindState;
+        var noMindState = subtypePrototype.SpriteNoMindState ?? prototype.SpriteNoMindState;
+        var toggleLightState = subtypePrototype.SpriteToggleLightState ?? prototype.SpriteToggleLightState;
         var hasMovementState = prototype.SpriteBodyMovementState is null;
 
         if (TryComp(entity, out SpriteComponent? sprite))
         {
-            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.Body, prototype.SpriteBodyState);
-            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.Light, prototype.SpriteBodyState);
-            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.LightStatus, prototype.SpriteBodyState);
+            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.Body, bodyState);
+            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.Light, bodyState);
+            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.LightStatus, bodyState);
 
             var rsiPath = SpriteSpecifierSerializer.TextureRoot / subtypePrototype.SpritePath;
             if (_resourceCache.TryGetResource<RSIResource>(rsiPath, out var resource))
@@ -64,8 +69,8 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
                 if (prototype.SpriteBodyMovementState is { } movementState)
                     hasMovementState = resource.RSI.TryGetState(movementState, out _);
             }
-            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.Body, prototype.SpriteBodyState);
-            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.LightStatus, prototype.SpriteToggleLightState);
+            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.Body, bodyState);
+            _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.LightStatus, toggleLightState);
             _sprite.SetScale((entity, sprite), prototype.SpriteScale); // Pirate: source quadborg art uses a custom sprite scale.
             sprite.NoRotation = prototype.SpriteNoRotation; // Pirate: source quadborg art uses directional states.
         }
@@ -74,8 +79,8 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
         {
             _borgSystem.SetMindStates(
                 (entity.Owner, chassis),
-                prototype.SpriteHasMindState,
-                prototype.SpriteNoMindState);
+                hasMindState,
+                noMindState);
 
             if (TryComp(entity, out AppearanceComponent? appearance))
             {
@@ -91,7 +96,7 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
             TryComp(entity, out SpriteMovementComponent? movement) &&
             movement.MovementLayers.TryGetValue("movement", out var movementLayer))
         {
-            movementLayer.State = prototype.SpriteBodyState;
+            movementLayer.State = bodyState;
         }
     }
 }
