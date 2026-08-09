@@ -1177,8 +1177,7 @@
   minLimit: 0
   loadouts:
   - ResearchDirectorBeret
-  subgroups: # Pirate
-  - MantisHead
+  - RDBeret # Pirate
 
 - type: loadoutGroup
   id: ResearchDirectorNeck
