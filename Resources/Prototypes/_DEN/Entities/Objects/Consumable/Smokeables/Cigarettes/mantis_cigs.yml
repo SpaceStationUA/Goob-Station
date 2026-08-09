@@ -76,10 +76,11 @@
       visible: false
   - type: Item
     sprite: _DEN/Objects/Consumable/Smokeables/Cigarettes/Packs/mantis.rsi
-  - type: StorageFill
-    contents:
-    - id: CigaretteMnemolith
-      amount: 10
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: CigaretteMnemolith
+        amount: 10
   - type: Tag
     tags:
     - CigPack

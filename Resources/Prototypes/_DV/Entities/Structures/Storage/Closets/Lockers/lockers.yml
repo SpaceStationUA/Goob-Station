@@ -9,6 +9,23 @@
     access: [["Mantis"]]
   - type: Sprite # TheDen - mantis cabinet sprites
     sprite: _DEN/Structures/Specific/Mantis/closetmantis.rsi
+    noRot: true
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: door-closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: EntityStorageVisuals # TheDen
     stateBaseClosed: base
     stateDoorOpen: door-open

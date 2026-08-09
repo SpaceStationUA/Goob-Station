@@ -12,7 +12,6 @@
       - id: ClothingHeadCage
         amount: 2
       - id: ClothingEyesGlassesEthereal
-      - id: LanternMantis
       - id: FlippoLighterMantis
       - id: RubberStampMantis # The mantis' seal lives in their locker
       # Equipment (moved from loadout)

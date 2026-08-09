@@ -183,6 +183,7 @@
   - type: Construction
     graph: MantisCasterPistolFuse
     node: crypto
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
 
 - type: entity
   parent: BaseMantisCasterRevolver
@@ -197,6 +198,7 @@
   - type: Construction
     graph: MantisCasterRevolverFuse
     node: crypto
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
 
 - type: entity
   parent: BaseMantisCasterShotgun
@@ -211,6 +213,7 @@
   - type: Construction
     graph: MantisCasterShotgunFuse
     node: crypto
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
 
 - type: entity
   parent: BaseMantisCasterSubMachineGun
@@ -225,6 +228,7 @@
   - type: Construction
     graph: MantisCasterSubMachineGunFuse
     node: crypto
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
 
 # Holy casters
 - type: entity
@@ -240,6 +244,7 @@
   - type: Construction
     graph: MantisCasterPistolFuse
     node: holy
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
 
 - type: entity
   parent: BaseMantisCasterRevolver
@@ -254,6 +259,7 @@
   - type: Construction
     graph: MantisCasterRevolverFuse
     node: holy
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
 
 - type: entity
   parent: BaseMantisCasterShotgun
@@ -268,6 +274,7 @@
   - type: Construction
     graph: MantisCasterShotgunFuse
     node: holy
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
 
 - type: entity
   parent: BaseMantisCasterSubMachineGun
@@ -282,6 +289,7 @@
   - type: Construction
     graph: MantisCasterSubMachineGunFuse
     node: holy
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
 
 # Lethal casters (traitor items)
 - type: entity
@@ -303,6 +311,7 @@
   - type: Construction
     graph: MantisCasterPistolFuse
     node: lethal
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
   - type: Tag
     tags:
       - MantisCaster
@@ -328,6 +337,7 @@
   - type: Construction
     graph: MantisCasterRevolverFuse
     node: lethal
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
   - type: Item
     storedRotation: 90
   - type: Tag
@@ -355,6 +365,7 @@
   - type: Construction
     graph: MantisCasterShotgunFuse
     node: lethal
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
   - type: Item
     storedRotation: 90
   - type: Tag
@@ -382,6 +393,7 @@
   - type: Construction
     graph: MantisCasterSubMachineGunFuse
     node: lethal
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
   - type: Tag
     tags:
       - MantisCaster

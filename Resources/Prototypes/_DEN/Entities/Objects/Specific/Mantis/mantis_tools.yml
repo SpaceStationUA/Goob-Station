@@ -72,6 +72,9 @@
     attackRate: 0.6666
     soundHit:
       path: /Audio/Weapons/block_metal1.ogg
+  - type: Tag
+    tags:
+    - MantisBeltStorable
 
 # Mantis hand labeler ("sigillator")
 - type: entity
