@@ -17,6 +17,14 @@
   - MagazineCaselessRifleStandard
   - MagazineBoxCaselessRifleStandard
 
+- type: latheRecipePack
+  id: SecurityNonlethalAmmoStaticPirate
+  recipes:
+  - MagazineShotgunBeanbag
+  - BoxShellTranquilizer
+  - BoxBeanbag
+  - MagazineBoxShotgunBeanbagHighCaliber
+
 ## Dynamic
 - type: latheRecipePack
   id: SecurityHardsuitsPirate

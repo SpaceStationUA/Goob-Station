@@ -49,7 +49,6 @@ research-technology-uranium-munitions = Уранові Боєприпаси
 research-technology-explosive-technology = Технологія Вибухівки
 research-technology-special-means = Особливі засоби
 research-technology-weaponized-laser-manipulation = Збройна Лазерна Маніпуляція
-research-technology-nonlethal-ammunition = Нелетальні Боєприпаси
 research-technology-practice-ammunition = Тренувальні Боєприпаси
 research-technology-concentrated-laser-weaponry = Сконцентрована Лазерна Зброя
 research-technology-wave-particle-harnessing = Приборкання хвиль-часток

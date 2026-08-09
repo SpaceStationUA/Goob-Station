@@ -506,6 +506,7 @@
     # Pirate Packs
     - SecurityEquipmentStaticPirate # Pirate: K9 durathread vest.
     - SecurityAmmoStaticPirate
+    - SecurityNonlethalAmmoStaticPirate # Pirate: roundstart nonlethal ammunition.
     - PirateStraightjacketLatheRecipePackStatic # Pirate - tweak recipes | Add straint-jacket to med and sec fabs.
     - ModesuitModuleSecStatic # Pirate: Wega modular suit port.
     dynamicPacks:

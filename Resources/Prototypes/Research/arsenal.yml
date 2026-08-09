@@ -73,28 +73,6 @@
   # Goobstation R&D Console rework end
 
 - type: technology
-  id: NonlethalAmmunition
-  name: research-technology-nonlethal-ammunition
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: beanbag
-  discipline: Arsenal
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - MagazineShotgunBeanbag
-  - BoxShellTranquilizer
-  - BoxBeanbag
-  - MagazineBoxShotgunBeanbagHighCaliber # Goobstation
-  - WeaponDisabler
-  - WeaponMechCombatDisabler # Goobstation
-  # Goobstation R&D Console rework start
-  position: 2,3
-  technologyPrerequisites:
-  - SalvageWeapons
-  # Goobstation R&D Console rework end
-
-- type: technology
   id: UraniumMunitions
   name: research-technology-uranium-munitions
   icon:
@@ -137,11 +115,13 @@
   - TelescopicShield
   - HoloprojectorSecurity
   - WeaponDisablerSMG
+  - WeaponDisabler # Pirate: moved from removed nonlethal ammunition technology.
+  - WeaponMechCombatDisabler # Pirate: moved from removed nonlethal ammunition technology.
   - Terminus #Goobstation
   # Goobstation R&D Console rework start
   position: 3,3
   technologyPrerequisites:
-  - NonlethalAmmunition
+  - SalvageWeapons # Pirate: nonlethal ammunition is available at roundstart.
   # Goobstation R&D Console rework end
 
 - type: technology
