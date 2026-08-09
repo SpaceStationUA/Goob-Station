@@ -29,7 +29,7 @@ public sealed partial class ToggleableVisualsComponent : Component
     public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 
     /// <summary>
-    /// When true, toggle visuals will replace the base visuals instead of being added on top.
+    /// Pirate: When true, toggle visuals will replace the base visuals instead of being added on top.
     /// </summary>
     [DataField]
     public bool ReplaceMode = false;

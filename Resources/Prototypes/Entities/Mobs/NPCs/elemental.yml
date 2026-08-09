@@ -50,7 +50,7 @@
   name: ore crab
   parent: [ MobElementalBase, MobCombat ]
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: orecrab-feedback
   - type: Sprite
     sprite: Mobs/Elemental/orecrab.rsi

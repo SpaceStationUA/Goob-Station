@@ -72,7 +72,7 @@
   parent: BaseAnomaly
   suffix: Pyroclastic
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: anomaly-pyroclastic-feedback
   - type: AmbientSound
     volume: 5
@@ -133,7 +133,7 @@
   parent: BaseAnomaly
   suffix: Gravity
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: anomaly-gravity-feedback
   - type: Anomaly
     corePrototype: AnomalyCoreGravity
@@ -170,7 +170,7 @@
   parent: BaseAnomaly
   suffix: Electricity
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: anomaly-electricity-feedback
   - type: Anomaly
     corePrototype: AnomalyCoreElectricity
@@ -197,7 +197,7 @@
   parent: BaseAnomaly
   suffix: Flesh
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: anomaly-flesh-feedback
   - type: Anomaly
     corePrototype: AnomalyCoreFlesh
@@ -294,7 +294,7 @@
   parent: BaseAnomaly
   suffix: Bluespace
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: anomaly-bluespace-feedback
   - type: Sprite
     layers:
@@ -345,7 +345,7 @@
   parent: BaseAnomaly
   suffix: Ice
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: anomaly-ice-feedback
   - type: Sprite
     sprite: Structures/Specific/Anomalies/ice_anom.rsi
@@ -443,7 +443,7 @@
   parent: AnomalyRockBase
   suffix: Rock, Uranium
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: anomaly-rock-feedback
   - type: Sprite
     color: "#52ff39"
@@ -795,7 +795,7 @@
   parent: BaseAnomaly
   suffix: Flora
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: anomaly-flora-feedback
   - type: Sprite
     drawdepth: Mobs
@@ -898,7 +898,7 @@
   parent: BaseAnomaly
   suffix: Liquid
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: anomaly-liquid-feedback
   - type: Sprite
     sprite: Structures/Specific/Anomalies/liquid_anom.rsi
@@ -1051,7 +1051,7 @@
   parent: BaseAnomaly
   suffix: Shadow
   components:
-  - type: AssayResponse
+  - type: AssayResponse # Pirate
     replaceMessage: anomaly-shadow-feedback
   - type: Sprite
     sprite: Structures/Specific/Anomalies/shadow_anom.rsi

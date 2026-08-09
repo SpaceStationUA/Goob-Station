@@ -137,12 +137,6 @@ public sealed class IdExaminableSystem : EntitySystem
         _ui.TryToggleUi(target, SetPsionicsVerbMenu.Key, uid);
     }
     // Pirate-PsionicsMenu-End
-
-    private void OpenWantedUI(EntityUid uid, EntityUid target) // Goobstation-WantedMenu
-    {
-        _ui.TryToggleUi(target, SetWantedVerbMenu.Key, uid);
-    }
-
     public string GetMessage(EntityUid uid)
     {
         return GetInfo(uid) ?? Loc.GetString("id-examinable-component-verb-no-id");

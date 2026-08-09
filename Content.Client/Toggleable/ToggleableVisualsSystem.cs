@@ -50,7 +50,7 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
             if (modulateColor)
                 SpriteSystem.LayerSetColor((uid, args.Sprite), component.SpriteLayer, color);
 
-            if (component.ReplaceMode && args.Sprite.AllLayers.Any())
+            if (component.ReplaceMode && args.Sprite.AllLayers.Any()) // Pirate
             {
                 SpriteSystem.LayerSetVisible((uid, args.Sprite), 0, !enabled);
             }
@@ -94,6 +94,7 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
         if (layers == null && !component.ClothingVisuals.TryGetValue(args.Slot, out layers))
             return;
 
+        // Pirate
         if (component.ReplaceMode)
         {
             for (var layerIdx = args.Layers.Count - 1; layerIdx >= 0; layerIdx--)
@@ -105,6 +106,7 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
                 }
             }
         }
+        // Pirate end
 
         var modulateColor = AppearanceSystem.TryGetData<Color>(uid, ToggleableVisuals.Color, out var color, appearance);
 
@@ -135,6 +137,7 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
         if (!component.InhandVisuals.TryGetValue(args.Location, out var layers))
             return;
 
+        // Pirate
         if (component.ReplaceMode)
         {
             var prefix = $"inhand-{args.Location.ToString().ToLowerInvariant()}";
@@ -147,6 +150,7 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
                 }
             }
         }
+        // Pirate end
 
         var modulateColor = AppearanceSystem.TryGetData<Color>(uid, ToggleableVisuals.Color, out var color, appearance);
 
