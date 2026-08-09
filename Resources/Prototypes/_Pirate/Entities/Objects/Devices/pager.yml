@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: Index
+
+- type: entity
+  parent: BaseItem
+  id: IndexPager
+  name: Пристрій
+  description: Прийняття Настанов виразно проступає в тому, як він їх виконує. Та по той бік маски все ж можна помітити тінь неприязні до них. І все ж, маючи змогу проживати всі страждання й насолоди світу за маскою "Настанов", його справжнє глибинне прагнення зрештою зводиться до вдячності.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/pager.rsi
+    layers:
+    - state: icon
+      map: ["enum.IndexPagerVisualLayers.Icon"]
+  - type: Appearance
+  - type: Item
+    sprite: _Pirate/Objects/Devices/pager.rsi
+    size: Small
+  - type: ActivatableUI
+    singleUser: false
+    inHandsOnly: true
+    key: enum.IndexPagerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.IndexPagerUiKey.Key:
+        type: IndexPagerBoundUserInterface
+      enum.IndexAdminUiKey.Key:
+        type: IndexAdminMenuBoundUserInterface
+  - type: IndexPager

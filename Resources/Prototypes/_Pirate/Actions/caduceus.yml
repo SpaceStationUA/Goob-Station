@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: Index
+
+- type: entity
+  parent: BaseToggleAction
+  id: ActionCaduceusToggle
+  name: Активувати Кадуцей
+  description: Дістати або заспокоїти слиз.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Objects/Weapons/Melee/Caduceus/icons.rsi
+      state: inactive
+    iconOn:
+      sprite: _Pirate/Objects/Weapons/Melee/Caduceus/icons.rsi
+      state: hatchet
+    useDelay: 10
+
+- type: entity
+  parent: BaseAction
+  id: ActionCaduceusSwap
+  name: Змінити форму
+  description: skip, skip, skip, when this game gets fucking good?
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Objects/Weapons/Melee/Caduceus/icons.rsi
+      state: bsword
+    useDelay: 30
+  - type: InstantAction
+    event: !type:CaduceusSwapActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionCaduceusHold
+  name: Затриматися
+  description: Дає вдарити ще стільки ж разів у цій формі, але це не по канону, не робіть так
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Pirate/Objects/Weapons/Melee/Caduceus/icons.rsi
+      state: hammer
+    useDelay: 10
+  - type: InstantAction
+    event: !type:CaduceusHoldActionEvent
