@@ -20,6 +20,12 @@
         Piercing: 0.60    # Поглинає 40% проникаючої шкоди (кулі)
         Heat: 0.55        # Поглинає 45% термічної шкоди
         Structural: 0.60  # Поглинає 40% шкоди від вибухів/руйнувань
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: SpeciesPressureProtection
+    species:
+    - Yautja
 
 - type: entity
   parent: GoobYautjaArmorBase

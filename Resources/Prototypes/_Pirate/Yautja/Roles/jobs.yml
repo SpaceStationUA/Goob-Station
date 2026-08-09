@@ -23,6 +23,9 @@
     - GoobYautjaHuntingTrap
     - GoobYautjaHuntingTrap
     - GoobYautjaSmartDisc
+    - GoobYautjaToolbeltFilled
+    - GoobYautjaHoundObservationPad
+    - GoobYautjaCleanserGelVial
 
 - type: startingGear
   parent: GoobYautjaHunterGear

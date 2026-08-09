@@ -1,6 +1,6 @@
 # CMSS13 Yautja mask variants for Goob Station.
 # Батьківський прототип — GoobYautjaMaskBase (нічне бачення + тепловізор як у ксеноморфів).
-# Шляхи до спрайтів змінено під кастомну папку _Oskarrr.
+# Шляхи до спрайтів: Resources/Textures/_Pirate/Yautja
 
 - type: entity
   parent: GoobYautjaMaskBase

@@ -5,13 +5,15 @@ using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Mobs;
 using Content.Shared.Popups;
-using Content.Shared.Physics;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -24,6 +26,7 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedExplosionSystem _explosion = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -32,18 +35,36 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
 
+    /// <summary>Claws currently being moved into the bracer — ignore DroppedEvent delete.</summary>
+    private readonly HashSet<EntityUid> _storingClaws = [];
+
+    /// <summary>Shield currently being moved into the bracer — ignore DroppedEvent delete.</summary>
+    private readonly HashSet<EntityUid> _storingShield = [];
+
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<YautjaBracerComponent, MapInitEvent>(OnBracerMapInit);
         SubscribeLocalEvent<YautjaBracerComponent, ToggleYautjaClawsEvent>(OnToggleClaws);
+        SubscribeLocalEvent<YautjaBracerComponent, ToggleYautjaShieldEvent>(OnToggleShield);
         SubscribeLocalEvent<YautjaBracerComponent, ToggleYautjaCloakEvent>(OnToggleCloak);
         SubscribeLocalEvent<YautjaBracerComponent, YautjaBracerSelfDestructEvent>(OnSelfDestruct);
         SubscribeLocalEvent<YautjaBracerComponent, GotUnequippedEvent>(OnBracerUnequipped);
         SubscribeLocalEvent<YautjaBracerComponent, ComponentShutdown>(OnBracerShutdown);
         SubscribeLocalEvent<YautjaBracerClawsComponent, ComponentShutdown>(OnClawsShutdown);
+        SubscribeLocalEvent<YautjaBracerClawsComponent, DroppedEvent>(OnClawsDropped);
+        SubscribeLocalEvent<YautjaBracerShieldComponent, ComponentShutdown>(OnShieldShutdown);
+        SubscribeLocalEvent<YautjaBracerShieldComponent, DroppedEvent>(OnShieldDropped);
         SubscribeLocalEvent<YautjaBracerCloakTrackerComponent, MoveEvent>(OnCloakTrackerMove);
         SubscribeLocalEvent<YautjaCloakPackComponent, GotUnequippedEvent>(OnCloakPackUnequipped);
+        SubscribeLocalEvent<MobStateChangedEvent>(OnWearerMobStateChanged);
+    }
+
+    private void OnBracerMapInit(Entity<YautjaBracerComponent> ent, ref MapInitEvent args)
+    {
+        _containers.EnsureContainer<Container>(ent.Owner, YautjaBracerComponent.ClawsContainerId);
+        _containers.EnsureContainer<Container>(ent.Owner, YautjaBracerComponent.ShieldContainerId);
     }
 
     private void OnCloakPackUnequipped(Entity<YautjaCloakPackComponent> ent, ref GotUnequippedEvent args)
@@ -56,16 +77,10 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
 
     private void OnCloakTrackerMove(Entity<YautjaBracerCloakTrackerComponent> ent, ref MoveEvent args)
     {
-        if (ent.Comp.Bracer is not { } bracerUid
-            || !TryComp(bracerUid, out YautjaBracerComponent? bracer)
-            || !bracer.Cloaked)
+        if (_timing.ApplyingState)
             return;
 
-        if (!TryComp<StealthComponent>(ent, out var stealth))
-            return;
-
-        if (_stealth.GetVisibility(ent, stealth) > stealth.MinVisibility)
-            _stealth.SetVisibility(ent, stealth.MinVisibility, stealth);
+        KeepCloaked(ent.Owner);
     }
 
     public override void Update(float frameTime)
@@ -81,6 +96,10 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
         while (query.MoveNext(out var uid, out var comp))
         {
             var ent = (uid, comp);
+
+            // Keep cloak locked at full invis without Dirty-spamming every client frame.
+            if (comp.Cloaked && comp.CloakUser is { } user && !TerminatingOrDeleted(user))
+                KeepCloaked(user);
 
             if (!comp.SelfDestructing || comp.SelfDestructAt == null || now < comp.SelfDestructAt)
                 continue;
@@ -102,7 +121,7 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var extended = HasExtendedClaws(ent.Comp);
+        var extended = AreClawsExtended(ent, args.Performer);
 
         if (!extended)
         {
@@ -114,9 +133,28 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
             RetractClaws(ent);
         }
 
-        if (args.Action is { } act)
-            _actions.SetToggled((act, act), !extended);
+        args.Toggle = true;
+        args.Handled = true;
+    }
 
+    private void OnToggleShield(Entity<YautjaBracerComponent> ent, ref ToggleYautjaShieldEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var extended = IsShieldExtended(ent, args.Performer);
+
+        if (!extended)
+        {
+            if (!TryExtendShield(ent, args.Performer))
+                return;
+        }
+        else
+        {
+            RetractShield(ent);
+        }
+
+        args.Toggle = true;
         args.Handled = true;
     }
 
@@ -126,9 +164,8 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
             return;
 
         var user = args.Performer;
-        var cloaked = ent.Comp.Cloaked;
 
-        if (!cloaked)
+        if (!ent.Comp.Cloaked)
         {
             if (!HasEquippedCloakPack(user))
             {
@@ -144,9 +181,7 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
             Decloak(ent);
         }
 
-        if (args.Action is { } act)
-            _actions.SetToggled((act, act), !cloaked);
-
+        args.Toggle = true;
         args.Handled = true;
     }
 
@@ -165,6 +200,7 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
                 continue;
 
             Decloak((uid, bracer));
+            SyncCloakActionToggle(user, false);
         }
     }
 
@@ -173,9 +209,19 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
         RemComp<StealthOnMoveComponent>(user);
 
         var stealth = EnsureComp<StealthComponent>(user);
-        _stealth.SetThermalsImmune(user, false, stealth);
+        _stealth.SetRevealOnAttack((user, stealth), false);
+        _stealth.SetRevealOnDamage((user, stealth), false);
+        _stealth.SetThermalsImmune(user, true, stealth);
+
+        // Force client shader rebind on every re-cloak (SetEnabled no-ops if already true).
+        _stealth.SetEnabled(user, false, stealth);
+        _stealth.SetEnabled(user, true, stealth);
         _stealth.SetVisibility(user, stealth.MinVisibility, stealth);
-        EnsureComp<YautjaBracerCloakTrackerComponent>(user).Bracer = ent;
+        Dirty(user, stealth);
+
+        var tracker = EnsureComp<YautjaBracerCloakTrackerComponent>(user);
+        tracker.Bracer = ent.Owner;
+        Dirty(user, tracker);
 
         ent.Comp.Cloaked = true;
         ent.Comp.CloakUser = user;
@@ -194,21 +240,16 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
 
         if (ent.Comp.CloakUser is { } target && !TerminatingOrDeleted(target))
         {
-            RemComp<StealthOnMoveComponent>(target);
             RemComp<YautjaBracerCloakTrackerComponent>(target);
-            RemComp<StealthComponent>(target);
-            _audio.PlayPredicted(ent.Comp.CloakOffSound, target, target);
+            RemComp<StealthOnMoveComponent>(target);
 
-            foreach (var (actionUid, _) in _actions.GetActions(target))
+            if (TryComp<StealthComponent>(target, out var stealth))
             {
-                if (!TryComp<InstantActionComponent>(actionUid, out var instant)
-                    || instant.Event is not ToggleYautjaCloakEvent)
-                {
-                    continue;
-                }
-
-                _actions.SetToggled(actionUid, false);
+                _stealth.SetEnabled(target, false, stealth);
+                RemCompDeferred<StealthComponent>(target);
             }
+
+            _audio.PlayPredicted(ent.Comp.CloakOffSound, target, target);
         }
 
         ent.Comp.Cloaked = false;
@@ -216,13 +257,67 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnSelfDestruct(Entity<YautjaBracerComponent> ent, ref YautjaBracerSelfDestructEvent args)
+    private void SyncCloakActionToggle(EntityUid user, bool toggled)
     {
-        if (args.Handled || ent.Comp.SelfDestructing)
+        foreach (var (actionUid, _) in _actions.GetActions(user))
+        {
+            if (!TryComp<InstantActionComponent>(actionUid, out var instant)
+                || instant.Event is not ToggleYautjaCloakEvent)
+            {
+                continue;
+            }
+
+            _actions.SetToggled(actionUid, toggled);
+        }
+    }
+
+    private void KeepCloaked(EntityUid user)
+    {
+        if (!TryComp<StealthComponent>(user, out var stealth))
             return;
 
-        var user = args.Performer;
+        if (!stealth.Enabled)
+            _stealth.SetEnabled(user, true, stealth);
+
+        if (_stealth.GetVisibility(user, stealth) > stealth.MinVisibility)
+            _stealth.SetVisibility(user, stealth.MinVisibility, stealth);
+    }
+
+    private void OnSelfDestruct(Entity<YautjaBracerComponent> ent, ref YautjaBracerSelfDestructEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryBeginSelfDestruct(ent, args.Performer, args.Action))
+            return;
+
+        args.Handled = true;
+    }
+
+    private void OnWearerMobStateChanged(MobStateChangedEvent args)
+    {
+        if (args.NewMobState != MobState.Critical || args.OldMobState == MobState.Critical)
+            return;
+
+        if (!_inventory.TryGetSlotEntity(args.Target, "gloves", out var gloves)
+            || !TryComp<YautjaBracerComponent>(gloves, out var bracer))
+        {
+            return;
+        }
+
+        TryBeginSelfDestruct((gloves.Value, bracer), args.Target);
+    }
+
+    /// <summary>
+    /// Starts the bracer self-destruct sequence. Returns false if already running or invalid.
+    /// </summary>
+    private bool TryBeginSelfDestruct(Entity<YautjaBracerComponent> ent, EntityUid user, EntityUid? action = null)
+    {
+        if (ent.Comp.SelfDestructing)
+            return false;
+
         RetractClaws(ent);
+        RetractShield(ent);
 
         _audio.PlayPredicted(ent.Comp.SelfDestructDoAfterSound, user, user);
         _popup.PopupPredicted(Loc.GetString("yautja-bracer-self-destruct-started"), user, user);
@@ -233,12 +328,12 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
             ent.Comp.SelfDestructing = true;
             ent.Comp.SelfDestructPhase = YautjaBracerSelfDestructPhase.Arming;
             ent.Comp.SelfDestructUser = user;
-            ent.Comp.SelfDestructAction = args.Action;
+            ent.Comp.SelfDestructAction = action;
             ent.Comp.SelfDestructAt = _timing.CurTime + _audio.GetAudioLength(doAfterSound);
             Dirty(ent);
         }
 
-        args.Handled = true;
+        return true;
     }
 
     private void BeginSelfDestructCountdown(Entity<YautjaBracerComponent> ent)
@@ -264,8 +359,10 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
     private void OnBracerUnequipped(Entity<YautjaBracerComponent> ent, ref GotUnequippedEvent args)
     {
         Decloak(ent);
+        SyncCloakActionToggle(args.Equipee, false);
         CancelSelfDestruct(ent);
         RetractClaws(ent);
+        RetractShield(ent);
     }
 
     private void OnBracerShutdown(Entity<YautjaBracerComponent> ent, ref ComponentShutdown args)
@@ -273,19 +370,84 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
         Decloak(ent);
         CancelSelfDestruct(ent);
         RetractClaws(ent);
+        RetractShield(ent);
     }
 
     private void OnClawsShutdown(Entity<YautjaBracerClawsComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.Bracer is not { } bracerUid
             || !TryComp(bracerUid, out YautjaBracerComponent? bracer)
-            || bracer.ClawsEntity != ent)
+            || bracer.ClawsEntity != ent.Owner)
         {
             return;
         }
 
         bracer.ClawsEntity = null;
         Dirty(bracerUid, bracer);
+    }
+
+    private void OnClawsDropped(Entity<YautjaBracerClawsComponent> ent, ref DroppedEvent args)
+    {
+        // Retract removes from hand then inserts into bracer — Dropped fires mid-transfer.
+        if (_storingClaws.Contains(ent.Owner))
+            return;
+
+        if (ent.Comp.Bracer is { } bracerUid
+            && _containers.TryGetContainer(bracerUid, YautjaBracerComponent.ClawsContainerId, out var container)
+            && container.Contains(ent.Owner))
+        {
+            return;
+        }
+
+        // Unexpected floor drop: put back into bracer instead of leaving trash / blocking hands.
+        if (ent.Comp.Bracer is { } owner
+            && TryComp(owner, out YautjaBracerComponent? bracer)
+            && !TerminatingOrDeleted(owner))
+        {
+            StoreClawsInBracer((owner, bracer), ent.Owner);
+            return;
+        }
+
+        // Never predict-delete networked claw entities — only the server may cull orphans.
+        if (_net.IsServer)
+            QueueDel(ent.Owner);
+    }
+
+    private void OnShieldShutdown(Entity<YautjaBracerShieldComponent> ent, ref ComponentShutdown args)
+    {
+        if (ent.Comp.Bracer is not { } bracerUid
+            || !TryComp(bracerUid, out YautjaBracerComponent? bracer)
+            || bracer.ShieldEntity != ent.Owner)
+        {
+            return;
+        }
+
+        bracer.ShieldEntity = null;
+        Dirty(bracerUid, bracer);
+    }
+
+    private void OnShieldDropped(Entity<YautjaBracerShieldComponent> ent, ref DroppedEvent args)
+    {
+        if (_storingShield.Contains(ent.Owner))
+            return;
+
+        if (ent.Comp.Bracer is { } bracerUid
+            && _containers.TryGetContainer(bracerUid, YautjaBracerComponent.ShieldContainerId, out var container)
+            && container.Contains(ent.Owner))
+        {
+            return;
+        }
+
+        if (ent.Comp.Bracer is { } owner
+            && TryComp(owner, out YautjaBracerComponent? bracer)
+            && !TerminatingOrDeleted(owner))
+        {
+            StoreShieldInBracer((owner, bracer), ent.Owner);
+            return;
+        }
+
+        if (_net.IsServer)
+            QueueDel(ent.Owner);
     }
 
     private void Detonate(Entity<YautjaBracerComponent> ent)
@@ -303,6 +465,7 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
             return;
 
         RetractClaws(ent);
+        RetractShield(ent);
 
         var coords = Transform(target).Coordinates;
         var boom = Spawn(ent.Comp.SelfDestructExplosionPrototype, coords);
@@ -327,30 +490,42 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
         Dirty(ent);
     }
 
-    private bool HasExtendedClaws(YautjaBracerComponent comp) =>
-        comp.ClawsEntity is { } uid && !TerminatingOrDeleted(uid);
+    private bool AreClawsExtended(Entity<YautjaBracerComponent> ent, EntityUid user) =>
+        ent.Comp.ClawsEntity is { } uid
+        && !TerminatingOrDeleted(uid)
+        && _hands.IsHolding(user, uid);
 
     private bool TryExtendClaws(Entity<YautjaBracerComponent> ent, EntityUid user)
     {
-        if (HasExtendedClaws(ent.Comp))
+        if (AreClawsExtended(ent, user))
             return true;
 
-        if (!EnsureFreeHand(user))
+        if (!TryComp<HandsComponent>(user, out var hands))
+            return false;
+
+        // Do NOT drop held items onto the floor — require a free hand.
+        if (_hands.CountFreeHands((user, hands)) <= 0)
         {
             _popup.PopupPredicted(Loc.GetString("yautja-bracer-claws-no-hands"), user, user);
             return false;
         }
 
-        var claws = Spawn(ent.Comp.ClawsPrototype, Transform(user).Coordinates);
-        EnsureComp<YautjaBracerClawsComponent>(claws).Bracer = ent;
+        if (!TryGetOrSpawnClaws(ent, out var claws))
+        {
+            _popup.PopupPredicted(Loc.GetString("yautja-bracer-claws-no-hands"), user, user);
+            return false;
+        }
+
+        RemComp<UnremoveableComponent>(claws);
 
         if (!_hands.TryPickupAnyHand(user, claws, checkActionBlocker: false))
         {
+            StoreClawsInBracer(ent, claws);
             _popup.PopupPredicted(Loc.GetString("yautja-bracer-claws-no-hands"), user, user);
-            QueueDel(claws);
             return false;
         }
 
+        EnsureComp<UnremoveableComponent>(claws);
         ent.Comp.ClawsEntity = claws;
         Dirty(ent);
 
@@ -358,28 +533,41 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
         return true;
     }
 
-    private bool EnsureFreeHand(EntityUid user)
+    private bool TryGetOrSpawnClaws(Entity<YautjaBracerComponent> ent, out EntityUid claws)
     {
-        if (!TryComp<HandsComponent>(user, out var hands))
-            return false;
+        claws = default;
 
-        if (_hands.CountFreeHands((user, hands)) > 0)
-            return true;
+        var container = _containers.EnsureContainer<Container>(ent.Owner, YautjaBracerComponent.ClawsContainerId);
 
-        foreach (var hand in _hands.EnumerateHands(user))
+        if (ent.Comp.ClawsEntity is { } existing && !TerminatingOrDeleted(existing))
         {
-            if (_hands.HandIsEmpty((user, hands), hand))
-                continue;
-
-            var held = _hands.GetHeldItem((user, hands), hand);
-            if (held != null && HasComp<UnremoveableComponent>(held))
-                continue;
-
-            if (_hands.TryDrop((user, hands), hand, checkActionBlocker: false))
-                return true;
+            claws = existing;
+            return true;
         }
 
-        return _hands.CountFreeHands((user, hands)) > 0;
+        if (container.ContainedEntities.Count > 0)
+        {
+            claws = container.ContainedEntities[0];
+            LinkClaws(ent, claws);
+            return true;
+        }
+
+        if (!PredictedTrySpawnInContainer(ent.Comp.ClawsPrototype, ent.Owner, YautjaBracerComponent.ClawsContainerId, out var spawned))
+            return false;
+
+        claws = spawned.Value;
+        LinkClaws(ent, claws);
+        return true;
+    }
+
+    private void LinkClaws(Entity<YautjaBracerComponent> ent, EntityUid claws)
+    {
+        var clawsComp = EnsureComp<YautjaBracerClawsComponent>(claws);
+        clawsComp.Bracer = ent.Owner;
+        Dirty(claws, clawsComp);
+
+        ent.Comp.ClawsEntity = claws;
+        Dirty(ent);
     }
 
     private void RetractClaws(Entity<YautjaBracerComponent> ent)
@@ -391,8 +579,182 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
             return;
         }
 
-        QueueDel(claws);
-        ent.Comp.ClawsEntity = null;
+        StoreClawsInBracer(ent, claws);
+    }
+
+    private void StoreClawsInBracer(Entity<YautjaBracerComponent> ent, EntityUid claws)
+    {
+        if (TerminatingOrDeleted(claws))
+        {
+            ent.Comp.ClawsEntity = null;
+            Dirty(ent);
+            return;
+        }
+
+        _storingClaws.Add(claws);
+        try
+        {
+            RemComp<UnremoveableComponent>(claws);
+
+            var container = _containers.EnsureContainer<Container>(ent.Owner, YautjaBracerComponent.ClawsContainerId);
+            if (container.Contains(claws))
+            {
+                ent.Comp.ClawsEntity = claws;
+                Dirty(ent);
+                return;
+            }
+
+            if (!_containers.Insert(claws, container))
+            {
+                // Insert can briefly fail during prediction; never predict-delete networked claws.
+                if (_net.IsServer)
+                {
+                    QueueDel(claws);
+                    ent.Comp.ClawsEntity = null;
+                    Dirty(ent);
+                }
+                return;
+            }
+
+            ent.Comp.ClawsEntity = claws;
+            Dirty(ent);
+        }
+        finally
+        {
+            _storingClaws.Remove(claws);
+        }
+    }
+
+    private bool IsShieldExtended(Entity<YautjaBracerComponent> ent, EntityUid user) =>
+        ent.Comp.ShieldEntity is { } uid
+        && !TerminatingOrDeleted(uid)
+        && _hands.IsHolding(user, uid);
+
+    private bool TryExtendShield(Entity<YautjaBracerComponent> ent, EntityUid user)
+    {
+        if (IsShieldExtended(ent, user))
+            return true;
+
+        if (!TryComp<HandsComponent>(user, out var hands))
+            return false;
+
+        if (_hands.CountFreeHands((user, hands)) <= 0)
+        {
+            _popup.PopupPredicted(Loc.GetString("yautja-bracer-shield-no-hands"), user, user);
+            return false;
+        }
+
+        if (!TryGetOrSpawnShield(ent, out var shield))
+        {
+            _popup.PopupPredicted(Loc.GetString("yautja-bracer-shield-no-hands"), user, user);
+            return false;
+        }
+
+        RemComp<UnremoveableComponent>(shield);
+
+        if (!_hands.TryPickupAnyHand(user, shield, checkActionBlocker: false))
+        {
+            StoreShieldInBracer(ent, shield);
+            _popup.PopupPredicted(Loc.GetString("yautja-bracer-shield-no-hands"), user, user);
+            return false;
+        }
+
+        EnsureComp<UnremoveableComponent>(shield);
+        ent.Comp.ShieldEntity = shield;
         Dirty(ent);
+
+        _audio.PlayPredicted(ent.Comp.ShieldExtendSound, user, user);
+        return true;
+    }
+
+    private bool TryGetOrSpawnShield(Entity<YautjaBracerComponent> ent, out EntityUid shield)
+    {
+        shield = default;
+
+        var container = _containers.EnsureContainer<Container>(ent.Owner, YautjaBracerComponent.ShieldContainerId);
+
+        if (ent.Comp.ShieldEntity is { } existing && !TerminatingOrDeleted(existing))
+        {
+            shield = existing;
+            return true;
+        }
+
+        if (container.ContainedEntities.Count > 0)
+        {
+            shield = container.ContainedEntities[0];
+            LinkShield(ent, shield);
+            return true;
+        }
+
+        if (!PredictedTrySpawnInContainer(ent.Comp.ShieldPrototype, ent.Owner, YautjaBracerComponent.ShieldContainerId, out var spawned))
+            return false;
+
+        shield = spawned.Value;
+        LinkShield(ent, shield);
+        return true;
+    }
+
+    private void LinkShield(Entity<YautjaBracerComponent> ent, EntityUid shield)
+    {
+        var shieldComp = EnsureComp<YautjaBracerShieldComponent>(shield);
+        shieldComp.Bracer = ent.Owner;
+        Dirty(shield, shieldComp);
+
+        ent.Comp.ShieldEntity = shield;
+        Dirty(ent);
+    }
+
+    private void RetractShield(Entity<YautjaBracerComponent> ent)
+    {
+        if (ent.Comp.ShieldEntity is not { } shield || TerminatingOrDeleted(shield))
+        {
+            ent.Comp.ShieldEntity = null;
+            Dirty(ent);
+            return;
+        }
+
+        StoreShieldInBracer(ent, shield);
+    }
+
+    private void StoreShieldInBracer(Entity<YautjaBracerComponent> ent, EntityUid shield)
+    {
+        if (TerminatingOrDeleted(shield))
+        {
+            ent.Comp.ShieldEntity = null;
+            Dirty(ent);
+            return;
+        }
+
+        _storingShield.Add(shield);
+        try
+        {
+            RemComp<UnremoveableComponent>(shield);
+
+            var container = _containers.EnsureContainer<Container>(ent.Owner, YautjaBracerComponent.ShieldContainerId);
+            if (container.Contains(shield))
+            {
+                ent.Comp.ShieldEntity = shield;
+                Dirty(ent);
+                return;
+            }
+
+            if (!_containers.Insert(shield, container))
+            {
+                if (_net.IsServer)
+                {
+                    QueueDel(shield);
+                    ent.Comp.ShieldEntity = null;
+                    Dirty(ent);
+                }
+                return;
+            }
+
+            ent.Comp.ShieldEntity = shield;
+            Dirty(ent);
+        }
+        finally
+        {
+            _storingShield.Remove(shield);
+        }
     }
 }

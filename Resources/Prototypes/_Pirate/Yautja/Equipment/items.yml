@@ -18,11 +18,17 @@
     sprite: _Pirate/Yautja/yautja_items.rsi
   - type: SolutionContainerManager
     solutions:
-      welder: # В Goob ID розчину зазвичай пишеться з маленької літери
+      Welder:
         reagents:
         - ReagentId: WeldingFuel
-          Quantity: 150
-        maxVol: 150
+          Quantity: 1000
+        maxVol: 1000
+  - type: SolutionRegeneration
+    solution: Welder
+    generated:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 10
 
 - type: entity
   parent: ClothingBeltUtility # Змінено з CMBeltUtility на стандартний для Goob

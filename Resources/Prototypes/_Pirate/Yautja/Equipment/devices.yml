@@ -11,14 +11,20 @@
     sprite: _Pirate/Yautja/bracer.rsi
   - type: Insulated
   - type: YautjaBracer
+  - type: ContainerContainer
+    containers:
+      yautja-bracer-claws: !type:Container
+      yautja-bracer-shield: !type:Container
   - type: ActionGrant
     actions:
     - ActionYautjaToggleClaws
+    - ActionYautjaToggleShield
     - ActionYautjaToggleCloak
     - ActionYautjaSelfDestruct
   - type: ItemActionGrant
     actions:
     - ActionYautjaToggleClaws
+    - ActionYautjaToggleShield
     - ActionYautjaToggleCloak
     - ActionYautjaSelfDestruct
     activeIfWorn: true
@@ -151,7 +157,7 @@
     contents:
     - id: GoobYautjaThrallBracer
     - id: GoobYautjaAutoInjector
-    - id: GoobYautjaHealingGel
+    - id: GoobYautjaCleanserGelVial
     - id: GoobYautjaStabilizerGel
 
 - type: entity
@@ -195,6 +201,12 @@
     toggleOnInteract: false
     setLanguageOnInteract: false
     showInfoOnExamine: false
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: SpeciesPressureProtection
+    species:
+    - Yautja
 
 - type: entity
   parent: GoobYautjaMaskBase

@@ -15,14 +15,33 @@ public enum YautjaBracerSelfDestructPhase : byte
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class YautjaBracerComponent : Component
 {
+    public const string ClawsContainerId = "yautja-bracer-claws";
+    public const string ShieldContainerId = "yautja-bracer-shield";
+
     [DataField]
     public EntProtoId ClawsPrototype = "GoobYautjaWristBlades";
 
+    [DataField]
+    public EntProtoId ShieldPrototype = "GoobYautjaBracerShield";
+
+    /// <summary>
+    /// Managed wrist-blade entity stored in <see cref="ClawsContainerId"/> or held when extended.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? ClawsEntity;
 
+    /// <summary>
+    /// Managed bracer shield stored in <see cref="ShieldContainerId"/> or held when extended.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? ShieldEntity;
+
     [DataField]
     public SoundSpecifier ClawsExtendSound =
+        new SoundPathSpecifier("/Audio/_Pirate/Yautja/Equipment/pred_attach.wav");
+
+    [DataField]
+    public SoundSpecifier ShieldExtendSound =
         new SoundPathSpecifier("/Audio/_Pirate/Yautja/Equipment/pred_attach.wav");
 
     [DataField]
@@ -82,7 +101,18 @@ public sealed partial class YautjaBracerClawsComponent : Component
     public EntityUid? Bracer;
 }
 
-[RegisterComponent]
+/// <summary>
+/// Щит, висунутий з наручника. Не знімається вручну — лише через браслет.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed partial class YautjaBracerShieldComponent : Component
+{
+    /// <summary>Runtime link to the owning bracer. Nullable so prototype save tests do not serialize invalid Uids.</summary>
+    [DataField]
+    public EntityUid? Bracer;
+}
+
+[RegisterComponent, NetworkedComponent]
 public sealed partial class YautjaBracerCloakTrackerComponent : Component
 {
     /// <summary>Runtime link to the owning bracer. Nullable so prototype save tests do not serialize invalid Uids.</summary>
@@ -97,6 +127,8 @@ public sealed partial class YautjaBracerCloakTrackerComponent : Component
 public sealed partial class YautjaCloakPackComponent : Component;
 
 public sealed partial class ToggleYautjaClawsEvent : InstantActionEvent;
+
+public sealed partial class ToggleYautjaShieldEvent : InstantActionEvent;
 
 public sealed partial class ToggleYautjaCloakEvent : InstantActionEvent;
 
