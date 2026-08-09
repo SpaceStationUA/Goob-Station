@@ -299,11 +299,11 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
                     _bloodstreamSystem.TryModifyBleedAmount((bloodsucker, null), unitsSucked * -0.05f);
 
                     // Satisfy hunger.
-                    _hunger.ModifyHunger(bloodsucker, unitsSucked * 1.5f);
+                    _hunger.ModifyHunger(bloodsucker, unitsSucked * 6f);
 
                     // Satisfy thirst directly.
                     if (TryComp<ThirstComponent>(bloodsucker, out var thirst))
-                        _thirst.ModifyThirst(bloodsucker, thirst, unitsSucked * 0.5f);
+                        _thirst.ModifyThirst(bloodsucker, thirst, unitsSucked * 2f);
 
                     // Heal brute and burn damage — use concrete type IDs, split evenly per group.
                     var healing = new DamageSpecifier();

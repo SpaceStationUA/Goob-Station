@@ -14,10 +14,4 @@ public sealed partial class VampirismComponent : Component
 {
     [DataField]
     public HashSet<ProtoId<MetabolizerTypePrototype>> MetabolizerPrototypes = new() { "Vampiric", "Animal" };
-
-    /// <summary>
-    /// Blood drain applied each tick via BloodDeficiencyComponent.
-    /// </summary>
-    [DataField]
-    public float DeficiencyDrainPerTick = -0.1f;
 }
