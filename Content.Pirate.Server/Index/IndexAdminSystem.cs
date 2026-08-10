@@ -37,8 +37,8 @@ public sealed class IndexAdminSystem : EntitySystem
         });
     }
 
-    private static SpriteSpecifier AdminVerbIcon => new SpriteSpecifier.Texture(
-        new ResPath("/Textures/_Pirate/Interface/Misc/index_logo.rsi/index_logo.png"));
+    private static SpriteSpecifier AdminVerbIcon => new SpriteSpecifier.Rsi(
+        new ResPath("/Textures/_Pirate/Interface/Misc/index_logo.rsi"), "index_logo");
 
     private void OnPagerVerb(Entity<IndexPagerComponent> ent, ref GetVerbsEvent<Verb> args)
     {

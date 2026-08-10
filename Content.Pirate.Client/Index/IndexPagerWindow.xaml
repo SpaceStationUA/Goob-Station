@@ -12,7 +12,6 @@
 
             <!-- Index logo -->
             <TextureRect Name="IndexLogo"
-                         TexturePath="/Textures/_Pirate/Interface/Misc/index_logo.rsi/index_logo.png"
                          SetSize="121 142"
                          Stretch="KeepAspectCentered"
                          HorizontalAlignment="Center"
