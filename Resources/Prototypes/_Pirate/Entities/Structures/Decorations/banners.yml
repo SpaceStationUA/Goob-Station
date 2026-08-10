@@ -1,0 +1,25 @@
+- type: entity
+  id: BannerSolarian
+  parent: BannerBase
+  name: Баннер Соларіанського Альянсу
+  description: Баннер, що зображує прапор Соларіанського Альянсу.
+  suffix: SAN
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Decoration/banners.rsi
+    state: bannerSol1
+  - type: Construction
+    graph: BannersGraphPirate
+    node: BannerSolarianNode
+
+- type: entity
+  id: BannerRespublic
+  parent: BannerBase
+  name: Баннер Галактичної Республіки
+  description: Баннер, що зображує прапор Галактичної Республіки. Це не те про що ви могли подумати!
+  suffix: StarWars
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Decoration/banners.rsi
+    state: bannerRespublic
+

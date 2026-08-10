@@ -1,0 +1,14 @@
+# Зміни Нюпенка для івенту Соларіанського альянсу
+- type: entity
+  parent: BaseItem
+  id: SolHandyFlag
+  name: Маленький ручний прапор Соларіанського Альянсу
+  description: "Аве Сол!"
+  suffix: SAN
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/Handy_flags/sol_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: _Pirate/Objects/Misc/Handy_flags/sol_handy_flag.rsi
+# Кінець змін Нюпенка
