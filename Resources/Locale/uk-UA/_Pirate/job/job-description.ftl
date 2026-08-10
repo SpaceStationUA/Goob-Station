@@ -9,4 +9,4 @@ job-description-interdyne-secure = Знищуйте загрозу, та зай�
 job-description-interdyne-service = Подавайте їжу своїм колегам, організовуйте з інженерами свята чи події, запросіть інженерів і зробіть зі столової в кімнату для D&D!
 job-description-interdyne-shaft-miners = Здобувайте ресурси, скористайтесь шаттлом на лаваленд, пропадіть майже на всю зміну поки весь персонал буде шукати вас весь цикл
 
-job-description-security-instructor = N/A
+job-description-security-instructor = Н/Д

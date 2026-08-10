@@ -78,7 +78,7 @@ public sealed class WetnessMoodSystem : EntitySystem
                 dirty++;
         }
 
-        UpdateEffect(mob, WetMoodId, wet);
+        UpdateEffect(mob, WetMoodId, HasComp<WaterAdaptedComponent>(mob) ? 0 : wet); // Pirate: feroxi water adaptation
         UpdateEffect(mob, DirtyMoodId, dirty);
     }
 

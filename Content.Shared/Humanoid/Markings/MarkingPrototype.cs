@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings
 {
-    [Prototype]
+    [Prototype("marking")] // Pirate: retain upstream explicit prototype kind
     public sealed partial class MarkingPrototype : IPrototype
     {
         [IdDataField]
@@ -46,8 +46,11 @@ namespace Content.Shared.Humanoid.Markings
         [DataField]
         public bool CanBeDisplaced { get; private set; } = true;
 
-        [DataField("sprites", required: true)]
-        public List<SpriteSpecifier> Sprites { get; private set; } = default!;
+        // Pirate - shader markings may carry colors without having their own sprites.
+        [DataField("sprites")]
+        public List<SpriteSpecifier> Sprites { get; private set; } = new();
+
+        public int ColorCount => Sprites.Count > 0 ? Sprites.Count : Coloring.Layers?.Count ?? 0;
 
         /// Impstation start
         [DataField]
@@ -65,7 +68,7 @@ namespace Content.Shared.Humanoid.Markings
 
         public Marking AsMarking()
         {
-            return new Marking(ID, Sprites.Count);
+            return new Marking(ID, ColorCount); // Pirate - shader markings have no sprites
         }
     }
 }

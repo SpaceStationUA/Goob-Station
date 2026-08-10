@@ -27,7 +27,10 @@
       - !type:SpawnEntity
         entity: RPassiveMobSpawner
         number: 5
+        predicted: false
         shouldScale: false
+        # Pirate: initialize random spawners at the extract's map position.
+        spawnAtPosition: true
     - reagents: [ Plasma ]
       methods: [ Touch, Injection ]
       effects:
@@ -43,7 +46,9 @@
       - !type:SpawnEntity
         entity: RHostileMobSpawner
         number: 5
+        predicted: false
         shouldScale: false
+        spawnAtPosition: true
     - reagents: [ Blood ]
       methods: [ Touch, Injection ]
       effects:
@@ -59,7 +64,9 @@
       - !type:SpawnEntity
         entity: RNeutralMobSpawner
         number: 5
+        predicted: false
         shouldScale: false
+        spawnAtPosition: true
   - type: Tag
     tags:
     - XenobiologyGoldExtract

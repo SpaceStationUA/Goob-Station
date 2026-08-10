@@ -49,4 +49,12 @@
         - SlimePerson
   components:
     - type: LimbFixation
+
+- type: trait
+  id: SlimeMorphImmunity
+  name: trait-slime-morph-immunity-name
+  description: trait-slime-morph-immunity-desc
+  category: Meta
+  components:
+    - type: SlimeMorphImmunity
 #endregion

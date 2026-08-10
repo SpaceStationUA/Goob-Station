@@ -1,0 +1,361 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# The source SpaceBlade base does not exist locally, so its base and security
+# behavior are flattened into this Pirate prototype.
+- type: entity
+  id: SpaceBladeSec
+  parent: [AirTank, BaseSecurityContraband]
+  name: space blade
+  description: Let it drip!
+  suffix: security
+  components:
+  - type: GasTank
+    outputPressure: 0.1
+    maxOutputPressure: 0.1
+    valveOutputRate: 50
+    air:
+      volume: 1
+      moles:
+      - 0.4101137219
+      temperature: 293.15
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 0.1
+        mask:
+        - TableMask
+        - InteractImpassable
+        layer:
+        - InteractImpassable
+  - type: Item
+    size: Small
+    sprite: _Pirate/Objects/Fun/spaceblade.rsi
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/spaceblade.rsi
+    state: secblade
+    scale: 0.5, 0.5
+  - type: Clothing
+    quickEquip: false
+    sprite: _Pirate/Objects/Fun/spaceblade.rsi
+    slots:
+    - Back
+    - suitStorage
+  - type: EmitSoundOnCollide
+    sound:
+      collection: MetalThud
+      params:
+        variation: 0.65
+        volume: -5
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5
+  - type: SpaceBlade
+  - type: ChasingWalk
+    chasingComponent:
+    - type: SpaceBlade
+  - type: StaminaDamageOnCollide
+    damage: 8
+  - type: DisarmMalus
+    malus: 0.225
+  - type: Tag
+    tags:
+    - SpaceBladeSec
+    - SecBeltEquip # Pirate: local equivalent of the source belt whitelist.
+  - type: ItemToggle
+    predictable: false
+    onUse: false
+    soundActivate:
+      path: /Audio/Items/flashlight_on.ogg
+    soundDeactivate:
+      path: /Audio/Items/flashlight_off.ogg
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Effects/Vehicle/policesiren.ogg
+      params:
+        volume: -4
+  - type: UseDelay
+    delay: 1
+
+- type: entity
+  name: PRIbar
+  parent: BaseCrowbar
+  id: Pribar
+  description: A purpose-built crowbar for prying open firelocks. Collapses to fit in a pocket.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/pribar.rsi
+    state: icon
+  - type: Item
+    sprite: _Pirate/Objects/Tools/pribar.rsi
+    size: Small
+    storedSprite:
+      sprite: _Pirate/Objects/Tools/pribar.rsi
+      state: storage
+  - type: Prying
+    speedModifier: 1.35
+  - type: Tag
+    tags:
+    - Pribar
+    - SecBeltEquip # Pirate: local equivalent of the source belt whitelist.
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Piercing: 8
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  # Pirate: the source upgrade graph depends on an unported PRIbar+ kit.
+
+- type: entity
+  name: ticket
+  parent: Paper
+  id: FineTicket
+  description: A space-glue backed fining ticket. Once it's stuck, it won't come off without being destroyed.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+      color: "#f07575"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#f07575"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/pop.ogg
+    embedOnThrow: true
+  - type: ThrowingAngle
+    angle: 0
+  - type: LandAtCursor
+  - type: Paper
+    content: code-violation
+  - type: PaperVisuals
+    backgroundImagePath: /Textures/Interface/Paper/paper_background_default.svg.96dpi.png
+    contentImagePath: /Textures/Interface/Paper/paper_content_lined.svg.96dpi.png
+    backgroundModulate: "#f07575"
+    contentImageModulate: "#f07575"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+    headerImagePath: /Textures/_Pirate/Interface/Paper/paper_heading_fine.svg.96dpi.png
+    headerMargin: 0.0, 12.0, 0.0, 0.0
+    maxWritableArea: 200.0, 300.0
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+    - SecTicket
+    - SecBeltEquip # Pirate: local equivalent of the source belt whitelist.
+  - type: FlavorProfile
+    flavors:
+    - secticket
+
+- type: entity
+  id: TicketPad
+  parent: BoxBase
+  name: ticket pad
+  description: A small folder of sticky-backed tickets.
+  components:
+  - type: Item
+    size: Small
+    shape: null
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/bureaucracy.rsi
+    state: ticket-book
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,1,3
+    whitelist:
+      tags:
+      - Document
+  - type: Appearance
+  - type: Tag
+    tags:
+    - Folder
+    - SecTicket
+    - SecBeltEquip # Pirate: local equivalent of the source belt whitelist.
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: FineTicket
+          amount: 8
+
+- type: entity
+  name: Citationator
+  parent: BaseStorageItem
+  id: LauncherCitationator
+  description: Issuing citations, with a prejudice.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Launchers/citationator.rsi
+    layers:
+    - state: icon
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Storage
+    maxItemSize: Tiny
+    grid:
+    - 0,0,0,2
+    whitelist:
+      tags:
+      - SecTicket
+    storageOpenSound:
+      path: /Audio/Items/change_drill.ogg
+    storageInsertSound:
+      path: /Audio/Items/change_drill.ogg
+    storageRemoveSound:
+      path: /Audio/Items/change_drill.ogg
+  - type: Gun
+    fireRate: 3
+    burstFireRate: 6
+    shotsPerBurst: 3
+    burstCooldown: 0.40
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - Burst
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/syringe_gun.ogg
+    soundEmpty:
+      path: /Audio/_Pirate/Weapons/Guns/Empty/SecLink/dry_fire.ogg
+    clumsyProof: true
+  - type: ContainerAmmoProvider
+    container: storagebase
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Tag
+    tags:
+    - SecBeltEquip # Pirate: local equivalent for a compact security utility.
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+
+- type: entity
+  name: compact shield
+  parent: TelescopicShield
+  id: CompactShield
+  description: A collapsable metal shield. While not the most effective, its plating is easy to weld back together.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/compactshield.rsi
+    layers:
+    - state: compact-icon
+    - state: compact-shield-on
+      visible: false
+      map: ["shield"]
+  - type: Item
+    size: Normal
+    sprite: _Pirate/Objects/Weapons/Melee/compactshield.rsi
+    heldPrefix: compact
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.9
+    activeBlockModifier:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.85
+      flatReductions:
+        Blunt: 0
+        Slash: 0
+        Piercing: 0
+        Heat: 0
+  - type: ToggleableVisuals
+    spriteLayer: shield
+    inhandVisuals:
+      left:
+      - state: inhand-left-on
+      right:
+      - state: inhand-right-on
+  - type: Appearance
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 35
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BrokenSecShield:
+            min: 1
+            max: 1
+  - type: StaticPrice
+    price: 150
+
+- type: entity
+  name: broken shield
+  parent: BaseItem
+  id: BrokenSecShield
+  description: A compact shield in desperate need of some welding.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/compactshield.rsi
+    state: broken
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: inhand-left-broken
+      right:
+      - state: inhand-right-broken
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 4
+  - type: ToolRefinable
+    refineResult:
+    - id: CompactShield
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200
+  - type: SpaceGarbage
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesSurplusNVGoggles
+  name: surplus night vision goggles
+  description: A bulky, old design that technically works. There's no room for lenses inside.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Eyes/Glasses/secvision.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Eyes/Glasses/secvision.rsi
+  - type: NightVision
+    isEquipment: true
+  - type: IdentityBlocker
+    coverage: EYES
+  # Pirate: target has no Impstation PluralName component.
+  - type: VisionCorrection
+    correctionPower: 1
+    visionBonus: 1.5

@@ -80,6 +80,19 @@ modsuit-verb-auto-activate-on = Автоактивація: увімкнено
 modsuit-verb-auto-activate-off = Автоактивація: вимкнено
 modsuit-verb-auto-activate-toggled = Автоактивацію перемкнено
 modsuit-continue-sealing = Триває герметизація наступної частини...
+modsuit-continue-unsealing = Триває розгерметизація наступної частини...
+modsuit-magboots-on = Магнітні чоботи костюма вмикаються.
+modsuit-magboots-off = Магнітні чоботи костюма вимикаються.
+modsuit-retract-blocked-active = Спершу вимкніть костюм.
+
+modsuit-action-deploy-name = [color=#58c4e8]Розгорнути MOD-костюм[/color]
+modsuit-action-deploy-desc = Розкриває костюм, вдягаючи всі встановлені частини на тіло.
+modsuit-action-retract-name = [color=#58c4e8]Згорнути MOD-костюм[/color]
+modsuit-action-retract-desc = Складає костюм назад у компактний стан. Спершу костюм потрібно вимкнути.
+modsuit-action-activate-name = [color=#58c4e8]Активувати MOD-костюм[/color]
+modsuit-action-activate-desc = Герметизує частини костюма та вмикає живлення. Натисніть один раз, щоб підготувати, і ще раз, щоб підтвердити.
+modsuit-action-deactivate-name = [color=#58c4e8]Деактивувати MOD-костюм[/color]
+modsuit-action-deactivate-desc = Вимикає живлення та розгерметизовує частини костюма. Натисніть один раз, щоб підготувати, і ще раз, щоб підтвердити.
 modsuit-impossible-equipped-part = Неможливо вдягнути частину модульного скафандра без контролера.
 
 modsuit-light-on = Ви вмикаєте освітлення костюма.

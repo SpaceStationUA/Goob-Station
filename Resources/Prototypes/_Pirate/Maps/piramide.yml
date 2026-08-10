@@ -1,7 +1,9 @@
 - type: gameMap
   id: PiramideTP
-  mapName: 'Piramide Island'
+  mapName: 'Piramide Station'
   mapPath: /Maps/_Pirate/piramide.yml
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
+  mapPreview: PirateMapPreviewPiramideTP
   minPlayers: 0
   maxPlayers: 55
   stations:

@@ -17,7 +17,7 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - Interdyne
+      - ZengHuPharmaceuticals
     # Pirate contractor end
   startingGear: ForensicMantisGear
   icon: "JobIconForensicMantis"

@@ -9,3 +9,4 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Asimov
+  - type: FreeMagLawboard

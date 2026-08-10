@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: 2026 Pirate
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: explosion
+  id: ZPerditionLandMine
+  damagePerIntensity:
+    types:
+      Heat: 5
+      Blunt: 5
+      Slash: 5
+  tileBreakChance: [0]
+  tileBreakIntensity: [0]
+
+- type: entity
+  parent: LandMineExplosive
+  id: LandMineExplosiveZPerdition
+  components:
+  - type: Explosive
+    explosionType: ZPerditionLandMine
+    maxIntensity: 10 # 150 raw damage at the center tile.
+    intensitySlope: 5
+    totalIntensity: 40
+    maxTileBreak: 0
+    canCreateVacuum: false
+  - type: ExplosionResistance
+    worn: false
+    modifiers:
+      ZPerditionLandMine: 0

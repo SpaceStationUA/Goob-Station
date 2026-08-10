@@ -205,6 +205,8 @@
     - id: BoxTapeRecorder # DeltaV
     - id: PhotoCameraFilled # Pirate: camera
     - id: PoliceBaton # Goobstation
+    - id: NFWeaponLauncherGrenadeNfsd # Pirate: tracking dart kit
+    - id: NFBoxDartsTracking # Pirate: tracking dart kit
     #- id: ObraDinnClock # Goobstation # Pirate disable
 
 - type: entity

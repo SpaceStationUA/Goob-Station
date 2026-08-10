@@ -169,6 +169,12 @@
         reagents:
         - ReagentId: CarpoToxin
           Quantity: 5
+        #region Pirate: carp fillet nutrition
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 6
+        - ReagentId: Fat
+          Quantity: 6
+        #endregion Pirate: carp fillet nutrition
   - type: Extractable
     juiceSolution:
       reagents:

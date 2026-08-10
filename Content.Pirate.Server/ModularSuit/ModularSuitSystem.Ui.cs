@@ -7,6 +7,7 @@ namespace Content.Pirate.Server.ModularSuit;
 public sealed partial class ModularSuitSystem
 {
     [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private ModularSuitUiStateSystem _uiState = default!;
 
     private void InitializeUi()
     {
@@ -25,13 +26,32 @@ public sealed partial class ModularSuitSystem
 
     private void OnToggleActiveMessage(Entity<ModularSuitComponent> ent, ref ToggleSuitActiveMessage args)
     {
-        if (args.Active && !ent.Comp.Assembled && TryStartSuitSealing(ent, args.Actor))
+        RequestSetActive(ent, args.Actor, args.Active);
+    }
+
+    protected override void ToggleActive(Entity<ModularSuitComponent> ent, EntityUid user)
+    {
+        RequestSetActive(ent, user, !ent.Comp.Active);
+    }
+
+    private void RequestSetActive(Entity<ModularSuitComponent> ent, EntityUid user, bool active)
+    {
+        if (ent.Comp.Wearer != user)
+            return;
+
+        if (active && !ent.Comp.Assembled && TryStartSuitSealing(ent, user))
         {
             UpdateUiState(ent);
             return;
         }
 
-        SetActive(ent, args.Active);
+        if (!active && ent.Comp.Active && TryStartSuitUnsealing(ent, user))
+        {
+            UpdateUiState(ent);
+            return;
+        }
+
+        SetActive(ent, active);
         UpdateUiState(ent);
     }
 
@@ -95,112 +115,6 @@ public sealed partial class ModularSuitSystem
         if (!_ui.HasUi(ent.Owner, ModularSuitUiKey.Key))
             return;
 
-        float coreCharge = 0;
-        float maxCoreCharge = 100;
-        float coreMultiplier = 1.0f;
-        bool infinityCore = false;
-        bool hasCore = false;
-
-        var coreContainer = Container.GetContainer(ent, CoreContainer);
-        if (coreContainer.ContainedEntities.Count > 0)
-        {
-            if (TryComp<ModularSuitCoreComponent>(coreContainer.ContainedEntities[0], out var core))
-            {
-                coreCharge = core.Charge;
-                maxCoreCharge = core.MaxCharge;
-                coreMultiplier = core.DrawMultiplier;
-                infinityCore = core.Infinite;
-                hasCore = true;
-            }
-        }
-
-        bool hasBattery = false;
-        float batteryCharge = 0;
-        float maxBatteryCharge = 0;
-        if (_powerCell.TryGetBatteryFromSlot(ent.Owner, out var battery))
-        {
-            batteryCharge = battery.Value.Comp.LastCharge;
-            maxBatteryCharge = battery.Value.Comp.MaxCharge;
-            hasBattery = true;
-        }
-
-        float totalPowerDraw = ent.Comp.BasePowerDraw;
-        var modules = new List<SuitModuleEntry>();
-        var moduleContainer = Container.GetContainer(ent, ModuleContainer);
-        foreach (var moduleUid in moduleContainer.ContainedEntities)
-        {
-            if (!TryComp<ModularSuitModuleComponent>(moduleUid, out var module))
-                continue;
-
-            if (module.IsActive) totalPowerDraw += module.PowerUsage;
-
-            modules.Add(new SuitModuleEntry(
-                GetNetEntity(moduleUid),
-                Name(moduleUid),
-                module.ModuleId,
-                module.IsActive,
-                module.IsPermanent,
-                module.PowerUsage,
-                module.PowerInstanceUsage,
-                module.CanBeDisabled,
-                module.Tags.Select(t => t.ToString()).ToList()
-            ));
-        }
-
-        var parts = new List<SuitPartEntry>();
-        var partContainer = Container.GetContainer(ent, PartContainer);
-
-        if (partContainer.ContainedEntities.Count > 0)
-        {
-            foreach (var partUid in partContainer.ContainedEntities)
-            {
-                if (!TryComp<ModularSuitPartComponent>(partUid, out var part))
-                    continue;
-
-                parts.Add(new SuitPartEntry(
-                    GetNetEntity(partUid),
-                    Name(partUid),
-                    part.PartType
-                ));
-            }
-        }
-
-        if (TryComp<ModularSuitEquippedComponent>(ent, out var equipped)
-            && equipped.EquippedParts.Count > 0)
-        {
-            foreach (var (_, partUid) in equipped.EquippedParts)
-            {
-                if (!TryComp<ModularSuitPartComponent>(partUid, out var part))
-                    continue;
-
-                parts.Add(new SuitPartEntry(
-                    GetNetEntity(partUid),
-                    Name(partUid),
-                    part.PartType
-                ));
-            }
-        }
-
-        string? wearerName = null;
-        if (ent.Comp.Wearer != null)
-            wearerName = Name(ent.Comp.Wearer.Value);
-
-        totalPowerDraw *= coreMultiplier;
-        var state = new ModularSuitBoundUserInterfaceState(
-            ent.Comp.Active,
-            coreCharge,
-            maxCoreCharge,
-            hasCore,
-            infinityCore,
-            hasBattery,
-            batteryCharge,
-            maxBatteryCharge,
-            totalPowerDraw,
-            modules,
-            parts,
-            wearerName
-        );
-
-        _ui.SetUiState(ent.Owner, ModularSuitUiKey.Key, state);
+        _ui.SetUiState(ent.Owner, ModularSuitUiKey.Key, _uiState.BuildUiState(ent));
     }
 }

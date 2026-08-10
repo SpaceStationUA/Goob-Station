@@ -26,6 +26,17 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
 
+#region Pirate: feroxi carpotoxin immunity
+- type: entity
+  parent: OrganAnimalHeart
+  id: OrganFeroxiHeart
+  name: feroxian heart
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Feroxi, Animal ]
+#endregion Pirate: feroxi carpotoxin immunity
+
 - type: entity
   parent: BaseHumanOrgan
   id: OrganFeroxiLungs

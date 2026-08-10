@@ -17,6 +17,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Content.Shared.Trigger;
 using Content.Shared.DoAfter;
+using Content.Shared.Cuffs;
+using Content.Shared.Cuffs.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Popups;
@@ -77,6 +79,7 @@ namespace Content.Server.BloodCult.EntitySystems
 		[Dependency] private readonly SharedAudioSystem _audio = default!;
 		[Dependency] private readonly GameTicker _gameTicker = default!;
 		[Dependency] private readonly SharedContainerSystem _container = default!;
+		[Dependency] private readonly SharedCuffableSystem _cuffable = default!;
 		[Dependency] private readonly BloodstreamSystem _bloodstream = default!;
 		[Dependency] private readonly SharedStunSystem _stun = default!;
 		[Dependency] private readonly BloodCultRuleSystem _bloodCultRule = default!;
@@ -120,6 +123,8 @@ namespace Content.Server.BloodCult.EntitySystems
 				_FailRitual(uid, "cult-invocation-interrupted");
 				continue;
 			}
+
+			var requiredParticipants = GetMindshieldBreakCultistsRequired(ritual.Victim);
 			
 			// Validate all participants are still alive, in range, and not deleted
 			var runePos = _transform.ToMapCoordinates(ritual.RuneLocation).Position;
@@ -143,8 +148,7 @@ namespace Content.Server.BloodCult.EntitySystems
 				validParticipants++;
 			}
 			
-			// Need at least 3 valid participants to continue the ritual
-			if (validParticipants < 3)
+			if (validParticipants < requiredParticipants)
 			{
 				_FailRitual(uid, "cult-invocation-fail");
 				continue;
@@ -156,13 +160,12 @@ namespace Content.Server.BloodCult.EntitySystems
 				ritual.ChantCount++;
 				ritual.NextChantTime = curTime + TimeSpan.FromSeconds(2);
 
-				// Make only the minimum required participants chant (first 3 valid cultists)
+				// Make only the minimum required participants chant.
 				int chantersCount = 0;
-				const int requiredChanters = 3;
 				
 				foreach (var participant in ritual.Participants)
 				{
-					if (chantersCount >= requiredChanters)
+					if (chantersCount >= requiredParticipants)
 						break;
 					
 					if (!Exists(participant) || _mobState.IsDead(participant))
@@ -228,10 +231,21 @@ namespace Content.Server.BloodCult.EntitySystems
 				}
 			}
 		}
-		
+
 		// Remove the ritual component
 		// This ensures the completion handler will return early if it somehow still fires
 		RemCompDeferred<MindshieldBreakRitualComponent>(ritualist);
+	}
+
+	private int GetMindshieldBreakCultistsRequired(EntityUid victim)
+	{
+		if (TryComp<CuffableComponent>(victim, out var cuffable) &&
+			_cuffable.IsCuffed((victim, cuffable)))
+		{
+			return 1;
+		}
+
+		return MindshieldBreakCultistsRequired;
 	}
 
 		private void HandleOfferTrigger(EntityUid uid, OfferOnTriggerComponent component, TriggerEvent args)
@@ -745,16 +759,6 @@ namespace Content.Server.BloodCult.EntitySystems
 			return;
 		}
 
-		// Require 2 cultists total (user + 1 other)
-		if (cultistsInRange.Length < MindshieldBreakCultistsRequired)
-		{
-			_popupSystem.PopupEntity(
-				Loc.GetString("cult-invocation-fail"),
-				user, user, PopupType.MediumCaution
-			);
-			return;
-		}
-
 		// Validate victim is still valid and has a mindshield before starting the ritual
 		// This ensures we're targeting the correct entity and prevents issues with multiple entities
 		if (!Exists(victim))
@@ -765,10 +769,19 @@ namespace Content.Server.BloodCult.EntitySystems
 			);
 			return;
 		}
-		
+
 		if (!TryComp<MindShieldComponent>(victim, out var _))
 		{
 			// Victim no longer has mindshield or was the wrong entity
+			_popupSystem.PopupEntity(
+				Loc.GetString("cult-invocation-fail"),
+				user, user, PopupType.MediumCaution
+			);
+			return;
+		}
+
+		if (cultistsInRange.Length < GetMindshieldBreakCultistsRequired(victim))
+		{
 			_popupSystem.PopupEntity(
 				Loc.GetString("cult-invocation-fail"),
 				user, user, PopupType.MediumCaution
@@ -910,8 +923,7 @@ namespace Content.Server.BloodCult.EntitySystems
 		validParticipants.Add(participant);
 	}
 
-	// Still need 2 cultists at the end
-	if (validParticipants.Count < MindshieldBreakCultistsRequired)
+	if (validParticipants.Count < GetMindshieldBreakCultistsRequired(victim))
 	{
 		// Show failure message to all participants who are still around
 		foreach (var participant in participants)

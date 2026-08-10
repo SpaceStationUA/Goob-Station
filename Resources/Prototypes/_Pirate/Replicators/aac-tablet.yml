@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: 2025 Impstation contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: keep the Replicator vocabulary isolated from the general AAC catalog.
+- type: entity
+  parent: BaseItem
+  id: BaseReplicatorAACTablet
+  abstract: true
+  components:
+  - type: ActivatableUI
+    singleUser: false
+    key: enum.AACTabletKey.Key
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: UserInterface
+    interfaces:
+      enum.AACTabletKey.Key:
+        type: AACBoundUserInterface
+  - type: Speech
+    speechSounds: Borg
+  - type: AACTablet
+    phraseGroup: ReplicatorPhrases
+  - type: VoiceMask

@@ -39,6 +39,10 @@
   - type: SpeedModifierContacts
     walkSpeedModifier: 0.5
     sprintSpeedModifier: 0.5
+    # Pirate: feroxi water adaptation
+    ignoreWhitelist:
+      components:
+      - WaterAdapted
   - type: Physics
     bodyType: Static
   - type: Fixtures

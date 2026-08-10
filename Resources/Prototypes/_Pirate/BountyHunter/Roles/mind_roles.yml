@@ -1,0 +1,10 @@
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleBountyHunter
+  name: Bounty Hunter Role
+  components:
+  - type: MindRole
+    antag: true
+    antagPrototype: BountyHunter
+    roleType: FreeAgent
+  - type: BountyHunterRole

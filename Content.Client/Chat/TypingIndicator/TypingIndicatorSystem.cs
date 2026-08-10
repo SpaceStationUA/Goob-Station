@@ -4,6 +4,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Chat.TypingIndicator;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Chat.TypingIndicator;
@@ -37,6 +38,17 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         _isClientTyping = true;
         ClientUpdateTyping();
         _lastTextChange = _time.CurTime;
+    }
+
+    // Pirate: interfaces can show a purpose-specific typing indicator.
+    public void ClientAlternateTyping(ProtoId<TypingIndicatorPrototype> prototype)
+    {
+        if (!_cfg.GetCVar(CCVars.ChatShowTypingIndicator))
+            return;
+
+        _isClientTyping = true;
+        _lastTextChange = _time.CurTime;
+        RaisePredictiveEvent(new TypingChangedEvent(TypingIndicatorState.Typing, prototype));
     }
 
     public void ClientSubmittedChatText()

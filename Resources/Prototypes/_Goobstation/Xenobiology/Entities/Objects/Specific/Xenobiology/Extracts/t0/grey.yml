@@ -20,9 +20,10 @@
         messages: [ "xeno-extract-reaction-reagent" ]
       - !type:PlaySoundEffect
         sound: /Audio/Effects/Chemistry/bubbles.ogg
-      - !type:AdjustReagent
+      - !type:AddReagentToSolution
         reagent: Epinephrine
-        amount: 15
+        solution: extract
+        strengthModifier: 15
     - reagents: [ Plasma ]
       methods: [ Touch, Injection ]
       effects:

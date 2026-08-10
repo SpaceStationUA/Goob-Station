@@ -36,6 +36,9 @@ public sealed partial class ModularSuitModuleComponent : Component
     [DataField("active"), ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public bool IsActive;
 
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool WasActive;
+
     [DataField]
     public SpriteSpecifier? VerbIcon;
 }

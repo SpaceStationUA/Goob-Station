@@ -1,4 +1,14 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 # Additional accessories / Додаткові аксесуари
+- type: loadout
+  id: AACTabletLoadout
+  storage:
+    back:
+    - AACTablet
+
 - type: loadout
   id: TrinketsClothingHeadPaperSack
   storage:
@@ -63,70 +73,70 @@
   storage:
     back:
     - PlushieEntony
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieIpcCat
   storage:
     back:
     - PlushieIpcCat
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieTK
   storage:
     back:
     - PlushieTK
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieKateryna
   storage:
     back:
     - PlushieKateryna
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieNicholasGray
   storage:
     back:
     - PlushieNicholasGray
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieOlia
   storage:
     back:
     - PlushieOlia
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSkeleton
   storage:
     back:
     - PlushieSkeleton
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieVulpSusie
   storage:
     back:
     - PlushieVulpSusie
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieTayler
   storage:
     back:
     - PlushieTayler
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushiePocketAssistant
   storage:
     back:
     - PlushiePocketAssistant
-  groupBy: "Plushie"
+  groupBy: "plushies"
 
 - type: loadout
   id: CardBoxTarot

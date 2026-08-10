@@ -4,6 +4,7 @@
   id: Serpentcrest
   mapName: 'Серпенткрест'
   mapPath: /Maps/_Goobstation/serpentcrest.yml
+  mapPreview: PirateMapPreviewSerpentcrest # Pirate - map vote preview
   minPlayers: 50
   stations:
     Serpentcrest:

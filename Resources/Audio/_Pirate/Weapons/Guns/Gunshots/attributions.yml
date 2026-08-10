@@ -42,3 +42,8 @@
   license: "Custom"
   copyright: "Halo © Microsoft Corporation. This audio file was created under Microsoft's Game Content Usage Rules using assets from Halo:Reach, and it is not endorsed by or affiliated with Microsoft. More info here: https://www.xbox.com/en-us/developers/rules. Pulled from Halo:Reach, made by Bungie"
   source: "https://youtu.be/0SEE9n-ciUc"
+
+- files: ["stunprojector.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Made by Little Robot Sound Factory on opengameart"
+  source: "https://opengameart.org/content/sci-fi-sound-effects-library"

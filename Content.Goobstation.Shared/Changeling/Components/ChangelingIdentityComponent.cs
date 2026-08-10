@@ -60,6 +60,9 @@ public sealed partial class ChangelingIdentityComponent : Component
     [DataField]
     public bool IsInLastResort = false;
 
+    // Pirate: server-side snapshots of evolutions suppressed while in headslug form.
+    public List<Component> LastResortComponents = new();
+
     public List<EntityUid>? ActiveArmor = null;
 
     public Dictionary<string, EntityUid?> Equipment = new();
@@ -69,6 +72,9 @@ public sealed partial class ChangelingIdentityComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float TotalEvolutionPoints;
+
+    [DataField]
+    public bool EvolutionPointsInitialized;
 
     /// <summary>
     ///     Cooldown between chem regen events.

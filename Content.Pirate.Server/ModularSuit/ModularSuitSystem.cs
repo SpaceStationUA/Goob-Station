@@ -431,14 +431,15 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         EntityUid user,
         Entity<ModularSuitPartComponent> part,
         bool activate,
-        bool activateSuit = false)
+        bool activateSuit = false,
+        bool deactivateSuit = false)
     {
         var delay = part.Comp.ToggleDelay;
         if (TryComp<AffectedModuleSpringlockComponent>(user, out var springlock))
             delay /= springlock.SpeedMultiplier;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay,
-            new ModularSuitPartSealDoAfterEvent(activate, activateSuit), part, part)
+            new ModularSuitPartSealDoAfterEvent(activate, activateSuit, deactivateSuit), part, part)
         {
             BreakOnDamage = true
         };
@@ -487,6 +488,28 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         return false;
     }
 
+    private bool TryStartSuitUnsealing(Entity<ModularSuitComponent> suit, EntityUid user)
+    {
+        if (!suit.Comp.Deployed || suit.Comp.Wearer != user ||
+            !TryComp<ModularSuitEquippedComponent>(suit, out var equipped))
+            return false;
+
+        foreach (var partUid in equipped.EquippedParts.Values)
+        {
+            if (!TryComp<ModularSuitPartComponent>(partUid, out var part) ||
+                !TryComp<ItemToggleComponent>(partUid, out var toggle) ||
+                !Toggle.IsActivated((partUid, toggle)))
+            {
+                continue;
+            }
+
+            StartPartToggleDoAfter(user, (partUid, part), false, deactivateSuit: true);
+            return true;
+        }
+
+        return false;
+    }
+
     private void OnPartDoAfterComplete(Entity<ModularSuitPartComponent> part, ref ModularSuitPartSealDoAfterEvent args)
     {
         if (!TryComp<AttachedModularSuitPartComponent>(part, out var attached)
@@ -503,44 +526,56 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         }
 
         CheckSuitAssembly(attached.Suit.Value);
-        if (args.Handled && args.Activate)
+        if (!args.Handled)
+            return;
+
+        var chains = args.Activate || args.DeactivateSuit;
+        if (!chains)
+            return;
+
+        if (!TryComp<ModularSuitEquippedComponent>(attached.Suit.Value, out var equipped))
+            return;
+
+        foreach (var (_, partUid) in equipped.EquippedParts)
         {
-            if (!TryComp<ModularSuitEquippedComponent>(attached.Suit.Value, out var equipped))
-                return;
+            if (partUid == part.Owner)
+                continue;
 
-            foreach (var (_, partUid) in equipped.EquippedParts)
-            {
-                if (partUid == part.Owner)
-                    continue;
+            if (!TryComp<ModularSuitPartComponent>(partUid, out var nextPart) ||
+                !TryComp<ItemToggleComponent>(partUid, out var toggle))
+                continue;
 
-                if (!TryComp<ItemToggleComponent>(partUid, out var toggle))
-                    continue;
+            if (Toggle.IsActivated((partUid, toggle)) == args.Activate)
+                continue;
 
-                if (!Toggle.IsActivated((partUid, toggle)))
-                {
-                    var delay = part.Comp.ToggleDelay;
-                    if (TryComp<AffectedModuleSpringlockComponent>(args.User, out var springlock))
-                        delay /= springlock.SpeedMultiplier;
+            StartPartToggleDoAfter(
+                args.User,
+                (partUid, nextPart),
+                args.Activate,
+                args.ActivateSuit,
+                args.DeactivateSuit);
+            Popup.PopupEntity(
+                Loc.GetString(args.Activate ? "modsuit-continue-sealing" : "modsuit-continue-unsealing"),
+                args.User,
+                args.User);
+            return;
+        }
 
-                    var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay,
-                        new ModularSuitPartSealDoAfterEvent(true, args.ActivateSuit), partUid, partUid)
-                    {
-                        BreakOnDamage = true
-                    };
+        if (!TryComp<ModularSuitComponent>(attached.Suit.Value, out var suitComp))
+            return;
 
-                    _doAfter.TryStartDoAfter(doAfterArgs);
-                    Popup.PopupEntity(Loc.GetString("modsuit-continue-sealing"), args.User, args.User);
-                    return;
-                }
-            }
-
-            if (TryComp<ModularSuitComponent>(attached.Suit.Value, out var suitComp)
-                && (suitComp.AutoActivateOnAssemble || args.ActivateSuit)
+        if (args.Activate)
+        {
+            if ((suitComp.AutoActivateOnAssemble || args.ActivateSuit)
                 && !suitComp.Active
                 && suitComp.Assembled)
             {
                 SetActive((attached.Suit.Value, suitComp), true);
             }
+        }
+        else if (suitComp.Active)
+        {
+            SetActive((attached.Suit.Value, suitComp), false);
         }
     }
 
