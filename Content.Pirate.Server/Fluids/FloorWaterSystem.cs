@@ -17,6 +17,7 @@ public sealed class FloorWaterSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = null!;
     [Dependency] private readonly SharedMapSystem _map = null!;
     [Dependency] private readonly IRobustRandom _random = null!;
+    [Dependency] private readonly WaterBridgeSystem _waterBridge = null!;
 
     public override void Initialize()
     {
@@ -30,6 +31,8 @@ public sealed class FloorWaterSystem : EntitySystem
     {
         // Stagger absorb scans across water tiles.
         ent.Comp.AbsorbAccumulator = _random.NextFloat(ent.Comp.AbsorbInterval);
+
+        _waterBridge.UpdateWater(ent.Owner);
     }
 
     private void OnStepAttempt(Entity<FloorWaterComponent> ent, ref StepTriggerAttemptEvent args)

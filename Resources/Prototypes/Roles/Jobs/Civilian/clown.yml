@@ -5,6 +5,14 @@
   name: job-name-clown
   description: job-description-clown
   playTimeTracker: JobClown
+  requirements:
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
+    # Pirate contractor end
   startingGear: ClownGear
   icon: "JobIconClown"
   supervisors: job-supervisors-hop

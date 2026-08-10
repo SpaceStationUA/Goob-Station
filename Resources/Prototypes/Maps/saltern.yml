@@ -4,6 +4,7 @@
   id: Saltern
   mapName: 'Салтерн'
   mapPath: /Maps/_Goobstation/saltern.yml # Goobstation - use custom saltern
+  mapPreview: PirateMapPreviewSaltern # Pirate - map vote preview
   minPlayers: 0
   maxPlayers: 35
   fallback: true

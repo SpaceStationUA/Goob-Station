@@ -501,7 +501,8 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
             || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution)
-            || amount == 0)
+            || amount == 0
+            || ent.Comp.BloodReferenceSolution.Volume == 0) // Pirate: blood-regen - prevent division by zero
             return false;
 
         referenceFactor = Math.Clamp(referenceFactor, 0f, ent.Comp.MaxVolumeModifier);

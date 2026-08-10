@@ -1,7 +1,9 @@
 - type: gameMap
   id: GlacierTP
-  mapName: 'Льодовик ТП'
+  mapName: 'Льодовик'
   mapPath: /Maps/_Pirate/glacier.yml
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
+  mapPreview: PirateMapPreviewGlacierTP
   minPlayers: 0
   maxPlayers: 50
   stations:

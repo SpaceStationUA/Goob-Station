@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "аварійний факел"
+  name: emergency flare
   parent: BaseItem
   id: Flare
-  description: "Факел, який виробляє дуже яскраве світло на короткий час. Спрямуйте полум'я від себе."
+  description: A flare that produces a very bright light for a short while. Point the flame away from yourself.
   components:
   - type: Tag
     tags:
@@ -26,6 +26,10 @@
         loop: true
         volume: -10
         maxDistance: 5
+  - type: SkiaExpendableLight # Pirate: server-side values for Skia light reactions.
+    litRadius: 10.0
+    litEnergy: 9.0
+    fadeInDuration: 45.0
   - type: Sprite
     sprite: Objects/Misc/flare.rsi
     layers:

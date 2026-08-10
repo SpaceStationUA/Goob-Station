@@ -1,0 +1,4 @@
+- files: ["elevator_music.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation (sound/music/elevator/robocop-short.ogg)"
+  source: "https://github.com/tgstation/tgstation"

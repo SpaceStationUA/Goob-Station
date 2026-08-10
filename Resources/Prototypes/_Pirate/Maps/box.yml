@@ -1,7 +1,9 @@
 - type: gameMap
   id: BoxTP
-  mapName: 'Бокс ТП'
+  mapName: 'Бокс'
   mapPath: /Maps/_Pirate/box.yml
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
+  mapPreview: PirateMapPreviewBoxTP
   minPlayers: 15
   maxPlayers: 85
   stations:

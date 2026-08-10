@@ -65,13 +65,14 @@ public sealed class GlobalTileMovementSystem : EntitySystem
 
     private void OnRuleStarted(Entity<GlobalTileMovementRuleComponent> ent, ref GameRuleStartedEvent args)
     {
-        var map = _wizardRuleSystem.GetTargetMap();
+        var maps = _wizardRuleSystem.GetTargetMaps(); // Pirate: multiz
 
-        if (map == null)
+        if (maps.Count == 0) // Pirate: multiz
             return;
 
         var entities = new HashSet<Entity<MobStateComponent, MindContainerComponent>>();
-        _lookup.GetEntitiesOnMap<MobStateComponent, MindContainerComponent>(Transform(map.Value).MapID, entities);
+        foreach (var map in maps) // Pirate: multiz
+            _lookup.GetEntitiesOnMap<MobStateComponent, MindContainerComponent>(Transform(map).MapID, entities); // Pirate: multiz
         foreach (var (uid, _, _) in entities)
         {
             if (TerminatingOrDeleted(uid))

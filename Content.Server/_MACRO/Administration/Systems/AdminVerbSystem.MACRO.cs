@@ -1,6 +1,7 @@
 using Content.Server._MACRO.StrangeMoods;
 using Content.Server._MACRO.StrangeMoods.Eui;
 using Content.Shared._MACRO.StrangeMoods;
+using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Robust.Shared.Random;
@@ -14,6 +15,10 @@ public sealed partial class AdminVerbSystem
 
     private void AddMACROVerbs(GetVerbsEvent<Verb> args)
     {
+        // Pirate: Keep the Thaven mood editor hidden from non-admin players.
+        if (!_adminManager.HasAdminFlag(args.User, AdminFlags.Moderator))
+            return;
+
         if (TryComp<StrangeMoodsComponent>(args.Target, out var moods))
         {
             args.Verbs.Add(new Verb()

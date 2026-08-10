@@ -6,8 +6,8 @@
 - type: entity
   parent: [BasicCyberneticEyes, BaseSyndicateContraband]
   id: OrganCyberdeckEyes
-  name: "очі з кібердекою"
-  description: "Пара кібернетичних очей із програмами для злому та прямим нейронним з'єднанням."
+  name: cyberdeck eyes
+  description: Cybernetic eyes with integrated intrusion software and a direct neural link.
   components:
   - type: CyberdeckSource
   - type: LimitedCharges
@@ -27,7 +27,7 @@
 - type: entity
   parent: BaseAutosurgeonSyndicateSingle
   id: AutosurgeonCyberdeck
-  name: "синдикатський автохірург (кібердека)"
+  name: syndicate autosurgeon (cyberdeck)
   components:
   - type: AutoSurgeon
     targetBodyPart: Head
@@ -36,8 +36,8 @@
 
 - type: entity
   id: CyberdeckAfterHackingEffect
-  name: "слід синдикатського злому"
-  description: "Слід втручання за допомогою незаконних технологій Синдикату."
+  name: syndicate hacking trace
+  description: A trace left by an intrusion through illegal Syndicate technology.
   components:
   - type: Transform
     anchored: true
@@ -66,8 +66,8 @@
 - type: entity
   parent: [Incorporeal, BaseMob]
   id: CyberdeckProjection
-  name: "око кібердеки"
-  description: "Проєкція користувача кібердеки в мережі станції."
+  name: cyberdeck eye
+  description: A projection of a Cyberdeck user inside the station network.
   categories: [HideSpawnMenu, DoNotMap]
   components:
   - type: Sprite
@@ -86,10 +86,12 @@
   - type: LagCompensation
   - type: StationAiWhitelist
   - type: NoFTL
+  - type: CEZLevelPhysicsExempt # Pirate: multiz
+  - type: CEZViewSource # Pirate: multiz
 
 - type: entity
   id: CyberdeckAiUiProxy
-  name: "проксі ШІ-інтерфейсу кібердеки"
+  name: cyberdeck AI interface proxy
   categories: [HideSpawnMenu, DoNotMap]
   components:
   - type: Transform

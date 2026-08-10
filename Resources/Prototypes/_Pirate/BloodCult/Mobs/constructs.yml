@@ -8,10 +8,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
 
 - type: entity
-  name: "оболонка джагернаута"
+  name: juggernaut shell
   id: CultJuggernautShell
   parent: BaseBloodCultContraband
-  description: "Велика інертна потвора, зроблена з рунованої сталі. Її можна завершити, перетягнувши на неї мертве тіло або використавши на ній наповнений камінь душі."
+  description: A large, inert monstrosity made from runed steel. Can be completed by dragging a dead body onto it or using a filled soulstone on it.
   components:
   - type: BloodCultConstructShell
   - type: Construction
@@ -60,8 +60,8 @@
 - type: entity
   id: CultLesserConstructShell
   parent: [ BaseItem, BaseBloodCultContraband ]
-  name: "оболонка малого конструкта"
-  description: "Порожня оболонка, здатна зв'язати душу мертвого тіла або каменя душі з формою ремісника чи примари."
+  name: lesser construct shell
+  description: An empty shell that can bind a dead soul or a soul stone into a lesser construct.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Objects/construct_shell.rsi
@@ -81,10 +81,9 @@
 
 - type: entity
   id: MobBloodCultJuggernaut
-  name: "Джагернаут"
-  description: "Сильний, повільний і має багато здоров'я. Вирішує більшість проблем ударами кулаків. Імунний до слабких атак."
+  name: Juggernaut
+  description: Strong, slow, and has lots of health. Solves most problems by punching them. Immune to weak attacks.
   parent: [ SimpleSpaceMobBase, BaseBloodCultContraband ]
-  categories: [ HideSpawnMenu ]
   components:
     - type: Hands
       showInHands: false
@@ -112,6 +111,9 @@
     - type: Physics
     - type: InputMover
     - type: MobMover
+    - type: MovementIgnoreGravity
+    - type: CEZLevelPhysicsExempt
+    - type: CEZLevelContextualMover
     - type: Speech
     - type: Emoting
     - type: ReplacementAccent
@@ -217,10 +219,9 @@
 
 - type: entity
   id: MobBloodCultShade
-  name: "Тінь"
-  description: "Душа, що стала твердою й поневолена волею кровокульту."
+  name: Shade
+  description: A soul made solid, enslaved to the will of the blood cult.
   parent: [ SimpleSpaceMobBase, BaseBloodCultContraband ]
-  #categories: [ HideSpawnMenu ]
   components:
     #- type: Hands
     - type: ZombieImmune
@@ -240,6 +241,9 @@
     - type: Physics
     - type: InputMover
     - type: MobMover
+    - type: MovementIgnoreGravity
+    - type: CEZLevelPhysicsExempt
+    - type: CEZLevelContextualMover
     - type: ReplacementAccent
       accent: genericAggressive
     - type: CombatMode
@@ -321,9 +325,8 @@
 - type: entity
   id: BaseMobBloodCultLesserConstruct
   parent: [ SimpleSpaceMobBase, BaseBloodCultContraband ]
-  name: "малий конструкт"
+  name: lesser construct
   abstract: true
-  categories: [ HideSpawnMenu ]
   components:
   - type: ZombieImmune
   - type: DamageOnHighSpeedImpact
@@ -344,6 +347,8 @@
   - type: InputMover
   - type: MobMover
   - type: MovementIgnoreGravity
+  - type: CEZLevelPhysicsExempt
+  - type: CEZLevelContextualMover
   - type: Speech
   - type: Emoting
   - type: TypingIndicator
@@ -419,8 +424,8 @@
 - type: entity
   id: MobBloodCultArtificer
   parent: BaseMobBloodCultLesserConstruct
-  name: "Ремісник"
-  description: "Масивний конструкт, призначений будувати укріплення та підтримувати армії культу."
+  name: Artificer
+  description: A bulbous construct dedicated to building and maintaining the cult's armies.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Mobs/Construct/artificer.rsi
@@ -444,8 +449,8 @@
 - type: entity
   id: MobBloodCultWraith
   parent: BaseMobBloodCultLesserConstruct
-  name: "Примара"
-  description: "Швидка пазуриста оболонка, створена для проникнення у ворожий тил й убивств."
+  name: Wraith
+  description: A wicked, clawed shell made to assassinate enemies and sow chaos behind their lines.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Mobs/Construct/wraith.rsi

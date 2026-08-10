@@ -8,6 +8,13 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 4h
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - IdrisIncorporated
+      - OrionExpress
+    # Pirate contractor end
   startingGear: MimeGear
   icon: "JobIconMime"
   supervisors: job-supervisors-hop
@@ -37,8 +44,8 @@
 - type: entity
   parent: BaseAction
   id: ActionMimeInvisibleWall
-  name: "Створити невидиму стіну"
-  description: "Створити невидиму стіну перед собою, якщо це можливо."
+  name: Create Invisible Wall
+  description: Create an invisible wall in front of you, if placeable there.
   components:
   - type: Action
     priority: -1

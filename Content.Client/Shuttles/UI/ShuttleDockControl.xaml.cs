@@ -2,6 +2,7 @@
 
 using System.Numerics;
 using Content.Client.Shuttles.Systems;
+using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -38,6 +39,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
     public Dictionary<NetEntity, List<DockingPortState>>? DockState;
 
     private List<Entity<MapGridComponent>> _grids = new();
+    private readonly HashSet<EntityUid> _zPeerGrids = new(); // Pirate: multiz - grids from linked z-network peers
 
     private readonly HashSet<DockingPortState> _drawnDocks = new();
     private readonly Dictionary<DockingPortState, Button> _dockButtons = new();
@@ -125,6 +127,28 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
         _grids.Clear();
         _mapManager.FindGridsIntersecting(gridXform.MapID, viewBoundsWorld, ref _grids);
 
+        #region Pirate: multiz - pull in peer-layer grids so the dock view shows the full multi-deck shuttle
+        _zPeerGrids.Clear();
+        if (EntManager.TryGetComponent(GridEntity, out CEZLinkedGridComponent? linked))
+        {
+            var seenMaps = new HashSet<MapId> { gridXform.MapID };
+            foreach (var (_, peerGrid) in linked.PeerGrids)
+            {
+                if (!EntManager.TryGetComponent(peerGrid, out TransformComponent? peerXform))
+                    continue;
+                if (!seenMaps.Add(peerXform.MapID))
+                    continue;
+                var peerGrids = new List<Entity<MapGridComponent>>();
+                _mapManager.FindGridsIntersecting(peerXform.MapID, viewBoundsWorld, ref peerGrids);
+                foreach (var pg in peerGrids)
+                {
+                    _zPeerGrids.Add(pg.Owner);
+                    _grids.Add(pg);
+                }
+            }
+        }
+        #endregion
+
         // offset the dotted-line position to the bounds.
         Vector2? viewedDockPos = _viewedState != null ? MidPointVector : null;
 
@@ -146,8 +170,16 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
             var curGridToWorld = _xformSystem.GetWorldMatrix(grid.Owner);
             var curGridToView = curGridToWorld * worldToSelectedDock * selectedDockToView;
             var color = _shuttles.GetIFFColor(grid.Owner, grid.Owner == GridEntity, component: iffComp);
+            // Pirate: multiz - peer-layer silhouettes draw dim so the focused deck stays the visual primary
+            if (_zPeerGrids.Contains(grid.Owner))
+                color = color.WithAlpha(color.A * 0.4f);
 
             DrawGrid(handle, curGridToView, grid, color);
+
+            // Pirate: multiz - peer-layer grids are on a different map; their docks can't be docking
+            // targets from this layer, so skip the per-dock overlay/buttons for them.
+            if (_zPeerGrids.Contains(grid.Owner))
+                continue;
 
             // Draw any docks on that grid
             if (!DockState.TryGetValue(EntManager.GetNetEntity(grid), out var gridDocks))

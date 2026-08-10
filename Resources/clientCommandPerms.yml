@@ -8,7 +8,7 @@
     - quit
     - hardquit
     - svbind
-    - bind
+    # Pirate: command binds are disabled to prevent client-side spam macros.
     - exec # macro moment
     - cls
     - vram

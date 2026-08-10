@@ -442,7 +442,9 @@
         color: Plum
         sound: "/Audio/Ambience/Antag/zombie_start.ogg"
       components:
-      - type: PendingZombie
+      - type: PendingZombie # Pirate: Restore preparation time for patient zero.
+        minInitialInfectedGrace: 750
+        maxInitialInfectedGrace: 900
       - type: ZombifyOnDeath
       - type: IncurableZombie
       - type: InitialInfected

@@ -30,6 +30,10 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         if (overrideIndicator != null)
             currentTypingIndicator = overrideIndicator.Value;
 
+        // Pirate: AAC and similar interfaces take precedence over clothing indicators.
+        if (component.TypingIndicatorOverridePrototype != null)
+            currentTypingIndicator = component.TypingIndicatorOverridePrototype.Value;
+
         if (!_prototypeManager.Resolve(currentTypingIndicator, out var proto))
         {
             Log.Error($"Unknown typing indicator id: {component.TypingIndicatorPrototype}");

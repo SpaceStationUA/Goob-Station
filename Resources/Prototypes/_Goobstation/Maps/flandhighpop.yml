@@ -4,6 +4,7 @@
   id: FlandHighPop
   mapName: 'Установка Фланд'
   mapPath: /Maps/_Goobstation/fland.yml
+  mapPreview: PirateMapPreviewFland # Pirate - map vote preview
   minPlayers: 85
   stations:
     Fland:

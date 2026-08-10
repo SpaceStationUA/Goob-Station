@@ -17,6 +17,7 @@
     - Shadowling # Einstein Engines - Shadowlings
     - BloodBrother # Pirate
     - BloodCultist # Pirate - Blood Cult
+    - Replicator # Pirate
   friendly: # Goobstation
     - Wizard
     - PirateFaction # goob - pirates
@@ -42,6 +43,7 @@
   - Wraith # Goobstation - Wraith
   - Lavafauna # Goob - Lavaland
   - BloodBrother # Pirate
+  - Replicator # Pirate
 
 - type: npcFaction
   id: Mouse
@@ -64,6 +66,7 @@
   - Dragon
   - Blob # Goobstation - Blob
   - Lavafauna # Goob - Lavaland
+  - Replicator # Pirate
 
 - type: npcFaction
   id: SimpleHostile
@@ -85,6 +88,7 @@
   - Lavafauna # Goob - Lavaland
   - BloodBrother # Pirate
   - BloodCultist # Pirate - Blood Cult
+  - Replicator # Pirate
   friendly: # Goobstation
   - Wizard
   - Shadowling # Einstein Engines - Shadowlings
@@ -92,18 +96,6 @@
 
 - type: npcFaction
   id: SimpleNeutral
-
-- type: npcFaction
-  id: Goblin
-  hostile:
-  - SimpleHostile
-  - Zombie
-  - Xeno
-  - Dragon
-  - Syndicate
-  - AllHostile
-  friendly:
-  - NanoTrasen
 
 - type: npcFaction
   id: Syndicate
@@ -125,6 +117,7 @@
   - Wraith # Goobstation - Wraith
   - Lavafauna # Goob - Lavaland
   - BloodCultist # Pirate - Blood Cult
+  - Replicator # Pirate
 
 - type: npcFaction
   id: Xeno
@@ -147,6 +140,7 @@
   - Lavafauna # Goob - Lavaland
   - BloodBrother # Pirate
   - BloodCultist # Pirate - Blood Cult
+  - Replicator # Pirate
   friendly: # Goobstation
     - Wizard
 
@@ -173,6 +167,7 @@
   - Lavafauna # Goob - Lavaland
   - BloodBrother # Pirate
   - BloodCultist # Pirate - Blood Cult
+  - Replicator # Pirate
 
 - type: npcFaction
   id: Revolutionary
@@ -189,6 +184,7 @@
   - Xenoborg
   - Lavafauna # Goob - Lavaland
   - BloodCultist # Pirate - Blood Cult
+  - Replicator # Pirate
 
 - type: npcFaction
   id: AllHostile
@@ -214,6 +210,7 @@
   - Lavafauna # Goob - Lavaland
   - BloodBrother # Pirate
   - BloodCultist # Pirate - Blood Cult
+  - Replicator # Pirate
 
 # Balloons Factions Edit:
 - type: npcFaction
@@ -246,6 +243,7 @@
   - Blob # Goobstation - Blob
   - Shadowling # Einstein Engines - Shadowlings
   - BloodBrother # Pirate
+  - Replicator # Pirate
 
 - type: npcFaction
   id: Wraith # Goobstation

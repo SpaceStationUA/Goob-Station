@@ -38,6 +38,14 @@
 - type: markingPoints
   id: MobFeroxiMarkingLimits
   points:
+    #region Pirate - Trauma Station hair gradients
+    HairSpecial:
+      points: 1
+      required: false
+    FacialHairSpecial:
+      points: 1
+      required: false
+    #endregion Pirate - Trauma Station hair gradients
     Hair:
       points: 1
       required: false

@@ -1,3 +1,9 @@
 stamp-component-stamped-name-admin-assistant = Адміністративний асистент
 stamp-component-stamped-name-interdyne-officer = Офіцер Інтердайну
 stamp-component-stamped-name-interdyne-deputy = Заступник Офіцера Інтердайну
+stamp-component-stamped-name-notary = НОТАРІУС
+stamp-component-stamped-name-carpy = Карпінальд Ф. Ґрросон, адвокат
+stamp-component-stamped-name-chiefjustice = Головний суддя
+stamp-component-stamped-name-prosec = Прокурор
+stamp-component-stamped-name-chemist = Хімік
+stamp-component-stamped-name-doctor = Лікар

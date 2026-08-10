@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- files: ["pirate_flag.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Derived from tgstation sprites and adapted by Saveliy360"
+  source: "https://github.com/tgstation/tgstation/commit/d0d81185f09ca30d3b0856d476544240dba0de53"

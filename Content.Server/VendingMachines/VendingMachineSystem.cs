@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Numerics;
+using Content.Server._Pirate.Security.Vending; // Pirate
 using Content.Server.Cargo.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -296,6 +297,18 @@ namespace Content.Server.VendingMachines
 
             if (!IsAuthorized(uid, sender, component))
                 return;
+
+            // Pirate: let downstream vending restrictions run before stock and banking logic.
+            var attempt = new VendingMachineVendAttemptEvent(sender, type, itemId);
+            RaiseLocalEvent(uid, attempt);
+            if (attempt.Cancelled)
+            {
+                if (attempt.DenialMessage != null)
+                    Popup.PopupEntity(attempt.DenialMessage, uid, sender);
+
+                Deny((uid, component), sender);
+                return;
+            }
 
             var entry = GetEntry(uid, itemId, type, component);
             if (entry == null)

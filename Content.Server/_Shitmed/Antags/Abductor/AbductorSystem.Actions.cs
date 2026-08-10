@@ -11,6 +11,7 @@ using Robust.Shared.Audio.Systems;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Actions.Components;
+using Content.Server._Pirate.ZLevels.View; // Pirate: multiz
 
 namespace Content.Server._Shitmed.Antags.Abductor;
 
@@ -19,9 +20,12 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly PullingSystem _pullingSystem = default!;
+    [Dependency] private readonly CEZLevelEyeSystem _zLevelEye = default!; // Pirate: multiz
 
     private static readonly EntProtoId<ActionComponent> SendYourself = "ActionSendYourself";
     private static readonly EntProtoId<ActionComponent> ExitAction = "ActionExitConsole";
+    private static readonly EntProtoId<ActionComponent> ViewUpAction = "ActionAbductorViewUp"; // Pirate: multiz
+    private static readonly EntProtoId<ActionComponent> ViewDownAction = "ActionAbductorViewDown"; // Pirate: multiz
     private static readonly EntProtoId TeleportationEffect = "EffectTeleportation";
     private static readonly EntProtoId TeleportationEffectEntity = "EffectTeleportationEntity";
 
@@ -102,12 +106,14 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         comp.HiddenActions = _actions.HideActions(args.Actor);
         _actions.AddAction(args.Actor, ref comp.ExitConsole, ExitAction);
         _actions.AddAction(args.Actor, ref comp.SendYourself, SendYourself);
+        _zLevelEye.ConfigureActions(args.Actor, ViewUpAction, ViewDownAction); // Pirate: multiz
     }
     private void RemoveActions(EntityUid actor)
     {
         EnsureComp<AbductorsAbilitiesComponent>(actor, out var comp);
         _actions.RemoveAction(actor, comp.ExitConsole);
         _actions.RemoveAction(actor, comp.SendYourself);
+        _zLevelEye.RemoveActions(actor); // Pirate: multiz
         _actions.UnHideActions(actor, comp.HiddenActions);
     }
 

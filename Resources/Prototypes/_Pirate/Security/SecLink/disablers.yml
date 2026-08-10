@@ -1,0 +1,272 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# Impstation's disabler bolt base, kept under a Pirate ID so the global Goobstation
+# BulletDisabler (which has its own ion damage and stamina tuning) is untouched.
+- type: entity
+  name: disabler bolt
+  id: BaseBulletDisablerSeclink
+  parent: BaseBullet
+  abstract: true
+  categories: [HideSpawnMenu]
+  components:
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi
+    layers:
+    - state: mediumstun
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Opaque
+        - Impassable
+        - BulletImpassable
+      fly-by:
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: false
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffectOmnilaser
+  - type: StaminaDamageOnCollide
+    damage: 30
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 0
+    soundHit:
+      collection: WeakHit
+    forceSound: true
+
+- type: entity
+  name: disabler bolt
+  id: BulletDisablerSeclink
+  parent: BaseBulletDisablerSeclink
+  categories: [HideSpawnMenu]
+
+- type: entity
+  name: auto disabler bolt
+  id: BulletAutoDisabler
+  parent: BaseBulletDisablerSeclink
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi
+    layers:
+    - state: lightstun
+      shader: unshaded
+  - type: StaminaDamageOnCollide
+    damage: 17
+
+- type: entity
+  name: disabler magnum bolt
+  id: BulletMagnumDisabler
+  parent: BaseBulletDisablerSeclink
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Projectiles/energybolts.rsi
+    layers:
+    - state: heavystun
+      shader: unshaded
+  - type: StaminaDamageOnCollide
+    damage: 40
+
+# The target has no Impstation BaseDisablerPistol, so the standard SecLink pistol
+# starts from the local WeaponDisabler and overrides the source's charge/fire data.
+- type: entity
+  name: disabler
+  parent: WeaponDisabler
+  id: WeaponDisablerSeclink
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Disablers/disabler.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Disablers/disabler.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: Gun
+    projectileSpeed: 25
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: BatteryAmmoProvider
+    proto: BulletDisablerSeclink
+    fireCost: 100
+  - type: StaticPrice
+    price: 420
+  - type: GuideHelp
+    guides:
+    - Security
+    - Antagonists
+  - type: Currency
+    price:
+      DisablerToken: 1
+
+- type: entity
+  name: discombobulator
+  parent: WeaponDisablerSeclink
+  id: WeaponFunnyDisabler
+  description: A self-defense weapon that humours organic targets, entertaining them until they collapse.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Disablers/clowndisabler.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Disablers/clowndisabler.rsi
+  - type: Gun
+    projectileSpeed: 25
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/Gunshots/SecLink/clowndisabler.ogg
+  - type: Appearance
+  - type: Currency
+    price:
+      DisablerToken: 1
+
+- type: entity
+  name: pocket disabler
+  parent: WeaponDisablerSeclink
+  id: WeaponPocketDisabler
+  description: A compact version of the iconic Disabler, but packs no less of a punch!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Disablers/disablerderringer.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Disablers/disablerderringer.rsi
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Battery
+    maxCharge: 540
+    startingCharge: 540
+  - type: BatteryAmmoProvider
+    proto: BulletDisablerSeclink
+    fireCost: 90
+  - type: Currency
+    price:
+      DisablerToken: 1
+
+- type: entity
+  name: auto disabler
+  parent: WeaponDisablerSeclink
+  id: WeaponAutoDisabler
+  description: A Disabler built for sustained, automatic fire at the cost of stunning power.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Disablers/autodisabler.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Disablers/autodisabler.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: true
+  - type: Gun
+    projectileSpeed: 25
+    minAngle: 2
+    maxAngle: 15
+    angleIncrease: 3
+    angleDecay: 15
+    fireRate: 3.34
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/Gunshots/SecLink/autodisabler.ogg
+  - type: Battery
+    maxCharge: 1440
+    startingCharge: 1440
+  - type: BatteryAmmoProvider
+    proto: BulletAutoDisabler
+    fireCost: 80
+  - type: Currency
+    price:
+      DisablerToken: 1
+
+- type: entity
+  name: magnum disabler
+  parent: WeaponDisablerSeclink
+  id: WeaponStunProjector
+  description: A disabler built for powerful single shots.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Disablers/stunprojector.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Disablers/stunprojector.rsi
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Gun
+    projectileSpeed: 30
+    fireRate: 1.3
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/Gunshots/SecLink/disablermagnum.ogg
+  - type: BatteryAmmoProvider
+    proto: BulletMagnumDisabler
+    fireCost: 150
+  - type: Battery
+    maxCharge: 1050
+    startingCharge: 1050
+  - type: Currency
+    price:
+      DisablerToken: 1

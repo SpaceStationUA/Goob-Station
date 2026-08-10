@@ -12,6 +12,9 @@
     - Moth
     - Reptilian
     - SlimePerson
+     # Pirate start
+    - Avali
+     # Pirate end
      # Goobstation
     - Felinid
     - Gingerbread
@@ -22,7 +25,6 @@
     - Yowie
     - IPC
     - Resomi
-    - Avali # Pirate
     - Oni
     - Tajaran
     - Chitinid
@@ -30,7 +32,6 @@
     - Feroxi
     - Shadowkin
     - Hydrakin # Monolith/Obelisk
-    - Goblin
     - Thaven # MACRO
 
 - type: guideEntry
@@ -128,11 +129,6 @@
   id: Shadowkin
   name: species-name-shadowkin
   text: "/ServerInfo/Guidebook/Mobs/Shadowkin.xml"
-
-- type: guideEntry
-  id: Goblin
-  name: species-name-goblin
-  text: "/ServerInfo/_Pirate/Guidebook/Mobs/Goblin.xml"
 
 - type: guideEntry
   id: Hydrakin

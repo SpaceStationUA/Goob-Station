@@ -1,7 +1,7 @@
 - type: entity
   id: RedSlimeExtract
   parent: BaseSlimeExtract
-  name: "червоний екстракт слайма"
+  name: red slime extract
   components:
   - type: Sprite
     layers:
@@ -33,9 +33,9 @@
         messages: [ "xeno-extract-reaction-reagent" ]
       - !type:PlaySoundEffect
         sound: /Audio/Effects/Chemistry/bubbles.ogg
-      - !type:AdjustReagent
+      - !type:AddReagentToSolution
         reagent: XenobioJellyRed
-        amount: 1
+        solution: extract
     - reagents: [ Blood ]
       methods: [ Touch, Injection ]
       effects:

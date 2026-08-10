@@ -30,10 +30,21 @@
   id: SecretCosmicCultGreenshift
   alias:
     - secretcosmiccultgreenshift
-    - secretentropygreenshift
-    - entropygreenshift
   name: secret-title
   description: secret-description
+  showInVote: false
+  rules:
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
+    - PsionicEventsScheduler # Pirate
+
+- type: gamePreset
+  id: EntropyGreenshift
+  alias:
+    - entropygreenshift
+    - secretentropygreenshift
+  name: secretplus-mid-title
+  description: secretplus-mid-description
   showInVote: false
   rules:
     - SpaceTrafficControlFriendlyEventScheduler

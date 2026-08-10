@@ -10,6 +10,7 @@
     - Genetic
   supportedTypes: # Goobstation
     - Holy
+    - Soul # Pirate: Skia soul damage.
 
 - type: damageContainer
   id: Inorganic
@@ -77,6 +78,7 @@
   - Toxin
   - Airloss
   - Genetic
+  - Metaphysical # Pirate: Skia Soul damage.
   supportedTypes: # Goobstation
   - Holy
 

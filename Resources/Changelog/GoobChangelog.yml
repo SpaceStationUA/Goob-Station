@@ -23474,3 +23474,33 @@ Entries:
       message: Removed guerrilla gloves from nukie uplink.
   id: 2774
   time: '2026-08-01T00:31:31.0000000+00:00'
+- author: Beanyboi69
+  changes:
+    - type: Tweak
+      message: Вимогу часу гри у цивільному відділі для сервісного працівника збільшено з 30 хвилин до 7,5 години.
+  id: 2775
+  time: '2026-08-02T01:28:02.0000000+00:00'
+- author: Kenkaitos
+  changes:
+    - type: Tweak
+      message: Тепер кіборга можна вимкнути через консоль робототехніки.
+  id: 2776
+  time: '2026-08-02T01:40:43.0000000+00:00'
+- author: Swino4ka
+  changes:
+    - type: Tweak
+      message: Схожі дрібнички тепер згруповано!
+  id: 2777
+  time: '2026-08-02T01:41:50.0000000+00:00'
+- author: Hardbassman
+  changes:
+    - type: Remove
+      message: Прибрано дублікат тенісного м'яча.
+  id: 2778
+  time: '2026-08-02T01:43:28.0000000+00:00'
+- author: Beanyboi69
+  changes:
+    - type: Add
+      message: Тепер у торговому автоматі за шахтарські бали можна придбати джетпак або міні-джетпак!
+  id: 2779
+  time: '2026-08-02T02:01:36.0000000+00:00'

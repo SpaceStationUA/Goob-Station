@@ -2,6 +2,8 @@
   id: PerditionTP
   mapName: 'Perdition Island'
   mapPath: /Maps/_Pirate/perdition.yml
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
+  mapPreview: PirateMapPreviewPerditionTP
   minPlayers: 0
   maxPlayers: 20
   stations:

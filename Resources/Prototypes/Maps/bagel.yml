@@ -4,6 +4,7 @@
   id: Bagel
   mapName: 'Багель'
   mapPath: /Maps/_Goobstation/bagel.yml # Goobstation - custom bagel
+  mapPreview: PirateMapPreviewBagel # Pirate - map vote preview
   minPlayers: 20
   maxPlayers: 80
   stations:

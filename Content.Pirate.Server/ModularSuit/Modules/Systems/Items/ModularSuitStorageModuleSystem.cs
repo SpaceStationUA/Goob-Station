@@ -42,6 +42,7 @@ public sealed partial class ModularSuitStorageModuleSystem : EntitySystem
             storage.ShowVerb = true;
             storage.ClickInsert = true;
             storage.OpenOnActivate = true;
+            storage.IgnoreLock = true;
             Dirty(suit, storage);
         }
     }

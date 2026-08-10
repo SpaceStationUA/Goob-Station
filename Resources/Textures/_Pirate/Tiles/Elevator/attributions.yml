@@ -1,0 +1,4 @@
+- files: ["catwalk.png", "solidgrate5.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13 at https://github.com/cmss13-devs/cmss13. Copied out of Textures/_RMC14/Structures/catwalk.rsi for use as standalone tile sprites."
+  source: "https://github.com/cmss13-devs/cmss13"
