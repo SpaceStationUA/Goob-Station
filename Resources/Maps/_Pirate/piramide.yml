@@ -51823,6 +51823,13 @@ entities:
     - type: Transform
       pos: 36.825893,7.7203765
       parent: 2
+- proto: ClothingEyesHudEpistemics
+  entities:
+  - uid: 6698
+    components:
+    - type: Transform
+      pos: -36.44554,-18.441252
+      parent: 2
 - proto: ClothingEyesHudMedical
   entities:
   - uid: 6699
@@ -52829,6 +52836,14 @@ entities:
     components:
     - type: Transform
       pos: 93.5,6.5
+      parent: 2
+- proto: ComputerPsionicsRecords
+  entities:
+  - uid: 6836
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -38.5,-17.5
       parent: 2
 - proto: ComputerRadar
   entities:
@@ -142498,7 +142513,7 @@ entities:
     - type: Transform
       pos: -17.5,36.5
       parent: 2
-- proto: SpawnMobSecLaikaOrShiva
+- proto: SpawnMobShiva
   entities:
   - uid: 15261
     components:
