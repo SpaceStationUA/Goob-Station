@@ -1,0 +1,19 @@
+- type: entity
+  parent: MarkerBase
+  id: RandomPosterSol
+  name: Рандомний постер Солу
+  suffix: SAN
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: random_legit
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PosterSolFlag
+      - PosterSolJoinForce
+      - PosterSolMisc
+      - PosterSolMilitaryFlag
+    chance: 1

@@ -8,3 +8,16 @@
     sprite: _Pirate/Clothing/Neck/Cloaks/instructorcloak.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Neck/Cloaks/instructorcloak.rsi
+
+# Зміна Нюпека
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakSol
+  name: Соларіанський плащ
+  description: Звичайний патріотичний плащ з прапором Соларіанського Альянсу
+  suffix: SAN
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Cloaks/solCloak.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Cloaks/solCloak.rsi

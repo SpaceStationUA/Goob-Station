@@ -1,0 +1,35 @@
+- type: entity
+  name: "Дарт Вейдер"
+  id: DarthVader
+  parent: BaseMobHuman
+  suffix: StarWars
+  components:
+  - type: HumanoidAppearance
+  - type: AutoImplant
+    implants: [FreedomImplant, NutrimentPumpImplant, SpaceProofImplant, StypticStimulatorImplant]
+  - type: GhostRole
+    name: Дарт Вейдер
+    description: Темний Лорд.
+    rules: ad
+    raffle:
+      settings: short
+  - type: Loadout
+    prototypes: [DarthVaderGear]
+  - type: Tag
+    tags:
+    - InstantDoAfters
+    - CanPilot
+    - BypassInteractionRangeChecks
+    - BypassDropChecks
+    - NoConsoleSound
+    - FootstepSound
+    - DoorBumpOpener
+  - type: Puller
+    needsHands: false
+  - type: Thieving
+    stripTimeReduction: 9999
+    stealthy: true
+  - type: BypassInteractionChecks
+  - type: SupermatterImmune
+  - type: MovementIgnoreGravity
+

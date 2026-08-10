@@ -10,3 +10,16 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+# Для соларіанського баннеру
+- type: construction
+  id: BannerSolarian
+  graph: BannersGraphPirate
+  startNode: start
+  targetNode: BannerSolarianNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
