@@ -1,0 +1,222 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from Starlight commit e22931e1e23afebee24eaf98b2ddae4fbbf37258.
+- type: entity
+  id: EnergyDomeTurtle
+  parent: BaseItem
+  name: BR-40c "Turtle"
+  description: A heavy two-handed energy barrier with very low passive power consumption. It can be linked with a multitool.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/EnergyDome/reinhardt.rsi
+    layers:
+    - state: icon
+  - type: InteractionOutline
+  - type: MultiHandedItem
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Item
+    size: Ginormous
+  - type: HeldSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        whitelist:
+          tags:
+          - PowerCell
+          - PowerCellSmall
+  - type: EnergyDomeGenerator
+    damageEnergyDraw: 5
+    domePrototype: EnergyDomeMediumBlue
+    canDeviceNetworkUse: true
+  - type: PowerCellDraw
+    enabled: false
+    drawRate: 2
+    useCharge: 0
+  - type: UseDelay
+    delay: 10
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Toggle
+    - On
+    - Off
+
+# Ported from Frontier commit 2f7ddd0897c9df98c3953a926706ebddbe19d505.
+- type: entity
+  id: HandheldSecurityMonitor
+  parent: BaseItem
+  name: security camera tablet
+  description: Displays feeds from the station camera network and security body cameras.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/tablets.rsi
+    layers:
+    - state: tablet
+    - sprite: _Pirate/Objects/Devices/security_tablet.rsi
+      state: cameras
+      shader: unshaded
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ActivatableUI
+    requireActiveHand: false
+    inHandsOnly: true
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraMonitorUiKey.Key:
+        type: SurveillanceCameraMonitorBoundUserInterface
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: SurveillanceCameraMonitor
+
+# Ported from Starlight commit e22931e1e23afebee24eaf98b2ddae4fbbf37258.
+- type: entity
+  id: HandheldBrigmedicCrewMonitor
+  parent: [ PowerCellSlotMediumItem, BaseHandheldComputer, BaseSecurityContraband ]
+  name: BrigBuddy 5000
+  description: A handheld crew monitor that only tracks security personnel. It does not assess their emotional stability or competence.
+  components:
+  - type: Tag
+    tags:
+    - BrigmedicBeltEquip
+  - type: Item
+    heldPrefix: scanner
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/handheld_brigmedic_crewmonitor.rsi
+    # Pirate: the source alert overlay has no matching local CrewMonitorAlerts API.
+    layers:
+    - state: frame
+    - state: powered
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      visible: true
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { visible: true, shader: unshaded }
+          Neither: { visible: true, shader: unshaded }
+          Empty: { visible: false }
+  - type: ActivatableUI
+    key: enum.CrewMonitoringUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+  - type: ItemToggle
+    onActivate: false
+  - type: CrewMonitoringConsole
+  - type: CrewMonitoringDepartmentFilter
+    shownDepartments:
+    - Security
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitor
+  - type: StationLimitedNetwork
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  id: HandheldBrigmedicCrewMonitorEmpty
+  parent: HandheldBrigmedicCrewMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        blacklist:
+          tags:
+          - MechReactor
+  - type: PowerCellDraw
+    useCharge: 15
+
+# Adapted from RMC commit d8fe93ef744114f7ae1acdea4278eec9f2a1989e.
+- type: entity
+  id: RMCMotionDetector
+  parent: [ BaseItem, PowerCellSlotSmallItem ]
+  name: pulse motion detector
+  description: Detects nearby living beings that moved recently. Each scan consumes battery charge.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/motion_detector.rsi
+    layers:
+    - state: detector
+    - state: detector_long_switch
+      map: [ "switch" ]
+    - state: detector_on_0
+      visible: false
+      map: [ "number" ]
+  - type: Item
+    size: Normal
+  - type: Clothing
+    slots:
+    - suitStorage
+    - belt
+  - type: MotionDetector
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.MotionDetectorVisualLayers.Setting:
+        switch:
+          Short: { state: detector_short_switch }
+          Long: { state: detector_long_switch }
+      enum.MotionDetectorVisualLayers.Number:
+        number:
+          -1: { visible: false }
+          0: { state: detector_on_0, visible: true }
+          1: { state: detector_on_1, visible: true }
+          2: { state: detector_on_2, visible: true }
+          3: { state: detector_on_3, visible: true }
+          4: { state: detector_on_4, visible: true }
+          5: { state: detector_on_5, visible: true }
+          6: { state: detector_on_6, visible: true }
+          7: { state: detector_on_7, visible: true }
+          8: { state: detector_on_8, visible: true }
+          9: { state: detector_on_9, visible: true }
+  - type: Tag
+    tags:
+    - RMCDetector
+
+- type: Tag
+  id: BrigmedicBeltEquip
+
+- type: Tag
+  id: RMCDetector

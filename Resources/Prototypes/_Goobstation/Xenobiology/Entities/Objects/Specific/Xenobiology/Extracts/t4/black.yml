@@ -1,7 +1,7 @@
 - type: entity
   id: BlackSlimeExtract
   parent: BaseSlimeExtract
-  name: "чорний екстракт слайма"
+  name: black slime extract
   components:
   - type: Sprite
     layers:
@@ -29,9 +29,10 @@
         messages: [ "xeno-extract-reaction-reagent" ]
       - !type:PlaySoundEffect
         sound: /Audio/Effects/Chemistry/bubbles.ogg
-      - !type:AdjustReagent
+      - !type:AddReagentToSolution
         reagent: AdvancedMutationToxin
-        amount: 10
+        solution: extract
+        strengthModifier: 10
     - reagents: [ Blood ]
       methods: [ Touch, Injection ]
       effects:

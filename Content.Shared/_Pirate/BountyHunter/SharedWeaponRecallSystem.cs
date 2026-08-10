@@ -31,7 +31,7 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<WeaponRecallComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<WeaponRecallComponent, OnWeaponRecallActionEvent>(OnWeaponRecallActionUse);
+        SubscribeLocalEvent<OnWeaponRecallActionEvent>(OnWeaponRecallActionUse);
         SubscribeLocalEvent<WeaponRecallComponent, ComponentShutdown>(OnRecallActionShutdown);
 
         SubscribeLocalEvent<WeaponRecallMarkerComponent, ComponentShutdown>(OnRecallMarkerShutdown);
@@ -43,8 +43,13 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
         ent.Comp.InitialDescription = Description(ent);
     }
 
-    private void OnWeaponRecallActionUse(Entity<WeaponRecallComponent> ent, ref OnWeaponRecallActionEvent args)
+    private void OnWeaponRecallActionUse(ref OnWeaponRecallActionEvent args)
     {
+        if (args.Handled || !TryComp<WeaponRecallComponent>(args.Action, out var recall))
+            return;
+
+        var ent = new Entity<WeaponRecallComponent>(args.Action, recall);
+
         if (ent.Comp.MarkedEntity == null)
         {
             if (!TryComp<HandsComponent>(args.Performer, out var hands))
@@ -178,6 +183,7 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
                 _metaData.SetEntityDescription(action, Loc.GetString(desc, ("item", marked)));
 
             _actions.SetEntityIcon((action, action), marked);
+            _actions.SetItemIconStyle((action, action), ItemActionIconStyle.BigItem);
         }
         else
         {
@@ -186,6 +192,7 @@ public abstract partial class SharedWeaponRecallSystem : EntitySystem
             if (action.Comp2.InitialDescription is {} desc)
                 _metaData.SetEntityDescription(action, desc);
             _actions.SetEntityIcon((action, action), null);
+            _actions.SetItemIconStyle((action, action), ItemActionIconStyle.BigAction);
         }
     }
 

@@ -37,6 +37,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
+    [Dependency] private readonly Content.Server._Pirate.ZLevels.Spawning.CEZLevelFloorGridsSystem _zFloors = default!; // Pirate: multiz
 
     public override void Initialize()
     {
@@ -150,20 +151,24 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
         foreach (var station in stations)
         {
-            if (_stationSystem.GetLargestGrid(station) is not { } grid
-                || !TryComp(station, out MetaDataComponent? stationMetaData))
-                return;
+            if (!TryComp(station, out MetaDataComponent? stationMetaData)) // Pirate: multiz
+                continue; // Pirate: multiz
 
-            var mapId = Transform(grid).MapID;
+            var beacons = new List<SharedNavMapSystem.NavMapBeacon>(); // Pirate: multiz
+            foreach (var grid in _zFloors.GetStationFloorGrids(station)) // Pirate: multiz
+            {
+                if (_entityManager.TryGetComponent<NavMapComponent>(grid, out var navMap)) // Pirate: multiz
+                    beacons.AddRange(navMap.Beacons.Values); // Pirate: multiz
+            }
 
-            if (!_entityManager.TryGetComponent<NavMapComponent>(grid, out var navMap))
-                return;
+            if (beacons.Count == 0) // Pirate: multiz
+                continue; // Pirate: multiz
 
             result.Add(station.Id, new StationBeacons
             {
                 Name = stationMetaData.EntityName,
                 StationId = station.Id,
-                Beacons = [.. navMap.Beacons.Values],
+                Beacons = beacons, // Pirate: multiz
             });
         }
 

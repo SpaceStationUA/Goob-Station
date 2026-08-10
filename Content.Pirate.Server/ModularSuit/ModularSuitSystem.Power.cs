@@ -1,5 +1,6 @@
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Pirate.Shared.ModularSuit;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
 using Robust.Shared.Containers;
 
@@ -8,6 +9,7 @@ namespace Content.Pirate.Server.ModularSuit;
 public sealed partial class ModularSuitSystem
 {
     [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
 
     public const string CellContainer = "cell_slot";
 
@@ -43,6 +45,7 @@ public sealed partial class ModularSuitSystem
         if (active && !ent.Comp.Assembled)
         {
             Popup.PopupEntity(Loc.GetString("modsuit-not-assembled"), ent, ent.Comp.Wearer ?? ent);
+            _audio.PlayPvs(ent.Comp.BuzzSound, ent.Owner);
             UpdateUiState(ent);
             return;
         }
@@ -50,13 +53,19 @@ public sealed partial class ModularSuitSystem
         if (active && !HasCore(ent))
         {
             Popup.PopupEntity(Loc.GetString("modsuit-no-core"), ent, ent.Comp.Wearer ?? ent);
+            _audio.PlayPvs(ent.Comp.BuzzSound, ent.Owner);
             UpdateUiState(ent);
             return;
         }
 
-        if (active && !ent.Comp.Active)
+        if (active)
         {
+            _audio.PlayPvs(ent.Comp.ActivateSound, ent.Owner);
             _audio.PlayPvs(ent.Comp.NominalSound, ent.Owner);
+        }
+        else
+        {
+            _audio.PlayPvs(ent.Comp.DeactivateSound, ent.Owner);
         }
 
         if (HasComp<ItemToggleComponent>(ent))
@@ -120,6 +129,7 @@ public sealed partial class ModularSuitSystem
             {
                 if (TryComp<ModularSuitModuleComponent>(module, out var mod) && mod.IsActive && mod.CanBeDisabled)
                 {
+                    mod.WasActive = true;
                     mod.IsActive = false;
                     Dirty(module, mod);
 
@@ -132,6 +142,22 @@ public sealed partial class ModularSuitSystem
         {
             foreach (var module in modules)
             {
+                if (!TryComp<ModularSuitModuleComponent>(module, out var mod) || !mod.WasActive)
+                    continue;
+
+                if (mod.IsActive || !mod.CanBeDisabled)
+                    continue;
+
+                if (!CanActivateModule(ent, module))
+                    continue;
+
+                mod.IsActive = true;
+                mod.WasActive = false;
+                Dirty(module, mod);
+            }
+
+            foreach (var module in modules)
+            {
                 if (TryComp<ModularSuitModuleComponent>(module, out var mod) && (mod.IsActive || !mod.CanBeDisabled))
                 {
                     var ev = new ModularSuitModuleToggledEvent(ent, ent.Comp.Wearer, true);
@@ -139,6 +165,13 @@ public sealed partial class ModularSuitSystem
                 }
             }
         }
+    }
+
+    private bool CanActivateModule(Entity<ModularSuitComponent> suit, EntityUid module)
+    {
+        var attempt = new ModularSuitModuleAttemptEvent(suit.Owner);
+        RaiseLocalEvent(module, ref attempt);
+        return !attempt.Cancelled;
     }
 
     private void OnModuleInstalledRefresh(Entity<ModularSuitComponent> ent, ref ModularSuitInstalledEvent args)
@@ -200,7 +233,7 @@ public sealed partial class ModularSuitSystem
 
         if (!suit.Comp.Active)
         {
-            if (core.Charge < core.MaxCharge && TryChargeFromBattery(suit, core))
+            if (core.Charge < core.MaxCharge && TryChargeFromBattery((coreEnt, core), suit))
                 UpdateUiState(suit);
 
             return;
@@ -221,6 +254,7 @@ public sealed partial class ModularSuitSystem
         var newCharge = Math.Max(0, core.Charge - chargeToUse);
         var used = core.Charge - newCharge;
         core.Charge = newCharge;
+        Dirty(coreEnt, core);
 
         if (used > 0)
         {
@@ -228,7 +262,7 @@ public sealed partial class ModularSuitSystem
             RaiseLocalEvent(suit.Owner, ref ev);
         }
 
-        if (core.Charge < core.MaxCharge && TryChargeFromBattery(suit, core))
+        if (core.Charge < core.MaxCharge && TryChargeFromBattery((coreEnt, core), suit))
             UpdateUiState(suit);
 
         if (core.Charge <= 0)
@@ -249,22 +283,29 @@ public sealed partial class ModularSuitSystem
         }
     }
 
-    private bool TryChargeFromBattery(Entity<ModularSuitComponent> suit, ModularSuitCoreComponent core)
+    private bool TryChargeFromBattery(Entity<ModularSuitCoreComponent> core, Entity<ModularSuitComponent> suit)
     {
-        if (!_powerCell.TryGetBatteryFromSlot(suit.Owner, out _))
+        if (!_powerCell.TryGetBatteryFromSlot(suit.Owner, out var battery))
             return false;
 
-        var needed = core.MaxCharge - core.Charge;
-        var maxTransfer = core.ChargeRate * (float)suit.Comp.UpdateInterval.TotalSeconds;
+        if (core.Comp.DrawMultiplier <= 0)
+            return false;
+
+        var needed = core.Comp.MaxCharge - core.Comp.Charge;
+        var maxTransfer = core.Comp.ChargeRate * (float)suit.Comp.UpdateInterval.TotalSeconds;
         var transfer = Math.Min(needed, maxTransfer);
+        var batteryCharge = Math.Min(transfer * core.Comp.DrawMultiplier, _battery.GetCharge(battery.Value.AsNullable()));
+        transfer = batteryCharge / core.Comp.DrawMultiplier;
 
-        if (transfer <= 0)
+        if (batteryCharge <= 0)
             return false;
 
-        if (_powerCell.TryUseCharge(suit.Owner, transfer, predicted: false))
+        if (_powerCell.TryUseCharge(suit.Owner, batteryCharge, predicted: false))
         {
-            core.Charge += transfer;
-            var ev = new ModularSuitChargeChangedEvent(core.Charge, core.MaxCharge);
+            core.Comp.Charge += transfer;
+            Dirty(core.Owner, core.Comp);
+
+            var ev = new ModularSuitChargeChangedEvent(core.Comp.Charge, core.Comp.MaxCharge);
             RaiseLocalEvent(suit.Owner, ref ev);
             return true;
         }
@@ -295,6 +336,7 @@ public sealed partial class ModularSuitSystem
             return false;
 
         core.Charge -= amount;
+        Dirty(coreEnt, core);
 
         var ev = new ModularSuitChargeChangedEvent(core.Charge, core.MaxCharge);
         RaiseLocalEvent(suit.Owner, ref ev);

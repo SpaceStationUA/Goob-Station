@@ -47,6 +47,8 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
     private void OnPlayerDetached(EntityUid uid, TypingIndicatorComponent component, PlayerDetachedEvent args)
     {
         // player left entity body - hide typing indicator
+        component.TypingIndicatorOverridePrototype = null; // Pirate: clear interface-specific indicators.
+        Dirty(uid, component);
         SetTypingIndicatorState(uid, TypingIndicatorState.None);
     }
 
@@ -74,13 +76,21 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
             return;
         }
 
+        var component = EnsureComp<TypingIndicatorComponent>(uid.Value);
+
         // check if this entity can speak or emote
         if (!_actionBlocker.CanEmote(uid.Value) && !_actionBlocker.CanSpeak(uid.Value))
         {
             // nah, make sure that typing indicator is disabled
+            component.TypingIndicatorOverridePrototype = null; // Pirate
+            Dirty(uid.Value, component);
             SetTypingIndicatorState(uid.Value, TypingIndicatorState.None);
             return;
         }
+
+        // Pirate: clear an interface-specific indicator on submit, timeout, or regular typing.
+        component.TypingIndicatorOverridePrototype = ev.OverrideIndicator;
+        Dirty(uid.Value, component);
 
         SetTypingIndicatorState(uid.Value, ev.State);
     }

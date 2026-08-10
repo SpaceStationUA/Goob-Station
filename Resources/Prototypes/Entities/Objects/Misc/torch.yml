@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "факел"
+  name: torch
   parent: BaseItem
   id: Torch
-  description: "Смолоскип, зроблений з дерева."
+  description: A torch fashioned from some wood.
   components:
     - type: ExpendableLight
       refuelMaterialID: WoodPlank
@@ -17,6 +17,10 @@
       # Sounds legit nuff
       litSound:
         path: /Audio/Items/Flare/flare_on.ogg
+    - type: SkiaExpendableLight # Pirate: server-side values for Skia light reactions.
+      litRadius: 6.0
+      litEnergy: 5.0
+      fadeInDuration: 8.0
     - type: Sprite
       sprite: Objects/Misc/torch.rsi
       layers:

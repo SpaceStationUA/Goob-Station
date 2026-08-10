@@ -62,6 +62,7 @@
         - MidImpassable
         - LowImpassable
   - type: Anchorable
+  - type: CEZPhysics # Pirate: multiz
 
 # For use with yaml composition, so that all wheeled structures can easily be changed.
 - type: entity

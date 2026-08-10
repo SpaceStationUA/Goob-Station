@@ -8,7 +8,7 @@ namespace Content.Server.Voting
     /// <summary>
     ///     Options for creating a vote.
     /// </summary>
-    public sealed class VoteOptions
+    public sealed partial class VoteOptions // Pirate - map vote visual metadata
     {
         /// <summary>
         ///     The text that is shown for "who called the vote".

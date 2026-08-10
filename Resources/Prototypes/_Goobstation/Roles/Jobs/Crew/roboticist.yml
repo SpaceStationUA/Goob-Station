@@ -11,7 +11,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - Interdyne
+      - ZengHuPharmaceuticals
+      - ZavodskiyInterstellar
     # Pirate contractor end
   startingGear: RoboticistGear
   icon: "JobIconRoboticist"

@@ -68,6 +68,8 @@
   id: EnergyDomeMediumBlue
   parent: EnergyDomeBase
   components:
+  - type: EnergyDome
+    allowProjectilesFromInside: true
   - type: Fixtures
     fixtures:
       fix1:

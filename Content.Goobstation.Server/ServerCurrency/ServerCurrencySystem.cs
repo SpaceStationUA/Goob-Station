@@ -2,6 +2,7 @@
 
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Common.ServerCurrency;
+using Content.Server._Pirate.ServerCurrency; // Pirate: roundstart bonus
 using Content.Server._RMC14.LinkAccount;
 using Content.Server.GameTicking;
 using Content.Server.Popups;
@@ -31,6 +32,7 @@ namespace Content.Goobstation.Server.ServerCurrency
         [Dependency] private readonly LinkAccountManager _linkAccount = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly SandboxSystem _sandbox = default!; // Pirate
+        [Dependency] private readonly PirateGoobcoinRewardSystem _pirateGoobcoins = default!; // Pirate: roundstart bonus
 
         private int _goobcoinsPerPlayer = 10;
         private int _goobcoinsNonAntagMultiplier = 1;
@@ -113,6 +115,8 @@ namespace Content.Goobstation.Server.ServerCurrency
                             var roundMinutesActual = _gameTicker.RoundDuration().TotalMinutes;
                             money = (int) (money * Math.Min(1, roundMinutesActual / _goobcoinsShortRoundPenaltyTargetMinutes));
                         }
+
+                        money += _pirateGoobcoins.GetRoundStartBonus(mind.OriginalOwnerUserId.Value); // Pirate: roundstart bonus
 
                         _currencyMan.AddCurrency(mind.OriginalOwnerUserId.Value, money);
                     }

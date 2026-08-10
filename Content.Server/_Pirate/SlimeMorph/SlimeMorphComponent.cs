@@ -83,7 +83,7 @@ public sealed partial class SlimeMorphComponent : Component
     /// Fraction of current nutrition consumed when committing a mimic. Self-edits are free.
     /// </summary>
     [DataField]
-    public float NutritionCostFraction = 0.3f;
+    public float NutritionCostFraction = 0.15f;
 
     /// <summary>
     /// Sound played when the slime reshapes itself - the squish ("Хлюп") from the Squish emote.
@@ -97,6 +97,13 @@ public sealed partial class SlimeMorphComponent : Component
     /// </summary>
     [ViewVariables]
     public Dictionary<NetEntity, SlimeMorphAppearance> Remembered = new();
+
+    /// <summary>
+    /// Looks the slime has saved from the menu under a name, so they can be reloaded later. Keyed by
+    /// (name, xenotype); saving with a matching key overwrites. Shown in the right-side list.
+    /// </summary>
+    [ViewVariables]
+    public List<SlimeMorphAppearance> Saved = new();
 
     /// <summary>
     /// The slime's own look, captured just before the first mimic so "Revert to self" can restore it.
@@ -133,6 +140,9 @@ public sealed class SlimeMorphWorking
 
     /// <summary>Head base-sprite override (baked head shapes like muzzles); null = slime's own head.</summary>
     public string? HeadLayer;
+
+    /// <summary>Species used to populate marking pickers.</summary>
+    public string? PickerSpecies;
 
     /// <summary>True when this buffer holds a look derived from a studied target (mimic), not free self-edits.</summary>
     public bool FromTarget;

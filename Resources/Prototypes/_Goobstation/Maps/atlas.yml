@@ -4,6 +4,7 @@
   id: Atlas
   mapName: Атлас
   mapPath: /Maps/_Goobstation/atlas.yml
+  mapPreview: PirateMapPreviewAtlas # Pirate - map vote preview
   minPlayers: 0
   maxPlayers: 20
   stations:

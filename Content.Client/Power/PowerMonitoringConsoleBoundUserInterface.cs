@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Power;
+using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Power;
@@ -19,6 +20,7 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
         _menu = this.CreateWindow<PowerMonitoringWindow>();
         _menu.SetEntity(Owner);
         _menu.SendPowerMonitoringConsoleMessageAction += SendPowerMonitoringConsoleMessage;
+        _menu.SendZLevelSelectedMessageAction += SendZLevelSelectedMessage; // Pirate: multiz
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -42,4 +44,11 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
     {
         SendMessage(new PowerMonitoringConsoleMessage(netEntity, group));
     }
+
+    #region Pirate: multiz
+    public void SendZLevelSelectedMessage(NetEntity? grid, int depth)
+    {
+        SendMessage(new CEZMonitoringConsoleLevelSelectedMessage(grid, depth));
+    }
+    #endregion
 }

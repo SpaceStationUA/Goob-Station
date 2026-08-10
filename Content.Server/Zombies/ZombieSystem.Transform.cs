@@ -157,6 +157,8 @@ public sealed partial class ZombieSystem
             return;
         }
 
+        // Pirate: Preserve hair and other humanoid markings through the zombie polymorph.
+        _humanoidAppearance.CloneAppearance(target, zombie);
         _meta.SetEntityName(zombie, _nameMod.GetBaseName(target));
 
         // reassign target to polymorphed zombie !!

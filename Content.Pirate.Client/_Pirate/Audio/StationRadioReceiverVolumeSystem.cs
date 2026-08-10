@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Shared.StationRadio.Components;
+using Content.Shared._Pirate.Audio;
 using Content.Shared._Pirate.CCVars;
 using Robust.Client.Audio;
 using Robust.Shared.Audio.Components;
@@ -36,10 +37,13 @@ public sealed class StationRadioReceiverVolumeSystem : EntitySystem
     public override void FrameUpdate(float frameTime)
     {
         var query = EntityQueryEnumerator<AudioComponent, TransformComponent>();
-        while (query.MoveNext(out _, out var audio, out var xform))
+        while (query.MoveNext(out var uid, out var audio, out var xform))
         {
-            if (!HasComp<StationRadioReceiverComponent>(xform.ParentUid))
+            if (!HasComp<StationRadioReceiverAudioComponent>(uid) &&
+                !HasComp<StationRadioReceiverComponent>(xform.ParentUid))
+            {
                 continue;
+            }
 
             audio.Volume = audio.Params.Volume + _volumeOffsetDb;
         }

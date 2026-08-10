@@ -56,6 +56,8 @@ using Content.Shared.Database;
 using Content.Server.Administration.Logs;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Cuffs;
+using Content.Shared.Cuffs.Components;
 
 using Content.Server.BloodCult.EntitySystems;
 using Content.Shared.BloodCult.Prototypes;
@@ -183,6 +185,7 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 	[Dependency] private readonly IPrototypeManager _proto = default!;
 	[Dependency] private readonly SharedActionsSystem _action = default!;
 	[Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+	[Dependency] private readonly SharedCuffableSystem _cuffable = default!;
 
 	public readonly string CultComponentId = "BloodCultist";
 
@@ -910,6 +913,13 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 
 	private bool _ConvertOffering(ConvertingData convert, BloodCultRuleComponent component, EntityUid cultistUid)
 	{
+		var requiredCultists = component.CultistsToConvert;
+		if (TryComp<CuffableComponent>(convert.Subject, out var cuffable) &&
+			_cuffable.IsCuffed((convert.Subject, cuffable)))
+		{
+			requiredCultists = 1;
+		}
+
 		if (HasComp<CultResistantComponent>(convert.Subject) || HasComp<CosmicCultComponent>(convert.Subject) || HasComp<ChangelingComponent>(convert.Subject))
 		{
 			_popupSystem.PopupEntity(
@@ -918,13 +928,13 @@ public sealed class BloodCultRuleSystem : GameRuleSystem<BloodCultRuleComponent>
 			);
 			return false;
 		}
-		else if (convert.Invokers.Length >= component.CultistsToConvert)
+		else if (convert.Invokers.Length >= requiredCultists)
 		{
 			// Only make the minimum required number of cultists speak
 			int speakerCount = 0;
 			foreach (EntityUid invoker in convert.Invokers)
 			{
-				if (speakerCount >= component.CultistsToConvert)
+				if (speakerCount >= requiredCultists)
 					break;
 
 				Speak(invoker, Loc.GetString("cult-invocation-offering"));

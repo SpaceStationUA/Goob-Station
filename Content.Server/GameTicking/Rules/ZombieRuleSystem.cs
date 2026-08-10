@@ -38,6 +38,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!; // Einstein Engines - Zombie Improvements Take 2
+    [Dependency] private readonly Content.Server._Pirate.ZLevels.Spawning.CEZLevelFloorGridsSystem _zFloors = default!; // Pirate: multiz
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!; // Goobstation
 
@@ -215,7 +216,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         {
             foreach (var station in _gameTicker.GetSpawnableStations())  // Einstein Engines - Zombie Improvements Take 2
             {
-                if (_station.GetLargestGrid(station) is { } grid)
+                foreach (var grid in _zFloors.GetStationFloorGrids(station)) // Pirate: multiz
                     stationGrids.Add(grid);
             }
         }

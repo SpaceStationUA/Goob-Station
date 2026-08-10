@@ -1,0 +1,44 @@
+- type: entity
+  id: CEZLevelsStairsDirtCliffBase
+  abstract: true
+  name: dirt cliff
+  description: A rough dirt cliff face that can be climbed between floors.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Architecture/Ladders/dirt_cliff.rsi
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent:
+  - CEZLevelStairsBase
+  - CEZLevelsStairsDirtCliffBase
+  id: CEZLevelStairsDirtCliff
+
+- type: entity
+  parent:
+  - CEZLevelStairsCornerBase
+  - CEZLevelsStairsDirtCliffBase
+  id: CEZLevelStairsDirtCliffCorner
+  suffix: Corner
+
+- type: entity
+  parent:
+  - CEZLevelStairsCornerInnerBase
+  - CEZLevelsStairsDirtCliffBase
+  id: CEZLevelStairsDirtCliffCornerInner
+  suffix: Inner Corner

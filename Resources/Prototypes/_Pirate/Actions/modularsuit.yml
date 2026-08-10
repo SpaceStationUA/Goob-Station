@@ -1,26 +1,39 @@
 - type: entity
   parent: BaseAction
   id: ToggleModularSuitDeployAction
-  name: "[color=#58c4e8]Розгорнути костюм[/color]"
-  description: "Розкриває модульний костюм і вдягає на тіло всі встановлені частини. Повторне натискання згортає костюм назад у компактний стан."
+  name: "[color=#58c4e8]Deploy MODsuit[/color]"
+  description: "Opens the modular suit, placing all the installed parts on the body."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    useDelay: 1.5
-    icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: activate }
-    iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: activate-ready }
+    useDelay: 0.5
+    icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: deploy }
+    iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: retract }
     itemIconStyle: BigAction
   - type: InstantAction
     event: !type:ToggleDeploySuitActionEvent
 
 - type: entity
   parent: BaseAction
-  id: ToggleModularSuitUiAction
-  name: "[color=#58c4e8]Відкрити інтерфейс МОД-костюма[/color]"
+  id: ToggleModularSuitActivateAction
+  name: "[color=#58c4e8]Activate MODsuit[/color]"
+  description: "Seals and powers up the suit. Press once to arm the control, then again to confirm."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    useDelay: 2
+    icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: activate }
+    iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: activate-ready }
+    itemIconStyle: BigAction
+  - type: InstantAction
+    event: !type:ToggleActivateSuitActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ToggleModularSuitUiAction
+  name: "[color=#58c4e8]Open MODSuit interface[/color]"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: panel }
   - type: InstantAction
     event: !type:ToggleSuitUiActionEvent
@@ -28,12 +41,11 @@
 - type: entity
   parent: BaseAction
   id: ToggleLightModuleAction
-  name: "[color=#58c4e8]Перемкнути освітлення[/color]"
-  description: "Вмикає або вимикає вбудовану систему освітлення костюма."
+  name: "[color=#58c4e8]Toggle Light[/color]"
+  description: "Turns the suit's integrated lighting system on or off."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    useDelay: 1
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: light-off }
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: light-on }
   - type: InstantAction
@@ -42,13 +54,13 @@
 - type: entity
   parent: BaseAction
   id: ActivateTeleporterModuleAction
-  name: "[color=#58c4e8]Активувати телепортер[/color]"
-  description: "Миттєво телепортує користувача до випадкової істоти поблизу. Для роботи потребує блюспейс-ядра."
+  name: "[color=#58c4e8]Activate Teleporter[/color]"
+  description: "Instantly teleports the user to the location of a random nearby creature. Requires a bluespace core to function."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
     startDelay: true
-    useDelay: 20
+    useDelay: 15
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: teleporter }
   - type: InstantAction
     event: !type:ActivateTeleporterModuleEvent
@@ -56,13 +68,11 @@
 - type: entity
   parent: BaseAction
   id: ToggleHolsterModuleAction
-  name: "[color=#58c4e8]Перемкнути кобуру[/color]"
-  description: "Висуває або ховає кобуру для швидкого доступу до вогнепальної зброї."
+  name: "[color=#58c4e8]Toggle Holster[/color]"
+  description: "Deploys or retracts the weapon holster for quick firearm access."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    startDelay: true
-    useDelay: 10
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: holster-in }
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: holster-out }
   - type: InstantAction
@@ -70,14 +80,26 @@
 
 - type: entity
   parent: BaseAction
+  id: ToggleMagbootsModuleAction
+  name: "[color=#58c4e8]Toggle Magboots[/color]"
+  description: "Engages the suit boots' electromagnets, holding you to the floor at the cost of speed."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: magnet }
+  - type: InstantAction
+    event: !type:ToggleMagbootsModuleEvent
+
+- type: entity
+  parent: BaseAction
   id: ActivatePaperDispenserModuleAction
-  name: "[color=#58c4e8]Активувати видавач паперу[/color]"
-  description: "Синтезує свіжий папір за допомогою передових технологій факсів і принтерів. Перетворює енергію костюма на високоякісне канцелярське приладдя. Ідеально для надзвичайних паперових справ або коли просто потрібно залишити записку."
+  name: "[color=#58c4e8]Activate Paper Dispenser[/color]"
+  description: "Synthesizes fresh paper using advanced fax and printer technology. Converts suit power into high-quality stationery. Perfect for paperwork emergencies or when you just need to leave a note."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
     startDelay: true
-    useDelay: 30
+    useDelay: 5
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: paper }
   - type: InstantAction
     event: !type:ActivateDispenserModuleEvent
@@ -90,13 +112,13 @@
 - type: entity
   parent: BaseAction
   id: ActivateEnergyShieldModuleAction
-  name: "[color=#58c4e8]Активувати енергетичний щит[/color]"
-  description: "Створює персональне захисне силове поле, що блокує вхідні атаки. Споживає значну кількість енергії."
+  name: "[color=#58c4e8]Activate Energy Shield[/color]"
+  description: "Generates a personal protective forcefield that blocks incoming attacks. Consumes significant power."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
     startDelay: true
-    useDelay: 60
+    useDelay: 20
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: energyshield }
   - type: InstantAction
     event: !type:ActivateEnergyShieldModuleEvent
@@ -104,13 +126,13 @@
 - type: entity
   parent: BaseAction
   id: ActivateBurgerDispenserModuleAction
-  name: "[color=#58c4e8]Активувати видавач бургерів[/color]"
-  description: "Створює їстівний бургер, використовуючи енергію костюма. Точний вид бургера може відрізнятися. Чай «Ерл Ґрей» недоступний."
+  name: "[color=#58c4e8]Activate Burger Dispenser[/color]"
+  description: "Creates an edible burger using the suit's power. The exact type of burger may vary. Earl Grey tea not available."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
     startDelay: true
-    useDelay: 120
+    useDelay: 10
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: dispenser }
   - type: InstantAction
     event: !type:ActivateDispenserModuleEvent
@@ -149,13 +171,13 @@
 - type: entity
   parent: BaseAction
   id: ActivateTanningModuleAction
-  name: "[color=#58c4e8]Активувати засмагу[/color]"
-  description: "Вмикає ультрафіолетові лампи для безпечної засмаги. Наявність функції «рак шкіри» не доведена."
+  name: "[color=#58c4e8]Activate Tanning[/color]"
+  description: "Activates UV lamps for a safe tan. Skin cancer functionality has not been proven."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
     startDelay: true
-    useDelay: 30
+    useDelay: 5
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: tanning }
   - type: InstantAction
     event: !type:ActivateTanningModuleEvent
@@ -163,13 +185,13 @@
 - type: entity
   parent: BaseAction
   id: ActivateAtrocinatorModuleAction
-  name: "[color=#58c4e8]Активувати атроцинатор[/color]"
-  description: "Активує таємничу сферу. Ефекти можуть відрізнятися. Дивіться під ноги!"
+  name: "[color=#58c4e8]Activate Atrocinator[/color]"
+  description: "Activates the mysterious orb. Effects vary. Watch your step!"
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
     startDelay: true
-    useDelay: 300
+    useDelay: 30
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: atrocinator }
   - type: InstantAction
     event: !type:ActivateAtrocinatorModuleEvent

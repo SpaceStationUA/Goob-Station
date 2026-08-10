@@ -1,8 +1,0 @@
-- type: entity
-  save: false
-  name: "Уріст МакГоблін"
-  parent: [MobGoblinBase, BaseMob]
-  id: MobGoblin
-  components:
-  - type: Speech
-    speechVerb: Goblin

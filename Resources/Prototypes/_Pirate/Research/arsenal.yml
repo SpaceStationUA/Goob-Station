@@ -13,3 +13,18 @@
   recipeUnlocks:
   - ClothingOuterHardsuitCombatK9
   - ClothingOuterHardsuitCombatRiotK9
+
+- type: technology
+  id: EnergyBarriersPirate
+  name: research-technology-energy-barriers-pirate
+  icon:
+    sprite: _Pirate/Objects/Tools/EnergyDome/reinhardt.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 5400
+  recipeUnlocks:
+  - EnergyDomeTurtle
+  technologyPrerequisites:
+  - AdvancedRiotControl
+  position: 7,1 # Pirate: keep downstream technologies on unique graph positions.

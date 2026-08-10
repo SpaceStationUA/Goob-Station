@@ -1,0 +1,59 @@
+# Стани
+phrase-safety-bleeding = Кровотеча
+phrase-safety-dangerous = Небезпечно
+phrase-safety-dying = Помирає
+phrase-safety-escape = Тікайте
+phrase-safety-hazardous = Небезпечний
+phrase-safety-here-to-help = Прийшов допомогти
+phrase-safety-how-to-help = Як я можу допомогти?
+phrase-safety-in-danger = У небезпеці
+phrase-safety-injured = Поранений
+phrase-safety-leaving = Відходжу
+phrase-safety-evac = Евакуюймося
+phrase-safety-lost = Загубився
+phrase-safety-need = Потрібно
+phrase-safety-not = Не
+phrase-safety-rescue = Рятуйте
+phrase-safety-safe = Безпечно
+phrase-safety-trustworthy = Вартий довіри
+
+# Небезпеки
+phrase-hazard-bad-temperature = Невідповідна температура
+phrase-hazard-broken-equipment = Зламане обладнання
+phrase-hazard-burning = Горить
+phrase-hazard-chemical-spill = Розлив хімікатів
+phrase-hazard-cold = Холодно
+phrase-hazard-darkness = Темрява
+phrase-hazard-explosion = Вибух
+phrase-hazard-fire = Пожежа
+phrase-hazard-freezing = Замерзання
+phrase-hazard-gas-leak = Витік газу
+phrase-hazard = Небезпека
+phrase-hazard-high-presure = Високий тиск
+phrase-hazard-hot = Гаряче
+phrase-hazard-infection = Інфекція
+phrase-hazard-low = Низький заряд
+phrase-hazard-low-presure = Низький тиск
+phrase-hazard-meteors = Метеор
+phrase-hazard-heat = Перегрів
+phrase-hazard-poison = Отрута
+phrase-hazard-power-outage = Знеструмлення
+phrase-hazard-radiation = Радіація
+phrase-hazard-shock = Небезпека ураження струмом
+phrase-hazard-space = Розгерметизація
+phrase-hazard-structure-damage = Пошкодження конструкції
+phrase-hazard-viral-threat = Вірусна загроза
+
+# Вороги
+phrase-hostile-attacker = Нападник
+phrase-hostile-bomb = Бомба
+phrase-hostile-criminal = Злочинець
+phrase-hostile-lifeform = Небезпечна форма життя
+phrase-hostile-enemy = Ворог
+phrase-hostile-entity = Сутність
+phrase-hostile-fugitive = Утікач
+phrase-hostile-gun = Вогнепальна зброя
+phrase-hostile = Ворожий
+phrase-hostile-infiltrator = Диверсант
+phrase-hostile-intruder = Зловмисник
+phrase-hostile-weapon = Зброя

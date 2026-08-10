@@ -1,0 +1,30 @@
+- type: tile
+  id: ElevatorSolidMetalGrate
+  parent: FloorSteel
+  name: solid metal grate
+  zTransparent: true
+  sprite: /Textures/_Pirate/Tiles/Elevator/solidgrate5.png
+  variants: 1
+  placementVariants: [1.0]
+  footstepSounds:
+    collection: FootstepCatwalk
+
+- type: tile
+  id: ElevatorPlatformTile
+  parent: FloorSteel
+  name: elevator platform
+  sprite: /Textures/Tiles/lattice.png
+  variants: 1
+  placementVariants: [1.0]
+  footstepSounds:
+    collection: FootstepCatwalk
+
+- type: tile
+  id: ElevatorLinearTransportModule
+  parent: FloorSteel
+  name: linear transport module
+  sprite: /Textures/_Pirate/Tiles/Elevator/catwalk.png
+  variants: 1
+  placementVariants: [1.0]
+  footstepSounds:
+    collection: FootstepCatwalk

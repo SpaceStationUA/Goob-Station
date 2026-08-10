@@ -1,8 +1,8 @@
 - type: entity
-  name: "сире філе абісального коропа"
+  name: raw abyssal carp fillet
   parent: FoodMeatFish
   id: FoodMeatAbyssalFish
-  description: "Темніше, насиченіше... з дивно привабливим кольором."
+  description: Darker, richer... with an oddly enticing color.
   components:
   - type: FlavorProfile
     flavors:
@@ -17,6 +17,12 @@
         reagents:
         - ReagentId: CarpoToxin
           Quantity: 8
+        #region Pirate: carp fillet nutrition
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 8
+        - ReagentId: Fat
+          Quantity: 8
+        #endregion Pirate: carp fillet nutrition
   - type: Extractable
     juiceSolution:
       reagents:
@@ -30,10 +36,10 @@
       - state: abyssal-inhand-right
 
 - type: entity
-  name: "сире філе поганого коропа"
+  name: raw bad carp fillet
   parent: FoodMeatFish
   id: FoodMeatBadFish
-  description: "Бліде, сухе й затхле."
+  description: Pale, dry, and musty.
   components:
   - type: FlavorProfile
     flavors:
@@ -48,6 +54,12 @@
         reagents:
         - ReagentId: CarpoToxin
           Quantity: 2
+        #region Pirate: carp fillet nutrition
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
+        #endregion Pirate: carp fillet nutrition
   - type: Extractable
     juiceSolution:
       reagents:

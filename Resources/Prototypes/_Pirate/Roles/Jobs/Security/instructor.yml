@@ -13,6 +13,11 @@
     - !type:RoleTimeRequirement
       role: JobDetective
       time: 1h
+    - !type:CharacterEmployerRequirement
+      employers:
+      - IdrisIncorporated
+      - ZavodskiyInterstellar
+      - PMCG
   startingGear: SecurityInstructorGear
   icon: "JobIconSecurityInstructor"
   supervisors: job-supervisors-hos
@@ -51,6 +56,7 @@
     back:
     - MagazineUniversalMagnum
     - SecurityInstructorWhistle
+    - BaseSeclinkRadio
 
 - type: chameleonOutfit
   id: SecurityInstructorChameleonOutfit

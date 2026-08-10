@@ -71,6 +71,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         InitializeCVars();
         InitializeGridAtmosphere();
         InitializeMap();
+        InitializeZAtmos(); // Pirate: multiz
 
         _atmosQuery = GetEntityQuery<GridAtmosphereComponent>();
         _mapAtmosQuery = GetEntityQuery<MapAtmosphereComponent>();
@@ -95,6 +96,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         foreach (var change in ev.Changes)
         {
             InvalidateTile(ev.Entity.Owner, change.GridIndices);
+            InvalidateZAtmosPeers(ev.Entity, change.GridIndices); // Pirate: multiz
         }
     }
 

@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using Content.Server._Goobstation.Wizard.Systems;
+using Content.Server._Pirate.ListeningPost.Components; // Pirate: listening post receive-only interception
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Effects;
@@ -483,6 +484,13 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp) || !sourseCollectiveMindComp.Minds.ContainsKey(collectiveMind.ID))
             return;
+
+        // Pirate: listening post operatives may intercept Binary but cannot impersonate silicons on it.
+        if (TryComp<ReceiveOnlyCollectiveMindComponent>(source, out var receiveOnly) &&
+            receiveOnly.Channel.Id == collectiveMind.ID)
+        {
+            return;
+        }
 
         var clients = Filter.Empty();
         var clientsSeeNames = Filter.Empty();

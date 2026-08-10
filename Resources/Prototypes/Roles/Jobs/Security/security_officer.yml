@@ -23,7 +23,7 @@
     # Pirate contractor start
     - !type:CharacterEmployerRequirement
       employers:
-      - NanoTrasen
+      - IdrisIncorporated
       - ZavodskiyInterstellar
       - PMCG
     # Pirate contractor end
@@ -60,6 +60,7 @@
   storage:
     back:
     - Flash
+    - BaseSeclinkRadio # Pirate: bonus equipment; existing security loadouts remain unchanged
 #    - MagazinePistol # PIRATE, moved to loadouts
 
 - type: chameleonOutfit
