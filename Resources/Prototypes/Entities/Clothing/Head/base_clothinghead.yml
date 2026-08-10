@@ -49,6 +49,16 @@
   #region Pirate: wetness
   - type: Wettable
   #endregion Pirate: wetness
+  # Mono - basic NVDs for everyone!
+  - type: MonolithNightVision # Gen 2 monotube
+    relayOverlay: true
+    goggleEffect: true
+    action: MonolithToggleNightVision
+    viewCircleRadius: 300
+    viewCircleCount: 1
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
 
 - type: entity
   abstract: true

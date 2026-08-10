@@ -117,3 +117,8 @@
   id: Hologram
   kind: source
   path: "/Textures/Shaders/hologram.swsl"
+
+- type: shader
+  id: MonolithNightVision
+  kind: source
+  path: "/Textures/Shaders/nightvision.swsl"
