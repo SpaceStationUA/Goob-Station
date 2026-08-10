@@ -74,6 +74,10 @@ public sealed partial class PersonalShieldOverlay : Overlay
                 continue;
 
             var size = extents * shield.Scale;
+            var worldPos = _transform.GetWorldPosition(xform);
+            if (!args.WorldBounds.Intersects(Box2.CenteredAround(worldPos, size)))
+                continue;
+
             var shader = GetShaderInstance(uid);
 
             shader.SetParameter("progress", GetProgress(shield));
@@ -92,7 +96,6 @@ public sealed partial class PersonalShieldOverlay : Overlay
 
             handle.UseShader(shader);
 
-            var worldPos = _transform.GetWorldPosition(xform);
             handle.SetTransform(Matrix3x2.Multiply(counterRot, Matrix3Helpers.CreateTranslation(worldPos)));
             handle.DrawTextureRect(Texture.White, Box2.CenteredAround(Vector2.Zero, size));
         }
@@ -140,6 +143,7 @@ public sealed partial class PersonalShieldOverlay : Overlay
             shader.Dispose();
 
         _shaderInstances.Clear();
+        _baseShader.Dispose();
     }
 
     private bool TryGetHitboxSize(EntityUid uid, SpriteComponent sprite, out Vector2 extents)

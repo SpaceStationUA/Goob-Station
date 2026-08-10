@@ -11,6 +11,7 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;
     [Dependency] private ItemToggleSystem _toggle = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -30,18 +31,30 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
 
     private void OnDamageModify(Entity<PersonalShieldComponent> ent, ref InventoryRelayedEvent<DamageModifyEvent> args)
     {
+        // Armor-piercing damage never raises a DamageModifyEvent (see DamageableSystem),
+        // so it inherently bypasses the shield.
+
         var shield = ent.Comp;
         if (!shield.IsUp || shield.Runtime.Charge <= 0f)
             return;
 
-        var incoming = args.Args.Damage.GetTotal().Float();
+        // Only positive damage soaks the shield; healing is left untouched.
+        var incoming = DamageSpecifier.GetPositive(args.Args.Damage).GetTotal().Float();
         if (incoming <= 0f)
             return;
 
         var soaked = MathF.Min(incoming, shield.Runtime.Charge);
         shield.Runtime.Charge -= soaked;
 
-        args.Args.Damage *= (incoming - soaked) / incoming;
+        var scale = (incoming - soaked) / incoming;
+        if (!MathHelper.CloseTo(scale, 1f))
+        {
+            foreach (var (type, value) in args.Args.Damage.DamageDict)
+            {
+                if (value > 0)
+                    args.Args.Damage.DamageDict[type] = value * scale;
+            }
+        }
 
         if (shield.Runtime.Charge <= 0f)
             Fracture(ent); // Uh oh.
@@ -117,7 +130,11 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
                 continue;
             }
 
-            var running = !TryComp<ItemToggleComponent>(uid, out var toggle) || toggle.Activated;
+            // The shield only runs while worn in an inventory slot and toggled on.
+            var worn = _inventory.TryGetContainingEntity(uid, out _);
+            var running = worn
+                          && TryComp<ItemToggleComponent>(uid, out var toggle)
+                          && toggle.Activated;
             var step = frameTime / MathF.Max(cfg.SpinupTime, 0.01f);
 
             if (running)
