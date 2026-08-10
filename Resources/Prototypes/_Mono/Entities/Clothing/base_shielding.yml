@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Mono: abstract parent granting a PersonalShield to high-tier combat suits.
+# Balanced as a flavour addition: it soaks a few hits, breaks, and respools.
+# Suits inheriting from this override the shield color (and optionally the numbers).
+
+- type: entity
+  abstract: true
+  id: MonoPersonalShieldClothing
+  components:
+  - type: PersonalShield
+    shield:
+      maxCharge: 40
+      regenRate: 0.5 # recharge per second while switched off - a full refill takes 80s
+      spinupTime: 2
+      breakCooldown: 12
+      powerDraw: 0.5 # burn per second while the shield is up - damage soaks from the same pool
+  - type: ItemToggle
+    onUse: false
+    onActivate: true
+    onAltUse: true
+    popupActivate: personal-shield-toggle-up
+    popupDeactivate: personal-shield-toggle-down
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
