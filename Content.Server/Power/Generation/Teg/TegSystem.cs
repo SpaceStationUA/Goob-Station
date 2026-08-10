@@ -131,6 +131,11 @@ public sealed class TegSystem : EntitySystem
         var (inletA, outletA) = GetPipes(circA);
         var (inletB, outletB) = GetPipes(circB);
 
+        // A circulator that lost its pipes (deconstructed / destroyed) can't run:
+        // skip this update instead of crashing the server. // Pirate
+        if (inletA is null || outletA is null || inletB is null || outletB is null)
+            return;
+
         var (airA, δpA) = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
         var (airB, δpB) = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
 
@@ -356,13 +361,18 @@ public sealed class TegSystem : EntitySystem
         return (new GasMixture(), δp);
     }
 
-    private (PipeNode inlet, PipeNode outlet) GetPipes(EntityUid uidCirculator)
+    private (PipeNode? inlet, PipeNode? outlet) GetPipes(EntityUid uidCirculator)
     {
-        var nodeContainer = _nodeContainerQuery.GetComponent(uidCirculator);
-        var inlet = (PipeNode) nodeContainer.Nodes[NodeNameInlet];
-        var outlet = (PipeNode) nodeContainer.Nodes[NodeNameOutlet];
+        // A circulator can lose its NodeContainer or pipe nodes when deconstructed or
+        // destroyed (e.g. by an explosion): the old GetComponent/[] lookups threw a
+        // KeyNotFoundException that crashed the whole server. Bail out instead, and
+        // let the caller skip this update. // Pirate
+        if (!_nodeContainerQuery.TryGetComponent(uidCirculator, out var nodeContainer)
+            || !nodeContainer.Nodes.TryGetValue(NodeNameInlet, out var inletNode)
+            || !nodeContainer.Nodes.TryGetValue(NodeNameOutlet, out var outletNode))
+            return (null, null);
 
-        return (inlet, outlet);
+        return ((PipeNode) inletNode, (PipeNode) outletNode);
     }
 
     private void DeviceNetworkPacketReceived(
@@ -403,6 +413,9 @@ public sealed class TegSystem : EntitySystem
     private TegSensorData.Circulator GetCirculatorSensorData(EntityUid circulator)
     {
         var (inlet, outlet) = GetPipes(circulator);
+        // A broken circulator reports empty readings instead of crashing the server. // Pirate
+        if (inlet is null || outlet is null)
+            return new TegSensorData.Circulator(0f, 0f, 0f, 0f);
 
         return new TegSensorData.Circulator(
             inlet.Air.Pressure,

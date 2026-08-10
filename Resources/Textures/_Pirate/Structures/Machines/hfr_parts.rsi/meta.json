@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Hypertorus fusion reactor sprite from /tg/station, converted from DMI",
+  "size": {"x": 32, "y": 32},
+  "states": [
+    {"name": "core_active", "directions": 4, "delays": [[0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2]]},
+    {"name": "core", "directions": 4},
+    {"name": "fuel_input_active", "directions": 4, "delays": [[0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2]]},
+    {"name": "fuel_input", "directions": 4},
+    {"name": "fuel_input_open", "directions": 4},
+    {"name": "moderator_input_active", "directions": 4, "delays": [[0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2]]},
+    {"name": "moderator_input", "directions": 4},
+    {"name": "moderator_input_open", "directions": 4},
+    {"name": "waste_output_active", "directions": 4, "delays": [[0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2]]},
+    {"name": "waste_output", "directions": 4},
+    {"name": "waste_output_open", "directions": 4},
+    {"name": "interface_active", "directions": 4, "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]},
+    {"name": "interface", "directions": 4},
+    {"name": "interface_coolant", "directions": 4},
+    {"name": "interface_open", "directions": 4},
+    {"name": "corner_active", "directions": 4, "delays": [[0.2, 0.2], [0.2, 0.2], [0.2, 0.2], [0.2, 0.2]]},
+    {"name": "corner", "directions": 4},
+    {"name": "corner_open", "directions": 4},
+    {"name": "crack", "directions": 4}
+  ]
+}

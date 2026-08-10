@@ -1,0 +1,66 @@
+# /tg/ gases - Noble gases and HFR reagents
+
+- type: reagent
+  id: Helium
+  name: reagent-name-helium
+  group: Elements
+  desc: reagent-desc-helium
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: nothing
+  color: "#f0f8ff"
+  boilingPoint: -268.9
+  meltingPoint: -272.2
+
+- type: reagent
+  id: HyperNoblium
+  name: reagent-name-hyper-noblium
+  desc: reagent-desc-hyper-noblium
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: metallic
+  color: "#e6e6fa"
+  metabolisms: {}
+
+- type: reagent
+  id: AntiNoblium
+  name: reagent-name-anti-noblium
+  desc: reagent-desc-anti-noblium
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: sour
+  color: "#2f0047"
+  metabolisms: {}
+
+- type: reagent
+  id: ProtoNitrate
+  name: reagent-name-proto-nitrate
+  desc: reagent-desc-proto-nitrate
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: sour
+  color: "#adff2f"
+  metabolisms: {}
+
+- type: reagent
+  id: Zauker
+  name: reagent-name-zauker
+  desc: reagent-desc-zauker
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#006400"
+  metabolisms: {}
+
+- type: reagent
+  id: Miasma
+  name: reagent-name-miasma
+  desc: reagent-desc-miasma
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: horrible
+  color: "#808000"
+  metabolisms: {}
+
+- type: reagent
+  id: Halon
+  name: reagent-name-halon
+  desc: reagent-desc-halon
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#800080"
+  metabolisms: {}

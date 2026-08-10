@@ -324,6 +324,7 @@
     - ServiceBoardsStaticGoob
     dynamicPacks:
     - ReactorCircuitboards # Pirate: DeltaV nuclear reactor
+    - EngineeringBoardsPirate # Pirate: HFR fusion reactor boards
     - EngineeringBoards
     - CargoBoards
     - MedicalBoards

@@ -2,3 +2,35 @@
   parent: [ BaseCircuitboardRecipe, BaseGeneralMachineRecipeCategory ]
   id: MassDriverCircuitboard
   result: MassDriverCircuitboard
+
+# Hyper-torus Fusion Reactor (HFR) circuit board recipes - Pirate content
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseEngineeringMachineRecipeCategory ]
+  id: MachineHyperTorusFusionReactorCircuitboard
+  result: MachineHyperTorusFusionReactorCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseEngineeringMachineRecipeCategory ]
+  id: MachineHFRFuelInputCircuitboard
+  result: MachineHFRFuelInputCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseEngineeringMachineRecipeCategory ]
+  id: MachineHFRModeratorInputCircuitboard
+  result: MachineHFRModeratorInputCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseEngineeringMachineRecipeCategory ]
+  id: MachineHFRWasteOutputCircuitboard
+  result: MachineHFRWasteOutputCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseEngineeringMachineRecipeCategory ]
+  id: MachineHFRInterfaceCircuitboard
+  result: MachineHFRInterfaceCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseEngineeringMachineRecipeCategory ]
+  id: MachineHFRCornerCircuitboard
+  result: MachineHFRCornerCircuitboard

@@ -191,6 +191,16 @@ namespace Content.Shared.Atmos
             [Gas.Nitrium] = Loc.GetString("gas-nitrium-abbreviation"),
             [Gas.Pluoxium] = Loc.GetString("gas-pluoxium-abbreviation"),
             // Goobstation End
+            // Pirate - /tg/ HFR gases
+            [Gas.HyperNoblium] = Loc.GetString("gas-hyper-noblium-abbreviation"),
+            [Gas.AntiNoblium] = Loc.GetString("gas-anti-noblium-abbreviation"),
+            [Gas.Hydrogen] = Loc.GetString("gas-hydrogen-abbreviation"),
+            [Gas.Helium] = Loc.GetString("gas-helium-abbreviation"),
+            [Gas.ProtoNitrate] = Loc.GetString("gas-proto-nitrate-abbreviation"),
+            [Gas.Zauker] = Loc.GetString("gas-zauker-abbreviation"),
+            [Gas.Miasma] = Loc.GetString("gas-miasma-abbreviation"),
+            [Gas.Halon] = Loc.GetString("gas-halon-abbreviation"),
+            // Pirate end
         };
 
         #region Excited Groups
@@ -220,7 +230,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 13; // Assmos - /tg/ gases
+        public const int TotalNumberOfGases = 21; // Assmos - /tg/ gases // Pirate: +8 HFR gases (H-Nob, A-Nob, H2, He, PN, Zauker, Miasma, Halon)
 
         /// <summary>
         ///     This is the actual length of the gases arrays in mixtures.
@@ -414,5 +424,15 @@ namespace Content.Shared.Atmos
         Healium = 10, // Assmos - /tg/ gases
         Nitrium = 11, // Assmos - /tg/ gases
         Pluoxium = 12, // Assmos - /tg/ gases
+        // Pirate - /tg/ HFR gases
+        HyperNoblium = 13, // /tg/ hyper-noblium
+        AntiNoblium = 14, // /tg/ anti-noblium
+        Hydrogen = 15, // /tg/ hydrogen (HFR fuel)
+        Helium = 16, // /tg/ helium (HFR fusion byproduct)
+        ProtoNitrate = 17, // /tg/ proto-nitrate (HFR moderator gas)
+        Zauker = 18, // /tg/ zauker (HFR moderator gas)
+        Miasma = 19, // /tg/ miasma (biological filth gas)
+        Halon = 20, // /tg/ halon (fire suppressant)
+        // Pirate end
     }
 }

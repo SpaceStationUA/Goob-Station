@@ -312,3 +312,6 @@ Resources/MapImages
 
 config.json
 .github/workflows/update-prs.yaml
+
+# Freebuff agent working files (converter tools, previews, local db)
+.freebuff/ # Pirate

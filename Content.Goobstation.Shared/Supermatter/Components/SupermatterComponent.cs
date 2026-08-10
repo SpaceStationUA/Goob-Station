@@ -56,9 +56,6 @@ public sealed partial class SupermatterComponent : Component
     [DataField("teslaSpawnPrototype")]
     public string TeslaPrototypeId = "TeslaEnergyBall";
 
-    [DataField("supermatterKudzuSpawnPrototype")]
-    public string SupermatterKudzuPrototypeId = "SupermatterKudzu";
-
     [ViewVariables(VVAccess.ReadWrite)]
     public float Power;
 

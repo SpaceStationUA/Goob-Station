@@ -1,0 +1,501 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# ---------------------------------------------------------------------------
+# Hyper-torus Fusion Reactor — a 3x3 multipart machine.
+#
+# Layout (offsets from the core, which is the master entity):
+#   corner   waste_output   corner      y: -1..1, x: -1..1
+#   fuel     core           moderator
+#   corner   interface      corner
+#
+# Parts face outward: fuel points West, moderator East, waste North,
+# interface South. Corners are oriented so their bracket hugs the core.
+# ---------------------------------------------------------------------------
+
+# --- Parts ---------------------------------------------------------------
+
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: BaseHFRPart
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/hfr_parts.rsi
+  - type: Appearance
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Rotatable
+  - type: Anchorable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        - HighImpassable
+  - type: MultipartMachinePart
+
+- type: entity
+  parent: BaseHFRPart
+  id: HFRFuelInputPart
+  name: HFR fuel input port
+  description: Input port for the Hypertorus Fusion Reactor, designed to take in fuels. The optimal fuel mix is a 50/50 split.
+  components:
+  - type: Sprite
+    layers:
+    - state: fuel_input
+      map: [ "enum.HFRVisualLayers.Base" ]
+    - state: fuel_input_active
+      map: [ "enum.HFRVisualLayers.Active" ]
+      visible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.HFRVisuals.State:
+        enum.HFRVisualLayers.Base:
+          Idle: { state: fuel_input, visible: true }
+          Active: { state: fuel_input, visible: true }
+          Broken: { state: fuel_input, visible: true }
+        enum.HFRVisualLayers.Active:
+          Idle: { visible: false }
+          Active: { state: fuel_input_active, visible: true }
+          Broken: { visible: false }
+  - type: HFRFuelInput
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 0
+        volume: 2000
+      pipe1: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 1
+        volume: 2000
+      pipe2: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 2
+        volume: 2000
+  - type: Construction
+    graph: HFRFuelInputPart
+    node: completed
+
+- type: entity
+  parent: BaseHFRPart
+  id: HFRFuelInputPartUnfinished
+  name: HFR fuel input port
+  suffix: Unfinished
+  description: Input port for the Hypertorus Fusion Reactor. It looks unfinished.
+  components:
+  - type: Sprite
+    layers:
+    - state: fuel_input_open
+  - type: HFRFuelInput
+  - type: Construction
+    graph: HFRFuelInputPart
+    node: start
+    defaultTarget: completed
+
+- type: entity
+  parent: BaseHFRPart
+  id: HFRModeratorInputPart
+  name: HFR moderator input port
+  description: Moderator port for the Hypertorus Fusion Reactor, designed to move gases inside the machine to cool and control the flow of the reaction.
+  components:
+  - type: Sprite
+    layers:
+    - state: moderator_input
+      map: [ "enum.HFRVisualLayers.Base" ]
+    - state: moderator_input_active
+      map: [ "enum.HFRVisualLayers.Active" ]
+      visible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.HFRVisuals.State:
+        enum.HFRVisualLayers.Base:
+          Idle: { state: moderator_input, visible: true }
+          Active: { state: moderator_input, visible: true }
+          Broken: { state: moderator_input, visible: true }
+        enum.HFRVisualLayers.Active:
+          Idle: { visible: false }
+          Active: { state: moderator_input_active, visible: true }
+          Broken: { visible: false }
+  - type: HFRModeratorInput
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 0
+        volume: 2000
+      pipe1: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 1
+        volume: 2000
+      pipe2: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 2
+        volume: 2000
+  - type: Construction
+    graph: HFRModeratorInputPart
+    node: completed
+
+- type: entity
+  parent: BaseHFRPart
+  id: HFRModeratorInputPartUnfinished
+  name: HFR moderator input port
+  suffix: Unfinished
+  description: Moderator port for the Hypertorus Fusion Reactor. It looks unfinished.
+  components:
+  - type: Sprite
+    layers:
+    - state: moderator_input_open
+  - type: HFRModeratorInput
+  - type: Construction
+    graph: HFRModeratorInputPart
+    node: start
+    defaultTarget: completed
+
+- type: entity
+  parent: BaseHFRPart
+  id: HFRWasteOutputPart
+  name: HFR waste output port
+  description: Waste port for the Hypertorus Fusion Reactor, designed to output the hot waste gases coming from the core of the machine.
+  components:
+  - type: Sprite
+    layers:
+    - state: waste_output
+      map: [ "enum.HFRVisualLayers.Base" ]
+    - state: waste_output_active
+      map: [ "enum.HFRVisualLayers.Active" ]
+      visible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.HFRVisuals.State:
+        enum.HFRVisualLayers.Base:
+          Idle: { state: waste_output, visible: true }
+          Active: { state: waste_output, visible: true }
+          Broken: { state: waste_output, visible: true }
+        enum.HFRVisualLayers.Active:
+          Idle: { visible: false }
+          Active: { state: waste_output_active, visible: true }
+          Broken: { visible: false }
+  - type: HFRWasteOutput
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 0
+        volume: 2000
+      pipe1: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 1
+        volume: 2000
+      pipe2: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 2
+        volume: 2000
+  - type: Construction
+    graph: HFRWasteOutputPart
+    node: completed
+
+- type: entity
+  parent: BaseHFRPart
+  id: HFRWasteOutputPartUnfinished
+  name: HFR waste output port
+  suffix: Unfinished
+  description: Waste port for the Hypertorus Fusion Reactor. It looks unfinished.
+  components:
+  - type: Sprite
+    layers:
+    - state: waste_output_open
+  - type: HFRWasteOutput
+  - type: Construction
+    graph: HFRWasteOutputPart
+    node: start
+    defaultTarget: completed
+
+- type: entity
+  parent: BaseHFRPart
+  id: HFRInterfacePart
+  name: HFR interface
+  description: Interface for the HFR to control the flow of the reaction.
+  components:
+  - type: Sprite
+    layers:
+    - state: interface
+      map: [ "enum.HFRVisualLayers.Base" ]
+    - state: interface_active
+      map: [ "enum.HFRVisualLayers.Active" ]
+      visible: false
+    # Small coolant-port marker on the outward edge: shows where to hook up the
+    # cooling loop (the interface part is the coolant port). 4-direction state so
+    # it rotates together with the part.
+    - state: interface_coolant
+  - type: GenericVisualizer
+    visuals:
+      enum.HFRVisuals.State:
+        enum.HFRVisualLayers.Base:
+          Idle: { state: interface, visible: true }
+          Active: { state: interface, visible: true }
+          Broken: { state: interface, visible: true }
+        enum.HFRVisualLayers.Active:
+          Idle: { visible: false }
+          Active: { state: interface_active, visible: true }
+          Broken: { visible: false }
+  - type: HFRInterface
+  - type: NodeContainer
+    nodes:
+      pipe: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 0
+        volume: 2000
+      pipe1: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 1
+        volume: 2000
+      pipe2: !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+        pipeLayer: 2
+        volume: 2000
+  - type: Construction
+    graph: HFRInterfacePart
+    node: completed
+
+- type: entity
+  parent: BaseHFRPart
+  id: HFRInterfacePartUnfinished
+  name: HFR interface
+  suffix: Unfinished
+  description: Interface for the HFR. It looks unfinished.
+  components:
+  - type: Sprite
+    layers:
+    - state: interface_open
+  - type: HFRInterface
+  - type: Construction
+    graph: HFRInterfacePart
+    node: start
+    defaultTarget: completed
+
+- type: entity
+  parent: BaseHFRPart
+  id: HFRCornerPart
+  name: HFR corner
+  description: Structural piece of the machine.
+  components:
+  - type: Sprite
+    layers:
+    - state: corner
+      map: [ "enum.HFRVisualLayers.Base" ]
+    - state: corner_active
+      map: [ "enum.HFRVisualLayers.Active" ]
+      visible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.HFRVisuals.State:
+        enum.HFRVisualLayers.Base:
+          Idle: { state: corner, visible: true }
+          Active: { state: corner, visible: true }
+          Broken: { state: corner, visible: true }
+        enum.HFRVisualLayers.Active:
+          Idle: { visible: false }
+          Active: { state: corner_active, visible: true }
+          Broken: { visible: false }
+  - type: HFRCorner
+  - type: Construction
+    graph: HFRCornerPart
+    node: completed
+
+- type: entity
+  parent: BaseHFRPart
+  id: HFRCornerPartUnfinished
+  name: HFR corner
+  suffix: Unfinished
+  description: Structural piece of the machine. It looks unfinished.
+  components:
+  - type: Sprite
+    layers:
+    - state: corner_open
+  - type: HFRCorner
+  - type: Construction
+    graph: HFRCornerPart
+    node: start
+    defaultTarget: completed
+
+# --- Master (core) --------------------------------------------------------
+
+- type: entity
+  parent: BaseStructure
+  id: HyperTorusFusionReactor
+  name: hyper-torus fusion reactor
+  description: A fusion reactor that consumes fuel to produce rare gases. Maintaining this is really hard. Expect to spend half an hour building supporting infrastructure.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/hfr_parts.rsi
+    layers:
+    - state: core
+      map: [ "enum.HFRVisualLayers.Base" ]
+    - state: core_active
+      map: [ "enum.HFRVisualLayers.Active" ]
+      visible: false
+    - state: crack
+      map: [ "enum.HFRVisualLayers.Crack" ]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.HFRVisuals.State:
+        enum.HFRVisualLayers.Base:
+          Idle: { state: core, visible: true }
+          Active: { state: core, visible: true }
+          Broken: { state: core, visible: true }
+        enum.HFRVisualLayers.Active:
+          Idle: { visible: false }
+          Active: { state: core_active, visible: true }
+          Broken: { visible: false }
+        enum.HFRVisualLayers.Crack:
+          Idle: { visible: false }
+          Active: { visible: false }
+          Broken: { state: crack, visible: true }
+  - type: AmbientSound
+    volume: -6
+    range: 12
+    enabled: false
+    sound:
+      path: /Audio/_Pirate/Machines/HFR/hypertorus_nominal.wav
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        - HighImpassable
+  - type: InteractionOutline
+  - type: Anchorable
+    delay: 10
+  - type: Rotatable
+    rotateWhileAnchored: false
+  - type: Damageable
+    damageModifierSet: StructuralReactorCasing
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 2000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: HFR
+  - type: WiresPanel
+  - type: Machine
+    board: MachineHyperTorusFusionReactorCircuitboard
+  - type: GuideHelp
+    guides:
+    - HFR
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: Construction
+    graph: Machine
+    node: machine
+    containers:
+    - machine_parts
+    - machine_board
+  - type: MultipartMachine
+    parts:
+      enum.HFRParts.FuelInput:
+        component: HFRFuelInput
+        offset: -1, 0
+        rotation: 270
+        ghostProto: HFRFuelInputPart
+        graph: HFRFuelInputPart
+        expectedNode: completed
+      enum.HFRParts.ModeratorInput:
+        component: HFRModeratorInput
+        offset: 1, 0
+        rotation: 90
+        ghostProto: HFRModeratorInputPart
+        graph: HFRModeratorInputPart
+        expectedNode: completed
+      enum.HFRParts.WasteOutput:
+        component: HFRWasteOutput
+        offset: 0, 1
+        rotation: 180
+        ghostProto: HFRWasteOutputPart
+        graph: HFRWasteOutputPart
+        expectedNode: completed
+      enum.HFRParts.Interface:
+        component: HFRInterface
+        offset: 0, -1
+        rotation: 0
+        ghostProto: HFRInterfacePart
+        graph: HFRInterfacePart
+        expectedNode: completed
+      enum.HFRParts.CornerNW:
+        component: HFRCorner
+        offset: -1, 1
+        rotation: 180
+        ghostProto: HFRCornerPart
+        graph: HFRCornerPart
+        expectedNode: completed
+      enum.HFRParts.CornerNE:
+        component: HFRCorner
+        offset: 1, 1
+        rotation: 90
+        ghostProto: HFRCornerPart
+        graph: HFRCornerPart
+        expectedNode: completed
+      enum.HFRParts.CornerSW:
+        component: HFRCorner
+        offset: -1, -1
+        rotation: 270
+        ghostProto: HFRCornerPart
+        graph: HFRCornerPart
+        expectedNode: completed
+      enum.HFRParts.CornerSE:
+        component: HFRCorner
+        offset: 1, -1
+        rotation: 0
+        ghostProto: HFRCornerPart
+        graph: HFRCornerPart
+        expectedNode: completed
+  - type: AtmosDevice
+  - type: RadiationSource
+    intensity: 0
+  - type: ActivatableUI
+    key: enum.HFRUiKey.Key
+  - type: ActivatableUIRequiresAnchor
+  - type: UserInterface
+    interfaces:
+      enum.HFRUiKey.Key:
+        type: HFRBoundUserInterface

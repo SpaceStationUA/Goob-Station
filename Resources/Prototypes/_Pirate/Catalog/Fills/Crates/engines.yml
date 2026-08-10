@@ -1,0 +1,24 @@
+# Hyper-torus Fusion Reactor (HFR) - Pirate content
+
+- type: entity
+  parent: CrateEngineeringSecure
+  id: CrateEngineeringHFR
+  name: HFR board crate
+  description: Contains circuit boards for the hyper-torus fusion reactor core and all of its ports.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: MachineHyperTorusFusionReactorCircuitboard
+        - id: MachineHFRFuelInputCircuitboard
+        - id: MachineHFRModeratorInputCircuitboard
+        - id: MachineHFRWasteOutputCircuitboard
+        - id: MachineHFRInterfaceCircuitboard
+        - id: MachineHFRCornerCircuitboard
+        - id: MachineHFRFuelInputCircuitboard
+        - id: MachineHFRModeratorInputCircuitboard
+        - id: MachineHFRWasteOutputCircuitboard
+        - id: MachineHFRInterfaceCircuitboard
+        - id: MachineHFRCornerCircuitboard
+          amount: 4

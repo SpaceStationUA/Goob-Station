@@ -25,8 +25,7 @@ public abstract class SharedSupermatterSystem : EntitySystem
     {
         Explosion = 0,
         Singulo = 1,
-        Tesla = 2,
-        Cascade = 3 // save for later
+        Tesla = 2, // Pirate: Cascade (resonance cascade) removed - it spawned a kudzu prototype that doesn't exist on this server
     }
     #region Getters/Setters
 

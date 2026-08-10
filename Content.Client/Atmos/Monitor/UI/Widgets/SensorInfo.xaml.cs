@@ -53,6 +53,11 @@ public sealed partial class SensorInfo : BoxContainer
 
         foreach (var (gas, amount) in data.Gases)
         {
+            // Pirate: skip gases the server sent no threshold for (e.g. newly added HFR gases)
+            // so we never throw on a missing dictionary key.
+            if (!data.GasThresholds.TryGetValue(gas, out var gasThreshold))
+                continue;
+
             var label = new RichTextLabel();
 
             var fractionGas = amount / data.TotalMoles;
@@ -62,14 +67,13 @@ public sealed partial class SensorInfo : BoxContainer
 
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
                 ("gas", Loc.GetString(gasName)),
-                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
+                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, gasThreshold)), // Pirate
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
             GasContainer.AddChild(label);
             _gasLabels.Add(gas, label);
 
-            var threshold = data.GasThresholds[gas];
-            var gasThresholdControl = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title"), threshold, AtmosMonitorThresholdType.Gas, gas, 100);
+            var gasThresholdControl = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title"), gasThreshold, AtmosMonitorThresholdType.Gas, gas, 100); // Pirate
             gasThresholdControl.Margin = new Thickness(20, 2, 2, 2);
             gasThresholdControl.ThresholdDataChanged += (type, alarmThreshold, arg3) =>
             {
@@ -134,9 +138,13 @@ public sealed partial class SensorInfo : BoxContainer
             ProtoId<GasPrototype> gasProtoId = atmosphereSystem.GetGas(gas);
             var gasName = _prototypeManager.Index(gasProtoId).Name;
 
+            // Pirate: skip gases the server sent no threshold for (e.g. newly added HFR gases).
+            if (!data.GasThresholds.TryGetValue(gas, out var gasThreshold))
+                continue;
+
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
                 ("gas", Loc.GetString(gasName)),
-                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
+                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, gasThreshold)), // Pirate
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
         }

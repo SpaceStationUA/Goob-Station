@@ -1,0 +1,16 @@
+ent-AtmosphericsProtoNitrate = { ent-ProtoNitrateCanister }
+    .desc = { ent-ProtoNitrateCanister.desc }
+ent-AtmosphericsZauker = { ent-ZaukerCanister }
+    .desc = { ent-ZaukerCanister.desc }
+ent-AtmosphericsMiasma = { ent-MiasmaCanister }
+    .desc = { ent-MiasmaCanister.desc }
+ent-AtmosphericsHalon = { ent-HalonCanister }
+    .desc = { ent-HalonCanister.desc }
+ent-AtmosphericsHydrogen = { ent-HydrogenCanister }
+    .desc = { ent-HydrogenCanister.desc }
+ent-AtmosphericsHelium = { ent-HeliumCanister }
+    .desc = { ent-HeliumCanister.desc }
+ent-AtmosphericsHyperNoblium = { ent-HyperNobliumCanister }
+    .desc = { ent-HyperNobliumCanister.desc }
+ent-AtmosphericsAntiNoblium = { ent-AntiNobliumCanister }
+    .desc = { ent-AntiNobliumCanister.desc }

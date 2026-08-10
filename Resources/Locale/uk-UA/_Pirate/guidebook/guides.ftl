@@ -3,6 +3,8 @@
 guide-entry-plumbingflow = Потік реагентів
 guide-entry-plumbingmachines = Трубопровідні машини
 guidebook-pirate-plumbing = Реагентні трубопроводи
+# Pirate
+guidebook-pirate-gasses = Екзотичні гази
 guidebook-pirate-plumbing-flow = Потік реагентів
 guidebook-pirate-plumbing-machines = Трубопровідні машини
 

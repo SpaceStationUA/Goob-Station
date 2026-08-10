@@ -1,0 +1,13 @@
+# HFR circuit boards - Pirate content
+# Unlocked by the Fusion Reactors research; the pack itself is added to the
+# circuit imprinter's dynamicPacks in the core lathe.yml.
+
+- type: latheRecipePack
+  id: EngineeringBoardsPirate
+  recipes:
+  - MachineHyperTorusFusionReactorCircuitboard
+  - MachineHFRFuelInputCircuitboard
+  - MachineHFRModeratorInputCircuitboard
+  - MachineHFRWasteOutputCircuitboard
+  - MachineHFRInterfaceCircuitboard
+  - MachineHFRCornerCircuitboard

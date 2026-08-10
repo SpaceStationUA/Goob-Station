@@ -1,0 +1,81 @@
+# Exotic gas canisters (HFR gases) - Pirate content
+
+- type: cargoProduct
+  id: AtmosphericsProtoNitrate
+  icon:
+    sprite: _Pirate/Structures/Storage/canister.rsi
+    state: proto_nitrate
+  product: ProtoNitrateCanister
+  cost: 20000 # HFR moderator gas, tier 3+ production (price doubled per mole)
+  category: cargoproduct-category-name-atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsZauker
+  icon:
+    sprite: _Pirate/Structures/Storage/canister.rsi
+    state: zauker
+  product: ZaukerCanister
+  cost: 24000 # HFR energy moderator gas (price doubled per mole)
+  category: cargoproduct-category-name-atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsMiasma
+  icon:
+    sprite: _Pirate/Structures/Storage/canister.rsi
+    state: miasma
+  product: MiasmaCanister
+  cost: 6000 # HFR byproduct gas (price doubled per mole)
+  category: cargoproduct-category-name-atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsHalon
+  icon:
+    sprite: _Pirate/Structures/Storage/canister.rsi
+    state: halon
+  product: HalonCanister
+  cost: 8000 # fire suppression gas (price doubled per mole)
+  category: cargoproduct-category-name-atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsHydrogen
+  icon:
+    sprite: _Pirate/Structures/Storage/canister.rsi
+    state: hydrogen
+  product: HydrogenCanister
+  cost: 10000 # HFR fuel gas, made from tritium via proto-nitrate
+  category: cargoproduct-category-name-atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsHelium
+  icon:
+    sprite: _Pirate/Structures/Storage/canister.rsi
+    state: helium
+  product: HeliumCanister
+  cost: 8000 # inert HFR byproduct gas
+  category: cargoproduct-category-name-atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsHyperNoblium
+  icon:
+    sprite: _Pirate/Structures/Storage/canister.rsi
+    state: hypernoblium
+  product: HyperNobliumCanister
+  cost: 40000 # rare cryo gas, stops all gas reactions; only from cryo reactor
+  category: cargoproduct-category-name-atmospherics
+  group: market
+
+- type: cargoProduct
+  id: AtmosphericsAntiNoblium
+  icon:
+    sprite: _Pirate/Structures/Storage/canister.rsi
+    state: antinoblium
+  product: AntiNobliumCanister
+  cost: 50000 # rarest gas, replicates itself; only from HFR PL5-6
+  category: cargoproduct-category-name-atmospherics
+  group: market

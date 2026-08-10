@@ -1,0 +1,11 @@
+# HFR board crate - Pirate content
+
+- type: cargoProduct
+  id: EngineHFR
+  icon:
+    sprite: _Pirate/Structures/Machines/hfr_parts.rsi
+    state: core
+  product: CrateEngineeringHFR
+  cost: 5000
+  category: cargoproduct-category-name-engineering
+  group: market
