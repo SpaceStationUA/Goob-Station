@@ -1,0 +1,12 @@
+
+- type: startingGear
+  id: DarthVaderGear
+  equipment:
+    jumpsuit: ClothingUniformBlackDeath
+    shoes: ClothingShoesChameleonNoSlips
+    head: ClothingHeadHelmetDarthVader
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitDarthVader
+    id: GalacticRespublicPDA
+    pocket1: EnergySwordDarthVader
+    pocket2: RadioHandheld

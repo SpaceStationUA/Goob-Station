@@ -1,0 +1,19 @@
+- type: entity
+  parent: IDCardStandard
+  id: GalacticRespublicIDCard
+  name: "iD-карта Галактичної Республіки"
+  suffix: StarWars
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+  - type: Item
+    heldPrefix: blue
+  - type: NanoChatCard # DeltaV
+    listNumber: false
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Access
+    groups:
+    - AllAccess
+    - Silicon

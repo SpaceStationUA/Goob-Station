@@ -1,0 +1,18 @@
+# - type: TetherAbility
+#   maxDistance: 10
+#   maxForce: 200
+#   frequency: 10
+#   dampingRatio: 2
+#   massLimit: 100
+#   canUnanchor: false
+#   canTetherAlive: false
+
+# - type: entityTargetAction
+#   id: TetherAbility
+#   name: Tether
+#   description: Tethers a target.
+#   icon:
+#     sprite: Objects/Weapons/Guns/Launchers/harpoon.rsi
+#     state: icon
+#   event: !type:TetherAbilityActionEvent
+#   useDelay: 1
