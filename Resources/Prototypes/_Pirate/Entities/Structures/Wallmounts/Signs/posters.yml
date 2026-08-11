@@ -296,7 +296,7 @@
 - type: entity
   parent: PosterBase
   id: PosterSolMisc
-  name: "ВсеСоларіанський обрітальний Маркетплейс!"
+  name: "ВсеСоларіанський орбітальний Маркетплейс!"
   description: "Доставка до усіх куточків галактики!"
   suffix: SAN
   components:
@@ -307,7 +307,7 @@
 - type: entity
   parent: PosterBase
   id: PosterSolMilitaryFlag
-  name: "Постер прапору Військови Сил Соларіанського Альянсу"
+  name: "Постер прапору Військових Сил Соларіанського Альянсу"
   description: "Пам'ять усім героям!"
   suffix: SAN
   components:
