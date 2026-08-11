@@ -7,8 +7,8 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Structures/Wallmounts/posters.rsi
-        state: random_legit
+      - sprite: _Pirate/Structures/Wallmounts/Posters/solPosters.rsi
+        state: random_sol
   - type: RandomSpawner
     offset: 0
     prototypes:
