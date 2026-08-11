@@ -12,6 +12,10 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: _Pirate/Objects/Weapons/Guns/Battery/energygun_pistol.rsi
+  - type: ItemSlots
+    slots:
+      - name: upgrade_slot
+        startingItem: null
   - type: Gun
     minAngle: 42
     maxAngle: 64
