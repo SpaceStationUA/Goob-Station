@@ -216,3 +216,9 @@
   equipment:
     outerClothing: ClothingOuterCoatMNKBlackJacket
   groupBy: "CoatJacket"
+
+- type: loadout
+  id: WardrobeCoatSpaceAsshole
+  equipment:
+    outerClothing: ClothingOuterCoatSpaceAsshole
+  groupBy: "CoatJacket"
