@@ -49,6 +49,48 @@ public sealed class WoundableVisualsSystem : VisualizerSystem<WoundableVisualsCo
         InitBleeding(ent);
     }
 
+    #region Pirate: feroxi submerge
+    /// <summary>
+    /// Hides or restores every wound/bleed overlay on a body. Restoring recomputes visibility from the
+    /// current wound state rather than from a remembered value, so it is safe to call at any time.
+    /// Exists so a system that hides a whole mob (submerging) can put these layers back correctly -
+    /// nothing else re-asserts them, since they're driven by wound events rather than appearance.
+    /// </summary>
+    public void SetWoundVisualsVisible(EntityUid body, bool visible)
+    {
+        if (!TryComp(body, out SpriteComponent? bodySprite))
+            return;
+
+        foreach (var (partId, _) in _body.GetBodyChildren(body))
+        {
+            if (!TryComp<WoundableVisualsComponent>(partId, out var visuals))
+                continue;
+
+            if (visible)
+            {
+                UpdateWoundableVisuals((partId, visuals), (body, bodySprite));
+                continue;
+            }
+
+            if (visuals.DamageOverlayGroups != null)
+            {
+                foreach (var (group, _) in visuals.DamageOverlayGroups)
+                {
+                    SetLayerHidden((body, bodySprite), BuildLayerKey(visuals.OccupiedLayer, group));
+                }
+            }
+
+            SetLayerHidden((body, bodySprite), BuildLayerKey(visuals.OccupiedLayer, BleedingSuffix));
+        }
+    }
+
+    private void SetLayerHidden(Entity<SpriteComponent?> ent, string layerKey)
+    {
+        if (_sprite.LayerMapTryGet(ent, layerKey, out var layer, false))
+            _sprite.LayerSetVisible(ent, layer, false);
+    }
+    #endregion
+
     private void InitBleeding(Entity<WoundableVisualsComponent> ent)
     {
         if (ent.Comp.BleedingOverlay == null)

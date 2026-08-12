@@ -1,0 +1,7 @@
+- type: alert
+  id: FeroxiUnderwater
+  # Plain textures use the bare-path form. A mapping with "sprite:" deserializes as SpriteSpecifier.Rsi,
+  # which expects an .rsi directory, and the whole prototype fails to load if pointed at a .png.
+  icons: [ /Textures/_Pirate/Interface/Actions/feroxi_dive.png ]
+  name: alerts-feroxi-underwater-name
+  description: alerts-feroxi-underwater-desc

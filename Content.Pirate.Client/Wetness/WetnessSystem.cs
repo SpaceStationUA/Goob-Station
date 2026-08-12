@@ -12,7 +12,13 @@ public sealed class WetnessSystem : SharedWetnessSystem
 {
     private const string DropletRsi = "_Pirate/Effects/wetness.rsi";
     private const string DropletState = "droplets";
-    private const string DropletLayerKey = "wetness-droplets";
+
+    /// <summary>
+    /// The droplet layer is present and visible for exactly as long as <see cref="WetVisualsComponent"/>
+    /// is - it is added on startup, removed on shutdown, and never toggled. That makes component
+    /// presence a reliable way for another system to restore it after temporarily hiding it.
+    /// </summary>
+    public const string DropletLayerKey = "wetness-droplets";
 
     [Dependency] private readonly SpriteSystem _sprite = null!;
 
