@@ -273,6 +273,17 @@ public sealed record HfrRecipeData(
 /// </summary>
 public static class HfrRecipes
 {
+    static HfrRecipes()
+    {
+        // All must have one entry per HfrRecipe value (no sentinel is defined
+        // today, but if one is ever added this fails loudly instead of letting
+        // the reactor index out of bounds at runtime). // Pirate
+        var recipeCount = Enum.GetValues<HfrRecipe>().Length;
+        if (All.Length != recipeCount)
+            throw new InvalidOperationException(
+                $"HfrRecipes.All contains {All.Length} entries but HfrRecipe defines {recipeCount} values; fix the recipe table or the enum.");
+    }
+
     public static readonly HfrRecipeData[] All =
     [
         // Plasma + Oxygen: main CO2, other H2O; tiers CO2/H2O/Frezon/N2O/Pluoxium/Halon (per /tg/).

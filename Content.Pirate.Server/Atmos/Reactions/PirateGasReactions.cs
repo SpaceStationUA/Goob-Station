@@ -77,6 +77,7 @@ public sealed partial class HyperNobliumFormationReaction : IGasReactionEffect
         // Energy released: NOBLIUM_FORMATION_ENERGY / max(bz_moles, 1)
         // Without BZ this is EXTREMELY energetic — 2e7 J per mole!
         var energyReleased = nobFormed * NobliumAtmospherics.HyperNobliumFormationEnergy / Math.Max(initBZ, 1f);
+        energyReleased /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise // Pirate
 
         var heatCap = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (heatCap > Atmospherics.MinimumHeatCapacity)
@@ -113,6 +114,8 @@ public sealed partial class AntiNobliumReplicationReaction : IGasReactionEffect
 
         // Calculate reaction rate: antinoblium_moles / 90
         var reactionRate = Math.Min(antiNobliumMoles / NobliumAtmospherics.AntiNobliumConversionDivisor, totalNotAntiNoblium);
+        if (reactionRate < Atmospherics.GasMinMoles)
+            return ReactionResult.NoReaction;
 
         // Near-zero: clear remaining gases
         var clearRemaining = totalNotAntiNoblium < Atmospherics.MinimumMolesDeltaToMove;
@@ -186,9 +189,10 @@ public sealed partial class HydrogenFireReaction : IGasReactionEffect
         var initialHydrogen = mixture.GetMoles(Gas.Hydrogen);
         var initialOxygen = mixture.GetMoles(Gas.Oxygen);
 
-        // /tg/ h2fire: min(H2 / 2, O2 / (2 * 10), H2, O2 * 2)
-        var burnedFuel = Math.Min(initialHydrogen / 2f, initialOxygen / (2f * 10f));
-        burnedFuel = Math.Min(burnedFuel, initialHydrogen);
+        // /tg/ h2fire rate limit and mass balance: burn at most H2/2 per tick and
+        // never more than the O2 can feed (burnedFuel * 0.5 O2 consumed). The old
+        // O2 / (2 * 10) limiter was too tight and starved the burn. // Pirate
+        var burnedFuel = Math.Min(initialHydrogen / 2f, initialHydrogen);
         burnedFuel = Math.Min(burnedFuel, initialOxygen * 2f);
 
         if (burnedFuel > 0f)
@@ -252,6 +256,7 @@ public sealed partial class HalonOxygenAbsorptionReaction : IGasReactionEffect
 
         // Endothermic: absorbs heat, cooling the fire down.
         var energyUsed = heatEfficiency * PirateAtmospherics.HalonCombustionEnergy;
+        energyUsed /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise // Pirate
         var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
             mixture.Temperature = Math.Max((temperature * oldHeatCapacity - energyUsed) / newHeatCapacity, Atmospherics.TCMB);
@@ -331,6 +336,7 @@ public sealed partial class ProtoNitrateFormationReaction : IGasReactionEffect
 
         // Exothermic.
         var energyReleased = heatEfficiency * PirateAtmospherics.PNFormationEnergy;
+        energyReleased /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise // Pirate
         var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
             mixture.Temperature = Math.Max((temperature * oldHeatCapacity + energyReleased) / newHeatCapacity, Atmospherics.TCMB);
@@ -364,6 +370,7 @@ public sealed partial class ProtoNitrateHydrogenResponseReaction : IGasReactionE
 
         // Endothermic.
         var energyUsed = produced * PirateAtmospherics.PNHydrogenConversionEnergy;
+        energyUsed /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise // Pirate
         var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
             mixture.Temperature = Math.Max((mixture.Temperature * oldHeatCapacity - energyUsed) / newHeatCapacity, Atmospherics.TCMB);
@@ -403,6 +410,7 @@ public sealed partial class ProtoNitrateBzaseReaction : IGasReactionEffect
 
         // Exothermic.
         var energyReleased = consumed * PirateAtmospherics.PNBzaseEnergy;
+        energyReleased /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise // Pirate
         var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
             mixture.Temperature = Math.Max((temperature * oldHeatCapacity + energyReleased) / newHeatCapacity, Atmospherics.TCMB);
@@ -454,6 +462,7 @@ public sealed partial class ProtoNitrateTritiumResponseReaction : IGasReactionEf
 
         // Exothermic.
         var energyReleased = produced * PirateAtmospherics.PNTritiumConversionEnergy;
+        energyReleased /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise // Pirate
         var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
             mixture.Temperature = Math.Max((temperature * oldHeatCapacity + energyReleased) / newHeatCapacity, Atmospherics.TCMB);
@@ -503,6 +512,7 @@ public sealed partial class ZaukerFormationReaction : IGasReactionEffect
 
         // Endothermic (matches /tg/ zauker_formation: energy is subtracted).
         var energyUsed = heatEfficiency * PirateAtmospherics.ZaukerFormationEnergy;
+        energyUsed /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise // Pirate
         var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
             mixture.Temperature = Math.Max((temperature * oldHeatCapacity - energyUsed) / newHeatCapacity, Atmospherics.TCMB);
@@ -535,6 +545,7 @@ public sealed partial class ZaukerDecompositionReaction : IGasReactionEffect
 
         // Exothermic.
         var energyReleased = PirateAtmospherics.ZaukerDecompositionEnergy * burned;
+        energyReleased /= heatScale; // adjust energy to make sure speedup doesn't cause mega temperature rise // Pirate
         var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
             mixture.Temperature = Math.Max((mixture.Temperature * oldHeatCapacity + energyReleased) / newHeatCapacity, Atmospherics.TCMB);

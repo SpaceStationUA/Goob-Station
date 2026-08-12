@@ -186,16 +186,20 @@ public sealed partial class HFRComponent : Component
     // --- Gas mixes (server-authoritative) ---
 
     /// <summary>
-    ///     The fusion mix — where the fusion reaction happens.
+    ///     The fusion mix — where the fusion reaction happens. Persisted so the
+    ///     reactor state survives map saves. // Pirate
     /// </summary>
+    [DataField]
     public GasMixture FusionMix = new(HFRConstants.FusionMixVolume)
     {
         Temperature = Atmospherics.T20C
     };
 
     /// <summary>
-    ///     The moderator mix — controls the reaction.
+    ///     The moderator mix — controls the reaction. Persisted so the reactor
+    ///     state survives map saves. // Pirate
     /// </summary>
+    [DataField]
     public GasMixture ModeratorMix = new(HFRConstants.ModeratorMixVolume)
     {
         Temperature = Atmospherics.T20C

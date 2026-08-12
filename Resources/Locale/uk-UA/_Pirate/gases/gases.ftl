@@ -3,7 +3,7 @@
 # Абревіатури (повітряна тривога / показники атмосфери)
 gas-hyper-noblium-abbreviation = Г-Ноб
 gas-anti-noblium-abbreviation = А-Ноб
-gas-hydrogen-abbreviation = H₂
+gas-hydrogen-abbreviation = H2
 gas-helium-abbreviation = He
 gas-proto-nitrate-abbreviation = ПН
 gas-zauker-abbreviation = ЗКР
@@ -23,10 +23,10 @@ gases-halon = Галон
 # Назви та описи реагентів
 reagent-name-helium = гелій
 reagent-desc-helium = Надзвичайно інертний газ, що утворюється при синтезі водню.
-reagent-name-hyper-noblium = Гіпер-Ноблій
-reagent-desc-hyper-noblium = Надзвичайно інертний газ, що пригнічує газові реакції. Використовується як основне паливо для Hyper-torus Fusion Reactor для виробництва Анти-Ноблію. Дуже важкий та дорогий.
-reagent-name-anti-noblium = Анти-Ноблій
-reagent-desc-anti-noblium = Дивний газ, що розкладає всі інші гази на більше себе. Викликає радіаційні опіки при контакті зі шкірою. Використовується як паливо високого рівня для Hyper-torus Fusion Reactor та в рецептах кристалізатора високого рівня. Красиво світиться фіолетовим у повітрі. Дорогий — 10 кредитів за моль.
+reagent-name-hyper-noblium = гіпер-ноблій
+reagent-desc-hyper-noblium = Надзвичайно інертний газ, що пригнічує газові реакції. Використовується як основне паливо для Гіпертороїдного термоядерного реактора для виробництва Анти-Ноблію. Дуже важкий та дорогий.
+reagent-name-anti-noblium = анти-ноблій
+reagent-desc-anti-noblium = Дивний газ, що розкладає всі інші гази на більше себе. Викликає радіаційні опіки при контакті зі шкірою. Використовується як паливо високого рівня для Гіпертороїдного термоядерного реактора та в рецептах кристалізатора високого рівня. Красиво світиться фіолетовим у повітрі. Дорогий — 10 кредитів за моль.
 reagent-name-proto-nitrate = прото-нітрат
 reagent-desc-proto-nitrate = Дуже леткий газ, що по-різному реагує з різними газами.
 reagent-name-zauker = заукер

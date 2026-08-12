@@ -256,7 +256,7 @@ public sealed partial class HFRWindow : FancyWindow
         }
 
         body.AddChild(list);
-        RecipeHost.AddChild(new Collapsible("Recipe selection", body));
+        RecipeHost.AddChild(new Collapsible(Loc.GetString("hfr-window-recipe-selection"), body));
     }
 
     /// <summary>
@@ -317,7 +317,7 @@ public sealed partial class HFRWindow : FancyWindow
         // "energy level" = energyModifiers * max(T*heatModifier/100, 1) in J/kJ/MJ —
         // nonzero whenever the fusion mix is healthy and growing with temperature.
         var recipe = HfrRecipes.All[Math.Clamp(_currentRecipe, 0, HfrRecipes.All.Length - 1)];
-        var displayEnergy = energy / (HFRConstants.LightSpeed * HFRConstants.LightSpeed) * recipe.EnergyModifier;
+        var displayEnergy = energy / (HFRConstants.LightSpeed * HFRConstants.LightSpeed) / recipe.EnergyModifier;
         SetBar(EnergyBar, EnergyValue, displayEnergy, AutoScale(displayEnergy),
             FormatNumber(displayEnergy, "J"));
         SetBar(HeatLimiterBar, HeatLimiterValue, heatLimiter, AutoScale(heatLimiter), FormatNumber(heatLimiter, "K"));
@@ -398,15 +398,15 @@ public sealed partial class HFRWindow : FancyWindow
     {
         var show = !GasReadoutPanel.Visible;
         GasReadoutPanel.Visible = show;
-        ShowGasesButton.Text = show ? "Hide mix gases" : "Show mix gases";
+        ShowGasesButton.Text = show ? Loc.GetString("hfr-ui-hide-mix-gases") : Loc.GetString("hfr-ui-show-mix-gases");
         if (show)
             RefreshGasReadout();
     }
 
     private void RefreshGasReadout()
     {
-        FusionReadoutLabel.SetMessage(BuildGasReadout(_fusionGases, "No fuel gases present"));
-        ModeratorReadoutLabel.SetMessage(BuildGasReadout(_moderatorGases, "No moderator gases present"));
+        FusionReadoutLabel.SetMessage(BuildGasReadout(_fusionGases, Loc.GetString("hfr-window-no-fusion-gases")));
+        ModeratorReadoutLabel.SetMessage(BuildGasReadout(_moderatorGases, Loc.GetString("hfr-window-no-moderator-gases")));
     }
 
     /// <summary>
@@ -426,8 +426,9 @@ public sealed partial class HFRWindow : FancyWindow
         for (var i = 0; i < items.Count; i++)
         {
             var (gas, moles) = items[i];
-            var label = GasInfo.TryGetValue(gas, out var info) ? info.Label : gas.ToString();
-            var color = GasInfo.TryGetValue(gas, out var info2) ? info2.Color : Color.White;
+            var (label, color) = GasInfo.TryGetValue(gas, out var info)
+                ? (info.Label, info.Color)
+                : (gas.ToString(), Color.White);
             msg.PushColor(color);
             msg.AddText($"{label}: ");
             msg.Pop();
@@ -444,7 +445,7 @@ public sealed partial class HFRWindow : FancyWindow
     private void SetToggleState(Button button, bool on)
     {
         button.Pressed = on;
-        button.Text = on ? "On" : "Off";
+        button.Text = on ? Loc.GetString("hfr-ui-toggle-on") : Loc.GetString("hfr-ui-toggle-off");
     }
 
     /// <summary>
@@ -459,7 +460,7 @@ public sealed partial class HFRWindow : FancyWindow
         if (_syncingUi)
             return;
 
-        button.Text = pressed ? "On" : "Off";
+        button.Text = pressed ? Loc.GetString("hfr-ui-toggle-on") : Loc.GetString("hfr-ui-toggle-off");
         send?.Invoke(pressed);
     }
 
@@ -663,9 +664,11 @@ public sealed class HypertorusTempChart : Control
             ? 2.73f
             : Math.Clamp(minPositive, 2.73f, 20f);
 
+        // Clamp negative/fractional readings to level 0 so a cold reactor can never
+        // fall through to the default branch (which marks it at the meltdown tier).
         var prevLevel = 0f;
         var nextLevel = 0f;
-        switch ((int) _powerLevel)
+        switch ((int) Math.Max(0f, _powerLevel))
         {
             case 0: nextLevel = 500f; break;
             case 1: prevLevel = 500f; nextLevel = 1000f; break;

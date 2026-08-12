@@ -14,6 +14,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
+using Content.Shared.Destructible;
 using Content.Shared.Emp;
 using Content.Shared.Machines.Components;
 using Content.Shared.Machines.Events;
@@ -29,6 +30,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
+using Robust.Shared.Timing;
 
 namespace Content.Pirate.Server.Atmos.HFR;
 
@@ -78,6 +80,9 @@ public sealed partial class HFRSystem : EntitySystem
         SubscribeLocalEvent<HFRComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
         SubscribeLocalEvent<HFRComponent, MultipartMachineAssemblyStateChanged>(OnAssemblyChanged);
         SubscribeLocalEvent<HFRComponent, ActivatableUIOpenAttemptEvent>(OnUiOpenAttempt);
+        // When the core itself is destroyed (explosion, deconstruction damage) it
+        // takes the eight parts down with it, so no orphaned reactor ring remains.
+        SubscribeLocalEvent<HFRComponent, DestructionEventArgs>(OnCoreDestroyed);
 
         Subs.BuiEvents<HFRComponent>(HFRUiKey.Key, subs =>
         {
@@ -97,6 +102,14 @@ public sealed partial class HFRSystem : EntitySystem
             subs.Event<HFREmergencyShutdownMessage>(OnEmergencyShutdown);
             subs.Event<BoundUIOpenedEvent>(OnUiOpened);
         });
+    }
+
+    /// <summary>
+    ///     The core was destroyed: delete the machine and all of its parts.
+    /// </summary>
+    private void OnCoreDestroyed(Entity<HFRComponent> ent, ref DestructionEventArgs args)
+    {
+        DeleteMachine(ent);
     }
 
     private void OnAssemblyChanged(Entity<HFRComponent> ent, ref MultipartMachineAssemblyStateChanged args)
@@ -462,7 +475,7 @@ public sealed partial class HFRSystem : EntitySystem
         ProcessWasteRemoval(comp, fusionMix, moderatorMix, output, powerLevel, dt);
 
         // --- Radiation ---
-        UpdateRadiation(comp, moderatorMix);
+        UpdateRadiation(ent, moderatorMix);
 
         // Output gas takes 95% of the moderator mix temperature
         var outMix = output.Air;
@@ -1006,7 +1019,11 @@ public sealed partial class HFRSystem : EntitySystem
         {
             var ironRemoved = Math.Min(HFRConstants.IronOxygenHealPerSecond * dt, iron);
             iron -= ironRemoved;
-            moderatorMix.AdjustMoles(Gas.Oxygen, -ironRemoved * HFRConstants.OxygenMolesConsumedPerIronHeal);
+            // Cap the oxygen consumed at what the moderator mix actually has, so
+            // the removal can never drive Gas.Oxygen below zero. // Pirate
+            var oxygenRemoved = Math.Min(ironRemoved * HFRConstants.OxygenMolesConsumedPerIronHeal,
+                moderatorMix.GetMoles(Gas.Oxygen));
+            moderatorMix.AdjustMoles(Gas.Oxygen, -oxygenRemoved);
         }
         comp.IronContent = Math.Clamp(iron, 0f, 300f);
     }
@@ -1105,11 +1122,21 @@ public sealed partial class HFRSystem : EntitySystem
 
         var coords = _xform.GetMapCoordinates(ent.Owner);
 
-        // Convert the /tg/ light-impact radius into an SS14 explosion intensity,
-        // with a slope of 1 (light falloff).
+        // Convert the /tg/ zone radii (flash/light/heavy/devastating, with the
+        // critical doubling already applied above) into an SS14 explosion
+        // intensity, with a slope of 1 (light falloff). Each nonzero zone adds
+        // its own intensity volume so the blast covers the whole /tg/ spread;
+        // zero zones (e.g. no heavy tier on a base explosion) contribute nothing.
         if (light > 0f)
         {
             var totalIntensity = _explosion.RadiusToIntensity(light, 1f);
+            if (flash > 0f)
+                totalIntensity += _explosion.RadiusToIntensity(flash, 1f);
+            if (heavy > 0f)
+                totalIntensity += _explosion.RadiusToIntensity(heavy, 1f);
+            if (devastating > 0f)
+                totalIntensity += _explosion.RadiusToIntensity(devastating, 1f);
+
             _explosion.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId,
                 totalIntensity, 1f, light, ent.Owner);
         }
@@ -1249,9 +1276,9 @@ public sealed partial class HFRSystem : EntitySystem
         }
     }
 
-    private void UpdateRadiation(HFRComponent comp, GasMixture moderatorMix)
+    private void UpdateRadiation(Entity<HFRComponent> ent, GasMixture moderatorMix)
     {
-        var source = EnsureComp<RadiationSourceComponent>(comp.Owner);
+        var source = EnsureComp<RadiationSourceComponent>(ent.Owner);
         // BZ massively increases radiation; Anti-Noblium adds radiation too.
         var rads = moderatorMix.GetMoles(Gas.BZ) * 0.05f
             + moderatorMix.GetMoles(Gas.AntiNoblium) * 0.1f;
@@ -1279,6 +1306,8 @@ public sealed partial class HFRSystem : EntitySystem
 
     private void OnSetHeatingConductor(Entity<HFRComponent> ent, ref HFRSetHeatingConductorMessage args)
     {
+        if (!float.IsFinite(args.Value))
+            return;
         ent.Comp.HeatingConductor = Math.Clamp(args.Value, 50f, 500f);
         Dirty(ent);
         UpdateUI(ent);
@@ -1286,6 +1315,8 @@ public sealed partial class HFRSystem : EntitySystem
 
     private void OnSetMagneticConstrictor(Entity<HFRComponent> ent, ref HFRSetMagneticConstrictorMessage args)
     {
+        if (!float.IsFinite(args.Value))
+            return;
         ent.Comp.MagneticConstrictor = Math.Clamp(args.Value, 50f, 1000f);
         Dirty(ent);
         UpdateUI(ent);
@@ -1294,6 +1325,8 @@ public sealed partial class HFRSystem : EntitySystem
     private void OnSetFuelInjectionRate(Entity<HFRComponent> ent, ref HFRSetFuelInjectionRateMessage args)
     {
         // /tg/ range: 0.5-150 mol/s.
+        if (!float.IsFinite(args.Value))
+            return;
         ent.Comp.FuelInjectionRate = Math.Clamp(args.Value, 0.5f, 150f);
         Dirty(ent);
         UpdateUI(ent);
@@ -1301,6 +1334,8 @@ public sealed partial class HFRSystem : EntitySystem
 
     private void OnSetCurrentDampener(Entity<HFRComponent> ent, ref HFRSetCurrentDampenerMessage args)
     {
+        if (!float.IsFinite(args.Value))
+            return;
         ent.Comp.CurrentDampener = Math.Clamp(args.Value, 0f, 1000f);
         Dirty(ent);
         UpdateUI(ent);
@@ -1308,6 +1343,8 @@ public sealed partial class HFRSystem : EntitySystem
 
     private void OnSetModeratorInjectionRate(Entity<HFRComponent> ent, ref HFRSetModeratorInjectionRateMessage args)
     {
+        if (!float.IsFinite(args.Value))
+            return;
         ent.Comp.ModeratorInjectionRate = Math.Clamp(args.Value, 0.5f, 150f);
         Dirty(ent);
         UpdateUI(ent);
@@ -1359,6 +1396,8 @@ public sealed partial class HFRSystem : EntitySystem
 
     private void OnSetModeratorFilteringRate(Entity<HFRComponent> ent, ref HFRSetModeratorFilteringRateMessage args)
     {
+        if (!float.IsFinite(args.Value))
+            return;
         ent.Comp.ModeratorFilteringRate = Math.Clamp(args.Value, 5f, 200f);
         Dirty(ent);
         UpdateUI(ent);
@@ -1372,7 +1411,7 @@ public sealed partial class HFRSystem : EntitySystem
         ent.Comp.ModeratorFilter = args.GasId switch
         {
             0 => null,
-            var id when Enum.IsDefined(typeof(Gas), (Gas) (id - 1)) => (Gas) (id - 1),
+            var id when Enum.IsDefined<Gas>((Gas) (id - 1)) => (Gas) (id - 1),
             _ => null
         };
         Dirty(ent);
@@ -1497,9 +1536,33 @@ public sealed partial class HFRSystem : EntitySystem
 /// </summary>
 public static class HFRRadiation
 {
+    // Gas reactions fire on every atmospheric update, so resolve these once and
+    // reuse them instead of going through IoCManager on every single call. // Pirate
+    private static IEntityManager? _entManager;
+    private static IGameTiming? _timing;
+
+    /// <summary>Minimum time between radiation pulses on the same tile.</summary>
+    private static readonly TimeSpan PulseCooldown = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    ///     Last pulse time per tile (keyed by grid + indices so no tile references
+    ///     are retained), so a mass reaction over many tiles doesn't spawn a new
+    ///     short-lived radiation entity for every invocation. // Pirate
+    /// </summary>
+    private static readonly Dictionary<(EntityUid Grid, Vector2i Indices), TimeSpan> LastPulse = new();
+
     public static void Pulse(TileAtmosphere tile, float maxRange)
     {
-        var entManager = IoCManager.Resolve<IEntityManager>();
+        var entManager = _entManager ??= IoCManager.Resolve<IEntityManager>();
+        var timing = _timing ??= IoCManager.Resolve<IGameTiming>();
+
+        // Per-tile throttle: reactions can fire for every tile in a large mix on
+        // every atmos tick; one decaying pulse per tile per second is plenty. // Pirate
+        var now = timing.CurTime;
+        var key = (tile.GridIndex, tile.GridIndices);
+        if (LastPulse.TryGetValue(key, out var last) && now - last < PulseCooldown)
+            return;
+        LastPulse[key] = now;
 
         if (!entManager.TryGetComponent(tile.GridIndex, out MapGridComponent? grid))
             return;

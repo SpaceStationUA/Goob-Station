@@ -3,7 +3,7 @@
 # Abbreviations (air alarm / atmos readouts)
 gas-hyper-noblium-abbreviation = H-Nob
 gas-anti-noblium-abbreviation = A-Nob
-gas-hydrogen-abbreviation = H₂
+gas-hydrogen-abbreviation = H2
 gas-helium-abbreviation = He
 gas-proto-nitrate-abbreviation = PN
 gas-zauker-abbreviation = ZKR
@@ -23,9 +23,9 @@ gases-halon = Halon
 # Reagent names & descriptions
 reagent-name-helium = helium
 reagent-desc-helium = An extremely inert gas produced by the fusion of hydrogen.
-reagent-name-hyper-noblium = Hyper-Noblium
+reagent-name-hyper-noblium = hyper-noblium
 reagent-desc-hyper-noblium = An extremely inert gas that suppresses gas reactions. Used as primary fuel for the Hyper-torus Fusion Reactor to produce Anti-Noblium. Very heavy and expensive.
-reagent-name-anti-noblium = Anti-Noblium
+reagent-name-anti-noblium = anti-noblium
 reagent-desc-anti-noblium = A strange gas that breaks down all other gases into more of itself. Causes radiation burns on contact with skin. Used as high-tier fuel for the Hyper-torus Fusion Reactor and in high-level crystallizer recipes. Glows a beautiful purple in the air. Expensive at 10 credits per mole.
 reagent-name-proto-nitrate = proto-nitrate
 reagent-desc-proto-nitrate = A very volatile gas that reacts differently with various gases.

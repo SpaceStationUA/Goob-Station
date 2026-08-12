@@ -138,10 +138,15 @@ public sealed partial class SensorInfo : BoxContainer
             ProtoId<GasPrototype> gasProtoId = atmosphereSystem.GetGas(gas);
             var gasName = _prototypeManager.Index(gasProtoId).Name;
 
-            // Pirate: skip gases the server sent no threshold for (e.g. newly added HFR gases).
+            // Pirate: skip gases the server sent no threshold for (e.g. newly added HFR gases)
+            // and hide the stale row so it doesn't keep showing the last known value.
             if (!data.GasThresholds.TryGetValue(gas, out var gasThreshold))
+            {
+                label.Visible = false;
                 continue;
+            }
 
+            label.Visible = true;
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
                 ("gas", Loc.GetString(gasName)),
                 ("color", AirAlarmWindow.ColorForThreshold(fractionGas, gasThreshold)), // Pirate
@@ -153,12 +158,17 @@ public sealed partial class SensorInfo : BoxContainer
         _temperatureThreshold.UpdateThresholdData(data.TemperatureThreshold, data.Temperature);
         foreach (var (gas, control) in _gasThresholds)
         {
-            if (!data.GasThresholds.TryGetValue(gas, out var threshold))
+            // Pirate: hide the control when the server no longer reports the gas or
+            // its threshold, and never index data.Gases without checking the key first.
+            if (!data.GasThresholds.TryGetValue(gas, out var threshold)
+                || !data.Gases.TryGetValue(gas, out var amount))
             {
+                control.Visible = false;
                 continue;
             }
 
-            control.UpdateThresholdData(threshold, data.Gases[gas] / data.TotalMoles);
+            control.Visible = true;
+            control.UpdateThresholdData(threshold, amount / data.TotalMoles);
         }
     }
 

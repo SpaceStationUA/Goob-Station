@@ -66,7 +66,7 @@
     sprite: _Pirate/Structures/Storage/canister.rsi
     state: hypernoblium
   product: HyperNobliumCanister
-  cost: 40000 # rare cryo gas, stops all gas reactions; only from cryo reactor
+  cost: 40000 # rare cryo gas, stops all gas reactions; from cryo reactor
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -76,6 +76,6 @@
     sprite: _Pirate/Structures/Storage/canister.rsi
     state: antinoblium
   product: AntiNobliumCanister
-  cost: 50000 # rarest gas, replicates itself; only from HFR PL5-6
+  cost: 50000 # rarest gas, replicates itself; from HFR PL5-6
   category: cargoproduct-category-name-atmospherics
   group: market

@@ -9,6 +9,46 @@ using Robust.Shared.Console;
 namespace Content.Pirate.Server.Administration.Commands;
 
 /// <summary>
+///     Shared reactor lookup for the HFR admin commands. When the first argument
+///     is a uid it must parse and resolve to an entity with an HFR component — a
+///     bad uid is an error, never a silent fallback. Only with no argument at all
+///     does the lookup fall back to the first HFR in the game.
+/// </summary>
+internal static class HFRCommandHelper
+{
+    public static Entity<HFRComponent>? ResolveHfr(IConsoleShell shell, IEntityManager entManager, string[] args)
+    {
+        EntityUid? target = null;
+
+        if (args.Length >= 1)
+        {
+            if (!NetEntity.TryParse(args[0], out var net) || !entManager.TryGetEntity(net, out var uid))
+            {
+                shell.WriteError($"Could not find an HFR reactor with uid '{args[0]}'. Check the uid and try again.");
+                return null;
+            }
+
+            target = uid;
+        }
+        else
+        {
+            // No uid given: grab the first HFR that exists in the game.
+            var query = entManager.EntityQueryEnumerator<HFRComponent>();
+            if (query.MoveNext(out var uid2, out _))
+                target = uid2;
+        }
+
+        if (target is not { } hfr || !entManager.TryGetComponent<HFRComponent>(hfr, out var comp))
+        {
+            shell.WriteError("Could not find an HFR reactor. Pass a uid or place one in the world first.");
+            return null;
+        }
+
+        return (hfr, comp);
+    }
+}
+
+/// <summary>
 ///     Forces the Hyper-torus Fusion Reactor into a meltdown countdown, for testing
 ///     the siren, countdown warnings and the rescue gameplay. Runs through the normal
 ///     atmos loop, so the reactor must be assembled and connected to pipes.
@@ -24,25 +64,11 @@ public sealed class HFREnableMeltdownCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        EntityUid? target = null;
-
-        if (args.Length >= 1 && NetEntity.TryParse(args[0], out var net) && _entManager.TryGetEntity(net, out var uid))
-        {
-            target = uid;
-        }
-        else
-        {
-            // No uid given: grab the first HFR that exists in the game.
-            var query = _entManager.EntityQueryEnumerator<HFRComponent>();
-            if (query.MoveNext(out var uid2, out _))
-                target = uid2;
-        }
-
-        if (target is not { } hfr || !_entManager.TryGetComponent<HFRComponent>(hfr, out var comp))
-        {
-            shell.WriteError("Could not find an HFR reactor. Pass a uid or place one in the world first.");
+        if (HFRCommandHelper.ResolveHfr(shell, _entManager, args) is not { } reactor)
             return;
-        }
+
+        var hfr = reactor.Owner;
+        var comp = reactor.Comp;
 
         // Drop integrity below the melting threshold. The next atmos tick will start
         // a fresh countdown with all the effects (siren, radio, station announcement
@@ -73,26 +99,10 @@ public sealed class HFRResetCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        EntityUid? target = null;
-
-        if (args.Length >= 1 && NetEntity.TryParse(args[0], out var net) && _entManager.TryGetEntity(net, out var uid))
-        {
-            target = uid;
-        }
-        else
-        {
-            var query = _entManager.EntityQueryEnumerator<HFRComponent>();
-            if (query.MoveNext(out var uid2, out _))
-                target = uid2;
-        }
-
-        if (target is not { } hfr || !_entManager.TryGetComponent<HFRComponent>(hfr, out var comp))
-        {
-            shell.WriteError("Could not find an HFR reactor. Pass a uid or place one in the world first.");
+        if (HFRCommandHelper.ResolveHfr(shell, _entManager, args) is not { } reactor)
             return;
-        }
 
-        _entManager.System<HFRSystem>().ResetReactor((hfr, comp));
-        shell.WriteLine($"HFR {hfr} reset: meltdown stopped, integrity restored to 100%.");
+        _entManager.System<HFRSystem>().ResetReactor(reactor);
+        shell.WriteLine($"HFR {reactor.Owner} reset: meltdown stopped, integrity restored to 100%.");
     }
 }

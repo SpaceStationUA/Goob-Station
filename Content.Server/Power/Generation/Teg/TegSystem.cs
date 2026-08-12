@@ -6,6 +6,7 @@ using Content.Server.Audio;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
@@ -74,6 +75,7 @@ public sealed class TegSystem : EntitySystem
     [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private readonly PointLightSystem _pointLight = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
@@ -132,9 +134,28 @@ public sealed class TegSystem : EntitySystem
         var (inletB, outletB) = GetPipes(circB);
 
         // A circulator that lost its pipes (deconstructed / destroyed) can't run:
-        // skip this update instead of crashing the server. // Pirate
+        // zero the stale power readings and refresh the visuals, then skip this
+        // update instead of crashing the server. // Pirate
         if (inletA is null || outletA is null || inletB is null || outletB is null)
+        {
+            component.LastGeneration = 0;
+            supplier.MaxSupply = 0;
+
+            // Reset the circulator transfer stats so their sprites stop spinning. // Pirate
+            if (EntityManager.TryGetComponent<TegCirculatorComponent>(circA, out var circAStats))
+            {
+                circAStats.LastPressureDelta = 0;
+                circAStats.LastMolesTransferred = 0;
+            }
+            if (EntityManager.TryGetComponent<TegCirculatorComponent>(circB, out var circBStats))
+            {
+                circBStats.LastPressureDelta = 0;
+                circBStats.LastMolesTransferred = 0;
+            }
+
+            UpdateAppearance(uid, component, powerReceiver, tegGroup);
             return;
+        }
 
         var (airA, δpA) = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
         var (airB, δpB) = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
@@ -364,15 +385,14 @@ public sealed class TegSystem : EntitySystem
     private (PipeNode? inlet, PipeNode? outlet) GetPipes(EntityUid uidCirculator)
     {
         // A circulator can lose its NodeContainer or pipe nodes when deconstructed or
-        // destroyed (e.g. by an explosion): the old GetComponent/[] lookups threw a
-        // KeyNotFoundException that crashed the whole server. Bail out instead, and
-        // let the caller skip this update. // Pirate
-        if (!_nodeContainerQuery.TryGetComponent(uidCirculator, out var nodeContainer)
-            || !nodeContainer.Nodes.TryGetValue(NodeNameInlet, out var inletNode)
-            || !nodeContainer.Nodes.TryGetValue(NodeNameOutlet, out var outletNode))
+        // destroyed (e.g. by an explosion): TryGetNodes returns false instead of
+        // throwing a KeyNotFoundException that would crash the whole server. Bail
+        // out, and let the caller skip this update. // Pirate
+        if (!_nodeContainer.TryGetNodes<PipeNode, PipeNode>(
+                (uidCirculator, null), NodeNameInlet, NodeNameOutlet, out var inlet, out var outlet))
             return (null, null);
 
-        return ((PipeNode) inletNode, (PipeNode) outletNode);
+        return (inlet, outlet);
     }
 
     private void DeviceNetworkPacketReceived(

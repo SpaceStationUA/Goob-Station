@@ -5,24 +5,24 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <controls:FancyWindow xmlns="https://spacestation14.io"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:Content.Client.UserInterface.Controls"
-        MinSize="840 980" Title="Hypertorus Fusion Reactor control panel">
+        MinSize="840 980" Title="{Loc 'hfr-window-title'}">
     <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
         <BoxContainer Orientation="Vertical" Margin="5" SeparationOverride="8">
 
             <!-- 1. Switches -->
             <BoxContainer Orientation="Vertical" SeparationOverride="4">
                 <PanelContainer Name="SwitchesHeader" SetHeight="24">
-                    <Label Text="Switches" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
+                    <Label Text="{Loc 'hfr-window-switches'}" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
                 </PanelContainer>
                 <BoxContainer Orientation="Vertical" SeparationOverride="4" Margin="0 6 0 0">
                     <BoxContainer Orientation="Horizontal" SeparationOverride="16">
                         <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                            <Label Text="Start power:" VerticalAlignment="Center"/>
-                            <Button Name="StartPowerToggle" ToggleMode="True" Text="Off" MinWidth="52"/>
+                            <Label Text="{Loc 'hfr-window-start-power'}" VerticalAlignment="Center"/>
+                            <Button Name="StartPowerToggle" ToggleMode="True" Text="{Loc 'hfr-ui-toggle-off'}" MinWidth="52"/>
                         </BoxContainer>
                         <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                            <Label Text="Start cooling:" VerticalAlignment="Center"/>
-                            <Button Name="StartCoolingToggle" ToggleMode="True" Text="Off" MinWidth="52"/>
+                            <Label Text="{Loc 'hfr-window-start-cooling'}" VerticalAlignment="Center"/>
+                            <Button Name="StartCoolingToggle" ToggleMode="True" Text="{Loc 'hfr-ui-toggle-off'}" MinWidth="52"/>
                         </BoxContainer>
                     </BoxContainer>
                     <BoxContainer Name="RecipeHost" Orientation="Vertical"/>
@@ -33,25 +33,25 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <BoxContainer Orientation="Horizontal" SeparationOverride="8">
                 <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
                     <PanelContainer Name="FusionGasesHeader" SetHeight="24">
-                        <Label Text="Internal Fusion Gases" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-internal-fusion-gases'}" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
                     </PanelContainer>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5" Margin="0 6 0 0">
-                        <Label Text="Injection control:" VerticalAlignment="Center" FontColorOverride="#808080"/>
-                        <Button Name="FusionInjectionSwitch" ToggleMode="True" Text="Off" MinWidth="52"/>
+                        <Label Text="{Loc 'hfr-window-injection-control'}" VerticalAlignment="Center" FontColorOverride="#808080"/>
+                        <Button Name="FusionInjectionSwitch" ToggleMode="True" Text="{Loc 'hfr-ui-toggle-off'}" MinWidth="52"/>
                         <LineEdit Name="FusionInjectionRateInput" Text="100" MinWidth="70" HorizontalExpand="True"/>
-                        <Label Text="mol/s" VerticalAlignment="Center" FontColorOverride="#808080"/>
+                        <Label Text="{Loc 'hfr-window-mol-per-sec'}" VerticalAlignment="Center" FontColorOverride="#808080"/>
                     </BoxContainer>
                     <BoxContainer Name="FusionGasList" Orientation="Vertical" SeparationOverride="3"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
                     <PanelContainer Name="ModeratorGasesHeader" SetHeight="24">
-                        <Label Text="Moderator Gases" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-moderator-gases'}" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
                     </PanelContainer>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5" Margin="0 6 0 0">
-                        <Label Text="Injection control:" VerticalAlignment="Center" FontColorOverride="#808080"/>
-                        <Button Name="ModeratorInjectionSwitch" ToggleMode="True" Text="Off" MinWidth="52"/>
+                        <Label Text="{Loc 'hfr-window-injection-control'}" VerticalAlignment="Center" FontColorOverride="#808080"/>
+                        <Button Name="ModeratorInjectionSwitch" ToggleMode="True" Text="{Loc 'hfr-ui-toggle-off'}" MinWidth="52"/>
                         <LineEdit Name="ModeratorInjectionRateInput" Text="150" MinWidth="70" HorizontalExpand="True"/>
-                        <Label Text="mol/s" VerticalAlignment="Center" FontColorOverride="#808080"/>
+                        <Label Text="{Loc 'hfr-window-mol-per-sec'}" VerticalAlignment="Center" FontColorOverride="#808080"/>
                     </BoxContainer>
                     <BoxContainer Name="ModeratorGasList" Orientation="Vertical" SeparationOverride="3"/>
                 </BoxContainer>
@@ -60,7 +60,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <!-- 4. Gas Monitoring (temperature chart) -->
             <BoxContainer Orientation="Vertical" SeparationOverride="4">
                 <PanelContainer Name="TempsHeader" SetHeight="24">
-                    <Label Text="Gas Monitoring" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
+                    <Label Text="{Loc 'hfr-window-gas-monitoring'}" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
                 </PanelContainer>
                 <BoxContainer Name="TempChartHost" Orientation="Horizontal" Margin="0 6 0 0"/>
             </BoxContainer>
@@ -68,36 +68,36 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <!-- 5. Reactor Status -->
             <BoxContainer Orientation="Vertical" SeparationOverride="4">
                 <PanelContainer Name="StatusHeader" SetHeight="24">
-                    <Label Text="Reactor Status" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
+                    <Label Text="{Loc 'hfr-window-reactor-status'}" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
                 </PanelContainer>
                 <BoxContainer Orientation="Vertical" SeparationOverride="3" Margin="0 6 0 0">
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Fusion Level:" SetWidth="120" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-fusion-level'}" SetWidth="120" VerticalAlignment="Center"/>
                         <ProgressBar Name="PowerLevelBar" HorizontalExpand="True" SetHeight="14" VerticalAlignment="Center"/>
                         <Label Name="PowerLevelValue" Text="0" Align="Right" SetWidth="70" VerticalAlignment="Center"/>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Integrity:" SetWidth="120" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-integrity'}" SetWidth="120" VerticalAlignment="Center"/>
                         <ProgressBar Name="IntegrityBar" HorizontalExpand="True" SetHeight="14" VerticalAlignment="Center"/>
                         <Label Name="IntegrityValue" Text="100%" Align="Right" SetWidth="70" VerticalAlignment="Center"/>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Iron Content:" SetWidth="120" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-iron-content'}" SetWidth="120" VerticalAlignment="Center"/>
                         <ProgressBar Name="IronContentBar" HorizontalExpand="True" SetHeight="14" VerticalAlignment="Center"/>
                         <Label Name="IronContentValue" Text="0%" Align="Right" SetWidth="70" VerticalAlignment="Center"/>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Energy Levels:" SetWidth="120" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-energy-levels'}" SetWidth="120" VerticalAlignment="Center"/>
                         <ProgressBar Name="EnergyBar" HorizontalExpand="True" SetHeight="14" VerticalAlignment="Center"/>
                         <Label Name="EnergyValue" Text="0 J" Align="Right" SetWidth="70" VerticalAlignment="Center"/>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Heat Limiter:" SetWidth="120" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-heat-limiter'}" SetWidth="120" VerticalAlignment="Center"/>
                         <ProgressBar Name="HeatLimiterBar" HorizontalExpand="True" SetHeight="14" VerticalAlignment="Center"/>
                         <Label Name="HeatLimiterValue" Text="0 K" Align="Right" SetWidth="70" VerticalAlignment="Center"/>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Heat Output:" SetWidth="120" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-heat-output'}" SetWidth="120" VerticalAlignment="Center"/>
                         <ProgressBar Name="HeatOutputBar" HorizontalExpand="True" SetHeight="14" VerticalAlignment="Center"/>
                         <Label Name="HeatOutputValue" Text="0 K" Align="Right" SetWidth="70" VerticalAlignment="Center"/>
                     </BoxContainer>
@@ -108,23 +108,23 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <!-- 6. Reactor Control -->
             <BoxContainer Orientation="Vertical" SeparationOverride="4">
                 <PanelContainer Name="ControlHeader" SetHeight="24">
-                    <Label Text="Reactor Control" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
+                    <Label Text="{Loc 'hfr-window-reactor-control'}" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
                 </PanelContainer>
                 <BoxContainer Orientation="Vertical" SeparationOverride="3" Margin="0 6 0 0">
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Heating Conductor:" SetWidth="160" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-heating-conductor'}" SetWidth="160" VerticalAlignment="Center"/>
                         <LineEdit Name="HeatingConductorInput" Text="200" HorizontalExpand="True" VerticalAlignment="Center"/>
-                        <Label Text="J/cm" VerticalAlignment="Center" FontColorOverride="#808080"/>
+                        <Label Text="{Loc 'hfr-window-joule-per-cm'}" VerticalAlignment="Center" FontColorOverride="#808080"/>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Magnetic Constrictor:" SetWidth="160" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-magnetic-constrictor'}" SetWidth="160" VerticalAlignment="Center"/>
                         <LineEdit Name="MagneticConstrictorInput" Text="100" HorizontalExpand="True" VerticalAlignment="Center"/>
-                        <Label Text="m³/T" VerticalAlignment="Center" FontColorOverride="#808080"/>
+                        <Label Text="{Loc 'hfr-window-m3-per-tesla'}" VerticalAlignment="Center" FontColorOverride="#808080"/>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Current Damper:" SetWidth="160" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-current-damper'}" SetWidth="160" VerticalAlignment="Center"/>
                         <LineEdit Name="CurrentDampenerInput" Text="0" HorizontalExpand="True" VerticalAlignment="Center"/>
-                        <Label Text="W" VerticalAlignment="Center" FontColorOverride="#808080"/>
+                        <Label Text="{Loc 'hfr-window-watt'}" VerticalAlignment="Center" FontColorOverride="#808080"/>
                     </BoxContainer>
                 </BoxContainer>
             </BoxContainer>
@@ -132,29 +132,29 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <!-- 7. Output Control -->
             <BoxContainer Orientation="Vertical" SeparationOverride="4">
                 <PanelContainer Name="OutputHeader" SetHeight="24">
-                    <Label Text="Output Control" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
+                    <Label Text="{Loc 'hfr-window-output-control'}" StyleClasses="LabelHeading" VerticalAlignment="Center"/>
                 </PanelContainer>
                 <BoxContainer Orientation="Vertical" SeparationOverride="3" Margin="0 6 0 0">
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Waste remove:" VerticalAlignment="Center"/>
-                        <Button Name="WasteRemovalToggle" ToggleMode="True" Text="Off" MinWidth="52"/>
+                        <Label Text="{Loc 'hfr-window-waste-remove'}" VerticalAlignment="Center"/>
+                        <Button Name="WasteRemovalToggle" ToggleMode="True" Text="{Loc 'hfr-ui-toggle-off'}" MinWidth="52"/>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                        <Label Text="Moderator filtering rate:" VerticalAlignment="Center"/>
+                        <Label Text="{Loc 'hfr-window-moderator-filtering-rate'}" VerticalAlignment="Center"/>
                         <LineEdit Name="ModeratorFilterRateInput" Text="20" MinWidth="70" HorizontalExpand="True" VerticalAlignment="Center"/>
-                        <Label Text="mol/s" VerticalAlignment="Center" FontColorOverride="#808080"/>
+                        <Label Text="{Loc 'hfr-window-mol-per-sec'}" VerticalAlignment="Center" FontColorOverride="#808080"/>
                     </BoxContainer>
-                    <Label Text="Filter from moderator mix:" FontColorOverride="#808080"/>
+                    <Label Text="{Loc 'hfr-window-filter-from-moderator-mix'}" FontColorOverride="#808080"/>
                     <WrapContainer Name="FilterGrid" SeparationOverride="4" CrossSeparationOverride="4"/>
-                    <Label Name="OutputStatusLabel" Text="Output port: not connected" StyleClasses="StatusFieldTitle"/>
-                    <Button Name="ShowGasesButton" Text="Show mix gases" HorizontalExpand="True"/>
+                    <Label Name="OutputStatusLabel" Text="{Loc 'hfr-ui-output-disconnected'}" StyleClasses="StatusFieldTitle"/>
+                    <Button Name="ShowGasesButton" Text="{Loc 'hfr-ui-show-mix-gases'}" HorizontalExpand="True"/>
                     <BoxContainer Name="GasReadoutPanel" Orientation="Vertical" Visible="False" SeparationOverride="3">
-                        <Label Text="Fusion mix:" StyleClasses="LabelHeading" FontColorOverride="#9fd"/>
+                        <Label Text="{Loc 'hfr-window-fusion-mix'}" StyleClasses="LabelHeading" FontColorOverride="#9fd"/>
                         <RichTextLabel Name="FusionReadoutLabel"/>
-                        <Label Text="Moderator mix:" StyleClasses="LabelHeading" FontColorOverride="#9fd" Margin="0 6 0 0"/>
+                        <Label Text="{Loc 'hfr-window-moderator-mix'}" StyleClasses="LabelHeading" FontColorOverride="#9fd" Margin="0 6 0 0"/>
                         <RichTextLabel Name="ModeratorReadoutLabel"/>
                     </BoxContainer>
-                    <Button Name="EmergencyShutdownButton" Text="Emergency Shutdown" StyleClasses="Caution" HorizontalExpand="True"/>
+                    <Button Name="EmergencyShutdownButton" Text="{Loc 'hfr-window-emergency-shutdown'}" StyleClasses="Caution" HorizontalExpand="True"/>
                 </BoxContainer>
             </BoxContainer>
 

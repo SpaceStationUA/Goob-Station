@@ -16,9 +16,4 @@
         - id: MachineHFRWasteOutputCircuitboard
         - id: MachineHFRInterfaceCircuitboard
         - id: MachineHFRCornerCircuitboard
-        - id: MachineHFRFuelInputCircuitboard
-        - id: MachineHFRModeratorInputCircuitboard
-        - id: MachineHFRWasteOutputCircuitboard
-        - id: MachineHFRInterfaceCircuitboard
-        - id: MachineHFRCornerCircuitboard
           amount: 4

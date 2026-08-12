@@ -14,6 +14,7 @@
 - type: reagent
   id: HyperNoblium
   name: reagent-name-hyper-noblium
+  group: Elements
   desc: reagent-desc-hyper-noblium
   physicalDesc: reagent-physical-desc-gaseous
   flavor: metallic
@@ -23,6 +24,7 @@
 - type: reagent
   id: AntiNoblium
   name: reagent-name-anti-noblium
+  group: Elements
   desc: reagent-desc-anti-noblium
   physicalDesc: reagent-physical-desc-gaseous
   flavor: sour
@@ -32,6 +34,7 @@
 - type: reagent
   id: ProtoNitrate
   name: reagent-name-proto-nitrate
+  group: Elements
   desc: reagent-desc-proto-nitrate
   physicalDesc: reagent-physical-desc-gaseous
   flavor: sour
@@ -41,6 +44,7 @@
 - type: reagent
   id: Zauker
   name: reagent-name-zauker
+  group: Elements
   desc: reagent-desc-zauker
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
@@ -50,6 +54,7 @@
 - type: reagent
   id: Miasma
   name: reagent-name-miasma
+  group: Elements
   desc: reagent-desc-miasma
   physicalDesc: reagent-physical-desc-gaseous
   flavor: horrible
@@ -59,6 +64,7 @@
 - type: reagent
   id: Halon
   name: reagent-name-halon
+  group: Elements
   desc: reagent-desc-halon
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter

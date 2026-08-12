@@ -73,7 +73,7 @@ public sealed class HFRBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUs
         _window.SetFilterSelection(cast.ModeratorFilterId);
         _window.SetRecipe(cast.Recipe);
         _window.SetOutputStatus(cast.OutputConnected
-            ? "Output port: connected"
-            : "Output port: not connected");
+            ? Loc.GetString("hfr-ui-output-connected")
+            : Loc.GetString("hfr-ui-output-disconnected"));
     }
 }

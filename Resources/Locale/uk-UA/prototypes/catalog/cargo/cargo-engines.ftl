@@ -14,3 +14,5 @@ ent-EngineParticleAccelerator = { ent-CrateEngineeringParticleAccelerator }
     .desc = { ent-CrateEngineeringParticleAccelerator.desc }
 ent-EngineSolar = { ent-CrateEngineeringSolar }
     .desc = { ent-CrateEngineeringSolar.desc }
+ent-EngineHFR = { ent-CrateEngineeringHFR }
+    .desc = { ent-CrateEngineeringHFR.desc }
