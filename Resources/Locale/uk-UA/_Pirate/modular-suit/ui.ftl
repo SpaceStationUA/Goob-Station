@@ -76,6 +76,10 @@ modsuit-verb-extract-core = Вилучити ядро
 modsuit-verb-extract-core-desc = Вилучити ядро живлення з костюма
 modsuit-verb-extract-part = Вилучити {$part}
 modsuit-verb-extract-part-desc = Вилучити частину костюма
+modsuit-verb-deploy = Розгорнути костюм
+modsuit-verb-retract = Згорнути костюм
+modsuit-verb-toggle-seal = Перемкнути герметизацію
+modsuit-verb-other-start = Ви починаєте керувати костюмом...
 modsuit-verb-auto-activate-on = Автоактивація: увімкнено
 modsuit-verb-auto-activate-off = Автоактивація: вимкнено
 modsuit-verb-auto-activate-toggled = Автоактивацію перемкнено
@@ -84,6 +88,8 @@ modsuit-continue-unsealing = Триває розгерметизація нас�
 modsuit-magboots-on = Магнітні чоботи костюма вмикаються.
 modsuit-magboots-off = Магнітні чоботи костюма вимикаються.
 modsuit-retract-blocked-active = Спершу вимкніть костюм.
+modsuit-seal-blocked-undeployed = Спершу розгорніть костюм.
+modsuit-seal-failed = Герметизація не вдалася! Розгорніть усі частини костюма.
 
 modsuit-action-deploy-name = [color=#58c4e8]Розгорнути MOD-костюм[/color]
 modsuit-action-deploy-desc = Розкриває костюм, вдягаючи всі встановлені частини на тіло.

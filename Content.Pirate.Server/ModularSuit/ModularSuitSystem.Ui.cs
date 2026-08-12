@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Pirate.Shared.ModularSuit;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 
 namespace Content.Pirate.Server.ModularSuit;
@@ -32,6 +33,36 @@ public sealed partial class ModularSuitSystem
     protected override void ToggleActive(Entity<ModularSuitComponent> ent, EntityUid user)
     {
         RequestSetActive(ent, user, !ent.Comp.Active);
+    }
+
+    /// <summary>
+    ///     Seals every deployed part, or unseals them again. Unlike the activate action this does not
+    ///     power the suit up by itself - that is left to the suit's auto-activate setting.
+    /// </summary>
+    private void ToggleSeal(Entity<ModularSuitComponent> ent, EntityUid wearer, EntityUid? actor = null)
+    {
+        var recipient = actor ?? wearer;
+
+        if (!ent.Comp.Deployed)
+        {
+            Refuse(ent, recipient, "modsuit-seal-blocked-undeployed");
+            return;
+        }
+
+        // Unsealing powers the suit down.
+        if (ent.Comp.Assembled)
+        {
+            if (!TryStartSuitUnsealing(ent, wearer))
+                Refuse(ent, recipient, "modsuit-seal-failed");
+
+            UpdateUiState(ent);
+            return;
+        }
+
+        if (!TryStartSuitSealing(ent, wearer, activateSuit: false))
+            Refuse(ent, recipient, "modsuit-seal-failed");
+
+        UpdateUiState(ent);
     }
 
     private void RequestSetActive(Entity<ModularSuitComponent> ent, EntityUid user, bool active)
