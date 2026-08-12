@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Pirate.Shared.ModularSuit;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 
 namespace Content.Pirate.Server.ModularSuit;
@@ -32,6 +33,50 @@ public sealed partial class ModularSuitSystem
     protected override void ToggleActive(Entity<ModularSuitComponent> ent, EntityUid user)
     {
         RequestSetActive(ent, user, !ent.Comp.Active);
+    }
+
+    /// <summary>
+    ///     Seals every deployed part, or unseals them again. Unlike the activate action this does not
+    ///     power the suit up by itself - that is left to the suit's auto-activate setting.
+    /// </summary>
+    private void ToggleSeal(Entity<ModularSuitComponent> ent, EntityUid user)
+    {
+        if (ent.Comp.Wearer != user)
+            return;
+
+        if (!ent.Comp.Deployed)
+        {
+            Popup.PopupEntity(Loc.GetString("modsuit-seal-blocked-undeployed"), ent.Owner, user, PopupType.SmallCaution);
+            _audio.PlayEntity(ent.Comp.BuzzSound, user, user);
+            return;
+        }
+
+        if (ent.Comp.Assembled)
+        {
+            if (ent.Comp.Active)
+            {
+                Popup.PopupEntity(Loc.GetString("modsuit-retract-blocked-active"), ent.Owner, user, PopupType.SmallCaution);
+                _audio.PlayEntity(ent.Comp.BuzzSound, user, user);
+                return;
+            }
+
+            if (!TryStartSuitUnsealing(ent, user))
+                FailSeal(ent, user);
+
+            UpdateUiState(ent);
+            return;
+        }
+
+        if (!TryStartSuitSealing(ent, user, activateSuit: false))
+            FailSeal(ent, user);
+
+        UpdateUiState(ent);
+    }
+
+    private void FailSeal(Entity<ModularSuitComponent> ent, EntityUid user)
+    {
+        Popup.PopupEntity(Loc.GetString("modsuit-seal-failed"), ent.Owner, user, PopupType.SmallCaution);
+        _audio.PlayEntity(ent.Comp.BuzzSound, user, user);
     }
 
     private void RequestSetActive(Entity<ModularSuitComponent> ent, EntityUid user, bool active)

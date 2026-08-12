@@ -82,21 +82,25 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
             return;
 
         args.Handled = true;
+        ToggleDeploy(ent, ent.Comp.Wearer.Value);
+    }
 
+    protected void ToggleDeploy(Entity<ModularSuitComponent> ent, EntityUid wearer)
+    {
         if (!ent.Comp.Deployed)
         {
-            DeploySuit(ent, ent.Comp.Wearer.Value);
+            DeploySuit(ent, wearer);
             return;
         }
 
         if (ent.Comp.Active)
         {
-            Popup.PopupEntity(Loc.GetString("modsuit-retract-blocked-active"), ent.Owner, ent.Comp.Wearer.Value, PopupType.SmallCaution);
-            _audioSystem.PlayEntity(ent.Comp.BuzzSound, ent.Comp.Wearer.Value, ent.Comp.Wearer.Value);
+            Popup.PopupEntity(Loc.GetString("modsuit-retract-blocked-active"), ent.Owner, wearer, PopupType.SmallCaution);
+            _audioSystem.PlayEntity(ent.Comp.BuzzSound, wearer, wearer);
             return;
         }
 
-        UndeploySuit(ent, ent.Comp.Wearer.Value);
+        UndeploySuit(ent, wearer);
     }
 
     private void OnToggleActivateAction(Entity<ModularSuitComponent> ent, ref ToggleActivateSuitActionEvent args)

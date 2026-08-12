@@ -3,6 +3,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Lock;
 using Content.Pirate.Shared.ModularSuit;
@@ -24,6 +25,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedPointLightSystem _light = default!;
     [Dependency] private LockSystem _lock = default!;
     [Dependency] private SharedToolSystem _tool = default!;
@@ -32,6 +34,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
     private const float ModuleExtractTime = 1.5f;
     private const float CoreExtractTime = 4.0f;
     private const float PartExtractTime = 5.0f;
+    private static readonly TimeSpan NonWearerVerbTime = TimeSpan.FromSeconds(2);
 
     public override void Initialize()
     {
@@ -43,6 +46,9 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         SubscribeLocalEvent<ModularSuitComponent, ComponentInit>(OnSuitInit);
         SubscribeLocalEvent<ModularSuitComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
         SubscribeLocalEvent<ModularSuitComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<ModularSuitComponent, GetVerbsEvent<EquipmentVerb>>(OnGetEquipmentVerbs);
+        SubscribeLocalEvent<ModularSuitComponent, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>>(OnRelayedEquipmentVerbs);
+        SubscribeLocalEvent<ModularSuitComponent, ModularSuitVerbDoAfterEvent>(OnVerbDoAfter);
         SubscribeLocalEvent<ModularSuitComponent, ModularSuitExtractDoAfterEvent>(OnDoAfterComplete);
         SubscribeLocalEvent<ModularSuitComponent, InteractUsingEvent>(OnSuitInteractUsing);
 
@@ -167,6 +173,87 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         };
 
         args.Verbs.Add(verb);
+    }
+
+    private void OnRelayedEquipmentVerbs(Entity<ModularSuitComponent> suit, ref InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
+    {
+        OnGetEquipmentVerbs(suit, ref args.Args);
+    }
+
+    /// <summary>
+    ///     The deploy and seal verbs the legacy modsuits show when right-clicking their wearer.
+    /// </summary>
+    private void OnGetEquipmentVerbs(Entity<ModularSuitComponent> suit, ref GetVerbsEvent<EquipmentVerb> args)
+    {
+        if (!args.CanComplexInteract || suit.Comp.Wearer is not { } wearer)
+            return;
+
+        // The control unit lives inside the wearer's inventory, so CanAccess is false for everyone
+        // but them - check reach against the suit instead.
+        if (!_interaction.InRangeUnobstructed(args.User, suit.Owner))
+            return;
+
+        var user = args.User;
+
+        args.Verbs.Add(new EquipmentVerb
+        {
+            Priority = 6,
+            Text = Loc.GetString("modsuit-verb-toggle-piece"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
+            Act = () => StartVerb(suit, user, wearer, ModularSuitVerbType.TogglePiece),
+        });
+
+        args.Verbs.Add(new EquipmentVerb
+        {
+            Priority = 5,
+            Text = Loc.GetString("modsuit-verb-toggle-seal"),
+            Icon = new SpriteSpecifier.Texture(new(suit.Comp.Assembled
+                ? "/Textures/Interface/VerbIcons/unlock.svg.192dpi.png"
+                : "/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
+            Act = () => StartVerb(suit, user, wearer, ModularSuitVerbType.ToggleSeal),
+        });
+    }
+
+    private void StartVerb(Entity<ModularSuitComponent> suit, EntityUid user, EntityUid wearer, ModularSuitVerbType verb)
+    {
+        if (user == wearer)
+        {
+            RunVerb(suit, wearer, verb);
+            return;
+        }
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, NonWearerVerbTime,
+            new ModularSuitVerbDoAfterEvent(verb), suit.Owner, wearer, suit.Owner)
+        {
+            BreakOnMove = true,
+            BreakOnDamage = true,
+            DistanceThreshold = 2
+        };
+
+        if (_doAfter.TryStartDoAfter(doAfterArgs))
+            Popup.PopupEntity(Loc.GetString("modsuit-verb-other-start"), wearer, user);
+    }
+
+    private void OnVerbDoAfter(Entity<ModularSuitComponent> suit, ref ModularSuitVerbDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled || suit.Comp.Wearer is not { } wearer)
+            return;
+
+        args.Handled = true;
+        RunVerb(suit, wearer, args.Verb);
+    }
+
+    private void RunVerb(Entity<ModularSuitComponent> suit, EntityUid wearer, ModularSuitVerbType verb)
+    {
+        switch (verb)
+        {
+            case ModularSuitVerbType.TogglePiece:
+                ToggleDeploy(suit, wearer);
+                break;
+            case ModularSuitVerbType.ToggleSeal:
+                ToggleSeal(suit, wearer);
+                break;
+        }
     }
 
     private void StartExtractDoAfter(EntityUid suit, EntityUid target, float delay, EntityUid user, ModularSuitPart type)
@@ -447,7 +534,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         _doAfter.TryStartDoAfter(doAfterArgs);
     }
 
-    private bool TryStartSuitSealing(Entity<ModularSuitComponent> suit, EntityUid user)
+    private bool TryStartSuitSealing(Entity<ModularSuitComponent> suit, EntityUid user, bool activateSuit = true)
     {
         if (!suit.Comp.Deployed || suit.Comp.Wearer != user ||
             !TryComp<ModularSuitEquippedComponent>(suit, out var equipped))
@@ -481,7 +568,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
                 continue;
             }
 
-            StartPartToggleDoAfter(user, (partUid, part), true, activateSuit: true);
+            StartPartToggleDoAfter(user, (partUid, part), true, activateSuit: activateSuit);
             return true;
         }
 
