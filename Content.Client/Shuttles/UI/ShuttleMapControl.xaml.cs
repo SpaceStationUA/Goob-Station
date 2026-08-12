@@ -260,6 +260,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         var viewportObjects = GetViewportMapObjects(matty, mapObjects);
         _viewportExclusions.Clear();
 
+        DrawStarSystem(handle, matty); // Far Horizons
+
         // Draw our FTL range + no FTL zones
         // Do it up here because we want this layered below most things.
         if (FtlMode)

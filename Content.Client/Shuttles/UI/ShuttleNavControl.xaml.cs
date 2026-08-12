@@ -275,6 +275,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
         DrawShields(handle, xform, worldToShuttle); // Pirate port - Monolith shields
 
+        DrawStarSystem(handle, worldToShuttle, shuttleToView, xform.MapUid); // Far Horizons
+
         // Frontier Corvax: north line drawing
         var rot = ourEntRot + _rotation.Value;
         DrawNorthLine(handle, rot);
