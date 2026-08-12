@@ -1,6 +1,9 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
+using Content.Server._FarHorizons.Planets;
+using Content.Shared._FarHorizons.Planets;
 using Content.Shared._FarHorizons.StarSystem;
 using Content.Shared._FarHorizons.StarSystem.Helpers;
 using Robust.Server.GameObjects;
@@ -19,6 +22,7 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly CEPlanetSystem _planetSystem = default!;
 
     public override void Initialize()
     {
@@ -95,13 +99,56 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
 
         if (_protoMan.TryIndex<EntityPrototype>(Planet.PLANET_ENTITY, out var planetEnt))
         {
+            var index = 0;
             foreach (var planet in ent.Comp.StarSystem.Planets)
             {
                 var planetCoords = new EntityCoordinates(ent, planet.Position + ent.Comp.StarOffset);
                 var spawnedPlanet = SpawnAtPosition(planetEnt.ID, planetCoords);
                 var name = Loc.GetString("space-planet-warp-name", ("planet", planet.Name));
                 _metadata.SetEntityName(spawnedPlanet, name);
+
+                // Far Horizons: planets become approachable sky bodies with approach zones.
+                // The client renders them via the parallax planet overlay; shuttle consoles
+                // draw the approach rings around them. Descent into the planet comes later.
+                // MaxScale is a fraction of the real world radius — rendering at full size
+                // would make a gas giant's disc fill the whole viewport.
+                var planetComp = EnsureComp<CEPlanetComponent>(spawnedPlanet);
+                planetComp.ShaderMode = true;
+                var worldRadius = CEPlanetRadii.WorldRadius(planet);
+                planetComp.WorldRadius = worldRadius;
+                planetComp.ApproachRadius = CEPlanetRadii.ApproachRadius(worldRadius);
+                planetComp.ZoneRadius = CEPlanetRadii.ZoneRadius(worldRadius);
+                planetComp.MinScaleRadius = CEPlanetRadii.MinScaleRadius(worldRadius);
+                planetComp.LandingRadius = CEPlanetRadii.LandingRadius(worldRadius);
+                planetComp.MinScale = CEPlanetRadii.MinScale(worldRadius);
+                planetComp.MaxScale = CEPlanetRadii.MaxScale(worldRadius);
+                Dirty(spawnedPlanet, planetComp);
+
+                // Far Horizons: generate the planet's descendable surface (biome ground layer
+                // + sky layers). Gas and ice giants get no surface and stay unlandable.
+                var surfaceSeed = (ent.Comp.Seed ?? 0) ^ (index * 1000003);
+                _planetSystem.CreatePlanetZStack(spawnedPlanet, planet, surfaceSeed);
+                index++;
             }
+        }
+
+        // Far Horizons: a predetermined, non-random planet in the sky alongside the procedural
+        // ones — the CE author's nauvis sprite. Position is deterministic per round seed, and it
+        // gets a landable surface just like the procedural planets.
+        if (_protoMan.TryIndex<EntityPrototype>("CEPlanetNauvis", out var nauvisProto))
+        {
+            var star = ent.Comp.StarSystem.Star;
+            var angle = ((ent.Comp.Seed ?? 0) % 360) * MathF.PI / 180f;
+            var nauvisPos = star.Position + ent.Comp.StarOffset +
+                            new Vector2(MathF.Cos(angle), MathF.Sin(angle)) * 3000f;
+
+            var spawnedNauvis = SpawnAtPosition(nauvisProto.ID, new EntityCoordinates(ent, nauvisPos));
+
+            var nauvisComp = EnsureComp<CEPlanetComponent>(spawnedNauvis);
+            nauvisComp.WorldRadius = 10f;
+            Dirty(spawnedNauvis, nauvisComp);
+
+            _planetSystem.CreatePlanetZStack(spawnedNauvis, (ent.Comp.Seed ?? 0) ^ 0x5BD1E995);
         }
     }
 }

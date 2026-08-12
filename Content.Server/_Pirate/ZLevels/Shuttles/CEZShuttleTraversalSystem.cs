@@ -38,6 +38,7 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly _FarHorizons.Planets.CEDescentSystem _descent = default!; // Far Horizons
 
     private EntityQuery<MapGridComponent> _gridQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -55,8 +56,9 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
     private static readonly TimeSpan ButtonRefreshInterval = TimeSpan.FromSeconds(0.5);
 
     // Mirror the FTL feel: a startup wind-up before the move, then an exit cooldown after.
-    private static readonly TimeSpan StartupTime = TimeSpan.FromSeconds(5.5);
-    private static readonly TimeSpan ExitTime = TimeSpan.FromSeconds(3);
+    // Kept short so level-by-level flying (planet descents in particular) doesn't drag. // Far Horizons
+    private static readonly TimeSpan StartupTime = TimeSpan.FromSeconds(3);
+    private static readonly TimeSpan ExitTime = TimeSpan.FromSeconds(1.5);
 
     private readonly SoundSpecifier _startupSound =
         new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg")
@@ -224,7 +226,7 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
         if (!TryGetMoveContext(root, out var decks, out var own, out var aabb))
             return;
 
-        canUp = CanReachDirection(decks, own, aabb, 1);
+        canUp = !_descent.IsAtPlanetCeiling(root) && CanReachDirection(decks, own, aabb, 1); // Far Horizons: no flying above the planet's ceiling
         canDown = CanReachDirection(decks, own, aabb, -1);
     }
 
@@ -234,6 +236,9 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
     /// </summary>
     private bool CanReach(EntityUid root, int direction)
     {
+        if (direction > 0 && _descent.IsAtPlanetCeiling(root)) // Far Horizons
+            return false;
+
         return TryGetMoveContext(root, out var decks, out var own, out var aabb) &&
                CanReachDirection(decks, own, aabb, direction);
     }

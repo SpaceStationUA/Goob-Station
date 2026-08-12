@@ -46,6 +46,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly _Lavaland.Shuttles.Systems.DockingConsoleSystem _dockingConsole = default!; // Lavaland Change: FTL
 
     [Dependency] private readonly _Pirate.ZLevels.Shuttles.CEZShuttleTraversalSystem _ztravel = default!; // Pirate: multiz
+    [Dependency] private readonly _FarHorizons.Planets.CEDescentSystem _descent = default!; // Far Horizons
 
     private EntityQuery<MetaDataComponent> _metaQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -504,6 +505,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             exclusions ?? new List<ShuttleExclusionObject>());
 
         _ztravel.WriteConsoleState(shuttle.Owner, mapState); // Pirate: multiz
+        _descent.WriteConsoleState(shuttle.Owner, mapState); // Far Horizons
 
         return mapState; // Pirate: multiz
     }

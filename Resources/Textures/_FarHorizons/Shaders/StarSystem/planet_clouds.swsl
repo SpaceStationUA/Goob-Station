@@ -1,0 +1,27 @@
+light_mode unshaded;
+
+#include "/Textures/_FarHorizons/Shaders/shader_utils.swsl"
+
+// Render data
+uniform highp vec2 viewportMin;
+uniform highp vec2 viewportSize;
+
+uniform highp vec3 cloudColor;
+
+void fragment() {
+    highp vec2 pixelWorldPos = viewportMin + (UV * viewportSize);
+
+    // Two noise octave sets drifting at different speeds — soft billowing atmosphere.
+    highp float drift = TIME * 0.002;
+    highp float n1 = fbm(pixelWorldPos * 0.0015 + vec2(drift, 0.0));
+    highp float n2 = fbm(pixelWorldPos * 0.004 + vec2(0.0, drift * 0.6));
+
+    highp float coverage = smoothstep(0.4, 0.8, n1 * 0.7 + n2 * 0.3);
+    highp float alpha = coverage * 0.55;
+
+    if (alpha < 0.02) {
+        discard;
+    }
+
+    COLOR = vec4(cloudColor, alpha);
+}

@@ -1,5 +1,9 @@
 # Physical representations for stellar objects in world
 
+# Both the star and planets carry an FTLBeacon so they show up as FTL destinations — the system
+# can be huge and the beacon is the only way to find your way back. FTLing to one arrives in
+# orbit around it (see CEDescentSystem.ResolvePlanetBeaconTarget), not inside the body.
+
 - type: entity
   id: StarEntity
   name: Star # Renamed at spawn

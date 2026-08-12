@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server._Pirate.ZLevels.Core;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Shared._FarHorizons.Planets; // Far Horizons
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Shuttles.Components;
 using Content.Shared.Station.Components;
@@ -24,6 +25,7 @@ public sealed class CEZShuttleRoofSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
+    [Dependency] private readonly _FarHorizons.Planets.CEPlanetSystem _planetSystem = default!; // Far Horizons
 
     private const string FallbackPlatingTileId = "Plating";
 
@@ -137,6 +139,15 @@ public sealed class CEZShuttleRoofSystem : EntitySystem
 
         var topXform = Transform(topGrid);
         if (topXform.MapUid is not { } topMapUid)
+        {
+            RemoveRoof(shuttleUid);
+            return;
+        }
+
+        // Far Horizons: no fake roof anywhere in planet networks — the ship keeps its real
+        // appearance while flying the atmosphere, and the clouds overlay reads as the sky.
+        // (The roof is a station-deck mechanic.)
+        if (_planetSystem.TryGetPlanetForMap(topMapUid, out _))
         {
             RemoveRoof(shuttleUid);
             return;

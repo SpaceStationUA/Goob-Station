@@ -42,6 +42,12 @@ public sealed class AsteroidBeltOverlay : Overlay
 
         var belt = starSystem.StarSystem.AsteroidBelt;
 
+        // FPS: the belt shader covers the whole viewport; skip it once the viewer is well outside
+        // the belt's outer edge so distant dust doesn't burn GPU time.
+        var beltCenter = belt.Position + starSystem.StarOffset;
+        if ((args.WorldAABB.Center - beltCenter).Length() > belt.RadialSize.Y * 1.8f)
+            return false;
+
         if (_belt == belt)
             return true;
 

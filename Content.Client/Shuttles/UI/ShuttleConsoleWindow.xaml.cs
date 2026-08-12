@@ -25,6 +25,9 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public event Action? RequestFlyUp; // Pirate: multiz
     public event Action? RequestFlyDown; // Pirate: multiz
 
+    public event Action? RequestDescend; // Far Horizons
+    public event Action? RequestAscend; // Far Horizons
+
     public event Action<NetEntity, NetEntity>? DockRequest;
     public event Action<NetEntity>? UndockRequest;
 
@@ -61,6 +64,11 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         #region Pirate: multiz
         MapContainer.RequestFlyUp += () => RequestFlyUp?.Invoke();
         MapContainer.RequestFlyDown += () => RequestFlyDown?.Invoke();
+        #endregion
+
+        #region Far Horizons
+        MapContainer.RequestDescend += () => RequestDescend?.Invoke();
+        MapContainer.RequestAscend += () => RequestAscend?.Invoke();
         #endregion
 
         DockContainer.DockRequest += (entity, netEntity) =>

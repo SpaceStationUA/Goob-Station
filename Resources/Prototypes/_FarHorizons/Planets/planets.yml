@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Far Horizons: hand-placed planets. Manual planets can either use a predefined sprite
+# (like the CE author's nauvis) or a procedural star system shader — see CEPlanetComponent.
+# Procedural star system planets (shader-based) are spawned by the star system itself,
+# and CEPlanetNauvis is spawned alongside them as a predetermined planet.
+
+- type: entity
+  id: CEPlanetBase
+  abstract: true
+  name: planet
+  description: A planet floating in space. Land on it, or just admire it from afar.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+  - type: CEPlanet
+    sprite:
+      sprite: _FarHorizons/Planets/nauvis.rsi
+      state: planet
+
+- type: entity
+  parent: CEPlanetBase
+  id: CEPlanetNauvis
+  name: Nauvis
+  description: The third rock from a certain sun. If you can read this, someone forgot to replace the description.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: CEPlanet
+    sprite:
+      sprite: _FarHorizons/Planets/nauvis.rsi
+      state: planet
+    spinRate: 0.02
+    zoneRadius: 64
+    approachRadius: 192
+    minScaleRadius: 512
+    minScale: 0.08
+    maxScale: 0.4
+    landingRadius: 100
+  - type: FTLBeacon

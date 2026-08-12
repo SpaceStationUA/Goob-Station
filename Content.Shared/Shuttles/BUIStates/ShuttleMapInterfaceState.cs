@@ -3,6 +3,7 @@
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Shuttles.UI.MapObjects;
 using Content.Shared.Timing;
+using Content.Shared._FarHorizons.Planets.Descent; // Far Horizons
 using Content.Shared._Pirate.ZLevels.Shuttles; // Pirate: multiz
 using Robust.Shared.Serialization;
 
@@ -40,6 +41,20 @@ public sealed class ShuttleMapInterfaceState
 
     /// <summary>Whether there is a level below the shuttle's bottom deck that it can fly into.</summary>
     public bool CanFlyDown;
+    #endregion
+
+    #region Far Horizons
+    /// <summary>Current planet descent/ascent drive phase.</summary>
+    public CEDescentConsoleState CEDescentState;
+
+    /// <summary>When the current descent phase started and ends, for the progress bar.</summary>
+    public StartEndTime CEDescentTime;
+
+    /// <summary>Whether the shuttle is within a planet's approach zone and may descend onto it.</summary>
+    public bool CanDescend;
+
+    /// <summary>Whether the shuttle is on a planet's ground layer and may ascend back to orbit.</summary>
+    public bool CanAscend;
     #endregion
 
     public ShuttleMapInterfaceState(

@@ -24,7 +24,8 @@ highp float fbm(highp vec2 p) {
     highp float value = 0.0;
     highp float amplitude = 0.5;
     highp float frequency = 1.0;
-    for (highp int i = 0; i < 3; i++) {
+    // Two octaves instead of three — noticeably cheaper per pixel, slightly smoother detail.
+    for (highp int i = 0; i < 2; i++) {
         value += amplitude * noise(p * frequency);
         frequency *= 2.0;
         amplitude *= 0.5;

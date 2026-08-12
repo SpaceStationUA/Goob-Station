@@ -55,7 +55,7 @@ public sealed partial class ShuttleConsoleSystem
         }
 
         var angle = args.Angle.Reduced();
-        var targetCoordinates = new EntityCoordinates(targetXform.MapUid!.Value, _transform.GetWorldPosition(targetXform));
+        var targetCoordinates = _descent.ResolvePlanetBeaconTarget(beaconEnt, targetXform); // Far Horizons: arrive in orbit around planets
 
         ConsoleFTL(ent, targetCoordinates, angle, targetXform.MapID);
     }

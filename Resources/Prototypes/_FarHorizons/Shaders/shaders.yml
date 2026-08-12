@@ -85,3 +85,8 @@
     boulderDensity: 0.05
     boulderMaxRadius: 1.5
     boulderSpeedMultiplier: 1.25
+
+- type: shader
+  id: PlanetClouds
+  kind: source
+  path: "/Textures/_FarHorizons/Shaders/StarSystem/planet_clouds.swsl"
