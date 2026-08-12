@@ -36,6 +36,8 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
     private const float PartExtractTime = 5.0f;
     private static readonly TimeSpan NonWearerVerbTime = TimeSpan.FromSeconds(2);
 
+    private readonly List<(EntityUid Suit, EntityUid Actor, ModularSuitVerbType Verb)> _pendingVerbs = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -198,9 +200,9 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         args.Verbs.Add(new EquipmentVerb
         {
             Priority = 6,
-            Text = Loc.GetString("modsuit-verb-toggle-piece"),
+            Text = Loc.GetString(suit.Comp.Deployed ? "modsuit-verb-retract" : "modsuit-verb-deploy"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
-            Act = () => StartVerb(suit, user, wearer, ModularSuitVerbType.TogglePiece),
+            Act = () => StartVerb(suit, user, wearer, ModularSuitVerbType.ToggleDeploy),
         });
 
         args.Verbs.Add(new EquipmentVerb
@@ -218,9 +220,13 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
     {
         if (user == wearer)
         {
-            RunVerb(suit, wearer, verb);
+            RunVerb(suit, user, verb);
             return;
         }
+
+        // RunVerb validates again because suit state can change during the delay.
+        if (!CanRunVerb(suit, wearer, user, verb))
+            return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, NonWearerVerbTime,
             new ModularSuitVerbDoAfterEvent(verb), suit.Owner, wearer, suit.Owner)
@@ -234,24 +240,72 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
             Popup.PopupEntity(Loc.GetString("modsuit-verb-other-start"), wearer, user);
     }
 
+    private bool CanRunVerb(
+        Entity<ModularSuitComponent> suit,
+        EntityUid wearer,
+        EntityUid actor,
+        ModularSuitVerbType verb)
+    {
+        var springlocked = TryComp<AffectedModuleSpringlockComponent>(wearer, out var springlock)
+                           && springlock.Locked;
+
+        switch (verb)
+        {
+            case ModularSuitVerbType.ToggleDeploy when suit.Comp.Deployed && suit.Comp.Active:
+                Refuse(suit, actor, "modsuit-retract-blocked-active");
+                return false;
+            case ModularSuitVerbType.ToggleDeploy when suit.Comp.Deployed && springlocked:
+                Refuse(suit, actor, "modsuit-undeploy-blocked");
+                return false;
+            case ModularSuitVerbType.ToggleSeal when !suit.Comp.Deployed:
+                Refuse(suit, actor, "modsuit-seal-blocked-undeployed");
+                return false;
+            case ModularSuitVerbType.ToggleSeal when !suit.Comp.Assembled && !AllRequiredPartsDeployed(suit):
+                Refuse(suit, actor, "modsuit-seal-failed");
+                return false;
+        }
+
+        return true;
+    }
+
     private void OnVerbDoAfter(Entity<ModularSuitComponent> suit, ref ModularSuitVerbDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || suit.Comp.Wearer is not { } wearer)
+        if (args.Handled || args.Cancelled)
             return;
 
         args.Handled = true;
-        RunVerb(suit, wearer, args.Verb);
+
+        // Run after do-after iteration to avoid mutating its component collection.
+        _pendingVerbs.Add((suit.Owner, args.User, args.Verb));
     }
 
-    private void RunVerb(Entity<ModularSuitComponent> suit, EntityUid wearer, ModularSuitVerbType verb)
+    private void ProcessPendingVerbs()
     {
+        if (_pendingVerbs.Count == 0)
+            return;
+
+        var pending = _pendingVerbs.ToArray();
+        _pendingVerbs.Clear();
+
+        foreach (var (suitUid, actor, verb) in pending)
+        {
+            if (TryComp<ModularSuitComponent>(suitUid, out var suit))
+                RunVerb((suitUid, suit), actor, verb);
+        }
+    }
+
+    private void RunVerb(Entity<ModularSuitComponent> suit, EntityUid actor, ModularSuitVerbType verb)
+    {
+        if (suit.Comp.Wearer is not { } wearer)
+            return;
+
         switch (verb)
         {
-            case ModularSuitVerbType.TogglePiece:
-                ToggleDeploy(suit, wearer);
+            case ModularSuitVerbType.ToggleDeploy:
+                ToggleDeploy(suit, wearer, actor);
                 break;
             case ModularSuitVerbType.ToggleSeal:
-                ToggleSeal(suit, wearer);
+                ToggleSeal(suit, wearer, actor);
                 break;
         }
     }
@@ -542,21 +596,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
             return false;
         }
 
-        var requiredParts = new HashSet<SuitPartType>
-        {
-            SuitPartType.Helmet,
-            SuitPartType.Torso,
-            SuitPartType.Gloves,
-            SuitPartType.Boots
-        };
-
-        foreach (var partUid in equipped.EquippedParts.Values)
-        {
-            if (TryComp<ModularSuitPartComponent>(partUid, out var part))
-                requiredParts.Remove(part.PartType);
-        }
-
-        if (requiredParts.Count > 0)
+        if (!AllRequiredPartsDeployed(suit))
             return false;
 
         foreach (var partUid in equipped.EquippedParts.Values)
@@ -573,6 +613,28 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         }
 
         return false;
+    }
+
+    private bool AllRequiredPartsDeployed(EntityUid suit)
+    {
+        if (!TryComp<ModularSuitEquippedComponent>(suit, out var equipped))
+            return false;
+
+        var requiredParts = new HashSet<SuitPartType>
+        {
+            SuitPartType.Helmet,
+            SuitPartType.Torso,
+            SuitPartType.Gloves,
+            SuitPartType.Boots
+        };
+
+        foreach (var partUid in equipped.EquippedParts.Values)
+        {
+            if (TryComp<ModularSuitPartComponent>(partUid, out var part))
+                requiredParts.Remove(part.PartType);
+        }
+
+        return requiredParts.Count == 0;
     }
 
     private bool TryStartSuitUnsealing(Entity<ModularSuitComponent> suit, EntityUid user)

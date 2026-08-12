@@ -39,44 +39,30 @@ public sealed partial class ModularSuitSystem
     ///     Seals every deployed part, or unseals them again. Unlike the activate action this does not
     ///     power the suit up by itself - that is left to the suit's auto-activate setting.
     /// </summary>
-    private void ToggleSeal(Entity<ModularSuitComponent> ent, EntityUid user)
+    private void ToggleSeal(Entity<ModularSuitComponent> ent, EntityUid wearer, EntityUid? actor = null)
     {
-        if (ent.Comp.Wearer != user)
-            return;
+        var recipient = actor ?? wearer;
 
         if (!ent.Comp.Deployed)
         {
-            Popup.PopupEntity(Loc.GetString("modsuit-seal-blocked-undeployed"), ent.Owner, user, PopupType.SmallCaution);
-            _audio.PlayEntity(ent.Comp.BuzzSound, user, user);
+            Refuse(ent, recipient, "modsuit-seal-blocked-undeployed");
             return;
         }
 
+        // Unsealing powers the suit down.
         if (ent.Comp.Assembled)
         {
-            if (ent.Comp.Active)
-            {
-                Popup.PopupEntity(Loc.GetString("modsuit-retract-blocked-active"), ent.Owner, user, PopupType.SmallCaution);
-                _audio.PlayEntity(ent.Comp.BuzzSound, user, user);
-                return;
-            }
-
-            if (!TryStartSuitUnsealing(ent, user))
-                FailSeal(ent, user);
+            if (!TryStartSuitUnsealing(ent, wearer))
+                Refuse(ent, recipient, "modsuit-seal-failed");
 
             UpdateUiState(ent);
             return;
         }
 
-        if (!TryStartSuitSealing(ent, user, activateSuit: false))
-            FailSeal(ent, user);
+        if (!TryStartSuitSealing(ent, wearer, activateSuit: false))
+            Refuse(ent, recipient, "modsuit-seal-failed");
 
         UpdateUiState(ent);
-    }
-
-    private void FailSeal(Entity<ModularSuitComponent> ent, EntityUid user)
-    {
-        Popup.PopupEntity(Loc.GetString("modsuit-seal-failed"), ent.Owner, user, PopupType.SmallCaution);
-        _audio.PlayEntity(ent.Comp.BuzzSound, user, user);
     }
 
     private void RequestSetActive(Entity<ModularSuitComponent> ent, EntityUid user, bool active)

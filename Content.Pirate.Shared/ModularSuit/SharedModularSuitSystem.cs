@@ -85,7 +85,7 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
         ToggleDeploy(ent, ent.Comp.Wearer.Value);
     }
 
-    protected void ToggleDeploy(Entity<ModularSuitComponent> ent, EntityUid wearer)
+    protected void ToggleDeploy(Entity<ModularSuitComponent> ent, EntityUid wearer, EntityUid? actor = null)
     {
         if (!ent.Comp.Deployed)
         {
@@ -95,12 +95,17 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
 
         if (ent.Comp.Active)
         {
-            Popup.PopupEntity(Loc.GetString("modsuit-retract-blocked-active"), ent.Owner, wearer, PopupType.SmallCaution);
-            _audioSystem.PlayEntity(ent.Comp.BuzzSound, wearer, wearer);
+            Refuse(ent, actor ?? wearer, "modsuit-retract-blocked-active");
             return;
         }
 
         UndeploySuit(ent, wearer);
+    }
+
+    protected void Refuse(Entity<ModularSuitComponent> ent, EntityUid recipient, LocId reason)
+    {
+        Popup.PopupEntity(Loc.GetString(reason), ent.Owner, recipient, PopupType.SmallCaution);
+        _audioSystem.PlayEntity(ent.Comp.BuzzSound, recipient, recipient);
     }
 
     private void OnToggleActivateAction(Entity<ModularSuitComponent> ent, ref ToggleActivateSuitActionEvent args)
@@ -237,7 +242,7 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
         ent.Comp.Deployed = true;
         SyncDeployAction(ent);
 
-        _audioSystem.PlayEntity(ent.Comp.DeploySound, wearer, wearer);
+        _audioSystem.PlayPvs(ent.Comp.DeploySound, ent.Owner);
         Dirty(ent.Owner, ent.Comp);
         UpdateActions(ent);
     }
@@ -273,7 +278,7 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
         ent.Comp.Assembled = false;
         SyncDeployAction(ent);
 
-        _audioSystem.PlayEntity(ent.Comp.DeploySound, wearer, wearer);
+        _audioSystem.PlayPvs(ent.Comp.DeploySound, ent.Owner);
         Dirty(ent.Owner, ent.Comp);
         UpdateActions(ent);
     }

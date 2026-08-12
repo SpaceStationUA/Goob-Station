@@ -9,7 +9,7 @@ namespace Content.Pirate.Shared.ModularSuit;
 [Serializable, NetSerializable]
 public enum ModularSuitVerbType : byte
 {
-    TogglePiece,
+    ToggleDeploy,
     ToggleSeal,
 }
 

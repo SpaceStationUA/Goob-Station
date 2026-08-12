@@ -1,5 +1,6 @@
 # Strings for the two MODsuit equipment verbs ported from the legacy modsuits.
-modsuit-verb-toggle-piece = Toggle Suit Piece
+modsuit-verb-deploy = Deploy Suit
+modsuit-verb-retract = Retract Suit
 modsuit-verb-toggle-seal = Toggle Seals
 modsuit-verb-other-start = You start operating the suit...
 modsuit-seal-blocked-undeployed = Deploy the suit first.
