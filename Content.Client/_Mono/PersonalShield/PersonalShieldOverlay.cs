@@ -75,7 +75,7 @@ public sealed partial class PersonalShieldOverlay : Overlay
 
             var size = extents * shield.Scale;
             var worldPos = _transform.GetWorldPosition(xform);
-            if (!args.WorldBounds.Intersects(Box2.CenteredAround(worldPos, size)))
+            if (!args.WorldBounds.CalcBoundingBox().Intersects(Box2.CenteredAround(worldPos, size)))
                 continue;
 
             var shader = GetShaderInstance(uid);
