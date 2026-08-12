@@ -101,6 +101,12 @@
     layers:
     - state: fuel_input_open
   - type: HFRFuelInput
+  - type: Machine
+    board: MachineHFRFuelInputCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
   - type: Construction
     graph: HFRFuelInputPart
     node: start
@@ -163,6 +169,12 @@
     layers:
     - state: moderator_input_open
   - type: HFRModeratorInput
+  - type: Machine
+    board: MachineHFRModeratorInputCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
   - type: Construction
     graph: HFRModeratorInputPart
     node: start
@@ -225,6 +237,12 @@
     layers:
     - state: waste_output_open
   - type: HFRWasteOutput
+  - type: Machine
+    board: MachineHFRWasteOutputCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
   - type: Construction
     graph: HFRWasteOutputPart
     node: start
@@ -291,6 +309,12 @@
     layers:
     - state: interface_open
   - type: HFRInterface
+  - type: Machine
+    board: MachineHFRInterfaceCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
   - type: Construction
     graph: HFRInterfacePart
     node: start
@@ -336,6 +360,12 @@
     layers:
     - state: corner_open
   - type: HFRCorner
+  - type: Machine
+    board: MachineHFRCornerCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
   - type: Construction
     graph: HFRCornerPart
     node: start
