@@ -175,17 +175,6 @@
       - state: icon
 
 - type: entity
-  name: "security bowtie"
-  description: "Cute bowtile"
-  id: ClothingNeckBowtieSecurity
-  parent: ClothingNeckBase
-  components:
-  - type: Sprite
-    sprite: _Pirate/Clothing/Neck/bowtie/security.rsi
-    layers:
-      - state: icon
-
-- type: entity
   name: "syndicate bowtie"
   description: "Cute bowtile"
   id: ClothingNeckBowtieSyndicate
