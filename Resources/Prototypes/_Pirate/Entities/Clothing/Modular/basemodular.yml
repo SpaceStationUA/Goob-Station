@@ -303,6 +303,10 @@
       - state: sealed-equipped-HAND
   - type: ModularSuitPart
     partType: Gloves
+  - type: Fiber
+    fiberMaterial: fibers-modular
+    fiberColor: fibers-black
+  - type: FingerprintMask
   - type: DamageOnInteractProtection
     damageProtection:
       flatReductions:

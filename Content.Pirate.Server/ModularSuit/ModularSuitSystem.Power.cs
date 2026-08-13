@@ -26,6 +26,8 @@ public sealed partial class ModularSuitSystem
     {
         base.Update(frameTime);
 
+        ProcessPendingVerbs();
+
         var query = EntityQueryEnumerator<ModularSuitComponent>();
         while (query.MoveNext(out var uid, out var suit))
         {

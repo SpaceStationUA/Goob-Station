@@ -10,8 +10,8 @@
     earliestStart: 20
     duration: 1
     minimumPlayers: 10
-    maxOccurrences: 3
-    weight: 10
+    maxOccurrences: 6 # Pirate - was 3
+    weight: 20 # Pirate - increase dead drop frequency
   - type: GameRule
     chaosScore: 40
   - type: RandomSpawnRule
