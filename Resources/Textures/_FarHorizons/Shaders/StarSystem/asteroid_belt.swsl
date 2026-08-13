@@ -81,24 +81,19 @@ void fragment() {
     highp float beltWidth = max(asteroidBeltRadialSize.y - asteroidBeltRadialSize.x, 0.001);
     highp float t = (dist - asteroidBeltRadialSize.x) / beltWidth;
 
-    highp float featherPower = (edgeFeatherPower <= 0.0) ? 0.6 : edgeFeatherPower;
-    highp float wideEdgeFeather = pow(sin(t * 3.14159265), featherPower);
-
-    highp float safeBandFreq = (bandFrequency <= 0.0) ? 12.0 : bandFrequency;
-    highp float safeBandNoise = (bandNoiseScale <= 0.0) ? 2.5 : bandNoiseScale;
+    highp float wideEdgeFeather = pow(sin(t * 3.14159265), edgeFeatherPower);
 
     highp float angle = atan(rawOffset.y, rawOffset.x);
-    highp float bandDistortion = fbm(vec2(t * safeBandNoise, angle * 3.0)) * 0.25;
+    highp float bandDistortion = fbm(vec2(t * bandNoiseScale, angle * 3.0)) * 0.25;
 
-    highp float bandSine = sin((t + bandDistortion) * safeBandFreq * 3.14159265);
+    highp float bandSine = sin((t + bandDistortion) * bandFrequency * 3.14159265);
     highp float bandMask = smoothstep(-0.3, 0.5, bandSine); 
 
     // mist
     highp float rotAngle = angle + (TIME * beltRotationSpeed);
     highp vec2 rotatedOffset = vec2(cos(rotAngle), sin(rotAngle)) * dist;
 
-    highp float safeMistScale = (mistScale <= 0.0) ? 0.01 : mistScale;
-    highp float mistNoise = fbm(rotatedOffset * safeMistScale);
+    highp float mistNoise = fbm01(rotatedOffset * mistScale);
 
     highp float lowThreshold = mix(0.4, -0.2, mistCoverage); 
     highp float highThreshold = mix(0.8, 0.3, mistCoverage);
@@ -106,43 +101,35 @@ void fragment() {
     highp float expandedMist = smoothstep(lowThreshold, highThreshold, mistNoise);
 
     highp float mistDensityVal = expandedMist * bandMask * wideEdgeFeather;
-    highp float safeMistDensity = (mistDensity <= 0.0) ? 1.0 : mistDensity;
-    highp float mistAlpha = clamp(mistDensityVal * safeMistDensity, 0.0, 1.0);
+    highp float mistAlpha = clamp(mistDensityVal * mistDensity, 0.0, 1.0);
 
     // specks
-    highp float safeSpecksMult = (specksSpeedMultiplier <= 0.0) ? 1.25 : specksSpeedMultiplier;
-    highp float specksRotAngle = angle + (TIME * beltRotationSpeed * safeSpecksMult);
+    highp float specksRotAngle = angle + (TIME * beltRotationSpeed * specksSpeedMultiplier);
     highp vec2 specksRotatedOffset = vec2(cos(specksRotAngle), sin(specksRotAngle)) * dist;
 
-    highp float safeSpecksScale = (specksScale <= 0.0) ? 0.08 : specksScale;
-    highp float rawSpeckNoise = fbm(specksRotatedOffset * safeSpecksScale);
+    highp float rawSpeckNoise = fbm01(specksRotatedOffset * specksScale);
 
-    highp float safeSpecksThresh = (specksThreshold <= 0.0) ? 0.70 : specksThreshold;
-    highp float specksMask = smoothstep(safeSpecksThresh, safeSpecksThresh + 0.1, rawSpeckNoise);
+    highp float specksMask = smoothstep(specksThreshold, specksThreshold + 0.1, rawSpeckNoise);
     
     highp float specksAlpha = specksMask * bandMask * wideEdgeFeather;
 
     // boulders
-    highp float safeBoulderMult = (boulderSpeedMultiplier <= 0.0) ? 1.4 : boulderSpeedMultiplier;
-    highp float boulderRotAngle = angle + (TIME * beltRotationSpeed * safeBoulderMult);
+    highp float boulderRotAngle = angle + (TIME * beltRotationSpeed * boulderSpeedMultiplier);
     highp vec2 boulderRotatedOffset = vec2(cos(boulderRotAngle), sin(boulderRotAngle)) * dist;
 
-    highp float safeGridScale = (boulderGridScale <= 0.0) ? 0.05 : boulderGridScale;
-    highp vec2 gridPos = boulderRotatedOffset * safeGridScale;
+    highp vec2 gridPos = boulderRotatedOffset * boulderGridScale;
     highp vec2 cellId = floor(gridPos);
     highp vec2 cellUV = fract(gridPos) - 0.5;
 
     highp vec2 cellHash = hash2(cellId);
     highp float cellSeed = cellHash.x + 0.5;
 
-    highp float safeBoulderDensity = (boulderDensity <= 0.0) ? 0.35 : boulderDensity;
     highp float boulderAlpha = 0.0;
     highp vec3 boulderColor = vec3(0.0);
 
-    if (cellSeed < safeBoulderDensity && bandMask > 0.1 && wideEdgeFeather > 0.1) {
-        highp float maxR = (boulderMaxRadius <= 0.0) ? 2.0 : boulderMaxRadius;
+    if (cellSeed < boulderDensity && bandMask > 0.1 && wideEdgeFeather > 0.1) {
         highp float sizeFactor = mix(0.4, 1.0, abs(cellHash.y) * 2.0);
-        highp float targetRadius = maxR * sizeFactor;
+        highp float targetRadius = boulderMaxRadius * sizeFactor;
 
         highp vec2 asteroidCenter = cellHash * 0.35;
         highp vec2 localPos = (cellUV - asteroidCenter) * 10.0;

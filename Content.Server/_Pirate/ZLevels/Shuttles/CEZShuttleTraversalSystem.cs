@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server._Pirate.ZLevels.Core;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Shared._FarHorizons.Planets; // Far Horizons
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Shuttles;
 using Content.Shared._Pirate.ZLevels.Shuttles.Components;
@@ -38,6 +39,7 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!; // Far Horizons: landing excavation
     [Dependency] private readonly _FarHorizons.Planets.CEDescentSystem _descent = default!; // Far Horizons
 
     private EntityQuery<MapGridComponent> _gridQuery;
@@ -431,7 +433,6 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
     {
         if (!TryGetRealDecks(root, out var decks))
             return false;
-
         // Resolve every deck's destination up front so the move is atomic: if any deck has no
         // adjacent map we bail before relocating anything, rather than stranding part of the stack.
         var moves = new List<(EntityUid Deck, TransformComponent Xform, EntityUid TargetMap)>(decks.Count);
@@ -474,6 +475,17 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
                     _physics.SetAngularVelocity(deck, 0f, body: body);
                 }
             }
+
+            // Far Horizons: arriving on a planet surface excavates the deck footprints so ships
+            // land on clear ground instead of inside biome rocks/walls. The biome only generates
+            // into untouched chunks, so cleared tiles stay clear.
+            foreach (var (deck, _, targetMap) in moves)
+            {
+                if (!HasComp<CEZGroundLayerComponent>(targetMap))
+                    continue;
+
+                ExcavateLandingSpot(targetMap, deck);
+            }
         }
         finally
         {
@@ -485,6 +497,32 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
         // above it now).
         _roof.EnsureRoof(root);
         return true;
+    }
+
+    /// <summary>
+    /// Clears biome tiles under <paramref name="gridUid"/>'s footprint (plus a small margin) on a
+    /// planet surface map, so the ship touches down on open ground instead of inside rocks. Only
+    /// already-generated tiles are cleared; the biome doesn't regenerate them afterwards.
+    /// </summary>
+    private void ExcavateLandingSpot(EntityUid mapUid, EntityUid gridUid)
+    {
+        if (!_gridQuery.TryGetComponent(mapUid, out var mapGrid) ||
+            !_gridQuery.TryGetComponent(gridUid, out var deckGrid))
+            return;
+
+        var bounds = _transform.GetWorldMatrix(gridUid).TransformBox(deckGrid.LocalAABB).Enlarged(2f);
+
+        var tiles = new List<(Vector2i GridIndices, Tile Tile)>();
+        foreach (var tileRef in _mapSystem.GetLocalTilesIntersecting(mapUid, mapGrid, bounds, false))
+        {
+            if (tileRef.Tile.IsEmpty)
+                continue;
+
+            tiles.Add((tileRef.GridIndices, Tile.Empty));
+        }
+
+        if (tiles.Count > 0)
+            _mapSystem.SetTiles(mapUid, mapGrid, tiles);
     }
 
     private void PlayForDecks(EntityUid root, SoundSpecifier sound)

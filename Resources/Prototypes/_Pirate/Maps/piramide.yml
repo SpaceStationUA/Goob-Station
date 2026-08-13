@@ -1,6 +1,7 @@
 - type: gameMap
   id: PiramideTP
   mapName: 'Piramide Station'
+  generateStarSystem: false
   mapPath: /Maps/_Pirate/piramide.yml
   mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
   mapPreview: PirateMapPreviewPiramideTP

@@ -15,6 +15,10 @@ public sealed partial class PlanetaryRings
     [ViewVariables(VVAccess.ReadWrite)] public Color Color2;
     [ViewVariables(VVAccess.ReadWrite)] public Color Color3;
 
+    public PlanetaryRings()
+    {
+    }
+
     public PlanetaryRings(System.Random rand, IPrototypeManager protoMan, ProtoId<PlanetaryRingsTypePrototype> protoId)
     {
         var proto = protoMan.Index(protoId);

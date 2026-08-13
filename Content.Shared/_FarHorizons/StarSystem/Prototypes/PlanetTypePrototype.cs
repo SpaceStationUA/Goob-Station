@@ -12,7 +12,15 @@ public sealed partial class PlanetTypePrototype : IPrototype
     [DataField] public List<ProtoId<PlanetaryAtmosphereTypePrototype>> Atmospheres = new();
     [DataField(required: true)] public float LiquidProbability = default!;
     [DataField] public List<ProtoId<PlanetaryLiquidTypePrototype>> Liquids = new();
+    // ShaderPrototype is client-only, so this stays a plain id string (validated by the client).
     [DataField(required: true)] public string Shader = default!;
+
+    /// <summary>
+    /// Whether this planet type can host a landable surface (descent z-stack). Gas and ice
+    /// giants have no surface to land on.
+    /// </summary>
+    [DataField] public bool Landable = true;
+
     [DataField(required: true)] public float RingProbability = default!;
     [DataField(required: true)] public FloatRangeValue EarthMass = default!;
     [DataField(required: true)] public List<ProtoId<PlanetPalettePrototype>> Palettes = default!;

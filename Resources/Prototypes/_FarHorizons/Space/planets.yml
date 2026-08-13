@@ -3,6 +3,7 @@
   id: PlanetTypeGasGiant
   orbit: [ OuterWarm]
   shader: GasGiant
+  landable: false
   basePrettiness: 30 # Pretty nice
   ringProbability: 0.45
   earthMass:
@@ -37,6 +38,7 @@
   id: PlanetTypeIceGiant
   orbit: [ OuterCold ]
   shader: IceGiant
+  landable: false
   basePrettiness: 15 # Eh
   ringProbability: 0.45
   earthMass:
@@ -90,6 +92,9 @@
       terrainScale:
         min: 0.5
         max: 1.5
+      roughness:
+        min: 0.25
+        max: 1.5
       macroFrequency:
         min: 2.5
         max: 5.0
@@ -130,6 +135,7 @@
   palettes:
     - PaletteBarrenLunar
     - PaletteBarrenRocky
+    - PaletteBarrenSulphur
   rings:
     - StandardRings
   customData: *rocky_planet_values
@@ -174,6 +180,7 @@
   palettes:
     - PaletteIceDeep
     - PaletteIceMethane
+    - PaletteIceCryoVolcanic
   rings:
     - StandardRings
   customData: *rocky_planet_values

@@ -9,6 +9,7 @@ ce-descent-request-denied = Посадковий привід відмовляє
 ce-descent-request-out-of-range = Ви маєте бути в зоні наближення планети, щоб здійснити посадку.
 ce-descent-request-no-network = Ця планета не має поверхні для посадки.
 ce-descent-request-respooling = Посадковий привід ще перезапускається після розряду.
+ce-descent-request-orbit-blocked = Немає вільної орбіти навколо цього тіла — спробуйте ще раз.
 
 ce-planet-type-gas-giant = Газовий гігант
 ce-planet-type-ice-giant = Крижаний гігант

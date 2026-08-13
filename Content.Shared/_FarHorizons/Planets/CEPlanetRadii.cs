@@ -19,8 +19,9 @@ public static class CEPlanetRadii
     /// </summary>
     public static float ApproachRadius(float worldRadius) => Math.Clamp(worldRadius * 6f, 192f, 800f);
 
-    /// <summary>Inner "you are at the planet" zone — full shader detail and where descents start.</summary>
-    public static float ZoneRadius(float worldRadius) => Math.Clamp(worldRadius * 1.5f, 32f, 128f);
+    /// <summary>Inner "you are at the planet" zone — full shader detail and where descents start.
+    /// Started a bit early so the "at the planet" feel kicks in before you sit on top of it.</summary>
+    public static float ZoneRadius(float worldRadius) => Math.Clamp(worldRadius * 3f, 63f, 252f);
 
     /// <summary>
     /// Distance at which the planet has shrunk to <see cref="CEPlanetComponent.MinScale"/> —
@@ -32,13 +33,13 @@ public static class CEPlanetRadii
     /// Apparent size at the planet (inside its zone). Every body — small rocky, gas giant, the
     /// sun — renders at roughly the same apparent size, so a giant never dominates the view.
     /// </summary>
-    public static float MaxScale(float worldRadius) => Math.Clamp(2f / worldRadius, 0.004f, 0.5f);
+    public static float MaxScale(float worldRadius) => Math.Clamp(5.04f / worldRadius, 0.004f, 1.26f);
 
     /// <summary>
     /// Apparent size when far away — a small uniform ball for every body, gas giants included,
     /// so distant planets all read at the size of a regular small planet.
     /// </summary>
-    public static float MinScale(float worldRadius) => Math.Clamp(0.15f / worldRadius, 0.0008f, 0.04f);
+    public static float MinScale(float worldRadius) => Math.Clamp(0.234f / worldRadius, 0.00125f, 0.0624f);
 
     /// <summary>Drop radius for a future descent (tiles around the surface origin).</summary>
     public static float LandingRadius(float worldRadius) => worldRadius;

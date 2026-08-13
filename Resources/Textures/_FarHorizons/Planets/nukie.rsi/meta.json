@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-3.0",
+  "copyright": "Daniel Maland (dmaland) via Wikimedia Commons (https://commons.wikimedia.org/wiki/File:Bringer_of_War_Planet.png)",
+  "size": {
+    "x": 250,
+    "y": 250
+  },
+  "states": [
+    {
+      "name": "planet",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    }
+  ]
+}

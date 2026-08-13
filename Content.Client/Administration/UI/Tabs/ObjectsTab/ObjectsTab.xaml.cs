@@ -87,6 +87,13 @@ public sealed partial class ObjectsTab : Control
                     _console.ExecuteCommand($"tpto {largestGrid.Value}");
                     break;
                 }
+            case ObjectsTabSelection.Planets:
+                {
+                    // Far Horizons: teleport to the planet itself — you arrive in space at its
+                    // zone edge, from where you can descend onto it.
+                    _console.ExecuteCommand($"tpto {nent}");
+                    break;
+                }
             default:
                 throw new NotImplementedException();
         }
@@ -124,6 +131,35 @@ public sealed partial class ObjectsTab : Control
                     var query = _entityManager.AllEntityQueryEnumerator<MapComponent, MetaDataComponent>();
                     while (query.MoveNext(out var uid, out _, out var metadata))
                         entities.Add((metadata.EntityName, _entityManager.GetNetEntity(uid)));
+
+                    break;
+                }
+            case ObjectsTabSelection.Planets:
+                {
+                    // Far Horizons: the star system's sky bodies. Planets carry CEPlanetComponent;
+                    // the star has no client-side marker, so match it by the name the server gave it.
+                    var query = _entityManager.AllEntityQueryEnumerator<Content.Shared._FarHorizons.Planets.CEPlanetComponent, MetaDataComponent>();
+                    while (query.MoveNext(out var uid, out _, out var metadata))
+                        entities.Add((metadata.EntityName, _entityManager.GetNetEntity(uid)));
+
+                    var starNames = new HashSet<string>();
+                    var starQuery = _entityManager.AllEntityQueryEnumerator<Content.Shared._FarHorizons.StarSystem.StarSystemMapComponent>();
+                    while (starQuery.MoveNext(out _, out var starSystem))
+                    {
+                        if (starSystem.StarSystem == null)
+                            continue;
+
+                        starNames.Add(Loc.GetString("space-star-warp-name", ("star", starSystem.StarSystem.Star.Name)));
+                    }
+
+                    var entQuery = _entityManager.AllEntityQueryEnumerator<TransformComponent, MetaDataComponent>();
+                    while (entQuery.MoveNext(out var entUid, out var xform, out var meta))
+                    {
+                        if (xform.GridUid != null || xform.MapUid == null || !starNames.Contains(meta.EntityName))
+                            continue;
+
+                        entities.Add((meta.EntityName, _entityManager.GetNetEntity(entUid)));
+                    }
 
                     break;
                 }
@@ -210,6 +246,7 @@ public sealed partial class ObjectsTab : Control
             ObjectsTabSelection.Grids => Loc.GetString("object-tab-object-type-grids"),
             ObjectsTabSelection.Maps => Loc.GetString("object-tab-object-type-maps"),
             ObjectsTabSelection.Stations => Loc.GetString("object-tab-object-type-stations"),
+            ObjectsTabSelection.Planets => Loc.GetString("object-tab-object-type-planets"),
             _ => throw new ArgumentOutOfRangeException(nameof(selection), selection, null),
         };
     }
@@ -219,6 +256,7 @@ public sealed partial class ObjectsTab : Control
         Grids,
         Maps,
         Stations,
+        Planets, // Far Horizons
     }
 }
 

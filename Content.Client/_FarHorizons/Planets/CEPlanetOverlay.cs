@@ -3,13 +3,13 @@
  * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
  */
 
-using System.Linq;
 using System.Numerics;
 using Content.Client.Parallax;
 using Content.Client.Viewport;
 using Content.Client._FarHorizons.StarSystem;
 using Content.Client._Pirate.ZLevels.Core;
 using Content.Shared._FarHorizons.Planets;
+using Content.Shared._FarHorizons.Planets.Shields;
 using Content.Shared._FarHorizons.StarSystem;
 using Content.Shared._FarHorizons.StarSystem.Helpers;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
@@ -56,6 +56,36 @@ public sealed partial class CEPlanetOverlay : Overlay
     private Star? _cachedStar;
     private ShaderInstance? _starShader;
 
+    // Reused per-Draw body collection (avoids per-frame allocations on the render path).
+    private readonly List<(float Dist, EntityUid PlanetUid, CEPlanetComponent? Planet, Vector2 WorldPos, Star? Star, Vector2 StarOffset)> _bodies = new();
+
+    // Shader-cache keys whose entities died, swept once per Draw.
+    private readonly List<EntityUid> _staleUids = new();
+
+    /// <summary>The star shader's corona extends to this multiple of the core radius.</summary>
+    private const float CoronaExtentFactor = 1.45f;
+
+    // Planetary shield skin: a procedural hex dome (see shield_skin.swsl) drawn over the
+    // disc while the planet's shield is up. One instance PER PLANET: the renderer batches
+    // draws per shader instance and uploads uniforms at flush time, so a single shared
+    // instance would render every planet with the last-set progress/colour — one planet's
+    // animation would replay on all the others.
+    private readonly Dictionary<EntityUid, ShaderInstance> _shieldSkinCache = new();
+
+    /// <summary>How long the field visually crawls across the disc after activation
+    /// (and, played in reverse, dissolves off it after deactivation).</summary>
+    private static readonly TimeSpan ShieldFormationTime = TimeSpan.FromSeconds(2.5);
+
+    /// <summary>
+    /// Per-planet local animation state for the shield skin: formation progress in
+    /// [0, 1] plus the local realtime it was last advanced. Entirely clientside — the
+    /// clock starts when *this client* observes <see cref="CEPlanetShieldComponent.Active"/>
+    /// flip, not when the server stamped it, so the crawl always plays out in full and
+    /// at the right speed regardless of ping. Planets first seen with the field already
+    /// up snap straight to formed (no replay every time one enters PVS).
+    /// </summary>
+    private readonly Dictionary<EntityUid, (float Progress, TimeSpan Last)> _shieldAnim = new();
+
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
 
     public CEPlanetOverlay()
@@ -98,6 +128,13 @@ public sealed partial class CEPlanetOverlay : Overlay
     /// <summary>Keeps the radius-edge body a hair inside the screen edge rather than clipped off it.</summary>
     private const float EdgeMargin = 0.9f;
 
+    /// <summary>
+    /// How far a planet may be from the viewer before the sky stops drawing it — distant
+    /// worlds (the nukie planet 3-5k out) stay hidden instead of hanging tiny at the screen
+    /// edge, and only grow in as you fly toward them. The star ignores this and is always drawn.
+    /// </summary>
+    private const float MaxPlanetRenderDistance = 1000f;
+
     protected override void Draw(in OverlayDrawArgs args)
     {
         var handle = args.WorldHandle;
@@ -105,6 +142,22 @@ public sealed partial class CEPlanetOverlay : Overlay
 
         // Fullbright: unaffected by world lighting.
         handle.UseShader(_unshaded);
+
+        // Drop shader-cache entries whose planets were deleted, so stale ShaderInstance
+        // references don't accumulate for the whole session.
+        _staleUids.Clear();
+        foreach (var cachedUid in _shaderCache.Keys)
+        {
+            if (!_entManager.EntityExists(cachedUid))
+                _staleUids.Add(cachedUid);
+        }
+
+        foreach (var staleUid in _staleUids)
+        {
+            _shaderCache.Remove(staleUid);
+            _shieldSkinCache.Remove(staleUid);
+            _shieldAnim.Remove(staleUid);
+        }
 
         // Work in the viewport's LOCAL (render-target pixel) space — WorldToLocal/LocalToWorld carry
         // the whole transform (eye rotation, zoom, z-level scaling). But [0, Size] is NOT the visible
@@ -135,8 +188,9 @@ public sealed partial class CEPlanetOverlay : Overlay
 
         // Collect every sky body on this map: planets plus the system's star. They're drawn
         // closest-last so the nearer body always hovers the farther one — planet over sun when
-        // you're at a planet, sun over planets when you're far out.
-        var bodies = new List<(float Dist, EntityUid PlanetUid, CEPlanetComponent? Planet, Vector2 WorldPos, Star? Star, Vector2 StarOffset)>();
+        // you're at a planet, sun over planets when you're far out. Distant planets are skipped
+        // so they don't spoil the horizon; the star is always drawn.
+        _bodies.Clear();
         var query = _entManager.EntityQueryEnumerator<CEPlanetComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var comp, out var xform))
         {
@@ -144,19 +198,23 @@ public sealed partial class CEPlanetOverlay : Overlay
                 continue;
 
             var worldPos = _transform.GetWorldPosition(xform);
-            bodies.Add(((worldPos - worldCentre).Length(), uid, comp, worldPos, null, default));
+            if ((worldPos - worldCentre).Length() > MaxPlanetRenderDistance)
+                continue;
+
+            _bodies.Add(((worldPos - worldCentre).Length(), uid, comp, worldPos, null, default));
         }
 
         if (_entManager.TryGetComponent<StarSystemMapComponent>(args.MapUid, out var starSystem) &&
             starSystem.StarSystem is { } system)
         {
             var starPos = system.Star.Position + starSystem.StarOffset;
-            bodies.Add(((starPos - worldCentre).Length(), default, null, starPos, system.Star, starSystem.StarOffset));
+            _bodies.Add(((starPos - worldCentre).Length(), default, null, starPos, system.Star, starSystem.StarOffset));
         }
 
         // Drawn farthest-first so the CLOSEST body always ends up on top — a closer planet
         // hovers the sun, and the sun hovers far planets when you're out in the system.
-        foreach (var (_, planetUid, planet, worldPos, star, starOffset) in bodies.OrderByDescending(b => b.Dist))
+        _bodies.Sort(static (a, b) => b.Dist.CompareTo(a.Dist));
+        foreach (var (_, planetUid, planet, worldPos, star, starOffset) in _bodies)
         {
             if (planet != null)
                 DrawPlanetBody(handle, vp, args.MapUid, planetUid, planet, worldPos, worldCentre, visRect, centreLocal, pxPerWorld, time);
@@ -187,10 +245,8 @@ public sealed partial class CEPlanetOverlay : Overlay
         // 0 → 1 over the remaining band out to ApproachRadius and clamps there beyond — so it
         // gradually moves toward the screen edge/corner as you pull away, then holds at the edge,
         // MinScale, tracking bearing like a distant body.
-        var zone = Math.Clamp(planet.ZoneRadius, 0f, planet.ApproachRadius - 1e-3f);
-        var band = planet.ApproachRadius - zone;
-        var lin = dist <= zone ? 0f : MathF.Min((dist - zone) / band, 1f);
-        var t = Ease01(lin);
+        var (t, scale, zone, minScaleR) = CalculateBodyTransform(
+            dist, planet.ApproachRadius, planet.ZoneRadius, planet.MinScaleRadius, planet.MinScale, planet.MaxScale);
 
         // Boundary visuals (debug only — gated on the z-level debug overlay being active): the
         // inner ring is the full-size zone (you're "at" the body inside it), the outer, dimmer
@@ -199,16 +255,9 @@ public sealed partial class CEPlanetOverlay : Overlay
         {
             if (zone > 0f)
                 handle.DrawCircle(worldPos, zone, planet.ZoneColor, false);
-            var minScaleRing = MathF.Max(planet.MinScaleRadius, zone + 1e-3f);
+            var minScaleRing = MathF.Max(minScaleR, zone + 1e-3f);
             handle.DrawCircle(worldPos, minScaleRing, planet.ZoneColor.WithAlpha(planet.ZoneColor.A * 0.5f), false);
         }
-
-        // Size runs on its OWN distance mapping, independent of the position compression above:
-        // MaxScale inside the zone, easing (smoothstep, flat slope both ends) down to MinScale
-        // out at MinScaleRadius, held at min beyond.
-        var minScaleR = MathF.Max(planet.MinScaleRadius, zone + 1e-3f);
-        var scaleLin = dist <= zone ? 0f : MathF.Min((dist - zone) / (minScaleR - zone), 1f);
-        var scale = planet.MaxScale + (planet.MinScale - planet.MaxScale) * Ease01(scaleLin);
 
         // World-space footprint of the body: sprite size, or the star system planet's visual
         // extent (disc + rings + atmosphere halo) for shader-mode planets.
@@ -219,7 +268,7 @@ public sealed partial class CEPlanetOverlay : Overlay
         Texture? tex = null;
         if (planet.ShaderMode)
         {
-            if (!TryGetShaderModeData(mapUid, worldPos, out var starSystemPlanet, out var star, out var starOffset))
+            if (!TryGetShaderModeData(mapUid, planet, out var starSystemPlanet, out var star, out var starOffset))
                 return;
 
             shaderModePlanet = starSystemPlanet;
@@ -230,7 +279,11 @@ public sealed partial class CEPlanetOverlay : Overlay
         else if (planet.Sprite is { } sprite)
         {
             tex = _sprite.Frame0(sprite);
-            size = tex.Size.X / (float) EyeManager.PixelsPerMeter * scale;
+            // Sprite planets scale off their world radius like the procedural bodies, so a
+            // big world reads as a big disc regardless of the art's native resolution. Falls
+            // back to the sprite's native size when the radius was never stamped.
+            var nativeSize = tex.Size.X / (float) EyeManager.PixelsPerMeter;
+            size = planet.WorldRadius > 0f ? planet.WorldRadius * 2f * scale : nativeSize * scale;
         }
         else
         {
@@ -274,6 +327,8 @@ public sealed partial class CEPlanetOverlay : Overlay
             handle.UseShader(cached.Shader);
             handle.DrawRect(rect, Color.White);
             handle.UseShader(_unshaded);
+
+            DrawPlanetShield(handle, uid, drawPos, size, tex);
             return;
         }
 
@@ -281,6 +336,63 @@ public sealed partial class CEPlanetOverlay : Overlay
         var angle = new Angle(time * planet.SpinRate);
         var box = Box2.CenteredAround(drawPos, new Vector2(size, size));
         handle.DrawTextureRect(tex!, new Box2Rotated(box, angle, drawPos));
+
+        DrawPlanetShield(handle, uid, drawPos, size, tex);
+    }
+
+    /// <summary>
+    /// Draws the planet's shield skin over the disc while <see cref="CEPlanetShieldComponent.Active"/>:
+    /// a procedural hex dome whose formation progress is a purely local clock advanced toward the
+    /// networked flag each frame — crawl in when it flips on, the exact same crawl in reverse when it
+    /// flips off, so a flip mid-animation just reverses from wherever the front currently is.
+    /// </summary>
+    private void DrawPlanetShield(DrawingHandleWorld handle, EntityUid uid, Vector2 drawPos, float size, Texture? tex)
+    {
+        if (!_entManager.TryGetComponent<CEPlanetShieldComponent>(uid, out var shield))
+            return;
+
+        var now = _timing.RealTime;
+        if (!_shieldAnim.TryGetValue(uid, out var anim))
+        {
+            // First observation: planets already shielded snap straight to formed (no replay
+            // every time one enters PVS); a freshly activated one starts its crawl from 0.
+            anim = shield.Active ? (1f, now) : (0f, now);
+        }
+
+        var step = (float) ((now - anim.Last).TotalSeconds / ShieldFormationTime.TotalSeconds);
+        var formed = Math.Clamp(anim.Progress + (shield.Active ? step : -step), 0f, 1f);
+        _shieldAnim[uid] = (formed, now);
+
+        if (formed <= 0f)
+            return;
+
+        // Per-planet instance: uniforms are read off the live instance when the draw batch
+        // flushes, so a shared one would smear the last-set progress across every planet.
+        if (!_shieldSkinCache.TryGetValue(uid, out var shader))
+        {
+            shader = _protoMan.Index<ShaderPrototype>("CEPlanetShieldSkin").InstanceUnique();
+            _shieldSkinCache[uid] = shader;
+        }
+
+        // The field snap-snaps to the planet art's own texel grid for sprite planets;
+        // shader-mode planets have no art grid, so the dome renders smooth there.
+        shader.SetParameter("progress", formed);
+        shader.SetParameter("skin_color", shield.ShieldColor);
+        shader.SetParameter("brightness", 1f);
+        shader.SetParameter("pixel_grid", tex?.Width ?? 1f);
+        shader.SetParameter("hex_density", 9f);
+        shader.SetParameter("form_origin", new Vector2(0f, -0.85f));
+        shader.SetParameter("fill_level", 0.08f);
+        shader.SetParameter("line_level", 0.5f);
+        shader.SetParameter("rim_level", 0.75f);
+        shader.SetParameter("core_fade", 0f);
+        shader.SetParameter("shard_scale", 4f);
+        shader.SetParameter("alpha_bands", 6f);
+        shader.SetParameter("breath_depth", 0.08f);
+
+        handle.UseShader(shader);
+        handle.DrawTextureRect(Texture.White, Box2.CenteredAround(drawPos, new Vector2(size, size)));
+        handle.UseShader(_unshaded);
     }
 
     private void DrawStarBody(
@@ -299,26 +411,21 @@ public sealed partial class CEPlanetOverlay : Overlay
         // The sun uses the exact same zone/approach/size curves as the planets, so it recedes to
         // the screen edge at the same apparent size as a distant planet and grows just like one
         // as you approach.
-        var approach = CEPlanetRadii.ApproachRadius(starWorldRadius);
-        var zone = Math.Clamp(CEPlanetRadii.ZoneRadius(starWorldRadius), 0f, approach - 1e-3f);
-        var minScaleR = MathF.Max(CEPlanetRadii.MinScaleRadius(starWorldRadius), zone + 1e-3f);
-
         var dist = (worldPos - worldCentre).Length();
-        var band = approach - zone;
-        var lin = dist <= zone ? 0f : MathF.Min((dist - zone) / band, 1f);
-        var t = Ease01(lin);
+        var (t, scale, _, _) = CalculateBodyTransform(
+            dist,
+            CEPlanetRadii.ApproachRadius(starWorldRadius),
+            CEPlanetRadii.ZoneRadius(starWorldRadius),
+            CEPlanetRadii.MinScaleRadius(starWorldRadius),
+            CEPlanetRadii.MinScale(starWorldRadius),
+            CEPlanetRadii.MaxScale(starWorldRadius));
 
-        var scaleLin = dist <= zone ? 0f : MathF.Min((dist - zone) / (minScaleR - zone), 1f);
-        // The sun uses the exact same size curve as the planets — uniform apparent size.
-        var scale = CEPlanetRadii.MaxScale(starWorldRadius) +
-                    (CEPlanetRadii.MinScale(starWorldRadius) - CEPlanetRadii.MaxScale(starWorldRadius)) * Ease01(scaleLin);
-
-        // The star shader's corona extends to 1.45x the core radius.
-        var size = starWorldRadius * 2f * 1.45f * scale;
+        // The star shader's corona extends to CoronaExtentFactor x the core radius.
+        var size = starWorldRadius * 2f * CoronaExtentFactor * scale;
 
         // FPS cap like the planets: keep the rect bounded without freezing the disc's growth.
         const float MaxBodySize = 4f;
-        if (size > MaxBodySize && size / 1.45f < MaxBodySize)
+        if (size > MaxBodySize && size / CoronaExtentFactor < MaxBodySize)
             size = MaxBodySize;
 
         if (_cachedStar != star)
@@ -408,8 +515,35 @@ public sealed partial class CEPlanetOverlay : Overlay
 
     private static float Ease01(float x) => x * x * (3f - 2f * x);
 
-    /// <summary>Finds the star system <see cref="Planet"/> this entity represents, by world position.</summary>
-    private bool TryGetShaderModeData(EntityUid mapUid, Vector2 worldPos, out Planet planet, out Star star, out Vector2 starOffset)
+    /// <summary>
+    /// Shared position/size compression for sky bodies (planets and the sun use identical
+    /// curves): <c>T</c> eases 0 → 1 from the zone edge to the approach radius (pinning the
+    /// body at the view centre inside the zone and at the screen edge at approach), while
+    /// <c>Scale</c> eases MaxScale → MinScale out to <paramref name="minScaleRadius"/> on its
+    /// own band. Returns the clamped zone and min-scale radius too, for debug rings.
+    /// </summary>
+    private static (float T, float Scale, float Zone, float MinScaleRadius) CalculateBodyTransform(
+        float dist,
+        float approach,
+        float zone,
+        float minScaleRadius,
+        float minScale,
+        float maxScale)
+    {
+        var clampedZone = Math.Clamp(zone, 0f, approach - 1e-3f);
+        var band = approach - clampedZone;
+        var lin = dist <= clampedZone ? 0f : MathF.Min((dist - clampedZone) / band, 1f);
+        var t = Ease01(lin);
+
+        var minScaleR = MathF.Max(minScaleRadius, clampedZone + 1e-3f);
+        var scaleLin = dist <= clampedZone ? 0f : MathF.Min((dist - clampedZone) / (minScaleR - clampedZone), 1f);
+        var scale = maxScale + (minScale - maxScale) * Ease01(scaleLin);
+
+        return (t, scale, clampedZone, minScaleR);
+    }
+
+    /// <summary>Finds the star system <see cref="Planet"/> this entity represents, by its replicated index.</summary>
+    private bool TryGetShaderModeData(EntityUid mapUid, CEPlanetComponent planetComp, out Planet planet, out Star star, out Vector2 starOffset)
     {
         planet = null!;
         star = null!;
@@ -421,15 +555,13 @@ public sealed partial class CEPlanetOverlay : Overlay
         starOffset = starSystem.StarOffset;
         star = starSystem.StarSystem.Star;
 
-        foreach (var candidate in starSystem.StarSystem.Planets)
-        {
-            if ((candidate.Position + starOffset - worldPos).Length() < 1f)
-            {
-                planet = candidate;
-                return true;
-            }
-        }
+        // Authoritative lookup by the replicated index; the body simply isn't drawn until the
+        // index arrives (a frame or two after spawn at most).
+        var index = planetComp.PlanetIndex;
+        if (index < 0 || index >= starSystem.StarSystem.Planets.Count)
+            return false;
 
-        return false;
+        planet = starSystem.StarSystem.Planets[index];
+        return true;
     }
 }

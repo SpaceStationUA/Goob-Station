@@ -15,6 +15,10 @@ public sealed partial class PlanetaryAtmosphere
     [ViewVariables(VVAccess.ReadWrite)] public float CloudScale;
     [ViewVariables(VVAccess.ReadWrite)] public float CloudDensity;
 
+    public PlanetaryAtmosphere()
+    {
+    }
+
     public PlanetaryAtmosphere(System.Random rand, IPrototypeManager protoMan, ProtoId<PlanetaryAtmosphereTypePrototype> protoId)
     {
         var proto = protoMan.Index(protoId);

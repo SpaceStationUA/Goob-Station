@@ -5,6 +5,7 @@
   mapName: Метеор Арена
   mapPath: /Maps/Nonstations/meteor-arena.yml
   minPlayers: 0
+  generateStarSystem: false
   stations:
     Arena:
       stationProto: StandardStationArena
@@ -19,6 +20,7 @@
   mapName: DM01 Вхід
   mapPath: /Maps/_Goobstation/Nonstations/dm01-entryway.yml #goobstation - no more shitty deathmatch in a dark
   minPlayers: 0
+  generateStarSystem: false
   stations:
     dm01-entryway:
       stationProto: StandardStationArena

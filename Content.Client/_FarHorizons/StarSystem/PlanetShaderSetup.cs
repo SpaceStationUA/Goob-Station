@@ -45,7 +45,7 @@ public static class PlanetShaderSetup
         var starColor = new Vector3(star.Color.R, star.Color.G, star.Color.B);
         shader.SetParameter("starPos", starPos);
         shader.SetParameter("starColor", starColor);
-        shader.SetParameter("starLuminosity", star.Luminocity);
+        shader.SetParameter("starLuminosity", star.Luminosity);
 
         // Atmosphere
         if (planet.Atmosphere != null)
@@ -77,7 +77,7 @@ public static class PlanetShaderSetup
             shader.SetParameter("riverFrequency", planet.Liquid.RiverFrequency);
             shader.SetParameter("riverThreshold", planet.Liquid.RiverThreshold);
             shader.SetParameter("liquidSpecularity", planet.Liquid.Specularity);
-            shader.SetParameter("isLiquidEmissive", planet.Liquid.Emmissive);
+            shader.SetParameter("isLiquidEmissive", planet.Liquid.Emissive);
             shader.SetParameter("liquidEmission", planet.Liquid.Emission);
 
             var color = new Vector3(planet.Liquid.Color.R, planet.Liquid.Color.G, planet.Liquid.Color.B);
@@ -157,7 +157,7 @@ public static class PlanetShaderSetup
         shader.SetParameter("starWorldPos", starPos);
         shader.SetParameter("starRadius", star.Radius);
         shader.SetParameter("starColor", starColor);
-        shader.SetParameter("starLuminosity", star.Luminocity);
+        shader.SetParameter("starLuminosity", star.Luminosity);
 
         return shader;
     }

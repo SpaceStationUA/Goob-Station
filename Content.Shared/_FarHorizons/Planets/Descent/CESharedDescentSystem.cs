@@ -4,7 +4,10 @@
  */
 
 using Content.Shared._FarHorizons.Planets;
+using Content.Shared._FarHorizons.Planets.Shields;
 using Content.Shared._Pirate.ZLevels.Core.Components;
+using Content.Shared.Tag;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 
@@ -20,6 +23,8 @@ public abstract partial class CESharedDescentSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     // Stage 2 (the warp) is the Vanishing → Arriving
     // transition itself: one tick, no duration entry. There is no chargeup entry
@@ -110,6 +115,18 @@ public abstract partial class CESharedDescentSystem : EntitySystem
         if (planet.Network is not { } networkUid || !HasComp<CEZLevelsNetworkComponent>(networkUid))
         {
             denyReason = "ce-descent-request-no-network";
+            return false;
+        }
+
+        // An active planetary shield blocks conventional entry outright — unless the
+        // requesting grid matches the shield's whitelist (syndicate ships through the
+        // nukie field). Networked flag, so the client predicts the same refusal the
+        // moment the pilot clicks.
+        if (TryComp<CEPlanetShieldComponent>(planetUid, out var shield) && shield.Active &&
+            (shield.Whitelist == null || !_whitelist.IsValid(shield.Whitelist, gridUid)))
+        {
+            Log.Info($"Shielded descent refused: grid={ToPrettyString(gridUid)}, planet={ToPrettyString(planetUid)}, whitelist set={shield.Whitelist != null}, grid has Syndicate tag={_tag.HasTag(gridUid, "Syndicate")}");
+            denyReason = "ce-descent-request-shielded";
             return false;
         }
 

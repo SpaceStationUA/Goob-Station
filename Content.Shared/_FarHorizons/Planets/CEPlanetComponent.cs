@@ -43,6 +43,29 @@ public sealed partial class CEPlanetComponent : Component
     public float WorldRadius;
 
     /// <summary>
+    /// Index of this planet inside its map's star system planet list (shader mode only), so the
+    /// client overlay can look its <see cref="Content.Shared._FarHorizons.StarSystem.Helpers.Planet"/>
+    /// up directly instead of matching by floating-point position. -1 when not a procedural planet.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int PlanetIndex = -1;
+
+    /// <summary>
+    /// Server-only: a pre-built surface map (lavaland, nukie) to adopt as the ground layer when
+    /// the descendable z-stack is lazily created on first approach. Null for biome-generated planets.
+    /// </summary>
+    [DataField]
+    public EntityUid? GroundMap;
+
+    /// <summary>
+    /// Hides this planet from the long-range shuttle map (markers, rings, labels) so a secret
+    /// world (the nukie planet) isn't spoiled — it still shows on the short-range nav radar,
+    /// where its zone circle is the click-to-descend target.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool HideFromMaps;
+
+    /// <summary>
     /// Visual spin rate in radians per second. The background sprite rotates continuously at this
     /// rate; 0 disables the spin.
     /// </summary>
@@ -55,16 +78,16 @@ public sealed partial class CEPlanetComponent : Component
     /// compresses this whole radius across the view — at the edge the planet is a few pixels near
     /// the screen edge, at the centre it's large and screen-centred.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float ApproachRadius = 64f;
 
     /// <summary>Sprite scale (native px → world units) at the radius edge: small but still visible.</summary>
-    [DataField]
-    public float MinScale = 0.1f;
+    [DataField, AutoNetworkedField]
+    public float MinScale = 0.13f;
 
     /// <summary>Sprite scale at the radius centre: the planet at full apparent size.</summary>
-    [DataField]
-    public float MaxScale = 2f;
+    [DataField, AutoNetworkedField]
+    public float MaxScale = 4.2f;
 
     /// <summary>
     /// World-space radius at which the sprite reaches <see cref="MinScale"/>. The scale eases
@@ -73,7 +96,7 @@ public sealed partial class CEPlanetComponent : Component
     /// than the approach radius for a shrink that keeps going long after the planet has slid to
     /// the screen edge, so the size change reads as very gradual. Held at min beyond.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float MinScaleRadius = 512f;
 
     /// <summary>
@@ -83,8 +106,8 @@ public sealed partial class CEPlanetComponent : Component
     /// gradually eases from the view centre toward the screen edge/corner along its bearing,
     /// arriving at the edge at <see cref="ApproachRadius"/>.
     /// </summary>
-    [DataField]
-    public float ZoneRadius = 16f;
+    [DataField, AutoNetworkedField]
+    public float ZoneRadius = 31f;
 
     /// <summary>Colour of the zone-boundary ring drawn around the planet's coordinate.</summary>
     [DataField]

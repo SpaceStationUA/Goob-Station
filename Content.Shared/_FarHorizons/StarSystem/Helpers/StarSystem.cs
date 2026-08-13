@@ -9,6 +9,12 @@ public sealed partial class PlanetarySystem
     [ViewVariables] public List<Planet> Planets;
     [ViewVariables] public AsteroidBelt? AsteroidBelt;
 
+    public PlanetarySystem()
+    {
+        Star = new Star();
+        Planets = new List<Planet>();
+    }
+
     public PlanetarySystem(Star star, List<Planet> planets, AsteroidBelt? asteroidBelt)
     {
         Star = star;

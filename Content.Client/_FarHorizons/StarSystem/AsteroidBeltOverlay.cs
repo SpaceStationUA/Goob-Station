@@ -6,7 +6,7 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._FarHorizons.StarSystem;
+namespace Content.Client._FarHorizons.StarSystem;
 
 public sealed class AsteroidBeltOverlay : Overlay
 {
@@ -86,7 +86,7 @@ public sealed class AsteroidBeltOverlay : Overlay
 
         shader.SetParameter("starWorldPos", starPos);
         shader.SetParameter("starColor", starColor);
-        shader.SetParameter("starLuminosity", star.Luminocity);
+        shader.SetParameter("starLuminosity", star.Luminosity);
 
         var beltPos = belt.Position + _starOffset;
 
@@ -101,6 +101,24 @@ public sealed class AsteroidBeltOverlay : Overlay
         shader.SetParameter("color3", color3);
         var color4 = new Vector3(palette.Color4.R, palette.Color4.G, palette.Color4.B);
         shader.SetParameter("color4", color4);
+
+        // Belt visual defaults. The belt prototype currently defines no per-belt tuning,
+        // so document the shader's previous per-pixel fallback values here instead.
+        // beltRotationSpeed / mistCoverage were previously left at zero; keep that behavior.
+        shader.SetParameter("beltRotationSpeed", 0.0f);
+        shader.SetParameter("edgeFeatherPower", 0.6f);
+        shader.SetParameter("bandFrequency", 12.0f);
+        shader.SetParameter("bandNoiseScale", 2.5f);
+        shader.SetParameter("mistScale", 0.01f);
+        shader.SetParameter("mistDensity", 1.0f);
+        shader.SetParameter("mistCoverage", 0.0f);
+        shader.SetParameter("specksScale", 0.08f);
+        shader.SetParameter("specksThreshold", 0.70f);
+        shader.SetParameter("specksSpeedMultiplier", 1.25f);
+        shader.SetParameter("boulderGridScale", 0.05f);
+        shader.SetParameter("boulderDensity", 0.35f);
+        shader.SetParameter("boulderMaxRadius", 2.0f);
+        shader.SetParameter("boulderSpeedMultiplier", 1.4f);
 
         return shader;
     }

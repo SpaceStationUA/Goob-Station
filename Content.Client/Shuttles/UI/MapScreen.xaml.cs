@@ -130,6 +130,9 @@ public sealed partial class MapScreen : BoxContainer
             RequestBeaconFTL?.Invoke(ent, angle);
         };
 
+        // Far Horizons: clicking a planet's zone on the map is the same as pressing Descend.
+        MapRadar.RequestPlanetDescend += _ => RequestDescend?.Invoke();
+
         MapBeaconsButton.OnToggled += args =>
         {
             MapRadar.ShowBeacons = args.Pressed;
@@ -212,7 +215,13 @@ public sealed partial class MapScreen : BoxContainer
         #region Far Horizons
         _descentState = state.CEDescentState;
         _descentTime = state.CEDescentTime;
-        DescentStateLabel.Text = Loc.GetString($"shuttle-console-descent-state-{_descentState.ToString()}");
+        MapRadar.SetDescentState(state.CEDescentPlanet, state.CEDescentTime, state.CEDescentDenyReason, state.CEDescentDenyUntil);
+
+        DescentStateLabel.Text = state.CEDescentDenyReason != null && _timing.CurTime < state.CEDescentDenyUntil
+            ? Loc.GetString(state.CEDescentDenyReason)
+            : Loc.GetString($"shuttle-console-descent-state-{_descentState.ToString()}");
+        DescentStateLabel.SetOnlyStyleClass(
+            state.CEDescentDenyReason != null && _timing.CurTime < state.CEDescentDenyUntil ? "Danger" : "Label");
 
         DescendButton.Disabled = !state.CanDescend;
         AscendButton.Disabled = !state.CanAscend;

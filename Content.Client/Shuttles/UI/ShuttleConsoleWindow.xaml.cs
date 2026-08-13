@@ -69,6 +69,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         #region Far Horizons
         MapContainer.RequestDescend += () => RequestDescend?.Invoke();
         MapContainer.RequestAscend += () => RequestAscend?.Invoke();
+        NavContainer.RequestPlanetDescend += _ => RequestDescend?.Invoke();
         #endregion
 
         DockContainer.DockRequest += (entity, netEntity) =>
@@ -165,5 +166,9 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         NavContainer.UpdateState(cState.NavState, cState.DockingPortStates);
         MapContainer.UpdateState(cState.MapState);
         DockContainer.UpdateState(coordinates?.EntityId, cState.DockingPortStates);
+
+        // Far Horizons: the nav radar mirrors the map's descent charge/refusal feedback.
+        NavContainer.SetDescentState(cState.MapState.CEDescentPlanet, cState.MapState.CEDescentTime,
+            cState.MapState.CEDescentDenyReason, cState.MapState.CEDescentDenyUntil);
     }
 }

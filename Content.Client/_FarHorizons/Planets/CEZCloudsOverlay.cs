@@ -26,6 +26,16 @@ public sealed partial class CEZCloudsOverlay : Overlay
     private readonly CESharedZLevelsSystem _zLevel;
     private readonly ShaderInstance _shader;
 
+    private static readonly System.Numerics.Vector3 DefaultCloudColor = new(0.92f, 0.94f, 0.98f);
+
+    // Network → ground layer of the planet, so the "is this a planet network" check doesn't
+    // enumerate every ground layer every frame. Entries are validated against the ground
+    // entity still existing each use.
+    private readonly Dictionary<EntityUid, EntityUid> _planetGroundCache = new();
+
+    // Network → tint of its cloud layer, replicated to clients.
+    private readonly Dictionary<EntityUid, System.Numerics.Vector3> _cloudColorCache = new();
+
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
 
     public CEZCloudsOverlay()
@@ -45,15 +55,26 @@ public sealed partial class CEZCloudsOverlay : Overlay
         if (!_entMan.TryGetComponent<CEZLevelMapComponent>(args.MapUid, out var zMap))
             return false;
 
+        var network = zMap.NetworkUid;
+
         // Confirm it's a planet network (has a ground layer somewhere in it) so other
         // z-networks (stations) keep their normal look.
+        if (_planetGroundCache.TryGetValue(network, out var ground) &&
+            _entMan.EntityExists(ground) &&
+            _entMan.HasComponent<CEZGroundLayerComponent>(ground))
+            return true;
+
         var query = _entMan.EntityQueryEnumerator<CEZGroundLayerComponent, CEZLevelMapComponent>();
-        while (query.MoveNext(out _, out _, out var groundZMap))
+        while (query.MoveNext(out var groundUid, out _, out var groundZMap))
         {
-            if (groundZMap.NetworkUid == zMap.NetworkUid)
-                return true;
+            if (groundZMap.NetworkUid != network)
+                continue;
+
+            _planetGroundCache[network] = groundUid;
+            return true;
         }
 
+        _planetGroundCache.Remove(network);
         return false;
     }
 
@@ -61,7 +82,29 @@ public sealed partial class CEZCloudsOverlay : Overlay
     {
         _shader.SetParameter("viewportMin", args.WorldAABB.BottomLeft);
         _shader.SetParameter("viewportSize", args.WorldAABB.Size);
-        _shader.SetParameter("cloudColor", new System.Numerics.Vector3(0.92f, 0.94f, 0.98f));
+
+        var color = DefaultCloudColor;
+        if (_entMan.TryGetComponent<CEZLevelMapComponent>(args.MapUid, out var zMap))
+        {
+            var network = zMap.NetworkUid;
+            if (!_cloudColorCache.TryGetValue(network, out color))
+            {
+                color = DefaultCloudColor;
+                var query = _entMan.EntityQueryEnumerator<CEZCloudLayerComponent, CEZLevelMapComponent>();
+                while (query.MoveNext(out _, out var layer, out var layerZMap))
+                {
+                    if (layerZMap.NetworkUid != network)
+                        continue;
+
+                    color = new System.Numerics.Vector3(layer.CloudColor.R, layer.CloudColor.G, layer.CloudColor.B);
+                    break;
+                }
+
+                _cloudColorCache[network] = color;
+            }
+        }
+
+        _shader.SetParameter("cloudColor", color);
 
         var handle = args.WorldHandle;
         handle.UseShader(_shader);

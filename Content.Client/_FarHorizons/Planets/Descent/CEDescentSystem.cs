@@ -36,6 +36,10 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
 
     private CEZDescentFadeOverlay _fadeOverlay = default!;
 
+    /// <summary>Each local player's eye zoom captured before the descent zoomed it out, so it
+    /// can be restored when the fall ends (the lerp back to 1x is the Arriving stage's look).</summary>
+    private readonly Dictionary<EntityUid, Vector2> _originalZoom = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -48,6 +52,7 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
     {
         base.Shutdown();
         _overlay.RemoveOverlay<CEZDescentFadeOverlay>();
+        _originalZoom.Clear();
     }
 
     public override void FrameUpdate(float frameTime)
@@ -64,6 +69,9 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         {
             if (TryComp<EyeComponent>(player, out var eye))
             {
+                if (!_originalZoom.ContainsKey(player))
+                    _originalZoom[player] = eye.Zoom;
+
                 var progress = GetStageProgress(descent.Stage, descent.StageStart, descent.Ascent);
                 var target = descent.Stage switch
                 {
@@ -73,6 +81,11 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
                 var zoom = Vector2.Lerp(eye.Zoom, new Vector2(target, target), Math.Clamp(frameTime * 4f, 0f, 1f));
                 _eye.SetZoom(player, zoom);
             }
+        }
+        else if (_originalZoom.Remove(player, out var originalZoom) && TryComp<EyeComponent>(player, out var eye))
+        {
+            // Descent over (landed, left the ship, or the component was removed) — restore.
+            _eye.SetZoom(player, originalZoom);
         }
 
         // Discharge shake: while the local player's grid carries a fresh stun, throw the

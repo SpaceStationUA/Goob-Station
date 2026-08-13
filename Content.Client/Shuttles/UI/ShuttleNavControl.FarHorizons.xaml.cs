@@ -1,15 +1,97 @@
-using System.Linq;
 using System.Numerics;
 using Content.Shared._FarHorizons.Planets;
+using Content.Shared._FarHorizons.Planets.Shields;
 using Content.Shared._FarHorizons.StarSystem;
 using Content.Shared._FarHorizons.StarSystem.Helpers;
+using Content.Shared.Timing;
 using Robust.Client.Graphics;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Shuttles.UI;
 
 public sealed partial class ShuttleNavControl
 {
-    private void DrawStarSystem(DrawingHandleScreen handle, Matrix3x2 worldToShuttle, Matrix3x2 shuttleToView, EntityUid? mapUid)
+    /// <summary>A world-space CE planet the nav radar draws and can target for descent.</summary>
+    private readonly record struct CEPlanetEntry(NetEntity Net, Vector2 WorldPos, float ZoneRadius, bool Shielded);
+
+    // Rebuilt every draw, reused by the mouse handlers for hit-testing.
+    private readonly List<CEPlanetEntry> _cePlanets = new();
+
+    private NetEntity _hoveredPlanet;
+    private NetEntity _lastClickedPlanet;
+    private NetEntity _denyPlanet;
+    private NetEntity _descentPlanet;
+    private StartEndTime _descentTime;
+    private string? _denyReason;
+    private TimeSpan _denyUntil;
+
+    private IGameTiming? _timing;
+
+    /// <summary>Raised when the pilot clicks a planet's zone circle on the radar — starts a descent.</summary>
+    public event Action<NetEntity>? RequestPlanetDescend; // Far Horizons
+
+    /// <summary>Far Horizons: pushes the console's descent state so the radar can animate the charge and refusals.</summary>
+    public void SetDescentState(NetEntity planet, StartEndTime time, string? denyReason, TimeSpan denyUntil)
+    {
+        _descentPlanet = planet;
+        _descentTime = time;
+        _denyReason = denyReason;
+        _denyUntil = denyUntil;
+
+        // The server refuses descents without echoing which planet — anchor the feedback to
+        // the zone the pilot actually clicked.
+        if (denyReason != null && _denyPlanet != _lastClickedPlanet)
+            _denyPlanet = _lastClickedPlanet;
+    }
+
+    /// <summary>Far Horizons: tracks which planet's zone the cursor is over (called from MouseMove).</summary>
+    public void UpdatePlanetHover(Vector2 pixelPos)
+    {
+        _hoveredPlanet = default;
+        var worldPos = PixelToWorld(pixelPos);
+
+        foreach (var planet in _cePlanets)
+        {
+            if ((worldPos - planet.WorldPos).LengthSquared() > planet.ZoneRadius * planet.ZoneRadius)
+                continue;
+
+            _hoveredPlanet = planet.Net;
+            return;
+        }
+    }
+
+    /// <summary>
+    /// Far Horizons: a click on a planet's zone circle starts a descent instead of firing
+    /// the weapons. Returns true when the click was consumed.
+    /// </summary>
+    public bool HandlePlanetZoneClick(Vector2 pixelPos)
+    {
+        UpdatePlanetHover(pixelPos);
+        if (_hoveredPlanet == default)
+            return false;
+
+        _lastClickedPlanet = _hoveredPlanet;
+        RequestPlanetDescend?.Invoke(_hoveredPlanet);
+        return true;
+    }
+
+    /// <summary>Converts a radar pixel position into world coordinates on the nav's map.</summary>
+    private Vector2 PixelToWorld(Vector2 pixelPos)
+    {
+        var a = InverseScalePosition(pixelPos);
+        var relativeWorldPos = a with { Y = -a.Y };
+        if (_rotation != null)
+            relativeWorldPos = _rotation.Value.RotateVec(relativeWorldPos);
+
+        var coords = _coordinates?.Offset(relativeWorldPos);
+        if (coords == null)
+            return Vector2.Zero;
+
+        return _transform.ToMapCoordinates(coords.Value).Position;
+    }
+
+    private void DrawStarSystem(DrawingHandleScreen handle, Matrix3x2 worldToShuttle, Matrix3x2 shuttleToView, EntityUid? mapUid, Vector2 shuttlePos)
     {
         if (!EntManager.TryGetComponent<StarSystemMapComponent>(mapUid, out var starSystem) ||
             starSystem.StarSystem == null)
@@ -33,11 +115,24 @@ public sealed partial class ShuttleNavControl
         }
 
         // Approach rings are drawn only around the nearest planet to the shuttle, so the zones
-        // of different planets don't pile up on top of each other.
-        var shuttlePos = EntManager.System<SharedTransformSystem>().GetWorldPosition(_coordinates!.Value.EntityId);
-        var nearest = starSystem.StarSystem.Planets
-            .OrderBy(p => (p.Position + starSystem.StarOffset - shuttlePos).Length())
-            .FirstOrDefault();
+        // of different planets don't pile up on top of each other. Single pass, squared distances.
+        Planet? nearest = null;
+        var nearestDistSq = float.MaxValue;
+        foreach (var candidate in starSystem.StarSystem.Planets)
+        {
+            var distSq = (candidate.Position + starSystem.StarOffset - shuttlePos).LengthSquared();
+            if (distSq >= nearestDistSq)
+                continue;
+
+            nearestDistSq = distSq;
+            nearest = candidate;
+        }
+
+        // Far Horizons: the preset sprite worlds (nauvis, lavaland, nukie) are CE planet entities —
+        // drawn with their zone circles, shield rings, hover highlight and the descent charge ring.
+        // This is the SHORT-RANGE radar, so even secret worlds (hideFromMaps) are fine here: they
+        // only show once the ship is already close.
+        DrawCePlanets(handle, worldToView, viewScale, mapUid);
 
         // First pass: markers + type labels for every planet.
         foreach (var planet in starSystem.StarSystem.Planets)
@@ -66,8 +161,90 @@ public sealed partial class ShuttleNavControl
         }
     }
 
-    private static bool IsPlanetLandable(Planet planet) =>
-        planet.Shader is not ("GasGiant" or "IceGiant");
+    private void DrawCePlanets(DrawingHandleScreen handle, Matrix3x2 worldToView, float viewScale, EntityUid? mapUid)
+    {
+        _timing ??= IoCManager.Resolve<IGameTiming>();
+        var now = _timing.CurTime;
+
+        _cePlanets.Clear();
+        var query = EntManager.EntityQueryEnumerator<CEPlanetComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var planet, out var xform))
+        {
+            if (mapUid != null && xform.MapUid != mapUid)
+                continue;
+
+            // The radar only reaches so far — nothing beyond its range can be drawn (or spoiled).
+            var worldPos = _transform.GetWorldPosition(xform);
+            var radarRange = ScaledMinimapRadius / viewScale;
+            if ((worldPos - _transform.ToMapCoordinates(_coordinates!.Value).Position).Length() > radarRange)
+                continue;
+
+            var shielded = EntManager.TryGetComponent<CEPlanetShieldComponent>(uid, out var shield) && shield.Active;
+            var net = EntManager.GetNetEntity(uid);
+            _cePlanets.Add(new CEPlanetEntry(net, worldPos, planet.ZoneRadius, shielded));
+
+            var screenPos = Vector2.Transform(worldPos, worldToView);
+            var zoneRadius = planet.ZoneRadius * viewScale;
+            var denied = _denyReason != null && now < _denyUntil && _denyPlanet == net;
+            var hovered = _hoveredPlanet == net;
+            var zoneColor = denied
+                ? Color.FromHex("#F9301C")
+                : hovered ? Color.White.WithAlpha(0.7f) : Color.White.WithAlpha(0.35f);
+
+            handle.DrawCircle(screenPos, zoneRadius, zoneColor.WithAlpha(zoneColor.A * 0.12f));
+            handle.DrawCircle(screenPos, zoneRadius, zoneColor, filled: false);
+            if (hovered)
+                handle.DrawCircle(screenPos, zoneRadius + 2f, Color.White.WithAlpha(0.5f), filled: false);
+
+            // Active shield: an outline around the zone, tinted per-planet (red for the nukie field).
+            if (shielded)
+                handle.DrawCircle(screenPos, zoneRadius + 3f, shield!.ShieldColor.WithAlpha(0.8f), filled: false);
+
+            var markerRadius = MathF.Max(planet.WorldRadius * viewScale * 3.6f, 4.8f);
+            handle.DrawCircle(screenPos, markerRadius, Color.Gray.WithAlpha(0.6f));
+            handle.DrawString(Font, screenPos + new Vector2(markerRadius + 3f, -8f),
+                EntManager.GetComponent<MetaDataComponent>(uid).EntityName, Color.White);
+
+            if (denied && _denyReason != null)
+                handle.DrawString(Font, screenPos + new Vector2(0f, zoneRadius + 16f), Loc.GetString(_denyReason), Color.FromHex("#F9301C"));
+
+            // Descent charge: a blue ring sweeping around the zone while the drive spins up or falls.
+            if (_descentPlanet == net && _descentTime.Start != _descentTime.End)
+            {
+                var progress = _descentTime.ProgressAt(now);
+                if (float.IsFinite(progress))
+                    DrawChargeRing(handle, screenPos, zoneRadius + 4f, Math.Clamp(progress, 0f, 1f));
+            }
+        }
+    }
+
+    /// <summary>Reused vertices for the charge ring (no per-frame allocation on the draw path).</summary>
+    private readonly List<Vector2> _chargeRingVerts = new(66);
+
+    /// <summary>
+    /// Draws a thin ring segment sweeping clockwise from 12 o'clock over
+    /// <paramref name="progress"/> of the circle — the descent drive's charge indicator.
+    /// </summary>
+    private void DrawChargeRing(DrawingHandleScreen handle, Vector2 center, float radius, float progress)
+    {
+        const int segments = 32;
+        const float band = 3f;
+        var sweep = progress * MathF.Tau;
+
+        _chargeRingVerts.Clear();
+        for (var i = 0; i <= segments; i++)
+        {
+            var angle = -MathF.PI / 2f + sweep * i / segments;
+            var dir = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+            _chargeRingVerts.Add(center + dir * (radius - band));
+            _chargeRingVerts.Add(center + dir * (radius + band));
+        }
+
+        var color = Color.FromHex("#169C9C");
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, _chargeRingVerts, color.WithAlpha(0.9f));
+    }
+
+    private static bool IsPlanetLandable(Planet planet) => Planet.IsLandable(planet);
 
     private static string GetPlanetType(Planet planet) => planet.Shader switch
     {

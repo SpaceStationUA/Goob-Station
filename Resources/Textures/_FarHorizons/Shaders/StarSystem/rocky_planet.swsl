@@ -191,7 +191,7 @@ void fragment() {
             );
         }
 
-        finalComposite.rgb = mix(finalComposite.rgb, litColor, 1.0 - finalComposite.a * 0.0);
+        finalComposite.rgb = mix(finalComposite.rgb, litColor, 1.0 - finalComposite.a);
         finalComposite.a = 1.0;
     }
 

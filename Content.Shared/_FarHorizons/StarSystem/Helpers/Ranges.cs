@@ -14,6 +14,10 @@ public sealed partial class FloatRangeValue : IStarSystemValueRange<float>
     [DataField(required: true)] public float Min;
     [DataField(required: true)] public float Max;
 
+    public FloatRangeValue()
+    {
+    }
+
     public FloatRangeValue(float min, float max)
     {
         Min = min;
@@ -29,13 +33,17 @@ public sealed partial class IntRangeValue : IStarSystemValueRange<int>
     [DataField(required: true)] public int Min;
     [DataField(required: true)] public int Max;
 
+    public IntRangeValue()
+    {
+    }
+
     public IntRangeValue(int min, int max)
     {
         Min = min;
         Max = max;
     }
 
-    public int RollValue(System.Random rand) => rand.Next(Min, Max);
+    public int RollValue(System.Random rand) => rand.Next(Min, Max + 1);
 }
 
 [DataDefinition]
@@ -43,6 +51,10 @@ public sealed partial class ColorRangeValue : IStarSystemValueRange<Color>
 {
     [DataField(required: true)] public Color Min;
     [DataField(required: true)] public Color Max;
+
+    public ColorRangeValue()
+    {
+    }
 
     public ColorRangeValue(Color min, Color max)
     {

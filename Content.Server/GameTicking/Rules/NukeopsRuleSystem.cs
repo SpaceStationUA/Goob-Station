@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Antag;
 using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
@@ -302,21 +303,57 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (ev.Uid != GetShuttle((uid, nukeops)))
                 continue;
 
-            if (nukeops.WarDeclaredTime != null)
+            if (IsHeldDuringWarOps((uid, nukeops), out var reason))
             {
-                var timeAfterDeclaration = Timing.CurTime.Subtract(nukeops.WarDeclaredTime.Value);
-                var timeRemain = nukeops.WarNukieArriveDelay.Subtract(timeAfterDeclaration);
-                if (timeRemain > TimeSpan.Zero)
-                {
-                    ev.Cancelled = true;
-                    ev.Reason = Loc.GetString("war-ops-infiltrator-unavailable",
-                        ("time", timeRemain.ToString("mm\\:ss")));
-                    continue;
-                }
+                ev.Cancelled = true;
+                ev.Reason = reason;
+                continue;
             }
 
             nukeops.LeftOutpost = true;
         }
+    }
+
+    /// <summary>
+    /// Far Horizons: true while a war-ops nukie shuttle must stay at its outpost — war declared
+    /// and the arrival delay hasn't elapsed yet. Shared by the FTL lock and the planet ascent
+    /// lock so both exits stay shut until the timer ends.
+    /// </summary>
+    public bool IsHeldDuringWarOps(Entity<NukeopsRuleComponent> nukeops, [NotNullWhen(true)] out string? reason)
+    {
+        reason = null;
+
+        if (nukeops.Comp.WarDeclaredTime == null)
+            return false;
+
+        var timeRemain = nukeops.Comp.WarNukieArriveDelay - (Timing.CurTime - nukeops.Comp.WarDeclaredTime.Value);
+        if (timeRemain <= TimeSpan.Zero)
+            return false;
+
+        reason = Loc.GetString("war-ops-infiltrator-unavailable",
+            ("time", timeRemain.ToString("mm\\:ss")));
+        return true;
+    }
+
+    /// <summary>
+    /// Far Horizons: true when <paramref name="gridUid"/> is the nukeops shuttle of an active
+    /// rule and war ops holds it at the outpost (see <see cref="IsHeldDuringWarOps"/>).
+    /// </summary>
+    public bool IsNukieShuttleHeld(EntityUid gridUid, [NotNullWhen(true)] out string? reason)
+    {
+        reason = null;
+
+        var query = QueryActiveRules();
+        while (query.MoveNext(out var uid, out _, out var nukeops, out _))
+        {
+            if (gridUid != GetShuttle((uid, nukeops)))
+                continue;
+
+            if (IsHeldDuringWarOps((uid, nukeops), out reason))
+                return true;
+        }
+
+        return false;
     }
 
     private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)

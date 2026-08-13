@@ -9,6 +9,7 @@ ce-descent-request-denied = The descent drive refuses to engage here.
 ce-descent-request-out-of-range = You need to be within the planet's approach zone to descend.
 ce-descent-request-no-network = This planet has no landable surface.
 ce-descent-request-respooling = The descent drive is still respooling after a discharge.
+ce-descent-request-orbit-blocked = No clear orbit slot around this body — try again.
 
 ce-planet-type-gas-giant = Gas Giant
 ce-planet-type-ice-giant = Ice Giant

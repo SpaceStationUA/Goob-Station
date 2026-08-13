@@ -6,6 +6,7 @@
 using Content.Server.Parallax;
 using Content.Server._Pirate.ZLevels.Core;
 using Content.Shared._FarHorizons.Planets;
+using Content.Shared._FarHorizons.StarSystem;
 using Content.Shared._FarHorizons.StarSystem.Helpers;
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared.Parallax.Biomes;
@@ -13,6 +14,7 @@ using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._FarHorizons.Planets;
@@ -34,11 +36,25 @@ public sealed partial class CEPlanetSystem : EntitySystem
     [Dependency] private readonly CEZLevelsSystem _zLevels = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
-    /// <summary>Total number of z-levels in a planet stack, including the ground layer.</summary>
-    public const int SkyLayerCount = 5;
+    /// <summary>
+    /// Number of sky layers in a planet stack, excluding the ground layer. Kept low for
+    /// generated planets (procedural, nauvis, lavaland, nukie) so dormant worlds cost fewer
+    /// maps; hand-mapped z-networks (e.g. station decks) define their own layouts elsewhere.
+    /// The full stack height is <see cref="SkyLayerCount"/> + 1 (ground).
+    /// </summary>
+    public const int SkyLayerCount = 3;
 
     /// <summary>Depth of the clouds layer (ground is 0).</summary>
     public const int CloudsIndex = 2;
+
+    /// <summary>The predetermined sprite planet the star system spawns alongside procedural ones.</summary>
+    public const string NauvisEntProtoId = "CEPlanetNauvis";
+
+    /// <summary>The volcanic world whose ground layer is the lavaland map (outpost, ruins, ores).</summary>
+    public const string LavalandEntProtoId = "CEPlanetLavaland";
+
+    /// <summary>The distant syndicate world whose ground layer is the nukie outpost map.</summary>
+    public const string NukieEntProtoId = "CEPlanetNukie";
 
     public override void Initialize()
     {
@@ -98,10 +114,10 @@ public sealed partial class CEPlanetSystem : EntitySystem
             return false;
 
         // Gas/ice giants have no surface to land on.
-        if (starSystemPlanet.Shader is "GasGiant" or "IceGiant")
+        if (!Planet.IsLandable(starSystemPlanet))
             return false;
 
-        var biomeId = GetBiomeForPlanet(starSystemPlanet);
+        var biomeId = GetBiomeForPlanet(starSystemPlanet, seed);
         var landingRadius = CEPlanetRadii.LandingRadius(CEPlanetRadii.WorldRadius(starSystemPlanet));
         return BuildPlanetStack(planetUid, comp, starSystemPlanet.Name, biomeId, seed, landingRadius);
     }
@@ -130,16 +146,82 @@ public sealed partial class CEPlanetSystem : EntitySystem
 
     private bool BuildPlanetStack(EntityUid planetUid, CEPlanetComponent comp, string displayName, string biomeId, int seed, float landingRadius)
     {
-        var network = _zLevels.CreateZNetwork();
-        _meta.SetEntityName(network.Owner, $"Planet z-Network: {displayName}");
-
-        var maps = new Dictionary<EntityUid, int>();
-
-        // Ground layer (depth 0).
+        // Ground layer (depth 0), biome-generated.
         var groundMap = _map.CreateMap(out var groundMapId, runMapInit: false);
         _meta.SetEntityName(groundMap, $"Surface: {displayName}");
         SetupPlanetSurface(groundMap, biomeId, seed, landingRadius);
-        maps[groundMap] = 0;
+
+        return BuildPlanetStackWithGround(planetUid, comp, displayName, groundMap);
+    }
+
+    /// <summary>
+    /// Lazily creates the planet's descendable z-stack if it doesn't exist yet, so dormant
+    /// worlds never pay for their ground/sky maps. Shader planets regenerate their biome
+    /// surface from the star system data, sprite planets from the map's seed, and lavaland/
+    /// nukie adopt their pre-built surface (<see cref="CEPlanetComponent.GroundMap"/>).
+    /// </summary>
+    public bool EnsurePlanetStack(EntityUid planetUid)
+    {
+        if (!TryComp<CEPlanetComponent>(planetUid, out var comp))
+            return false;
+
+        if (comp.Network != null)
+            return true;
+
+        if (comp.GroundMap is { } groundMap && Exists(groundMap))
+            return CreatePlanetZStackWithGround(planetUid, groundMap, MetaData(planetUid).EntityName);
+
+        var mapUid = Transform(planetUid).MapUid;
+        if (mapUid == null ||
+            !TryComp<StarSystemMapComponent>(mapUid, out var starSystem) ||
+            starSystem.StarSystem == null)
+            return false;
+
+        var seed = starSystem.Seed ?? 0;
+
+        if (comp.ShaderMode)
+        {
+            if (comp.PlanetIndex < 0 || comp.PlanetIndex >= starSystem.StarSystem.Planets.Count)
+                return false;
+
+            return CreatePlanetZStack(planetUid, starSystem.StarSystem.Planets[comp.PlanetIndex], seed ^ (comp.PlanetIndex * 1000003));
+        }
+
+        // Sprite planet: seed-derived biome surface, same derivation the eager path used.
+        return CreatePlanetZStack(planetUid, seed ^ 0x5BD1E995);
+    }
+
+    /// <summary>
+    /// Wraps a pre-built surface map (e.g. a lavaland planet) in the usual planet z-stack:
+    /// marks it as the ground layer, adds empty sky layers above it and joins everything
+    /// into one z-network. The ground map keeps whatever setup it already has (biome,
+    /// atmosphere, outpost grids, weather) — only the ground marker and the sky levels
+    /// are added.
+    /// </summary>
+    public bool CreatePlanetZStackWithGround(EntityUid planetUid, EntityUid groundMap, string displayName)
+    {
+        if (!TryComp<CEPlanetComponent>(planetUid, out var comp) || comp.Network != null)
+            return false;
+
+        if (!Exists(groundMap))
+        {
+            Log.Warning($"Cannot wrap {ToPrettyString(groundMap)} as the ground layer of {ToPrettyString(planetUid)}: it doesn't exist.");
+            return false;
+        }
+
+        return BuildPlanetStackWithGround(planetUid, comp, displayName, groundMap);
+    }
+
+    private bool BuildPlanetStackWithGround(EntityUid planetUid, CEPlanetComponent comp, string displayName, EntityUid groundMap)
+    {
+        var network = _zLevels.CreateZNetwork();
+        _meta.SetEntityName(network.Owner, $"Planet z-Network: {displayName}");
+
+        var maps = new Dictionary<EntityUid, int> { [groundMap] = 0 };
+
+        // This is the surface ships land on: the clouds overlay skips it, the descent
+        // validation and shield machinery resolve it back to its planet.
+        EnsureComp<CEZGroundLayerComponent>(groundMap);
 
         // Sky layers above the ground, clouds marker at CloudsIndex.
         for (var depth = 1; depth <= SkyLayerCount; depth++)
@@ -160,9 +242,15 @@ public sealed partial class CEPlanetSystem : EntitySystem
             return false;
         }
 
-        // Init the maps now the network is linked.
-        foreach (var mapUid in maps.Keys)
+        // Init the maps now the network is linked. A pre-built ground map (lavaland) is
+        // already initialized by its own setup — only the fresh sky maps need it.
+        foreach (var (mapUid, _) in maps)
+        {
+            if (CompOrNull<MapComponent>(mapUid)?.MapInitialized == true)
+                continue;
+
             _map.InitializeMap(mapUid);
+        }
 
         comp.Network = network.Owner;
         Dirty(planetUid, comp);
@@ -183,11 +271,12 @@ public sealed partial class CEPlanetSystem : EntitySystem
         AddComp<CEZGroundLayerComponent>(map);
     }
 
-    private static string GetBiomeForPlanet(Planet planet)
+    private static string GetBiomeForPlanet(Planet planet, int seed)
     {
-        // Deterministic pick themed by the planet's generated name.
-        var hash = Math.Abs(planet.Name.GetHashCode());
-        return (planet.Shader, hash % 4) switch
+        // Deterministic pick from the generation seed (no string hashing: GetHashCode is
+        // not stable across runs). seed & 3 maps any sign to [0, 3] without Math.Abs.
+        var biomeIndex = seed & 3;
+        return (planet.Shader, biomeIndex) switch
         {
             ("RockyPlanet", 0) => "Grasslands",
             ("RockyPlanet", 1) => "LowDesert",

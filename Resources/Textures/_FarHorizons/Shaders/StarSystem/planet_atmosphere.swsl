@@ -97,8 +97,8 @@ highp vec2 getCloudUV(highp vec2 sphereCoord, highp float z) {
 highp float getCloudDensity(highp vec2 cloudUV) {
     highp vec2 scaledUV = (cloudUV + planetPos / 1000.0) * cloudScale;
 
-    highp float macroNoise = fbm(scaledUV);
-    highp float detailNoise = fbm(scaledUV * 2.5) * 0.5;
+    highp float macroNoise = fbm01(scaledUV);
+    highp float detailNoise = fbm01(scaledUV * 2.5) * 0.5;
     
     highp float rawDensity = macroNoise + detailNoise;
 

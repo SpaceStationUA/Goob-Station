@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 - type: planetaryAtmosphereType
   id: StandardAtmosphere
   colors:
@@ -69,10 +71,10 @@
     - '#735A61'
   cloudCoverage:
     min: 0.75
-    max: 1.25
+    max: 1.0
   cloudScale:
     min: 0.25
     max: 0.75
   cloudDensity:
     min: 0.75
-    max: 1.25
+    max: 1.0

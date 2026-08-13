@@ -2,6 +2,7 @@
 
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Shared.Popups;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.UI.MapObjects;
 using Robust.Shared.Map;
@@ -55,9 +56,23 @@ public sealed partial class ShuttleConsoleSystem
         }
 
         var angle = args.Angle.Reduced();
-        var targetCoordinates = _descent.ResolvePlanetBeaconTarget(beaconEnt, targetXform); // Far Horizons: arrive in orbit around planets
 
-        ConsoleFTL(ent, targetCoordinates, angle, targetXform.MapID);
+        // Far Horizons: planetary beacon arrivals pick a random orbit angle around the body; if
+        // that spot is blocked (FTLFree rejection), re-roll the angle a few times before giving
+        // up and telling the pilot.
+        for (var attempt = 0; attempt < 3; attempt++)
+        {
+            var targetCoordinates = _descent.ResolvePlanetBeaconTarget(beaconEnt, targetXform); // Far Horizons: arrive in orbit around planets
+
+            // The beacon's map couldn't be resolved — nothing sane to jump to.
+            if (targetCoordinates == EntityCoordinates.Invalid)
+                return;
+
+            if (ConsoleFTL(ent, targetCoordinates, angle, targetXform.MapID))
+                return;
+        }
+
+        _popup.PopupEntity(Loc.GetString("ce-descent-request-orbit-blocked"), ent.Owner, args.Actor, PopupType.Medium);
     }
 
     private void OnPositionFTLMessage(Entity<ShuttleConsoleComponent> entity, ref ShuttleConsoleFTLPositionMessage args)
@@ -109,19 +124,20 @@ public sealed partial class ShuttleConsoleSystem
     }
 
     /// <summary>
-    /// Handles shuttle console FTLs.
+    /// Handles shuttle console FTLs. Returns true when the FTL actually started, false when any
+    /// precondition (or FTLFree) rejected it — callers retry with a new random target or notify.
     /// </summary>
-    private void ConsoleFTL(Entity<ShuttleConsoleComponent> ent, EntityCoordinates targetCoordinates, Angle targetAngle, MapId targetMap)
+    private bool ConsoleFTL(Entity<ShuttleConsoleComponent> ent, EntityCoordinates targetCoordinates, Angle targetAngle, MapId targetMap)
     {
         var consoleUid = GetDroneConsole(ent.Owner);
 
         if (consoleUid == null)
-            return;
+            return false;
 
         var shuttleUid = _xformQuery.GetComponent(consoleUid.Value).GridUid;
 
         if (shuttleUid == null) // Pirate: multiz
-            return;
+            return false;
 
         #region Pirate: multiz
         // Resolve deck consoles through root shuttle FTL state.
@@ -129,23 +145,23 @@ public sealed partial class ShuttleConsoleSystem
         var actualShuttleUid = _shuttle.ResolveFTLShuttle(selectedShuttleUid);
 
         if (!TryComp(actualShuttleUid, out ShuttleComponent? actualShuttleComp))
-            return;
+            return false;
 
         if (actualShuttleComp.Enabled == false)
-            return;
+            return false;
 
         // Check shuttle can even FTL
         if (!_shuttle.CanFTL(actualShuttleUid, out _))
-            return;
+            return false;
 
         if (_ztravel.IsTraversing(actualShuttleUid))
-            return;
+            return false;
 
         List<ShuttleExclusionObject>? exclusions = null;
         GetExclusions(ref exclusions);
 
         if (!TryComp(actualShuttleUid, out PhysicsComponent? shuttlePhysics))
-            return;
+            return false;
 
         // Client sends the "adjusted" coordinates and we adjust it back to get the actual transform coordinates.
         var adjustedCoordinates = targetCoordinates.Offset(targetAngle.RotateVec(-shuttlePhysics.LocalCenter));
@@ -157,10 +173,10 @@ public sealed partial class ShuttleConsoleSystem
 
         // Check shuttle can FTL to this target.
         if (!_shuttle.CanFTLTo(actualShuttleUid, actualTargetMap, ent))
-            return;
+            return false;
 
         if (!_shuttle.FTLFree(actualShuttleUid, actualTargetCoordinates, targetAngle, exclusions, allowSameMap: allowResolvedSameMap))
-            return;
+            return false;
         #endregion
 
         var tagEv = new FTLTagEvent();
@@ -170,5 +186,6 @@ public sealed partial class ShuttleConsoleSystem
         RaiseLocalEvent(ref ev);
 
         _shuttle.FTLToCoordinates(actualShuttleUid, actualShuttleComp, actualTargetCoordinates, targetAngle); // Pirate: multiz
+        return true;
     }
 }

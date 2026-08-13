@@ -33,6 +33,12 @@ highp float fbm(highp vec2 p) {
     return value;
 }
 
+// fbm remapped to the [0, 1] range. Use this for consumers that treat the noise as an unsigned
+// mask (coverage, thresholds); raw fbm is signed and must only be used where the code remaps it.
+highp float fbm01(highp vec2 p) {
+    return clamp(fbm(p) * 0.5 + 0.5, 0.0, 1.0);
+}
+
 highp vec3 rgb2hsv(highp vec3 c) {
     highp vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
     highp vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));

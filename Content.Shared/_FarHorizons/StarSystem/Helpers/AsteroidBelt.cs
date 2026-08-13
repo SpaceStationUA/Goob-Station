@@ -8,9 +8,18 @@ namespace Content.Shared._FarHorizons.StarSystem.Helpers;
 public sealed partial class AsteroidBelt
 {
     [ViewVariables] public Vector2 Position;
+    /// <summary>
+    /// X is the belt's inner radius, Y is its outer radius.
+    /// </summary>
     [ViewVariables] public Vector2 RadialSize;
     [ViewVariables] public string Shader;
     [ViewVariables] public ProtoId<PlanetPalettePrototype> Palette;
+
+    public AsteroidBelt()
+    {
+        Shader = string.Empty;
+        Palette = new ProtoId<PlanetPalettePrototype>(string.Empty);
+    }
 
     public AsteroidBelt(Vector2 position, Vector2 radialSize, string shader, ProtoId<PlanetPalettePrototype> palette)
     {

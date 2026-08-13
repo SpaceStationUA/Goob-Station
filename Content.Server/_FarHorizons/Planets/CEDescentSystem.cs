@@ -3,12 +3,15 @@
  * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
  */
 
+using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Server.GameTicking.Rules;
 using Content.Server._Pirate.ZLevels.Core;
 using Content.Server._Pirate.ZLevels.Shuttles;
 using Content.Shared._FarHorizons.Planets;
+using Content.Shared._Pirate.ZLevels.Shuttles.Components;
 using Content.Shared._FarHorizons.Planets.Descent;
 using Content.Shared._FarHorizons.StarSystem;
 using Content.Shared._FarHorizons.StarSystem.Helpers;
@@ -54,6 +57,7 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly NukeopsRuleSystem _nukeops = default!; // Far Horizons: war-ops ascent lock
 
     private EntityQuery<MapGridComponent> _gridQuery = default!;
     private EntityQuery<PhysicsComponent> _physQuery = default!;
@@ -64,6 +68,15 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
 
     /// <summary>Per-shuttle cached console flags so the periodic refresh only pushes state on change.</summary>
     private readonly Dictionary<EntityUid, (bool CanDescend, bool CanAscend)> _consoleFlagsCache = new();
+
+    /// <summary>
+    /// Per-grid recently refused descent reasons (reason, server curtime until shown), so the
+    /// console UI can flash feedback instead of the refusal passing silently.
+    /// </summary>
+    private readonly Dictionary<EntityUid, (string Reason, TimeSpan Until)> _descentDenies = new();
+
+    /// <summary>How long a refusal stays visible on the console UI.</summary>
+    private static readonly TimeSpan DenyFeedbackTime = TimeSpan.FromSeconds(4);
 
     private readonly HashSet<EntityUid> _thrusterDockScan = new();
 
@@ -102,25 +115,39 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         // Ascents target the planet that owns the ground layer the shuttle is parked on.
         if (args.Ascent)
         {
+            // War ops holds the nukie shuttle at its outpost until the timer ends — the
+            // ascent drive is just as locked as the FTL drive.
+            if (_nukeops.IsNukieShuttleHeld(root, out var warReason))
+            {
+                _popup.PopupClient(warReason, ent.Owner, args.Actor);
+                return;
+            }
+
             if (_xformQuery.GetComponent(root).MapUid is not { } mapUid ||
                 !_planetSystem.TryGetPlanetForMap(mapUid, out var planet) ||
                 !TryStartAscent((root, _gridQuery.GetComponent(root)), planet))
             {
-                _popup.PopupClient(Loc.GetString("ce-descent-request-denied"), ent.Owner, ent.Owner);
+                _popup.PopupClient(Loc.GetString("ce-descent-request-denied"), ent.Owner, args.Actor);
             }
 
             return;
         }
 
         // Resolve the best target: the closest landable planet on this map within its zone.
+        // The z-stack is created lazily here (or on approach) — dormant planets cost no maps.
         string? denyReason = null;
         if (TryGetClosestPlanet(root, out var descentPlanet, out _) &&
+            _planetSystem.EnsurePlanetStack(descentPlanet.Owner) &&
             TryBeginDescent(root, descentPlanet, out denyReason))
         {
             // The ship is committed to the charge: lock the pilots for its duration.
             var spinup = EnsureComp<CEDescentSpinupComponent>(root);
-            AddComp<PreventPilotComponent>(root);
-            spinup.PilotLocked.Add(root);
+            if (!HasComp<PreventPilotComponent>(root))
+            {
+                AddComp<PreventPilotComponent>(root);
+                spinup.PilotLocked.Add(root);
+            }
+
             Dirty(root, spinup);
 
             RefreshConsoles(root);
@@ -128,7 +155,11 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         }
 
         if (denyReason != null)
-            _popup.PopupClient(Loc.GetString(denyReason), ent.Owner, ent.Owner);
+        {
+            _descentDenies[root] = (denyReason, Timing.CurTime + DenyFeedbackTime);
+            _popup.PopupClient(Loc.GetString(denyReason), ent.Owner, args.Actor);
+            RefreshConsoles(root);
+        }
     }
 
     /// <summary>
@@ -137,18 +168,32 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
     /// </summary>
     private void GetAllDockedShuttles(EntityUid root, HashSet<EntityUid> output)
     {
+        // One pass builds a grid → docked-with-docks map; the BFS reuses it instead of
+        // rescanning the whole world for every grid.
+        var dockedByGrid = new Dictionary<EntityUid, List<EntityUid>>();
+        var query = AllEntityQuery<DockingComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var dock, out var xform))
+        {
+            if (!dock.Docked || dock.DockedWith == null || xform.GridUid is not { } grid)
+                continue;
+
+            if (!dockedByGrid.TryGetValue(grid, out var docks))
+                dockedByGrid[grid] = docks = new List<EntityUid>();
+
+            docks.Add(dock.DockedWith.Value);
+        }
+
         var pending = new Queue<EntityUid>();
         pending.Enqueue(root);
 
         while (pending.TryDequeue(out var grid))
         {
-            var query = AllEntityQuery<DockingComponent, TransformComponent>();
-            while (query.MoveNext(out var uid, out var dock, out var xform))
-            {
-                if (!dock.Docked || dock.DockedWith == null || xform.GridUid != grid)
-                    continue;
+            if (!dockedByGrid.TryGetValue(grid, out var docks))
+                continue;
 
-                if (!_xformQuery.TryGetComponent(dock.DockedWith.Value, out var otherXform) ||
+            foreach (var otherDockUid in docks)
+            {
+                if (!_xformQuery.TryGetComponent(otherDockUid, out var otherXform) ||
                     otherXform.GridUid is not { } otherGrid)
                     continue;
 
@@ -158,6 +203,22 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
                 pending.Enqueue(otherGrid);
             }
         }
+
+        // Only flyable ships ride along: a ship docked to a planet's outpost (or a station)
+        // must leave the structure behind, not drag it into space. Roof grids (thrusterless
+        // helpers spawned for z-stack shuttles) still count as part of the ship.
+        output.RemoveWhere(uid => !IsPartOfShipSet(uid));
+    }
+
+    /// <summary>True for grids the descent/ascent should relocate: flyable ships and their roof grids.</summary>
+    private bool IsPartOfShipSet(EntityUid uid)
+    {
+        if (HasComp<CEZShuttleRoofComponent>(uid))
+            return true;
+
+        return TryComp<ShuttleComponent>(uid, out var shuttle) &&
+               (shuttle.AngularThrusters.Count > 0 ||
+                shuttle.LinearThrusters.Any(list => list.Count > 0));
     }
 
     /// <summary>
@@ -182,6 +243,11 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
             AbortCharge(thrusterGrid);
             return;
         }
+
+        // Fast path: no charge is running anywhere, so there's nothing to abort.
+        var anySpinup = EntityQueryEnumerator<CEDescentSpinupComponent>();
+        if (!anySpinup.MoveNext(out _, out _))
+            return;
 
         // The whole docked set charges together, so any member's engines count.
         _thrusterDockScan.Clear();
@@ -214,7 +280,8 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
             var stunned = EnsureComp<CEDescentStunnedComponent>(uid);
             stunned.Start = Timing.CurTime;
             stunned.End = Timing.CurTime + DriveRespoolTime;
-            stunned.PilotLocked = HasComp<PreventPilotComponent>(uid);
+            // Only the grids whose PreventPilot this charge created are ours to remove later.
+            stunned.PilotLocked = spinup.PilotLocked.Contains(uid);
             Dirty(uid, stunned);
         }
 
@@ -396,7 +463,7 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         ent.Comp.DescentMap = pseudoMap;
         Dirty(ent);
 
-        MoveGridSet(ent.Comp.GridSet, pseudoMap);
+        MoveGridSet(ent.Comp.GridSet, ent.Owner, pseudoMap);
     }
 
     /// <summary>
@@ -413,16 +480,22 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
             return false;
         }
 
-        // Arrive on the top sky level of the planet's z-stack, keeping the ship's position. The
-        // pilot then flies the shuttle down level by level with the console's fly-down controls
-        // and picks the landing spot themselves.
+        // Arrive on the top sky level of the planet's z-stack. The pilot then flies the
+        // shuttle down level by level with the console's fly-down controls and picks the
+        // landing spot themselves.
         if (!TryGetTopMap(networkUid, out var skyMap))
         {
             Finish(ent);
             return false;
         }
 
-        MoveGridSet(ent.Comp.GridSet, skyMap);
+        // LandingRadius scatters the arrival point around the surface origin (0,0) — on the
+        // lavaland planet that's around the outpost; 0 means everyone arrives at the origin.
+        var landingOffset = Vector2.Zero;
+        if (TryComp<CEPlanetComponent>(planetUid.Value, out var planetComp) && planetComp.LandingRadius > 0f)
+            landingOffset = _random.NextAngle().ToVec() * _random.NextFloat(0f, planetComp.LandingRadius);
+
+        MoveGridSet(ent.Comp.GridSet, ent.Owner, skyMap, landingOffset);
         ReenableShuttles(ent.Comp.GridSet);
 
         // The roof system only reacts to traversal/FTL moves — the descent moves the ship
@@ -448,10 +521,11 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         // Breach orbit: drop the ship just outside the planet's body.
         var planetPos = _transform.GetWorldPosition(planetUid.Value);
         var angle = _random.NextAngle();
-        var orbitDist = MathF.Max(planet.WorldRadius, MinAscentOrbitDistance) + MaxAscentOrbitDistance;
+        var orbitDist = MathF.Max(planet.WorldRadius, MinAscentOrbitDistance) +
+                        _random.NextFloat(MinAscentOrbitDistance, MaxAscentOrbitDistance);
         var worldPos = planetPos + angle.ToVec() * orbitDist;
 
-        MoveGridSet(ent.Comp.GridSet, spaceMap, worldPos);
+        MoveGridSet(ent.Comp.GridSet, ent.Owner, spaceMap, worldPos);
         ReenableShuttles(ent.Comp.GridSet);
         _roof.EnsureRoof(ent.Owner);
         return true;
@@ -461,6 +535,10 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
     {
         foreach (var member in gridSet)
         {
+            // The set may hold grids deleted mid-sequence; skip them without failing the rest.
+            if (!Exists(member) || !_gridQuery.HasComponent(member))
+                continue;
+
             _shuttle.Enable(member);
             RefreshConsoles(member);
         }
@@ -477,7 +555,9 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         if (ent.Comp.GridSet.Count > 0)
             ReenableShuttles(ent.Comp.GridSet);
 
-        RemComp<CEDescentComponent>(ent);
+        // Deferred: this can run while Update enumerates CEDescentComponents; removing the
+        // component eagerly would invalidate the enumerator mid-iteration.
+        RemCompDeferred<CEDescentComponent>(ent);
         RefreshConsoles(ent.Owner);
     }
 
@@ -495,7 +575,9 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
             zMap.NetworkUid != networkUid)
             return false;
 
-        if (HasComp<CEDescentComponent>(grid) || HasComp<CEDescentSpinupComponent>(grid))
+        if (HasComp<CEDescentComponent>(grid) ||
+            HasComp<CEDescentSpinupComponent>(grid) ||
+            HasComp<CEDescentStunnedComponent>(grid))
             return false;
 
         var gridSet = new HashSet<EntityUid>();
@@ -520,11 +602,14 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
     }
 
     /// <summary>
-    /// Relocates a set of grids to <paramref name="targetMap"/> at the given world position,
-    /// preserving their world rotation, undocking first and zeroing velocities.
+    /// Relocates a set of grids to <paramref name="targetMap"/>, preserving their world rotation,
+    /// undocking first and zeroing velocities. With <paramref name="worldPos"/> the root grid
+    /// lands exactly there and every other grid keeps its current offset from the root, so the
+    /// docked formation stays intact; without it each grid keeps its own position.
     /// </summary>
-    private void MoveGridSet(HashSet<EntityUid> gridSet, EntityUid targetMap, Vector2? worldPos = null)
+    private void MoveGridSet(HashSet<EntityUid> gridSet, EntityUid root, EntityUid targetMap, Vector2? worldPos = null)
     {
+        var rootPos = _transform.GetWorldPosition(root);
         var moves = new List<(EntityUid Grid, Vector2 WorldPos, Angle WorldRot)>(gridSet.Count);
         foreach (var grid in gridSet)
         {
@@ -546,6 +631,9 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
             foreach (var (grid, oldPos, oldRot) in moves)
             {
                 var pos = worldPos ?? oldPos;
+                if (worldPos != null)
+                    pos += oldPos - rootPos;
+
                 var xform = _xformQuery.GetComponent(grid);
                 _transform.SetCoordinates(grid, xform, new EntityCoordinates(targetMap, pos), rotation: oldRot);
 
@@ -569,18 +657,63 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
     }
 
     /// <summary>
+    /// Creates descendable z-stacks for planets a shuttle has entered the approach radius of
+    /// (or parked on the surface of), if they don't have one yet
+    /// (see <see cref="CEPlanetSystem.EnsurePlanetStack"/>).
+    /// </summary>
+    private void EnsureNearbyPlanetStacks()
+    {
+        var query = EntityQueryEnumerator<ShuttleComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var xform))
+        {
+            if (xform.MapUid is not { } mapUid)
+                continue;
+
+            var shuttlePos = _transform.GetWorldPosition(xform);
+
+            var planets = EntityQueryEnumerator<CEPlanetComponent, TransformComponent>();
+            while (planets.MoveNext(out var planetUid, out var planet, out var planetXform))
+            {
+                if (planet.Network != null)
+                    continue;
+
+                // A ship parked on a not-yet-wrapped planet surface (lavaland/nukie ground —
+                // e.g. a shuttle spawned at the outpost) needs its stack too: it never
+                // "approached" the planet entity, it's already on the surface.
+                if (planet.GroundMap == mapUid)
+                {
+                    _planetSystem.EnsurePlanetStack(planetUid);
+                    continue;
+                }
+
+                if (planetXform.MapUid != mapUid)
+                    continue;
+
+                if ((shuttlePos - _transform.GetWorldPosition(planetXform)).LengthSquared() > planet.ApproachRadius * planet.ApproachRadius)
+                    continue;
+
+                _planetSystem.EnsurePlanetStack(planetUid);
+            }
+        }
+    }
+
+    /// <summary>
     /// FTL beacon targets that are stellar bodies arrive in orbit around them instead of at their
     /// centre (the bodies are far bigger than a ship). The star is found by matching the beacon's
-    /// position against the map's star system. Any other beacon passes through.
+    /// position against the map's star system. Any other beacon passes through. Returns
+    /// <see cref="EntityCoordinates.Invalid"/> when the beacon's map can't be resolved.
     /// </summary>
     public EntityCoordinates ResolvePlanetBeaconTarget(EntityUid beaconEnt, TransformComponent targetXform)
     {
         if (TryComp<CEPlanetComponent>(beaconEnt, out var comp) && comp.WorldRadius > 0f)
         {
+            if (targetXform.MapUid is not { } planetMapUid)
+                return EntityCoordinates.Invalid;
+
             var pos = _transform.GetWorldPosition(targetXform);
             var dir = _random.NextAngle().ToVec();
             var orbitDist = comp.WorldRadius + 40f;
-            return new EntityCoordinates(targetXform.MapUid!.Value, pos + dir * orbitDist);
+            return new EntityCoordinates(planetMapUid, pos + dir * orbitDist);
         }
 
         // The system's star: arrive just outside its disc too.
@@ -598,7 +731,10 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
             }
         }
 
-        return new EntityCoordinates(targetXform.MapUid!.Value, _transform.GetWorldPosition(targetXform));
+        if (targetXform.MapUid is not { } fallbackMapUid)
+            return EntityCoordinates.Invalid;
+
+        return new EntityCoordinates(fallbackMapUid, _transform.GetWorldPosition(targetXform));
     }
 
     /// <summary>Finds the highest (top) map of a z-network.</summary>
@@ -685,11 +821,14 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         {
             state.CEDescentState = CEDescentConsoleState.Spinup;
             state.CEDescentTime = new StartEndTime(spinup.Start, spinup.End);
+            state.CEDescentPlanet = GetNetEntity(spinup.Planet);
         }
         else if (TryComp<CEDescentComponent>(root, out var descent))
         {
             state.CEDescentState = CEDescentConsoleState.Descending;
             state.CEDescentTime = StartEndTime.FromStartDuration(descent.StageStart, StageDuration(descent.Stage, descent.Ascent));
+            if (descent.Planet is { } planet)
+                state.CEDescentPlanet = GetNetEntity(planet);
         }
         else if (TryComp<CEDescentStunnedComponent>(root, out var stunned))
         {
@@ -700,6 +839,17 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         {
             state.CEDescentState = CEDescentConsoleState.Available;
             state.CEDescentTime = default;
+
+            // A recent refusal is shown on the console UI for a few seconds.
+            if (_descentDenies.TryGetValue(root, out var deny) && Timing.CurTime < deny.Until)
+            {
+                state.CEDescentDenyReason = deny.Reason;
+                state.CEDescentDenyUntil = deny.Until;
+            }
+            else
+            {
+                _descentDenies.Remove(root);
+            }
         }
 
         state.CanDescend = CanDescend(root);
@@ -718,7 +868,9 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
 
     private bool CanAscend(EntityUid root)
     {
-        if (HasComp<CEDescentComponent>(root))
+        if (HasComp<CEDescentComponent>(root) ||
+            HasComp<CEDescentSpinupComponent>(root) ||
+            HasComp<CEDescentStunnedComponent>(root))
             return false;
 
         // Takeoff works from any altitude inside the planet's z-stack, not just the ground layer.
@@ -734,9 +886,16 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
     /// </summary>
     private void RefreshConsoleFlags()
     {
+        // Lazy z-stacks: a planet that still has no descendable maps grows them the moment a
+        // ship enters its approach radius, so dormant worlds stay map-free all round.
+        EnsureNearbyPlanetStacks();
+
+        var seen = new HashSet<EntityUid>();
         var query = EntityQueryEnumerator<ShuttleComponent>();
         while (query.MoveNext(out var uid, out _))
         {
+            seen.Add(uid);
+
             if (HasComp<CEDescentSpinupComponent>(uid) ||
                 HasComp<CEDescentComponent>(uid) ||
                 HasComp<CEDescentStunnedComponent>(uid))
@@ -754,7 +913,19 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
             RefreshConsoles(uid);
         }
 
-        if (_consoleFlagsCache.Count > 64)
-            _consoleFlagsCache.Clear();
+        // Drop only entries for shuttles that are gone — never the whole cache, so active
+        // shuttles keep their cached states and don't get needless console refreshes.
+        if (_consoleFlagsCache.Count > seen.Count)
+        {
+            var staleUids = new List<EntityUid>(_consoleFlagsCache.Count);
+            foreach (var cachedUid in _consoleFlagsCache.Keys)
+            {
+                if (!seen.Contains(cachedUid))
+                    staleUids.Add(cachedUid);
+            }
+
+            foreach (var staleUid in staleUids)
+                _consoleFlagsCache.Remove(staleUid);
+        }
     }
 }

@@ -1,6 +1,7 @@
 - type: gameMap
   id: PerditionTP
   mapName: 'Perdition Island'
+  generateStarSystem: false
   mapPath: /Maps/_Pirate/perdition.yml
   mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
   mapPreview: PirateMapPreviewPerditionTP

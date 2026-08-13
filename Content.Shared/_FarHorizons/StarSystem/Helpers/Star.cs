@@ -7,7 +7,7 @@ namespace Content.Shared._FarHorizons.StarSystem.Helpers;
 public sealed partial class Star
 {
     [ViewVariables] public float SolarMass;
-    [ViewVariables] public float Luminocity;
+    [ViewVariables] public float Luminosity;
     [ViewVariables] public float Radius;
     [ViewVariables] public float Temperature;
     [ViewVariables] public string Shader;
@@ -20,17 +20,23 @@ public sealed partial class Star
 
     private const string UppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+    public Star()
+    {
+        Color = Color.White;
+        Shader = string.Empty;
+    }
+
     public Star(float solarMass, Color color, string shader)
     {
         SolarMass = Math.Clamp(solarMass, 0.08f, 8.0f); // Main Sequence stars
 
-        Luminocity = SolarMass < 0.43f
+        Luminosity = SolarMass < 0.43f
             ? 0.23f * MathF.Pow(SolarMass, 2.3f)
             : SolarMass < 2.0f ? MathF.Pow(SolarMass, 4.0f) : 1.4f * MathF.Pow(SolarMass, 3.5f);
 
         Radius = SolarMass < 1.66f ? MathF.Pow(SolarMass, 0.9f) : 1.15f * MathF.Pow(SolarMass, 0.6f);
 
-        Temperature = MathF.Pow(Luminocity / MathF.Pow(Radius, 2f), 0.25f) * 5778f;
+        Temperature = MathF.Pow(Luminosity / MathF.Pow(Radius, 2f), 0.25f) * 5778f;
 
         Color = color;
         Position = Vector2.Zero;
@@ -65,29 +71,27 @@ public sealed partial class Star
     public string GetPlanetName(int order) => 
         $"{Name} {ToRomanNumeral(order)}";
     
-    private string ToRomanNumeral(int order) =>
-        order switch
+    // Zero-based: order 0 is "I", 1 is "II", and so on. Algorithmic so orders
+    // beyond 19 keep producing valid numerals instead of "??".
+    // (No collection expressions here: they compile to InlineArray helpers that the
+    // engine's ILVerify step rejects.)
+    private static readonly int[] RomanValues = new[] { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+    private static readonly string[] RomanNumerals = new[] { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+
+    private string ToRomanNumeral(int order)
+    {
+        var value = order + 1;
+
+        var sb = new StringBuilder();
+        for (var i = 0; i < RomanValues.Length; i++)
         {
-            0 => "I",
-            1 => "II",
-            2 => "III",
-            3 => "IV",
-            4 => "V",
-            5 => "VI",
-            6 => "VII",
-            7 => "VIII",
-            8 => "IX",
-            9 => "X",
-            10 => "XI",
-            11 => "XII",
-            12 => "XIII",
-            13 => "XIV",
-            14 => "XV",
-            15 => "XVI",
-            16 => "XVII",
-            17 => "XVIII",
-            18 => "XIX",
-            19 => "XX",
-            _ => "??"
-        };
+            while (value >= RomanValues[i])
+            {
+                value -= RomanValues[i];
+                sb.Append(RomanNumerals[i]);
+            }
+        }
+
+        return sb.ToString();
+    }
 }

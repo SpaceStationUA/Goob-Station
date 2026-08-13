@@ -16,7 +16,12 @@ public sealed partial class Planet
     [ViewVariables] public PlanetaryAtmosphere? Atmosphere;
     [ViewVariables] public PlanetaryLiquid? Liquid;
     [ViewVariables] public ProtoId<PlanetPalettePrototype> Palette;
+    // ShaderPrototype is client-only, so this stays a plain id string (validated by the client).
     [ViewVariables] public string Shader;
+
+    /// <summary>Whether this planet type can host a landable surface (copied from its prototype).</summary>
+    [ViewVariables] public bool Landable = true;
+
     [ViewVariables] public float HueShift;
     [ViewVariables] public float SaturationShift;
     [ViewVariables] public PlanetCustomValues CustomData;
@@ -26,6 +31,14 @@ public sealed partial class Planet
     public const float NAV_PIXEL_SIZE = 10;
     public const float MAP_PIXEL_SIZE = 10;
     public const string PLANET_ENTITY = "PlanetEntity";
+
+    public Planet()
+    {
+        Name = string.Empty;
+        Palette = new ProtoId<PlanetPalettePrototype>(string.Empty);
+        Shader = string.Empty;
+        CustomData = new PlanetCustomValues();
+    }
 
     public Planet(Vector2 position,
                   string name,
@@ -39,7 +52,8 @@ public sealed partial class Planet
                   float saturationShift,
                   PlanetCustomValues customData,
                   PlanetaryRings? rings = null,
-                  int basePrettiness = -100)
+                  int basePrettiness = -100,
+                  bool landable = true)
     {
         Position = position;
         Name = name;
@@ -55,6 +69,7 @@ public sealed partial class Planet
         CustomData = customData;
         Rings = rings;
         BasePrettiness = basePrettiness;
+        Landable = landable;
     }
 
     public static float GetRadius(float mass) => 
@@ -62,10 +77,10 @@ public sealed partial class Planet
         {
             <= 2f => (float)Math.Pow(mass, 0.28f), // rocky planets
             <= 130f => 1.01f * (float)Math.Pow(mass, 0.59f), // neptune-likes
-            _ => 12f * (float)Math.Pow(mass, -0.04f) // jupiter-likes
+            _ => 17.74f * (float)Math.Pow(mass, -0.044f) // jupiter-likes, continuous Chen & Kipping
         };
 
-    public int GetPettiness()
+    public int GetPrettiness()
     {
         var prettiness = BasePrettiness;
 
@@ -83,7 +98,7 @@ public sealed partial class Planet
 
     public Vector2 GetPointOnOrbit(IRobustRandom rand, float spacing = 25f)
     {
-        var angle = rand.Next() * 2f * MathF.PI;
+        var angle = rand.NextFloat() * 2f * MathF.PI;
 
         var radius = (Radius * NAV_PIXEL_SIZE) + spacing;
 
@@ -92,6 +107,12 @@ public sealed partial class Planet
 
         return new Vector2(x, y);
     }
+
+    /// <summary>
+    /// Whether this planet can host a landable surface. Gas and ice giants have no surface,
+    /// so the descent system and the shuttle map must agree on the same rule.
+    /// </summary>
+    public static bool IsLandable(Planet planet) => planet.Landable;
 }
 
 [DataDefinition]
@@ -100,6 +121,13 @@ public sealed partial class PlanetCustomValues
     [ViewVariables(VVAccess.ReadWrite)] public Dictionary<string, float> Floats;
     [ViewVariables(VVAccess.ReadWrite)] public Dictionary<string, int> Ints;
     [ViewVariables(VVAccess.ReadWrite)] public Dictionary<string, Color> Colors;
+
+    public PlanetCustomValues()
+    {
+        Floats = new Dictionary<string, float>();
+        Ints = new Dictionary<string, int>();
+        Colors = new Dictionary<string, Color>();
+    }
 
     public PlanetCustomValues(System.Random rand, PlanetTypePrototype proto)
     {

@@ -49,6 +49,12 @@ public sealed partial class LavalandSystem : EntitySystem
     private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<FixturesComponent> _fixtureQuery;
 
+    /// <summary>
+    /// Game map → the lavaland planet map generated for it (see <see cref="OnLoadingMaps"/>).
+    /// Lets the star system find the lavaland surface to wrap as a planet's ground layer.
+    /// </summary>
+    private readonly Dictionary<string, EntityUid> _lavalandByGameMap = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -66,14 +72,25 @@ public sealed partial class LavalandSystem : EntitySystem
 
     private void OnLoadingMaps(LoadingMapsEvent ev)
     {
+        _lavalandByGameMap.Clear();
         EnsurePreloaderMap();
         foreach (var gameMap in ev.Maps)
         {
             foreach (var planetEntry in gameMap.Planets)
             {
-                SetupLavalandPlanet(planetEntry, out _);
+                if (SetupLavalandPlanet(planetEntry, out var lavaland))
+                    _lavalandByGameMap[gameMap.ID] = lavaland!.Value.Owner;
             }
         }
+    }
+
+    /// <summary>
+    /// The lavaland planet map generated for <paramref name="gameMap"/>, if any. Null when the
+    /// map had no lavaland configured or its generation failed (disabled, no preloader, etc).
+    /// </summary>
+    public EntityUid? GetLavalandForGameMap(string gameMapId)
+    {
+        return _lavalandByGameMap.TryGetValue(gameMapId, out var uid) ? uid : null;
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)

@@ -12,8 +12,12 @@ public sealed partial class PlanetaryLiquid
     [ViewVariables(VVAccess.ReadWrite)] public float RiverFrequency;
     [ViewVariables(VVAccess.ReadWrite)] public float RiverThreshold;
     [ViewVariables(VVAccess.ReadWrite)] public float Specularity;
-    [ViewVariables(VVAccess.ReadWrite)] public bool Emmissive;
+    [ViewVariables(VVAccess.ReadWrite)] public bool Emissive;
     [ViewVariables(VVAccess.ReadWrite)] public float Emission;
+
+    public PlanetaryLiquid()
+    {
+    }
 
     public PlanetaryLiquid(System.Random rand, IPrototypeManager protoMan, ProtoId<PlanetaryLiquidTypePrototype> protoId)
     {
@@ -24,7 +28,7 @@ public sealed partial class PlanetaryLiquid
         RiverFrequency = proto.RiverFrequency.RollValue(rand);
         RiverThreshold = proto.RiverThreshold.RollValue(rand);
         Specularity = proto.Specularity.RollValue(rand);
-        Emmissive = proto.Emissive;
+        Emissive = proto.Emissive;
         Emission = proto.Emission.RollValue(rand);
     }
 }

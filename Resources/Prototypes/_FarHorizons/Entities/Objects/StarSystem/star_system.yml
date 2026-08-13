@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 # Physical representations for stellar objects in world
 
 # Both the star and planets carry an FTLBeacon so they show up as FTL destinations — the system

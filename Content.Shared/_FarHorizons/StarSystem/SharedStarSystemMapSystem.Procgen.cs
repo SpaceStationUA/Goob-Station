@@ -20,13 +20,20 @@ public abstract partial class SharedStarSystemMapSystem
         var rand = new System.Random(ent.Comp.Seed.Value);
 
         var stars = _protoMan.EnumeratePrototypes<StarTypePrototype>().OrderBy(p => p.ID).ToList();
+        if (stars.Count == 0)
+        {
+            Log.Warning("No star type prototypes available, cannot generate a star system for map {0}.", ent.Owner);
+            return null;
+        }
+
         var pickedStar = rand.Pick(stars);
 
         var solarMass = rand.NextFloat(pickedStar.SolarMass.Min, pickedStar.SolarMass.Max);
         var star = new Star(solarMass, pickedStar.Color, pickedStar.Shader);
         star.GenerateName(rand);
 
-        var orbitOffset = new Vector2(rand.NextFloat(), rand.NextFloat());
+        // Symmetric [-1, 1) so the system can shift in any direction from the map center.
+        var orbitOffset = new Vector2(rand.NextFloat() * 2f - 1f, rand.NextFloat() * 2f - 1f);
 
         AsteroidBelt? asteroidBelt = null;
 
@@ -52,12 +59,16 @@ public abstract partial class SharedStarSystemMapSystem
 
             slotId++;
             
+            // Representative planet mass for belt slot sizing. The belt slot itself
+            // has no planet; the value only scales the clearance term.
+            const float beltSlotEarthMass = 100f;
+
             if (orbit.Type == OrbitType.Belt &&
                 starProto.AsteroidBelts.Any())
             {
-                var currentDist = SlotDistance(slotId, star, 100f);
-                var prevDist = SlotDistance(slotId - 1, star, 100f);
-                var nextDist = SlotDistance(slotId + 1, star, 100f);
+                var currentDist = SlotDistance(slotId, star, beltSlotEarthMass);
+                var prevDist = SlotDistance(slotId - 1, star, beltSlotEarthMass);
+                var nextDist = SlotDistance(slotId + 1, star, beltSlotEarthMass);
 
                 var innerHalf = (currentDist - prevDist) * 0.5f * 0.75f;
                 var outerHalf = (nextDist - currentDist) * 0.5f * 0.75f;
@@ -111,7 +122,8 @@ public abstract partial class SharedStarSystemMapSystem
             }
 
             PlanetaryRings? rings = null;
-            if (planet.Rings.Any() && planet.RingProbability > 0f && rand.NextFloat() < planet.RingProbability)
+            var ringRoll = rand.NextFloat();
+            if (planet.Rings.Any() && planet.RingProbability > 0f && ringRoll < planet.RingProbability)
             {
                 var ringType = rand.Pick(planet.Rings);
                 rings = new PlanetaryRings(rand, _protoMan, ringType);
@@ -137,7 +149,8 @@ public abstract partial class SharedStarSystemMapSystem
                 saturationShift, 
                 customData, 
                 rings,
-                planet.BasePrettiness
+                planet.BasePrettiness,
+                planet.Landable
             ));
             
             nameId++;

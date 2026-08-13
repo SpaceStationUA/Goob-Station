@@ -57,16 +57,16 @@ void fragment() {
         highp vec3 baseColor = samplePlanetPalette(baseGradient * 0.6 + 0.1); 
 
         highp vec2 cloudUV = vec2(longitude * 0.6 + TIME * rotationSpeed * 2.5, latitudeCurve * 2.5);
-        highp float rawCloud = fbm(cloudUV * cloudScale + vec2(fbm(cloudUV * 1.5), 0.0) * 1.5);
+        highp float rawCloud = fbm01(cloudUV * cloudScale + vec2(fbm(cloudUV * 1.5), 0.0) * 1.5);
         
         highp float cloudSpread = max(0.01, cloudIntensity * 0.4);
         highp float cloudMask = smoothstep(1.0 - cloudSpread, 1.0, rawCloud);
 
         highp vec2 stormUV = vec2(longitude * 1.2 + TIME * rotationSpeed * 0.9, latitudeCurve * 1.5);
-        highp float stormNoise = fbm(stormUV * 4.0);
+        highp float stormNoise = fbm01(stormUV * 4.0);
         
         highp float stormSpread = max(0.01, stormFrequency * 0.25);
-        highp float stormMask = smoothstep(1.0 - stormSpread, 1.0, stormNoise) * fbm(stormUV * 8.0);
+        highp float stormMask = smoothstep(1.0 - stormSpread, 1.0, stormNoise) * fbm01(stormUV * 8.0);
 
         baseColor = mix(baseColor, color1 * 0.4, stormMask);     
         baseColor = mix(baseColor, color4, cloudMask * 0.8);     

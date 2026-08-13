@@ -152,10 +152,16 @@ public sealed class DockingConsoleSystem : SharedDockingConsoleSystem
         var map = dest.Map;
         // can't FTL if its already there or somehow failed whitelist
         if (map == Transform(shuttle).MapID)
+        {
+            Log.Debug($"{ToPrettyString(args.Actor)} tried to FTL-dock {ToPrettyString(shuttle)} to its own map {map}; ignoring.");
             return;
+        }
 
         if (FindLargestGrid(map) is not {} grid)
+        {
+            Log.Warning($"FTL-dock {ToPrettyString(shuttle)} to destination {dest.Name} ({map}) failed: no grid found on the target map.");
             return;
+        }
 
         Log.Debug($"{ToPrettyString(args.Actor):user} is FTL-docking {ToPrettyString(shuttle):shuttle} to {ToPrettyString(grid):grid}");
 
@@ -170,12 +176,21 @@ public sealed class DockingConsoleSystem : SharedDockingConsoleSystem
     private void OnCallShuttle(Entity<DockingConsoleComponent> ent, ref DockingConsoleShuttleCheckMessage args)
     {
         if (ent.Comp.Shuttle != null || UpdateShuttle(ent) || HasComp<DockingShuttleComponent>(ent.Comp.Shuttle))
+        {
+            // The "call" button only ever spawns a fresh shuttle when none exists — a shuttle
+            // that's somewhere else must be summoned through the destination list instead.
+            if (ent.Comp.Shuttle != null)
+                Log.Debug($"Call-shuttle on {ToPrettyString(ent)} ignored: {ToPrettyString(ent.Comp.Shuttle.Value)} already exists.");
             return;
+        }
 
         // Find the target
         var targetMap = Transform(ent).MapID;
         if (FindLargestGrid(targetMap) is not {} grid)
+        {
+            Log.Warning($"Call-shuttle on {ToPrettyString(ent)} failed: no grid found on its map {targetMap}.");
             return;
+        }
 
         // Get called station
         var station = _station.GetOwningStation(grid);

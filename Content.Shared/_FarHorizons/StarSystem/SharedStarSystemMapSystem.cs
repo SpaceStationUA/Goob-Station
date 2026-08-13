@@ -14,6 +14,6 @@ public abstract partial class SharedStarSystemMapSystem : EntitySystem
             ent.Comp.StarSystem == null)
             return new List<Planet>();
         
-        return ent.Comp.StarSystem.Planets.OrderByDescending(p => p.GetPettiness()).ToList();
+        return ent.Comp.StarSystem.Planets.OrderByDescending(p => p.GetPrettiness()).ToList();
     }
 }

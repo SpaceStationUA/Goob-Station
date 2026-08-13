@@ -109,7 +109,8 @@ void fragment() {
             
             highp float absLatitude = abs(surfaceCoord.y);
             
-            highp float polarMask = pow(smoothstep(polarGlowExtent, 1.0, absLatitude), 2.5) * normalizedGlowStrength;
+            highp float safeGlowExtent = clamp(polarGlowExtent, 0.0, 0.99);
+            highp float polarMask = pow(smoothstep(safeGlowExtent, 1.0, absLatitude), 2.5) * normalizedGlowStrength;
             
             if (polarMask > 0.001) {
                 highp float polarTime = TIME * 0.02;

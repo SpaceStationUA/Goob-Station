@@ -104,11 +104,20 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         if (FtlMode)
             return;
 
+        UpdatePlanetHover(args.RelativePixelPosition); // Far Horizons
+
         base.MouseMove(args);
     }
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
+        // Far Horizons: clicking a planet's zone circle on the map starts a descent.
+        if (!FtlMode && args.Function == EngineKeyFunctions.UIClick && HandlePlanetZoneClick(args.RelativePixelPosition))
+        {
+            base.KeyBindUp(args);
+            return;
+        }
+
         if (FtlMode && ViewingMap != MapId.Nullspace)
         {
             if (args.Function == EngineKeyFunctions.UIClick)
