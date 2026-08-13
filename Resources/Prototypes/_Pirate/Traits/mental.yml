@@ -47,7 +47,6 @@
       invert: true
       species:
         - IPC
-        - Plasmaman
         - Shadowkin
     - !type:HasCompCondition
       invert: true
