@@ -19,7 +19,10 @@
         - MachineMask
         layer:
           - MachineLayer
+  #region Pirate: lathe printing sounds
   - type: Lathe
+    producingSound: /Audio/_Pirate/Machines/lathe_print.ogg
+  #endregion Pirate: lathe printing sounds
   - type: MaterialStorage
   - type: Destructible
     thresholds:
