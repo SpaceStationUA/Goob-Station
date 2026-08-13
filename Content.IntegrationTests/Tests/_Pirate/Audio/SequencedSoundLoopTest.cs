@@ -86,6 +86,55 @@ public sealed class SequencedSoundLoopTest
     }
 
     [Test]
+    public async Task OnlyIntendedMachinesHaveTheCycle()
+    {
+        string[] shouldHave =
+        [
+            "Autolathe", "AutolatheHyperConvection",
+            "Protolathe", "ProtolatheHyperConvection",
+            "Omnilathe",
+            "EngineeringTechFab", "CargoTechFab", "ScienceTechFab", "ServiceTechFab",
+            "MedicalTechFab", "SecurityTechFab", "AmmoTechFab", "ERTTechFab",
+            "GoobYautjaTechFab", "GoobYautjaStructureYautjaMachinesAutolathe",
+            "ExosuitFabricator",
+        ];
+
+        string[] shouldNotHave =
+        [
+            "Biofabricator", "MedicalBiofabricator", "Biogenerator", "NuclearFabricator",
+            "OreProcessor", "OreProcessorIndustrial", "Sheetifier",
+            "CircuitImprinter", "CircuitImprinterHyperConvection",
+            "UniformPrinter", "CutterMachine", "PrinterDoc",
+        ];
+
+        await using var pair = await PoolManager.GetServerClient();
+        var protoMan = pair.Server.ProtoMan;
+        var compFactory = pair.Server.ResolveDependency<IComponentFactory>();
+
+        await pair.Server.WaitAssertion(() =>
+        {
+            Assert.Multiple(() =>
+            {
+                foreach (var id in shouldHave)
+                {
+                    var proto = protoMan.Index<EntityPrototype>(id);
+                    Assert.That(proto.TryGetComponent<SequencedSoundLoopComponent>(out _, compFactory),
+                        $"{id} lost its print sound");
+                }
+
+                foreach (var id in shouldNotHave)
+                {
+                    var proto = protoMan.Index<EntityPrototype>(id);
+                    Assert.That(proto.TryGetComponent<SequencedSoundLoopComponent>(out _, compFactory), Is.False,
+                        $"{id} is not supposed to make print noise");
+                }
+            });
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task MidSequenceWalksInOrderAndWraps()
     {
         await using var pair = await PoolManager.GetServerClient();
