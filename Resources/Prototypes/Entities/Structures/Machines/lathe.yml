@@ -21,7 +21,16 @@
           - MachineLayer
   #region Pirate: lathe printing sounds
   - type: Lathe
-    producingSound: /Audio/_Pirate/Machines/lathe_print.ogg
+  - type: SequencedSoundLoop
+    startSound: /Audio/_Pirate/Machines/Fabricator/autolathe_start.ogg
+    startLength: 2.671
+    midSounds: PirateFabricatorPrintMid
+    midLength: 1
+    endSound: /Audio/_Pirate/Machines/Fabricator/autolathe_end.ogg
+    params:
+      volume: -2
+      referenceDistance: 2
+      maxDistance: 12
   #endregion Pirate: lathe printing sounds
   - type: MaterialStorage
   - type: Destructible
@@ -421,6 +430,22 @@
   - type: GuideHelp
     guides:
     - Robotics
+  #region Pirate: lathe printing sounds
+  - type: SequencedSoundLoop
+    startSound: /Audio/_Pirate/Machines/Fabricator/synthfab_start.ogg
+    startLength: 1
+    midSounds: PirateSynthFabPrintMid
+    midLength: 3
+    endSound: /Audio/_Pirate/Machines/Fabricator/synthfab_end.ogg
+    startParams:
+      volume: -2
+      referenceDistance: 2
+      maxDistance: 12
+    params:
+      volume: 0
+      referenceDistance: 2
+      maxDistance: 12
+  #endregion Pirate: lathe printing sounds
 
 - type: entity
   id: Biofabricator

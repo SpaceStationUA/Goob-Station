@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Order matters: autolathe clips form a continuous sequence.
+
+- type: soundCollection
+  id: PirateFabricatorPrintMid
+  files:
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid01.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid02.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid03.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid04.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid05.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid06.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid07.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid08.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid09.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid10.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid11.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid12.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid13.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid14.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid15.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid16.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid17.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid18.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid19.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid20.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid21.ogg
+  - /Audio/_Pirate/Machines/Fabricator/autolathe_mid22.ogg
+
+- type: soundCollection
+  id: PirateSynthFabPrintMid
+  files:
+  - /Audio/_Pirate/Machines/Fabricator/synthfab_running.ogg
