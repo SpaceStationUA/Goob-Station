@@ -10,6 +10,7 @@ using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -142,10 +143,12 @@ public sealed class SequencedSoundLoopTest
         var mapData = await pair.CreateTestMap();
 
         var entMan = server.EntMan;
+        var protoMan = server.ProtoMan;
         var loopSystem = server.System<SequencedSoundLoopSystem>();
 
         var lathe = EntityUid.Invalid;
         SequencedSoundLoopComponent loop = default!;
+        var midCount = 0;
 
         await server.WaitAssertion(() =>
         {
@@ -158,6 +161,10 @@ public sealed class SequencedSoundLoopTest
                 Assert.That(loop.MidLength, Is.GreaterThan(TimeSpan.Zero));
             });
 
+            midCount = protoMan.Index<SoundCollectionPrototype>(loop.MidSounds!.Value).PickFiles.Count;
+            Assert.That(midCount, Is.GreaterThan(1),
+                "At least two mid clips are needed to prove ordering and wraparound");
+
             loopSystem.StartLoop((lathe, loop));
 
             Assert.Multiple(() =>
@@ -169,7 +176,7 @@ public sealed class SequencedSoundLoopTest
         });
 
         var indices = new List<int>();
-        for (var i = 0; i < ExpectedMidCount + 1; i++)
+        for (var i = 0; i < midCount + 1; i++)
         {
             await server.WaitPost(() => loop.NextPlayTime = TimeSpan.Zero);
             await pair.RunTicksSync(1);
@@ -182,10 +189,10 @@ public sealed class SequencedSoundLoopTest
 
             Assert.Multiple(() =>
             {
-                for (var i = 0; i < ExpectedMidCount; i++)
+                for (var i = 0; i < midCount; i++)
                     Assert.That(indices[i], Is.EqualTo(i + 1), $"Mid clip {i} played out of order");
 
-                Assert.That(indices[ExpectedMidCount], Is.EqualTo(1), "The mid loop did not wrap around");
+                Assert.That(indices[midCount], Is.EqualTo(1), "The mid loop did not wrap around");
             });
 
             loopSystem.StopLoop((lathe, loop));
@@ -219,17 +226,46 @@ public sealed class SequencedSoundLoopTest
             Assert.That(loop.StartLength, Is.GreaterThan(TimeSpan.Zero),
                 "This test needs a start flourish to cut short");
 
+            // Count one-shot audio entities to verify end-sound emission.
+            int AudioCount()
+            {
+                var count = 0;
+                var query = entMan.AllEntityQueryEnumerator<AudioComponent>();
+                while (query.MoveNext(out _, out _))
+                    count++;
+                return count;
+            }
+
             loopSystem.StartLoop((lathe, loop));
             var scheduled = loop.NextPlayTime;
 
             loopSystem.StartLoop((lathe, loop));
             Assert.That(loop.NextPlayTime, Is.EqualTo(scheduled), "StartLoop restarted a running cycle");
 
+            Assert.That(loop.LoopStarted, Is.False, "The mid loop should not have begun yet");
+            var beforeCutShort = AudioCount();
             loopSystem.StopLoop((lathe, loop));
+
             Assert.Multiple(() =>
             {
+                Assert.That(AudioCount(), Is.EqualTo(beforeCutShort),
+                    "The end sound played even though the mid loop never started");
                 Assert.That(loop.Running, Is.False);
-                Assert.That(loop.LoopStarted, Is.False, "The end sound must stay gated on the loop having started");
+                Assert.That(loop.LoopStarted, Is.False);
+            });
+
+            // Verify the end sound is not disabled entirely.
+            loopSystem.StartLoop((lathe, loop));
+            loop.LoopStarted = true;
+            var beforeNormalStop = AudioCount();
+            loopSystem.StopLoop((lathe, loop));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(AudioCount(), Is.EqualTo(beforeNormalStop + 1),
+                    "The end sound is missing when the mid loop had started");
+                Assert.That(loop.Running, Is.False);
+                Assert.That(loop.LoopStarted, Is.False);
             });
 
             entMan.DeleteEntity(lathe);

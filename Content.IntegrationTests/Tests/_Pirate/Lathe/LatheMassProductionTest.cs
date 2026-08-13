@@ -54,10 +54,13 @@ public sealed class LatheMassProductionTest
                 $"{result.ID} has no composition, so it wouldn't go into the lathe's storage");
 
             foreach (var (material, amount) in recipe.Materials)
-                materialStorage.TryChangeMaterialAmount(lathe, material, amount * Quantity);
+            {
+                Assert.That(materialStorage.TryChangeMaterialAmount(lathe, material, amount * Quantity),
+                    $"Failed to seed the lathe with {amount * Quantity} {material}");
+            }
 
             Assert.That(latheSystem.TryAddToQueue(lathe, recipe, Quantity, latheComp), "Failed to queue the batch");
-            latheSystem.TryStartProducing(lathe, latheComp);
+            Assert.That(latheSystem.TryStartProducing(lathe, latheComp), "The lathe refused to start printing");
 
             Assert.Multiple(() =>
             {
