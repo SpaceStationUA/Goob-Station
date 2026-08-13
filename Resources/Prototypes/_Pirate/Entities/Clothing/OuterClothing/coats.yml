@@ -111,6 +111,34 @@
         Piercing: 0.6
 
 - type: entity
+  parent: ClothingOuterCoatWarden
+  id: ClothingOuterCoatWardenAlt
+  name: "халат Наглядача"
+  description: "Посилено кевларовими бронеплитами, для захисту життєво важливих органів"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/warden.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/warden.rsi
+
+- type: entity
+  parent: ClothingOuterCoatAMG
+  id: ClothingOuterCoatHOS
+  name: "халат Голови Безпеки"
+  description: "Посилено кевларовими бронеплитами, для захисту життєво важливих органів"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/HOS.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/HOS.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.7
+        Piercing: 0.6
+
+- type: entity
   parent: ClothingOuterCoatAMG
   id: ClothingOuterCoatHOP
   name: "халат Голови Персоналу"
@@ -155,3 +183,245 @@
     sprite: _Pirate/Clothing/OuterClothing/Coats/atmos.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/OuterClothing/Coats/atmos.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatBar
+  name: "халат бармена"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/bartender.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/bartender.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatBotany
+  name: "халат ботаніка"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/botany.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/botany.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatCaplain
+  name: "халат капелана"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/caplain.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/caplain.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatCargo
+  name: "халат вантажника"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/cargo.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/cargo.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatCE
+  name: "халат Головного Інженера"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/CE.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/CE.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatCentcom
+  name: "халат Центрального Командування"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/centcom.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/centcom.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatChef
+  name: "халат кухаря"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/chef.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/chef.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatChem
+  name: "халат хіміка"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/chem.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/chem.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatClown
+  name: "халат клоуна"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/clown.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/clown.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatCMO
+  name: "халат Головного Лікаря"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/CMO.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/CMO.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatDetectiveNoir
+  name: "нуарний халат детектива"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/detective_noir.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/detective_noir.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatDoctor
+  name: "халат лікаря"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/doctor.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/doctor.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatEngineer
+  name: "халат інженера"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/engi.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/engi.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatGenetics
+  name: "халат генетика"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/genetics.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/genetics.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatJanitor
+  name: "халат прибиральника"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/janitor.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/janitor.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatMime
+  name: "халат міма"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/mime.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/mime.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatParamedic
+  name: "халат парамедика"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/paramedic.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/paramedic.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatQM
+  name: "халат Голови Карго"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/QM.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/QM.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatRDAlt
+  name: "халат Наукового Директора"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/RD.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/RD.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatScience
+  name: "халат науковця"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/science.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/science.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatSyndicate
+  name: "халат синдикату"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/syndi.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/syndi.rsi
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterCoatLabOpened
+  id: ClothingOuterCoatVirologist
+  name: "халат вірусолога"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/virologist.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/virologist.rsi
