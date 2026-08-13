@@ -19,6 +19,8 @@
         - MachineMask
         layer:
           - MachineLayer
+  #region Pirate: lathe printing sounds
+  #endregion Pirate: lathe printing sounds
   - type: Lathe
   - type: MaterialStorage
   - type: Destructible
@@ -112,7 +114,7 @@
 
 - type: entity
   id: Autolathe
-  parent: [BaseLatheLube]
+  parent: [BaseLatheLube, BasePirateFabricatorSound] # Pirate: lathe printing sounds
   name: autolathe
   description: It produces basic items using metal and glass. Has the ability to process blueprints to print new recipes.
   components:
@@ -209,7 +211,7 @@
 
 - type: entity
   id: Protolathe
-  parent: [BaseLatheLube]
+  parent: [BaseLatheLube, BasePirateFabricatorSound] # Pirate: lathe printing sounds
   name: protolathe
   description: Converts raw materials into advanced items.
   components:
@@ -353,7 +355,7 @@
 
 - type: entity
   id: ExosuitFabricator
-  parent: [BaseLatheLube]
+  parent: [BaseLatheLube, BasePirateSynthFabSound] # Pirate: lathe printing sounds
   name: exosuit fabricator
   description: Creates parts for robotics and other mechanical needs.
   components:
@@ -418,6 +420,8 @@
   - type: GuideHelp
     guides:
     - Robotics
+  #region Pirate: lathe printing sounds
+  #endregion Pirate: lathe printing sounds
 
 - type: entity
   id: Biofabricator
@@ -465,7 +469,7 @@
 
 - type: entity
   id: SecurityTechFab
-  parent: [BaseLatheLube]
+  parent: [BaseLatheLube, BasePirateFabricatorSound] # Pirate: lathe printing sounds
   name: security techfab
   description: Prints equipment and circuitboards for use by security crew. #Goobstation - Circuitboards description
   components:
@@ -547,7 +551,7 @@
 
 - type: entity
   id: AmmoTechFab
-  parent: [BaseLatheLube]
+  parent: [BaseLatheLube, BasePirateFabricatorSound] # Pirate: lathe printing sounds
   name: ammo techfab
   description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
   components:
@@ -589,7 +593,7 @@
 
 - type: entity
   id: MedicalTechFab
-  parent: [BaseLatheLube] #Goobstation - Circuitboards description
+  parent: [BaseLatheLube, BasePirateFabricatorSound] #Goobstation - Circuitboards description # Pirate: lathe printing sounds
   name: medical techfab
   description: Prints equipment and circuitboards for use by the medbay.
   components:
