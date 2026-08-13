@@ -9,7 +9,6 @@
     shoes: GoobYautjaClanGreaves
   storage:
     back:
-    - GoobYautjaPlasmaRifle
     - MedkitCombatFilled
     - MedkitCombatFilled
     - GoobYautjaHealthShard
@@ -22,10 +21,11 @@
     - GoobYautjaHuntingTrap
     - GoobYautjaHuntingTrap
     - GoobYautjaHuntingTrap
-    - GoobYautjaSmartDisc
     - GoobYautjaToolbeltFilled
     - GoobYautjaHoundObservationPad
     - GoobYautjaCleanserGelVial
+    - GoobYautjaHuntingPouch
+    - GoobYautjaHonorCodex
 
 - type: startingGear
   parent: GoobYautjaHunterGear
@@ -73,6 +73,7 @@
     - GoobYautjaHuntingPouch
     - GoobYautjaToolbeltFilled
     - GoobYautjaHoundObservationPad
+    - GoobYautjaHonorCodex
 
 - type: startingGear
   parent: GoobYautjaBadBloodGearBase
