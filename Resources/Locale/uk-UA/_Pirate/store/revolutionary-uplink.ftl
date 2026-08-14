@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 
 store-currency-display-revcoin = RC
+revcoin = RevCoin
 store-category-revolutionary-default = Спорядження
 store-preset-name-revolutionary-uplink = VivaStore
 
