@@ -42,6 +42,7 @@
     children:
     - id: ClosetSkeleton
     - id: KingRatMigration
+    - id: Fugitive # Pirate
     - id: BorerSpawn # Pirate
     - id: ListeningPost # Pirate
     # - id: RevenantSpawn # Goob
