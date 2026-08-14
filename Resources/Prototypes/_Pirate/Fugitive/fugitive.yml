@@ -25,7 +25,7 @@
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointGhostFugitive
-  name: fugitive-spawn-point-name
+  name: fugitive spawn point
   components:
   - type: GhostRole
     name: ghost-role-information-fugitive-name
@@ -64,8 +64,8 @@
 - type: entity
   parent: [ BaseFugitiveObjective, BaseLivingObjective ]
   id: FugitiveEscapeObjective
-  name: objective-condition-fugitive-escape-title
-  description: objective-condition-fugitive-escape-description
+  name: evade law enforcement
+  description: Blend into the crowd and escape on the evacuation shuttle.
   components:
   - type: Objective
     icon:
@@ -76,8 +76,8 @@
 - type: entity
   parent: ToolboxThief
   id: FugitiveStash
-  name: fugitive-stash-name
-  description: fugitive-stash-description
+  name: fugitive's stash
+  description: These supplies got you out of jail and hopefully they will keep you out of it.
   components:
   - type: ThiefUndeterminedBackpack
     maxSelectedSets: 1
@@ -219,11 +219,11 @@
     - MidroundAntag
 
 - type: entity
-  name: fugitive-galpol-stamp-name
+  name: GALPOL rubber stamp
   parent: RubberStampBase
   id: RubberStampGalpol
   categories: [ DoNotMap ]
-  description: fugitive-galpol-stamp-description
+  description: A rubber stamp for important documents concerning intergalactic security affairs.
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-GALPOL

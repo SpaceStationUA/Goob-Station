@@ -7,7 +7,7 @@ role-subtype-fugitive = Fugitive
 ghost-role-information-fugitive-name = Fugitive
 ghost-role-information-fugitive-description = You are an escaped prisoner. Make it out alive.
 ghost-role-information-fugitive-rules = You are a light solo antagonist. Focus on laying low and escaping rather than directly engaging Security. Do not murderbone.
-fugitive-spawn-point-name = fugitive spawn point
+ent-SpawnPointGhostFugitive = fugitive spawn point
 
 fugitive-round-end-agent-name = Fugitive
 fugitive-spawn = You fall from the ceiling!
@@ -60,11 +60,11 @@ fugitive-crime-22 = False Report
 fugitive-crime-23 = Contempt of Court
 fugitive-crime-24 = Identity Theft
 
-objective-condition-fugitive-escape-title = Evade law enforcement
-objective-condition-fugitive-escape-description = You will never atone for your crimes. Blend into the crowd and escape on the evacuation shuttle.
+ent-FugitiveEscapeObjective = Evade law enforcement
+    .desc = You will never atone for your crimes. Blend into the crowd and escape on the evacuation shuttle.
 
-fugitive-stash-name = fugitive's stash
-fugitive-stash-description = These supplies got you out of jail and hopefully they will keep you out of it.
+ent-FugitiveStash = fugitive's stash
+    .desc = These supplies got you out of jail and hopefully they will keep you out of it.
 fugitive-stash-window-title = Fugitive Stash
 fugitive-stash-window-description = Choose {$maxCount} kit to help you elude the authorities. The choice is final.
 
@@ -81,8 +81,8 @@ fugitive-set-infiltrator-description = An Agent ID, a freedom implanter, and a S
 fugitive-set-disruptor-name = disruptor's kit
 fugitive-set-disruptor-description = A cryptographic sequencer and a camera bug for compromising station systems.
 
-fugitive-report-paper-name = fugitive report
-fugitive-report-paper-description = An arrest warrant for a space fugitive sent from GALPOL.
-fugitive-galpol-stamp-name = GALPOL rubber stamp
-fugitive-galpol-stamp-description = A rubber stamp for important documents concerning intergalactic security affairs.
+ent-PaperFugitiveReport = fugitive report
+    .desc = An arrest warrant for a space fugitive sent from GALPOL.
+ent-RubberStampGalpol = GALPOL rubber stamp
+    .desc = A rubber stamp for important documents concerning intergalactic security affairs.
 stamp-component-stamped-name-GALPOL = GALPOL

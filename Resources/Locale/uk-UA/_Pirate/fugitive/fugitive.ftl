@@ -7,7 +7,7 @@ role-subtype-fugitive = Утікач
 ghost-role-information-fugitive-name = Утікач
 ghost-role-information-fugitive-description = Ви втекли з в'язниці. Утечіть звідси та виживіть.
 ghost-role-information-fugitive-rules = Ваша мета: переховуватися й уникати Служби Безпеки, а не атакувати її безпосередньо. Не влаштовуйте безпричинної різанини.
-fugitive-spawn-point-name = точка появи Утікача
+ent-SpawnPointGhostFugitive = точка появи Утікача
 
 fugitive-round-end-agent-name = Утікач
 fugitive-spawn = Ви падаєте зі стелі!
@@ -60,11 +60,11 @@ fugitive-crime-22 = Неправдиве повідомлення
 fugitive-crime-23 = Неповага до суду
 fugitive-crime-24 = Викрадення особистості
 
-objective-condition-fugitive-escape-title = Уникайте правосуддя
-objective-condition-fugitive-escape-description = Змішайтеся з натовпом, виживіть і покиньте станцію на евакуаційному шатлі.
+ent-FugitiveEscapeObjective = Уникайте правосуддя
+    .desc = Змішайтеся з натовпом, виживіть і покиньте станцію на евакуаційному шатлі.
 
-fugitive-stash-name = схованка Утікача
-fugitive-stash-description = Ці припаси допомогли вам утекти з в'язниці й мають допомогти залишитися на волі.
+ent-FugitiveStash = схованка Утікача
+    .desc = Ці припаси допомогли вам утекти з в'язниці й мають допомогти залишитися на волі.
 fugitive-stash-window-title = Схованка Утікача
 fugitive-stash-window-description = Оберіть {$maxCount} комплект, який допоможе уникнути переслідування. Змінити вибір буде неможливо.
 
@@ -81,8 +81,8 @@ fugitive-set-infiltrator-description = Агентська ID-картка, ім�
 fugitive-set-disruptor-name = комплект дестабілізатора
 fugitive-set-disruptor-description = Криптографічний секвенсор і пристрій підключення до камер для злому систем станції.
 
-fugitive-report-paper-name = орієнтування на Утікача
-fugitive-report-paper-description = Ордер на арешт космічного втікача, надісланий GALPOL.
-fugitive-galpol-stamp-name = печатка GALPOL
-fugitive-galpol-stamp-description = Печатка для важливих документів у справах міжгалактичної безпеки.
+ent-PaperFugitiveReport = орієнтування на Утікача
+    .desc = Ордер на арешт космічного втікача, надісланий GALPOL.
+ent-RubberStampGalpol = печатка GALPOL
+    .desc = Печатка для важливих документів у справах міжгалактичної безпеки.
 stamp-component-stamped-name-GALPOL = GALPOL
