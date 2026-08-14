@@ -5,8 +5,8 @@ roles-antag-fugitive-objective = Залишайтеся на волі попри
 role-subtype-fugitive = Утікач
 
 ghost-role-information-fugitive-name = Утікач
-ghost-role-information-fugitive-description = Ви втекли з в'язниці. Виберіться звідси живим.
-ghost-role-information-fugitive-rules = Ви легкий антагоніст-одинак. Переховуйтеся й уникайте Служби Безпеки, а не атакуйте її безпосередньо. Не влаштовуйте безпричинної різанини.
+ghost-role-information-fugitive-description = Ви втекли з в'язниці. Утечіть звідси та виживіть.
+ghost-role-information-fugitive-rules = Ваша мета: переховуватися й уникати Служби Безпеки, а не атакувати її безпосередньо. Не влаштовуйте безпричинної різанини.
 fugitive-spawn-point-name = точка появи Утікача
 
 fugitive-round-end-agent-name = Утікач
@@ -16,7 +16,7 @@ station-event-fugitive-hunt-announcement = Перевірте комунікац
 fugitive-announcement-GALPOL = GALPOL
 
 fugitive-report-title = РОЗШУКУЄТЬСЯ ВТІКАЧ!
-fugitive-report-first-line = У секторі помічено втікача, який приховав свою особу. Він може переховуватися на одній зі станцій.
+fugitive-report-first-line = У секторі помічено особу, яка втекла та приховала свою ідентичність. Ця особа може переховуватися на одній зі станцій.
 fugitive-report-inhuman = {$name} не є гуманоїдом. Інших відомостей немає.
 fugitive-report-morphotype = МОРФОТИП: {$species}
 fugitive-report-age = ВІК: {$age}
@@ -33,7 +33,7 @@ fugitive-report-crime = - {$count ->
     [1] Один епізод
     *[other] {$count} епізодів
 } за статтею «{$crime}»
-fugitive-report-last-line = GALPOL доручає Nanotrasen затримати цю особу й доправити її на суд до Центрального Командування. Забезпечте доставлення втікача живим.
+fugitive-report-last-line = GALPOL доручає Nanotrasen затримати цю особу й доправити її на суд до Центрального Командування. Забезпечте затримання без летальних наслідків.
 
 fugitive-crime-1 = Вбивство
 fugitive-crime-2 = Тероризм
@@ -61,7 +61,7 @@ fugitive-crime-23 = Неповага до суду
 fugitive-crime-24 = Викрадення особистості
 
 objective-condition-fugitive-escape-title = Уникайте правосуддя
-objective-condition-fugitive-escape-description = Змішайтеся з натовпом і живим покиньте станцію на евакуаційному шатлі.
+objective-condition-fugitive-escape-description = Змішайтеся з натовпом, виживіть і покиньте станцію на евакуаційному шатлі.
 
 fugitive-stash-name = схованка Утікача
 fugitive-stash-description = Ці припаси допомогли вам утекти з в'язниці й мають допомогти залишитися на волі.
