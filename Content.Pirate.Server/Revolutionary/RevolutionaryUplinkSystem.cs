@@ -49,17 +49,28 @@ public sealed class RevolutionaryUplinkSystem : EntitySystem
             return;
         }
 
-        var uplinkTarget = _uplink.FindUplinkTarget(headRevolutionary)
-            ?? _implants.AddImplant(headRevolutionary, "UplinkImplant");
-        if (uplinkTarget == null
-            || !_uplink.AddUplink(
-                headRevolutionary,
-                rule.Comp.StartingBalance,
-                rule.Comp.UplinkCurrencyId,
-                rule.Comp.UplinkStoreId,
-                uplinkTarget,
-                out var setupEvent))
+        var uplinkTarget = _uplink.FindUplinkTarget(headRevolutionary);
+        EntityUid? fallbackImplant = null;
+        if (uplinkTarget == null)
         {
+            fallbackImplant = _implants.AddImplant(headRevolutionary, "UplinkImplant");
+            uplinkTarget = fallbackImplant;
+        }
+
+        if (uplinkTarget == null)
+            return;
+
+        if (!_uplink.AddUplink(
+            headRevolutionary,
+            rule.Comp.StartingBalance,
+            rule.Comp.UplinkCurrencyId,
+            rule.Comp.UplinkStoreId,
+            uplinkTarget,
+            out var setupEvent))
+        {
+            if (fallbackImplant != null)
+                RemoveImplant(headRevolutionary, fallbackImplant.Value);
+
             return;
         }
 
@@ -87,6 +98,7 @@ public sealed class RevolutionaryUplinkSystem : EntitySystem
             || HasComp<RevolutionaryLieutenantComponent>(target)
             || !_mind.TryGetMind(target, out var mindId, out _))
         {
+            RemoveImplant(target, implant.Owner);
             return;
         }
 
@@ -102,6 +114,9 @@ public sealed class RevolutionaryUplinkSystem : EntitySystem
         ref ImplantRemovedEvent args)
     {
         var target = args.Implanted;
+        if (HasOtherLieutenantImplant(target, implant.Owner))
+            return;
+
         RemComp<RevolutionaryLieutenantComponent>(target);
 
         if (!_mind.TryGetMind(target, out var mindId, out _))
@@ -111,6 +126,26 @@ public sealed class RevolutionaryUplinkSystem : EntitySystem
             ? "head-rev-briefing"
             : "rev-briefing");
         SetRoleBriefing(mindId, briefing);
+    }
+
+    private bool HasOtherLieutenantImplant(EntityUid target, EntityUid removedImplant)
+    {
+        if (!TryComp<ImplantedComponent>(target, out var implanted))
+            return false;
+
+        foreach (var implant in implanted.ImplantContainer.ContainedEntities)
+        {
+            if (implant != removedImplant && HasComp<RevolutionaryLieutenantComponent>(implant))
+                return true;
+        }
+
+        return false;
+    }
+
+    private void RemoveImplant(EntityUid target, EntityUid implant)
+    {
+        if (TryComp<ImplantedComponent>(target, out var implanted))
+            _implants.ForceRemove((target, implanted), implant);
     }
 
     // Pirate - remove the physical lieutenant implant so its radio access is revoked too.
