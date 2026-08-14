@@ -89,6 +89,12 @@
     - id: MobCockroach
     - id: SpaceCash100
     - id: StrangePill
+    - id: OminousPill # Pirate medical vendor variations
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: WeirdPill
+      amount: !type:RangeNumberSelector
+        range: 1, 3
     - id: Joint
 
 - type: entityTable # TODO: Add more variety!
@@ -110,6 +116,10 @@
       - id: Bloodpack
     - id: SyndicateBusinessCard
       weight: 0.5
+    - id: GoldenPill # Pirate medical vendor variations
+      weight: 0.5
+      amount: !type:RangeNumberSelector
+        range: 1, 2
 
 # Packages
 # TODO: Currently mostly maints loot, should be updated in the future.
