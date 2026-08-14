@@ -1,4 +1,4 @@
-using Content.Client.Ghost;
+using System.Numerics;
 using Content.Shared.Ghost;
 using Content.Pirate.Shared.CustomGhostSystem;
 using Robust.Client.GameObjects;
@@ -25,7 +25,6 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
                 try
                 {
                     args.Sprite.LayerSetState(0, state);
-                    return;
                 }
                 catch
                 {
@@ -43,14 +42,20 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
                             }
                         }
                     }
-                    return;
                 }
             }
             else
             {
                 args.Sprite.LayerSetRSI(0, spriteData);
-                return;
             }
+
+            if (!AppearanceSystem.TryGetData<float>(uid, CustomGhostAppearance.Scale, out var scale, args.Component))
+                scale = 1f;
+
+            args.Sprite.LayerSetScale(0, new Vector2(scale, scale));
+
+            // Зберігаємо прозорість привида.
+            return;
         }
 
         if (AppearanceSystem.TryGetData<float>(uid, CustomGhostAppearance.AlphaOverride, out var alpha, args.Component))
