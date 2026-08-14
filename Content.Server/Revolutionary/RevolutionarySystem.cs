@@ -2,6 +2,7 @@
 
 using Content.Server._EinsteinEngines.Language; // Goob Station - Revolutionary Language
 using Content.Server.Polymorph.Systems;
+using Content.Pirate.Shared.Revolutionary.Components;
 using Content.Shared.Mood;
 using Content.Shared.Polymorph;
 using Content.Shared.Revolutionary;
@@ -59,6 +60,8 @@ public sealed class RevolutionarySystem : SharedRevolutionarySystem  // Goob Sta
             case RevolutionaryComponent revComp:
                 RaiseLocalEvent(uid, new MoodRemoveEffectEvent("RevolutionFocused")); // Pirate - port EE mood system
                 _languageSystem.RemoveLanguage(uid, revComp.Language);
+                if (!TerminatingOrDeleted(uid))
+                    RemComp<RevolutionaryLieutenantComponent>(uid); // Pirate - revoke lieutenant status on deconversion.
                 break;
         }
     }

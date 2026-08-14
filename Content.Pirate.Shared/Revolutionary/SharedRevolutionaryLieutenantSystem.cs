@@ -19,6 +19,10 @@ public sealed class SharedRevolutionaryLieutenantSystem : EntitySystem
         SubscribeLocalEvent<RevolutionaryComponent, ComponentStartup>(DirtyLieutenantComponents);
         SubscribeLocalEvent<HeadRevolutionaryComponent, ComponentStartup>(DirtyLieutenantComponents);
         SubscribeLocalEvent<ShowAntagIconsComponent, ComponentStartup>(DirtyLieutenantComponents);
+        SubscribeLocalEvent<RevolutionaryLieutenantComponent, ComponentRemove>(DirtyLieutenantComponents);
+        SubscribeLocalEvent<RevolutionaryComponent, ComponentRemove>(DirtyLieutenantComponents);
+        SubscribeLocalEvent<HeadRevolutionaryComponent, ComponentRemove>(DirtyLieutenantComponents);
+        SubscribeLocalEvent<ShowAntagIconsComponent, ComponentRemove>(DirtyLieutenantComponents);
     }
 
     private void OnGetStateAttempt(
@@ -31,7 +35,7 @@ public sealed class SharedRevolutionaryLieutenantSystem : EntitySystem
     private bool CanSeeLieutenants(ICommonSession? player)
     {
         if (player?.AttachedEntity is not { } uid)
-            return true;
+            return true; // Match SharedRevolutionarySystem for replay sessions.
 
         return HasComp<RevolutionaryComponent>(uid)
             || HasComp<HeadRevolutionaryComponent>(uid)
@@ -40,6 +44,12 @@ public sealed class SharedRevolutionaryLieutenantSystem : EntitySystem
     }
 
     private void DirtyLieutenantComponents<T>(EntityUid uid, T component, ComponentStartup args)
+        => DirtyLieutenantComponents();
+
+    private void DirtyLieutenantComponents<T>(EntityUid uid, T component, ComponentRemove args)
+        => DirtyLieutenantComponents();
+
+    private void DirtyLieutenantComponents()
     {
         var query = AllEntityQuery<RevolutionaryLieutenantComponent>();
         while (query.MoveNext(out var lieutenant, out var lieutenantComponent))

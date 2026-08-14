@@ -34,7 +34,6 @@ public sealed class RevolutionaryUplinkSystem : EntitySystem
 
         SubscribeLocalEvent<RevolutionaryRuleComponent, AfterAntagEntitySelectedEvent>(OnHeadRevolutionarySelected);
         SubscribeLocalEvent<RevolutionaryLieutenantComponent, ImplantImplantedEvent>(OnLieutenantImplanted);
-        SubscribeLocalEvent<RevolutionaryComponent, ComponentShutdown>(OnRevolutionaryShutdown);
         SubscribeLocalEvent<RoleRemovedEvent>(OnRoleRemoved);
     }
 
@@ -94,13 +93,6 @@ public sealed class RevolutionaryUplinkSystem : EntitySystem
         var briefing = Loc.GetString("rev-lieutenant-greeting");
         _antag.SendBriefing(target, briefing, Color.Red, LieutenantBriefingSound);
         SetRoleBriefing(mindId, briefing);
-    }
-
-    // Pirate - do not leave lieutenant visibility on a deconverted revolutionary.
-    private void OnRevolutionaryShutdown(Entity<RevolutionaryComponent> ent, ref ComponentShutdown args)
-    {
-        if (!TerminatingOrDeleted(ent))
-            RemComp<RevolutionaryLieutenantComponent>(ent);
     }
 
     // Pirate - remove the physical lieutenant implant so its radio access is revoked too.
