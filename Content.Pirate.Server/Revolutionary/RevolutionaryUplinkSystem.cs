@@ -34,6 +34,7 @@ public sealed class RevolutionaryUplinkSystem : EntitySystem
 
         SubscribeLocalEvent<RevolutionaryRuleComponent, AfterAntagEntitySelectedEvent>(OnHeadRevolutionarySelected);
         SubscribeLocalEvent<RevolutionaryLieutenantComponent, ImplantImplantedEvent>(OnLieutenantImplanted);
+        SubscribeLocalEvent<RevolutionaryLieutenantComponent, ImplantRemovedEvent>(OnLieutenantRemoved);
         SubscribeLocalEvent<RoleRemovedEvent>(OnRoleRemoved);
     }
 
@@ -48,14 +49,15 @@ public sealed class RevolutionaryUplinkSystem : EntitySystem
             return;
         }
 
-        var pda = _uplink.FindUplinkTarget(headRevolutionary);
-        if (pda == null
+        var uplinkTarget = _uplink.FindUplinkTarget(headRevolutionary)
+            ?? _implants.AddImplant(headRevolutionary, "UplinkImplant");
+        if (uplinkTarget == null
             || !_uplink.AddUplink(
                 headRevolutionary,
                 rule.Comp.StartingBalance,
                 rule.Comp.UplinkCurrencyId,
                 rule.Comp.UplinkStoreId,
-                pda,
+                uplinkTarget,
                 out var setupEvent))
         {
             return;
@@ -92,6 +94,22 @@ public sealed class RevolutionaryUplinkSystem : EntitySystem
 
         var briefing = Loc.GetString("rev-lieutenant-greeting");
         _antag.SendBriefing(target, briefing, Color.Red, LieutenantBriefingSound);
+        SetRoleBriefing(mindId, briefing);
+    }
+
+    private void OnLieutenantRemoved(
+        Entity<RevolutionaryLieutenantComponent> implant,
+        ref ImplantRemovedEvent args)
+    {
+        var target = args.Implanted;
+        RemComp<RevolutionaryLieutenantComponent>(target);
+
+        if (!_mind.TryGetMind(target, out var mindId, out _))
+            return;
+
+        var briefing = Loc.GetString(HasComp<HeadRevolutionaryComponent>(target)
+            ? "head-rev-briefing"
+            : "rev-briefing");
         SetRoleBriefing(mindId, briefing);
     }
 

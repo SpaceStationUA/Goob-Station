@@ -31,8 +31,11 @@ public sealed class SharedRevolutionaryLieutenantSystem : EntitySystem
 
     private bool CanSeeLieutenants(ICommonSession? player)
     {
-        if (player?.AttachedEntity is not { } uid)
+        if (player is null)
             return true; // Match SharedRevolutionarySystem for replay sessions.
+
+        if (player.AttachedEntity is not { } uid)
+            return false;
 
         return HasComp<RevolutionaryComponent>(uid)
             || HasComp<HeadRevolutionaryComponent>(uid)
