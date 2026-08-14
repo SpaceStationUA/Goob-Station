@@ -440,6 +440,10 @@
       - MilitaryPowerCell # Goobstation
       - EnergyMagAmmo # Goobstation
       - HandGrenade
+      - MilitaryPowerCellSMG # Goob edit start
+      - MilitaryPowerCellSniper
+      - MilitaryPowerCellRevolver
+      - EnergyMagAmmo # Goob edit end
       components:
       - Stunbaton
       - FlashOnTrigger

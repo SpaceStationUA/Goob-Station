@@ -24,13 +24,6 @@
 
   - type: TraumaInflicter
     severityThreshold: 12
-    allowedTraumas:
-    - Dismemberment
-    - OrganDamage
-    - BoneDamage
-    - VeinsDamage
-    - NerveDamage
-    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     allowArmourDeduction:
     - Dismemberment
     - OrganDamage
@@ -43,7 +36,6 @@
       BoneDamage: 0.8
       VeinsDamage: 0
       NerveDamage: 0
-      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
     mangledMultipliers:
       BoneDamage: 1
   - type: PainInflicter
@@ -64,13 +56,6 @@
     mangleSeverity: Severe
   - type: TraumaInflicter
     severityThreshold: 9
-    allowedTraumas:
-    - Dismemberment
-    - OrganDamage
-    - BoneDamage
-    - VeinsDamage
-    - NerveDamage
-    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     allowArmourDeduction:
     - Dismemberment
     - OrganDamage
@@ -80,10 +65,9 @@
     traumasChances:
       Dismemberment: 0
       OrganDamage: 0.08
-      BoneDamage: 0.14
+      BoneDamage: -0.1
       VeinsDamage: -0.4 # goes through rather easy.
       NerveDamage: -0.4
-      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
     mangledMultipliers:
       BoneDamage: 0.1
   - type: PainInflicter
@@ -109,19 +93,12 @@
     - BoneDamage
     - VeinsDamage
     - NerveDamage
-    allowedTraumas:
-    - OrganDamage
-    - BoneDamage
-    - VeinsDamage
-    - NerveDamage
-    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     traumasChances:
       Dismemberment: -0.4 # Bullets go THROUGH people
       OrganDamage: 0.24
-      BoneDamage: 0.24
+      BoneDamage: -0.1
       VeinsDamage: -0.4
       NerveDamage: -0.4
-      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
   - type: PainInflicter
     multiplier: 0.44
   - type: BleedInflicter
@@ -140,11 +117,6 @@
     mangleSeverity: Severe
   - type: TraumaInflicter
     severityThreshold: 9
-    allowedTraumas:
-    - Dismemberment
-    - VeinsDamage
-    - NerveDamage
-    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     allowArmourDeduction:
     - Dismemberment # seems rather reasonable. Wear armour, guys
     - VeinsDamage
@@ -155,7 +127,6 @@
       BoneDamage: 0
       VeinsDamage: 0.27
       NerveDamage: 0.27
-      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
     mangledMultipliers:
       BoneDamage: 0.2
   - type: PainInflicter
@@ -174,12 +145,6 @@
     scarWound: BurnScar
   - type: TraumaInflicter
     severityThreshold: 17
-    allowedTraumas:
-    - OrganDamage
-    - BoneDamage
-    - VeinsDamage
-    - NerveDamage
-    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     allowArmourDeduction:
     - OrganDamage
     - BoneDamage
@@ -191,7 +156,6 @@
       BoneDamage: -0.21
       VeinsDamage: 0.34
       NerveDamage: 0.34
-      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
   - type: PainInflicter
     multiplier: 0.8
   - type: BleedRemover
@@ -209,12 +173,6 @@
     scarWound: BurnScar
   - type: TraumaInflicter
     severityThreshold: 17
-    allowedTraumas:
-#    - OrganDamage
-#    - BoneDamage
-    - VeinsDamage
-    - NerveDamage
-    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     allowArmourDeduction:
     - OrganDamage # No matter what ultrasuperduper cool armour you have, while getting fucking boiled alive - YOUR VEINS AND NERVES WILL HURT.
     - BoneDamage
@@ -224,7 +182,6 @@
 #      BoneDamage: -0.21
       VeinsDamage: 0.34
       NerveDamage: 0.34
-      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
     mangledMultipliers:
       BoneDamage: 1
   - type: PainInflicter
@@ -241,17 +198,12 @@
     scarWound: BurnScar
   - type: TraumaInflicter
     severityThreshold: 12
-    allowedTraumas:
-    - VeinsDamage
-    - NerveDamage
-    - FaceMutilation # DOWNSTREAM-TPirates: face mutilation
     traumasChances:
       Dismemberment: 0
       OrganDamage: 0
       BoneDamage: 0
       VeinsDamage: 0.5
       NerveDamage: 0.5
-      FaceMutilation: 0 # DOWNSTREAM-TPirates: face mutilation
   - type: PainInflicter
     multiplier: 0.75 # it hurts
 
@@ -265,8 +217,6 @@
     woundVisibility: AdvancedScanner
   - type: TraumaInflicter
     severityThreshold: 0
-    allowedTraumas:
-    - NerveDamage
     traumasChances:
       Dismemberment: 0
       OrganDamage: 0
@@ -287,10 +237,6 @@
     scarWound: BurnScar
   - type: TraumaInflicter
     severityThreshold: 9
-    allowedTraumas:
-    - OrganDamage
-    - VeinsDamage
-    - NerveDamage
     traumasChances:
       Dismemberment: 0
       OrganDamage: 0
@@ -312,11 +258,6 @@
     selfHealMultiplier: 0
   - type: TraumaInflicter
     severityThreshold: 0
-    allowedTraumas:
-    - OrganDamage
-    - BoneDamage
-    - VeinsDamage
-    - NerveDamage
     traumasChances:
       Dismemberment: 0
       OrganDamage: 0
@@ -338,9 +279,6 @@
     scarWound: BurnScar
   - type: TraumaInflicter
     severityThreshold: 12
-    allowedTraumas:
-    - VeinsDamage
-    - NerveDamage
     traumasChances:
       Dismemberment: 0
       OrganDamage: 0
@@ -363,10 +301,6 @@
     selfHealMultiplier: 0
   - type: TraumaInflicter
     severityThreshold: 11
-    allowedTraumas:
-    - OrganDamage
-    - VeinsDamage
-    - NerveDamage
     allowArmourDeduction:
     - OrganDamage
     traumasChances:
@@ -389,10 +323,6 @@
     woundVisibility: HandScanner
   - type: TraumaInflicter
     severityThreshold: 7
-    allowedTraumas:
-    - OrganDamage
-    - VeinsDamage
-    - NerveDamage
     traumasChances:
       Dismemberment: 0
       OrganDamage: -0.34
@@ -432,3 +362,18 @@
   components:
   - type: Trauma
     traumaType: Dismemberment
+
+- type: entity
+  id: TraumaShrapnel
+  components:
+  - type: Trauma
+    traumaType: Shrapnel
+  - type: TraumaBloodloss
+    amount: 0.8
+
+- type: entity
+  id: TraumaBraindeath
+  components:
+  - type: Trauma
+    traumaType: Braindeath
+  - type: Braindeath
