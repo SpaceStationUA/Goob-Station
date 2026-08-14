@@ -4334,3 +4334,12 @@ Entries:
       message: Voidstein Island переіменовано на Funny Island
   id: 431
   time: '2026-08-14T20:47:06.0000000+00:00'
+- author: CyberLanos
+  changes:
+    - type: Add
+      message: >-
+        кастомні гости стискаються до розміру в 28x28 підкселів (можна підтюнити
+        через sudo cvar pirate.custom_ghost_max_size). Більше ніяких фанер на
+        пів екрана
+  id: 432
+  time: '2026-08-14T20:47:59.0000000+00:00'
