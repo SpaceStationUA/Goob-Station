@@ -4324,3 +4324,13 @@ Entries:
         та засобами розвідки.
   id: 430
   time: '2026-08-14T19:48:45.0000000+00:00'
+- author: AgentMaper
+  changes:
+    - type: Add
+      message: Додана резервна ID на Perdition Island, Piramide Station та OmegaTP
+    - type: Add
+      message: Доданий подрібнювач на OmegaTP
+    - type: Tweak
+      message: Voidstein Island переіменовано на Funny Island
+  id: 431
+  time: '2026-08-14T20:47:06.0000000+00:00'
