@@ -173,6 +173,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
     private void OnGetBriefing(EntityUid uid, RevolutionaryRoleComponent comp, ref GetBriefingEvent args)
     {
+        if (HasComp<RoleBriefingComponent>(uid)) // Pirate - HRev uplink and lieutenant briefings are stored on the role.
+            return;
+
         var ent = args.Mind.Comp.OwnedEntity;
         var head = HasComp<HeadRevolutionaryComponent>(ent);
         args.Append(Loc.GetString(head ? "head-rev-briefing" : "rev-briefing"));
