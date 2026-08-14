@@ -1,0 +1,19 @@
+# Samples are ordered by pitch class from C to B.
+
+- type: sampleBank
+  id: PdaRingtone
+  baseKey: 60
+  octaveRange: 2
+  samples:
+  - path: /Audio/Effects/RingtoneNotes/c.ogg
+  - path: /Audio/Effects/RingtoneNotes/csharp.ogg
+  - path: /Audio/Effects/RingtoneNotes/d.ogg
+  - path: /Audio/Effects/RingtoneNotes/dsharp.ogg
+  - path: /Audio/Effects/RingtoneNotes/e.ogg
+  - path: /Audio/Effects/RingtoneNotes/f.ogg
+  - path: /Audio/Effects/RingtoneNotes/fsharp.ogg
+  - path: /Audio/Effects/RingtoneNotes/g.ogg
+  - path: /Audio/Effects/RingtoneNotes/gsharp.ogg
+  - path: /Audio/Effects/RingtoneNotes/a.ogg
+  - path: /Audio/Effects/RingtoneNotes/asharp.ogg
+  - path: /Audio/Effects/RingtoneNotes/b.ogg
