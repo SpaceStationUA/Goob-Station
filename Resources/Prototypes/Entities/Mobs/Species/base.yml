@@ -217,6 +217,8 @@
   - type: AccessReader # Goobstation-WantedMenu
     access: [["Security"]]
     shouldShowExaminationText: false
+  - type: IdExaminablePsionics # Pirate-PsionicsMenu
+    radioChannel: Science
   - type: UserInterface
     interfaces:
       enum.HumanoidMarkingModifierKey.Key:
@@ -377,6 +379,7 @@
   #  power: 0.6
   - type: FlightAffectedByScale # Goobstation: port EE height/width sliders.
   - type: StunVisuals
+  - type: PotentialPsionic # Pirate
   - type: DiseaseCarrier
   - type: Immunity
     affectedTypes:

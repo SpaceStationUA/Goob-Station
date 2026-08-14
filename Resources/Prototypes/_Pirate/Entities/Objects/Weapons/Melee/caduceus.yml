@@ -1,0 +1,162 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: Index
+
+- type: entity
+  parent: BaseItem
+  id: Caduceus
+  name: Золотий флакон
+  description: Золотий флакон з золотою цепочкою. В середині міститься слиз, що виглядає як чорний метал. Цікава іграшка.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/Caduceus/icons.rsi
+    layers:
+    - state: inactive
+      map: ["enum.CaduceusVisualLayers.Icon"]
+  - type: Appearance
+  - type: Item
+    size: Normal
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 9
+    # Picking the Caduceus up must not look like an attack - otherwise activation would be
+    # deferred by the hand-selection cooldown reset (see CaduceusSystem.IsAttacking).
+    resetOnHandSelected: false
+  - type: Caduceus
+    currentForm: Inactive
+    forms:
+      Hatchet:
+        damage:
+          types:
+            Slash: 20
+        attackRate: 2.5
+        range: 1.4
+        angle: 55
+        maxHits: 4
+        iconState: hatchet
+        inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_hatchet.rsi
+        transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_hatchet.ogg
+        animation: WeaponArcSlash
+        wideAnimation: WeaponArcSlash
+      Stiletto:
+        damage:
+          types:
+            Piercing: 24
+        attackRate: 2.0
+        range: 1.2
+        angle: 40
+        maxHits: 4
+        iconState: stiletto
+        inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_stiletto.rsi
+        transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_stiletto.ogg
+        animation: WeaponArcThrust
+        wideAnimation: WeaponArcThrust
+      BastardSword:
+        damage:
+          types:
+            Slash: 44
+        attackRate: 1.0
+        range: 1.6
+        angle: 65
+        maxHits: 3
+        iconState: bsword
+        inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_bsword.rsi
+        transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_bsword.ogg
+        animation: WeaponArcSlash
+        wideAnimation: WeaponArcSlash
+      Rapier:
+        damage:
+          types:
+            Piercing: 36
+        attackRate: 1.4
+        range: 1.7
+        maxHits: 2
+        # Precise thrust: narrow arc, wide swing still available but tiny (like stunprod).
+        angle: 10
+        animationRotation: -135
+        wideAnimationRotation: -135
+        iconState: rapier
+        inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_rapier.rsi
+        transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_rapier.ogg
+        animation: WeaponArcThrust
+        wideAnimation: WeaponArcThrust
+      Hammer:
+        damage:
+          types:
+            Blunt: 60
+        attackRate: 0.8
+        range: 1.4
+        angle: 55
+        maxHits: 2
+        iconState: hammer
+        inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_hammer.rsi
+        transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_hammer.ogg
+        animation: WeaponArcSlash
+        wideAnimation: WeaponArcSlash
+      Greatsword:
+        damage:
+          types:
+            Slash: 70
+        attackRate: 0.7
+        range: 1.8
+        angle: 85
+        maxHits: 2
+        iconState: gsword
+        inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_gsword.rsi
+        transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_gsword.ogg
+        animation: WeaponArcSlash
+        wideAnimation: WeaponArcSlash
+      Lance:
+        damage:
+          types:
+            Piercing: 66
+        attackRate: 0.7
+        range: 2.4
+        maxHits: 2
+        # Long reach, narrow arc: wide swing stays available but very tight (like stunprod).
+        angle: 15
+        animationRotation: -135
+        wideAnimationRotation: -135
+        iconState: lance
+        inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_lance.rsi
+        transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_lance.ogg
+        animation: WeaponArcThrust
+        wideAnimation: WeaponArcThrust
+      Whip:
+        damage:
+          types:
+            Slash: 40
+        attackRate: 0.6
+        range: 2.3
+        angle: 105
+        maxHits: 2
+        iconState: whip
+        inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_whip.rsi
+        transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_whip.ogg
+        animation: WeaponArcSlash
+        wideAnimation: WeaponArcSlash
+      Scythe:
+        damage:
+          types:
+            Slash: 50
+        attackRate: 0.6
+        range: 2.1
+        angle: 90
+        maxHits: 1
+        # A scythe is a big weapon - render it larger on the ground.
+        scale: 1.5
+        iconState: scytle
+        inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_scytle.rsi
+        transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_scythe.ogg
+        animation: WeaponArcSlash
+        wideAnimation: WeaponArcSlash
+      Fpoon:
+        # Non-zero damage is required for the suicide mechanic (lethal damage is spread from this).
+        damage:
+          types:
+            Blunt: 3
+        attackRate: 1.0
+        range: 1.2
+        iconState: fpoon
+        inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_fpoon.rsi

@@ -1,0 +1,224 @@
+- type: entityTable
+  id: GlimmerEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp and GlimmerEventComp
+    children:
+    - id: MundaneDischarge
+    - id: NoosphericZap
+    - id: NoosphericFry
+    - id: NoosphericSilence
+    - id: MassMindSwap
+    - id: GlimmerWispSpawn
+    - id: FreeProber
+    - id: GlimmerRevenantSpawn
+    - id: GlimmerMiteSpawn
+    - id: GlimmerRandomSentience
+    #- id: LockProbers
+    - id: PsionicNosebleedEvent
+    - id: MinorMassMindSwap # Delta V
+    - id: NoosphericStorm
+    - id: GlimmerFoxfireSpawn
+    #- id: GlimmerRestyle
+
+- type: entity
+  parent: BaseGameRule
+  id: GlimmerEventScheduler
+  components:
+  - type: BasicStationEventScheduler
+    minMaxEventTiming:
+      min: 300
+      max: 1500
+    scheduledGameRules: !type:NestedSelector
+      tableId: GlimmerEventsTable
+
+# Base glimmer event
+- type: entity
+  id: BaseGlimmerEvent
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    # Favor glimmer events just a little more than regular events.
+    weight: 12
+  - type: GlimmerEvent
+
+## Glimmer events
+- type: entity
+  id: MundaneDischarge
+  parent: BaseGlimmerEvent
+  components:
+  - type: StationEvent
+    weight: 18
+  - type: GlimmerEvent
+    maximumGlimmer: 300
+    glimmerBurnLower: 18
+    glimmerBurnUpper: 40
+
+- type: entity
+  id: NoosphericZap
+  parent: BaseGlimmerEvent
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 450
+  - type: NoosphericZapRule
+
+- type: entity
+  id: NoosphericFry
+  parent: BaseGlimmerEvent
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 300
+    maximumGlimmer: 900
+  - type: NoosphericFryRule
+
+- type: entity
+  id: NoosphericSilence
+  parent: BaseGlimmerEvent
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 500
+    maximumGlimmer: 900
+    glimmerBurnLower: 18
+    glimmerBurnUpper: 40
+  - type: NoosphericSilenceRule
+
+- type: entity
+  id: MassMindSwap
+  parent: BaseGlimmerEvent
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 900
+    glimmerBurnLower: 50
+    glimmerBurnUpper: 110
+  - type: MassMindSwapRule
+
+- type: entity
+  id: MinorMassMindSwap
+  parent: BaseGlimmerEvent
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 750
+    glimmerBurnLower: 40
+    glimmerBurnUpper: 80
+  - type: MinorMassMindSwapRule
+    isTemporary: true
+
+- type: entity
+  id: NoosphericStorm
+  parent: BaseGlimmerEvent
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 200
+  - type: NoosphericStormRule
+
+- type: entity
+  abstract: true
+  parent: BaseGlimmerEvent
+  id: BaseGlimmerSignaturesEvent
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 300
+    maximumGlimmer: 1000
+    report: glimmer-event-report-signatures
+
+- type: entity
+  id: GlimmerWispSpawn
+  parent: BaseGlimmerSignaturesEvent
+  components:
+  - type: GlimmerMobRule
+    mobPrototype: MobGlimmerWisp
+
+- type: entity
+  parent: BaseGlimmerSignaturesEvent
+  id: FreeProber
+  components:
+  - type: FreeProberRule
+
+# Converted from upstream event
+- type: entity
+  parent: BaseGlimmerSignaturesEvent
+  id: GlimmerRevenantSpawn
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 500
+    maximumGlimmer: 900
+  - type: GlimmerMobRule
+    mobPrototype: MobRevenant
+    maxSpawns: 1
+
+- type: entity
+  parent: BaseGlimmerSignaturesEvent
+  id: GlimmerMiteSpawn
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 50
+    maximumGlimmer: 900
+  - type: GlimmerMobRule
+    mobPrototype: MobGlimmerMite
+    glimmerTier: Low # get more mites earlier on
+
+# Like upstream's event but can reoccur and tied to glimmer.
+- type: entity
+  parent: [RandomSentience, BaseGlimmerEvent]
+  id: GlimmerRandomSentience
+  components:
+  - type: StationEvent
+    weight: 6
+    duration: 1
+    reoccurrenceDelay: 20
+    startAudio:
+      path: /Audio/_DV/Announcements/attention.ogg
+  - type: GlimmerEvent
+    minimumGlimmer: 300
+    maximumGlimmer: 600
+    glimmerBurnLower: 20
+    glimmerBurnUpper: 60
+  - type: RandomSentienceRule
+
+#- type: entity
+#  parent: BaseGlimmerEvent
+#  id: LockProbers
+#  components:
+#  - type: GlimmerEvent
+#    minimumGlimmer: 500
+#  - type: LockProbersRule
+
+- type: entity
+  parent: BaseGlimmerEvent
+  id: PsionicNosebleedEvent
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 350
+  - type: PsionicNosebleedRule
+
+- type: entity
+  parent: BaseGlimmerEvent
+  id: GlimmerFoxfireSpawn
+  components:
+  - type: GlimmerEvent
+    minimumGlimmer: 100
+    maximumGlimmer: 500
+  - type: GlimmerFoxfireSpawnRule
+    randomColorList:
+    - aqua
+    - betterviolet
+    - blue
+    - chartreuse
+    - cyan
+    - deeppink
+    - fuchsia
+    - green
+    - indigo
+    - lime
+    - pink
+    - red
+    - silver
+    - yellow
+
+
+#- type: entity
+#  id: GlimmerRestyle
+#  parent: BaseGlimmerSignaturesEvent
+#  components:
+#  - type: GlimmerEvent
+#    minimumGlimmer: 300
+#    maximumGlimmer: 700
+#  - type: GlimmerRestyleRule

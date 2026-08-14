@@ -1,0 +1,65 @@
+- type: job
+  id: ForensicMantis
+  name: job-name-mantis
+  description: job-description-mantis
+  playTimeTracker: JobForensicMantis
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 18000
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 3600
+    - !type:SpeciesRequirement
+      inverted: true
+      species:
+        - IPC
+        - Plasmaman
+    # Pirate contractor start
+    - !type:CharacterEmployerRequirement
+      employers:
+      - NanoTrasen
+      - ZengHuPharmaceuticals
+    # Pirate contractor end
+  startingGear: ForensicMantisGear
+  icon: "JobIconForensicMantis"
+  supervisors: job-supervisors-rd
+  whitelisted: true # Pirate
+  goobcoins: 25 #Goob content
+  canBeAntag: false # Pirate - like security, mindshielded, no antag roles
+  access:
+  - Research
+  - Maintenance
+  - Mantis
+  special:
+  - !type:AddComponentSpecial
+    components:
+      - type: CanEnchant
+      - type: MetapsionicPulsePower # DeltaV
+      - type: AssayPower
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+
+- type: startingGear
+  id: ForensicMantisGear
+  equipment:
+    id: ForensicMantisPDA
+    pocket1: HandheldPsionicsRegistry
+  storage:
+    back:
+    - ClaridisolSynth
+
+- type: chameleonOutfit
+  id: ForensicMantisChameleonOutfit
+  job: ForensicMantis
+  startingGear: ForensicMantisGear
+  hasMindShield: true
+  equipment:
+    id: ForensicMantisPDA
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetScience
+    belt: ClothingBeltMantis
+    head: ClothingHeadHatFezMantis
+    jumpsuit: ClothingUniformJumpsuitMantis
+    outerClothing: ClothingOuterCoatMantis
+    shoes: ClothingShoesBootsMantis
+    gloves: ClothingHandsGlovesColorWhite

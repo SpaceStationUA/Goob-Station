@@ -397,7 +397,7 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 10
-      - !type:ChemRemovePsionic #PIRATE
+      - !type:RemovePsionicAbilities #PIRATE
         conditions:
         - !type:ReagentCondition
           reagent: MindbreakerToxin

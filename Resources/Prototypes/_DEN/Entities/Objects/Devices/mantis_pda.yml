@@ -1,0 +1,70 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (Resources/Prototypes/Nyanotrasen/Entities/Objects/Devices/pda.yml,
+# ForensicMantisPDA section).
+# Adapted for this fork: PsiWatchCartridge and MantisGuide (GuideHelp) aren't in this fork
+# (commented out).
+
+- type: entity # TheDen - Changed pretty much everything
+  parent: BasePDA
+  id: ForensicMantisPDA
+  name: mantis PDA
+  description: "This PDA marks its bearer as a member of the Outer Chamber--a mantis, the Greek word for \"seer.\" The eye on its display seems to track whoever dares to look back. Carried in a pocket, because you couldn't bear to hang this hunk of plastic on your belt."
+  components:
+  - type: Item # I gave them custom sprites so they don't need the color codes that I added later
+    sprite: _DEN/Objects/Devices/pda.rsi
+    heldPrefix: mantis
+  - type: Clothing
+    sprite: _DEN/Objects/Devices/pda.rsi
+    equippedPrefix: mantis
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-mantis
+  - type: Sprite
+    sprite: _DEN/Objects/Devices/pda.rsi
+    layers:
+    - map: [ "enum.PdaVisualLayers.Base" ]
+      state: "pda-mantis"
+    - state: "mantis-light_overlay"
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: "unshaded"
+      visible: false
+    - state: "mantis-id_overlay"
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: "unshaded"
+      visible: false
+    - state: "mantis-insert_overlay"
+      map: [ "enum.PdaVisualLayers.Pen" ]
+  - type: PointLight
+    enabled: false
+    radius: 1.75
+    energy: 2
+    color: "#d9418d"
+  - type: Pda
+    id: ForensicMantisIDCard
+    penSlot:
+      startingItem: PenMantis
+      priority: -2
+      whitelist:
+        tags:
+        - Write
+  - type: PdaBorderColor
+    borderColor: "#3b3640"
+    accentVColor: "#431b57"
+    accentHColor: "#8c1c54"
+  - type: Icon
+    sprite: _DEN/Objects/Devices/pda.rsi
+    state: pda-mantis
+  - type: CartridgeLoader
+    preinstalled:
+     - CrewManifestCartridge
+     - NotekeeperCartridge
+     - NewsReaderCartridge
+     - GlimmerMonitorCartridge
+     - NanoChatCartridge
+     - WalletCartridge # Pirate banking
+

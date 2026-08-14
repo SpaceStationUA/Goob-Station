@@ -1,0 +1,56 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+               Title="{Loc 'index-admin-window-title'}"
+               MinSize="400 560"
+               SetSize="400 560">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#14141C" />
+        </PanelContainer.PanelOverride>
+
+        <BoxContainer Orientation="Vertical" Margin="14">
+
+            <!-- Index logo -->
+            <TextureRect Name="IndexLogo"
+                         SetSize="121 142"
+                         Stretch="KeepAspectCentered"
+                         HorizontalAlignment="Center"
+                         Margin="0 2 0 6" />
+
+            <Label Name="MemberNameLabel" HorizontalAlignment="Center" StyleClasses="LabelSubText" />
+
+            <!-- KARMIC CONSEQUENCE counter -->
+            <Label Name="KarmaLabel"
+                   HorizontalAlignment="Center"
+                   FontColorOverride="#F2D3A0"
+                   Margin="0 4 0 12" />
+
+            <!-- Prescription sender -->
+            <Label Text="{Loc 'index-admin-send-prescription-header'}"
+                   StyleClasses="LabelSubText"
+                   FontColorOverride="#C9A36A"
+                   Margin="0 0 0 4" />
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <LineEdit Name="PrescriptionInput"
+                          HorizontalExpand="True"
+                          PlaceHolder="{Loc 'index-admin-prescription-placeholder'}" />
+                <Button Name="SendButton" Text="{Loc 'index-admin-send-button'}" />
+            </BoxContainer>
+
+            <!-- Karma controls -->
+            <Label Text="{Loc 'index-admin-karma-header'}"
+                   StyleClasses="LabelSubText"
+                   FontColorOverride="#C9A36A"
+                   Margin="0 14 0 4" />
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Button Name="AddOneButton" Text="+1" HorizontalExpand="True" />
+                <Button Name="AddFiveButton" Text="+5" HorizontalExpand="True" />
+                <Button Name="RemoveOneButton" Text="-1" HorizontalExpand="True" />
+                <Button Name="RemoveFiveButton" Text="-5" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <!-- Fpoon guarantee -->
+            <Button Name="FpoonButton" ToggleMode="True" Text="{Loc 'index-admin-fpoon-button'}" Margin="0 14 0 0" />
+        </BoxContainer>
+    </PanelContainer>
+</DefaultWindow>

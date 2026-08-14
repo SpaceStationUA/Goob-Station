@@ -62,6 +62,8 @@
     components:
       - type: CommandStaff
       - type: EngineeringStaff # Goobstation
+  - !type:ModifyPsionicChanceSpecial # Pirate - Commands are much more likely to be psionic.
+    jobBonusChance: 0.1
 
 - type: startingGear
   id: ChiefEngineerGear

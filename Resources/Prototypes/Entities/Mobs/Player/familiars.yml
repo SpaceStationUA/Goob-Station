@@ -2,7 +2,7 @@
 
 - type: entity
   name: Remilia
-  parent: BaseMobPsionicFamiliar # Pirate psionics
+  parent: MobBat
   id: MobBatRemilia
   description: The chaplain's familiar. Likes fruit.
   components:
@@ -40,7 +40,6 @@
     understands:
     - Mouse
     - TauCetiBasic
-#Pirate psionics VVV
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Effects/bite.ogg
@@ -49,12 +48,6 @@
     damage:
       types:
         Piercing: 5
-  - type: InnatePsionicPowers
-    powersToAdd:
-      - TelepathyPower
-  - type: PsionicFamiliar
-    inheritMasterFactions: false
-#Pirate psionics ^^^
 
 - type: entity
   name: Cerberus

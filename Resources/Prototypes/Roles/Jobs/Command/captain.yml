@@ -73,6 +73,8 @@
       - type: CommandStaff
       - type: Condemned # Goobstation - Nanotrasen owns your soul pal.
         soulOwnedNotDevil: true
+  - !type:ModifyPsionicChanceSpecial # Pirate - Commands are much more likely to be psionic.
+    jobBonusChance: 0.1
 
 - type: startingGear
   id: CaptainGear

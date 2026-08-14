@@ -1,0 +1,187 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+# SPDX-FileCopyrightText: 2025 Jakumba
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (Resources/Prototypes/_DEN/Entities/Objects/Specific/Mantis/)
+# Adapted for this fork: ItemToggleDamageOtherOnHit isn't in this fork (commented out on the lighter).
+
+# Mantis lantern
+- type: entity
+  parent: [BaseItem, BaseAntiPsionicWeapon, BaseMantisContraband] # If I parented it to Lantern, it would have a battery slot...
+  id: LanternMantis
+  name: mantis lantern
+  description: "An ornate lantern housing an eidolite pyramid that draws power from the noosphere. Instead of merely casting light, it seems to declare it--an austere radiance that etches itself into whatever it touches. Stare too long and the gleam resolves into shapes you almost recognize, then promptly forget. For all its theatrics, the handle still hangs comfortably on your back."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Specific/Mantis/lanternmantis.rsi
+    layers:
+    - state: icon
+    - state: icon-crystal
+      shader: unshaded
+  - type: Item
+    sprite: _DEN/Objects/Specific/Mantis/lanternmantis.rsi
+  - type: EtherealLight # Dims around ethereal entities
+  - type: PointLight
+    enabled: false
+    radius: 3
+    energy: 4
+    color: "#d9418d"
+    netsync: false
+  - type: Appearance
+  - type: UseDelay
+  - type: ToggleableVisuals
+    replaceMode: false
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: on-inhand-left
+        shader: unshaded
+      right:
+      - state: on-inhand-right
+        shader: unshaded
+    clothingVisuals:
+      belt:
+      - state: on-equipped-BELT
+        shader: unshaded
+      suitstorage:
+      - state: on-equipped-SUITSTORAGE
+        shader: unshaded
+  - type: ItemTogglePointLight
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      path: /Audio/_DEN/Effects/crystalshimmer1.ogg
+      params:
+        volume: -2
+        variation: 0.05
+    soundDeactivate:
+      path: /Audio/_DEN/Effects/crystalshimmer2.ogg
+      params:
+        volume: -2
+        variation: 0.05
+  - type: StealTarget
+    stealGroup: LAMP # The moths are coming the moths are coming
+  - type: Clothing
+    sprite: _DEN/Objects/Specific/Mantis/lanternmantis.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
+  - type: MeleeWeapon # You can swing it like a weapon
+    attackRate: 0.6666
+    soundHit:
+      path: /Audio/Weapons/block_metal1.ogg
+  - type: Tag
+    tags:
+    - MantisBeltStorable
+
+# Mantis hand labeler ("sigillator")
+- type: entity
+  parent: [HandLabeler, BaseAntiPsionicWeapon, BaseMantisContraband] # Contraband so the mystagogue doesn't steal it
+  id: HandLabelerMantis
+  name: sigillator
+  suffix: Hand Labeler
+  description: "An ancient and mystical hand labeler wrought from slabs of mnemolith, used by turning the wheels and giving something a good smack. You wouldn't be caught dead with that blue plastic monstrosity."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Specific/Mantis/handlabelermantis.rsi
+  - type: Item
+    sprite: _DEN/Objects/Specific/Mantis/handlabelermantis.rsi
+    storedSprite:
+    storedRotation: -90
+  - type: MeleeWeapon # You can swing it like a weapon
+    attackRate: 0.6666
+    wideAnimationRotation: -90
+    soundHit:
+      path: /Audio/Weapons/block_metal1.ogg
+      params:
+        volume: -60 # Why is it so loud...
+        variation: 0.05
+    damage:
+      types:
+        Blunt: 5 # 7.5 DPS (same as Crowbar), or 9.38 DPS against psions
+        Holy: 2.5 # 14.1 total DPS against psionic supernaturals
+  - type: ThrowingAngle
+    angle: -90
+  - type: Tag
+    tags:
+    - HandLabeler
+    - MantisBeltStorable
+
+# Mantis lighter
+- type: entity
+  parent: [FlippoLighter, BaseAntiPsionicWeapon]
+  id: FlippoLighterMantis
+  name: mantis lighter
+  description: "A glossy lighter sculpted from chips of mnemolith, housing an eidolite pyramid that draws energy from the noosphere. The flame gutters strangely, as if aware of what it burns."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Specific/Mantis/lightermantis.rsi
+    layers:
+    - state: mantis_icon_base
+      map: ["base"]
+    - state: mantis_top
+      map: ["top"]
+      visible: false
+    - state: mantis_open
+      map: ["open"]
+      visible: false
+    - state: mantis_lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      path: /Audio/_DEN/Effects/crystaltap1.ogg
+      params:
+        volume: -6
+        variation: 0.05
+    soundDeactivate:
+      path: /Audio/_DEN/Effects/crystaltap2.ogg
+      params:
+        volume: -6
+        variation: 0.05
+  - type: Item
+    sprite: _DEN/Objects/Specific/Mantis/lightermantis.rsi
+    heldPrefix: mantis
+  - type: Welder
+    fuelConsumption: 0 # Powered by the noosphere
+    fuelLitCost: 0 # Powered by the noosphere
+    tankSafe: true
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 1
+        maxVol: 1
+  - type: ToggleableVisuals
+    spriteLayer: mantis_lighter_flame
+    inhandVisuals:
+      left:
+      - state: mantis-inhand-left-flame
+        shader: unshaded
+      right:
+      - state: mantis-inhand-right-flame
+        shader: unshaded
+  - type: PointLight
+    radius: 1.75
+    energy: 2
+    color: "#4dc4ff"
+  - type: MeleeWeapon
+    attackRate: .6666
+    wideAnimationRotation: 180
+    damage:
+      types:
+        Blunt: 2 # 3 DPS, or 3.75 DPS against psions
+        Holy: 1 # 5 total DPS against psionic supernaturals
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Heat: 2 # 3 DPS, or 3.75 DPS against psions
+        Holy: 1 # 5 total DPS against psionic supernaturals
+  # - type: ItemToggleDamageOtherOnHit # Not in this fork
+  - type: ThrowingAngle
+    angle: 180

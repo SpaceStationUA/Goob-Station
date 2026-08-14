@@ -78,6 +78,8 @@
     components:
       - type: CommandStaff
       - type: SecurityStaff # goobstation
+  - !type:ModifyPsionicChanceSpecial # Pirate - Commands are much more likely to be psionic.
+    jobBonusChance: 0.1
 
 - type: startingGear
   id: HoSGear

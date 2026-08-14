@@ -17,6 +17,13 @@ public sealed partial class DCCVars
     public static readonly CVarDef<bool> NoVisionFilters =
         CVarDef.Create("accessibility.no_vision_filters", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+    /// <summary>
+    /// Disables the fullscreen shader at 700+ glimmer.
+    /// </summary>
+    // Pirate: used by the ported DeltaV glimmer overlay.
+    public static readonly CVarDef<bool> DisableGlimmerShader =
+        CVarDef.Create("accessibility.disable_glimmer_shader", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
     /*
      * Cosmic Cult
      */

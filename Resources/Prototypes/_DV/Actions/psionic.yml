@@ -1,0 +1,296 @@
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: BasePsionicAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    startDelay: true
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionDispel
+  name: Dispel
+  description: Dispel summoned entities such as familiars or forcewalls.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: dispel
+    useDelay: 45
+    checkCanInteract: false
+  - type: TargetAction
+    range: 6
+    checkCanAccess: false
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:DispelPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionMassSleep
+  name: Mass Sleep
+  description: Put targets in a small area to sleep.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: mass_sleep
+    useDelay: 60
+    checkCanInteract: false
+  - type: TargetAction
+    checkCanAccess: false
+    range: -1 # You can cast it anywhere on your screen.
+  - type: WorldTargetAction
+    event: !type:MassSleepPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionMindSwapPsionic
+  name: Mind Swap
+  description: Swap minds with the target. Either can change back after 20 seconds.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: mind_swap
+    useDelay: 240
+    checkCanInteract: false
+  - type: TargetAction
+    checkCanAccess: false
+    range: 8
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:MindSwapPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionMindSwapReturn
+  name: Reverse Mind Swap
+  description: Return to your original body.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: mind_swap_return
+    useDelay: 20
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:MindSwappedReturnPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionNoosphericZap
+  name: Noospheric Zap
+  description: Shocks the target and leaves them stunned and stuttering.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: noospheric_zap
+    useDelay: 100
+    checkCanInteract: false
+  - type: TargetAction
+    range: 5
+  - type: EntityTargetAction
+    event: !type:NoosphericZapPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionPyrokinesis
+  name: Pyrokinesis
+  description: Light a flammable target on fire.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: pyrokinesis
+    useDelay: 50
+  - type: TargetAction
+    range: 6
+    checkCanAccess: false
+  - type: EntityTargetAction
+    event: !type:PyrokinesisPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionMetapsionicPulse
+  name: Metapsionic Pulse
+  description: Send a mental pulse around yourself to see if there are any psychics nearby.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: metapsionic
+    useDelay: 45
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:MetapsionicPulsePowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionEruption
+  name: Psionic Eruption
+  description: Unleash a powerful psionic eruption destroying you and everything around you.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: eruption
+    useDelay: 45
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:PsionicEruptionPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionPsionicRegeneration
+  name: Psionic Regeneration
+  description: Push your natural metabolism to the limit to power your body's regenerative capability.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: regeneration
+    useDelay: 120
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:PsionicRegenerationPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionTelegnosis
+  name: Telegnosis
+  description: Create a telegnostic projection to remotely observe things.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: telegnosis
+    useDelay: 150
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:TelegnosisPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionPsychokineticScream
+  name: Psychokinetic Scream
+  description: Emit a blood-curdling scream that shatters all lights in the area.
+  components:
+  - type: Action
+    icon: { sprite: _DV/Actions/shatterlights.rsi, state: shatter-lights }
+    useDelay: 60
+  - type: InstantAction
+    event: !type:PsychokineticScreamPowerActionEvent
+
+# Pirate: Ported from upstream PR #34 (SpaceStationUA/Goob-Station)
+- type: entity
+  parent: BasePsionicAction
+  id: ActionAnoigo
+  name: Anoigo
+  description: Open and unbolt nearby doors.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: anoigo
+    useDelay: 40
+    checkCanInteract: false
+  - type: TargetAction
+    range: 6
+    checkCanAccess: false
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:AnoigoPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionHealingWord
+  name: Healing Word
+  description: Heal the wounds of a nearby target.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: healing_word
+    useDelay: 10
+    checkCanInteract: false
+  - type: TargetAction
+    range: 6
+    checkCanAccess: false
+  - type: EntityTargetAction
+    canTargetSelf: true
+    event: !type:HealingWordActionEvent
+  - type: ForceSpeech
+    speechText: healing-word-begin
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionRevivify
+  name: Revivify
+  description: Bring a dead target back from the brink.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: revivify
+    useDelay: 120
+    checkCanInteract: false
+  - type: TargetAction
+    range: 2
+    checkCanAccess: false
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:RevivifyPowerActionEvent
+  - type: ForceSpeech
+    speechText: revivify-begin
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionDarkSwap
+  name: DarkSwap
+  description: Phase into the shadow realm to pass through obstacles.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: darkswap
+    useDelay: 10
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:DarkSwapPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionAssay
+  name: Assay
+  description: Scan a target to learn about their psionic abilities.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: assay
+    useDelay: 45
+    checkCanInteract: false
+  - type: TargetAction
+    range: 2
+    checkCanAccess: false
+  - type: EntityTargetAction
+    canTargetSelf: true
+    event: !type:AssayPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionShadeskip
+  name: Shadeskip
+  description: Cover the surrounding area in shadow kudzu.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: shadeskip
+    useDelay: 45
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:ShadeskipPowerActionEvent

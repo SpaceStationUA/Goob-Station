@@ -1,0 +1,50 @@
+using Content.Shared.Actions;
+using Content.Server.NPC.Events;
+using Content.Server.NPC.Components;
+using Content.Shared._DV.Psionics.Components.PsionicPowers;
+using Content.Shared.Actions.Components;
+using Robust.Shared.Timing;
+
+namespace Content.Server.Psionics.NPC;
+
+public sealed class PsionicNpcCombatSystem : EntitySystem
+{
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<NoosphericZapPowerComponent, NPCSteeringEvent>(ZapCombat);
+    }
+
+    // TODO: would be useful if this can be reused for other powers like pyrokinesis wyci
+    private void ZapCombat(Entity<NoosphericZapPowerComponent> ent, ref NPCSteeringEvent args)
+    {
+        var (uid, comp) = ent;
+        if (comp.ActionEntity is not {} action)
+            return;
+
+        var target = Comp<EntityTargetActionComponent>(action);
+
+        if (_actions.GetAction(action) is not { } actionData)
+            return;
+
+        if (actionData.Comp.Cooldown is { } cooldown && cooldown.End > _timing.CurTime)
+            return;
+
+        if (!TryComp<NPCRangedCombatComponent>(uid, out var combat))
+            return;
+
+        if (!_actions.ValidateEntityTarget(uid, combat.Target, (action, target)))
+            return;
+
+        if (target.Event is not {} ev)
+            return;
+
+        ev.Target = combat.Target;
+
+        _actions.PerformAction(uid, actionData);
+    }
+}

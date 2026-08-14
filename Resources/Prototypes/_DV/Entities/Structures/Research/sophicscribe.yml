@@ -1,0 +1,34 @@
+- type: entity
+  parent: BaseStructure
+  id: SophicScribe
+  name: sophic grammateus
+  description: Latest reports on the Noösphere!
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+    sprite: _EinsteinEngines/Structures/Decoration/statues.rsi
+    layers:
+      - state: sophie
+      - map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SophicScribe
+  - type: AssayResponse
+    replaceMessage: sophic-grammateus-feedback
+  - type: Speech
+    speechSounds: Tenor
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Science
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Science
+  - type: Psionic
+  - type: Grammar
+    attributes:
+      gender: female
+      proper: true
+  - type: SpriteFade

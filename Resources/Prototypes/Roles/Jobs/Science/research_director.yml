@@ -7,18 +7,11 @@
   playTimeTracker: JobResearchDirector
   requirements:
   - !type:RoleTimeRequirement
-    role: JobForensicMantis
-    time: 18000 # 5 hours
-  - !type:RoleTimeRequirement
     role: JobScientist
     time: 6h # Goobstation
   - !type:DepartmentTimeRequirement
     department: Science
     time: 10h
-  - !type:SpeciesRequirement # Pirate no ipc psionics
-    inverted: true
-    species:
-    - IPC
   - !type:TraitsRequirement
     inverted: true
     traits:
@@ -64,17 +57,13 @@
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
-      - type: Psionic # Nyano - They start with telepathic chat
-        powerSlots: 3
-        baselinePowerCost: 75
-        nextPowerCost: 75 # No that's fully intended that he has the "Full" power pull. Have fun with being a crew-aligned wizard/cultist.
       - type: CommandStaff
-      - type: InnatePsionicPowers
-        powersToAdd:
-          - DispelPower
-          - MetapsionicPower
-          - TelepathyPower
-      - type: Telepathy
+  - !type:AddPsionicComponentSpecial # Pirate
+    components:
+      - type: Psionic # DeltaV - They start with telepathic chat.
+      - type: DispelPower # DeltaV - They get the Dispel psionic power on spawn.
+  - !type:ModifyPsionicChanceSpecial # Pirate - Commands are much more likely to be psionic.
+    jobBonusChance: 0.1
 
 - type: startingGear
   id: ResearchDirectorGear

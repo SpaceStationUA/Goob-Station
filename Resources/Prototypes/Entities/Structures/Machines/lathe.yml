@@ -538,6 +538,7 @@
     - SecurityUtilityPirate # Pirate: BR-40c energy dome generator.
     - ModesuitModuleSecReach # Pirate: Wega modular suit port.
     - ArmorPlates # Pirate: Monolith armor plates.
+    - MantisCastersPirate # Pirate: mantis psionic caster frames (PsionicCountermeasures tech).
   - type: EmagLatheRecipes # Goobstation
     emagStaticPacks:
     - SyndicateAmmoStatic

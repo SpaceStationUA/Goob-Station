@@ -115,11 +115,13 @@
   - MagazineBoxMagnumIncendiary
   - MagazineBoxMagnumUranium
   - MagazineBoxPistolIncendiary
+  - MagazineBoxPistolCryptobiolin # PIRATE psionic
   - MagazineBoxPistolUranium
   - MagazineBoxRifleIncendiary
   - MagazineBoxRifleUranium
   # - MagazineLightRifleIncendiary # Goobstation - remove light rifle
   # - MagazineLightRifleUranium # Goobstation - remove light rifle
+  - MagazinePistolCryptobiolin # PIRATE psionic
   - MagazinePistolIncendiary
   - MagazinePistolUranium
   - MagazinePistolSubMachineGunIncendiary
@@ -130,10 +132,6 @@
   - MagazineShotgunIncendiary
   - SpeedLoaderMagnumIncendiary
   - SpeedLoaderMagnumUranium
-  - MagazinePistolCryptobiolin # PIRATE psionic
-  - MagazineBoxPistolCryptobiolin # PIRATE psionic
-  - ShellSoulbreaker # PIRATE psionic
-  - BoxShellSoulbreaker # PIRATE psionic
 
 - type: latheRecipePack
   id: SecurityWeapons

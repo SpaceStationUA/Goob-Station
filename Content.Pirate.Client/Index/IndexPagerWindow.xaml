@@ -1,0 +1,47 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+               Title="{Loc 'index-pager-window-title'}"
+               MinSize="360 500"
+               SetSize="360 500">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#12141B" />
+        </PanelContainer.PanelOverride>
+
+        <BoxContainer Orientation="Vertical" Margin="14">
+
+            <!-- Index logo -->
+            <TextureRect Name="IndexLogo"
+                         SetSize="121 142"
+                         Stretch="KeepAspectCentered"
+                         HorizontalAlignment="Center"
+                         Margin="0 2 0 6" />
+
+            <Label Name="MemberNameLabel" HorizontalAlignment="Center" StyleClasses="LabelSubText" />
+
+            <!-- KARMIC CONSEQUENCE counter -->
+            <Label Name="KarmaLabel"
+                   HorizontalAlignment="Center"
+                   FontColorOverride="#F2D3A0"
+                   Margin="0 4 0 10" />
+
+            <!-- Prescription log -->
+            <PanelContainer VerticalExpand="True" Margin="0 0 0 8">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1E27" BorderColor="#2E323D" BorderThickness="1" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc 'index-pager-prescriptions-header'}"
+                           StyleClasses="LabelSubText"
+                           FontColorOverride="#C9A36A"
+                           Margin="10 8" />
+                    <ScrollContainer HScrollEnabled="False" VerticalExpand="True" MinHeight="180">
+                        <BoxContainer Name="PrescriptionList" Orientation="Vertical" Margin="10 2" SeparationOverride="10" />
+                    </ScrollContainer>
+                </BoxContainer>
+            </PanelContainer>
+
+            <Label Text="{Loc 'index-pager-hint'}" StyleClasses="LabelSubText" HorizontalAlignment="Center" />
+        </BoxContainer>
+    </PanelContainer>
+</DefaultWindow>

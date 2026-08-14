@@ -1,49 +1,49 @@
-cage-resist-second-person = Ви починаєте знімати свій {$cage}.
-cage-resist-third-person = {CAPITALIZE($user)} починає знімати {$cage} {$user}.
-cage-uncage-verb = Зняти
-ent-ActionMetapsionic = Метапсіонний Пульс
-    .desc = Надішліть ментальний імпульс через область, щоб побачити, чи немає поблизу екстрасенсів.
-metapsionic-pulse-success = Ви виявляєте психічну присутність поруч.
-metapsionic-pulse-failure = Ви не помічаєте жодної психічної присутності поблизу.
-metapsionic-pulse-power = Ви помічаєте що {$power} було використано десь поруч.
-ent-ActionDispel = Розсіювати покликаних сутностей, таких як фамільяри або силові стіни.
-ent-ActionMassSleep = Масовий Сон
-    .desc = Змусьте цілі в невеликому радіусі спати.
 accept-psionics-window-title = Псіонік!
 accept-psionics-window-prompt-text-part = Ви отримали псіонічну силу!
                                          Цілком можливо, що на вас можуть полювати певні антипсихічні сили,
                                          тому вам слід зберегти це в таємниці.
                                          Ви все ще хочете бути псіоніком?
-ent-ActionPsionicInvisibility = Псіонна Невидимість
-    .desc = Зробіть себе невидимим для будь-якої істоти, яка потенційно може бути екстрасенсом. На боргів, тварин, тощо це не впливає.
-ent-ActionPsionicInvisibilityOff = Вимкнути Псіонну Невидимість
-ent-ActionMindSwapPsionic = Обмін Розумом
-    .desc = Поміняйтеся розумом з ціллю. Будь-хто з вас буде мати можливість повернутися через 20 секунд.
-ent-ActionMindSwapReturn = Зупинити Обмін Розумом
-    .desc = Повернутись в своє початкове тіло.
-ent-ActionTelegnosis = Телегноз
-    .desc = Створіть телегностичну проекцію, щоб дистанційно спостерігати за речами.
-ent-ActionPsionicRegeneration = Псіонічна Регенерація
-    .desc = Доведіть свій природний метаболізм до межі, щоб активізувати регенераційну здатність вашого тіла.
+
 glimmer-report = Поточний рівень Мерехтіння: {$level}Ψ.
 glimmer-event-report-generic = Виявлено ноосферний розряд. Рівень Мерехтіння зменшився на {$decrease} до {$level}Ψ.
 glimmer-event-report-signatures = Виявлено нові псіонічні сигнатури. Рівень Мерехтіння зменшився на {$decrease} до {$level}Ψ.
-glimmer-event-awakened-prefix = пробуджено {$entity}
+
+psionic-roll-failed = Ноосферний вплив не залишає сліду у вашій свідомості...
+psionic-partly-mindbroken = Псіонічний вплив на вашу свідомість слабшає...
+psionic-mindbroken = Ваша свідомість відступає від абстракції до реальності.
+
 noospheric-zap-seize = У тебе судоми!
 noospheric-zap-seize-potential-regained = Ану схопися! Здається, якийсь ментальний блок теж розвіявся.
-mindswap-trapped = Здається, ви застрягли в цій посудині.
+
 telegnostic-trapped-entity-name = розірвана телегностична проекція
 telegnostic-trapped-entity-desc = Його численні очі видають смуток.
+
 psionic-burns-up = {CAPITALIZE($item)} палає дугами дивної енергії!
 psionic-burn-resist = Дивні дуги танцюють по {$item}!
-ent-ActionNoosphericZap = Ноосферний Шок
-    .desc = Викликає шок у свідомості мішені, залишаючи її приголомшеною і заїкаючося.
-ent-ActionPyrokinesis = Пірокінез
-    .desc = Підпалити легкозаймисту мішень.
+
 pyrokinesis-power-used = Струмок полум'я охоплює {THE($target)}, і запалює {OBJECT($target)}!
-ent-ActionPsychokinesis = Психокінез
-    .desc = Згинайте тканину простору, щоб миттєво рухатися по ній.
-ent-ActionRfSensitivity = Перемикання Чутливості до Радіочастот
-    .desc = Перемикання здатності інтерпретувати радіохвилі.
-ent-ActionAssay = Аналіз
-    .desc = Досліджуйте істот з близької відстані, щоб зібрати метафоричну інформацію про будь-які здібності, які вона може мати
+
+psionic-power-name-anoigo = Анойго
+psionic-power-name-healing-word = Цілюще Слово
+psionic-power-name-revivify = Воскресіння
+psionic-power-name-darkswap = Темний Обмін
+psionic-power-name-assay = Аналіз
+psionic-power-name-shadeskip = Тіньовий Крок
+
+airlock-blocked-anoigo-fail = Захищена панель проводів блокує вашу псіонічну дію!
+
+assay-begin = Ви починаєте аналізувати {THE($entity)}...
+assay-self = Ви не можете зосередитись, щоб проаналізувати себе!
+no-powers = {CAPITALIZE(THE($entity))} не має псіонічних здібностей.
+assay-body = Виявлено псіонічні здібності у {$entity}:
+
+## Mindbroken
+mindbroken-examine = Очі не кліпають, дивлячись вглиб горизонту. Важко позбутися відчуття, що реальність забула про одну важливу частину {CAPITALIZE($entity)}.
+mindbroken-assay = Благословення, що колись жило в {CAPITALIZE($entity)}, залишило лише холодний попіл.
+
+healing-word-begin = Слово, що зігріває всіх довкола.
+revivify-begin = Лагідні слова, що зігрівають душу.
+
+entity-anomaly-no-grid = Ви повинні стояти на твердій поверхні, щоб використати цю здібність!
+
+reliquary-feedback = Я БАЧУ ТЕБЕ, ПОСТОРОННІЙ. ТВОЇ ДУМКИ ВТОРГАЮТЬСЯ У СВЯЩЕННІ МАТРИЦІ. # TheDen - mantis reliquary conduit

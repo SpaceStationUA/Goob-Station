@@ -1,0 +1,27 @@
+- type: entity
+  name: mindbreaker toxin
+  parent: Pill
+  id: PillMindbreakerToxin
+  description: Removes psionics when ingested. Mildly poisonous.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: MindbreakerToxin
+          Quantity: 20
+
+- type: entity
+  name: soulbreaker toxin
+  parent: Pill
+  id: PillSoulbreakerToxin
+  description: Permanently mindbreaks a psionic when ingested. Only works on actual psionics.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: SoulbreakerToxin
+          Quantity: 20

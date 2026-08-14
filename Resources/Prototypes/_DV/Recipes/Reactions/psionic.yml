@@ -1,0 +1,257 @@
+- type: reaction
+  id: CrystalNormality
+  impact: Low
+  quantized: true
+  minTemp: 400
+  reactants:
+    Ash:
+      amount: 5
+    Holywater:
+      amount: 5
+    Blood:
+      amount: 5
+    Ectoplasm:
+      amount: 5
+    Plasma:
+      amount: 5
+      catalyst: true
+  effects:
+    # Pirate: local equivalent of Delta-V SpawnEntity reaction effect.
+    - !type:SpawnEntity
+      entity: CrystalNormality
+    - !type:AffectsGlimmer
+      amount: -10
+
+- type: reaction
+  id: CreatePureOil
+  reactants:
+    LotophagoiOil:
+      amount: 5
+    Claridisol:
+      amount: 5
+  products:
+    PureOil: 10
+
+- type: reaction
+  id: CreateZapCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Insuzine:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalZap
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateTelegCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Oculine:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalTeleg
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateScreamCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Blissifylovene:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalScream
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateDispelCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Charcoal:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalDispel
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreatePulseCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Mercury:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalPulse
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateRegenCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Arcryox:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalRegen
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreatePyroCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Phlogiston:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalPyro
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateAnoigoCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Iron:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalAnoigo
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateHealCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Bicaridine:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalHeal
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateAssayCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Cognizine:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalAssay
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateShadeskipCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Plasma:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalShadeskip
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateMassSleepCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    ChloralHydrate:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalMassSleep
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateMindSwapCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    MindbreakerToxin:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalMindSwap
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateEruptionCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    Uranium:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalEruption
+  - !type:AffectsGlimmer
+    amount: -3

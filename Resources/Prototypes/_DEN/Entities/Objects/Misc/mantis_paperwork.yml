@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (Resources/Prototypes/_DEN/Entities/Objects/Misc/paper.yml,
+# Mantis section).
+# Adapted for this fork:
+#   only the mantis stylus (PenMantis) is kept, and it comes with the mantis PDA.
+
+# Mantis stylus (PenMantis)
+- type: entity
+  parent: [PenEmbeddable, BaseAntiPsionicWeapon, BaseMantisContraband] # Contraband so the mystagogue doesn't steal it
+  id: PenMantis # The most mechanically complex pen in the world, all just for style
+  name: mantis stylus
+  description: "A writing tool chiseled from a spike of mnemolith. Do not accidentally poke yourself with it."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Misc/bureaucracy.rsi
+    state: pen_mantis
+  - type: Item
+    sprite: _DEN/Objects/Misc/bureaucracy.rsi
+    heldPrefix: pen_mantis
+  - type: DamageOtherOnHit
+    damage:
+      types: # Thrown damage (but you'll get it thrown back at you, and you're psionic)
+        Piercing: 6.4 # 8 damage against psions (same as PenCap)
+        Holy: 3.2 # 12 total damage against supernaturals
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    removalTime: 0 # No doafter to pull it out so people can throw it back fast, because you probably deserve it
+  - type: MeleeWeapon # You can swing it like a weapon
+    attackRate: .6666
+    angle: 40
+    wideAnimationRotation: -45
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+    damage:
+      types: # Melee damage
+        Piercing: 3.2 # 4.8 DPS, or 6 DPS against psions (same as Shiv)
+        Holy: 1.6 # 9 total DPS against psionic supernaturals
+  - type: ThrowingAngle
+    angle: -45
+  # - type: PhysicalComposition # Mnemolith material isn't in this fork
+  #   materialComposition:
+  #     Mnemolith: 100
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_DEN/Effects/crystalbell1.ogg
+      params:
+        volume: -6
+        variation: 0.05
+        maxDistance: 10 # Longer range than a standard pen click to be spooky
+  - type: UseDelay
+    delay: 2 # Its sound effect is 2s long, no overlapping allowed
+  - type: Tag
+    tags:
+      - Write
+      - Pen
+      - MantisBeltStorable
+      - MantisBoxFolderStorable # Only the mantis pen, stamp, and papers should have this

@@ -8,11 +8,12 @@ using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Psionics;
+using Content.Shared._Pirate.CCVars;
+using Content.Shared._DV.Psionics.Events;
+using Content.Shared.Hands;
+using Content.Shared.Item;
 using Content.Shared.Mobs;
-using Content.Pirate.Common.CCVar;
 using Robust.Shared.Configuration;
-using Content.Shared.Abilities.Psionics;
 using Content.Shared.Tag;
 
 
@@ -33,11 +34,14 @@ public abstract class SharedEtherealSystem : EntitySystem
         SubscribeLocalEvent<EtherealComponent, MapInitEvent>(OnStartup);
         SubscribeLocalEvent<EtherealComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<EtherealComponent, InteractionAttemptEvent>(OnInteractionAttempt);
+        SubscribeLocalEvent<EtherealComponent, UseAttemptEvent>(OnUseAttempt);
         SubscribeLocalEvent<EtherealComponent, BeforeThrowEvent>(OnBeforeThrow);
-        SubscribeLocalEvent<EtherealComponent, OnAttemptPowerUseEvent>(OnAttemptPowerUse);
+        SubscribeLocalEvent<EtherealComponent, ThrowAttemptEvent>(OnThrowAttempt);
+        SubscribeLocalEvent<EtherealComponent, PickupAttemptEvent>(OnPickupAttempt);
+        SubscribeLocalEvent<EtherealComponent, PsionicPowerUseAttemptEvent>(OnAttemptPowerUse);
         SubscribeLocalEvent<EtherealComponent, AttackAttemptEvent>(OnAttackAttempt);
         SubscribeLocalEvent<EtherealComponent, ShotAttemptedEvent>(OnShootAttempt);
-        SubscribeLocalEvent<EtherealComponent, OnMindbreakEvent>(OnMindbreak);
+        SubscribeLocalEvent<EtherealComponent, PsionicMindBrokenEvent>(OnMindbreak);
         SubscribeLocalEvent<EtherealComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
@@ -51,7 +55,7 @@ public abstract class SharedEtherealSystem : EntitySystem
         component.OldMobMask = fixture.Value.CollisionMask;
         component.OldMobLayer = fixture.Value.CollisionLayer;
 
-        if (_cfg.GetCVar(CCVars.EtherealPassThrough))
+        if (_cfg.GetCVar(PirateVars.EtherealPassThrough))
         {
             _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int) CollisionGroup.GhostImpassable, fixtures);
             _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, 0, fixtures);
@@ -68,6 +72,12 @@ public abstract class SharedEtherealSystem : EntitySystem
 
     public virtual void OnShutdown(EntityUid uid, EtherealComponent component, ComponentShutdown args)
     {
+        // DarkSwap: undo the pacification we applied whenever the shadow realm ends
+        // for any reason (toggle off, mindbreak, death, etc.). This must not be gated
+        // behind the fixtures check below - the ethereal state may end without fixtures.
+        if (component.RemovePacifiedOnEnd)
+            RemComp<PacifiedComponent>(uid);
+
         if (!TryComp<FixturesComponent>(uid, out var fixtures))
             return;
 
@@ -76,12 +86,12 @@ public abstract class SharedEtherealSystem : EntitySystem
         _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, component.OldMobMask, fixtures);
         _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, component.OldMobLayer, fixtures);
 
-        if (_cfg.GetCVar(CCVars.EtherealPassThrough))
+        if (_cfg.GetCVar(PirateVars.EtherealPassThrough))
             if (component.HasDoorBumpTag)
                 _tag.AddTag(uid, "DoorBumpOpener");
     }
 
-    private void OnMindbreak(EntityUid uid, EtherealComponent component, ref OnMindbreakEvent args)
+    private void OnMindbreak(EntityUid uid, EtherealComponent component, ref PsionicMindBrokenEvent args)
     {
         SpawnAtPosition("ShadowkinShadow", Transform(uid).Coordinates);
         SpawnAtPosition("EffectFlashShadowkinDarkSwapOff", Transform(uid).Coordinates);
@@ -131,7 +141,6 @@ public abstract class SharedEtherealSystem : EntitySystem
         if (!HasComp<TransformComponent>(args.Target)
             || HasComp<EtherealComponent>(args.Target))
             return;
-
         args.Cancelled = true;
         if (_gameTiming.InPrediction)
             return;
@@ -139,11 +148,25 @@ public abstract class SharedEtherealSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("ethereal-pickup-fail"), args.Target.Value, uid);
     }
 
-    private void OnAttemptPowerUse(EntityUid uid, EtherealComponent component, OnAttemptPowerUseEvent args)
+    private void OnUseAttempt(EntityUid uid, EtherealComponent component, UseAttemptEvent args)
     {
-        if (args.Power == "DarkSwap")
-            return;
-
         args.Cancel();
+    }
+
+    private void OnThrowAttempt(EntityUid uid, EtherealComponent component, ThrowAttemptEvent args)
+    {
+        // Block throwing at the action blocker level (CanThrow), so the player never even initiates a throw.
+        args.Cancel();
+    }
+
+    private void OnPickupAttempt(EntityUid uid, EtherealComponent component, PickupAttemptEvent args)
+    {
+        // Block picking up items while intangible (CanPickup).
+        args.Cancel();
+    }
+
+    private void OnAttemptPowerUse(EntityUid uid, EtherealComponent component, ref PsionicPowerUseAttemptEvent args)
+    {
+        args.CanUsePower = false;
     }
 }

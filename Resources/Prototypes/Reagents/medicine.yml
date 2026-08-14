@@ -19,14 +19,12 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectWoozy
         time: 20.0
-      - !type:GenericStatusEffect
-        key: PsionicallyInsulated
-        component: PsionicInsulation
+      - !type:ModifyStatusEffect # Pirate
+        effectProto: StatusEffectShieldedFromPsionics
         type: Add
-        time: 900
-      - !type:GenericStatusEffect
-        key: PsionicsDisabled
-        component: PsionicsDisabled
+        time: 50
+      - !type:ModifyStatusEffect # Pirate
+        effectProto: StatusEffectPsionicsDisabled
         type: Add
         time: 900
       - !type:Drunk

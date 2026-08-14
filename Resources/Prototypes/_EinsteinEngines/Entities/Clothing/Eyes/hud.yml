@@ -1,4 +1,3 @@
-
 - type: entity
   parent: [ClothingEyesBase, BaseMantisContraband]
   id: ClothingEyesHudEpistemics

@@ -27,4 +27,23 @@ public sealed partial class PirateVars
     /// </summary>
     public static readonly CVarDef<bool> SkipDisabledTraitsPopup =
         CVarDef.Create("traits.pirate.skip_disabled_traits_popup", false, CVar.CLIENT | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Allow ethereal shadowkin entities to pass through walls and objects while ethereal.
+    /// </summary>
+    public static readonly CVarDef<bool> EtherealPassThrough =
+        CVarDef.Create("ic.EtherealPassThrough", false, CVar.SERVER);
+
+    /// <summary>
+    /// Whether glimmer is enabled.
+    /// </summary>
+    public static readonly CVarDef<bool> GlimmerEnabled =
+        CVarDef.Create("glimmer.enabled", true, CVar.REPLICATED);
+
+    /// <summary>
+    /// Passive glimmer drain per second.
+    /// Note that this is randomized and this is an average value.
+    /// </summary>
+    public static readonly CVarDef<float> GlimmerLostPerSecond =
+        CVarDef.Create("glimmer.passive_drain_per_second", 0.1f, CVar.SERVERONLY);
 }

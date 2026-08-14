@@ -28,7 +28,11 @@
   equipment:
     head: ClothingHeadHoodMantisDark
 - type: loadout
-  id: MantisBeret
+  id: MantisHoodDarkFolded
+  equipment:
+    head: ClothingHeadHoodMantisDarkFolded
+- type: loadout
+  id: RDBeret
   equipment:
     head: ClothingHeadHatBeretMysta
 # Neck
@@ -40,10 +44,6 @@
   id: MantisMantleOrnate
   equipment:
     neck: ClothingNeckMantleMantisOrnate
-- type: loadout
-  id: MantisShackles
-  equipment:
-    neck: ClothingNeckMantisShackles
 - type: loadout
   id: MantisPendulum
   equipment:
@@ -73,35 +73,31 @@
 - type: loadout
   id: MantisBackpack
   equipment:
-    back: ClothingBackpackMantisFilled
+    back: ClothingBackpackScience
 - type: loadout
   id: MantisBackpackDEN
   equipment:
-    back: ClothingBackpackMantisFilledDEN
+    back: ClothingBackpackMantis
 - type: loadout
   id: MantisSatchel
   equipment:
-    back: ClothingBackpackSatchelMantisFilled
+    back: ClothingBackpackSatchelScience
 - type: loadout
   id: MantisSatchelDEN
   equipment:
-    back: ClothingBackpackSatchelMantisFilledDEN
+    back: ClothingBackpackSatchelMantis
 - type: loadout
   id: MantisDuffel
   equipment:
-    back: ClothingBackpackDuffelMantisFilled
+    back: ClothingBackpackDuffelScience
 - type: loadout
   id: MantisDuffelDEN
   equipment:
-    back: ClothingBackpackDuffelMantisFilledDEN
-- type: loadout
-  id: MantisPurse
-  equipment:
-    back: ClothingBackpackSatchelMantisPurseFilled
+    back: ClothingBackpackDuffelMantis
 - type: loadout
   id: MantisMessenger
   equipment:
-    back: ClothingBackpackMessengerMantisFilled
+    back: ClothingBackpackMessengerMantis
 # OuterClothing
 - type: loadout
   id: MantisCoat
@@ -123,6 +119,14 @@
   id: MantisCoatWinterDark
   equipment:
     outerClothing: ClothingOuterWinterCoatMantisDark
+- type: loadout
+  id: MantisCoatWinterDarkFolded
+  equipment:
+    outerClothing: ClothingOuterWinterCoatMantisDarkFolded
+- type: loadout
+  id: MantisCoatWinterMu
+  equipment:
+    outerClothing: ClothingOuterWinterCoatMantisMu
 # Gloves
 - type: loadout
   id: MantisGloves
@@ -132,6 +136,14 @@
   id: MantisGlovesAiry
   equipment:
     gloves: ClothingHandsGlovesMantisAiry
+- type: loadout
+  id: MantisGlovesDark
+  equipment:
+    gloves: ClothingHandsGlovesMantisDark
+- type: loadout
+  id: MantisGlovesOrnate
+  equipment:
+    gloves: ClothingHandsGlovesMantisOrnate
 # Shoes
 - type: loadout
   id: MantisBoots
@@ -164,21 +176,13 @@
   equipment:
     eyes: ClothingEyesGlassesEpistemics
 - type: loadout
-  id: MantisGlasses
+  id: MantisGlassesHud
   equipment:
-    eyes: ClothingEyesGlassesEpistemicsMantis
+    eyes: ClothingEyesHudEpistemicsMantis
 - type: loadout
-  id: MantisGlassesTinted
+  id: MantisGlassesHudFolded
   equipment:
-    eyes: ClothingEyesGlassesEpistemicsMantisTinted
-- type: loadout
-  id: MantisGlassesVeil
-  equipment:
-    eyes: ClothingEyesGlassesEpistemicsMantisVeil
-- type: loadout
-  id: MantisGlassesMirrored
-  equipment:
-    eyes: ClothingEyesGlassesEpistemicsMantisMirrored
+    eyes: ClothingEyesHudEpistemicsMantisFolded
 # Belt
 - type: loadout
   id: MantisBelt
@@ -210,3 +214,79 @@
   id: MantisMaskRitual
   equipment:
     mask: ClothingMaskMantisRitual
+# Weapons - Ranged (стрілецька зброя, замість магазину - кріо кастер у рюкзаку)
+- type: loadout
+  id: MantisRangedPistol
+  dummyEntity: MantisRangedPistol
+  storage:
+    back:
+    - MantisRangedPistol
+    - MantisCasterPistolCrypto
+- type: loadout
+  id: MantisRangedRevolver
+  dummyEntity: MantisRangedRevolver
+  storage:
+    back:
+    - MantisRangedRevolver
+    - MantisCasterRevolverCrypto
+- type: loadout
+  id: MantisRangedShotgun
+  dummyEntity: MantisRangedShotgun
+  storage:
+    back:
+    - MantisRangedShotgun
+    - MantisCasterShotgunCrypto
+- type: loadout
+  id: MantisRangedSubMachineGun
+  dummyEntity: MantisRangedSubMachineGun
+  storage:
+    back:
+    - MantisRangedSubMachineGun
+    - MantisCasterSubMachineGunCrypto
+# Weapons - Melee (ближня зброя)
+- type: loadout
+  id: MantisMeleeKnife
+  dummyEntity: MantisMeleeKnife
+  storage:
+    back:
+    - MantisMeleeKnife
+- type: loadout
+  id: MantisMeleeSickle
+  dummyEntity: MantisMeleeSickle
+  storage:
+    back:
+    - MantisMeleeSickle
+- type: loadout
+  id: MantisMeleeFist
+  dummyEntity: MantisMeleeFist
+  equipment:
+    gloves: MantisMeleeFist # Manifold is worn on the hands, not stashed in a backpack
+- type: loadout
+  id: MantisMeleeCane
+  dummyEntity: MantisMeleeCane
+  storage:
+    back:
+    - MantisMeleeCane
+- type: loadout
+  id: MantisMeleeGreatsword
+  dummyEntity: MantisMeleeGreatswordSheathFilled
+  equipment:
+    suitstorage: MantisMeleeGreatswordSheathFilled
+- type: loadout
+  id: MantisMeleeGreatswordHip
+  dummyEntity: MantisMeleeGreatswordSheathHipFilled
+  equipment:
+    suitstorage: MantisMeleeGreatswordSheathHipFilled
+# Equipment moved to the mantis locker (TailorsKnife, FlippoLighter, CaseCandles, CigPack, Ledger, PsionRegistry, CrewMonitor)
+# Neck - Wolfskin (PR 2669)
+- type: loadout
+  id: MantisWolfskin
+  equipment:
+    neck: ClothingNeckCloakMantisShroud
+# Mask
+# Gloves
+- type: loadout
+  id: MantisGlovesChains
+  equipment:
+    gloves: ClothingHandsGlovesMantisChains
+

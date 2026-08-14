@@ -1,0 +1,73 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (_DEN/Entities/Structures/furniture/chairs.yml,
+# mantis section). ScrapElectrum drop -> SheetSteel1 (electrum scrap isn't in this fork).
+
+- type: entity
+  parent: VehicleWheelchair
+  id: SomberChairLeatherMantisWheelchair
+  name: mantis chair
+  description: "A plush leather office chair concealing strange bluespace mechanisms that let it compact into an electrum orb. It hovers just above the ground and can be steered with psionic influence."
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Foldable
+    canFoldInsideContainer: false
+  - type: Sprite
+    sprite: _DEN/Structures/Specific/Mantis/mantischair.rsi
+    state: vehicle
+  - type: Item
+    size: Huge
+  - type: Damageable
+    damageModifierSet: StrongMetallic
+    damageContainer: Inorganic
+  - type: StaticPrice
+    price: 125
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 3
+            max: 3
+          SheetSteel1: # TheDen: ScrapElectrum (not in this fork)
+            min: 3
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: SomberChairLeatherMantisWheelchair
+  id: SomberChairLeatherMantisWheelchairFolded
+  name: bound mantis chair
+  suffix: Folded, Not Tabletop
+  description: "An electrum orb concealing strange bluespace mechanisms that let it unfold into a plush leather office chair. Useful for mantes with mobility restrictions, or simply as versatile office furniture."
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Sprite
+    sprite: _DEN/Structures/Specific/Mantis/mantischair.rsi
+    state: vehicle_folded
+  - type: Item
+    size: Small
+  - type: Foldable
+    folded: true
+  - type: Tag
+    tags:
+    - MantisBeltStorable
+    - DoorBumpOpener

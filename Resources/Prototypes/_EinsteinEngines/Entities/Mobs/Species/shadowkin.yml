@@ -8,6 +8,8 @@
   name: Urist McShadow
   abstract: true
   components:
+  - type: Inventory # TheDen - So they can have -shadowkin clothing sprites
+    speciesId: shadowkin
   - type: LanguageKnowledge # Einstein Engines - Language
     speaks:
     - TauCetiBasic
@@ -231,14 +233,12 @@
     saturationLoss: 0.2
     maxSaturation: 30
     saturation: 30 #Goob Edit end
-  - type: Shadowkin # Pirate psionic start
-  - type: Psionic
-    mindbreakingFeedback: shadowkin-blackeye
-  - type: InnatePsionicPowers
-    powersToAdd:
-      - TelepathyPower
-  - type: PotentiaModifier
-    potentiaMultiplier: 1.25 # Pirate psionic end
+  - type: Shadowkin # Pirate
+  - type: Psionic # Pirate - shadowkin are naturally psionic; powers come from drugs or crystals.
+  - type: PotentialPsionic # Pirate
+    speciesBonusChance: 0.1
+    mindbrokenExamineDesc: examine-mindbroken-shadowkin-message # Pirate - custom examine desc used if/when a shadowkin gets permanently mindbroken.
+
 
 - type: entity
   save: false
@@ -247,6 +247,8 @@
   categories: [ HideSpawnMenu ]
   description: A dummy shadowkin meant to be used in character setup.
   components:
+    - type: Inventory # TheDen - So they can have -shadowkin clothing sprites
+      speciesId: shadowkin
     - type: HumanoidAppearance
       species: Shadowkin
       customBaseLayers: # Pirate: glowing eyes patch

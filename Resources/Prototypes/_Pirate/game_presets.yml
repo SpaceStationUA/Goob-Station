@@ -11,7 +11,7 @@
   showInVote: true
   rules:
     - SecretTP
-    - PsionicEventsScheduler
+    - GlimmerEventScheduler
 
 - type: gamePreset
   id: SecretSalt
@@ -23,7 +23,7 @@
   showInVote: true
   rules:
     - SecretSalt
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 # Pirate: Admin-only decoy presets run Greenshift while showing another mode in the lobby.
 - type: gamePreset
@@ -36,7 +36,7 @@
   rules:
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: EntropyGreenshift
@@ -49,7 +49,7 @@
   rules:
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SecretTPGreenshift
@@ -62,7 +62,7 @@
   rules:
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SecretSaltGreenshift
@@ -75,7 +75,7 @@
   rules:
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: PirateGreenshift
@@ -88,7 +88,7 @@
   rules:
   - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: PirateRelaxed
@@ -103,7 +103,7 @@
   - PirateRelaxedEventScheduler
   - PirateRelaxedSubGamemodesRule
   - BasicRoundstartVariation
-  - PsionicEventsScheduler
+  - GlimmerEventScheduler
 
 - type: entityTable
   id: PirateRelaxedEventsTable
@@ -151,4 +151,4 @@
   - BasicStationEventScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
