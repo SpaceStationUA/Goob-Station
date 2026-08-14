@@ -1,0 +1,87 @@
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitDarthVader
+  name: Скафандр Дарта Вейдера
+  description: Чорний, пропитаний ненавистю та злобою костюм, на який й погляд тяжко кинути.
+  suffix: StarWars
+  components:
+  - type: Sprite
+    sprite: _Pirate/_StarWars/Clothing/OuterClothing/Hardsuits/darthVaderBody.rsi
+  - type: Clothing
+    sprite: _Pirate/_StarWars/Clothing/OuterClothing/Hardsuits/darthVaderBody.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: FireProtection
+    reduction: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.3
+        Heat: 0.5
+        Radiation: 0.15
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: HeldSpeedModifier
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
+  - type: DamageOnShootProtection #imp # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 4 # Pirate ^
+
+
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitShturm
+  name: Костюм штурмовика
+  description: Дешевий костюм, ніби зроблений на один раз й таких ще тисячі.
+  suffix: StarWars
+  components:
+  - type: Sprite
+    sprite: _Pirate/_StarWars/Clothing/OuterClothing/Hardsuits/shturmBody.rsi
+  - type: Clothing
+    sprite: _Pirate/_StarWars/Clothing/OuterClothing/Hardsuits/shturmBody.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.85
+        Radiation: 0.4
+        Caustic: 0.4
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingHeadHelmetHardsuitShturm
+  - type: StaminaResistance
+    damageCoefficient: 0.7
+  - type: ModifyDelayedKnockdown
+    delayDelta: 1.5
+    knockdownTimeDelta: -1.5
+  - type: DamageOnShootProtection #imp  # Pirate V
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 4 # Pirate ^
