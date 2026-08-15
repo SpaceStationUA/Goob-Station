@@ -7,6 +7,7 @@
     Telecrystal: 20
   categories:
   - UplinkWearables
+  reputation: 20 # Pirate: armour reputation
   conditions:
   - !type:BuyerWhitelistCondition
     blacklist:
@@ -23,6 +24,7 @@
     Telecrystal: 20
   categories:
   - UplinkWearables
+  reputation: 50 # Pirate: explosives reputation
 
 - type: listing
   id: UplinkChameleonArmor
@@ -33,3 +35,4 @@
     Telecrystal: 25
   categories:
   - UplinkWearables
+  reputation: 40 # Pirate: armour reputation

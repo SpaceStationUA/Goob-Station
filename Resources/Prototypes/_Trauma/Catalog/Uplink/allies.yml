@@ -38,6 +38,7 @@
     Telecrystal: 15
   categories:
   - UplinkAllies
+  reputation: 30 # Pirate: allies reputation
 
 - type: listing
   id: CarpOperativeReinforcement
@@ -49,6 +50,7 @@
     Telecrystal: 30
   categories:
   - UplinkAllies
+  reputation: 45 # Pirate: allies reputation
 
 - type: listing
   id: SpiderOperativeReinforcement
@@ -60,6 +62,7 @@
     Telecrystal: 50
   categories:
   - UplinkAllies
+  reputation: 50 # Pirate: allies reputation
 
 - type: listing
   id: UplinkReinforcementRadioSyndicateCyborgSaboteur

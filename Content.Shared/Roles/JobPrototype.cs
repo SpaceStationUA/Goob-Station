@@ -96,6 +96,12 @@ namespace Content.Shared.Roles
         // Pirate edit end
 
         /// <summary>
+        /// Pirate: Multiplies the syndicate ransom price by this number.
+        /// </summary>
+        [DataField]
+        public float RansomModifier = 1f;
+
+        /// <summary>
         ///     The "weight" or importance of this job. If this number is large, the job system will assign this job
         ///     before assigning other jobs.
         /// </summary>

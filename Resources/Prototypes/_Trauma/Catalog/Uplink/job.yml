@@ -78,6 +78,7 @@
     Telecrystal: 15
   categories:
   - UplinkJob
+  reputation: 40 # Pirate: explosives reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -92,6 +93,7 @@
     Telecrystal: 20
   categories:
   - UplinkJob
+  reputation: 40 # Pirate: sidearms reputation
   conditions:
   - !type:BuyerDepartmentCondition
     whitelist:
@@ -134,6 +136,7 @@
     Telecrystal: 50
   categories:
   - UplinkJob
+  reputation: 30 # Pirate: melee weapons reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -149,6 +152,7 @@
     Telecrystal: 100
   categories:
   - UplinkJob
+  reputation: 50 # Pirate: allies reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:

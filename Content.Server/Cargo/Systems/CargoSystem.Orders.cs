@@ -5,6 +5,7 @@ using Content.Goobstation.Common.Pirates;
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Station.Components;
+using Content.Shared._Pirate.Traitor; // Pirate
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -29,6 +30,7 @@ namespace Content.Server.Cargo.Systems
     {
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly EmagSystem _emag = default!;
+        [Dependency] private readonly RansomSystem _ransom = default!; // Pirate
         [Dependency] private readonly IGameTiming _timing = default!;
 
         private void InitializeConsole()
@@ -470,6 +472,7 @@ namespace Content.Server.Cargo.Systems
                     orderDatabase.Capacity,
                     GetNetEntity(station.Value),
                     RelevantOrders((station!.Value, orderDatabase), (consoleUid, console)),
+                    _ransom.GetRansoms(), // Pirate
                     GetAvailableProducts((consoleUid, console))
                 ));
             }

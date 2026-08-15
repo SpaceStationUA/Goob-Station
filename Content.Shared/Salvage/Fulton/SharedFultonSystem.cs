@@ -54,6 +54,8 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     private void OnFultonContainerInserted(EntityUid uid, FultonedComponent component, EntGotInsertedIntoContainerMessage args)
     {
+        if (!component.Removable) // Pirate: extraction fultons stay attached inside containers.
+            return;
         RemCompDeferred<FultonedComponent>(uid);
     }
 
@@ -168,7 +170,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
         Dirty(args.NewId, newFulton);
     }
 
-    protected virtual void UpdateAppearance(EntityUid uid, FultonedComponent fultoned)
+    public virtual void UpdateAppearance(EntityUid uid, FultonedComponent fultoned) // Pirate: exposed for syndicate fultons.
     {
         return;
     }

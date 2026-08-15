@@ -13,6 +13,7 @@
     Telecrystal: 13 # goob - this +1 mag = 15 TC
   categories:
   - UplinkWeaponry
+  reputation: 40 # Pirate: sidearms reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -29,6 +30,7 @@
     Telecrystal: 20 # goob - Originally was 65 TC but was not used due to high cost. and the same happened at 40 TC. +2 mags = 30 TC.
   categories:
   - UplinkWeaponry
+  reputation: 40 # Pirate: sidearms reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -47,6 +49,7 @@
     Telecrystal: 17 # goob - this +1 mag = 20 TC
   categories:
   - UplinkWeaponry
+  reputation: 45 # Pirate: sidearms reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -65,6 +68,7 @@
     Telecrystal: 4 # goob
   categories:
   - UplinkWeaponry
+  reputation: 60 # Pirate: long arms reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -83,6 +87,7 @@
   saleLimit: 2 # Goob - 2 eswords = desword
   categories:
   - UplinkWeaponry
+  reputation: 30 # Pirate: melee weapons reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -100,6 +105,7 @@
     Telecrystal: 10 # goob
   categories:
   - UplinkWeaponry
+  reputation: 20 # Pirate: melee weapons reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -134,6 +140,7 @@
     Telecrystal: 20 # goob - Pretty weak, but resusable ranged crit potential shouldn't be less.
   categories:
     - UplinkWeaponry
+  reputation: 20 # Pirate: melee weapons reputation
     #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -151,6 +158,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkWeaponry
+  reputation: 30 # Pirate: melee weapons reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -168,6 +176,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkWeaponry
+  reputation: 60 # Pirate: long arms reputation
 #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -187,6 +196,7 @@
     Telecrystal: 15 # goob
   categories:
   - UplinkWeaponry
+  reputation: 40 # Pirate: sidearms reputation
 
 
 - type: listing
@@ -199,6 +209,7 @@
     Telecrystal: 75 # goob
   categories:
   - UplinkWeaponry
+  reputation: 60 # Pirate: long arms reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -231,6 +242,7 @@
     Telecrystal: 50 # goob unbunde update
   categories:
   - UplinkWeaponry
+  reputation: 60 # Pirate: long arms reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -265,6 +277,7 @@
     Telecrystal: 60 # goob
   categories:
   - UplinkWeaponry
+  reputation: 60 # Pirate: long arms reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -283,6 +296,7 @@
     Telecrystal: 150 # goob
   categories:
   - UplinkWeaponry
+  reputation: 95 # Pirate: high-power weapons reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -301,6 +315,7 @@
     Telecrystal: 100 # goob
   categories:
   - UplinkWeaponry
+  reputation: 80 # Pirate: high-power weapons reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -320,6 +335,7 @@
     Telecrystal: 10 # goob
   categories:
   - UplinkExplosives
+  reputation: 40 # Pirate: explosives reputation
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -365,6 +381,7 @@
     Telecrystal: 24 # goob
   categories:
     - UplinkExplosives
+  reputation: 50 # Pirate: explosives reputation
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -382,6 +399,7 @@
     Telecrystal: 20 # goob
   categories:
     - UplinkExplosives
+  reputation: 55 # Pirate: explosives reputation
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -398,6 +416,7 @@
     Telecrystal: 4 # goob - it's an emergency escape tool and distraction, not a real nade.
   categories:
     - UplinkExplosives
+  reputation: 40 # Pirate: explosives reputation
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -414,6 +433,7 @@
     Telecrystal: 18 # goob
   categories:
     - UplinkExplosives
+  reputation: 40 # Pirate: explosives reputation
 #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -435,6 +455,7 @@
     Telecrystal: 8 # goob - We have a ten tens or 100 TC system, lets use the bastard. Better than 13's yet 10 TC's a pretty crappy price.
   categories:
   - UplinkExplosives
+  reputation: 40 # Pirate: explosives reputation
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -467,6 +488,7 @@
     Telecrystal: 52 # goob - you're buying bulk so its some discount
   categories:
   - UplinkExplosives
+  reputation: 65 # Pirate: powerful explosives reputation
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -483,6 +505,7 @@
     Telecrystal: 4 # goob - implanter is 10 and infintely better lmao
   categories:
   - UplinkExplosives
+  reputation: 40 # Pirate: explosives reputation
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -500,6 +523,7 @@
     Telecrystal: 12 # goob
   categories:
   - UplinkExplosives
+  reputation: 40 # Pirate: explosives reputation
 
 
 - type: listing
@@ -511,6 +535,7 @@
     Telecrystal: 52 # goob
   categories:
     - UplinkExplosives
+  reputation: 75 # Pirate: powerful explosives reputation
   restockTime: 1800
 #Goobstation
   conditions:
@@ -544,6 +569,7 @@
     Telecrystal: 22 # goob - Best grenade in the game currently, but very hard to predict how it explodes.
   categories:
   - UplinkExplosives
+  reputation: 60 # Pirate: powerful explosives reputation
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -561,6 +587,7 @@
     Telecrystal: 8 # goob
   categories:
   - UplinkExplosives
+  reputation: 45 # Pirate: explosives reputation
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -578,6 +605,7 @@
     Telecrystal: 8 # goob
   categories:
   - UplinkExplosives
+  reputation: 45 # Pirate: explosives reputation
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -752,6 +780,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkChemicals
+  reputation: 25 # Pirate: chemicals reputation
 
 
 - type: listing
@@ -764,6 +793,7 @@
     Telecrystal: 5 # goob
   categories:
   - UplinkChemicals
+  reputation: 20 # Pirate: chemicals reputation
 
 
 - type: listing
@@ -779,6 +809,7 @@
     Telecrystal: 20 # Goob
   categories:
   - UplinkChemicals
+  reputation: 20 # Pirate: chemicals reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -818,6 +849,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkChemicals
+  reputation: 25 # Pirate: chemicals reputation
 
 
 - type: listing
@@ -829,6 +861,7 @@
     Telecrystal: 10 #goob
   categories:
   - UplinkChemicals
+  reputation: 20 # Pirate: chemicals reputation
 
 
 - type: listing
@@ -840,6 +873,7 @@
     Telecrystal: 12 # Goobstation - Combat pen rebalance
   categories:
   - UplinkChemicals
+  reputation: 20 # Pirate: chemicals reputation
 
 
 - type: listing
@@ -854,6 +888,7 @@
     Telecrystal: 5 # goob
   categories:
   - UplinkChemicals
+  reputation: 20 # Pirate: chemicals reputation
 
 
 - type: listing
@@ -868,6 +903,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkChemicals
+  reputation: 35 # Pirate: chemicals reputation
 
 
 - type: listing
@@ -987,6 +1023,7 @@
     Telecrystal: 5 # goob
   categories:
   - UplinkDeception
+  reputation: 5 # Pirate: melee weapon and pen
 
 - type: listing
   id: UplinkDecoyDisk
@@ -1018,6 +1055,7 @@
     Telecrystal: 20 # goob
   categories:
     - UplinkDeception
+  reputation: 15 # Pirate: reputation gate
   conditions: # EE Plasmeme Change: Plasmamen get another listing.
   - !type:BuyerSpeciesCondition
     blacklist:
@@ -1054,6 +1092,7 @@
     Telecrystal: 10 # goob
   categories:
   - UplinkDeception
+  reputation: 40 # Pirate: explosives reputation
   restockTime: 1800
   conditions:
   - !type:StoreWhitelistCondition
@@ -1100,6 +1139,7 @@
     Telecrystal: 20 # goob - not quite worth 25
   categories:
   - UplinkDisruption
+  reputation: 10 # Pirate: iconic item
 
 
 - type: listing
@@ -1122,6 +1162,7 @@
     Telecrystal: 25 # goob
   categories:
   - UplinkDisruption
+  reputation: 40 # Pirate: sidearms reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1140,6 +1181,7 @@
     Telecrystal: 20 # goob
   categories:
     - UplinkDisruption
+  reputation: 60 # Pirate: powerful explosives reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1168,6 +1210,7 @@
     Telecrystal: 6 # goob - Not a GREAT item but has some effects. Bomb Balance.
   categories:
   - UplinkDisruption
+  reputation: 5 # Pirate: requires one completed task
 
 
 - type: listing
@@ -1212,6 +1255,7 @@
     Telecrystal: 32 # goob - worse synd bomb. Requires real skill to pull off. Can get 3, but that blocks any decent item. Bomb balancing applies here.
   categories:
   - UplinkDisruption
+  reputation: 50 # Pirate: explosives reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1331,6 +1375,7 @@
     Telecrystal: 60 # goob
   categories:
     - UplinkDisruption
+  reputation: 85 # Pirate: station-destructive items reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1366,6 +1411,7 @@
       tags:
       - ContractorUplink
       - NukeOpsUplink
+  reputation: 50 # Pirate: allies reputation
 
 
 - type: listing
@@ -1378,6 +1424,7 @@
     Telecrystal: 70 # goob
   categories:
   - UplinkAllies
+  reputation: 45 # Pirate: allies reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1438,6 +1485,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkAllies
+  reputation: 30 # Pirate: allies reputation, reduced for a monkey
   conditions:
     - !type:StoreWhitelistCondition
       blacklist:
@@ -1575,6 +1623,7 @@
     Telecrystal: 25 # goob
   categories:
     - UplinkImplants
+  reputation: 25 # Pirate: not needed for shoe theft
 
 
 - type: listing
@@ -1587,6 +1636,7 @@
     Telecrystal: 10 # goob
   categories:
     - UplinkImplants
+  reputation: 25 # Pirate: melee weapons reputation
 
 - type: listing
   id: UplinkRadioImplanter
@@ -1678,6 +1728,7 @@
     Telecrystal: 20 # goob # goob - traitor suicide implants
   categories:
     - UplinkImplants
+  reputation: 20 # Pirate: chemicals reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1838,6 +1889,7 @@
     Telecrystal: 30
   categories:
   - UplinkWearables
+  reputation: 20 # Pirate: strong item, not available at round start
 
 
 - type: listing
@@ -1849,6 +1901,7 @@
     Telecrystal: 15 # goob
   categories:
   - UplinkWearables
+  reputation: 15 # Pirate: armour reputation
 
 
 - type: listing
@@ -1860,6 +1913,7 @@
     Telecrystal: 25 # goob
   categories:
   - UplinkWearables
+  reputation: 40 # Pirate: armour reputation
 
 - type: listing
   id: UplinkClothingShoesBootsMagSyndie
@@ -1882,6 +1936,7 @@
     Telecrystal: 20 # goob - Meh protection no slowdown. Can definitely take a hit or two extra however.
   categories:
   - UplinkWearables
+  reputation: 10 # Pirate: syndicate EVA reputation
 
 
 - type: listing
@@ -1894,6 +1949,7 @@
     Telecrystal: 20 # goob
   categories:
   - UplinkWearables
+  reputation: 15 # Pirate: armour reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1912,6 +1968,7 @@
     Telecrystal: 50 # goob
   categories:
   - UplinkWearables
+  reputation: 65 # Pirate: hardsuits reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -2074,6 +2131,7 @@
     Telecrystal: 130 # goob
   categories:
   - UplinkPointless
+  reputation: 100 # Pirate: station-destructive items reputation
 
 
 - type: listing
@@ -2156,6 +2214,7 @@
     Telecrystal: 100 # goob
   categories:
   - UplinkPointless
+  reputation: 50 # Pirate: reputation gate
 
 
 - type: listing
@@ -2200,6 +2259,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkJob
+  reputation: 30 # Pirate: lower than sidearms because it must be grown
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2215,6 +2275,7 @@
     Telecrystal: 30 # goob
   categories:
     - UplinkJob
+  reputation: 5 # Pirate: melee weapons reputation
   conditions:
     - !type:BuyerJobCondition
       whitelist:
@@ -2229,6 +2290,7 @@
     Telecrystal: 20 # goob
   categories:
   - UplinkJob
+  reputation: 40 # Pirate: allies reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2248,6 +2310,7 @@
     Telecrystal: 100 # goob
   categories:
   - UplinkJob
+  reputation: 70 # Pirate: powerful explosives
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2263,6 +2326,7 @@
     Telecrystal: 20 # goob
   categories:
   - UplinkJob
+  reputation: 40 # Pirate: sidearms reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2280,6 +2344,7 @@
     Telecrystal: 8 # goob
   categories:
   - UplinkJob
+  reputation: 40 # Pirate: explosives reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2295,6 +2360,7 @@
     Telecrystal: 18 # goob
   categories:
   - UplinkJob
+  reputation: 45 # Pirate: explosives reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2311,6 +2377,7 @@
     Telecrystal: 60 # goob
   categories:
   - UplinkJob
+  reputation: 45 # Pirate: allies reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2326,6 +2393,7 @@
     Telecrystal: 20 # goob
   categories:
   - UplinkJob
+  reputation: 20 # Pirate: explosives reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2344,6 +2412,7 @@
     Telecrystal: 10 # goob - Weak but very cheap
   categories:
   - UplinkJob
+  reputation: 40 # Pirate: sidearms reputation
   conditions:
     - !type:BuyerDepartmentCondition
       whitelist:
@@ -2359,6 +2428,7 @@
     Telecrystal: 16 # goob - was 20, with my buff made it 25 to be closer to minibomb -panzer well no one uses it! 16 TC better.
   categories:
   - UplinkJob
+  reputation: 45 # Pirate: explosives reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2397,6 +2467,7 @@
     Telecrystal: 40 # E-sword sidegrade - goob
   categories:
   - UplinkJob
+  reputation: 20 # Pirate: melee weapons reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2417,6 +2488,7 @@
     Telecrystal: 20 # goob
   categories:
   - UplinkJob
+  reputation: 20 # Pirate: melee weapons reputation
   conditions:
   - !type:BuyerJobCondition
     whitelist:

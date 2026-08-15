@@ -1,0 +1,51 @@
+- type: weightedRandom
+  id: PirateTraitorContractGroupStealMinor
+  weights:
+    TraitorContractAdminStampObjective: 1
+    TraitorContractRCDObjective: 1
+    TraitorContractCargoRequestObjective: 1
+    TraitorContractResearchComputerObjective: 1
+    TraitorContractCriminalRecordsObjective: 0.75
+
+- type: weightedRandom
+  id: PirateTraitorContractGroupSteal
+  weights:
+    TraitorContractCMOHyposprayObjective: 1
+    TraitorContractRDHardsuitObjective: 1
+    TraitorContractHandTeleporterObjective: 0.5
+    TraitorContractEnergyMagnumObjective: 0.75
+    TraitorContractMagbootsObjective: 1
+    TraitorContractClipboardObjective: 1
+    TraitorContractKnuckleDustersObjective: 1
+    TraitorContractCaptainIdObjective: 0.75
+    TraitorContractCaptainJetpackObjective: 0.5
+    TraitorContractCaptainGunObjective: 0.5
+    TraitorContractNukeDiskObjective: 0.2
+
+- type: weightedRandom
+  id: PirateTraitorContractGroupMurder
+  weights:
+    TraitorContractTeachRandomPersonObjective: 1
+    TraitorContractTeachRandomHeadObjective: 0.25
+    TraitorContractTeachRandomTraitorObjective: 0.2
+
+- type: weightedRandom
+  id: PirateTraitorContractGroupAssist
+  weights:
+    TraitorContractAssistObjective: 1
+
+- type: weightedRandom
+  id: PirateTraitorContractGroupSabotage
+  weights:
+    TraitorContractCritAnomalyObjective: 1
+
+- type: weightedRandom
+  id: PirateTraitorContractGroupSpecial
+  weights:
+    TraitorContractDieObjective: 1
+
+- type: weightedRandom
+  id: PirateTraitorContractGroupRansom
+  weights:
+    TraitorContractRansomRandomPersonObjective: 1
+    TraitorContractRansomRandomHeadObjective: 0.5
