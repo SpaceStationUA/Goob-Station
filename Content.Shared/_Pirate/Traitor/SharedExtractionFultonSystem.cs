@@ -64,8 +64,7 @@ public abstract class SharedExtractionFultonSystem : EntitySystem
     /// </summary>
     public bool ValidTarget(ExtractionBeaconComponent comp, EntityUid uid)
     {
-        return _whitelist.IsWhitelistPassOrNull(comp.Whitelist, uid)
-            && !_whitelist.IsBlacklistPass(comp.Blacklist, uid);
+        return _whitelist.CheckBoth(uid, comp.Blacklist, comp.Whitelist);
     }
 }
 

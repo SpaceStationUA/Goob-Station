@@ -26,8 +26,7 @@ public sealed class UplinkImplantSystem : EntitySystem
 
     private void OnImplanted(Entity<StoreContractsComponent> ent, ref ImplantImplantedEvent args)
     {
-        if (args.Implanted is not {} mob)
-            return;
+        var mob = args.Implanted;
 
         // don't overwrite if the mind is valid
         if (_reputation.GetContracts(ent.Comp.Mind) != null)
@@ -46,8 +45,7 @@ public sealed class UplinkImplantSystem : EntitySystem
 
     private void OnRemoved(Entity<StoreContractsComponent> ent, ref ImplantRemovedEvent args)
     {
-        if (args.Implanted is {} mob)
-            _actions.RemoveProvidedActions(mob, ent.Owner);
+        _actions.RemoveProvidedActions(args.Implanted, ent.Owner);
         _reputation.SetStoreMind(ent, null);
     }
 
