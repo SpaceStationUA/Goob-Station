@@ -3,6 +3,7 @@
 using Content.Client.CharacterInfo;
 using Content.Pirate.Shared.Familiar;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Utility;
 
 namespace Content.Pirate.Client.Familiar;
 
