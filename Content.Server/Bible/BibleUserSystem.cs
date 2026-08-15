@@ -2,6 +2,7 @@
 
 using Content.Goobstation.Common.Religion;
 using Content.Goobstation.Shared.Bible;
+using Content.Pirate.Common.Familiar;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Popups;
 using Content.Shared._Shitmed.Damage;
@@ -39,6 +40,8 @@ namespace Content.Server.Bible
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        // Pirate: expose the existing bible familiar relationship to the common familiar API.
+        [Dependency] private readonly CommonFamiliarSystem _familiar = default!;
 
 
         public override void Initialize()
@@ -239,6 +242,7 @@ namespace Content.Server.Bible
 
             component.Source = parent;
             summonable.Summon = uid;
+            _familiar.SetMaster(uid, parent);
         }
 
         private void AttemptSummon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent? position)
