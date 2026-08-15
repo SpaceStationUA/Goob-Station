@@ -60,7 +60,7 @@ public sealed partial class CargoSystem
         // malf client or they somehow got gibbed in jail
         if (GetEntity(args.Entity) is not { Valid: true } uid ||
             // got released already
-            !TryComp<RansomComponent>(uid, out var ransom) ||
+            !TryComp<SyndicateRansomComponent>(uid, out var ransom) ||
             // console is not on a station
             _station.GetOwningStation(ent.Owner) is not {} station ||
             !TryComp<StationBankAccountComponent>(station, out var bank) ||

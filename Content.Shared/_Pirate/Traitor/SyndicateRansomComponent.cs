@@ -7,7 +7,7 @@ namespace Content.Shared._Pirate.Traitor;
 /// This entity is being held ransom and can be purchased to teleport to the ATS.
 /// </summary>
 [RegisterComponent, Access(typeof(RansomSystem))]
-public sealed partial class RansomComponent : Component
+public sealed partial class SyndicateRansomComponent : Component
 {
     [DataField]
     public int Ransom;

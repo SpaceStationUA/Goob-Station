@@ -27,8 +27,8 @@ public sealed class RansomSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RansomComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<RansomComponent, MoveEvent>(OnMove);
+        SubscribeLocalEvent<SyndicateRansomComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SyndicateRansomComponent, MoveEvent>(OnMove);
 
         Subs.CVar(_cfg, PirateVars.MobRansom, n => _mobBase = n, true);
         Subs.CVar(_cfg, PirateVars.HumanoidRansom, n => _humanoidBase = n, true);
@@ -36,16 +36,16 @@ public sealed class RansomSystem : EntitySystem
         Subs.CVar(_cfg, PirateVars.RansomCritModifier, n => _critMod = n, true);
     }
 
-    private void OnMapInit(Entity<RansomComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<SyndicateRansomComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.Map = Transform(ent).MapID;
     }
 
-    private void OnMove(Entity<RansomComponent> ent, ref MoveEvent args)
+    private void OnMove(Entity<SyndicateRansomComponent> ent, ref MoveEvent args)
     {
         // remove ransom when its paid, or if they sneak a fulton/whatever into the jail, or get admin help
         if (Transform(ent).MapID != ent.Comp.Map)
-            RemCompDeferred<RansomComponent>(ent);
+            RemCompDeferred<SyndicateRansomComponent>(ent);
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public sealed class RansomSystem : EntitySystem
     public int RansomEntity(EntityUid uid)
     {
         var ransom = GetRansom(uid);
-        EnsureComp<RansomComponent>(uid).Ransom = ransom;
+        EnsureComp<SyndicateRansomComponent>(uid).Ransom = ransom;
         return ransom;
     }
 
@@ -87,7 +87,7 @@ public sealed class RansomSystem : EntitySystem
     public List<RansomData> GetRansoms()
     {
         _ransoms.Clear();
-        var query = EntityQueryEnumerator<RansomComponent>();
+        var query = EntityQueryEnumerator<SyndicateRansomComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
             var ent = GetNetEntity(uid);
