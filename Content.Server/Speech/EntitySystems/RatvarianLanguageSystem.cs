@@ -19,10 +19,12 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
     // Pirate: Lobotomy/Ratvarian accents must alter Cyrillic speech as well as Latin speech.
     private const string LowerLatin = "abcdefghijklmnopqrstuvwxyz";
     private const string UpperLatin = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private const string LowerUkrainian = "абвгґдеєжзиіїйклмнопрстуфхцчшщьюя";
-    private const string UpperUkrainian = "АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ";
-    private const string LowerRussian = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-    private const string UpperRussian = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+    private const string LowerCommonCyrillic = "абвгдежзийклмнопрстуфхцчшщьюя";
+    private const string UpperCommonCyrillic = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЮЯ";
+    private const string LowerUkrainianSpecific = "ґєії";
+    private const string UpperUkrainianSpecific = "ҐЄІЇ";
+    private const string LowerRussianSpecific = "ёъыэ";
+    private const string UpperRussianSpecific = "ЁЪЫЭ";
 
     // This is the word of Ratvar and those who speak it shall abide by His rules:
     /*
@@ -73,11 +75,15 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
         if (rotated != letter)
             return rotated;
 
-        rotated = RotateLetter(letter, LowerUkrainian, UpperUkrainian);
+        rotated = RotateLetter(letter, LowerCommonCyrillic, UpperCommonCyrillic);
         if (rotated != letter)
             return rotated;
 
-        return RotateLetter(letter, LowerRussian, UpperRussian);
+        rotated = RotateLetter(letter, LowerUkrainianSpecific, UpperUkrainianSpecific);
+        if (rotated != letter)
+            return rotated;
+
+        return RotateLetter(letter, LowerRussianSpecific, UpperRussianSpecific);
     }
 
     private static char RotateLetter(char letter, string lowerAlphabet, string upperAlphabet)
