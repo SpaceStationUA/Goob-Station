@@ -30,8 +30,14 @@
 - type: entity
   parent: PaperStationWarrant
   id: PaperFugitiveReport
-  name: fugitive report
+  name: fugitive report # Pirate: entity localization uses the automatic ent-* keys.
   description: An arrest warrant for a space fugitive sent from GALPOL.
+  components: # Pirate: GALPOL warrants arrive prestamped.
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: "#3db010"
+      stampedName: stamp-component-stamped-name-GALPOL
 
 - type: entity
   parent: Paper
