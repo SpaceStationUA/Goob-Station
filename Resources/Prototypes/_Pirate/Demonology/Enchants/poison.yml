@@ -20,6 +20,7 @@
       solution:
         maxVol: 1
     - type: SolutionRegeneration
+      solution: melee
       generated:
         reagents:
         - ReagentId: Amatoxin

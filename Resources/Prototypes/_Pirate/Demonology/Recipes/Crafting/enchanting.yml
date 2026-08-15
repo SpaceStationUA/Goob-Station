@@ -13,18 +13,22 @@
   parent: BaseDemonology
   id: EnchantScroll
   graph: EnchantedScroll
+  targetNode: finish
 
 - type: construction
   parent: BaseDemonology
   id: BloodVial
   graph: DemonBlood
+  targetNode: finish
 
 - type: construction
   parent: BaseDemonology
   id: CraftInk
   graph: RandomInk
+  targetNode: finish
 
 - type: construction
   parent: BaseDemonology
   id: DefaceBible
   graph: DefaceBible
+  targetNode: finish

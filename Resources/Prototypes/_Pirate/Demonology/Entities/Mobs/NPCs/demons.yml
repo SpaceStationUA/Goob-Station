@@ -161,6 +161,7 @@
     solution:
       maxVol: 5
   - type: SolutionRegeneration
+    solution: melee
     generated:
       reagents:
       - ReagentId: Honk
@@ -468,6 +469,7 @@
     solution:
       maxVol: 10
   - type: SolutionRegeneration
+    solution: melee
     generated:
       reagents:
       # Pirate: Trauma's UnstableCompound reagent is unavailable in this branch.
@@ -562,6 +564,7 @@
     solution:
       maxVol: 10
   - type: SolutionRegeneration
+    solution: melee
     generated:
       reagents:
       - ReagentId: UnstableMutagen
@@ -694,6 +697,7 @@
     solution:
       maxVol: 10
   - type: SolutionRegeneration
+    solution: melee
     generated:
       reagents:
       - ReagentId: ChloralHydrate
@@ -855,6 +859,7 @@
     solution:
       maxVol: 10
   - type: SolutionRegeneration
+    solution: melee
     generated:
       reagents:
       - ReagentId: Gold
@@ -906,6 +911,7 @@
     solution:
       maxVol: 10
   - type: SolutionRegeneration
+    solution: melee
     generated:
       reagents:
       - ReagentId: Impedrezene
@@ -1040,6 +1046,7 @@
     solution:
       maxVol: 13
   - type: SolutionRegeneration
+    solution: melee
     generated:
       reagents:
       - ReagentId: MindbreakerToxin

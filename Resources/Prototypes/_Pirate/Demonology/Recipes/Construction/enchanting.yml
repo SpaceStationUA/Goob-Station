@@ -14,18 +14,22 @@
   parent: BaseDemonologyRune
   id: EnchantingRune
   graph: EnchantingRune
+  targetNode: finish
 
 - type: construction
   parent: BaseDemonologyRune
   id: MinorSummoning
   graph: MinorSummoning
+  targetNode: finish
 
 - type: construction
   parent: BaseDemonologyRune
   id: MediumSummoning
   graph: MediumSummoning
+  targetNode: finish
 
 - type: construction
   parent: BaseDemonologyRune
   id: MajorSummoning
   graph: MajorSummoning
+  targetNode: finish
