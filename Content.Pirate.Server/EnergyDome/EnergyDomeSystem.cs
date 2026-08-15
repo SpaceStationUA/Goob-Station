@@ -22,6 +22,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
 
 namespace Content.Pirate.Server.EnergyDome;
 
@@ -246,12 +247,24 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
     private void OnParentChanged(Entity<EnergyDomeGeneratorComponent> generator, ref EntParentChangedMessage args)
     {
-        //To do: taking the active barrier in hand for some reason does not manage to change the parent in this case,
-        //and the barrier is not turned off.
-        //
-        //Laying down works well (-_-)
-        if (GetProtectedEntity(generator) != generator.Comp.DomeParentEntity)
-            TurnOff(generator, false);
+        if (!generator.Comp.Enabled)
+            return;
+
+        var generatorUid = generator.Owner;
+
+        // Container transfers briefly expose an intermediate parent. Check after the move is complete
+        // so moving an active generator between a hand, pocket, and carried storage keeps it enabled.
+        Timer.Spawn(0, () =>
+        {
+            if (!TryComp<EnergyDomeGeneratorComponent>(generatorUid, out var component) ||
+                !component.Enabled ||
+                GetProtectedEntity(generatorUid) == component.DomeParentEntity)
+            {
+                return;
+            }
+
+            TurnOff((generatorUid, component), false);
+        });
     }
 
     private void OnComponentRemove(Entity<EnergyDomeGeneratorComponent> generator, ref ComponentRemove args)
