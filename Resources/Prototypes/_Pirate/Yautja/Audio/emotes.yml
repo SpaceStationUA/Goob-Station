@@ -1,6 +1,6 @@
 ﻿- type: emote
   id: GoobYautjaClick
-  name: Клацання Яутжа
+  name: "Клацання Яутжа"
   category: Vocal
   icon: Interface/Emotes/click.png
   available: false
@@ -11,7 +11,7 @@
 
 - type: emote
   id: GoobYautjaRoar
-  name: Рев Яутжа
+  name: "Рев Яутжа"
   category: Vocal
   icon: Interface/Actions/scream.png
   available: false
@@ -22,7 +22,7 @@
 
 - type: emote
   id: GoobYautjaLaugh
-  name: Сміх Яутжа
+  name: "Сміх Яутжа"
   category: Vocal
   icon: Interface/Emotes/laugh.png
   available: false
@@ -33,7 +33,7 @@
 
 - type: emote
   id: GoobYautjaGrowl
-  name: Ричання Яутжа
+  name: "Ричання Яутжа"
   category: Vocal
   icon: Interface/Emotes/chitter.png
   available: false
@@ -44,7 +44,7 @@
 
 - type: emote
   id: GoobYautjaPain
-  name: Сквік болю Яутжа
+  name: "Сквік болю Яутжа"
   category: Vocal
   icon: Interface/Emotes/cry.png
   available: false
@@ -55,7 +55,7 @@
 
 - type: emote
   id: GoobYautjaDistract
-  name: Відволікаючий звук Яутжа
+  name: "Відволікаючий звук Яутжа"
   category: Vocal
   icon: Interface/Emotes/click.png
   available: false
@@ -67,7 +67,7 @@
 
 - type: emote
   id: GoobYautjaDeathCry
-  name: Передсмертний крик Яутжа
+  name: "Передсмертний крик Яутжа"
   category: Vocal
   icon: Interface/Emotes/deathgasp.png
   available: false
@@ -78,7 +78,7 @@
 
 - type: emote
   id: GoobYautjaDeathLaugh
-  name: Передсмертний сміх Яутжа
+  name: "Передсмертний сміх Яутжа"
   category: Vocal
   icon: Interface/Emotes/deathgasp.png
   available: false

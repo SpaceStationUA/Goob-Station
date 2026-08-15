@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseAction
   id: ActionYautjaToggleClaws
-  name: Extend Claws
-  description: Extend or retract the wrist blades built into your bracer.
+  name: "Висунути кігті"
+  description: "Висуває або ховає наручні леза, вбудовані у ваш наруч."
   components:
   - type: Action
     icon:
@@ -17,8 +17,8 @@
 - type: entity
   parent: BaseAction
   id: ActionYautjaToggleShield
-  name: Extend Shield
-  description: Extend or retract the wrist shield built into your bracer.
+  name: "Розгорнути щит"
+  description: "Висуває або ховає наручний щит, вбудований у ваш наруч."
   components:
   - type: Action
     icon:
@@ -33,8 +33,8 @@
 - type: entity
   parent: BaseAction
   id: ActionYautjaToggleCloak
-  name: Cloak
-  description: Toggles full cloaking. Stays invisible while moving or being hit. Requires a Yautja cloak in the backpack slot.
+  name: "Маскування"
+  description: "Перемикає повне маскування. Ви залишаєтесь невидимими під час руху або коли вас вдаряють. Потрібен плащ Яутжа в слоті рюкзака."
   components:
   - type: Action
     icon:
@@ -49,8 +49,8 @@
 - type: entity
   parent: BaseAction
   id: ActionYautjaSelfDestruct
-  name: Self Destruct
-  description: Initiates the bracer self-destruct protocol. Detonates with macro-bomb force after the countdown.
+  name: "Самознищення"
+  description: "Запускає протокол самознищення наруча. Після зворотного відліку вибухає з потужністю макробомби."
   components:
   - type: Action
     priority: -20
@@ -63,8 +63,8 @@
 - type: entity
   parent: BaseAction
   id: ActionYautjaObservationProjection
-  name: Psionic Projection
-  description: Leave your body as an incorporeal observer. Use the return action to return to your body.
+  name: "Псіонічна проєкція"
+  description: "Покиньте тіло як безтілесний спостерігач. Скористайтеся дією повернення, щоб повернутися до тіла."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -76,8 +76,8 @@
 - type: entity
   parent: ActionMindSwapReturn
   id: ActionYautjaObservationReturn
-  name: Return to Body
-  description: Return from the observation projection to your body.
+  name: "Повернутися до тіла"
+  description: "Поверніться з проєкції спостереження до свого тіла."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action

@@ -1,9 +1,9 @@
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseClothingRadio]
   id: ClothingOuterHardsuitTCAF
-  name: тактичний скафандр TCAF
+  name: "тактичний скафандр TCAF"
   suffix: TCAF
-  description: Стандартний тактичний скафандр, що використовується Збройними силами Тау-Кита. Зроблений з тонких листів пластитану він забезпечує базовий захист, а також захист від вибухів та високого тиску.
+  description: "Стандартний тактичний скафандр, який використовують збройні сили Тау-Кита. Виготовлений із тонких листів пластитану, він забезпечує базовий захист, зокрема від вибухів і високого тиску."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/_BieselRepublic/OuterClothing/Hardsuits/TCAF_tacsuit.rsi

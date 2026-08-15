@@ -1,8 +1,8 @@
 - type: entity
   id: HolosignRadiationBlocking
   parent: BaseHolosign
-  name: holographic radiation barrier
-  description: A barrier of hard light that blocks light and radiation, but nothing else.
+  name: "голографічний радіаційний бар'єр"
+  description: "Бар'єр із твердого світла, що блокує світло й радіацію, але не перешкоджає руху."
   components:
   - type: Sprite
     sprite: _Pirate/Nuclear/Structures/Holo/radiation.rsi

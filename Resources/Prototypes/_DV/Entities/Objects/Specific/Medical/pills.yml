@@ -1,8 +1,8 @@
 - type: entity
-  name: sanctus sal
+  name: "санктус-сіль"
   parent: Pill
   id: PillSanctusSal
-  description: A long-lasting drug which prevents and shields from psionic usage.
+  description: "Тривалодіючий препарат, який запобігає використанню псіонічних сил і захищає від них."
   components:
   - type: SolutionContainerManager
     solutions:
