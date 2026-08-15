@@ -1026,4 +1026,9 @@ MagazinePistolMindbreaker: MagazinePistolCryptobiolin
 SpawnMobGoidaBot: SpawnMobPotyzhnobot
 PinkHandcuffs: null
 AsimovCircuitBoard: CrewsimovCircuitBoard
+# Pirate: random medical vendor variations.
+VendingMachineMedical: RandomVendingMedical
+VendingMachineMedicalBase: RandomVendingMedicalCivilian
+VendingMachineWallMedical: RandomVendingMedicalWall
+VendingMachineWallMedicalCivilian: RandomVendingMedicalCivilianWall
 # PIRATE END
