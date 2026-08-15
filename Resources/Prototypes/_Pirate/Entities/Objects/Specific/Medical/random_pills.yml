@@ -105,6 +105,8 @@
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillOminousPill
+  - type: StaticPrice
+    price: 5
 
 # It's technically safer/more reliable than Strange Pills, but as a result, you don't get as much. You also barely get any syndicate chems.
 - type: weightedRandomFillSolution
@@ -213,6 +215,8 @@
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillWeirdPill
+  - type: StaticPrice
+    price: 5
 
 # It has an equal chance of everything, with quantities better than the Ominous Pill. Truly, a legendary mains pull.
 - type: weightedRandomFillSolution
@@ -295,3 +299,5 @@
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillGoldenPill
+  - type: StaticPrice
+    price: 5

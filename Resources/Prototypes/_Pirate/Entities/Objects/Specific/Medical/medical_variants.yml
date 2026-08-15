@@ -15,11 +15,14 @@
     sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
     state: bluebrutepack2
   - type: Item
-    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
-    heldPrefix: bluebrutepack
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: brutepack
   - type: Stack
     stackType: DeforestBrutePack
     count: 15
+  - type: StackPrice
+    price: 5
   - type: Healing
     damageContainers:
     - Biological
@@ -69,12 +72,15 @@
     sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
     state: blueointment3
   - type: Item
-    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
-    heldPrefix: blueointment
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: ointment
     storedRotation: 45
   - type: Stack
     stackType: DeforestOintment
     count: 15
+  - type: StackPrice
+    price: 5
   - type: Healing
     damageContainers:
     - Biological
@@ -126,11 +132,14 @@
     sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
     state: redbrutepack2
   - type: Item
-    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
-    heldPrefix: redbrutepack
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: brutepack
   - type: Stack
     stackType: SyndicateBrutePack
     count: 10
+  - type: StackPrice
+    price: 5
   - type: Healing
     damageContainers:
     - Biological
@@ -180,12 +189,15 @@
     sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
     state: redointment3
   - type: Item
-    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
-    heldPrefix: redointment
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: ointment
     storedRotation: 45
   - type: Stack
     stackType: SyndicateOintment
     count: 10
+  - type: StackPrice
+    price: 5
   - type: Healing
     damageContainers:
     - Biological
@@ -237,11 +249,14 @@
     sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
     state: yellowbrutepack2
   - type: Item
-    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
-    heldPrefix: yellowbrutepack
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: brutepack
   - type: Stack
     stackType: GoldBrutePack
     count: 10
+  - type: StackPrice
+    price: 5
   - type: Healing
     damageContainers:
     - Biological
@@ -291,12 +306,15 @@
     sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
     state: yellowointment3
   - type: Item
-    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
-    heldPrefix: yellowointment
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: ointment
     storedRotation: 45
   - type: Stack
     stackType: GoldOintment
     count: 10
+  - type: StackPrice
+    price: 5
   - type: Healing
     damageContainers:
     - Biological
