@@ -111,7 +111,7 @@
 
 # Mantis lighter
 - type: entity
-  parent: [FlippoLighter, BaseAntiPsionicWeapon]
+  parent: [FlippoLighter, BaseAntiPsionicWeapon, BaseMantisContraband]
   id: FlippoLighterMantis
   name: mantis lighter
   description: "A glossy lighter sculpted from chips of mnemolith, housing an eidolite pyramid that draws energy from the noosphere. The flame gutters strangely, as if aware of what it burns."
