@@ -14,7 +14,7 @@ public sealed partial class GlimmerSourceComponent : Component
     /// <summary>
     /// Since glimmer is an int, we'll do it like this.
     /// </summary>
-    [DataField] public float SecondsPerGlimmer = 10f;
+    [DataField] public float SecondsPerGlimmer = 20f;
 
     /// <summary>
     /// True if it produces glimmer, false if it subtracts it.
