@@ -5,6 +5,7 @@ using Content.Server.Roles;
 using Content.Shared._Pirate.Reputation;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 
 namespace Content.Server._Pirate.Objectives.Systems;
 

@@ -4,6 +4,7 @@ using Content.Server.Roles;
 using Content.Shared._Pirate.Reputation;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Random;
 
@@ -51,7 +52,7 @@ public sealed class AssistRandomContractSystem : EntitySystem
 
             foreach (var obj in contracts.Comp.Objectives)
             {
-                if (obj is {} uid && _whitelist.IsBlacklistFailOrNull(ent.Comp.Blacklist, uid))
+                if (obj is {} uid && _whitelist.IsWhitelistFailOrNull(ent.Comp.Blacklist, uid))
                     return true; // has at least 1 objective to pick
             }
 
@@ -70,8 +71,10 @@ public sealed class AssistRandomContractSystem : EntitySystem
         _available.Clear();
         foreach (var obj in contracts.Comp.Objectives)
         {
-            if (obj is {} uid && _whitelist.IsBlacklistFailOrNull(ent.Comp.Blacklist, uid))
-                _available.Add(uid);
+            if (obj is not {} uid || !_whitelist.IsWhitelistFailOrNull(ent.Comp.Blacklist, uid))
+                continue;
+
+            _available.Add(uid);
         }
 
         // just incase the target selection fails
