@@ -16,9 +16,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Minibomb
-    maxIntensity: 50
+    maxIntensity: 30 # Pirate edit - was 50
     intensitySlope: 20
-    totalIntensity: 100
+    totalIntensity: 25 # Pirate edit - was 100
     canCreateVacuum: false
   - type: TriggerOnSignal
   - type: DeviceLinkSink
