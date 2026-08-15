@@ -16,6 +16,7 @@
   name: Syndicate Marshal Role
   components:
   - type: MindRole
+    antag: true
     antagPrototype: SyndicateMarshal
 
 - type: entity
