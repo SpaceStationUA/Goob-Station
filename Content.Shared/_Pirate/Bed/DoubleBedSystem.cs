@@ -95,7 +95,6 @@ public sealed class DoubleBedSystem : EntitySystem
 
         if (HasComp<DoubleBedSheetComponent>(args.Used))
         {
-            // A double bedsheet covers the lower half of the bed and does not use the clicked side.
             _placeableSurface.SetPositionOffset(ent, ent.Comp.RightBedsheetOffset, surface);
             return;
         }
