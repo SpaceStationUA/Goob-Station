@@ -9,6 +9,7 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas.Systems;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.IdentityManagement;
 
@@ -51,9 +52,9 @@ public sealed partial class IdentitySystem
         HandleFaceMutilationTraumaChanged(uid, args.TraumaType);
     }
 
-    private void HandleFaceMutilationTraumaChanged(EntityUid uid, TraumaType traumaType)
+    private void HandleFaceMutilationTraumaChanged(EntityUid uid, ProtoId<TraumaTypePrototype> traumaType)
     {
-        if (traumaType != TraumaType.FaceMutilation)
+        if (traumaType != TraumaSystem.FaceMutilation)
             return;
 
         QueueIdentityUpdateForWoundable(uid);
@@ -74,7 +75,7 @@ public sealed partial class IdentitySystem
             return false;
 
         return _bodySystem.GetBodyChildrenOfType(uid, BodyPartType.Head, body)
-            .Any(head => _trauma.HasWoundableTrauma(head.Id, TraumaType.FaceMutilation));
+            .Any(head => _trauma.HasWoundableTrauma(head.Id, TraumaSystem.FaceMutilation));
     }
 
     private void OnPirateTransformSpeakerName(EntityUid uid, IdentityComponent component, ref TransformSpeakerNameEvent args)

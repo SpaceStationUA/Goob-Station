@@ -68,8 +68,11 @@ public sealed partial class HealthChange : EntityEffectBase<HealthChange>
     [DataField]
     public TargetBodyPart TargetPart = TargetBodyPart.All;
 
+    // Respect wound heal-blockers/floors by default so a broken-bone limb can't be fully healed by chems
+    // Set true on a specific reagent to bypass.
     [DataField]
-    public bool IgnoreBlockers = true;
+    public bool IgnoreBlockers;
+    // Goobstation-end
 
     [DataField]
     public TemperatureScaling? ScaleByTemperature;

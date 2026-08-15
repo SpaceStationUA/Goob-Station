@@ -1,3 +1,15 @@
+- type: traumaType
+  id: FaceMutilation
+  severityGate: 0
+  target: Woundable
+  traumaEntity: FaceMutilation
+  causes:
+  - !type:WoundSeverityCause
+    allowedParts:
+    - Head
+    chance: !type:FaceMutilationChance
+  treatment: !type:SurgicalTreatment
+
 - type: entity
   id: FaceMutilation
   components:
