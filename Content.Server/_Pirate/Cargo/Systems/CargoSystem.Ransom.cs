@@ -1,4 +1,5 @@
 using Content.Server.Cargo.Components;
+using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared._Pirate.Traitor;
 using Content.Shared.Bed.Sleep;
@@ -11,6 +12,7 @@ using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Cargo.Systems;
@@ -21,6 +23,7 @@ namespace Content.Server.Cargo.Systems;
 public sealed partial class CargoSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
@@ -93,6 +96,9 @@ public sealed partial class CargoSystem
             $"{ToPrettyString(user):user} paid the ransom of ${cost} for {ToPrettyString(uid)} with balance at {balance}");
 
         UpdateBankAccount((station, bank), -cost, CreateAccountDistribution((station, bank)));
+
+        if (TryComp<ActorComponent>(uid, out var actor))
+            _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("syndicate-ransom-memory-loss"));
 
         // announce it so everyone knows
         var msg = Loc.GetString("syndicate-ransom-return-announcement", ("station", trade));

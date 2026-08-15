@@ -8,7 +8,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Popups;
 using Content.Shared.Salvage.Fulton;
@@ -22,7 +21,6 @@ public sealed class ExtractionFultonSystem : SharedExtractionFultonSystem
 {
     [Dependency] private readonly ExtractConditionSystem _extractCondition = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MobStateSystem _mob = default!;
     [Dependency] private readonly RansomConditionSystem _ransomCondition = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
@@ -137,12 +135,6 @@ public sealed class ExtractionFultonSystem : SharedExtractionFultonSystem
 
         if (_ransomCondition.FindObjective(mind, target) != null)
         {
-            if (!_mob.IsAlive(target))
-            {
-                Popup.PopupEntity(Loc.GetString("extraction-fulton-dead"), target, user);
-                return false;
-            }
-
             if (!TryComp<CuffableComponent>(target, out var cuffable) ||
                 !_cuffable.IsCuffed((target, cuffable)))
             {
