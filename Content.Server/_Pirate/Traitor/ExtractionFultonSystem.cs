@@ -2,6 +2,8 @@ using Content.Server._Pirate.Objectives.Systems;
 using Content.Server.Objectives.Systems;
 using Content.Shared._Pirate.Traitor;
 using Content.Shared.Charges.Systems;
+using Content.Shared.Cuffs;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
@@ -24,6 +26,7 @@ public sealed class ExtractionFultonSystem : SharedExtractionFultonSystem
     [Dependency] private readonly RansomConditionSystem _ransomCondition = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
+    [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedFultonSystem _fulton = default!;
@@ -87,6 +90,12 @@ public sealed class ExtractionFultonSystem : SharedExtractionFultonSystem
         if (args.Cancelled || args.Target is not {} target || GetEntity(args.Beacon) is not {} beacon)
             return;
 
+        // Revalidate the objective and restraints after the do-after so the target cannot be uncuffed during it.
+        if (_mind.GetMind(args.User) is not {} mindId ||
+            !TryComp<MindComponent>(mindId, out var mind) ||
+            !CanExtractPopup((mindId, mind), args.User, target))
+            return;
+
         if (!_charges.TryUseCharge(ent.Owner))
             return;
 
@@ -131,6 +140,13 @@ public sealed class ExtractionFultonSystem : SharedExtractionFultonSystem
             if (!_mob.IsAlive(target))
             {
                 Popup.PopupEntity(Loc.GetString("extraction-fulton-dead"), target, user);
+                return false;
+            }
+
+            if (!TryComp<CuffableComponent>(target, out var cuffable) ||
+                !_cuffable.IsCuffed((target, cuffable)))
+            {
+                Popup.PopupEntity(Loc.GetString("extraction-fulton-not-cuffed"), target, user);
                 return false;
             }
 

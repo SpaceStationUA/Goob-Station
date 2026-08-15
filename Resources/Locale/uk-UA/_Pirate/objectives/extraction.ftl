@@ -1,5 +1,6 @@
 extraction-fulton-not-target = Це не потрібно викрадати.
 extraction-fulton-dead = Ціль має бути живою для викрадення!
+extraction-fulton-not-cuffed = Ціль має бути закована в кайданки!
 extraction-fulton-no-destination = Місце призначення не знайдено!
 extraction-fulton-anchored = Спочатку це потрібно від'єднати.
 extraction-fulton-verb-text = Прикріпити фултон
