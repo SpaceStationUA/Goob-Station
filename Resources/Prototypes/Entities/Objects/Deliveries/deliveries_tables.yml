@@ -67,18 +67,8 @@
     - !type:GroupSelector
       weight: 7
       children:
-      - id: MailRobustToolsSpam
-      - id: MailNanotrasenSpam
-      - id: MailSyndicateSpam
-      - id: MailScienceSpiderClanSpam
-      - id: MailAllAccessSpam
-      - id: MailCentcommRetributionSpam
-      - id: MailAlternativeDimensionSpam
-      - id: MailNarsieCultSpam
-      - id: MailRageCageSpam
-      - id: MailVoyageAdvertisementSpam
-      - id: MailEvilLizardSpam
-      - id: MailParentsNeedMoneySpam
+      - id: MailSpamLetter # Pirate: one localized prototype replaces the numbered spam IDs.
+        weight: 12
       - id: MailSELFSpamLetter # Pirate: SELF
         weight: 0.4
 
