@@ -340,8 +340,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_actions.Count == 0)
             return;
 
-        _savedActions[entity] = new(_actions);
-        _sawmill.Debug($"Saved actions for entity {entity}");
+        // Pirate: Keep the first snapshot until the corresponding load completes. Multiple removal events can
+        // arrive during one equipment transition, and replacing it with a partially updated bar loses order.
+        if (_savedActions.TryAdd(entity, new(_actions)))
+            _sawmill.Debug($"Saved actions for entity {entity}");
     }
 
     private void OnActionsLoaded(EntityUid entity)
@@ -359,8 +361,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (!_savedActions.TryGetValue(entity, out var savedActions))
             return;
-        if (savedActions.Count == 0 || _actions.Count == 0 || _actions.SequenceEqual(savedActions))
+        if (savedActions.Count == 0 || _actions.Count == 0)
             return;
+
+        if (_actions.SequenceEqual(savedActions))
+        {
+            _savedActions.Remove(entity);
+            return;
+        }
         var metaQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
         var actionQuery = EntityManager.GetEntityQuery<ActionComponent>();
 
