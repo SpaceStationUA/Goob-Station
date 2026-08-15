@@ -22,6 +22,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
 
 namespace Content.Pirate.Server.EnergyDome;
 
