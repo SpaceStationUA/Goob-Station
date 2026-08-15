@@ -71,20 +71,28 @@ public sealed class ReputationSystem : EntitySystem
         if (GetContracts(ent.Comp.Mind) is not {} contracts)
             return;
 
+        // A mind can have both a PDA and an uplink implant. Losing one store
+        // should not invalidate contracts that remain available through the other.
+        contracts.Comp.Stores.Remove(ent.Owner);
+        if (contracts.Comp.Stores.Count != 0)
+            return;
+
         // if the PDA is cremated or eaten by a singulo or something,
         // delete all the offerings and fail the active contracts
-        foreach (var uid in contracts.Comp.Offerings)
+        for (var i = 0; i < contracts.Comp.Offerings.Count; i++)
         {
-            Del(uid);
+            Del(contracts.Comp.Offerings[i]);
+            contracts.Comp.Offerings[i] = null;
+            contracts.Comp.OfferingSlots[i] = new OfferingSlot();
         }
 
         foreach (var obj in contracts.Comp.Objectives)
         {
-            ContractFailed(contracts, obj);
+            if (obj is {} objective)
+                TryFailContract(contracts, objective);
         }
 
-        // don't try to pay TC to this store now that it's deleted
-        contracts.Comp.Stores.Remove(ent.Owner);
+        Dirty(contracts);
     }
 
     private void OnMapInit(Entity<ContractsComponent> ent, ref MapInitEvent args)
