@@ -1,0 +1,27 @@
+- type: entity
+  parent: [ AdvancedJetInjector, BaseMedicalContraband ]
+  id: DeforestJetInjector
+  name: DeForest jet injector
+  description: A modern high-quality injector with a smaller capacity and fast injection.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/deforest_jetinjector.rsi
+    layers:
+    - state: jetinjector_base
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: jetinjector_filled1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: Item
+    sprite: _Pirate/Objects/Specific/Medical/deforest_jetinjector.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 10
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+  - type: Injector
+    activeModeProtoId: DeforestJetInjectorDynamicMode
+    allowedModes:
+    - DeforestJetInjectorDynamicMode
+    - DeforestJetInjectorInjectMode

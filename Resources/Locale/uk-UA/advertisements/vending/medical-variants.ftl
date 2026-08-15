@@ -1,0 +1,29 @@
+advertisement-interdyne-1 = Рятуйте життя!
+advertisement-interdyne-2 = Найкраще для вашого травмпункту.
+advertisement-interdyne-3 = Лише найгостріші інструменти.
+advertisement-interdyne-4 = Натуральні трави!
+advertisement-interdyne-5 = Це вбиває!
+advertisement-interdyne-6 = Хіба не хочете ще?
+advertisement-interdyne-7 = Понг!
+advertisement-interdyne-8 = Не допускайте передозування людей!
+advertisement-interdyne-9 = Передозуйте людей!
+
+advertisement-deforest-1 = Рятуйте життя!
+advertisement-deforest-2 = Найкраще для вашого медбею.
+advertisement-deforest-3 = Лише найчистіші інструменти.
+advertisement-deforest-4 = Високоякісні ін'єктори!
+advertisement-deforest-5 = Це рятує життя!
+advertisement-deforest-6 = Хіба не хочете трохи?
+advertisement-deforest-7 = Біп!
+advertisement-deforest-8 = Не допускайте передозування людей!
+advertisement-deforest-9 = Передозуйте людей!
+
+advertisement-nanomedgold-1 = Рятуйте життя! -ДЕЛЮКС-
+advertisement-nanomedgold-2 = Найкраще для вашого розкішного медбею.
+advertisement-nanomedgold-3 = Лише найкращі інструменти.
+advertisement-nanomedgold-4 = Хімікати класу люкс!
+advertisement-nanomedgold-5 = Це рятує життя.
+advertisement-nanomedgold-6 = Хіба не хочете трохи?
+advertisement-nanomedgold-7 = Бам!
+advertisement-nanomedgold-8 = Не допускайте передозування людей!
+advertisement-nanomedgold-9 = Передозуйте людей!

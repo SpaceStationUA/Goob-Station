@@ -1,0 +1,353 @@
+# Pirate medical vendor variants.
+
+## DeForest bruise packs
+- type: entity
+  name: DeForest bruise pack
+  description: DeForest-grade bruise packs for all your needs.
+  parent: BaseHealingItem
+  id: DeforestBrutePack
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
+    state: bluebrutepack2
+  - type: Item
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: brutepack
+  - type: Stack
+    stackType: DeforestBrutePack
+    count: 15
+  - type: StackPrice
+    price: 5
+  - type: Healing
+    damageContainers:
+    - Biological
+    - Skeleton
+    delay: 1.6
+    damage:
+      groups:
+        Brute: -24
+    healingBeginSound:
+      path: /Audio/Items/Medical/brutepack_begin.ogg
+    healingEndSound:
+      path: /Audio/Items/Medical/brutepack_end.ogg
+
+- type: entity
+  name: DeForest bruise pack
+  description: DeForest-grade bruise packs for all your needs. The blue ones are supposedly rare.
+  parent: DeforestBrutePack
+  id: DeforestBrutePack1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: bluebrutepack
+  - type: Stack
+    stackType: DeforestBrutePack
+    count: 1
+
+- type: stack
+  parent: BaseSmallStack
+  id: DeforestBrutePack
+  name: stack-deforestbrutepack
+  icon: { sprite: /Textures/_Pirate/Objects/Specific/Medical/medical_variants.rsi, state: bluebrutepack }
+  spawn: DeforestBrutePack1
+  maxCount: 15
+
+## DeForest ointments
+- type: entity
+  name: DeForest ointment
+  description: DeForest's soothing ointment treats severe burns but does nothing for caustic burns.
+  parent: BaseHealingItem
+  id: DeforestOintment
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Ointment
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
+    state: blueointment3
+  - type: Item
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: ointment
+    storedRotation: 45
+  - type: Stack
+    stackType: DeforestOintment
+    count: 15
+  - type: StackPrice
+    price: 5
+  - type: Healing
+    damageContainers:
+    - Biological
+    - Skeleton
+    delay: 1.6
+    damage:
+      types:
+        Heat: -8
+        Cold: -8
+        Shock: -8
+    healingBeginSound:
+      path: /Audio/Items/Medical/ointment_begin.ogg
+    healingEndSound:
+      path: /Audio/Items/Medical/ointment_end.ogg
+
+- type: entity
+  name: DeForest ointment
+  description: DeForest's soothing ointment treats severe burns but does nothing for caustic burns. The blue ones are supposedly rare.
+  parent: DeforestOintment
+  id: DeforestOintment1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: blueointment
+  - type: Stack
+    stackType: DeforestOintment
+    count: 1
+
+- type: stack
+  parent: BaseSmallStack
+  id: DeforestOintment
+  name: stack-deforestointment
+  icon: { sprite: /Textures/_Pirate/Objects/Specific/Medical/medical_variants.rsi, state: blueointment }
+  spawn: DeforestOintment1
+  maxCount: 15
+
+## Interdyne bruise packs
+- type: entity
+  name: Interdyne bruise pack
+  description: Interdyne-grade bruise packs for all your needs.
+  parent: BaseHealingItem
+  id: SyndicateBrutePack
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
+    state: redbrutepack2
+  - type: Item
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: brutepack
+  - type: Stack
+    stackType: SyndicateBrutePack
+    count: 10
+  - type: StackPrice
+    price: 5
+  - type: Healing
+    damageContainers:
+    - Biological
+    - Skeleton
+    delay: 1.6
+    damage:
+      groups:
+        Brute: -36
+    healingBeginSound:
+      path: /Audio/Items/Medical/brutepack_begin.ogg
+    healingEndSound:
+      path: /Audio/Items/Medical/brutepack_end.ogg
+
+- type: entity
+  name: Interdyne bruise pack
+  description: Interdyne-grade bruise packs for all your needs. The red ones are supposedly rare.
+  parent: SyndicateBrutePack
+  id: SyndicateBrutePack1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: redbrutepack
+  - type: Stack
+    stackType: SyndicateBrutePack
+    count: 1
+
+- type: stack
+  parent: BaseSmallStack
+  id: SyndicateBrutePack
+  name: stack-interdynebrutepack
+  icon: { sprite: /Textures/_Pirate/Objects/Specific/Medical/medical_variants.rsi, state: redbrutepack }
+  spawn: SyndicateBrutePack1
+  maxCount: 10
+
+## Interdyne ointments
+- type: entity
+  name: Interdyne ointment
+  description: Interdyne's special blend treats severe burns but does nothing for caustic burns.
+  parent: BaseHealingItem
+  id: SyndicateOintment
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Ointment
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
+    state: redointment3
+  - type: Item
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: ointment
+    storedRotation: 45
+  - type: Stack
+    stackType: SyndicateOintment
+    count: 10
+  - type: StackPrice
+    price: 5
+  - type: Healing
+    damageContainers:
+    - Biological
+    - Skeleton
+    delay: 1.6
+    damage:
+      types:
+        Heat: -12
+        Cold: -12
+        Shock: -12
+    healingBeginSound:
+      path: /Audio/Items/Medical/ointment_begin.ogg
+    healingEndSound:
+      path: /Audio/Items/Medical/ointment_end.ogg
+
+- type: entity
+  name: Interdyne ointment
+  description: Interdyne's special blend treats severe burns but does nothing for caustic burns. The red ones are supposedly rare.
+  parent: SyndicateOintment
+  id: SyndicateOintment1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: redointment
+  - type: Stack
+    stackType: SyndicateOintment
+    count: 1
+
+- type: stack
+  parent: BaseSmallStack
+  id: SyndicateOintment
+  name: stack-interdyneointment
+  icon: { sprite: /Textures/_Pirate/Objects/Specific/Medical/medical_variants.rsi, state: redointment }
+  spawn: SyndicateOintment1
+  maxCount: 10
+
+## NanoMed GOLD bruise packs
+- type: entity
+  name: gold bruise pack
+  description: Limited-edition golden bruise packs.
+  parent: BaseHealingItem
+  id: GoldBrutePack
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
+    state: yellowbrutepack2
+  - type: Item
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: brutepack
+  - type: Stack
+    stackType: GoldBrutePack
+    count: 10
+  - type: StackPrice
+    price: 5
+  - type: Healing
+    damageContainers:
+    - Biological
+    - Skeleton
+    delay: 1.6
+    damage:
+      groups:
+        Brute: -48
+    healingBeginSound:
+      path: /Audio/Items/Medical/brutepack_begin.ogg
+    healingEndSound:
+      path: /Audio/Items/Medical/brutepack_end.ogg
+
+- type: entity
+  name: gold bruise pack
+  description: Limited-edition golden bruise packs. They're exceedingly rare. Treasure them.
+  parent: GoldBrutePack
+  id: GoldBrutePack1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: yellowbrutepack
+  - type: Stack
+    stackType: GoldBrutePack
+    count: 1
+
+- type: stack
+  parent: BaseSmallStack
+  id: GoldBrutePack
+  name: stack-goldbrutepack
+  icon: { sprite: /Textures/_Pirate/Objects/Specific/Medical/medical_variants.rsi, state: yellowbrutepack }
+  spawn: GoldBrutePack1
+  maxCount: 10
+
+## NanoMed GOLD ointments
+- type: entity
+  name: gold ointment
+  description: Limited-edition golden ointment. It heals mild caustic burns too.
+  parent: BaseHealingItem
+  id: GoldOintment
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Ointment
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/medical_variants.rsi
+    state: yellowointment3
+  - type: Item
+    # Pirate: the variant RSI only contains world sprites; use the base in-hand states.
+    sprite: Objects/Specific/Medical/medical.rsi
+    heldPrefix: ointment
+    storedRotation: 45
+  - type: Stack
+    stackType: GoldOintment
+    count: 10
+  - type: StackPrice
+    price: 5
+  - type: Healing
+    damageContainers:
+    - Biological
+    - Skeleton
+    delay: 1.6
+    damage:
+      types:
+        Heat: -16
+        Cold: -16
+        Shock: -16
+        Caustic: -8
+    healingBeginSound:
+      path: /Audio/Items/Medical/ointment_begin.ogg
+    healingEndSound:
+      path: /Audio/Items/Medical/ointment_end.ogg
+
+- type: entity
+  name: gold ointment
+  description: Limited-edition golden ointment. It heals mild caustic burns too. They're exceedingly rare. Treasure it.
+  parent: GoldOintment
+  id: GoldOintment1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: yellowointment
+  - type: Stack
+    stackType: GoldOintment
+    count: 1
+
+- type: stack
+  parent: BaseSmallStack
+  id: GoldOintment
+  name: stack-goldointment
+  icon: { sprite: /Textures/_Pirate/Objects/Specific/Medical/medical_variants.rsi, state: yellowointment }
+  spawn: GoldOintment1
+  maxCount: 10
