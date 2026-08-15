@@ -65,8 +65,6 @@ ent-FugitiveEscapeObjective = Уникайте правосуддя
 
 ent-FugitiveStash = схованка Утікача
     .desc = Ці припаси допомогли вам утекти з в'язниці й мають допомогти залишитися на волі.
-fugitive-stash-window-title = Схованка Утікача
-fugitive-stash-window-description = Оберіть {$maxCount} комплект, який допоможе уникнути переслідування. Змінити вибір буде неможливо.
 
 fugitive-set-hitman-name = комплект кілера
 fugitive-set-hitman-description = Заряджений Viper, запасний магазин і коричнева валіза для озброєного самозахисту.

@@ -37,7 +37,7 @@
     stampState: paper_stamp-centcom
     stampedBy:
     - stampedColor: "#3db010"
-      stampedName: GALPOL
+      stampedName: stamp-component-stamped-name-GALPOL
 
 - type: entity
   parent: Paper

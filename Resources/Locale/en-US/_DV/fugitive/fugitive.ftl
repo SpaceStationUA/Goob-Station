@@ -65,8 +65,6 @@ ent-FugitiveEscapeObjective = Evade law enforcement
 
 ent-FugitiveStash = fugitive's stash
     .desc = These supplies got you out of jail and hopefully they will keep you out of it.
-fugitive-stash-window-title = Fugitive Stash
-fugitive-stash-window-description = Choose {$maxCount} kit to help you elude the authorities. The choice is final.
 
 fugitive-set-hitman-name = hitman's kit
 fugitive-set-hitman-description = A loaded Viper, a spare magazine, and a brown briefcase for armed self-defense.
