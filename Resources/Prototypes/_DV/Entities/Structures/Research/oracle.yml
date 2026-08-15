@@ -1,3 +1,11 @@
+# Weighted table of research point disks the oracle throws out as a reward.
+- type: weightedRandomEntity
+  id: OracleRewardDisks
+  weights:
+    ResearchDisk5000: 85
+    ResearchDisk10000: 13
+    ResearchDisk20000: 2
+
 - type: entity
   parent: BaseStructure
   id: Oracle
