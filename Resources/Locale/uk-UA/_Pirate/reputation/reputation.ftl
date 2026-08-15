@@ -20,6 +20,7 @@ ent-SyndieFulton = Фултон Синдикату
 ent-MobHumanSyndicateMarshal = наглядач Синдикату
     .suffix = Людина, наглядач
 ent-WarpPointSyndieJail = точка переміщення до в'язниці Синдикату
+    .desc = Точка для переміщення до в'язниці Синдикату.
     .suffix = В'язниця Синдикату
 ent-MarkerSyndieJailLoot = маяк здобичі фултона Синдикату
 ent-SyndicateMarshalSpawner = точка появи наглядача Синдикату
