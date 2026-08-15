@@ -5,14 +5,13 @@
   id: EnergyDomeTurtle
   parent: BaseItem
   name: BR-40c "Turtle"
-  description: A heavy two-handed energy barrier with very low passive power consumption. It can be linked with a multitool.
+  description: A compact one-handed energy barrier with very low passive power consumption. It can be linked with a multitool.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Tools/EnergyDome/reinhardt.rsi
     layers:
     - state: icon
   - type: InteractionOutline
-  - type: MultiHandedItem
   - type: Fixtures
     fixtures:
       fix1:
@@ -25,7 +24,7 @@
         restitution: 0.3
         friction: 0.2
   - type: Item
-    size: Ginormous
+    size: Small
   - type: HeldSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
@@ -44,12 +43,12 @@
           - PowerCell
           - PowerCellSmall
   - type: EnergyDomeGenerator
-    damageEnergyDraw: 5
+    damageEnergyDraw: 1.67
     domePrototype: EnergyDomeMediumBlue
     canDeviceNetworkUse: true
   - type: PowerCellDraw
     enabled: false
-    drawRate: 2
+    drawRate: 0.67
     useCharge: 0
   - type: UseDelay
     delay: 10
