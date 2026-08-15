@@ -46,7 +46,8 @@ public static class ListingLocalisationHelpers
         var _rand = IoCManager.Resolve<IRobustRandom>();
 
         var discountFluff = _rand.Pick(_protoMan.Index<DatasetPrototype>("UplinkDiscountFluff").Values);
-        var discountString = $"{Loc.GetString("store-sales-amount", ("amount", listingData.DiscountValue))} {discountFluff}";
+        // Pirate: Pass the percentage as text so Fluent does not apply numeric grouping.
+        var discountString = $"{Loc.GetString("store-sales-amount", ("amount", listingData.DiscountValue.ToString()))} {discountFluff}";
 
         if (listingData.DiscountValue > 0)
             desc += "\n" + discountString;

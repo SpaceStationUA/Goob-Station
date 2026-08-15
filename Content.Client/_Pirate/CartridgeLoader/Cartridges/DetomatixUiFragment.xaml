@@ -1,0 +1,83 @@
+<cartridges:DetomatixUiFragment
+    xmlns="https://spacestation14.io"
+    xmlns:cartridges="clr-namespace:Content.Client._Pirate.CartridgeLoader.Cartridges"
+    HorizontalExpand="True"
+    VerticalExpand="True">
+
+    <PanelContainer Name="RootPanel" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+
+            <PanelContainer Name="HeaderPanel" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Name="TitleLabel"
+                           Text="{Loc detomatix-title}"
+                           HorizontalExpand="True" />
+                    <Label Name="ChargesCounter" HorizontalAlignment="Right" />
+                </BoxContainer>
+            </PanelContainer>
+
+            <BoxContainer Orientation="Vertical"
+                          Margin="11 10 11 8"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 4">
+                    <Label Name="ChargesCaption"
+                           Text="{Loc detomatix-charges-caption}"
+                           HorizontalExpand="True" />
+                    <Label Name="ChargesValue" HorizontalAlignment="Right" />
+                </BoxContainer>
+                <ProgressBar Name="ChargesBar" MinHeight="7" MaxHeight="7" HorizontalExpand="True" />
+
+                <LineEdit Name="SearchBar" Margin="0 11 0 0" HorizontalExpand="True" />
+
+                <BoxContainer Name="ListSection"
+                              Orientation="Vertical"
+                              HorizontalExpand="True"
+                              VerticalExpand="True">
+                    <BoxContainer Name="ListCaption"
+                                  Orientation="Horizontal"
+                                  HorizontalExpand="True"
+                                  Margin="0 11 0 5" />
+
+                    <ScrollContainer HScrollEnabled="False"
+                                     HorizontalExpand="True"
+                                     VerticalExpand="True">
+                        <BoxContainer Name="Entries"
+                                      Orientation="Vertical"
+                                      VerticalAlignment="Top"
+                                      HorizontalExpand="True" />
+                    </ScrollContainer>
+                </BoxContainer>
+
+                <BoxContainer Name="EmptyState"
+                              Orientation="Vertical"
+                              HorizontalExpand="True"
+                              VerticalExpand="True"
+                              Visible="False">
+                    <Control VerticalExpand="True" />
+                    <PanelContainer Name="EmptyRule"
+                                    HorizontalAlignment="Center"
+                                    MinSize="34 2"
+                                    Margin="0 0 0 13" />
+                    <Label Name="EmptyTitle" HorizontalAlignment="Center" />
+                    <Label Name="EmptyHint"
+                           HorizontalAlignment="Center"
+                           Margin="0 5 0 0" />
+                    <Control VerticalExpand="True" />
+                </BoxContainer>
+            </BoxContainer>
+
+            <PanelContainer Name="HintBar" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Name="HintText"
+                           Text="{Loc detomatix-warning}"
+                           HorizontalExpand="True" />
+                    <Label Name="HintBrand"
+                           Text="{Loc detomatix-brand}"
+                           HorizontalAlignment="Right" />
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </PanelContainer>
+</cartridges:DetomatixUiFragment>

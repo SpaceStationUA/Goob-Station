@@ -242,3 +242,17 @@
     Telecrystal: 1
   categories:
   - UplinkPointless
+
+- type: listing
+  id: UplinkDetomatixCartridge
+  name: uplink-detomatix-name
+  description: uplink-detomatix-desc
+  productEntity: DetomatixCartridge
+  icon: { sprite: _Pirate/Objects/Devices/cartridge_detomatix.rsi, state: cart-detomatix }
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkExplosives
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
