@@ -1,6 +1,7 @@
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas.Systems;
+using Content.Shared._Shitmed.Medical.Surgery.Wounds;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
 using Content.Shared.Body.Part;
 
