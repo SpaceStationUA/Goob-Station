@@ -53,7 +53,7 @@
     speedModifier: 5
     pryPowered: true
     useSound: /Audio/Machines/airlock_creaking.ogg
-  - type: LanguageSpeaker
+  - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
     - Eldritch
@@ -156,10 +156,10 @@
           DemonSoulFragment:
             min: 0
             max: 1
-  - type: Solution
-    id: melee
-    solution:
-      maxVol: 5
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 5
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -464,10 +464,10 @@
           DemonSoulFragment:
             min: 1
             max: 2
-  - type: Solution
-    id: melee
-    solution:
-      maxVol: 10
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -559,10 +559,10 @@
           DemonSoulFragment:
             min: 1
             max: 3
-  - type: Solution
-    id: melee
-    solution:
-      maxVol: 10
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -692,10 +692,10 @@
           DemonSoulFragment:
             min: 2
             max: 3
-  - type: Solution
-    id: melee
-    solution:
-      maxVol: 10
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -854,10 +854,10 @@
           DemonSoulFragment:
             min: 4
             max: 5
-  - type: Solution
-    id: melee
-    solution:
-      maxVol: 10
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -906,10 +906,10 @@
           DemonSoulFragment:
             min: 5
             max: 6
-  - type: Solution
-    id: melee
-    solution:
-      maxVol: 10
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -992,7 +992,7 @@
   - type: Devourer
     foodPreferenceWhitelist:
       components:
-      - HumanoidProfile
+      - HumanoidAppearance
     stomachStorageWhitelist:
       components:
       - MobState
@@ -1004,6 +1004,7 @@
       - MobState
       - Door
       - Item
+      tags:
       - Wall
 
 - type: entity
@@ -1041,10 +1042,10 @@
             min: 3
             max: 5
   - type: MovementIgnoreGravity
-  - type: Solution
-    id: melee
-    solution:
-      maxVol: 13
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 13
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -1093,6 +1094,7 @@
             max: 5
   - type: Puller
     needsHands: false
+  - type: GrabIntent
     stageChangeCooldown: 0.1
     softGrabSpeedModifier: 1
     hardGrabSpeedModifier: 1
@@ -1321,7 +1323,7 @@
   - type: Devourer
     foodPreferenceWhitelist:
       components:
-      - HumanoidProfile
+      - HumanoidAppearance
     stomachStorageWhitelist:
       components:
       - MobState

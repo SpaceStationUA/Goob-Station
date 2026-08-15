@@ -1,34 +1,31 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-- type: construction
-  abstract: true
-  id: BaseDemonology
-  targetNode: finish
-  category: construction-category-demonology
-  objectType: Item
-  # Pirate: Trauma's MagicalLiteracy knowledge system is unavailable.
-  useQuality: false
+# Pirate: construction prototypes have no inheritance or MagicalLiteracy quality gate here.
 
 - type: construction
-  parent: BaseDemonology
   id: EnchantScroll
   graph: EnchantedScroll
   targetNode: finish
+  category: construction-category-demonology
+  objectType: Item
 
 - type: construction
-  parent: BaseDemonology
   id: BloodVial
   graph: DemonBlood
   targetNode: finish
+  category: construction-category-demonology
+  objectType: Item
 
 - type: construction
-  parent: BaseDemonology
   id: CraftInk
   graph: RandomInk
   targetNode: finish
+  category: construction-category-demonology
+  objectType: Item
 
 - type: construction
-  parent: BaseDemonology
   id: DefaceBible
   graph: DefaceBible
   targetNode: finish
+  category: construction-category-demonology
+  objectType: Item

@@ -12,13 +12,13 @@
       - MeleeWeapon
     blacklist:
       components:
-      - Solution
+      - SolutionContainerManager
   - type: ComponentsEnchant
     added:
-    - type: Solution
-      id: melee
-      solution:
-        maxVol: 1
+    - type: SolutionContainerManager
+      solutions:
+        melee:
+          maxVol: 1
     - type: SolutionRegeneration
       solution: melee
       generated:
