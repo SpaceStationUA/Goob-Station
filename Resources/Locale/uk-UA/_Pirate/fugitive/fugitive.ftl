@@ -60,7 +60,7 @@ fugitive-crime-22 = Неправдиве повідомлення
 fugitive-crime-23 = Неповага до суду
 fugitive-crime-24 = Викрадення особистості
 
-ent-FugitiveEscapeObjective = Уникайте правосуддя
+ent-FugitiveEscapeObjective = Уникайте правоохоронців
     .desc = Змішайтеся з натовпом, виживіть і покиньте станцію на евакуаційному шатлі.
 
 ent-FugitiveStash = схованка Утікача
