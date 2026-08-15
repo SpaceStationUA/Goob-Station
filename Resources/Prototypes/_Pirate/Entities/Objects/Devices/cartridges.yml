@@ -60,3 +60,25 @@
     access:
     - [ "Quartermaster" ]
     - [ "Cargo" ]
+
+- type: entity
+  parent: BaseItem
+  id: DetomatixCartridge
+  name: картридж D.E.T.O.M.A.T.I.X.
+  description: Червоно-чорний картридж із літерою S на задній стороні
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/cartridge_detomatix.rsi
+    state: cart-detomatix
+  - type: Icon
+    sprite: _Pirate/Objects/Devices/cartridge_detomatix.rsi
+    state: cart-detomatix
+  - type: UIFragment
+    ui: !type:DetomatixUi
+  - type: DetomatixCartridge
+  - type: NonInstallableProgram
+  - type: Cartridge
+    programName: detomatix-program-name
+    icon:
+      sprite: Objects/Weapons/Bombs/c4.rsi
+      state: icon
