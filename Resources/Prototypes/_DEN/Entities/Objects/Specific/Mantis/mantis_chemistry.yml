@@ -153,11 +153,11 @@
 - type: entity # Not obtainable by players, unless we want to prevent them from making heartbreaker out of their roundstart mindbreaker in MantisCaseChemicals
   parent: [PillCanisterMantis, BaseMantisContraband]
   id: PillCanisterSoulbreakerToxinMantis
-  suffix: soulbreaker toxin, 5
+  suffix: soulbreaker toxin, 10
   description: "Permanently removes psionics when ingested. Not to be taken lightly. Four times stronger than mindbreaker toxin."
   components:
   - type: Label
-    currentLabel: soulbreaker toxin 5u
+    currentLabel: soulbreaker toxin 10u
   - type: Sprite
     layers:
     - state: pill_canister
@@ -165,7 +165,7 @@
   - type: StorageFill
     contents:
     - id: PillSoulbreakerToxin
-      amount: 5
+      amount: 10
 
 # Cryptobiolin pill + canister (temporary psionic insulation)
 - type: entity

@@ -179,3 +179,10 @@
     back:
     - TrainWhistle
   groupBy: "Trinkets"
+
+- type: loadout
+  id: PlushieNilaMil
+  storage:
+    back:
+    - PlushieNilaMil
+  groupBy: "plushies"

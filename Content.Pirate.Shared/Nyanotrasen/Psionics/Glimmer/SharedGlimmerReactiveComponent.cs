@@ -68,7 +68,7 @@ namespace Content.Shared.Psionics.Glimmer
         /// by this factor to get the glimmer generation per second.
         /// </summary>
         [DataField]
-        public float GlimmerGenerationFactor = 0.001f;
+        public float GlimmerGenerationFactor = 0.0005f;
 
         /// <summary>
         /// Noises to play on failed turn off.
