@@ -23,12 +23,6 @@
     - BoneDamage
     - VeinsDamage
     - NerveDamage
-    allowedTraumas:
-    - Dismemberment
-    - OrganDamage
-    - BoneDamage
-    - VeinsDamage
-    - NerveDamage
     traumasChances:
       Dismemberment: 0.5
       OrganDamage: 0.5

@@ -4327,19 +4327,39 @@ Entries:
 - author: AgentMaper
   changes:
     - type: Add
-      message: Додана резервна ID на Perdition Island, Piramide Station та OmegaTP
+      message: >-
+        Додано резервну ID-картку на острові «Пердішн», станції «Піраміда» та
+        «Омега ТП»
     - type: Add
-      message: Доданий подрібнювач на OmegaTP
+      message: Додано подрібнювач на «Омега ТП»
     - type: Tweak
-      message: Voidstein Island переіменовано на Funny Island
+      message: Острів «Войдштейн» перейменовано на «Кумедний острів»
   id: 431
   time: '2026-08-14T20:47:06.0000000+00:00'
 - author: CyberLanos
   changes:
     - type: Add
       message: >-
-        кастомні гости стискаються до розміру в 28x28 підкселів (можна підтюнити
-        через sudo cvar pirate.custom_ghost_max_size). Більше ніяких фанер на
-        пів екрана
+        Користувацькі привиди стискаються до розміру 28x28 пікселів (можна
+        налаштувати через sudo cvar pirate.custom_ghost_max_size). Більше ніяких
+        фанер на пів екрана
   id: 432
   time: '2026-08-14T20:47:59.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Add
+      message: Додано midround ghost-role Утікача з шістьма комплектами спорядження.
+  id: 433
+  time: '2026-08-15T09:10:50.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Tweak
+      message: Оновлено upstream.
+  id: 434
+  time: '2026-08-15T09:28:07.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Add
+      message: випадкові виробники медичних автоматів
+  id: 435
+  time: '2026-08-15T09:48:09.0000000+00:00'

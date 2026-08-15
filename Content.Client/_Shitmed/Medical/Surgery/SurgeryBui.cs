@@ -189,20 +189,27 @@ public sealed class SurgeryBui : BoundUserInterface
 
             var restoredPart = false;
 
-            foreach (var surgeryId in surgeries)
-            {
-                if (_system.GetSingleton(surgeryId) is not { } surgery ||
-                    !_entities.TryGetComponent(surgery, out SurgeryComponent? surgeryComp))
-                    continue;
+            if (oldPart != entity)
+                continue;
 
-                if (oldPart == entity && oldSurgery?.Proto == surgeryId)
+            var restored = false;
+            if (oldSurgery != null)
+            {
+                foreach (var surgeryId in surgeries)
                 {
+                    if (oldSurgery.Value.Proto != surgeryId
+                        || _system.GetSingleton(surgeryId) is not { } surgery
+                        || !_entities.TryGetComponent(surgery, out SurgeryComponent? surgeryComp))
+                        continue;
+
                     OnSurgeryPressed((surgery, surgeryComp), netEntity, surgeryId);
-                    restoredPart = true;
+                    restored = true;
+                    break;
                 }
             }
 
-            if (oldPart == entity && oldSurgery == null)
+            restoredPart = restored;
+            if (!restored)
             {
                 OnPartPressed(netEntity, surgeries);
                 restoredPart = true;

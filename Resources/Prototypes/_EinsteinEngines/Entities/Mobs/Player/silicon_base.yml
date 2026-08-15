@@ -372,3 +372,4 @@
       penaltyTime: 0
     - type: CyberdeckHackable # Pirate - Cyberdeck
       delay: 8
+    - type: CosmicCenserTarget # DeltaV - Cosmic Cult
