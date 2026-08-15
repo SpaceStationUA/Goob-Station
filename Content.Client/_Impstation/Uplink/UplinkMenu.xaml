@@ -24,6 +24,7 @@
                         Text="{Loc 'store-ui-refund-text'}" />
                     <Button
                         Name="ContractsButton"
+                        Access="Public"
                         HorizontalAlignment="Right"
                         Visible="False"
                         Text="{Loc 'pda-bound-user-interface-contracts-title'}" />
