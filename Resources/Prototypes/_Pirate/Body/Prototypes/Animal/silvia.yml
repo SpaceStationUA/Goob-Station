@@ -3,7 +3,7 @@
 
 - type: body
   id: SpaceCobraSilvia
-  name: "Сільвія"
+  name: "Silvia"
   root: chest
   slots:
     chest:

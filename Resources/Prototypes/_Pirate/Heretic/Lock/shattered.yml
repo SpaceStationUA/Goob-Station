@@ -2,7 +2,7 @@
 
 - type: body
   id: Shattered
-  name: "розколотий"
+  name: shattered
   root: chest
   slots:
     head:
@@ -161,7 +161,7 @@
 - type: entity
   parent: [ChestHuman, PartShattered]
   id: ChestShattered
-  name: "розколоті груди"
+  name: shattered chest
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -176,7 +176,7 @@
 - type: entity
   parent: [GroinHuman, PartShattered]
   id: GroinShattered
-  name: "розколотий пах"
+  name: shattered groin
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -191,7 +191,7 @@
 - type: entity
   parent: [HeadHuman, PartShattered]
   id: HeadShattered
-  name: "розколота голова"
+  name: shattered head
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -206,7 +206,7 @@
 - type: entity
   parent: [LeftArmHuman, PartShattered]
   id: LeftArmShattered
-  name: "розколота ліва рука"
+  name: left shattered arm
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -221,7 +221,7 @@
 - type: entity
   parent: [RightArmHuman, PartShattered]
   id: RightArmShattered
-  name: "розколота права рука"
+  name: right shattered arm
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -236,7 +236,7 @@
 - type: entity
   parent: [LeftHandHuman, PartShattered]
   id: LeftHandShattered
-  name: "розколота ліва кисть"
+  name: left shattered hand
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -251,7 +251,7 @@
 - type: entity
   parent: [RightHandHuman, PartShattered]
   id: RightHandShattered
-  name: "розколота права кисть"
+  name: right shattered hand
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -266,7 +266,7 @@
 - type: entity
   parent: [LeftLegHuman, PartShattered]
   id: LeftLegShattered
-  name: "розколота ліва нога"
+  name: left shattered leg
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -281,7 +281,7 @@
 - type: entity
   parent: [RightLegHuman, PartShattered]
   id: RightLegShattered
-  name: "розколота права нога"
+  name: right shattered leg
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -296,7 +296,7 @@
 - type: entity
   parent: [LeftFootHuman, PartShattered]
   id: LeftFootShattered
-  name: "розколота ліва ступня"
+  name: left shattered foot
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -311,7 +311,7 @@
 - type: entity
   parent: [RightFootHuman, PartShattered]
   id: RightFootShattered
-  name: "розколота права ступня"
+  name: right shattered foot
   components:
   - type: Sprite
     sprite: _Pirate/Heretic/Mobs/Shattered/parts.rsi
@@ -330,7 +330,7 @@
   - MobAtmosStandard
   - MobFlammable
   id: MobShattered
-  name: "розколотий повсталий"
+  name: shattered risen
   components:
   - type: HumanoidAppearance
     species: Shattered

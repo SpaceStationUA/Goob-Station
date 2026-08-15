@@ -268,7 +268,7 @@
   parent: BasePlushie
   id: PlushieNilaMil
   name: "плюшева слаймолюдка-ботанік"
-  description: "Кумедна іграшка вашої слизької знайомої! На етикетці написано: «Міла Ніл. Така зла...»"
+  description: Смішна іграшка вашої слизової знайомої! На етикетці написано "Міла Ніл.  So evil...""
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Fun/Plushies/toys.rsi

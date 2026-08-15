@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseStructure
   id: Turbine
-  name: "газова турбіна"
-  description: "Велика турбіна, що виробляє електроенергію з гарячого газу."
+  name: gas turbine
+  description: A large turbine used for generating power using hot gas.
   components:
   - type: Sprite
     sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/turbine.rsi
@@ -129,8 +129,8 @@
 - type: entity
   id: TurbineSmall
   parent: Turbine
-  name: "мала газова турбіна"
-  description: "Мала турбіна, що виробляє електроенергію з гарячого газу."
+  name: small gas turbine
+  description: A small turbine used for generating power using hot gas.
   components:
   - type: Sprite
     sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/small_turbine.rsi
