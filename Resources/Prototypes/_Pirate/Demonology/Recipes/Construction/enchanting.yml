@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: construction
+  abstract: true
+  id: BaseDemonologyRune
+  targetNode: finish
+  category: construction-category-demonology
+  objectType: Structure
+  placementMode: SnapgridCenter
+  # Pirate: Trauma's MagicalLiteracy knowledge system is unavailable.
+  useQuality: false
+
+- type: construction
+  parent: BaseDemonologyRune
+  id: EnchantingRune
+  graph: EnchantingRune
+
+- type: construction
+  parent: BaseDemonologyRune
+  id: MinorSummoning
+  graph: MinorSummoning
+
+- type: construction
+  parent: BaseDemonologyRune
+  id: MediumSummoning
+  graph: MediumSummoning
+
+- type: construction
+  parent: BaseDemonologyRune
+  id: MajorSummoning
+  graph: MajorSummoning
