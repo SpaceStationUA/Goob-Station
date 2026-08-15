@@ -221,7 +221,6 @@
 - type: entity
   parent: BasePirateTraitorMurderObjective
   id: TraitorContractTeachRandomPersonObjective
-  description: traitor-contract-teach-person-description
   components:
   - type: Objective
     difficulty: 1.75
@@ -238,7 +237,6 @@
 - type: entity
   parent: BasePirateTraitorMurderObjective
   id: TraitorContractTeachRandomHeadObjective
-  description: traitor-contract-teach-head-description
   components:
   - type: Objective
     difficulty: 2
@@ -262,7 +260,6 @@
 - type: entity
   parent: BasePirateTraitorMurderObjective
   id: TraitorContractTeachRandomTraitorObjective
-  description: traitor-contract-teach-traitor-description
   components:
   - type: Objective
     difficulty: 2
@@ -280,7 +277,6 @@
 - type: entity
   parent: BaseTraitorSocialObjective
   id: TraitorContractAssistObjective
-  description: traitor-contract-assist-description
   components:
   - type: Objective
     difficulty: 2.5
@@ -300,8 +296,6 @@
 - type: entity
   parent: BaseTraitorObjective
   id: TraitorContractCritAnomalyObjective
-  name: traitor-contract-crit-anomaly-name
-  description: traitor-contract-crit-anomaly-description
   components:
   - type: Objective
     difficulty: 1.5
@@ -323,7 +317,6 @@
   abstract: true
   parent: [BaseTraitorObjective, BaseRansomObjective]
   id: BasePirateTraitorRansomObjective
-  description: traitor-contract-ransom-description
   components:
   - type: Objective
     difficulty: 3
@@ -365,8 +358,6 @@
 - type: entity
   parent: BaseTraitorObjective
   id: TraitorContractDieObjective
-  name: traitor-contract-die-name
-  description: traitor-contract-die-description
   components:
   - type: Objective
     difficulty: 0.5

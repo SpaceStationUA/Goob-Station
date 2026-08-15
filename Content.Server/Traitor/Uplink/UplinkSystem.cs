@@ -49,7 +49,7 @@ public sealed class UplinkSystem : EntitySystem
             uplinkTarget = _goobUplink.FindUplinkTarget(user, preference.SearchComponents);
 
         if (uplinkTarget == null)
-            return ImplantUplink(user, balance, out uplinkTarget);
+            return ImplantUplink(user, balance);
 
         EnsureComp<UplinkComponent>(uplinkTarget.Value);
         SetUplink(user, uplinkTarget.Value, balance);
@@ -109,7 +109,7 @@ public sealed class UplinkSystem : EntitySystem
         uplinkEntity ??= _goobUplink.FindUplinkTarget(user, new[] { "Pda", "Pen" });
 
         if (uplinkEntity == null)
-            return ImplantUplink(user, balance, out _);
+            return ImplantUplink(user, balance);
 
         EnsureComp<UplinkComponent>(uplinkEntity.Value);
         SetUplink(user, uplinkEntity.Value, balance);
@@ -144,10 +144,8 @@ public sealed class UplinkSystem : EntitySystem
     /// <summary>
     /// Implant an uplink as a fallback measure if the traitor had no PDA
     /// </summary>
-    private bool ImplantUplink(EntityUid user, FixedPoint2 balance, out EntityUid? implantTarget)
+    private bool ImplantUplink(EntityUid user, FixedPoint2 balance)
     {
-        implantTarget = null;
-
         if (!_proto.Resolve<ListingPrototype>(FallbackUplinkCatalog, out var catalog))
             return false;
 
@@ -161,14 +159,13 @@ public sealed class UplinkSystem : EntitySystem
 
         var implant = _subdermalImplant.AddImplant(user, FallbackUplinkImplant);
 
-        if (implant is not {} implantUid || !HasComp<StoreComponent>(implantUid))
+        if (!HasComp<StoreComponent>(implant))
         {
             Log.Error($"Implant does not have the store component {implant}");
             return false;
         }
 
-        SetUplink(user, implantUid, balance);
-        implantTarget = implantUid;
+        SetUplink(user, implant.Value, balance);
         return true;
     }
 

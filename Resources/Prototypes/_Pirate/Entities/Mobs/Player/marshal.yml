@@ -1,3 +1,23 @@
+- type: antag
+  id: SyndicateMarshal
+  name: ghost-role-information-syndicate-marshal-name
+  objective: ghost-role-information-syndicate-marshal-description
+  antagonist: false
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 259200 # 72 hours
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 28800 # 8 hours
+
+- type: entity
+  parent: MindRoleGhostRoleNeutral
+  id: MindRoleSyndicateMarshal
+  name: Syndicate Marshal Role
+  components:
+  - type: MindRole
+    antagPrototype: SyndicateMarshal
+
 - type: entity
   parent: MobHumanSyndicateAgentBase
   id: MobHumanSyndicateMarshal
@@ -9,13 +29,7 @@
     description: ghost-role-information-syndicate-marshal-description
     rules: ghost-role-information-syndicate-marshal-rules
     mindRoles:
-    - MindRoleGhostRoleNeutral
-    requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 259200 # 72 hours
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 28800 # 8 hours
+    - MindRoleSyndicateMarshal
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ SyndicateMarshalGear ]

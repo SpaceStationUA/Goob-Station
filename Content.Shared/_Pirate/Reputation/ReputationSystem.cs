@@ -1,4 +1,5 @@
 using Content.Shared._Pirate.Objectives.Systems;
+using Content.Shared.Implants.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Objectives.Systems;
@@ -158,13 +159,21 @@ public sealed class ReputationSystem : EntitySystem
         var contracts = AddComp<ContractsComponent>(mindId);
         PickOfferings((mindId, contracts));
 
-        if (pda is not {} uid)
+        if (pda is {} uid)
+        {
+            var store = EnsureComp<StoreContractsComponent>(uid);
+            SetStoreMind((uid, store), mindId);
+            return;
+        }
+
+        if (!TryComp<ImplantedComponent>(mob, out var implanted))
             return;
 
-        // The uplink implant already carries this component. EnsureComp keeps
-        // the same store state when contracts are initialized after implantation.
-        var store = EnsureComp<StoreContractsComponent>(uid);
-        SetStoreMind((uid, store), mindId);
+        foreach (var implant in implanted.ImplantContainer.ContainedEntities)
+        {
+            if (TryComp<StoreContractsComponent>(implant, out var store))
+                SetStoreMind((implant, store), mindId);
+        }
     }
 
     public void ToggleUI(EntityUid user, EntityUid store)
