@@ -11,7 +11,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Buckle.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedBuckleSystem))]
+[Access(typeof(SharedBuckleSystem), typeof(Content.Shared._Pirate.Bed.DoubleBedSystem))] // Pirate port: двоспальні ліжка з ADT
 public sealed partial class StrapComponent : Component
 {
     /// <summary>

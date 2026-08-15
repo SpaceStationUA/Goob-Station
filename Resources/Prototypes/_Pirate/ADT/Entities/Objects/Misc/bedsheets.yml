@@ -1,0 +1,182 @@
+﻿- type: entity
+  parent: BaseItem
+  id: DoubleBedsheetBase
+  abstract: true
+  name: базова двоспальна ковдра
+  description: Велика м’яка ковдра для двоспального ліжка.
+  placement:
+    mode: SnapgridCenter
+    snap: [Bed]
+  components:
+  - type: Sprite
+    sprite: _Pirate/ADT/Objects/Misc/bedsheets_double.rsi
+    noRot: true
+  - type: Item
+    size: Small
+  - type: StaticPrice
+    price: 24
+  - type: Tag
+    tags: [Bedsheet]
+  - type: DoubleBedSheet
+
+- type: entity
+  id: DoubleBedsheetBlack
+  parent: DoubleBedsheetBase
+  name: чорна двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetblack }]
+- type: entity
+  id: DoubleBedsheetBlue
+  parent: DoubleBedsheetBase
+  name: синя двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetblue }]
+- type: entity
+  id: DoubleBedsheetBrown
+  parent: DoubleBedsheetBase
+  name: коричнева двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetbrown }]
+- type: entity
+  id: DoubleBedsheetGreen
+  parent: DoubleBedsheetBase
+  name: зелена двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetgreen }]
+- type: entity
+  id: DoubleBedsheetGrey
+  parent: DoubleBedsheetBase
+  name: сіра двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetgrey }]
+- type: entity
+  id: DoubleBedsheetOrange
+  parent: DoubleBedsheetBase
+  name: помаранчева двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetorange }]
+- type: entity
+  id: DoubleBedsheetPurple
+  parent: DoubleBedsheetBase
+  name: фіолетова двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetpurple }]
+- type: entity
+  id: DoubleBedsheetRed
+  parent: DoubleBedsheetBase
+  name: червона двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetred }]
+- type: entity
+  id: DoubleBedsheetWhite
+  parent: DoubleBedsheetBase
+  name: біла двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetwhite }]
+- type: entity
+  id: DoubleBedsheetYellow
+  parent: DoubleBedsheetBase
+  name: жовта двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetyellow }]
+
+- type: entity
+  id: DoubleBedsheetCaptain
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра капітана
+  description: Велика ковдра з емблемою Nanotrasen, виткана з революційної нитки.
+  components: [{ type: Sprite, state: double_sheetcaptain }, { type: StealTarget, stealGroup: HeadBedsheet }]
+- type: entity
+  id: DoubleBedsheetCE
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра старшого інженера
+  description: Прикрашена емблемою ключа, добре відбиває світло й не боїться плям.
+  components: [{ type: Sprite, state: double_sheetce }, { type: StealTarget, stealGroup: HeadBedsheet }]
+- type: entity
+  id: DoubleBedsheetCentcom
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра Центкому
+  description: Виткана з передових нанониток для тепла, незамінна для посадовців.
+  components: [{ type: Sprite, state: double_sheetcentcom }, { type: StealTarget, stealGroup: HeadBedsheet }]
+- type: entity
+  id: DoubleBedsheetClown
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра клоуна
+  description: Велика райдужна ковдра з маскою клоуна. Ледь пахне бананами.
+  components: [{ type: Sprite, state: double_sheetclown }]
+- type: entity
+  id: DoubleBedsheetCMO
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра головного лікаря
+  description: Стерилізована ковдра з емблемою хреста.
+  components: [{ type: Sprite, state: double_sheetcmo }, { type: StealTarget, stealGroup: HeadBedsheet }]
+- type: entity
+  id: DoubleBedsheetCosmos
+  parent: DoubleBedsheetBase
+  name: космічна двоспальна ковдра
+  description: Створена з мрій тих, хто дивиться на зорі.
+  components: [{ type: Sprite, state: double_sheetcosmos }]
+- type: entity
+  id: DoubleBedsheetCult
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра культу
+  description: Сяє зловісною потойбічною присутністю.
+  components: [{ type: Sprite, state: double_sheetcult }]
+- type: entity
+  id: DoubleBedsheetHOP
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра голови персоналу
+  description: Прикрашена емблемою ключа — для рідкісних моментів відпочинку з Іаном.
+  components: [{ type: Sprite, state: double_sheethop }, { type: StealTarget, stealGroup: HeadBedsheet }]
+- type: entity
+  id: DoubleBedsheetHOS
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра голови служби безпеки
+  description: Прикрашена емблемою щита. Злочинність не спить, але ви — ЗАКОН!
+  components: [{ type: Sprite, state: double_sheethos }, { type: StealTarget, stealGroup: HeadBedsheet }]
+- type: entity
+  id: DoubleBedsheetIan
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра Іана
+  components: [{ type: Sprite, state: double_sheetian }]
+- type: entity
+  id: DoubleBedsheetMedical
+  parent: DoubleBedsheetBase
+  name: медична двоспальна ковдра
+  description: Стерилізована ковдра для медвідсіку.
+  components: [{ type: Sprite, state: double_sheetmedical }]
+- type: entity
+  id: DoubleBedsheetMime
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра міма
+  description: Дуже заспокійлива смугаста ковдра. Під нею весь шум ніби зникає.
+  components: [{ type: Sprite, state: double_sheetmime }]
+- type: entity
+  id: DoubleBedsheetNT
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра NT
+  description: Має логотип Nanotrasen і ауру службового обов’язку.
+  components: [{ type: Sprite, state: double_sheetnt }]
+- type: entity
+  id: DoubleBedsheetQM
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра квартирмейстера
+  components: [{ type: Sprite, state: double_sheetqm }, { type: StealTarget, stealGroup: HeadBedsheet }]
+- type: entity
+  id: DoubleBedsheetRainbow
+  parent: DoubleBedsheetBase
+  name: райдужна двоспальна ковдра
+  components: [{ type: Sprite, state: double_sheetrainbow }]
+- type: entity
+  id: DoubleBedsheetRD
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра наукового керівника
+  description: Виготовлена з вогнестійкого матеріалу й прикрашена емблемою колби.
+  components: [{ type: Sprite, state: double_sheetrd }, { type: StealTarget, stealGroup: HeadBedsheet }]
+- type: entity
+  id: DoubleBedsheetSyndie
+  parent: [DoubleBedsheetBase, BaseSyndicateContraband]
+  name: двоспальна ковдра Синдикату
+  description: Має емблему Синдикату й ауру зла.
+  components: [{ type: Sprite, state: double_sheetsyndie }]
+- type: entity
+  id: DoubleBedsheetUSA
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра США
+  components: [{ type: Sprite, state: double_sheetusa }]
+- type: entity
+  id: DoubleBedsheetWiz
+  parent: DoubleBedsheetBase
+  name: двоспальна ковдра чарівника
+  description: Особлива тканина, зачарована для магічної ночі. Навіть світиться!
+  components: [{ type: Sprite, state: double_sheetwiz }]

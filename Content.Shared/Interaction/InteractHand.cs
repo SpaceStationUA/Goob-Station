@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Interaction;
 
@@ -32,10 +33,13 @@ public sealed class InteractHandEvent : HandledEntityEventArgs, ITargetedInterac
     /// </summary>
     public EntityUid Target { get; }
 
-    public InteractHandEvent(EntityUid user, EntityUid target)
+    public EntityCoordinates? ClickLocation { get; }
+
+    public InteractHandEvent(EntityUid user, EntityUid target, EntityCoordinates? clickLocation = null)
     {
         User = user;
         Target = target;
+        ClickLocation = clickLocation;
     }
 }
 
