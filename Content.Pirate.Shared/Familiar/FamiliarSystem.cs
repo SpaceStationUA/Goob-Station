@@ -65,11 +65,14 @@ public sealed class FamiliarSystem : CommonFamiliarSystem
     /// </summary>
     public bool CopyMaster(EntityUid source, EntityUid destination)
     {
-        if (_mind.GetMind(source) is { } sourceMind)
-            source = sourceMind;
-
+        // The relationship is normally stored on the source body. A mind entity is only
+        // a fallback for callers that already pass the mind itself.
         if (!_familiarQuery.TryComp(source, out var sourceComp))
-            return false;
+        {
+            if (_mind.GetMind(source) is not { } sourceMind ||
+                !_familiarQuery.TryComp(sourceMind, out sourceComp))
+                return false;
+        }
 
         var destinationComp = EnsureComp<FamiliarMasterComponent>(destination);
         destinationComp.Master = sourceComp.Master;

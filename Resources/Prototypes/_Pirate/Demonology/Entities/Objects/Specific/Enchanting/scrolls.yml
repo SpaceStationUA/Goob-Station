@@ -5,7 +5,7 @@
   parent: BasePaper
   id: BaseEnchantingScroll
   name: enchanted scroll
-  description: A scroll embuded with an enchantment. Could do any number of things.
+  description: A scroll imbued with an enchantment. Could do any number of things.
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Objects/Specific/empty_scroll.rsi

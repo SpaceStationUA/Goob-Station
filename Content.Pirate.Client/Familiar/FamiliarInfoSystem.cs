@@ -25,10 +25,10 @@ public sealed class FamiliarInfoSystem : EntitySystem
         if (_familiar.GetMasterName(args.Entity) is not { } master)
             return;
 
-        master = FormattedMessage.EscapeText(master);
         args.Controls.Add(new RichTextLabel
         {
-            Text = $"[bold]{master}[/bold] is your master, serve them faithfully!",
+            Text = Loc.GetString("familiar-master-info",
+                ("master", FormattedMessage.EscapeText(master))),
             Margin = new Thickness(8, 4)
         });
     }

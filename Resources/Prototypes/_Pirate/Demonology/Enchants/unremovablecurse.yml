@@ -10,4 +10,6 @@
     blacklist:
       components:
       - StealTarget
-  - type: Unremoveable
+  - type: ComponentsEnchant
+    added:
+    - type: Unremoveable

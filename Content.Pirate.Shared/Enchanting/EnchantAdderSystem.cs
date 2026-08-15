@@ -48,14 +48,16 @@ public sealed class EnchantAdderSystem : EntitySystem
 
     private void OnDoAfter(Entity<EnchantAdderComponent> ent, ref EnchantAdderDoAfterEvent args)
     {
-        if (args.Target is not { } target || !_enchanting.Enchant(target, ent.Comp.Enchant))
+        if (args.Cancelled || args.Handled || args.Target is not { } target ||
+            !_enchanting.Enchant(target, ent.Comp.Enchant))
             return;
 
-        _popup.PopupEntity($"You inscribe the {Name(target)} with magical ink...", target, args.User);
+        args.Handled = true;
+        _popup.PopupClient(Loc.GetString("enchant-adder-inscribe", ("target", target)), target, args.User);
         PredictedQueueDel(ent);
 
-        _meta.SetEntityName(target, ent.Comp.Name);
-        _meta.SetEntityDescription(target, ent.Comp.Desc);
+        _meta.SetEntityName(target, Loc.GetString(ent.Comp.Name));
+        _meta.SetEntityDescription(target, Loc.GetString(ent.Comp.Desc));
     }
 }
 

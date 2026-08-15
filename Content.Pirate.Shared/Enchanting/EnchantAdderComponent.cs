@@ -20,10 +20,10 @@ public sealed partial class EnchantAdderComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(1);
 
     [DataField(required: true)]
-    public string Name = string.Empty;
+    public LocId Name;
 
     [DataField(required: true)]
-    public string Desc = string.Empty;
+    public LocId Desc;
 
     [DataField]
     public EntityWhitelist? Whitelist;

@@ -4,7 +4,7 @@
   abstract: true
   parent: [BaseItem, BaseMagicalContraband]
   id: BaseInk
-  description: A vial of magical ink, can be used on a scroll to prepare an encantment or curse.
+  description: A vial of magical ink, can be used on a scroll to prepare an enchantment or curse.
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Objects/Enchanting/inks.rsi
@@ -12,7 +12,7 @@
     size: Tiny
     sprite: _Pirate/Demonology/Objects/Enchanting/inks.rsi
   - type: EnchantAdder
-    desc: A scroll embued with an enchantment. Could do any number of things.
+    desc: enchant-adder-scroll-description
     whitelist:
       tags:
       - EnchantingScroll
@@ -51,7 +51,7 @@
     state: ashartine
   - type: EnchantAdder
     enchant: EnchantSharpness
-    name: scroll of blades
+    name: enchant-scroll-sharpness
 
 - type: entity
   parent: BaseInk
@@ -63,7 +63,7 @@
     state: asimel
   - type: EnchantAdder
     enchant: EnchantFireAspect
-    name: scroll of flames
+    name: enchant-scroll-fire-aspect
 
 - type: entity
   parent: BaseInk
@@ -75,7 +75,7 @@
     state: azurapetra
   - type: EnchantAdder
     enchant: EnchantFortune
-    name: scroll of riches
+    name: enchant-scroll-fortune
 
 - type: entity
   parent: BaseInk
@@ -87,7 +87,7 @@
     state: catwink
   - type: EnchantAdder
     enchant: EnchantInsulated
-    name: scroll of electric resistance
+    name: enchant-scroll-insulated
 
 - type: entity
   parent: BaseInk
@@ -99,7 +99,7 @@
     state: endozult
   - type: EnchantAdder
     enchant: EnchantKnockback
-    name: scroll of force
+    name: enchant-scroll-knockback
 
 - type: entity
   parent: BaseInk
@@ -111,7 +111,7 @@
     state: hithine
   - type: EnchantAdder
     enchant: EnchantLavaforged
-    name: scroll of lava swimming
+    name: enchant-scroll-lavaforged
 
 - type: entity
   parent: BaseInk
@@ -123,7 +123,7 @@
     state: houndsgall
   - type: EnchantAdder
     enchant: EnchantProtection
-    name: scroll of physical resistance
+    name: enchant-scroll-protection
 
 - type: entity
   parent: BaseInk
@@ -135,7 +135,7 @@
     state: indothine
   - type: EnchantAdder
     enchant: EnchantProtFire
-    name: scroll of fire resistance
+    name: enchant-scroll-fire-protection
 
 - type: entity
   parent: BaseInk
@@ -147,7 +147,7 @@
     state: marakat
   - type: EnchantAdder
     enchant: EnchantSlippery
-    name: scroll of hatred
+    name: enchant-scroll-slippery
 
 - type: entity
   parent: BaseInk
@@ -159,7 +159,7 @@
     state: nillycant
   - type: EnchantAdder
     enchant: EnchantThorns
-    name: scroll of the sharpened flesh
+    name: enchant-scroll-thorns
 
 - type: entity
   parent: BaseInk
@@ -171,7 +171,7 @@
     state: nocimat
   - type: EnchantAdder
     enchant: EnchantUnbreaking
-    name: scroll of steel
+    name: enchant-scroll-unbreaking
 
 - type: entity
   parent: BaseInk
@@ -183,7 +183,7 @@
     state: orpimentexultant
   - type: EnchantAdder
     enchant: EnchantUnslippable
-    name: scroll of the deft runner
+    name: enchant-scroll-unslippable
 
 - type: entity
   parent: BaseInk
@@ -195,7 +195,7 @@
     state: porphyrine
   - type: EnchantAdder
     enchant: EnchantElectrified
-    name: scroll of thunder
+    name: enchant-scroll-electrified
 
 - type: entity
   parent: BaseInk
@@ -207,7 +207,7 @@
     state: posithane
   - type: EnchantAdder
     enchant: EnchantFocus
-    name: scroll of concentration
+    name: enchant-scroll-focus
 
 - type: entity
   parent: BaseInk
@@ -219,7 +219,7 @@
     state: pyroendine
   - type: EnchantAdder
     enchant: EnchantLaser
-    name: scroll of light
+    name: enchant-scroll-laser
 
 - type: entity
   parent: BaseInk
@@ -231,7 +231,7 @@
     state: raggath
   - type: EnchantAdder
     enchant: EnchantMagicProtection
-    name: scroll of magical resistance
+    name: enchant-scroll-magic-protection
 
 - type: entity
   parent: BaseInk
@@ -243,7 +243,7 @@
     state: rubiginosus
   - type: EnchantAdder
     enchant: EnchantMagnetized
-    name: scroll of magnets
+    name: enchant-scroll-magnetized
 
 - type: entity
   parent: BaseInk
@@ -255,7 +255,7 @@
     state: stargallink
   - type: EnchantAdder
     enchant: EnchantPoison
-    name: scroll of snakes
+    name: enchant-scroll-poison
 
 - type: entity
   parent: BaseInk
@@ -267,7 +267,19 @@
     state: terragall
   - type: EnchantAdder
     enchant: EnchantRotten
-    name: scroll of maggots
+    name: enchant-scroll-rotten
+
+- type: entity
+  parent: BaseInk
+  id: MagicInkUnden
+  name: unden
+  suffix: Sentience
+  components:
+  - type: Sprite
+    state: unden
+  - type: EnchantAdder
+    enchant: EnchantMagicSentience
+    name: enchant-scroll-sentience
 
 ## Curses
 
@@ -281,7 +293,7 @@
     state: perhibiate
   - type: EnchantAdder
     enchant: CurseBurning
-    name: scroll of seared flesh
+    name: enchant-scroll-burning-curse
 
 - type: entity
   parent: BaseInk
@@ -293,7 +305,7 @@
     state: perinsabate
   - type: EnchantAdder
     enchant: CurseClumsy
-    name: scroll of the jester
+    name: enchant-scroll-clumsy-curse
 
 - type: entity
   parent: BaseInk
@@ -305,7 +317,7 @@
     state: perinculate
   - type: EnchantAdder
     enchant: CurseSlowing
-    name: scroll of chains
+    name: enchant-scroll-slowing-curse
 
 - type: entity
   parent: BaseInk
@@ -317,7 +329,7 @@
     state: purpuraatramentum
   - type: EnchantAdder
     enchant: CurseGravity
-    name: scroll of the singularity
+    name: enchant-scroll-gravity-curse
 
 - type: entity
   parent: BaseInk
@@ -329,19 +341,7 @@
     state: pyrathene
   - type: EnchantAdder
     enchant: CurseInvisibility
-    name: scroll of the blinded eye
-
-- type: entity
-  parent: BaseInk
-  id: MagicInkUnden
-  name: unden
-  suffix: Sentience
-  components:
-  - type: Sprite
-    state: unden
-  - type: EnchantAdder
-    enchant: EnchantMagicSentience
-    name: scroll of mind
+    name: enchant-scroll-invisibility-curse
 
 - type: entity
   parent: BaseInk
@@ -353,7 +353,7 @@
     state: uzult
   - type: EnchantAdder
     enchant: CurseUnremovable
-    name: scroll of flesh knitting
+    name: enchant-scroll-binding-curse
 
 - type: entity
   parent: BaseInk
@@ -365,4 +365,4 @@
     state: yewgallink
   - type: EnchantAdder
     enchant: CurseVanishing
-    name: scroll of decay
+    name: enchant-scroll-vanishing-curse

@@ -14,9 +14,10 @@
     materialComposition:
       Glass: 100
       Steel: 50
-  - type: Solution
-    solution:
-      maxVol: 100
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
   - type: Sprite
     sprite: _Pirate/Demonology/Objects/Enchanting/bloodvial.rsi
     layers:
@@ -44,7 +45,7 @@
 - type: entity
   name: filled blood vial
   parent: [BaseItem, BaseMagicalContraband]
-  description: A blood vial embuded with black magic, useful for a variety of things.
+  description: A blood vial imbued with black magic, useful for a variety of things.
   id: BloodVialFull
   components:
   - type: StaticPrice

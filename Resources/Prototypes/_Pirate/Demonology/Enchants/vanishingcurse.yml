@@ -12,7 +12,4 @@
       - StealTarget
   - type: ComponentsEnchant
     added:
-    - type: FadingTimedDespawn
-      lifetime: 1
-      fadeOutTime: 180
-    # TODO: parity have it only despawn after you die
+    - type: VanishingCurse
