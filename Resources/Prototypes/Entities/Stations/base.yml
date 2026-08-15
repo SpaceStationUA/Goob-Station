@@ -133,6 +133,7 @@
   abstract: true
   components:
     - type: StationCentcomm
+    - type: SyndieJail # Pirate
 
 - type: entity
   id: BaseStationEvacuation

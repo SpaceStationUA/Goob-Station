@@ -7,3 +7,8 @@
   id: MageUtility
   name: store-category-utility
   priority: 1
+
+- type: storeCategory
+  id: UplinkObjectives
+  name: store-category-objectives
+  priority: 11

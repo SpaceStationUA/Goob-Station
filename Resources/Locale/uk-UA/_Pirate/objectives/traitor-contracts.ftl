@@ -1,0 +1,9 @@
+traitor-contract-teach-person-description = Убийте ціль і покажіть усім, що Синдикат не жартує. Достатньо, щоб вона померла один раз.
+traitor-contract-teach-head-description = Показово стратьте ціль і доведіть, що Синдикат налаштований серйозно. Достатньо однієї смерті, але підійдіть до справи творчо.
+traitor-contract-teach-traitor-description = Покажіть перебіжчику, що буває з тими, хто ставить Синдикат під сумнів. Достатньо однієї смерті, але підійдіть до справи творчо.
+traitor-contract-assist-description = Допоможіть іншому агенту Синдикату виконати один із його контрактів.
+traitor-contract-crit-anomaly-name = Дестабілізувати аномалію
+traitor-contract-crit-anomaly-description = Доведіть аномалію до критичного стану й дозвольте їй зруйнуватися.
+traitor-contract-ransom-description = Затримайте ціль і відправте її фултоном до штабу. Ми утримуватимемо її до сплати викупу.
+traitor-contract-die-name = Загинути славною смертю
+traitor-contract-die-description = Влаштуйте незабутнє видовище й загиньте в ім'я Синдикату.

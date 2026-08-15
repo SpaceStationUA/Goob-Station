@@ -2,6 +2,7 @@
 
 using Content.Shared.Cargo;
 using Content.Client.Cargo.UI;
+using Content.Shared._Pirate.Traitor; // Pirate
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
@@ -94,6 +95,7 @@ namespace Content.Client.Cargo.BUI
             };
             _menu.OnOrderApproved += ApproveOrder;
             _menu.OnOrderCanceled += RemoveOrder;
+            _menu.OnRansomPurchase += ent => SendMessage(new RansomPurchaseMessage(ent)); // Pirate
             _orderMenu.SubmitButton.OnPressed += (_) =>
             {
                 if (AddOrder())
@@ -147,6 +149,7 @@ namespace Content.Client.Cargo.BUI
 
             _menu?.UpdateStation(station);
             Populate(cState.Orders);
+            _menu?.UpdateRansoms(cState.Ransoms, BankBalance); // Pirate
         }
 
         protected override void Dispose(bool disposing)

@@ -1,0 +1,22 @@
+# Pirate contract objectives use the local Starlight lesson condition.
+- type: entity
+  abstract: true
+  parent: BaseLivingObjective
+  id: BaseExtractObjective
+  components:
+  - type: ExtractCondition
+    objectiveNoOwnerText: objective-condition-extract-title-no-owner
+    objectiveText: objective-condition-extract-title
+    descriptionText: objective-condition-extract-description
+  - type: CodeCondition
+  - type: StoreUnlocker
+    listings:
+    - SyndieFulton
+
+- type: entity
+  abstract: true
+  parent: BaseTargetObjective
+  id: BaseRansomObjective
+  components:
+  - type: CodeCondition
+  - type: RansomCondition

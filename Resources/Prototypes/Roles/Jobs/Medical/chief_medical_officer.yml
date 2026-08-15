@@ -37,6 +37,7 @@
   weight: 10
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
+  ransomModifier: 3 # Pirate: traitor ransom value
   supervisors: job-supervisors-captain
   canBeAntag: false
   guides: # goobstation

@@ -41,6 +41,8 @@
   id: Traitors
   name: guide-entry-traitors
   text: "/ServerInfo/Guidebook/Antagonist/Traitors.xml"
+  children: # Pirate
+  - Contracts
 
 - type: guideEntry
   id: NuclearOperatives

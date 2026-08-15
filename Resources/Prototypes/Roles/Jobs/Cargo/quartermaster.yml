@@ -36,6 +36,7 @@
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"
+  ransomModifier: 2 # Pirate: traitor ransom value
   supervisors: job-supervisors-captain
   #canBeAntag: false
   antagAdvantage: 75 # Goobstation
