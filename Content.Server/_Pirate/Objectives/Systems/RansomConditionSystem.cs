@@ -4,7 +4,6 @@ using Content.Server.Objectives.Systems;
 using Content.Shared._Pirate.Traitor;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Robust.Shared.Audio;
 
 namespace Content.Server._Pirate.Objectives.Systems;
@@ -17,7 +16,6 @@ public sealed class RansomConditionSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly CodeConditionSystem _codeCondition = default!;
     [Dependency] private readonly ContractObjectiveSystem _contract = default!;
-    [Dependency] private readonly MobStateSystem _mob = default!;
     [Dependency] private readonly RansomSystem _ransom = default!;
     [Dependency] private readonly TargetObjectiveSystem _targetObjective = default!;
 
@@ -45,7 +43,7 @@ public sealed class RansomConditionSystem : EntitySystem
         // TODO: put their inventory into the vault
 
         // complete the objective of the person that kidnapped them
-        if (_mob.IsAlive(ent) && extracting.Mind is {} mindId && FindObjective(mindId, ent) is {} objective)
+        if (extracting.Mind is {} mindId && FindObjective(mindId, ent) is {} objective)
             _codeCondition.SetCompleted(objective);
 
         _contract.FailContracts<RansomConditionComponent>(obj => TargetEquals(obj, ent));

@@ -3,6 +3,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Pirate.Reputation;
 
@@ -96,6 +97,12 @@ public partial record struct ContractSlot
     public string? ObjectiveTitle;
 
     /// <summary>
+    /// The icon of the current objective, or null if there is none.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? Icon;
+
+    /// <summary>
     /// When the slot gets unlocked and a new contract can be taken.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
@@ -113,6 +120,12 @@ public partial record struct OfferingSlot
     /// </summary>
     [DataField]
     public string? Title;
+
+    /// <summary>
+    /// The icon of the available objective, or null if locked.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? Icon;
 
     /// <summary>
     /// When the slot gets unlocked and a new offering is rolled.

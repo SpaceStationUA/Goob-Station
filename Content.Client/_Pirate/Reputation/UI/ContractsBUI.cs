@@ -17,18 +17,16 @@ public sealed class ContractsBUI : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<ContractsWindow>();
-        _window.Owner = Owner;
         _window.OnAccept += i => SendMessage(new ContractsAcceptMessage(i));
         _window.OnComplete += i => SendMessage(new ContractsCompleteMessage(i));
         _window.OnReject += i => SendMessage(new ContractsRejectMessage(i));
-        _window.UpdateState();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
 
-        if (state is ContractsState)
-            _window?.UpdateState();
+        if (state is ContractsState contracts)
+            _window?.UpdateState(contracts);
     }
 }

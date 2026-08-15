@@ -2,6 +2,7 @@ using Content.Shared._Pirate.Objectives.Systems;
 using Content.Shared.Implants.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -31,7 +32,6 @@ public sealed class ReputationSystem : EntitySystem
 
         SubscribeLocalEvent<ContractsComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ContractsComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<ContractsComponent, AfterAutoHandleStateEvent>(OnHandleState);
         Subs.BuiEvents<StoreContractsComponent>(ContractsUiKey.Key, subs =>
         {
             subs.Event<BoundUIOpenedEvent>(OnUIOpened);
@@ -120,13 +120,6 @@ public sealed class ReputationSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnHandleState(Entity<ContractsComponent> ent, ref AfterAutoHandleStateEvent args)
-    {
-        // update CurrentLevel for client after server changes it, so UI can use it
-        UpdateLevel(ent);
-        UpdateUI(ent);
-    }
-
     private void OnUIOpened(Entity<StoreContractsComponent> ent, ref BoundUIOpenedEvent args)
     {
         UpdateStoreUI(ent);
@@ -191,7 +184,20 @@ public sealed class ReputationSystem : EntitySystem
 
     private void UpdateStoreUI(EntityUid uid)
     {
-        _ui.SetUiState(uid, ContractsUiKey.Key, new ContractsState());
+        if (!TryComp<StoreContractsComponent>(uid, out var store) ||
+            GetContracts(store.Mind) is not {} contracts)
+        {
+            return;
+        }
+
+        var comp = contracts.Comp;
+        var level = comp.CurrentLevel?.Name.Id;
+        var state = new ContractsState(
+            comp.Reputation,
+            level,
+            new List<ContractSlot>(comp.Slots),
+            new List<OfferingSlot>(comp.OfferingSlots));
+        _ui.SetUiState(uid, ContractsUiKey.Key, state);
     }
 
     private void UpdateUI(Entity<ContractsComponent> ent)
@@ -236,7 +242,8 @@ public sealed class ReputationSystem : EntitySystem
             ent.Comp.Offerings[i] = objective;
             ent.Comp.OfferingSlots[i] = new OfferingSlot
             {
-                Title = _contract.ContractName(objective)
+                Title = _contract.ContractName(objective),
+                Icon = Comp<ObjectiveComponent>(objective).Icon
             };
             Dirty(ent);
             UpdateUI(ent);
@@ -259,6 +266,7 @@ public sealed class ReputationSystem : EntitySystem
         ent.Comp.Objectives[index] = objective;
         var slot = ent.Comp.Slots[index];
         slot.ObjectiveTitle = _contract.ContractName(objective);
+        slot.Icon = Comp<ObjectiveComponent>(objective).Icon;
         ent.Comp.Slots[index] = slot;
         Dirty(ent);
 

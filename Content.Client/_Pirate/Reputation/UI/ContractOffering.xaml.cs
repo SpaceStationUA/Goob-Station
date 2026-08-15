@@ -36,6 +36,11 @@ public sealed partial class ContractOffering : BoxContainer
         else
             Title.Visible = false;
 
+        if (slot.Icon is {} icon)
+            Icon.SetFromSpriteSpecifier(icon);
+        else
+            Icon.Visible = false;
+
         UnlockLabel.NextUnlock = slot.NextUnlock;
         UnlockLabel.OnUnlock += () => OnUnlock?.Invoke();
 
