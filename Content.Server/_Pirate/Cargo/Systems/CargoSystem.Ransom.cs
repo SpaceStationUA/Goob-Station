@@ -1,12 +1,12 @@
 using Content.Server.Cargo.Components;
 using Content.Server.Chat.Systems;
-using Content.Server.Station.Components;
 using Content.Shared._Pirate.Traitor;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Database;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.Station.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
