@@ -1,0 +1,35 @@
+- type: entity
+  parent: BaseItem
+  id: BlacksmithMetalFile
+  name: напилок
+  description: Грубий металевий напилок для обробки заготовок на ковадлі.
+  components:
+  - type: Sprite
+    sprite: _Oskarrr/blacksmith/file.rsi
+    state: file
+  - type: Item
+    size: Small
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.2
+    damage:
+      types:
+        Slash: 4
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+
+- type: entity
+  parent: BaseGuidebook
+  id: BookBlacksmithGuide
+  name: довідник коваля
+  description: Товстий том про ковадло. Використай у руці, щоб вивчити кування (5 с, потім 5 хв).
+  components:
+  - type: Sprite
+    sprite: _Oskarrr/blacksmith/guidebook.rsi
+    layers:
+    - state: guidebook
+  - type: GuideHelp
+    openOnActivation: false
+    guides:
+    - Blacksmith
+  - type: BlacksmithGuidebook

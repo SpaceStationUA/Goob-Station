@@ -37,6 +37,7 @@
   description: Toggles full cloaking. Stays invisible while moving or being hit. Requires a Yautja cloak in the backpack slot.
   components:
   - type: Action
+    useDelay: 3
     icon:
       sprite: _Pirate/Yautja/cape_full.rsi
       state: icon

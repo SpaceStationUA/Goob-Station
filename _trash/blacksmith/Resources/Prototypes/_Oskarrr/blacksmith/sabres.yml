@@ -1,0 +1,86 @@
+# Ковані шаблі (на базі капітанських, без згадок капітана).
+- type: entity
+  parent: BaseSword
+  id: BlacksmithSabre
+  name: шабля
+  description: Церемоніальна шабля з гострим лезом. Добре збалансована для швидких ударів.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/sabre_drop.ogg
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/captain_sabre.rsi
+  - type: MeleeWeapon
+    animationRotation: -95
+    wideAnimationRotation: -135
+    heavyStaminaCost: 2.5
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 19
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Reflect
+    reflectProb: 0.3
+    spread: 90
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/captain_sabre_storage_64x.rsi
+    shape:
+    - 0,0,0,3
+  - type: Tag
+    tags:
+    - CaptainSabre
+  - type: DisarmMalus
+
+- type: entity
+  parent: BlacksmithSabre
+  id: BlacksmithSabreHeavy
+  name: важка шабля
+  description: Важка й товста шабля кавалерійського типу. Погано ріже, але має чудову пробивну силу. Оздоблена золотом і різьбленням на руків'ї.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/Captain_sabres/heavy.rsi
+  - type: MeleeWeapon
+    canWideSwing: false
+    attackRate: 1.7
+    damage:
+      types:
+        Piercing: 21
+      armorPenetration: 0.30
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Reflect
+    reflectProb: 0
+  - type: Tag
+    tags:
+    - CaptainSabreHeavy
+
+- type: entity
+  parent: BlacksmithSabre
+  id: BlacksmithSabreShashka
+  name: шашка
+  description: Давня легка шашка. Швидка й гостра, але з поганим пробиттям.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/Captain_sabres/shashka.rsi
+  - type: MeleeWeapon
+    attackRate: 1.6
+    damage:
+      types:
+        Slash: 21
+      armorPenetration: -0.15
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Reflect
+    reflectProb: 0.35
+  - type: Item
+    storedSprite:
+      state: icon
+      sprite: _Pirate/Objects/Weapons/Melee/Captain_sabres/shashka.rsi
+    shape:
+    - 0,0,0,2
+  - type: Tag
+    tags:
+    - CaptainSabreShashka

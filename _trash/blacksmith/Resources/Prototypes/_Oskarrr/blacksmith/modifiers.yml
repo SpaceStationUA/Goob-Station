@@ -1,0 +1,82 @@
+# Якості кування на ковадлі (залежать від рівня знань з довідника):
+# Level 0 (усі відділи без книги): 2 дебафи, 0 бафів.
+# Level 1: 1 баф + 1 дебаф; Level 2: 2 бафи, 0 дебафів (+ буст майстерної).
+# Exclusive (майстерна/легендарна) замінює пару.
+# Chance = вага всередині пулу. Тупа ⟂ гостра, легка ⟂ важка.
+
+# --- Дебафи ---
+- type: blacksmithWeaponModifier
+  id: BlacksmithDull
+  chance: 0.16
+  isDebuff: true
+  name: blacksmith-modifier-dull
+  damageMultiplier: 0.5
+  incompatibleWith:
+  - BlacksmithSharp
+
+- type: blacksmithWeaponModifier
+  id: BlacksmithHeavy
+  chance: 0.08
+  isDebuff: true
+  name: blacksmith-modifier-heavy
+  damageMultiplier: 1.05
+  heldSpeedMultiplier: 0.8
+  incompatibleWith:
+  - BlacksmithLight
+
+- type: blacksmithWeaponModifier
+  id: BlacksmithLight
+  chance: 0.10
+  isDebuff: true
+  name: blacksmith-modifier-light
+  damageMultiplier: 0.8
+  attackRateMultiplier: 1.05
+  incompatibleWith:
+  - BlacksmithHeavy
+
+- type: blacksmithWeaponModifier
+  id: BlacksmithCrooked
+  chance: 0.08
+  isDebuff: true
+  name: blacksmith-modifier-crooked
+  damageMultiplier: 0.95
+  attackRateMultiplier: 0.85
+
+- type: blacksmithWeaponModifier
+  id: BlacksmithUnbalanced
+  chance: 0.08
+  isDebuff: true
+  name: blacksmith-modifier-unbalanced
+  attackRateMultiplier: 0.9
+  heldSpeedMultiplier: 0.95
+
+# --- Бафи ---
+- type: blacksmithWeaponModifier
+  id: BlacksmithSharp
+  chance: 0.22
+  name: blacksmith-modifier-sharp
+  damageMultiplier: 1.2
+  incompatibleWith:
+  - BlacksmithDull
+
+- type: blacksmithWeaponModifier
+  id: BlacksmithHardened
+  chance: 0.18
+  name: blacksmith-modifier-hardened
+  damageMultiplier: 1.15
+
+- type: blacksmithWeaponModifier
+  id: BlacksmithMasterwork
+  chance: 0.08
+  name: blacksmith-modifier-masterwork
+  exclusive: true
+  damageMultiplier: 1.25
+  attackRateMultiplier: 1.1
+
+- type: blacksmithWeaponModifier
+  id: BlacksmithLegendary
+  chance: 0.02
+  name: blacksmith-modifier-legendary
+  exclusive: true
+  damageMultiplier: 1.3
+  attackRateMultiplier: 1.2

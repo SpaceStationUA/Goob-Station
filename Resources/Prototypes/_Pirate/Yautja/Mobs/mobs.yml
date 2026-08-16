@@ -3,8 +3,12 @@
   parent: MobHuman
   id: GoobMobYautja
   name: "Мисливець Яутжа"
-  suffix: Yautja, Event
+  suffix: Yautja, Event, DO NOT MAP
+  categories: [ DoNotMap ]
   components:
+  - type: Loadout
+    prototypes:
+    - GoobYautjaHunterGear
   - type: HumanoidAppearance
     species: Yautja
     hideLayersOnEquip:

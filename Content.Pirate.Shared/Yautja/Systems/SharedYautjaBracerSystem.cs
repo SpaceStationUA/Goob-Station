@@ -12,6 +12,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -57,8 +58,24 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
         SubscribeLocalEvent<YautjaBracerShieldComponent, ComponentShutdown>(OnShieldShutdown);
         SubscribeLocalEvent<YautjaBracerShieldComponent, DroppedEvent>(OnShieldDropped);
         SubscribeLocalEvent<YautjaBracerCloakTrackerComponent, MoveEvent>(OnCloakTrackerMove);
+        SubscribeLocalEvent<YautjaBracerCloakTrackerComponent, AttackAttemptEvent>(OnCloakedAttackAttempt);
+        SubscribeLocalEvent<YautjaBracerCloakTrackerComponent, ShotAttemptedEvent>(OnCloakedShotAttempt);
         SubscribeLocalEvent<YautjaCloakPackComponent, GotUnequippedEvent>(OnCloakPackUnequipped);
         SubscribeLocalEvent<MobStateChangedEvent>(OnWearerMobStateChanged);
+    }
+
+    private void OnCloakedAttackAttempt(
+        Entity<YautjaBracerCloakTrackerComponent> ent,
+        ref AttackAttemptEvent args)
+    {
+        args.Cancel();
+    }
+
+    private void OnCloakedShotAttempt(
+        Entity<YautjaBracerCloakTrackerComponent> ent,
+        ref ShotAttemptedEvent args)
+    {
+        args.Cancel();
     }
 
     private void OnBracerMapInit(Entity<YautjaBracerComponent> ent, ref MapInitEvent args)
