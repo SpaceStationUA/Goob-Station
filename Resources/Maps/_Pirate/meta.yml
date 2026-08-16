@@ -18253,13 +18253,6 @@ entities:
     - type: Transform
       pos: -14.519806,-23.287313
       parent: 2
-- proto: BoxShellSoulbreaker
-  entities:
-  - uid: 1232
-    components:
-    - type: Transform
-      pos: 8.521361,-57.55835
-      parent: 2
 - proto: BoxShotgunIncendiary
   entities:
   - uid: 1233
