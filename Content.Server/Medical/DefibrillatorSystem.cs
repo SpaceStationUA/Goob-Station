@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Shared.Defibrillator;
 using Content.Server.Atmos.Rotting;
 using Content.Server.Chat.Systems;
 using Content.Server.DoAfter;
@@ -71,6 +72,10 @@ public sealed class DefibrillatorSystem : EntitySystem
     private void OnAfterInteract(EntityUid uid, DefibrillatorComponent component, AfterInteractEvent args)
     {
         if (args.Handled || args.Target is not { } target)
+            return;
+
+        // Belt defibs are intentionally not used directly; the detachable paddles are the only items that should trigger the zap.
+        if (HasComp<DefibrillatorHideInHandComponent>(uid))
             return;
 
         args.Handled = TryStartZap(uid, target, args.User, component);

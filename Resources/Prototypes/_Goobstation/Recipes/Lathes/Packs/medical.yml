@@ -66,6 +66,9 @@
   - SyringeGun
   - HandheldCrewMonitor
   - DefibrillatorCompact
+  - DefibrillatorBeltCompact
+  - DefibrillatorBeltCMO
+  - DefibrillatorBeltCombat
   - ClothingHandsGlovesSurgical
 
 - type: latheRecipePack
