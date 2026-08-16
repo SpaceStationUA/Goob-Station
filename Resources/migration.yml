@@ -1031,4 +1031,13 @@ VendingMachineMedical: RandomVendingMedical
 VendingMachineMedicalBase: RandomVendingMedicalCivilian
 VendingMachineWallMedical: RandomVendingMedicalWall
 VendingMachineWallMedicalCivilian: RandomVendingMedicalCivilianWall
+# Pirate: stairs
+Stairs: SteelCenterStairs
+StairStage: SteelCenterStairs
+StairWhite: SteelWhiteCenterStairs
+StairStageWhite: SteelWhiteCenterStairs
+StairDark: SteelDarkCenterStairs
+StairStageDark: SteelDarkCenterStairs
+StairWood: WoodCenterStairs
+StairStageWood: WoodCenterStairs
 # PIRATE END
