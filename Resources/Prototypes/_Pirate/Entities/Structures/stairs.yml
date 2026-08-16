@@ -110,9 +110,6 @@
     sprite: _Pirate/Structures/stairs.rsi
     state: steel_dark_single_stairs
     drawdepth: FloorTiles
-  - type: Construction
-    graph: SteelDarkSingleStairs
-    node: steeldarksinglestairs
 
 - type: entity
   id: SteelDarkLightLeftStairs
@@ -173,9 +170,6 @@
     sprite: _Pirate/Structures/stairs.rsi
     state: steel_single_stairs
     drawdepth: FloorTiles
-  - type: Construction
-    graph: SteelSingleStairs
-    node: steelsinglestairs
 
 - type: entity
   id: SteelLightLeftStairs
@@ -236,9 +230,6 @@
     sprite: _Pirate/Structures/stairs.rsi
     state: steel_white_single_stairs
     drawdepth: FloorTiles
-  - type: Construction
-    graph: SteelWhiteSingleStairs
-    node: steelwhitesinglestairs
 
 - type: entity
   id: SteelWhiteLightLeftStairs
@@ -299,9 +290,6 @@
     sprite: _Pirate/Structures/stairs.rsi
     state: wood_black_single_stairs
     drawdepth: FloorTiles
-  - type: Construction
-    graph: WoodBlackSingleStairs
-    node: woodblacksinglestairs
 
 - type: entity
   id: WoodDarkCenterStairs
@@ -342,9 +330,6 @@
     sprite: _Pirate/Structures/stairs.rsi
     state: wood_dark_single_stairs
     drawdepth: FloorTiles
-  - type: Construction
-    graph: WoodDarkSingleStairs
-    node: wooddarksinglestairs
 
 - type: entity
   id: WoodLeftStairs
@@ -375,9 +360,6 @@
     sprite: _Pirate/Structures/stairs.rsi
     state: wood_single_stairs
     drawdepth: FloorTiles
-  - type: Construction
-    graph: WoodSingleStairs
-    node: woodsinglestairs
 
 - type: entity
   id: WoodLightCenterStairs
@@ -418,9 +400,6 @@
     sprite: _Pirate/Structures/stairs.rsi
     state: wood_light_single_stairs
     drawdepth: FloorTiles
-  - type: Construction
-    graph: WoodLightSingleStairs
-    node: woodlightsinglestairs
 
 
 - type: entity
@@ -462,6 +441,3 @@
     sprite: _Pirate/Structures/stairs.rsi
     state: wood_red_single_stairs
     drawdepth: FloorTiles
-  - type: Construction
-    graph: WoodRedSingleStairs
-    node: woodredsinglestairs
