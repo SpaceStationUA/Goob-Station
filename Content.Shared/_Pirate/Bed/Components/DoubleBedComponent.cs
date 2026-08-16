@@ -10,7 +10,7 @@ public sealed partial class DoubleBedComponent : Component
     public Vector2? PendingBuckleOffset;
 
     [DataField, AutoNetworkedField]
-    public Vector2 LeftOffset = new(0f, -0.25f);
+    public Vector2 LeftOffset = new(0f, -0.15f);
 
     [DataField, AutoNetworkedField]
     public Vector2 RightOffset = new(0f, 0.25f);
