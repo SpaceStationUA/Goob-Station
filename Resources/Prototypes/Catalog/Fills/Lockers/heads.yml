@@ -263,6 +263,7 @@
     - id: RapidSyringeGun
     - id: BoxSyringePax
     - id: ClothingBeltMilitaryWebbingCMOFilled
+    - id: DefibrillatorBeltCMO # Pirate
     - id: ClothingBackpackDuffelSurgeryFilled
     - id: MaterialSiloFlatpack
     # Shitmed

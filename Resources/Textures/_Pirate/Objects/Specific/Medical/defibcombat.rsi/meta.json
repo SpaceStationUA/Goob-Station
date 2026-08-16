@@ -8,8 +8,6 @@
   },
   "states": [
     { "name": "icon" },
-    { "name": "inhand-left" },
-    { "name": "inhand-right" },
     { "name": "equipped-BELT", "directions": 4 },
     { "name": "charge100" },
     { "name": "charge75" },
