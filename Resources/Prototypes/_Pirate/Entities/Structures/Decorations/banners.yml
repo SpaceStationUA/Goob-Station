@@ -1,8 +1,8 @@
 - type: entity
   id: BannerSolarian
   parent: BannerBase
-  name: Баннер Соларіанського Альянсу
-  description: Баннер, що зображує прапор Соларіанського Альянсу.
+  name: "банер Соларіанського Альянсу"
+  description: "Банер із прапором Соларіанського Альянсу."
   suffix: SAN
   components:
   - type: Sprite
@@ -15,8 +15,8 @@
 - type: entity
   id: BannerRespublic
   parent: BannerBase
-  name: Баннер Галактичної Республіки
-  description: Баннер, що зображує прапор Галактичної Республіки. Це не те про що ви могли подумати!
+  name: "банер Галактичної Республіки"
+  description: "Банер із прапором Галактичної Республіки. Це не те, про що ви могли подумати!"
   suffix: StarWars
   components:
   - type: Sprite

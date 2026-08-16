@@ -10,8 +10,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionDispel
-  name: Dispel
-  description: Dispel summoned entities such as familiars or forcewalls.
+  name: "Розсіювання"
+  description: "Розсіює викликаних істот, таких як фамільяри або силові стіни."
   components:
   - type: Action
     icon:
@@ -29,8 +29,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionMassSleep
-  name: Mass Sleep
-  description: Put targets in a small area to sleep.
+  name: "Масове присипляння"
+  description: "Присипляє цілі в невеликій області."
   components:
   - type: Action
     icon:
@@ -47,8 +47,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionMindSwapPsionic
-  name: Mind Swap
-  description: Swap minds with the target. Either can change back after 20 seconds.
+  name: "Обмін розумом"
+  description: "Обмінятися розумом з ціллю. Будь-хто може повернутися назад через 20 секунд."
   components:
   - type: Action
     icon:
@@ -66,8 +66,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionMindSwapReturn
-  name: Reverse Mind Swap
-  description: Return to your original body.
+  name: "Повернути обмін розумом"
+  description: "Повернутися до свого початкового тіла."
   components:
   - type: Action
     icon:
@@ -81,8 +81,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionNoosphericZap
-  name: Noospheric Zap
-  description: Shocks the target and leaves them stunned and stuttering.
+  name: "Ноосферний розряд"
+  description: "Б'є ціль струмом, приголомшуючи її та змушуючи затинатися."
   components:
   - type: Action
     icon:
@@ -98,8 +98,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionPyrokinesis
-  name: Pyrokinesis
-  description: Light a flammable target on fire.
+  name: "Пірокінез"
+  description: "Підпалити легкозаймисту ціль."
   components:
   - type: Action
     icon:
@@ -115,8 +115,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionMetapsionicPulse
-  name: Metapsionic Pulse
-  description: Send a mental pulse around yourself to see if there are any psychics nearby.
+  name: "Метапсіонічний імпульс"
+  description: "Надсилає ментальний імпульс навколо себе, щоб виявити псіоніків поблизу."
   components:
   - type: Action
     icon:
@@ -130,8 +130,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionEruption
-  name: Psionic Eruption
-  description: Unleash a powerful psionic eruption destroying you and everything around you.
+  name: "Псіонічний вибух"
+  description: "Вивільняє потужний псіонічний вибух, що знищує вас і все навколо."
   components:
   - type: Action
     icon:
@@ -145,8 +145,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionPsionicRegeneration
-  name: Psionic Regeneration
-  description: Push your natural metabolism to the limit to power your body's regenerative capability.
+  name: "Псіонічна регенерація"
+  description: "Вичавіть із природного метаболізму все можливе, щоб підживити здатність тіла до відновлення."
   components:
   - type: Action
     icon:
@@ -160,8 +160,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionTelegnosis
-  name: Telegnosis
-  description: Create a telegnostic projection to remotely observe things.
+  name: "Телегнозис"
+  description: "Створити телегностичну проєкцію для дистанційного спостереження за речами."
   components:
   - type: Action
     icon:
@@ -175,8 +175,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionPsychokineticScream
-  name: Psychokinetic Scream
-  description: Emit a blood-curdling scream that shatters all lights in the area.
+  name: "Психокінетичний крик"
+  description: "Видає пронизливий крик, що розбиває всі джерела світла поблизу."
   components:
   - type: Action
     icon: { sprite: _DV/Actions/shatterlights.rsi, state: shatter-lights }
@@ -188,8 +188,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionAnoigo
-  name: Anoigo
-  description: Open and unbolt nearby doors.
+  name: "Анойго"
+  description: "Відкриває та відмикає сусідні двері."
   components:
   - type: Action
     icon:
@@ -207,8 +207,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionHealingWord
-  name: Healing Word
-  description: Heal the wounds of a nearby target.
+  name: "Цілюще Слово"
+  description: "Зцілює рани цілі поблизу."
   components:
   - type: Action
     icon:
@@ -228,8 +228,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionRevivify
-  name: Revivify
-  description: Bring a dead target back from the brink.
+  name: "Воскресіння"
+  description: "Повертає мертву ціль із того світу."
   components:
   - type: Action
     icon:
@@ -249,8 +249,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionDarkSwap
-  name: DarkSwap
-  description: Phase into the shadow realm to pass through obstacles.
+  name: "Темний Обмін"
+  description: "Переходить у тіньовий вимір, щоб проходити крізь перешкоди."
   components:
   - type: Action
     icon:
@@ -264,8 +264,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionAssay
-  name: Assay
-  description: Scan a target to learn about their psionic abilities.
+  name: "Аналіз"
+  description: "Сканує ціль, щоб дізнатися про її псіонічні здібності."
   components:
   - type: Action
     icon:
@@ -283,8 +283,8 @@
 - type: entity
   parent: BasePsionicAction
   id: ActionShadeskip
-  name: Shadeskip
-  description: Cover the surrounding area in shadow kudzu.
+  name: "Тіньовий Крок"
+  description: "Вкриває навколишню місцевість тіньовим кудзу."
   components:
   - type: Action
     icon:

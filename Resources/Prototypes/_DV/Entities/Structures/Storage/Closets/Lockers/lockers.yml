@@ -1,9 +1,9 @@
 - type: entity
   id: LockerForensicMantis
   parent: LockerBooze
-  name: psionic mantis' cabinet
+  name: "шафа псіо-екстрасенса"
   suffix: Empty
-  description: "Concealed knowledge stirs within, revealed only to those who can pierce the veil." # TheDen
+  description: "Приховане знання ворушиться всередині й відкривається лише тим, хто здатен пронизати завісу." # TheDen
   components:
   - type: AccessReader
     access: [["Mantis"]]
