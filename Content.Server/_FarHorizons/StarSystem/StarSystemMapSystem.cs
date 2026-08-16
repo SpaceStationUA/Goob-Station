@@ -266,7 +266,7 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
         else
         {
             var star = ent.Comp.StarSystem.Star;
-            // 137° off from nauvis' own deterministic slot so the two preset worlds don't overlap.
+            // Fixed 137° slot so the preset worlds don't overlap each other.
             var angle = (((ent.Comp.Seed ?? 0) % 360) + 137) % 360 * MathF.PI / 180f;
             lavalandPos = star.Position + ent.Comp.StarOffset +
                           new Vector2(MathF.Cos(angle), MathF.Sin(angle)) * 3000f;

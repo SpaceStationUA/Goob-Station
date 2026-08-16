@@ -141,7 +141,7 @@ public sealed partial class ShuttleMapControl
             handle.DrawCircle(planetPos, CEPlanetRadii.ZoneRadius(worldRadius) * MinimapScale, Color.White.WithAlpha(0.35f), filled: false);
         }
 
-        // Far Horizons: the preset sprite worlds (nauvis, lavaland) are CE planet entities, not
+        // Far Horizons: the preset sprite worlds (lavaland) are CE planet entities, not
         // star-system data — draw them with clickable zone circles, shield rings and the
         // descent charge animation.
         DrawCePlanets(handle, matty, shuttleTransform.MapUid.Value);

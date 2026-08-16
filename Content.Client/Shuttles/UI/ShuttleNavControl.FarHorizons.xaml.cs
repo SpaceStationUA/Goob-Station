@@ -128,7 +128,7 @@ public sealed partial class ShuttleNavControl
             nearest = candidate;
         }
 
-        // Far Horizons: the preset sprite worlds (nauvis, lavaland, nukie) are CE planet entities —
+        // Far Horizons: the preset sprite worlds (lavaland, nukie) are CE planet entities —
         // drawn with their zone circles, shield rings, hover highlight and the descent charge ring.
         // This is the SHORT-RANGE radar, so even secret worlds (hideFromMaps) are fine here: they
         // only show once the ship is already close.

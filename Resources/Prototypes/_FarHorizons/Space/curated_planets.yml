@@ -50,7 +50,7 @@
   shader: RockyPlanet
   earthMass: 1.05
   rotation: 5.3
-  palette: PaletteHabitableNauvis
+  palette: PaletteHabitable
   atmosphere: StandardAtmosphere
   liquid: LiquidWater
   basePrettiness: 20

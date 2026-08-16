@@ -248,7 +248,7 @@
   color4: '#EAF7FB'
 
 - type: planetPalette
-  id: PaletteHabitableNauvis
+  id: PaletteHabitable
   color1: '#3E3A32'
   color2: '#42632D'
   color3: '#8C7A56'

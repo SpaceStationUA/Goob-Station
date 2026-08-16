@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Far Horizons: hand-placed planets. Manual planets can either use a predefined sprite
-# (like the CE author's nauvis) or a procedural star system shader — see CEPlanetComponent.
-# Procedural star system planets (shader-based) are spawned by the star system itself,
-# and CEPlanetNauvis is spawned alongside them as a predetermined planet.
+# Far Horizons: hand-placed planets. Manual planets use a predefined sprite — see
+# CEPlanetComponent. Procedural star system planets (shader-based) are spawned by the
+# star system itself, and the preset worlds (lavaland, nukie) join them as predetermined
+# sprite planets with their own descent stacks.
 
 - type: entity
   id: CEPlanetBase
@@ -14,19 +14,6 @@
   components:
   - type: Transform
   - type: CEPlanet
-    sprite:
-      sprite: _FarHorizons/Planets/nauvis.rsi
-      state: planet
-
-- type: entity
-  parent: CEPlanetBase
-  id: CEPlanetNauvis
-  name: Nauvis
-  description: The third rock from a certain sun. If you can read this, someone forgot to replace the description.
-  components:
-  - type: CEPlanet
-    spinRate: 0.02
-  - type: FTLBeacon
 
 # The star system's volcanic world: its ground layer is the lavaland map (outpost, ruins,
 # megafauna, ores) generated alongside space maps, so miners can fly to it and descend

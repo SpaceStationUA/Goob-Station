@@ -49,7 +49,7 @@ public sealed partial class CEPlanetSystem : EntitySystem
 
     /// <summary>
     /// Number of sky layers in a planet stack, excluding the ground layer. Kept low for
-    /// generated planets (procedural, nauvis, lavaland, nukie) so dormant worlds cost fewer
+    /// generated planets (procedural, lavaland, nukie) so dormant worlds cost fewer
     /// maps; hand-mapped z-networks (e.g. station decks) define their own layouts elsewhere.
     /// The full stack height is <see cref="SkyLayerCount"/> + 1 (ground).
     /// </summary>
@@ -57,9 +57,6 @@ public sealed partial class CEPlanetSystem : EntitySystem
 
     /// <summary>Depth of the clouds layer (ground is 0).</summary>
     public const int CloudsIndex = 2;
-
-    /// <summary>The predetermined sprite planet the star system spawns alongside procedural ones.</summary>
-    public const string NauvisEntProtoId = "CEPlanetNauvis";
 
     /// <summary>The volcanic world whose ground layer is the lavaland map (outpost, ruins, ores).</summary>
     public const string LavalandEntProtoId = "CEPlanetLavaland";
