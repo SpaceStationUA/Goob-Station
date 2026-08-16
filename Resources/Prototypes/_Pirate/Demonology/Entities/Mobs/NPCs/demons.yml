@@ -1092,8 +1092,14 @@
     hands:
       Left:
         location: Left
+        whitelist:
+          components:
+          - VirtualItem
       Right:
         location: Right
+        whitelist:
+          components:
+          - VirtualItem
     sortedHands:
     - Left
     - Right

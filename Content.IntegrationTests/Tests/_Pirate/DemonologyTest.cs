@@ -63,6 +63,7 @@ using Content.Shared.Gravity;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Heretic;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Magic.Events;
@@ -1690,8 +1691,10 @@ public sealed class DemonologyTest : InteractionTest
     {
         var demon = await Spawn("MajorDemonHanged", AbilityCoordinates(30, 0));
         var victim = await Spawn("DemonologyTestVictim", AbilityCoordinates(31, 0));
+        var item = await Spawn("DemonologyTestItem", AbilityCoordinates(30, 1));
         var demonUid = ToServer(demon);
         var victimUid = ToServer(victim);
+        var itemUid = ToServer(item);
         var pulling = SEntMan.System<PullingSystem>();
         var grab = SEntMan.System<GrabIntentSystem>();
         var stamina = SEntMan.System<SharedStaminaSystem>();
@@ -1700,6 +1703,8 @@ public sealed class DemonologyTest : InteractionTest
         {
             var hangedGrab = SEntMan.GetComponent<GrabIntentComponent>(demonUid);
             Assert.That(hangedGrab.SuffocateGrabStaminaDamage, Is.EqualTo(1000f));
+            Assert.That(HandSys.TryPickupAnyHand(demonUid, itemUid), Is.False,
+                "Hanged could pick up an ordinary item");
             Assert.That(pulling.TryStartPull(demonUid, victimUid, force: true), Is.True,
                 "Hanged could not start a grab");
             Assert.That(grab.TryGrab(victimUid, demonUid,
@@ -1707,6 +1712,10 @@ public sealed class DemonologyTest : InteractionTest
                 "Hanged could not escalate its grab to suffocating");
             Assert.That(SEntMan.GetComponent<GrabIntentComponent>(demonUid).GrabStage, Is.EqualTo(GrabStage.Suffocate));
             Assert.That(SEntMan.GetComponent<GrabbableComponent>(victimUid).GrabStage, Is.EqualTo(GrabStage.Suffocate));
+            var held = HandSys.EnumerateHeld(demonUid).ToArray();
+            Assert.That(held, Has.Length.EqualTo(2), "Hanged grab did not occupy both virtual hands");
+            Assert.That(held.All(SEntMan.HasComponent<VirtualItemComponent>), Is.True,
+                "Hanged grab used a non-virtual hand item");
         });
 
         await RunSeconds(0.2f);
@@ -1720,6 +1729,7 @@ public sealed class DemonologyTest : InteractionTest
             "Hanged suffocating grab did not deal 1000 stamina damage");
 
         await Server.WaitPost(() => pulling.TryStopPull(victimUid, SEntMan.GetComponent<PullableComponent>(victimUid), ignoreGrab: true));
+        await Delete(item);
         await Delete(victim);
         await Delete(demon);
     }
