@@ -107,8 +107,8 @@
     bounds: -0.5,-0.5,0.5,0.5
   - type: HasJobIcons # Goobstation
   - type: RotationVisuals
-    defaultRotation: 90
-    horizontalRotation: 90
+    defaultRotation: -90 # Pirate edit - was 90
+    horizontalRotation: -90 # Pirate edit - was 90
   - type: HumanoidAppearance
     species: Human
   - type: TypingIndicator

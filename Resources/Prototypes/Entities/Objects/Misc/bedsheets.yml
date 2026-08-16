@@ -35,6 +35,10 @@
     tags:
     - Recyclable #Goobstation
     - Bedsheet
+  # Pirate - Bedsheet cover start
+  - type: Appearance
+  - type: BedsheetCover
+  # Pirate - Bedsheet cover end
 
 - type: entity
   id: BedsheetBlack

@@ -1,3 +1,4 @@
+### Санвузел
 - type: construction
   id: Shower
   graph: Shower
@@ -10,6 +11,47 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+### Ліжка
+- type: construction
+  id: DoubleBed
+  graph: bed
+  startNode: start
+  targetNode: double_bed
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BedWood
+  graph: bed
+  startNode: start
+  targetNode: bedwood
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: DoubleBedWood
+  graph: bed
+  startNode: start
+  targetNode: double_bed_wood
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+
 
 # Для соларіанського баннеру
 - type: construction

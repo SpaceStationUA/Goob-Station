@@ -1,0 +1,289 @@
+﻿- type: entity
+  parent: BaseItem
+  id: DoubleBedsheetBase
+  abstract: true
+  name: двоспальне простирадло
+  description: Велике м’яке простирадло для двоспального ліжка.
+  placement:
+    mode: SnapgridCenter
+    snap: [Bed]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/bedsheets_double.rsi
+    noRot: true
+  - type: Item
+    size: Small
+  - type: StaticPrice
+    price: 24
+  - type: Tag
+    tags: [Bedsheet]
+  - type: Appearance
+  - type: BedsheetCover
+  - type: DoubleBedSheet
+
+
+
+- type: entity
+  id: DoubleBedsheetBlack
+  parent: DoubleBedsheetBase
+  name: чорне двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetblack
+
+- type: entity
+  id: DoubleBedsheetBlue
+  parent: DoubleBedsheetBase
+  name: синє двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetblue
+
+- type: entity
+  id: DoubleBedsheetBrown
+  parent: DoubleBedsheetBase
+  name: коричневе двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetbrown
+
+- type: entity
+  id: DoubleBedsheetGreen
+  parent: DoubleBedsheetBase
+  name: зелене двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetgreen
+
+- type: entity
+  id: DoubleBedsheetGrey
+  parent: DoubleBedsheetBase
+  name: сіре двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetgrey
+
+- type: entity
+  id: DoubleBedsheetOrange
+  parent: DoubleBedsheetBase
+  name: помаранчеве двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetorange
+
+- type: entity
+  id: DoubleBedsheetPurple
+  parent: DoubleBedsheetBase
+  name: фіолетове двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetpurple
+
+- type: entity
+  id: DoubleBedsheetRed
+  parent: DoubleBedsheetBase
+  name: червoнe двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetred
+
+- type: entity
+  id: DoubleBedsheetWhite
+  parent: DoubleBedsheetBase
+  name: біле двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetwhite
+
+- type: entity
+  id: DoubleBedsheetYellow
+  parent: DoubleBedsheetBase
+  name: жовте двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetyellow
+
+
+
+- type: entity
+  id: DoubleBedsheetCaptain
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло капітана
+  description: Велике простирадло з емблемою NanoTrasen, виткана з революційної нитки.
+  components:
+  - type: Sprite
+    state: double_sheetcaptain
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetCE
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло старшого інженера
+  description: Прикрашена емблемою ключа, добре відбиває світло й не боїться плям.
+  components:
+  - type: Sprite
+    state: double_sheetce
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetCentcom
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло центрального командування
+  description: Виткана з передових нанониток для тепла.
+  components:
+  - type: Sprite
+    state: double_sheetcentcom
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetClown
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло клоуна
+  description: Велике райдужне простирадло з маскою клоуна. Пахне бананами.
+  components:
+  - type: Sprite
+    state: double_sheetclown
+
+- type: entity
+  id: DoubleBedsheetCMO
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло головного лікаря
+  description: Стерилізована простирадло з емблемою хреста.
+  components:
+  - type: Sprite
+    state: double_sheetcmo
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetCosmos
+  parent: DoubleBedsheetBase
+  name: космічне двоспальне простирадло
+  description: Створена з мрій тих, хто дивиться на зорі.
+  components:
+  - type: Sprite
+    state: double_sheetcosmos
+
+- type: entity
+  id: DoubleBedsheetCult
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло культу
+  description: Сяє зловісною потойбічною присутністю.
+  components:
+  - type: Sprite
+    state: double_sheetcult
+
+- type: entity
+  id: DoubleBedsheetHOP
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло голови персоналу
+  description: Прикрашена емблемою ключа - для рідкісних моментів відпочинку з Іаном.
+  components:
+  - type: Sprite
+    state: double_sheethop
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetHOS
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло голови служби безпеки
+  description: Прикрашена емблемою щита. Злочинність не спить, але ви - ЗАКОН!
+  components:
+  - type: Sprite
+    state: double_sheethos
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetIan
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло Іана
+  components:
+  - type: Sprite
+    state: double_sheetian
+
+- type: entity
+  id: DoubleBedsheetMedical
+  parent: DoubleBedsheetBase
+  name: медичне двоспальне простирадло
+  description: Стерилізована простирадло для медвідсіку.
+  components:
+  - type: Sprite
+    state: double_sheetmedical
+
+- type: entity
+  id: DoubleBedsheetMime
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло міма
+  description: Дуже заспокійлива смугаста простирадло. Під нею весь шум ніби зникає.
+  components:
+  - type: Sprite
+    state: double_sheetmime
+
+- type: entity
+  id: DoubleBedsheetNT
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло NT
+  description: Має логотип Nanotrasen і ауру службового обов’язку.
+  components:
+  - type: Sprite
+    state: double_sheetnt
+
+- type: entity
+  id: DoubleBedsheetQM
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло квартирмейстера
+  components:
+  - type: Sprite
+    state: double_sheetqm
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetRainbow
+  parent: DoubleBedsheetBase
+  name: райдужне двоспальне простирадло
+  components:
+  - type: Sprite
+    state: double_sheetrainbow
+
+- type: entity
+  id: DoubleBedsheetRD
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло наукового керівника
+  description: Виготовлена з вогнестійкого матеріалу й прикрашена емблемою колби.
+  components:
+  - type: Sprite
+    state: double_sheetrd
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetSyndie
+  parent: [DoubleBedsheetBase, BaseSyndicateContraband]
+  name: двоспальне простирадло Синдикату
+  description: Має емблему Синдикату й ауру зла.
+  components:
+  - type: Sprite
+    state: double_sheetsyndie
+
+- type: entity
+  id: DoubleBedsheetUSA
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло США
+  components:
+  - type: Sprite
+    state: double_sheetusa
+
+- type: entity
+  id: DoubleBedsheetWiz
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло чарівника
+  description: Особлива тканина, зачарована магією для чарівного сну. Воно світиться!
+  components:
+  - type: Sprite
+    state: double_sheetwiz
