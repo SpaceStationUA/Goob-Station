@@ -139,7 +139,7 @@ namespace Content.IntegrationTests.Tests
             "Leonid",
             "Loop",
             "Marathon",
-            "Meta",
+            "MetaTP",         // Pirate
             "MeteorArena",    // Deathmatch
             "Oasis",
             "OasisHighPop",
@@ -198,6 +198,7 @@ namespace Content.IntegrationTests.Tests
               "GlacierTP", // Pirate
               "OmegaTP", // Pirate
               "KettleTP", // Pirate
+              "MetaTP", // Pirate
             //"GateTP", // Pirate - re-add after the rework
               "PerditionTP", // Pirate
               "PiramideTP", // Pirate
