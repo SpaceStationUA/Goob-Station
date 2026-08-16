@@ -192,7 +192,8 @@
         Heat: 0.6
         Caustic: 0.7
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitMercenary
+    clothingPrototypes:
+      head: ClothingHeadHelmetHardsuitMercenary
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.95

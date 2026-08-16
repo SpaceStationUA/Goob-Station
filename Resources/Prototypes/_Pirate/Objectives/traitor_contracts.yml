@@ -21,8 +21,8 @@
   - type: ReputationCondition
     reputation: 20
   - type: ContractObjective
-    reputation: 10
-    payment: 4
+    reputation: 20
+    payment: 20
 
 - type: entity
   abstract: true
@@ -32,8 +32,8 @@
   - type: ReputationCondition
     reputation: 0
   - type: ContractObjective
-    reputation: 5
-    payment: 1
+    reputation: 10
+    payment: 5
 
 # Minor theft.
 - type: entity
@@ -80,8 +80,8 @@
   - type: ExtractCondition
     stealGroup: CriminalRecordsComputerCircuitboard
   - type: ContractObjective
-    reputation: 10
-    payment: 3
+    reputation: 15
+    payment: 15
 
 # Standard extraction contracts.
 - type: entity
@@ -215,8 +215,8 @@
   - type: ReputationCondition
     reputation: 30
   - type: ContractObjective
-    reputation: 15
-    payment: 2
+    reputation: 20
+    payment: 15
 
 - type: entity
   parent: BasePirateTraitorMurderObjective
@@ -255,7 +255,8 @@
   - type: ReputationCondition
     reputation: 40
   - type: ContractObjective
-    payment: 4
+    reputation: 25
+    payment: 25
 
 - type: entity
   parent: BasePirateTraitorMurderObjective
@@ -270,8 +271,8 @@
   - type: ReputationCondition
     reputation: 40
   - type: ContractObjective
-    reputation: 20
-    payment: 6
+    reputation: 30
+    payment: 35
 
 # Assist a fellow traitor.
 - type: entity
@@ -289,8 +290,8 @@
       - SocialObjective
       - DieCondition
   - type: ContractObjective
-    reputation: 5
-    payment: 3
+    reputation: 10
+    payment: 15
 
 # Sabotage.
 - type: entity
@@ -309,8 +310,8 @@
   - type: ReputationCondition
     reputation: 30
   - type: ContractObjective
-    reputation: 10
-    payment: 4
+    reputation: 20
+    payment: 20
 
 # Kidnap for ransom.
 - type: entity
@@ -328,8 +329,8 @@
   - type: ReputationCondition
     reputation: 30
   - type: ContractObjective
-    reputation: 15
-    payment: 4
+    reputation: 25
+    payment: 25
   - type: StoreUnlocker
     listings:
     - SyndieFulton
@@ -351,8 +352,8 @@
         components:
         - CommandStaff
   - type: ContractObjective
-    reputation: 15
-    payment: 5
+    reputation: 30
+    payment: 35
 
 # Capstone contract. It is prepaid and deliberately rare.
 - type: entity
@@ -375,6 +376,6 @@
   - type: ReputationCondition
     reputation: 90
   - type: ContractObjective
-    reputation: 40
-    payment: 20
+    reputation: 50
+    payment: 100
     prepaid: true

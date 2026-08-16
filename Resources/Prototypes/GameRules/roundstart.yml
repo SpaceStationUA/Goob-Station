@@ -297,8 +297,8 @@
     delay: # NotGoobstation - I know what you're thinking. I think having 4 minutes of non-chaos is fine?
       min: 240
       max: 420
-  - type: TraitorRule # Pirate: roundstart traitors have less TC because they can complete contracts
-    startingBalance: 10
+  - type: TraitorRule # Pirate: contracts supplement the uplink, but local uplink prices need a useful starting budget
+    startingBalance: 50
   - type: AntagSelection
     selectionTime: IntraPlayerSpawn
     definitions:

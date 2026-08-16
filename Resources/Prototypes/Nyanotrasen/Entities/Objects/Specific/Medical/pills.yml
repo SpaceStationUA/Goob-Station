@@ -24,4 +24,4 @@
         maxVol: 20
         reagents:
         - ReagentId: SoulbreakerToxin
-          Quantity: 20
+          Quantity: 10

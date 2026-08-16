@@ -39,7 +39,8 @@ public sealed partial class MinSolution : IGraphCondition
         if (!containerSys.TryGetSolution(uid, Solution, out _, out var solution))
             return false;
 
-        solution.TryGetReagentQuantity(Reagent, out var quantity);
+        // Pirate: sampled blood carries reagent data, but construction only cares about the reagent prototype.
+        var quantity = solution.GetTotalPrototypeQuantity(Reagent.Prototype);
         return quantity >= Quantity;
     }
 
@@ -52,7 +53,8 @@ public sealed partial class MinSolution : IGraphCondition
         if (!containerSys.TryGetSolution(uid, Solution, out _, out var solution))
             return false;
 
-        solution.TryGetReagentQuantity(Reagent, out var quantity);
+        // Pirate: keep examine progress consistent with the construction condition above.
+        var quantity = solution.GetTotalPrototypeQuantity(Reagent.Prototype);
 
         // already has enough so dont show examine
         if (quantity >= Quantity)

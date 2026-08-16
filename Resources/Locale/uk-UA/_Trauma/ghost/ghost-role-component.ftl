@@ -1,0 +1,9 @@
+ghost-role-information-nukie-carp-name = Ядерний оперативник-короп
+ghost-role-information-nukie-carp-description = Підкріплення Синдикату у вигляді ядерного оперативника-коропа.
+ghost-role-information-nukie-mouse-name = Ядерний оперативник-миша
+ghost-role-information-nukie-mouse-description = Підкріплення Синдикату у вигляді ядерного оперативника-миші.
+ghost-role-information-nukie-spider-name = Ядерний оперативник-павук
+ghost-role-information-nukie-spider-description = Підкріплення Синдикату у вигляді ядерного оперативника-павука.
+ghost-role-information-syndicate-cyborg-medical-name = Медичний кіборг Синдикату
+ghost-role-information-syndicate-behonker-name = Гонкер Синдикату
+ghost-role-information-syndicate-behonker-desc = Послідовник Гонкмати потребує вашої допомоги. Допоможіть йому у скрутний час.

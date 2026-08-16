@@ -396,7 +396,7 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
         type: Add
-        time: 10
+        time: 5
       - !type:RemovePsionicAbilities #PIRATE
         conditions:
         - !type:ReagentCondition

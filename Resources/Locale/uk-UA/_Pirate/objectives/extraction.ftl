@@ -1,5 +1,5 @@
 extraction-fulton-not-target = Це не потрібно викрадати.
-extraction-fulton-dead = Ціль має бути живою для викрадення!
+extraction-fulton-not-cuffed = Ціль має бути закована в кайданки!
 extraction-fulton-no-destination = Місце призначення не знайдено!
 extraction-fulton-anchored = Спочатку це потрібно від'єднати.
 extraction-fulton-verb-text = Прикріпити фултон
@@ -14,3 +14,4 @@ syndicate-ransom-announcement =
 
 syndicate-ransom-return-announcement-sender = Автоматизована торгова станція
 syndicate-ransom-return-announcement = На станцію [{$station}] надійшла несанкціонована доставка від [НЕВІДОМОГО ВІДПРАВНИКА]. Екіпаж має оглянути її та за бажанням забрати вміст.
+syndicate-ransom-memory-loss = Після викупу ви не пам'ятаєте, де були та хто вас викрав.

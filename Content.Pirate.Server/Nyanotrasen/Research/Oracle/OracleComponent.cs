@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Random;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -43,6 +44,18 @@ public sealed partial class OracleComponent : Component
     {
         "LotophagoiOil", "LotophagoiOil", "LotophagoiOil", "Wine", "Blood", "Ichor",
     };
+
+    /// <summary>
+    /// Weighted table of research point disks the oracle throws out as a reward.
+    /// </summary>
+    [DataField("rewardDisks")]
+    public ProtoId<WeightedRandomEntityPrototype> RewardDisks = "OracleRewardDisks";
+
+    /// <summary>
+    /// How much glimmer is silently drained when the oracle's request is fulfilled.
+    /// </summary>
+    [DataField("glimmerReduction")]
+    public int GlimmerReduction = 3;
 
     [DataField("demandMessages")]
     public IReadOnlyList<string> DemandMessages = new[]

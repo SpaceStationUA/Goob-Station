@@ -95,3 +95,4 @@ research-technology-bluespace-chemistry = Блюспейс-хімія
 research-technology-kinetic-modifications = Кінетичні модифікації
 research-technology-thermal-weaponry = Термальна зброя
 research-technology-dual-wielding-technology = Технологія подвійного володіння
+research-technology-psionic-countermeasures = Псіонічні контрзаходи

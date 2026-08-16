@@ -7,8 +7,11 @@
     edges:
     - to: finish
       steps:
-      - material: Paper
-        amount: 1
+      - tag: Paper
+        name: construction-graph-tag-paper
+        icon:
+          sprite: Objects/Misc/bureaucracy.rsi
+          state: paper
         doAfter: 1
   - node: finish
     entity: EnchantingScrollEmpty

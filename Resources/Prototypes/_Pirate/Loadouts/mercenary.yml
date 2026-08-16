@@ -12,5 +12,5 @@
     outerClothing: ClothingOuterVestWebMerc
     pocket1: WeaponLaserSvalinn
     pocket2: RadioHandheld
-    id: AgentIDCard
+    id: MercenaryIDCard
     mask: ClothingMaskGasMerc

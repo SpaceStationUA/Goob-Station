@@ -17,6 +17,8 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Psionics.Glimmer;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Research.Systems;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Verbs;
@@ -175,7 +177,11 @@ public sealed class OracleSystem : EntitySystem
             LogImpact.Medium,
             $"{ToPrettyString(user):player} sold {ToPrettyString(used)} to {ToPrettyString(oracle.Owner)}.");
 
-        Spawn("ResearchDisk5000", Transform(user).Coordinates);
+        var diskProto = _prototypeManager.Index<WeightedRandomEntityPrototype>(oracle.Comp.RewardDisks).Pick(_random);
+        Spawn(diskProto, Transform(user).Coordinates);
+
+        // Silently drain a little glimmer when the request is fulfilled.
+        _glimmerSystem.Glimmer -= oracle.Comp.GlimmerReduction;
 
         DispenseLiquidReward(oracle.Owner, oracle.Comp);
 
@@ -211,7 +217,7 @@ public sealed class OracleSystem : EntitySystem
             .Where(x => !x.Abstract)
             .Select(x => x.ID).ToList();
 
-        var amount = 20 + _random.Next(1, 30) + _glimmerSystem.Glimmer / 10f;
+        var amount = 20 + _random.Next(1, 30) + _glimmerSystem.Glimmer / 20f;
         amount = (float) Math.Round(amount);
 
         var sol = new Solution();

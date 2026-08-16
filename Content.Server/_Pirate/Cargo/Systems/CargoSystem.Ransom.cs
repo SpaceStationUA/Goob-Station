@@ -1,16 +1,20 @@
 using Content.Server.Cargo.Components;
+using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared._Pirate.Traitor;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Database;
+using Content.Shared.Mind;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Station.Components;
 using Content.Shared.Storage.EntitySystems;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Cargo.Systems;
@@ -21,7 +25,9 @@ namespace Content.Server.Cargo.Systems;
 public sealed partial class CargoSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
+    [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     /// <summary>
@@ -94,12 +100,35 @@ public sealed partial class CargoSystem
 
         UpdateBankAccount((station, bank), -cost, CreateAccountDistribution((station, bank)));
 
+        if (TryGetRansomVictimSession(uid) is {} victimSession)
+            _chatManager.DispatchServerMessage(victimSession, Loc.GetString("syndicate-ransom-memory-loss"));
+
         // announce it so everyone knows
         var msg = Loc.GetString("syndicate-ransom-return-announcement", ("station", trade));
         var sender = Loc.GetString("syndicate-ransom-return-announcement-sender");
         var sound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
         var color = Color.Red;
         _chat.DispatchGlobalAnnouncement(msg, sender, playSound: true, sound, color);
+    }
+
+    private ICommonSession? TryGetRansomVictimSession(EntityUid uid)
+    {
+        if (TryComp<ActorComponent>(uid, out var actor))
+            return actor.PlayerSession;
+
+        var originalEntity = GetNetEntity(uid);
+        var query = EntityQueryEnumerator<MindComponent>();
+        while (query.MoveNext(out _, out var mind))
+        {
+            if (mind.OriginalOwnedEntity != originalEntity)
+                continue;
+
+            var userId = mind.UserId ?? mind.OriginalOwnerUserId;
+            if (userId is {} id && _players.TryGetSessionById(id, out var session))
+                return session;
+        }
+
+        return null;
     }
 
     // like TryFulfillOrder but for ransoms

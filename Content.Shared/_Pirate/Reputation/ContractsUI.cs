@@ -9,8 +9,17 @@ public enum ContractsUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class ContractsState : BoundUserInterfaceState;
-// TODO
+public sealed class ContractsState(
+    int reputation,
+    string? level,
+    List<ContractSlot> contractSlots,
+    List<OfferingSlot> offeringSlots) : BoundUserInterfaceState
+{
+    public readonly int Reputation = reputation;
+    public readonly string? Level = level;
+    public readonly List<ContractSlot> ContractSlots = contractSlots;
+    public readonly List<OfferingSlot> OfferingSlots = offeringSlots;
+}
 
 /// <summary>
 /// Accept a contract with offerings index.

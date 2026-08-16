@@ -9,51 +9,35 @@ namespace Content.Client._Pirate.Reputation.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ContractsWindow : FancyWindow
 {
-    [Dependency] private EntityManager _entMan = default!;
-    private readonly ReputationSystem _reputation;
-
     public event Action<int>? OnAccept;
     public event Action<int>? OnComplete;
     public event Action<int>? OnReject;
 
-    public EntityUid Owner;
-
     public ContractsWindow()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
-
-        _reputation = _entMan.System<ReputationSystem>();
     }
 
-    public void UpdateState()
+    public void UpdateState(ContractsState state)
     {
-        if (!_entMan.TryGetComponent<StoreContractsComponent>(Owner, out var store))
-            return;
-
-        if (_reputation.GetContracts(store.Mind) is not {} contracts)
-            return;
-
-        var comp = contracts.Comp;
-        if (comp.CurrentLevel is {} level)
-            Level.Text = Loc.GetString(level.Name);
-        Reputation.Text = Loc.GetString("contracts-reputation", ("reputation", comp.Reputation));
+        Level.Text = state.Level is {} level ? Loc.GetString(level) : string.Empty;
+        Reputation.Text = Loc.GetString("contracts-reputation", ("reputation", state.Reputation));
 
         Contracts.RemoveAllChildren();
         var slotsFull = true;
-        for (int i = 0; i < comp.Slots.Count; i++)
+        for (int i = 0; i < state.ContractSlots.Count; i++)
         {
             var index = i;
-            if (comp.Slots[i].ObjectiveTitle is {} title)
+            if (state.ContractSlots[i].ObjectiveTitle is {} title)
             {
-                var contract = new Contract(title);
+                var contract = new Contract(title, state.ContractSlots[i].Icon);
                 contract.OnComplete += () => OnComplete?.Invoke(index);
                 Contracts.AddChild(contract);
                 // TODO: green when objective is complete
             }
             else
             {
-                var empty = new EmptyContract(comp.Slots[i].NextUnlock);
+                var empty = new EmptyContract(state.ContractSlots[i].NextUnlock);
                 empty.OnUnlock += EnableAccepts;
                 if (!empty.IsLocked)
                     slotsFull = false;
@@ -62,10 +46,10 @@ public sealed partial class ContractsWindow : FancyWindow
         }
 
         Offerings.RemoveAllChildren();
-        for (int i = 0; i < comp.OfferingSlots.Count; i++)
+        for (int i = 0; i < state.OfferingSlots.Count; i++)
         {
             var index = i;
-            var offering = new ContractOffering(comp.OfferingSlots[i]);
+            var offering = new ContractOffering(state.OfferingSlots[i]);
             offering.AcceptDisabled = slotsFull;
             offering.OnAccept += () => OnAccept?.Invoke(index);
             offering.OnReject += () => OnReject?.Invoke(index);

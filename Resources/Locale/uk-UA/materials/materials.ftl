@@ -38,8 +38,6 @@ material-reclaimer-upgrade-process-rate = швидкість процесу
 materials-bluespace = блюспейс
 materials-normality = нормальність
 
-# Руди
-materials-raw-bluespace = сирий блюспейс
 materials-raw-normality = сира нормальність
 
 # Утилізатор матеріалу
