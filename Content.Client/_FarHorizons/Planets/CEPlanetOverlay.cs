@@ -129,9 +129,9 @@ public sealed partial class CEPlanetOverlay : Overlay
     private const float EdgeMargin = 0.9f;
 
     /// <summary>
-    /// How far a planet may be from the viewer before the sky stops drawing it — distant
-    /// worlds (the nukie planet 3-5k out) stay hidden instead of hanging tiny at the screen
-    /// edge, and only grow in as you fly toward them. The star ignores this and is always drawn.
+    /// How far a secret world may be from the viewer before the sky stops drawing it — the
+    /// hidden Taipan (nukie) world only, so it stays a surprise until you're close. Every
+    /// other body is always drawn; the star ignores this entirely.
     /// </summary>
     private const float MaxPlanetRenderDistance = 1000f;
 
@@ -188,8 +188,8 @@ public sealed partial class CEPlanetOverlay : Overlay
 
         // Collect every sky body on this map: planets plus the system's star. They're drawn
         // closest-last so the nearer body always hovers the farther one — planet over sun when
-        // you're at a planet, sun over planets when you're far out. Distant planets are skipped
-        // so they don't spoil the horizon; the star is always drawn.
+        // you're at a planet, sun over planets when you're far out. Secret worlds (HideFromMaps,
+        // i.e. Taipan) stay hidden beyond a short range; every other body is always drawn.
         _bodies.Clear();
         var query = _entManager.EntityQueryEnumerator<CEPlanetComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var comp, out var xform))
@@ -198,7 +198,7 @@ public sealed partial class CEPlanetOverlay : Overlay
                 continue;
 
             var worldPos = _transform.GetWorldPosition(xform);
-            if ((worldPos - worldCentre).Length() > MaxPlanetRenderDistance)
+            if (comp.HideFromMaps && (worldPos - worldCentre).Length() > MaxPlanetRenderDistance)
                 continue;
 
             _bodies.Add(((worldPos - worldCentre).Length(), uid, comp, worldPos, null, default));
@@ -420,12 +420,15 @@ public sealed partial class CEPlanetOverlay : Overlay
             CEPlanetRadii.MinScale(starWorldRadius),
             CEPlanetRadii.MaxScale(starWorldRadius));
 
-        // The star shader's corona extends to CoronaExtentFactor x the core radius.
-        var size = starWorldRadius * 2f * CoronaExtentFactor * scale;
+        // The star shader's corona extends to CoronaExtentFactor x the core radius; a ringed
+        // star (Kyphrus) extends further, and the draw rect must contain the whole ring or it
+        // clips into a square at the quad edge.
+        var extent = star.Rings != null ? MathF.Max(CoronaExtentFactor, star.Rings.RadiusOuter) : CoronaExtentFactor;
+        var size = starWorldRadius * 2f * extent * scale;
 
         // FPS cap like the planets: keep the rect bounded without freezing the disc's growth.
         const float MaxBodySize = 4f;
-        if (size > MaxBodySize && size / CoronaExtentFactor < MaxBodySize)
+        if (size > MaxBodySize && size / extent < MaxBodySize)
             size = MaxBodySize;
 
         if (_cachedStar != star)

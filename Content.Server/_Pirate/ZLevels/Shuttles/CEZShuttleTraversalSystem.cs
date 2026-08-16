@@ -2,7 +2,9 @@ using System.Numerics;
 using Content.Server._Pirate.ZLevels.Core;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Shared._FarHorizons.Camera; // Far Horizons
 using Content.Shared._FarHorizons.Planets; // Far Horizons
+using Content.Shared._FarHorizons.Planets.Descent; // Far Horizons: empty-shuttle auto-land
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Shuttles;
 using Content.Shared._Pirate.ZLevels.Shuttles.Components;
@@ -16,6 +18,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server._Pirate.ZLevels.Shuttles;
@@ -39,7 +42,7 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MapSystem _mapSystem = default!; // Far Horizons: landing excavation
+    [Dependency] private readonly _FarHorizons.Planets.CEPlanetSystem _planetSystem = default!; // Far Horizons: landing pads
     [Dependency] private readonly _FarHorizons.Planets.CEDescentSystem _descent = default!; // Far Horizons
 
     private EntityQuery<MapGridComponent> _gridQuery;
@@ -56,6 +59,12 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
     private readonly HashSet<EntityUid> _refreshSeen = new();
     private TimeSpan _nextButtonRefresh;
     private static readonly TimeSpan ButtonRefreshInterval = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>Far Horizons: how far (tiles) an empty shuttle nudges per drift tick.</summary>
+    private const float ShipDriftStep = 1.5f;
+
+    /// <summary>Far Horizons: spiral search rings for the shuttle's nearest open landing spot.</summary>
+    private const int MaxShipDriftRings = 12;
 
     // Mirror the FTL feel: a startup wind-up before the move, then an exit cooldown after.
     // Kept short so level-by-level flying (planet descents in particular) doesn't drag. // Far Horizons
@@ -180,7 +189,129 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
         {
             _nextButtonRefresh = now + ButtonRefreshInterval;
             RefreshOpenFlightConsoles();
+            AutoLandEmptyShuttles(); // Far Horizons
         }
+    }
+
+    /// <summary>
+    /// Far Horizons: a shuttle hovering over a planet surface with no players aboard lands itself
+    /// (level by level, using the regular fly-down traversal), so a player who dropped off it can
+    /// always walk back to it. Over a building it drifts sideways to the nearest open spot first,
+    /// then descends — it never parks on top of a building. Critters and other non-player mobs
+    /// don't keep it hovering.
+    /// </summary>
+    private void AutoLandEmptyShuttles()
+    {
+        _refreshSeen.Clear();
+
+        var query = EntityQueryEnumerator<ShuttleComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var xform))
+        {
+            if (xform.MapUid is not { } mapUid ||
+                HasComp<CEZGroundLayerComponent>(mapUid) ||
+                !_planetSystem.TryGetPlanetForMap(mapUid, out _))
+                continue;
+
+            // Never fight an in-progress descent/ascent.
+            if (HasComp<CEDescentComponent>(uid) ||
+                HasComp<CEDescentSpinupComponent>(uid) ||
+                HasComp<CEDescentStunnedComponent>(uid))
+                continue;
+
+            var root = _shuttle.ResolveFTLShuttle(uid);
+            if (!_refreshSeen.Add(root))
+                continue;
+
+            if (HasAboardPlayers(root) || HasComp<CEZShuttleTraversalComponent>(root))
+                continue;
+
+            // Over a building? Drift sideways until the footprint is clear, then descend.
+            if (TryDriftEmptyShuttleToOpenGround(root))
+                continue;
+
+            // CanReach inside refuses blocked spots (outpost footprint), FTL-ing ships and
+            // shuttles without thrusters — exactly the cases that must not auto-land.
+            TryStartTraversal(root, -1);
+        }
+    }
+
+    /// <summary>
+    /// Far Horizons: when the shuttle is one level above a planet's ground layer and its footprint
+    /// covers a building there, nudge it toward the nearest open spot. Returns true when drifting
+    /// (nothing else should move the shuttle this tick).
+    /// </summary>
+    private bool TryDriftEmptyShuttleToOpenGround(EntityUid root)
+    {
+        if (!TryGetRealDecks(root, out var decks) || decks.Count == 0)
+            return false;
+
+        var rootXform = _xformQuery.GetComponent(root);
+        if (rootXform.MapUid is not { } mapUid ||
+            !_zLevels.TryGetPlanetGroundLayerBelow(mapUid, out var groundMapUid))
+            return false;
+
+        var own = GetOwnGrids(root);
+        var footprint = GetShuttleWorldAabb(decks);
+        if (footprint is not { } aabb)
+            return false;
+
+        // Already clear — the regular descent can proceed.
+        if (!IsBlocked(own, aabb, groundMapUid.Value))
+            return false;
+
+        var origin = _transform.GetWorldPosition(root);
+        var step = MathF.Max(aabb.Width, aabb.Height);
+
+        // Spiral outward for the closest position where the footprint covers no other grid.
+        for (var ring = 1; ring <= MaxShipDriftRings; ring++)
+        {
+            var radius = ring * step;
+            for (var dx = -ring; dx <= ring; dx++)
+            {
+                for (var dy = -ring; dy <= ring; dy++)
+                {
+                    if (MathF.Max(MathF.Abs(dx), MathF.Abs(dy)) != ring)
+                        continue;
+
+                    var candidate = origin + new Vector2(dx, dy) * step;
+                    var candidateAabb = aabb.Translated(candidate - origin);
+                    if (IsBlocked(own, candidateAabb, groundMapUid.Value))
+                        continue;
+
+                    var delta = candidate - origin;
+                    var move = delta.Length() <= ShipDriftStep
+                        ? delta
+                        : Vector2.Normalize(delta) * ShipDriftStep;
+
+                    _transform.SetCoordinates(root, rootXform, new EntityCoordinates(mapUid, origin + move));
+                    _console.RefreshShuttleConsoles(root);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>True when any player-controlled mob is aboard any deck of the shuttle.</summary>
+    private bool HasAboardPlayers(EntityUid root)
+    {
+        _ownScratch.Clear();
+        _ownScratch.Add(root);
+        if (TryComp<CEZLinkedGridComponent>(root, out var linked))
+        {
+            foreach (var (_, peer) in linked.PeerGrids)
+                _ownScratch.Add(peer);
+        }
+
+        var query = EntityQueryEnumerator<ActorComponent, TransformComponent>();
+        while (query.MoveNext(out _, out _, out var xform))
+        {
+            if (xform.GridUid is { } grid && _ownScratch.Contains(grid))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -478,13 +609,29 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
 
             // Far Horizons: arriving on a planet surface excavates the deck footprints so ships
             // land on clear ground instead of inside biome rocks/walls. The biome only generates
-            // into untouched chunks, so cleared tiles stay clear.
+            // into untouched chunks, so cleared tiles stay clear. Everyone aboard feels the
+            // touchdown.
+            var landedOnGround = false;
             foreach (var (deck, _, targetMap) in moves)
             {
                 if (!HasComp<CEZGroundLayerComponent>(targetMap))
                     continue;
 
-                ExcavateLandingSpot(targetMap, deck);
+                landedOnGround = true;
+                _planetSystem.ExcavateLandingPad(targetMap, deck);
+            }
+
+            if (landedOnGround)
+            {
+                var filter = Filter.Empty();
+                foreach (var (deck, _, _) in moves)
+                    filter.AddInGrid(deck);
+
+                RaiseNetworkEvent(new RadialShakeEvent
+                {
+                    Duration = 1.2f,
+                    Amplitude = 0.9f,
+                }, filter);
             }
         }
         finally
@@ -497,32 +644,6 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
         // above it now).
         _roof.EnsureRoof(root);
         return true;
-    }
-
-    /// <summary>
-    /// Clears biome tiles under <paramref name="gridUid"/>'s footprint (plus a small margin) on a
-    /// planet surface map, so the ship touches down on open ground instead of inside rocks. Only
-    /// already-generated tiles are cleared; the biome doesn't regenerate them afterwards.
-    /// </summary>
-    private void ExcavateLandingSpot(EntityUid mapUid, EntityUid gridUid)
-    {
-        if (!_gridQuery.TryGetComponent(mapUid, out var mapGrid) ||
-            !_gridQuery.TryGetComponent(gridUid, out var deckGrid))
-            return;
-
-        var bounds = _transform.GetWorldMatrix(gridUid).TransformBox(deckGrid.LocalAABB).Enlarged(2f);
-
-        var tiles = new List<(Vector2i GridIndices, Tile Tile)>();
-        foreach (var tileRef in _mapSystem.GetLocalTilesIntersecting(mapUid, mapGrid, bounds, false))
-        {
-            if (tileRef.Tile.IsEmpty)
-                continue;
-
-            tiles.Add((tileRef.GridIndices, Tile.Empty));
-        }
-
-        if (tiles.Count > 0)
-            _mapSystem.SetTiles(mapUid, mapGrid, tiles);
     }
 
     private void PlayForDecks(EntityUid root, SoundSpecifier sound)

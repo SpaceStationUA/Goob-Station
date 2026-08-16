@@ -158,6 +158,23 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         base.MouseWheel(args);
     }
 
+    /// <summary>
+    /// Far Horizons: zoom-step lock for the star-system map. Null restores the default free
+    /// wheel zoom (256-1024 world units); a value locks the map at exactly that range — the
+    /// wheel becomes a no-op while locked.
+    /// </summary>
+    public void SetZoomStep(float? step)
+    {
+        WorldMinRange = step ?? 256f;
+        WorldMaxRange = step ?? 1024f;
+
+        if (step is { } locked)
+        {
+            WorldRange = locked;
+            ActualRadarRange = locked;
+        }
+    }
+
     private void DrawParallax(DrawingHandleScreen handle)
     {
         if (!EntManager.TryGetComponent(_shuttleEntity, out TransformComponent? shuttleXform) || shuttleXform.MapUid == null)

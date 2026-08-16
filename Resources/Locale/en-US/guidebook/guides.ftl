@@ -260,3 +260,7 @@ guide-entry-rules-ban-durations = Ban Durations
 
 guide-entry-writing = Writing
 guide-entry-glossary = Glossary
+
+guide-entry-starsystem = Star System
+guide-entry-planet-lavaland = Lavaland
+guide-entry-planet-taipan = Taipan

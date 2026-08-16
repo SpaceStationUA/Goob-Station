@@ -21,6 +21,13 @@ public sealed partial class PlanetTypePrototype : IPrototype
     /// </summary>
     [DataField] public bool Landable = true;
 
+    /// <summary>
+    /// Whether this type counts as a habitable (atmospheric, life-capable) world. Curated
+    /// systems keep their hand-picked habitable planet and only roll flavour worlds from
+    /// non-habitable types, so the nice worlds stay predictable.
+    /// </summary>
+    [DataField] public bool Habitable;
+
     [DataField(required: true)] public float RingProbability = default!;
     [DataField(required: true)] public FloatRangeValue EarthMass = default!;
     [DataField(required: true)] public List<ProtoId<PlanetPalettePrototype>> Palettes = default!;

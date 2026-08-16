@@ -1,5 +1,7 @@
 using System.Numerics;
 using System.Text;
+using Content.Shared._FarHorizons.StarSystem.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._FarHorizons.StarSystem.Helpers;
 
@@ -14,6 +16,8 @@ public sealed partial class Star
     [ViewVariables(VVAccess.ReadWrite)] public Color Color;
     [ViewVariables] public Vector2 Position;
     [ViewVariables] public string Name = "";
+    [ViewVariables] public float Rotation;
+    [ViewVariables] public PlanetaryRings? Rings;
     public const float NAV_PIXEL_SIZE = 500;
     public const float MAP_PIXEL_SIZE = 500;
     public const string STAR_ENTITY = "StarEntity";
@@ -41,6 +45,20 @@ public sealed partial class Star
         Color = color;
         Position = Vector2.Zero;
         Shader = shader;
+    }
+
+    /// <summary>
+    /// Builds a star from its type prototype: rolls the mass range, honours a fixed curated
+    /// name (Kyphrus), and attaches a ring system when the type defines one.
+    /// </summary>
+    public Star(StarTypePrototype proto, System.Random rand, IPrototypeManager protoMan)
+        : this(proto.SolarMass.RollValue(rand), proto.Color, proto.Shader)
+    {
+        Name = proto.Name ?? "";
+        Rotation = proto.Rotation;
+
+        if (proto.Rings is { } rings)
+            Rings = new PlanetaryRings(rand, protoMan, rings);
     }
 
     public void GenerateName(System.Random rand)

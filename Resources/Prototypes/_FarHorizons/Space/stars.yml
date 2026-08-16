@@ -142,3 +142,25 @@
     - type: OuterCold
       prob: 0.7
   asteroidBelts: [ StandardAsteroidBelt ]
+
+# Far Horizons: the curated home star — a ringed orange dwarf, centrepiece of the Kyphrus system.
+- type: starType
+  id: StarKyphrus
+  name: Kyphrus
+  shader: MainSequenceStar
+  solarMass:
+    min: 0.62
+    max: 0.62
+  color: '#FFD2A1'
+  rotation: 0.6
+  rings: StandardRings
+  orbits:
+    - type: InnerHot
+      prob: 0.5
+    - type: InnerHabitable
+      prob: 0.5
+    - type: InnerCold
+      prob: 0.4
+    - type: Belt
+      prob: 0.4
+  asteroidBelts: [ StandardAsteroidBelt ]

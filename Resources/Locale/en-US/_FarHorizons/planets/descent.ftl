@@ -14,3 +14,10 @@ ce-descent-request-orbit-blocked = No clear orbit slot around this body — try 
 ce-planet-type-gas-giant = Gas Giant
 ce-planet-type-ice-giant = Ice Giant
 ce-planet-type-rocky = Rocky
+
+shuttle-console-map-zoom = Map zoom:
+shuttle-console-map-zoom-free = Free
+shuttle-console-map-zoom-2k = 2k
+shuttle-console-map-zoom-5k = 5k
+shuttle-console-map-zoom-10k = 10k
+shuttle-console-map-zoom-30k = 30k

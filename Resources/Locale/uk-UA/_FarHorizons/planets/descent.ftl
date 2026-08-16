@@ -14,3 +14,10 @@ ce-descent-request-orbit-blocked = Немає вільної орбіти нав
 ce-planet-type-gas-giant = Газовий гігант
 ce-planet-type-ice-giant = Крижаний гігант
 ce-planet-type-rocky = Скеляста
+
+shuttle-console-map-zoom = Масштаб карти:
+shuttle-console-map-zoom-free = Вільно
+shuttle-console-map-zoom-2k = 2к
+shuttle-console-map-zoom-5k = 5к
+shuttle-console-map-zoom-10k = 10к
+shuttle-console-map-zoom-30k = 30к

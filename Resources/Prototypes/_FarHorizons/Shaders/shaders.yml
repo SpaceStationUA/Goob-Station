@@ -9,6 +9,17 @@
   params:
     parallaxFactor: 0.05
     solarRadiusFactor: 25.0
+    rotationAngle: 0.6
+    hasRings: false
+    ringsRadiusInner: 1.35
+    ringsRadiusOuter: 1.85
+    ringsBandFrequency: 10.0
+    ringsColor1: "0.851, 0.725, 0.549"
+    ringsColor2: "0.639, 0.478, 0.306"
+    ringsColor3: "0.435, 0.310, 0.200"
+    ringDensity: 0.8
+    axialPitch: 1.7
+    perspectiveStrength: 0.013
 
 - type: shader
   id: GasGiant

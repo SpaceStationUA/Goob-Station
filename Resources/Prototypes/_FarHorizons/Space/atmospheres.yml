@@ -78,3 +78,26 @@
   cloudDensity:
     min: 0.75
     max: 1.0
+
+# Far Horizons: the Blight atmosphere (curated Aerumna) — fixed values via degenerate ranges.
+- type: planetaryAtmosphereType
+  id: BlightAtmosphere
+  colors:
+    - '#8C3A2E'
+  thickness:
+    min: 0.13
+    max: 0.13
+  density:
+    min: 1.05
+    max: 1.05
+  cloudColors:
+    - '#C9A85E'
+  cloudCoverage:
+    min: 0.9
+    max: 0.9
+  cloudScale:
+    min: 0.55
+    max: 0.55
+  cloudDensity:
+    min: 1.1
+    max: 1.1

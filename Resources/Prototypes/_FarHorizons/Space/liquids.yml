@@ -60,3 +60,25 @@
   emission:
     min: 0.0
     max: 0.0
+
+# Far Horizons: the glowing letoferol seas of Aerumna — fixed values via degenerate ranges.
+- type: planetaryLiquidType
+  id: LiquidNaturalLetoferol
+  color: '#7A5E14'
+  shallowColor: '#EBBA34'
+  level:
+    min: 0.4
+    max: 0.4
+  riverFrequency:
+    min: 4.5
+    max: 4.5
+  riverThreshold:
+    min: 0.22
+    max: 0.22
+  specularity:
+    min: 12.0
+    max: 12.0
+  emissive: true
+  emission:
+    min: 0.25
+    max: 0.25

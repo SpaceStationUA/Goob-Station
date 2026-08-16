@@ -674,12 +674,19 @@ public sealed class NPCUtilitySystem : EntitySystem
                 foreach (var effect in entry.Effects)
                 {
                     Entity<MetabolizerComponent>? metabolizingOrgan = null;
+                    var hasMetabolizers = false;
                     if (HasComp<BodyComponent>(consumer)
                         && _body.TryGetBodyOrganEntityComps<MetabolizerComponent>(consumer, out var metabolizers))
                     {
-                        metabolizingOrgan = metabolizers.First(met =>
+                        hasMetabolizers = true;
+                        metabolizingOrgan = metabolizers.FirstOrDefault(met =>
                             (met.Comp1.MetabolismGroups ?? []).Any(group => group.Id == metabolism));
                     }
+
+                    // This consumer's organs don't metabolize this metabolism group,
+                    // so the effect can't apply to it — skip it instead of crashing the plan job.
+                    if (hasMetabolizers && metabolizingOrgan == null)
+                        continue;
 
                     if (effect.Conditions != null
                         && metabolizingOrgan != null

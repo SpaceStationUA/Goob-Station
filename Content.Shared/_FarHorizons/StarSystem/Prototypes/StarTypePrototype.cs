@@ -12,6 +12,15 @@ public sealed partial class StarTypePrototype : IPrototype
     [DataField(required: true)] public Color Color = default!;
     [DataField(required: true)] public List<StarOrbitSlot> Orbits = default!;
     [DataField(required: true)] public List<ProtoId<AsteroidBeltTypePrototype>> AsteroidBelts = default!;
+
+    /// <summary>Optional fixed name (curated stars like Kyphrus); otherwise a name is generated.</summary>
+    [DataField] public string? Name;
+
+    /// <summary>Surface rotation speed for the star shader, radians per second.</summary>
+    [DataField] public float Rotation;
+
+    /// <summary>Optional ring system around the star (curated stars like Kyphrus).</summary>
+    [DataField] public ProtoId<PlanetaryRingsTypePrototype>? Rings;
 }
 
 [DataDefinition]

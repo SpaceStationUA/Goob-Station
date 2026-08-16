@@ -226,34 +226,6 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
                 index++;
             }
         }
-
-        // Far Horizons: a predetermined, non-random planet in the sky alongside the procedural
-        // ones — the CE author's nauvis sprite. Position is deterministic per round seed, and it
-        // gets a landable surface just like the procedural planets.
-        if (_protoMan.TryIndex<EntityPrototype>(CEPlanetSystem.NauvisEntProtoId, out var nauvisProto))
-        {
-            var star = ent.Comp.StarSystem.Star;
-            var angle = ((ent.Comp.Seed ?? 0) % 360) * MathF.PI / 180f;
-            var nauvisPos = star.Position + ent.Comp.StarOffset +
-                            new Vector2(MathF.Cos(angle), MathF.Sin(angle)) * 3000f;
-
-            var spawnedNauvis = SpawnAtPosition(nauvisProto.ID, new EntityCoordinates(ent, nauvisPos));
-
-            // Sprite planet: stamp the same CEPlanetRadii-derived fields as the procedural
-            // bodies so the client render and the descent system agree everywhere.
-            var nauvisComp = EnsureComp<CEPlanetComponent>(spawnedNauvis);
-            var nauvisWorldRadius = 10f;
-            nauvisComp.WorldRadius = nauvisWorldRadius;
-            nauvisComp.ApproachRadius = CEPlanetRadii.ApproachRadius(nauvisWorldRadius);
-            nauvisComp.ZoneRadius = CEPlanetRadii.ZoneRadius(nauvisWorldRadius);
-            nauvisComp.MinScaleRadius = CEPlanetRadii.MinScaleRadius(nauvisWorldRadius);
-            nauvisComp.LandingRadius = CEPlanetRadii.LandingRadius(nauvisWorldRadius);
-            nauvisComp.MinScale = CEPlanetRadii.MinScale(nauvisWorldRadius);
-            nauvisComp.MaxScale = CEPlanetRadii.MaxScale(nauvisWorldRadius);
-            Dirty(spawnedNauvis, nauvisComp);
-
-            // Lazy: the z-stack is created on first approach (EnsurePlanetStack).
-        }
     }
 
     /// <summary>How far from the station the lavaland world sits, so it's a short hop rather than a system crossing.</summary>

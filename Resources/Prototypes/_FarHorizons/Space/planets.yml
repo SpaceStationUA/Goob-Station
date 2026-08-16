@@ -145,6 +145,7 @@
   id: PlanetTypeDesert
   orbit: [ InnerHot, InnerHabitable ]
   shader: RockyPlanet
+  habitable: true
   basePrettiness: 0 # Eh
   ringProbability: 0.05
   earthMass:
@@ -166,6 +167,7 @@
   id: PlanetTypeIce
   orbit: [ InnerHabitable, InnerCold ]
   shader: RockyPlanet
+  habitable: true
   basePrettiness: 0 # Eh
   ringProbability: 0.15
   earthMass:
@@ -190,6 +192,7 @@
   id: PlanetTypeHabitable
   orbit: [ InnerHabitable ]
   shader: RockyPlanet
+  habitable: true
   basePrettiness: 15 # Neat
   ringProbability: 0.10
   earthMass:

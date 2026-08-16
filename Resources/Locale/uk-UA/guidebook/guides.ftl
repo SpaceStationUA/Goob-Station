@@ -215,3 +215,6 @@ guide-entry-analysisconsole = Консоль аналізу
 guide-entry-lawsets = Набори законів силіконів
 guide-entry-wizard = Чарівник
 guide-entry-xenoborgs = Ксеноборги
+guide-entry-starsystem = Зоряна система
+guide-entry-planet-lavaland = Лаваленд
+guide-entry-planet-taipan = Тайпан

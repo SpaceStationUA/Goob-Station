@@ -5,6 +5,7 @@ using Content.Client.Shuttles.Systems;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
+using Content.Shared._FarHorizons.Planets; // Far Horizons
 using Content.Shared._FarHorizons.Planets.Descent; // Far Horizons
 using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared._Pirate.ZLevels.Shuttles; // Pirate: multiz
@@ -117,6 +118,41 @@ public sealed partial class MapScreen : BoxContainer
         DescentBar.ForegroundStyleBoxOverride = _descentStyle;
         DescendButton.OnPressed += _ => RequestDescend?.Invoke();
         AscendButton.OnPressed += _ => RequestAscend?.Invoke();
+
+        // Zoom steps: Free keeps the default wheel zoom; the other steps lock the map at a
+        // fixed world range so the whole star system is a couple of clicks away.
+        var zoomGroup = new ButtonGroup();
+        ZoomFreeButton.Group = zoomGroup;
+        Zoom2kButton.Group = zoomGroup;
+        Zoom5kButton.Group = zoomGroup;
+        Zoom10kButton.Group = zoomGroup;
+        Zoom30kButton.Group = zoomGroup;
+
+        ZoomFreeButton.OnToggled += args =>
+        {
+            if (args.Pressed)
+                MapRadar.SetZoomStep(null);
+        };
+        Zoom2kButton.OnToggled += args =>
+        {
+            if (args.Pressed)
+                MapRadar.SetZoomStep(2000f);
+        };
+        Zoom5kButton.OnToggled += args =>
+        {
+            if (args.Pressed)
+                MapRadar.SetZoomStep(5000f);
+        };
+        Zoom10kButton.OnToggled += args =>
+        {
+            if (args.Pressed)
+                MapRadar.SetZoomStep(10000f);
+        };
+        Zoom30kButton.OnToggled += args =>
+        {
+            if (args.Pressed)
+                MapRadar.SetZoomStep(30000f);
+        };
         #endregion
 
         // Just pass it on up.
@@ -428,6 +464,15 @@ public sealed partial class MapScreen : BoxContainer
             {
                 if (beacon.HideButton)
                     continue;
+
+                // Far Horizons: secret worlds (the nukie planet) stay off the FTL map and its
+                // object list entirely — no name, no dot, no spoilers.
+                if (_entManager.TryGetEntity(beacon.Entity, out var beaconUid) &&
+                    _entManager.TryGetComponent<CEPlanetComponent>(beaconUid, out var planet) &&
+                    planet.HideFromMaps)
+                {
+                    continue;
+                }
 
                 _pendingMapObjects.Add((mapComp.MapId, beacon));
             }

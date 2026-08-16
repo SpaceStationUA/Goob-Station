@@ -13,6 +13,8 @@ using Content.Server._Pirate.ZLevels.Shuttles;
 using Content.Shared._FarHorizons.Planets;
 using Content.Shared._Pirate.ZLevels.Shuttles.Components;
 using Content.Shared._FarHorizons.Planets.Descent;
+using Content.Shared._FarHorizons.Camera; // Far Horizons: arrival shake
+using Robust.Shared.Player;
 using Content.Shared._FarHorizons.StarSystem;
 using Content.Shared._FarHorizons.StarSystem.Helpers;
 using Content.Shared._Pirate.ZLevels.Core.Components;
@@ -24,6 +26,8 @@ using Content.Shared.Shuttles.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Timing;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -58,6 +62,7 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeops = default!; // Far Horizons: war-ops ascent lock
+    [Dependency] private readonly SharedAudioSystem _audio = default!; // Far Horizons: descent cues
 
     private EntityQuery<MapGridComponent> _gridQuery = default!;
     private EntityQuery<PhysicsComponent> _physQuery = default!;
@@ -65,6 +70,18 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
 
     private const float MinAscentOrbitDistance = 32f;
     private const float MaxAscentOrbitDistance = 96f;
+
+    // The descent drive keeps the classic hyperspace cue; FTL uses the new NSV set, so the
+    // two reads audibly different.
+    private readonly SoundSpecifier _descentStartSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
+
+    private readonly SoundSpecifier _descentArriveSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-5f),
+    };
 
     /// <summary>Per-shuttle cached console flags so the periodic refresh only pushes state on change.</summary>
     private readonly Dictionary<EntityUid, (bool CanDescend, bool CanAscend)> _consoleFlagsCache = new();
@@ -390,6 +407,23 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         ent.Comp.StageStart = Timing.CurTime;
         Dirty(ent);
 
+        // Touchdown (surface or space, descent or ascent) gets the classic arrival sting and a
+        // rumble through the hull for everyone aboard.
+        if (stage == CEDescentStage.Arriving)
+        {
+            _audio.PlayPvs(_descentArriveSound, ent.Owner);
+
+            var filter = Filter.Empty();
+            foreach (var grid in ent.Comp.GridSet)
+                filter.AddInGrid(grid);
+
+            RaiseNetworkEvent(new RadialShakeEvent
+            {
+                Duration = 1.5f,
+                Amplitude = 1.1f,
+            }, filter);
+        }
+
         if (ent.Comp.DescentMap is { } mapUid && TryComp<CEDescentMapComponent>(mapUid, out var map))
         {
             map.Stage = stage;
@@ -464,6 +498,9 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         Dirty(ent);
 
         MoveGridSet(ent.Comp.GridSet, ent.Owner, pseudoMap);
+
+        // The fall begins audibly for everyone aboard.
+        _audio.PlayPvs(_descentStartSound, ent.Owner);
     }
 
     /// <summary>
@@ -659,7 +696,9 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
     /// <summary>
     /// Creates descendable z-stacks for planets a shuttle has entered the approach radius of
     /// (or parked on the surface of), if they don't have one yet
-    /// (see <see cref="CEPlanetSystem.EnsurePlanetStack"/>).
+    /// (see <see cref="CEPlanetSystem.EnsurePlanetStack"/>). Also keeps landing pads clear:
+    /// the biome generates rocks around viewers (the ship), so parked and moving ships on a
+    /// planet surface continuously re-clear their own footprint.
     /// </summary>
     private void EnsureNearbyPlanetStacks()
     {
@@ -668,6 +707,11 @@ public sealed partial class CEDescentSystem : CESharedDescentSystem
         {
             if (xform.MapUid is not { } mapUid)
                 continue;
+
+            // Clear the ship's footprint on planet surfaces so freshly generated rocks never
+            // end up inside the hull.
+            if (HasComp<CEZGroundLayerComponent>(mapUid))
+                _planetSystem.ExcavateLandingPad(mapUid, uid);
 
             var shuttlePos = _transform.GetWorldPosition(xform);
 

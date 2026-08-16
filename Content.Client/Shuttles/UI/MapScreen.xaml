@@ -63,6 +63,41 @@ SPDX-License-Identifier: MIT
                 </controls:BoxContainer>
                 <!-- Pirate: multiz (end) -->
                 <!-- Far Horizons (begin) -->
+                <controls1:StripeBack MinSize="48 48">
+                    <controls:Label Text="{controls:Loc 'shuttle-console-map-zoom'}"
+                           HorizontalAlignment="Center"/>
+                </controls1:StripeBack>
+                <controls:BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <controls:Button Name="ZoomFreeButton"
+                                     Text="{controls:Loc 'shuttle-console-map-zoom-free'}"
+                                     TextAlign="Center"
+                                     HorizontalExpand="True"
+                                     ToggleMode="True"
+                                     Pressed="True"/>
+                    <controls:Button Name="Zoom2kButton"
+                                     Text="{controls:Loc 'shuttle-console-map-zoom-2k'}"
+                                     TextAlign="Center"
+                                     HorizontalExpand="True"
+                                     ToggleMode="True"/>
+                </controls:BoxContainer>
+                <controls:BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <controls:Button Name="Zoom5kButton"
+                                     Text="{controls:Loc 'shuttle-console-map-zoom-5k'}"
+                                     TextAlign="Center"
+                                     HorizontalExpand="True"
+                                     ToggleMode="True"/>
+                    <controls:Button Name="Zoom10kButton"
+                                     Text="{controls:Loc 'shuttle-console-map-zoom-10k'}"
+                                     TextAlign="Center"
+                                     HorizontalExpand="True"
+                                     ToggleMode="True"/>
+                    <controls:Button Name="Zoom30kButton"
+                                     Text="{controls:Loc 'shuttle-console-map-zoom-30k'}"
+                                     TextAlign="Center"
+                                     HorizontalExpand="True"
+                                     ToggleMode="True"/>
+                </controls:BoxContainer>
+                <!-- Far Horizons (end) -->
                 <controls:Label Name="DescentStateLabel"
                                 Text="{controls:Loc 'shuttle-console-descent-state-Available'}"
                                 HorizontalAlignment="Center"/>

@@ -3,18 +3,26 @@
  * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
  */
 
+using System.Numerics;
+using Content.Server.Atmos.Components; // Far Horizons: sky-layer atmosphere
+using Content.Server.Atmos.EntitySystems; // Far Horizons: sky-layer atmosphere
 using Content.Server.Parallax;
 using Content.Server._Pirate.ZLevels.Core;
 using Content.Shared._FarHorizons.Planets;
 using Content.Shared._FarHorizons.StarSystem;
 using Content.Shared._FarHorizons.StarSystem.Helpers;
 using Content.Shared._Pirate.ZLevels.Core.Components;
+using Content.Shared.Atmos; // Far Horizons: sky-layer atmosphere
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Parallax.Biomes.Layers;
+using Content.Shared.Physics;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._FarHorizons.Planets;
@@ -35,6 +43,9 @@ public sealed partial class CEPlanetSystem : EntitySystem
     [Dependency] private readonly BiomeSystem _biome = default!;
     [Dependency] private readonly CEZLevelsSystem _zLevels = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly ITileDefinitionManager _tiledef = default!; // Far Horizons: landing pads
+    [Dependency] private readonly EntityLookupSystem _lookup = default!; // Far Horizons: landing pads
+    [Dependency] private readonly AtmosphereSystem _atmos = default!; // Far Horizons: sky-layer atmosphere
 
     /// <summary>
     /// Number of sky layers in a planet stack, excluding the ground layer. Kept low for
@@ -230,6 +241,14 @@ public sealed partial class CEPlanetSystem : EntitySystem
             _meta.SetEntityName(skyMap, $"Sky: {displayName} [{depth}]");
             if (depth == CloudsIndex)
                 AddComp<CEZCloudLayerComponent>(skyMap);
+
+            // Far Horizons: sky levels share the ground layer's breathable atmosphere — a
+            // player stepping off a hovering shuttle over the clouds still has air. The sky
+            // marker carries the ground layer's gravity for falls and the drift redirection.
+            ApplySkyAtmosphere(skyMap, groundMap);
+            var skyLayer = EnsureComp<CEZPlanetSkyLayerComponent>(skyMap);
+            skyLayer.GroundMapUid = groundMap;
+            Dirty(skyMap, skyLayer);
             maps[skyMap] = depth;
         }
 
@@ -295,5 +314,120 @@ public sealed partial class CEPlanetSystem : EntitySystem
             "Snow" => Color.FromHex("#E8F4FF"),
             _ => Color.FromHex("#C8FDFF"),
         };
+    }
+
+    /// <summary>
+    /// Replaces obstacles (rocks, walls) in a disc around <paramref name="worldPos"/> on a planet
+    /// surface with the biome's base fill floor — ships touch down on clear ground and players
+    /// landing from the sky don't spawn inside walls. The biome never regenerates cleared tiles.
+    /// </summary>
+    public void ExcavateLandingPad(EntityUid mapUid, Vector2 worldPos, float radius)
+    {
+        if (!TryComp<MapGridComponent>(mapUid, out var mapGrid))
+            return;
+
+        var floor = GetBiomeFillFloor(mapUid);
+        if (floor.IsEmpty)
+            return;
+
+        ExcavateTiles(mapUid, mapGrid, floor, Box2.CenteredAround(worldPos, new Vector2(radius, radius)));
+    }
+
+    /// <summary>Clears the footprint of <paramref name="gridUid"/> (plus a margin) down to the biome fill floor.</summary>
+    public void ExcavateLandingPad(EntityUid mapUid, EntityUid gridUid, float margin = 2f)
+    {
+        if (!TryComp<MapGridComponent>(mapUid, out var mapGrid) ||
+            !TryComp<MapGridComponent>(gridUid, out var deckGrid))
+            return;
+
+        var floor = GetBiomeFillFloor(mapUid);
+        if (floor.IsEmpty)
+            return;
+
+        var bounds = Transform(gridUid).WorldMatrix.TransformBox(deckGrid.LocalAABB).Enlarged(margin);
+        ExcavateTiles(mapUid, mapGrid, floor, bounds);
+    }
+
+    private void ExcavateTiles(EntityUid mapUid, MapGridComponent mapGrid, Tile floor, Box2 bounds)
+    {
+        var tiles = new List<(Vector2i GridIndices, Tile Tile)>();
+        foreach (var tileRef in _map.GetLocalTilesIntersecting(mapUid, mapGrid, bounds, false))
+        {
+            if (tileRef.Tile.IsEmpty || tileRef.Tile.TypeId == floor.TypeId)
+                continue;
+
+            tiles.Add((tileRef.GridIndices, floor));
+        }
+
+        if (tiles.Count > 0)
+            _map.SetTiles(mapUid, mapGrid, tiles);
+
+        // Rocks and wall decor are anchored entities, not tiles — remove them too, otherwise
+        // they stay standing inside a landed ship's hull or under a player's touchdown spot.
+        var toDelete = new List<EntityUid>();
+        foreach (var ent in _lookup.GetEntitiesIntersecting(Transform(mapUid).MapID, bounds, LookupFlags.Static))
+        {
+            // Only terrain decor anchored to the surface grid itself — never parts of the
+            // landing ship (its own grid) or of a building standing on the surface (outpost).
+            if (Transform(ent).GridUid != mapUid ||
+                !TryComp<FixturesComponent>(ent, out var fixtures))
+                continue;
+
+            foreach (var fixture in fixtures.Fixtures.Values)
+            {
+                if (!fixture.Hard ||
+                    (fixture.CollisionLayer & (int) (CollisionGroup.Impassable | CollisionGroup.HighImpassable)) == 0)
+                    continue;
+
+                toDelete.Add(ent);
+                break;
+            }
+        }
+
+        foreach (var ent in toDelete)
+            QueueDel(ent);
+    }
+
+    /// <summary>The biome's lowest-threshold tile layer — the ground fill a cleared pad should become.</summary>
+    private Tile GetBiomeFillFloor(EntityUid mapUid)
+    {
+        if (!TryComp<BiomeComponent>(mapUid, out var biome))
+            return Tile.Empty;
+
+        var floor = Tile.Empty;
+        var floorThreshold = float.MaxValue;
+        foreach (var layer in biome.Layers)
+        {
+            if (layer is not BiomeTileLayer tileLayer || tileLayer.Threshold >= floorThreshold)
+                continue;
+
+            floorThreshold = tileLayer.Threshold;
+            floor = new Tile(_tiledef[tileLayer.Tile].TileId);
+        }
+
+        return floor;
+    }
+
+    /// <summary>
+    /// Far Horizons: gives a sky layer the same breathable atmosphere as the ground layer below it
+    /// (falling back to standard air for maps without one), so planet z-stacks are breathable
+    /// top to bottom even when the sky maps are created lazily.
+    /// </summary>
+    private void ApplySkyAtmosphere(EntityUid skyMap, EntityUid groundMap)
+    {
+        GasMixture mixture;
+        if (TryComp<MapAtmosphereComponent>(groundMap, out var groundAtmos))
+        {
+            mixture = new GasMixture(groundAtmos.Mixture);
+        }
+        else
+        {
+            var moles = new float[Atmospherics.AdjustedNumberOfGases];
+            moles[(int) Gas.Oxygen] = 21.824779f;
+            moles[(int) Gas.Nitrogen] = 82.10312f;
+            mixture = new GasMixture(moles, Atmospherics.T20C);
+        }
+
+        _atmos.SetMapAtmosphere(skyMap, false, mixture);
     }
 }

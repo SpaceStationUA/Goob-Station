@@ -3,7 +3,6 @@ using System.Numerics;
 using Content.Shared._FarHorizons.StarSystem.Helpers;
 using Content.Shared._FarHorizons.StarSystem.Prototypes;
 using Robust.Shared.Random;
-
 namespace Content.Shared._FarHorizons.StarSystem;
 
 public abstract partial class SharedStarSystemMapSystem
@@ -19,6 +18,32 @@ public abstract partial class SharedStarSystemMapSystem
         if (ent.Comp.Seed == null) return null;
         var rand = new System.Random(ent.Comp.Seed.Value);
 
+        // The home system is a curated blend: the ringed Kyphrus star with its named worlds
+        // (Fervidus, Merak, Asclepiu, Aerumna, Thrascias) at fixed orbits, plus a few
+        // randomly generated planets for flavour. Falls back to pure procgen without the data.
+        if (_protoMan.TryIndex<CuratedSystemPrototype>("SystemKyphrus", out var curated) &&
+            _protoMan.TryIndex(curated.Star, out var curatedStar))
+        {
+            var star = new Star(curatedStar, rand, _protoMan);
+            if (string.IsNullOrEmpty(star.Name))
+                star.GenerateName(rand);
+
+            var planets = new List<Planet>();
+            foreach (var entry in curated.Planets)
+            {
+                var planetProto = _protoMan.Index(entry.Planet);
+                var position = star.Position + new Vector2(MathF.Cos(entry.Angle), MathF.Sin(entry.Angle)) * entry.Distance;
+                planets.Add(BuildCuratedPlanet(planetProto, rand, position));
+            }
+
+            // Flavour: a handful of random inner worlds from the star type's orbit slots.
+            // Only unhabitable types — the curated Asclepiu stays the one habitable world.
+            AsteroidBelt? belt = null;
+            planets.AddRange(ResolvePlanets(rand, star, curatedStar, Vector2.Zero, ref belt, excludeHabitable: true));
+
+            return new PlanetarySystem(star, planets, belt);
+        }
+
         var stars = _protoMan.EnumeratePrototypes<StarTypePrototype>().OrderBy(p => p.ID).ToList();
         if (stars.Count == 0)
         {
@@ -29,20 +54,57 @@ public abstract partial class SharedStarSystemMapSystem
         var pickedStar = rand.Pick(stars);
 
         var solarMass = rand.NextFloat(pickedStar.SolarMass.Min, pickedStar.SolarMass.Max);
-        var star = new Star(solarMass, pickedStar.Color, pickedStar.Shader);
-        star.GenerateName(rand);
+        var fallbackStar = new Star(solarMass, pickedStar.Color, pickedStar.Shader);
+        fallbackStar.GenerateName(rand);
 
         // Symmetric [-1, 1) so the system can shift in any direction from the map center.
         var orbitOffset = new Vector2(rand.NextFloat() * 2f - 1f, rand.NextFloat() * 2f - 1f);
 
         AsteroidBelt? asteroidBelt = null;
 
-        var planets = ResolvePlanets(rand, star, pickedStar, orbitOffset, ref asteroidBelt);
+        var fallbackPlanets = ResolvePlanets(rand, fallbackStar, pickedStar, orbitOffset, ref asteroidBelt);
 
-        return new PlanetarySystem(star, planets, asteroidBelt);
+        return new PlanetarySystem(fallbackStar, fallbackPlanets, asteroidBelt);
     }
 
-    private List<Planet> ResolvePlanets(System.Random rand, Star star, StarTypePrototype starProto, Vector2 orbitOffset, ref AsteroidBelt? belt)
+    /// <summary>Builds a named, fixed-value planet from a curated prototype.</summary>
+    private Planet BuildCuratedPlanet(CuratedPlanetPrototype proto, System.Random rand, Vector2 position)
+    {
+        PlanetaryAtmosphere? atmosphere = null;
+        if (proto.Atmosphere is { } atmosphereId)
+            atmosphere = new PlanetaryAtmosphere(rand, _protoMan, atmosphereId);
+
+        PlanetaryLiquid? liquid = null;
+        if (proto.Liquid is { } liquidId)
+            liquid = new PlanetaryLiquid(rand, _protoMan, liquidId);
+
+        PlanetaryRings? rings = null;
+        if (proto.Rings is { } ringsId)
+            rings = new PlanetaryRings(rand, _protoMan, ringsId);
+
+        var customData = new PlanetCustomValues();
+        foreach (var (key, value) in proto.CustomFloats)
+            customData.Floats[key] = value;
+
+        return new Planet(
+            position,
+            proto.Name,
+            proto.EarthMass,
+            proto.Rotation,
+            atmosphere,
+            liquid,
+            proto.Palette,
+            proto.Shader,
+            proto.HueShift,
+            proto.SaturationShift,
+            customData,
+            rings,
+            proto.BasePrettiness,
+            proto.Landable
+        );
+    }
+
+    private List<Planet> ResolvePlanets(System.Random rand, Star star, StarTypePrototype starProto, Vector2 orbitOffset, ref AsteroidBelt? belt, bool excludeHabitable = false)
     {
         var output = new List<Planet>();
 
@@ -89,7 +151,7 @@ public abstract partial class SharedStarSystemMapSystem
             }
 
             var planets = _protoMan.EnumeratePrototypes<PlanetTypePrototype>()
-                .Where(p => p.Orbit.Contains(orbit.Type))
+                .Where(p => p.Orbit.Contains(orbit.Type) && (!excludeHabitable || !p.Habitable))
                 .OrderBy(p => p.ID)
                 .ToList();
 
