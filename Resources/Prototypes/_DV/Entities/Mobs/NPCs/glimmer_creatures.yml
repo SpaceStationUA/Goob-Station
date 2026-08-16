@@ -23,6 +23,7 @@
           Quantity: 15
   - type: Psionic
   - type: GlimmerSource
+    secondsPerGlimmer: 40 # Pirate: mites add glimmer twice as slow
   - type: AmbientSound
     range: 6
     volume: -3
