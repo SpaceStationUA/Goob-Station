@@ -146,6 +146,9 @@
   - type: DefibrillatorHideInHand
   - type: DefibrillatorSelfRecharge
     rechargePerSecond: 0.1
+  - type: Tag
+    tags:
+    - EmagImmune # Syndicate combat gear cannot be emagged
   - type: ItemSlots
     slots:
       cell_slot:
