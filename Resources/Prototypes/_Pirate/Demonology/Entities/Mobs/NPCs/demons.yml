@@ -159,7 +159,7 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 5
+        maxVol: 7
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -847,7 +847,7 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 10
+        maxVol: 57
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -1035,7 +1035,7 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 13
+        maxVol: 17
   - type: SolutionRegeneration
     solution: melee
     generated:
