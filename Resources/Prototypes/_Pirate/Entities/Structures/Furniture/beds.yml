@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: Bed
   id: DoubleBed
   name: двоспальне ліжко
@@ -8,7 +8,7 @@
     sprite: _Pirate/Structures/Furniture/bed_double.rsi
     state: bed_double
   - type: Construction
-    graph: double_bed
+    graph: bed
     node: double_bed
   - type: DoubleBed
     leftBedsheetOffset: "0,0.5"
@@ -40,7 +40,6 @@
   name: дерев'яне двоспальне ліжко
   components:
   - type: Sprite
-    sprite: _Pirate/ADT/Structures/Furniture/bed_double.rsi
     state: bed_double-wood
   - type: Construction
     graph: bed

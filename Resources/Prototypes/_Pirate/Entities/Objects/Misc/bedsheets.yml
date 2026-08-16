@@ -278,3 +278,12 @@
   components:
   - type: Sprite
     state: double_sheetusa
+
+- type: entity
+  id: DoubleBedsheetWiz
+  parent: DoubleBedsheetBase
+  name: двоспальне простирадло чарівника
+  description: Особлива тканина, зачарована магією для чарівного сну. Воно світиться!
+  components:
+  - type: Sprite
+    state: double_sheetwiz
