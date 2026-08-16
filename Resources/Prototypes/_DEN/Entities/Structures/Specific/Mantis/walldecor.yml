@@ -7,8 +7,8 @@
 - type: entity
   parent: BaseSignDirectional
   id: WallDecorSomberPsi
-  name: "електрумова псі"
-  description: "Грецька літера псі, що символізує Ноосферу та псіо-екстрасенса, який за нею наглядає."
+  name: electrum psi
+  description: "A Greek psi, symbolizing the noosphere and the mantis who watches over it."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Specific/Mantis/walldecor.rsi
@@ -31,8 +31,8 @@
 - type: entity
   parent: WallDecorSomberPsi
   id: WallDecorSomberEye
-  name: "електрумове око"
-  description: "Око з електруму, що символізує розум і прикрашене пурпуровими китицями."
+  name: electrum eye
+  description: "An electrum eye, symbolizing the mind, decorated with magenta tassles."
   components:
   - type: Sprite
     state: eye
@@ -40,8 +40,8 @@
 - type: entity
   parent: WallDecorSomberPsi
   id: WallDecorSomberHereticTrophy
-  name: "трофей псіо-екстрасенса"
-  description: "Уламки розбитого потойбічного клинка, закріплені як трофей. На табличці написано: «Так закінчать усі, хто шукає місце за межею»"
+  name: mantis's trophy
+  description: "Fragments of a shattered, otherworldly blade, mounted as a trophy. The plaque reads, \"Thus end all who seek the place beyond.\""
   components:
   - type: Sprite
     layers:

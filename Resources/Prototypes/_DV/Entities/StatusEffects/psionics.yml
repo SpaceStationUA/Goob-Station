@@ -2,7 +2,7 @@
 - type: entity
   parent: MobStatusEffectDebuff
   id: StatusEffectPsionicsDisabled
-  name: "псіонічні сили вимкнено"
+  name: psionics disabled
   components:
   - type: PsionicsDisabled
 
@@ -10,7 +10,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectShieldedFromPsionics
-  name: "захищено від псіоніки"
+  name: shielded from psionics
   components:
   - type: ShieldedFromPsionics
 
@@ -18,7 +18,7 @@
 - type: entity
   parent: MobStatusEffectDebuff
   id: StatusEffectTelepathicRepeater
-  name: "телепатичний повторювач"
+  name: telepathic repeater
   components:
   - type: TelepathicRepeater
 
@@ -26,13 +26,13 @@
 - type: entity
   parent: [ StatusEffectSlowdown, MobStatusEffectDebuff ]
   id: MassSleepSlowdownStatusEffect
-  name: "уповільнено силою масового сну"
+  name: slowed by mass sleep power
 
 # Heals the victims while sleeping.
 - type: entity
   parent: StatusEffectForcedSleeping
   id: MassSleepForcedSleepStatusEffect
-  name: "примусово приспано силою масового сну"
+  name: forced to sleep by mass sleep power
   components:
   - type: RegenerativeSleepingStatusEffect
     quantity: 0.5

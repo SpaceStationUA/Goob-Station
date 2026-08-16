@@ -5,8 +5,8 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryCorticalBorerRemoval
-  name: "Видалення кортикального бурильника"
-  description: "Хірургічне видалення кортикального бурильника з тіла."
+  name: Remove Cortical Borer
+  description: Remove a cortical borer infestation from the body.
   components:
   - type: Surgery
     priority: -1
@@ -22,7 +22,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepRemoveCorticalBorer
-  name: "Видалити кортикального бурильника"
+  name: Remove the Cortical Borer
   components:
   - type: SurgeryStep
     tool:

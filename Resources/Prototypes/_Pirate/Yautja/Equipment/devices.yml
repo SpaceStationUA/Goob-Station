@@ -2,7 +2,7 @@
   parent: ClothingHandsGlovesLeather
   id: GoobYautjaBracer
   name: "мисливський наручник"
-  description: "Важкий наручний комп’ютер, наповнений чужопланетними мисливськими інструментами."
+  description: "Важкий наручний комп'ютер, наповнений прибулецькими мисливськими інструментами."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/bracer.rsi
@@ -63,7 +63,7 @@
   parent: GoobYautjaBracer
   id: GoobYautjaBadBloodBracer
   name: "поношений мисливський браслет"
-  description: "Зношений мисливський браслет, нашвидкуруч підтриманий у робочому стані. Його відсік зброї пошкоджений. Комунікатор напряму підключено до браслета."
+  description: "Зношений мисливський браслет, грубо підтримуваний у робочому стані. Його відсік зброї пошкоджений. Комунікатор напряму підключено до браслета."
   components:
 #  - type: YautjaBadBloodGearChoice
 #  - type: YautjaBracer
@@ -110,7 +110,7 @@
   parent: ClothingHandsGlovesLeather
   id: GoobYautjaThrallBracer
   name: "рабський наручник"
-  description: "Спрощений чужопланетний наручник, що зв’язує раба з мисливцем Яутжа."
+  description: "Спрощений прибулецький наручник, що зв'язує раба з мисливцем Яутжа."
   suffix: Yautja, Thrall
   components:
   - type: Sprite
@@ -128,8 +128,8 @@
 - type: entity
   parent: GoobYautjaBracer
   id: GoobYautjaBloodedThrallBracer
-  name: "кров’яний рабський наручник"
-  description: "Повний мисливський наручник, довірений кров’яному рабові."
+  name: "кров'яний рабський наручник"
+  description: "Повний мисливський наручник, довірений кров'яному рабу."
   suffix: Yautja, Thrall, Blooded
   components:
 #  - type: YautjaThrallBracer
@@ -139,8 +139,8 @@
 - type: entity
   parent: BaseStorageItem
   id: GoobYautjaThrallGearBox
-  name: "чужопланетний футляр для наручника"
-  description: "Маленький футляр, що містить рабський наручник і екстрене медичне спорядження Яутжа."
+  name: "прибулецький футляр для наручника"
+  description: "Маленький футляр, що містить рабський наручник і екстрене медичне забезпечення Яутжа."
   suffix: Yautja, Thrall, Filled
   components:
   - type: Sprite
@@ -212,7 +212,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMask
   name: "біомаска"
-  description: "Чужопланетна мисливська маска з вбудованим тактичним візором і перекладачем Тау-Цеті Бейсик."
+  description: "Прибулецька мисливська маска з вбудованим тактичним візором і перекладачем Tau-Ceti Basic."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/mask.rsi
@@ -232,7 +232,7 @@
   parent: IDCardStandard
   id: GoobYautjaBracerIdChip
   name: "вбудований ID-чип наручника"
-  description: "Компактний ідентифікаційний планшет, розгорнутий із наручника Яутжа."
+  description: "Компактний ідентифікаційний планшет, розгорнутий з наручника Яутжа."
   components:
   - type: Sprite
     sprite: Objects/Misc/id_cards.rsi
@@ -277,7 +277,7 @@
 
 - type: entity
   id: GoobYautjaBracerSelfDestructBurst
-  name: "імпульс самознищення наручника Яутжа"
+  name: yautja bracer self destruct burst
   categories: [ HideSpawnMenu ]
   save: false
   components:

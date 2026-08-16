@@ -3,7 +3,7 @@
 - type: entity
   parent: BaseEnchant
   id: CurseClumsy
-  name: "прокляття клоуна"
+  name: The Clowns Curse
   components:
   - type: Enchant
     maxLevel: 1

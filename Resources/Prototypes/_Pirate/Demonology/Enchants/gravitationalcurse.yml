@@ -3,7 +3,7 @@
 - type: entity
   parent: BaseEnchant
   id: CurseGravity
-  name: "прокляття сингулярності"
+  name: Curse of the Singularity
   components:
   - type: Enchant
     maxLevel: 1

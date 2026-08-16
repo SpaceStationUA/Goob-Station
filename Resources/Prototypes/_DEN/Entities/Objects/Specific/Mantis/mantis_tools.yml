@@ -10,8 +10,8 @@
 - type: entity
   parent: [BaseItem, BaseAntiPsionicWeapon, BaseMantisContraband] # If I parented it to Lantern, it would have a battery slot...
   id: LanternMantis
-  name: "ліхтар псіо-екстрасенса"
-  description: "Вишуканий ліхтар із вмонтованою ейдолітовою пірамідою, що черпає енергію з Ноосфери. Замість просто відкидати світло, він, здається, проголошує його — суворе сяйво врізається в усе, чого торкається. Якщо надто довго вдивлятися, блиск перетворюється на форми, які ви майже впізнаєте, а потім одразу забуваєте. Попри всю цю театральність, ручка все ще зручно висить за спиною."
+  name: mantis lantern
+  description: "An ornate lantern housing an eidolite pyramid that draws power from the noosphere. Instead of merely casting light, it seems to declare it--an austere radiance that etches itself into whatever it touches. Stare too long and the gleam resolves into shapes you almost recognize, then promptly forget. For all its theatrics, the handle still hangs comfortably on your back."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Specific/Mantis/lanternmantis.rsi
@@ -80,9 +80,9 @@
 - type: entity
   parent: [HandLabeler, BaseAntiPsionicWeapon, BaseMantisContraband] # Contraband so the mystagogue doesn't steal it
   id: HandLabelerMantis
-  name: "сігіліатор"
+  name: sigillator
   suffix: Hand Labeler
-  description: "Стародавній і містичний ручний етикетувальник, викуваний із плит мнемоліту; ним користуються, крутячи коліщата й добряче ляскаючи по чомусь. Ви б і під дулом не взяли до рук те синє пластикове страховисько."
+  description: "An ancient and mystical hand labeler wrought from slabs of mnemolith, used by turning the wheels and giving something a good smack. You wouldn't be caught dead with that blue plastic monstrosity."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Specific/Mantis/handlabelermantis.rsi
@@ -113,8 +113,8 @@
 - type: entity
   parent: [FlippoLighter, BaseAntiPsionicWeapon, BaseMantisContraband]
   id: FlippoLighterMantis
-  name: "запальничка псіо-екстрасенса"
-  description: "Блискуча запальничка, вирізьблена зі скалок мнемоліту, з ейдолітовою пірамідою всередині, що черпає енергію з Ноосфери. Полум’я дивно тремтить, наче знає, що саме спалює."
+  name: mantis lighter
+  description: "A glossy lighter sculpted from chips of mnemolith, housing an eidolite pyramid that draws energy from the noosphere. The flame gutters strangely, as if aware of what it burns."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Specific/Mantis/lightermantis.rsi
