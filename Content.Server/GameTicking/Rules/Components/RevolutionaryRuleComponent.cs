@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Store;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -32,4 +34,14 @@ public sealed partial class RevolutionaryRuleComponent : Component
     [DataField] public bool HasAnnouncementPlayed = false;
     [DataField] public bool HasRevAnnouncementPlayed = false;
     // gobo edit end
+
+    // Pirate - HRev uplink configuration.
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int StartingBalance = 55;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public EntProtoId UplinkStoreId = "StorePresetRevolutionaryUplink";
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<CurrencyPrototype> UplinkCurrencyId = "RevCoin";
 }

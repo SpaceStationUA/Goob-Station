@@ -1,3 +1,16 @@
 recipes-secret-door-reinforced-name = посилені секретні двері
 recipes-wooden-wand-name = дерев'яна паличка
 recipe-anomaly-core-name = ядро аномалії
+recipe-mantis-caster-frame-name = псіонічний каркас кастера
+recipe-mantis-caster-pistol-crypto = Пістолетний кастер (заглушення)
+recipe-mantis-caster-pistol-holy = Пістолетний кастер (вигнання)
+recipe-mantis-caster-pistol-lethal = Пістолетний кастер (пробивання)
+recipe-mantis-caster-revolver-crypto = Револьверний кастер (заглушення)
+recipe-mantis-caster-revolver-holy = Револьверний кастер (вигнання)
+recipe-mantis-caster-revolver-lethal = Револьверний кастер (пробивання)
+recipe-mantis-caster-shotgun-crypto = Дробовиковий кастер (заглушення)
+recipe-mantis-caster-shotgun-holy = Дробовиковий кастер (вигнання)
+recipe-mantis-caster-shotgun-lethal = Дробовиковий кастер (пробивання)
+recipe-mantis-caster-submachinegun-crypto = Кастер-пістолет-кулемет (заглушення)
+recipe-mantis-caster-submachinegun-holy = Кастер-пістолет-кулемет (вигнання)
+recipe-mantis-caster-submachinegun-lethal = Кастер-пістолет-кулемет (пробивання)

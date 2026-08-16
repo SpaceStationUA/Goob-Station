@@ -1,0 +1,21 @@
+- type: entity
+  id: LockerForensicMantisFilled
+  suffix: Filled
+  parent: LockerForensicMantis
+  components:
+  - type: StorageFill
+    contents:
+      # Tools
+      - id: MantisCaseTools # TheDen - Contains their lantern, folder, and hand labeler
+      - id: MantisCaseChemicals # TheDen - Contains their syringe, chemistry bottle, and pill canisters
+      - id: BoxZiptie # DeltaV - Give the mantis some zipties
+      - id: ClothingHeadCage
+        amount: 2
+      - id: ClothingEyesGlassesEthereal
+      - id: FlippoLighterMantis
+      - id: RubberStampMantis # The mantis' seal lives in their locker
+      # Equipment (moved from loadout)
+      - id: MantisTailorsKnife
+      - id: MantisCaseCandles
+      - id: CigPackMnemolith
+      - id: HandheldPsionicsRegistry

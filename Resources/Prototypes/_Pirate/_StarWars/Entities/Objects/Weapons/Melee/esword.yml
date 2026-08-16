@@ -1,0 +1,43 @@
+- type: entity
+  name: Енергетичний меч Дарта Вейдера
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  id: EnergySwordDarthVader
+  description: Навіть найтупіший меч стане найстрашнішою зброєю в умілих руках злості.
+  suffix: StarWars
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword.rsi
+    layers:
+    - state: e_sword
+    - state: e_sword_blade
+      color: "#fb0000"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: Item
+    sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
+  - type: Tag
+    tags:
+    - EnergySword
+  - type: ThrowableBlocker
+    blockSound:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+        volume: -2
+  - type: Reflect
+    reflectProb: 1
+    reflects:
+      - Energy
+      - Nonenergy
+  - type: EnergySword
+    colorOptions:
+    - "#ff0000" # can only be blue
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+        types:
+            Slash: 30
+            Heat: 30
+        woundSeverityMultipliers:
+          Slash: 1.5
+    deactivatedSecret: true

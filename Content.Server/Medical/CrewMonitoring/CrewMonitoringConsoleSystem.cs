@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Server._Pirate.Medical.CrewMonitoring; // Pirate: departmental handheld monitors.
 using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
 using Content.Goobstation.Shared.CrewMonitoring;
@@ -12,14 +13,17 @@ using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Pinpointer;
+using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components; // Pirate: multiz
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
 public sealed class CrewMonitoringConsoleSystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _cell = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
@@ -113,10 +117,24 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         // GoobStation - Start
         var isCommandOnly = HasComp<CrewMonitorScanningComponent>(uid);
 
+        // Pirate: BrigBuddy-style monitors expose only explicitly configured departments.
+        HashSet<string>? departmentNames = null;
+        if (TryComp<CrewMonitoringDepartmentFilterComponent>(uid, out var departmentFilter))
+        {
+            departmentNames = new HashSet<string>();
+            foreach (var departmentId in departmentFilter.ShownDepartments)
+            {
+                if (_prototype.TryIndex(departmentId, out DepartmentPrototype? department))
+                    departmentNames.Add(Loc.GetString(department.Name));
+            }
+        }
+
         var filteredSensors = component.ConnectedSensors
             .Where(pair => isCommandOnly
                 ? pair.Value.IsCommandTracker
                 : !pair.Value.IsCommandTracker)
+            .Where(pair => departmentNames == null ||
+                pair.Value.JobDepartments.Any(departmentNames.Contains))
             .Select(pair => pair.Value)
             .ToList();
         _uiSystem.SetUiState(uid, CrewMonitoringUIKey.Key, new CrewMonitoringState(filteredSensors));

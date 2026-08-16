@@ -25,8 +25,7 @@ public sealed partial class LatheSystem
 
         if (comp.CurrentRecipe != null)
         {
-            var count = comp.Queue.Count;
-            for (int i = 0; i < count + 1; i++)
+            while (comp.CurrentRecipe != null) // Pirate: lathe mass-production fix
             {
                 // Modified FinishProducing method
                 var currentRecipe = _proto.Index(comp.CurrentRecipe.Value);
@@ -34,11 +33,9 @@ public sealed partial class LatheSystem
                 {
                     var prototype = _proto.Index(resultProto);
                     // Storage output is already true if we are in this method
-                    if (prototype.TryGetComponent<PhysicalCompositionComponent>(out var composition, _factory))
-                    {
-                        _materialStorage.TryChangeMaterialAmount(uid, composition.MaterialComposition);
-                    }
-                    else
+                    // Match FinishProducing when storage cannot accept the result.
+                    if (!prototype.TryGetComponent<PhysicalCompositionComponent>(out var composition, _factory)
+                        || !_materialStorage.TryChangeMaterialAmount(uid, composition.MaterialComposition)) // Pirate: lathe mass-production fix
                     {
                         // This case should ideally never happen? But whatever
                         var result = Spawn(resultProto, Transform(uid).Coordinates);
@@ -71,16 +68,21 @@ public sealed partial class LatheSystem
 
                 // Dequeue recipes on a loop
                 // We do this after the main code since the first recipe is given outside of this method
-                var recipeProto = comp.Queue.First().Recipe;
-                comp.Queue.RemoveFirst();
+                #region Pirate: lathe mass-production fix
+                if (comp.Queue.First is not { } node)
+                    break;
 
-                var recipe = _proto.Index(recipeProto);
+                var recipe = _proto.Index(node.Value.Recipe);
                 var time = _reagentSpeed.ApplySpeed(uid, recipe.CompleteTime) * comp.TimeMultiplier;
                 if (time != TimeSpan.Zero)
-                    break; // Now it should be handled by another method
+                    break;
 
-                comp.CurrentRecipe = recipe;
-                AbortFabrication(ent, comp, null);
+                node.Value.ItemsPrinted++;
+                if (node.Value.ItemsPrinted >= node.Value.ItemsRequested || node.Value.ItemsPrinted < 0) // Rollover sanity check
+                    comp.Queue.RemoveFirst();
+
+                comp.CurrentRecipe = node.Value.Recipe;
+                #endregion
             }
         }
 

@@ -89,6 +89,9 @@ namespace Content.Shared.Storage
         [DataField]
         public bool OpenOnActivate = true;
 
+        [DataField]
+        public bool IgnoreLock; // Pirate: modsuit item transfer fix
+
         /// <summary>
         /// How many entities area pickup can pickup at once.
         /// </summary>

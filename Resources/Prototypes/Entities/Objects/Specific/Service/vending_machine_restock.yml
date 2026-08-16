@@ -286,6 +286,18 @@
     - NanoMedPlusInventory
     - NanoMedCivilianInventory
     - NanoMedCivilianWallInventory
+    - InterdyneEnterpriseInventory # Pirate medical vendor variations
+    - InterdyneCommercialInventory
+    - InterdyneEnterpriseWallInventory
+    - InterdyneCommercialWallInventory
+    - DeforestInterstellarInventory
+    - DeforestPlanetaryInventory
+    - DeforestInterstellarWallInventory
+    - DeforestPlanetaryWallInventory
+    - GoldNanoMedInventory
+    - GoldNanoMedCivilianWallInventory
+    - GoldNanoMedPlusInventory
+    - GoldNanoMedCivilianInventory
   - type: Sprite
     layers:
     - state: base

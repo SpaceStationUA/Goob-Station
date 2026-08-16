@@ -2,7 +2,7 @@
                xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                Title="{Loc 'slime-morph-window-title'}"
-               MinSize="900 640">
+               MinSize="900 730">
     <PanelContainer>
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BackgroundColor="#1A1D24" />
@@ -33,6 +33,9 @@
                                 <OptionButton Name="SexButton" HorizontalExpand="True" />
                                 <Label Text="{Loc 'slime-morph-label-gender'}" FontColorOverride="#9AA1B0" />
                                 <OptionButton Name="GenderButton" HorizontalExpand="True" />
+                                <!-- Pirate: slime morph - xenotype selector scopes the marking pickers to a race -->
+                                <Label Text="{Loc 'slime-morph-label-xenotype'}" FontColorOverride="#9AA1B0" />
+                                <OptionButton Name="XenotypeButton" HorizontalExpand="True" />
                             </GridContainer>
 
                             <BoxContainer Orientation="Horizontal" Margin="0 2">
@@ -49,24 +52,16 @@
                             <Label Text="{Loc 'slime-morph-label-skin'}" FontColorOverride="#9AA1B0" Margin="0 4 0 0" />
                             <ColorSelectorSliders Name="SkinColorSelector" />
 
+                            <!-- Pirate: slime morph - recolor body/eyes + every marking toward the body color -->
+                            <Button Name="AdaptColorsButton" Text="{Loc 'slime-morph-button-adapt-colors'}"
+                                    HorizontalExpand="True" Margin="0 6 0 0" />
+
                             <Label Text="{Loc 'slime-morph-label-eyes'}" FontColorOverride="#9AA1B0" Margin="0 4 0 0" />
                             <ColorSelectorSliders Name="EyeColorSelector" />
 
                             <BoxContainer Name="MarkingPickers" Orientation="Vertical" />
                         </BoxContainer>
                     </ScrollContainer>
-
-                    <PanelContainer>
-                        <PanelContainer.PanelOverride>
-                            <gfx:StyleBoxFlat BackgroundColor="#272B35" BorderColor="#2E323D" BorderThickness="0 1 0 0"
-                                              ContentMarginLeftOverride="10" ContentMarginRightOverride="10"
-                                              ContentMarginTopOverride="8" ContentMarginBottomOverride="8" />
-                        </PanelContainer.PanelOverride>
-                        <BoxContainer Orientation="Horizontal" SeparationOverride="8">
-                            <Button Name="ApplyButton" Text="{Loc 'slime-morph-button-apply'}" HorizontalExpand="True" />
-                            <Button Name="ResetButton" Text="{Loc 'slime-morph-button-reset'}" />
-                        </BoxContainer>
-                    </PanelContainer>
 
                 </BoxContainer>
             </PanelContainer>
@@ -98,9 +93,20 @@
 
                     <BoxContainer Orientation="Vertical" Margin="8 0 8 8" VerticalExpand="True">
                         <ItemList Name="RememberedList" VerticalExpand="True" SelectMode="Single" />
+                        <!-- Pirate: slime morph - single commit button (Mimic) + Reset -->
                         <BoxContainer Orientation="Horizontal" SeparationOverride="8" Margin="0 8 0 0">
-                            <Button Name="MimicButton" Text="{Loc 'slime-morph-button-mimic'}" HorizontalExpand="True" Disabled="True" />
-                            <Button Name="ForgetButton" Text="{Loc 'slime-morph-button-forget'}" Disabled="True" />
+                            <Button Name="MimicButton" Text="{Loc 'slime-morph-button-mimic'}" HorizontalExpand="True" />
+                            <Button Name="ResetButton" Text="{Loc 'slime-morph-button-reset'}" HorizontalExpand="True" />
+                        </BoxContainer>
+                        <!-- Pirate: slime morph - save current look / forget selected -->
+                        <BoxContainer Orientation="Horizontal" SeparationOverride="8" Margin="0 8 0 0">
+                            <Button Name="SaveButton" Text="{Loc 'slime-morph-button-save'}" HorizontalExpand="True" />
+                            <Button Name="ForgetButton" Text="{Loc 'slime-morph-button-forget'}" HorizontalExpand="True" Disabled="True" />
+                        </BoxContainer>
+                        <!-- Pirate: slime morph - import/export a look to/from a .yml file -->
+                        <BoxContainer Orientation="Horizontal" SeparationOverride="8" Margin="0 8 0 0">
+                            <Button Name="ImportButton" Text="{Loc 'slime-morph-button-import'}" HorizontalExpand="True" />
+                            <Button Name="ExportButton" Text="{Loc 'slime-morph-button-export'}" HorizontalExpand="True" />
                         </BoxContainer>
                         <Button Name="RevertButton" Text="{Loc 'slime-morph-button-revert'}" Margin="0 8 0 0" />
                     </BoxContainer>

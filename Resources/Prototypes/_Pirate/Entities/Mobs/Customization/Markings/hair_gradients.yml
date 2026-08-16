@@ -10,7 +10,7 @@
   markingCategory: HairSpecial
   canBeDisplaced: false
   shader: GradientRGB2Col
-  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Arachnid, IPC, Yowie, BananaMen, Shadow, Vulpkanin]
+  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Arachnid, IPC, Yowie, BananaMen, Shadow, Vulpkanin, Feroxi]
   coloring:
     layers:
       col1:
@@ -39,7 +39,7 @@
   markingCategory: FacialHairSpecial
   canBeDisplaced: false
   shader: GradientRGB2Col
-  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Yowie, BananaMen, Shadow]
+  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Yowie, BananaMen, Shadow, Feroxi]
   coloring:
     layers:
       col1:
@@ -68,7 +68,7 @@
   markingCategory: HairSpecial
   canBeDisplaced: false
   shader: GradientRGB3Col
-  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Arachnid, IPC, Yowie, BananaMen, Shadow, Vulpkanin]
+  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Arachnid, IPC, Yowie, BananaMen, Shadow, Vulpkanin, Feroxi]
   coloring:
     layers:
       col1:
@@ -103,7 +103,7 @@
   markingCategory: FacialHairSpecial
   canBeDisplaced: false
   shader: GradientRGB3Col
-  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Yowie, BananaMen, Shadow]
+  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Yowie, BananaMen, Shadow, Feroxi]
   coloring:
     layers:
       col1:
@@ -138,7 +138,7 @@
   markingCategory: HairSpecial
   canBeDisplaced: false
   shader: GradientHSV
-  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Arachnid, IPC, Yowie, BananaMen, Shadow, Vulpkanin]
+  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Arachnid, IPC, Yowie, BananaMen, Shadow, Vulpkanin, Feroxi]
   coloring:
     layers:
       col1:
@@ -167,7 +167,7 @@
   markingCategory: FacialHairSpecial
   canBeDisplaced: false
   shader: GradientHSV
-  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Yowie, BananaMen, Shadow]
+  speciesRestriction: [Human, SlimePerson, Harpy, Vox, Yowie, BananaMen, Shadow, Feroxi]
   coloring:
     layers:
       col1:

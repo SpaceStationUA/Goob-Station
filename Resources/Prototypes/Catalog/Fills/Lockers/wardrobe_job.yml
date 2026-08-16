@@ -66,6 +66,7 @@
       - id: WhoopieCushion
       - id: Brutepack
       - id: StrangePill
+      - id: WeirdPill # Pirate medical vendor variations
       - id: Shiv
     - !type:GroupSelector
       prob: 0.1
@@ -74,6 +75,8 @@
       - id: Joint
       - id: Blunt
       - id: PackPaperRolling
+      - id: OminousPill # Pirate medical vendor variations
+      - id: GoldenPill
       - id: Cigarette
         amount: !type:RangeNumberSelector
           range: 1, 4

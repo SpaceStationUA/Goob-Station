@@ -6,27 +6,20 @@ using Content.Pirate.Shared.Witch;
 using Content.Pirate.Shared.Witch.EntityEffects;
 using Content.Shared._White.Other;
 using Content.Shared._White.Xenomorphs.Acid.Components;
-using Content.Server.Abilities.Psionics;
 using Content.Server.Body.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Stack;
-using Content.Server.Psionics;
-using Content.Shared.Abilities.Psionics;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.ReactionEffects;
-using Content.Shared.Chemistry.ReagentEffects;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.EntityEffects;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Maps;
-using Content.Shared.Mood;
-using Content.Shared.Psionics.Glimmer;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Stacks;
 using Content.Goobstation.Maths.FixedPoint;
@@ -149,10 +142,7 @@ public sealed class PirateEntityEffectSystem : EntitySystem
 
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly GlimmerSystem _glimmer = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly PsionicAbilitiesSystem _psionicAbilities = default!;
-    [Dependency] private readonly PsionicsSystem _psionics = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
@@ -167,106 +157,10 @@ public sealed class PirateEntityEffectSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<ChangeGlimmerReactionEffect>>(OnExecuteChangeGlimmer);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<ChemRemovePsionic>>(OnExecuteChemRemovePsionic);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<ChemAddMoodlet>>(OnExecuteChemAddMoodlet);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<ChemRemoveMoodlet>>(OnExecuteChemRemoveMoodlet);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<ChemPurgeMoodlets>>(OnExecuteChemPurgeMoodlets);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<ChemRerollPsionic>>(OnExecuteChemRerollPsionic);
-        SubscribeLocalEvent<ExecuteEntityEffectEvent<ChemRestorePsionicReroll>>(OnExecuteChemRestorePsionicReroll);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<CleanseWitchEffects>>(OnExecuteCleanseWitchEffects);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PirateAcidCorrode>>(OnExecuteAcidCorrode);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PhilosopherStoneEffect>>(OnExecutePhilosopherStone);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ChaosMixtureEffect>>(OnExecuteChaosMixture);
-    }
-
-    private void OnExecuteChangeGlimmer(ref ExecuteEntityEffectEvent<ChangeGlimmerReactionEffect> args)
-    {
-        // Only reagent reactions matter here.
-        if (args.Args is not EntityEffectReagentArgs)
-            return;
-
-        _glimmer.DeltaGlimmerInput(args.Effect.Count);
-    }
-
-    private void OnExecuteChemRemovePsionic(ref ExecuteEntityEffectEvent<ChemRemovePsionic> args)
-    {
-        if (args.Args is not EntityEffectReagentArgs reagentArgs)
-            return;
-
-        if (reagentArgs.Scale != 1f)
-            return;
-
-        _psionicAbilities.MindBreak(reagentArgs.TargetEntity);
-    }
-
-    private void OnExecuteChemAddMoodlet(ref ExecuteEntityEffectEvent<ChemAddMoodlet> args)
-    {
-        if (args.Args is not EntityEffectReagentArgs reagentArgs)
-            return;
-
-        RaiseLocalEvent(reagentArgs.TargetEntity, new MoodEffectEvent(args.Effect.MoodPrototype));
-    }
-
-    private void OnExecuteChemRemoveMoodlet(ref ExecuteEntityEffectEvent<ChemRemoveMoodlet> args)
-    {
-        if (args.Args is not EntityEffectReagentArgs reagentArgs)
-            return;
-
-        RaiseLocalEvent(reagentArgs.TargetEntity, new MoodRemoveEffectEvent(args.Effect.MoodPrototype));
-    }
-
-    private void OnExecuteChemPurgeMoodlets(ref ExecuteEntityEffectEvent<ChemPurgeMoodlets> args)
-    {
-        if (args.Args is not EntityEffectReagentArgs reagentArgs
-            || !TryComp<MoodComponent>(reagentArgs.TargetEntity, out var moodComponent))
-            return;
-
-        var moodletList = new List<string>();
-
-        foreach (var moodlet in moodComponent.CategorisedEffects.Values)
-        {
-            if (!_prototype.TryIndex(moodlet, out MoodEffectPrototype? moodProto)
-                || moodProto.Timeout == 0 && !args.Effect.RemovePermanentMoodlets)
-                continue;
-
-            moodletList.Add(moodlet);
-        }
-
-        foreach (var moodlet in moodComponent.UncategorisedEffects)
-        {
-            if (!_prototype.TryIndex(moodlet.Key, out MoodEffectPrototype? moodProto)
-                || moodProto.Timeout == 0 && !args.Effect.RemovePermanentMoodlets)
-                continue;
-
-            moodletList.Add(moodlet.Key);
-        }
-
-        foreach (var moodId in moodletList)
-            RaiseLocalEvent(reagentArgs.TargetEntity, new MoodRemoveEffectEvent(moodId));
-    }
-
-    private void OnExecuteChemRerollPsionic(ref ExecuteEntityEffectEvent<ChemRerollPsionic> args)
-    {
-        if (args.Args is not EntityEffectReagentArgs)
-            return;
-
-        _psionics.RerollPsionics(args.Args.TargetEntity, bonusMuliplier: args.Effect.BonusMuliplier);
-    }
-
-    private void OnExecuteChemRestorePsionicReroll(ref ExecuteEntityEffectEvent<ChemRestorePsionicReroll> args)
-    {
-        if (args.Args is not EntityEffectReagentArgs)
-            return;
-
-        if (!TryComp(args.Args.TargetEntity, out PsionicComponent? psionicComp))
-            return;
-
-        if (!psionicComp.Roller && !args.Effect.BypassRoller)
-            return;
-
-        psionicComp.CanReroll = true;
-        Dirty(args.Args.TargetEntity, psionicComp);
     }
 
     private void OnExecuteCleanseWitchEffects(ref ExecuteEntityEffectEvent<CleanseWitchEffects> args)

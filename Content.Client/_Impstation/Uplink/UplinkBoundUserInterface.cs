@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Shared._Pirate.Reputation;
+using Content.Shared.PDA;
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -25,8 +27,12 @@ public sealed class UplinkBoundUserInterface(EntityUid owner, Enum uiKey) : Boun
         base.Open();
 
         _menu = this.CreateWindow<UplinkMenu>();
+        _menu.Owner = Owner; // Pirate: reputation checks use the actual store entity.
 
         _menu.Stylesheet = "Syndicate";
+        _menu.ContractsButton.Visible = EntMan.HasComponent<StoreContractsComponent>(Owner) &&
+                                        !EntMan.HasComponent<PdaComponent>(Owner);
+        _menu.OnContractsPressed += _ => SendMessage(new StoreShowContractsMessage());
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {

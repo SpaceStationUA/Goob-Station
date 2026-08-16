@@ -28,3 +28,13 @@
   license: "CC-BY-4.0"
   copyright: "Created by everythingsounds on Freesound, edited for SS14"
   source: "https://freesound.org/people/everythingsounds/sounds/602902/"
+
+- files: ["motion_detector_click.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/7853d79df1827a2a4907fb3162b6319662dbc1ba/sound/machines/click.ogg"
+
+- files: ["lathe_print.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by kayozzx (Discord), taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/436ba869ebcd0b60b63973fb7562f447ee655205/sound/machines/lathe/lathe_print.ogg"

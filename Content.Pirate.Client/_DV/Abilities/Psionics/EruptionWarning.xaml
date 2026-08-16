@@ -1,0 +1,11 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               x:Class="Content.Pirate.Client._DV.Abilities.Psionics.EruptionWarning"
+               Title="{Loc 'eruption-warning-window-title'}">
+    <BoxContainer Orientation="Vertical" Margin="10">
+        <Label Text="{Loc 'eruption-warning-window-prompt-text-part'}" Margin="5" Align="Center"/>
+        <BoxContainer Orientation="Horizontal" Margin="5" Align="Center">
+            <Button Name="ConfirmButton" Text="{Loc 'eruption-warning-window-acknowledge-button'}"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

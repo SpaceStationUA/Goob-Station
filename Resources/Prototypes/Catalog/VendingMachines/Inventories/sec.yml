@@ -21,6 +21,9 @@
     RiotLaserShield: 2
     RiotBulletShield: 2
     RadioHandheldSecurity: 5
+    HandheldSecurityMonitor: 2 # Pirate
+    HandheldBrigmedicCrewMonitor: 2 # Pirate
+    RMCMotionDetector: 2 # Pirate
     PSA: 1 # Pirate: limited stealth detector
     NFWeaponLauncherGrenadeNfsd: 1 # Pirate: tracking dart launcher
     NFBoxDartsTracking: 2 # Pirate: limited tracking kits

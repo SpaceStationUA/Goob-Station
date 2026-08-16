@@ -9,9 +9,12 @@ public sealed partial class ModularSuitPartSealDoAfterEvent : SimpleDoAfterEvent
     public bool Activate { get; }
     public bool ActivateSuit { get; }
 
-    public ModularSuitPartSealDoAfterEvent(bool activate, bool activateSuit = false)
+    public bool DeactivateSuit { get; }
+
+    public ModularSuitPartSealDoAfterEvent(bool activate, bool activateSuit = false, bool deactivateSuit = false)
     {
         Activate = activate;
         ActivateSuit = activateSuit;
+        DeactivateSuit = deactivateSuit;
     }
 }

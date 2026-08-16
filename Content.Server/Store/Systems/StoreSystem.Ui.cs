@@ -11,6 +11,7 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared._Goobstation.Wizard.Refund; // Goob
+using Content.Shared._Pirate.Reputation; // Pirate: traitor contracts.
 using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Goobstation.Maths.FixedPoint;
@@ -40,6 +41,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly ActionUpgradeSystem _actionUpgrade = default!;
+    [Dependency] private readonly ReputationSystem _reputation = default!; // Pirate: traitor contracts.
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
@@ -53,6 +55,7 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
         SubscribeLocalEvent<StoreComponent, StoreRequestRefundMessage>(OnRequestRefund);
+        SubscribeLocalEvent<StoreComponent, StoreShowContractsMessage>(OnShowContracts); // Pirate: pen uplink contract access.
         SubscribeLocalEvent<StoreComponent, RefundEntityDeletedEvent>(OnRefundEntityDeleted);
 
         // Goobstation start
@@ -64,6 +67,17 @@ public sealed partial class StoreSystem
     private void OnRefundEntityDeleted(Entity<StoreComponent> ent, ref RefundEntityDeletedEvent args)
     {
         ent.Comp.BoughtEntities.Remove(args.Uid);
+    }
+
+    private void OnShowContracts(Entity<StoreComponent> ent, ref StoreShowContractsMessage args)
+    {
+        if (!HasComp<StoreContractsComponent>(ent) ||
+            TryComp<RingerUplinkComponent>(ent, out var uplink) && !uplink.Unlocked)
+        {
+            return;
+        }
+
+        _reputation.ToggleUI(args.Actor, ent);
     }
 
     /// <summary>
@@ -161,6 +175,10 @@ public sealed partial class StoreSystem
 
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
+            return;
+
+        // Pirate: enforce reputation server-side for untrusted clients.
+        if (!_reputation.CanStorePurchase(uid, listing.Reputation))
             return;
 
         //condition checking because why not

@@ -42,6 +42,7 @@ public sealed class StorageSystem : SharedStorageSystem
         component.MaxItemSize = state.MaxItemSize;
         component.Whitelist = state.Whitelist;
         component.Blacklist = state.Blacklist;
+        component.IgnoreLock = state.IgnoreLock; // Pirate: modsuit item transfer fix
 
         _oldStoredItems.Clear();
 

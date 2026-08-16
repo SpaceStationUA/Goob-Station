@@ -8,6 +8,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -15,6 +16,7 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 public sealed class BatteryWeaponFireModesSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
@@ -105,7 +107,17 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         if (index < 0 || index >= ent.Comp.FireModes.Count)
             return false;
 
+        // Pirate: wait for the server when downstream rules can reject a mode change.
+        if (!ent.Comp.Predictable && _net.IsClient)
+            return true;
+
         if (user != null && !_accessReaderSystem.IsAllowed(user.Value, ent))
+            return false;
+
+        // Pirate: let server-side alert-level restrictions reject lethal borg fire modes.
+        var attempt = new BatteryWeaponFireModeChangeAttemptEvent(user, index);
+        RaiseLocalEvent(ent.Owner, ref attempt);
+        if (attempt.Cancelled)
             return false;
 
         SetFireMode(ent, index, user);
@@ -125,7 +137,13 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
                 _appearanceSystem.SetData(ent, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
 
             if (user != null)
-                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode-popup", ("mode", prototype.Name)), ent, user.Value);
+            {
+                var message = Loc.GetString("gun-set-fire-mode-popup", ("mode", prototype.Name));
+                if (ent.Comp.Predictable)
+                    _popupSystem.PopupClient(message, ent, user.Value);
+                else
+                    _popupSystem.PopupEntity(message, ent, user.Value);
+            }
         }
 
         if (TryComp(ent, out BatteryAmmoProviderComponent? batteryAmmoProviderComponent))

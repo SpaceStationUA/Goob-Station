@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: BasePirateFabricatorSound
+  abstract: true
+  components:
+  - type: SequencedSoundLoop
+    startSound: /Audio/_Pirate/Machines/Fabricator/autolathe_start.ogg
+    startLength: 2.671
+    midSounds: PirateFabricatorPrintMid
+    midLength: 1
+    endSound: /Audio/_Pirate/Machines/Fabricator/autolathe_end.ogg
+    params:
+      volume: -2
+      referenceDistance: 2
+      maxDistance: 12
+
+- type: entity
+  id: BasePirateSynthFabSound
+  abstract: true
+  components:
+  - type: SequencedSoundLoop
+    startSound: /Audio/_Pirate/Machines/Fabricator/synthfab_start.ogg
+    startLength: 1
+    midSounds: PirateSynthFabPrintMid
+    midLength: 3
+    endSound: /Audio/_Pirate/Machines/Fabricator/synthfab_end.ogg
+    startParams:
+      volume: -2
+      referenceDistance: 2
+      maxDistance: 12
+    params:
+      volume: 0
+      referenceDistance: 2
+      maxDistance: 12

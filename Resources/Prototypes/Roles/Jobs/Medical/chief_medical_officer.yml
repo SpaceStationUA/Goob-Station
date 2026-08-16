@@ -37,6 +37,7 @@
   weight: 10
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
+  ransomModifier: 3 # Pirate: traitor ransom value
   supervisors: job-supervisors-captain
   canBeAntag: false
   guides: # goobstation
@@ -67,6 +68,8 @@
     components:
     - type: SurgerySpeedModifier
       speedModifier: 2
+  - !type:ModifyPsionicChanceSpecial # Pirate - Commands are much more likely to be psionic.
+    jobBonusChance: 0.1
 
 - type: startingGear
   id: CMOGear

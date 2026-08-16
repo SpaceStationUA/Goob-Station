@@ -1,0 +1,51 @@
+- type: entity
+  name: Зброя штурмовика
+  parent: BaseWeaponBatterySmall
+  id: WeaponEnergyGunE11
+  description: Надійна та перевірена часом зброя
+  suffix: StarWars
+  components:
+  - type: Sprite
+    sprite: _Pirate/_StarWars/Objects/Weapons/Guns/e11Riffle.rsi
+    layers:
+    - state: icon
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Battery/energygun_pistol.rsi
+  - type: Gun
+    minAngle: 42
+    maxAngle: 64
+    soundGunshot:
+      path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/_DV/Weapons/Guns/Empty/dry_fire.ogg
+  - type: Battery
+    maxCharge: 1200
+    startingCharge: 1200
+  - type: BatteryAmmoProvider
+    proto: BulletEnergyGunLaser
+    fireCost: 100
+  - type: BatterySelfRecharger
+    autoRechargeRate: 40
+  # - type: AmmoSelector
+  #   prototypes:
+  #     - BulletEnergyGunLaser
+  #     - BulletDisabler
+  # - type: UserInterface
+  #   interfaces:
+  #     enum.AmmoSelectorUiKey.Key:
+  #       type: AmmoSelectorMenuBoundUserInterface
+  # - type: ActivatableUI
+  #   inHandsOnly: true
+  #   key: enum.AmmoSelectorUiKey.Key
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+    onUse: false
+    wieldToggle: false
+  # - type: MagazineVisuals
+  #   magState: mag
+  #   steps: 5
+  #   zeroVisible: true
+  - type: ItemToggleColor
+  - type: Appearance

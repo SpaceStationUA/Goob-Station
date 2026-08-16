@@ -1,0 +1,231 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: antag
+  id: Fugitive
+  name: roles-antag-fugitive-name
+  antagonist: true
+  objective: roles-antag-fugitive-objective
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 1h
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleFugitive
+  name: Fugitive Role
+  components:
+  - type: MindRole
+    subtype: role-subtype-fugitive
+    antagPrototype: Fugitive
+    exclusiveAntag: true
+  - type: FugitiveRole
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostFugitive
+  name: fugitive spawn point
+  components:
+  - type: GhostRole
+    name: ghost-role-information-fugitive-name
+    description: ghost-role-information-fugitive-description
+    rules: ghost-role-information-fugitive-rules
+    mindRoles:
+    - MindRoleFugitive
+
+- type: startingGear
+  id: FugitiveGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPrisoner
+    ears: ClothingHeadsetGrey
+    gloves: ClothingHandsGlovesColorYellow
+    back: ClothingBackpackSatchel
+    shoes: ClothingShoesChameleonNoSlips
+    id: PassengerPDA
+  inhand:
+  - ToolboxElectricalFilled
+  storage:
+    back:
+    - FugitiveStash
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseFugitiveObjective
+  components:
+  - type: Objective
+    issuer: objective-issuer-self
+    difficulty: 1
+  - type: RoleRequirement
+    roles:
+    - FugitiveRole
+
+- type: entity
+  parent: [ BaseFugitiveObjective, BaseLivingObjective ]
+  id: FugitiveEscapeObjective
+  name: evade law enforcement
+  description: Blend into the crowd and escape on the evacuation shuttle.
+  components:
+  - type: Objective
+    icon:
+      sprite: Markers/jobs.rsi
+      state: prisoner
+  - type: EscapeShuttleCondition
+
+- type: entity
+  parent: ToolboxThief
+  id: FugitiveStash
+  name: fugitive's stash
+  description: These supplies got you out of jail and hopefully they will keep you out of it.
+  components:
+  - type: SetSelector
+    maxSelectedSets: 1
+    possibleSets:
+    - FugitiveHitman
+    - FugitiveSaboteur
+    - FugitiveGhost
+    - FugitiveLeverage
+    - FugitiveInfiltrator
+    - FugitiveDisruptor
+
+- type: selectableSet
+  id: FugitiveHitman
+  name: fugitive-set-hitman-name
+  description: fugitive-set-hitman-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    state: icon
+  content:
+  - WeaponPistolViper
+  - MagazinePistol
+  - BriefcaseBrown
+
+- type: selectableSet
+  id: FugitiveSaboteur
+  name: fugitive-set-saboteur-name
+  description: fugitive-set-saboteur-description
+  sprite:
+    sprite: Objects/Weapons/Grenades/empgrenade.rsi
+    state: icon
+  content:
+  - EmpGrenade
+  - EmpGrenade
+  - C4
+  - ClothingMaskGas
+
+- type: selectableSet
+  id: FugitiveGhost
+  name: fugitive-set-ghost-name
+  description: fugitive-set-ghost-description
+  sprite:
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+    state: icon
+  content:
+  - SmokeGrenade
+  - SmokeGrenade
+  - ScramImplanter
+  - ClothingOuterGhostSheet
+
+- type: selectableSet
+  id: FugitiveLeverage
+  name: fugitive-set-leverage-name
+  description: fugitive-set-leverage-description
+  sprite:
+    sprite: Objects/Misc/handcuffs.rsi
+    state: handcuff
+  content:
+  - DeathAcidifierImplanter
+  - Handcuffs
+  - Handcuffs
+  - Bola
+
+- type: selectableSet
+  id: FugitiveInfiltrator
+  name: fugitive-set-infiltrator-name
+  description: fugitive-set-infiltrator-description
+  sprite:
+    entity: AgentIDCard
+  content:
+  - AgentIDCard
+  - FreedomImplanter
+  - ClothingMaskGasSyndicate
+
+- type: selectableSet
+  id: FugitiveDisruptor
+  name: fugitive-set-disruptor-name
+  description: fugitive-set-disruptor-description
+  sprite:
+    sprite: Objects/Tools/emag.rsi
+    state: icon
+  content:
+  - Emag
+  - CameraBug
+
+- type: localizedDataset
+  id: FugitiveCrimes
+  values:
+    prefix: fugitive-crime-
+    count: 24
+
+- type: entity
+  parent: BaseGameRule
+  id: Fugitive
+  components:
+  - type: GameRule
+    chaosScore: 100 # Pirate: required by the local chaos scheduler.
+  - type: StationEvent
+    weight: 7
+    reoccurrenceDelay: 5
+    minimumPlayers: 40
+    earliestStart: 25
+    duration: null
+    eventType: HostilesSpawn
+  - type: VentSpawnRule # Pirate: local equivalent of DeltaV's midround-antag spawn fallback.
+  # Pirate: PrecognitionResult is unavailable in the local psionics implementation.
+  - type: FugitiveRule
+  - type: AntagLoadProfileRule
+  - type: AntagObjectives
+    objectives:
+    - FugitiveEscapeObjective
+  - type: AntagSelection
+    selectionTime: PostPlayerSpawn
+    agentName: fugitive-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostFugitive
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: FugitiveGear
+      roleLoadout:
+      - RoleSurvivalStandard
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - NamesFakeHumanFirst
+        - NamesFakeHumanLast
+        nameFormat: name-format-standard
+      - type: RandomHumanoidAppearance
+        randomizeName: false
+        # Pirate: the local component has no keepGender option.
+      - type: EmitSoundOnSpawn
+        sound: /Audio/Effects/clang.ogg
+      mindRoles:
+      - MindRoleFugitive
+  - type: Tag
+    tags:
+    - MidroundAntag
+
+- type: entity
+  name: GALPOL rubber stamp
+  parent: RubberStampBase
+  id: RubberStampGalpol
+  categories: [ DoNotMap ]
+  description: A rubber stamp for important documents concerning intergalactic security affairs.
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-GALPOL
+    stampedColor: "#3db010"
+    stampState: paper_stamp-centcom
+  - type: Sprite
+    state: stamp-centcom

@@ -1,0 +1,1326 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  parent: [ MobSpaceBasic, MobCombat ]
+  id: BaseDemon
+  name: demon
+  description: It came from hell.
+  components:
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 4.5
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+  - type: FootstepModifier
+  - type: Physics
+    bodyType: KinematicController
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1000: Dead
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damage:
+      types:
+        Heat: -1
+        Blunt: -1
+        Slash: -1
+        Piercing: -1
+        Ballistic: -1
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Sulfur
+        Quantity: 100
+    bleedReductionAmount: 1
+  - type: ZombieImmune # gibs on death so its not possible to become a zombie
+  - type: Prying
+    speedModifier: 5
+    pryPowered: true
+    useSound: /Audio/Machines/airlock_creaking.ogg
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - Eldritch
+    understands:
+    - TauCetiBasic
+    - Eldritch
+  - type: ThermalVision
+  - type: Stamina
+    baseCritThreshold: 9999
+  - type: FlashImmunity
+    showInExamine: false
+  - type: Puller
+    needsHands: false
+  - type: GhostRole
+    name: ghost-role-information-demon-name
+    description: ghost-role-information-demon-desc
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: short
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+  - type: GhostTakeoverAvailable
+  - type: WeakToHoly # Pirate: Trauma's AlwaysTakeHoly component is unavailable here.
+    alwaysTakeHoly: true
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
+  - type: Targeting
+  - type: WarpPoint
+  - type: PointLight
+    radius: 0
+    energy: 0
+
+- type: entity
+  parent: BaseBullet
+  id: DemonAcid
+  name: demonic acid spit
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Caustic: 15
+        Structural: 20
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
+    layers:
+    - state: xeno_toxic
+  - type: Ammo
+    muzzleFlash: null
+
+# Minor Demons
+
+- type: entity
+  parent: BaseDemon
+  id: MinorDemonGuy
+  name: twisted clown
+  description: What happens when a clown pies one too many chaplains. Actions have consequences.
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: WaddleAnimation
+  - type: Speech
+    speechSounds: BikeHorn
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/guy.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Slash: 5
+    animation: WeaponArcFist
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 0
+            max: 1
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 5
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Honk
+        Quantity: 7
+  - type: MeleeChemicalInjector
+    transferAmount: 7
+    solution: melee
+
+- type: entity
+  parent: BaseDemon
+  id: MinorDemonIncel
+  name: jealousy incarnate
+  description: A hellish creature that dwells in the second layer of hell, tiringly talkative.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/incel.rsi
+  - type: MeleeWeapon
+    range: 3
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 5
+        Slash: 5
+    animation: WeaponArcBite
+    altDisarm: false
+    canWideSwing: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 0
+            max: 1
+
+- type: entity
+  parent: [ BaseDemon, InventoryBase ]
+  id: MinorDemonUrist
+  name: sinner
+  description: A wicked human sent to suffer in hell forever.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/human.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 5
+    animation: WeaponArcFist
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 0
+            max: 1
+  - type: Crawler
+  - type: Inventory
+    templateId: demon
+  - type: Hands
+    activeHandId: Hand
+    hands:
+      Hand:
+        location: Left
+  - type: ComplexInteraction
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Sulfur
+        Quantity: 25
+      - ReagentId: Blood
+        Quantity: 75
+
+- type: entity
+  parent: BaseDemon
+  id: MinorDemonIan
+  name: flesh hound
+  description: After enough time in hell, souls begin to assume a more… primal form.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/ian.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Slash: 2
+    altDisarm: false
+    canWideSwing: true
+    attackRate: 5
+    autoAttack: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 0
+            max: 1
+          MaterialHideCorgi:
+            min: 1
+            max: 1
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 7.5
+
+- type: entity
+  parent: [ BaseDemon, InventoryBase ]
+  id: MinorDemonVox
+  name: outcast
+  description: Hated by even the most repulsive demons, it wanders the planes of Hell alone.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/vox.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 5
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 0
+            max: 1
+  - type: Crawler
+  - type: Inventory
+    templateId: demon
+    speciesId: vox
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: &vox_displacement Mobs/Species/Vox/displacement.rsi
+            state: jumpsuit
+      eyes:
+        sizeMaps:
+          32:
+            sprite: *vox_displacement
+            state: eyes
+      gloves:
+        sizeMaps:
+          32:
+            sprite: *vox_displacement
+            state: hand
+      head:
+        sizeMaps:
+          32:
+            sprite: *vox_displacement
+            state: head
+      neck:
+        sizeMaps:
+          32:
+            sprite: *vox_displacement
+            state: neck
+      ears:
+        sizeMaps:
+          32:
+            sprite: *vox_displacement
+            state: ears
+      shoes:
+        sizeMaps:
+          32:
+            sprite: *vox_displacement
+            state: shoes
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: *vox_displacement
+          state: hand_l
+    activeHandId: Hand
+    hands:
+      Hand:
+        location: Left
+  - type: ComplexInteraction
+
+- type: entity
+  parent: [ BaseDemon, InventoryBase ]
+  id: MinorDemonVulp
+  name: wrathful beast
+  description: The dominant species of a bygone era, now tortured in Hell for their hubris.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/vulp.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Slash: 5
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 0
+            max: 1
+  - type: Crawler
+  - type: Inventory
+    templateId: demon
+  - type: Hands
+    activeHandId: Hand
+    hands:
+      Hand:
+        location: Left
+  - type: ComplexInteraction
+
+- type: entity
+  parent: BaseDemon
+  id: MinorDemonCentifiend
+  name: lesser centifiend
+  description: A juvenile demon, it progresses the potent diseases of its greater brethren.
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 12
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/smolcentifiend.rsi
+  - type: MeleeWeapon
+    animation: WeaponArcBite
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Piercing: 1
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 35
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 1
+            max: 2
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      # Pirate: Trauma's UnstableCompound reagent is unavailable in this branch.
+      - ReagentId: UnstableMutagen
+        Quantity: 1
+  - type: MeleeChemicalInjector
+    transferAmount: 1
+    solution: melee
+
+- type: entity
+  parent: BaseDemon
+  id: MinorDemonFlesh
+  name: miserable flesh thing
+  description: A disgusting living mass of fat, muscle tissue, mucus and blood. The ritual must have failed somehow, and this wretched thing is the result.
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 12
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/flesh.rsi
+  - type: MeleeWeapon
+    animation: WeaponArcBite
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 3
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 35
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 0
+            max: 1
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
+
+# Medium
+
+- type: entity
+  parent: BaseDemon
+  id: MediumDemonCentifiend
+  name: centifiend
+  description: One of the most common demons in Hell, this oversized arthropod spreads pestilence with its bite.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/centifiend.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Piercing: 1
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 1
+            max: 3
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: UnstableMutagen
+        Quantity: 3
+      - ReagentId: Mold
+        Quantity: 5
+  - type: MeleeChemicalInjector
+    transferAmount: 8
+    solution: melee
+
+- type: entity
+  parent: BaseDemon
+  id: MediumDemonChad
+  name: prideful demon
+  description: It takes great pride in its mustache. It used to take pride in its skin…
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/chad.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 20
+        Structural: 50
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 1
+            max: 3
+
+- type: entity
+  parent: BaseDemon
+  id: MediumDemonHamlet
+  name: hellmet
+  description: Bred as livestock in hell, rumors say Hellmets taste like chicken.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/hamlet.rsi
+    drawdepth: SmallMobs
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Slash: 10
+    altDisarm: false
+    canWideSwing: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 1
+            max: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5.5
+  - type: VentCrawler
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 12 # Goob edit
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: FaxableObject
+    insertingState: inserting_hamster
+  - type: FaxSlip
+    slipChance: 0.3
+
+- type: entity
+  parent: BaseDemon
+  id: MediumDemonMindflayer
+  name: mindflayer
+  description: A primordial beast, it's kin have existed since the dawn of Hell. Barely intelligent, it uses inate psychic abilities to feed on the intellect of its prey.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/mindflayer.rsi
+  - type: MeleeWeapon
+    range: 5
+    soundHit:
+      path: /Audio/_Goobstation/Wizard/disable_tech.ogg
+    damage:
+      types:
+        Asphyxiation: 15
+        Bloodloss: 5
+        Ion: 20
+    animation: WeaponArcPurplePunch
+    altDisarm: true
+    canWideSwing: false
+    attackRate: 0.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 2
+            max: 3
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: ChloralHydrate
+        Quantity: 7
+  - type: MeleeChemicalInjector
+    transferAmount: 7
+    solution: melee
+
+- type: entity
+  parent: BaseDemon
+  id: MediumDemonAbomination
+  name: abomination
+  description: A grotesque amalgamation of sickly flesh, muscle quivers underneath it's rotting skin and it constantly drools a corrosive mucus.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/abomination.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 13
+    altDisarm: false
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 1
+            max: 3
+  - type: Gun
+    projectileSpeed: 20
+    fireRate: 0.5
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot: /Audio/_Goobstation/Changeling/Effects/armour_strip.ogg
+  - type: BatteryAmmoProvider
+    proto: DemonAcid
+    fireCost: 25
+    examinable: false
+  - type: BatterySelfRecharger
+    autoRechargeRate: 25
+  - type: Battery
+    maxCharge: 100
+    startingCharge: 100
+
+- type: entity
+  parent: BaseDemon
+  id: MediumDemonImp
+  name: imp
+  description: Miserable, weak and disfigured beings, they often find themselves the lackeys of more powerful demons. Lords of Hell often use imps as cannon fodder for their armies.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/imp.rsi
+  - type: MeleeWeapon
+    range: 2
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Piercing: 12
+    animation: WeaponArcThrust
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 1
+            max: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5
+    baseSprintSpeed: 7
+
+- type: entity
+  parent: BaseDemon
+  id: MediumDemonDark
+  name: darkling
+  description: Strange shadowy beings, darklings hide in the deepest recesses of Hell, only emerging to drag down the odd sinner into the darkness.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/dark.rsi
+  - type: MeleeWeapon
+    range: 3
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Slash: 10
+        Asphyxiation: 5
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 1
+            max: 2
+# Major demons
+
+- type: entity
+  parent: BaseDemon
+  id: MajorAngelHuman
+  name: Aspect of Greed
+  description: After consuming a great number of Hellish souls, it's possible a lowly Sinner may become an Aspect. Humans embody the aspect of Greed.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/fat.rsi
+  - type: MeleeWeapon
+    range: 2
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Caustic: 20
+        Blunt: 10
+        Structural: 20
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 275
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 4
+            max: 5
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Gold
+        Quantity: 50
+      - ReagentId: Hemorrhinol
+        Quantity: 7
+  - type: MeleeChemicalInjector
+    transferAmount: 57
+    solution: melee
+  - type: ActionGrant
+    actions:
+    - ActionDemonRift
+    - ActionDemonRepulse
+
+- type: entity
+  parent: BaseDemon
+  id: MajorAngelLizard
+  name: Aspect of Predation
+  description: After consuming a great number of Hellish souls, it's possible a lowly Sinner may become an aspect. Lizards embody the aspect of Predation.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/buff.rsi
+  - type: MeleeWeapon
+    range: 2
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Slash: 20
+        Piercing: 5
+    animation: WeaponArcSlash
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 5
+            max: 6
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 10
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: Impedrezene
+        Quantity: 6
+  - type: MeleeChemicalInjector
+    transferAmount: 6
+    solution: melee
+  - type: ActionGrant
+    actions:
+    - ActionDemonRift
+
+
+- type: entity
+  parent: BaseDemon
+  id: MajorAngelMoth
+  name: Aspect of Madness
+  description: After consuming a great number of Hellish souls, it's possible a lowly Sinner may become an aspect. Moths embody the aspect of Madness.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/normal.rsi
+  - type: MeleeWeapon
+    range: 2
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Piercing: 10
+    altDisarm: false
+    canWideSwing: true
+    attackRate: 4
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 4
+            max: 5
+  - type: ActionGrant
+    actions:
+    - ActionDemonRepulse
+
+- type: entity
+  parent: BaseDemon
+  id: MajorDemonBosche
+  name: bosche
+  description: Born from the dreams of a mad painter, all it knows is to consume.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/bosche.rsi
+  - type: MeleeWeapon
+    range: 2.5
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 6
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1250
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 3
+            max: 5
+  - type: Devourer
+    foodPreferenceWhitelist:
+      components:
+      - HumanoidAppearance
+    stomachStorageWhitelist:
+      components:
+      - MobState
+      - Item
+    chemical: Ichor
+    healRate: 7.5
+    whitelist:
+      components:
+      - MobState
+      - Door
+      - Item
+      tags:
+      - Wall
+
+- type: entity
+  parent: BaseDemon
+  id: MajorDemonFeverbird
+  name: feverbird
+  description: Your head hurts. Something is wrong. Onion layer one. Onion layer two. Onion layer three…
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/feverbird.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      shader: unshaded
+  - type: MeleeWeapon
+    range: 2.5
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Slash: 5
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 3
+            max: 5
+  - type: MovementIgnoreGravity
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 13
+  - type: SolutionRegeneration
+    solution: melee
+    generated:
+      reagents:
+      - ReagentId: MindbreakerToxin
+        Quantity: 1
+      - ReagentId: Tazinide
+        Quantity: 5
+      - ReagentId: Fentanyl
+        Quantity: 1
+      - ReagentId: Happiness
+        Quantity: 10
+  - type: MeleeChemicalInjector
+    transferAmount: 17
+    solution: melee
+
+- type: entity
+  parent: BaseDemon
+  id: MajorDemonHanged
+  name: hanged
+  description: After being sent to the gallows, the souls of criminals enter the flora of Hell, they are back to exact revenge.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/hanger.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 5
+    altDisarm: false
+    canWideSwing: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 3
+            max: 5
+  - type: Puller
+    needsHands: false
+  - type: GrabIntent
+    stageChangeCooldown: 0.1
+    softGrabSpeedModifier: 1
+    hardGrabSpeedModifier: 1
+    chokeGrabSpeedModifier: 1
+    suffocateGrabStaminaDamage: 1000
+    grabThrowDamageModifier: 4
+
+- type: entity
+  parent: BaseDemon
+  id: MajorDemonHiver
+  description: Weaker demons that formed a symbiotic relationship with infernal bees. yes Hell has bees, lots of them.
+  name: hiver
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/hiver.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 15
+    altDisarm: true
+    canWideSwing: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 3
+            max: 5
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Sulfur
+        Quantity: 200
+      - ReagentId: BuzzochloricBees
+        Quantity: 75
+  - type: TimedSpawner
+    prototypes:
+    - BeeLaughterDemon
+    intervalSeconds: 3
+    minimumEntitiesSpawned: 5
+    maximumEntitiesSpawned: 10
+
+- type: entity
+  parent: BeeLaughter
+  id: BeeLaughterDemon
+  name: demon bee
+  components:
+  - type: FadingTimedDespawn
+    lifetime: 5
+    fadeOutTime: 5
+
+- type: entity
+  parent: BaseDemon
+  id: MajorDemonSteamer
+  name: steamer
+  description: Steamers are demons that were born from the souls of those who died to welderbombing. Their anger manifests as blazing oil within their gut.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/steamer.rsi
+  - type: MeleeWeapon
+    range: 1
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 15
+    altDisarm: false
+    canWideSwing: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 3
+            max: 5
+  - type: GunRequiresWield
+  - type: Gun
+    minAngle: 0
+    maxAngle: 0
+    fireRate: 15
+    burstFireRate: 15
+    burstCooldown: 1
+    shotsPerBurst: 5
+    projectileSpeed: 20
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/Gunshots/flamethrower.ogg # Pirate: local equivalent for Trauma's sound.
+  - type: BatteryAmmoProvider
+    proto: BulletFlamethrower # Pirate: local equivalent for Trauma's FlameThrowerBullet.
+    fireCost: 1
+    examinable: false
+  - type: BatterySelfRecharger
+    autoRechargeRate: 5
+  - type: Battery
+    maxCharge: 150
+    startingCharge: 150
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+
+- type: entity
+  parent: BaseDemon
+  id: MajorDemonButcher
+  name: butcher
+  description: The butchers march through hell, like a plague of locusts, flaying and consuming all in their path.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/butcher.rsi
+  - type: MeleeWeapon
+    angle: 45
+    range: 2
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Slash: 30
+        Structural: 50
+    animation: WeaponArcSlash
+    altDisarm: false
+    canWideSwing: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 450
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 4
+            max: 6
+
+- type: entity
+  parent: BaseDemon
+  id: MajorDemonGhost
+  name: Spectre
+  description: Torn from their bodies, they seek to warm their hands on the warm flesh of the living.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/spectre.rsi
+  - type: MeleeWeapon
+    range: 2
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Cold: 15
+    altDisarm: false
+    canWideSwing: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 3
+            max: 4
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.2,0.1,0.2"
+        hard: false
+        mask:
+        - Opaque
+
+- type: entity
+  parent: BaseDemon
+  id: MajorDemonSaturn
+  name: saturnite
+  description: Many demonologists perform rituals to give themselves stronger physical forms, saturnites form when said rituals go terribly wrong.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Mobs/Monsters/Demons/saturn.rsi
+  - type: MeleeWeapon
+    range: 2
+    soundHit:
+      path: /Audio/Effects/demon_attack1.ogg
+    damage:
+      types:
+        Blunt: 20
+        Slash: 15
+        Structural: 30
+    animation: WeaponArcBite
+    altDisarm: true
+    canWideSwing: false
+    attackRate: 2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DemonSoulFragment:
+            min: 4
+            max: 5
+  - type: Devourer
+    foodPreferenceWhitelist:
+      components:
+      - HumanoidAppearance
+    stomachStorageWhitelist:
+      components:
+      - MobState
+      - Item
+    chemical: Ichor
+    healRate: 7.5
+    whitelist:
+      components:
+      - MobState
+      - Item

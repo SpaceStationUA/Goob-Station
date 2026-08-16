@@ -35,6 +35,7 @@
   - PlushieSkeleton
   - PlushieTayler
   - PlushiePocketAssistant
+  - PlushieNilaMil
 
 - type: loadoutGroup
   id: PirateGambling
@@ -554,6 +555,7 @@
   - WardrobeFlannelBlue
   - WardrobeFlannelGreen
   - WardrobeFlannelRed
+  - WardrobeCoatSpaceAsshole
 
 - type: loadoutGroup
   id: PirateEEGenericHead
@@ -800,21 +802,21 @@
   id: MantisHead
   name: loadout-group-mantis-head
   loadouts:
-  - MantisTinfoil
+  - MantisHoodDarkFolded
   - MantisHelmet
   - MantisFez
   - MantisFezInsulative
   - MantisFezAiry
   - MantisFezOrnate
   - MantisHoodDark
-  - MantisBeret
+  - MantisHoodDarkFolded
 
 - type: loadoutGroup
   id: MantisJumpsuit
   name: loadout-group-mantis-Jumpsuit
   loadouts:
-  - MantisSuit
   - MantisSuitDark
+  - MantisSuit
   - MantisSkirt
   - MantisSkirtAiry
   - MantisSkirtOrnate
@@ -823,39 +825,43 @@
   id: MantisBack
   name: loadout-group-mantis-Back
   loadouts:
-  - MantisBackpack
   - MantisBackpackDEN
+  - MantisBackpack
   - MantisSatchel
   - MantisSatchelDEN
   - MantisDuffel
   - MantisDuffelDEN
-  - MantisPurse
   - MantisMessenger
 
 - type: loadoutGroup
   id: MantisOuterClothing
   name: loadout-group-mantis-OuterClothing
   loadouts:
+  - MantisCoatWinterMu
   - MantisCoat
   - MantisCoatAiry
   - MantisCoatOrnate
   - MantisCoatWinter
   - MantisCoatWinterDark
+  - MantisCoatWinterDarkFolded
 
 - type: loadoutGroup
   id: MantisGloves
   name: loadout-group-mantis-Gloves
   loadouts:
+  - MantisGlovesDark
   - MantisGloves
   - MantisGlovesAiry
+  - MantisGlovesOrnate
+  - MantisGlovesChains
 
 - type: loadoutGroup
   id: MantisShoes
   name: loadout-group-mantis-Shoes
   loadouts:
+  - MantisSandalsDark
   - MantisBoots
   - MantisSandalsAiry
-  - MantisSandalsDark
   - MantisSandalsOrnate
 
 - type: loadoutGroup
@@ -865,18 +871,16 @@
   - EpiHudGlasses
   - EtherealGlasses
   - EpiHud
-  - MantisGlasses
-  - MantisGlassesTinted
-  - MantisGlassesVeil
-  - MantisGlassesMirrored
+  - MantisGlassesHud
+  - MantisGlassesHudFolded
 
 - type: loadoutGroup
   id: MantisBelt
   name: loadout-group-mantis-Belt
   loadouts:
+  - MantisBeltDark
   - MantisBelt
   - MantisBeltAiry
-  - MantisBeltDark
   - MantisBeltOrnate
 
 - type: loadoutGroup
@@ -885,12 +889,13 @@
   loadouts:
   - MantisCloakDark
   - MantisMantleOrnate
-  - MantisShackles
   - MantisPendulum
+  - MantisWolfskin
 
 - type: loadoutGroup
   id: MantisEars
   name: loadout-group-mantis-Ears
+  minLimit: 1
   loadouts:
   - MantisHeadset
   - MantisHeadsetAlt
@@ -898,9 +903,31 @@
 - type: loadoutGroup
   id: MantisMask
   name: loadout-group-mantis-Mask
+  minLimit: 0
   loadouts:
   - MantisMaskRitual
-  - MantisBelt
+
+- type: loadoutGroup
+  id: MantisRanged
+  name: loadout-group-mantis-Ranged
+  minLimit: 1
+  loadouts:
+  - MantisRangedPistol
+  - MantisRangedRevolver
+  - MantisRangedShotgun
+  - MantisRangedSubMachineGun
+
+- type: loadoutGroup
+  id: MantisMelee
+  name: loadout-group-mantis-Melee
+  minLimit: 1
+  loadouts:
+  - MantisMeleeKnife
+  - MantisMeleeSickle
+  - MantisMeleeFist
+  - MantisMeleeCane
+  - MantisMeleeGreatsword
+  - MantisMeleeGreatswordHip
 
 
 

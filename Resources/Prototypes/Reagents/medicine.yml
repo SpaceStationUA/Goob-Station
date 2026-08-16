@@ -19,14 +19,12 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectWoozy
         time: 20.0
-      - !type:GenericStatusEffect
-        key: PsionicallyInsulated
-        component: PsionicInsulation
+      - !type:ModifyStatusEffect # Pirate
+        effectProto: StatusEffectShieldedFromPsionics
         type: Add
-        time: 900
-      - !type:GenericStatusEffect
-        key: PsionicsDisabled
-        component: PsionicsDisabled
+        time: 50
+      - !type:ModifyStatusEffect # Pirate
+        effectProto: StatusEffectPsionicsDisabled
         type: Add
         time: 900
       - !type:Drunk
@@ -261,10 +259,11 @@
             scale: 1.6
           damage:
           # todo scale with temp like SS13
-            Airloss: -3
-            Brute: -3 # Goob
-            Burn: -3 # Goob
-            Toxin: -2
+          # Goob - Cryo buff till temp scaling is implemented
+            Airloss: -9 # Goob - Cryobuff
+            Brute: -9 # Goob - Cryobuff
+            Burn: -9 # Goob - Cryobuff
+            Toxin: -6 # Goob - Cryobuff
         - !type:GenericStatusEffect # Mono edit
           conditions:
           - !type:MetabolizerTypeCondition

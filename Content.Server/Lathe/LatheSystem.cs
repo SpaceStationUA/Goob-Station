@@ -225,9 +225,9 @@ namespace Content.Server.Lathe
                 // Goobstation edit start: handle special case with lots of 0-time recipes that insert into storage
                 if (component.OutputToStorage)
                     FinishProducingManyStorage((uid, component, lathe));
+                else // Pirate: lathe mass-production fix
+                    FinishProducing(uid, component, lathe);
                 // Goobstation edit end
-
-                FinishProducing(uid, component, lathe);
             }
             return true;
         }
@@ -245,7 +245,7 @@ namespace Content.Server.Lathe
                     // Goobstation, output to material storage instead of spawning, if preferred & possible
                     var prototype = _proto.Index(resultProto);
                     if (!comp.OutputToStorage || !prototype.TryGetComponent<PhysicalCompositionComponent>(out var composition, _factory)
-                        || _materialStorage.TryChangeMaterialAmount(uid, composition.MaterialComposition))
+                        || !_materialStorage.TryChangeMaterialAmount(uid, composition.MaterialComposition))
                     {
                         var result = Spawn(resultProto, Transform(uid).Coordinates);
                         _stack.TryMergeToContacts(result);

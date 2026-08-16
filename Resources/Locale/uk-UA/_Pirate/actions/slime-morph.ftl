@@ -12,14 +12,28 @@ slime-morph-label-skin = Колір тіла
 slime-morph-label-eyes = Колір очей
 slime-morph-label-height = Зріст
 slime-morph-label-weight = Вага
+slime-morph-label-xenotype = Ксенотип
 
 slime-morph-button-mimic = Імітувати
 slime-morph-button-forget = Забути
 slime-morph-button-revert = Стати собою
 slime-morph-button-apply = Застосувати
 slime-morph-button-reset = Скинути
+slime-morph-button-adapt-colors = Адаптувати кольори
+slime-morph-button-save = Зберегти
+slime-morph-button-import = Імпортувати
+slime-morph-button-export = Експортувати
 
 slime-morph-remembered-entry = {$name} ({$species})
+slime-morph-saved-entry = ★ {$name} ({$species})
+
+slime-morph-save-title = Зберегти зовнішність
+slime-morph-save-prompt = Назва зовнішності
+slime-morph-save-placeholder = Назва
+slime-morph-save-success = Ви зберігаєте зовнішність «{$name}».
+
+slime-morph-import-title = Імпортувати зовнішність
+slime-morph-import-prompt = Назва зовнішності
 
 slime-morph-gender-male = Він / Його
 slime-morph-gender-female = Вона / Її

@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterCoatMantis
+  name: psionic mantis' winter coat # DeltaV - Rename Forensic Mantis to Psionic Mantis
+  description: Solve cold cases in style.
+  components:
+    - type: Sprite
+      sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/mantis_winter_coat.rsi
+    - type: Clothing
+      sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/mantis_winter_coat.rsi
+    - type: AllowSuitStorage # So the greatsword sheath / guns can be worn on the suit storage slot

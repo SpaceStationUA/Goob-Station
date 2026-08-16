@@ -1,0 +1,59 @@
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadHelmetDarthVader
+  name: Шолом Дарта Вейдера
+  description: Брутальний й холодний шолом.
+  suffix: StarWars
+  components:
+  - type: Sprite
+    sprite: _Pirate/_StarWars/Clothing/Head/Hardsuits/darthVaderHelmet.rsi
+  - type: Clothing
+    sprite: _Pirate/_StarWars/Clothing/Head/Hardsuits/darthVaderHelmet.rsi
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Radiation: 0.5
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: FireProtection
+    reduction: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+  - type: FlashImmunity
+  - type: FlashSoundSuppression
+
+
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitShturm
+  name: Шолом штурмовика
+  description: Монолітний білий костюм звичайного штурмовика
+  suffix: StarWars
+  components:
+  - type: Sprite
+    sprite: _Pirate/_StarWars/Clothing/Head/Hardsuits/shturmHelmet.rsi
+  - type: Clothing
+    sprite: _Pirate/_StarWars/Clothing/Head/Hardsuits/shturmHelmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.6
+        Radiation: 0.4
+        Caustic: 0.4
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: FlashImmunity
+  - type: FlashSoundSuppression

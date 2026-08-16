@@ -133,5 +133,6 @@ holopad-engineering-main = Інженерія - Головне
 # Безпека
 holopad-security-evac-checkpoint = Безпека - Евакуаційний блокпост
 holopad-security-arrivals-checkpoint = Безпека - Блокпост прибуття
+holopad-epistemics-mantis = Епістеміка - Мантіс # Pirate
 
 # Обслуговування

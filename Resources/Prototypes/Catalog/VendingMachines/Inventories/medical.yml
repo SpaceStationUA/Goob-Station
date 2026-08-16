@@ -13,7 +13,11 @@
     PillCanisterTricordrazine: 2
   contrabandInventory:
     PillCanisterRandom: 1
+    StrangePill: 1 # Pirate medical vendor variations
     PowerCellSmall: 2
+  emaggedInventory:
+    OminousPill: 1 # Pirate medical vendor variations
+    PillDesoxyephedrine5: 1
 
 - type: vendingMachineInventory
   id: NanoMedCivilianWallInventory
@@ -30,6 +34,10 @@
   contrabandInventory:
     PillCanisterRandom: 1
     PowerCellSmall: 2
+    StrangePill: 1 # Pirate medical vendor variations
+  emaggedInventory:
+    OminousPill: 1 # Pirate medical vendor variations
+    PillDesoxyephedrine5: 1
 
 - type: vendingMachineInventory
   id: NanoMedPlusInventory
@@ -70,9 +78,12 @@
     SyringeMicroplastics: 2 #Technically a medicine
     FoodSnackLollypopWrappedLexorin: 3
     FoodSnackLollypopWrappedMysteryEvil: 5 # Goobstation - end
+    OminousPill: 2 # Pirate medical vendor variations
+    PillDesoxyephedrine5: 2
   contrabandInventory:
     PillCanisterRandom: 3
     PillSpaceDrugs: 3
+    StrangePill: 2 # Pirate medical vendor variations
     FoodApple: 1
 
 - type: vendingMachineInventory
@@ -95,4 +106,8 @@
   contrabandInventory:
     PillCanisterRandom: 1
     PillSpaceDrugs: 3
+    StrangePill: 2 # Pirate medical vendor variations
     FoodApple: 1
+  emaggedInventory:
+    OminousPill: 2 # Pirate medical vendor variations
+    PillDesoxyephedrine5: 1

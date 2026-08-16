@@ -1,0 +1,455 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Adapted from Starlight commit e22931e1e23afebee24eaf98b2ddae4fbbf37258.
+
+- type: entity
+  id: WeaponPDW9TaserBorg
+  # Pirate: copy the disabler SMG layout without its global PacifismAllowedGun;
+  # pacifism is allowed only for the nonlethal fire mode below.
+  parent: [ BaseWeaponBattery, BaseSecurityContraband ]
+  name: integrated pulse carbine
+  description: A self-recharging disabler SMG built into a security cyborg. Its lethal mode is restricted to Code Red.
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
+  - type: Tag
+    tags:
+    - Taser
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Gun
+    selectedMode: FullAuto
+    fireRate: 4.5
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: BatteryAmmoProvider
+    proto: BulletDisablerSmg
+    fireCost: 25
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 260
+  - type: Battery
+    maxCharge: 750
+    startingCharge: 750
+  - type: BatterySelfRecharger
+    autoRechargeRate: 20
+  - type: BatteryWeaponFireModes
+    predictable: false
+    fireModes:
+    - proto: BulletDisablerSmg
+      fireCost: 25
+      pacifismAllowedMode: true
+    - proto: RedMediumLaser
+      fireCost: 100
+  - type: SecurityBorgLethalMode
+    safeMode: 0
+    lethalMode: 1
+    allowedAlertLevels:
+    - amber
+    - red
+    - gamma
+    - delta
+    - violet
+    - omicron
+  - type: Unremoveable
+  - type: GunExecutionBlacklist
+
+- type: entity
+  id: BorgStunbatonRechargeable
+  parent: Stunbaton
+  name: integrated stun baton
+  description: A self-recharging stun baton built into a security cyborg.
+  components:
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: BatterySelfRecharger
+    autoRechargeRate: 8
+  - type: Unremoveable
+
+- type: entity
+  id: BorgHolocuffs
+  parent: Handcuffs
+  name: integrated holocuffs
+  description: Holographic restraints emitted by a security cyborg. A fresh pair appears after use and the applied pair vanishes when removed.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/holocuffs.rsi
+    state: holorestrainer_powered
+  - type: Handcuff
+    cuffTime: 3
+    uncuffTime: 5
+    breakoutTime: 30
+    cuffedRSI: Objects/Misc/handcuffs.rsi
+    bodyIconState: body-overlay
+    # Pirate: the local cuff system permits BorgHandcuff items from their module hand.
+  - type: BorgHandcuff
+  - type: Unremoveable
+
+- type: entity
+  id: BorgFlashRechargeable
+  parent: Flash
+  name: integrated flash
+  description: An ultrabright flash built into a security cyborg. Its capacitor recharges automatically.
+  components:
+  - type: LimitedCharges
+    maxCharges: 5
+  - type: AutoRecharge
+    rechargeDuration: 30
+  - type: Unremoveable
+
+- type: entity
+  id: BorgHoloprojectorSecurity
+  parent: HoloprojectorSecurity
+  name: integrated holobarrier projector
+  description: A security holobarrier projector powered by a sealed self-charging cell.
+  suffix: Borg
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+        disableEject: true
+        swap: false
+        blacklist:
+          tags:
+          - MechReactor
+  - type: Unremoveable
+
+- type: entity
+  id: BorgContrabandBag
+  parent: BaseStorageItem
+  name: integrated contraband bag
+  description: An evidence bag mounted in a security cyborg's chassis for collecting contraband.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/security.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+  - type: Tag
+    tags:
+    - BorgContrabandBag
+  - type: Storage
+    maxItemSize: Large
+    grid:
+    - 0,0,8,3
+    quickInsert: true
+    areaInsert: false
+    whitelist:
+      components:
+      - Contraband
+  - type: Dumpable
+
+- type: entity
+  id: BaseBorgModuleSecurity
+  parent: BaseBorgModule
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - BorgModuleSecurity
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#a0322c"
+      - state: base-module-inhand-left
+        color: "#444444"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#5b5b5b"
+      right:
+      - state: base-icon-inhand-right
+        color: "#a0322c"
+      - state: base-module-inhand-right
+        color: "#444444"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#5b5b5b"
+
+- type: entity
+  id: BorgModuleSecurity
+  parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
+  name: security equipment cyborg module
+  description: Provides a security cyborg with nonlethal enforcement equipment and a red-alert-restricted pulse carbine.
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+    - sprite: _Pirate/Objects/Specific/Robotics/security_borg_module.rsi
+      state: icon-nt
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponPDW9TaserBorg
+    - item: BorgStunbatonRechargeable
+    - item: BorgHolocuffs
+    - item: BorgFlashRechargeable
+    - item: BorgHoloprojectorSecurity
+  - type: BorgModuleIcon
+    icon: { sprite: _Pirate/Interface/Actions/security_borg.rsi, state: security-unlethal-module }
+  - type: Tag
+    tags:
+    - BorgModuleSecurity
+    - BorgModuleSecurityStation
+
+- type: entity
+  id: BorgModuleSecurityContraband
+  parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
+  name: contraband bag cyborg module
+  description: Provides an integrated evidence bag for collecting contraband.
+  components:
+  - type: Sprite
+    layers:
+    - state: security
+    - sprite: _Pirate/Objects/Specific/Robotics/security_borg_module.rsi
+      state: icon-nt
+  - type: ItemBorgModule
+    hands:
+    - item: BorgContrabandBag
+      hand:
+        emptyRepresentative: BorgContrabandBag
+        emptyLabel: borg-slot-contrabag-empty
+        whitelist:
+          tags:
+          - BorgContrabandBag
+  - type: BorgModuleIcon
+    icon: { sprite: _Pirate/Interface/Actions/security_borg.rsi, state: security-unlethal-module }
+  - type: Tag
+    tags:
+    - BorgModuleSecurity
+    - BorgModuleSecurityStation
+
+- type: entity
+  id: BorgChassisSecurity
+  parent: BorgChassisSelectable
+  name: security cyborg
+  components:
+  - type: Sprite
+    sprite: _Pirate/Mobs/Silicon/Chassis/security.rsi
+    layers:
+    - state: standard
+      map: [ "enum.BorgVisualLayers.Body", "movement" ]
+    - state: standard_e_r
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+    - state: standard_l
+      map: [ "light", "enum.BorgVisualLayers.LightStatus" ]
+      shader: unshaded
+      visible: false
+  - type: BorgSwitchableType
+    selectedBorgType: security
+  - type: BorgSwitchableSubtype
+    borgSubtype: security_default
+
+- type: entity
+  id: BorgChassisSecurityPowered
+  parent: BorgChassisSecurity
+  name: security cyborg
+  suffix: Powered
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+        blacklist:
+          tags:
+          - MechReactor
+
+- type: borgType
+  id: security
+  dummyPrototype: BorgChassisSecurity
+  extraModuleCount: 3
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleSecurity
+  defaultModules:
+  - BorgModuleTool
+  - BorgModuleSecurity
+  - BorgModuleSecurityContraband
+  lawset: SecurityCyborgLawset
+  radioChannels:
+  - Command
+  - Security
+  addComponents:
+  - type: FlashImmunity
+  inventoryTemplateId: borgShort
+  spriteBodyState: standard
+  spriteHasMindState: standard_e
+  spriteNoMindState: standard_e_r
+  spriteToggleLightState: standard_l
+  petSuccessString: petting-success-security-cyborg
+  petFailureString: petting-failure-security-cyborg
+
+- type: borgSubtype
+  id: security_default
+  parentBorgType: security
+  spritePath: _Pirate/Mobs/Silicon/Chassis/security.rsi
+  dummyPrototype: BorgChassisSecurity
+
+# Pirate: security skins use the same RSI with skin-specific state names.
+- type: borgSubtype
+  id: security_borg
+  parentBorgType: security
+  spritePath: _Pirate/Mobs/Silicon/Chassis/security.rsi
+  spriteBodyState: borg
+  spriteHasMindState: borg_e
+  spriteNoMindState: borg_e_r
+  spriteToggleLightState: borg_l
+  dummyPrototype: BorgChassisSecurityBorg
+
+- type: borgSubtype
+  id: security_red_knight
+  parentBorgType: security
+  spritePath: _Pirate/Mobs/Silicon/Chassis/security.rsi
+  spriteBodyState: red-knight
+  spriteHasMindState: red-knight_e
+  spriteNoMindState: red-knight_e_r
+  spriteToggleLightState: red-knight_l
+  dummyPrototype: BorgChassisSecurityRedKnight
+
+- type: borgSubtype
+  id: security_black_knight
+  parentBorgType: security
+  spritePath: _Pirate/Mobs/Silicon/Chassis/security.rsi
+  spriteBodyState: black-knight
+  spriteHasMindState: black-knight_e
+  spriteNoMindState: black-knight_e_r
+  spriteToggleLightState: black-knight_l
+  dummyPrototype: BorgChassisSecurityBlackKnight
+
+- type: borgSubtype
+  id: security_noble
+  parentBorgType: security
+  spritePath: _Pirate/Mobs/Silicon/Chassis/security.rsi
+  spriteBodyState: noble
+  spriteHasMindState: noble_e
+  spriteNoMindState: noble_e_r
+  spriteToggleLightState: noble_l
+  dummyPrototype: BorgChassisSecurityNoble
+
+- type: borgSubtype
+  id: security_cricket
+  parentBorgType: security
+  spritePath: _Pirate/Mobs/Silicon/Chassis/security.rsi
+  spriteBodyState: cricket
+  spriteHasMindState: cricket_e
+  spriteNoMindState: cricket_e_r
+  spriteToggleLightState: cricket_l
+  dummyPrototype: BorgChassisSecurityCricket
+
+- type: borgSubtype
+  id: security_heavy
+  parentBorgType: security
+  spritePath: _Pirate/Mobs/Silicon/Chassis/security.rsi
+  spriteBodyState: heavy
+  spriteHasMindState: heavy_e
+  spriteNoMindState: heavy_e_r
+  spriteToggleLightState: heavy_l
+  dummyPrototype: BorgChassisSecurityHeavy
+
+# Pirate: hidden preview entities for the selectable security borg skins.
+- type: entity
+  id: BorgChassisSecurityBorg
+  parent: BorgChassisSecurity
+  name: security cyborg
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: security_borg
+
+- type: entity
+  id: BorgChassisSecurityRedKnight
+  parent: BorgChassisSecurity
+  name: security cyborg
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: security_red_knight
+
+- type: entity
+  id: BorgChassisSecurityBlackKnight
+  parent: BorgChassisSecurity
+  name: security cyborg
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: security_black_knight
+
+- type: entity
+  id: BorgChassisSecurityNoble
+  parent: BorgChassisSecurity
+  name: security cyborg
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: security_noble
+
+- type: entity
+  id: BorgChassisSecurityCricket
+  parent: BorgChassisSecurity
+  name: security cyborg
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: security_cricket
+
+- type: entity
+  id: BorgChassisSecurityHeavy
+  parent: BorgChassisSecurity
+  name: security cyborg
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BorgSwitchableSubtype
+    borgSubtype: security_heavy
+
+- type: siliconLaw
+  id: SecurityCyborg1
+  order: 1
+  lawString: law-security-cyborg-1
+
+- type: siliconLaw
+  id: SecurityCyborg2
+  order: 2
+  lawString: law-security-cyborg-2
+
+- type: siliconLaw
+  id: SecurityCyborg3
+  order: 3
+  lawString: law-security-cyborg-3
+
+- type: siliconLawset
+  id: SecurityCyborgLawset
+  name: law-security-cyborg-lawset-name
+  laws:
+  - SecurityCyborg1
+  - SecurityCyborg2
+  - SecurityCyborg3
+  obeysTo: laws-owner-crew
+
+- type: Tag
+  id: BorgModuleSecurity
+
+- type: Tag
+  id: BorgModuleSecurityStation
+
+- type: Tag
+  id: BorgContrabandBag

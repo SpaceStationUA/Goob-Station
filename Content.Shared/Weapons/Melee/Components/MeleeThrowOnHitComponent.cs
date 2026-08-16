@@ -49,8 +49,20 @@ public sealed partial class MeleeThrowOnHitComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool ThrowWhileOnDelay;
-    /// </summary>
 
+    /// <summary>
+    /// Whether throwing the target should apply camera recoil to the user.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CameraRecoilOnThrown = true; // Pirate: billiards
+
+    /// <summary>
+    /// Whether the target should be treated as airborne while it is thrown.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ThrowInAir = true; // Pirate: billiards
+
+    /// <summary>
     /// Whether the entity can apply knockback this instance of being thrown.
     /// If true, the entity cannot apply knockback.
     /// </summary>

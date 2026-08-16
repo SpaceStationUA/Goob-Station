@@ -231,3 +231,28 @@
     blacklist:
       components:
       - SurplusBundle
+
+- type: listing
+  id: UplinkSecuritySpaceBladeSyndicate
+  name: uplink-spaceblade-syndicate-name
+  description: uplink-spaceblade-syndicate-desc
+  productEntity: SpaceBladeContra
+  icon: { sprite: _Pirate/Objects/Fun/spaceblade.rsi, state: contraband }
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkDetomatixCartridge
+  name: uplink-detomatix-name
+  description: uplink-detomatix-desc
+  productEntity: DetomatixCartridge
+  icon: { sprite: _Pirate/Objects/Devices/cartridge_detomatix.rsi, state: cart-detomatix }
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkExplosives
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

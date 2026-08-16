@@ -1,0 +1,50 @@
+- type: entity
+  id: LockerForensicMantis
+  parent: LockerBooze
+  name: psionic mantis' cabinet
+  suffix: Empty
+  description: "Concealed knowledge stirs within, revealed only to those who can pierce the veil." # TheDen
+  components:
+  - type: AccessReader
+    access: [["Mantis"]]
+  - type: Sprite # TheDen - mantis cabinet sprites
+    sprite: _DEN/Structures/Specific/Mantis/closetmantis.rsi
+    noRot: true
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: door-closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: EntityStorageVisuals # TheDen
+    stateBaseClosed: base
+    stateDoorOpen: door-open
+    stateDoorClosed: door-closed
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+          MaterialWoodPlank1:
+            min: 1
+            max: 2

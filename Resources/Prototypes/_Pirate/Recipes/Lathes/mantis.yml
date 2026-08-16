@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Psionic caster frames (Pirate)
+# Printed on the SecFab and Protolathe once the PsionicCountermeasures tech is researched,
+# then fused with a whitelisted anomaly core via construction to make the finished casters.
+
+- type: latheRecipe
+  id: MantisCasterPistolFrame
+  result: MantisCasterPistolFrame
+  categories:
+  - Weapons
+  completetime: 3
+  materials:
+    Steel: 300
+    Glass: 200
+    Plastic: 200
+
+- type: latheRecipe
+  id: MantisCasterRevolverFrame
+  result: MantisCasterRevolverFrame
+  categories:
+  - Weapons
+  completetime: 3
+  materials:
+    Steel: 350
+    Glass: 250
+    Plastic: 250
+
+- type: latheRecipe
+  id: MantisCasterShotgunFrame
+  result: MantisCasterShotgunFrame
+  categories:
+  - Weapons
+  completetime: 3
+  materials:
+    Steel: 400
+    Glass: 300
+    Plastic: 300
+
+- type: latheRecipe
+  id: MantisCasterSubMachineGunFrame
+  result: MantisCasterSubMachineGunFrame
+  categories:
+  - Weapons
+  completetime: 3
+  materials:
+    Steel: 350
+    Glass: 250
+    Plastic: 250
+
+- type: latheRecipePack
+  id: MantisCastersPirate
+  recipes:
+  - MantisCasterPistolFrame
+  - MantisCasterRevolverFrame
+  - MantisCasterShotgunFrame
+  - MantisCasterSubMachineGunFrame

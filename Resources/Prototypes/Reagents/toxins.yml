@@ -46,16 +46,16 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:MetabolizerTypeCondition # Goobstation - Yowie
-          type: [ Yowie ]
+        - !type:MetabolizerTypeCondition # Goobstation - Yowie # Pirate: feroxi carpotoxin immunity
+          type: [ Yowie, Feroxi ]
           inverted: true
         damage:
           types:
             Poison: 4
       - !type:PopupMessage
         conditions:
-        - !type:MetabolizerTypeCondition # Goobstation - Yowie
-          type: [ Yowie ]
+        - !type:MetabolizerTypeCondition # Goobstation - Yowie # Pirate: feroxi carpotoxin immunity
+          type: [ Yowie, Feroxi ]
           inverted: true
         type: Local
         visualType: MediumCaution
@@ -396,8 +396,8 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
         type: Add
-        time: 10
-      - !type:ChemRemovePsionic #PIRATE
+        time: 5
+      - !type:RemovePsionicAbilities #PIRATE
         conditions:
         - !type:ReagentCondition
           reagent: MindbreakerToxin

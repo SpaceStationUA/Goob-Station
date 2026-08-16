@@ -211,6 +211,7 @@
   id: Gnash
   name: chat-emote-name-gnash
   category: Vocal
+  icon: _Pirate/Interface/Emotes/gnash.png # Pirate: port gnash icon
   available: false
   whitelist:
     components:

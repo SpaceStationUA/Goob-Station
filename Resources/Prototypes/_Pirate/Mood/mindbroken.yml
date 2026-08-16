@@ -1,0 +1,6 @@
+# Permanent negative mood debuff for mindbroken entities (Pirate)
+# Applied by MindBrokenSystem while the MindBrokenComponent is present; no timeout
+# means it stays until the mindbroken state itself is removed.
+- type: moodEffect
+  id: Mindbroken
+  moodChange: -10

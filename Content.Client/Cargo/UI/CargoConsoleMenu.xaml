@@ -6,6 +6,7 @@ SPDX-License-Identifier: MIT
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:traitor="clr-namespace:Content.Client._Pirate.Traitor.UI"
     MinSize="540 390"
     SetSize="995 600">
 
@@ -13,6 +14,8 @@ SPDX-License-Identifier: MIT
     <BoxContainer Orientation="Vertical"
         VerticalExpand="True">
 
+        <traitor:RansomContainer Name="RansomContainer"/>
+        <Control MinHeight="10"/>
         <TabContainer Name="TabContainer" VerticalExpand="True">
           <!-- Sub-Main Container -->
           <BoxContainer Orientation="Horizontal"

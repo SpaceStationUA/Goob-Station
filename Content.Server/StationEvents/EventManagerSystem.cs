@@ -2,10 +2,12 @@
 
 using System.Linq;
 using Content.Goobstation.Common.CCVar; // Goobstation
+using Content.Server.Psionics.Glimmer; // Pirate
 using Content.Server.GameTicking;
 using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Components;
 using Content.Shared.CCVar;
+using Content.Shared.Psionics.Glimmer; // Pirate
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -22,6 +24,7 @@ public sealed class EventManagerSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
+    [Dependency] private readonly GlimmerSystem _glimmer = default!; // Pirate
     [Dependency] public readonly GameTicker GameTicker = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
 
@@ -294,6 +297,13 @@ public sealed class EventManagerSystem : EntitySystem
         }
 
         if (_roundEnd.IsRoundEndRequested() && !stationEvent.OccursDuringRoundEnd)
+        {
+            return false;
+        }
+
+        // Pirate: glimmer events have their own eligibility band.
+        if (prototype.TryGetComponent<GlimmerEventComponent>(out var glimmerEvent, EntityManager.ComponentFactory)
+            && (_glimmer.Glimmer < glimmerEvent.MinimumGlimmer || _glimmer.Glimmer > glimmerEvent.MaximumGlimmer))
         {
             return false;
         }

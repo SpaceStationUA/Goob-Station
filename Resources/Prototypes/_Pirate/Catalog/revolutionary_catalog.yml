@@ -1,0 +1,117 @@
+# SPDX-FileCopyrightText: 2025 Tadeo <td12233a@gmail.com>
+# SPDX-FileCopyrightText: 2025 mkanke-real <mikekanke@gmail.com>
+# SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+- type: listing
+  id: RevolutionaryUplinkFlash
+  name: revolutionary-uplink-flash-name
+  description: revolutionary-uplink-flash-desc
+  productEntity: RevFlash # Pirate - local equivalent of Funky's HRev conversion flash.
+  cost:
+    RevCoin: 10
+  categories:
+  - RevolutionaryUplinkDefault
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  saleLimit: 1
+
+- type: listing
+  id: RevolutionaryUplinkSunglasses
+  name: revolutionary-uplink-sunglasses-name
+  description: revolutionary-uplink-sunglasses-desc
+  productEntity: ClothingEyesGlassesSunglasses
+  cost:
+    RevCoin: 5
+  categories:
+  - RevolutionaryUplinkDefault
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  saleLimit: 2
+
+- type: listing
+  id: RevolutionaryUplinkSyndieKey
+  name: revolutionary-uplink-syndicate-key-name
+  description: revolutionary-uplink-syndicate-key-desc
+  productEntity: EncryptionKeySyndie
+  cost:
+    RevCoin: 10
+  categories:
+  - RevolutionaryUplinkDefault
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  saleLimit: 1
+
+- type: listing
+  id: RevolutionaryUplinkFastDrawImplanter
+  name: revolutionary-uplink-fast-draw-implanter-name
+  description: revolutionary-uplink-fast-draw-implanter-desc
+  productEntity: RevsFastDrawImplanter
+  cost:
+    RevCoin: 10
+  categories:
+  - RevolutionaryUplinkDefault
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  saleLimit: 1
+
+- type: listing
+  id: RevolutionaryUplinkRevLieutenantImplanter
+  name: revolutionary-uplink-lieutenant-implanter-name
+  description: revolutionary-uplink-lieutenant-implanter-desc
+  productEntity: LieutenantRevolutionaryImplanter
+  cost:
+    RevCoin: 5
+  categories:
+  - RevolutionaryUplinkDefault
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+  saleLimit: 1
+
+- type: listing
+  id: RevolutionaryUplinkCameraBug
+  name: revolutionary-uplink-camera-bug-name
+  description: revolutionary-uplink-camera-bug-desc
+  productEntity: CameraBug
+  cost:
+    RevCoin: 5
+  categories:
+  - RevolutionaryUplinkDefault
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+  saleLimit: 1
+
+- type: listing
+  id: RevolutionaryUplinkListeningBug
+  name: revolutionary-uplink-listening-bug-name
+  description: revolutionary-uplink-listening-bug-desc
+  productEntity: RadioHandheldSyndicate
+  cost:
+    RevCoin: 2
+  categories:
+  - RevolutionaryUplinkDefault
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 5
+  saleLimit: 5
+
+- type: listing
+  id: RevolutionaryUplinkTrenchWhistle
+  name: revolutionary-uplink-trench-whistle-name
+  description: revolutionary-uplink-trench-whistle-desc
+  productEntity: SyndicateWhistle
+  cost:
+    RevCoin: 1
+  categories:
+  - RevolutionaryUplinkDefault
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  saleLimit: 1

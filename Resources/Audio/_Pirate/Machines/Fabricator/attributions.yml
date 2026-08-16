@@ -1,0 +1,9 @@
+- files: ["autolathe_start.ogg", "autolathe_end.ogg", "autolathe_mid01.ogg", "autolathe_mid02.ogg", "autolathe_mid03.ogg", "autolathe_mid04.ogg", "autolathe_mid05.ogg", "autolathe_mid06.ogg", "autolathe_mid07.ogg", "autolathe_mid08.ogg", "autolathe_mid09.ogg", "autolathe_mid10.ogg", "autolathe_mid11.ogg", "autolathe_mid12.ogg", "autolathe_mid13.ogg", "autolathe_mid14.ogg", "autolathe_mid15.ogg", "autolathe_mid16.ogg", "autolathe_mid17.ogg", "autolathe_mid18.ogg", "autolathe_mid19.ogg", "autolathe_mid20.ogg", "autolathe_mid21.ogg", "autolathe_mid22.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Aurora Station contributors, taken from Aurora.3 (sound/machines/fabricators/autolathe/). Downmixed from stereo to mono for positional audio, then compressed and limited from -26.5 to -18.7 LUFS to match SS14 sound levels. Processed as one continuous stream and re-sliced at the original sample boundaries, so durations are unchanged."
+  source: "https://github.com/Aurorastation/Aurora.3/tree/a4da3a88851d8a8838c69b7960265b13a5c6596f/sound/machines/fabricators/autolathe"
+
+- files: ["synthfab_start.ogg", "synthfab_running.ogg", "synthfab_end.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from freesound via Aurora.3 (sound/machines/synthfab/), attributed there as CC0. Compressed and limited from -28.7 to -19.8 LUFS to match SS14 sound levels; durations unchanged."
+  source: "https://freesound.org/s/530765/"

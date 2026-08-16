@@ -29,6 +29,7 @@
   # Pirate contractor end
   startingGear: DetectiveGear
   icon: "JobIconDetective"
+  ransomModifier: 2 # Pirate: security staff are worth less than heads
   supervisors: job-supervisors-hos
   canBeAntag: false
   guides: # goobstation

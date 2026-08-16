@@ -59,6 +59,7 @@
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
+  ransomModifier: 5 # Pirate: traitor ransom value
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -73,6 +74,8 @@
       - type: CommandStaff
       - type: Condemned # Goobstation - Nanotrasen owns your soul pal.
         soulOwnedNotDevil: true
+  - !type:ModifyPsionicChanceSpecial # Pirate - Commands are much more likely to be psionic.
+    jobBonusChance: 0.1
 
 - type: startingGear
   id: CaptainGear

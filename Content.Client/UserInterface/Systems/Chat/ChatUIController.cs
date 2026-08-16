@@ -17,6 +17,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
+using Content.Pirate.Shared.Psionics; // Pirate
 using Content.Shared._Starlight.CollectiveMind; // Goobstation - Starlight collective mind port
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -67,7 +68,6 @@ public sealed partial class ChatUIController : UIController
     [UISystemDependency] private readonly CollectiveMindSystem? _collectiveMind = default!; // Goobstation - Starlight collective mind port
     [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
     [UISystemDependency] private readonly ChatSystem? _chatSys = default;
-    [UISystemDependency] private readonly PsionicChatUpdateSystem? _psionic = default!; //Nyano - Summary: makes the psionic chat available.
     [UISystemDependency] private readonly TransformSystem? _transform = default;
     [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
@@ -602,13 +602,18 @@ public sealed partial class ChatUIController : UIController
             FilterableChannels |= ChatChannel.Telepathic; //Nyano - Summary: makes admins able to see psionic chat.
         }
 
-        // Nyano - Summary: - Begin modified code block to add telepathic as a channel for a psionic user.
-        if (_psionic != null && _psionic.IsPsionic)
+        // Pirate: ask Pirate-side systems whether this player can use telepathic chat.
+        if (_player.LocalEntity is { } localEntity)
         {
-            FilterableChannels |= ChatChannel.Telepathic;
-            CanSendChannels |= ChatSelectChannel.Telepathic;
+            var ev = new GetTelepathicChatPermissionsEvent();
+            _ent.EventBus.RaiseLocalEvent(localEntity, ref ev);
+            if (ev.CanUse)
+            {
+                FilterableChannels |= ChatChannel.Telepathic;
+                CanSendChannels |= ChatSelectChannel.Telepathic;
+            }
         }
-        // /Nyano - End modified code block
+
         // Goobstation - Starlight collective mind port
         if (_collectiveMind != null && _collectiveMind.IsCollectiveMind)
         {

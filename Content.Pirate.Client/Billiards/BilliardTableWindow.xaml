@@ -1,0 +1,29 @@
+<!--
+SPDX-License-Identifier: MIT
+-->
+
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="using:Content.Client.UserInterface.Controls"
+                      MinSize="420 230"
+                      Resizable="False"
+                      Title="{Loc 'billiard-table-window-title'}">
+    <BoxContainer Orientation="Vertical"
+                  Margin="12"
+                  SeparationOverride="10">
+        <Label Name="BallCountLabel"
+               HorizontalAlignment="Center" />
+        <Label Name="StatusLabel"
+               HorizontalAlignment="Center" />
+
+        <Button Name="PyramidButton"
+                SetHeight="42"
+                Text="{Loc 'billiard-table-window-pyramid'}" />
+        <Button Name="AmericanPoolButton"
+                SetHeight="42"
+                Text="{Loc 'billiard-table-window-american-pool'}" />
+        <Button Name="StorageButton"
+                SetHeight="36"
+                Text="{Loc 'billiard-table-window-open-storage'}" />
+    </BoxContainer>
+</controls:FancyWindow>

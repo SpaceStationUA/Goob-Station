@@ -30,7 +30,7 @@
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobThavenChest
     Groin: MobThavenGroin
-    Eyes: MobHumanoidEyes
+    Eyes: MobThavenEyes # Pirate: use the Thaven eye layer instead of the human one.
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
     LArm: MobThavenLArm
@@ -42,6 +42,12 @@
     LFoot: MobThavenLFoot
     RFoot: MobThavenRFoot
     Tail: MobHumanoidAnyMarking
+
+- type: humanoidBaseSprite
+  id: MobThavenEyes
+  baseSprite:
+    sprite: _MACRO/Mobs/Species/Thaven/parts.rsi
+    state: eyes
 
 - type: humanoidBaseSprite
   id: MobThavenHead

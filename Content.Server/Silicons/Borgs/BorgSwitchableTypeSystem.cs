@@ -55,7 +55,10 @@ public sealed partial class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeS
         {
             _borgSystem.SetTransponderSprite(
                 (ent.Owner, transponder),
-                new SpriteSpecifier.Rsi(subtypePrototype.SpritePath, prototype.SpriteBodyState)); // goob - Use the subtype `SpritePath` instead of a hardcoded rsi
+                // Pirate: use the subtype-specific body state for the transponder.
+                new SpriteSpecifier.Rsi(
+                    subtypePrototype.SpritePath,
+                    subtypePrototype.SpriteBodyState ?? prototype.SpriteBodyState)); // goob - Use the subtype `SpritePath` instead of a hardcoded rsi
 
             _borgSystem.SetTransponderName(
                 (ent.Owner, transponder),

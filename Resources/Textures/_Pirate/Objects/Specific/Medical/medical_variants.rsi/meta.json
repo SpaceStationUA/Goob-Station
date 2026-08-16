@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Base bruise packs and ointments taken from cev-eris and tgstation; blue variants are part of the medical pack, red variants by KillerTheFlareon, and yellow variants by wonderfulnewworld (GitHub).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    { "name": "bluebrutepack" },
+    { "name": "bluebrutepack2" },
+    { "name": "bluebrutepack3" },
+    { "name": "blueointment" },
+    { "name": "blueointment2" },
+    { "name": "blueointment3" },
+    { "name": "redbrutepack" },
+    { "name": "redbrutepack2" },
+    { "name": "redbrutepack3" },
+    { "name": "redointment" },
+    { "name": "redointment2" },
+    { "name": "redointment3" },
+    { "name": "yellowbrutepack" },
+    { "name": "yellowbrutepack2" },
+    { "name": "yellowointment" },
+    { "name": "yellowointment2" },
+    { "name": "yellowointment3" }
+  ]
+}

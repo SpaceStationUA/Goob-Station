@@ -1,0 +1,35 @@
+- type: latheRecipe
+  id: ClothingHeadCage
+  icon:
+    sprite: Nyanotrasen/Clothing/Head/Hats/cage.rsi
+    state: icon
+  result: ClothingHeadCage
+  completetime: 4
+  materials:
+    Steel: 400
+    BSCrystal: 20
+
+- type: latheRecipe
+  id: ClothingHeadHelmetInsulated
+  result: ClothingHeadHelmetInsulated
+  completetime: 4
+  materials:
+    Steel: 400
+    BSCrystal: 20
+
+- type: latheRecipe
+  id: MagazineBoxPistolCryptobiolin
+  result: MagazineBoxPistolCryptobiolin
+  completetime: 5
+  materials:
+    Plastic: 1250
+    Steel: 75
+    BSCrystal: 75
+
+- type: latheRecipe
+  id: MagazinePistolCryptobiolin
+  result: MagazinePistolCryptobiolin
+  completetime: 4
+  materials:
+    Steel: 400
+    BSCrystal: 20

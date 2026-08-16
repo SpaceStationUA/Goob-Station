@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Emp;
+using Content.Shared.Inventory; // Pirate: charge worn equipment
 using Content.Shared.Examine;
 using Content.Shared.Power.Components;
 using Content.Shared.PowerCell;
@@ -20,6 +21,7 @@ public sealed class ChargerSystem : EntitySystem
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!; // Pirate: charge worn equipment
 
     public override void Initialize()
     {
@@ -42,6 +44,30 @@ public sealed class ChargerSystem : EntitySystem
     {
         UpdateStatus(ent);
     }
+
+    #region Pirate: charge worn equipment
+    private bool TryGetChargeableBattery(EntityUid uid, [NotNullWhen(true)] out Entity<BatteryComponent>? battery)
+    {
+        if (_powerCell.TryGetBatteryFromEntityOrSlot(uid, out battery))
+            return true;
+
+        if (!TryComp<InventoryComponent>(uid, out var inv))
+            return false;
+
+        var enumerator = _inventory.GetSlotEnumerator((uid, inv));
+        while (enumerator.NextItem(out var item, out _))
+        {
+            if (!TryComp<PowerCellSlotComponent>(item, out var slot) || !slot.FitsInCharger)
+                continue;
+
+            if (_powerCell.TryGetBatteryFromSlot((item, slot), out battery))
+                return true;
+        }
+
+        battery = null;
+        return false;
+    }
+    #endregion Pirate: charge worn equipment
 
     private void OnChargerExamine(EntityUid uid, ChargerComponent component, ExaminedEvent args)
     {
@@ -68,7 +94,7 @@ public sealed class ChargerSystem : EntitySystem
                 // add how much each item is charged it
                 foreach (var contained in container.ContainedEntities)
                 {
-                    if (!_powerCell.TryGetBatteryFromEntityOrSlot(contained, out var battery))
+                    if (!TryGetChargeableBattery(contained, out var battery))
                         continue;
 
                     var chargePercent = _battery.GetChargeLevel(battery.Value.AsNullable()) * 100;
@@ -93,7 +119,7 @@ public sealed class ChargerSystem : EntitySystem
             return;
 
         AddComp<InsideChargerComponent>(args.Entity);
-        if (_powerCell.TryGetBatteryFromEntityOrSlot(args.Entity, out var battery))
+        if (TryGetChargeableBattery(args.Entity, out var battery))
             _battery.RefreshChargeRate(battery.Value.AsNullable());
         UpdateStatus(ent);
     }
@@ -107,7 +133,7 @@ public sealed class ChargerSystem : EntitySystem
             return;
 
         RemComp<InsideChargerComponent>(args.Entity);
-        if (_powerCell.TryGetBatteryFromEntityOrSlot(args.Entity, out var battery))
+        if (TryGetChargeableBattery(args.Entity, out var battery))
             _battery.RefreshChargeRate(battery.Value.AsNullable());
         UpdateStatus(ent);
     }
@@ -195,7 +221,7 @@ public sealed class ChargerSystem : EntitySystem
 
         foreach (var item in container.ContainedEntities)
         {
-            if (_powerCell.TryGetBatteryFromEntityOrSlot(item, out var battery))
+            if (TryGetChargeableBattery(item, out var battery))
                 _battery.RefreshChargeRate(battery.Value.AsNullable());
         }
     }
@@ -243,7 +269,7 @@ public sealed class ChargerSystem : EntitySystem
             return CellChargerStatus.Empty;
 
         // Use the first stored battery for visuals. If someone ever makes a multi-slot charger then this will need to be changed.
-        if (!_powerCell.TryGetBatteryFromEntityOrSlot(container.ContainedEntities[0], out var battery))
+        if (!TryGetChargeableBattery(container.ContainedEntities[0], out var battery))
             return CellChargerStatus.Off;
 
         if (_battery.IsFull(battery.Value.AsNullable()))

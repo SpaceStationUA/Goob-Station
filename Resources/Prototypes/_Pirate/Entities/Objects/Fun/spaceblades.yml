@@ -1,0 +1,369 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: SpaceBlade
+  parent: BaseItem
+  name: space blade
+  description: Let it drip.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/spaceblade.rsi
+    state: redorange
+    scale: 0.5, 0.5
+  - type: Item
+    size: Small
+    sprite: _Pirate/Objects/Fun/spaceblade.rsi
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SharedGasTankUiKey.Key:
+        type: GasTankBoundUserInterface
+  - type: GasTank
+    outputPressure: 0.1
+    maxOutputPressure: 0.1
+    valveOutputRate: 50
+    air:
+      volume: 1
+      moles:
+      - 0.4101137219
+      temperature: 293.15
+  - type: StaticPrice
+    price: 20
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 100
+        mask:
+        - TableMask
+        - InteractImpassable
+        layer:
+        - InteractImpassable
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/desk_bell_ring.ogg
+      params:
+        variation: 0.65
+        volume: -5
+
+- type: entity
+  id: SpaceBladeRedOrange
+  parent: SpaceBlade
+
+- type: entity
+  id: SpaceBladeBlue
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: blue
+
+- type: entity
+  id: SpaceBladeFrontier
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: frontier
+
+- type: entity
+  id: SpaceBladeGoldBlue
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: goldblue
+
+- type: entity
+  id: SpaceBladeMail
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: mail
+
+- type: entity
+  id: SpaceBladeEyeball
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: eyeball
+
+- type: entity
+  id: SpaceBladeBlade
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: blade
+
+- type: entity
+  id: SpaceBladeCheck
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: check
+
+- type: entity
+  id: SpaceBladeRune
+  parent: SpaceBlade
+  description: Birthday parties are yearly reminders that as soon as you're born you start dying, unless you let it rip.
+  components:
+  - type: Sprite
+    state: rune
+
+- type: entity
+  id: SpaceBladeMc
+  parent: SpaceBlade
+  description: Let it McDrip.
+  components:
+  - type: Sprite
+    state: mcblade
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Pirate/Objects/Fun/SpaceBlade/deepfryer_basket_add_item.ogg
+  - type: UseDelay
+    delay: 2
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Pirate/Objects/Fun/SpaceBlade/deepfryer_basket_add_item.ogg
+      params:
+        variation: 0.65
+        volume: -5
+
+- type: entity
+  id: SpaceBladeContra
+  parent: [SpaceBlade, BaseSyndicateContraband]
+  description: Let it reap.
+  components:
+  - type: Sprite
+    state: contraband
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 0.5
+  - type: PointLight
+    enabled: true
+    radius: 5
+    color: "#3db83b"
+
+- type: entity
+  id: SpaceBladeMoff
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: moff
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Moth/moth_scream.ogg # Pirate: local path for the source moth scream.
+  - type: UseDelay
+    delay: 2
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+      params:
+        variation: 0.65
+        volume: -5
+
+- type: entity
+  id: SpaceBladeWeh
+  parent: SpaceBlade
+  description: Let it weh!
+  components:
+  - type: Sprite
+    state: weh
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: UseDelay
+    delay: 1
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+      params:
+        variation: 0.65
+        volume: -5
+
+- type: entity
+  id: SpaceBladeTesla
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: tesla
+  - type: PointLight
+    enabled: true
+    radius: 5
+    color: "#4080ff"
+  - type: Electrified
+    shockDamage: 0
+    shockTime: 0.8
+    requirePower: false
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Lightning/lightningshock.ogg
+      params:
+        variation: 0.65
+        volume: -10
+
+- type: entity
+  id: SpaceBladePizza
+  parent: [SpaceBlade, PlasticBanana]
+  name: space blade
+  description: Let it mama mia, not safe for ages under 3.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/spaceblade.rsi
+    state: pizza
+
+- type: entity
+  id: SpaceBladeSingularity
+  parent: [BaseMajorContraband, SpaceBlade] # Pirate: local equivalent of the source C3 contraband tier.
+  name: space blade
+  description: Let it consume.
+  components:
+  - type: Sprite
+    state: singularity
+  - type: SingularityDistortion
+    intensity: 500
+    falloffPower: 5
+  - type: GravityAnomaly
+  - type: GravityWell
+    baseRadialAcceleration: 1
+    maxRange: 1
+
+- type: entity
+  id: SpaceBladeClown
+  parent: SpaceBlade
+  name: space blade
+  description: Let it honk.
+  components:
+  - type: Sprite
+    state: clown
+  - type: Slippery
+    slipData:
+      knockdownTime: 0.5
+      launchForwardsMultiplier: 0.5
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: GasTank
+    outputPressure: 0.1
+    maxOutputPressure: 0.1
+    valveOutputRate: 50
+    air:
+      volume: 1
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0.4101137219 # Atmospherics.Gas.NitrousOxide
+      temperature: 293.15
+
+- type: entity
+  id: SpaceBladeBros
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: brosblade
+
+- type: entity
+  id: SpaceBladeGay
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: gayblade
+
+- type: entity
+  id: SpaceBladeRatKing
+  parent: SpaceBlade
+  components:
+  - type: Sprite
+    state: ratking
+
+- type: entity
+  id: SpaceBladeBoxTrash
+  parent: BaseItem
+  name: unfolded space blade box
+  description: A small, unfolded cardboard toy box.
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 50
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/spaceblade.rsi
+    state: sb_box_unfolded
+  - type: Tag
+    tags:
+    - Trash
+  - type: SpaceGarbage
+
+- type: entity
+  id: MysterySpaceBladeBox
+  parent: BaseItem
+  name: mystery space blade box
+  description: A box containing a mystery space blade. The side depicts a few blacked-out rare space blades.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/spaceblade.rsi
+    state: sb_box
+    scale: 0.65, 0.65
+  - type: StaticPrice
+    price: 160
+  - type: SpawnItemsOnUse
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+    items:
+    - id: SpaceBladeBoxTrash
+    - id: SpaceBladeRedOrange
+      orGroup: SpaceBlade
+    - id: SpaceBladeBlue
+      orGroup: SpaceBlade
+    - id: SpaceBladeFrontier
+      orGroup: SpaceBlade
+    - id: SpaceBladeGoldBlue
+      orGroup: SpaceBlade
+    - id: SpaceBladeMail
+      orGroup: SpaceBlade
+    - id: SpaceBladeEyeball
+      orGroup: SpaceBlade
+    - id: SpaceBladeBlade
+      orGroup: SpaceBlade
+    - id: SpaceBladeCheck
+      orGroup: SpaceBlade
+      prob: 0.2
+    - id: SpaceBladeRune
+      orGroup: SpaceBlade
+      prob: 0.2
+    - id: SpaceBladeMoff
+      orGroup: SpaceBlade
+      prob: 0.2
+    - id: SpaceBladePizza
+      orGroup: SpaceBlade
+      prob: 0.2
+    - id: SpaceBladeWeh
+      orGroup: SpaceBlade
+      prob: 0.2
+    - id: SpaceBladeBros
+      orGroup: SpaceBlade
+      prob: 0.2
+    - id: SpaceBladeGay
+      orGroup: SpaceBlade
+      prob: 0.2
+    - id: SpaceBladeRatKing
+      orGroup: SpaceBlade
+      prob: 0.2
+    - id: SpaceBladeClown
+      orGroup: SpaceBlade
+      prob: 0.1
+    - id: SpaceBladeTesla
+      orGroup: SpaceBlade
+      prob: 0.1
+    - id: SpaceBladeSingularity
+      orGroup: SpaceBlade
+      prob: 0.1

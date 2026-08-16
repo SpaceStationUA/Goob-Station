@@ -2,6 +2,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle.Components;
+using Robust.Shared.Containers; // Pirate: modsuit hidden layer restore
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -11,6 +12,7 @@ public sealed class HideLayerClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!; // Pirate: modsuit hidden layer restore
 
     public override void Initialize()
     {
@@ -18,7 +20,42 @@ public sealed class HideLayerClothingSystem : EntitySystem
         SubscribeLocalEvent<HideLayerClothingComponent, ClothingGotEquippedEvent>(OnHideGotEquipped);
         SubscribeLocalEvent<HideLayerClothingComponent, ItemMaskToggledEvent>(OnHideToggled);
         SubscribeLocalEvent<HideLayerClothingComponent, ItemToggledEvent>(OnItemToggled); // Pirate: modular suits
+        #region Pirate: modsuit hidden layer restore
+        SubscribeLocalEvent<HideLayerClothingComponent, ComponentStartup>(OnHideStartup);
+        SubscribeLocalEvent<HideLayerClothingComponent, ComponentShutdown>(OnHideShutdown);
+        SubscribeLocalEvent<HideLayerClothingComponent, EntityTerminatingEvent>(OnHideTerminating);
+        #endregion Pirate: modsuit hidden layer restore
     }
+
+    #region Pirate: modsuit hidden layer restore
+    private void OnHideStartup(Entity<HideLayerClothingComponent> ent, ref ComponentStartup args)
+    {
+        RefreshWornLayers(ent, hideLayers: true);
+    }
+
+    private void OnHideShutdown(Entity<HideLayerClothingComponent> ent, ref ComponentShutdown args)
+    {
+        RefreshWornLayers(ent, hideLayers: false);
+    }
+
+    // Entity termination is the last time the wearer can be resolved.
+    private void OnHideTerminating(Entity<HideLayerClothingComponent> ent, ref EntityTerminatingEvent args)
+    {
+        RefreshWornLayers(ent, hideLayers: false);
+    }
+
+    private void RefreshWornLayers(Entity<HideLayerClothingComponent> ent, bool hideLayers)
+    {
+        if (!TryComp<ClothingComponent>(ent, out var clothing) || clothing.InSlotFlag == null)
+            return;
+
+        if (!_container.TryGetContainingContainer((ent.Owner, null, null), out var container)
+            || TerminatingOrDeleted(container.Owner))
+            return;
+
+        SetLayerVisibility((ent.Owner, ent.Comp, clothing), container.Owner, hideLayers);
+    }
+    #endregion Pirate: modsuit hidden layer restore
 
     private void OnHideToggled(Entity<HideLayerClothingComponent> ent, ref ItemMaskToggledEvent args)
     {

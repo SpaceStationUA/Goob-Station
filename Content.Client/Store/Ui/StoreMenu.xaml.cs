@@ -33,6 +33,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
+    public EntityUid Owner; // Pirate: reputation checks use the actual store entity.
 
     private List<ListingData> _cachedListings = new();
 
@@ -148,7 +149,7 @@ public sealed partial class StoreMenu : DefaultWindow
                 texture = spriteSys.Frame0(icon);
         }
 
-        var newListing = new StoreListingControl(listing, GetListingPriceString(listing), hasBalance, texture);
+        var newListing = new StoreListingControl(listing, GetListingPriceString(listing), hasBalance, Owner, texture);
 
         if (listing.DiscountValue > 0) // WD EDIT
             newListing.StoreItemBuyButton.AddStyleClass("ButtonColorRed");

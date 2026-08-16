@@ -5,8 +5,6 @@ using Content.Pirate.Shared.ModularSuit;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Whitelist;
-using Content.Shared.Wieldable;
-using Content.Shared.Wieldable.Components;
 
 namespace Content.Pirate.Server.ModularSuit;
 
@@ -17,7 +15,6 @@ public sealed partial class HolsterModuleHandler : ModuleActionHandler
     [Dependency] private SharedGunSystem _gun = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private SharedWieldableSystem _wieldable = default!;
 
     public override void Initialize()
     {
@@ -51,9 +48,6 @@ public sealed partial class HolsterModuleHandler : ModuleActionHandler
 
                 if (!_hands.TryPickup(user, item))
                     return;
-
-                if (TryComp<WieldableComponent>(item, out var wieldable))
-                    _wieldable.TryWield(item, wieldable, user);
 
                 if (TryComp<ChamberMagazineAmmoProviderComponent>(item, out var chamber)
                     && chamber.BoltClosed != null && !chamber.BoltClosed.Value)

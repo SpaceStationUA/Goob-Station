@@ -2,6 +2,7 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Localizations;
+using Content.Shared._Pirate.Silicons; // Pirate: reusable security borg holocuffs.
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
 
@@ -174,8 +175,18 @@ public abstract partial class SharedBorgSystem
             {
                 if (module.Comp.StoredItems.TryGetValue(handId, out var storedItem))
                 {
-                    item = storedItem;
-                    // DoPickup handles removing the item from the container.
+                    // Pirate: recover provider tools consumed outside the module, such as applied holocuffs.
+                    if (Exists(storedItem) && container.Contains(storedItem))
+                    {
+                        item = storedItem;
+                        // DoPickup handles removing the item from the container.
+                    }
+                    else
+                    {
+                        module.Comp.StoredItems.Remove(handId);
+                        if (hand.Item is { } replacementPrototype)
+                            item = PredictedSpawnAtPosition(replacementPrototype, xform.Coordinates);
+                    }
                 }
             }
             else if (hand.Item is { } itemProto)
@@ -188,6 +199,15 @@ public abstract partial class SharedBorgSystem
                 _hands.DoPickup(chassis, handId, pickUp, hands);
                 if (!hand.ForceRemovable && hand.Hand.Whitelist == null && hand.Hand.Blacklist == null)
                 {
+                    EnsureComp<UnremoveableComponent>(pickUp);
+                }
+
+                // Pirate: remember the generated hand so applied holocuffs can replenish and return safely.
+                if (TryComp<BorgHandcuffComponent>(pickUp, out var borgCuff))
+                {
+                    borgCuff.OwnerChassis = chassis.Owner;
+                    borgCuff.HandId = handId;
+                    Dirty(pickUp, borgCuff);
                     EnsureComp<UnremoveableComponent>(pickUp);
                 }
             }

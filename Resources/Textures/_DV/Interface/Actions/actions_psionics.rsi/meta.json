@@ -1,0 +1,65 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by @Vordenburg (github) for Nyanotrasen. Eruption sprited by TehFlaminTaco on Discord for DeltaV.",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "dispel"
+        },
+        {
+            "name": "invisibility_off"
+        },
+        {
+            "name": "invisibility"
+        },
+        {
+            "name": "mass_sleep"
+        },
+        {
+            "name": "metapsionic"
+        },
+        {
+            "name": "mind_swap"
+        },
+        {
+            "name": "mind_swap_return"
+        },
+        {
+            "name": "noospheric_zap"
+        },
+        {
+            "name": "pyrokinesis"
+        },
+        {
+            "name": "regeneration"
+        },
+        {
+            "name": "telegnosis"
+        },
+        {
+            "name": "eruption"
+        },
+        {
+            "name": "anoigo"
+        },
+        {
+            "name": "healing_word"
+        },
+        {
+            "name": "revivify"
+        },
+        {
+            "name": "darkswap"
+        },
+        {
+            "name": "assay"
+        },
+        {
+            "name": "shadeskip"
+        }
+    ]
+}

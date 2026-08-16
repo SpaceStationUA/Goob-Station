@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using Content.Shared.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Power.Components;
@@ -12,11 +13,16 @@ using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Projectiles;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
 
 namespace Content.Pirate.Server.EnergyDome;
 
@@ -58,6 +64,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
         //Dome events
         SubscribeLocalEvent<EnergyDomeComponent, DamageChangedEvent>(OnDomeDamaged);
+        SubscribeLocalEvent<EnergyDomeComponent, PreventCollideEvent>(OnDomePreventCollide);
     }
 
 
@@ -196,14 +203,68 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         }
     }
 
+    private void OnDomePreventCollide(Entity<EnergyDomeComponent> dome, ref PreventCollideEvent args)
+    {
+        if (args.Cancelled ||
+            !dome.Comp.AllowProjectilesFromInside ||
+            !TryComp<ProjectileComponent>(args.OtherEntity, out var projectile) ||
+            projectile.Shooter is not { } shooter ||
+            args.OurFixture.Shape is not PhysShapeCircle shape)
+            return;
+
+        if (IsProjectileFromInsideDome(dome.Owner, shooter, shape))
+            args.Cancelled = true;
+    }
+
+    private bool IsProjectileFromInsideDome(EntityUid dome, EntityUid shooter, PhysShapeCircle shape)
+    {
+        if (IsPositionInsideDome(dome, shooter, shape))
+            return true;
+
+        // Some automated weapons use the weapon entity as Shooter. Resolve its outer
+        // container so a weapon held by someone under the dome gets the same treatment.
+        if (!TryComp<TransformComponent>(shooter, out var shooterTransform) ||
+            !_container.TryGetOuterContainer(shooter, shooterTransform, out var container))
+            return false;
+
+        return IsPositionInsideDome(dome, container.Owner, shape);
+    }
+
+    private bool IsPositionInsideDome(EntityUid dome, EntityUid candidate, PhysShapeCircle shape)
+    {
+        if (!TryComp<TransformComponent>(dome, out var domeTransform) ||
+            !TryComp<TransformComponent>(candidate, out var candidateTransform) ||
+            candidateTransform.MapID != domeTransform.MapID)
+        {
+            return false;
+        }
+
+        var domeCenter = Vector2.Transform(shape.Position, _transform.GetWorldMatrix(domeTransform));
+        var candidatePosition = _transform.GetWorldPosition(candidateTransform);
+        var offset = candidatePosition - domeCenter;
+        return offset.LengthSquared() <= shape.Radius * shape.Radius;
+    }
+
     private void OnParentChanged(Entity<EnergyDomeGeneratorComponent> generator, ref EntParentChangedMessage args)
     {
-        //To do: taking the active barrier in hand for some reason does not manage to change the parent in this case,
-        //and the barrier is not turned off.
-        //
-        //Laying down works well (-_-)
-        if (GetProtectedEntity(generator) != generator.Comp.DomeParentEntity)
-            TurnOff(generator, false);
+        if (!generator.Comp.Enabled)
+            return;
+
+        var generatorUid = generator.Owner;
+
+        // Container transfers briefly expose an intermediate parent. Check after the move is complete
+        // so moving an active generator between a hand, pocket, and carried storage keeps it enabled.
+        Timer.Spawn(0, () =>
+        {
+            if (!TryComp<EnergyDomeGeneratorComponent>(generatorUid, out var component) ||
+                !component.Enabled ||
+                GetProtectedEntity(generatorUid) == component.DomeParentEntity)
+            {
+                return;
+            }
+
+            TurnOff((generatorUid, component), false);
+        });
     }
 
     private void OnComponentRemove(Entity<EnergyDomeGeneratorComponent> generator, ref ComponentRemove args)

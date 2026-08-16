@@ -1,17 +1,31 @@
 - type: entity
   parent: BaseAction
   id: ToggleModularSuitDeployAction
-  name: "[color=#58c4e8]Expand Suit[/color]"
-  description: "Opens the modular suit, placing all the installed parts on the body. When pressed again, it closes the suit back into a compact state."
+  name: "[color=#58c4e8]Deploy MODsuit[/color]"
+  description: "Opens the modular suit, placing all the installed parts on the body."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    useDelay: 1.5
+    useDelay: 0.5
+    icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: deploy }
+    iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: retract }
+    itemIconStyle: BigAction
+  - type: InstantAction
+    event: !type:ToggleDeploySuitActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ToggleModularSuitActivateAction
+  name: "[color=#58c4e8]Activate MODsuit[/color]"
+  description: "Seals and powers up the suit. Press once to arm the control, then again to confirm."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: activate }
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: activate-ready }
     itemIconStyle: BigAction
   - type: InstantAction
-    event: !type:ToggleDeploySuitActionEvent
+    event: !type:ToggleActivateSuitActionEvent
 
 - type: entity
   parent: BaseAction
@@ -20,7 +34,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    useDelay: 2
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: panel }
   - type: InstantAction
     event: !type:ToggleSuitUiActionEvent
@@ -33,7 +46,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    useDelay: 1
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: light-off }
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: light-on }
   - type: InstantAction
@@ -48,7 +60,7 @@
   components:
   - type: Action
     startDelay: true
-    useDelay: 20
+    useDelay: 15
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: teleporter }
   - type: InstantAction
     event: !type:ActivateTeleporterModuleEvent
@@ -61,12 +73,22 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    startDelay: true
-    useDelay: 10
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: holster-in }
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: holster-out }
   - type: InstantAction
     event: !type:ToggleHolsterModuleEvent
+
+- type: entity
+  parent: BaseAction
+  id: ToggleMagbootsModuleAction
+  name: "[color=#58c4e8]Toggle Magboots[/color]"
+  description: "Engages the suit boots' electromagnets, holding you to the floor at the cost of speed."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: magnet }
+  - type: InstantAction
+    event: !type:ToggleMagbootsModuleEvent
 
 - type: entity
   parent: BaseAction
@@ -77,7 +99,7 @@
   components:
   - type: Action
     startDelay: true
-    useDelay: 30
+    useDelay: 5
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: paper }
   - type: InstantAction
     event: !type:ActivateDispenserModuleEvent
@@ -96,7 +118,7 @@
   components:
   - type: Action
     startDelay: true
-    useDelay: 60
+    useDelay: 20
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: energyshield }
   - type: InstantAction
     event: !type:ActivateEnergyShieldModuleEvent
@@ -110,7 +132,7 @@
   components:
   - type: Action
     startDelay: true
-    useDelay: 120
+    useDelay: 10
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: dispenser }
   - type: InstantAction
     event: !type:ActivateDispenserModuleEvent
@@ -155,7 +177,7 @@
   components:
   - type: Action
     startDelay: true
-    useDelay: 30
+    useDelay: 5
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: tanning }
   - type: InstantAction
     event: !type:ActivateTanningModuleEvent
@@ -169,7 +191,7 @@
   components:
   - type: Action
     startDelay: true
-    useDelay: 300
+    useDelay: 30
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: atrocinator }
   - type: InstantAction
     event: !type:ActivateAtrocinatorModuleEvent

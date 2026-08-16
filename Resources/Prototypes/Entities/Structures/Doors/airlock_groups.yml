@@ -14,6 +14,7 @@
     hydroponics: _Pirate/Structures/Doors/Airlocks/Standard/hydroponics.rsi # Pirate Changes
     janitor:     _Pirate/Structures/Doors/Airlocks/Standard/janitor.rsi # Pirate Changes
     maintenance: _Pirate/Structures/Doors/Airlocks/Standard/maint.rsi # Pirate Changes
+    mantis:      _DEN/Structures/Doors/Airlocks/Standard/mantis.rsi # Pirate Changes
     medical:     _Pirate/Structures/Doors/Airlocks/Standard/medical.rsi # Pirate Changes
     salvage:     _Pirate/Structures/Doors/Airlocks/Standard/salvage.rsi # Pirate Changes
     science:     _Pirate/Structures/Doors/Airlocks/Standard/science.rsi # Pirate Changes
@@ -36,6 +37,7 @@
     hydroponics: _Pirate/Structures/Doors/Airlocks/Glass/hydroponics.rsi # Pirate Changes
     janitor:     _Pirate/Structures/Doors/Airlocks/Glass/janitor.rsi # Pirate Changes
     maintenance: _Pirate/Doors/Airlocks/Glass/maint.rsi # Pirate Changes
+    mantis:      _DEN/Structures/Doors/Airlocks/Glass/mantis.rsi # Pirate Changes
     medical:     _Pirate/Doors/Airlocks/Glass/medical.rsi # Pirate Changes
     salvage:     _Pirate/Doors/Airlocks/Glass/salvage.rsi # Pirate Changes
     security:    _Pirate/Doors/Airlocks/Glass/security.rsi # Pirate Changes
@@ -87,6 +89,7 @@
     janitor: Civilian # Goobstation - Sweet new jani door
     roboticist: Science # Goobstation
     maintenance: Civilian
+    mantis: Science # Pirate
     medical: Medical
     salvage: Cargo
     science: Science

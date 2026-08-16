@@ -1,14 +1,15 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Pirate.Shared.ModularSuit;
 
-[RegisterComponent, Access(typeof(SharedModularSuitSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), Access(typeof(SharedModularSuitSystem))]
 public sealed partial class ModularSuitCoreComponent : Component
 {
     [DataField]
     public float MaxCharge = 100f;
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
     public float Charge = 100f;
 
     [DataField]

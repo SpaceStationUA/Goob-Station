@@ -16,3 +16,10 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from /tg/station."
   source: "https://github.com/tgstation/tgstation/commit/24082a2b4f516d94cab74b39f27d63cdcb4efd22"
+
+- files:
+  - activate.ogg
+  - deactivate.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from /tg/station. activate.ogg is sound/machines/synth/synth_yes.ogg and deactivate.ogg is sound/machines/synth/synth_no.ogg, both pitched down one octave (asetrate=22050 against a 44100 Hz source) to give them the low sweep tg gets by playing them at a reduced rate. tg passes playsound frequency = 6000, but taken literally that is 0.136x and pushes nearly all the energy below 80 Hz, where it is inaudible on most speakers; one octave keeps the character while leaving the audible band intact."
+  source: "https://github.com/tgstation/tgstation/commit/21ce3d66d4ceff1e547f6e2c137231c599efcf2a"

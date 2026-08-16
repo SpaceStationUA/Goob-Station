@@ -1,0 +1,291 @@
+# SPDX-License-Identifier: MIT
+
+- type: entity
+  id: TableBilliard
+  parent: BaseStructure
+  name: billiard table
+  description: A standard billiard table with green cloth. The perfect place to relax after a shift.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/Billiards/billiard_table.rsi
+    state: table
+    scale: 2,2
+  - type: Physics
+    bodyType: Static
+  - type: Construction
+    graph: TableBilliard
+    node: tableBilliard
+  - type: Fixtures
+    fixtures:
+      border_north:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.68,1.24,0.68,1.44"
+        density: 100
+        mask: [ MachineMask, DoorPassable ]
+        layer: [ TableLayer ]
+        friction: 0.0001
+      border_south:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.68,-1.50,0.68,-1.32"
+        density: 100
+        mask: [ MachineMask, DoorPassable ]
+        layer: [ TableLayer ]
+        friction: 0.0001
+      border_west_top:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.00,0.12,-0.80,1.12"
+        density: 100
+        mask: [ MachineMask, DoorPassable ]
+        layer: [ TableLayer ]
+        friction: 0.0001
+      border_west_bottom:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.00,-1.18,-0.80,-0.18"
+        density: 100
+        mask: [ MachineMask, DoorPassable ]
+        layer: [ TableLayer ]
+        friction: 0.0001
+      border_east_top:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "0.80,0.12,1.00,1.12"
+        density: 100
+        mask: [ MachineMask, DoorPassable ]
+        layer: [ TableLayer ]
+        friction: 0.0001
+      border_east_bottom:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "0.80,-1.18,1.00,-0.18"
+        density: 100
+        mask: [ MachineMask, DoorPassable ]
+        layer: [ TableLayer ]
+        friction: 0.0001
+      pocket_nw:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.12
+          position: -0.88,1.32
+        hard: false
+        mask: [ DoorPassable ]
+      pocket_ne:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.12
+          position: 0.88,1.32
+        hard: false
+        mask: [ DoorPassable ]
+      pocket_sw:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.12
+          position: -0.88,-1.38
+        hard: false
+        mask: [ DoorPassable ]
+      pocket_se:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.12
+          position: 0.88,-1.38
+        hard: false
+        mask: [ DoorPassable ]
+      pocket_w:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.12
+          position: -0.932,-0.02
+        hard: false
+        mask: [ DoorPassable ]
+      pocket_e:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.12
+          position: 0.92,-0.02
+        hard: false
+        mask: [ DoorPassable ]
+  - type: Damageable
+    damageContainer: StructuralInorganic # Pirate: Injurable is unavailable in this branch.
+  - type: Storage
+    openOnActivate: false
+    grid:
+    - 0,0,4,3
+    maxItemSize: Small
+    whitelist:
+      components:
+      - BilliardBall
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.BilliardTableUiKey.Key:
+        type: BilliardTableBoundUserInterface
+  - type: BilliardTable
+  - type: ActivatableUI
+    key: enum.BilliardTableUiKey.Key
+    singleUser: true
+    verbText: billiard-table-verb
+  - type: Anchorable
+  - type: Rotatable
+
+- type: entity
+  id: BilliardBall
+  parent: BaseItem
+  name: billiard ball
+  description: A heavy, smooth ball used to play billiards.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/Billiards/billiard_ball.rsi
+    layers:
+    - state: ball
+      map: [ "enum.BilliardVisualLayers.Base" ]
+    - state: ball_second
+      map: [ "enum.BilliardVisualLayers.Stripe" ]
+      visible: false
+    scale: 0.16,0.16
+  - type: Appearance
+  - type: Item
+    size: Tiny
+  - type: TileFrictionModifier
+    modifier: 0.2
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 1.0
+    angularDamping: 1.5
+    sleepingAllowed: false
+  - type: Damageable
+  - type: BilliardBall
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.07
+        density: 5
+        restitution: 0.45
+        friction: 0.01
+        mask:
+        - DoorPassable
+        - Impassable
+        layer:
+        - DoorPassable
+
+- type: entity
+  id: BilliardCue
+  parent: BaseItem
+  name: billiard cue
+  description: A cue used to strike billiard balls.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Pirate/Objects/Fun/Billiards/billiard_cue.rsi
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/Billiards/billiard_cue.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -180
+    damage:
+      types:
+        Blunt: 5
+        Structural: 1
+  - type: BilliardCue
+  - type: MeleeThrowOnHit
+    speed: 7
+    distance: 0.8
+    cameraRecoilOnThrown: false
+    throwInAir: false
+
+- type: entity
+  id: BilliardTableFlatpack
+  parent: BaseFlatpack
+  name: billiard table flatpack
+  description: A flatpack used to construct a billiard table. Use a multitool to unpack it.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/billiard_flatpack.rsi
+    layers:
+    - state: billiard-table
+  - type: Flatpack
+    entity: TableBilliard
+  - type: StaticPrice
+    price: 600
+
+- type: constructionGraph
+  id: TableBilliard
+  start: start
+  graph:
+  - node: start
+  - node: tableBilliard
+    entity: TableBilliard
+    edges:
+    - to: start
+      conditions:
+      - !type:ContainerEmpty
+        container: storagebase
+        examineText: construction-condition-billiard-table-storage-not-empty
+        guideStep: construction-step-billiard-table-empty-storage
+      completed:
+      - !type:SpawnPrototype
+        prototype: BilliardTableFlatpack
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 3
+
+- type: entity
+  id: BoxBilliardBalls
+  parent: BoxCardboard
+  name: billiard ball box
+  description: A box for storing billiard balls.
+  components:
+  - type: Sprite
+    layers:
+    - state: box
+    - sprite: _Pirate/Objects/Storage/billiard_box.rsi
+      state: balls
+  - type: Storage
+    grid:
+    - 0,0,3,3
+    whitelist: # TODO cardboard boxes should not have whitelisting
+      components:
+      - BilliardBall
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: BilliardBall
+          amount: 16
+
+- type: entity
+  id: CrateBilliardComplect
+  parent: CrateGenericSteel
+  name: billiards set crate
+  description: "A billiard table flatpack, a box of balls, and two cues: everything needed for a good evening."
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: BoxBilliardBalls
+        - id: BilliardTableFlatpack
+        - id: BilliardCue
+          amount: 2
+
+- type: cargoProduct
+  id: CrateBilliardComplect
+  icon:
+    sprite: _Pirate/Objects/Fun/Billiards/billiard_table.rsi
+    state: table
+  product: CrateBilliardComplect
+  cost: 5000
+  category: cargoproduct-category-name-fun
+  group: market

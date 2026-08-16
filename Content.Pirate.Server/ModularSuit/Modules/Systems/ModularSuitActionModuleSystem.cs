@@ -100,8 +100,24 @@ public sealed partial class ModularSuitActionModuleSystem : EntitySystem
             if (ev.Actions.Count == 0)
                 return;
 
-            _actions.GrantActions(suitComp.Wearer.Value, ev.Actions, suit);
+            _actions.GrantActions(suitComp.Wearer.Value, FilterAlreadyGranted(suitComp.Wearer.Value, ev.Actions), suit);
         }
+    }
+
+    private List<EntityUid> FilterAlreadyGranted(EntityUid wearer, IEnumerable<EntityUid> actions)
+    {
+        var granted = new HashSet<EntityUid>();
+        foreach (var action in _actions.GetActions(wearer))
+            granted.Add(action.Owner);
+
+        var result = new List<EntityUid>();
+        foreach (var action in actions)
+        {
+            if (!granted.Contains(action))
+                result.Add(action);
+        }
+
+        return result;
     }
 
     private void OnGetItemActions(Entity<ModularSuitActionHolderComponent> ent, ref GetItemActionsEvent args)

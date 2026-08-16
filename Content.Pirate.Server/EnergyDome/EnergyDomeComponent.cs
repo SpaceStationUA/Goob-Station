@@ -12,4 +12,10 @@ public sealed partial class EnergyDomeComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? Generator;
+
+    /// <summary>
+    /// Projectiles fired by entities inside this dome pass through it without damaging it.
+    /// </summary>
+    [DataField]
+    public bool AllowProjectilesFromInside;
 }

@@ -1,0 +1,584 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+# SPDX-FileCopyrightText: 2026 Jakumba
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (Resources/Prototypes/_DEN/Entities/Objects/Weapons/Guns/Ammunition/Cells/casters.yml)
+# Adapted for this fork:
+# - TheDen's ProjectileBatteryAmmoProvider is replaced by the local BatteryAmmoProvider (fires projectile protos here).
+# - TheDen's PowerCellVisuals charge-level system doesn't exist here; the casters use the local
+#   BatteryVisuals + GenericVisualizer pattern instead (glow shown while charged, hidden when empty).
+#   The charge level is shown by the gun's MagazineVisuals mag-N states.
+# - PowerCell `levels` field doesn't exist here.
+# - BaseRivalCompanyContraband doesn't exist here, so the lethal casters parent BaseSyndicateContraband instead.
+
+# Base items
+- type: entity
+  parent: [BaseItem, BaseMantisContraband]
+  id: BaseMantisCaster
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o1 # The glow layer is hidden by GenericVisualizer when the charge is depleted
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: unshaded
+  - type: Item
+    size: Small
+  - type: Battery # Nonlethal casters have the same maxCharge, and the fireCost varies per gun
+    pricePerJoule: 0
+    maxCharge: 120 # One third of PowerCellSmall in case they accidentally plug into something
+    startingCharge: 120 # Not intended to be a particularly useful power source if so
+  - type: EmpImmune
+  - type: PowerCell
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: BatterySelfRecharger # No AutoRecharge bool in this fork - having the component recharges the cell
+    autoRechargeRate: 4 # Takes 30 seconds to charge itself back to full, comparable to WeaponAdvancedLaser (but with special ammo that doesn't hurt player characters) # If this needs balanced, consider adding autoRechargePause and autoRechargePauseTime instead of just lowering it
+  - type: BatteryAmmoProvider
+    proto: BulletMantisCapgun # Inherited by BaseMantisCasterCapgun
+    fireCost: 24 # Can fire 5 times, takes 6 seconds to recharge 1 shot (shotgun values used here as an example)
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerCellVisualLayers.Unshaded:
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisBeltStorable
+
+- type: entity
+  parent: BaseMantisCaster
+  id: BaseMantisCasterLethal # Variant base for the lethal versions
+  description: "A rock anomaly core harnessed as a self-replenishing ammo source. It forms diamond shards into lethal projectiles, each one perfectly faceted and catastrophically illegal. The caster is heavy and cold in the hand, as if it knows what it's for."
+  abstract: true
+  components:
+  - type: Battery
+    maxCharge: 600 # These have 5x the maxCharge so that they take 30 seconds to refill in a cell recharger, and good luck doing that under fire
+    startingCharge: 600 # The guns still fire as many times as usual, because lethal casters also have 5x the fireCost
+  - type: BatterySelfRecharger
+    autoRechargeRate: 10 # Takes 60 seconds to charge itself back to full, so it's useless for prolonged standoffs (use other weapons for those!) # If this needs balanced, consider adding autoRechargePause and autoRechargePauseTime instead of just lowering it
+
+- type: entity
+  parent: BaseMantisCaster
+  id: BaseMantisCasterCapgun # Variant base without glowing bullets and a 3x longer recharge rate
+  description: "An exotic anomaly core harnessed as a self-replenishing ammo source. It generates harmless percussion caps suitable for drills and training. Despite the playful construction, the device still radiates the faint, uncanny energy of all anomaly tech."
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o2
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: shaded
+  - type: BatterySelfRecharger
+    autoRechargeRate: 1 # Takes 2 minutes to charge itself back to full, so people aren't too annoying with the capguns
+
+
+- type: entity
+  parent: BaseMantisCaster
+  id: BaseMantisCasterPistol
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o7
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: unshaded
+  - type: BatteryAmmoProvider
+    proto: BulletMantisCapgun
+    fireCost: 10 # Can fire 12 times, takes 2.5 seconds to recharge 1 shot
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterPistol
+      - MantisBeltStorable
+
+- type: entity
+  parent: BaseMantisCaster
+  id: BaseMantisCasterRevolver
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o6
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: unshaded
+  - type: BatteryAmmoProvider
+    proto: BulletMantisCapgun
+    fireCost: 20 # Can fire 6 times, takes 5 seconds to recharge 1 shot
+  - type: Item
+    storedRotation: 90
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterRevolver
+      - MantisBeltStorable
+
+- type: entity
+  parent: BaseMantisCaster
+  id: BaseMantisCasterShotgun
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o5
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: unshaded
+  - type: BatteryAmmoProvider
+    proto: BulletMantisCapgun
+    fireCost: 24 # Can fire 5 times, takes 6 seconds to recharge 1 shot
+  - type: Item
+    storedRotation: 90
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterShotgun
+      - MantisBeltStorable
+
+- type: entity
+  parent: BaseMantisCaster
+  id: BaseMantisCasterSubMachineGun
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o8
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: unshaded
+  - type: BatteryAmmoProvider
+    proto: BulletMantisCapgun
+    fireCost: 5 # Can fire 24 times, takes 1.25 seconds to recharge 1 shot
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterSubMachineGun
+      - MantisBeltStorable
+
+# Cryptobiolin casters
+- type: entity
+  parent: BaseMantisCasterPistol
+  id: MantisCasterPistolCrypto
+  name: pistol caster (silencing)
+  description: "A liquid anomaly core harnessed as a self-replenishing ammo source. Each bullet carries a measured droplet of cryptobiolin that dampens noospheric connection on contact, suppressing psionics for nearly two minutes per hit. A full magazine carries enough to last twenty minutes. Built to neutralize violent psions without causing harm."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-cryptobiolin.rsi
+  - type: BatteryAmmoProvider
+    proto: BulletMantisCrypto
+  - type: Construction
+    graph: MantisCasterPistolFuse
+    node: crypto
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+
+- type: entity
+  parent: BaseMantisCasterRevolver
+  id: MantisCasterRevolverCrypto
+  name: revolver caster (silencing)
+  description: "A liquid anomaly core harnessed as a self-replenishing ammo source. Each bullet carries a measured droplet of cryptobiolin that dampens noospheric connection on contact, suppressing psionics for over three minutes per hit. A full cylinder carries enough to last twenty minutes. Built to neutralize violent psions without causing harm."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-cryptobiolin.rsi
+  - type: BatteryAmmoProvider
+    proto: BulletMantisCryptoRevolver
+  - type: Construction
+    graph: MantisCasterRevolverFuse
+    node: crypto
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+
+- type: entity
+  parent: BaseMantisCasterShotgun
+  id: MantisCasterShotgunCrypto
+  name: shotgun caster (silencing)
+  description: "A liquid anomaly core harnessed as a self-replenishing ammo source. Each blast disperses measured droplets of cryptobiolin that dampen noospheric connection on contact, suppressing psionics for forty seconds per pellet or four minutes per shot. A full cylinder carries enough to last twenty minutes. Built to neutralize violent psions without causing harm."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-cryptobiolin.rsi
+  - type: BatteryAmmoProvider
+    proto: BulletMantisCryptoSpread
+  - type: Construction
+    graph: MantisCasterShotgunFuse
+    node: crypto
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+
+- type: entity
+  parent: BaseMantisCasterSubMachineGun
+  id: MantisCasterSubMachineGunCrypto
+  name: submachine gun caster (silencing)
+  description: "A liquid anomaly core harnessed as a self-replenishing ammo source. Each bullet carries a measured droplet of cryptobiolin that dampens noospheric connection on contact, suppressing psionics for over thirty seconds per hit. A full magazine carries enough to last twenty minutes. Built to neutralize violent psions without causing harm."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-cryptobiolin.rsi
+  - type: BatteryAmmoProvider
+    proto: BulletMantisCryptoSubMachineGun
+  - type: Construction
+    graph: MantisCasterSubMachineGunFuse
+    node: crypto
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+
+# Holy casters
+- type: entity
+  parent: BaseMantisCasterPistol
+  id: MantisCasterPistolHoly
+  name: pistol caster (banishing)
+  description: "A floral anomaly core harnessed as a self-replenishing ammo source. The bullets it manifests tear through supernatural threats without harming anything mundane. Called \"holy\" by laypeople--thanks to the chaplain--but \"metaphysical\" would be a more accurate description."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-holy.rsi
+  - type: BatteryAmmoProvider
+    proto: BulletMantisHoly
+  - type: Construction
+    graph: MantisCasterPistolFuse
+    node: holy
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+
+- type: entity
+  parent: BaseMantisCasterRevolver
+  id: MantisCasterRevolverHoly
+  name: revolver caster (banishing)
+  description: "A floral anomaly core harnessed as a self-replenishing ammo source. The bullets it manifests tear through supernatural threats without harming anything mundane. Called \"holy\" by laypeople--thanks to the chaplain--but \"metaphysical\" would be a more accurate description."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-holy.rsi
+  - type: BatteryAmmoProvider
+    proto: BulletMantisHolyRevolver
+  - type: Construction
+    graph: MantisCasterRevolverFuse
+    node: holy
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+
+- type: entity
+  parent: BaseMantisCasterShotgun
+  id: MantisCasterShotgunHoly
+  name: shotgun caster (banishing)
+  description: "A floral anomaly core harnessed as a self-replenishing ammo source. The pellets it manifests tear through supernatural threats without harming anything mundane. Called \"holy\" by laypeople--thanks to the chaplain--but \"metaphysical\" would be a more accurate description."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-holy.rsi
+  - type: BatteryAmmoProvider
+    proto: BulletMantisHolySpread
+  - type: Construction
+    graph: MantisCasterShotgunFuse
+    node: holy
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+
+- type: entity
+  parent: BaseMantisCasterSubMachineGun
+  id: MantisCasterSubMachineGunHoly
+  name: submachine gun caster (banishing)
+  description: "A floral anomaly core harnessed as a self-replenishing ammo source. The bullets it manifests tear through supernatural threats without harming anything mundane. Called \"holy\" by laypeople--thanks to the chaplain--but \"metaphysical\" would be a more accurate description."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-holy.rsi
+  - type: BatteryAmmoProvider
+    proto: BulletMantisHolySubMachineGun
+  - type: Construction
+    graph: MantisCasterSubMachineGunFuse
+    node: holy
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+
+# Lethal casters (traitor items)
+- type: entity
+  parent: [BaseMantisContraband, BaseMantisCasterLethal] # Pirate - lethal casters are mantis contraband now, craftable via PsionicCountermeasures
+  id: MantisCasterPistolLethal
+  name: pistol caster (piercing)
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-lethal.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o7
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: unshaded
+  - type: BatteryAmmoProvider
+    proto: BulletMantisLethal
+    fireCost: 50 # Can fire 12 times, takes 5 seconds to recharge 1 shot
+  - type: Construction
+    graph: MantisCasterPistolFuse
+    node: lethal
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterPistol
+      - MantisBeltStorable
+
+- type: entity
+  parent: [BaseMantisContraband, BaseMantisCasterLethal]
+  id: MantisCasterRevolverLethal
+  name: revolver caster (piercing)
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-lethal.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o6
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: unshaded
+  - type: BatteryAmmoProvider
+    proto: BulletMantisLethalRevolver
+    fireCost: 100 # Can fire 6 times, takes 10 seconds to recharge 1 shot
+  - type: Construction
+    graph: MantisCasterRevolverFuse
+    node: lethal
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+  - type: Item
+    storedRotation: 90
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterRevolver
+      - MantisBeltStorable
+
+- type: entity
+  parent: [BaseMantisContraband, BaseMantisCasterLethal]
+  id: MantisCasterShotgunLethal
+  name: shotgun caster (piercing)
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-lethal.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o5
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: unshaded
+  - type: BatteryAmmoProvider
+    proto: BulletMantisLethalSpread
+    fireCost: 120 # Can fire 5 times, takes 12 seconds to recharge 1 shot
+  - type: Construction
+    graph: MantisCasterShotgunFuse
+    node: lethal
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+  - type: Item
+    storedRotation: 90
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterShotgun
+      - MantisBeltStorable
+
+- type: entity
+  parent: [BaseMantisContraband, BaseMantisCasterLethal]
+  id: MantisCasterSubMachineGunLethal
+  name: submachine gun caster (piercing)
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-lethal.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o8
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: unshaded
+  - type: BatteryAmmoProvider
+    proto: BulletMantisLethalSubMachineGun
+    fireCost: 25 # Can fire 24 times, takes 2.5 seconds to recharge 1 shot
+  - type: Construction
+    graph: MantisCasterSubMachineGunFuse
+    node: lethal
+    deconstructionTarget: null # Pirate: one-way fuse graph has no "start" node, so deconstruction is disabled.
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterSubMachineGun
+      - MantisBeltStorable
+
+# Capgun casters
+- type: entity
+  parent: BaseMantisCasterCapgun
+  id: MantisCasterPistolCapgun
+  name: pistol caster (training)
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-capgun.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o7
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: shaded
+  - type: BatteryAmmoProvider
+    fireCost: 10 # Can fire 12 times, takes 10 seconds to recharge 1 shot
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterPistol
+      - MantisBeltStorable
+
+- type: entity
+  parent: BaseMantisCasterCapgun
+  id: MantisCasterRevolverCapgun
+  name: revolver caster (training)
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-capgun.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o6
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: shaded
+  - type: BatteryAmmoProvider
+    fireCost: 20 # Can fire 6 times, takes 20 seconds to recharge 1 shot
+  - type: Item
+    storedRotation: 90
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterRevolver
+      - MantisBeltStorable
+
+- type: entity
+  parent: BaseMantisCasterCapgun
+  id: MantisCasterShotgunCapgun
+  name: shotgun caster (training)
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-capgun.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o5
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: shaded
+  - type: BatteryAmmoProvider
+    proto: BulletMantisCapgunSpread
+    fireCost: 24 # Can fire 5 times, takes 24 seconds to recharge 1 shot
+  - type: Item
+    storedRotation: 90
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterShotgun
+      - MantisBeltStorable
+
+- type: entity
+  parent: BaseMantisCasterCapgun
+  id: MantisCasterSubMachineGunCapgun
+  name: submachine gun caster (training)
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-capgun.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o8
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: shaded
+  - type: BatteryAmmoProvider
+    fireCost: 5 # Can fire 24 times, takes 5 seconds to recharge 1 shot
+  - type: Tag
+    tags:
+      - MantisCaster
+      - MantisCasterSubMachineGun
+      - MantisBeltStorable
+
+# Psionic caster frames - the "unloaded" base forms (Pirate)
+# Printed on the Protolathe (PsionicCountermeasures tech), then fused with a whitelisted anomaly core
+# via construction (crafting menu) to produce the finished casters.
+- type: entity
+  parent: BaseMantisCasterPistol
+  id: MantisCasterPistolFrame
+  name: pistol caster frame
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-frame.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o7
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: shaded
+  - type: Tag
+    tags:
+    - MantisCaster
+    - MantisCasterPistol
+    - MantisCasterFrame
+    - MantisCasterFramePistol
+    - MantisBeltStorable
+
+- type: entity
+  parent: BaseMantisCasterRevolver
+  id: MantisCasterRevolverFrame
+  name: revolver caster frame
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-frame.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o6
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: shaded
+  - type: Tag
+    tags:
+    - MantisCaster
+    - MantisCasterRevolver
+    - MantisCasterFrame
+    - MantisCasterFrameRevolver
+    - MantisBeltStorable
+
+- type: entity
+  parent: BaseMantisCasterShotgun
+  id: MantisCasterShotgunFrame
+  name: shotgun caster frame
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-frame.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o5
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: shaded
+  - type: Tag
+    tags:
+    - MantisCaster
+    - MantisCasterShotgun
+    - MantisCasterFrame
+    - MantisCasterFrameShotgun
+    - MantisBeltStorable
+
+- type: entity
+  parent: [BaseItem, BaseMantisContraband] # Just an item - not an ammo cell like the finished casters
+  id: MantisCasterSubMachineGunFrame
+  name: submachine gun caster frame
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-frame.rsi
+    layers:
+    - state: base
+      map: [ "enum.PowerCellVisualLayers.Base" ]
+    - state: o8
+      map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      shader: shaded
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - MantisCaster
+    - MantisCasterSubMachineGun
+    - MantisCasterFrame
+    - MantisCasterFrameSubMachineGun
+    - MantisBeltStorable

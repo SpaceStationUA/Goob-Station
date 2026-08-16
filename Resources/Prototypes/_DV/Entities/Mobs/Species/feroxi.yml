@@ -115,6 +115,13 @@
     hydratedMetabolizer: Feroxi
     dehydratedMetabolizer: FeroxiDehydrated
     dehydrationThreshold: 150
+  # Pirate: port shark vision
+  - type: SharkVision
+    pulseTime: 5
+    activateSound: null
+    deactivateSound: null
+  # Pirate: port shark vision end
+  - type: WaterAdapted # Pirate: feroxi water adaptation
   - type: LanguageKnowledge # The Den, give Feroxi their own language.
     speaks:
     - TauCetiBasic

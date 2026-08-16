@@ -2,3 +2,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Modified gulp.png icon by CyberLanos"
   source: "https://github.com/CyberLanos"
+
+- files: ["gnash.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Extracted from https://github.com/tgstation/tgstation/blob/master/icons/effects/effects.dmi , then modified by Blackdutchie, taken from Delta-V"
+  source: "https://github.com/DeltaV-Station/Delta-v"

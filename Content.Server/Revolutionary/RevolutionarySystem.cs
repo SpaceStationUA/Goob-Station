@@ -2,6 +2,8 @@
 
 using Content.Server._EinsteinEngines.Language; // Goob Station - Revolutionary Language
 using Content.Server.Polymorph.Systems;
+using Content.Pirate.Shared.Revolutionary;
+using Content.Pirate.Shared.Revolutionary.Components;
 using Content.Shared.Mood;
 using Content.Shared.Polymorph;
 using Content.Shared.Revolutionary;
@@ -13,6 +15,7 @@ public sealed class RevolutionarySystem : SharedRevolutionarySystem  // Goob Sta
 {
     [Dependency] private readonly LanguageSystem _languageSystem = default!;
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
+    [Dependency] private readonly SharedRevolutionaryLieutenantSystem _lieutenantSystem = default!; // Pirate
 
     public override void Initialize()
     {
@@ -34,6 +37,7 @@ public sealed class RevolutionarySystem : SharedRevolutionarySystem  // Goob Sta
     public override void OnRevolutionaryComponentStartup<T>(EntityUid someUid, T someComp, ComponentStartup ev)
     {
         base.OnRevolutionaryComponentStartup(someUid, someComp, ev);
+        _lieutenantSystem.DirtyLieutenantComponents(); // Pirate - refresh lieutenant visibility via the existing lifecycle owner.
 
         switch (someComp)
         {
@@ -59,6 +63,8 @@ public sealed class RevolutionarySystem : SharedRevolutionarySystem  // Goob Sta
             case RevolutionaryComponent revComp:
                 RaiseLocalEvent(uid, new MoodRemoveEffectEvent("RevolutionFocused")); // Pirate - port EE mood system
                 _languageSystem.RemoveLanguage(uid, revComp.Language);
+                if (!TerminatingOrDeleted(uid))
+                    RemComp<RevolutionaryLieutenantComponent>(uid); // Pirate - revoke lieutenant status on deconversion.
                 break;
         }
     }
