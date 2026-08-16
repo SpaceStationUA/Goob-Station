@@ -327,7 +327,7 @@
   id: FloorWood
   parent: BaseStationTile
   name: tiles-wood
-  sprite: /Textures/Tiles/wood.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -1732,7 +1732,7 @@
   id: FloorWoodTile
   parent: BaseStationTile
   name: tiles-wood2
-  sprite: /Textures/Tiles/wood_tile.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_tile.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -1750,7 +1750,7 @@
   id: FloorBrokenWood
   parent: BaseStationTile
   name: tiles-wood3
-  sprite: /Textures/Tiles/wood_broken.png
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood.png # Pirate - resprite
   variants: 7
   placementVariants:
   - 1.0
@@ -1958,7 +1958,7 @@
   id: FloorWoodLarge
   parent: BaseStationTile
   name: tiles-wood-large
-  sprite: /Textures/Tiles/wood_large.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_large.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0

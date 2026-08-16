@@ -1,9 +1,8 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
-
+#region Зламані
 - type: tile
-  id: FloorWoodParquet
-  name: tiles-wood-parquet
-  sprite: /Textures/_Pirate/Tiles/wood/wood_parquet.png # Pirate - resprite
+  id: FloorWoodLargeBroken
+  name: tiles-wood-large-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_large.png
   variants: 4
   placementVariants:
   - 1.0
@@ -17,15 +16,16 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodParquet
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodChess
-  name: tiles-wood-chess
-  sprite: /Textures/_Pirate/Tiles/wood/wood_chess.png # Pirate - resprite
-  variants: 4
+  id: FloorWoodChessBroken
+  name: tiles-wood-chess-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_chess.png
+  variants: 5
   placementVariants:
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -37,15 +37,18 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodChess
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodBlack
-  name: tiles-wood-black
-  sprite: /Textures/_Pirate/Tiles/wood/wood_black.png # Pirate - resprite
-  variants: 4
+  id: FloorWoodParquetBroken
+  name: tiles-wood-parquet-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_parquet.png
+  variants: 7
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -57,15 +60,18 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodBlack
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodLargeBlack
-  name: tiles-wood-large-black
-  sprite: /Textures/_Pirate/Tiles/wood/wood_large_black.png # Pirate - resprite
-  variants: 4
+  id: FloorLightWoodBroken
+  name: tiles-wood-light-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_light.png
+  variants: 7
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -77,13 +83,13 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodLargeBlack
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodParquetBlack
-  name: tiles-wood-parquet-black
-  sprite: /Textures/_Pirate/Tiles/wood/wood_parquet_black.png # Pirate - resprite
+  id: FloorLightWoodLargeBroken
+  name: tiles-wood-light-large-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_large_light.png
   variants: 4
   placementVariants:
   - 1.0
@@ -97,15 +103,16 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodParquetBlack
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodChessBlack
-  name: tiles-wood-chess-black
-  sprite: /Textures/_Pirate/Tiles/wood/wood_chess_black.png # Pirate - resprite
-  variants: 4
+  id: FloorLightWoodChessBroken
+  name: tiles-wood-light-chess-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_chess_light.png
+  variants: 5
   placementVariants:
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -117,15 +124,18 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodChessBlack
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodDark
-  name: tiles-wood-dark
-  sprite: /Textures/_Pirate/Tiles/wood/wood_dark.png # Pirate - resprite
-  variants: 4
+  id: FloorLightWoodParquetBroken
+  name: tiles-wood-light-parquet-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_parquet_light.png
+  variants: 7
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -137,15 +147,18 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodDark
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodLargeDark
-  name: tiles-wood-large-dark
-  sprite: /Textures/_Pirate/Tiles/wood/wood_large_dark.png # Pirate - resprite
-  variants: 4
+  id: FloorRedWoodBroken
+  name: tiles-wood-red-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_red.png
+  variants: 7
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -157,13 +170,13 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodLargeDark
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodParquetDark
-  name: tiles-wood-parquet-dark
-  sprite: /Textures/_Pirate/Tiles/wood/wood_parquet_dark.png # Pirate - resprite
+  id: FloorRedWoodLargeBroken
+  name: tiles-wood-red-large-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_large_red.png
   variants: 4
   placementVariants:
   - 1.0
@@ -177,15 +190,16 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodParquetDark
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodChessDark
-  name: tiles-wood-chess-dark
-  sprite: /Textures/_Pirate/Tiles/wood/wood_chess_dark.png # Pirate - resprite
-  variants: 4
+  id: FloorRedWoodChessBroken
+  name: tiles-wood-red-chess-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_chess_red.png
+  variants: 5
   placementVariants:
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -197,15 +211,18 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodChessDark
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodLight
-  name: tiles-wood-light
-  sprite: /Textures/_Pirate/Tiles/wood/wood_light.png # Pirate - resprite
-  variants: 4
+  id: FloorRedWoodParquetBroken
+  name: tiles-wood-red-parquet-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_parquet_red.png
+  variants: 7
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -217,15 +234,18 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodLight
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodLargeLight
-  name: tiles-wood-large-light
-  sprite: /Textures/_Pirate/Tiles/wood/wood_large_light.png # Pirate - resprite
-  variants: 4
+  id: FloorDarkWoodBroken
+  name: tiles-wood-dark-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_dark.png
+  variants: 7
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -237,13 +257,13 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodLargeLight
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodParquetLight
-  name: tiles-wood-parquet-light
-  sprite: /Textures/_Pirate/Tiles/wood/wood_parquet_light.png # Pirate - resprite
+  id: FloorDarkWoodLargeBroken
+  name: tiles-wood-dark-large-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_large_dark.png
   variants: 4
   placementVariants:
   - 1.0
@@ -257,15 +277,16 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodParquetLight
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodChessLight
-  name: tiles-wood-chess-light
-  sprite: /Textures/_Pirate/Tiles/wood/wood_chess_light.png # Pirate - resprite
-  variants: 4
+  id: FloorDarkWoodChessBroken
+  name: tiles-wood-dark-chess-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_chess_dark.png
+  variants: 5
   placementVariants:
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -277,15 +298,18 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodChessLight
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodRed
-  name: tiles-wood-red
-  sprite: /Textures/_Pirate/Tiles/wood/wood_red.png # Pirate - resprite
-  variants: 4
+  id: FloorDarkWoodParquetBroken
+  name: tiles-wood-dark-parquet-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_parquet_dark.png
+  variants: 7
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -297,15 +321,18 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodRed
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodLargeRed
-  name: tiles-wood-large-red
-  sprite: /Textures/_Pirate/Tiles/wood/wood_large_red.png # Pirate - resprite
-  variants: 4
+  id: FloorBlackWoodBroken
+  name: tiles-wood-black-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_black.png
+  variants: 7
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -317,13 +344,13 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodLargeRed
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodParquetRed
-  name: tiles-wood-parquet-red
-  sprite: /Textures/_Pirate/Tiles/wood/wood_parquet_red.png # Pirate - resprite
+  id: FloorBlackWoodLargeBroken
+  name: tiles-wood-black-large-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_large_black.png
   variants: 4
   placementVariants:
   - 1.0
@@ -337,15 +364,16 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodParquetRed
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
 - type: tile
-  id: FloorWoodChessRed
-  name: tiles-wood-chess-red
-  sprite: /Textures/_Pirate/Tiles/wood/wood_chess_red.png # Pirate - resprite
-  variants: 4
+  id: FloorBlackWoodChessBroken
+  name: tiles-wood-black-chess-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_chess_black.png
+  variants: 5
   placementVariants:
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -357,5 +385,28 @@
     collection: FootstepWood
   barestepSounds:
     collection: BarestepWood
-  itemDrop: FloorTileItemWoodChessRed
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorBlackWoodParquetBroken
+  name: tiles-wood-black-parquet-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_parquet_black.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
