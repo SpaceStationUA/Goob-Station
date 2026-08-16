@@ -44,7 +44,7 @@ public sealed class EnchantRelaySystem : EntitySystem
     {
         foreach (var enchant in ent.Comp.Enchants)
         {
-            RaiseLocalEvent(enchant, args);
+            RaiseLocalEvent(enchant, ref args); // Pirate: preserve mutations made by by-ref enchant events.
         }
     }
 

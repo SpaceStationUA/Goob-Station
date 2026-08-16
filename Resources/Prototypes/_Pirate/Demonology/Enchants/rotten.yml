@@ -17,4 +17,4 @@
       molsPerSecondPerUnitMass: 0
     - type: RotInto
       entity: MobLivingCurse
-      stage: 1
+      stage: 0 # Pirate: wiki promises transformation after the initial 300-second rot timer.
