@@ -34,6 +34,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<StoreMenu>();
+        _menu.Owner = Owner; // Pirate: reputation checks use the actual store entity.
         if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))
             _menu.Title = Loc.GetString(store.Name);
 

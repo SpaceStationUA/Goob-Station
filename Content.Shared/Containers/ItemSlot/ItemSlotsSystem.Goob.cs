@@ -69,7 +69,9 @@ public sealed partial class ItemSlotsSystem
 
         foreach (var slot in slots)
         {
-            TryInsertOrDoAfter(uid, (user, hands), toInsert, slot, doAfter);
+            // Pirate: Report a successful insertion so callers do not roll it back.
+            if (TryInsertOrDoAfter(uid, (user, hands), toInsert, slot, doAfter))
+                return true;
         }
 
         return false;

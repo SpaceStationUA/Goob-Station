@@ -9,6 +9,7 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Roles;
 using Content.Server.Traitor.Uplink;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared._Pirate.Reputation; // Pirate
 using Content.Shared.Mind;
 using Content.Shared.Mood;
 using Content.Shared.NPC.Systems;
@@ -44,6 +45,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ReputationSystem _reputation = default!; // Pirate
     [Dependency] private readonly SharedRoleCodewordSystem _roleCodewordSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
@@ -104,8 +106,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
             var uplinkPreference = _goobUplink.GetUplinkPreference(mindId);
 
-            if (!_uplink.TryAddUplink(traitor, startingBalance, uplinkPreference, out _, out var setupEvent))
+            if (!_uplink.TryAddUplink(traitor, startingBalance, uplinkPreference, out var uplinkTarget, out var setupEvent))
                 return false;
+
+            _reputation.AddContracts(traitor, uplinkTarget); // Pirate: contract state lives on the traitor mind.
 
             if (setupEvent != null)
             {
@@ -211,6 +215,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink add");
         var uplinked = _uplink.AddUplink(traitor, startingBalance, pda, true);
 
+        _reputation.AddContracts(traitor, pda); // Pirate
         if (pda is not null && uplinked)
         {
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink is PDA");

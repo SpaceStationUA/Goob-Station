@@ -82,7 +82,7 @@
     angle: 180
 
 - type: entity
-  parent: [TailorsKnife, BaseAntiPsionicWeapon]
+  parent: [TailorsKnife, BaseAntiPsionicWeapon, BaseMantisContraband]
   id: MantisTailorsKnife
   name: ravel
   description: "A mnemolith tailor's knife, presumably stolen from whoever designed these new uniforms. You rat. The hole in the handle is just big enough to spin it around your finger, though this serves no purpose."

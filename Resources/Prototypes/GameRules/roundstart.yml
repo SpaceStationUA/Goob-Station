@@ -146,6 +146,7 @@
     - NamesOperationSuffix
     nameFormat: name-format-nuclear-operation
   - type: NukeopsRule
+  - type: TeleportDiskRule # Pirate: syndicate fulton disk interaction
   - type: RuleGrids
   - type: AntagSelection
     agentName: nukeops-roundend-name # Goobstation
@@ -258,10 +259,10 @@
   parent: BaseTraitorRuleNoObjectives
   id: BaseTraitorRule
   components:
-  - type: AntagRandomObjectives
-    sets:
-    - groups: TraitorObjectiveGroups
-    maxDifficulty: 5
+  #- type: AntagRandomObjectives # Pirate: replaced by contracts system
+  #  sets:
+  #  - groups: TraitorObjectiveGroups
+  #  maxDifficulty: 5
   - type: AntagSelection
     agentName: traitor-round-end-agent-name
   - type: DynamicRuleCost
@@ -296,6 +297,8 @@
     delay: # NotGoobstation - I know what you're thinking. I think having 4 minutes of non-chaos is fine?
       min: 240
       max: 420
+  - type: TraitorRule # Pirate: contracts supplement the uplink, but local uplink prices need a useful starting budget
+    startingBalance: 50
   - type: AntagSelection
     selectionTime: IntraPlayerSpawn
     definitions:

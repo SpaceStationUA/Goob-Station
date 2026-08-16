@@ -13,7 +13,7 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
         type: Add
-        time: 5
+        time: 2 # Pirate
       - !type:ModifyStatusEffect
         effectProto: StatusEffectTelepathicRepeater
         type: Add

@@ -1,0 +1,223 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  parent: [ BaseStructure, BaseMagicalContraband ]
+  id: BaseSummoningRune
+  components:
+  - type: Sprite
+    state: icon
+    snapCardinals: true
+  - type: Clickable
+  - type: IgnoresFingerprints
+  - type: Damageable
+  # Pirate: Injurable is unavailable in this branch; Damageable handles rune damage.
+    damageContainer: Inorganic
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  abstract: true
+  parent: [ BaseStructure, DrinkBase, BaseMagicalContraband ]
+  id: BaseCarvedRune
+  components:
+  - type: Sprite
+    state: carved
+    snapCardinals: true
+  - type: Construction
+    node: carved
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/_Goobstation/Heretic/runebreak.ogg
+  - type: InteractionOutline
+  - type: Physics
+    canCollide: false
+
+# Enchanting
+
+- type: entity
+  parent: BaseCarvedRune
+  id: EnchantingRuneCarved
+  name: unfinished rune
+  description: An unfinished rune, needs blood.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Structures/Runes/enchanting.rsi
+  - type: Construction
+    graph: EnchantingRune
+
+- type: entity
+  parent: BaseSummoningRune
+  id: EnchantingRune
+  name: enchantment rune
+  description: A rune used for enchanting items.
+  components:
+  - type: PlaceableSurface
+  - type: EnchantingTable
+  - type: Sprite
+    sprite: _Pirate/Demonology/Structures/Runes/enchanting.rsi
+    state: icon
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 30
+      behaviors: &rune_break
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/_Goobstation/Heretic/runebreak.ogg
+  - type: Construction
+    graph: EnchantingRune
+    node: finish
+
+## Demons
+
+- type: entity
+  abstract: true
+  parent: BaseSummoningRune
+  id: BaseDemonRune
+  components:
+  - type: RandomDemonSpawner
+  - type: Construction
+    node: finish
+  - type: GhostRole
+    name: ghost-role-information-demon-name
+    description: ghost-role-information-demon-desc
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: short
+  - type: TimedDespawn
+    lifetime: 60
+  - type: SpawnOnDespawn
+    prototype: DemonSoulFragment # gets changed by RandomDemonSpawner mapinit
+
+# Minor
+
+- type: entity
+  parent: BaseDemonRune
+  id: MinorDemonRune
+  name: minor summoning circle
+  description: A rune used to summon minor demons.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Structures/Runes/minor.rsi
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 30
+      behaviors: *rune_break
+  - type: Construction
+    graph: MinorSummoning
+  - type: RandomDemonSpawner
+    hostileChance: 0.25 # minor demons are more friendly
+    demons:
+    - MinorDemonGuy
+    - MinorDemonIncel
+    - MinorDemonUrist
+    - MinorDemonIan
+    - MinorDemonVox
+    - MinorDemonVulp
+    - MinorDemonCentifiend
+    - MinorDemonFlesh
+
+- type: entity
+  parent: BaseCarvedRune
+  id: MinorRuneCarved
+  name: unfinished rune
+  description: An unfinished rune, needs blood.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Structures/Runes/minor.rsi
+  - type: Construction
+    graph: MinorSummoning
+
+# Medium
+
+- type: entity
+  parent: BaseDemonRune
+  id: MediumDemonRune
+  name: summoning circle
+  description: A rune used to summon demons.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Structures/Runes/medium.rsi
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 60
+      behaviors: *rune_break
+  - type: Construction
+    graph: MediumSummoning
+  - type: RandomDemonSpawner
+    demons:
+    - MediumDemonChad
+    - MediumDemonHamlet
+    - MediumDemonCentifiend
+    - MediumDemonAbomination
+    - MediumDemonMindflayer
+    - MediumDemonImp
+    - MediumDemonDark
+
+- type: entity
+  parent: BaseCarvedRune
+  id: MediumRuneCarved
+  name: unfinished rune
+  description: An unfinished rune, needs blood.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Structures/Runes/medium.rsi
+  - type: Construction
+    graph: MediumSummoning
+
+# Major
+
+- type: entity
+  parent: BaseDemonRune
+  id: MajorDemonRune
+  name: major summoning circle
+  description: A rune used to summon major demons.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Structures/Runes/major.rsi
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 90
+      behaviors: *rune_break
+  - type: Construction
+    graph: MajorSummoning
+  - type: RandomDemonSpawner
+    demons:
+    - MajorDemonGhost
+    - MajorDemonBosche
+    - MajorDemonFeverbird
+    - MajorDemonHanged
+    - MajorDemonHiver
+    - MajorDemonSteamer
+    - MajorDemonButcher
+    - MajorAngelHuman
+    - MajorAngelLizard
+    - MajorAngelMoth
+    - MajorDemonSaturn
+
+- type: entity
+  parent: BaseCarvedRune
+  id: MajorRuneCarved
+  name: unfinished rune
+  description: An unfinished rune, needs blood.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Demonology/Structures/Runes/major.rsi
+  - type: Construction
+    graph: MajorSummoning

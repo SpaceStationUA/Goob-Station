@@ -59,6 +59,7 @@
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
+  ransomModifier: 5 # Pirate: traitor ransom value
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
   canBeAntag: false

@@ -177,10 +177,13 @@
   - type: Store
     balance:
       Telecrystal: 0
+  - type: StoreContracts # Pirate: uplink implants cannot buy blood-red gear.
   - type: UserInterface
     interfaces:
       enum.StoreUiKey.Key:
         type: UplinkBoundUserInterface # imp edit, was StoreBoundUserInterface
+      enum.ContractsUiKey.Key: # Pirate
+        type: ContractsBUI
 
 - type: entity
   parent: BaseSubdermalImplant

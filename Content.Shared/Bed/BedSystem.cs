@@ -56,11 +56,20 @@ public sealed class BedSystem : EntitySystem
     {
         EnsureComp<HealOnBuckleHealingComponent>(bed);
         bed.Comp.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(bed.Comp.HealTime);
-        _actionsSystem.AddAction(args.Buckle, ref bed.Comp.SleepAction, SleepingSystem.SleepActionId, bed);
-        Dirty(bed);
 
-        // Single action entity, cannot strap multiple entities to the same bed.
-        DebugTools.AssertEqual(args.Strap.Comp.BuckledEntities.Count, 1);
+        // Pirate edit start
+        if (args.Strap.Comp.BuckledEntities.Count > 1)
+        {
+            EntityUid? sleepAction = null;
+            _actionsSystem.AddAction(args.Buckle, ref sleepAction, SleepingSystem.SleepActionId, args.Buckle);
+        }
+        else
+        {
+            _actionsSystem.AddAction(args.Buckle, ref bed.Comp.SleepAction, SleepingSystem.SleepActionId, bed);
+        }
+        // Pirate edit end
+
+        Dirty(bed);
     }
 
     private void OnUnstrapped(Entity<HealOnBuckleComponent> bed, ref UnstrappedEvent args)
@@ -68,7 +77,10 @@ public sealed class BedSystem : EntitySystem
         // If the entity being unbuckled is terminating, we shouldn't try to act upon it, as some components may be gone
         if (!Terminating(args.Buckle.Owner))
         {
-            _actionsSystem.RemoveAction(args.Buckle.Owner, bed.Comp.SleepAction);
+            if (_actionsSystem.TryGetActionById(args.Buckle.Owner, SleepingSystem.SleepActionId, out var sleepAction))
+            {
+                _actionsSystem.RemoveAction(args.Buckle.Owner, sleepAction.Value.Owner);
+            }
             _sleepingSystem.TryWaking(args.Buckle.Owner);
         }
 

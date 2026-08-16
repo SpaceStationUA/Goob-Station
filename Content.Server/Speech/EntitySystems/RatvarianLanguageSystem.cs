@@ -16,6 +16,16 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
 
     private static readonly ProtoId<StatusEffectPrototype> RatvarianKey = "RatvarianLanguage";
 
+    // Pirate: Lobotomy/Ratvarian accents must alter Cyrillic speech as well as Latin speech.
+    private const string LowerLatin = "abcdefghijklmnopqrstuvwxyz";
+    private const string UpperLatin = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private const string LowerCommonCyrillic = "абвгдежзийклмнопрстуфхцчшщьюя";
+    private const string UpperCommonCyrillic = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЮЯ";
+    private const string LowerUkrainianSpecific = "ґєії";
+    private const string UpperUkrainianSpecific = "ҐЄІЇ";
+    private const string LowerRussianSpecific = "ёъыэ";
+    private const string UpperRussianSpecific = "ЁЪЫЭ";
+
     // This is the word of Ratvar and those who speak it shall abide by His rules:
     /*
      * Any time the word "of" occurs, it's linked to the previous word by a hyphen: "I am-of Ratvar"
@@ -59,6 +69,36 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
         args.Message = Translate(args.Message);
     }
 
+    private static char RotateLetter(char letter)
+    {
+        var rotated = RotateLetter(letter, LowerLatin, UpperLatin);
+        if (rotated != letter)
+            return rotated;
+
+        rotated = RotateLetter(letter, LowerCommonCyrillic, UpperCommonCyrillic);
+        if (rotated != letter)
+            return rotated;
+
+        rotated = RotateLetter(letter, LowerUkrainianSpecific, UpperUkrainianSpecific);
+        if (rotated != letter)
+            return rotated;
+
+        return RotateLetter(letter, LowerRussianSpecific, UpperRussianSpecific);
+    }
+
+    private static char RotateLetter(char letter, string lowerAlphabet, string upperAlphabet)
+    {
+        var index = lowerAlphabet.IndexOf(letter);
+        if (index >= 0)
+            return lowerAlphabet[(index + lowerAlphabet.Length / 2) % lowerAlphabet.Length];
+
+        index = upperAlphabet.IndexOf(letter);
+        if (index >= 0)
+            return upperAlphabet[(index + upperAlphabet.Length / 2) % upperAlphabet.Length];
+
+        return letter;
+    }
+
     private string Translate(string message)
     {
         var ruleTranslation = message;
@@ -87,30 +127,7 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
             {
                 for (int i = 0; i < word.Length; i++)
                 {
-                    var letter = word[i];
-
-                    if (letter >= 97 && letter <= 122)
-                    {
-                        var letterRot = letter + 13;
-
-                        if (letterRot > 122)
-                            letterRot -= 26;
-
-                        newWord.Append((char) letterRot);
-                    }
-                    else if (letter >= 65 && letter <= 90)
-                    {
-                        var letterRot = letter + 13;
-
-                        if (letterRot > 90)
-                            letterRot -= 26;
-
-                        newWord.Append((char) letterRot);
-                    }
-                    else
-                    {
-                        newWord.Append(word[i]);
-                    }
+                    newWord.Append(RotateLetter(word[i]));
                 }
             }
             finalMessage.Append(newWord + " ");

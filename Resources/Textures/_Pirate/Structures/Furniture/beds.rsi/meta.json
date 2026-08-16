@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/SPLURT-Station/S.P.L.U.R.T-tg/blob/master/modular_zubbers/icons/obj/bed.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bed-wood"
+        }
+    ]
+}

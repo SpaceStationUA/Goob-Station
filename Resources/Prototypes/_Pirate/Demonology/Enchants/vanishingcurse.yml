@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseEnchant
+  id: CurseVanishing
+  name: Curse of Vanishing
+  components:
+  - type: Enchant
+    maxLevel: 1
+    blacklist:
+      components:
+      - StealTarget
+  - type: ComponentsEnchant
+    added:
+    - type: VanishingCurse

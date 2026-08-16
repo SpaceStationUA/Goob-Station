@@ -20,7 +20,7 @@ public sealed partial class RotationVisualsComponent : Component
     [DataField, AutoNetworkedField]
     public Angle HorizontalRotation = Angle.FromDegrees(90);
 
-    [DataField]
+    [DataField, AutoNetworkedField] // Pirate edit - add (AutoNetworkedField)
     public float AnimationTime = 0.125f;
 }
 

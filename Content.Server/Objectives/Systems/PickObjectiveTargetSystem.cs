@@ -20,6 +20,7 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
 {
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -90,6 +91,60 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
         }
 
         _target.SetTarget(ent, picked, target);
+    }
+
+    /// <summary>
+    /// Picks an alive target mind for contract systems that need a custom predicate.
+    /// </summary>
+    public void AssignRandomTarget(
+        EntityUid uid,
+        ref ObjectiveAssignedEvent args,
+        Predicate<EntityUid> filter,
+        bool fallbackToAny = true)
+    {
+        if (!TryComp<TargetObjectiveComponent>(uid, out var target))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        if (target.Target != null)
+            return;
+
+        var candidates = _mind.GetAliveHumans(args.MindId)
+            .Where(mind => !IsTargetObjectiveImmune(mind.Owner))
+            .ToList();
+
+        // Avoid assigning the same kill target twice.
+        foreach (var objective in args.Mind.Objectives)
+        {
+            if (HasComp<KillPersonConditionComponent>(objective) &&
+                TryComp<TargetObjectiveComponent>(objective, out var kill))
+            {
+                candidates.RemoveAll(mind => mind.Owner == kill.Target);
+            }
+        }
+
+        // Targets on a different map cannot be reached during ordinary play.
+        if (args.Mind.OwnedEntity is {} mob)
+        {
+            var map = Transform(mob).MapID;
+            candidates.RemoveAll(mind => mind.Comp.OwnedEntity is not {} body || Transform(body).MapID != map);
+        }
+
+        var filtered = candidates.Where(mind => filter(mind.Owner)).ToList();
+        if (filtered.Count == 0)
+        {
+            if (!fallbackToAny || candidates.Count == 0)
+            {
+                args.Cancelled = true;
+                return;
+            }
+
+            filtered = candidates;
+        }
+
+        _target.SetTarget(uid, _random.Pick(filtered).Owner, target);
     }
 
     // Pirate: target overrides may point at either a body or a mind.

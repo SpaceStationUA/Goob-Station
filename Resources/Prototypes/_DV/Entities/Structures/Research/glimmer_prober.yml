@@ -6,6 +6,8 @@
   components:
   - type: Psionic
   - type: GlimmerSource
+  - type: ApcPowerReceiver
+    powerDisabled: true # Pirate: the prober starts switched off - it must be turned on before it generates glimmer/research
   - type: Construction
     graph: GlimmerDevices
     node: glimmerProber

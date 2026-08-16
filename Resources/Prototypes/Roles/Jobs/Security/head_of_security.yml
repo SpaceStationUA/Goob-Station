@@ -48,6 +48,7 @@
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
+  ransomModifier: 4 # Pirate: traitor ransom value
   supervisors: job-supervisors-captain
   canBeAntag: false
   guides: # goobstation

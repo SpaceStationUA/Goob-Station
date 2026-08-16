@@ -51,6 +51,7 @@
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
+  ransomModifier: 3 # Pirate: traitor ransom value
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:

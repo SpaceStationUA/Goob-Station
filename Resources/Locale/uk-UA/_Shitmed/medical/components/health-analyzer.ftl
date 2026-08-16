@@ -32,3 +32,5 @@ condition-body-bleeding-LeftHand = • У {$entity} кровотеча з лів
 condition-body-bleeding-RightHand = • У {$entity} кровотеча з правої кисті.
 condition-body-bleeding-LeftFoot = • У {$entity} кровотеча з лівої стопи.
 condition-body-bleeding-RightFoot = • У {$entity} кровотеча з правої стопи.
+condition-body-trauma-Shrapnel = • У {$woundable} застрягли уламки.
+condition-body-trauma-Braindeath = • [color=red]Мозок мертвий.[/color] Для можливості оживлення його потрібно хірургічно відновити.

@@ -97,7 +97,7 @@ public sealed class FultonSystem : SharedFultonSystem
         UpdateAppearance(uid, component);
     }
 
-    protected override void UpdateAppearance(EntityUid uid, FultonedComponent component)
+    public override void UpdateAppearance(EntityUid uid, FultonedComponent component) // Pirate: exposed for syndicate fultons.
     {
         if (!component.Effect.IsValid())
             return;

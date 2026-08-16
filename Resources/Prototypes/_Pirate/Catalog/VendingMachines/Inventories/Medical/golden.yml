@@ -55,6 +55,8 @@
     GoldBrutePack: 4
     GoldOintment: 4
     Bloodpack: 4
+    # Pirate: shared NanoMed Plus supplies
+    IVBloodPackFull: 3
     Tourniquet: 1
     ChemistryBottleEpinephrine: 2
     ChemistryBottleBicaridine: 1
@@ -68,6 +70,19 @@
     SyringeIpecac: 1
     ClothingEyesHudMedical: 2
     ClothingEyesEyepatchHudMedical: 2
+    MedicalPatchPrefilledBicaridine: 3
+    MedicalPatchPrefilledDermaline: 3
+    MedicalPatchBasic: 5
+    CigPackMedical: 2
+    ParamedHypo: 2
+    CartridgeSaline: 4
+    CartridgeBicaridine: 4
+    CartridgeDermaline: 4
+    CartridgeAtropine: 4
+    VehicleWheelchairFolded: 3
+    FoodSnackLollypopWrappedMystery: 10
+    FoodSnackLollypopWrappedTricordrazine: 8
+    NitrousOxideTankFilled: 2
     SpaceMedipen: 1
   contrabandInventory:
     PillCanisterRandom: 3

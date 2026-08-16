@@ -106,7 +106,7 @@ public sealed class NyanoChatSystem : EntitySystem
 
         _chatManager.ChatMessageToMany(ChatChannel.Telepathic, message, adminMessageWrap, source, hideChat, true, admins, Color.PaleVioletRed);
 
-        if (_random.Prob(0.1f))
+        if (_random.Prob(0.05f))
             _glimmerSystem.Glimmer++;
 
         if (_random.Prob(Math.Min(0.33f + ((float) _glimmerSystem.Glimmer / 1500), 1)))
