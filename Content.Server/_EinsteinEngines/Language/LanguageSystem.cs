@@ -40,7 +40,7 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
     private void OnLanguageSpeakerStartup(Entity<LanguageSpeakerComponent> ent, ref ComponentStartup args)
     {
         if (MetaData(ent).EntityLifeStage == EntityLifeStage.MapInitialized)
-            UpdateEntityLanguages(ent);
+            UpdateEntityLanguages(ent.AsNullable());
     }
 
     private void OnLanguageKnowledgeStartup(Entity<LanguageKnowledgeComponent> ent, ref ComponentStartup args)
