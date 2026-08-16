@@ -6,7 +6,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskAncient
   name: "стародавня біомаска"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і funktionальна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_ancient.rsi
@@ -21,8 +21,8 @@
 - type: entity
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskAncientRedGlow
-  name: "стародавня біомаска з червоним сяйвом"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  name: "стародавня червоносяюча біомаска"
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_ancient_redglow.rsi
@@ -38,7 +38,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskAncientWhite
   name: "стародавня біла біомаска"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_ancient_white.rsi
@@ -54,7 +54,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodBane
   name: "біомаска прокляття ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_bane.rsi
@@ -70,7 +70,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodCommando
   name: "біомаска командо ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_commando.rsi
@@ -86,7 +86,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodCommandoAlt
   name: "альтернативна біомаска командо ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_commandoalt.rsi
@@ -101,7 +101,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodEmissaryClassic
   name: "класична біомаска емісара ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_emissary_classic.rsi
@@ -117,7 +117,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodEmissaryDesert
   name: "пустельна біомаска емісара ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_emissary_desert.rsi
@@ -133,7 +133,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodEmissaryJungle
   name: "джунглева біомаска емісара ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_emissary_jungle.rsi
@@ -149,7 +149,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodEmissarySnow
   name: "снігова біомаска емісара ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_emissary_snow.rsi
@@ -165,7 +165,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodEmissaryUrban
   name: "міська біомаска емісара ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_emissary_urban.rsi
@@ -181,7 +181,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodLunatic
   name: "біомаска божевільного ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_lunatic.rsi
@@ -195,8 +195,8 @@
 - type: entity
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodPatchwork
-  name: "клаптикова біомаска ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  name: "клаптева біомаска ренегата"
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_patchwork.rsi
@@ -211,8 +211,8 @@
 - type: entity
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodPatchworkAlt
-  name: "альтернативна клаптикова біомаска ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  name: "альтернативна клаптева біомаска ренегата"
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_patchworkalt.rsi
@@ -228,7 +228,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodScav
   name: "біомаска сміттяра ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_scav.rsi
@@ -244,7 +244,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodScavAlt
   name: "альтернативна біомаска сміттяра ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_scavalt.rsi
@@ -260,7 +260,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskBadBloodVenator
   name: "біомаска мисливця ренегата"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_bb_venator.rsi
@@ -276,7 +276,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskEliteCleopatra
   name: "елітна біомаска Клеопатри"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_elite_cleopatra.rsi
@@ -291,7 +291,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskElitePlated
   name: "елітна броньована біомаска"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_elite_plated.rsi
@@ -307,7 +307,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskLegacyCollector
   name: "спадкова біомаска колекціонера"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_legacy_collector.rsi
@@ -323,7 +323,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskLegacyDragon
   name: "спадкова біомаска дракона"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_legacy_dragon.rsi
@@ -338,8 +338,8 @@
 - type: entity
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskLegacyEnforcer
-  name: "спадкова біомаска карателя"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  name: "спадкова біомаска енфорсера"
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_legacy_enforcer.rsi
@@ -354,8 +354,8 @@
 - type: entity
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskLegacySwamp
-  name: "спадкова біомаска боліт"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  name: "спадкова біомаска болот"
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask_legacy_swamp.rsi
@@ -371,7 +371,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred01Bone
   name: "кістяна кланова біомаска 1"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask1_bone.rsi
@@ -387,7 +387,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred01Bronze
   name: "бронзова кланова біомаска 1"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask1_bronze.rsi
@@ -402,7 +402,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred01Crimson
   name: "багряна кланова біомаска 1"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask1_crimson.rsi
@@ -418,7 +418,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred01Ebony
   name: "ебенова кланова біомаска 1"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask1_ebony.rsi
@@ -434,7 +434,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred01Silver
   name: "срібна кланова біомаска 1"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask1_silver.rsi
@@ -450,7 +450,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred02Bone
   name: "кістяна кланова біомаска 2"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask2_bone.rsi
@@ -466,7 +466,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred02Bronze
   name: "бронзова кланова біомаска 2"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask2_bronze.rsi
@@ -482,7 +482,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred02Crimson
   name: "багряна кланова біомаска 2"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask2_crimson.rsi
@@ -497,7 +497,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred02Ebony
   name: "ебенова кланова біомаска 2"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask2_ebony.rsi
@@ -513,7 +513,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred02Silver
   name: "срібна кланова біомаска 2"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask2_silver.rsi
@@ -529,7 +529,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred03Bone
   name: "кістяна кланова біомаска 3"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask3_bone.rsi
@@ -545,7 +545,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred03Bronze
   name: "бронзова кланова біомаска 3"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask3_bronze.rsi
@@ -561,7 +561,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred03Crimson
   name: "багряна кланова біомаска 3"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask3_crimson.rsi
@@ -577,7 +577,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred03Ebony
   name: "ебенова кланова біомаска 3"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask3_ebony.rsi
@@ -593,7 +593,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred03Silver
   name: "срібна кланова біомаска 3"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask3_silver.rsi
@@ -608,7 +608,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred04Bone
   name: "кістяна кланова біомаска 4"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask4_bone.rsi
@@ -624,7 +624,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred04Bronze
   name: "бронзова кланова біомаска 4"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask4_bronze.rsi
@@ -640,7 +640,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred04Crimson
   name: "багряна кланова біомаска 4"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask4_crimson.rsi
@@ -656,7 +656,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred04Ebony
   name: "ебенова кланова біомаска 4"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask4_ebony.rsi
@@ -672,7 +672,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred04Silver
   name: "срібна кланова біомаска 4"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask4_silver.rsi
@@ -688,7 +688,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred05Bone
   name: "кістяна кланова біомаска 5"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask5_bone.rsi
@@ -703,7 +703,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred05Bronze
   name: "бронзова кланова біомаска 5"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask5_bronze.rsi
@@ -719,7 +719,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred05Crimson
   name: "багряна кланова біомаска 5"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask5_crimson.rsi
@@ -735,7 +735,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred05Ebony
   name: "ебенова кланова біомаска 5"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментона і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask5_ebony.rsi
@@ -751,7 +751,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred05Silver
   name: "срібна кланова біомаска 5"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask5_silver.rsi
@@ -767,7 +767,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred06Bone
   name: "кістяна кланова біомаска 6"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask6_bone.rsi
@@ -783,7 +783,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred06Bronze
   name: "бронзова кланова біомаска 6"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask6_bronze.rsi
@@ -798,7 +798,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred06Crimson
   name: "багряна кланова біомаска 6"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask6_crimson.rsi
@@ -814,7 +814,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred06Ebony
   name: "ебенова кланова біомаска 6"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask6_ebony.rsi
@@ -830,7 +830,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred06Silver
   name: "срібна кланова біомаска 6"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask6_silver.rsi
@@ -846,7 +846,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred07Bone
   name: "кістяна кланова біомаска 7"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask7_bone.rsi
@@ -862,7 +862,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred07Bronze
   name: "бронзова кланова біомаска 7"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask7_bronze.rsi
@@ -878,7 +878,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred07Crimson
   name: "багряна кланова біомаска 7"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask7_crimson.rsi
@@ -894,7 +894,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred07Ebony
   name: "ебенова кланова біомаска 7"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask7_ebony.rsi
@@ -909,7 +909,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred07Silver
   name: "срібна кланова біомаска 7"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask7_silver.rsi
@@ -925,7 +925,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred08Bone
   name: "кістяна кланова біомаска 8"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask8_bone.rsi
@@ -941,7 +941,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred08Bronze
   name: "бронзова кланова біомаска 8"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask8_bronze.rsi
@@ -957,7 +957,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred08Crimson
   name: "багряна кланова біомаска 8"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask8_crimson.rsi
@@ -973,7 +973,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred08Ebony
   name: "ебенова кланова біомаска 8"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask8_ebony.rsi
@@ -989,7 +989,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred08Silver
   name: "срібна кланова біомаска 8"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask8_silver.rsi
@@ -1005,7 +1005,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred09Bone
   name: "кістяна кланова біомаска 9"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask9_bone.rsi
@@ -1021,7 +1021,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred09Bronze
   name: "бронзова кланова біомаска 9"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask9_bronze.rsi
@@ -1037,7 +1037,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred09Crimson
   name: "багряна кланова біомаска 9"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask9_crimson.rsi
@@ -1053,7 +1053,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred09Ebony
   name: "ебенова кланова біомаска 9"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask9_ebony.rsi
@@ -1069,7 +1069,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred09Silver
   name: "срібна кланова біомаска 9"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask9_silver.rsi
@@ -1085,7 +1085,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred10Bone
   name: "кістяна кланова біомаска 10"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask10_bone.rsi
@@ -1100,7 +1100,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred10Bronze
   name: "бронзова кланова біомаска 10"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask10_bronze.rsi
@@ -1116,7 +1116,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred10Crimson
   name: "багряна кланова біомаска 10"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask10_crimson.rsi
@@ -1132,7 +1132,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred10Ebony
   name: "ебенова кланова біомаска 10"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask10_ebony.rsi
@@ -1148,7 +1148,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred10Silver
   name: "срібна кланова біомаска 10"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask10_silver.rsi
@@ -1164,7 +1164,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred11Bone
   name: "кістяна кланова біомаска 11"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask11_bone.rsi
@@ -1180,7 +1180,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred11Bronze
   name: "бронзова кланова біомаска 11"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask11_bronze.rsi
@@ -1196,7 +1196,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred11Crimson
   name: "багряна кланова біомаска 11"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask11_crimson.rsi
@@ -1212,7 +1212,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred11Ebony
   name: "ебенова кланова біомаска 11"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask11_ebony.rsi
@@ -1228,7 +1228,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred11Silver
   name: "срібна кланова біомаска 11"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask11_silver.rsi
@@ -1244,7 +1244,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred12Bone
   name: "кістяна кланова біомаска 12"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask12_bone.rsi
@@ -1260,7 +1260,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred12Bronze
   name: "бронзова кланова біомаска 12"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask12_bronze.rsi
@@ -1276,7 +1276,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred12Crimson
   name: "багряна кланова біомаска 12"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask12_crimson.rsi
@@ -1291,7 +1291,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred12Ebony
   name: "ебенова кланова біомаска 12"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask12_ebony.rsi
@@ -1307,7 +1307,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred12Silver
   name: "срібна кланова біомаска 12"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask12_silver.rsi
@@ -1323,7 +1323,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred13Bone
   name: "кістяна кланова біомаска 13"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask13_bone.rsi
@@ -1339,7 +1339,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred13Bronze
   name: "бронзова кланова біомаска 13"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask13_bronze.rsi
@@ -1355,7 +1355,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred13Crimson
   name: "багряна кланова біомаска 13"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask13_crimson.rsi
@@ -1371,7 +1371,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred13Ebony
   name: "ебенова кланова біомаска 13"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask13_ebony.rsi
@@ -1387,7 +1387,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred13Silver
   name: "срібна кланова біомаска 13"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask13_silver.rsi
@@ -1403,7 +1403,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred14Bone
   name: "кістяна кланова біомаска 14"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask14_bone.rsi
@@ -1419,7 +1419,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred14Bronze
   name: "бронзова кланова біомаска 14"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask14_bronze.rsi
@@ -1435,7 +1435,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred14Crimson
   name: "багряна кланова біомаска 14"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask14_crimson.rsi
@@ -1451,7 +1451,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred14Ebony
   name: "ебенова кланова біомаска 14"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask14_ebony.rsi
@@ -1467,7 +1467,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred14Silver
   name: "срібна кланова біомаска 14"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask14_silver.rsi
@@ -1483,7 +1483,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred15Bone
   name: "кістяна кланова біомаска 15"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask15_bone.rsi
@@ -1498,7 +1498,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred15Bronze
   name: "бронзова кланова біомаска 15"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask15_bronze.rsi
@@ -1514,7 +1514,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred15Crimson
   name: "багряна кланова біомаска 15"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask15_crimson.rsi
@@ -1530,7 +1530,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred15Ebony
   name: "ебенова кланова біомаска 15"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask15_ebony.rsi
@@ -1546,7 +1546,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred15Silver
   name: "срібна кланова біомаска 15"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask15_silver.rsi
@@ -1562,7 +1562,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred16Bone
   name: "кістяна кланова біомаска 16"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask16_bone.rsi
@@ -1578,7 +1578,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred16Bronze
   name: "бронзова кланова біомаска 16"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask16_bronze.rsi
@@ -1594,7 +1594,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred16Crimson
   name: "багряна кланова біомаска 16"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask16_crimson.rsi
@@ -1610,7 +1610,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred16Ebony
   name: "ебенова кланова біомаска 16"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask16_ebony.rsi
@@ -1626,7 +1626,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred16Silver
   name: "срібна кланова біомаска 16"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask16_silver.rsi
@@ -1642,7 +1642,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred17Bone
   name: "кістяна кланова біомаска 17"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask17_bone.rsi
@@ -1658,7 +1658,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred17Bronze
   name: "бронзова кланова біомаска 17"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask17_bronze.rsi
@@ -1674,7 +1674,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred17Crimson
   name: "багряна кланова біомаска 17"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask17_crimson.rsi
@@ -1689,7 +1689,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred17Ebony
   name: "ебенова кланова біомаска 17"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask17_ebony.rsi
@@ -1705,7 +1705,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred17Silver
   name: "срібна кланова біомаска 17"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask17_silver.rsi
@@ -1721,7 +1721,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred18Bone
   name: "кістяна кланова біомаска 18"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask18_bone.rsi
@@ -1737,7 +1737,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred18Bronze
   name: "бронзова кланова біомаска 18"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask18_bronze.rsi
@@ -1753,7 +1753,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred18Crimson
   name: "багряна кланова біомаска 18"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask18_crimson.rsi
@@ -1769,7 +1769,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred18Ebony
   name: "ебенова кланова біомаска 18"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask18_ebony.rsi
@@ -1785,7 +1785,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred18Silver
   name: "срібна кланова біомаска 18"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask18_silver.rsi
@@ -1801,7 +1801,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred19Bone
   name: "кістяна кланова біомаска 19"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask19_bone.rsi
@@ -1817,7 +1817,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred19Bronze
   name: "бронзова кланова біомаска 19"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask19_bronze.rsi
@@ -1833,7 +1833,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred19Crimson
   name: "багряна кланова біомаска 19"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask19_crimson.rsi
@@ -1849,7 +1849,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred19Ebony
   name: "ебенова кланова біомаска 19"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask19_ebony.rsi
@@ -1865,7 +1865,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred19Silver
   name: "срібна кланова біомаска 19"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask19_silver.rsi
@@ -1881,7 +1881,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred20Bone
   name: "кістяна кланова біомаска 20"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask20_bone.rsi
@@ -1896,7 +1896,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred20Bronze
   name: "бронзова кланова біомаска 20"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask20_bronze.rsi
@@ -1912,7 +1912,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred20Crimson
   name: "багряна кланова біомаска 20"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask20_crimson.rsi
@@ -1928,7 +1928,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred20Ebony
   name: "ебенова кланова біомаска 20"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask20_ebony.rsi
@@ -1944,7 +1944,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskPred20Silver
   name: "срібна кланова біомаска 20"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/pred_mask20_silver.rsi
@@ -1960,7 +1960,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskThrallBone
   name: "кістяна рабська маска"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/thrallmask_bone.rsi
@@ -1976,7 +1976,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskThrallCrimson
   name: "багряна рабська маска"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/thrallmask_crimson.rsi
@@ -1992,7 +1992,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskThrallEbony
   name: "ебенова рабська маска"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/thrallmask_ebony.rsi
@@ -2008,7 +2008,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskThrallGold
   name: "золота рабська маска"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/thrallmask_gold.rsi
@@ -2024,7 +2024,7 @@
   parent: GoobYautjaMaskBase
   id: GoobYautjaMaskThrallSilver
   name: "срібна рабська маска"
-  description: "Майстерно оздоблена чужопланетна мисливська маска, водночас декоративна й функціональна."
+  description: "Прекрасно оформлена прибулецька мисливська маска, водночас орнаментована і функціональна."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/masks/thrallmask_silver.rsi

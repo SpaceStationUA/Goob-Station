@@ -1,8 +1,8 @@
 - type: entity
   parent: DehydratedSpaceCarp
   id: DehydratedMagicCarp
-  name: "зневоднений магічний короп"
-  description: "Схожий на плюшевого магічного коропа, але варто лише додати води, і він стане справжнім магічним коропом!"
+  name: dehydrated magic carp
+  description: Looks like a plush toy magic carp, but just add water and it becomes a real-life magic carp!
   components:
   - type: Sprite
     state: magicplush

@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBunnyears
-  name: "кролячі вушка"
+  name: кролячі вушка
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hats/bunnyears.rsi
@@ -16,7 +16,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsDark
-  name: "темні кролячі вушка"
+  name: темні кролячі вушка
   components:
   - type: Sprite
     state: dark
@@ -29,7 +29,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsSyndicate
-  name: "кролячі вушка синдикату"
+  name: кролячі вушка синдикату
   components:
   - type: Sprite
     state: syndi
@@ -43,7 +43,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsCE
-  name: "кролячі вушка головного інженера"
+  name: кролячі вушка головного інженера
   components:
   - type: Sprite
     state: ce
@@ -56,7 +56,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsEngineers
-  name: "кролячі вушка інженера"
+  name: кролячі вушка інженера
   components:
   - type: Sprite
     state: engi
@@ -69,7 +69,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsAtmos
-  name: "кролячі вушка атмосферного техніка"
+  name: кролячі вушка атмосферного техніка
   components:
   - type: Sprite
     state: atmos
@@ -83,7 +83,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsCMO
-  name: "кролячі вушка головного лікаря"
+  name: кролячі вушка головного лікаря
   components:
   - type: Sprite
     state: cmo
@@ -96,7 +96,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsDoctor
-  name: "кролячі вушка лікаря"
+  name: кролячі вушка лікаря
   components:
   - type: Sprite
     state: doctor
@@ -109,7 +109,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsGenetics
-  name: "кролячі вушка генетика"
+  name: кролячі вушка генетика
   components:
   - type: Sprite
     state: genetics
@@ -122,7 +122,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsVirologist
-  name: "кролячі вушка вірусолога"
+  name: кролячі вушка вірусолога
   components:
   - type: Sprite
     state: virologist
@@ -135,7 +135,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsParamedic
-  name: "кролячі вушка парамедика"
+  name: кролячі вушка парамедика
   components:
   - type: Sprite
     state: paramedic
@@ -148,7 +148,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsChem
-  name: "кролячі вушка хіміка"
+  name: кролячі вушка хіміка
   components:
   - type: Sprite
     state: chem
@@ -162,7 +162,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsRD
-  name: "кролячі вушка директора наукового відділу"
+  name: кролячі вушка директора наукового відділу
   components:
   - type: Sprite
     state: rd
@@ -175,7 +175,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsScience
-  name: "кролячі вушка науковця"
+  name: кролячі вушка науковця
   components:
   - type: Sprite
     state: science
@@ -188,7 +188,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsRoboticist
-  name: "кролячі вушка робототехніка"
+  name: кролячі вушка робототехніка
   components:
   - type: Sprite
     state: roboticist
@@ -202,7 +202,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsQM
-  name: "кролячі вушка квартмейстера"
+  name: кролячі вушка квартмейстера
   components:
   - type: Sprite
     state: qm
@@ -215,7 +215,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsCargo
-  name: "кролячі вушка вантажника"
+  name: кролячі вушка вантажника
   components:
   - type: Sprite
     state: cargo
@@ -228,7 +228,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsSalvage
-  name: "кролячі вушка утилізатора"
+  name: кролячі вушка утилізатора
   components:
   - type: Sprite
     state: salvage
@@ -242,7 +242,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsHOS
-  name: "кролячі вушка голови служби безпеки"
+  name: кролячі вушка голови служби безпеки
   components:
   - type: Sprite
     state: hos
@@ -255,7 +255,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsWarden
-  name: "кролячі вушка наглядача"
+  name: кролячі вушка наглядача
   components:
   - type: Sprite
     state: warden
@@ -268,7 +268,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsDetective
-  name: "кролячі вушка детектива"
+  name: кролячі вушка детектива
   components:
   - type: Sprite
     state: detective
@@ -281,7 +281,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsDetectiveNoir
-  name: "нуарні кролячі вушка детектива"
+  name: нуарні кролячі вушка детектива
   components:
   - type: Sprite
     state: detective_noir
@@ -294,7 +294,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsSecurity
-  name: "кролячі вушка охорони"
+  name: кролячі вушка охорони
   components:
   - type: Sprite
     state: security
@@ -307,7 +307,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsLawyer
-  name: "кролячі вушка адвоката"
+  name: кролячі вушка адвоката
   components:
   - type: Sprite
     state: lawyer
@@ -321,7 +321,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsCentcom
-  name: "кролячі вушка центрального командування"
+  name: кролячі вушка центрального командування
   components:
   - type: Sprite
     state: centcom
@@ -334,7 +334,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsCaptain
-  name: "кролячі вушка капітана"
+  name: кролячі вушка капітана
   components:
   - type: Sprite
     state: captain
@@ -347,7 +347,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsHOP
-  name: "кролячі вушка голови персоналу"
+  name: кролячі вушка голови персоналу
   components:
   - type: Sprite
     state: hop
@@ -361,7 +361,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsBotany
-  name: "кролячі вушка ботаніка"
+  name: кролячі вушка ботаніка
   components:
   - type: Sprite
     state: botany
@@ -374,7 +374,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsChaplain
-  name: "кролячі вушка капелана"
+  name: кролячі вушка капелана
   components:
   - type: Sprite
     state: chaplain
@@ -387,7 +387,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsChef
-  name: "кролячі вушка кухаря"
+  name: кролячі вушка кухаря
   components:
   - type: Sprite
     state: chef
@@ -400,7 +400,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsClown
-  name: "кролячі вушка клоуна"
+  name: кролячі вушка клоуна
   components:
   - type: Sprite
     state: clown
@@ -413,7 +413,7 @@
 - type: entity
   parent: ClothingHeadHatBunnyears
   id: ClothingHeadHatBunnyearsJanitor
-  name: "кролячі вушка прибиральника"
+  name: кролячі вушка прибиральника
   components:
   - type: Sprite
     state: janitor

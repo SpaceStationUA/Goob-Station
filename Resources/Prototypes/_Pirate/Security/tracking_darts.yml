@@ -5,7 +5,7 @@
   id: NFTrackingDart
 
 - type: entity
-  name: "відстежувальний дротик"
+  name: tracking dart
   id: NFDartTracking
   parent: Dart
   components:
@@ -56,10 +56,10 @@
 
 # Pirate: local pinpointers can otherwise link directly to mobs, bypassing the dart.
 - type: entity
-  name: "пінпойнтер відстежувального дротика"
+  name: tracking dart pinpointer
   id: NFTrackingDartPinpointer
   parent: PinpointerUniversal
-  description: "Ручний пристрій, налаштований на прив'язування лише до відстежувальних дротиків."
+  description: A handheld tracker configured to link only to tracking darts.
   components:
   - type: Pinpointer
     updateTargetName: true
@@ -70,10 +70,10 @@
       - NFTrackingDart
 
 - type: entity
-  name: "коробка комплекту відстеження"
+  name: tracking kit box
   parent: BoxDarts
   id: NFBoxDartsTracking
-  description: "Коробка з трьома відстежувальними дротиками та трьома пінпойнтерами."
+  description: A box of tracking darts and pinpointers.
   components:
   # Pirate: BoxDarts only accepts Tiny items locally, while pinpointers are Small.
   - type: Storage
@@ -91,8 +91,8 @@
 - type: entity
   id: NFWeaponLauncherGrenadeNfsd
   parent: [ BaseWeaponLauncher, BaseGunWieldable, BaseSecurityContraband ]
-  name: "проєктор NGP-40"
-  description: "Однозарядний пусковий пристрій для відстежувальних дротиків."
+  name: NGP-40 projector
+  description: A single-shot launcher configured for tracking darts.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Launchers/nfsd_lake.rsi

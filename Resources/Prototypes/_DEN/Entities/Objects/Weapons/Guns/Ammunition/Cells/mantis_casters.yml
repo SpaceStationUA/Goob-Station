@@ -55,7 +55,7 @@
 - type: entity
   parent: BaseMantisCaster
   id: BaseMantisCasterLethal # Variant base for the lethal versions
-  description: "Кам’яне ядро аномалії, використане як самовідновлюване джерело боєприпасів. Воно формує діамантові уламки в смертоносні снаряди, кожен із яких бездоганно огранений і катастрофічно незаконний. Кастер важкий і холодний у руці, наче знає, для чого його створено."
+  description: "A rock anomaly core harnessed as a self-replenishing ammo source. It forms diamond shards into lethal projectiles, each one perfectly faceted and catastrophically illegal. The caster is heavy and cold in the hand, as if it knows what it's for."
   abstract: true
   components:
   - type: Battery
@@ -67,7 +67,7 @@
 - type: entity
   parent: BaseMantisCaster
   id: BaseMantisCasterCapgun # Variant base without glowing bullets and a 3x longer recharge rate
-  description: "Екзотичне ядро аномалії, використане як самовідновлюване джерело боєприпасів. Воно генерує нешкідливі капсулі, придатні для вправ і тренувань. Попри жартівливу конструкцію, пристрій усе одно випромінює слабку моторошну енергію, властиву всій аномальній техніці."
+  description: "An exotic anomaly core harnessed as a self-replenishing ammo source. It generates harmless percussion caps suitable for drills and training. Despite the playful construction, the device still radiates the faint, uncanny energy of all anomaly tech."
   abstract: true
   components:
   - type: Sprite
@@ -173,8 +173,8 @@
 - type: entity
   parent: BaseMantisCasterPistol
   id: MantisCasterPistolCrypto
-  name: "пістолетний кастер (заглушення)"
-  description: "Рідинне ядро аномалії, використане як самовідновлюване джерело боєприпасів. Кожна куля несе відміряну краплю криптобіоліну, яка при контакті послаблює зв’язок із Ноосферою та пригнічує псіоніку майже на дві хвилини за влучання. Повного магазина вистачає на двадцять хвилин. Створений для знешкодження агресивних псіоніків без заподіяння шкоди."
+  name: pistol caster (silencing)
+  description: "A liquid anomaly core harnessed as a self-replenishing ammo source. Each bullet carries a measured droplet of cryptobiolin that dampens noospheric connection on contact, suppressing psionics for nearly two minutes per hit. A full magazine carries enough to last twenty minutes. Built to neutralize violent psions without causing harm."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-cryptobiolin.rsi
@@ -188,8 +188,8 @@
 - type: entity
   parent: BaseMantisCasterRevolver
   id: MantisCasterRevolverCrypto
-  name: "револьверний кастер (заглушення)"
-  description: "Рідинне ядро аномалії, використане як самовідновлюване джерело боєприпасів. Кожна куля несе відміряну краплю криптобіоліну, яка при контакті послаблює зв’язок із Ноосферою та пригнічує псіоніку більш ніж на три хвилини за влучання. Повного барабана вистачає на двадцять хвилин. Створений для знешкодження агресивних псіоніків без заподіяння шкоди."
+  name: revolver caster (silencing)
+  description: "A liquid anomaly core harnessed as a self-replenishing ammo source. Each bullet carries a measured droplet of cryptobiolin that dampens noospheric connection on contact, suppressing psionics for over three minutes per hit. A full cylinder carries enough to last twenty minutes. Built to neutralize violent psions without causing harm."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-cryptobiolin.rsi
@@ -203,8 +203,8 @@
 - type: entity
   parent: BaseMantisCasterShotgun
   id: MantisCasterShotgunCrypto
-  name: "дробовиковий кастер (заглушення)"
-  description: "Рідинне ядро аномалії, використане як самовідновлюване джерело боєприпасів. Кожен постріл розсіює відміряні краплі криптобіоліну, які при контакті послаблюють зв’язок із Ноосферою та пригнічують псіоніку на сорок секунд за кожну дробину або на чотири хвилини за постріл. Повного барабана вистачає на двадцять хвилин. Створений для знешкодження агресивних псіоніків без заподіяння шкоди."
+  name: shotgun caster (silencing)
+  description: "A liquid anomaly core harnessed as a self-replenishing ammo source. Each blast disperses measured droplets of cryptobiolin that dampen noospheric connection on contact, suppressing psionics for forty seconds per pellet or four minutes per shot. A full cylinder carries enough to last twenty minutes. Built to neutralize violent psions without causing harm."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-cryptobiolin.rsi
@@ -218,8 +218,8 @@
 - type: entity
   parent: BaseMantisCasterSubMachineGun
   id: MantisCasterSubMachineGunCrypto
-  name: "кастер-пістолет-кулемет (заглушення)"
-  description: "Рідинне ядро аномалії, використане як самовідновлюване джерело боєприпасів. Кожна куля несе відміряну краплю криптобіоліну, яка при контакті послаблює зв’язок із Ноосферою та пригнічує псіоніку більш ніж на тридцять секунд за влучання. Повного магазина вистачає на двадцять хвилин. Створений для знешкодження агресивних псіоніків без заподіяння шкоди."
+  name: submachine gun caster (silencing)
+  description: "A liquid anomaly core harnessed as a self-replenishing ammo source. Each bullet carries a measured droplet of cryptobiolin that dampens noospheric connection on contact, suppressing psionics for over thirty seconds per hit. A full magazine carries enough to last twenty minutes. Built to neutralize violent psions without causing harm."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-cryptobiolin.rsi
@@ -234,8 +234,8 @@
 - type: entity
   parent: BaseMantisCasterPistol
   id: MantisCasterPistolHoly
-  name: "пістолетний кастер (вигнання)"
-  description: "Квіткове ядро аномалії, використане як самовідновлюване джерело боєприпасів. Створені ним кулі розривають надприродні загрози, не завдаючи шкоди нічому буденному. Завдяки капелану миряни називають його «святим», але «метафізичний» було б точніше."
+  name: pistol caster (banishing)
+  description: "A floral anomaly core harnessed as a self-replenishing ammo source. The bullets it manifests tear through supernatural threats without harming anything mundane. Called \"holy\" by laypeople--thanks to the chaplain--but \"metaphysical\" would be a more accurate description."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-holy.rsi
@@ -249,8 +249,8 @@
 - type: entity
   parent: BaseMantisCasterRevolver
   id: MantisCasterRevolverHoly
-  name: "револьверний кастер (вигнання)"
-  description: "Квіткове ядро аномалії, використане як самовідновлюване джерело боєприпасів. Створені ним кулі розривають надприродні загрози, не завдаючи шкоди нічому буденному. Завдяки капелану миряни називають його «святим», але «метафізичний» було б точніше."
+  name: revolver caster (banishing)
+  description: "A floral anomaly core harnessed as a self-replenishing ammo source. The bullets it manifests tear through supernatural threats without harming anything mundane. Called \"holy\" by laypeople--thanks to the chaplain--but \"metaphysical\" would be a more accurate description."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-holy.rsi
@@ -264,8 +264,8 @@
 - type: entity
   parent: BaseMantisCasterShotgun
   id: MantisCasterShotgunHoly
-  name: "дробовиковий кастер (вигнання)"
-  description: "Квіткове ядро аномалії, використане як самовідновлюване джерело боєприпасів. Створений ним дріб розриває надприродні загрози, не завдаючи шкоди нічому буденному. Завдяки капелану миряни називають його «святим», але «метафізичний» було б точніше."
+  name: shotgun caster (banishing)
+  description: "A floral anomaly core harnessed as a self-replenishing ammo source. The pellets it manifests tear through supernatural threats without harming anything mundane. Called \"holy\" by laypeople--thanks to the chaplain--but \"metaphysical\" would be a more accurate description."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-holy.rsi
@@ -279,8 +279,8 @@
 - type: entity
   parent: BaseMantisCasterSubMachineGun
   id: MantisCasterSubMachineGunHoly
-  name: "кастер-пістолет-кулемет (вигнання)"
-  description: "Квіткове ядро аномалії, використане як самовідновлюване джерело боєприпасів. Створені ним кулі розривають надприродні загрози, не завдаючи шкоди нічому буденному. Завдяки капелану миряни називають його «святим», але «метафізичний» було б точніше."
+  name: submachine gun caster (banishing)
+  description: "A floral anomaly core harnessed as a self-replenishing ammo source. The bullets it manifests tear through supernatural threats without harming anything mundane. Called \"holy\" by laypeople--thanks to the chaplain--but \"metaphysical\" would be a more accurate description."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-holy.rsi
@@ -295,7 +295,7 @@
 - type: entity
   parent: [BaseMantisContraband, BaseMantisCasterLethal] # Pirate - lethal casters are mantis contraband now, craftable via PsionicCountermeasures
   id: MantisCasterPistolLethal
-  name: "пістолетний кастер (пробивання)"
+  name: pistol caster (piercing)
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-lethal.rsi
@@ -321,7 +321,7 @@
 - type: entity
   parent: [BaseMantisContraband, BaseMantisCasterLethal]
   id: MantisCasterRevolverLethal
-  name: "револьверний кастер (пробивання)"
+  name: revolver caster (piercing)
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-lethal.rsi
@@ -349,7 +349,7 @@
 - type: entity
   parent: [BaseMantisContraband, BaseMantisCasterLethal]
   id: MantisCasterShotgunLethal
-  name: "дробовиковий кастер (пробивання)"
+  name: shotgun caster (piercing)
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-lethal.rsi
@@ -377,7 +377,7 @@
 - type: entity
   parent: [BaseMantisContraband, BaseMantisCasterLethal]
   id: MantisCasterSubMachineGunLethal
-  name: "кастер-пістолет-кулемет (пробивання)"
+  name: submachine gun caster (piercing)
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-lethal.rsi
@@ -404,7 +404,7 @@
 - type: entity
   parent: BaseMantisCasterCapgun
   id: MantisCasterPistolCapgun
-  name: "пістолетний кастер (тренувальний)"
+  name: pistol caster (training)
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-capgun.rsi
@@ -425,7 +425,7 @@
 - type: entity
   parent: BaseMantisCasterCapgun
   id: MantisCasterRevolverCapgun
-  name: "револьверний кастер (тренувальний)"
+  name: revolver caster (training)
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-capgun.rsi
@@ -448,7 +448,7 @@
 - type: entity
   parent: BaseMantisCasterCapgun
   id: MantisCasterShotgunCapgun
-  name: "дробовиковий кастер (тренувальний)"
+  name: shotgun caster (training)
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-capgun.rsi
@@ -472,7 +472,7 @@
 - type: entity
   parent: BaseMantisCasterCapgun
   id: MantisCasterSubMachineGunCapgun
-  name: "кастер-пістолет-кулемет (тренувальний)"
+  name: submachine gun caster (training)
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-capgun.rsi
@@ -496,8 +496,8 @@
 - type: entity
   parent: BaseMantisCasterPistol
   id: MantisCasterPistolFrame
-  name: "каркас пістолетного кастера"
-  description: "Незаряджений каркас псіонічного кастера з порожньою камерою, у яку ще належить вплавити дозволене ядро аномалії. До того часу він стріляє лише нешкідливими капсулями."
+  name: pistol caster frame
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-frame.rsi
@@ -518,8 +518,8 @@
 - type: entity
   parent: BaseMantisCasterRevolver
   id: MantisCasterRevolverFrame
-  name: "каркас револьверного кастера"
-  description: "Незаряджений каркас псіонічного кастера з порожньою камерою, у яку ще належить вплавити дозволене ядро аномалії. До того часу він стріляє лише нешкідливими капсулями."
+  name: revolver caster frame
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-frame.rsi
@@ -540,8 +540,8 @@
 - type: entity
   parent: BaseMantisCasterShotgun
   id: MantisCasterShotgunFrame
-  name: "каркас дробовикового кастера"
-  description: "Незаряджений каркас псіонічного кастера з порожньою камерою, у яку ще належить вплавити дозволене ядро аномалії. До того часу він стріляє лише нешкідливими капсулями."
+  name: shotgun caster frame
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-frame.rsi
@@ -562,8 +562,8 @@
 - type: entity
   parent: [BaseItem, BaseMantisContraband] # Just an item - not an ammo cell like the finished casters
   id: MantisCasterSubMachineGunFrame
-  name: "каркас кастера-пістолета-кулемета"
-  description: "Незаряджений каркас псіонічного кастера з порожньою камерою, у яку ще належить вплавити дозволене ядро аномалії."
+  name: submachine gun caster frame
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-frame.rsi

@@ -7,8 +7,8 @@
 - type: entity
   parent: BedsheetBase
   id: BedsheetSomberMantis
-  name: "простирадло псіо-екстрасенса"
-  description: "Псіонічно заряджене простирадло, з яким навіть нікчемне ліжко здаватиметься вершиною розкоші."
+  name: mantis bedsheet
+  description: "A psionically-charged bedsheet that will make any garbage bed seem like the height of luxury."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Misc/bedsheets.rsi

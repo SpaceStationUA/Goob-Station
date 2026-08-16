@@ -2,8 +2,8 @@
   abstract: true
   parent: [ BaseStructure, BaseNuclearPropertiesSteel ]
   id: BaseNuclearReactor
-  name: "ядерний реактор"
-  description: "Корпус ядерного реактора з комірками для паливних стрижнів та інших компонентів. Стривайте, хіба один із таких не вибухнув?"
+  name: nuclear reactor
+  description: A nuclear reactor vessel, with slots for fuel rods and other components. Hey wait, didn't one of these explode once?
   components:
   - type: Sprite
     sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/nuclear_reactor.rsi
@@ -196,8 +196,8 @@
   parent: [ BaseStructure, BaseNuclearPropertiesSteel ]
   id: NuclearReactorMelted # This is more of a decoration than anything else
   suffix: Melted
-  name: "ядерний реактор"
-  description: "Зруйнований корпус ядерного реактора, що досі світиться від жару й радіації."
+  name: nuclear reactor
+  description: A broken nuclear reactor vessel. It glows with heat and radiation.
   components:
   - type: Sprite
     sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/nuclear_reactor.rsi
@@ -229,7 +229,7 @@
 - type: entity
   parent: NuclearReactorCrew
   id: NuclearReactorSmall
-  name: "розплавлений малий ядерний реактор"
+  name: small nuclear reactor
   components:
   - type: Sprite
     sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/small_nuclear_reactor.rsi
@@ -285,9 +285,9 @@
 - type: entity
   parent: NuclearReactorMelted
   id: NuclearReactorSmallMelted
-  name: "розплавлений малий ядерний реактор"
+  name: small nuclear reactor
   suffix: Melted
-  description: "Зруйнований корпус ядерного реактора, що досі світиться від жару й радіації."
+  description: A broken nuclear reactor vessel. It glows with heat and radiation.
   components:
   - type: Sprite
     sprite: _Pirate/Nuclear/Structures/Power/Generation/FissionGenerator/small_nuclear_reactor.rsi
@@ -339,7 +339,7 @@
   parent: NuclearReactorMelted
   id: NuclearReactorMeltedSalvage
   suffix: "Melted, Salvage"
-  description: "Корпус ядерного реактора, що давно розплавився. Він досі світиться від залишкового жару й радіації."
+  description: A nuclear reactor vessel, long since melted down. It still glows with residual heat and radiation.
   components:
   - type: RadiationSource
     intensity: 3.5
@@ -350,7 +350,7 @@
 - type: entity
   parent: NuclearReactorSalvage
   id: NuclearReactorSmallSalvage
-  name: "розплавлений малий ядерний реактор"
+  name: small nuclear reactor
   suffix: Salvage
   components:
   - type: Sprite
@@ -392,7 +392,7 @@
   parent: NuclearReactorSmallMelted
   id: NuclearReactorSmallMeltedSalvage
   suffix: "Melted, Salvage"
-  description: "Корпус ядерного реактора, що давно розплавився. Він досі світиться від залишкового жару й радіації."
+  description: A nuclear reactor vessel, long since melted down. It still glows with residual heat and radiation.
   components:
   - type: RadiationSource
     intensity: 2.5
@@ -403,8 +403,8 @@
 - type: entity
   parent: BaseItem
   id: NuclearDebrisChunk
-  name: "ядерні уламки"
-  description: "Ви не бачите графіту на підлозі. Ви в шоці. Зверніться до медичного відділу."
+  name: nuclear debris
+  description: You do not see the graphite on the floor. You're in shock. Report to medical.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

@@ -2,7 +2,7 @@
   save: false
   parent: MobHuman
   id: GoobMobYautja
-  name: "мисливець Яутжа"
+  name: "Мисливець Яутжа"
   suffix: Yautja, Event
   components:
   - type: HumanoidAppearance
