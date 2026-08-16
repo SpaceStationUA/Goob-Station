@@ -9,12 +9,31 @@ public sealed class BedsheetCoverVisualizerSystem : VisualizerSystem<BedsheetCov
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<BedsheetCoverComponent, AfterAutoHandleStateEvent>(OnCoverState);
+    }
+
     protected override void OnAppearanceChange(EntityUid uid, BedsheetCoverComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null || !AppearanceSystem.TryGetData<bool>(uid, BedsheetVisuals.Covered, out var covered, args.Component))
             return;
 
-        _sprite.SetDrawDepth((uid, args.Sprite), covered
+        SetDrawDepth(uid, args.Sprite, covered);
+    }
+
+    private void OnCoverState(Entity<BedsheetCoverComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
+            return;
+
+        SetDrawDepth(ent.Owner, sprite, ent.Comp.Covered);
+    }
+
+    private void SetDrawDepth(EntityUid uid, SpriteComponent sprite, bool covered)
+    {
+        _sprite.SetDrawDepth((uid, sprite), covered
             ? (int) DrawDepth.OverMobs
             : (int) DrawDepth.SmallObjects);
     }

@@ -56,11 +56,20 @@ public sealed class BedSystem : EntitySystem
     {
         EnsureComp<HealOnBuckleHealingComponent>(bed);
         bed.Comp.NextHealTime = _timing.CurTime + TimeSpan.FromSeconds(bed.Comp.HealTime);
-        _actionsSystem.AddAction(args.Buckle, ref bed.Comp.SleepAction, SleepingSystem.SleepActionId, bed);
-        Dirty(bed);
 
-        // Single action entity, cannot strap multiple entities to the same bed.
-        DebugTools.AssertEqual(args.Strap.Comp.BuckledEntities.Count, 1);
+        // Pirate edit start
+        if (args.Strap.Comp.BuckledEntities.Count > 1)
+        {
+            EntityUid? sleepAction = null;
+            _actionsSystem.AddAction(args.Buckle, ref sleepAction, SleepingSystem.SleepActionId, args.Buckle);
+        }
+        else
+        {
+            _actionsSystem.AddAction(args.Buckle, ref bed.Comp.SleepAction, SleepingSystem.SleepActionId, bed);
+        }
+        // Pirate edit end
+
+        Dirty(bed);
     }
 
     private void OnUnstrapped(Entity<HealOnBuckleComponent> bed, ref UnstrappedEvent args)
@@ -68,19 +77,10 @@ public sealed class BedSystem : EntitySystem
         // If the entity being unbuckled is terminating, we shouldn't try to act upon it, as some components may be gone
         if (!Terminating(args.Buckle.Owner))
         {
-            // Pirate edit start
-            if (bed.Comp.SleepAction is { } sleepAction)
+            if (_actionsSystem.TryGetActionById(args.Buckle.Owner, SleepingSystem.SleepActionId, out var sleepAction))
             {
-                foreach (var action in _actionsSystem.GetActions(args.Buckle.Owner))
-                {
-                    if (action.Owner != sleepAction)
-                        continue;
-
-                    _actionsSystem.RemoveAction(args.Buckle.Owner, sleepAction);
-                    break;
-                }
+                _actionsSystem.RemoveAction(args.Buckle.Owner, sleepAction.Value.Owner);
             }
-            // Pirate edit end
             _sleepingSystem.TryWaking(args.Buckle.Owner);
         }
 

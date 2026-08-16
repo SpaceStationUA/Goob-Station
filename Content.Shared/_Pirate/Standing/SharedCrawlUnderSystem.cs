@@ -1,9 +1,13 @@
 using Content.Shared.Input;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Movement.Components;
 using Content.Shared.Rotation;
+using Content.Shared.Stunnable;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
@@ -25,6 +29,7 @@ public class SharedCrawlUnderSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speed = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -92,7 +97,11 @@ public class SharedCrawlUnderSystem : EntitySystem
 
     private void OnMoveInput(Entity<StandingStateComponent> ent, ref MoveInputEvent args)
     {
-        if (ent.Comp.Standing || !args.State)
+        if (ent.Comp.Standing || !args.State ||
+            HasComp<SleepingComponent>(ent.Owner) ||
+            HasComp<StunnedComponent>(ent.Owner) ||
+            _mobState.IsIncapacitated(ent.Owner) ||
+            TryComp<BuckleComponent>(ent.Owner, out var buckle) && buckle.Buckled)
             return;
 
         var angle = args.Dir switch

@@ -63,6 +63,7 @@ public sealed class BedsheetCoverSystem : EntitySystem
     private void Toggle(Entity<BedsheetCoverComponent> ent)
     {
         ent.Comp.Covered = !ent.Comp.Covered;
+        Dirty(ent);
         Appearance.SetData(ent, BedsheetVisuals.Covered, ent.Comp.Covered);
     }
 }
