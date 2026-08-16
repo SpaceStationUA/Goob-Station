@@ -43,7 +43,7 @@
   id: BaseSpecifiedDoubleBedsheetRecipe
   materials: { Cloth: 150, Durathread: 50 }
 
-# Кольорові ковдри
+# Кольорові простирадла
 - type: latheRecipe
   parent: BaseDoubleBedsheetRecipe
   id: DoubleBedsheetBlack
@@ -85,7 +85,7 @@
   id: DoubleBedsheetYellow
   result: DoubleBedsheetYellow
 
-# Особливі ковдри
+# Особливі простирадла
 - type: latheRecipe
   parent: BaseSpecifiedDoubleBedsheetRecipe
   id: DoubleBedsheetCaptain

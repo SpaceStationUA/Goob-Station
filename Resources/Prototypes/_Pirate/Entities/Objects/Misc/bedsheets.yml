@@ -9,7 +9,7 @@
     snap: [Bed]
   components:
   - type: Sprite
-    sprite: _Pirate//Objects/Misc/bedsheets_double.rsi
+    sprite: _Pirate/Objects/Misc/bedsheets_double.rsi
     noRot: true
   - type: Item
     size: Small

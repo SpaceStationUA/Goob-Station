@@ -5,7 +5,7 @@
   description: Велике ліжко для двох людей. На нього можна постелити дві ковдри або одну велику.
   components:
   - type: Sprite
-    sprite: _Pirate/ADT/Structures/Furniture/bed_double.rsi
+    sprite: _Pirate/Structures/Furniture/bed_double.rsi
     state: bed_double
   - type: Construction
     graph: double_bed
