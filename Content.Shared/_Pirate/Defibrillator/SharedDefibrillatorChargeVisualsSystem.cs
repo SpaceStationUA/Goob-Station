@@ -7,7 +7,7 @@ using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Robust.Shared.GameObjects;
 
-namespace Content.Goobstation.Shared.Defibrillator;
+namespace Content.Shared._Pirate.Defibrillator;
 
 /// <summary>
 /// Tracks the charge level of a belt defibrillator's power cell and exposes it through appearance data,

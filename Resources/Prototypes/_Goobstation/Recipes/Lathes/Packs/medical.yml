@@ -65,9 +65,7 @@
   recipes:
   - SyringeGun
   - HandheldCrewMonitor
-  - DefibrillatorBeltCompact
-  - DefibrillatorBeltCMO
-  - DefibrillatorBeltCombat
+  # Pirate - DefibrillatorCompact removed, belt defib recipes moved to _Pirate packs (DefibrillatorBeltsPirate)
   - ClothingHandsGlovesSurgical
 
 - type: latheRecipePack

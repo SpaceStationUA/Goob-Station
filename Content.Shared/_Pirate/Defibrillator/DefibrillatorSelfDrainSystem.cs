@@ -4,7 +4,7 @@ using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Robust.Shared.Network;
 
-namespace Content.Goobstation.Shared.Defibrillator;
+namespace Content.Shared._Pirate.Defibrillator;
 
 /// <summary>
 /// Slowly drains the power cell installed in a belt defibrillator, so the charge

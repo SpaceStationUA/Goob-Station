@@ -88,6 +88,7 @@ public sealed partial class ItemSlotsSystem
         if (_handsSystem.IsHolding(user, toInsert) && !_handsSystem.TryDrop(user, toInsert)) // Goobstation - don't try to drop if not holding
             return false;
 
+        //Pirate
         if (TryComp<MetaDataComponent>(toInsert, out var meta) &&
             TryComp<TransformComponent>(toInsert, out var xform) &&
             (meta.Flags & MetaDataFlags.InContainer) != 0 &&
@@ -95,6 +96,7 @@ public sealed partial class ItemSlotsSystem
         {
             _containers.Remove((toInsert, xform, meta), oldContainer, reparent: false);
         }
+        //Pirate end
 
         if (slot.Item != null)
             _handsSystem.TryPickupAnyHand(user, slot.Item.Value, handsComp: user.Comp);

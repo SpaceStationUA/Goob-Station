@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Goobstation.Shared.Defibrillator;
+using Content.Shared._Pirate.Defibrillator;
 using Content.Shared.Hands;
 
-namespace Content.Goobstation.Client.Defibrillator;
+namespace Content.Client._Pirate.Defibrillator;
 
 /// <summary>
 /// Prevents belt defibrillators from rendering a held in-hand sprite while they are carried in a hand.

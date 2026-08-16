@@ -17,7 +17,7 @@
   description: A compact defibrillator with a belt clip, for medics who need their hands free.
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Medical/defibcompact.rsi
+    sprite: _Pirate/Objects/Specific/Medical/defibcompact.rsi
     layers:
     - state: icon
     - state: screen
@@ -82,7 +82,7 @@
   description: A premium belt defibrillator issued to the Chief Medical Officer. Pairs well with a chest rig.
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Medical/defibcmo.rsi
+    sprite: _Pirate/Objects/Specific/Medical/defibcmo.rsi
     layers:
     - state: icon
     - state: charge100
@@ -130,7 +130,7 @@
   description: A rugged red belt defibrillator for field medics. Doubles as a taser in a pinch.
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Medical/defibcombat.rsi
+    sprite: _Pirate/Objects/Specific/Medical/defibcombat.rsi
     layers:
     - state: icon
     - state: charge100
@@ -181,7 +181,7 @@
   description: A state-of-the-art belt defibrillator issued to elite Nanotrasen operatives. Self-recharging battery, revives through thick clothing, and can deliver a nasty shock.
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Medical/defibnt.rsi
+    sprite: _Pirate/Objects/Specific/Medical/defibnt.rsi
     layers:
     - state: icon
     - state: charge100
@@ -236,7 +236,7 @@
   description: A pair of plastic-gripped paddles that deliver a powerful shock. Store them back in your belt before running off.
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Medical/defibpaddles.rsi
+    sprite: _Pirate/Objects/Specific/Medical/defibpaddles.rsi
     layers:
     - state: icon
   - type: Item
@@ -252,7 +252,7 @@
   name: CMO defibrillator paddles
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Medical/defibpaddles.rsi
+    sprite: _Pirate/Objects/Specific/Medical/defibpaddles.rsi
     layers:
     - state: icon
 
@@ -262,7 +262,7 @@
   name: combat defibrillator paddles
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Medical/defibpaddles_combat.rsi
+    sprite: _Pirate/Objects/Specific/Medical/defibpaddles_combat.rsi
     layers:
     - state: icon
   - type: ItemToggle
@@ -291,7 +291,7 @@
   name: elite Nanotrasen defibrillator paddles
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Medical/defibpaddles_nt.rsi
+    sprite: _Pirate/Objects/Specific/Medical/defibpaddles_nt.rsi
     layers:
     - state: icon
   - type: ItemToggle

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace Content.Goobstation.Shared.Defibrillator;
+namespace Content.Shared._Pirate.Defibrillator;
 
 /// <summary>
 /// Marks a belt defibrillator that slowly recharges its installed power cell on its own,

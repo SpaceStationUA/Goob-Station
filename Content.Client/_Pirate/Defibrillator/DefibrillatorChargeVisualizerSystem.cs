@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Goobstation.Shared.Defibrillator;
+using Content.Shared._Pirate.Defibrillator;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 
-namespace Content.Goobstation.Client.Defibrillator;
+namespace Content.Client._Pirate.Defibrillator;
 
 /// <summary>
 /// Renders the power cell charge bar and missing-cell overlay on belt defibrillators.

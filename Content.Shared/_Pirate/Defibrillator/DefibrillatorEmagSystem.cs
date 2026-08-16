@@ -12,7 +12,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Goobstation.Shared.Defibrillator;
+namespace Content.Shared._Pirate.Defibrillator;
 
 /// <summary>
 /// Handles emagging belt defibrillators: toggles the safety protocols (SS13-style <c>emag_act</c>)

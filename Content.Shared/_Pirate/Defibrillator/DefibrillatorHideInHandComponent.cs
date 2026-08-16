@@ -2,7 +2,7 @@
 
 using Robust.Shared.GameStates;
 
-namespace Content.Goobstation.Shared.Defibrillator;
+namespace Content.Shared._Pirate.Defibrillator;
 
 /// <summary>
 /// Marks a defibrillator that should be completely hidden in the holder's in-hand sprite.

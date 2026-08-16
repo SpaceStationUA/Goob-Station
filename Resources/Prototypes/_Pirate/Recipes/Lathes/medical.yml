@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipe
+  id: DefibrillatorBeltCompact
+  result: DefibrillatorBeltCompactEmpty
+  completetime: 5
+  materials:
+    Steel: 250
+    Silver: 50
+
+- type: latheRecipe
+  id: DefibrillatorBeltCMO
+  result: DefibrillatorBeltCMOEmpty
+  completetime: 5
+  materials:
+    Steel: 250
+    Silver: 50
+
+- type: latheRecipe
+  id: DefibrillatorBeltCombat
+  result: DefibrillatorBeltCombatEmpty
+  completetime: 5
+  materials:
+    Steel: 250
+    Silver: 50

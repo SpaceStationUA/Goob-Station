@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Goobstation.Shared.Defibrillator;
+using Content.Shared._Pirate.Defibrillator;
 using Content.Server.DoAfter;
 using Content.Server.Electrocution;
 using Content.Server.Medical;
@@ -20,7 +20,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
-namespace Content.Goobstation.Server.Defibrillator;
+namespace Content.Server._Pirate.Defibrillator;
 
 /// <summary>
 /// Handles belt-defibrillator shock paddles: using them on a target triggers the parent

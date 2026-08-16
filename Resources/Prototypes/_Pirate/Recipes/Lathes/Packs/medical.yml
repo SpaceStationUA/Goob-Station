@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipePack
+  id: DefibrillatorBeltsPirate
+  recipes:
+  - DefibrillatorBeltCompact
+  - DefibrillatorBeltCMO
+  - DefibrillatorBeltCombat
