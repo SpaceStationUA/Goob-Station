@@ -41,7 +41,7 @@
     prepDuration: 1
     channelInterval: 1
     channelDamage: 5
-    channelChargeCost: 10
+    channelChargeCost: 25
   - type: DefibrillatorHideInHand
   - type: DefibrillatorSelfDrain
     drainPerSecond: 0.05
