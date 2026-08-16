@@ -1,6 +1,6 @@
 - type: material
   id: Bluespace
-  name: bluespace
+  name: "блюспейс"
   unit: materials-unit-crystal
   icon: { sprite: /Textures/Nyanotrasen/Objects/Materials/materials.rsi, state: bluespace }
   color: "#53a9ff"
@@ -9,7 +9,7 @@
 
 - type: material
   id: NormalityCrystal
-  name: normality
+  name: "нормальність"
   unit: materials-unit-crystal
   icon: { sprite: /Textures/Nyanotrasen/Objects/Materials/materials.rsi, state: bluespace }
   color: "#999999"

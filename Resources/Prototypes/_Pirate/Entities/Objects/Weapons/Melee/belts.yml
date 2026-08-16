@@ -1,8 +1,8 @@
 - type: entity
   id: WaistBeltInstructorBelt
   parent: [BaseSecurityContraband, ClothingBeltSecurity]
-  name: дисциплінарний пояс
-  description: Дуже важкий пояс. "Дивись, що ти накоїв! Кадет, від пола п'ять разів віджатися! ЗАРАЗ!""
+  name: "дисциплінарний пояс"
+  description: "Дуже важкий пояс. \"Дивись, що ти накоїв! Кадете, від підлоги п'ять разів віджатися! ЗАРАЗ!\""
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Belt/instructordisciplinary.rsi

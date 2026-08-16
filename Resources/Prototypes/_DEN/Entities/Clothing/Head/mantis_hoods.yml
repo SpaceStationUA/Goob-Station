@@ -1,8 +1,8 @@
 - type: entity
   parent: [ClothingHeadHatFezMantis, BaseFoldable]
   id: ClothingHeadHoodMantisDark
-  name: dark mantis hood
-  description: "A gloomy hood that sits low on the head, ornamented with magenta tassles. It matches your cloak nicely, though it can be worn on its own. You can lower it to rest more comfortably atop your shoulders."
+  name: "темний каптур псіо-екстрасенса"
+  description: "Похмурий каптур, що низько сидить на голові, прикрашений пурпуровими китицями. Він пасує до вашого плаща, хоча його можна носити й окремо. Його можна опустити, щоб зручніше влаштувати на плечах."
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hoods/mantis_hood_dark.rsi
@@ -33,9 +33,9 @@
 - type: entity # A separate loadout option that starts lowered; parents to the fez so it doesn't hide hair while lowered
   parent: [ClothingHeadHatFezMantis, BaseFoldable]
   id: ClothingHeadHoodMantisDarkFolded
-  name: dark mantis hood
+  name: "темний каптур псіо-екстрасенса"
   suffix: Lowered
-  description: "A gloomy hood that sits low on the head, ornamented with magenta tassles. It matches your cloak nicely, though it can be worn on its own. It keeps sliding back onto your shoulders, but you can always raise it back up."
+  description: "Похмурий каптур, що низько сидить на голові, прикрашений пурпуровими китицями. Він пасує до вашого плаща, хоча його можна носити й окремо. Він постійно сповзає на плечі, але його завжди можна знову підняти."
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hoods/mantis_hood_dark.rsi
