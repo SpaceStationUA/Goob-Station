@@ -12,15 +12,15 @@ public sealed partial class RotationVisualsComponent : Component
     /// Default value of <see cref="HorizontalRotation"/>
     /// </summary>
     [DataField]
-    public Angle DefaultRotation = Angle.FromDegrees(-90); // Pirate edit - was 90
+    public Angle DefaultRotation = Angle.FromDegrees(90);
 
     [DataField]
     public Angle VerticalRotation = 0;
 
     [DataField, AutoNetworkedField]
-    public Angle HorizontalRotation = Angle.FromDegrees(-90); // Pirate edit - was 90
+    public Angle HorizontalRotation = Angle.FromDegrees(90);
 
-    [DataField]
+    [DataField, AutoNetworkedField] // Pirate edit - add (AutoNetworkedField)
     public float AnimationTime = 0.125f;
 }
 
