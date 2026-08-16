@@ -23,9 +23,6 @@ namespace Content.Shared.Standing;
 
 public class SharedCrawlUnderSystem : EntitySystem
 {
-    private static readonly Angle LeftRotation = Angle.FromDegrees(90);
-    private static readonly Angle RightRotation = Angle.FromDegrees(-90);
-
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
@@ -104,10 +101,13 @@ public class SharedCrawlUnderSystem : EntitySystem
             TryComp<BuckleComponent>(ent.Owner, out var buckle) && buckle.Buckled)
             return;
 
+        if (!TryComp(ent.Owner, out RotationVisualsComponent? rotation))
+            return;
+
         var angle = args.Dir switch
         {
-            Direction.East => RightRotation,
-            Direction.West => LeftRotation,
+            Direction.East => rotation.DefaultRotation,
+            Direction.West => -rotation.DefaultRotation,
             _ => (Angle?) null
         };
 

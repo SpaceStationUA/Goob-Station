@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Bed.Components;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Body.Events;
@@ -79,12 +80,16 @@ public sealed class BedSystem : EntitySystem
         {
             if (_actionsSystem.TryGetActionById(args.Buckle.Owner, SleepingSystem.SleepActionId, out var sleepAction))
             {
-                _actionsSystem.RemoveAction(args.Buckle.Owner, sleepAction.Value.Owner);
+                if (bed.Comp.SleepAction == sleepAction.Value.Owner)
+                    _actionsSystem.RemoveAction(args.Buckle.Owner, bed.Comp.SleepAction);
+                else
+                    _actConts.RemoveAction((sleepAction.Value.Owner, (ActionComponent?) sleepAction.Value.Comp));
             }
             _sleepingSystem.TryWaking(args.Buckle.Owner);
         }
 
-        RemComp<HealOnBuckleHealingComponent>(bed);
+        if (args.Strap.Comp.BuckledEntities.Count == 0)
+            RemComp<HealOnBuckleHealingComponent>(bed);
     }
 
     private void OnStasisStrapped(Entity<StasisBedComponent> ent, ref StrappedEvent args)
