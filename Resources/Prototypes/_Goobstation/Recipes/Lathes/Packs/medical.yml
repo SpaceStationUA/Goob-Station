@@ -65,7 +65,6 @@
   recipes:
   - SyringeGun
   - HandheldCrewMonitor
-  - DefibrillatorCompact
   - DefibrillatorBeltCompact
   - DefibrillatorBeltCMO
   - DefibrillatorBeltCombat

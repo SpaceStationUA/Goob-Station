@@ -7,7 +7,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: DefibrillatorCompact
+      - id: DefibrillatorBeltCMO
       - id: EnergyScalpel
       - id: AdvancedRetractor
       - id: EnergyCautery

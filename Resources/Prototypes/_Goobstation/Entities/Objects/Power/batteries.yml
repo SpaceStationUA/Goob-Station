@@ -1,13 +1,4 @@
 - type: entity
-  id: PowerCellMediumDefibStart
-  suffix: Defib start
-  parent: PowerCellMedium
-  components:
-  - type: Battery
-    maxCharge: 720
-    startingCharge: 640
-
-- type: entity
   name: disposable battery
   description: Robots eat these, right?
   id: BatteryDisposable

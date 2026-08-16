@@ -39,8 +39,8 @@
   - type: DefibrillatorChargeVisuals
   - type: DefibrillatorEmag
     prepDuration: 1
-    channelInterval: 0.2
-    channelDamage: 10
+    channelInterval: 1
+    channelDamage: 5
     channelChargeCost: 10
   - type: DefibrillatorHideInHand
   - type: DefibrillatorSelfDrain
@@ -49,7 +49,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMediumDefibStart
+        startingItem: PowerCellMedium
         blacklist:
           components:
           - BatterySelfRecharger # blocks nuclear/microreactor and slime organ cells
@@ -102,7 +102,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMediumDefibStart
+        startingItem: PowerCellMedium
       paddles_slot:
         name: defibrillator-paddles-slot-name
         startingItem: DefibrillatorPaddlesCMO
@@ -150,7 +150,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMediumDefibStart
+        startingItem: PowerCellMedium
       paddles_slot:
         name: defibrillator-paddles-slot-name
         startingItem: DefibrillatorPaddlesCombat
@@ -198,7 +198,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMediumDefibStart
+        startingItem: PowerCellMedium
       paddles_slot:
         name: defibrillator-paddles-slot-name
         startingItem: DefibrillatorPaddlesNT
