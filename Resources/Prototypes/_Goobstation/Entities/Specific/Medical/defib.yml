@@ -45,6 +45,8 @@
   - type: DefibrillatorHideInHand
   - type: DefibrillatorSelfDrain
     drainPerSecond: 0.05
+  - type: Item
+    size: Ginormous # too big for bags and boxes
   - type: ItemSlots
     slots:
       cell_slot:
