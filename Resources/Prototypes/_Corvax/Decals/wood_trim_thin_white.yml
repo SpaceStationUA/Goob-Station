@@ -1,121 +1,120 @@
-### Moved to Resources/_Pirate/Prototypes/Decals/wood_trim.yml
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# - type: decal
-#   id: WoodTrimThinBoxWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_box
+- type: decal
+  id: WoodTrimThinBoxWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_box_white
 
-# - type: decal
-#   id: WoodTrimThinCornerNeWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_corner_ne
+- type: decal
+  id: WoodTrimThinCornerNeWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_corner_ne_white
 
-# - type: decal
-#   id: WoodTrimThinCornerSeWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_corner_se
+- type: decal
+  id: WoodTrimThinCornerSeWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_corner_se_white
 
-# - type: decal
-#   id: WoodTrimThinCornerNwWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_corner_nw
+- type: decal
+  id: WoodTrimThinCornerNwWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_corner_nw_white
 
-# - type: decal
-#   id: WoodTrimThinCornerSwWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_corner_sw
+- type: decal
+  id: WoodTrimThinCornerSwWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_corner_sw_white
 
-# - type: decal
-#   id: WoodTrimThinInnerNeWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_inner_ne
+- type: decal
+  id: WoodTrimThinInnerNeWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_inner_ne_white
 
-# - type: decal
-#   id: WoodTrimThinInnerSeWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_inner_se
+- type: decal
+  id: WoodTrimThinInnerSeWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_inner_se_white
 
-# - type: decal
-#   id: WoodTrimThinInnerNwWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_inner_nw
+- type: decal
+  id: WoodTrimThinInnerNwWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_inner_nw_white
 
-# - type: decal
-#   id: WoodTrimThinInnerSwWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_inner_sw
+- type: decal
+  id: WoodTrimThinInnerSwWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_inner_sw_white
 
-# - type: decal
-#   id: WoodTrimThinEndNWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_end_n
+- type: decal
+  id: WoodTrimThinEndNWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_end_n_white
 
-# - type: decal
-#   id: WoodTrimThinEndEWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_end_e
+- type: decal
+  id: WoodTrimThinEndEWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_end_e_white
 
-# - type: decal
-#   id: WoodTrimThinEndSWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_end_s
+- type: decal
+  id: WoodTrimThinEndSWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_end_s_white
 
-# - type: decal
-#   id: WoodTrimThinEndWWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_end_w
+- type: decal
+  id: WoodTrimThinEndWWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_end_w_white
 
-# - type: decal
-#   id: WoodTrimThinLineNWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_line_n
+- type: decal
+  id: WoodTrimThinLineNWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_line_n_white
 
-# - type: decal
-#   id: WoodTrimThinLineEWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_line_e
+- type: decal
+  id: WoodTrimThinLineEWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_line_e_white
 
-# - type: decal
-#   id: WoodTrimThinLineSWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_line_s
+- type: decal
+  id: WoodTrimThinLineSWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_line_s_white
 
-# - type: decal
-#   id: WoodTrimThinLineWWhite
-#   tags: ["station", "markings"]
-#   sprite:
-#     sprite: _Corvax/Decals/wood_trim_white.rsi
-#     state: thin_line_w
+- type: decal
+  id: WoodTrimThinLineWWhite
+  tags: ["station", "markings"]
+  sprite:
+    sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite
+    state: thin_line_w_white
