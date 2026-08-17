@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.ActionBlocker;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
+using Content.Shared.Whitelist;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 
@@ -17,6 +19,8 @@ public sealed class BackEquipSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -92,6 +96,51 @@ public sealed class BackEquipSystem : EntitySystem
             _inventory.TryEquip(uid, handItem.Value, equipmentSlot, predicted: true, checkDoafter: true);
             return;
         }
+
+        // The slot item is an item-slot holder (e.g. a sheath): sheathe a held weapon into an
+        // empty matching slot, or unsheathe the slotted weapon into an empty hand.
+        if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
+        {
+            if (handItem == null)
+            {
+                ItemSlot? toEjectFrom = null;
+                foreach (var slot in slots.Slots.Values)
+                {
+                    if (slot.HasItem && slot.Priority > (toEjectFrom?.Priority ?? int.MinValue))
+                        toEjectFrom = slot;
+                }
+
+                if (toEjectFrom == null)
+                {
+                    _popup.PopupClient(emptyEquipmentSlotString, uid, uid);
+                    return;
+                }
+
+                _slots.TryEjectToHands(slotItem, toEjectFrom, uid, excludeUserAudio: true);
+                return;
+            }
+
+            ItemSlot? toInsertTo = null;
+            foreach (var slot in slots.Slots.Values)
+            {
+                if (!slot.HasItem
+                    && _whitelistSystem.IsWhitelistPassOrNull(slot.Whitelist, handItem.Value)
+                    && slot.Priority > (toInsertTo?.Priority ?? int.MinValue))
+                {
+                    toInsertTo = slot;
+                }
+            }
+
+            if (toInsertTo == null)
+            {
+                _popup.PopupClient(Loc.GetString("smart-equip-no-valid-item-slot-insert", ("item", handItem.Value)), uid, uid);
+                return;
+            }
+
+            _slots.TryInsertFromHand(slotItem, toInsertTo, uid, hands, excludeUserAudio: true);
+            return;
+        }
+
         if (handItem != null)
             return;
 
