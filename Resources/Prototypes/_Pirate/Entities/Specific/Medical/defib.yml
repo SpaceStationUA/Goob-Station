@@ -34,6 +34,12 @@
   - type: DefibrillatorHideInHand
   - type: Item
     size: Ginormous # too big for bags and boxes
+  # Both slots must be declared explicitly: YAML inheritance replaces the whole
+  # containers dict, and ItemSlotsSystem creates a container for every slot at runtime.
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+      paddles_slot: !type:ContainerSlot
   - type: ItemSlots
     slots:
       cell_slot:
