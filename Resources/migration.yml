@@ -1031,6 +1031,7 @@ VendingMachineMedical: RandomVendingMedical
 VendingMachineMedicalBase: RandomVendingMedicalCivilian
 VendingMachineWallMedical: RandomVendingMedicalWall
 VendingMachineWallMedicalCivilian: RandomVendingMedicalCivilianWall
+Bush: FloraBigBush01
 # Pirate: stairs
 Stairs: SteelCenterStairs
 StairStage: SteelCenterStairs
