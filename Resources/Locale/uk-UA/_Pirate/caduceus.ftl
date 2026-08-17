@@ -43,7 +43,7 @@ caduceus-toggle-cooldown = Слиз ще не готовий змінити фо
 
 caduceus-fpoon-permanent = ВБИЙСЯ
 caduceus-inactive = Слиз крутиться в своїй вязниці, приємно вібруючи.
-caduceus-fpoon-prescription = Скажи "Я не маю нічого, крім мого смутку, і я бажаю нічого більше", після чого вдар своєю зброєю по своїй голові.
+caduceus-fpoon-prescription = Скажи "Я не маю нічого, крім мого смутку, і я бажаю нічого більше, після чого вдар своєю зброєю по своїй голові.
 
 # --- Fpoon self-execution ---
 caduceus-fpoon-self-initial = Ви підносите ложко-виделку до себе...

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.ActionBlocker;
-using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Containers.ItemSlots; // Pirate
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
-using Content.Shared.Whitelist;
+using Content.Shared.Whitelist; // Pirate
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 
@@ -19,8 +19,8 @@ public sealed class BackEquipSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _slots = default!; // Pirate
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!; // Pirate
 
     public override void Initialize()
     {
@@ -96,7 +96,7 @@ public sealed class BackEquipSystem : EntitySystem
             _inventory.TryEquip(uid, handItem.Value, equipmentSlot, predicted: true, checkDoafter: true);
             return;
         }
-
+        // Pirate
         // The slot item is an item-slot holder (e.g. a sheath): sheathe a held weapon into an
         // empty matching slot, or unsheathe the slotted weapon into an empty hand.
         if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
@@ -140,6 +140,7 @@ public sealed class BackEquipSystem : EntitySystem
             _slots.TryInsertFromHand(slotItem, toInsertTo, uid, hands, excludeUserAudio: true);
             return;
         }
+        // Pirate end
 
         if (handItem != null)
             return;
