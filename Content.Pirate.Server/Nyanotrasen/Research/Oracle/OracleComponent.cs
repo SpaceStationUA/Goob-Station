@@ -96,7 +96,8 @@ public sealed partial class OracleComponent : Component
         "ClothingBackpackSatchelHolding",
         "ClothingBackpackDuffelHolding",
         "TrashBagOfHolding",
-        "BluespaceCrystal",
+        "MaterialBSCrystal",
+        "MaterialBSCrystal1",
         "InsulativeHeadcage",
         "CrystalNormality",
     };

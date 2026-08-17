@@ -21,6 +21,10 @@ public sealed class IndexPagerSystem : EntitySystem
 {
     public const int FpoonKarmaThreshold = 10;
 
+    // The Index shows its face - a fullscreen jumpscare, nothing else.
+    // A raw texture, like the Thunderstrike smite, because the RSI loader rejects non-icon-multiple sizes.
+    public const string JumpscareImage = "/Textures/_Pirate/Interface/Misc/karmic_consequence.png";
+
     private static readonly SoundSpecifier BeeperOpen =
         new SoundPathSpecifier("/Audio/_Pirate/Items/Pager/index_beeper_opening.ogg");
 
@@ -133,11 +137,13 @@ public sealed class IndexPagerSystem : EntitySystem
         var hasMember = member != null;
         var name = hasMember ? Identity.Name(owner!.Value, EntityManager) : string.Empty;
 
+        var lastPrescription = pager.Comp.Prescriptions.Count > 0 ? pager.Comp.Prescriptions[^1] : string.Empty;
         var state = new IndexAdminBoundUserInterfaceState(
             member?.KarmicConsequence ?? 0,
             name,
             hasMember,
-            member?.NextWeaponFpoon ?? false);
+            member?.NextWeaponFpoon ?? false,
+            lastPrescription);
 
         _ui.SetUiState(pager.Owner, IndexAdminUiKey.Key, state);
     }
