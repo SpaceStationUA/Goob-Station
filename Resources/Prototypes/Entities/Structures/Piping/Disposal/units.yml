@@ -130,6 +130,7 @@
   description: A pneumatic mail delivery unit.
   components:
   - type: Sprite
+    sprite: _Pirate/Structures/Piping/disposal.rsi # Pirate - resprite
     snapCardinals: true
     layers:
       - state: conmailing
