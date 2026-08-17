@@ -19,7 +19,7 @@
   parent: [BaseSword, BaseAntiPsionicWeapon, BaseMantisContraband]
   id: MantisMeleeGreatsword # The risk/reward option, highly likely to knock you on your ass and get you killed, extremely difficult to use effectively
   name: Faust # Part of the reason it's so punishing, aside from the challenge, is because antags could possibly use it against psions - it needs to be unreliable
-  description: "A mnemolith greatsword whose unstable resonance makes it treacherous to wield. Faust rebounds violently from any impact that does not strike a psion, whipping back into its bearer even if it merely grazes a wall. It must be properly wielded--without absolute focus, the blade resists. Unmatched against psionic and otherworldly threats, perilous against anything else."
+  description: "A mnemolith greatsword whose unstable resonance makes it treacherous to wield. Faust rebounds violently from any impact that does not strike a psion, whipping back into its bearer even if it merely grazes a wall. It must be properly wielded--without absolute focus, the blade resists. Unmatched against psionic and otherworldly threats, perilous against anything else. Faust know all outcomes."
   components:
   - type: Grammar # Faust is its name
     attributes:
@@ -51,7 +51,7 @@
         volume: -2
         variation: 0.05
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 0.3
     range: 1.85
     angle: 90
     maxTargets: 10 # When you see a stat that looks good, just remember that if you hit anything non-psionic, you lose
