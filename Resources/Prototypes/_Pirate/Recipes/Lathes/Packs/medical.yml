@@ -3,6 +3,4 @@
 - type: latheRecipePack
   id: DefibrillatorBeltsPirate
   recipes:
-  - DefibrillatorBeltCompact
-  - DefibrillatorBeltCMO
-  - DefibrillatorBeltCombat
+  - DefibrillatorBeltCompact # Pirate - only the standard belt defib is printable; CMO/Combat/NT variants are contraband and cannot be printed

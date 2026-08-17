@@ -1,20 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  id: DefibrillatorCompactEmpty
+  id: DefibrillatorBeltBase
   parent: DefibrillatorCompact
-  suffix: Empty
-  components:
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-
-- type: entity
-  id: DefibrillatorBeltCompact
-  parent: DefibrillatorCompact
-  name: belt defibrillator
-  description: A compact defibrillator with a belt clip, for medics who need their hands free.
+  abstract: true
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Medical/defibcompact.rsi
@@ -43,8 +32,6 @@
     channelDamage: 5
     channelChargeCost: 25
   - type: DefibrillatorHideInHand
-  - type: DefibrillatorSelfDrain
-    drainPerSecond: 0.05
   - type: Item
     size: Ginormous # too big for bags and boxes
   - type: ItemSlots
@@ -66,6 +53,15 @@
     slots: [belt]
 
 - type: entity
+  id: DefibrillatorBeltCompact
+  parent: DefibrillatorBeltBase
+  name: belt defibrillator
+  description: A compact defibrillator with a belt clip, for medics who need their hands free.
+  components:
+  - type: DefibrillatorSelfDrain
+    drainPerSecond: 0.05
+
+- type: entity
   id: DefibrillatorBeltCompactEmpty
   parent: DefibrillatorBeltCompact
   suffix: Empty
@@ -74,10 +70,17 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+      paddles_slot:
+        name: defibrillator-paddles-slot-name
+        startingItem: DefibrillatorPaddles
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - DefibrillatorPaddles
 
 - type: entity
   id: DefibrillatorBeltCMO
-  parent: [ DefibrillatorBeltCompact, BaseCommandContraband ]
+  parent: [ DefibrillatorBeltBase, BaseCommandContraband ]
   name: chief medical officer's belt defibrillator
   description: A premium belt defibrillator issued to the Chief Medical Officer. Pairs well with a chest rig.
   components:
@@ -114,18 +117,8 @@
           - DefibrillatorPaddles
 
 - type: entity
-  id: DefibrillatorBeltCMOEmpty
-  parent: DefibrillatorBeltCMO
-  suffix: Empty
-  components:
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-
-- type: entity
   id: DefibrillatorBeltCombat
-  parent: [ DefibrillatorBeltCompact, BaseSyndicateContraband ]
+  parent: [ DefibrillatorBeltBase, BaseSyndicateContraband ]
   name: combat belt defibrillator
   description: A rugged red belt defibrillator for field medics. Doubles as a taser in a pinch.
   components:
@@ -139,10 +132,6 @@
       shader: unshaded
     - state: nocell
       map: [ "enum.DefibrillatorChargeLayers.NoCell" ]
-      visible: false
-      shader: unshaded
-    - state: emagged
-      map: [ "enum.DefibrillatorChargeLayers.Emagged" ]
       visible: false
       shader: unshaded
   - type: DefibrillatorHideInHand
@@ -165,16 +154,6 @@
           - DefibrillatorPaddles
 
 - type: entity
-  id: DefibrillatorBeltCombatEmpty
-  parent: DefibrillatorBeltCombat
-  suffix: Empty
-  components:
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-
-- type: entity
   id: DefibrillatorBeltNT
   parent: [ DefibrillatorBeltCombat, BaseCentcommContraband ]
   name: elite Nanotrasen defibrillator
@@ -190,10 +169,6 @@
       shader: unshaded
     - state: nocell
       map: [ "enum.DefibrillatorChargeLayers.NoCell" ]
-      visible: false
-      shader: unshaded
-    - state: emagged
-      map: [ "enum.DefibrillatorChargeLayers.Emagged" ]
       visible: false
       shader: unshaded
   - type: DefibrillatorHideInHand
@@ -224,6 +199,13 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+      paddles_slot:
+        name: defibrillator-paddles-slot-name
+        startingItem: DefibrillatorPaddlesNT
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - DefibrillatorPaddles
 
 # Shock paddles — detachable electrodes stored in the belt defibrillators.
 # Using them on a target zaps it through the parent belt (charge, cooldown, sounds).

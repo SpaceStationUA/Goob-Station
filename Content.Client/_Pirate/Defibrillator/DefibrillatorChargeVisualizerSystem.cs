@@ -41,9 +41,13 @@ public sealed class DefibrillatorChargeVisualizerSystem : VisualizerSystem<Defib
             && missing;
         args.Sprite.LayerSetVisible(DefibrillatorChargeLayers.NoCell, noCell);
 
-        var emagged = AppearanceSystem.TryGetData<bool>(uid, DefibrillatorChargeVisuals.Emagged, out var isEmagged, args.Component)
-            && isEmagged;
-        args.Sprite.LayerSetVisible(DefibrillatorChargeLayers.Emagged, emagged);
+        // Some belts (combat/NT) are emag-immune and don't define the Emagged layer at all.
+        if (args.Sprite.LayerMapTryGet(DefibrillatorChargeLayers.Emagged, out _))
+        {
+            var emagged = AppearanceSystem.TryGetData<bool>(uid, DefibrillatorChargeVisuals.Emagged, out var isEmagged, args.Component)
+                && isEmagged;
+            args.Sprite.LayerSetVisible(DefibrillatorChargeLayers.Emagged, emagged);
+        }
     }
 }
 

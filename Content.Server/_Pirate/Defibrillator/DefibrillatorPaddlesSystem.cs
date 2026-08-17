@@ -76,7 +76,7 @@ public sealed partial class DefibrillatorPaddlesSystem : EntitySystem
                 continue;
 
             // Only snap back when actually held by a mob (i.e. we moved with the holder).
-            if (xform.ParentUid == uid || !HasComp<MobStateComponent>(xform.ParentUid))
+            if (!HasComp<MobStateComponent>(xform.ParentUid))
                 continue;
 
             // Don't snap back while the paddles are still inside the belt's own slot.
