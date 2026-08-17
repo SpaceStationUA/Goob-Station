@@ -53,7 +53,7 @@
   id: PlatingDamaged
   parent: BasePlating
   name: tiles-plating
-  sprite: /Textures/Tiles/plating_damaged.png
+  sprite: /Textures/_Pirate/Tiles/plating/damaged.png # Pirate - resprite
   variants: 3
   placementVariants:
   - 1.0
@@ -91,7 +91,7 @@
   id: PlatingSnow
   name: tiles-snow-plating
   parent: BasePlating
-  sprite: /Textures/Tiles/snow_plating.png #Not in the snow planet RSI because it doesn't have any metadata. Should probably be moved to its own folder later.
+  sprite: /Textures/_Pirate/Tiles/plating/snow.png # Pirate - resprite
   baseTurf: Lattice
   isSubfloor: true
   # Goobstation - Fireaxe plating prying

@@ -41,156 +41,252 @@
 
 - type: entity
   id: BannerNanotrasen
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: nanotrasen banner
   description: A banner displaying the Nanotrasen logo. It looks rather cheap.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
-    node: BannerNanotrasenNode # Frontier    
+    node: BannerNanotrasenNode # Frontier
 
 - type: entity
   id: BannerCargo
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: cargo banner
   description: A banner displaying the colors of the cargo department. Not. Cargonia.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_cargo
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner_cargo
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner_cargo-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
-    node: BannerCargoNode # Frontier    
+    node: BannerCargoNode # Frontier
 
 - type: entity
   id: BannerEngineering
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: engineering banner
   description: A banner displaying the colors of the engineering department. Scrungularty.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_engineering
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner_engineering
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner_engineering-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerEngineeringNode # Frontier
 
 - type: entity
   id: BannerMedical
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: medical banner
   description: A banner displaying the colors of the medical department. How sterile.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_medical
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner_medical
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner_medical-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerMedicalNode # Frontier
 
 - type: entity
   id: BannerRevolution
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: revolution banner
   description: A banner displaying revolution. Viva!
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_revolution
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner_revolution
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner_revolution-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerRevolutionNode # Frontier
 
 - type: entity
   id: BannerSyndicate
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: syndicate banner
   description: A banner from which, according to the syndicate, you should feel hatred for NT.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_syndicate
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner_syndicate
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner_syndicate-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerSyndicateNode # Frontier
 
 - type: entity
   id: BannerScience
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: science banner
   description: A banner displaying the colors of the science department. Where science has no bounds, and regulations are rarely followed.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_science
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner_science
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner_science-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerScienceNode # Frontier
 
 - type: entity
   id: BannerSecurity
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: security banner
   description: A banner displaying the colors of the security department. You're surprised it's not vandalised.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner_security
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner_security
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner_security-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerSecurityNode # Frontier
 
 - type: entity
   id: BannerBlue
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: blue banner
   description: A banner displaying the color blue. Dabudidabudai.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-blue
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner-blue
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner-blue-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerBlueNode # Frontier
 
 - type: entity
   id: BannerRed
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: red banner
   description: A banner displaying the color red. The edgy one.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-red
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner-red
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner-red-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerRedNode # Frontier
 
 - type: entity
   id: BannerYellow
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: yellow banner
   description: A banner displaying the color yellow. Reminds you of ducks and lemon stands.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-yellow
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner-yellow
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner-yellow-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerYellowNode # Frontier
 
 - type: entity
   id: BannerGreen
-  parent: BannerBase
+  parent: BannerBaseTP # Pirate edit
   name: green banner
   description: A banner displaying the color green. Grass, leaves, guacamole.
   components:
   - type: Sprite
-    sprite: Structures/Decoration/banner.rsi
-    state: banner-green
+  # Pirate edit start
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner-green
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: banner-green-rolled
+      map: ["foldedLayer"]
+      visible: false
+  # Pirate edit end
   - type: Construction # Frontier
     graph: BannersGraph # Frontier
     node: BannerGreenNode # Frontier
