@@ -158,7 +158,7 @@
   id: FloorSteel
   parent: BaseStationTile
   name: tiles-steel-floor
-  sprite: /Textures/Tiles/steel.png
+  sprite: /Textures/_Pirate/Tiles/steel.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -171,7 +171,7 @@
   id: FloorSteelCheckerLight
   parent: BaseStationTile
   name: tiles-steel-floor-checker-light
-  sprite: /Textures/Tiles/cafeteria.png
+  sprite: /Textures/_Pirate/Tiles/cafeteria.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -184,7 +184,7 @@
   id: FloorSteelCheckerDark
   parent: BaseStationTile
   name: tiles-steel-floor-checker-dark
-  sprite: /Textures/Tiles/checker_dark.png
+  sprite: /Textures/_Pirate/Tiles/checker_dark.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -197,7 +197,7 @@
   id: FloorSteelMini
   parent: BaseStationTile
   name: tiles-steel-floor-mini
-  sprite: /Textures/Tiles/steel_mini.png
+  sprite: /Textures/_Pirate/Tiles/steel_mini.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -210,7 +210,7 @@
   id: FloorSteelPavement
   parent: BaseStationTile
   name: tiles-steel-floor-pavement
-  sprite: /Textures/Tiles/steel_pavement.png
+  sprite: /Textures/_Pirate/Tiles/steel_pavement.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -223,7 +223,7 @@
   id: FloorSteelDiagonal
   parent: BaseStationTile
   name: tiles-steel-floor-diagonal
-  sprite: /Textures/Tiles/steel_diagonal.png
+  sprite: /Textures/_Pirate/Tiles/steel_diagonal.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -236,14 +236,14 @@
   id: FloorSteelOffset
   parent: BaseStationTile
   name: tiles-steel-floor-offset
-  sprite: /Textures/Tiles/steel_offset.png
+  sprite: /Textures/_Pirate/Tiles/steel_offset.png # Pirate - resprite
   itemDrop: FloorTileItemSteelOffset
 
 - type: tile
   id: FloorSteelMono
   parent: BaseStationTile
   name: tiles-steel-floor-mono
-  sprite: /Textures/Tiles/steel_mono.png
+  sprite: /Textures/_Pirate/Tiles/steel_mono.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -256,7 +256,7 @@
   id: FloorSteelPavementVertical
   parent: BaseStationTile
   name: tiles-steel-floor-pavement-vertical
-  sprite: /Textures/Tiles/steel_pavement_vertical.png
+  sprite: /Textures/_Pirate/Tiles/steel_pavement_vertical.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -269,7 +269,7 @@
   id: FloorSteelHerringbone
   parent: BaseStationTile
   name: tiles-steel-floor-herringbone
-  sprite: /Textures/Tiles/steel_herringbone.png
+  sprite: /Textures/_Pirate/Tiles/steel_herringbone.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -282,7 +282,7 @@
   id: FloorSteelDiagonalMini
   parent: BaseStationTile
   name: tiles-steel-floor-diagonal-mini
-  sprite: /Textures/Tiles/steel_diagonal_mini.png
+  sprite: /Textures/_Pirate/Tiles/steel_diagonal_mini.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -313,7 +313,7 @@
   id: FloorPlastic
   parent: BaseStationTile
   name: tiles-plastic-floor
-  sprite: /Textures/Tiles/plastic.png
+  sprite: /Textures/_Pirate/Tiles/plastic.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -345,7 +345,7 @@
   id: FloorWhite
   parent: BaseStationTile
   name: tiles-white-floor
-  sprite: /Textures/Tiles/white.png
+  sprite: /Textures/_Pirate/Tiles/white.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -361,7 +361,7 @@
   id: FloorWhiteMini
   parent: BaseStationTile
   name: tiles-white-floor-mini
-  sprite: /Textures/Tiles/white_mini.png
+  sprite: /Textures/_Pirate/Tiles/white_mini.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -377,7 +377,7 @@
   id: FloorWhitePavement
   parent: BaseStationTile
   name: tiles-white-floor-pavement
-  sprite: /Textures/Tiles/white_pavement.png
+  sprite: /Textures/_Pirate/Tiles/white_pavement.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -393,7 +393,7 @@
   id: FloorWhiteDiagonal
   parent: BaseStationTile
   name: tiles-white-floor-diagonal
-  sprite: /Textures/Tiles/white_diagonal.png
+  sprite: /Textures/_Pirate/Tiles/white_diagonal.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -409,7 +409,7 @@
   id: FloorWhiteOffset
   parent: BaseStationTile
   name: tiles-white-floor-offset
-  sprite: /Textures/Tiles/white_offset.png
+  sprite: /Textures/_Pirate/Tiles/white_offset.png # Pirate - resprite
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemWhiteOffset
@@ -419,7 +419,7 @@
   id: FloorWhiteMono
   parent: BaseStationTile
   name: tiles-white-floor-mono
-  sprite: /Textures/Tiles/white_mono.png
+  sprite: /Textures/_Pirate/Tiles/white_mono.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -435,7 +435,7 @@
   id: FloorWhitePavementVertical
   parent: BaseStationTile
   name: tiles-white-floor-pavement-vertical
-  sprite: /Textures/Tiles/white_pavement_vertical.png
+  sprite: /Textures/_Pirate/Tiles/white_pavement_vertical.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -451,7 +451,7 @@
   id: FloorWhiteHerringbone
   parent: BaseStationTile
   name: tiles-white-floor-herringbone
-  sprite: /Textures/Tiles/white_herringbone.png
+  sprite: /Textures/_Pirate/Tiles/white_herringbone.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -467,7 +467,7 @@
   id: FloorWhiteDiagonalMini
   parent: BaseStationTile
   name: tiles-white-floor-diagonal-mini
-  sprite: /Textures/Tiles/white_diagonal_mini.png
+  sprite: /Textures/_Pirate/Tiles/white_diagonal_mini.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -483,7 +483,7 @@
   id: FloorWhitePlastic
   parent: BaseStationTile
   name: tiles-plastic-white-floor
-  sprite: /Textures/Tiles/white_plastic.png
+  sprite: /Textures/_Pirate/Tiles/white_plastic.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -499,7 +499,7 @@
   id: FloorDark
   parent: BaseStationTile
   name: tiles-dark-floor
-  sprite: /Textures/Tiles/dark.png
+  sprite: /Textures/_Pirate/Tiles/dark.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -514,7 +514,7 @@
   id: FloorDarkMini
   parent: BaseStationTile
   name: tiles-dark-floor-mini
-  sprite: /Textures/Tiles/dark_mini.png
+  sprite: /Textures/_Pirate/Tiles/dark_mini.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -529,7 +529,7 @@
   id: FloorDarkPavement
   parent: BaseStationTile
   name: tiles-dark-floor-pavement
-  sprite: /Textures/Tiles/dark_pavement.png
+  sprite: /Textures/_Pirate/Tiles/dark_pavement.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -545,7 +545,7 @@
   id: FloorDarkDiagonal
   parent: BaseStationTile
   name: tiles-dark-floor-diagonal
-  sprite: /Textures/Tiles/dark_diagonal.png
+  sprite: /Textures/_Pirate/Tiles/dark_diagonal.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -561,7 +561,7 @@
   id: FloorDarkOffset
   parent: BaseStationTile
   name: tiles-dark-floor-offset
-  sprite: /Textures/Tiles/dark_offset.png
+  sprite: /Textures/_Pirate/Tiles/dark_offset.png # Pirate - resprite
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemDarkOffset
@@ -571,7 +571,7 @@
   id: FloorDarkMono
   parent: BaseStationTile
   name: tiles-dark-floor-mono
-  sprite: /Textures/Tiles/dark_mono.png
+  sprite: /Textures/_Pirate/Tiles/dark_mono.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -587,7 +587,7 @@
   id: FloorDarkPavementVertical
   parent: BaseStationTile
   name: tiles-dark-floor-pavement-vertical
-  sprite: /Textures/Tiles/dark_pavement_vertical.png
+  sprite: /Textures/_Pirate/Tiles/dark_pavement_vertical.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -603,7 +603,7 @@
   id: FloorDarkHerringbone
   parent: BaseStationTile
   name: tiles-dark-floor-herringbone
-  sprite: /Textures/Tiles/dark_herringbone.png
+  sprite: /Textures/_Pirate/Tiles/dark_herringbone.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -619,7 +619,7 @@
   id: FloorDarkDiagonalMini
   parent: BaseStationTile
   name: tiles-dark-floor-diagonal-mini
-  sprite: /Textures/Tiles/dark_diagonal_mini.png
+  sprite: /Textures/_Pirate/Tiles/dark_diagonal_mini.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -635,7 +635,7 @@
   id: FloorDarkPlastic
   parent: BaseStationTile
   name: tiles-plastic-dark-floor
-  sprite: /Textures/Tiles/dark_plastic.png
+  sprite: /Textures/_Pirate/Tiles/dark_plastic.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -671,7 +671,7 @@
   id: FloorReinforced
   parent: BaseStationTile
   name: tiles-reinforced-floor
-  sprite: /Textures/Tiles/reinforced.png
+  sprite: /Textures/_Pirate/Tiles/reinforced.png # Pirate - resprite
   footstepSounds:
     collection: FootstepHull
   itemDrop: PartRodMetal1
@@ -681,7 +681,7 @@
   id: FloorMono
   parent: BaseStationTile
   name: tiles-mono-floor
-  sprite: /Textures/Tiles/mono.png
+  sprite: /Textures/_Pirate/Tiles/mono.png # Pirate - resprite
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemMono
@@ -716,7 +716,7 @@
   id: FloorElevatorShaft
   parent: BaseStationTile
   name: tiles-elevator-shaft
-  sprite: /Textures/Tiles/elevator_shaft.png
+  sprite: /Textures/_Pirate/Tiles/elevator_shaft.png # Pirate - resprite
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemElevatorShaft
@@ -754,7 +754,7 @@
   id: FloorSteelLime
   parent: BaseStationTile
   name: tiles-lime-floor
-  sprite: /Textures/Tiles/lime.png
+  sprite: /Textures/_Pirate/Tiles/lime.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -767,7 +767,7 @@
   id: FloorMining
   parent: BaseStationTile
   name: tiles-mining-tile
-  sprite: /Textures/Tiles/mining_floor.png
+  sprite: /Textures/_Pirate/Tiles/mining_floor.png # Pirate - resprite
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemMining
@@ -777,7 +777,7 @@
   id: FloorMiningDark
   parent: BaseStationTile
   name: tiles-mining-dark-tile
-  sprite: /Textures/Tiles/mining_floor_dark.png
+  sprite: /Textures/_Pirate/Tiles/mining_floor_dark.png # Pirate - resprite
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemMiningDark
@@ -787,7 +787,7 @@
   id: FloorMiningLight
   parent: BaseStationTile
   name: tiles-mining-light-tile
-  sprite: /Textures/Tiles/mining_floor_light.png
+  sprite: /Textures/_Pirate/Tiles/mining_floor_light.png # Pirate - resprite
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemMiningLight
@@ -798,7 +798,7 @@
   id: FloorFreezer
   parent: BaseStationTile
   name: tiles-freezer
-  sprite: /Textures/Tiles/freezer.png
+  sprite: /Textures/_Pirate/Tiles/freezer.png # Pirate - resprite
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemFreezer
@@ -808,7 +808,7 @@
   id: FloorShowroom
   parent: BaseStationTile
   name: tiles-showroom-floor
-  sprite: /Textures/Tiles/showroom.png
+  sprite: /Textures/_Pirate/Tiles/showroom.png # Pirate - resprite
   itemDrop: FloorTileItemShowroom
   tileRipResistance: 100 # Goob
 
@@ -816,7 +816,7 @@
   id: FloorHydro
   parent: BaseStationTile
   name: tiles-hydro-floor
-  sprite: /Textures/Tiles/hydro.png
+  sprite: /Textures/_Pirate/Tiles/hydro.png # Pirate - resprite
   itemDrop: FloorTileItemHydro
   tileRipResistance: 50 # Goob
 
@@ -846,7 +846,7 @@
   id: FloorMime
   parent: BaseStationTile
   name: tiles-mime-floor
-  sprite: /Textures/Tiles/mime.png
+  sprite: /Textures/_Pirate/Tiles/mime.png # Pirate - resprite
   itemDrop: FloorTileItemMime
   tileRipResistance: 50 # Goob
 
@@ -854,7 +854,7 @@
   id: FloorKitchen
   parent: BaseStationTile
   name: tiles-kitchen-floor
-  sprite: /Textures/Tiles/kitchen.png
+  sprite: /Textures/_Pirate/Tiles/kitchen.png # Pirate - resprite
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemKitchen
@@ -864,7 +864,7 @@
   id: FloorLaundry
   parent: BaseStationTile
   name: tiles-laundry-floor
-  sprite: /Textures/Tiles/laundry.png
+  sprite: /Textures/_Pirate/Tiles/laundry.png # Pirate - resprite
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemLaundry
@@ -1144,13 +1144,14 @@
   id: FloorShuttleWhite
   parent: BaseStationTile
   name: tiles-white-shuttle-floor
-  sprite: /Textures/Tiles/shuttlewhite.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  sprite: /Textures/_Pirate/Tiles/shuttlewhite.png # Pirate - resprite start
+  # variants: 4
+  # placementVariants:
+  # - 1.0
+  # - 1.0
+  # - 1.0
+  # - 1.0
+  # Pirate - resprite end
   itemDrop: FloorTileItemShuttleWhite
 
 - type: tile
@@ -1170,7 +1171,7 @@
   id: FloorShuttleBlack
   parent: BaseStationTile
   name: tiles-black-shuttle-floor
-  sprite: /Textures/Tiles/shuttleblack.png
+  sprite: /Textures/_Pirate/Tiles/shuttleblack.png # Pirate - resprite
   #variants: 4 # Trauma - no
   #placementVariants:
   #- 1.0
@@ -1183,26 +1184,28 @@
   id: FloorShuttleBlue
   parent: BaseStationTile
   name: tiles-blue-shuttle-floor
-  sprite: /Textures/Tiles/shuttleblue.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  sprite: /Textures/_Pirate/Tiles/shuttleblue.png # Pirate - resprite start
+  # variants: 4
+  # placementVariants:
+  # - 1.0
+  # - 1.0
+  # - 1.0
+  # - 1.0
+  # Pirate - resprite end
   itemDrop: FloorTileItemShuttleBlue
 
 - type: tile
   id: FloorShuttleOrange
   parent: BaseStationTile
   name: tiles-orange-shuttle-floor
-  sprite: /Textures/Tiles/shuttleorange.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  sprite: /Textures/_Pirate/Tiles/shuttleorange.png # Pirate - resprite start
+  # variants: 4
+  # placementVariants:
+  # - 1.0
+  # - 1.0
+  # - 1.0
+  # - 1.0
+  # Pirate - resprite end
   itemDrop: FloorTileItemShuttleOrange
 
 - type: tile
@@ -1222,7 +1225,7 @@
   id: FloorShuttleRed
   parent: BaseStationTile
   name: tiles-red-shuttle-floor
-  sprite: /Textures/Tiles/shuttlered.png
+  sprite: /Textures/_Pirate/Tiles/shuttlered.png # Pirate - resprite
   #variants: 4 # Trauma - no
   #placementVariants:
   #- 1.0
@@ -1237,7 +1240,7 @@
   id: FloorGold
   parent: BaseStationTile
   name: tiles-gold-tile
-  sprite: /Textures/Tiles/gold.png
+  sprite: /Textures/_Pirate/Tiles/gold.png # Pirate - resprite
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemGold
@@ -1258,7 +1261,7 @@
   parent: BaseStationTile
   name: tiles-glass-floor
   zTransparent: true # Pirate: multiz
-  sprite: /Textures/Tiles/glass.png
+  sprite: /Textures/_Pirate/Tiles/glass.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -1275,7 +1278,7 @@
   parent: BaseStationTile
   name: tiles-reinforced-glass-floor
   zTransparent: true # Pirate: multiz
-  sprite: /Textures/Tiles/rglass.png
+  sprite: /Textures/_Pirate/Tiles/rglass.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -1304,7 +1307,7 @@
   id: FloorGreenCircuit
   parent: BaseStationTile
   name: tiles-green-circuit-floor
-  sprite: /Textures/Tiles/green_circuit.png
+  sprite: /Textures/_Pirate/Tiles/green_circuit.png # Pirate - resprite
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemGCircuit
@@ -1314,7 +1317,7 @@
   id: FloorBlueCircuit
   parent: BaseStationTile
   name: tiles-blue-circuit-floor
-  sprite: /Textures/Tiles/blue_circuit.png
+  sprite: /Textures/_Pirate/Tiles/blue_circuit.png # Pirate - resprite
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemBCircuit
@@ -1324,7 +1327,7 @@
   id: FloorRedCircuit
   parent: BaseStationTile
   name: tiles-red-circuit-floor
-  sprite: /Textures/Tiles/red_circuit.png
+  sprite: /Textures/_Pirate/Tiles/red_circuit.png # Pirate - resprite
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemRCircuit
@@ -1356,7 +1359,14 @@
 - type: tile
   id: FloorGrass
   name: tiles-planet-grass-floor
-  sprite: /Textures/Tiles/grass.png
+  sprite: /Textures/_Pirate/Tiles/grass.png # Pirate - resprite start
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  # Pirate - resprite end
   baseTurf: FloorDirt
   isSubfloor: true
   footstepSounds:
@@ -1368,7 +1378,14 @@
 - type: tile
   id: FloorGrassJungle
   name: tiles-jungle-grass-floor
-  sprite: /Textures/Tiles/grassjungle.png
+  sprite: /Textures/_Pirate/Tiles/grassjungle.png # Pirate - resprite
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  # Pirate - resprite end
   baseTurf: FloorDirt
   isSubfloor: true
   footstepSounds:
@@ -1380,7 +1397,7 @@
 - type: tile
   id: FloorGrassDark
   name: tiles-dark-grass-floor
-  sprite: /Textures/Tiles/grassdark.png
+  sprite: /Textures/_Pirate/Tiles/grassdark.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -1397,7 +1414,7 @@
 - type: tile
   id: FloorGrassLight
   name: tiles-light-grass-floor
-  sprite: /Textures/Tiles/grasslight.png
+  sprite: /Textures/_Pirate/Tiles/grasslight.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -1813,7 +1830,7 @@
   id: FloorReinforcedHardened
   parent: BaseStationTile
   name: tiles-super-reinforced-floor
-  sprite: /Textures/Tiles/super_reinforced.png
+  sprite: /Textures/_Pirate/Tiles/super_reinforced.png # Pirate - resprite
   footstepSounds:
     collection: FootstepHull
   itemDrop: PartRodMetal1 #same case as FloorHull
