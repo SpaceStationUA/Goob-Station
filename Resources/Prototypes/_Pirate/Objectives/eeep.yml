@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseSurviveObjective
   id: EeepSurviveObjective
-  name: Live a sheep's life or evolve
-  description: Keep living as an electric sheep, or evolve into your adult form.
+  name: "Живи овечим життям або еволюціонуй"
+  description: "Продовжуй жити як електрична вівця або еволюціонуй у дорослу форму."
   components:
   - type: Objective
     difficulty: 0

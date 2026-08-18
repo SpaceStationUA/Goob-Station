@@ -2,7 +2,6 @@
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
-using Content.Shared.Mood;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -86,12 +85,6 @@ public sealed partial class EdibleComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? UseSound;
-
-    /// <summary>
-    /// Pirate: mood effects applied when this edible is voluntarily consumed.
-    /// </summary>
-    [DataField]
-    public List<ProtoId<MoodEffectPrototype>> MoodletsOnEat = new();
 
     /// <summary>
     /// Verb, icon, and sound data for our edible.

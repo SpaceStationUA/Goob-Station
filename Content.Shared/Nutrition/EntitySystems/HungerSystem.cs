@@ -2,16 +2,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
-using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Mood;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusIcon;
-using Robust.Shared.Configuration;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -21,8 +17,6 @@ namespace Content.Shared.Nutrition.EntitySystems;
 public sealed class HungerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
@@ -67,8 +61,7 @@ public sealed class HungerSystem : EntitySystem
 
     private void OnRefreshMovespeed(EntityUid uid, HungerComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        if (_config.GetCVar(CCVars.MoodEnabled)
-            || component.CurrentThreshold > HungerThreshold.Starving)
+        if (component.CurrentThreshold > HungerThreshold.Starving)
             return;
 
         if (_jetpack.IsUserFlying(uid))
@@ -159,16 +152,7 @@ public sealed class HungerSystem : EntitySystem
 
         if (GetMovementThreshold(component.CurrentThreshold) != GetMovementThreshold(component.LastThreshold))
         {
-            if (!_config.GetCVar(CCVars.MoodEnabled))
-                _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-        }
-
-        if (_config.GetCVar(CCVars.MoodEnabled) && _net.IsServer)
-        {
-            var moodThreshold = component.CurrentThreshold == HungerThreshold.Dead
-                ? HungerThreshold.Starving
-                : component.CurrentThreshold;
-            RaiseLocalEvent(uid, new MoodEffectEvent("Hunger" + moodThreshold)); // Pirate
+            _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
         }
 
         if (component.HungerThresholdAlerts.TryGetValue(component.CurrentThreshold, out var alertId))

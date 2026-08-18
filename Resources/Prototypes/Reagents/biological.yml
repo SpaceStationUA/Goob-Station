@@ -51,11 +51,6 @@
   color: "#808A51"
   recognizable: true
   physicalDesc: reagent-physical-desc-slimy
-  metabolisms:
-    Drink:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: DrankInsectBlood
 
 - type: reagent
   id: Slime
@@ -125,14 +120,6 @@
   color: "#162581"
   recognizable: true
   physicalDesc: reagent-physical-desc-metallic
-  metabolisms:
-    Drink:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: DrankBlood
-          conditions:
-          - !type:MetabolizerTypeCondition
-            type: [ Human ]
 
 - type: reagent
   parent: Blood
@@ -144,14 +131,6 @@
   color: "#7a8bf2"
   recognizable: true
   physicalDesc: reagent-physical-desc-pungent
-  metabolisms:
-    Drink:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: DrankBlood
-          conditions:
-          - !type:MetabolizerTypeCondition
-            type: [ Human ]
 
 - type: reagent
   id: ZombieBlood
@@ -167,8 +146,6 @@
       effects:
       - !type:SatiateThirst
         factor: -0.5
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: DrankZombieBlood
     Poison:
       effects:
       - !type:HealthChange
@@ -263,8 +240,6 @@
       - !type:AdjustReagent
         reagent: Nutriment
         amount: 0.1
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: DrankVomit
   footstepSound:
     collection: FootstepBlood
     params:

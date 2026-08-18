@@ -15,8 +15,7 @@
       whitelist:
         components: [HumanoidAppearance]
   action:
-    !type:MoodAction
-    effect: BeingPet
+    !type:NoOpAction
   effectFailure: null
 
 - type: Interaction
@@ -31,12 +30,5 @@
       blacklist:
         components: [HumanoidAppearance]
   action:
-    !type:ComplexAction
-    actions:
-    - !type:MoodAction
-      effect: BeingPet
-    - !type:OnUserAction
-      action:
-        !type:MoodAction
-        effect: PetAnimal
+    !type:NoOpAction
   effectFailure: null

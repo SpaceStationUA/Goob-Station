@@ -33,7 +33,6 @@ using Content.Shared._Shitmed.Damage;
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness.Systems;
 using Content.Shared.Chat;
-using Content.Shared.Mood;
 
 namespace Content.Server.Medical;
 
@@ -276,9 +275,6 @@ public sealed class DefibrillatorSystem : EntitySystem
             ? component.FailureSound
             : component.SuccessSound;
         _audio.PlayPvs(sound, uid);
-
-        if (wasDead && !dead && session != null)
-            RaiseLocalEvent(user, new MoodEffectEvent("SavedLife")); // Pirate - port EE mood system
 
         // if we don't have enough power left for another shot, turn it off
         if (!_powerCell.HasActivatableCharge(uid))

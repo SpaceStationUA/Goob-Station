@@ -84,8 +84,6 @@
       - !type:RemoveComponentEffect # goob edit
         component: DelayedKnockdown
         locale: reagent-effect-guidebook-remove-delayed-knockdown
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: StrongStimulant
     Medicine:
       effects:
       # Side effects
@@ -176,8 +174,6 @@
       - !type:SuppressPain # Shitmed Change
         amount: 1.2
         time: 10 # it accumulated 1.2*quantity and then exists for 30 seconds.
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: StrongStimulant
     Medicine:
       effects:
       # Side effects
@@ -294,8 +290,6 @@
       - !type:SuppressPain
           amount: 1.2
           time: 30 # it accumulated 1.2*quantity and then exists for 30 seconds.
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: StrongStimulant
     Medicine:
       effects:
       # Main effects
@@ -382,8 +376,6 @@
             Shock: -0.1
             Cold: -0.1
             Radiation: -0.1
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: NicotineBenefit
 
 # TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent
@@ -458,8 +450,6 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: SpaceDrugsBenefit
 
 - type: reagent
   id: Bananadine
@@ -653,8 +643,6 @@
         - !type:ReagentCondition
           reagent: TearGas
           min: 4
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: TearGasEffect
 
 - type: reagent
   id: Happiness
@@ -720,8 +708,6 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: PsicodineEffect
 
 - type: reagent # Assmos - /tg/ gases
   id: NitrosylPlasmide
