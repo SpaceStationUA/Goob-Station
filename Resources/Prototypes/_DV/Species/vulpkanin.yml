@@ -60,13 +60,15 @@
       required: false
     RightFoot:
       points: 2
-      required: false
+      required: true # Pirate - paw pads
+      defaultMarkings: [ VulpPadsRight ] # Pirate - paw pads
     LeftLeg:
       points: 2
       required: false
     LeftFoot:
       points: 2
-      required: false
+      required: true # Pirate - paw pads
+      defaultMarkings: [ VulpPadsLeft ] # Pirate - paw pads
     RightArm:
       points: 2
       required: false

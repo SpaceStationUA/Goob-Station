@@ -1,0 +1,19 @@
+- type: marking
+  id: VulpPadsLeft
+  markingCategory: LeftFoot
+  bodyPart: LFoot
+  speciesRestriction: [Vulpkanin]
+  coloration: PawPads
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/foot.rsi
+      state: l_pads
+
+- type: marking
+  id: VulpPadsRight
+  markingCategory: RightFoot
+  bodyPart: RFoot
+  speciesRestriction: [Vulpkanin]
+  coloration: PawPads
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/foot.rsi
+      state: r_pads

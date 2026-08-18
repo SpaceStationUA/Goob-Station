@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Client.Player; // Pirate ckey for restricted players
+using Robust.Shared.Prototypes; // Pirate - Marking coloration clamp
 
 namespace Content.Client.Humanoid;
 
@@ -17,6 +18,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!; // Pirate ckey for restricted players
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Pirate - Marking coloration clamp
 
     private readonly SpriteSystem _sprite;
 
@@ -260,6 +262,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
             selector.OnColorChanged += color =>
             {
                 marking.SetColor(colorIndex, color);
+                MarkingColoration.Clamp(marking, _prototypeManager); // Pirate - Marking coloration clamp
                 OnColorChanged!((_slot, marking));
             };
 

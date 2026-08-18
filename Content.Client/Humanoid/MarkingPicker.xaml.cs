@@ -441,7 +441,7 @@ public sealed partial class MarkingPicker : Control
                 }
             }
             // Pirate end - port Floofstation custom layers
-            
+
             var colorContainer = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical,
@@ -500,6 +500,7 @@ public sealed partial class MarkingPicker : Control
 
         var marking = new Marking(_currentMarkings.Markings[_selectedMarkingCategory][markingIndex]);
         marking.SetColor(colorIndex, _currentMarkingColors[colorIndex]);
+        MarkingColoration.Clamp(marking, _prototypeManager); // Pirate - Marking coloration clamp
         _currentMarkings.Replace(_selectedMarkingCategory, markingIndex, marking);
 
         OnMarkingColorChange?.Invoke(_currentMarkings);
