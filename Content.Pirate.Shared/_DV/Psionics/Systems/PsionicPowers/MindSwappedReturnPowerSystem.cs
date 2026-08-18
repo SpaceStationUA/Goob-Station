@@ -54,7 +54,8 @@ public sealed class MindSwappedReturnPowerSystem : BasePsionicPowerSystem<MindSw
         EnsureReturnAction(power);
 
         if (power.Comp.PowerInitFeedback is { } feedback && TryComp<ActorComponent>(power, out _))
-            RaiseLocalEvent(power, new PsionicPowerGainedEvent(power, Loc.GetString(feedback)));
+            // Broadcast so server-side handlers (e.g. the chat feedback) receive it.
+            RaiseLocalEvent(power, new PsionicPowerGainedEvent(power, Loc.GetString(feedback)), broadcast: true);
     }
 
     protected override void OnPowerUsed(Entity<MindSwappedReturnPowerComponent> psionic, ref MindSwappedReturnPowerActionEvent args)

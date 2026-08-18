@@ -1,6 +1,7 @@
 using Content.Server.Chat.Managers;
 using Content.Server._DV.Psionics.UI;
 using Content.Server.EUI;
+using Content.Shared.Shadowkin;
 using Content.Shared._DV.Psionics.Components;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared._DV.Psionics.Systems;
@@ -63,6 +64,23 @@ public sealed partial class PsionicSystem : SharedPsionicSystem
     {
         if (RollChance(potPsionic))
             _euiManager.OpenEui(new AcceptPsionicsEui(potPsionic, this), args.Player);
+    }
+
+    /// <summary>
+    /// Pirate: offers a psionic power to a target. Players are shown the same accept/deny
+    /// panel as the roundstart roll (mid-round variant), so they choose whether to become
+    /// psionic. NPCs are granted a power directly so mid-round awakeners like the
+    /// noospheric storm still awaken them.
+    /// </summary>
+    public void OfferPsionicPower(Entity<PotentialPsionicComponent> potPsionic)
+    {
+        if (_playerManager.TryGetSessionByEntity(potPsionic, out var session))
+        {
+            _euiManager.OpenEui(new AcceptPsionicsEui(potPsionic, this, midRound: true), session);
+            return;
+        }
+
+        AddRandomPsionicPower(potPsionic, true);
     }
 
     /// <summary>

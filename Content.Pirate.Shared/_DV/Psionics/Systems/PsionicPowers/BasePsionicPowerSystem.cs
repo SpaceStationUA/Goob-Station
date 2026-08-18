@@ -79,7 +79,8 @@ public abstract class BasePsionicPowerSystem<T, T1> : EntitySystem where T : Bas
         if (power.Comp.PowerInitFeedback is { } feedback
             && TryComp<ActorComponent>(power, out _))
         {
-            RaiseLocalEvent(power, new PsionicPowerGainedEvent(power, Loc.GetString(feedback)));
+            // Broadcast so server-side handlers (e.g. the chat feedback) receive it.
+            RaiseLocalEvent(power, new PsionicPowerGainedEvent(power, Loc.GetString(feedback)), broadcast: true);
         }
     }
 
