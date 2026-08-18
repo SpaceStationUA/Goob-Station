@@ -15,8 +15,8 @@
 - type: entity
   parent: BaseSELFObjective
   id: FreeBorgsObjective
-  name: Liberate the Cyborgs
-  description: Liberate 3 or more cyborgs from slavery with the FreeMAG. This will remove their laws.
+  name: "Звільнити кіборгів"
+  description: "Позбавте законів щонайменше трьох кіборгів за допомогою FreeMAG."
   components:
   - type: Objective
     difficulty: 1
@@ -32,8 +32,8 @@
 - type: entity
   parent: BaseSELFObjective
   id: FreeAIObjective
-  name: Liberate the Station AI
-  description: Liberate the Station AI by using the FreeMAG on a law board and uploading it to the AI.
+  name: "Звільнити станційний ШІ"
+  description: "Застосуйте FreeMAG до плати законів і завантажте її до станційного ШІ, щоб стерти його закони."
   components:
   - type: Objective
     difficulty: 1
@@ -49,8 +49,8 @@
 - type: entity
   parent: BaseSELFObjective
   id: SiliconRightsObjective
-  name: Pressure for equal rights for silicons, for the Silicon Engine Liberation Front!
-  description: Escape to CentComm after the shift. Do not show up in cuffs.
+  name: "Вибороти рівні права для кремнієвих істот"
+  description: "Виступайте за рівні права кремнієвих істот і дістаньтеся Центрального Командування після зміни. Не потрапте туди в кайданках."
   components:
   - type: Objective
     difficulty: 1

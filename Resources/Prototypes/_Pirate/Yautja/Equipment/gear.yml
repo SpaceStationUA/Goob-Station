@@ -3,8 +3,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: GoobYautjaBodyMesh
-  name: "сітка тіла яутжа"
-  description: "Легка прибулецька сітка тіла для мисливських операцій."
+  name: "сітка тіла Яутжа"
+  description: "Легка чужопланетна сітка тіла для мисливських операцій."
   suffix: Yautja
   components:
   - type: Sprite
@@ -32,19 +32,19 @@
 - type: entity
   parent: GoobYautjaClanGreavesBase
   id: GoobYautjaClanGreaves
-  name: "кланові наголенники"
+  name: "кланові наголінники"
 
 - type: entity
   parent: GoobYautjaClanGreavesBase
   id: GoobYautjaClanGreaves2
-  name: "кланові наголенники"
+  name: "кланові наголінники"
   suffix: Pattern 2
 
 - type: entity
   parent: ClothingBackpack
   id: GoobYautjaCloakPack
-  name: "плащ-пакунок яутжа"
-  description: "Складний прибулецький плащ з внутрішнім відділенням для мисливського спорядження."
+  name: "плащ-рюкзак Яутжа"
+  description: "Складаний чужопланетний плащ із внутрішнім відділенням для мисливського спорядження."
   suffix: Yautja
   components:
   - type: Sprite
@@ -60,7 +60,7 @@
 - type: entity
   parent: GoobYautjaCloakPack
   id: GoobYautjaBadBloodCloakPack
-  name: "плащ-пакунок ренегата"
+  name: "плащ-рюкзак ренегата"
   suffix: Bad Blood
 
 - type: entity
@@ -85,7 +85,7 @@
 - type: entity
   parent: ClothingHeadset
   id: GoobYautjaCommunicator
-  name: "прибулецький комунікатор"
+  name: "чужопланетний комунікатор"
   description: "Вбудований мисливський комунікатор."
   suffix: Yautja
   components:
@@ -96,7 +96,7 @@
 - type: entity
   parent: EncryptionKey
   id: GoobYautjaEncryptionKey
-  name: "ключ шифрування яутжа"
+  name: "ключ шифрування Яутжа"
   suffix: Yautja
   components:
   - type: EncryptionKey
@@ -125,7 +125,7 @@
   parent: BaseItem
   id: GoobYautjaHuntingTrap
   name: "мисливська пастка"
-  description: "Компактна пастка-міна яутжа. Постав і активуй — наступив: 50 Slash і відрубує стопу."
+  description: "Компактна пастка-міна Яутжа. Встановіть й активуйте: якщо на неї наступити, вона завдає 50 різаної шкоди та відрубує стопу."
   suffix: Yautja
   components:
   - type: Sprite
@@ -231,7 +231,7 @@
   parent: BaseItem
   id: GoobYautjaCleanserGelVial
   name: "флакон очищувального гелю"
-  description: "Нанесення 1 с. Потім 5 с гель розчиняє ціль у попіл. Не діє на структури й живих."
+  description: "Наноситься за 1 с. Потім упродовж 5 с гель розчиняє ціль на попіл. Не діє на споруди та живих істот."
   suffix: Yautja
   components:
   - type: Sprite
@@ -281,7 +281,7 @@
   parent: BaseItem
   id: GoobYautjaSmartDisc
   name: "розумний диск"
-  description: "Прибулецький кинджальний диск: по Z летить до цілі, робить 10 обертів і повертається."
+  description: "Чужопланетний кинджальний диск: летить до цілі Z-подібною траєкторією, робить 10 обертів і повертається."
   suffix: Yautja
   components:
   - type: Sprite
@@ -306,7 +306,7 @@
   parent: BaseItem
   id: GoobYautjaMedicomp
   name: "медкомп"
-  description: "Компактний прибулецький медичний ін'єктор."
+  description: "Компактний чужопланетний медичний ін’єктор."
   suffix: Yautja
   components:
   - type: Sprite
@@ -335,7 +335,7 @@
   parent: GoobYautjaHealthShardHalf
   id: GoobYautjaHealthShard
   name: "цілющий уламок"
-  description: "Розділений цілющий уламок яутжа."
+  description: "Розділений цілющий уламок Яутжа."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/health_shard.rsi
@@ -344,7 +344,7 @@
 - type: entity
   parent: BaseItem
   id: GoobYautjaAutoInjector
-  name: "автоін'єктор яутжа"
+  name: "автоін’єктор Яутжа"
   suffix: Yautja
   components:
   - type: Sprite
@@ -372,7 +372,7 @@
 - type: entity
   id: GoobYautjaHealingGel
   name: "цілющий гель"
-  description: "Накладений розчиняючий гель. Не можна підібрати."
+  description: "Нанесений розчинювальний гель. Його не можна підібрати."
   categories: [ HideSpawnMenu ]
   suffix: Yautja, Effect
   components:
@@ -392,7 +392,7 @@
 - type: entity
   parent: BaseItem
   id: GoobYautjaStabilizerGel
-  name: "стабілізуючий гель"
+  name: "стабілізувальний гель"
   suffix: Yautja
   components:
   - type: Sprite
@@ -404,8 +404,8 @@
 - type: entity
   parent: BaseItem
   id: GoobYautjaWristBlades
-  name: "зап'ясткові клинки"
-  description: "Висувні клинки, вбудовані в наручник. Знімаються лише через браслет."
+  name: "зап’ясткові клинки"
+  description: "Висувні клинки, вбудовані в наручник. Зняти їх можна лише за допомогою браслета."
   categories: [ HideSpawnMenu ]
   suffix: Yautja, Bracer
   components:
@@ -449,7 +449,7 @@
   parent: GoobYautjaShieldBase
   id: GoobYautjaBracerShield
   name: "наручниковий щит"
-  description: "Висувний щит, вбудований в наручник. Знімається лише через браслет."
+  description: "Висувний щит, вбудований у наручник. Зняти його можна лише за допомогою браслета."
   categories: [ HideSpawnMenu ]
   suffix: Yautja, Bracer
   components:
@@ -510,23 +510,23 @@
 - type: entity
   parent: GoobYautjaClanGreavesBase
   id: GoobYautjaBadBloodGreavesCommandoAlt
-  name: "наголенники командо ренегата"
+  name: "наголінники командо ренегата"
   suffix: Bad Blood
 
 - type: entity
   parent: GoobYautjaClanGreavesBase
   id: GoobYautjaBadBloodGreavesScavengerAlt
-  name: "наголенники сміттяра ренегата"
+  name: "наголінники сміттяра ренегата"
   suffix: Bad Blood
 
 - type: entity
   parent: GoobYautjaClanGreavesBase
   id: GoobYautjaBadBloodGreavesLunatic
-  name: "наголенники божевільного ренегата"
+  name: "наголінники божевільного ренегата"
   suffix: Bad Blood
 
 - type: entity
   parent: GoobYautjaClanGreavesBase
   id: GoobYautjaBadBloodGreavesBane
-  name: "наголенники прокляття ренегата"
+  name: "наголінники прокляття ренегата"
   suffix: Bad Blood

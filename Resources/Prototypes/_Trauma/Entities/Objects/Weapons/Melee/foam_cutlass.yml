@@ -1,8 +1,8 @@
 - type: entity
   parent: Cutlass
   id: RealFoamCutlass
-  name: foam cutlass
-  description: Cosplay as a pirate and force your friends to walk the plank.
+  name: "пінний катлас"
+  description: "Вдавай із себе пірата й змушуй друзів ходити по дошці."
   suffix: Real
   components:
   - type: Sprite

@@ -3,8 +3,8 @@
 - type: entity
   id: PSAUnpowered
   parent: BaseItem
-  name: portable sensor array
-  description: A device used to detect electromagnetic irregularities that warp the visual spectrum.
+  name: "портативний сенсорний масив"
+  description: "Пристрій для виявлення електромагнітних аномалій, які викривляють видимий спектр."
   suffix: Unpowered
   components:
   - type: Sprite
