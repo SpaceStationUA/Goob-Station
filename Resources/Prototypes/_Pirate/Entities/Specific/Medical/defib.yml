@@ -76,6 +76,9 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+        blacklist:
+          components:
+          - BatterySelfRecharger
       paddles_slot:
         name: defibrillator-paddles-slot-name
         startingItem: DefibrillatorPaddles
@@ -165,6 +168,9 @@
   name: elite Nanotrasen defibrillator
   description: A state-of-the-art belt defibrillator issued to elite Nanotrasen operatives. Self-recharging battery, revives through thick clothing, and can deliver a nasty shock.
   components:
+  - type: Contraband
+    severity: Restricted
+    allowedDepartments: [ CentralCommand ]
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Medical/defibnt.rsi
     layers:

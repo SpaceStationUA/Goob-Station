@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared._Pirate.Defibrillator;
+using Content.Shared.Contraband;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Medical;
 using Content.Shared.Tag;
@@ -56,6 +57,8 @@ public sealed class DefibrillatorTest
                 Assert.That(itemSlots.TryGetSlot(compactEmpty, "cell_slot", out var emptyCell), "Printed belt lost its cell slot");
                 Assert.That(itemSlots.TryGetSlot(compactEmpty, "paddles_slot", out _), "Printed belt lost its paddles slot");
                 Assert.That(emptyCell!.Item, Is.Null, "Printed belt must spawn without a cell");
+                Assert.That(emptyCell.Blacklist?.Components, Does.Contain("BatterySelfRecharger"),
+                    "Printed belt should still blacklist self-recharging cells");
                 entMan.DeleteEntity(compactEmpty);
 
                 // Premium CMO belt: self-recharging, spawns with its own paddles.
@@ -70,6 +73,15 @@ public sealed class DefibrillatorTest
                 var combat = entMan.SpawnEntity("DefibrillatorBeltCombat", mapData.GridCoords);
                 Assert.That(tagSystem.HasTag(combat, "EmagImmune"), "Combat belt must be emag-immune");
                 entMan.DeleteEntity(combat);
+
+                // NT elite belt: overridden contraband to Restricted/CentralCommand (not Syndicate).
+                var nt = entMan.SpawnEntity("DefibrillatorBeltNT", mapData.GridCoords);
+                var ntContraband = entMan.GetComponent<ContrabandComponent>(nt);
+                Assert.That(ntContraband.Severity.Id, Is.EqualTo("Restricted"),
+                    "NT belt must be Restricted contraband, not Syndicate");
+                Assert.That(ntContraband.AllowedDepartments, Does.Contain(new("CentralCommand")),
+                    "NT belt must be restricted to CentralCommand department");
+                entMan.DeleteEntity(nt);
             });
         });
 

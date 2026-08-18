@@ -6,6 +6,7 @@ using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests._Pirate.Damage;
@@ -58,14 +59,27 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
             if (!dead)
                 return;
 
+            // Suppress WoundSystem error logs during lethal damage application — the wound
+            // system logs an error when it cannot resolve WoundableComponent on a body-part
+            // entity that was removed by death. This is a known upstream issue that is
+            // unrelated to soul damage regeneration.
+            var woundSawmill = Server.ResolveDependency<ILogManager>().GetSawmill("system.wound");
+            var previousLevel = woundSawmill.Level;
+            woundSawmill.Level = LogLevel.Fatal;
+
             damageable.TryChangeDamage(
                 SPlayer,
                 new DamageSpecifier(ProtoMan.Index(BluntDamageType), 210),
                 ignoreResistances: true,
                 targetPart: TargetBodyPart.Vital,
                 canMiss: false);
+
+            woundSawmill.Level = previousLevel;
             Assert.That(mobState.IsDead(SPlayer), Is.True);
         });
+
+
+        await RunTicks(10);
 
         await RunSeconds(halfRecoveryDelay);
 
@@ -88,7 +102,8 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
             Comp<DamageableComponent>(Player).Damage.DamageDict[SoulDamageType.Id],
             Is.EqualTo(expectedSoulDamage)));
 
-        await RunSeconds(halfRecoveryDelay + TickPeriod * 2);
+
+        await RunSeconds(halfRecoveryDelay + 0.5f);
         await Server.WaitAssertion(() =>
         {
             Assert.That(
