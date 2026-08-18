@@ -5,6 +5,7 @@ using Content.Shared.Charges.Systems;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
@@ -28,6 +29,7 @@ public sealed class ExtractionFultonSystem : SharedExtractionFultonSystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedFultonSystem _fulton = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
@@ -124,7 +126,9 @@ public sealed class ExtractionFultonSystem : SharedExtractionFultonSystem
             return false;
         }
 
-        if (_container.IsEntityInContainer(target))
+        // Items in a user's hands are still in a ContainerSlot, but should be
+        // attachable without forcing the user to drop the objective first.
+        if (_container.IsEntityInContainer(target) && !_hands.IsHolding(user, target))
         {
             Popup.PopupEntity(Loc.GetString("extraction-fulton-inside-container"), target, user);
             return false;
