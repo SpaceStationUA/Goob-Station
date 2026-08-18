@@ -3,8 +3,8 @@ using Content.Server._DV.Psionics.Systems;
 using Content.Server.Administration;
 using Content.Shared._DV.Psionics.Components;
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
-using Content.Shared.Administration;
 using Content.Shared.Actions;
+using Content.Shared.Administration;
 using Content.Shared.Ghost;
 using Content.Shared.Shadowkin;
 using Robust.Shared.Console;
@@ -84,6 +84,9 @@ public sealed class PsionicAddCommand : IConsoleCommand
         }
 
         _entManager.AddComponents(target.Value, powerPrototype, removeExisting: false);
+
+        // Initialize power components (action button, psionic component, feedback).
+        psionicSystem.InitializePowerComponents(target.Value, powerPrototype);
 
         shell.WriteLine($"Granted {powerPrototype.ID} to {target.Value}.");
     }
