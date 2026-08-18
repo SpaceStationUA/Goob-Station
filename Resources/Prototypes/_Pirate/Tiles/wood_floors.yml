@@ -1,0 +1,412 @@
+#region Зламані
+- type: tile
+  id: FloorWoodLargeBroken
+  name: tiles-wood-large-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_large.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorWoodChessBroken
+  name: tiles-wood-chess-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_chess.png
+  variants: 5
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorWoodParquetBroken
+  name: tiles-wood-parquet-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_parquet.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorLightWoodBroken
+  name: tiles-wood-light-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_light.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorLightWoodLargeBroken
+  name: tiles-wood-light-large-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_large_light.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorLightWoodChessBroken
+  name: tiles-wood-light-chess-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_chess_light.png
+  variants: 5
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorLightWoodParquetBroken
+  name: tiles-wood-light-parquet-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_parquet_light.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorRedWoodBroken
+  name: tiles-wood-red-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_red.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorRedWoodLargeBroken
+  name: tiles-wood-red-large-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_large_red.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorRedWoodChessBroken
+  name: tiles-wood-red-chess-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_chess_red.png
+  variants: 5
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorRedWoodParquetBroken
+  name: tiles-wood-red-parquet-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_parquet_red.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkWoodBroken
+  name: tiles-wood-dark-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_dark.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkWoodLargeBroken
+  name: tiles-wood-dark-large-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_large_dark.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkWoodChessBroken
+  name: tiles-wood-dark-chess-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_chess_dark.png
+  variants: 5
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorDarkWoodParquetBroken
+  name: tiles-wood-dark-parquet-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_parquet_dark.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorBlackWoodBroken
+  name: tiles-wood-black-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_black.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorBlackWoodLargeBroken
+  name: tiles-wood-black-large-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_large_black.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorBlackWoodChessBroken
+  name: tiles-wood-black-chess-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_chess_black.png
+  variants: 5
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorBlackWoodParquetBroken
+  name: tiles-wood-black-parquet-broken
+  sprite: /Textures/_Pirate/Tiles/wood/broken/wood_parquet_black.png
+  variants: 7
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: MaterialWoodPlank1
+  heatCapacity: 10000

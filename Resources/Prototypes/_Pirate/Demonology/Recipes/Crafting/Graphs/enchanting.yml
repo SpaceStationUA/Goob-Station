@@ -80,7 +80,7 @@
         icon:
           sprite: _Pirate/Demonology/Objects/Enchanting/bloodvial.rsi
           state: icon
-      - tag: Bible
+      - component: Bible # Pirate: local holy books do not share the Bible tag.
         name: construction-graph-tag-bible
         icon:
           sprite: Objects/Specific/Chapel/bible.rsi

@@ -1,4 +1,4 @@
-### Санвузел
+#region Санвузел
 - type: construction
   id: Shower
   graph: Shower
@@ -12,7 +12,7 @@
   conditions:
     - !type:TileNotBlocked
 
-### Ліжка
+#region Ліжка
 - type: construction
   id: DoubleBed
   graph: bed
@@ -51,9 +51,103 @@
   conditions:
     - !type:TileNotBlocked
 
+#region Банери
+- type: construction
+  id: BannerMagicRecipe
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerMagicNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
+- type: construction
+  id: BannerGreytideRecipe
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerGreytideNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
-# Для соларіанського баннеру
+- type: construction
+  id: BannerCybersunRecipe
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerCybersunNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerGorlexRecipe
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerGorlexNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerNinjaRecipe
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerNinjaNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerPirateRecipe
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerPirateNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerInterpharmRecipe
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerInterpharmNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BannerNarsiRecipe
+  graph: BannersGraph
+  startNode: start
+  targetNode: BannerNarsiNode
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
 - type: construction
   id: BannerSolarian
   graph: BannersGraphPirate

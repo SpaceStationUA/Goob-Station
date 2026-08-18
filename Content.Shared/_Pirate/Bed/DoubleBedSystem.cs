@@ -29,18 +29,6 @@ public sealed class DoubleBedSystem : EntitySystem
 
     private void OnInteractHand(Entity<DoubleBedComponent> ent, ref InteractHandEvent args)
     {
-        var query = EntityQueryEnumerator<DoubleBedSheetComponent, TransformComponent>();
-        while (query.MoveNext(out var bedsheet, out _, out var transform))
-        {
-            if (transform.ParentUid != ent.Owner)
-                continue;
-
-            args.Handled = true;
-            ent.Comp.PendingBuckleOffset = null;
-            Transform(bedsheet).Coordinates = Transform(args.User).Coordinates;
-            return;
-        }
-
         if (args.ClickLocation is { } clickLocation && TryComp<StrapComponent>(ent, out var strap))
         {
             ent.Comp.PendingBuckleOffset = GetClosestOffset(GetLocalClickY(ent, clickLocation), ent.Comp);

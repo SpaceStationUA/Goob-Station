@@ -3,7 +3,7 @@
 - type: tile
   id: FloorWoodParquet
   name: tiles-wood-parquet
-  sprite: /Textures/_Corvax/Tiles/wood_parquet.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_parquet.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -23,7 +23,7 @@
 - type: tile
   id: FloorWoodChess
   name: tiles-wood-chess
-  sprite: /Textures/_Corvax/Tiles/wood_chess.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_chess.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -43,7 +43,7 @@
 - type: tile
   id: FloorWoodBlack
   name: tiles-wood-black
-  sprite: /Textures/_Corvax/Tiles/wood_black.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_black.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -63,7 +63,7 @@
 - type: tile
   id: FloorWoodLargeBlack
   name: tiles-wood-large-black
-  sprite: /Textures/_Corvax/Tiles/wood_large_black.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_large_black.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -83,7 +83,7 @@
 - type: tile
   id: FloorWoodParquetBlack
   name: tiles-wood-parquet-black
-  sprite: /Textures/_Corvax/Tiles/wood_parquet_black.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_parquet_black.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -103,7 +103,7 @@
 - type: tile
   id: FloorWoodChessBlack
   name: tiles-wood-chess-black
-  sprite: /Textures/_Corvax/Tiles/wood_chess_black.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_chess_black.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -123,7 +123,7 @@
 - type: tile
   id: FloorWoodDark
   name: tiles-wood-dark
-  sprite: /Textures/_Corvax/Tiles/wood_dark.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_dark.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -143,7 +143,7 @@
 - type: tile
   id: FloorWoodLargeDark
   name: tiles-wood-large-dark
-  sprite: /Textures/_Corvax/Tiles/wood_large_dark.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_large_dark.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -163,7 +163,7 @@
 - type: tile
   id: FloorWoodParquetDark
   name: tiles-wood-parquet-dark
-  sprite: /Textures/_Corvax/Tiles/wood_parquet_dark.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_parquet_dark.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -183,7 +183,7 @@
 - type: tile
   id: FloorWoodChessDark
   name: tiles-wood-chess-dark
-  sprite: /Textures/_Corvax/Tiles/wood_chess_dark.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_chess_dark.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -203,7 +203,7 @@
 - type: tile
   id: FloorWoodLight
   name: tiles-wood-light
-  sprite: /Textures/_Corvax/Tiles/wood_light.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_light.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -223,7 +223,7 @@
 - type: tile
   id: FloorWoodLargeLight
   name: tiles-wood-large-light
-  sprite: /Textures/_Corvax/Tiles/wood_large_light.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_large_light.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -243,7 +243,7 @@
 - type: tile
   id: FloorWoodParquetLight
   name: tiles-wood-parquet-light
-  sprite: /Textures/_Corvax/Tiles/wood_parquet_light.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_parquet_light.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -263,7 +263,7 @@
 - type: tile
   id: FloorWoodChessLight
   name: tiles-wood-chess-light
-  sprite: /Textures/_Corvax/Tiles/wood_chess_light.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_chess_light.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -283,7 +283,7 @@
 - type: tile
   id: FloorWoodRed
   name: tiles-wood-red
-  sprite: /Textures/_Corvax/Tiles/wood_red.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_red.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -303,7 +303,7 @@
 - type: tile
   id: FloorWoodLargeRed
   name: tiles-wood-large-red
-  sprite: /Textures/_Corvax/Tiles/wood_large_red.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_large_red.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -323,7 +323,7 @@
 - type: tile
   id: FloorWoodParquetRed
   name: tiles-wood-parquet-red
-  sprite: /Textures/_Corvax/Tiles/wood_parquet_red.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_parquet_red.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0
@@ -343,7 +343,7 @@
 - type: tile
   id: FloorWoodChessRed
   name: tiles-wood-chess-red
-  sprite: /Textures/_Corvax/Tiles/wood_chess_red.png
+  sprite: /Textures/_Pirate/Tiles/wood/wood_chess_red.png # Pirate - resprite
   variants: 4
   placementVariants:
   - 1.0

@@ -102,7 +102,8 @@ public sealed class SharedVentCrawableSystem : EntitySystem
         if (!_containerSystem.CanInsert(toInsert, holder.Container))
             return false;
 
-        return HasComp<ItemComponent>(toInsert) ||
+        return HasComp<VentCrawlerComponent>(toInsert) || // Pirate: bodyless demon crawlers are valid vent occupants.
+            HasComp<ItemComponent>(toInsert) ||
             HasComp<BodyComponent>(toInsert);
     }
 

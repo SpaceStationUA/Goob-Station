@@ -1,3 +1,186 @@
+### База для нових банерів
+- type: entity
+  id: BannerBaseTP
+  parent: BannerBase
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: banner
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: rolled
+      map: ["foldedLayer"]
+      visible: false
+  - type: Foldable
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FoldedVisuals.State:
+        foldedLayer:
+          True: {visible: true}
+          False: {visible: false}
+        unfoldedLayer:
+          True: {visible: false}
+          False: {visible: true}
+  - type: Item
+    size: Normal
+
+### Банери з новою базою
+- type: entity
+  id: BannerCybersun
+  parent: BannerBaseTP
+  name: Cybersun banner
+  description: A banner with the Cybersun Industries logo. They are very secretive corporations.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: cydersun
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: cydersun-rolled
+      map: ["foldedLayer"]
+      visible: false
+  - type: Construction
+    graph: BannersGraph
+    node: BannerCybersunNode
+
+- type: entity
+  id: BannerGorlex
+  parent: BannerBaseTP
+  name: Gorlex Securities banner
+  description: A banner with the Gorlex Securities LLC logo. These corporations are very secretive, but you know everything!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: gorlex
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: gorlex-rolled
+      map: ["foldedLayer"]
+      visible: false
+  - type: Construction
+    graph: BannersGraph
+    node: BannerGorlexNode
+
+- type: entity
+  id: BannerGreytide
+  parent: BannerBaseTP
+  name: greytide banner
+  description: A banner with a greytide flag. Greytide must be destroyed!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: greytide
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: greytide-rolled
+      map: ["foldedLayer"]
+      visible: false
+  - type: Construction
+    graph: BannersGraph
+    node: BannerGreytideNode
+
+- type: entity
+  id: BannerInterpharm
+  parent: BannerBaseTP
+  name: InterPharm banner
+  description: A banner with the Interdyne Pharmaceutics logo. They are corporations. Pharmaceuticals - that's understandable.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: interpharm
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: interpharm-rolled
+      map: ["foldedLayer"]
+      visible: false
+  - type: Construction
+    graph: BannersGraph
+    node: BannerInterpharmNode
+
+- type: entity
+  id: BannerMagic
+  parent: BannerBaseTP
+  name: wizard banner
+  description: A banner displaying a wizard from the "Order of Wizard-Magicians and Wizard-Magicians Order". Honestly, that name sounds like it came from a children's book.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: magic
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: magic-rolled
+      map: ["foldedLayer"]
+      visible: false
+  - type: Construction
+    graph: BannersGraph
+    node: BannerMagicNode
+
+- type: entity
+  id: BannerNarsi
+  parent: BannerBaseTP
+  name: Nars'ie banner
+  description: A banner with Nars'ie.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: narsi
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: narsi-rolled
+      map: ["foldedLayer"]
+      visible: false
+  - type: Construction
+    graph: BannersGraph
+    node: BannerNarsiNode
+
+- type: entity
+  id: BannerNinja
+  parent: BannerBaseTP
+  name: space ninja banner
+  description: A banner displaying a ninja.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: ninja
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: ninja-rolled
+      map: ["foldedLayer"]
+      visible: false
+  - type: Construction
+    graph: BannersGraph
+    node: BannerNinjaNode
+
+- type: entity
+  id: BannerPirate
+  parent: BannerBaseTP
+  name: pirate banner
+  description: A banner displaying a pirate flag. Argh!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Banners/banner.rsi
+    layers:
+    - state: pirate
+      map: ["unfoldedLayer"]
+    - sprite: _Pirate/Structures/Banners/rolled.rsi
+      state: pirate-rolled
+      map: ["foldedLayer"]
+      visible: false
+  - type: Construction
+    graph: BannersGraph
+    node: BannerPirateNode
+
+### Банери з старою базою
 - type: entity
   id: BannerSolarian
   parent: BannerBase
@@ -22,4 +205,3 @@
   - type: Sprite
     sprite: _Pirate/Objects/Decoration/banners.rsi
     state: bannerRespublic
-

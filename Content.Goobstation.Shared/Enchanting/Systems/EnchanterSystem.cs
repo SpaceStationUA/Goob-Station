@@ -96,6 +96,14 @@ public sealed class EnchanterSystem : EntitySystem
         }
     }
 
+    // Pirate: allow downstream ink systems to prepare a scroll without bypassing component access rules.
+    public void AddEnchant(EntityUid uid, EntProtoId<EnchantComponent> enchant)
+    {
+        var component = EnsureComp<EnchanterComponent>(uid);
+        component.Enchants.Add(enchant);
+        Dirty(uid, component);
+    }
+
     /// <summary>
     /// Try to use an enchanter to add random enchant(s) to an item, deleting it if successful.
     /// </summary>

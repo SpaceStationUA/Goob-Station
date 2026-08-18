@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Shared.Enchanting.Components;
 using Content.Goobstation.Shared.Enchanting.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -11,7 +12,7 @@ namespace Content.Pirate.Shared.Enchanting;
 
 public sealed class EnchantAdderSystem : EntitySystem
 {
-    [Dependency] private readonly EnchantingSystem _enchanting = default!;
+    [Dependency] private readonly EnchanterSystem _enchanter = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -49,8 +50,11 @@ public sealed class EnchantAdderSystem : EntitySystem
     private void OnDoAfter(Entity<EnchantAdderComponent> ent, ref EnchantAdderDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Target is not { } target ||
-            !_enchanting.Enchant(target, ent.Comp.Enchant))
+            HasComp<EnchanterComponent>(target))
             return;
+
+        // Ink prepares a scroll for the altar; it must not enchant the scroll itself.
+        _enchanter.AddEnchant(target, ent.Comp.Enchant);
 
         args.Handled = true;
         _popup.PopupClient(Loc.GetString("enchant-adder-inscribe", ("target", target)), target, args.User);
