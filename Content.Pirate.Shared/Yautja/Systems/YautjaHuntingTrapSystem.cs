@@ -9,6 +9,7 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
@@ -32,6 +33,7 @@ public sealed class YautjaHuntingTrapSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -61,6 +63,12 @@ public sealed class YautjaHuntingTrapSystem : EntitySystem
 
         if (!TryComp<ItemToggleComponent>(ent, out var toggle))
             return;
+
+        if (IsProtectedByYautjaGreaves(args.Tripper))
+        {
+            args.Cancelled = true;
+            return;
+        }
 
         args.Continue |= toggle.Activated;
     }
@@ -182,5 +190,11 @@ public sealed class YautjaHuntingTrapSystem : EntitySystem
         return !ent.Comp.Used
                && TryComp(ent, out ItemToggleComponent? toggle)
                && toggle.Activated;
+    }
+
+    private bool IsProtectedByYautjaGreaves(EntityUid tripper)
+    {
+        return _inventory.TryGetSlotEntity(tripper, "feet", out var feetItem)
+               && HasComp<YautjaTrapProtectionComponent>(feetItem);
     }
 }

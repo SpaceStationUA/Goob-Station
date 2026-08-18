@@ -3,6 +3,7 @@
   id: GoobYautjaWeaponBase
   abstract: true
   components:
+  - type: YautjaResinBreaker
   - type: Sprite
     sprite: _Pirate/Yautja/weapons.rsi
     state: clan_sword

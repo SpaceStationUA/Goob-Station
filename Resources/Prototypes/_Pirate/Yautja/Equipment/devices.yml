@@ -168,6 +168,9 @@
   components:
   - type: IngestionBlocker
     blockSmokeIngestion: true
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 20
   - type: NightVision
     isEquipment: true
     color: white
@@ -226,8 +229,6 @@
   - type: Item
     size: Small
   - type: Mask
-  - type: EyeProtection
-    protectionTime: 20
 - type: entity
   parent: IDCardStandard
   id: GoobYautjaBracerIdChip
