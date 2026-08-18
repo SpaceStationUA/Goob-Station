@@ -46,9 +46,12 @@ public sealed class MoodSystem : EntitySystem
         SubscribeLocalEvent<MoodComponent, ShowMoodAlertEvent>(OnShowMoodAlert);
     }
 
+    private bool IsMoodActive(MoodComponent component) =>
+        component.Enabled && _config.GetCVar(CCVars.MoodEnabled);
+
     private void OnShowMoodAlert(EntityUid uid, MoodComponent component, ShowMoodAlertEvent args)
     {
-        if (!_playerManager.TryGetSessionByEntity(uid, out var session))
+        if (!IsMoodActive(component) || !_playerManager.TryGetSessionByEntity(uid, out var session))
             return;
 
         var msg = $"{Loc.GetString("mood-show-effects-start")}\n";
@@ -93,7 +96,7 @@ public sealed class MoodSystem : EntitySystem
 
     private void OnRemoveEffect(EntityUid uid, MoodComponent component, MoodRemoveEffectEvent args)
     {
-        if (!_config.GetCVar(CCVars.MoodEnabled))
+        if (!IsMoodActive(component))
             return;
 
         if (component.UncategorisedEffects.TryGetValue(args.EffectId, out _))
@@ -113,7 +116,7 @@ public sealed class MoodSystem : EntitySystem
 
     private void OnRefreshMoveSpeed(EntityUid uid, MoodComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        if (!_config.GetCVar(CCVars.MoodEnabled)
+        if (!IsMoodActive(component)
             || component.CurrentMoodThreshold is > MoodThreshold.Meh and < MoodThreshold.Good or MoodThreshold.Dead
             || _jetpack.IsUserFlying(uid))
             return;
@@ -134,7 +137,7 @@ public sealed class MoodSystem : EntitySystem
 
     private void OnMoodEffect(EntityUid uid, MoodComponent component, MoodEffectEvent args)
     {
-        if (!_config.GetCVar(CCVars.MoodEnabled)
+        if (!IsMoodActive(component)
             || !_prototypeManager.TryIndex<MoodEffectPrototype>(args.EffectId, out var prototype))
             return;
 
@@ -271,7 +274,7 @@ public sealed class MoodSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, MoodComponent component, MobStateChangedEvent args)
     {
-        if (!_config.GetCVar(CCVars.MoodEnabled))
+        if (!IsMoodActive(component))
             return;
 
         if (args.NewMobState == MobState.Dead && args.OldMobState != MobState.Dead)
@@ -300,7 +303,7 @@ public sealed class MoodSystem : EntitySystem
 
     private void OnInit(EntityUid uid, MoodComponent component, ComponentStartup args)
     {
-        if (!_config.GetCVar(CCVars.MoodEnabled))
+        if (!IsMoodActive(component))
             return;
 
         if (_config.GetCVar(CCVars.MoodModifiesThresholds)
@@ -314,8 +317,8 @@ public sealed class MoodSystem : EntitySystem
 
     private void SetMood(EntityUid uid, float amount, MoodComponent? component = null, bool force = false, bool refresh = false)
     {
-        if (!_config.GetCVar(CCVars.MoodEnabled)
-            || !Resolve(uid, ref component)
+        if (!Resolve(uid, ref component)
+            || !IsMoodActive(component)
             || component.CurrentMoodThreshold == MoodThreshold.Dead && !refresh)
             return;
 
@@ -442,7 +445,8 @@ public sealed class MoodSystem : EntitySystem
 
     private void OnDamageChange(EntityUid uid, MoodComponent component, DamageChangedEvent args)
     {
-        if (!_mobThreshold.TryGetPercentageForState(uid, MobState.Critical, args.Damageable.TotalDamage, out var damage))
+        if (!IsMoodActive(component)
+            || !_mobThreshold.TryGetPercentageForState(uid, MobState.Critical, args.Damageable.TotalDamage, out var damage))
             return;
 
         var protoId = "HealthNoDamage";

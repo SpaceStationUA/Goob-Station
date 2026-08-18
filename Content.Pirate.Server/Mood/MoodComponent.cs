@@ -10,6 +10,12 @@ namespace Content.Pirate.Server.Mood;
 [RegisterComponent]
 public sealed partial class MoodComponent : Component
 {
+    /// <summary>
+    /// When false, mood alerts and effects are skipped. The entity can still exist without a mood meter.
+    /// </summary>
+    [DataField]
+    public bool Enabled = true;
+
     [DataField]
     public float CurrentMoodLevel;
 

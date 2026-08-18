@@ -65,9 +65,11 @@
   - type: Mood
     enabled: false
   - type: Hunger
-    enabled: false
+    baseDecayRate: 0
+    startingHunger: 150
   - type: Thirst
-    enabled: false
+    baseDecayRate: 0
+    startingThirst: 450
   - type: Barotrauma
     # Яутжа носять біомаску (mask), не шолом (head)
     protectionSlots:
