@@ -159,7 +159,7 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 5
+        maxVol: 7
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -647,6 +647,8 @@
     insertingState: inserting_hamster
   - type: FaxSlip
     slipChance: 0.3
+  - type: DemonTripOnHit # Pirate: implement the wiki's 30% melee trip chance.
+    chance: 0.3
 
 - type: entity
   parent: BaseDemon
@@ -847,7 +849,7 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 10
+        maxVol: 57
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -1032,10 +1034,11 @@
             min: 3
             max: 5
   - type: MovementIgnoreGravity
+    weightless: true
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 13
+        maxVol: 17
   - type: SolutionRegeneration
     solution: melee
     generated:
@@ -1084,6 +1087,22 @@
             max: 5
   - type: Puller
     needsHands: false
+  - type: Hands # Pirate: GrabIntent uses virtual hands for staged grabs.
+    activeHandId: Left
+    hands:
+      Left:
+        location: Left
+        whitelist:
+          components:
+          - VirtualItem
+      Right:
+        location: Right
+        whitelist:
+          components:
+          - VirtualItem
+    sortedHands:
+    - Left
+    - Right
   - type: GrabIntent
     stageChangeCooldown: 0.1
     softGrabSpeedModifier: 1
@@ -1323,4 +1342,5 @@
     whitelist:
       components:
       - MobState
+      - Door # Pirate: saturnites can devour doors as described by the demonology guide.
       - Item
