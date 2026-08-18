@@ -34,6 +34,7 @@
       - AltarsGolemancy # Pirate
   - type: EnchantingTable # Goobstation
   - type: RecallPrayable # Goobstation
+  - type: SacrificeAltar # Pirate
 
 - type: entity
   id: AltarNanotrasen
