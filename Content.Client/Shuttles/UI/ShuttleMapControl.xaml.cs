@@ -104,11 +104,20 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         if (FtlMode)
             return;
 
+        UpdatePlanetHover(args.RelativePixelPosition); // Far Horizons
+
         base.MouseMove(args);
     }
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
+        // Far Horizons: clicking a planet's zone circle on the map starts a descent.
+        if (!FtlMode && args.Function == EngineKeyFunctions.UIClick && HandlePlanetZoneClick(args.RelativePixelPosition))
+        {
+            base.KeyBindUp(args);
+            return;
+        }
+
         if (FtlMode && ViewingMap != MapId.Nullspace)
         {
             if (args.Function == EngineKeyFunctions.UIClick)
@@ -147,6 +156,23 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         }
 
         base.MouseWheel(args);
+    }
+
+    /// <summary>
+    /// Far Horizons: zoom-step lock for the star-system map. Null restores the default free
+    /// wheel zoom (256-1024 world units); a value locks the map at exactly that range — the
+    /// wheel becomes a no-op while locked.
+    /// </summary>
+    public void SetZoomStep(float? step)
+    {
+        WorldMinRange = step ?? 256f;
+        WorldMaxRange = step ?? 1024f;
+
+        if (step is { } locked)
+        {
+            WorldRange = locked;
+            ActualRadarRange = locked;
+        }
     }
 
     private void DrawParallax(DrawingHandleScreen handle)
@@ -259,6 +285,8 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
         var viewBox = new Box2(Offset - WorldRangeVector, Offset + WorldRangeVector);
         var viewportObjects = GetViewportMapObjects(matty, mapObjects);
         _viewportExclusions.Clear();
+
+        DrawStarSystem(handle, matty); // Far Horizons
 
         // Draw our FTL range + no FTL zones
         // Do it up here because we want this layered below most things.

@@ -658,10 +658,11 @@ public sealed partial class GoobCVars
         CVarDef.Create("admin.notification_volume", 1f, CVar.CLIENT | CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    /// Whether or not to spawn space whales if the entity is too far away from the station
+    /// Whether or not to spawn space whales if the entity is too far away from the station.
+    /// Disabled by default — it harassed players flying to far-away star system planets. // Far Horizons
     /// </summary>
     public static readonly CVarDef<bool> SpaceWhaleSpawn =
-        CVarDef.Create("misc.space_whale_spawn", true, CVar.SERVER);
+        CVarDef.Create("misc.space_whale_spawn", false, CVar.SERVER);
 
     /// <summary>
     /// The distance to spawn a space whale from the station

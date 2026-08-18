@@ -129,6 +129,13 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         TryFireAtPosition(args.RelativePosition);
     }
 
+    protected override void MouseMove(GUIMouseMoveEventArgs args)
+    {
+        UpdatePlanetHover(args.RelativePosition); // Far Horizons
+
+        base.MouseMove(args);
+    }
+
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
         base.KeyBindUp(args);
@@ -137,6 +144,10 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         {
             return;
         }
+
+        // Far Horizons: clicking a planet's zone circle starts a descent instead of firing.
+        if (HandlePlanetZoneClick(args.RelativePosition))
+            return;
 
         _isMouseDown = false;
 
@@ -274,6 +285,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         var shuttleToView = Matrix3x2.CreateScale(new Vector2(MinimapScale, -MinimapScale)) * Matrix3x2.CreateTranslation(MidPointVector);
 
         DrawShields(handle, xform, worldToShuttle); // Pirate port - Monolith shields
+
+        DrawStarSystem(handle, worldToShuttle, shuttleToView, xform.MapUid, mapPos.Position); // Far Horizons
 
         // Frontier Corvax: north line drawing
         var rot = ourEntRot + _rotation.Value;

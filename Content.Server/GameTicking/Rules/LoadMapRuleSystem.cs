@@ -102,6 +102,36 @@ public sealed class LoadMapRuleSystem : StationEventSystem<LoadMapRuleComponent>
         var ev = new RuleLoadedGridsEvent(mapId, grids);
         RaiseLocalEvent(uid, ref ev);
 
+        // Far Horizons: broadcast what got loaded so the star system can wrap the freshly
+        // loaded surface (the nukie outpost) as a planet's ground layer.
+        RaiseLocalEvent(new RuleLoadedMapEvent(comp.MapPath, comp.GridPath, mapId, grids));
+
         base.Added(uid, comp, rule, args);
+    }
+}
+
+/// <summary>
+/// Broadcast after a <see cref="LoadMapRuleSystem"/> loads a map or grid: the loaded
+/// surface, its grids, and the source path. Raised so other systems can adopt the
+/// content (e.g. wrapping the nukie outpost as a planet's ground layer).
+/// </summary>
+public sealed class RuleLoadedMapEvent : EntityEventArgs
+{
+    /// <summary>The map path the rule loaded, if any.</summary>
+    public readonly ResPath? MapPath;
+
+    /// <summary>The grid path the rule loaded, if any.</summary>
+    public readonly ResPath? GridPath;
+
+    public readonly MapId MapId;
+
+    public readonly IReadOnlyList<EntityUid> Grids;
+
+    public RuleLoadedMapEvent(ResPath? mapPath, ResPath? gridPath, MapId mapId, IReadOnlyList<EntityUid> grids)
+    {
+        MapPath = mapPath;
+        GridPath = gridPath;
+        MapId = mapId;
+        Grids = grids;
     }
 }

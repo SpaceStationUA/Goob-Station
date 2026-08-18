@@ -1,0 +1,102 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Far Horizons: the named worlds of the curated Kyphrus system — fixed values, no rolling.
+# Orbits (distance/angle) live on the curatedSystem entry.
+
+- type: curatedPlanet
+  id: PlanetFervidus
+  name: Fervidus
+  shader: RockyPlanet
+  earthMass: 0.7
+  rotation: 0.4
+  palette: PaletteVolcanicMagma
+  atmosphere: VolcanicAtmosphere
+  liquid: LiquidMagma
+  basePrettiness: 15
+  customFloats:
+    terrainScale: 1.0
+    macroFrequency: 3.75
+    macroAmplitude: 0.75
+    ridgeFrequency: 1.0
+    ridgeAmplitude: 7.5
+    detailFrequency: 7.5
+    detailAmplitude: 0.25
+    polarCapColor: 0.875
+    polarCapCoverage: 0.2
+
+- type: curatedPlanet
+  id: PlanetMerak
+  name: Merak
+  shader: RockyPlanet
+  earthMass: 1.4
+  rotation: 2.1
+  palette: PaletteDesertDune
+  atmosphere: DesertAtmosphere
+  basePrettiness: 5
+  customFloats:
+    terrainScale: 1.0
+    macroFrequency: 3.75
+    macroAmplitude: 0.75
+    ridgeFrequency: 1.0
+    ridgeAmplitude: 7.5
+    detailFrequency: 7.5
+    detailAmplitude: 0.25
+    polarCapColor: 0.875
+    polarCapCoverage: 0.2
+
+- type: curatedPlanet
+  id: PlanetAsclepiu
+  name: Asclepiu
+  shader: RockyPlanet
+  earthMass: 1.05
+  rotation: 5.3
+  palette: PaletteHabitable
+  atmosphere: StandardAtmosphere
+  liquid: LiquidWater
+  basePrettiness: 20
+  customFloats:
+    terrainScale: 1.0
+    macroFrequency: 3.75
+    macroAmplitude: 0.75
+    ridgeFrequency: 1.0
+    ridgeAmplitude: 7.5
+    detailFrequency: 7.5
+    detailAmplitude: 0.25
+    polarCapColor: 1.0
+    polarCapCoverage: 0.2
+
+- type: curatedPlanet
+  id: PlanetAerumna
+  name: Aerumna
+  shader: RockyPlanet
+  earthMass: 0.95
+  rotation: 3.9
+  palette: PaletteBlightAerumna
+  atmosphere: BlightAtmosphere
+  liquid: LiquidNaturalLetoferol
+  basePrettiness: 10
+  customFloats:
+    terrainScale: 0.8
+    macroFrequency: 2.2
+    macroAmplitude: 1.2
+    ridgeFrequency: 1.15
+    ridgeAmplitude: 8.5
+    detailFrequency: 8.0
+    detailAmplitude: 0.25
+    polarCapColor: 1.0
+    polarCapCoverage: 0.15
+
+- type: curatedPlanet
+  id: PlanetThrascias
+  name: Thrascias
+  shader: IceGiant
+  earthMass: 540.0
+  rotation: 1.2
+  palette: PaletteIceGiantFrezon
+  rings: StandardRings
+  landable: false
+  basePrettiness: 12
+  customFloats:
+    cloudScale: 3.2
+    cloudIntensity: 2.1
+    stormFrequency: 1.4

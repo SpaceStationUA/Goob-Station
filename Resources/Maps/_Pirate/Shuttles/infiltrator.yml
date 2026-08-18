@@ -32,6 +32,9 @@ entities:
     components:
     - type: MetaData
       name: Infiltrator
+    - type: Tag
+      tags:
+      - Syndicate
     - type: Transform
       pos: -0.51388806,-0.5416667
       parent: invalid

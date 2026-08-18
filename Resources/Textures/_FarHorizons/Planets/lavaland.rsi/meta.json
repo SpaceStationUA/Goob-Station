@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Max (maewionn), OpenGameArt via Wikimedia Commons (https://commons.wikimedia.org/wiki/File:Lava_planet.png)",
+  "size": {
+    "x": 250,
+    "y": 250
+  },
+  "states": [
+    {
+      "name": "planet",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    }
+  ]
+}

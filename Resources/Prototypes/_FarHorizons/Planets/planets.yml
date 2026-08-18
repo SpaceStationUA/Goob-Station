@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Far Horizons: hand-placed planets. Manual planets use a predefined sprite — see
+# CEPlanetComponent. Procedural star system planets (shader-based) are spawned by the
+# star system itself, and the preset worlds (lavaland, nukie) join them as predetermined
+# sprite planets with their own descent stacks.
+
+- type: entity
+  id: CEPlanetBase
+  abstract: true
+  name: planet
+  description: A planet floating in space. Land on it, or just admire it from afar.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+  - type: CEPlanet
+
+# The star system's volcanic world: its ground layer is the lavaland map (outpost, ruins,
+# megafauna, ores) generated alongside space maps, so miners can fly to it and descend
+# onto the surface. Spawned by the star system, never by hand.
+- type: entity
+  parent: CEPlanetBase
+  id: CEPlanetLavaland
+  name: Lavaland
+  description: A scorched volcanic world. The ash storms are the least of your worries.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: CEPlanet
+    sprite:
+      sprite: _FarHorizons/Planets/lavaland.rsi
+      state: planet
+    spinRate: 0.005
+  - type: FTLBeacon
+
+# The distant syndicate world: its ground layer is the nukie outpost map loaded by the
+# nukeops rule, and a permanent red field keeps everyone but syndicate ships out.
+- type: entity
+  parent: CEPlanetBase
+  id: CEPlanetNukie
+  name: Nukie
+  description: A red and angry world. The field over it is not for your benefit.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: CEPlanet
+    sprite:
+      sprite: _FarHorizons/Planets/nukie.rsi
+      state: planet
+    spinRate: 0.008
+    hideFromMaps: true
+  - type: CEPlanetShield
+    active: true
+    shieldColor: "#e03c3c"
+    whitelist:
+      tags:
+      - Syndicate
+  - type: FTLBeacon

@@ -3,6 +3,7 @@
 using Content.Client.Shuttles.UI;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
+using Content.Shared._FarHorizons.Planets.Descent; // Far Horizons
 using Content.Shared._Pirate.ZLevels.Shuttles; // Pirate: multiz
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -32,6 +33,10 @@ public sealed partial class ShuttleConsoleBoundUserInterface : BoundUserInterfac
         #region Pirate: multiz
         _window.RequestFlyUp += () => SendMessage(new CEShuttleConsoleFlyUpMessage());
         _window.RequestFlyDown += () => SendMessage(new CEShuttleConsoleFlyDownMessage());
+        #endregion
+        #region Far Horizons
+        _window.RequestDescend += () => SendMessage(new CEDescentRequestMessage());
+        _window.RequestAscend += () => SendMessage(new CEDescentRequestMessage() { Ascent = true });
         #endregion
         NfOpen(); // Frontier
     }

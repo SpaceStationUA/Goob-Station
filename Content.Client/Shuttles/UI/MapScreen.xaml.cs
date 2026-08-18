@@ -5,6 +5,8 @@ using Content.Client.Shuttles.Systems;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
+using Content.Shared._FarHorizons.Planets; // Far Horizons
+using Content.Shared._FarHorizons.Planets.Descent; // Far Horizons
 using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared._Pirate.ZLevels.Shuttles; // Pirate: multiz
 using Content.Shared.Shuttles.UI.MapObjects;
@@ -46,7 +48,11 @@ public sealed partial class MapScreen : BoxContainer
     #region Pirate: multiz
     private CEZTraversalState _zState;
     private StartEndTime _zTime;
+
+    private CEDescentConsoleState _descentState;
+    private StartEndTime _descentTime;
     private StyleBoxFlat _zStyle = default!;
+    private StyleBoxFlat _descentStyle = default!; // Far Horizons
     #endregion
 
     private List<ShuttleBeaconObject> _beacons = new();
@@ -66,6 +72,9 @@ public sealed partial class MapScreen : BoxContainer
 
     public event Action? RequestFlyUp; // Pirate: multiz
     public event Action? RequestFlyDown; // Pirate: multiz
+
+    public event Action? RequestDescend; // Far Horizons
+    public event Action? RequestAscend; // Far Horizons
 
     private readonly Dictionary<MapId, BoxContainer> _mapHeadings = new();
     private readonly Dictionary<MapId, List<IMapObject>> _mapObjects = new();
@@ -104,6 +113,48 @@ public sealed partial class MapScreen : BoxContainer
         FlyDownButton.OnPressed += _ => RequestFlyDown?.Invoke();
         #endregion
 
+        #region Far Horizons
+        _descentStyle = new StyleBoxFlat(Color.FromHex("#FF8A1C"));
+        DescentBar.ForegroundStyleBoxOverride = _descentStyle;
+        DescendButton.OnPressed += _ => RequestDescend?.Invoke();
+        AscendButton.OnPressed += _ => RequestAscend?.Invoke();
+
+        // Zoom steps: Free keeps the default wheel zoom; the other steps lock the map at a
+        // fixed world range so the whole star system is a couple of clicks away.
+        var zoomGroup = new ButtonGroup();
+        ZoomFreeButton.Group = zoomGroup;
+        Zoom2kButton.Group = zoomGroup;
+        Zoom5kButton.Group = zoomGroup;
+        Zoom10kButton.Group = zoomGroup;
+        Zoom30kButton.Group = zoomGroup;
+
+        ZoomFreeButton.OnToggled += args =>
+        {
+            if (args.Pressed)
+                MapRadar.SetZoomStep(null);
+        };
+        Zoom2kButton.OnToggled += args =>
+        {
+            if (args.Pressed)
+                MapRadar.SetZoomStep(2000f);
+        };
+        Zoom5kButton.OnToggled += args =>
+        {
+            if (args.Pressed)
+                MapRadar.SetZoomStep(5000f);
+        };
+        Zoom10kButton.OnToggled += args =>
+        {
+            if (args.Pressed)
+                MapRadar.SetZoomStep(10000f);
+        };
+        Zoom30kButton.OnToggled += args =>
+        {
+            if (args.Pressed)
+                MapRadar.SetZoomStep(30000f);
+        };
+        #endregion
+
         // Just pass it on up.
         MapRadar.RequestFTL += (coords, angle) =>
         {
@@ -114,6 +165,9 @@ public sealed partial class MapScreen : BoxContainer
         {
             RequestBeaconFTL?.Invoke(ent, angle);
         };
+
+        // Far Horizons: clicking a planet's zone on the map is the same as pressing Descend.
+        MapRadar.RequestPlanetDescend += _ => RequestDescend?.Invoke();
 
         MapBeaconsButton.OnToggled += args =>
         {
@@ -191,6 +245,29 @@ public sealed partial class MapScreen : BoxContainer
             CEZTraversalState.Starting => Color.FromHex("#169C9C"),
             CEZTraversalState.Cooldown => Color.FromHex("#F9801D"),
             _ => Color.FromHex("#80C71F"),
+        };
+        #endregion
+
+        #region Far Horizons
+        _descentState = state.CEDescentState;
+        _descentTime = state.CEDescentTime;
+        MapRadar.SetDescentState(state.CEDescentPlanet, state.CEDescentTime, state.CEDescentDenyReason, state.CEDescentDenyUntil);
+
+        DescentStateLabel.Text = state.CEDescentDenyReason != null && _timing.CurTime < state.CEDescentDenyUntil
+            ? Loc.GetString(state.CEDescentDenyReason)
+            : Loc.GetString($"shuttle-console-descent-state-{_descentState.ToString()}");
+        DescentStateLabel.SetOnlyStyleClass(
+            state.CEDescentDenyReason != null && _timing.CurTime < state.CEDescentDenyUntil ? "Danger" : "Label");
+
+        DescendButton.Disabled = !state.CanDescend;
+        AscendButton.Disabled = !state.CanAscend;
+
+        _descentStyle.BackgroundColor = _descentState switch
+        {
+            CEDescentConsoleState.Spinup => Color.FromHex("#FF8A1C"),
+            CEDescentConsoleState.Descending => Color.FromHex("#169C9C"),
+            CEDescentConsoleState.Stunned => Color.FromHex("#F9301C"),
+            _ => Color.FromHex("#FF8A1C"),
         };
         #endregion
     }
@@ -388,6 +465,15 @@ public sealed partial class MapScreen : BoxContainer
                 if (beacon.HideButton)
                     continue;
 
+                // Far Horizons: secret worlds (the nukie planet) stay off the FTL map and its
+                // object list entirely — no name, no dot, no spoilers.
+                if (_entManager.TryGetEntity(beacon.Entity, out var beaconUid) &&
+                    _entManager.TryGetComponent<CEPlanetComponent>(beaconUid, out var planet) &&
+                    planet.HideFromMaps)
+                {
+                    continue;
+                }
+
                 _pendingMapObjects.Add((mapComp.MapId, beacon));
             }
 
@@ -568,6 +654,11 @@ public sealed partial class MapScreen : BoxContainer
         #region Pirate: multiz
         var zProgress = _zTime.ProgressAt(curTime);
         ZTraversalBar.Value = float.IsFinite(zProgress) ? zProgress : 1;
+        #endregion
+
+        #region Far Horizons
+        var descentProgress = _descentTime.ProgressAt(curTime);
+        DescentBar.Value = float.IsFinite(descentProgress) ? descentProgress : 1;
         #endregion
     }
 

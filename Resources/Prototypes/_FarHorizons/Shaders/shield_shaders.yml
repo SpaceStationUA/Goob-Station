@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Procedural hex dome drawn over a planet disc while its shield is up
+# (CEPlanetOverlay). Fully textureless — the whole pattern is shader math.
+- type: shader
+  id: CEPlanetShieldSkin
+  kind: source
+  path: "/Textures/_FarHorizons/Shaders/shield_skin.swsl"

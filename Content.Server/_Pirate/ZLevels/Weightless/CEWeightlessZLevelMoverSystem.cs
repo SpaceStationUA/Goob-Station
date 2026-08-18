@@ -3,6 +3,7 @@
  * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
  */
 
+using Content.Shared._FarHorizons.Planets; // Far Horizons: planet stacks need a jetpack for level hops
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Content.Shared._Pirate.ZLevels.Flight.Components;
@@ -12,6 +13,7 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Components; // Far Horizons: jetpack gate
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -73,9 +75,21 @@ public sealed class CEWeightlessZLevelMoverSystem : EntitySystem
             return;
         }
 
+        var jetpack = HasComp<JetpackUserComponent>(uid); // Far Horizons: jetpack flyers get free level travel
+
         var hasUp = HasZLevel(uid, 1, xform);
         var hasDown = _zLevels.IsInEmptySpaceOnCurrentLevel(uid, xform) &&
                       HasZLevel(uid, -1, xform);
+
+        // Far Horizons: a jetpack flyer may descend a level even where a landing would be
+        // blocked — they're flying, not landing.
+        if (!hasDown && jetpack &&
+            _zLevels.IsInEmptySpaceOnCurrentLevel(uid, xform) &&
+            xform.MapUid is { } downMapUid &&
+            _zLevels.TryMapDown(downMapUid, out _))
+        {
+            hasDown = true;
+        }
 
         if (!hasUp && !hasDown)
         {
@@ -105,6 +119,15 @@ public sealed class CEWeightlessZLevelMoverSystem : EntitySystem
             return false;
 
         if (TryComp<CEZFlyerComponent>(uid, out var flyer) && flyer.Active)
+            return false;
+
+        // Far Horizons: on planet stacks level-hopping needs a jetpack — without one, the sky
+        // takes you (fall/drift) and no free level hops may be handed out.
+        if (xform.MapUid is { } mapUid &&
+            (HasComp<CEZGroundLayerComponent>(mapUid) ||
+             HasComp<CEZPlanetSkyLayerComponent>(mapUid) ||
+             _zLevels.TryGetPlanetGroundLayerBelow(mapUid, out _)) &&
+            !HasComp<JetpackUserComponent>(uid))
             return false;
 
         if (!_gravity.IsWeightless(uid)) // Pirate: multiz - IsWeightless now reads cached GravityAffectedComponent, takes only the entity
@@ -171,7 +194,9 @@ public sealed class CEWeightlessZLevelMoverSystem : EntitySystem
         if (args.Handled || !CanUseActionNow(ent, ent.Comp, -1))
             return;
 
-        if (!_zLevels.TryMoveDown(ent))
+        // Far Horizons: jetpack flyers bypass the landing block — they're flying, not landing.
+        var bypass = HasComp<JetpackUserComponent>(ent.Owner);
+        if (!_zLevels.TryMoveDown(ent, bypassPassability: bypass))
             return;
 
         StartCooldown(ent.Comp);

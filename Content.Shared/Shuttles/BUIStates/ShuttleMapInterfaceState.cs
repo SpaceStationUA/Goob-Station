@@ -3,6 +3,7 @@
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Shuttles.UI.MapObjects;
 using Content.Shared.Timing;
+using Content.Shared._FarHorizons.Planets.Descent; // Far Horizons
 using Content.Shared._Pirate.ZLevels.Shuttles; // Pirate: multiz
 using Robust.Shared.Serialization;
 
@@ -40,6 +41,35 @@ public sealed class ShuttleMapInterfaceState
 
     /// <summary>Whether there is a level below the shuttle's bottom deck that it can fly into.</summary>
     public bool CanFlyDown;
+    #endregion
+
+    #region Far Horizons
+    /// <summary>Current planet descent/ascent drive phase.</summary>
+    public CEDescentConsoleState CEDescentState;
+
+    /// <summary>When the current descent phase started and ends, for the progress bar.</summary>
+    public StartEndTime CEDescentTime;
+
+    /// <summary>
+    /// The planet the descent/ascent drive is currently pointed at (spinup/descending), so the
+    /// map can animate the charge around that planet's marker. Invalid when idle.
+    /// </summary>
+    public NetEntity CEDescentPlanet;
+
+    /// <summary>
+    /// Loc id of the last refused descent request (shielded, out of range, ...), shown on the
+    /// console for a few seconds. Null when nothing was refused recently.
+    /// </summary>
+    public string? CEDescentDenyReason;
+
+    /// <summary>Server curtime until which the denial feedback is shown.</summary>
+    public TimeSpan CEDescentDenyUntil;
+
+    /// <summary>Whether the shuttle is within a planet's approach zone and may descend onto it.</summary>
+    public bool CanDescend;
+
+    /// <summary>Whether the shuttle is on a planet's ground layer and may ascend back to orbit.</summary>
+    public bool CanAscend;
     #endregion
 
     public ShuttleMapInterfaceState(

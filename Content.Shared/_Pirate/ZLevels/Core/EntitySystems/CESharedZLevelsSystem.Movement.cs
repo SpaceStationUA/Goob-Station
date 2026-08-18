@@ -3,12 +3,15 @@
  * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
  */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared._FarHorizons.Planets; // Far Horizons: building-drop block on planet surfaces
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Flight.Components;
 using Content.Shared.Chasm;
 using Content.Shared.Gravity;
 using Content.Shared.Inventory;
+using Content.Shared.Mobs.Components; // Far Horizons: planet sky gravity applies to mobs only
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Content.Shared.Throwing;
@@ -258,7 +261,76 @@ public abstract partial class CESharedZLevelsSystem
         if (!TryResolveGridForMapOffset(ent, xform, -1, out var belowGridUid, out var belowGrid))
             return false;
 
+        // Far Horizons: a planet's ground layer can't be landed on through a building's grid —
+        // falling entities drift sideways to the nearest open spot instead of dropping into
+        // rooms. (The server-side drift handles the redirection.) Only counts as "over the
+        // building" when the grid actually has tiles there — the resolver's any-grid fallback
+        // returns a distant building even for open void, which must stay fallable.
+        if (xform.MapUid is { } currentMapUid &&
+            TryGetPlanetGroundLayerBelow(currentMapUid, out var groundMapUid) &&
+            belowGridUid != groundMapUid &&
+            _map.TryGetTileRef(belowGridUid, belowGrid, worldPos, out var buildingTileRef) &&
+            !buildingTileRef.Tile.IsEmpty)
+        {
+            return true;
+        }
+
         return HasLandingBlockerOnGridAtWorld(belowGridUid, belowGrid, worldPos);
+    }
+
+    /// <summary>
+    /// Resolves the planet ground layer directly below <paramref name="mapUid"/> — the map below
+    /// is a planet surface (biome terrain), not a station deck or empty sky. Far Horizons.
+    /// </summary>
+    [PublicAPI]
+    public bool TryGetPlanetGroundLayerBelow(EntityUid mapUid, [NotNullWhen(true)] out EntityUid? groundMapUid)
+    {
+        groundMapUid = null;
+
+        if (TryMapDown(mapUid, out var belowMap) &&
+            belowMap is { } belowMapEnt &&
+            HasComp<CEZGroundLayerComponent>(belowMapEnt.Owner))
+        {
+            groundMapUid = belowMapEnt.Owner;
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Far Horizons: resolves the planet ground layer anywhere below <paramref name="mapUid"/> in
+    /// the same z-network — any sky layer of the stack, not just the one directly above ground.
+    /// Uses the sky-layer marker when present, and walks the map chain otherwise via the same
+    /// neighbour resolution <see cref="TryMapOffset"/> uses (cached refs with network fallback).
+    /// </summary>
+    [PublicAPI]
+    public bool TryGetPlanetGroundLayerInStackBelow(EntityUid mapUid, [NotNullWhen(true)] out EntityUid? groundMapUid)
+    {
+        groundMapUid = null;
+
+        if (TryComp<CEZPlanetSkyLayerComponent>(mapUid, out var skyLayer) && skyLayer.GroundMapUid != EntityUid.Invalid)
+        {
+            groundMapUid = skyLayer.GroundMapUid;
+            return true;
+        }
+
+        var current = mapUid;
+        for (var i = 0; i < 16; i++)
+        {
+            if (!TryMapOffset(current, -1, out var belowMap) || belowMap is not { } belowEnt)
+                return false;
+
+            if (HasComp<CEZGroundLayerComponent>(belowEnt.Owner))
+            {
+                groundMapUid = belowEnt.Owner;
+                return true;
+            }
+
+            current = belowEnt.Owner;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -360,6 +432,14 @@ public abstract partial class CESharedZLevelsSystem
         if (_gravity.EntityGridOrMapHaveGravity((ent.Owner, xform)))
             return;
 
+        // Far Horizons: planet sky layers are the void — floaters stay weightless there so they
+        // drift with inertia (or fly with a jetpack) instead of walking on thin air. The z-gravity
+        // still pulls them down and the sky drift redirects landings away from buildings.
+        if (xform.MapUid is { } skyMapUid &&
+            (HasComp<CEZPlanetSkyLayerComponent>(skyMapUid) ||
+             TryGetPlanetGroundLayerBelow(skyMapUid, out _)))
+            return;
+
         if (!HasZGravityInfluenceFromBelow(ent.Owner, xform))
             return;
 
@@ -377,6 +457,21 @@ public abstract partial class CESharedZLevelsSystem
             TryFindSupportedLevelBelow(uid, xform, out _, out var supportGridUid, out _))
         {
             hasZGravity = HasGridGravityOnSupport(supportGridUid);
+        }
+
+        // Far Horizons: a planet's sky layers inherit the ground layer's gravity — mobs fall
+        // there even over open void (a space-borne base has no support anywhere but the ground
+        // map's gravity still pulls). Active jetpack users fly under their own power and stay
+        // exempt; items are handled by the server-side sky drift system so a thrown item keeps
+        // its momentum for a while before dropping.
+        if (!hasZGravity &&
+            HasComp<MobStateComponent>(uid) &&
+            !HasComp<JetpackUserComponent>(uid) &&
+            xform.MapUid is { } mobSkyMapUid &&
+            TryGetPlanetGroundLayerInStackBelow(mobSkyMapUid, out var stackGroundMapUid) &&
+            HasGridGravityOnSupport(stackGroundMapUid.Value))
+        {
+            hasZGravity = true;
         }
 
         SetZGravityInfluenced(uid, hasZGravity);
@@ -413,7 +508,17 @@ public abstract partial class CESharedZLevelsSystem
                 : TryResolveGridForMapOffset(ent, xform, -offset, out belowGridUid, out belowGrid);
 
             if (!resolved)
-                break;
+            {
+                // Far Horizons: planet sky layers have no grids at all. Keep searching past
+                // them so a fall through consecutive empty levels still finds the ground
+                // layer's support/gravity instead of treating the fall as weightless.
+                if (useDetachedCarrierProbe ||
+                    xform.MapUid is not { } sourceMapUid ||
+                    !TryResolveTraversalMapOffset(sourceMapUid, -offset, out _, out _))
+                    break;
+
+                continue;
+            }
 
             var tileIndices = _map.WorldToTile(belowGridUid, belowGrid, worldPos);
             var anchoredQuery = _map.GetAnchoredEntitiesEnumerator(belowGridUid, belowGrid, tileIndices);
@@ -487,7 +592,23 @@ public abstract partial class CESharedZLevelsSystem
         }
 
         if (!TryFindSupportedLevelBelow(uid, xform, out supportOffset, out supportGridUid, out supportIsHighGround))
+        {
+            // Far Horizons: on a planet's sky layers the ground layer's gravity pulls entities
+            // down even where nothing supports them (the void around a space-borne base), so
+            // they fall through the stack to the ground layer itself.
+            if (xform.MapUid is { } voidSkyMapUid &&
+                TryGetPlanetGroundLayerInStackBelow(voidSkyMapUid, out var voidGroundMapUid) &&
+                HasGridGravityOnSupport(voidGroundMapUid.Value))
+            {
+                supportOffset = 1;
+                supportGridUid = voidGroundMapUid.Value;
+                supportIsHighGround = false;
+                effectiveGravityBelow = true;
+                return AutoDescendMode.FreeFall;
+            }
+
             return AutoDescendMode.None;
+        }
 
         effectiveGravityBelow = HasGridGravityOnSupport(supportGridUid);
 
@@ -2889,6 +3010,22 @@ public abstract partial class CESharedZLevelsSystem
             return false;
 
         return TryMove(ent, -1);
+    }
+
+    /// <summary>
+    /// Far Horizons: forces a falling entity into its touchdown drop — a height above the current
+    /// ground plus a downward speed — so the z-physics lands it with the usual impact. Used by the
+    /// sky drift system when it transfers a faller onto the planet's ground layer.
+    /// </summary>
+    [PublicAPI]
+    public void SetFallTouchdown(EntityUid ent, float height, float fallSpeed)
+    {
+        if (!ZPhysQuery.TryComp(ent, out var zPhys))
+            return;
+
+        zPhys.LocalPosition = MathF.Max(height, zPhys.CurrentGroundHeight);
+        zPhys.Velocity = MathF.Min(zPhys.Velocity, -fallSpeed);
+        Dirty(ent, zPhys);
     }
 
     [PublicAPI]

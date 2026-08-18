@@ -5,6 +5,7 @@
   mapName: Лаваленд Тест
   mapPath: /Maps/_Lavaland/lavaland_playtest.yml
   minPlayers: 0
+  generateStarSystem: false
   stations:
     Lavatest:
       stationProto: StandardNanotrasenStation
