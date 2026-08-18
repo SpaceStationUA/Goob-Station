@@ -89,6 +89,7 @@
     glimmerBurnLower: 50
     glimmerBurnUpper: 110
   - type: MassMindSwapRule
+    maxNumberOfPairs: 7
 
 - type: entity
   id: MinorMassMindSwap
