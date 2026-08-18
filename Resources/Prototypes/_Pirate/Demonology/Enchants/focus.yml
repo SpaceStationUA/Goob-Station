@@ -8,6 +8,7 @@
   - type: Enchant
     maxLevel: 1
     whitelist:
+      requireAll: true # Pirate: wiki requires both clothing and armor.
       components:
       - Clothing
       - Armor

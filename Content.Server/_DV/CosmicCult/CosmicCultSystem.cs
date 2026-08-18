@@ -24,7 +24,6 @@ using Content.Shared.Eye;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Mood;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Polymorph;
 using Content.Shared.Speech.Components;
@@ -151,8 +150,6 @@ public sealed partial class CosmicCultSystem
     /// </summary>
     private void OnStartCultist(Entity<CosmicCultComponent> ent, ref ComponentInit args)
     {
-        RaiseLocalEvent(ent.Owner, new MoodEffectEvent("CultFocused")); // Pirate - port EE mood system
-
         _eye.RefreshVisibilityMask(ent.Owner);
         _alerts.ShowAlert(ent.Owner, ent.Comp.EntropyAlert);
 

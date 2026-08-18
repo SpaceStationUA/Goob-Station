@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/a373b4cb08298523d40acc14f9c390a0c403fc31/icons/obj/bed.dmi, bed_double-wood taken from https://github.com/SPLURT-Station/S.P.L.U.R.T-tg/blob/master/modular_zubbers/icons/obj/bed.dmi and modify by Vareniko",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bed_double"
+        },
+        {
+            "name": "bed_double-wood"
+        }
+    ]
+}

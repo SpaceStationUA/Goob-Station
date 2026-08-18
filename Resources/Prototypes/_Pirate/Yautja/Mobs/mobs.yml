@@ -62,8 +62,6 @@
     - Yautja
   - type: BreathingImmunity
   - type: DiseaseImmune
-  - type: Mood
-    enabled: false
   - type: Hunger
     baseDecayRate: 0
     startingHunger: 150

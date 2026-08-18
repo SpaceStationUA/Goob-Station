@@ -1,0 +1,46 @@
+- type: entity
+  parent: Bed
+  id: DoubleBed
+  name: двоспальне ліжко
+  description: Велике ліжко для двох людей. На нього можна постелити дві ковдри або одну велику.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Furniture/bed_double.rsi
+    state: bed_double
+  - type: Construction
+    graph: bed
+    node: double_bed
+  - type: DoubleBed
+    leftBedsheetOffset: "0,0.5"
+    rightBedsheetOffset: "0,0"
+  - type: Appearance
+  - type: Strap
+    position: Down
+    rotation: -90
+    size: 200
+    buckleOffset: "0,-0.25"
+  - type: PlaceableSurface
+    placeCentered: true
+
+- type: entity
+  parent: Bed
+  id: BedWood
+  name: дерев'яне ліжко
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Furniture/beds.rsi
+    state: bed-wood
+  - type: Construction
+    graph: bed
+    node: bedwood
+
+- type: entity
+  parent: DoubleBed
+  id: DoubleBedWood
+  name: дерев'яне двоспальне ліжко
+  components:
+  - type: Sprite
+    state: bed_double-wood
+  - type: Construction
+    graph: bed
+    node: double_bed_wood

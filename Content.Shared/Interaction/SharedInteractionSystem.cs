@@ -498,7 +498,7 @@ namespace Content.Shared.Interaction
             if (!TryGetUsedEntity(user, out var used, checkCanUse))
             {
                 if (inRangeUnobstructed && target != null)
-                    InteractHand(user, target.Value);
+                    InteractHand(user, target.Value, coordinates); // Pirate edit - add (coordinates)
 
                 return;
             }
@@ -546,7 +546,7 @@ namespace Content.Shared.Interaction
             return uid != null && IsDeleted(uid.Value);
         }
 
-        public bool InteractHand(EntityUid user, EntityUid target) // Goobstation - useful return value
+        public bool InteractHand(EntityUid user, EntityUid target, EntityCoordinates? clickLocation = null) // Goobstation - useful return value // Pirate edit - add (EntityCoordinates? clickLocation = null)
         {
             if (IsDeleted(user) || IsDeleted(target))
                 return false; // Goobstation
@@ -575,7 +575,7 @@ namespace Content.Shared.Interaction
             DebugTools.Assert(!IsDeleted(user) && !IsDeleted(target));
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
-            var message = new InteractHandEvent(user, target);
+            var message = new InteractHandEvent(user, target, clickLocation); // Pirate edit - add (clickLocation)
             RaiseLocalEvent(target, message, true);
             var userMessage = new UserInteractHandEvent(user, target);
             RaiseLocalEvent(user, userMessage, true);
