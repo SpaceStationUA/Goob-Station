@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Client.Eye;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Client.Player;
@@ -58,21 +59,26 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
-        var eyeEntities = AllEntityQuery<ContentEyeComponent, EyeComponent>();
-        while (eyeEntities.MoveNext(out var entity, out ContentEyeComponent? contentComponent, out EyeComponent? eyeComponent))
-        {
-            UpdateEyeOffset((entity, eyeComponent));
-        }
+        UpdateActiveEyeOffsets();
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
         // TODO: Ideally we wouldn't want this to run in both FrameUpdate and Update, but we kind of have to since the visual update happens in FrameUpdate, but interaction update happens in Update. It's a workaround and a better solution should be found.
-        var eyeEntities = AllEntityQuery<ContentEyeComponent, EyeComponent>();
-        while (eyeEntities.MoveNext(out var entity, out ContentEyeComponent? contentComponent, out EyeComponent? eyeComponent))
+        UpdateActiveEyeOffsets();
+    }
+
+    private void UpdateActiveEyeOffsets()
+    {
+        var eyeEntities = AllEntityQuery<LerpingEyeComponent, ContentEyeComponent, EyeComponent>();
+        while (eyeEntities.MoveNext(
+                   out var entity,
+                   out LerpingEyeComponent? _,
+                   out ContentEyeComponent? _,
+                   out EyeComponent? eye))
         {
-            UpdateEyeOffset((entity, eyeComponent));
+            UpdateEyeOffset((entity, eye));
         }
     }
 }
