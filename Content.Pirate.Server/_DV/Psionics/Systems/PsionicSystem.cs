@@ -92,6 +92,6 @@ public sealed partial class PsionicSystem : SharedPsionicSystem
         if (!_playerManager.TryGetSessionByEntity(ev.User, out var session))
             return;
 
-        _chatManager.ChatMessageToOne(ChatChannel.Emotes, ev.Feedback, ev.Feedback, ev.User, false, session.Channel);
+        _chatManager.ChatMessageToOne(ChatChannel.Server, ev.Feedback, ev.Feedback, ev.User, false, session.Channel);
     }
 }
