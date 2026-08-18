@@ -53,7 +53,7 @@ internal sealed class NoosphericStormRule : StationEventSystem<NoosphericStormRu
         }
 
         // Increase glimmer.
-        var baseGlimmerAdd = _robustRandom.Next(component.BaseGlimmerAddMin, component.BaseGlimmerAddMax);
+        var baseGlimmerAdd = _robustRandom.Next(component.BaseGlimmerAddMin, component.BaseGlimmerAddMax + 1);
         //var glimmerSeverityMod = 1 + (component.GlimmerSeverityCoefficient * (GetSeverityModifier() - 1f));
         var glimmerAdded = baseGlimmerAdd; // Math.Round(baseGlimmerAdd * glimmerSeverityMod);
 

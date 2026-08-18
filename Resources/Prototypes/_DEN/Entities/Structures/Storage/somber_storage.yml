@@ -21,6 +21,10 @@
       map: ["enum.StorageVisualLayers.Base"]
     - state: door-closed
       map: ["enum.StorageVisualLayers.Door"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
@@ -107,6 +111,10 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]

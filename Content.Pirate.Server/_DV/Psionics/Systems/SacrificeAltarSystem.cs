@@ -97,6 +97,7 @@ public sealed class SacrificeAltarSystem : EntitySystem
             NeedHand = true,
             BreakOnDamage = true,
             BreakOnMove = true,
+            DuplicateCondition = DuplicateConditions.SameTarget,
         };
 
         if (!_doAfter.TryStartDoAfter(doAfterArgs, out _))
@@ -109,7 +110,7 @@ public sealed class SacrificeAltarSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, SacrificeAltarComponent component, ref SacrificeDoAfterEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || args.Cancelled)
             return;
 
         args.Handled = true;
@@ -141,14 +142,18 @@ public sealed class SacrificeAltarSystem : EntitySystem
             Loc.GetString("sacrifice-altar-announce", ("user", user), ("target", target)),
             uid, PopupType.LargeCaution);
 
-        // Reduce glimmer.
-        var glimmerReduction = _random.Next(component.GlimmerReductionMin, component.GlimmerReductionMax + 1);
+        // Normalize min/max so reversed mapper-configured ranges don't throw.
+        var glimMin = Math.Min(component.GlimmerReductionMin, component.GlimmerReductionMax);
+        var glimMax = Math.Max(component.GlimmerReductionMin, component.GlimmerReductionMax);
+        var glimmerReduction = _random.Next(glimMin, glimMax + 1);
         _glimmer.Glimmer -= glimmerReduction;
 
         var coords = Transform(target).Coordinates;
 
         // Spawn bluespace crystals.
-        var crystalCount = _random.Next(component.BsCrystalMin, component.BsCrystalMax + 1);
+        var crMin = Math.Min(component.BsCrystalMin, component.BsCrystalMax);
+        var crMax = Math.Max(component.BsCrystalMin, component.BsCrystalMax);
+        var crystalCount = _random.Next(crMin, crMax + 1);
         for (var i = 0; i < crystalCount; i++)
         {
             Spawn("MaterialBSCrystal1", coords);
@@ -160,13 +165,13 @@ public sealed class SacrificeAltarSystem : EntitySystem
         // Log the sacrifice.
         _adminLog.Add(LogType.Psionics,
             LogImpact.High,
-            $"{ToPrettyString(user):player} sacrificed {ToPrettyString(target):player} on {ToPrettyString(uid):player}, reducing glimmer by {glimmerReduction}");
+            $"{ToPrettyString(user):player} sacrificed {ToPrettyString(target):player} on {ToPrettyString(uid)}, reducing glimmer by {glimmerReduction}");
 
         // Gib the target.
         _body.GibBody(target, gibOrgans: true);
 
         // Play a sound.
-        _audio.PlayPvs("/Audio/Effects/hallelujah.ogg", uid);
+        _audio.PlayPvs(component.SacrificeSound, uid);
     }
 }
 

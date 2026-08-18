@@ -1,6 +1,7 @@
 namespace Content.Server._DV.Psionics.Components;
 
 using Content.Server._DV.Psionics.Systems;
+using Robust.Shared.Audio;
 
 /// <summary>
 /// Marks an altar as capable of sacrificing a buckled psionic to reduce glimmer.
@@ -40,4 +41,10 @@ public sealed partial class SacrificeAltarComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(10);
+
+    /// <summary>
+    /// Sound played when the sacrifice completes.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier SacrificeSound = new SoundPathSpecifier("/Audio/Effects/hallelujah.ogg");
 }

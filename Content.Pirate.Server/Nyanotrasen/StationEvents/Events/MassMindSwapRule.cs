@@ -80,7 +80,10 @@ internal sealed class MassMindSwapRule : StationEventSystem<MassMindSwapRuleComp
                 psionicActors.Add(psion);
         }
 
-        var swapPairCount = _random.Next(1, component.MaxNumberOfPairs);
+        var swapPairCount = component.MaxNumberOfPairs <= 1
+            ? 1
+            : _random.Next(1, component.MaxNumberOfPairs + 1);
+        swapPairCount = Math.Min(swapPairCount, psionicActors.Count / 2);
 
         for (; swapPairCount > 0 && psionicActors.Count > 1; swapPairCount--)
         {
