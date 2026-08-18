@@ -15,9 +15,9 @@ public sealed partial class TelegnosisPowerComponent : BasePsionicPowerComponent
 
     public override string? PowerMetapsionicFeedback { get; set; } = "telegnosis-power-metapsionic-feedback";
 
-    public override int MinGlimmerChanged { get; set; } = 5;
+    public override int MinGlimmerChanged { get; set; } = 2;
 
-    public override int MaxGlimmerChanged { get; set; } = 25;
+    public override int MaxGlimmerChanged { get; set; } = 12;
 
     /// <summary>
     /// The mob prototype that will be used to telegnosis.
