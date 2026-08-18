@@ -3,7 +3,6 @@ using Content.Shared._DV.Psionics.Components;
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
 using Content.Shared._DV.Psionics.Events;
 using Content.Shared.Examine;
-using Content.Shared.Mood;
 
 namespace Content.Server._DV.Psionics.Systems;
 
@@ -57,10 +56,6 @@ public sealed class MindBrokenSystem : EntitySystem
             ent.Comp.BlinkingDisabled = true;
         }
 
-        // Permanent negative mood debuff (can be disabled per-entity).
-        if (!ent.Comp.IgnoreMoodDebuff)
-            RaiseLocalEvent(ent, new MoodEffectEvent("Mindbroken"));
-
         var ev = new MindBrokenAddedEvent();
         RaiseLocalEvent(ent, ref ev);
     }
@@ -70,10 +65,6 @@ public sealed class MindBrokenSystem : EntitySystem
         // Undo the granted insulation & assay response when the mindbroken state is removed.
         RemComp<PsionicallyInsulativeComponent>(ent);
         RemComp<AssayResponseComponent>(ent);
-
-        // Remove the permanent mood debuff if it was applied.
-        if (!ent.Comp.IgnoreMoodDebuff)
-            RaiseLocalEvent(ent, new MoodRemoveEffectEvent("Mindbroken"));
 
         // Restore blinking if this mindbroken state disabled it.
         if (ent.Comp.BlinkingDisabled && TryComp<BlinkingComponent>(ent, out var blinking))

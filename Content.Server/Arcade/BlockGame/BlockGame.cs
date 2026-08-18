@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Arcade;
-using Content.Shared.Mood;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using System.Linq;
@@ -85,7 +84,6 @@ public sealed partial class BlockGame
         {
             _highScorePlacement = _arcadeSystem.RegisterHighScore(meta.EntityName, Points);
             SendHighscoreUpdate();
-            _entityManager.EventBus.RaiseLocalEvent(meta.Owner, new MoodEffectEvent("ArcadePlay")); // Pirate - port EE mood system
         }
         SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement));
     }

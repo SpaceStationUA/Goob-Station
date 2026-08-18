@@ -8,7 +8,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Fluids;
 using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Mood;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
@@ -148,7 +147,6 @@ public sealed class VomitSystem : EntitySystem
         // Force sound to play as spill doesn't work if solution is empty.
         _audio.PlayPvs(_vomitSound, uid);
         _popup.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
-        RaiseLocalEvent(uid, new MoodEffectEvent("MobVomit")); // Pirate - port EE mood system
     }
 }
 

@@ -1,5 +1,4 @@
 using Content.Pirate.Shared.Vampire.Components;
-using Content.Pirate.Server.Mood;
 using Content.Pirate.Server.Alchemy.Components;
 using Content.Pirate.Shared.Alchemy.EntityEffects;
 using Content.Pirate.Shared.Witch;
