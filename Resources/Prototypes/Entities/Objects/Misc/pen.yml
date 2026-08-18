@@ -17,6 +17,7 @@
     tags:
     - Write
     - Pen
+  - type: StoreContracts # Pirate: register contracts UI for pen uplinks.
   - type: UserInterface # Goob starting here
     interfaces:
       enum.PenSpinUiKey.Key:
