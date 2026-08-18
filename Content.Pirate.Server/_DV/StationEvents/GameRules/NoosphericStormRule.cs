@@ -6,6 +6,7 @@ using Content.Shared._DV.Psionics.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Psionics.Glimmer;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server._DV.StationEvents.GameRules;
@@ -27,6 +28,7 @@ internal sealed class NoosphericStormRule : StationEventSystem<NoosphericStormRu
         while (query.MoveNext(out var potPsionic, out var potPsionicComp))
         {
             if (!_mobStateSystem.IsAlive(potPsionic)
+                || !HasComp<ActorComponent>(potPsionic) // Skip non-player entities.
                 || HasComp<PsionicComponent>(potPsionic)) // Skip over already psionic entities.
                 continue;
 

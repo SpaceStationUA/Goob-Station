@@ -11,6 +11,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Psionics.Glimmer;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server._DV.StationEvents.GameRules;
 
@@ -48,7 +49,8 @@ internal sealed class NoosphericFryRule : StationEventSystem<NoosphericFryRuleCo
         var query = EntityQueryEnumerator<PotentialPsionicComponent>();
         while (query.MoveNext(out var psion, out var _))
         {
-            if (!_mobStateSystem.IsAlive(psion))
+            if (!_mobStateSystem.IsAlive(psion)
+                || !HasComp<ActorComponent>(psion)) // Skip non-player entities.
                 continue;
 
             var ev = new NoosphericFryEvent(damage, fireStacks);

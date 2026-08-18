@@ -67,7 +67,6 @@ internal sealed class MassMindSwapRule : StationEventSystem<MassMindSwapRuleComp
 
     private void SwapMinds(MassMindSwapRuleComponent component)
     {
-        List<EntityUid> psionicPool = new();
         List<EntityUid> psionicActors = new();
 
         var query = EntityQueryEnumerator<PotentialPsionicComponent, MobStateComponent>();
@@ -76,29 +75,25 @@ internal sealed class MassMindSwapRule : StationEventSystem<MassMindSwapRuleComp
             if (!_mobStateSystem.IsAlive(psion, mobState) || !_psionic.CanBeTargeted(psion))
                 continue;
 
-            psionicPool.Add(psion);
-
+            // Only swap between connected players — no mindswapping NPCs
             if (HasComp<ActorComponent>(psion))
-            {
-                // This is so we don't bother mindswapping NPCs with NPCs.
                 psionicActors.Add(psion);
-            }
         }
 
         // Shuffle the list of candidates.
-        _random.Shuffle(psionicPool);
+        _random.Shuffle(psionicActors);
 
         foreach (var actor in psionicActors)
         {
             do
             {
-                if (psionicPool.Count == 0)
+                if (psionicActors.Count == 0)
                     // We ran out of candidates. Exit early.
                     return;
 
                 // Pop the last entry off.
-                var other = psionicPool[^1];
-                psionicPool.RemoveAt(psionicPool.Count - 1);
+                var other = psionicActors[^1];
+                psionicActors.RemoveAt(psionicActors.Count - 1);
 
                 if (other == actor)
                     // Don't be yourself. Find someone else.
@@ -106,7 +101,7 @@ internal sealed class MassMindSwapRule : StationEventSystem<MassMindSwapRuleComp
 
                 // A valid swap target has been found.
                 // Remove this actor from the pool of swap candidates before they go.
-                psionicPool.Remove(actor);
+                psionicActors.Remove(actor);
 
                 // Do the swap. Also ignore mindshields, because this is the big boi swap.
                 _mindSwap.SwapMinds(actor, other, false, component.IsTemporary, true);
