@@ -54,17 +54,17 @@ public sealed class SacrificeAltarSystem : EntitySystem
             && !HasComp<BibleUserComponent>(args.User))
             return;
 
-        // Check if someone is buckled to the altar.
-        if (!TryComp<StrapComponent>(uid, out var strap) || strap.BuckledEntities.Count == 0)
-            return;
-
-        // Find the first buckled psionic.
+        // Check if someone is buckled to the altar by scanning nearby entities.
         EntityUid? target = null;
-        foreach (var buckled in strap.BuckledEntities)
+        var buckleQuery = EntityQueryEnumerator<BuckleComponent>();
+        while (buckleQuery.MoveNext(out var buckledUid, out var buckleComp))
         {
-            if (HasComp<PotentialPsionicComponent>(buckled) || HasComp<PsionicComponent>(buckled))
+            if (buckleComp.BuckledTo != uid)
+                continue;
+
+            if (HasComp<PotentialPsionicComponent>(buckledUid) || HasComp<PsionicComponent>(buckledUid))
             {
-                target = buckled;
+                target = buckledUid;
                 break;
             }
         }
@@ -84,7 +84,7 @@ public sealed class SacrificeAltarSystem : EntitySystem
 
     private void StartSacrifice(EntityUid altar, EntityUid target, EntityUid user, SacrificeAltarComponent component)
     {
-        if (!TryComp<StrapComponent>(altar, out var strap) || !strap.BuckledEntities.Contains(target))
+        if (!TryComp<BuckleComponent>(target, out var buckleComp) || buckleComp.BuckledTo != altar)
         {
             _popup.PopupClient(Loc.GetString("sacrifice-altar-target-not-buckled"), user, user);
             return;
@@ -118,7 +118,7 @@ public sealed class SacrificeAltarSystem : EntitySystem
         var user = args.User;
 
         // Re-validate after the DoAfter delay — psionic check happens HERE.
-        if (!TryComp<StrapComponent>(uid, out var strap) || !strap.BuckledEntities.Contains(target))
+        if (!TryComp<BuckleComponent>(target, out var buckleComp) || buckleComp.BuckledTo != uid)
         {
             _popup.PopupClient(Loc.GetString("sacrifice-altar-target-not-buckled"), user, user);
             return;
