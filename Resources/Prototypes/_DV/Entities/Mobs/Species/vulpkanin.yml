@@ -14,7 +14,7 @@
     speciesId: vulpkanin
   - type: Thirst
   - type: Icon
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: full
   - type: Body
     prototype: Vulpkanin
