@@ -32,15 +32,6 @@
     - !type:ModifyHealthAction
       damage:
         types: {Piercing: 5}
-    # Для мазохстів:
-    #- !type:ConditionalAction
-    #  condition:
-    #    !type:EntityWhitelistRequirement
-    #    whitelist:
-    #      components: [Masochist]
-    #  true:
-    #    !type:MoodAction
-    #    effect: ??? # Позитивний ефект сюди
   effectSuccess:
     popup: Obvious
     sound:
@@ -69,8 +60,6 @@
       slot: MASK
   action:
     !type:NoOpAction
-  #  !type:MoodAction
-  #  effect: BeingKissed
   effectSuccess:
     popup: Obvious
     sound: {path: /Audio/_Pirate/Epic/kiss.ogg}
@@ -99,8 +88,6 @@
       slot: MASK
   action:
     !type:NoOpAction
-  #  !type:MoodAction
-  #  effect: BeingLicked
   effectSuccess:
     popup: Obvious
     sound: {path: /Audio/_Pirate/Epic/lick.ogg}

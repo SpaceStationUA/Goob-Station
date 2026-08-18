@@ -296,12 +296,6 @@ reagent-effect-guidebook-chem-mindbreak = { $chance ->
         *[other] назавжди руйнує
     } свідомість цілі, позбавляючи всієї псіоніки та псіонічного потенціалу
 
-reagent-effect-guidebook-add-moodlet = змінює настрій на {$amount}
-    { $timeout ->
-        [0] на невизначений час
-        *[other] на {$timeout} секунд
-    }
-
 reagent-effect-guidebook-smoke-area-reaction-effect = { $chance ->
         [1] створює
         *[other] створює
@@ -338,8 +332,6 @@ reagent-effect-guidebook-chem-restorereroll-psionic = { $chance ->
         [1] Відновлює
         *[other] відновити
     } здатність отримувати користь від реагентів, що відкривають розум
-reagent-effect-guidebook-remove-moodlet = Видаляє мудлет {$name}.
-reagent-effect-guidebook-purge-moodlets = Видаляє всі активні непостійні мудлети.
 reagent-effect-guidebook-flash-reaction-effect = { $chance ->
         [1] Спричиняє
         *[other] спричинити

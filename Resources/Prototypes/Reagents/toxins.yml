@@ -571,12 +571,6 @@
             - !type:ReagentCondition
               reagent: Romerol
               min: 5
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: RomerolEffect
-          conditions:
-            - !type:ReagentCondition
-              reagent: Romerol
-              min: 5
 
 - type: reagent
   id: UncookedAnimalProteins
@@ -715,8 +709,6 @@
         gainRateModifier: -0.00111111111111 #double spaceacilin penalty
         strengthModifier: -0.0088888888888 #ditto
         statusLifetime: 1.5 # 1.5s per 1u
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: PaxEffect
 
 - type: reagent
   id: Honk
