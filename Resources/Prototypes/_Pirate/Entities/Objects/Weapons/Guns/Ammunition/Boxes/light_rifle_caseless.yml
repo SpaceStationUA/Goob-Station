@@ -1,0 +1,25 @@
+# Pirate: large ammo box for the Bandit's .30 caseless light rifle rounds - no box existed for this
+# caliber before, only the 15-round magazine.
+- type: entity
+  parent: BaseMagazineBoxLightRifle
+  id: MagazineBoxLightRifleCaselessBig
+  name: ammunition box (.30 caseless rifle)
+  description: A cardboard box of .30 caseless light rifle rounds. Intended to hold general-purpose kinetic ammunition.
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 200
+    proto: CartridgeLightRifleCaseless
+    whitelist:
+      tags:
+      - CartridgeLightRifleCaseless
+  - type: Sprite
+    layers:
+    - state: base-b
+      map: ["enum.GunVisualLayers.Base"]
+    - state: magb-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: magb
+    steps: 4
+    zeroVisible: false
+  - type: Appearance

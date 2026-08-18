@@ -1,3 +1,133 @@
+# Mercenary
+
+- type: selectableSet
+  id: MercWSPRSet
+  name: selectable-set-merc-wspr-name
+  description: selectable-set-merc-wspr-description
+  sprite:
+    sprite: _Goobstation/Objects/Weapons/Guns/Rifles/wspr.rsi
+    state: icon
+  content:
+  - WeaponRifleWSPR
+  - MagazineCaselessRifle
+  - MagazineCaselessRifle
+  - MagazineBoxCaselessRifleBig
+
+- type: selectableSet
+  id: MercEstocSet
+  name: selectable-set-merc-estoc-name
+  description: selectable-set-merc-estoc-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
+    state: icon
+  content:
+  - WeaponRifleEstoc
+  - MagazineLightRifle
+  - MagazineLightRifle
+  - MagazineBoxLightRifleBig
+
+- type: selectableSet
+  id: MercBanditSet
+  name: selectable-set-merc-bandit-name
+  description: selectable-set-merc-bandit-description
+  sprite:
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/bandit.rsi
+    state: icon
+  content:
+  - WeaponRifleBandit
+  - MagazineLightRifleCaseless
+  - MagazineLightRifleCaseless
+  - MagazineLightRifleCaseless
+  - MagazineLightRifleCaseless
+  - MagazineBoxLightRifleCaselessBig
+
+- type: selectableSet
+  id: MercAKMSet
+  name: selectable-set-merc-akm-name
+  description: selectable-set-merc-akm-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+    state: icon
+  content:
+  - WeaponRifleAk
+  - MagazineLightRifle
+  - MagazineLightRifle
+  - MagazineBoxLightRifleBig
+
+- type: selectableSet
+  id: MercEnforcerSet
+  name: selectable-set-merc-enforcer-name
+  description: selectable-set-merc-enforcer-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+    state: icon
+  content:
+  - WeaponShotgunEnforcer
+  - BoxLethalshot
+  - BoxLethalshot
+  - BoxShotgunIncendiary
+
+- type: selectableSet
+  id: MercVulkanMSet
+  name: selectable-set-merc-vulkan-m-name
+  description: selectable-set-merc-vulkan-m-description
+  sprite:
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/vulcan.rsi
+    state: icon
+  content:
+  - WeaponRifleVulcanM
+  - MagazineLightRifle
+  - MagazineLightRifle
+  - MagazineBoxLightRifleBig
+
+# Mercenary sidearms
+
+- type: selectableSet
+  id: MercSvalinnSet
+  name: selectable-set-merc-svalinn-name
+  description: selectable-set-merc-svalinn-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+    state: icon
+  content:
+  - WeaponLaserSvalinn
+
+- type: selectableSet
+  id: MercEnergyMagnumSet
+  name: selectable-set-merc-energy-magnum-name
+  description: selectable-set-merc-energy-magnum-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
+    state: icon
+  content:
+  - WeaponEnergyMagnum
+
+- type: selectableSet
+  id: MercCobraSet
+  name: selectable-set-merc-cobra-name
+  description: selectable-set-merc-cobra-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+    state: icon
+  content:
+  - WeaponPistolCobra
+  - MagazinePistolCaselessRifle
+  - MagazinePistolCaselessRifle
+  - MagazineBoxCaselessRifle
+
+- type: selectableSet
+  id: MercViperSet
+  name: selectable-set-merc-viper-name
+  description: selectable-set-merc-viper-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    state: icon
+  content:
+  - WeaponPistolViper
+  - MagazinePistol
+  - MagazinePistol
+  - MagazineBoxPistol
+
 ## Command - Командування
 # Captain - Капітан
 - type: selectableSet

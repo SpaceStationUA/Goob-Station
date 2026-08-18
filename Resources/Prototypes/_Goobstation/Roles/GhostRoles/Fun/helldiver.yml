@@ -33,10 +33,8 @@
   id: HelldiverBeltFillTable
   table: !type:AllSelector
     children:
-    - id: MagazineRifle
-      amount: !type:ConstantNumberSelector
-        value: 3
-    - id: MagazineBoxRifleBig
+    - id: MercUndeterminedWeapon # Pirate: merc weapon selector
+    - id: MercUndeterminedSidearm # Pirate: merc sidearm selector
     - id: ExGrenade
       amount: !type:ConstantNumberSelector
         value: 2
