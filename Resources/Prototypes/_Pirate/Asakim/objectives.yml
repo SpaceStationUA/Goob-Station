@@ -20,8 +20,8 @@
 - type: entity
   parent: BaseAsakimObjective
   id: AsakimKillObjective
-  name: ">TERMINATE"
-  description: Vital signs MUST reach zero in subject. Once.
+  name: ">ЛІКВІДУВАТИ"
+  description: "Життєві показники суб’єкта МАЮТЬ досягти нуля. Один раз."
   components:
   - type: Objective
     issuer: objective-issuer-asakim
@@ -51,40 +51,40 @@
 - type: entity
   parent: [BaseAsakimObjective, BaseSurviveObjective]
   id: AsakimTheftObjective
-  name: ">CONFISCATE"
-  description: Records indicate that this sector may have valuable items. Confiscate such items for further study.
+  name: ">КОНФІСКУВАТИ"
+  description: "Записи вказують, що в цьому секторі можуть бути цінні предмети. Конфіскуйте їх для подальшого дослідження."
   components:
   - type: Objective
 
 - type: entity
   parent: [BaseAsakimObjective, BaseSurviveObjective]
   id: AsakimInfiltrateObjective
-  name: ">INFILTRATE"
-  description: Ambient radio chatter mentions "High-Security Areas". Investigate such places, if they do exist.
+  name: ">ПРОНИКНУТИ"
+  description: "У місцевому радіоефірі згадуються «зони підвищеної безпеки». Дослідіть такі місця, якщо вони справді існують."
   components:
   - type: Objective
 
 - type: entity
   parent: [BaseAsakimObjective, BaseSurviveObjective]
   id: AsakimInterrogateObjective
-  name: ">INTERROGATE"
-  description: WARNING - Time-gap of [ERROR] years detected. Records may be outdated. Consult local population.
+  name: ">ДОПИТАТИ"
+  description: "УВАГА: виявлено часовий розрив у [ПОМИЛКА] років. Записи можуть бути застарілими. Опитайте місцеве населення."
   components:
   - type: Objective
 
 - type: entity
   parent: [BaseAsakimObjective, BaseSurviveObjective]
   id: AsakimUpgradeObjective
-  name: ">UPGRADE"
-  description: Preliminary sector scans detect possible high-value cybernetics. Upgrade your body.
+  name: ">ВДОСКОНАЛИТИСЯ"
+  description: "Попереднє сканування сектора виявило можливі цінні кібернетичні технології. Вдоскональте своє тіло."
   components:
   - type: Objective
 
 - type: entity
   parent: [BaseAsakimObjective, BaseSurviveObjective]
   id: AsakimAllyObjective
-  name: ">AFFILIATE"
-  description: Prior records indicate possible persons-of-interest in this sector. Find or make allies in the local populace.
+  name: ">ОБ’ЄДНАТИСЯ"
+  description: "Попередні записи вказують на можливих осіб, що становлять інтерес у цьому секторі. Знайдіть або здобудьте союзників серед місцевого населення."
   components:
   - type: Objective
 

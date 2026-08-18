@@ -30,7 +30,8 @@ public sealed class UplinkBoundUserInterface(EntityUid owner, Enum uiKey) : Boun
         _menu.Owner = Owner; // Pirate: reputation checks use the actual store entity.
 
         _menu.Stylesheet = "Syndicate";
-        _menu.ContractsButton.Visible = EntMan.HasComponent<StoreContractsComponent>(Owner) &&
+        _menu.ContractsButton.Visible = EntMan.TryGetComponent<StoreContractsComponent>(Owner, out var contracts) &&
+                                        contracts.Mind != null &&
                                         !EntMan.HasComponent<PdaComponent>(Owner);
         _menu.OnContractsPressed += _ => SendMessage(new StoreShowContractsMessage());
 

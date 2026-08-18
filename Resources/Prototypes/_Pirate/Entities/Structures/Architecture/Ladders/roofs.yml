@@ -1,7 +1,7 @@
 - type: entity
   id: CEZLevelsStairsRoofBase
-  name: roof tile
-  description: Roof tiles, for covering building roofs.
+  name: "покрівельна плитка"
+  description: "Покрівельна плитка для накриття дахів будівель."
   abstract: true
   components:
   - type: Damageable

@@ -9,7 +9,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;
-using Content.Shared.Inventory;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Destructible;
@@ -33,8 +32,6 @@ public sealed class WashingMachineSystem : SharedWashingMachineSystem
     [Dependency] private readonly IRobustRandom _random = null!;
     [Dependency] private readonly ReactiveSystem _reactive = null!;
 
-    /// <summary>How long after a wash cycle wearing a laundered inner uniform grants the buff.</summary>
-    private static readonly TimeSpan FreshLaundryWindow = TimeSpan.FromMinutes(5);
     private static readonly SoundSpecifier HitSound = new SoundCollectionSpecifier("MetalThud");
 
     public override void Initialize()
@@ -145,13 +142,6 @@ public sealed class WashingMachineSystem : SharedWashingMachineSystem
             {
                 if (TryComp<WettableComponent>(item, out var wettable))
                     _wetness.DryFully((item, wettable));
-
-                // Inner uniforms can grant the fresh-laundry buff.
-                if (TryComp<ClothingComponent>(item, out var clothing) && (clothing.Slots & SlotFlags.INNERCLOTHING) != 0)
-                {
-                    var fresh = EnsureComp<FreshLaundryComponent>(item);
-                    fresh.Expiry = Timing.CurTime + FreshLaundryWindow;
-                }
             }
         }
 

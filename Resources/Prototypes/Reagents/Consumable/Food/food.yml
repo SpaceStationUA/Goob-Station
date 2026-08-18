@@ -155,12 +155,6 @@
           type: [ Vampiric ]
           inverted: true
         factor: 1
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: SweetenerEffect
-        conditions:
-        - !type:MetabolizerTypeCondition # Pirate
-          type: [ Vampiric ]
-          inverted: true
       - !type:GenericStatusEffect # Pirate
         key: CorticalBorerProtection
         type: Add

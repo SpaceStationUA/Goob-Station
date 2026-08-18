@@ -24,6 +24,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Decals;
+using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Radio;
 using Content.Shared.Roles.RoleCodeword;
@@ -696,6 +697,7 @@ public sealed partial class ChatUIController : UIController
             : MapCoordinates.Nullspace;
 
         var occluded = player != null && _examine.IsOccluded(player.Value);
+        var maxRaycastRangeSquared = ExamineSystemShared.MaxRaycastRange * ExamineSystemShared.MaxRaycastRange;
 
         foreach (var (ent, bubs) in _activeSpeechBubbles)
         {
@@ -713,10 +715,14 @@ public sealed partial class ChatUIController : UIController
 
             var otherPos = _transform?.GetMapCoordinates(ent) ?? MapCoordinates.Nullspace;
 
-            if (occluded && !_examine.InRangeUnOccluded(
+            // Pirate: avoid an unlimited occlusion ray each frame for distant speech bubbles.
+            if (occluded &&
+                (otherPos.MapId != playerPos.MapId ||
+                 Vector2.DistanceSquared(playerPos.Position, otherPos.Position) > maxRaycastRangeSquared ||
+                 !_examine.InRangeUnOccluded(
                     playerPos,
                     otherPos, 0f,
-                    (ent, player), predicate))
+                    (ent, player), predicate)))
             {
                 SetBubbles(bubs, false);
                 continue;

@@ -156,8 +156,6 @@
         - !type:TagCondition
           inverted: true
           tag: Bee
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: BuzzochloricBeesEffect
 # Goobstation yowie changes end
 
 - type: reagent
@@ -229,8 +227,6 @@
       - !type:Emote
         emote: Scream
         probability: 0.3
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: LacerinolEffect
 
 - type: reagent
   id: Fresium

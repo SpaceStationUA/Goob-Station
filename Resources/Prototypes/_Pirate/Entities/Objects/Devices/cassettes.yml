@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: RMCCassettePlayer
-  name: cassette player
-  description: A cassette player that first hit the market over 100 years ago. Crazy how these never went out of style.
+  name: "касетний плеєр"
+  description: "Касетний плеєр, що вперше з'явився на ринку понад сто років тому. Дивно, що вони досі не вийшли з моди."
   components:
   - type: Sprite
     sprite: _Pirate/Cassette/Objects/Devices/cassette_player.rsi
@@ -18,8 +18,8 @@
   abstract: true
   parent: BaseItem
   id: RMCCassetteTapeBase
-  name: cassette
-  description: A plastic cassette tape.
+  name: "касета"
+  description: "Пластикова аудіокасета."
   components:
   - type: Sprite
     sprite: _Pirate/Cassette/Objects/Devices/cassette_player.rsi
@@ -32,7 +32,7 @@
 - type: entity
   parent: RMCCassetteTapeBase
   id: RMCCassetteTapeCustom
-  name: custom cassette
+  name: "власна касета"
   components:
   - type: Sprite
     state: cassette_gray
@@ -45,7 +45,7 @@
 - type: entity
   parent: RMCCassetteTapeBase
   id: RMCCassetteTapeWigWoo1
-  name: WigWoo1 cassette
+  name: "касета ВігВу1"
   components:
   - type: Sprite
     state: cassette_blue
@@ -56,7 +56,7 @@
 - type: entity
   parent: RMCCassetteTapeBase
   id: RMCCassetteTapeMendax
-  name: Mendax cassette
+  name: "касета Мендакс"
   components:
   - type: Sprite
     state: cassette_orange_blue
@@ -69,7 +69,7 @@
 - type: entity
   parent: RMCCassetteTapeBase
   id: RMCCassetteTapeNighty
-  name: Nighty cassette
+  name: "касета Найті"
   components:
   - type: Sprite
     state: cassette_green
@@ -85,7 +85,7 @@
 - type: entity
   parent: RMCCassetteTapeBase
   id: RMCCassetteTapeGoodShowOldChap
-  name: GoodShowOldChap cassette
+  name: "касета ГудШоуОлдЧеп"
   components:
   - type: Sprite
     state: cassette_ocean
@@ -98,7 +98,7 @@
 - type: entity
   parent: RMCCassetteTapeBase
   id: RMCCassetteTapeRedQwesta
-  name: Qwesta cassette
+  name: "касета Квеста"
   components:
   - type: Sprite
     state: cassette_pink_stripe
@@ -112,7 +112,7 @@
 - type: entity
   parent: RMCCassetteTapeBase
   id: RMCCassetteTapeBolgarich
-  name: Bolgarich cassette
+  name: "касета Болгарич"
   components:
   - type: Sprite
     state: cassette_gray
@@ -130,8 +130,8 @@
 - type: entity
   parent: RMCCassetteTapeBase
   id: RMCCassetteTapeQwertyquerty
-  name: Qwertyquerty cassette
-  description: A plastic cassette tape.
+  name: "касета Квертікуерті"
+  description: "Пластикова аудіокасета."
   components:
   - type: Sprite
     state: cassette_orange
@@ -144,7 +144,7 @@
 - type: entity
   parent: RMCCassetteTapeBase
   id: RMCCassetteTapePigeonBeans
-  name: PigeonBeans cassette
+  name: "касета ПіджинБінз"
   components:
   - type: Sprite
     state: cassette_red_stripe

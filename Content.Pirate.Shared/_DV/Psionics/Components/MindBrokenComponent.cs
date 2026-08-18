@@ -24,10 +24,4 @@ public sealed partial class MindBrokenComponent : Component
     /// </summary>
     [DataField]
     public bool BlinkingDisabled;
-
-    /// <summary>
-    ///     When true, the permanent negative mood debuff is NOT applied to this entity.
-    /// </summary>
-    [DataField]
-    public bool IgnoreMoodDebuff;
 }
