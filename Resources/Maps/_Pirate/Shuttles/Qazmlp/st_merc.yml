@@ -2425,8 +2425,6 @@ entities:
       pos: -1.5,-9.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 1143
 - proto: AlwaysPoweredlightRed
@@ -7930,8 +7928,6 @@ entities:
       pos: -3.5,-4.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 1143
     - type: AtmosPipeColor
@@ -8102,8 +8098,6 @@ entities:
       pos: -0.5,-9.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 1143
     - type: AtmosPipeColor
@@ -8160,8 +8154,6 @@ entities:
       pos: -2.5,-4.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 1143
     - type: AtmosPipeColor
@@ -8349,8 +8341,6 @@ entities:
       pos: -2.5,-9.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 1143
     - type: AtmosPipeColor
