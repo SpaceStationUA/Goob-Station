@@ -179,4 +179,5 @@ public sealed class SacrificeAltarSystem : EntitySystem
 /// <summary>
 /// DoAfter event for the psionic sacrifice ritual.
 /// </summary>
+[NetSerializable]
 public sealed partial class SacrificeDoAfterEvent : SimpleDoAfterEvent;
