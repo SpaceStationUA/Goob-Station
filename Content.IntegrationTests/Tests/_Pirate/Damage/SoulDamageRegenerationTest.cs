@@ -66,15 +66,19 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
             var woundSawmill = Server.ResolveDependency<ILogManager>().GetSawmill("system.wound");
             var previousLevel = woundSawmill.Level;
             woundSawmill.Level = LogLevel.Fatal;
-
-            damageable.TryChangeDamage(
-                SPlayer,
-                new DamageSpecifier(ProtoMan.Index(BluntDamageType), 210),
-                ignoreResistances: true,
-                targetPart: TargetBodyPart.Vital,
-                canMiss: false);
-
-            woundSawmill.Level = previousLevel;
+            try
+            {
+                damageable.TryChangeDamage(
+                    SPlayer,
+                    new DamageSpecifier(ProtoMan.Index(BluntDamageType), 210),
+                    ignoreResistances: true,
+                    targetPart: TargetBodyPart.Vital,
+                    canMiss: false);
+            }
+            finally
+            {
+                woundSawmill.Level = previousLevel;
+            }
             Assert.That(mobState.IsDead(SPlayer), Is.True);
         });
 
