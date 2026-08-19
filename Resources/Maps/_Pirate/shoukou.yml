@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/19/2026 09:39:57
-  entityCount: 17163
+  time: 08/19/2026 19:38:43
+  entityCount: 17168
 maps:
 - 1
 grids:
@@ -9587,7 +9587,7 @@ entities:
       pos: 42.5,2.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -79965.914
+      secondsUntilStateChange: -80404.25
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13027,7 +13027,7 @@ entities:
   - uid: 10471
     components:
     - type: Transform
-      pos: 17.569435,-35.54709
+      pos: 17.4638,-36.11243
       parent: 2
 - proto: BoxCandle
   entities:
@@ -42167,6 +42167,12 @@ entities:
         moles:
           Oxygen: 1.7459903
           Nitrogen: 6.568249
+  - uid: 13500
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 17.5,-35.5
+      parent: 2
 - proto: CrewMonitoringServer
   entities:
   - uid: 6355
@@ -42276,7 +42282,7 @@ entities:
       pos: 38.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -3867.4587
+      secondsUntilStateChange: -4305.792
       state: Opening
   - uid: 5951
     components:
@@ -42495,7 +42501,7 @@ entities:
       pos: -2.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -39247.88
+      secondsUntilStateChange: -39686.21
       state: Closing
   - uid: 6406
     components:
@@ -81319,7 +81325,7 @@ entities:
   - uid: 803
     components:
     - type: Transform
-      pos: 17.37724,-36.408283
+      pos: 17.385231,-36.346806
       parent: 2
   - uid: 10762
     components:
@@ -92005,6 +92011,32 @@ entities:
     - type: Transform
       pos: 65.5,-24.5
       parent: 2
+- proto: Shower
+  entities:
+  - uid: 13491
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 43.5,-18.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 13494
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 43.5,-19.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
+  - uid: 13497
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 38.5,-0.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: ShuttersNormalOpen
   entities:
   - uid: 6321
@@ -95760,6 +95792,13 @@ entities:
     - type: Transform
       pos: 34.5,5.5
       parent: 2
+- proto: SpawnPointForensicMantis
+  entities:
+  - uid: 802
+    components:
+    - type: Transform
+      pos: -30.5,2.5
+      parent: 2
 - proto: SpawnPointHeadOfPersonnel
   entities:
   - uid: 14386
@@ -95853,11 +95892,6 @@ entities:
     components:
     - type: Transform
       pos: -0.5,-40.5
-      parent: 2
-  - uid: 14414
-    components:
-    - type: Transform
-      pos: -0.5,-36.5
       parent: 2
   - uid: 14415
     components:
@@ -96193,6 +96227,13 @@ entities:
     - type: Transform
       pos: 22.5,-17.5
       parent: 2
+- proto: SpawnPointSecurityInstructor
+  entities:
+  - uid: 13490
+    components:
+    - type: Transform
+      pos: 27.5,-0.5
+      parent: 2
 - proto: SpawnPointSecurityOfficer
   entities:
   - uid: 14479
@@ -96291,6 +96332,13 @@ entities:
     - type: Transform
       pos: -30.5,-33.5
       parent: 2
+- proto: SpawnPointVirologist
+  entities:
+  - uid: 13458
+    components:
+    - type: Transform
+      pos: 0.5,-36.5
+      parent: 2
 - proto: SpawnPointWarden
   entities:
   - uid: 13226
@@ -96326,7 +96374,7 @@ entities:
   - uid: 14506
     components:
     - type: Transform
-      pos: 44.323345,-18.467981
+      pos: 44.31627,-18.1906
       parent: 2
 - proto: SprayBottleWater
   entities:
@@ -98336,11 +98384,6 @@ entities:
     - type: Transform
       pos: 6.5,-39.5
       parent: 2
-  - uid: 802
-    components:
-    - type: Transform
-      pos: 17.5,-35.5
-      parent: 2
   - uid: 6417
     components:
     - type: Transform
@@ -99771,11 +99814,6 @@ entities:
     - type: Transform
       pos: -14.5,-19.5
       parent: 2
-  - uid: 15015
-    components:
-    - type: Transform
-      pos: 44.5,-18.5
-      parent: 2
 - proto: TableWood
   entities:
   - uid: 270
@@ -100594,7 +100632,7 @@ entities:
   - uid: 15255
     components:
     - type: Transform
-      pos: 44.638676,-18.402077
+      pos: 44.644394,-18.1906
       parent: 2
   - uid: 15256
     components:
@@ -110806,6 +110844,13 @@ entities:
       location: Dojo
     missingComponents:
     - NavMapBeacon
+- proto: WashingMachine
+  entities:
+  - uid: 13445
+    components:
+    - type: Transform
+      pos: 44.5,-18.5
+      parent: 2
 - proto: WaterCooler
   entities:
   - uid: 10629

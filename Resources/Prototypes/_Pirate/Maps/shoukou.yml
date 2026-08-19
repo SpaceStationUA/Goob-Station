@@ -7,7 +7,7 @@
   mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
   mapPreview: PirateMapPreviewShoukou
   minPlayers: 1
-  maxPlayers: 85 
+  maxPlayers: 35
   stations:
     Shoukou:
       stationProto: StandardNanotrasenStation
