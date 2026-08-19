@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseStructure
   id: SophicScribe
-  name: "софічний граматевс"
-  description: "Останні звіти з Ноосфери!"
+  name: sophic grammateus
+  description: Latest reports on the Noösphere!
   components:
   - type: Sprite
     noRot: true

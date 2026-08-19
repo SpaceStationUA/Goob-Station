@@ -3,7 +3,7 @@
 # The standard baton deliberately inherits the local Pirate/Goobstation baton.  The
 # SecLink variant only adds its token price so the global Stunbaton stays unchanged.
 - type: entity
-  name: "електрокийок SecLink"
+  name: stun baton
   parent: Stunbaton
   id: StunbatonSeclink
   components:
@@ -12,10 +12,10 @@
       BatonToken: 1
 
 - type: entity
-  name: "веселий кийок"
+  name: fun baton
   parent: StunbatonSeclink
   id: Funbaton
-  description: "Електрифікований засіб, здатний безпечно розважити будь-якого злочинця. Не забудьте про перемикач живлення."
+  description: A powered implement capable of safely entertaining any criminal, just be mindful of the 'on' switch.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/funbaton.rsi
@@ -34,10 +34,10 @@
       BatonToken: 1
 
 - type: entity
-  name: "електробита"
+  name: stun bat
   parent: StunbatonSeclink
   id: Stunbat
-  description: "Електрокийок для спортивного офіцера СБ. Використання без живлення гарантовано принесе штрафний удар."
+  description: A Stun Baton designed with the athletic security officer in mind. Using this unpowered is sure to have a foul called.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/stunbat.rsi
@@ -54,10 +54,10 @@
       BatonToken: 1
 
 - type: entity
-  name: "електрошабля"
+  name: stun sabre
   parent: StunbatonSeclink
   id: Stunsabre
-  description: "Сучасний електрокийок, натхненний зброєю підпільних убивць. Без живлення це лише палиця."
+  description: A state-of-the-art Stun Baton derived from the signature weapons of underground assassins. Unpowered, it's no better than hitting someone with a stick.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/stunsabre.rsi
