@@ -34,7 +34,7 @@
     openOnActivate: false
     maxItemSize: Huge
     grid:
-    - 0,0,6,3
+    - 0,0,7,3
   - type: ExplosionResistance
     damageCoefficient: 1
   - type: Tag
@@ -68,7 +68,7 @@
       state: storage_large
   - type: Storage
     grid:
-    - 0,0,7,4
+    - 0,0,8,4
 
 - type: entity
   parent: BaseStorageSuitModule
@@ -85,7 +85,7 @@
       state: storage_syndi
   - type: Storage
     grid:
-    - 0,0,8,4
+    - 0,0,9,5
 
 - type: entity
   parent: BaseStorageSuitModule
@@ -257,6 +257,14 @@
   components:
   - type: ModularSuitLightModule
     lightColor: "#facb3e"
+
+- type: entity
+  parent: AdvancedFlashlightSuitModule
+  id: AdvancedFlashlightSuitModuleDarkOrange
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ModularSuitLightModule
+    lightColor: "#ee8e2e"
 
 # Visor
 - type: entity
