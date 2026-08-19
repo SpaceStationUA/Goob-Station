@@ -1,4 +1,4 @@
-﻿# Shared by BountyHunter and Hitman's HitmanBountyHunterKit: pick between the "Гекон" modsuit or the classic mercenary hardsuit kit.
+﻿# Shared bounty hunter and hitman hardsuit selector.
 - type: entity
   parent: [ BaseItem, BaseSetSelector, BaseMajorContraband ]
   id: UndeterminedSuitBountyHunter

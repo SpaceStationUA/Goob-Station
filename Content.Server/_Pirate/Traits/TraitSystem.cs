@@ -37,7 +37,6 @@ public sealed class TraitSystem : SharedTraitSystem
         ApplyProfileTraits(args.Mob, args.Profile, args.Player, args.JobId);
     }
 
-    /// <summary>Applies selected profile traits to an already-spawned mob.</summary>
     public void ApplyProfileTraits(
         EntityUid mob,
         Content.Shared.Preferences.HumanoidCharacterProfile profile,

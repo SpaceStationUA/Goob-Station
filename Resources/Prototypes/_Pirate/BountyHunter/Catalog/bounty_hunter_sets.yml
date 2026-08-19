@@ -27,7 +27,7 @@
   - HandHeldMassScanner
   - WeaponGrapplingGun
 
-# One of the two options offered by UndeterminedSuitBountyHunter (see BountyHunter/Entities/bounty_hunter_items.yml).
+# Gekon option for the shared suit selector.
 - type: selectableSet
   id: BountyHunterGekonSuit
   name: bounty-hunter-category-gekon-name
@@ -38,7 +38,7 @@
   content:
   - ClothingModularControllerMercenaryPreassembled
 
-# Wraps UndeterminedSuitBountyHunter as a single BountyHunterGear category slot.
+# Wrap the suit selector as one catalog choice.
 - type: selectableSet
   id: BountyHunterSuitChoice
   name: bounty-hunter-category-suitchoice-name
