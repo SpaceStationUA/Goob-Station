@@ -42,6 +42,6 @@ selectable-set-merc-energy-magnum-description = Три режими: летал�
 selectable-set-merc-cobra-name = Кобра
 selectable-set-merc-cobra-description = Інтегрований глушник і дозвукові набої. Тиха робота, ще тихіший відхід.
     Включає: пістолет Кобра (9.5мм HP, безгільзові), 2 магазини та малу коробку патронів.
-selectable-set-merc-viper-name = Віпер
+selectable-set-merc-viper-name = Вайпер
 selectable-set-merc-viper-description = Пістолет-кулемет, що б'є вище своєї ваги. Напівавтомат або шквал вогню.
-    Включає: пістолет Віпер (.35 авто), 2 магазини та малу коробку патронів.
+    Включає: пістолет Вайпер (.35 авто), 2 магазини та малу коробку патронів.

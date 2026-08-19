@@ -233,9 +233,11 @@
     - ArmorBossterSuitModule
     - StorageSyndicateSuitModule
     - AdvancedFlashlightSuitModuleDarkOrange
-    - JetpackAdvancedSuitModule
+    - JetpackSuitModule
     - ApparatusSuitModule
     - HolsterSuitModule
+    - GPSSuitModule
+    - TetherSuitModule
   - type: ItemSlots
     slots:
       cell_slot:

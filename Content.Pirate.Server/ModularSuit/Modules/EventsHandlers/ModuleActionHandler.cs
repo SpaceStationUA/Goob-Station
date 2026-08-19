@@ -14,15 +14,20 @@ public abstract partial class ModuleActionHandler : EntitySystem
     [Dependency] protected ModularSuitSystem ModularSuit = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
 
-    public BaseContainer? GetModulesContainer(EntityUid suitUid)
+    /// <param name="requireActive">
+    /// When false, the modules can be reached even while the suit is not deployed.
+    /// Only for modules that are purely mechanical and stay usable on an unsealed suit, like the holster.
+    /// </param>
+    public BaseContainer? GetModulesContainer(EntityUid suitUid, bool requireActive = true)
     {
-        if (!TryComp<ModularSuitComponent>(suitUid, out var suit) || !suit.Active)
+        if (!TryComp<ModularSuitComponent>(suitUid, out var suit) || requireActive && !suit.Active)
             return null;
 
         return Container.GetContainer(suitUid, ModularSuitSystem.ModuleContainer);
     }
 
-    public bool TryFindModuleByAction(Entity<ModularSuitActionHolderComponent> suit, EntityUid actionUid, [NotNullWhen(true)] out EntityUid? moduleEnt)
+    /// <inheritdoc cref="GetModulesContainer"/>
+    public bool TryFindModuleByAction(Entity<ModularSuitActionHolderComponent> suit, EntityUid actionUid, [NotNullWhen(true)] out EntityUid? moduleEnt, bool requireActive = true)
     {
         moduleEnt = null;
 
@@ -39,7 +44,7 @@ public abstract partial class ModuleActionHandler : EntitySystem
         if (actionId == null)
             return false;
 
-        var container = GetModulesContainer(suit);
+        var container = GetModulesContainer(suit, requireActive);
         if (container == null)
             return false;
 

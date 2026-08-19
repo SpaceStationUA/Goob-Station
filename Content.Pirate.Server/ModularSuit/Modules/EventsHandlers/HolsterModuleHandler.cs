@@ -26,7 +26,8 @@ public sealed partial class HolsterModuleHandler : ModuleActionHandler
         if (args.Handled)
             return;
 
-        if (!TryFindModuleByAction(ent, args.Action, out var moduleEnt))
+        // The holster is a mechanical mount, so it stays usable while the suit is not deployed.
+        if (!TryFindModuleByAction(ent, args.Action, out var moduleEnt, requireActive: false))
             return;
 
         if (!TryComp<ModularSuitModuleComponent>(moduleEnt, out var moduleComp) || !moduleComp.IsActive)

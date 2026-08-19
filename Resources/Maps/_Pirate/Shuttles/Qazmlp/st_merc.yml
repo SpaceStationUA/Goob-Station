@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/18/2026 21:26:57
-  entityCount: 1838
+  time: 08/19/2026 21:10:34
+  entityCount: 1836
 maps:
 - 1
 grids:
@@ -1306,7 +1306,9 @@ entities:
           -7,1:
             0: 140
           -6,0:
-            0: 2039
+            0: 247
+            1: 256
+            2: 1536
           -6,1:
             0: 4095
           -7,-3:
@@ -1329,6 +1331,16 @@ entities:
           moles:
             Oxygen: 21.824879
             Nitrogen: 82.10312
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+            Oxygen: 20.078888
+            Nitrogen: 75.53487
+        - volume: 2500
+          temperature: 293.15
+          moles:
+            Oxygen: 21.6852
+            Nitrogen: 81.57766
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
@@ -2119,7 +2131,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -28555.773
+      secondsUntilStateChange: -28738.238
       state: Opening
   - uid: 933
     components:
@@ -2204,7 +2216,7 @@ entities:
       pos: -6.5,3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -12713.031
+      secondsUntilStateChange: -12895.496
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4939,32 +4951,6 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 480
-- proto: ClothingOuterHardsuitMercenary
-  entities:
-  - uid: 647
-    components:
-    - type: Transform
-      parent: 645
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 645
-  - uid: 658
-    components:
-    - type: Transform
-      parent: 656
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 656
-  - uid: 661
-    components:
-    - type: Transform
-      parent: 659
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 659
 - proto: ClothingOuterVestWebMerc
   entities:
   - uid: 430
@@ -4985,32 +4971,6 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 480
-- proto: ClothingShoesBootsMagRocket
-  entities:
-  - uid: 646
-    components:
-    - type: Transform
-      parent: 645
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 645
-  - uid: 657
-    components:
-    - type: Transform
-      parent: 656
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 656
-  - uid: 660
-    components:
-    - type: Transform
-      parent: 659
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 659
 - proto: ClothingShoesBootsMercFilled
   entities:
   - uid: 425
@@ -10126,6 +10086,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: -21.5,0.5
       parent: 2
+- proto: RadioJammer
+  entities:
+  - uid: 658
+    components:
+    - type: Transform
+      pos: -9.51577,-6.4466243
+      parent: 2
 - proto: RagItem
   entities:
   - uid: 445
@@ -12078,6 +12045,14 @@ entities:
     - type: Transform
       pos: -23.5,2.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
     - type: AccessReader
       accessListsOriginal: []
       access:
@@ -12088,10 +12063,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 323
-          - 329
-          - 647
           - 646
+          - 329
+          - 323
   - uid: 656
     components:
     - type: Transform
@@ -12107,18 +12081,17 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
+          Oxygen: 1.8856695
+          Nitrogen: 7.0937095
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 406
+          - 647
           - 466
-          - 658
-          - 657
+          - 406
   - uid: 659
     components:
     - type: Transform
@@ -12134,18 +12107,17 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
+          Oxygen: 1.8856695
+          Nitrogen: 7.0937095
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 1079
+          - 657
           - 1142
-          - 661
-          - 660
+          - 1079
 - proto: SurvivalKnife
   entities:
   - uid: 408
@@ -12573,6 +12545,32 @@ entities:
     - type: Transform
       pos: -0.47654176,0.8216392
       parent: 823
+- proto: UndeterminedSuitBountyHunter
+  entities:
+  - uid: 646
+    components:
+    - type: Transform
+      parent: 645
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 645
+  - uid: 647
+    components:
+    - type: Transform
+      parent: 656
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 656
+  - uid: 657
+    components:
+    - type: Transform
+      parent: 659
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 659
 - proto: UniformPrinter
   entities:
   - uid: 831

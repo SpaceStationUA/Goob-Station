@@ -27,6 +27,28 @@
   - HandHeldMassScanner
   - WeaponGrapplingGun
 
+# One of the two options offered by UndeterminedSuitBountyHunter (see BountyHunter/Entities/bounty_hunter_items.yml).
+- type: selectableSet
+  id: BountyHunterGekonSuit
+  name: bounty-hunter-category-gekon-name
+  description: bounty-hunter-category-gekon-description
+  sprite:
+    sprite: _Pirate/Clothing/Modular/Mercenary/control.rsi
+    state: icon
+  content:
+  - ClothingModularControllerMercenaryPreassembled
+
+# Wraps UndeterminedSuitBountyHunter as a single BountyHunterGear category slot.
+- type: selectableSet
+  id: BountyHunterSuitChoice
+  name: bounty-hunter-category-suitchoice-name
+  description: bounty-hunter-category-suitchoice-description
+  sprite:
+    sprite: _Goobstation/Objects/Devices/unique_teleporters.rsi
+    state: standard
+  content:
+  - UndeterminedSuitBountyHunter
+
 - type: selectableSet
   id: BountyHunterDisguise
   name: bounty-hunter-category-infiltrator-name
