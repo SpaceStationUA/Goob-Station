@@ -32,7 +32,6 @@
     maxCharge: 120 # One third of PowerCellSmall in case they accidentally plug into something
     startingCharge: 120 # Not intended to be a particularly useful power source if so
   - type: EmpImmune
-  - type: PowerCell
   - type: Appearance
   - type: BatteryVisuals
   - type: BatterySelfRecharger # No AutoRecharge bool in this fork - having the component recharges the cell

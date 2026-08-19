@@ -61,8 +61,8 @@
     heavyStaminaCost: 15 # Pirate - halved from 30, so heavy swings are less punishing to the wielder
     damage:
       types:
-        Slash: 28 # 8.4 DPS (slow 0.3 attacks/sec wielded), or 14.4 total vs psions
-        Holy: 20 # 14.4 combined DPS vs psionic supernaturals
+        Slash: 28 # 8.4 DPS (Slash only), or 10.5 against psions (1.25×)
+        Holy: 20 # 14.4 total base DPS, or 18.0 against psionic supernaturals (1.25×)
         Structural: 30 # 9.0 structural DPS
     soundHit:
       path: /Audio/_DEN/Weapons/Melee/fausthit.ogg

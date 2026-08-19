@@ -190,6 +190,10 @@ public abstract partial class SharedPsionicSystem
             {
                 RaiseLocalEvent(entity, new PsionicPowerGainedEvent(entity, Loc.GetString(feedback)), broadcast: true);
             }
+
+            // Raise MapInitEvent on the power component entity so specialized power systems
+            // (e.g. PsionicEruptionPowerSystem) receive the same post-init as MapInitEvent paths.
+            RaiseLocalEvent(entity, new MapInitEvent());
         }
     }
 

@@ -67,8 +67,8 @@
   - type: ItemToggleMeleeWeapon
     activatedDamage:
       types: # If you flip it, you stab them with the point
-        Piercing: 10 # 15 DPS (same as CombatKnife), or 18.75 DPS against psions
-        Holy: 5 # 28.13 total DPS against psionic supernaturals
+        Piercing: 10 # 6.67 DPS (Piercing only), or 13.33 against psions (2.0×)
+        Holy: 5 # 10 total base DPS, or 20 against psionic supernaturals (2.0×)
     activatedSoundOnHit:
       path: /Audio/Weapons/bladeslice.ogg # rapierhit.ogg isn't in this fork
       params:

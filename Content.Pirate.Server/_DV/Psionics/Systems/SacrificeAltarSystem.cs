@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared._DV.Psionics.Components;
+using Content.Shared._DV.Psionics.Events.PowerDoAfterEvents;
 using Content.Goobstation.Common.Religion;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Database;
@@ -17,7 +18,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Serialization;
 
 namespace Content.Server._DV.Psionics.Systems;
 
@@ -176,10 +176,3 @@ public sealed class SacrificeAltarSystem : EntitySystem
         _audio.PlayPvs(component.SacrificeSound, uid);
     }
 }
-
-/// <summary>
-/// DoAfter event for the psionic sacrifice ritual.
-/// </summary>
-
-[Serializable, NetSerializable]
-public sealed partial class SacrificeDoAfterEvent : SimpleDoAfterEvent;
