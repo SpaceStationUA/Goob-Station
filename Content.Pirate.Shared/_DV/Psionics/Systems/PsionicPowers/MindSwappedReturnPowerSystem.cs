@@ -26,6 +26,7 @@ public sealed class MindSwappedReturnPowerSystem : BasePsionicPowerSystem<MindSw
         base.Initialize();
 
         SubscribeLocalEvent<MindSwappedReturnPowerComponent, ComponentShutdown>(OnShutDown);
+        SubscribeLocalEvent<MindSwappedReturnPowerComponent, PsionicPowerPostInitializedEvent>(OnPostInit);
 
         _mindSwappedQuery = GetEntityQuery<MindSwappedReturnPowerComponent>();
     }
@@ -56,6 +57,11 @@ public sealed class MindSwappedReturnPowerSystem : BasePsionicPowerSystem<MindSw
         if (power.Comp.PowerInitFeedback is { } feedback && TryComp<ActorComponent>(power, out _))
             // Broadcast so server-side handlers (e.g. the chat feedback) receive it.
             RaiseLocalEvent(power, new PsionicPowerGainedEvent(power, Loc.GetString(feedback)), broadcast: true);
+    }
+
+    private void OnPostInit(Entity<MindSwappedReturnPowerComponent> power, ref PsionicPowerPostInitializedEvent args)
+    {
+        EnsureReturnAction(power);
     }
 
     protected override void OnPowerUsed(Entity<MindSwappedReturnPowerComponent> psionic, ref MindSwappedReturnPowerActionEvent args)
