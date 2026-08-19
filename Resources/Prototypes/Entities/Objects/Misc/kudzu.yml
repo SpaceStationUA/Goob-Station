@@ -300,7 +300,7 @@
         map: [base]
     - type: Kudzu
       growthTickChance: 0.2
-      spreadChance: 0.4 #Goob, i lowkirkenely hate sci
+      spreadChance: 0.1 #Goob, i lowkirkenely hate sci
     - type: RandomSpawner
       deleteSpawnerAfterSpawn: false
       rareChance: 0.05
