@@ -107,7 +107,7 @@
   id: DefibrillatorSyndicate
   parent: [ DefibrillatorCompact, BaseSyndicateContraband ]
   name: interdyne defibrillator
-  # Pirate - desc changed, melee zap weapon removed, defib hidden in hands
+  # Pirate - desc changed, melee zap weapon removed
   description: A compact medical defibrillator fitted for field use.
   components:
   - type: Sprite
@@ -121,4 +121,3 @@
       - state: ready
         map: ["enum.PowerDeviceVisualLayers.Powered"]
         shader: unshaded
-  - type: DefibrillatorHideInHand # Pirate

@@ -18,23 +18,35 @@ public sealed partial class DefibrillatorSelfRechargeSystem : EntitySystem
     [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly INetManager _net = default!;
 
-    private float _accumulator;
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<DefibrillatorSelfRechargeComponent, PowerCellChangedEvent>(OnPowerCellChanged);
+    }
+
+    private void OnPowerCellChanged(Entity<DefibrillatorSelfRechargeComponent> ent, ref PowerCellChangedEvent args)
+    {
+        // A new battery was inserted (or the old one removed). Reset the per-entity
+        // accumulator so we only recharge using time elapsed since this battery
+        // was installed — preventing a burst of charge from stale accumulated time.
+        ent.Comp.AccumulatedTime = 0f;
+    }
 
     public override void Update(float frameTime)
     {
         if (!_net.IsServer)
             return;
 
-        _accumulator += frameTime;
-        if (_accumulator < 1f)
-            return; // tick once per second
-
-        var seconds = _accumulator;
-        _accumulator = 0;
-
         var query = EntityQueryEnumerator<DefibrillatorSelfRechargeComponent, PowerCellSlotComponent>();
         while (query.MoveNext(out var uid, out var recharge, out var slot))
         {
+            recharge.AccumulatedTime += frameTime;
+            if (recharge.AccumulatedTime < 1f)
+                continue; // tick once per second
+
+            var seconds = recharge.AccumulatedTime;
+            recharge.AccumulatedTime = 0f;
+
             if (!_powerCell.TryGetBatteryFromSlot((uid, slot), out var battery))
                 continue;
 

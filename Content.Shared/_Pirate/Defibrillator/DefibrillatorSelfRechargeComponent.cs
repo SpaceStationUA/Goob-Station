@@ -14,4 +14,12 @@ public sealed partial class DefibrillatorSelfRechargeComponent : Component
     /// </summary>
     [DataField]
     public float RechargePerSecond = 0.1f;
+
+    /// <summary>
+    /// Per-entity accumulated time since the last recharge tick. Replaced the shared
+    /// system-level accumulator so that each defibrillator tracks its own recharge
+    /// independently (e.g. after a battery swap resets this to zero).
+    /// </summary>
+    [DataField]
+    public float AccumulatedTime;
 }

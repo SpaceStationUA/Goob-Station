@@ -6,6 +6,8 @@
 - type: latheRecipe
   id: DefibrillatorBeltCompact
   result: DefibrillatorBeltCompactEmpty
+  categories:
+  - Medical
   completetime: 5
   materials:
     Steel: 250
