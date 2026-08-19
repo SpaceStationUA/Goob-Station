@@ -1,5 +1,10 @@
 - type: randomHumanoidSettings
   id: Mercenary
+  speciesBlacklist:
+  - Yowie
+  - Plasmaman
+  - Diona
+  - Vox
   components:
     - type: Loadout
       prototypes: [ MercenaryGear ]

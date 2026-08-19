@@ -14,15 +14,15 @@ public abstract partial class ModuleActionHandler : EntitySystem
     [Dependency] protected ModularSuitSystem ModularSuit = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
 
-    public BaseContainer? GetModulesContainer(EntityUid suitUid)
+    public BaseContainer? GetModulesContainer(EntityUid suitUid, bool requireActive = true)
     {
-        if (!TryComp<ModularSuitComponent>(suitUid, out var suit) || !suit.Active)
+        if (!TryComp<ModularSuitComponent>(suitUid, out var suit) || requireActive && !suit.Active)
             return null;
 
         return Container.GetContainer(suitUid, ModularSuitSystem.ModuleContainer);
     }
 
-    public bool TryFindModuleByAction(Entity<ModularSuitActionHolderComponent> suit, EntityUid actionUid, [NotNullWhen(true)] out EntityUid? moduleEnt)
+    public bool TryFindModuleByAction(Entity<ModularSuitActionHolderComponent> suit, EntityUid actionUid, [NotNullWhen(true)] out EntityUid? moduleEnt, bool requireActive = true)
     {
         moduleEnt = null;
 
@@ -39,7 +39,7 @@ public abstract partial class ModuleActionHandler : EntitySystem
         if (actionId == null)
             return false;
 
-        var container = GetModulesContainer(suit);
+        var container = GetModulesContainer(suit, requireActive);
         if (container == null)
             return false;
 

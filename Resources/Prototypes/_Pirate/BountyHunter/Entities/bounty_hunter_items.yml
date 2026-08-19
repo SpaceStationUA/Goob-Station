@@ -1,4 +1,22 @@
-﻿# Bounty Hunter Kits
+﻿# Shared bounty hunter and hitman hardsuit selector.
+- type: entity
+  parent: [ BaseItem, BaseSetSelector, BaseMajorContraband ]
+  id: UndeterminedSuitBountyHunter
+  name: "селектор костюма мисливця за головами"
+  description: "Невеликий пульт, що використовує технологію блюспейс для виклику скафандра або мод-костюма на ваш вибір."
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Devices/unique_teleporters.rsi
+    state: standard
+  - type: SetSelector
+    maxSelectedSets: 1
+    possibleSets:
+    - BountyHunterGekonSuit
+    - BountyHunterHardsuit
+    approveSound:
+      collection: storageRustle
+
+# Bounty Hunter Kits
 - type: entity
   parent: ToolboxThief
   id: BountyHunterGear
@@ -9,7 +27,7 @@
     maxSelectedSets: 2
     possibleSets:
     - BountyHunterRaider
-    - BountyHunterHardsuit
+    - BountyHunterSuitChoice
     - BountyHunterDisguise
     - BountyHunterSubverter
     - BountyHunterRoboticist

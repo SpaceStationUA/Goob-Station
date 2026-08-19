@@ -45,6 +45,19 @@ bounty-hunter-category-hardsuit-description =
     Містить: легкий захисний скафандр, ракетні магнітні черевики,
     ручний сканер маси та гак-кішку.
 
+bounty-hunter-category-gekon-name = МОД-костюм «Гекон»
+bounty-hunter-category-gekon-description =
+    Ви віддаєте перевагу модульності над простотою.
+    Містить: попередньо зібраний МОД-костюм «Гекон» - броньований, з джетпаком,
+    магнітними чоботами, кобурою та власним сховищем, готовий до будь-якої
+    ситуації просто з коробки.
+
+bounty-hunter-category-suitchoice-name = Космічне спорядження
+bounty-hunter-category-suitchoice-description =
+    Ви ще не визначилися, у чому працювати в космосі.
+    Дозволяє на місці обрати між МОД-костюмом «Гекон» та класичним
+    скафандром найманця.
+
 bounty-hunter-category-infiltrator-name = Інфільтратор
 bounty-hunter-category-infiltrator-description =
     Ви волієте підбиратися до цілей обманом.
@@ -103,6 +116,8 @@ ent-ActionWeaponRecall = Позначити зброю
     .desc = Позначте зброю в руці, щоб згодом викликати її назад.
 ent-BountyHunterGear = скринька мисливця за головами
     .desc = Набір контрабанди, зібраної за роки роботи. Деякі речі незаконніші за інші.
+ent-UndeterminedSuitBountyHunter = селектор костюма мисливця за головами
+    .desc = Невеликий пульт, що використовує технологію блюспейс для виклику скафандра або мод-костюма на ваш вибір.
 ent-ClothingEyesBountyHunterGlasses = окуляри мисливця за головами
     .desc = Високотехнологічні окуляри із захистом від спалахів і тепловізором.
 ent-ReinforcementRadioBountyHunterCyborg = радіо виклику відновленого кіборга
