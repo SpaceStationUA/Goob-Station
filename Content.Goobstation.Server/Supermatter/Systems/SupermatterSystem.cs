@@ -415,6 +415,11 @@ public sealed class SupermatterSystem : SharedSupermatterSystem
                     loc = "supermatter-delam-tesla";
                     alertLevel = "delta";
                     break;
+
+                case DelamType.Cascade:
+                    loc = "supermatter-delam-cascade";
+                    alertLevel = "delta";
+                    break;
             }
 
             var station = _station.GetOwningStation(uid);
@@ -494,6 +499,8 @@ public sealed class SupermatterSystem : SharedSupermatterSystem
         if (sm.Power >= sm.PowerPenaltyThreshold)
             return DelamType.Tesla;
 
+        // TODO: add resonance cascade when there's crazy conditions, or a destabilizing crystal :godo:
+
         return DelamType.Explosion;
     }
 
@@ -535,6 +542,11 @@ public sealed class SupermatterSystem : SharedSupermatterSystem
 
             case DelamType.Tesla:
                 Spawn(sm.TeslaPrototypeId, xform.Coordinates);
+                break;
+
+
+            case DelamType.Cascade:
+                Spawn(sm.SupermatterKudzuPrototypeId, xform.Coordinates);
                 break;
         }
     }
