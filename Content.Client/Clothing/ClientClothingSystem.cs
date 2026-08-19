@@ -26,6 +26,7 @@ namespace Content.Client.Clothing;
 public sealed class ClientClothingSystem : ClothingSystem
 {
     public const string Jumpsuit = "jumpsuit";
+    private const string Jumpskirt = "jumpskirt"; // Pirate - add jumpskirt displacement
 
     /// <summary>
     /// This is a shitty hotfix written by me (Paul) to save me from renaming all files.
@@ -206,7 +207,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         return true;
     }
 
-    // Pirate edit start - clothing fallback
+    /// Pirate edit start - clothing fallback
     private IEnumerable<string> GetClothingSpecies(string speciesId, string slot)
     {
         yield return speciesId;
@@ -228,7 +229,14 @@ public sealed class ClientClothingSystem : ClothingSystem
                 yield return fallbackId.ToLowerInvariant();
         }
     }
-    // Pirate edit end
+
+    // Pirate - add jumpskirt displacement
+    private bool IsJumpskirt(EntityUid equipment)
+    {
+        return TryComp<MetaDataComponent>(equipment, out var metadata) &&
+               metadata.EntityPrototype?.ID.Contains("Jumpskirt", StringComparison.OrdinalIgnoreCase) == true;
+    }
+    /// Pirate end
 
     private void OnVisualsChanged(EntityUid uid, InventoryComponent component, VisualsChangedEvent args)
     {
@@ -331,8 +339,23 @@ public sealed class ClientClothingSystem : ClothingSystem
         RaiseLocalEvent(equipee, ref hiddenEv);
         // Goob edit end
 
-        // Select displacement maps
-        var displacementData = inventory.Displacements.GetValueOrDefault(slot); //Default unsexed map
+        // Pirate edit start - add jumpskirt displacement
+        // Select displacement maps. Jumpskirts get their own map when configured,
+        // otherwise they fall back to the regular jumpsuit map.
+        var displacementSlot = slot;
+        if (slot == Jumpsuit && IsJumpskirt(equipment) &&
+            (inventory.Displacements.GetValueOrDefault(Jumpskirt) is not null ||
+             inventory.MaleDisplacements.GetValueOrDefault(Jumpskirt) is not null ||
+             inventory.FemaleDisplacements.GetValueOrDefault(Jumpskirt) is not null))
+        {
+            displacementSlot = Jumpskirt;
+        }
+
+        var displacementData = inventory.Displacements.GetValueOrDefault(displacementSlot) ??
+                               (displacementSlot == Jumpskirt
+                                   ? inventory.Displacements.GetValueOrDefault(Jumpsuit)
+                                   : null); // Default unsexed map
+        // Pirate edit end
 
         var equipeeSex = CompOrNull<HumanoidAppearanceComponent>(equipee)?.Sex;
         if (equipeeSex != null)
@@ -341,11 +364,21 @@ public sealed class ClientClothingSystem : ClothingSystem
             {
                 case Sex.Male:
                     if (inventory.MaleDisplacements.Count > 0)
-                        displacementData = inventory.MaleDisplacements.GetValueOrDefault(slot);
+        // Pirate edit start - add jumpskirt displacement
+                        displacementData = inventory.MaleDisplacements.GetValueOrDefault(displacementSlot) ??
+                                           (displacementSlot == Jumpskirt
+                                               ? inventory.MaleDisplacements.GetValueOrDefault(Jumpsuit)
+                                               : null);
+        // Pirate edit end
                     break;
                 case Sex.Female:
                     if (inventory.FemaleDisplacements.Count > 0)
-                        displacementData = inventory.FemaleDisplacements.GetValueOrDefault(slot);
+        // Pirate edit start - add jumpskirt displacement
+                        displacementData = inventory.FemaleDisplacements.GetValueOrDefault(displacementSlot) ??
+                                           (displacementSlot == Jumpskirt
+                                               ? inventory.FemaleDisplacements.GetValueOrDefault(Jumpsuit)
+                                               : null);
+        // Pirate edit end
                     break;
             }
         }

@@ -11,13 +11,21 @@
   },
   "states": [
     {
+        "name": "jumpskirt",
+        "directions": 4
+    },
+    {
+        "name": "jumpskirt-female",
+        "directions": 4
+    },
+    {
       "name": "jumpsuit",
       "directions": 4
     },
     {
         "name": "jumpsuit-female",
         "directions": 4
-      },
+    },
     {
       "name": "shoes",
       "directions" : 4

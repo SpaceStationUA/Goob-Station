@@ -19,6 +19,11 @@
           32:
             sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
             state: jumpsuit-female
+      jumpskirt:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpskirt-female
       shoes:
         sizeMaps:
           32:
@@ -30,6 +35,11 @@
           32:
             sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
             state: jumpsuit
+      jumpskirt:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpskirt
       shoes:
         sizeMaps:
           32:
@@ -178,6 +188,11 @@
           32:
             sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
             state: jumpsuit-female
+      jumpskirt:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpskirt-female
       shoes:
         sizeMaps:
           32:
@@ -189,6 +204,11 @@
           32:
             sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
             state: jumpsuit
+      jumpskirt:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpskirt
       shoes:
         sizeMaps:
           32:
