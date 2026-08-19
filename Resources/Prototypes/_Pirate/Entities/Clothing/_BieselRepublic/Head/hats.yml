@@ -2,9 +2,9 @@
 - type: entity
   parent: [ClothingHeadBaseButcherable]
   id: ClothingHeadHatTCAFBeretDress
-  name: "парадний берет TCAF"
+  name: парадний берет TCAF
   suffix: TCAF
-  description: "Формальний берет, який носять чинні та колишні військовослужбовці збройних сил Тау-Кита."
+  description: Формальний берет, який носять чинні та колишні військовослужбовці збройних сил Тау-Кита.
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Head/Hats/TCAF_beret_dress.rsi
@@ -14,9 +14,9 @@
 - type: entity
   parent: [ClothingHeadBaseButcherable]
   id: ClothingHeadHatTCAFBeretField
-  name: "польовий берет TCAF"
+  name: польовий берет TCAF
   suffix: TCAF
-  description: "Польовий берет, який носять чинні та колишні військовослужбовці збройних сил Тау-Кита."
+  description: Польовий берет, який носять чинні та колишні військовослужбовці збройних сил Тау-Кита.
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Head/Hats/TCAF_beret_field.rsi
@@ -26,9 +26,9 @@
 - type: entity
   parent: [ClothingHeadBaseButcherable]
   id: ClothingHeadHatTCFLBeretDress
-  name: "парадний берет TCFL"
+  name: парадний берет TCFL
   suffix: TCAF
-  description: "Формальний берет, який носять чинні та колишні військовослужбовці іноземної легіону Тау-Кита."
+  description: Формальний берет, який носять чинні та колишні військовослужбовці іноземної легіону Тау-Кита.
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Head/Hats/TCFL_beret_dress.rsi
@@ -38,9 +38,9 @@
 - type: entity
   parent: [ClothingHeadBaseButcherable]
   id: ClothingHeadHatTCFLBeretField
-  name: "польовий берет TCFL"
+  name: польовий берет TCFL
   suffix: TCAF
-  description: "Польовий берет, який носять чинні та колишні військовослужбовці іноземної легіону Тау-Кита."
+  description: Польовий берет, який носять чинні та колишні військовослужбовці іноземної легіону Тау-Кита.
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Head/Hats/TCFL_beret_field.rsi
@@ -50,9 +50,9 @@
 - type: entity
   parent: [ClothingHeadBaseButcherable]
   id: ClothingHeadHatTCFLBeretSentinel
-  name: "берет вартового TCFL"
+  name: берет вартового TCFL
   suffix: TCAF
-  description: "Парадний берет, який носять елітні військовослужбовці іноземної легіону Тау-Кита."
+  description: Парадний берет, який носять елітні військовослужбовці іноземної легіону Тау-Кита.
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Head/Hats/TCFL_beret_sentinel.rsi

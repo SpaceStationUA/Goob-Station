@@ -1,7 +1,7 @@
 - type: entity
   parent: IDCardStandard
   id: InterdyneIDCard
-  name: "ID-карта Interdyne"
+  name: Interdyne ID card
   components:
     - type: Sprite
       layers:
@@ -18,8 +18,8 @@
 - type: entity
   parent: IDCardStandard
   id: K9OfficerIDCard
-  name: "ID-картка офіцера K9"
-  description: "Картка, що підтверджує службовий статус пса служби безпеки."
+  name: ID-картка офіцера K9
+  description: Картка, що підтверджує службовий статус пса служби безпеки.
   components:
   - type: Sprite
     layers:
@@ -39,7 +39,7 @@
 - type: entity
   parent: IDCardStandard
   id: CaptainInterdyneIDCard
-  name: "ID-карта офіцера Interdyne"
+  name: Interdyne Officer ID card
   components:
     - type: Sprite
       layers:
@@ -56,7 +56,7 @@
 - type: entity
   parent: IDCardStandard
   id: InterdyneDeputyIDCard
-  name: "ID-карта заступника Interdyne"
+  name: Interdyne Deputy ID card
   components:
     - type: Sprite
       layers:
@@ -74,7 +74,7 @@
 - type: entity
   parent: IDCardStandard
   id: InterdyneEngineerIDCard
-  name: "ID-карта інженера Interdyne"
+  name: InterdyneEngineer ID card
   components:
     - type: Sprite
       layers:
@@ -91,7 +91,7 @@
 - type: entity
   parent: IDCardStandard
   id: InterdyneMedIDCard
-  name: "ID-карта медика Interdyne"
+  name: Interdyne Medical ID card
   components:
     - type: Sprite
       layers:
@@ -108,7 +108,7 @@
 - type: entity
   parent: IDCardStandard
   id: InterdynePilotIDCard
-  name: "ID-карта пілота Interdyne"
+  name: Interdyne Pilot ID card
   components:
     - type: Sprite
       layers:
@@ -125,7 +125,7 @@
 - type: entity
   parent: IDCardStandard
   id: InterdyneSecureIDCard
-  name: "ID-карта служби безпеки Interdyne"
+  name: Interdyne Secure ID card
   components:
     - type: Sprite
       layers:
@@ -142,7 +142,7 @@
 - type: entity
   parent: IDCardStandard
   id: InterdyneServiceIDCard
-  name: "ID-карта сервісного персоналу Interdyne"
+  name: Interdyne Service ID card
   components:
     - type: Sprite
       layers:
@@ -159,7 +159,7 @@
 - type: entity
   parent: IDCardStandard
   id: InterdyneShaftMinersIDCard
-  name: "ID-карта шахтаря Interdyne"
+  name: Interdyne Shaft Miners ID card
   components:
     - type: Sprite
       layers:
@@ -176,7 +176,7 @@
 - type: entity
   parent: IDCardStandard
   id: AdminAssistantIDCard
-  name: "посвідчення адміністративного асистента"
+  name: administrative assistant ID card
   components:
   - type: Sprite
     layers:
@@ -210,7 +210,7 @@
 - type: entity
   parent: SecurityIDCard
   id: SecurityInstructorIDCard
-  name: "iD-картка інструктора"
+  name: instructor ID card
   components:
   - type: Sprite
     layers:

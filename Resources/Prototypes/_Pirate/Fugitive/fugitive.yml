@@ -13,7 +13,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleFugitive
-  name: "роль Утікача"
+  name: Fugitive Role
   components:
   - type: MindRole
     subtype: role-subtype-fugitive
@@ -25,7 +25,7 @@
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointGhostFugitive
-  name: "точка появи Утікача"
+  name: fugitive spawn point
   components:
   - type: GhostRole
     name: ghost-role-information-fugitive-name
@@ -64,8 +64,8 @@
 - type: entity
   parent: [ BaseFugitiveObjective, BaseLivingObjective ]
   id: FugitiveEscapeObjective
-  name: "уникайте правоохоронців"
-  description: "Змішайтеся з натовпом, виживіть і покиньте станцію на евакуаційному шатлі."
+  name: evade law enforcement
+  description: Blend into the crowd and escape on the evacuation shuttle.
   components:
   - type: Objective
     icon:
@@ -76,8 +76,8 @@
 - type: entity
   parent: ToolboxThief
   id: FugitiveStash
-  name: "схованка Утікача"
-  description: "Ці припаси допомогли вам утекти з в'язниці й мають допомогти залишитися на волі."
+  name: fugitive's stash
+  description: These supplies got you out of jail and hopefully they will keep you out of it.
   components:
   - type: SetSelector
     maxSelectedSets: 1
@@ -217,11 +217,11 @@
     - MidroundAntag
 
 - type: entity
-  name: "печатка GALPOL"
+  name: GALPOL rubber stamp
   parent: RubberStampBase
   id: RubberStampGalpol
   categories: [ DoNotMap ]
-  description: "Печатка для важливих документів у справах міжгалактичної безпеки."
+  description: A rubber stamp for important documents concerning intergalactic security affairs.
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-GALPOL

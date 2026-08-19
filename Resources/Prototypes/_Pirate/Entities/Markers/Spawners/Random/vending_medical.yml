@@ -1,6 +1,6 @@
 - type: entity
   id: RandomVendingMedical
-  name: "випадковий медичний автомат"
+  name: random medical vending machine spawner
   suffix: Departmental
   parent: MarkerBase
   components:
@@ -28,7 +28,7 @@
 
 - type: entity
   id: RandomVendingMedicalCivilian
-  name: "випадковий медичний автомат"
+  name: random medical vending machine spawner
   suffix: Civilian
   parent: MarkerBase
   components:
@@ -56,7 +56,7 @@
 
 - type: entity
   id: RandomVendingMedicalWall
-  name: "випадковий медичний автомат"
+  name: random medical vending machine spawner
   suffix: Departmental, Wallmount
   parent: MarkerBase
   components:
@@ -84,7 +84,7 @@
 
 - type: entity
   id: RandomVendingMedicalCivilianWall
-  name: "випадковий медичний автомат"
+  name: random medical vending machine spawner
   suffix: Civilian, Wallmount
   parent: MarkerBase
   components:

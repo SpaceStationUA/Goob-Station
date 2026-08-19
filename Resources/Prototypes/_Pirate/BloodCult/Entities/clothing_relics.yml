@@ -6,8 +6,8 @@
 - type: entity
   id: ClothingOuterBloodCultArmor
   parent: [ ClothingOuterHardsuitBase, BaseBloodCultContraband ]
-  name: "загартована броня Нар'Сі"
-  description: "Важкий герметичний обладунок воїнів Нар'Сі, придатний для відкритого космосу."
+  name: Nar'Sien hardened armor
+  description: A heavily armored exosuit worn by Nar'Sien warriors. It can withstand hard vacuum.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Clothing/OuterClothing/Hardsuits/blood_cult_armor.rsi
@@ -41,8 +41,8 @@
   id: ClothingHeadHelmetBloodCultArmor
   parent: [ ClothingHeadHardsuitBase, BaseBloodCultContraband ]
   categories: [ HideSpawnMenu ]
-  name: "загартований шолом Нар'Сі"
-  description: "Герметичний шолом до загартованої броні культу."
+  name: Nar'Sien hardened helmet
+  description: A heavily armored helmet that seals the hardened cult armor.
   components:
   - type: BreathMask
   - type: Sprite
@@ -59,8 +59,8 @@
 - type: entity
   id: ClothingOuterRobesBloodCultFlagellant
   parent: [ ClothingOuterBaseToggleable, BaseBloodCultContraband ]
-  name: "роба флагелянта"
-  description: "Просочена кров'ю роба, що надає неприродної швидкості ціною значно тяжчих поранень."
+  name: flagellant's robe
+  description: Blood-soaked robes that grant unnatural speed at the cost of greatly increased damage taken.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Clothing/OuterClothing/Misc/blood_cult_robe.rsi
@@ -84,8 +84,8 @@
   id: ClothingHeadHatHoodBloodCultFlagellant
   parent: [ ClothingHeadBase, BaseBloodCultContraband ]
   categories: [ HideSpawnMenu ]
-  name: "каптур флагелянта"
-  description: "Просочений кров'ю каптур, насичений темною магією."
+  name: flagellant's hood
+  description: A blood-soaked hood infused with dark magic.
   components:
   - type: Sprite
     sprite: _Pirate/BloodCult/Clothing/Head/Hoods/blood_cult_hood.rsi
@@ -101,8 +101,8 @@
 - type: entity
   id: ClothingEyeBloodCultBlindfold
   parent: [ ClothingEyesBase, BaseBloodCultContraband ]
-  name: "пов'язка ревнителя"
-  description: "Нехай Нар'Сі веде вас крізь темряву та захищає від світла."
+  name: zealot's blindfold
+  description: May Nar'Sie guide you through darkness and shield you from the light.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Misc/blindfold.rsi

@@ -57,7 +57,7 @@
 - type: entity
   id: PartYautja
   parent: [BaseItem, BasePart]
-  name: "частина тіла Яутжа"
+  name: "yautja body part"
   abstract: true
   components:
   - type: Icon
@@ -75,7 +75,7 @@
 
 - type: entity
   id: ChestYautja
-  name: "грудна клітка Яутжа"
+  name: "yautja chest"
   parent: [PartYautja, BaseChest]
   components:
   - type: Sprite
@@ -101,7 +101,7 @@
 
 - type: entity
   id: GroinYautja
-  name: "пах Яутжа"
+  name: "yautja groin"
   parent: [PartYautja, BaseGroin]
   components:
   - type: Sprite
@@ -127,7 +127,7 @@
 
 - type: entity
   id: HeadYautja
-  name: "голова Яутжа"
+  name: "yautja head"
   parent: [PartYautja, BaseHead]
   components:
   - type: Sprite
@@ -153,7 +153,7 @@
 
 - type: entity
   id: LeftArmYautja
-  name: "ліва рука Яутжа"
+  name: "left yautja arm"
   parent: [PartYautja, BaseLeftArm]
   components:
   - type: Sprite
@@ -172,7 +172,7 @@
 
 - type: entity
   id: RightArmYautja
-  name: "права рука Яутжа"
+  name: "right yautja arm"
   parent: [PartYautja, BaseRightArm]
   components:
   - type: Sprite
@@ -191,7 +191,7 @@
 
 - type: entity
   id: LeftHandYautja
-  name: "ліва кисть Яутжа"
+  name: "left yautja hand"
   parent: [PartYautja, BaseLeftHand]
   components:
   - type: Sprite
@@ -210,7 +210,7 @@
 
 - type: entity
   id: RightHandYautja
-  name: "права кисть Яутжа"
+  name: "right yautja hand"
   parent: [PartYautja, BaseRightHand]
   components:
   - type: Sprite
@@ -229,7 +229,7 @@
 
 - type: entity
   id: LeftLegYautja
-  name: "ліва нога Яутжа"
+  name: "ліва нога яутжа"
   parent: [PartYautja, BaseLeftLeg]
   components:
   - type: Sprite
@@ -248,7 +248,7 @@
 
 - type: entity
   id: RightLegYautja
-  name: "права нога Яутжа"
+  name: "права нога яутжа"
   parent: [PartYautja, BaseRightLeg]
   components:
   - type: Sprite
@@ -267,7 +267,7 @@
 
 - type: entity
   id: LeftFootYautja
-  name: "ліва стопа Яутжа"
+  name: "left yautja foot"
   parent: [PartYautja, BaseLeftFoot]
   components:
   - type: Sprite
@@ -286,7 +286,7 @@
 
 - type: entity
   id: RightFootYautja
-  name: "права стопа Яутжа"
+  name: "right yautja foot"
   parent: [PartYautja, BaseRightFoot]
   components:
   - type: Sprite

@@ -18,8 +18,8 @@
 - type: entity
   parent: [BaseSword, BaseAntiPsionicWeapon, BaseMantisContraband]
   id: MantisMeleeGreatsword # The risk/reward option, highly likely to knock you on your ass and get you killed, extremely difficult to use effectively
-  name: "Фауст" # Part of the reason it's so punishing, aside from the challenge, is because antags could possibly use it against psions - it needs to be unreliable
-  description: "Мнемолітовий дворучний меч із нестабільним резонансом, через що ним небезпечно володіти. Фауст люто відскакує від будь-якого удару, що не влучає у псіоніка, і повертається у власника, навіть якщо лише чиркне об стіну. Його потрібно тримати як слід — без цілковитої зосередженості клинок опирається. Незрівнянний проти псіонічних і потойбічних загроз, небезпечний проти всього іншого."
+  name: Faust # Part of the reason it's so punishing, aside from the challenge, is because antags could possibly use it against psions - it needs to be unreliable
+  description: "A mnemolith greatsword whose unstable resonance makes it treacherous to wield. Faust rebounds violently from any impact that does not strike a psion, whipping back into its bearer even if it merely grazes a wall. It must be properly wielded--without absolute focus, the blade resists. Unmatched against psionic and otherworldly threats, perilous against anything else."
   components:
   - type: Grammar # Faust is its name
     attributes:
@@ -124,9 +124,9 @@
 - type: entity
   parent: [BaseItem, BaseFoldable, BaseMantisContraband]
   id: MantisMeleeGreatswordSheath # A suitstorage sheath for Faust, in this file because it's basically part of the sword
-  name: "лиховісні піхви"
+  name: foreboding scabbard
   suffix: Faust, Empty
-  description: "Важкі піхви, підсилені смугами мю-металу, що перехрещуються над декоративними очима, ймовірно, як застереження. Цей псіонічно ізолювальний метал використовують лише для утримання зброї, яка інакше під час виймання люто відскакувала б від свого вмістилища. Їхня нерухомість здається неприродною, наче самі піхви затамували подих. Трохи вправної роботи кравецьким ножем — і їх можна переробити для носіння на стегні. Вони настільки важкі, що носити їх можна лише поверх верхнього одягу, а зброя всередині така довга, що витягти її можна лише телекінезом."
+  description: "A heavy scabbard reinforced with mu-metal bands that cross over its ornamental eyes, likely as a warning. This psionically insulating metal is only used to contain weapons that would otherwise recoil violently against their housing when drawn. Its stillness feels wrong, as if the scabbard itself is holding its breath. It can be reworked to ride the hip instead with a bit of clever knife tailoring. So heavy it can only be worn over outerwear--and the weapon within so long it must be drawn with telekinesis."
   components:
   - type: Foldable
     canFoldInsideContainer: true
@@ -227,9 +227,9 @@
 - type: entity
   parent: MantisMeleeGreatswordSheath
   id: MantisMeleeGreatswordSheathHip
-  name: "лиховісні піхви (на стегні)"
+  name: foreboding scabbard (hip carry)
   suffix: Faust, Empty
-  description: "Важкі піхви, підсилені смугами мю-металу, що перехрещуються над декоративними очима, ймовірно, як застереження. Цей псіонічно ізолювальний метал використовують лише для утримання зброї, яка інакше під час виймання люто відскакувала б від свого вмістилища. Підвішені на стегні товстою тканинною обмоткою — традиційний спосіб носіння разом із вовчою шкурою псіо-екстрасенса, щоб капелюх не заважав вихопити клинок. Трохи вправної роботи кравецьким ножем — і їх можна знову переробити для носіння на спині. Вони настільки важкі, що носити їх можна лише поверх верхнього одягу, а зброя всередині така довга, що витягти її можна лише телекінезом."
+  description: "A heavy scabbard reinforced with mu-metal bands that cross over its ornamental eyes, likely as a warning. This psionically insulating metal is only used to contain weapons that would otherwise recoil violently against their housing when drawn. Suspended from the hip with a thick cloth wrap--traditional when worn with a mantis wolfskin to keep the draw clear of the hat. It can be reworked to ride the back again with a bit of clever knife tailoring. So heavy it can only be worn over outerwear, and the weapon within so long it must be drawn with telekinesis."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Melee/Mantis/mantisgreatswordsheath-alt.rsi
