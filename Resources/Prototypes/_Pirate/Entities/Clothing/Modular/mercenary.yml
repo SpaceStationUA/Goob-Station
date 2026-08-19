@@ -95,6 +95,8 @@
         shader: unshaded
       head-resomi:
       - state: sealed-equipped-HELMET-resomi
+      - state: visor-unshaded-resomi
+        shader: unshaded
       head-vulpkanin:
       - state: sealed-equipped-HELMET-vulpkanin
       - state: visor-unshaded-vulpkanin
@@ -182,12 +184,8 @@
     clothingVisuals:
       gloves:
       - state: sealed-equipped-HAND
-      - state: sealed-equipped-HAND-unshaded
-        shader: unshaded
       gloves-vox:
       - state: sealed-equipped-HAND-vox
-      - state: sealed-equipped-HAND-unshaded-vox
-        shader: unshaded
   - type: Insulated
     coefficient: 0.5
 

@@ -4,7 +4,7 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/19/2026 21:10:34
+  time: 08/19/2026 21:37:42
   entityCount: 1836
 maps:
 - 1
@@ -1268,7 +1268,8 @@ entities:
           -5,-4:
             0: 65224
           -4,-3:
-            0: 57281
+            0: 24513
+            1: 32768
           -5,-3:
             0: 60943
           -5,-2:
@@ -1307,8 +1308,8 @@ entities:
             0: 140
           -6,0:
             0: 247
-            1: 256
-            2: 1536
+            2: 256
+            1: 1536
           -6,1:
             0: 4095
           -7,-3:
@@ -1332,15 +1333,15 @@ entities:
             Oxygen: 21.824879
             Nitrogen: 82.10312
         - volume: 2500
-          temperature: 293.14975
-          moles:
-            Oxygen: 20.078888
-            Nitrogen: 75.53487
-        - volume: 2500
           temperature: 293.15
           moles:
             Oxygen: 21.6852
             Nitrogen: 81.57766
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+            Oxygen: 20.078888
+            Nitrogen: 75.53487
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
@@ -2131,7 +2132,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -28738.238
+      secondsUntilStateChange: -28843.74
       state: Opening
   - uid: 933
     components:
@@ -2216,7 +2217,7 @@ entities:
       pos: -6.5,3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -12895.496
+      secondsUntilStateChange: -13000.997
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4707,9 +4708,19 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 1624
-- proto: ClothingBeltCombatSurgeryBlue
+- proto: ClothingBeltCombatSurgeryFilledBlue
   entities:
-  - uid: 1276
+  - uid: 660
+    components:
+    - type: Transform
+      parent: 1281
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1281
+- proto: ClothingBeltCombatSurgeryFilledGreen
+  entities:
+  - uid: 661
     components:
     - type: Transform
       parent: 1281
@@ -4724,16 +4735,6 @@ entities:
     - type: Transform
       pos: -4.6224356,-10.19825
       parent: 2
-- proto: ClothingBeltCombatSurgeryGreen
-  entities:
-  - uid: 1483
-    components:
-    - type: Transform
-      parent: 1281
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 1281
 - proto: ClothingBeltMercWebbing
   entities:
   - uid: 431
@@ -8900,16 +8901,16 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
+          Oxygen: 1.8856695
+          Nitrogen: 7.0937095
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 1276
-          - 1483
+          - 661
+          - 660
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True

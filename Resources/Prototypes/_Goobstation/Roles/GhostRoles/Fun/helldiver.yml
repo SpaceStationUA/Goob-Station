@@ -4,7 +4,7 @@
   id: HelldiverGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitMercenary
-    back: WeaponRifleM90
+    # Pirate: merc weapon selector - primary and sidearm now come from the belt selectors below, so the fixed WeaponRifleM90 and WeaponPistolEchis were dropped to avoid handing out two of each.
     belt: ClothingBeltMercWebbingHelldiverFilled
     mask: ClothingMaskGasMerc
     eyes: ClothingEyesGlassesMercenary # Night Vision when added
@@ -17,7 +17,6 @@
     shoes: ClothingShoesBootsMercFilled
     id: HelldiverPDA
     pocket1: ToolDebug
-    pocket2: WeaponPistolEchis
 
 - type: entity
   parent: ClothingBeltMercWebbing
