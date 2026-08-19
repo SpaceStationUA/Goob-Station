@@ -17,6 +17,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization;
 
 namespace Content.Server._DV.Psionics.Systems;
 
@@ -179,5 +180,6 @@ public sealed class SacrificeAltarSystem : EntitySystem
 /// <summary>
 /// DoAfter event for the psionic sacrifice ritual.
 /// </summary>
-[NetSerializable]
+
+[Serializable, NetSerializable]
 public sealed partial class SacrificeDoAfterEvent : SimpleDoAfterEvent;
