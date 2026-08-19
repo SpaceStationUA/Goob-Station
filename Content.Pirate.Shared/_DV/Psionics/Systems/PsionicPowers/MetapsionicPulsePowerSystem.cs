@@ -27,6 +27,9 @@ public sealed class MetapsionicPulsePowerSystem : BasePsionicPowerSystem<Metapsi
 
     private void OnPostInit(Entity<MetapsionicPulsePowerComponent> power, ref PsionicPowerPostInitializedEvent args)
     {
+        if (args.PowerType != typeof(MetapsionicPulsePowerComponent))
+            return;
+
         InitMetapsionicExtras(power);
     }
 

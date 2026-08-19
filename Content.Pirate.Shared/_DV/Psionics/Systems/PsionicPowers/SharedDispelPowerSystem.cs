@@ -41,6 +41,9 @@ public abstract class SharedDispelPowerSystem : BasePsionicPowerSystem<DispelPow
 
     private void OnPostInit(Entity<DispelPowerComponent> power, ref PsionicPowerPostInitializedEvent args)
     {
+        if (args.PowerType != typeof(DispelPowerComponent))
+            return;
+
         InitDispelExtras(power);
     }
 

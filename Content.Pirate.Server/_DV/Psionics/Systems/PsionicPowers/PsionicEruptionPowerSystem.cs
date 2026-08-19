@@ -53,6 +53,9 @@ public sealed class PsionicEruptionSystem : BasePsionicPowerSystem<PsionicErupti
 
     private void OnPostInit(Entity<PsionicEruptionPowerComponent> power, ref PsionicPowerPostInitializedEvent args)
     {
+        if (args.PowerType != typeof(PsionicEruptionPowerComponent))
+            return;
+
         OpenEruptionUI(power);
     }
 

@@ -3,8 +3,11 @@ namespace Content.Shared._DV.Psionics.Events;
 /// <summary>
 /// Raised on a psionic entity after <c>InitializePowerComponents</c> finishes the
 /// base power setup (action button, PsionicComponent registration, pool merges,
-/// init feedback). Specialized power systems subscribe to this for post-init work
-/// that only matters when powers are added at runtime (e.g. PsionicEruption opens
-/// its EUI and sets the initial annoyance timer).
+/// init feedback). <see cref="PowerType"/> identifies which specific power was
+/// just initialized so handlers can filter for only the power they care about.
 /// </summary>
-public sealed class PsionicPowerPostInitializedEvent;
+/// <param name="powerType">The component type of the power that was just initialized.</param>
+public sealed class PsionicPowerPostInitializedEvent(Type powerType)
+{
+    public Type PowerType { get; } = powerType;
+}

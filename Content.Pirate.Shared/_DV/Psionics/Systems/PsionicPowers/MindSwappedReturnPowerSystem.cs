@@ -61,6 +61,9 @@ public sealed class MindSwappedReturnPowerSystem : BasePsionicPowerSystem<MindSw
 
     private void OnPostInit(Entity<MindSwappedReturnPowerComponent> power, ref PsionicPowerPostInitializedEvent args)
     {
+        if (args.PowerType != typeof(MindSwappedReturnPowerComponent))
+            return;
+
         EnsureReturnAction(power);
     }
 

@@ -193,7 +193,7 @@ public abstract partial class SharedPsionicSystem
 
             // Raise a post-init event so specialized power systems (e.g. PsionicEruptionPowerSystem)
             // receive the same initialization as MapInitEvent paths without duplicating base setup.
-            RaiseLocalEvent(entity, new PsionicPowerPostInitializedEvent());
+            RaiseLocalEvent(entity, new PsionicPowerPostInitializedEvent(compType));
         }
     }
 
