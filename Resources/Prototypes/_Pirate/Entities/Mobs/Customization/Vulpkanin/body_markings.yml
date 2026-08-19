@@ -1,7 +1,7 @@
 - type: marking
   id: VulpPadsLeft
-  markingCategory: LeftFoot
   bodyPart: LFoot
+  markingCategory: LeftFoot
   speciesRestriction: [Vulpkanin]
   coloration: PawPads
   sprites:
@@ -10,8 +10,8 @@
 
 - type: marking
   id: VulpPadsRight
-  markingCategory: RightFoot
   bodyPart: RFoot
+  markingCategory: RightFoot
   speciesRestriction: [Vulpkanin]
   coloration: PawPads
   sprites:

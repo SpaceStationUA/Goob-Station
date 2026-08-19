@@ -1,3 +1,0 @@
-- type: skinColoration
-  id: TajaranFur
-  strategy: !type:ClampedHsvColoration {}

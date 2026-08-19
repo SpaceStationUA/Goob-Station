@@ -9,12 +9,14 @@ using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes; // Pirate
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Prototypes; // Pirate
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 using static Robust.Client.GameObjects.SpriteComponent;
@@ -50,6 +52,7 @@ public sealed class ClientClothingSystem : ClothingSystem
     };
 
     [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Pirate edit - clothing fallback
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly DisplacementMapSystem _displacement = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
@@ -104,16 +107,24 @@ public sealed class ClientClothingSystem : ClothingSystem
             return;
 
         List<PrototypeLayerData>? layers = null;
+        // Pirate edit start - clothing fallback
+        var speciesId = inventory.SpeciesId ?? CompOrNull<HumanoidAppearanceComponent>(args.Equipee)?.Species.ToString();
 
-        // first attempt to get species specific data.
-        if (inventory.SpeciesId != null)
-            item.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
-
+        // Try the equipped species first, then its optional clothing fallback.
+        if (speciesId != null)
+        {
+            foreach (var species in GetClothingSpecies(speciesId, args.Slot))
+            {
+                if (item.ClothingVisuals.TryGetValue($"{args.Slot}-{species}", out layers))
+                    break;
+            }
+        }
+        // Pirate edit end
         // if that returned nothing, attempt to find generic data
         if (layers == null && !item.ClothingVisuals.TryGetValue(args.Slot, out layers))
         {
             // No generic data either. Attempt to generate defaults from the item's RSI & item-prefixes
-            if (!TryGetDefaultVisuals(uid, item, args.Slot, inventory.SpeciesId, out layers))
+            if (!TryGetDefaultVisuals(uid, item, args.Slot, speciesId, out layers)) // Pirate edit - clothing fallback
                 return;
         }
 
@@ -168,10 +179,22 @@ public sealed class ClientClothingSystem : ClothingSystem
         if (clothing.EquippedState != null)
             state = $"{clothing.EquippedState}";
 
-        // species specific
-        if (speciesId != null && rsi.TryGetState($"{state}-{speciesId}", out _))
-            state = $"{state}-{speciesId}";
-        else if (!rsi.TryGetState(state, out _))
+        // Pirate edit start - clothing fallback
+        // Species-specific states: own species has priority over the configured fallback.
+        if (speciesId != null)
+        {
+            foreach (var species in GetClothingSpecies(speciesId, slot))
+            {
+                if (!rsi.TryGetState($"{state}-{species}", out _))
+                    continue;
+
+                state = $"{state}-{species}";
+                break;
+            }
+        }
+
+        if (!rsi.TryGetState(state, out _))
+        // Pirate edit end
             return false;
 
         var layer = new PrototypeLayerData();
@@ -182,6 +205,30 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         return true;
     }
+
+    // Pirate edit start - clothing fallback
+    private IEnumerable<string> GetClothingSpecies(string speciesId, string slot)
+    {
+        yield return speciesId;
+
+        var normalizedSpeciesId = speciesId.ToLowerInvariant();
+        if (normalizedSpeciesId != speciesId)
+            yield return normalizedSpeciesId;
+
+        var species = _prototypeManager.EnumeratePrototypes<SpeciesPrototype>()
+            .FirstOrDefault(p => string.Equals(p.ID, speciesId, StringComparison.OrdinalIgnoreCase));
+        if (species is not null
+            && species.ClothingSpeciesFallback.FirstOrDefault(p => string.Equals(p.Key, slot, StringComparison.OrdinalIgnoreCase)) is { Key: not null, Value: var fallback }
+            && !string.Equals(fallback.ToString(), speciesId, StringComparison.OrdinalIgnoreCase))
+        {
+            var fallbackId = fallback.ToString();
+            yield return fallbackId;
+
+            if (fallbackId.ToLowerInvariant() != fallbackId)
+                yield return fallbackId.ToLowerInvariant();
+        }
+    }
+    // Pirate edit end
 
     private void OnVisualsChanged(EntityUid uid, InventoryComponent component, VisualsChangedEvent args)
     {

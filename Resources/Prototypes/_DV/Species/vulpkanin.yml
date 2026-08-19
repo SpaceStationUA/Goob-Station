@@ -6,10 +6,13 @@
   roundStart: true
   prototype: MobVulpkanin
   sprites: MobVulpkaninSprites
+  clothingSpeciesFallback: # Pirate clothing fallback
+    outerClothing: Reptilian
+    shoes: Reptilian
   defaultSkinTone: "#985629"
   markingLimits: MobVulpkaninMarkingLimits
   dollPrototype: MobVulpkaninDummy
-  skinColoration: Hues
+  skinColoration: AnimalFur # Pirate edit
   maleFirstNames: NamesVulpakinMale
   femaleFirstNames: NamesVulpakinFemale
   lastNames: NamesVulpakinLast

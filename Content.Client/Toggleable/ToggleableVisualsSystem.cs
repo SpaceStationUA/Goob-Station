@@ -3,11 +3,14 @@ using Content.Client.Clothing;
 using Content.Client.Items.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Hands;
+using Content.Shared.Humanoid; // Pirate
+using Content.Shared.Humanoid.Prototypes; // Pirate
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes; // Pirate
 using Robust.Shared.Utility;
 
 namespace Content.Client.Toggleable;
@@ -22,6 +25,7 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
 {
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Pirate
 
     public override void Initialize()
     {
@@ -86,9 +90,19 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
             return;
         List<PrototypeLayerData>? layers = null;
 
-        // attempt to get species specific data
-        if (inventory.SpeciesId != null)
-            component.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
+        // Pirate edit start - clothing fallback
+        var speciesId = inventory.SpeciesId ?? CompOrNull<HumanoidAppearanceComponent>(args.Equipee)?.Species.ToString();
+
+        // Try the equipped species first, then its optional clothing fallback.
+        if (speciesId != null)
+        {
+            foreach (var species in GetClothingSpecies(speciesId, args.Slot))
+            {
+                if (component.ClothingVisuals.TryGetValue($"{args.Slot}-{species}", out layers))
+                    break;
+            }
+        }
+        // Pirate edit - clothing fallback
 
         // No species specific data.  Try to default to generic data.
         if (layers == null && !component.ClothingVisuals.TryGetValue(args.Slot, out layers))
@@ -171,4 +185,28 @@ public sealed class ToggleableVisualsSystem : VisualizerSystem<ToggleableVisuals
             args.Layers.Add((key, layer));
         }
     }
+
+    // Pirate edit start - clothing fallback
+    private IEnumerable<string> GetClothingSpecies(string speciesId, string slot)
+    {
+        yield return speciesId;
+
+        var normalizedSpeciesId = speciesId.ToLowerInvariant();
+        if (normalizedSpeciesId != speciesId)
+            yield return normalizedSpeciesId;
+
+        var species = _prototypeManager.EnumeratePrototypes<SpeciesPrototype>()
+            .FirstOrDefault(p => string.Equals(p.ID, speciesId, StringComparison.OrdinalIgnoreCase));
+        if (species is not null
+            && species.ClothingSpeciesFallback.FirstOrDefault(p => string.Equals(p.Key, slot, StringComparison.OrdinalIgnoreCase)) is { Key: not null, Value: var fallback }
+            && !string.Equals(fallback.ToString(), speciesId, StringComparison.OrdinalIgnoreCase))
+        {
+            var fallbackId = fallback.ToString();
+            yield return fallbackId;
+
+            if (fallbackId.ToLowerInvariant() != fallbackId)
+                yield return fallbackId.ToLowerInvariant();
+        }
+    }
+    // Pirate edit - clothing fallback
 }

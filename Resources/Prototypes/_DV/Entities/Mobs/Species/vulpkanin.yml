@@ -12,6 +12,30 @@
   - type: Hunger
   - type: Inventory # Allows vulps to wear properly shaped helmets
     speciesId: vulpkanin
+    # Pirate edit start - resprite
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit-female
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+    # Pirate edit end
   - type: Thirst
   - type: Icon
     sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
@@ -146,3 +170,28 @@
   components:
   - type: HumanoidAppearance
     species: Vulpkanin
+  # Pirate edit start - resprite
+  - type: Inventory
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit-female
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+    # Pirate edit end
