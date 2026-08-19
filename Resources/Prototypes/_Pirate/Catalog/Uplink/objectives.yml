@@ -10,7 +10,7 @@
   - UplinkObjectives
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 1
+    stock: 3
   - !type:BuyerWhitelistCondition
     blacklist:
       components:
