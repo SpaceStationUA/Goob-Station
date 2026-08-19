@@ -100,8 +100,8 @@
   - type: AntiPsionicWeapon # To override the +25% blunt damage against psions, because the bonking part isn't made of mnemolith
     modifiers:
       coefficients:
-        Piercing: 1.25
-        Holy: 1.25
+        Piercing: 2.0
+        Holy: 2.0
   # - type: ItemToggleDamageOtherOnHit # Not in this fork
   # - type: ItemToggleEmbeddableProjectile # Not in this fork
   #   activatedEmbedOnThrow: true
