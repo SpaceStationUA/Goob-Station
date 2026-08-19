@@ -169,6 +169,7 @@ public abstract partial class SharedPsionicSystem
 
             // Create the action button.
             actionSystem.AddAction(entity, ref psionicPowerComp.ActionEntity, psionicPowerComp.ActionProtoId);
+            Dirty(entity, psionicPowerComp);
 
             // Ensure the entity is registered as a psionic.
             var psionicComp = EnsureComp<PsionicComponent>(entity);

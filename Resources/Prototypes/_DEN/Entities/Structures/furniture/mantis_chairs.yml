@@ -35,7 +35,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Items/Handling/cloth_drop.ogg
+          path: /Audio/_Goobstation/Items/handling/cloth_drop.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialCloth:

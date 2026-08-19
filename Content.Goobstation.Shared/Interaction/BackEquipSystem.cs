@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Containers.ItemSlots; // Pirate
 using Content.Shared.Hands.Components;
@@ -103,41 +104,33 @@ public sealed class BackEquipSystem : EntitySystem
         {
             if (handItem == null)
             {
-                ItemSlot? toEjectFrom = null;
-                foreach (var slot in slots.Slots.Values)
+                var ejectCandidates = slots.Slots.Values
+                    .Where(s => s.HasItem)
+                    .OrderByDescending(s => s.Priority)
+                    .ToList();
+
+                foreach (var slot in ejectCandidates)
                 {
-                    if (slot.HasItem && slot.Priority > (toEjectFrom?.Priority ?? int.MinValue))
-                        toEjectFrom = slot;
+                    if (_slots.TryEjectToHands(slotItem, slot, uid, excludeUserAudio: true))
+                        return;
                 }
 
-                if (toEjectFrom == null)
-                {
-                    _popup.PopupClient(emptyEquipmentSlotString, uid, uid);
+                _popup.PopupClient(emptyEquipmentSlotString, uid, uid);
+                return;
+            }
+
+            var insertCandidates = slots.Slots.Values
+                .Where(s => !s.HasItem && _whitelistSystem.IsWhitelistPassOrNull(s.Whitelist, handItem.Value))
+                .OrderByDescending(s => s.Priority)
+                .ToList();
+
+            foreach (var slot in insertCandidates)
+            {
+                if (_slots.TryInsertFromHand(slotItem, slot, uid, hands, excludeUserAudio: true))
                     return;
-                }
-
-                _slots.TryEjectToHands(slotItem, toEjectFrom, uid, excludeUserAudio: true);
-                return;
             }
 
-            ItemSlot? toInsertTo = null;
-            foreach (var slot in slots.Slots.Values)
-            {
-                if (!slot.HasItem
-                    && _whitelistSystem.IsWhitelistPassOrNull(slot.Whitelist, handItem.Value)
-                    && slot.Priority > (toInsertTo?.Priority ?? int.MinValue))
-                {
-                    toInsertTo = slot;
-                }
-            }
-
-            if (toInsertTo == null)
-            {
-                _popup.PopupClient(Loc.GetString("smart-equip-no-valid-item-slot-insert", ("item", handItem.Value)), uid, uid);
-                return;
-            }
-
-            _slots.TryInsertFromHand(slotItem, toInsertTo, uid, hands, excludeUserAudio: true);
+            _popup.PopupClient(Loc.GetString("smart-equip-no-valid-item-slot-insert", ("item", handItem.Value)), uid, uid);
             return;
         }
         // Pirate end

@@ -123,7 +123,7 @@
   description: "Потужний психоделік, що може пробудити псіонічні здібності у тих, хто має потенціал; у просторіччі його називають «космічними наркотиками»"
   components:
   - type: Label
-    currentLabel: LSD 15u
+    currentLabel: Космічний міраж 15u
   - type: Sprite
     layers:
     - state: pill_canister
@@ -154,7 +154,7 @@
   parent: [PillCanisterMantis, BaseMantisContraband]
   id: PillCanisterSoulbreakerToxinMantis
   suffix: soulbreaker toxin, 10
-  description: "Назавжди позбавляє псіоніки після вживання. Не варто ставитися до цього легковажно. У чотири рази сильніший за токсин мозколом."
+  description: "Назавжди позбавляє псіоніки після вживання. Не варто ставитися до цього легковажно."
   components:
   - type: Label
     currentLabel: soulbreaker toxin 10u

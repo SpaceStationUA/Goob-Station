@@ -9,6 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Psionics.Glimmer;
 using Content.Shared.Verbs;
@@ -104,7 +105,7 @@ public sealed class SacrificeAltarSystem : EntitySystem
             return;
 
         _popup.PopupEntity(
-            Loc.GetString("sacrifice-altar-begin", ("user", user), ("target", target)),
+            Loc.GetString("sacrifice-altar-begin", ("user", Identity.Entity(user, EntityManager)), ("target", Identity.Entity(target, EntityManager))),
             altar, PopupType.MediumCaution);
     }
 
@@ -139,7 +140,7 @@ public sealed class SacrificeAltarSystem : EntitySystem
 
         // Announce the sacrifice to everyone nearby.
         _popup.PopupEntity(
-            Loc.GetString("sacrifice-altar-announce", ("user", user), ("target", target)),
+            Loc.GetString("sacrifice-altar-announce", ("user", Identity.Entity(user, EntityManager)), ("target", Identity.Entity(target, EntityManager))),
             uid, PopupType.LargeCaution);
 
         // Normalize min/max so reversed mapper-configured ranges don't throw.

@@ -73,8 +73,6 @@
       state: sombertelevision
     - map: ["computerLayerScreen"]
       state: sombertelevision-on
-  - type: Tag
-    tags:
   - type: EtherealLight
   - type: PointLight
     radius: 2
