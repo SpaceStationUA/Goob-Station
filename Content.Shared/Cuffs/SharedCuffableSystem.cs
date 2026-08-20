@@ -430,7 +430,14 @@ namespace Content.Shared.Cuffs
                 var handcuffEntity = handcuffContainer.ContainedEntities[^1];
 
                 if (EntityManager.IsQueuedForDeletion(handcuffEntity) || TerminatingOrDeleted(handcuffEntity))
-                    break;
+                {
+                    if (Deleted(handcuffEntity) ||
+                        !_container.Remove(handcuffEntity, handcuffContainer, reparent: false, force: true))
+                        break;
+
+                    dirty = true;
+                    continue;
+                }
 
                 dirty = true;
                 _transform.PlaceNextTo(handcuffEntity, ent.Owner);
