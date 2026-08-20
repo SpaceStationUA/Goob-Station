@@ -10,6 +10,7 @@ public sealed class YautjaObservationPadSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedMindSwapPowerSystem _mindSwap = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -25,18 +26,20 @@ public sealed class YautjaObservationPadSystem : EntitySystem
             return;
 
         var projection = Spawn(ent.Comp.ProjectionPrototype, Transform(args.Performer).Coordinates);
-        Transform(projection).AttachToGridOrMap();
+        _transform.AttachToGridOrMap(projection);
 
-        // Yautja pad is a device, not a psionic power - ignore shielding/mindshield checks.
-        if (!_mindSwap.SwapMinds(args.Performer, projection, ignoreMindshields: true, ignorePsionicShielding: true))
+        // Tech device, not a psionic power — ignore mindshield / psionic gates.
+        if (!_mindSwap.SwapMinds(
+                args.Performer,
+                projection,
+                ignoreMindshields: true,
+                ignorePsionicShielding: true))
         {
-            // If swap didn't work out, delete the spawned projection.
-            args.Handled = false;
             QueueDel(projection);
             return;
         }
 
-        // Shorter return cooldown than default mind-swap (20s).
+        // Shorter return cooldown than default mind-swap.
         ApplyShortReturnDelay(projection, ent.Comp);
         ApplyShortReturnDelay(args.Performer, ent.Comp);
 
@@ -51,10 +54,13 @@ public sealed class YautjaObservationPadSystem : EntitySystem
         if (swapped.ActionEntity is { } existing)
             _actions.RemoveAction(uid, existing);
 
-        swapped.ActionProtoId = pad.ReturnActionPrototype.Id;
+        swapped.ActionProtoId = pad.ReturnActionPrototype;
+        swapped.ActionEntity = null;
+
         EntityUid? actionEnt = null;
-        _actions.AddAction(uid, ref actionEnt, pad.ReturnActionPrototype.Id);
+        _actions.AddAction(uid, ref actionEnt, pad.ReturnActionPrototype);
         swapped.ActionEntity = actionEnt;
+        Dirty(uid, swapped);
 
         if (actionEnt is not { } action)
             return;

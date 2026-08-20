@@ -168,6 +168,9 @@
   components:
   - type: IngestionBlocker
     blockSmokeIngestion: true
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 20
   - type: NightVision
     isEquipment: true
     color: white
@@ -226,8 +229,6 @@
   - type: Item
     size: Small
   - type: Mask
-  - type: EyeProtection
-    protectionTime: 20
 - type: entity
   parent: IDCardStandard
   id: GoobYautjaBracerIdChip
@@ -262,7 +263,7 @@
     delay: 1.0
   - type: Injector
     solutionName: hypospray
-    currentTransferAmount: 30
+    currentTransferAmount: 10
     activeModeProtoId: HyposprayInjectMode
     allowedModes:
     - HyposprayInjectMode
@@ -270,13 +271,9 @@
   - type: SolutionContainerManager
     solutions:
       hypospray:
-        maxVol: 30
+        maxVol: 10
         reagents:
-        - ReagentId: Inaprovaline
-          Quantity: 10
-        - ReagentId: Bicaridine
-          Quantity: 10
-        - ReagentId: Tricordrazine
+        - ReagentId: Omnizine
           Quantity: 10
 
 - type: entity

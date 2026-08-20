@@ -18,7 +18,7 @@
 
 - type: entity
   id: GoobYautjaTechFab
-  parent: [BaseLatheLube, BasePirateFabricatorSound]
+  parent: [BaseLatheLube, BasePirateFabricatorSound] # Pirate: lathe printing sounds
   name: "техфаб Яутжа"
   description: "Стародавній мисливський фабрикатор: ритуальна зброя, маски, наручники та плащі."
   suffix: Yautja

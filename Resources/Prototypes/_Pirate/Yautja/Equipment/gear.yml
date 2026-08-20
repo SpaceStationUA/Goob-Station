@@ -22,6 +22,7 @@
   abstract: true
   suffix: Yautja
   components:
+  - type: YautjaTrapProtection
   - type: Sprite
     sprite: _Pirate/Yautja/armor_clan.rsi
     state: icon
@@ -165,7 +166,6 @@
       types:
       - Landmine
   - type: TriggerOnStepTrigger
-  - type: PreventableStepTrigger
   - type: EmitSoundOnTrigger
     positional: true
     sound:
@@ -194,9 +194,10 @@
   - type: Rotatable
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseSetSelector ]
   id: GoobYautjaHuntingPouch
   name: "мисливська сумка"
+  description: "Блюспейс-сумка мисливця. Обери рівно 3 набори зброї Яутжа."
   suffix: Yautja
   components:
   - type: Sprite
@@ -204,16 +205,40 @@
     state: beltbag
   - type: Item
     size: Small
-  - type: Storage
-    grid:
-    - 0,0,3,1
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-  - type: UserInterface
-    interfaces:
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
+  - type: SetSelector
+    maxSelectedSets: 3
+    possibleSets:
+    - YautjaSetPlasmaRifle
+    - YautjaSetSpikeLauncher
+    - YautjaSetSmartDisc
+    - YautjaSetHarpoon
+    - YautjaSetClanSword
+    - YautjaSetRendingSword
+    - YautjaSetPiercingSword
+    - YautjaSetSeveringSword
+    - YautjaSetScimitar
+    - YautjaSetChainwhip
+    - YautjaSetDualWarScythe
+    - YautjaSetDoubleWarScythe
+    - YautjaSetCruelStaff
+    - YautjaSetCombistick
+    - YautjaSetWarAxe
+    - YautjaSetCeremonialDagger
+    - YautjaSetCombiknife
+    - YautjaSetHunterSpear
+    - YautjaSetWarGlaive
+    - YautjaSetCleavingGlaive
+    - YautjaSetAncientWarGlaive
+    - YautjaSetLongaxe
+    - YautjaSetDuellingBlade
+    - YautjaSetDuellingClub
+    - YautjaSetDuellingHatchet
+    - YautjaSetDuellingKnife
+    - YautjaSetChainGauntlet
+    - YautjaSetClanShield
+    - YautjaSetAncientShield
+    - YautjaSetAncientShieldAlt
+    - YautjaSetAncientShieldTemple
 
 - type: entity
   parent: BaseItem
@@ -416,6 +441,7 @@
     sprite: _Pirate/Yautja/wrist_blades.rsi
     size: Small
   - type: Sharp
+  - type: YautjaResinBreaker
   - type: YautjaBracerClaws
   - type: MeleeWeapon
     wideAnimationRotation: -135
@@ -530,3 +556,29 @@
   id: GoobYautjaBadBloodGreavesBane
   name: "наголенники прокляття ренегата"
   suffix: Bad Blood
+
+- type: entity
+  parent: BookBase
+  id: GoobYautjaHonorCodex
+  name: "Кодекс Честі"
+  description: "Обов'язковий кодекс честі Яутжа. Текст не змінюється."
+  suffix: Yautja
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#ab1515"
+    - state: decor_wingette
+      color: "#e05334"
+    - state: icon_stunbaton
+  - type: Paper
+    content: book-text-yautja-honor-codex
+    contentSize: 20000
+    editingDisabled: true
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
