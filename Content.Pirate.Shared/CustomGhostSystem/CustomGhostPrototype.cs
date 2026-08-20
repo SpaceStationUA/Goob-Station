@@ -4,9 +4,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Pirate.Shared.CustomGhostSystem;
 
-/// <summary>
-/// This is a prototype for...
-/// </summary>
 [DataDefinition]
 [Prototype("customGhost")]
 public sealed partial class CustomGhostPrototype : IPrototype
@@ -40,6 +37,6 @@ public enum CustomGhostAppearance
 {
     Sprite,
     AlphaOverride,
-    /// <summary>Множник ліміту розміру з прототипу; сам ліміт застосовує клієнт.</summary>
+    /// <summary>Prototype size multiplier applied by the client.</summary>
     MaxSize
 }

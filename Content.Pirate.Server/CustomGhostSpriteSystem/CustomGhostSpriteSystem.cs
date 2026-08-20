@@ -113,13 +113,11 @@ public sealed class CustomGhostSpriteSystem : EntitySystem
                 if (customGhostPrototype.GhostName != string.Empty)
                 {
                     _metaData.SetEntityName(ghostUid, customGhostPrototype.GhostName);
-                    // MetaData(ghostUid).EntityName = customGhostPrototype.GhostName;
                 }
 
                 if (customGhostPrototype.GhostDescription != string.Empty)
                 {
                     _metaData.SetEntityDescription(ghostUid, customGhostPrototype.GhostDescription);
-                    // MetaData(ghostUid).EntityDescription = customGhostPrototype.GhostDescription;
                 }
 
                 return true;

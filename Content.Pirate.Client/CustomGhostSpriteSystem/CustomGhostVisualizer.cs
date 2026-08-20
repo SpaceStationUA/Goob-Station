@@ -16,8 +16,7 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
     {
         base.Initialize();
 
-        // Ліміт живе на клієнті, бо лише клієнт знає розміри спрайтів: у зібраному сервері
-        // взагалі немає тек з текстурами. Cvar реплікується, тож зміна діє одразу для всіх.
+        // The client applies the limit because it owns sprite dimensions.
         Subs.CVar(_configuration, PirateCVars.CustomGhostMaxSize, OnMaxSizeChanged);
     }
 
@@ -51,7 +50,7 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
                 }
                 catch
                 {
-                    // Якщо state не існує, підміняємо на перший доступний у RSI
+                    // Fall back to a common RSI state.
                     var rsi = args.Sprite[0].Rsi;
                     if (rsi != null)
                     {
@@ -74,7 +73,7 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
 
             ApplyScale(uid, args.Component, args.Sprite, _configuration.GetCVar(PirateCVars.CustomGhostMaxSize));
 
-            // Зберігаємо прозорість привида.
+            // Preserve the existing ghost transparency.
             return;
         }
 
@@ -84,10 +83,7 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
         }
     }
 
-    /// <summary>
-    /// Стискає нульовий шар так, щоб кадр RSI вписався у квадрат зі стороною maxSquare * maxSize.
-    /// Спрайти, які вже менші за ліміт, не збільшуються.
-    /// </summary>
+    /// <summary>Scales a ghost down to its configured size limit.</summary>
     private void ApplyScale(EntityUid uid, AppearanceComponent appearance, SpriteComponent sprite, int maxSquare)
     {
         if (!AppearanceSystem.TryGetData<float>(uid, CustomGhostAppearance.MaxSize, out var maxSize, appearance))
