@@ -40,5 +40,6 @@ public enum CustomGhostAppearance
 {
     Sprite,
     AlphaOverride,
-    Scale
+    /// <summary>Множник ліміту розміру з прототипу; сам ліміт застосовує клієнт.</summary>
+    MaxSize
 }

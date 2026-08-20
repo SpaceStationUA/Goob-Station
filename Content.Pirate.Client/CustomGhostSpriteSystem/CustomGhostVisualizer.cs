@@ -1,12 +1,35 @@
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Ghost;
+using Content.Pirate.Common.CCVar;
 using Content.Pirate.Shared.CustomGhostSystem;
 using Robust.Client.GameObjects;
+using Robust.Shared.Configuration;
 
 namespace Content.Pirate.Client.CustomGhostSpriteSystem;
 
 public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
 {
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        // Ліміт живе на клієнті, бо лише клієнт знає розміри спрайтів: у зібраному сервері
+        // взагалі немає тек з текстурами. Cvar реплікується, тож зміна діє одразу для всіх.
+        Subs.CVar(_configuration, PirateCVars.CustomGhostMaxSize, OnMaxSizeChanged);
+    }
+
+    private void OnMaxSizeChanged(int maxSquare)
+    {
+        var query = AllEntityQuery<GhostComponent, AppearanceComponent, SpriteComponent>();
+        while (query.MoveNext(out var uid, out _, out var appearance, out var sprite))
+        {
+            ApplyScale(uid, appearance, sprite, maxSquare);
+        }
+    }
+
     protected override void OnAppearanceChange(EntityUid uid, GhostComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
@@ -49,10 +72,7 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
                 args.Sprite.LayerSetRSI(0, spriteData);
             }
 
-            if (!AppearanceSystem.TryGetData<float>(uid, CustomGhostAppearance.Scale, out var scale, args.Component))
-                scale = 1f;
-
-            args.Sprite.LayerSetScale(0, new Vector2(scale, scale));
+            ApplyScale(uid, args.Component, args.Sprite, _configuration.GetCVar(PirateCVars.CustomGhostMaxSize));
 
             // Зберігаємо прозорість привида.
             return;
@@ -62,5 +82,30 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
         {
             args.Sprite.Color = args.Sprite.Color.WithAlpha(alpha);
         }
+    }
+
+    /// <summary>
+    /// Стискає нульовий шар так, щоб кадр RSI вписався у квадрат зі стороною maxSquare * maxSize.
+    /// Спрайти, які вже менші за ліміт, не збільшуються.
+    /// </summary>
+    private void ApplyScale(EntityUid uid, AppearanceComponent appearance, SpriteComponent sprite, int maxSquare)
+    {
+        if (!AppearanceSystem.TryGetData<float>(uid, CustomGhostAppearance.MaxSize, out var maxSize, appearance))
+            return;
+
+        var scale = 1f;
+
+        if (maxSquare > 0
+            && maxSize > 0f
+            && sprite.AllLayers.FirstOrDefault()?.Rsi is { } rsi)
+        {
+            var largestSide = Math.Max(rsi.Size.X, rsi.Size.Y);
+            var limit = maxSquare * maxSize;
+
+            if (largestSide > limit && largestSide > 0)
+                scale = limit / largestSide;
+        }
+
+        sprite.LayerSetScale(0, new Vector2(scale, scale));
     }
 }
