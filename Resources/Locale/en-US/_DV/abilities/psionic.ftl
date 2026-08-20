@@ -80,7 +80,9 @@ psionic-power-mass-sleep-warning = Your eyelids begin to droop...
 
 # Healing Word / Revivify (Pirate: words the caster is forced to speak when the action succeeds)
 healing-word-begin = A word that brings warmth to all who hear it.
+healing-word-target = You begin channeling healing energy into {THE($target)}.
 revivify-begin = Pleasant words that warm the soul.
+revivify-target = You begin channeling revivification into {THE($target)}.
 
 # Anoigo
 airlock-blocked-anoigo-fail = The secured wiring panel blocks your psionic influence!

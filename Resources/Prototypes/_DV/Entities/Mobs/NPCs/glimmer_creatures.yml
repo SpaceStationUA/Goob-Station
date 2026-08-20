@@ -23,6 +23,7 @@
           Quantity: 15
   - type: Psionic
   - type: GlimmerSource
+    secondsPerGlimmer: 40 # Pirate: mites add glimmer twice as slow
   - type: AmbientSound
     range: 6
     volume: -3
@@ -66,8 +67,8 @@
         layer:
         - Opaque
   - type: MovementSpeedModifier
-    baseSprintSpeed: 8
-    baseWalkSpeed: 5
+    baseSprintSpeed: 6
+    baseWalkSpeed: 3.75
   - type: MovementIgnoreGravity
   - type: Speech
   # powers
@@ -131,7 +132,7 @@
     - Pacified
   # combat
   - type: Gun
-    fireRate: 0.7
+    fireRate: 0.525
     soundGunshot:
       collection: MagicMissile
     showExamineText: false

@@ -5,6 +5,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Jittering;
 using Content.Server.Lightning;
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
+using Content.Shared._DV.Psionics.Events;
 using Content.Shared._DV.Psionics.Events.PowerActionEvents;
 using Content.Shared._DV.Psionics.Events.PowerDoAfterEvents;
 using Content.Shared._DV.Psionics.Systems.PsionicPowers;
@@ -41,12 +42,25 @@ public sealed class PsionicEruptionSystem : BasePsionicPowerSystem<PsionicErupti
         base.Initialize();
 
         SubscribeLocalEvent<PsionicEruptionPowerComponent, PsionicEruptionDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<PsionicEruptionPowerComponent, PsionicPowerPostInitializedEvent>(OnPostInit);
     }
 
     protected override void OnPowerInit(Entity<PsionicEruptionPowerComponent> power, ref MapInitEvent args)
     {
         base.OnPowerInit(power, ref args);
+        OpenEruptionUI(power);
+    }
 
+    private void OnPostInit(Entity<PsionicEruptionPowerComponent> power, ref PsionicPowerPostInitializedEvent args)
+    {
+        if (args.PowerType != typeof(PsionicEruptionPowerComponent))
+            return;
+
+        OpenEruptionUI(power);
+    }
+
+    private void OpenEruptionUI(Entity<PsionicEruptionPowerComponent> power)
+    {
         if (!_player.TryGetSessionByEntity(power, out var session))
             return;
 

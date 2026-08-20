@@ -14,9 +14,9 @@ public sealed partial class AssayPowerComponent : BasePsionicPowerComponent
 
     public override string? PowerMetapsionicFeedback { get; set; } = "assay-power-metapsionic-feedback";
 
-    public override int MinGlimmerChanged { get; set; } = 3;
+    public override int MinGlimmerChanged { get; set; } = 1;
 
-    public override int MaxGlimmerChanged { get; set; } = 6;
+    public override int MaxGlimmerChanged { get; set; } = 3;
 
     /// <summary>
     /// How long the scan takes. Casting time.

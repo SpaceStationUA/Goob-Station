@@ -15,9 +15,9 @@ public sealed partial class RevivifyPowerComponent : BasePsionicPowerComponent
 
     public override string? PowerMetapsionicFeedback { get; set; } = "revivify-power-metapsionic-feedback";
 
-    public override int MinGlimmerChanged { get; set; } = 10;
+    public override int MinGlimmerChanged { get; set; } = 5;
 
-    public override int MaxGlimmerChanged { get; set; } = 20;
+    public override int MaxGlimmerChanged { get; set; } = 10;
 
     /// <summary>
     /// How much the target is healed on a successful cast.

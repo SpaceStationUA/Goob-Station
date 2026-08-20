@@ -59,12 +59,16 @@ public sealed class IndexAdminBoundUserInterfaceState : BoundUserInterfaceState
     /// <summary>Whether the next Caduceus transformation is guaranteed to be a fpoon.</summary>
     public bool NextWeaponFpoon;
 
-    public IndexAdminBoundUserInterfaceState(int karmicConsequence, string memberName, bool hasMember, bool nextWeaponFpoon)
+    /// <summary>The latest prescription sent to the member (empty when none).</summary>
+    public string LastPrescription;
+
+    public IndexAdminBoundUserInterfaceState(int karmicConsequence, string memberName, bool hasMember, bool nextWeaponFpoon, string lastPrescription)
     {
         KarmicConsequence = karmicConsequence;
         MemberName = memberName;
         HasMember = hasMember;
         NextWeaponFpoon = nextWeaponFpoon;
+        LastPrescription = lastPrescription;
     }
 }
 
@@ -113,6 +117,15 @@ public sealed class IndexAdminGuaranteeFpoonMessage : BoundUserInterfaceMessage
     public IndexAdminGuaranteeFpoonMessage(bool enabled)
     {
         Enabled = enabled;
+    }
+}
+
+/// <summary>Admin: show the Index's face (fullscreen jumpscare) to the targeted member.</summary>
+[Serializable, NetSerializable]
+public sealed class IndexAdminJumpscareMessage : BoundUserInterfaceMessage
+{
+    public IndexAdminJumpscareMessage()
+    {
     }
 }
 

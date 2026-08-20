@@ -41,9 +41,9 @@
     angle: 60
     damage:
       types:
-        Blunt: 12 # 12 DPS, or 15 DPS against psions (same as CombatKnife)
-        Holy: 6 # 22.5 total DPS against psionic supernaturals
-        Structural: 7.5 # 5 structural DPS
+        Blunt: 12 # 12 DPS (Blunt only), or 15 against psions (1.25×)
+        Holy: 6 # 18 total base DPS, or 22.5 against psionic supernaturals (1.25×)
+        Structural: 7.5 # 7.5 structural DPS
     soundHit:
       path: /Audio/Weapons/punch1.ogg # _Impstation nullglove.ogg isn't in this fork
       params:

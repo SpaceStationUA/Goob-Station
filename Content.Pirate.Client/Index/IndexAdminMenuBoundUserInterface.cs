@@ -25,6 +25,7 @@ public sealed class IndexAdminMenuBoundUserInterface : BoundUserInterface
         _window.OnAddKarma += amount => SendMessage(new IndexAdminAddKarmaMessage(amount));
         _window.OnRemoveKarma += amount => SendMessage(new IndexAdminRemoveKarmaMessage(amount));
         _window.OnGuaranteeFpoon += enabled => SendMessage(new IndexAdminGuaranteeFpoonMessage(enabled));
+        _window.OnJumpscare += () => SendMessage(new IndexAdminJumpscareMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -1,0 +1,300 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+# SPDX-FileCopyrightText: 2025 sleepyyapril
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (fireplace.yml, mannequin.yml, mirror.yml, dresser.yml).
+
+# --- Fireplace ---
+
+- type: entity
+  parent: Fireplace
+  id: SomberFireplace
+  name: somber electrum fireplace
+  description: "An avant-garde fireplace shaped like an eye, its smokeless psionic flame rippling like liquid."
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DEN/Structures/Decoration/somberfireplace.rsi
+    layers:
+      - state: fireplace
+      - state: fireplacefestive
+        map: ["christmas"]
+        visible: false
+      - state: fireplace_fire4
+        shader: unshaded
+      - state: fireplace_glow
+        shader: unshaded
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        christmas:
+          festive: { visible: true }
+  - type: AmbientSound
+    volume: -6
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
+  - type: PointLight
+    radius: 4
+    energy: 6
+    color: "#4dc4ff"
+  - type: AlwaysHot
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1: # TheDen: ScrapElectrum (not in this fork)
+            min: 3
+            max: 5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.05,0.1,0.05,0.35"
+        hard: true
+        density: 200
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+        - BulletImpassable
+
+# --- Hanging Brazier ---
+
+- type: entity
+  parent: BaseSignDirectional
+  id: SomberHangingBrazier
+  name: somber hanging brazier
+  description: "An electrum brazier, its smokeless psionic flame rippling like liquid."
+  placement:
+    mode: WallmountLight
+  components:
+  - type: Sprite
+    drawdepth: SmallObjects
+    noRot: true
+    sprite: _DEN/Structures/Decoration/somberhangingbrazier.rsi
+    layers:
+      - state: fireplace
+      - state: fireplacefestive
+        map: ["christmas"]
+        visible: false
+      - state: fireplace_fire4
+        shader: unshaded
+      - state: fireplace_glow
+        shader: unshaded
+  - type: Appearance
+  - type: HolidayVisuals
+    holidays:
+      festive:
+      - FestiveSeason
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        christmas:
+          festive: { visible: true }
+  - type: PointLight
+    radius: 3
+    energy: 4
+    softness: 1.1
+    color: "#4dc4ff"
+  - type: StaticPrice
+    price: 125
+  - type: AlwaysHot
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1: # TheDen: ScrapElectrum (not in this fork)
+            min: 1
+            max: 3
+
+# --- Mannequin ---
+
+- type: entity
+  parent: Mannequin
+  id: SomberMannequin
+  name: somber mannequin
+  description: "A gloomy mannequin with only slightly unsettling electrum eyes, made to display clothes."
+  components:
+  - type: Sprite
+    sprite: _DEN/Structures/Decoration/mannequin.rsi
+    state: sombermannequin
+    noRot: true
+    layers:
+    - map: [ "mannequin" ]
+      sprite: _DEN/Structures/Decoration/mannequin.rsi
+      state: sombermannequin
+    - map: [ "jumpsuit" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "neck" ]
+    - map: [ "back" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 3
+            max: 3
+          SheetSteel1: # TheDen: ScrapElectrum (not in this fork)
+            min: 1
+            max: 3
+      - !type:EmptyAllContainersBehaviour
+
+# --- Mirror ---
+
+- type: entity
+  parent: Mirror
+  id: SomberMirror
+  name: somber electrum mirror
+  description: "A glossy electrum mirror with a polished mu-metal backing that prevents psionic scrying. A calm, private moment."
+  components:
+  - type: Sprite
+    sprite: _DEN/Structures/Wallmounts/mirror.rsi
+    state: sombermirror
+
+# --- Dresser ---
+
+- type: entity
+  parent: Dresser
+  id: SomberDresser
+  name: somber dresser
+  description: "An expensive dresser made of gloomy, patterned wood with electrum accents."
+  components:
+  - type: Sprite
+    sprite: _DEN/Structures/Furniture/furniture.rsi
+    state: somberdresser
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 3
+            max: 3
+          SheetSteel1: # TheDen: ScrapElectrum (not in this fork)
+            min: 1
+            max: 3
+      - !type:EmptyAllContainersBehaviour
+
+- type: entity
+  parent: DresserFilled
+  id: SomberDresserFilled
+  name: somber dresser
+  suffix: Filled
+  components:
+  - type: Sprite
+    sprite: _DEN/Structures/Furniture/furniture.rsi
+    state: somberdresser
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: StaticPrice
+    price: 125
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 3
+            max: 3
+          SheetSteel1: # TheDen: ScrapElectrum (not in this fork)
+            min: 1
+            max: 3
+      - !type:EmptyAllContainersBehaviour

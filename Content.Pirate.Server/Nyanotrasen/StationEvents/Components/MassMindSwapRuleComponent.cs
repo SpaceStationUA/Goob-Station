@@ -25,6 +25,9 @@ public sealed partial class MassMindSwapRuleComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? SoundTime;
 
+    [DataField]
+    public int MaxNumberOfPairs = 3;
+
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? SwapTime;
 }

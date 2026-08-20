@@ -116,7 +116,20 @@ namespace Content.Server.Psionics.Glimmer
                 if (TryComp<ResearchPointSourceComponent>(uid, out var researchGenerator))
                     researchGenerator.PointsPerSecond = (int)(maxGlimmerByTier * component.ResearchGenerationFactor);
                 if (TryComp<GlimmerSourceComponent>(uid, out var glimmerSource))
-                    glimmerSource.SecondsPerGlimmer = 1f / (maxGlimmerByTier * component.GlimmerGenerationFactor);
+                {
+                    // Pirate: fixed glimmer generation times per tier. SecondsPerGlimmer = 1 / (max * factor),
+                    // so the maxes below give ~15s / ~10s / ~5s / ~3s per glimmer at Moderate/High/Dangerous/Critical.
+                    // Minimal and Low keep their normal tier maxes (unchanged).
+                    int glimmerTierMax = currentGlimmerTier switch
+                    {
+                        GlimmerTier.Moderate => 133,  // ~15s per glimmer
+                        GlimmerTier.High => 200,      // ~10s per glimmer
+                        GlimmerTier.Dangerous => 400, // ~5s per glimmer
+                        GlimmerTier.Critical => 667,  // ~3s per glimmer
+                        _ => maxGlimmerByTier
+                    };
+                    glimmerSource.SecondsPerGlimmer = 1f / (glimmerTierMax * component.GlimmerGenerationFactor);
+                }
             }
 
             if (component.ModulatesPointLight) //SharedPointLightComponent is now being fetched via TryGetLight.
@@ -214,7 +227,7 @@ namespace Content.Server.Psionics.Glimmer
 
         private void OnDestroyed(EntityUid uid, SharedGlimmerReactiveComponent component, DestructionEventArgs args)
         {
-            Spawn("MaterialBluespace1", Transform(uid).Coordinates);
+            Spawn("MaterialBSCrystal1", Transform(uid).Coordinates);
 
             var tier = _glimmerSystem.GetGlimmerTier();
             if (tier < GlimmerTier.High)

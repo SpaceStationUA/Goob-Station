@@ -55,7 +55,7 @@ public sealed partial class OracleComponent : Component
     /// How much glimmer is silently drained when the oracle's request is fulfilled.
     /// </summary>
     [DataField("glimmerReduction")]
-    public int GlimmerReduction = 3;
+    public int GlimmerReduction = 5;
 
     [DataField("demandMessages")]
     public IReadOnlyList<string> DemandMessages = new[]
@@ -96,7 +96,8 @@ public sealed partial class OracleComponent : Component
         "ClothingBackpackSatchelHolding",
         "ClothingBackpackDuffelHolding",
         "TrashBagOfHolding",
-        "BluespaceCrystal",
+        "MaterialBSCrystal",
+        "MaterialBSCrystal1",
         "InsulativeHeadcage",
         "CrystalNormality",
     };

@@ -14,7 +14,7 @@ public sealed partial class DispelPowerComponent : BasePsionicPowerComponent
 
     public override string? PowerMetapsionicFeedback { get; set; } = "dispel-power-metapsionic-feedback";
 
-    public override int MinGlimmerChanged { get; set; } = 5;
+    public override int MinGlimmerChanged { get; set; } = 2;
 
-    public override int MaxGlimmerChanged { get; set; } = 10;
+    public override int MaxGlimmerChanged { get; set; } = 5;
 }

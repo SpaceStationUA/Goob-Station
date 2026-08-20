@@ -113,12 +113,12 @@
     sprite: _DEN/Objects/Weapons/Melee/Mantis/mantisknife.rsi
     storedSprite: null # To override CombatKnife
   - type: MeleeWeapon
-    attackRate: .6666
+    attackRate: 1.0
     angle: 40 # Standard knife swing, here for reference
     damage:
       types:
-        Slash: 10 # 15 DPS (same as CombatKnife), or 18.75 DPS against psions
-        Holy: 5 # 28.13 total DPS against psionic supernaturals
+        Slash: 15 # 15 DPS (Slash only), or 18.75 against psions (1.25×)
+        Holy: 7 # 22 total base DPS, or 27.5 against psionic supernaturals (1.25×)
   - type: DisarmMalus
     malus: 0.3 # A third harder to disarm than CombatKnife due to the finger ring
   - type: Tag
@@ -153,12 +153,12 @@
     sprite: _DEN/Objects/Weapons/Melee/Mantis/mantissickle-inhands-64x.rsi
     storedSprite: null # To override CombatKnife
   - type: MeleeWeapon
-    attackRate: 1.3333 # Twice as slow as the athame, but twice the damage, so same DPS
+    attackRate: 0.85
     angle: 60 # Swings a little wider than the athame, but easier to disarm
     damage:
       types:
-        Slash: 20 # 15 DPS (same as CombatKnife), or 18.75 DPS against psions
-        Holy: 10 # 28.13 total DPS against psionic supernaturals
+        Slash: 20 # 17 DPS (Slash only), or 21.25 against psions (1.25×)
+        Holy: 10 # 25.5 total base DPS, or 31.875 against psionic supernaturals (1.25×)
   - type: DisarmMalus
     malus: 0.1125 # Half as hard to disarm as CombatKnife, too big for the finger ring to help
   - type: MeleeThrowOnHit # Just a tiny knockback to look cool, barely moves anything

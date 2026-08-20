@@ -32,7 +32,6 @@
     maxCharge: 120 # One third of PowerCellSmall in case they accidentally plug into something
     startingCharge: 120 # Not intended to be a particularly useful power source if so
   - type: EmpImmune
-  - type: PowerCell
   - type: Appearance
   - type: BatteryVisuals
   - type: BatterySelfRecharger # No AutoRecharge bool in this fork - having the component recharges the cell
@@ -494,10 +493,11 @@
 # Printed on the Protolathe (PsionicCountermeasures tech), then fused with a whitelisted anomaly core
 # via construction (crafting menu) to produce the finished casters.
 - type: entity
-  parent: BaseMantisCasterPistol
+  parent: [BaseItem, BaseMantisContraband] # Just an item - not an ammo cell like the finished casters
   id: MantisCasterPistolFrame
+
   name: pistol caster frame
-  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-frame.rsi
@@ -507,6 +507,8 @@
     - state: o7
       map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       shader: shaded
+  - type: Item
+    size: Small
   - type: Tag
     tags:
     - MantisCaster
@@ -516,10 +518,10 @@
     - MantisBeltStorable
 
 - type: entity
-  parent: BaseMantisCasterRevolver
+  parent: [BaseItem, BaseMantisContraband] # Just an item - not an ammo cell like the finished casters
   id: MantisCasterRevolverFrame
   name: revolver caster frame
-  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-frame.rsi
@@ -529,6 +531,9 @@
     - state: o6
       map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       shader: shaded
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Tag
     tags:
     - MantisCaster
@@ -538,10 +543,10 @@
     - MantisBeltStorable
 
 - type: entity
-  parent: BaseMantisCasterShotgun
+  parent: [BaseItem, BaseMantisContraband] # Just an item - not an ammo cell like the finished casters
   id: MantisCasterShotgunFrame
   name: shotgun caster frame
-  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it. Until then it only fires harmless percussion caps."
+  description: "An unloaded psionic caster frame with an empty core chamber, awaiting a whitelisted anomaly core to be fused into it."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-frame.rsi
@@ -551,6 +556,9 @@
     - state: o5
       map: [ "enum.PowerCellVisualLayers.Unshaded" ]
       shader: shaded
+  - type: Item
+    size: Small
+    storedRotation: 90
   - type: Tag
     tags:
     - MantisCaster

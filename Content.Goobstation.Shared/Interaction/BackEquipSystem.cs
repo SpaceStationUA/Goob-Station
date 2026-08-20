@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Containers.ItemSlots; // Pirate
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
+using Content.Shared.Whitelist; // Pirate
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 
@@ -17,6 +20,8 @@ public sealed class BackEquipSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly ItemSlotsSystem _slots = default!; // Pirate
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!; // Pirate
 
     public override void Initialize()
     {
@@ -92,6 +97,44 @@ public sealed class BackEquipSystem : EntitySystem
             _inventory.TryEquip(uid, handItem.Value, equipmentSlot, predicted: true, checkDoafter: true);
             return;
         }
+        // Pirate
+        // The slot item is an item-slot holder (e.g. a sheath): sheathe a held weapon into an
+        // empty matching slot, or unsheathe the slotted weapon into an empty hand.
+        if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
+        {
+            if (handItem == null)
+            {
+                var ejectCandidates = slots.Slots.Values
+                    .Where(s => s.HasItem)
+                    .OrderByDescending(s => s.Priority)
+                    .ToList();
+
+                foreach (var slot in ejectCandidates)
+                {
+                    if (_slots.TryEjectToHands(slotItem, slot, uid, excludeUserAudio: true))
+                        return;
+                }
+
+                _popup.PopupClient(emptyEquipmentSlotString, uid, uid);
+                return;
+            }
+
+            var insertCandidates = slots.Slots.Values
+                .Where(s => !s.HasItem && _whitelistSystem.IsWhitelistPassOrNull(s.Whitelist, handItem.Value))
+                .OrderByDescending(s => s.Priority)
+                .ToList();
+
+            foreach (var slot in insertCandidates)
+            {
+                if (_slots.TryInsertFromHand(slotItem, slot, uid, hands, excludeUserAudio: true))
+                    return;
+            }
+
+            _popup.PopupClient(Loc.GetString("smart-equip-no-valid-item-slot-insert", ("item", handItem.Value)), uid, uid);
+            return;
+        }
+        // Pirate end
+
         if (handItem != null)
             return;
 

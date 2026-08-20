@@ -9,6 +9,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 
 namespace Content.Server._DV.Psionics.Systems.PsionicPowers;
 
@@ -45,6 +46,8 @@ public sealed class HealingWordSystem : SharedHealingWordSystem
 
         psionic.Comp.SaveDoAfterId(doAfterId.Value);
         Dirty(psionic);
+
+        Popup.PopupEntity(Loc.GetString("healing-word-target", ("target", args.Target)), args.Performer, args.Performer, PopupType.Medium);
 
         // The caster is forced to speak their words by ForceSpeechSystem.
         AfterPowerUsed(psionic, args.Performer);

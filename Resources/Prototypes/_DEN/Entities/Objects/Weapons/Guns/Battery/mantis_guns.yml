@@ -36,6 +36,13 @@
       params:
         volume: -5
         variation: 0.05
+  - type: RestrictGunshotsByUserTag # Goobstation - Oni cannot use ranged weapons
+    doesntContain:
+    - Oni
+    messages:
+    - oni-cannot-shoot-guns-1
+    - oni-cannot-shoot-guns-2
+    - oni-cannot-shoot-guns-3
   - type: MagazineAmmoProvider
   - type: MagazineVisuals
     magState: mag

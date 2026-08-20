@@ -262,6 +262,11 @@
   equipment:
     gloves: MantisMeleeFist # Manifold is worn on the hands, not stashed in a backpack
 - type: loadout
+  id: MantisMeleeFistDouble
+  dummyEntity: MantisMeleeFistDouble
+  equipment:
+    gloves: MantisMeleeFistDouble # Twinned manifold, worn on hands like the regular one
+- type: loadout
   id: MantisMeleeCane
   dummyEntity: MantisMeleeCane
   storage:

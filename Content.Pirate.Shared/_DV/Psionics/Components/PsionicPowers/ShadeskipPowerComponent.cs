@@ -14,9 +14,9 @@ public sealed partial class ShadeskipPowerComponent : BasePsionicPowerComponent
 
     public override string? PowerMetapsionicFeedback { get; set; } = "shadeskip-power-metapsionic-feedback";
 
-    public override int MinGlimmerChanged { get; set; } = 6;
+    public override int MinGlimmerChanged { get; set; } = 3;
 
-    public override int MaxGlimmerChanged { get; set; } = 8;
+    public override int MaxGlimmerChanged { get; set; } = 4;
 
     /// <summary>
     /// The minimum amount of shadow kudzu spawned.

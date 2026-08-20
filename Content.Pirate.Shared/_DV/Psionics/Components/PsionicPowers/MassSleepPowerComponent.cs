@@ -14,9 +14,9 @@ public sealed partial class MassSleepPowerComponent : BasePsionicPowerComponent
 
     public override string? PowerMetapsionicFeedback { get; set; } = "mass-sleep-power-metapsionic-feedback";
 
-    public override int MinGlimmerChanged { get; set; } = 15;
+    public override int MinGlimmerChanged { get; set; } = 7;
 
-    public override int MaxGlimmerChanged { get; set; } = 30;
+    public override int MaxGlimmerChanged { get; set; } = 15;
 
     /// <summary>
     /// The radius around the cursor point where people will fall asleep.

@@ -13,10 +13,28 @@ public sealed class MetapsionicPulsePowerSystem : BasePsionicPowerSystem<Metapsi
 {
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<MetapsionicPulsePowerComponent, PsionicPowerPostInitializedEvent>(OnPostInit);
+    }
+
     protected override void OnPowerInit(Entity<MetapsionicPulsePowerComponent> power, ref MapInitEvent args)
     {
         base.OnPowerInit(power, ref args);
+        InitMetapsionicExtras(power);
+    }
 
+    private void OnPostInit(Entity<MetapsionicPulsePowerComponent> power, ref PsionicPowerPostInitializedEvent args)
+    {
+        if (args.PowerType != typeof(MetapsionicPulsePowerComponent))
+            return;
+
+        InitMetapsionicExtras(power);
+    }
+
+    private void InitMetapsionicExtras(Entity<MetapsionicPulsePowerComponent> power)
+    {
         // If the power was stripped (e.g. entity without psionic potential), skip the extras.
         if (!HasComp<MetapsionicPulsePowerComponent>(power))
             return;

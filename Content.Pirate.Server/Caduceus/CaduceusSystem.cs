@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Goobstation.Shared.MisandryBox.JumpScare;
 using Content.Pirate.Server.Index;
 using Content.Pirate.Shared.Caduceus;
 using Content.Pirate.Shared.Index;
@@ -22,9 +23,11 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Pirate.Server.Caduceus;
 
@@ -43,6 +46,8 @@ public sealed class CaduceusSystem : EntitySystem
     public const int FpoonKarmaThreshold = 10;
     public const float FpoonChance = 0.1f;
 
+    [Dependency] private readonly IFullScreenImageJumpscare _jumpscare = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -325,6 +330,13 @@ public sealed class CaduceusSystem : EntitySystem
 
         // Holding a form longer is a sin - the Index keeps score.
         EntityManager.System<IndexPagerSystem>().AddKarma(holder, 1);
+
+        // And the Index makes itself known - the jumpscare only, no damage or other effects.
+        if (_player.TryGetSessionByEntity(holder, out var session))
+        {
+            var image = new SpriteSpecifier.Texture(new ResPath(IndexPagerSystem.JumpscareImage));
+            _jumpscare.Jumpscare(image, session);
+        }
 
         // The weapon stays in this form for the extra hits - no pending morph.
         ent.Comp.PendingForm = null;

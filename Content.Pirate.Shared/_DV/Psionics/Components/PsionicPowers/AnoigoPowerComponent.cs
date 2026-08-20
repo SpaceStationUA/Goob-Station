@@ -14,7 +14,7 @@ public sealed partial class AnoigoPowerComponent : BasePsionicPowerComponent
 
     public override string? PowerMetapsionicFeedback { get; set; } = "anoigo-power-metapsionic-feedback";
 
-    public override int MinGlimmerChanged { get; set; } = 5;
+    public override int MinGlimmerChanged { get; set; } = 2;
 
-    public override int MaxGlimmerChanged { get; set; } = 15;
+    public override int MaxGlimmerChanged { get; set; } = 7;
 }
