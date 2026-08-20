@@ -107,6 +107,16 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
         SetAction(ent, ref ent.Comp.SurfaceActionEntity, ent.Comp.SurfaceAction, false);
         _alerts.ClearAlert(ent.Owner, ent.Comp.UnderwaterAlert);
 
+        // The speed modifier is cached on MovementSpeedModifierComponent and only recomputed when
+        // something asks for a refresh. Once this component is gone OnRefreshMovementSpeed stops
+        // firing, so a mob that loses it mid-swim would keep the bonus forever. Clear the flag first
+        // so the refresh below sees us as surfaced.
+        if (ent.Comp.IsUnderwater)
+        {
+            ent.Comp.IsUnderwater = false;
+            _movementSpeedModifier.RefreshMovementSpeedModifiers(ent.Owner);
+        }
+
         // Don't leave a mob permanently silent if the component goes away mid-swim.
         if (ent.Comp.RemovedFootstepTag)
         {
