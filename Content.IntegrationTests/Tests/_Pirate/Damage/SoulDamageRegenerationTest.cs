@@ -89,7 +89,6 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
             Is.EqualTo(expectedSoulDamage)));
 
         await RunSeconds(halfRecoveryDelay + TickPeriod * 2);
-
         await Server.WaitAssertion(() =>
         {
             Assert.That(
