@@ -5,7 +5,7 @@
   mapName: 'Мета'
   mapPath: /Maps/_Pirate/meta.yml # Goobstation
   mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
-  mapPreview: PirateMapPreviewMeta # Pirate - Мета та МетаТП не дуже відрізняються, думаю ніхто не помітить що у них однаковий рендер)
+  mapPreview: PirateMapPreviewMeta # Pirate - Це тепер рендер мети тп але у файлі просто рендеру мети тому що [fatl] unhandled 
   minPlayers: 25 # Pirate - 30 -> 25
   maxPlayers: 85 # Goobstation - Limit mappool to highpop versions of maps only
   stations:
@@ -77,5 +77,5 @@
         - type: StationBlobConfig
           stageBegin: 40
           stageCritical: 450
-          stageTheEnd: 900
+          stageTheEnd: 850 # Pirate - 900 -> 850 - Трохи полегшено виграш блобу, тому що у мене є влада над Метою ТП, це взагалі-то мідпоп мапа а не хайпоп, а тут стоїть кофіг хайпопу, і взагалі нащо ти це читаєш, йди займись чимось важливим в житті, піди почіпай траву яхз 
         # Goobstation blob-config-end
