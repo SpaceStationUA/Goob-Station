@@ -39,7 +39,7 @@
   id: CyberLimbsMarkingHesphiastosLArm
   bodyPart: LArm
   markingCategory: LeftArm
-  speciesRestriction: [IPC, Moth, Dwarf, Human, Arachnid, Felinid, Oni, HumanoidFoxes, Tajaran] # Goobstation - Tajaran # Pirate - remove (Vulpkanin, Reptilian)
+  speciesRestriction: [IPC, Moth, Dwarf, Human, Arachnid, Felinid, Oni, Vulpkanin, HumanoidFoxes, Reptilian, Tajaran] # Goobstation - Tajaran
   sprites:
   - sprite: _EinsteinEngines/Mobs/Species/Cybernetics/hesphiastos/hesphiastos_main.rsi
     state: l_arm-1
@@ -50,7 +50,7 @@
   id: CyberLimbsMarkingHesphiastosLHand
   bodyPart: LHand
   markingCategory: LeftHand
-  speciesRestriction: [IPC, Moth, Dwarf, Human, Arachnid, Felinid, Oni, HumanoidFoxes, Tajaran] # Goobstation - Tajaran # Pirate - remove (Vulpkanin, Reptilian)
+  speciesRestriction: [IPC, Moth, Dwarf, Human, Arachnid, Felinid, Oni, Vulpkanin, HumanoidFoxes, Reptilian, Tajaran] # Goobstation - Tajaran
   sprites:
   - sprite: _EinsteinEngines/Mobs/Species/Cybernetics/hesphiastos/hesphiastos_main.rsi
     state: l_hand-1
@@ -86,7 +86,7 @@
   id: CyberLimbsMarkingHesphiastosRArm
   bodyPart: RArm
   markingCategory: RightArm
-  speciesRestriction: [IPC, Moth, Dwarf, Human, Arachnid, Felinid, Oni, HumanoidFoxes, Tajaran] # Goobstation - Tajaran # Pirate - remove (Vulpkanin, Reptilian)
+  speciesRestriction: [IPC, Moth, Dwarf, Human, Arachnid, Felinid, Oni, Vulpkanin, HumanoidFoxes, Reptilian, Tajaran] # Goobstation - Tajaran
   sprites:
   - sprite: _EinsteinEngines/Mobs/Species/Cybernetics/hesphiastos/hesphiastos_main.rsi
     state: r_arm-1
@@ -98,7 +98,7 @@
   id: CyberLimbsMarkingHesphiastosRHand
   bodyPart: RHand
   markingCategory: RightHand
-  speciesRestriction: [IPC, Moth, Dwarf, Human, Arachnid, Felinid, Oni, HumanoidFoxes, Tajaran] # Goobstation - Tajaran # Pirate - remove (Vulpkanin, Reptilian)
+  speciesRestriction: [IPC, Moth, Dwarf, Human, Arachnid, Felinid, Oni, Vulpkanin, HumanoidFoxes, Reptilian, Tajaran] # Goobstation - Tajaran
   sprites:
   - sprite: _EinsteinEngines/Mobs/Species/Cybernetics/hesphiastos/hesphiastos_main.rsi
     state: r_hand-1

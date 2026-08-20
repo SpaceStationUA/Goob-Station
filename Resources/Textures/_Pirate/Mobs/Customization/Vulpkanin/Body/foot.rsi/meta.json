@@ -14,6 +14,14 @@
 	{
       "name": "r_pads",
       "directions": 4
+    },
+	{
+      "name": "l_point",
+      "directions": 4
+    },
+	{
+      "name": "r_point",
+      "directions": 4
     }
   ]
 }
