@@ -15,11 +15,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Shared.Feroxi;
 
-/// <summary>
-/// Handles the Feroxi underwater ability: diving while standing in water, the movement speed and
-/// unarmed damage boosts while under, and automatically surfacing when leaving the water, being
-/// knocked down, entering crit, or dying.
-/// </summary>
+/// <summary>Handles Feroxi diving and underwater effects.</summary>
 public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
@@ -38,8 +34,7 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
     {
         base.Initialize();
 
-        // Without this the client only ticks Update during prediction, which made surfacing lag
-        // behind the local player by a long way at swim speed.
+        // Keep client surfacing responsive outside prediction.
         UpdatesOutsidePrediction = true;
 
         _floorWaterQuery = GetEntityQuery<FloorWaterComponent>();
@@ -52,11 +47,7 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
         SubscribeLocalEvent<FeroxiUnderwaterComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
-    /// <summary>
-    /// Water contact is tracked by tile rather than by physics contacts - the water tile's fixture is
-    /// deliberately smaller than its tile, so EndCollideEvent fires well after you've actually left,
-    /// which made surfacing feel badly delayed (worse at swim speed).
-    /// </summary>
+    // Track water by tile because fixtures do not fill their tiles.
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -79,9 +70,6 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Returns the water tile entity on the same tile as this mob, if any.
-    /// </summary>
     private EntityUid? FindWater(EntityUid uid)
     {
         var xform = Transform(uid);
@@ -107,17 +95,13 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
         SetAction(ent, ref ent.Comp.SurfaceActionEntity, ent.Comp.SurfaceAction, false);
         _alerts.ClearAlert(ent.Owner, ent.Comp.UnderwaterAlert);
 
-        // The speed modifier is cached on MovementSpeedModifierComponent and only recomputed when
-        // something asks for a refresh. Once this component is gone OnRefreshMovementSpeed stops
-        // firing, so a mob that loses it mid-swim would keep the bonus forever. Clear the flag first
-        // so the refresh below sees us as surfaced.
+        // Clear the state before refreshing so shutdown cannot leave the cached speed bonus behind.
         if (ent.Comp.IsUnderwater)
         {
             ent.Comp.IsUnderwater = false;
             _movementSpeedModifier.RefreshMovementSpeedModifiers(ent.Owner);
         }
 
-        // Don't leave a mob permanently silent if the component goes away mid-swim.
         if (ent.Comp.RemovedFootstepTag)
         {
             _tags.AddTag(ent.Owner, FootstepSoundTag);
@@ -125,10 +109,6 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Shows exactly one of the two actions, or neither on dry land. Dive is offered while standing in
-    /// water on foot; Surface replaces it while underwater, so the button always names what it will do.
-    /// </summary>
     private void UpdateActions(Entity<FeroxiUnderwaterComponent> ent)
     {
         SetAction(ent, ref ent.Comp.DiveActionEntity, ent.Comp.DiveAction,
@@ -137,9 +117,6 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
         SetAction(ent, ref ent.Comp.SurfaceActionEntity, ent.Comp.SurfaceAction, ent.Comp.IsUnderwater);
     }
 
-    /// <summary>
-    /// Adds or removes a single action. Actions are server-authoritative, hence the server-only guard.
-    /// </summary>
     private void SetAction(Entity<FeroxiUnderwaterComponent> ent, ref EntityUid? actionEntity, EntProtoId action, bool present)
     {
         if (!_net.IsServer || present == (actionEntity != null))
@@ -187,10 +164,6 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
             SetUnderwater(ent, false);
     }
 
-    /// <summary>
-    /// Anything that puts the mob on the floor surfaces them - stamina crit, stuns, knockdowns,
-    /// non-lethal takedowns. Covers all of them in one place since they all end up prone.
-    /// </summary>
     private void OnDowned(Entity<FeroxiUnderwaterComponent> ent, ref DownedEvent args)
     {
         SetUnderwater(ent, false);
@@ -202,24 +175,16 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
             args.ModifySpeed(ent.Comp.SpeedModifier);
     }
 
-    /// <summary>
-    /// Lunging out of the water hits harder. This only fires for unarmed attacks: when a weapon is
-    /// held the hit event is raised on the weapon entity instead of on the attacker.
-    /// </summary>
+    // Weapon hits target the weapon entity, so this only affects unarmed attacks.
     private void OnMeleeHit(Entity<FeroxiUnderwaterComponent> ent, ref MeleeHitEvent args)
     {
         if (!ent.Comp.IsUnderwater || !args.IsHit || args.HitEntities.Count == 0)
             return;
 
-        // BonusDamage is added to the base damage before modifier sets are applied, so adding one
-        // extra copy of the base damage is what gets the configured multiplier.
+        // Add one base-damage copy to apply the configured multiplier.
         args.BonusDamage += args.BaseDamage * (ent.Comp.UnarmedDamageModifier - 1f);
     }
 
-    /// <summary>
-    /// Attempts to change the underwater state. Diving requires currently standing in water.
-    /// Surfacing is always allowed - used both by the toggle action and by the auto-surface conditions.
-    /// </summary>
     public bool SetUnderwater(Entity<FeroxiUnderwaterComponent> ent, bool underwater)
     {
         if (ent.Comp.IsUnderwater == underwater)
@@ -238,7 +203,6 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
         {
             _alerts.ShowAlert(ent.Owner, ent.Comp.UnderwaterAlert);
 
-            // Swimming shouldn't make footstep noise. Same approach as SlasherIncorporealSystem.
             if (_tags.HasTag(ent.Owner, FootstepSoundTag))
             {
                 _tags.RemoveTag(ent.Owner, FootstepSoundTag);

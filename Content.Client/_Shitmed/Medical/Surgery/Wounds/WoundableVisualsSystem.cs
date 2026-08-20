@@ -50,12 +50,7 @@ public sealed class WoundableVisualsSystem : VisualizerSystem<WoundableVisualsCo
     }
 
     #region Pirate: feroxi submerge
-    /// <summary>
-    /// Hides or restores every wound/bleed overlay on a body. Restoring recomputes visibility from the
-    /// current wound state rather than from a remembered value, so it is safe to call at any time.
-    /// Exists so a system that hides a whole mob (submerging) can put these layers back correctly -
-    /// nothing else re-asserts them, since they're driven by wound events rather than appearance.
-    /// </summary>
+    /// <summary>Hides or rebuilds wound and bleed overlays from current state.</summary>
     public void SetWoundVisualsVisible(EntityUid body, bool visible)
     {
         if (!TryComp(body, out SpriteComponent? bodySprite))

@@ -725,9 +725,7 @@ public abstract partial class SharedMoverController : VirtualController
         sound = haveShoes ? tileDef.FootstepSounds : tileDef.BarestepSounds;
 
         #region Pirate: claw footsteps
-        // Deliberately last: every FootstepModifier path above returns early, so puddles and other
-        // objects standing on the tile still win. That is also what keeps water and gibs on the
-        // shared barefoot sound without needing to be listed anywhere.
+        // Keep this fallback last so tile-specific sounds take precedence.
         if (!haveShoes)
             sound = _clawFootsteps.GetClawSound(uid, sound);
         #endregion Pirate: claw footsteps

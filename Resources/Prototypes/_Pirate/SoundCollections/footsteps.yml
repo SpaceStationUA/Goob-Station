@@ -23,8 +23,6 @@
   files:
   - /Audio/_Pirate/Effects/Footsteps/tacsuit_step_00.ogg
 
-# Barefoot claw sounds for clawed species. Mirrors /tg/station, where digitigrade lizards get their
-# own step sounds on hard floors and wood but share the normal barefoot sound everywhere else.
 - type: soundCollection
   id: ClawstepHard
   files:
