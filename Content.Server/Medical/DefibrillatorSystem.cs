@@ -78,7 +78,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         // Belt defibs are intentionally not used directly; the detachable paddles are the only items that should trigger the zap.
         if (HasComp<DefibrillatorHideInHandComponent>(uid))
             return;
-        //Pirate end
+        //Pirate: portable defibs (end)
 
         args.Handled = TryStartZap(uid, target, args.User, component);
     }
