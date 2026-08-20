@@ -22,3 +22,18 @@
   id: FootstepHardsuitHeavy
   files:
   - /Audio/_Pirate/Effects/Footsteps/tacsuit_step_00.ogg
+
+- type: soundCollection
+  id: ClawstepHard
+  files:
+  - /Audio/_Pirate/Effects/Footsteps/hardclaw1.ogg
+  - /Audio/_Pirate/Effects/Footsteps/hardclaw2.ogg
+  - /Audio/_Pirate/Effects/Footsteps/hardclaw3.ogg
+  - /Audio/_Pirate/Effects/Footsteps/hardclaw4.ogg
+
+- type: soundCollection
+  id: ClawstepWood
+  files:
+  - /Audio/_Pirate/Effects/Footsteps/woodclaw1.ogg
+  - /Audio/_Pirate/Effects/Footsteps/woodclaw2.ogg
+  - /Audio/_Pirate/Effects/Footsteps/woodclaw3.ogg

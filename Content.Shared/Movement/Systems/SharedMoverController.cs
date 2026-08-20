@@ -12,6 +12,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared._Pirate.Clothing.Events; // Pirate: gear step sounds
+using Content.Shared._Pirate.Movement.Systems; // Pirate: claw footsteps
 using Content.Shared._DV.StepTrigger.Components; // DeltaV - NoShoesSilentFootstepsComponent
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
@@ -58,6 +59,7 @@ public abstract partial class SharedMoverController : VirtualController
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
     [Dependency] private   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly TagSystem _tags = default!;
+    [Dependency] private   readonly ClawFootstepsSystem _clawFootsteps = default!; // Pirate: claw footsteps
     [Dependency] private   readonly SharedInteractionSystem _interaction = default!; // Tile Movement Change
     [Dependency] private   readonly StandingStateSystem _standing = default!; // Goobstation - kil mofs
     [Dependency] private   readonly CommonMomentumSteeringSystem _momentumSteering = default!; // Goobstation - momentum steering
@@ -721,6 +723,13 @@ public abstract partial class SharedMoverController : VirtualController
             return false;
 
         sound = haveShoes ? tileDef.FootstepSounds : tileDef.BarestepSounds;
+
+        #region Pirate: claw footsteps
+        // Keep this fallback last so tile-specific sounds take precedence.
+        if (!haveShoes)
+            sound = _clawFootsteps.GetClawSound(uid, sound);
+        #endregion Pirate: claw footsteps
+
         return sound != null;
     }
 
