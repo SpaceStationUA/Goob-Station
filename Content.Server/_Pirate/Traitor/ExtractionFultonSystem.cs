@@ -140,10 +140,10 @@ public sealed class ExtractionFultonSystem : SharedExtractionFultonSystem
 
         if (_ransomCondition.FindObjective(mind, target) != null)
         {
-            var isDead = TryComp<MobStateComponent>(target, out var mobState) &&
-                         mobState.CurrentState == MobState.Dead;
+            var isCriticalOrDead = TryComp<MobStateComponent>(target, out var mobState) &&
+                                   mobState.CurrentState is MobState.Critical or MobState.Dead;
 
-            if (!isDead &&
+            if (!isCriticalOrDead &&
                 (!TryComp<CuffableComponent>(target, out var cuffable) ||
                  !_cuffable.IsCuffed((target, cuffable))))
             {
