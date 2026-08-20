@@ -36,6 +36,7 @@
     spawned:
     - id: FoodMeatLizard
       amount: 5
+  - type: ClawFootsteps # Pirate: claw footsteps
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
