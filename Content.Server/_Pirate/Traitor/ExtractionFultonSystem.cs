@@ -8,6 +8,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Popups;
@@ -139,8 +140,12 @@ public sealed class ExtractionFultonSystem : SharedExtractionFultonSystem
 
         if (_ransomCondition.FindObjective(mind, target) != null)
         {
-            if (!TryComp<CuffableComponent>(target, out var cuffable) ||
-                !_cuffable.IsCuffed((target, cuffable)))
+            var isDead = TryComp<MobStateComponent>(target, out var mobState) &&
+                         mobState.CurrentState == MobState.Dead;
+
+            if (!isDead &&
+                (!TryComp<CuffableComponent>(target, out var cuffable) ||
+                 !_cuffable.IsCuffed((target, cuffable))))
             {
                 Popup.PopupEntity(Loc.GetString("extraction-fulton-not-cuffed"), target, user);
                 return false;
