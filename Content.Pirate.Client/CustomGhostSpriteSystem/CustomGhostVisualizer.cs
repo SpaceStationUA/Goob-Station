@@ -16,7 +16,6 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
     {
         base.Initialize();
 
-        // The client applies the limit because it owns sprite dimensions.
         Subs.CVar(_configuration, PirateCVars.CustomGhostMaxSize, OnMaxSizeChanged);
     }
 
