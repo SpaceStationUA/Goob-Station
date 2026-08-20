@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Shared._Pirate.Traitor; // Pirate
 using Content.Shared.Salvage.Fulton;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -75,6 +76,9 @@ public sealed class FultonSystem : SharedFultonSystem
                 Coordinates = GetNetCoordinates(oldCoords),
             });
         }
+        // Pirate: syndicate fultons use this event.
+        var ev = new FultonedEvent();
+        RaiseLocalEvent(uid, ref ev);
 
         Audio.PlayPvs(component.Sound, uid);
         RemCompDeferred<FultonedComponent>(uid);

@@ -394,10 +394,19 @@ public abstract partial class SharedMindSystem : EntitySystem
             return false;
 
         var objective = mind.Objectives[index];
+        return TryRemoveObjective((mindId, mind), objective); // Pirate
+    }
+
+    /// <summary>
+    /// Pirate: Remove an objective from this mind, if you already know its uid.
+    /// </summary>
+    public bool TryRemoveObjective(Entity<MindComponent> mind, EntityUid objective)
+    {
+        if (!mind.Comp.Objectives.Remove(objective))
+            return false;
 
         var title = Name(objective);
         _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) removed from the mind of {MindOwnerLoggingString(mind)}");
-        mind.Objectives.Remove(objective);
 
         // garbage collection - only delete the objective entity if no mind uses it anymore
         // This comes up for stuff like paradox clones where the objectives share the same entity

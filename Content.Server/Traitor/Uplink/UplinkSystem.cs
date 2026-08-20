@@ -62,6 +62,45 @@ public sealed class UplinkSystem : EntitySystem
     }
 
     /// <summary>
+    /// Adds an uplink with a custom currency and store preset to a specific target.
+    /// </summary>
+    // Pirate - revolutionary uplink support.
+    public bool AddUplink(
+        EntityUid user,
+        FixedPoint2 balance,
+        ProtoId<CurrencyPrototype> currency,
+        EntProtoId storePreset,
+        EntityUid? uplinkEntity,
+        out SetupUplinkEvent? setupEvent)
+    {
+        setupEvent = null;
+        uplinkEntity ??= FindUplinkTarget(user);
+
+        if (uplinkEntity == null)
+            return false;
+
+        var presetEntity = Spawn(storePreset);
+        if (!TryComp<StoreComponent>(presetEntity, out var presetStore))
+        {
+            QueueDel(presetEntity);
+            return false;
+        }
+
+        var store = EntityManager.CopyComponent(presetEntity, uplinkEntity.Value, presetStore);
+        store.StartingMap = Transform(uplinkEntity.Value).MapUid;
+        QueueDel(presetEntity);
+
+        EnsureComp<UplinkComponent>(uplinkEntity.Value);
+        SetUplink(user, uplinkEntity.Value, balance, currency);
+
+        var ev = new SetupUplinkEvent { User = user };
+        RaiseLocalEvent(uplinkEntity.Value, ref ev);
+        setupEvent = ev;
+
+        return true;
+    }
+
+    /// <summary>
     /// Legacy method for backwards compatibility.
     /// Adds an uplink to the target, auto-detecting location (prefers PDA).
     /// </summary>
@@ -81,7 +120,11 @@ public sealed class UplinkSystem : EntitySystem
     /// <summary>
     /// Configure TC for the uplink
     /// </summary>
-    private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance)
+    private void SetUplink(
+        EntityUid user,
+        EntityUid uplink,
+        FixedPoint2 balance,
+        ProtoId<CurrencyPrototype>? currency = null)
     {
         if (!_mind.TryGetMind(user, out var mind, out _))
             return;
@@ -91,7 +134,10 @@ public sealed class UplinkSystem : EntitySystem
         store.AccountOwner = mind;
 
         store.Balance.Clear();
-        var bal = new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance } };
+        var bal = new Dictionary<string, FixedPoint2>
+        {
+            { currency ?? TelecrystalCurrencyPrototype, balance },
+        };
         _store.TryAddCurrency(bal, uplink, store);
     }
 

@@ -1,0 +1,17 @@
+#Epistemics
+- type: entity
+  parent: Holopad
+  id: HolopadEpistemicsMantis
+  suffix: Mantis
+  components:
+  - type: Label
+    currentLabel: holopad-epistemics-mantis
+
+- type: entity
+  # Pirate: Epistemics is not a local department, so keep the Oracle pad on the base holopad.
+  parent: Holopad
+  id: HolopadEpistemicsOracle
+  suffix: Oracle
+  components:
+  - type: Label
+    currentLabel: holopad-epistemics-oracle

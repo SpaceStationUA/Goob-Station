@@ -1,0 +1,51 @@
+- type: antag
+  id: SyndicateMarshal
+  name: ghost-role-information-syndicate-marshal-name
+  objective: ghost-role-information-syndicate-marshal-description
+  antagonist: false
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 259200 # 72 hours
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 28800 # 8 hours
+
+- type: entity
+  parent: MindRoleGhostRoleNeutral
+  id: MindRoleSyndicateMarshal
+  name: Syndicate Marshal Role
+  components:
+  - type: MindRole
+    antag: true
+    antagPrototype: SyndicateMarshal
+
+- type: entity
+  parent: MobHumanSyndicateAgentBase
+  id: MobHumanSyndicateMarshal
+  name: syndicate marshal
+  suffix: Human, Marshal
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-marshal-name
+    description: ghost-role-information-syndicate-marshal-description
+    rules: ghost-role-information-syndicate-marshal-rules
+    mindRoles:
+    - MindRoleSyndicateMarshal
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [ SyndicateMarshalGear ]
+  - type: AntagImmune # no marshal sleepy agent
+  - type: AutoImplant
+    implants:
+    - DeathAcidifierImplant
+
+- type: startingGear
+  parent: SyndicateOperativeGearExtremelyBasic
+  id: SyndicateMarshalGear
+  equipment:
+    outerClothing: ClothingOuterWinterSyndieCapArmored
+    id: SyndiPDA
+    pocket1: WeaponRevolverPythonAP
+  storage:
+    back:
+    - SpeedLoaderMagnumAP

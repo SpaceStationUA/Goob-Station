@@ -12,6 +12,12 @@
       collection: RadiationPulse
       params:
         volume: 5
+  # Pirate: anomalies are noöspheric entities - psionic, and a dormant glimmer source.
+  # The glimmer source only activates while an anomaly vessel is harvesting them
+  # (connected and powered), see GlimmerStructuresSystem.
+  - type: Psionic
+  - type: GlimmerSource
+    active: false
   - type: AmbientSound
     range: 5
     volume: -5
@@ -66,6 +72,8 @@
   parent: BaseAnomaly
   suffix: Pyroclastic
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: anomaly-pyroclastic-feedback
   - type: AmbientSound
     volume: 5
     range: 5
@@ -125,6 +133,8 @@
   parent: BaseAnomaly
   suffix: Gravity
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: anomaly-gravity-feedback
   - type: Anomaly
     corePrototype: AnomalyCoreGravity
     coreInertPrototype: AnomalyCoreGravityInert
@@ -160,6 +170,8 @@
   parent: BaseAnomaly
   suffix: Electricity
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: anomaly-electricity-feedback
   - type: Anomaly
     corePrototype: AnomalyCoreElectricity
     coreInertPrototype: AnomalyCoreElectricityInert
@@ -185,6 +197,8 @@
   parent: BaseAnomaly
   suffix: Flesh
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: anomaly-flesh-feedback
   - type: Anomaly
     corePrototype: AnomalyCoreFlesh
     coreInertPrototype: AnomalyCoreFleshInert
@@ -280,6 +294,8 @@
   parent: BaseAnomaly
   suffix: Bluespace
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: anomaly-bluespace-feedback
   - type: Sprite
     layers:
     - state: anom4
@@ -329,6 +345,8 @@
   parent: BaseAnomaly
   suffix: Ice
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: anomaly-ice-feedback
   - type: Sprite
     sprite: Structures/Specific/Anomalies/ice_anom.rsi
     layers:
@@ -425,6 +443,8 @@
   parent: AnomalyRockBase
   suffix: Rock, Uranium
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: anomaly-rock-feedback
   - type: Sprite
     color: "#52ff39"
   - type: PointLight
@@ -775,6 +795,8 @@
   parent: BaseAnomaly
   suffix: Flora
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: anomaly-flora-feedback
   - type: Sprite
     drawdepth: Mobs
     sprite: Structures/Specific/Anomalies/flora_anom.rsi
@@ -876,6 +898,8 @@
   parent: BaseAnomaly
   suffix: Liquid
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: anomaly-liquid-feedback
   - type: Sprite
     sprite: Structures/Specific/Anomalies/liquid_anom.rsi
     layers:
@@ -1027,6 +1051,8 @@
   parent: BaseAnomaly
   suffix: Shadow
   components:
+  - type: AssayResponse # Pirate
+    replaceMessage: anomaly-shadow-feedback
   - type: Sprite
     sprite: Structures/Specific/Anomalies/shadow_anom.rsi
     layers:

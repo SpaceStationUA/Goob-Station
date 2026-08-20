@@ -139,7 +139,7 @@ namespace Content.IntegrationTests.Tests
             "Leonid",
             "Loop",
             "Marathon",
-            "Meta",
+            "MetaTP",         // Pirate
             "MeteorArena",    // Deathmatch
             "Oasis",
             "OasisHighPop",
@@ -155,7 +155,8 @@ namespace Content.IntegrationTests.Tests
             "Serpentcrest",
             "Snowball",
             "TestTeg",        // Dev map
-            "Train"           // Not in pool
+            "Train",           // Not in pool
+			"Shoukou"       // Pirate
             // Goob end
         };
         // Goobstation edit start, yeah i know, but this is easier and less load than loading protoman or something.
@@ -198,6 +199,7 @@ namespace Content.IntegrationTests.Tests
               "GlacierTP", // Pirate
               "OmegaTP", // Pirate
               "KettleTP", // Pirate
+              "MetaTP", // Pirate
             //"GateTP", // Pirate - re-add after the rework
               "PerditionTP", // Pirate
               "PiramideTP", // Pirate
@@ -206,6 +208,7 @@ namespace Content.IntegrationTests.Tests
               "Saltern",
               "Serpentcrest",
              // "Snowball", // fuck off not in pool
+			  "Shoukou", //Pirate
         };
         // Goobstation edit end
 

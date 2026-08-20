@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Adapted from the mercenary hardsuit sprites (originally by AvianMaiden for Impstation) for the modular suit system.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-sealed"
+    },
+    {
+      "name": "equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "visor-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-HELMET-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "visor-unshaded-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "visor-unshaded-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-resomi",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-HELMET-resomi",
+      "directions": 4
+    },
+    {
+      "name": "visor-unshaded-resomi",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-HELMET-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "visor-unshaded-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-feroxi",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-HELMET-feroxi",
+      "directions": 4
+    },
+    {
+      "name": "visor-unshaded-feroxi",
+      "directions": 4
+    }
+  ]
+}

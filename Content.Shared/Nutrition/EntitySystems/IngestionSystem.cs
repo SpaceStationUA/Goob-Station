@@ -16,7 +16,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Mood;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tools.EntitySystems;
@@ -479,9 +478,6 @@ public sealed partial class IngestionSystem : EntitySystem
                 Loc.GetString(edible.OtherMessage),
                 args.User,
                 args.User);
-
-            foreach (var moodlet in entity.Comp.MoodletsOnEat) // Pirate - port EE mood system
-                RaiseLocalEvent(args.User, new MoodEffectEvent(moodlet));
 
             // log successful voluntary eating
             // TODO: Use correct verb

@@ -75,7 +75,7 @@ public sealed partial class LatheSystem
                 var recipe = _proto.Index(node.Value.Recipe);
                 var time = _reagentSpeed.ApplySpeed(uid, recipe.CompleteTime) * comp.TimeMultiplier;
                 if (time != TimeSpan.Zero)
-                    break; // Now it should be handled by another method
+                    break;
 
                 node.Value.ItemsPrinted++;
                 if (node.Value.ItemsPrinted >= node.Value.ItemsRequested || node.Value.ItemsPrinted < 0) // Rollover sanity check

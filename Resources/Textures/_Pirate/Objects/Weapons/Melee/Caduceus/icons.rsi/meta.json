@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/Lobotomy-Corporation-13/lc13.git",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+        {
+            "name": "inactive",
+            "directions": 1
+        },
+        {
+            "name": "bsword",
+            "directions": 1
+        },
+        {
+            "name": "fpoon",
+            "directions": 1
+        },
+        {
+            "name": "gsword",
+            "directions": 1
+        },
+        {
+            "name": "hammer",
+            "directions": 1
+        },
+        {
+            "name": "hatchet",
+            "directions": 1
+        },
+        {
+            "name": "lance",
+            "directions": 1
+        },
+        {
+            "name": "rapier",
+            "directions": 1
+        },
+        {
+            "name": "scytle",
+            "directions": 1
+        },
+        {
+            "name": "stiletto",
+            "directions": 1
+        },
+        {
+            "name": "whip",
+            "directions": 1
+        }
+    ]
+}

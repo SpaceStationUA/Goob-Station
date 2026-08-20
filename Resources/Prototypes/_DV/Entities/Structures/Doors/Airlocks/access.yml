@@ -1,0 +1,22 @@
+- type: entity
+  parent: AirlockScience
+  id: AirlockMantisLocked
+  suffix: Mantis, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMantis ]
+  - type: Sprite # TheDen - mantis airlock
+    sprite: _DEN/Structures/Doors/Airlocks/Standard/mantis.rsi
+
+
+- type: entity
+  parent: AirlockScienceGlass
+  id: AirlockMantisGlassLocked
+  suffix: Mantis, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsMantis ]
+  - type: Sprite # TheDen - mantis glass airlock
+    sprite: _DEN/Structures/Doors/Airlocks/Glass/mantis.rsi

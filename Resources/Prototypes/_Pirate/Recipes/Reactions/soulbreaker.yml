@@ -1,0 +1,16 @@
+# Soulbreaker toxin reaction
+# The mantis' last resort: a permanent mindbreak against psionics.
+# Uses this fork's psionic reagents (Ectoplasm, Prometheum) plus MindbreakerToxin.
+- type: reaction
+  id: SoulbreakerToxin
+  impact: Medium
+  minTemp: 390
+  reactants:
+    Ectoplasm:
+      amount: 2
+    Prometheum:
+      amount: 1
+    MindbreakerToxin:
+      amount: 1
+  products:
+    SoulbreakerToxin: 2

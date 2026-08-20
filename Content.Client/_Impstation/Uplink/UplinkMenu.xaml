@@ -22,6 +22,12 @@
                         Name="RefundButton"
                         HorizontalAlignment="Right"
                         Text="{Loc 'store-ui-refund-text'}" />
+                    <Button
+                        Name="ContractsButton"
+                        Access="Public"
+                        HorizontalAlignment="Right"
+                        Visible="False"
+                        Text="{Loc 'pda-bound-user-interface-contracts-title'}" />
                 </BoxContainer>
                 <LineEdit Name="SearchBar" Margin="0,4,0,4" PlaceHolder="Search" HorizontalExpand="True" MinWidth="150"/>
                 <PanelContainer VerticalExpand="True">

@@ -1,0 +1,52 @@
+# Generated from Hava Nagila MIDI slices.
+
+- type: sampledSong
+  id: PirateSongHavaNagilaBars12
+  bank: PdaRingtone
+  duration: 6.400
+  notes:
+  - { time: 0.000, key: 40, velocity: 110 }
+  - { time: 0.000, key: 52, velocity: 110 }
+  - { time: 0.000, key: 64, velocity: 110 }
+  - { time: 0.400, key: 64, velocity: 110 }
+  - { time: 0.800, key: 52, velocity: 110 }
+  - { time: 0.800, key: 56, velocity: 110 }
+  - { time: 0.800, key: 59, velocity: 110 }
+  - { time: 1.000, key: 68, velocity: 110 }
+  - { time: 1.200, key: 65, velocity: 110 }
+  - { time: 1.400, key: 64, velocity: 110 }
+  - { time: 1.600, key: 52, velocity: 110 }
+  - { time: 1.600, key: 40, velocity: 110 }
+  - { time: 1.600, key: 68, velocity: 110 }
+  - { time: 2.000, key: 68, velocity: 110 }
+  - { time: 2.400, key: 52, velocity: 110 }
+  - { time: 2.400, key: 56, velocity: 110 }
+  - { time: 2.400, key: 59, velocity: 110 }
+  - { time: 2.600, key: 71, velocity: 110 }
+  - { time: 2.800, key: 69, velocity: 110 }
+  - { time: 3.000, key: 68, velocity: 110 }
+  - { time: 3.200, key: 52, velocity: 110 }
+  - { time: 3.200, key: 57, velocity: 110 }
+  - { time: 3.200, key: 60, velocity: 110 }
+  - { time: 3.200, key: 69, velocity: 110 }
+  - { time: 3.600, key: 69, velocity: 110 }
+  - { time: 4.000, key: 60, velocity: 110 }
+  - { time: 4.000, key: 57, velocity: 110 }
+  - { time: 4.000, key: 52, velocity: 110 }
+  - { time: 4.200, key: 72, velocity: 110 }
+  - { time: 4.400, key: 71, velocity: 110 }
+  - { time: 4.600, key: 69, velocity: 110 }
+  - { time: 4.800, key: 52, velocity: 110 }
+  - { time: 4.800, key: 56, velocity: 110 }
+  - { time: 4.800, key: 59, velocity: 110 }
+  - { time: 4.800, key: 68, velocity: 110 }
+  - { time: 5.200, key: 65, velocity: 110 }
+  - { time: 5.200, key: 52, velocity: 110 }
+  - { time: 5.200, key: 57, velocity: 110 }
+  - { time: 5.200, key: 60, velocity: 110 }
+  - { time: 5.300, key: 64, velocity: 110 }
+  - { time: 5.400, key: 65, velocity: 110 }
+  - { time: 5.600, key: 59, velocity: 110 }
+  - { time: 5.600, key: 56, velocity: 110 }
+  - { time: 5.600, key: 52, velocity: 110 }
+  - { time: 5.600, key: 68, velocity: 110 }

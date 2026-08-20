@@ -47,14 +47,10 @@
       invert: true
       species:
         - IPC
-        - Plasmaman
         - Shadowkin
     - !type:HasCompCondition
       invert: true
       component: BorgChassis
   components:
     - type: Psionic
-    - type: InnatePsionicPowers
-      powersToAdd:
-        - TelepathyPower
 #endregion

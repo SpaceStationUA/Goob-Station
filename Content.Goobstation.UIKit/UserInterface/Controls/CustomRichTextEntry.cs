@@ -261,7 +261,7 @@ public struct CustomRichTextEntry
         float lineHeightScale = 1)
     {
         var screenHandle = (DrawingHandleScreen) handle;
-        // TODO: It should precalculate, instead of drawing, calculate and draw again
+        // The first pass calculates bounds and positions controls. It must not render content.
         var bounds = DrawBoxContent(
                 tagManager,
                 handle,
@@ -271,7 +271,8 @@ public struct CustomRichTextEntry
                 scrollBarPixelSize,
                 context,
                 uiScale,
-                lineHeightScale);
+                lineHeightScale,
+                drawContent: false);
 
         // Draw background box
         if (IsInBox)
@@ -292,7 +293,7 @@ public struct CustomRichTextEntry
         }
 
         // And draw actual content
-        DrawBoxContent(tagManager, handle, defaultFont, drawBox, verticalOffset, scrollBarPixelSize, context, uiScale, lineHeightScale);
+        DrawBoxContent(tagManager, handle, defaultFont, drawBox, verticalOffset, scrollBarPixelSize, context, uiScale, lineHeightScale, drawContent: true);
     }
 
     private readonly UIBox2 DrawBoxContent(
@@ -304,7 +305,8 @@ public struct CustomRichTextEntry
         Vector2i scrollBarPixelSize,
         MarkupDrawingContext context,
         float uiScale,
-        float lineHeightScale = 1)
+        float lineHeightScale = 1,
+        bool drawContent = true)
     {
         context.Clear();
         context.Color.Push(_defaultColor);
@@ -348,7 +350,9 @@ public struct CustomRichTextEntry
                     lineBreakIndex += 1;
                 }
 
-                var advance = font.DrawChar(handle, rune, baseLine, uiScale, color);
+                var advance = drawContent
+                    ? font.DrawChar(handle, rune, baseLine, uiScale, color)
+                    : font.TryGetCharMetrics(rune, uiScale, out var metrics) ? metrics.Advance : 0;
                 baseLine += new Vector2(advance, 0);
 
                 globalBreakCounter += 1;
@@ -358,7 +362,7 @@ public struct CustomRichTextEntry
                 continue;
 
             // Controls may have been previously hidden via HideControls due to being "out-of frame".
-            // If this ever gets replaced with RectClipContents / scissor box testing, this can be removed.
+            // They must be visible while measuring or the layout system reports a zero desired size.
             var staticSprite = control as StaticSpriteView;
             if (staticSprite is not null)
                 staticSprite.IsVisible = true;
@@ -367,35 +371,39 @@ public struct CustomRichTextEntry
 
             var invertedScale = 1f / uiScale;
             var pos = new Vector2(baseLine.X * invertedScale, (baseLine.Y - defaultFont.GetAscent(uiScale)) * invertedScale);
-            LayoutContainer.SetPosition(control, pos);
             control.Measure(new Vector2(Width, Height));
-            if (staticSprite is not null &&
-                staticSprite.IsVisible &&
-                staticSprite.Entity is not null &&
-                _entManager.TryGetComponent<MetaDataComponent>(staticSprite.Entity, out var metaData) &&
-                _entManager.TryGetComponent<SpriteComponent>(staticSprite.Entity, out var spriteComp) &&
-                !metaData.Deleted)
+            if (drawContent)
             {
-                var spritePos = new Vector2(
-                        pos.X + (staticSprite.SetWidth/2),
-                        pos.Y + (staticSprite.SetHeight/2));
-                float spriteScaleX;
-                float spriteScaleY;
-                if (spriteComp.Icon is not null)
-                {
-                    spriteScaleX = staticSprite.SetWidth / spriteComp.Icon.Default.Size.X;
-                    spriteScaleY = staticSprite.SetHeight / spriteComp.Icon.Default.Size.Y;
-                }
-                else
-                {
-                    spriteScaleX = 1f;
-                    spriteScaleY = 1f;
-                }
+                LayoutContainer.SetPosition(control, pos);
 
-                screenHandle.DrawEntity(staticSprite.Entity.Value,
-                        spritePos * uiScale,
-                        new Vector2(spriteScaleX, spriteScaleY) * uiScale,
-                        Angle.Zero);
+                if (staticSprite is not null &&
+                    staticSprite.IsVisible &&
+                    staticSprite.Entity is not null &&
+                    _entManager.TryGetComponent<MetaDataComponent>(staticSprite.Entity, out var metaData) &&
+                    _entManager.TryGetComponent<SpriteComponent>(staticSprite.Entity, out var spriteComp) &&
+                    !metaData.Deleted)
+                {
+                    var spritePos = new Vector2(
+                            pos.X + (staticSprite.SetWidth/2),
+                            pos.Y + (staticSprite.SetHeight/2));
+                    float spriteScaleX;
+                    float spriteScaleY;
+                    if (spriteComp.Icon is not null)
+                    {
+                        spriteScaleX = staticSprite.SetWidth / spriteComp.Icon.Default.Size.X;
+                        spriteScaleY = staticSprite.SetHeight / spriteComp.Icon.Default.Size.Y;
+                    }
+                    else
+                    {
+                        spriteScaleX = 1f;
+                        spriteScaleY = 1f;
+                    }
+
+                    screenHandle.DrawEntity(staticSprite.Entity.Value,
+                            spritePos * uiScale,
+                            new Vector2(spriteScaleX, spriteScaleY) * uiScale,
+                            Angle.Zero);
+                }
             }
 
             var advanceX = control.SetWidth;

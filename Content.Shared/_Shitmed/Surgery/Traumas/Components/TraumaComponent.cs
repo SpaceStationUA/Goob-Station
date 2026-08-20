@@ -1,5 +1,6 @@
 using Content.Goobstation.Maths.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Content.Shared.Body.Part;
 
@@ -43,7 +44,7 @@ public sealed partial class TraumaComponent : Component
     /// Self-explanatory
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public TraumaType TraumaType;
+    public ProtoId<TraumaTypePrototype> TraumaType;
 
     #region DOWNSTREAM-TPirates: face mutilation
     /// <summary>
@@ -62,6 +63,6 @@ public sealed class TraumaComponentState : ComponentState
     public NetEntity? TraumaTarget;
     public (BodyPartType, BodyPartSymmetry)? TargetType;
     public FixedPoint2 TraumaSeverity;
-    public TraumaType TraumaType;
+    public ProtoId<TraumaTypePrototype> TraumaType;
     public string? MarkingId; // DOWNSTREAM-TPirates: face mutilation
 }

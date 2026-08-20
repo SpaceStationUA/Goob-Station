@@ -405,7 +405,7 @@ namespace Content.Server.Construction
             }
             // WD EDIT END
 
-            var entChangeEv = new ConstructionChangeEntityEvent(newUid, uid);
+            var entChangeEv = new ConstructionChangeEntityEvent(newUid, uid, userUid);
             RaiseLocalEvent(uid, entChangeEv);
             RaiseLocalEvent(newUid, entChangeEv, broadcast: true);
 
@@ -469,11 +469,14 @@ namespace Content.Server.Construction
     {
         public readonly EntityUid New;
         public readonly EntityUid Old;
+        // Pirate: Demonology needs the summoner when a rune changes prototype.
+        public readonly EntityUid? User;
 
-        public ConstructionChangeEntityEvent(EntityUid newUid, EntityUid oldUid)
+        public ConstructionChangeEntityEvent(EntityUid newUid, EntityUid oldUid, EntityUid? user = null)
         {
             New = newUid;
             Old = oldUid;
+            User = user;
         }
     }
 

@@ -32,6 +32,7 @@
     # Pirate contractor end
   startingGear: SecurityCadetGear
   icon: "JobIconSecurityCadet"
+  ransomModifier: 2 # Pirate: security staff are worth less than heads
   supervisors: job-supervisors-security
   canBeAntag: false
   guides: # goobstation

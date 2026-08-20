@@ -95,6 +95,7 @@
       params:
         volume: -6
   - type: EmitSoundOnUse
+    handle: false
     sound:
       path: /Audio/_Goobstation/Items/handling/paper_use.ogg
       params:

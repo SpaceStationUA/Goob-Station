@@ -32,18 +32,9 @@
       soulOwnedNotDevil: true # This just means they won't suffer the effects of being condemned, while still not being able to sell their soul. - Goobstation
     - type: CanEnchant #GoobStation
     - type: CurseImmune # Immune to curses of wraith plaguebringer - Goobstation
-# Pirate VVV
-    - type: Psionic
-      powerRollMultiplier: 3
-      baselinePowerCost: 150
-      nextPowerCost: 150
-    - type: InnatePsionicPowers
-      powersToAdd:
-        - HealingWordPower
-        - SummonRemiliaPower
-        - TelepathyPower
-    - type: Telepathy
-# Pirate ^^^
+    - type: HealingWord # Pirate
+  - !type:ModifyPsionicChanceSpecial # Pirate - Chaplains are much more likely to be psionic.
+    jobBonusChance: 0.15 # Additional 15% chance.
 - type: startingGear
   id: ChaplainGear
   equipment:

@@ -1,0 +1,30 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltMantis
+  name: mantis' belt
+  description: Perfect for storing all of your equipment.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Belt/mantis_belt.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Belt/mantis_belt.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - Document
+        - Flashlight
+        - ForensicBeltEquip
+        - Sidearm
+        - Folder
+        - Pill
+        - Syringe
+        - MagazinePistol
+        - PillCanister
+        - MantisBeltStorable
+      components:
+        - AnomalyScanner
+        - NodeScanner
+        - Flash
+        - HandLabeler
+        - PossessionImmune # TinfoilHat component removed in psionics port; the hat now grants PossessionImmune
+        - Handcuff

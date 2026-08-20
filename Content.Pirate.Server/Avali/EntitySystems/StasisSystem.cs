@@ -3,6 +3,7 @@ using Content.Pirate.Shared.Avali.EntitySystems;
 using Content.Pirate.Shared.Avali.Events;
 using Content.Server.Body.Systems;
 using Content.Shared.Actions;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs;
@@ -30,6 +31,7 @@ public sealed class StasisSystem : SharedStasisSystem
         SubscribeLocalEvent<StasisComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StasisComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<StasisComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<StasisComponent, CuffedStateChangeEvent>(OnCuffedStateChanged);
         SubscribeLocalEvent<StasisComponent, DamageModifyEvent>(OnDamageModify);
         SubscribeLocalEvent<StasisComponent, PrepareStasisActionEvent>(OnPrepareStasis);
         SubscribeLocalEvent<StasisComponent, EnterStasisActionEvent>(OnEnterStasis);
@@ -72,6 +74,16 @@ public sealed class StasisSystem : SharedStasisSystem
         if (args.NewMobState == MobState.Dead &&
             (ent.Comp.IsInStasis || HasComp<StasisFrozenComponent>(ent.Owner)))
             RaiseLocalEvent(ent.Owner, new ExitStasisActionEvent());
+    }
+
+    private void OnCuffedStateChanged(Entity<StasisComponent> ent, ref CuffedStateChangeEvent args)
+    {
+        if (!TryComp<CuffableComponent>(ent, out var cuffable) ||
+            cuffable.CanStillInteract ||
+            (!ent.Comp.IsInStasis && !HasComp<StasisFrozenComponent>(ent.Owner)))
+            return;
+
+        RaiseLocalEvent(ent.Owner, new ExitStasisActionEvent());
     }
 
     private static void OnDamageModify(Entity<StasisComponent> ent, ref DamageModifyEvent args)

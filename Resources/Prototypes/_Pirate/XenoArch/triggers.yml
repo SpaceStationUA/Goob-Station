@@ -1,0 +1,7 @@
+# Pirate - psionic artifact trigger (psionic power used nearby), based on DeltaV's TriggerPsionicUsage.
+- type: xenoArchTrigger
+  id: TriggerPsionicUsage
+  tip: xenoarch-trigger-tip-psionic
+  components:
+  - type: XATPsionicUsage
+    range: 5

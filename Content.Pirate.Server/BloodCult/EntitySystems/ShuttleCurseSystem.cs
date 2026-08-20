@@ -70,7 +70,7 @@ public sealed class ShuttleCurseSystem : EntitySystem
 
         var message = string.Empty;
         if (_prototype.TryIndex(orb.Comp.CurseMessages, out LocalizedDatasetPrototype? messages))
-            message = _random.Pick(messages.Values);
+            message = Loc.GetString(_random.Pick(messages.Values));
 
         _chat.DispatchGlobalAnnouncement(
             Loc.GetString(

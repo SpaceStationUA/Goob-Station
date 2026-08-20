@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by prazat911 (discord) for Adventure Time",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "banner-rolled"
+    },
+    {
+      "name": "banner-red-rolled"
+    },
+    {
+      "name": "banner-blue-rolled"
+    },
+    {
+      "name": "banner-yellow-rolled"
+    },
+    {
+      "name": "banner-green-rolled"
+    },
+    {
+      "name": "banner_engineering-rolled"
+    },
+    {
+      "name": "banner_medical-rolled"
+    },
+    {
+      "name": "banner_science-rolled"
+    },
+    {
+      "name": "banner_cargo-rolled"
+    },
+    {
+      "name": "banner_security-rolled"
+    },
+    {
+      "name": "banner_revolution-rolled"
+    },
+    {
+      "name": "banner_syndicate-rolled"
+    },
+    {
+      "name": "cydersun-rolled"
+    },
+    {
+      "name": "gorlex-rolled"
+    },
+    {
+      "name": "greytide-rolled"
+    },
+    {
+      "name": "interpharm-rolled"
+    },
+    {
+      "name": "magic-rolled"
+    },
+    {
+      "name": "narsi-rolled"
+    },
+    {
+      "name": "ninja-rolled"
+    },
+    {
+      "name": "pirate-rolled"
+    }
+  ]
+}
+

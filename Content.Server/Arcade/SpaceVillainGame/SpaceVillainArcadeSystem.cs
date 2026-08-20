@@ -5,7 +5,6 @@ using Content.Shared.UserInterface;
 using Content.Server.Advertise.EntitySystems;
 using Content.Shared.Advertise.Components;
 using Content.Shared.Arcade;
-using Content.Shared.Mood;
 using Content.Shared.Power;
 using Content.Shared.Random.Helpers;
 using Robust.Server.GameObjects;
@@ -91,7 +90,6 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
             case SharedSpaceVillainArcadeComponent.PlayerAction.Attack:
             case SharedSpaceVillainArcadeComponent.PlayerAction.Heal:
             case SharedSpaceVillainArcadeComponent.PlayerAction.Recharge:
-                RaiseLocalEvent(msg.Actor, new MoodEffectEvent("ArcadePlay")); // Pirate - port EE mood system
                 component.Game.ExecutePlayerAction(uid, msg.PlayerAction, component);
                 // Any sort of gameplay action counts
                 if (TryComp<SpeakOnUIClosedComponent>(uid, out var speakComponent))

@@ -1,0 +1,35 @@
+- type: htnCompound
+  id: GlimmerWispCompound
+  branches:
+  - tasks:
+    - !type:HTNCompoundTask
+      task: InnateRangedCombatCompound
+  - tasks:
+    - !type:HTNCompoundTask
+      task: DrainPsionicCompound
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
+  - preconditions:
+      - !type:PulledPrecondition
+        isPulled: true
+    tasks:
+      - !type:HTNPrimitiveTask
+        operator: !type:UnPullOperator
+          shutdownState: TaskFinished
+
+- type: htnCompound
+  id: DrainPsionicCompound
+  branches:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:PickDrainTargetOperator
+        targetKey: TargetCoordinates
+        drainKey: DrainTarget
+        rangeKey: VisionRadius
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        pathfindInPlanning: false
+    - !type:HTNPrimitiveTask
+      operator: !type:DrainOperator
+        drainKey: DrainTarget

@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Adapted from the mercenary hardsuit sprites (originally by AvianMaiden for Impstation) for the modular suit system.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-sealed"
+    },
+    {
+      "name": "equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-OUTERCLOTHING-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-resomi",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-OUTERCLOTHING-resomi",
+      "directions": 4
+    }
+  ]
+}

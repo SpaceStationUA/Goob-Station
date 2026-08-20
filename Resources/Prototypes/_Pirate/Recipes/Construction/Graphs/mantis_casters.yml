@@ -1,0 +1,230 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Mantis caster "fusing" graphs (Pirate)
+#
+# Each graph takes a psionic caster frame (the unloaded base form) and a whitelisted
+# anomaly core, and fuses them into a finished caster. Three branches per gun type:
+# crypto (silencing), holy (banishing), lethal (piercing).
+
+- type: constructionGraph
+  id: MantisCasterPistolFuse
+  start: cryptoStart
+  graph:
+  - node: crypto
+    entity: MantisCasterPistolCrypto
+  - node: cryptoStart
+    edges:
+    - to: crypto
+      steps:
+      - tag: MantisCasterFramePistol
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+  - node: holy
+    entity: MantisCasterPistolHoly
+  - node: holyStart
+    edges:
+    - to: holy
+      steps:
+      - tag: MantisCasterFramePistol
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+  - node: lethal
+    entity: MantisCasterPistolLethal
+  - node: lethalStart
+    edges:
+    - to: lethal
+      steps:
+      - tag: MantisCasterFramePistol
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-pistol-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+
+- type: constructionGraph
+  id: MantisCasterRevolverFuse
+  start: cryptoStart
+  graph:
+  - node: crypto
+    entity: MantisCasterRevolverCrypto
+  - node: cryptoStart
+    edges:
+    - to: crypto
+      steps:
+      - tag: MantisCasterFrameRevolver
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+  - node: holy
+    entity: MantisCasterRevolverHoly
+  - node: holyStart
+    edges:
+    - to: holy
+      steps:
+      - tag: MantisCasterFrameRevolver
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+  - node: lethal
+    entity: MantisCasterRevolverLethal
+  - node: lethalStart
+    edges:
+    - to: lethal
+      steps:
+      - tag: MantisCasterFrameRevolver
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-revolver-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+
+- type: constructionGraph
+  id: MantisCasterShotgunFuse
+  start: cryptoStart
+  graph:
+  - node: crypto
+    entity: MantisCasterShotgunCrypto
+  - node: cryptoStart
+    edges:
+    - to: crypto
+      steps:
+      - tag: MantisCasterFrameShotgun
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+  - node: holy
+    entity: MantisCasterShotgunHoly
+  - node: holyStart
+    edges:
+    - to: holy
+      steps:
+      - tag: MantisCasterFrameShotgun
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+  - node: lethal
+    entity: MantisCasterShotgunLethal
+  - node: lethalStart
+    edges:
+    - to: lethal
+      steps:
+      - tag: MantisCasterFrameShotgun
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-shotgun-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+
+- type: constructionGraph
+  id: MantisCasterSubMachineGunFuse
+  start: cryptoStart
+  graph:
+  - node: crypto
+    entity: MantisCasterSubMachineGunCrypto
+  - node: cryptoStart
+    edges:
+    - to: crypto
+      steps:
+      - tag: MantisCasterFrameSubMachineGun
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+  - node: holy
+    entity: MantisCasterSubMachineGunHoly
+  - node: holyStart
+    edges:
+    - to: holy
+      steps:
+      - tag: MantisCasterFrameSubMachineGun
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2
+  - node: lethal
+    entity: MantisCasterSubMachineGunLethal
+  - node: lethalStart
+    edges:
+    - to: lethal
+      steps:
+      - tag: MantisCasterFrameSubMachineGun
+        name: recipe-mantis-caster-frame-name
+        icon:
+          sprite: _DEN/Objects/Weapons/Guns/Ammunition/Magazine/Battery/Mantis/mantis-submachinegun-frame.rsi
+          state: base
+      - component: AnomalyCore
+        name: recipe-anomaly-core-name
+        icon:
+          sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+          state: core
+        doAfter: 2

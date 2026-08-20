@@ -298,7 +298,8 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             _currencyMan.AddCurrency(key, (int)Math.Round( currency * _goobcoinsServerMultiplier));
     }
 
-    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, ProtoId<WeightedRandomPrototype> objectiveGroupProto, float maxDifficulty)
+    // Pirate: contract generation calls this shared API.
+    public override EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, ProtoId<WeightedRandomPrototype> objectiveGroupProto, float maxDifficulty)
     {
         if (!_prototypeManager.TryIndex(objectiveGroupProto, out var groupsProto))
         {

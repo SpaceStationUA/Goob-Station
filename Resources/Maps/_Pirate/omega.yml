@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 07/14/2026 09:20:08
-  entityCount: 14278
+  time: 08/14/2026 18:51:29
+  entityCount: 14281
 maps:
 - 1
 grids:
@@ -510,6 +510,8 @@ entities:
             2350: -37,22
             2351: -36,22
             2352: -35,22
+            3643: 10,-43
+            3644: 10,-39
         - node:
             color: '#FFFFFFFF'
             id: BrickTileDarkCornerNe
@@ -2345,6 +2347,13 @@ entities:
             54: 9,21
             1746: -35,3
             1747: -34,3
+        - node:
+            angle: 1.5707963267948966 rad
+            color: '#FFFFFFFF'
+            id: LoadingArea
+          decals:
+            3645: 9,-43
+            3646: 9,-39
         - node:
             color: '#0000007F'
             id: MarkupSquare
@@ -4997,7 +5006,8 @@ entities:
           2,-12:
             0: 28672
           2,-11:
-            0: 32631
+            0: 32627
+            4: 4
           2,-10:
             0: 32627
           3,-12:
@@ -5267,10 +5277,10 @@ entities:
             0: 2080
           -12,4:
             3: 546
-            4: 2184
+            5: 2184
           -13,4:
             3: 2184
-            5: 546
+            6: 546
           -12,5:
             0: 1
             1: 3856
@@ -5279,7 +5289,7 @@ entities:
           -11,5:
             1: 784
           -11,4:
-            6: 546
+            7: 546
           -11,6:
             0: 49152
           -11,3:
@@ -5557,6 +5567,11 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles: {}
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+            Oxygen: 20.078888
+            Nitrogen: 75.53487
         - volume: 2500
           temperature: 293.15
           moles:
@@ -8320,7 +8335,7 @@ entities:
       pos: -7.5,-22.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -18871.771
+      secondsUntilStateChange: -19186.18
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9641,13 +9656,6 @@ entities:
           ents:
           - 11996
           - 11997
-- proto: AsimovCircuitBoard
-  entities:
-  - uid: 526
-    components:
-    - type: Transform
-      pos: 9.542928,43.4008
-      parent: 2
 - proto: AsteroidRock
   entities:
   - uid: 527
@@ -33668,6 +33676,32 @@ entities:
         moles:
           Oxygen: 1.6033952
           Nitrogen: 6.031821
+- proto: ClosetWall
+  entities:
+  - uid: 11403
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-43.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 9810
+          - 11023
+    - type: Fixtures
+      fixtures: {}
 - proto: ClosetWallAtmospherics
   entities:
   - uid: 5069
@@ -35707,6 +35741,13 @@ entities:
     - type: SingletonDeviceNetServer
       active: False
       available: False
+- proto: CrewsimovCircuitBoard
+  entities:
+  - uid: 526
+    components:
+    - type: Transform
+      pos: 9.542928,43.4008
+      parent: 2
 - proto: Crowbar
   entities:
   - uid: 5363
@@ -40180,6 +40221,13 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+  - uid: 11837
+    components:
+    - type: Transform
+      pos: 6.5,-43.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: FaxMachineBase
   entities:
   - uid: 6099
@@ -40947,10 +40995,10 @@ entities:
     - type: Transform
       pos: 7.3448906,-32.315014
       parent: 2
-  - uid: 6165
+  - uid: 12127
     components:
     - type: Transform
-      pos: 5.9437256,-42.24992
+      pos: 7.0435696,-37.207706
       parent: 2
 - proto: Firelock
   entities:
@@ -65468,12 +65516,12 @@ entities:
   - uid: 9671
     components:
     - type: Transform
-      pos: 6.3590813,-42.46417
+      pos: 10.352666,-40.403988
       parent: 2
   - uid: 9672
     components:
     - type: Transform
-      pos: 6.571847,-42.293957
+      pos: 10.665166,-40.216488
       parent: 2
 - proto: MopBucket
   entities:
@@ -66300,8 +66348,11 @@ entities:
   - uid: 9810
     components:
     - type: Transform
-      pos: 10.566645,-40.391
-      parent: 2
+      parent: 11403
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 11403
 - proto: Pen
   entities:
   - uid: 1130
@@ -73819,8 +73870,11 @@ entities:
   - uid: 11023
     components:
     - type: Transform
-      pos: 10.458229,-40.43005
-      parent: 2
+      parent: 11403
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 11403
 - proto: SheetUranium
   entities:
   - uid: 11024
@@ -75897,6 +75951,13 @@ entities:
     - type: Transform
       pos: 6.5,-37.5
       parent: 2
+- proto: SlimeGrinder
+  entities:
+  - uid: 6165
+    components:
+    - type: Transform
+      pos: 6.5,-42.5
+      parent: 2
 - proto: SmartFridgeMedical
   entities:
   - uid: 11265
@@ -76535,6 +76596,16 @@ entities:
       rot: 3.141592653589793 rad
       pos: -28.5,27.5
       parent: 2
+- proto: SpareIdCabinetFilled
+  entities:
+  - uid: 10459
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,27.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: SpawnMechRipley
   entities:
   - uid: 11384
@@ -76556,13 +76627,6 @@ entities:
     - type: Transform
       pos: 11.5,-20.5
       parent: 2
-- proto: SpawnMobCMOPetSilvia # Pirate: CMO pet
-  entities:
-  - uid: 11387
-    components:
-    - type: Transform
-      pos: -26.5,-25.5
-      parent: 2
 - proto: SpawnMobCleanBot
   entities:
   - uid: 11388
@@ -76570,6 +76634,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 12.5,55.5
+      parent: 2
+- proto: SpawnMobCMOPetSilvia
+  entities:
+  - uid: 11387
+    components:
+    - type: Transform
+      pos: -26.5,-25.5
       parent: 2
 - proto: SpawnMobCorgi
   entities:
@@ -79772,12 +79843,6 @@ entities:
     components:
     - type: Transform
       pos: 16.5,-36.5
-      parent: 2
-  - uid: 11837
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 6.5,-42.5
       parent: 2
   - uid: 11838
     components:

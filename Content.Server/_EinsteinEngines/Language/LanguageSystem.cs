@@ -17,6 +17,8 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
         base.Initialize();
 
         SubscribeLocalEvent<LanguageSpeakerComponent, MapInitEvent>(OnInitLanguageSpeaker);
+        SubscribeLocalEvent<LanguageSpeakerComponent, ComponentStartup>(OnLanguageSpeakerStartup); // Pirate: support dynamically added language components.
+        SubscribeLocalEvent<LanguageKnowledgeComponent, ComponentStartup>(OnLanguageKnowledgeStartup); // Pirate: support dynamically added language components.
         SubscribeLocalEvent<LanguageSpeakerComponent, ComponentGetState>(OnGetLanguageState);
         SubscribeLocalEvent<UniversalLanguageSpeakerComponent, DetermineEntityLanguagesEvent>(OnDetermineUniversalLanguages);
         SubscribeNetworkEvent<LanguagesSetMessage>(OnClientSetLanguage);
@@ -33,6 +35,18 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
             ent.Comp.CurrentLanguage = ent.Comp.SpokenLanguages.FirstOrDefault(UniversalPrototype);
 
         UpdateEntityLanguages(ent!);
+    }
+
+    private void OnLanguageSpeakerStartup(Entity<LanguageSpeakerComponent> ent, ref ComponentStartup args)
+    {
+        if (MetaData(ent).EntityLifeStage == EntityLifeStage.MapInitialized)
+            UpdateEntityLanguages(ent.AsNullable());
+    }
+
+    private void OnLanguageKnowledgeStartup(Entity<LanguageKnowledgeComponent> ent, ref ComponentStartup args)
+    {
+        if (MetaData(ent).EntityLifeStage == EntityLifeStage.MapInitialized)
+            UpdateEntityLanguages(ent.Owner);
     }
 
     private void OnGetLanguageState(Entity<LanguageSpeakerComponent> entity, ref ComponentGetState args)

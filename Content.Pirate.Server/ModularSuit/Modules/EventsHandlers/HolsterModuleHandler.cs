@@ -2,8 +2,6 @@ using Content.Shared.Actions;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.EntitySystems;
 using Content.Pirate.Shared.ModularSuit;
-using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Whitelist;
 
 namespace Content.Pirate.Server.ModularSuit;
@@ -12,7 +10,6 @@ public sealed partial class HolsterModuleHandler : ModuleActionHandler
 {
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private SharedGunSystem _gun = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
 
@@ -26,7 +23,8 @@ public sealed partial class HolsterModuleHandler : ModuleActionHandler
         if (args.Handled)
             return;
 
-        if (!TryFindModuleByAction(ent, args.Action, out var moduleEnt))
+        // The holster is a mechanical mount, so it stays usable while the suit is not deployed.
+        if (!TryFindModuleByAction(ent, args.Action, out var moduleEnt, requireActive: false))
             return;
 
         if (!TryComp<ModularSuitModuleComponent>(moduleEnt, out var moduleComp) || !moduleComp.IsActive)
@@ -48,10 +46,6 @@ public sealed partial class HolsterModuleHandler : ModuleActionHandler
 
                 if (!_hands.TryPickup(user, item))
                     return;
-
-                if (TryComp<ChamberMagazineAmmoProviderComponent>(item, out var chamber)
-                    && chamber.BoltClosed != null && !chamber.BoltClosed.Value)
-                    _gun.SetBoltClosed(item, chamber, true);
 
                 Audio.PlayPvs(args.EjectSound, ent.Owner);
             }

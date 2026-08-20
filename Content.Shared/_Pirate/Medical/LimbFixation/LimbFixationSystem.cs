@@ -6,6 +6,7 @@ using Content.Shared._Shitmed.Medical.Surgery;
 using Content.Shared._Shitmed.Medical.Surgery.Conditions;
 using Content.Shared._Shitmed.Medical.Surgery.Steps;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas;
+using Content.Shared._Shitmed.Medical.Surgery.Traumas.Systems;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Systems;
@@ -47,7 +48,7 @@ public sealed class LimbFixationSystem : EntitySystem
 
     private void OnBeforeTraumaInduced(Entity<WoundableComponent> ent, ref BeforeTraumaInducedEvent args)
     {
-        if (args.TraumaType != TraumaType.Dismemberment
+        if (args.TraumaType != TraumaSystem.Dismemberment
             || !TryComp<BodyPartComponent>(ent, out var part)
             || part.Body is not { } body
             || part.PartType == BodyPartType.Chest

@@ -27,6 +27,28 @@
   - HandHeldMassScanner
   - WeaponGrapplingGun
 
+# Gekon option for the shared suit selector.
+- type: selectableSet
+  id: BountyHunterGekonSuit
+  name: bounty-hunter-category-gekon-name
+  description: bounty-hunter-category-gekon-description
+  sprite:
+    sprite: _Pirate/Clothing/Modular/Mercenary/control.rsi
+    state: icon
+  content:
+  - ClothingModularControllerMercenaryPreassembled
+
+# Wrap the suit selector as one catalog choice.
+- type: selectableSet
+  id: BountyHunterSuitChoice
+  name: bounty-hunter-category-suitchoice-name
+  description: bounty-hunter-category-suitchoice-description
+  sprite:
+    sprite: _Goobstation/Objects/Devices/unique_teleporters.rsi
+    state: standard
+  content:
+  - UndeterminedSuitBountyHunter
+
 - type: selectableSet
   id: BountyHunterDisguise
   name: bounty-hunter-category-infiltrator-name

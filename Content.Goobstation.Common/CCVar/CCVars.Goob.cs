@@ -390,12 +390,6 @@ public sealed partial class GoobCVars
         CVarDef.Create("contests.do_mind_contests", true, CVar.REPLICATED | CVar.SERVER);
 
     /// <summary>
-    ///     Toggles all MoodContest functions. All mood contests output 1f when false.
-    /// </summary>
-    public static readonly CVarDef<bool> DoMoodContests =
-        CVarDef.Create("contests.do_mood_contests", true, CVar.REPLICATED | CVar.SERVER);
-
-    /// <summary>
     ///     The maximum amount that Mass Contests can modify a physics multiplier, given as a +/- percentage
     ///     Default of 0.25f outputs between * 0.75f and 1.25f
     /// </summary>
@@ -597,7 +591,7 @@ public sealed partial class GoobCVars
     /// Applies to Brute and Burn damage
     /// </summary>
     public static readonly CVarDef<float> ExplosionWoundMultiplier =
-        CVarDef.Create("explosion.wounding_multiplier", 4f, CVar.SERVERONLY);
+        CVarDef.Create("explosion.wounding_multiplier", 2.5f, CVar.SERVERONLY);
 
     #endregion
 

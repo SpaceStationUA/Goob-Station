@@ -7,6 +7,7 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -45,6 +46,7 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
 
         SubscribeLocalEvent<ModularSuitComponent, ClothingGotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<ModularSuitComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<ModularSuitCarrierComponent, MobStateChangedEvent>(OnWearerMobStateChanged);
 
         SubscribeLocalEvent<ModularSuitPartComponent, BeingEquippedAttemptEvent>(OnPartEquippedAttempt);
         SubscribeLocalEvent<ModularSuitPartComponent, GotUnequippedEvent>(OnPartUnequipped);
@@ -222,6 +224,19 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
         ent.Comp.Wearer = null;
         RemComp<ModularSuitCarrierComponent>(args.Equipee);
         _uiSystem.CloseUi(ent.Owner, ModularSuitUiKey.Key, args.Equipee);
+    }
+
+    private void OnWearerMobStateChanged(Entity<ModularSuitCarrierComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (args.NewMobState != MobState.Dead ||
+            ent.Comp.CurrentSlot is not { } slot ||
+            !Inventory.TryGetSlotEntity(ent.Owner, slot, out var suitUid) ||
+            !TryComp<ModularSuitComponent>(suitUid.Value, out var suit))
+        {
+            return;
+        }
+
+        SetActive((suitUid.Value, suit), false);
     }
 
     private void DeploySuit(Entity<ModularSuitComponent> ent, EntityUid wearer)

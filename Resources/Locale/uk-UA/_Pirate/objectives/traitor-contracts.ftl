@@ -1,0 +1,16 @@
+ent-TraitorContractTeachRandomPersonObjective =
+    .desc = Убийте ціль і покажіть усім, що Синдикат не жартує. Достатньо, щоб вона померла один раз.
+ent-TraitorContractTeachRandomHeadObjective =
+    .desc = Показово стратьте ціль і доведіть, що Синдикат налаштований серйозно. Достатньо однієї смерті, але підійдіть до справи творчо.
+ent-TraitorContractTeachRandomTraitorObjective =
+    .desc = Покажіть перебіжчику, що буває з тими, хто ставить Синдикат під сумнів. Достатньо однієї смерті, але підійдіть до справи творчо.
+ent-TraitorContractAssistObjective =
+    .desc = Допоможіть іншому агенту Синдикату виконати один із його контрактів.
+ent-TraitorContractCritAnomalyObjective = Дестабілізувати аномалію
+    .desc = Доведіть аномалію до критичного стану й дозвольте їй зруйнуватися.
+ent-TraitorContractRansomRandomPersonObjective =
+    .desc = Закуйте ціль у кайданки й відправте її фултоном до штабу. Ми утримуватимемо її до сплати викупу.
+ent-TraitorContractRansomRandomHeadObjective =
+    .desc = Закуйте ціль у кайданки й відправте її фултоном до штабу. Ми утримуватимемо її до сплати викупу.
+ent-TraitorContractDieObjective = Загинути славною смертю
+    .desc = Влаштуйте незабутнє видовище й загиньте в ім'я Синдикату.

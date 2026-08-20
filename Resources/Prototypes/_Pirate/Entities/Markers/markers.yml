@@ -7,3 +7,14 @@
     layers:
       - state: green
       - state: ai
+
+- type: entity
+  id: MarkerMercSpawn
+  name: mercenary spawn marker
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: red
+  - type: MercSpawnPoint

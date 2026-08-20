@@ -4,7 +4,6 @@ using Robust.Server.GameObjects;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using System.Linq;
-using Content.Shared.Abilities.Psionics;
 using Robust.Shared.Random;
 using Content.Shared.Light.Components;
 using Content.Shared.NPC.Components;
@@ -64,9 +63,6 @@ public sealed class EtherealSystem : SharedEtherealSystem
         _stealth.SetVisibility(uid, 0.8f, stealth);
 
         SuppressFactions(uid, component, true);
-
-        if (HasComp<MindbrokenComponent>(uid))
-            RemComp(uid, component);
     }
 
     public override void OnShutdown(EntityUid uid, EtherealComponent component, ComponentShutdown args)

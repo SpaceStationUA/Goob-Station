@@ -51,6 +51,7 @@
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
+  ransomModifier: 3 # Pirate: traitor ransom value
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:
@@ -88,6 +89,8 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
+  - !type:ModifyPsionicChanceSpecial # Pirate - Commands are much more likely to be psionic.
+    jobBonusChance: 0.1
 
 - type: startingGear
   id: HoPGear

@@ -124,6 +124,8 @@
       key_slots:
       - EncryptionKeySyndie
       - EncryptionKeyStationMaster
+  # Pirate: bridge radio coverage between the remote post and the station.
+  - type: ListeningPostRadio
   - type: Sprite
     sprite: _Pirate/Clothing/Ears/Headsets/syndicate_listening.rsi
   - type: Clothing
