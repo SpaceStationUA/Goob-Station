@@ -5,7 +5,7 @@
   mapName: 'Мета'
   mapPath: /Maps/_Pirate/meta.yml # Goobstation
   mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
-  mapPreview: PirateMapPreviewMetaTP # Pirate - Додано рендер Мети ТП, замість використання рендера Мети
+  mapPreview: PirateMapPreviewMeta # Pirate - Це тепер рендер мети тп але у файлі просто рендеру мети тому що [fatl] unhandled 
   minPlayers: 25 # Pirate - 30 -> 25
   maxPlayers: 85 # Goobstation - Limit mappool to highpop versions of maps only
   stations:
