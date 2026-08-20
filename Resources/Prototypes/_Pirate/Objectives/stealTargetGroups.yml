@@ -1,0 +1,35 @@
+## Minor contract targets.
+- type: stealTargetGroup
+  id: RubberStampAdminAssistant
+  name: steal-target-groups-admin-assistant-stamp
+  sprite:
+    sprite: _Pirate/Objects/Misc/stamps.rsi
+    state: stamp-admin-assistant
+
+- type: stealTargetGroup
+  id: RCD
+  name: steal-target-groups-rcd
+  sprite:
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: CargoRequestComputerCircuitboard
+  name: steal-target-groups-cargo-request-computer-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_supply
+
+- type: stealTargetGroup
+  id: ResearchComputerCircuitboard
+  name: steal-target-groups-research-computer-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_science
+
+- type: stealTargetGroup
+  id: CriminalRecordsComputerCircuitboard
+  name: steal-target-groups-criminal-records-computer-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_security

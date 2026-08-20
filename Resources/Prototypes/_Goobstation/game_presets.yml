@@ -15,7 +15,7 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Traitorling
@@ -31,7 +31,7 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: NukeTraitor
@@ -48,7 +48,7 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: NukeLing
@@ -64,7 +64,7 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: RevTraitor
@@ -80,7 +80,7 @@
     - CalmTraitor
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: RevLing
@@ -97,7 +97,7 @@
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Blob
@@ -112,7 +112,7 @@
   - AntagStationEventScheduler
   - BasicRoundstartVariation
   - SubGamemodesRule
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Honkops
@@ -128,7 +128,7 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: TheGhost
@@ -141,7 +141,7 @@
   minPlayers: 5
   rules:
     - CalmDynamic
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
     - SubGamemodesRule
     - RareIonStormScheduler
     - SpaceTrafficControlFriendlyEventScheduler
@@ -157,7 +157,7 @@
   minPlayers: 25
   rules:
     - CombatDynamic
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
     - SubGamemodesRule
     - IonStormScheduler
     - SpaceTrafficControlEventScheduler
@@ -173,7 +173,7 @@
   showInVote: true
   rules:
     - SecretPlusLow
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SecretPlusMid
@@ -186,7 +186,7 @@
   showInVote: true
   rules:
     - SecretPlusMid
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SecretPlusAdmeme
@@ -200,7 +200,7 @@
   showInVote: false # 1984
   rules:
     - SecretPlusAdmeme
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SurvivalPlusMid
@@ -214,7 +214,7 @@
   minPlayers: 100 # Pirate
   rules:
     - SecretPlusRampingMid
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Xenomorphs

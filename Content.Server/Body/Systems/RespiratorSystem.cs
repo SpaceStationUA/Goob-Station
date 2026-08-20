@@ -28,7 +28,6 @@ using Content.Shared.Database;
 using Content.Shared.EntityConditions;
 using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects.Effects.Body;
-using Content.Shared.Mood;
 using Content.Server.EntityEffects;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
@@ -467,8 +466,6 @@ public sealed class RespiratorSystem : EntitySystem
 
     private void OnSuffocation(Entity<BodyComponent> ent, ref SuffocationEvent args)
     {
-        RaiseLocalEvent(ent.Owner, new MoodEffectEvent("Suffocating")); // Pirate - port EE mood system
-
         // TODO: This is not going work with multiple different lungs, if that ever becomes a possibility
         var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
         foreach (var entity in organs)
@@ -479,8 +476,6 @@ public sealed class RespiratorSystem : EntitySystem
 
     private void OnStopSuffocating(Entity<BodyComponent> ent, ref StopSuffocatingEvent args)
     {
-        RaiseLocalEvent(ent.Owner, new MoodRemoveEffectEvent("Suffocating")); // Pirate - port EE mood system
-
         // TODO: This is not going work with multiple different lungs, if that ever becomes a possibility
         var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
         foreach (var entity in organs)

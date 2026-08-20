@@ -29,9 +29,11 @@ public sealed partial class UplinkMenu : FancyWindow
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
     public event Action<BaseButton.ButtonEventArgs>? OnRefundAttempt;
+    public event Action<BaseButton.ButtonEventArgs>? OnContractsPressed;
 
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
+    public EntityUid Owner; // Pirate: contract reputation belongs to the store.
 
     private List<ListingData> _cachedListings = new();
 
@@ -42,6 +44,7 @@ public sealed partial class UplinkMenu : FancyWindow
 
         WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
         RefundButton.OnButtonDown += OnRefundButtonDown;
+        ContractsButton.OnButtonDown += args => OnContractsPressed?.Invoke(args);
         SearchBar.OnTextChanged += _ => SearchTextUpdated?.Invoke(this, SearchBar.Text);
     }
 
@@ -150,7 +153,7 @@ public sealed partial class UplinkMenu : FancyWindow
         var listingInStock = GetListingPriceString(listing);
         var discount = GetDiscountString(listing);
 
-        var newListing = new UplinkMarketListing(listing, listingInStock, discount, hasBalance, texture, extraText);
+        var newListing = new UplinkMarketListing(listing, listingInStock, discount, hasBalance, Owner, texture, extraText);
         newListing.StoreItemBuyButton.OnButtonDown += args
             => OnListingButtonPressed?.Invoke(args, listing);
 

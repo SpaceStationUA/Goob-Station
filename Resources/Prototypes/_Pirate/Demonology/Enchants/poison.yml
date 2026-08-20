@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseEnchant
+  id: EnchantPoison
+  name: Poison
+  components:
+  - type: Enchant
+    maxLevel: 1
+    whitelist:
+      components:
+      - MeleeWeapon
+    blacklist:
+      components:
+      - SolutionContainerManager
+  - type: ComponentsEnchant
+    added:
+    - type: SolutionContainerManager
+      solutions:
+        melee:
+          maxVol: 1
+    - type: SolutionRegeneration
+      solution: melee
+      generated:
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 0.1
+    - type: MeleeChemicalInjector
+      transferAmount: 1
+      solution: melee

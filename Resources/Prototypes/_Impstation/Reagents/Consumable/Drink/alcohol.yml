@@ -668,7 +668,7 @@
         component: SeeingRainbows
         type: Add
         time: 5
-      - !type:ChemRemovePsionic
+      - !type:RollPsionicAbility
         conditions:
           - !type:ReagentCondition
             reagent: DoubleGreen

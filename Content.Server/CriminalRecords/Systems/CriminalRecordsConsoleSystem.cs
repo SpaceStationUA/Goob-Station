@@ -360,8 +360,9 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             // this is impossible
             _ => "not-wanted"
         };
-        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args),
-            ent.Comp.SecurityChannel, ent);
+        // Pirate: said by the console / ID card rather than the officer
+        var message = Loc.GetString($"criminal-records-console-{statusString}", args);
+        _radio.SendRadioMessage(ent, message, ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
     }

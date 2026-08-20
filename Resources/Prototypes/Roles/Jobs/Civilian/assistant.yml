@@ -7,6 +7,7 @@
   playTimeTracker: JobPassenger
   startingGear: PassengerGear
   icon: "JobIconPassenger"
+  ransomModifier: 0.5 # Pirate: random civilians fetch less than employees
   supervisors: job-supervisors-everyone
   goobcoins: 20 #Goob content
   access:

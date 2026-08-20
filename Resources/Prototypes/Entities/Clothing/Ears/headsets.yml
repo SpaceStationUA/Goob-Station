@@ -294,10 +294,14 @@
       containers:
         key_slots:
         - EncryptionKeyFreelance
+        - EncryptionKeyCommon # Pirate: freelance comms
     - type: Sprite
       sprite: Clothing/Ears/Headsets/freelance.rsi
     - type: Clothing
       sprite: Clothing/Ears/Headsets/freelance.rsi
+    - type: RadioSoundProfile # Pirate: freelance comms
+      transmitSound: /Audio/_Pirate/Radio/radio_talk_alter.ogg # Pirate: freelance comms
+      receiveSound: /Audio/_Pirate/Radio/radio_receive_alter.ogg # Pirate: freelance comms
 
 - type: entity
   parent: [ClothingHeadset, BaseMagicalContraband]

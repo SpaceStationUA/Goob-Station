@@ -1,0 +1,208 @@
+# SPDX-FileCopyrightText: 2025 Shaman
+# SPDX-FileCopyrightText: 2025 sleepyyapril
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ported from TheDenSS14/TheDen (jukebox.yml, monitors_televisions.yml, chargers.yml, beds.yml).
+
+# --- Jukebox ---
+
+- type: entity
+  parent: Jukebox
+  id: SomberJukebox
+  name: somber radio
+  description: "A striped amaranth radio. You do not need an entire god damn jukebox in here. It would be tacky."
+  components:
+  - type: Sprite
+    sprite: _DEN/Structures/Machines/somberjukebox.rsi
+    snapCardinals: true
+    noRot: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 3
+            max: 3
+          SheetSteel1: # TheDen: ScrapElectrum (not in this fork)
+            min: 1
+            max: 3
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.21875,-0.0625,0.21875,0.21875"
+        hard: false
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+        density: 100
+
+# --- Television ---
+
+- type: entity
+  parent: ComputerTelevision
+  id: ComputerSomberTelevision
+  name: somber television
+  description: "A striped amaranth television. It looks like an expensive antique, but the screen is so small and square that it's hard to appreciate. For some reason, it has a channel zero that only displays grainy images of rotating fruit."
+  components:
+  - type: Sprite
+    sprite: _DEN/Structures/Machines/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: sombertelevision
+    - map: ["computerLayerScreen"]
+      state: sombertelevision-on
+  - type: EtherealLight
+  - type: PointLight
+    radius: 2
+    energy: 4
+    color: "#4dc4ff"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.28125,-0.15625,0.28125,0.3125"
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+        density: 200
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 3
+            max: 3
+          SheetSteel1: # TheDen: ScrapElectrum (not in this fork)
+            min: 1
+            max: 3
+
+# --- Power Cell Recharger ---
+
+- type: entity
+  parent: PowerCellRecharger
+  id: SomberPowerCellRecharger
+  name: somber orgone pyramid
+  suffix: Cell Recharger
+  description: "A meticulously crafted eidolite pyramid used to recharge power cells. Its facets are aligned with more geomantic intent than most people can grasp. Mantes insist it channels noospheric flow, though the tangle of wires inside suggests it might just be a normal cell recharger dressed up as an occult artifact. Either way, it works fine."
+  components:
+  - type: Sprite
+    sprite: _DEN/Structures/Power/somber_cell_recharger.rsi
+    snapCardinals: true
+    noRot: true
+  - type: Charger
+    chargeRate: 20
+  - type: PointLight
+    enabled: true
+    radius: 1.4
+    energy: 1.4
+    color: "#d9418d"
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: StaticPrice
+    price: 2000
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1: # TheDen: MaterialEidolite1 + ScrapElectrum (not in this fork)
+            min: 3
+            max: 3
+
+# --- Psych Bed ---
+
+- type: entity
+  parent: PsychBed
+  id: SomberPsychBed
+  name: somber chaise lounge
+  description: "Technically it's a chaise \"longue,\" which is French for \"long chair,\" but you do lounge on it."
+  components:
+  - type: Sprite
+    sprite: _DEN/Structures/Furniture/furniture.rsi
+    state: somberpsychbed
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 3
+            max: 3
+          SheetSteel1: # TheDen: ScrapElectrum (not in this fork)
+            min: 1
+            max: 3

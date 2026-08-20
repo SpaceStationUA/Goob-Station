@@ -9,11 +9,6 @@
   flavor: sweet
   color: aquamarine
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: SweetenerEffect
 
 - type: reagent
   id: BbqSauce
@@ -24,11 +19,6 @@
   flavor: sweet
   color: darkred
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: SweetenerEffect
 
 - type: reagent
   id: Coldsauce
@@ -40,20 +30,6 @@
   color: skyblue
 
 - type: reagent
-  id: Frostoil
-  name: reagent-name-frostoil
-  group: Foods
-  desc: reagent-desc-frostoil
-  physicalDesc: reagent-physical-desc-cold
-  flavor: cold
-  color: skyblue
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet
-          moodPrototype: MintyEffect
-
-- type: reagent
   id: Cornoil
   name: reagent-name-cornoil
   group: Foods
@@ -62,11 +38,6 @@
   flavor: oily
   color: yellow
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: OilyEffect
 
 - type: reagent
   id: HorseradishSauce
@@ -77,11 +48,6 @@
   flavor: spicy
   color: gray
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: SpicyEffect
 
 - type: reagent
   id: Hotsauce
@@ -92,11 +58,6 @@
   flavor: spicy
   color: red
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: SpicyEffect
 
 - type: reagent
   id: Ketchup
@@ -107,11 +68,6 @@
   flavor: tomato
   color: red
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: SweetenerEffect
 
 - type: reagent
   id: Ketchunaise
@@ -122,11 +78,6 @@
   flavor: ketchunaise
   color: "#fba399"
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: SweetenerEffect
 
 - type: reagent
   id: LaughinSyrup
@@ -137,11 +88,6 @@
   flavor: sweet
   color: "#803280"
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: SweetenerEffect
 
 - type: reagent
   id: Mayo
@@ -152,11 +98,6 @@
   flavor: mayonnaise
   color: "#f9f5e5"
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: SweetenerEffect
 
 - type: reagent
   id: Mustard
@@ -167,11 +108,6 @@
   flavor: mustard
   color: "#ffdb58"
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: SweetenerEffect
 
 - type: reagent
   id: Vinaigrette
@@ -182,11 +118,6 @@
   flavor: sour
   color: "#efdaae"
   recognizable: true
-  metabolisms:
-    Food:
-      effects:
-        - !type:ChemAddMoodlet # Pirate - port EE mood system
-          moodPrototype: SweetenerEffect
 
 - type: reagent
   id: Soysauce
@@ -204,8 +135,6 @@
         factor: 0.5
       - !type:SatiateThirst
         factor: -0.5 # high salt content
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: SaltyEffect
 
 - type: reagent
   id: TableSalt
@@ -237,8 +166,6 @@
       # eating salt on its own kinda sucks, kids
       - !type:SatiateThirst
         factor: -0.5
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: SaltyEffect
   tileReactions: # 古布站 - Wraith Start Goobstation
     - !type:EnsureTileReaction
       components:
@@ -268,8 +195,6 @@
       effects:
       - !type:SatiateHunger
         factor: 6.0 #Stronger than cookedramen
-      - !type:ChemAddMoodlet # Pirate - port EE mood system
-        moodPrototype: SweetenerEffect
   footstepSound:
     collection: FootstepSlime
     params:

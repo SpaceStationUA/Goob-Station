@@ -35,6 +35,38 @@
             - material: Durathread
               amount: 2
               doAfter: 1
+        ### Pirate start
+        - to: bedwood
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 2
+              doAfter: 1
+            - material: Cloth
+              amount: 2
+              doAfter: 1
+        - to: double_bed
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Steel
+              amount: 4
+              doAfter: 1
+            - material: Cloth
+              amount: 4
+              doAfter: 1
+        - to: double_bed_wood
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 4
+              doAfter: 1
+            - material: Cloth
+              amount: 4
+              doAfter: 1
+        ### Pirate end
     - node: bed
       entity: Bed
       edges:
@@ -60,6 +92,50 @@
           steps:
             - tool: Screwing
               doAfter: 1
+    ### Pirate start
+    - node: bedwood
+      entity: BedWood
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+    - node: double_bed_wood
+      entity: DoubleBedWood
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 4
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+          steps:
+            - tool: Screwing
+              doAfter: 1
+    - node: double_bed
+      entity: DoubleBed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 4
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+          steps:
+            - tool: Screwing
+              doAfter: 1
+    ### Pirate end
     - node: medicalbed
       entity: MedicalBed
       edges:

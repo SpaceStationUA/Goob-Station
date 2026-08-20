@@ -1,0 +1,15 @@
+uplink-reinforcement-radio-nukie-mouse-name = Телепортер оперативника-миші
+uplink-reinforcement-radio-nukie-mouse-desc = Викликає спеціально навченого оперативника-мишу на допомогу.
+uplink-reinforcement-radio-nukie-carp-name = Телепортер оперативника-коропа
+uplink-reinforcement-radio-nukie-carp-desc = Викликає спеціально навченого оперативника-коропа на допомогу.
+uplink-reinforcement-radio-nukie-spider-name = Телепортер оперативника-павука
+uplink-reinforcement-radio-nukie-spider-desc = Викликає спеціально навченого павучого оперативника на допомогу.
+uplink-reinforcement-radio-cyborg-assault-name-trauma = Телепортер штурмового кіборга
+uplink-reinforcement-radio-cyborg-saboteur-name = Телепортер кіборга-диверсанта
+uplink-reinforcement-radio-cyborg-saboteur-desc = Викликає легкоброньованого кіборга, який спеціалізується на диверсіях і вбивствах.
+uplink-reinforcement-radio-cyborg-medical-name = Телепортер медичного кіборга
+uplink-reinforcement-radio-cyborg-medical-desc = Викликає легкоброньованого кіборга, що спеціалізується на всьому, пов’язаному з медициною.
+uplink-magic-carp-dehydrated-name = Зневоднений магічний короп
+uplink-magic-carp-dehydrated-desc = Схожий на плюшевого іграшкового коропа, але якщо додати води, він стане справжнім магічним коропом!
+uplink-holo-carp-dehydrated-name = Зневоднений голографічний короп
+uplink-holo-carp-dehydrated-desc = Схожий на плюшевого іграшкового коропа, але якщо додати води, він стане справжнім голографічним коропом!

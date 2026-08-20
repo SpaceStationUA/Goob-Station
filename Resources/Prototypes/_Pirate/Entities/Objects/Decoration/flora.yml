@@ -1,111 +1,103 @@
+#region Дерева
+### Звичайні
 - type: entity
   parent: BaseTree
   id: FloraTree01
   name: tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_trees.rsi
     state: tree01
 
 - type: entity
-  parent: BaseTree
+  parent: FloraTree01
   id: FloraTree02
   name: tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_trees.rsi
     state: tree02
 
 - type: entity
-  parent: BaseTree
+  parent: FloraTree01
   id: FloraTree03
   name: tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_trees.rsi
     state: tree03
 
 - type: entity
-  parent: BaseTree
+  parent: FloraTree01
   id: FloraTree04
   name: tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_trees.rsi
     state: tree04
 
 - type: entity
-  parent: BaseTree
+  parent: FloraTree01
   id: FloraTree05
   name: tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_trees.rsi
     state: tree05
 
 - type: entity
-  parent: BaseTree
+  parent: FloraTree01
   id: FloraTree06
   name: tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_trees.rsi
     state: tree06
 
+### Засніжені
 - type: entity
   parent: BaseTreeSnow
   id: FloraTreeSnow01
   name: snowy tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treessnow.rsi
     state: treesnow01
 
 - type: entity
-  parent: BaseTreeSnow
+  parent: FloraTreeSnow01
   id: FloraTreeSnow02
   name: snowy tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treessnow.rsi
     state: treesnow02
 
 - type: entity
-  parent: BaseTreeSnow
+  parent: FloraTreeSnow01
   id: FloraTreeSnow03
   name: snowy tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treessnow.rsi
     state: treesnow03
 
 - type: entity
-  parent: BaseTreeSnow
+  parent: FloraTreeSnow01
   id: FloraTreeSnow04
   name: snowy tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treessnow.rsi
     state: treesnow04
 
 - type: entity
-  parent: BaseTreeSnow
+  parent: FloraTreeSnow01
   id: FloraTreeSnow05
   name: snowy tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treessnow.rsi
     state: treesnow05
 
 - type: entity
-  parent: BaseTreeSnow
+  parent: FloraTreeSnow01
   id: FloraTreeSnow06
   name: snowy tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treessnow.rsi
     state: treesnow06
 
+### Великі
 - type: entity
   parent: BaseTreeLarge
   id: FloraTreeLarge01
@@ -116,50 +108,46 @@
     state: treelarge01
 
 - type: entity
-  parent: BaseTreeLarge
+  parent: FloraTreeLarge01
   id: FloraTreeLarge02
   name: large tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
     state: treelarge02
 
 - type: entity
-  parent: BaseTreeLarge
+  parent: FloraTreeLarge01
   id: FloraTreeLarge03
   name: large tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
     state: treelarge03
 
 - type: entity
-  parent: BaseTreeLarge
+  parent: FloraTreeLarge01
   id: FloraTreeLarge04
   name: large tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
     state: treelarge04
 
 - type: entity
-  parent: BaseTreeLarge
+  parent: FloraTreeLarge01
   id: FloraTreeLarge05
   name: large tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
     state: treelarge05
 
 - type: entity
-  parent: BaseTreeLarge
+  parent: FloraTreeLarge01
   id: FloraTreeLarge06
   name: large tree
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
     state: treelarge06
 
+### Зламані
 - type: entity
   parent: BaseTreeConifer
   id: FloraTreeConifer01
@@ -170,23 +158,22 @@
     state: treeconifer01
 
 - type: entity
-  parent: BaseTreeConifer
+  parent: FloraTreeConifer01
   id: FloraTreeConifer02
   name: snowy conifer
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treesconifer.rsi
     state: treeconifer02
 
 - type: entity
-  parent: BaseTreeConifer
+  parent: FloraTreeConifer01
   id: FloraTreeConifer03
   name: snowy conifer
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treesconifer.rsi
     state: treeconifer03
 
+### Тіньові
 - type: entity
   parent: FloraTree01
   id: ShadowTree01
@@ -202,7 +189,6 @@
   id: ShadowTree02
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
     state: tree02
 
 - type: entity
@@ -210,7 +196,6 @@
   id: ShadowTree03
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
     state: tree03
 
 - type: entity
@@ -218,7 +203,6 @@
   id: ShadowTree04
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
     state: tree04
 
 - type: entity
@@ -226,7 +210,6 @@
   id: ShadowTree05
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
     state: tree05
 
 - type: entity
@@ -234,9 +217,9 @@
   id: ShadowTree06
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
     state: tree06
 
+### Світящі
 - type: entity
   parent: BaseTree
   id: LightTree01
@@ -256,7 +239,6 @@
   id: LightTree02
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
     state: tree02
 
 - type: entity
@@ -264,7 +246,6 @@
   id: LightTree03
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
     state: tree03
 
 - type: entity
@@ -272,7 +253,6 @@
   id: LightTree04
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
     state: tree04
 
 - type: entity
@@ -280,7 +260,6 @@
   id: LightTree05
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
     state: tree05
 
 - type: entity
@@ -288,19 +267,134 @@
   id: LightTree06
   components:
   - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslight.rsi
     state: tree06
 
+### Пальмові
 - type: entity
-  parent: BaseStructure
-  id: Bush
+  parent: BaseTree
+  id: FloraTreeBroken01
+  name: broken tree
+  description: The remains of a once majestic tree.
   components:
   - type: Sprite
-    sprite: _Pirate/Objects/Decoration/Flora/bush.rsi
-    state: bush01
-    drawdepth: OverMobs
-    offset: "0, 0.4"
+    sprite: _Pirate/Objects/Decoration/Flora/flora_treebroken_96x96.rsi
+    state: broken01
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.3,0.35,0.5"
+        density: 1000
+        layer:
+        - WallLayer
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
 
+- type: entity
+  parent: FloraTreeBroken01
+  id: FloraTreeBroken02
+  components:
+  - type: Sprite
+    state: broken02
+
+- type: entity
+  parent: FloraTreeBroken01
+  id: FloraTreeBroken03
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Decoration/Flora/flora_treebroken_48x48.rsi
+    state: broken03
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,0.1,0.35,0.9"
+        density: 1000
+        layer:
+        - WallLayer
+
+- type: entity
+  parent: FloraTreeBroken01
+  id: FloraTreeBroken04
+  components:
+  - type: Sprite
+    state: broken04
+
+- type: entity
+  parent: FloraTreeBroken01
+  id: FloraTreeBroken05
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Decoration/Flora/flora_treebroken_48x48.rsi
+    state: broken05
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,0.1,0.35,0.9"
+        density: 1000
+        layer:
+        - WallLayer
+
+- type: entity
+  parent: BaseTree
+  id: FloraPalmTree01
+  name: palm tree
+  description: A tropical palm tree. Gives the atmosphere of a paradise island.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Decoration/Flora/flora_treepalm.rsi
+    state: treepalm01
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 400
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/tree_fell.ogg
+            params:
+              volume: 5
+              variation: 0.05
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            Log:
+              min: 2
+              max: 5
+
+- type: entity
+  parent: FloraPalmTree01
+  id: FloraPalmTree02
+  components:
+  - type: Sprite
+    state: treepalm02
+
+- type: entity
+  parent: FloraPalmTree01
+  id: FloraPalmTree03
+  components:
+  - type: Sprite
+    state: treepalm03
+
+#region Кусти
 - type: entity
   parent: BaseStructure
   id: Hedge
@@ -308,3 +402,131 @@
   - type: Sprite
     sprite: _Pirate/Objects/Decoration/Flora/hedge.rsi
     state: icon
+
+- type: entity
+  parent: BaseStructure
+  id: FloraBigBush01
+  name: big bush
+  description: A dense decorative bush.
+  components:
+  - type: SpriteFade
+  - type: Sprite
+    sprite: _Pirate/Objects/Decoration/Flora/flora_bushes64x64.rsi
+    state: bigbush1
+    drawdepth: OverMobs
+    offset: "0, 0.4"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask: []
+        layer: []
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/chop.ogg
+        params:
+          variation: 0.05
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCloth1:
+            min: 1
+            max: 2
+
+- type: entity
+  parent: FloraBigBush01
+  id: FloraBigBush02
+  components:
+  - type: Sprite
+    state: bigbush2
+
+- type: entity
+  parent: FloraBigBush01
+  id: FloraBigBush03
+  components:
+  - type: Sprite
+    state: bigbush3
+
+- type: entity
+  parent: FloraBigBush01
+  id: FloraBigBush04
+  components:
+  - type: Sprite
+    state: bigbush4
+
+#region Каміння
+- type: entity
+  parent: BaseStructure
+  id: FloraBigRock01
+  name: big rock
+  description: A large decorative rock.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Decoration/Flora/flora_rocks64x64.rsi
+    state: bigrock01
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask: []
+        layer: []
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/break_stone.ogg
+        params:
+          variation: 0.05
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelOre1:
+            min: 1
+            max: 2
+
+- type: entity
+  parent: FloraBigRock01
+  id: FloraBigRock02
+  components:
+  - type: Sprite
+    state: bigrock02
+
+- type: entity
+  parent: FloraBigRock01
+  id: FloraBigRock03
+  components:
+  - type: Sprite
+    state: bigrock03
+
+- type: entity
+  parent: FloraBigRock01
+  id: FloraBigRock04
+  components:
+  - type: Sprite
+    state: bigrock04

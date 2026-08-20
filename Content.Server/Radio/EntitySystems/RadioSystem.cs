@@ -26,6 +26,7 @@ using Content.Shared.Chat.RadioIconsEvents; // Goobstation
 using Content.Shared.Whitelist; // Goobstation
 using Content.Shared.StatusIcon; // Goobstation
 using Content.Goobstation.Shared.Radio; // Goobstation
+using Content.Server._Pirate.ListeningPost.Components; // Pirate - listening post long-range radio
 using Content.Server._Pirate.Radio.Components; // Pirate - Handheld Radios port
 using Content.Shared._Pirate.Radio; // Pirate: radio sounds
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
@@ -217,6 +218,7 @@ public sealed partial class RadioSystem : EntitySystem
         var sourceMapId = sourceCoverage.FallbackMapId; // Pirate: multiz
         var hasActiveServer = HasActiveServer(sourceCoverage, channel.ID); // Pirate: multiz
         var sourceServerExempt = _exemptQuery.HasComp(radioSource);
+        var sourceCoverageExempt = HasComp<ListeningPostRadioComponent>(radioSource); // Pirate: listening post radio
 
         // Pirate start - handheld radios port
         if (frequency == null)
@@ -247,8 +249,10 @@ public sealed partial class RadioSystem : EntitySystem
                 continue;
             // Pirate end - Handheld Radios port
 
-            if (!channel.LongRange && !_zLevels.IsInCoverage(sourceCoverage, receiver, transform) && !radio.GlobalReceive // Pirate: multiz
-                && !(HasActiveTransmitter(transform.MapID) && HasActiveTransmitter(sourceMapId))) // goob - intermap transmitters
+            var receiverCoverageExempt = HasComp<ListeningPostRadioComponent>(receiver); // Pirate: listening post radio
+            if (!channel.LongRange && !_zLevels.IsInCoverage(sourceCoverage, receiver, transform) && // Pirate: multiz
+                !radio.GlobalReceive && !sourceCoverageExempt && !receiverCoverageExempt &&
+                !(HasActiveTransmitter(transform.MapID) && HasActiveTransmitter(sourceMapId))) // goob - intermap transmitters
                 continue;
 
             // don't need telecom server for long range channels or handheld radios and intercoms

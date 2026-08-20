@@ -1,0 +1,11 @@
+# Зміна нюпенка
+- type: entity
+  parent: BaseFlag
+  id: SolFlag
+  name: Соларанський прапор
+  description: Прапор повішений на стіну, нічого особливого.
+  suffix: SAN
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/flags.rsi
+    state: flagSol

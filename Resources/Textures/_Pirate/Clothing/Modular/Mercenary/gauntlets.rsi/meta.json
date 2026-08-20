@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Adapted from the mercenary hardsuit sprites (originally by AvianMaiden for Impstation) for the modular suit system.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-sealed"
+    },
+    {
+      "name": "equipped-HAND",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-HAND",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-HAND-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HAND-vox",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-HAND-vox",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-HAND-unshaded-vox",
+      "directions": 4
+    }
+  ]
+}

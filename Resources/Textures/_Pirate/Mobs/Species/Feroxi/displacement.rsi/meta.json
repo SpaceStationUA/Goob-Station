@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Feroxi displacement maps generated from the Goobstation feroxi body silhouette (_Goobstation/Mobs/Species/Feroxi/parts.rsi) measured against the human baseline: clothing pixels that would hang off the feroxi body are masked, and pixels over the wider/offset feroxi legs sample from the nearest human-body pixel.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "load": {
+    "srgb": false
+  },
+  "states": [
+    {
+      "name": "outerclothing",
+      "directions": 4
+    },
+    {
+      "name": "shoes",
+      "directions": 4
+    }
+  ]
+}

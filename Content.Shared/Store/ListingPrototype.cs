@@ -123,6 +123,13 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     public int PurchaseAmount;
 
     /// <summary>
+    /// Pirate - Reputation required for traitors to purchase this.
+    /// This is ignored for non-traitor stores.
+    /// </summary>
+    [DataField]
+    public int? Reputation;
+
+    /// <summary>
     /// Used to delay purchase of some items.
     /// </summary>
     [DataField]
@@ -182,6 +189,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             DisableRefund != listing.DisableRefund || // Goobstation
             ResetRestockOnPurchase != listing.ResetRestockOnPurchase || // Goobstation
             RestockAfterPurchase != listing.RestockAfterPurchase || // Goobstation
+            Reputation != listing.Reputation || // Pirate: include reputation in listing identity.
             RestockTime != listing.RestockTime)
             return false;
 
@@ -232,6 +240,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             ProductUpgradeId = ProductUpgradeId,
             ProductActionEntity = ProductActionEntity,
             ProductEvent = ProductEvent,
+            Reputation = Reputation, // Pirate: traitor contract reputation gate
             RaiseProductEventOnUser = RaiseProductEventOnUser, // goob edit
             ProductHereticKnowledge = ProductHereticKnowledge, // goob edit
             DisableRefund = DisableRefund, // goob edit

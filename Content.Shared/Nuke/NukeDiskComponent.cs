@@ -28,4 +28,10 @@ public sealed partial class NukeDiskComponent : Component
     [DataField]
     public TimeSpan MicrowaveStd = TimeSpan.FromSeconds(27.35);
     // STD of 27.36s means theres an 90% chance the time is between +-45s, and a ~99% chance its between +-70s
+
+    /// <summary>
+    /// Pirate: When extracted by a syndicate agent, this makes the disk teleport to any nuclear operatives.
+    /// </summary>
+    [DataField]
+    public bool Extracted;
 }

@@ -442,3 +442,15 @@ reagent-effect-guidebook-add-to-chemicals = { $chance ->
         [1] до
         *[-1] з
     } розчину
+reagent-effect-guidebook-change-glimmer-reaction-effect = { $chance ->
+        [1] Змінює
+        *[other] Змінює
+    } кількість мерехтінь на {$count} пунктів
+reagent-effect-guidebook-chem-remove-psionic = { $chance ->
+        [1] Видаляє
+        *[other] видаляє
+    } псіонічні здібності
+reagent-effect-guidebook-chem-roll-psionic = { $chance ->
+        [1] Дає
+        *[other] дає
+    } шанс отримати псіонічну силу з множником x{$multiplier}

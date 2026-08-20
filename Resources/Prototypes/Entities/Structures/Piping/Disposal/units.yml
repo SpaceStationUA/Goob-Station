@@ -100,7 +100,7 @@
   name: disposal unit
   components:
   - type: Sprite
-    sprite: Structures/Piping/disposal.rsi
+    sprite: _Pirate/Structures/Piping/disposal.rsi # Pirate - resprite
     snapCardinals: true
   - type: Construction
     graph: DisposalMachine
@@ -130,7 +130,7 @@
   description: A pneumatic mail delivery unit.
   components:
   - type: Sprite
-    sprite: Structures/Piping/disposal.rsi
+    sprite: _Pirate/Structures/Piping/disposal.rsi # Pirate - resprite
     snapCardinals: true
     layers:
       - state: conmailing

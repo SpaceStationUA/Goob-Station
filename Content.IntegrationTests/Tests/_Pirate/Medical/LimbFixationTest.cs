@@ -10,6 +10,7 @@ using Content.Shared._Shitmed.Medical.Surgery;
 using Content.Shared._Shitmed.Medical.Surgery.Conditions;
 using Content.Shared._Shitmed.Medical.Surgery.Steps;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas;
+using Content.Shared._Shitmed.Medical.Surgery.Traumas.Systems;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Systems;
@@ -63,7 +64,7 @@ public sealed class LimbFixationTest
             var beforeTrauma = new BeforeTraumaInducedEvent(
                 FixedPoint2.New(50),
                 armWoundable.ParentWoundable!.Value,
-                TraumaType.Dismemberment);
+                TraumaSystem.Dismemberment);
 
             entMan.EventBus.RaiseLocalEvent(arm.Id, ref beforeTrauma);
 

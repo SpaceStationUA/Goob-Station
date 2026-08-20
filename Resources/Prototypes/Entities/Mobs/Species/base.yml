@@ -107,8 +107,8 @@
     bounds: -0.5,-0.5,0.5,0.5
   - type: HasJobIcons # Goobstation
   - type: RotationVisuals
-    defaultRotation: 90
-    horizontalRotation: 90
+    defaultRotation: -90 # Pirate edit - was 90
+    horizontalRotation: -90 # Pirate edit - was 90
   - type: HumanoidAppearance
     species: Human
   - type: TypingIndicator
@@ -217,6 +217,8 @@
   - type: AccessReader # Goobstation-WantedMenu
     access: [["Security"]]
     shouldShowExaminationText: false
+  - type: IdExaminablePsionics # Pirate-PsionicsMenu
+    radioChannel: Science
   - type: UserInterface
     interfaces:
       enum.HumanoidMarkingModifierKey.Key:
@@ -286,7 +288,6 @@
   - type: ExaminableCharacter # WWDP
   - type: AlternativeJob # Pirate - Alternative Jobs
   - type: OfferItem # Pirate - port EE item offesrs
-  - type: Mood # Pirate - port EE mood system
   - type: Sprinter # Goobstation
   - type: MindControllable # Goobstation
   - type: VisibleContraband # Goobstation
@@ -377,6 +378,7 @@
   #  power: 0.6
   - type: FlightAffectedByScale # Goobstation: port EE height/width sliders.
   - type: StunVisuals
+  - type: PotentialPsionic # Pirate
   - type: DiseaseCarrier
   - type: Immunity
     affectedTypes:

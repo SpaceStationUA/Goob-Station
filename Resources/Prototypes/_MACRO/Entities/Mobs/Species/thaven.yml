@@ -9,6 +9,43 @@
   - type: ScaleData
   - type: HumanoidAppearance
     species: Thaven
+    # Pirate: Align Thaven hair and facial hair with the custom head sprite.
+    markingsDisplacement:
+      Hair:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: head
+      FacialHair:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: head
+  - type: Inventory
+    # Pirate: Apply the Thaven-specific clothing offsets and inventory layout.
+    speciesId: thaven
+    templateId: thaven
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: outerclothing_hardsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: head
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: hands
   - type: Fixtures
     fixtures:
       fix1:
@@ -80,3 +117,40 @@
   components:
   - type: HumanoidAppearance
     species: Thaven
+    # Pirate: Keep the character-setup dummy aligned with the in-game sprite.
+    markingsDisplacement:
+      Hair:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: head
+      FacialHair:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: head
+  - type: Inventory
+    # Pirate: Match the dummy's inventory offsets to the real Thaven body.
+    speciesId: thaven
+    templateId: thaven
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: outerclothing_hardsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: head
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _MACRO/Mobs/Species/Thaven/displacement.rsi
+            state: hands

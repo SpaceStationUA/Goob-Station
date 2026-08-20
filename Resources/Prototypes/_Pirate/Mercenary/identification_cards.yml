@@ -1,0 +1,34 @@
+- type: entity
+  parent: [IDCardStandard, BaseChameleon]
+  id: MercenaryIDCard
+  name: mercenary ID card
+  suffix: Mercenary
+  components:
+  - type: Access
+    tags:
+    - Maintenance
+    - SyndicateAgent
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idpassenger
+  - type: AgentIDCard
+  - type: UIRequiresLock
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+    verbText: agent-id-open-ui-verb
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: ChameleonClothing
+    slot: [idcard]
+    default: PassengerIDCard
+    requireTag: WhitelistChameleonIdCard
+  - type: UserInterface
+    interfaces:
+      enum.AgentIDCardUiKey.Key:
+        type: AgentIDCardBoundUserInterface
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
+  - type: NanoChatCard
+    listNumber: false

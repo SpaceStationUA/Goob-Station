@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared._Pirate.Reputation; // Pirate
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Random; // Pirate
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -15,6 +17,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly ReputationSystem _reputation = default!; // Pirate
 
     private EntityQuery<MetaDataComponent> _metaQuery;
 
@@ -46,6 +49,15 @@ public abstract class SharedObjectivesSystem : EntitySystem
             {
                 if (_metaQuery.GetComponent(objective).EntityPrototype?.ID == proto)
                     return false;
+            }
+            // Pirate: prevent duplicate contract offerings.
+            if (_reputation.GetContracts(mindId) is {} contracts)
+            {
+                foreach (var objective in contracts.Comp.Offerings)
+                {
+                    if (objective is {} obj && _metaQuery.Comp(obj).EntityPrototype?.ID == proto)
+                        return false;
+                }
             }
         }
 
@@ -165,5 +177,12 @@ public abstract class SharedObjectivesSystem : EntitySystem
             return;
 
         comp.Icon = icon;
+    }
+    /// <summary>
+    /// Pirate: Allows shared contract code to request an objective.
+    /// </summary>
+    public virtual EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, ProtoId<WeightedRandomPrototype> objectiveGroupProto, float maxDifficulty)
+    {
+        return null;
     }
 }

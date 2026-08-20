@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared._Shitmed.Body.Events; // Shitmed Change
 using Content.Client.DisplacementMap;
 using Content.Client.Examine;
@@ -65,17 +64,20 @@ namespace Content.Client.Hands.Systems
             if (args.Current is not HandsComponentState state)
                 return;
 
-            var newHands = state.Hands.Keys.Except(ent.Comp.Hands.Keys); // hands that were added between states
-            var oldHands = ent.Comp.Hands.Keys.Except(state.Hands.Keys); // hands that were removed between states
-
-            foreach (var handId in oldHands)
+            // Remove from the end because RemoveHand also updates SortedHands.
+            for (var i = ent.Comp.SortedHands.Count - 1; i >= 0; i--)
             {
-                RemoveHand(ent.AsNullable(), handId);
+                var handId = ent.Comp.SortedHands[i];
+                if (!state.Hands.ContainsKey(handId))
+                    RemoveHand(ent.AsNullable(), handId);
             }
 
-            foreach (var handId in state.SortedHands.Intersect(newHands))
+            foreach (var handId in state.SortedHands)
             {
-                AddHand(ent.AsNullable(), handId, state.Hands[handId]);
+                if (ent.Comp.Hands.ContainsKey(handId) || !state.Hands.TryGetValue(handId, out var hand))
+                    continue;
+
+                AddHand(ent.AsNullable(), handId, hand);
             }
             ent.Comp.SortedHands = new (state.SortedHands);
 

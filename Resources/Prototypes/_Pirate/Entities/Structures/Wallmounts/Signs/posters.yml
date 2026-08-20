@@ -237,7 +237,7 @@
   - type: Sprite
     sprite: _Pirate/Structures/Wallmounts/Posters/Interdyne.rsi
     state: poster_interdyne_public_zone
-    
+
 - type: entity
   parent: PosterBase
   id: PosterLegitInterdynePrivateZone
@@ -268,3 +268,49 @@
   - type: Sprite
     sprite: _Pirate/Structures/Wallmounts/Posters/Vareniko.rsi
     state: LoveFurry
+
+# Од Нюпенка
+
+- type: entity
+  parent: PosterBase
+  id: PosterSolFlag
+  name: "Постер прапору Соларіанського Альянсу"
+  description: "Аве Сол!"
+  suffix: SAN
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/Posters/solPosters.rsi
+    state: posterSol1
+
+- type: entity
+  parent: PosterBase
+  id: PosterSolJoinForce
+  name: "Приєднуйся до армії Соларіанського Альянсу!"
+  description: "Армія у нас велика, на усіх вистачить! Ще й на землю лишиться!"
+  suffix: SAN
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/Posters/solPosters.rsi
+    state: posterSol2
+
+- type: entity
+  parent: PosterBase
+  id: PosterSolMisc
+  name: "ВсеСоларіанський орбітальний Маркетплейс!"
+  description: "Доставка до усіх куточків галактики!"
+  suffix: SAN
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/Posters/solPosters.rsi
+    state: posterSol3
+
+- type: entity
+  parent: PosterBase
+  id: PosterSolMilitaryFlag
+  name: "Постер прапору Військових Сил Соларіанського Альянсу"
+  description: "Пам'ять усім героям!"
+  suffix: SAN
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/Posters/solPosters.rsi
+    state: posterSol4

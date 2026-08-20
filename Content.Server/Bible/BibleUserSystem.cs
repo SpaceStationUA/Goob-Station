@@ -2,6 +2,7 @@
 
 using Content.Goobstation.Common.Religion;
 using Content.Goobstation.Shared.Bible;
+using Content.Pirate.Common.Familiar;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Popups;
 using Content.Shared._Shitmed.Damage;
@@ -17,7 +18,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Mood;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -39,6 +39,8 @@ namespace Content.Server.Bible
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        // Pirate: expose the existing bible familiar relationship to the common familiar API.
+        [Dependency] private readonly CommonFamiliarSystem _familiar = default!;
 
 
         public override void Initialize()
@@ -164,7 +166,6 @@ namespace Content.Server.Bible
 
                 _audio.PlayPvs(component.HealSoundPath, args.User);
                 _delay.TryResetDelay((uid, useDelay));
-                RaiseLocalEvent(args.Target.Value, new MoodEffectEvent("GotBlessed")); // Pirate - port EE mood system
             }
             else
             {
@@ -239,6 +240,7 @@ namespace Content.Server.Bible
 
             component.Source = parent;
             summonable.Summon = uid;
+            _familiar.SetMaster(uid, parent);
         }
 
         private void AttemptSummon(Entity<SummonableComponent> ent, EntityUid user, TransformComponent? position)

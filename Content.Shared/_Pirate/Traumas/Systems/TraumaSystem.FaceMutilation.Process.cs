@@ -1,110 +1,83 @@
 using System;
 using System.Collections.Generic;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared._Shitmed.Medical.Surgery.Traumas;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas.Components;
-using Content.Shared._Shitmed.Medical.Surgery.Wounds;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
-using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
-using Robust.Shared.Random;
 
 namespace Content.Shared._Shitmed.Medical.Surgery.Traumas.Systems;
 
 public sealed partial class TraumaSystem
 {
-    public bool RandomFaceMutilationChance(
-        Entity<WoundableComponent> target,
-        Entity<TraumaInflicterComponent> woundInflicter)
+    private void InitFaceMutilation()
     {
-        if (!TryComp<BodyPartComponent>(target, out var bodyPart)
-            || !bodyPart.Body.HasValue
-            || bodyPart.PartType != BodyPartType.Head
-            || target.Comp.WoundableSeverity < WoundableSeverity.Moderate
-            || target.Comp.WoundableSeverity == WoundableSeverity.Severed
-            || HasWoundableTrauma(target, TraumaType.FaceMutilation, target))
-        {
-            return false;
-        }
-
-        if (!TryComp<WoundComponent>(woundInflicter, out var woundComp))
-            return false;
-
-        var deduction = GetTraumaChanceDeduction(
-            woundInflicter,
-            bodyPart.Body.Value,
-            target,
-            woundComp.WoundSeverityPoint,
-            TraumaType.FaceMutilation,
-            BodyPartType.Head);
-
-        if (deduction >= 1)
-            return false;
-
-        if (target.Comp.IntegrityCap <= 0)
-            return false;
-
-        var damageFraction = FixedPoint2.Clamp(
-            1f - target.Comp.WoundableIntegrity / target.Comp.IntegrityCap,
-            0,
-            1);
-
-        var chance = FixedPoint2.Clamp(
-            damageFraction * 0.6f - deduction + woundInflicter.Comp.TraumasChances[TraumaType.FaceMutilation],
-            0,
-            1);
-
-        return _random.Prob((float) chance);
+        SubscribeLocalEvent<TraumaComponent, TraumaInducedEvent>(OnFaceMutilationTraumaInduced);
+        SubscribeLocalEvent<TraumaComponent, TraumaBeingRemovedEvent>(OnFaceMutilationTraumaRemoved);
     }
 
-    private void ApplyFaceMutilationTrauma(
-        Entity<WoundableComponent> target,
-        EntityUid traumaTarget,
-        Entity<TraumaInflicterComponent> inflicter)
+    private void OnFaceMutilationTraumaInduced(
+        Entity<TraumaComponent> trauma,
+        ref TraumaInducedEvent args)
     {
-        var faceTraumaEnt = AddTrauma(traumaTarget, target, inflicter, TraumaType.FaceMutilation, 0);
-        if (faceTraumaEnt == EntityUid.Invalid
-            || !_net.IsServer)
-        {
+        if (args.TraumaType != FaceMutilation)
             return;
-        }
 
-        if (!TryComp<BodyPartComponent>(target, out var targetPartComp)
-            || !targetPartComp.Body.HasValue
-            || !TryComp<HumanoidAppearanceComponent>(targetPartComp.Body.Value, out var headOwnerHumanoid))
-        {
+        if (!_container.TryGetContainingContainer(
+                (trauma.Owner, Transform(trauma.Owner), MetaData(trauma.Owner)),
+                out var traumaContainer)
+            || !TryComp<TraumaInflicterComponent>(traumaContainer.Owner, out var inflicter))
             return;
-        }
+
+        ApplyFaceMutilationMarkings(trauma, args.TraumaTarget, inflicter);
+    }
+
+    private void OnFaceMutilationTraumaRemoved(
+        Entity<TraumaComponent> trauma,
+        ref TraumaBeingRemovedEvent args)
+    {
+        if (args.TraumaType == FaceMutilation)
+            TryRemoveFaceMutilationMarkings(trauma);
+    }
+
+    private void ApplyFaceMutilationMarkings(
+        Entity<TraumaComponent> faceTrauma,
+        EntityUid traumaTarget,
+        TraumaInflicterComponent inflicter)
+    {
+        if (!_net.IsServer
+            || !TryComp<BodyPartComponent>(traumaTarget, out var targetPart)
+            || targetPart.Body is not { } body
+            || !TryComp<HumanoidAppearanceComponent>(body, out var humanoid))
+            return;
 
         var appliedMarkings = new List<string>();
-
-        foreach (var markingId in inflicter.Comp.FaceMutilationMarkings)
+        foreach (var markingId in inflicter.FaceMutilationMarkings)
         {
             if (!_markingManager.Markings.TryGetValue(markingId, out var markingProto))
                 continue;
 
             var marking = markingProto.AsMarking();
-            if (!_markingManager.IsValidMarking(marking, MarkingCategories.Head, headOwnerHumanoid.Species, headOwnerHumanoid.Sex))
+            if (!_markingManager.IsValidMarking(marking, MarkingCategories.Head, humanoid.Species, humanoid.Sex))
                 continue;
 
-            _humanoid.AddMarking(targetPartComp.Body.Value, markingId, sync: false, forced: true, humanoid: headOwnerHumanoid);
+            _humanoid.AddMarking(body, markingId, sync: false, forced: true, humanoid: humanoid);
             appliedMarkings.Add(markingId);
         }
 
-        if (appliedMarkings.Count > 0 && TryComp<TraumaComponent>(faceTraumaEnt, out var traumaComp))
-        {
-            traumaComp.MarkingId = string.Join(',', appliedMarkings);
-            Dirty(faceTraumaEnt, traumaComp);
-        }
+        if (appliedMarkings.Count == 0)
+            return;
 
-        Dirty(targetPartComp.Body.Value, headOwnerHumanoid);
+        faceTrauma.Comp.MarkingId = string.Join(',', appliedMarkings);
+        Dirty(faceTrauma, faceTrauma.Comp);
+        Dirty(body, humanoid);
     }
 
     private void TryRemoveFaceMutilationMarkings(Entity<TraumaComponent> trauma)
     {
         if (!_net.IsServer
-            || trauma.Comp.TraumaType != TraumaType.FaceMutilation
+            || trauma.Comp.TraumaType != FaceMutilation
             || trauma.Comp.TraumaTarget is not { } traumaTarget
             || trauma.Comp.MarkingId is not { } markingIdsRaw)
         {
@@ -113,9 +86,9 @@ public sealed partial class TraumaSystem
 
         var markingHolder = traumaTarget;
         if (TryComp<BodyPartComponent>(traumaTarget, out var traumaBodyPart)
-            && traumaBodyPart.Body.HasValue)
+            && traumaBodyPart.Body is { } body)
         {
-            markingHolder = traumaBodyPart.Body.Value;
+            markingHolder = body;
         }
 
         if (!TryComp<HumanoidAppearanceComponent>(markingHolder, out var humanoid))

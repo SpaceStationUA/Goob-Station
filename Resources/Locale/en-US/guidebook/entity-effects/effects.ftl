@@ -570,3 +570,21 @@ reagent-effect-guidebook-add-to-chemicals =
         [1] to
         *[-1] from
     } the solution
+
+reagent-effect-guidebook-change-glimmer-reaction-effect =
+    { $chance ->
+        [1] Changes
+        *[other] change
+    } glimmer by {$amount} points
+
+reagent-effect-guidebook-chem-remove-psionic =
+    { $chance ->
+        [1] Removes
+        *[other] remove
+    } psionic abilities
+
+reagent-effect-guidebook-chem-roll-psionic =
+    { $chance ->
+        [1] Gives
+        *[other] give
+    } a chance to roll a psionic power with x{$multiplier} multiplier

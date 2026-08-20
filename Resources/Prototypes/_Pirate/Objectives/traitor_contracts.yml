@@ -1,0 +1,381 @@
+- type: weightedRandom
+  id: ReputationOfferings
+  weights:
+    PirateTraitorContractGroupStealMinor: 0.5
+    PirateTraitorContractGroupSteal: 1
+    PirateTraitorContractGroupMurder: 1
+    PirateTraitorContractGroupAssist: 0.5
+    PirateTraitorContractGroupSabotage: 1
+    PirateTraitorContractGroupSpecial: 0.2
+    PirateTraitorContractGroupRansom: 1
+
+- type: entity
+  abstract: true
+  parent: [BaseTraitorObjective, BaseExtractObjective]
+  id: BasePirateTraitorExtractObjective
+  components:
+  - type: Objective
+    difficulty: 2.75
+  - type: ObjectiveLimit
+    limit: 2
+  - type: ReputationCondition
+    reputation: 20
+  - type: ContractObjective
+    reputation: 20
+    payment: 20
+
+- type: entity
+  abstract: true
+  parent: BasePirateTraitorExtractObjective
+  id: BasePirateTraitorMinorExtractObjective
+  components:
+  - type: ReputationCondition
+    reputation: 0
+  - type: ContractObjective
+    reputation: 10
+    payment: 5
+
+# Minor theft.
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractAdminStampObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ AdministrativeAssistant ]
+  - type: ExtractCondition
+    stealGroup: RubberStampAdminAssistant
+    owner: job-name-admin-assistant
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractRCDObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Engineering
+  - type: ExtractCondition
+    stealGroup: RCD
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractCargoRequestObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Cargo
+  - type: ExtractCondition
+    stealGroup: CargoRequestComputerCircuitboard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractResearchComputerObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Science
+  - type: ExtractCondition
+    stealGroup: ResearchComputerCircuitboard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractCriminalRecordsObjective
+  components:
+  - type: ExtractCondition
+    stealGroup: CriminalRecordsComputerCircuitboard
+  - type: ContractObjective
+    reputation: 15
+    payment: 15
+
+# Standard extraction contracts.
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractCMOHyposprayObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ChiefMedicalOfficer ]
+  - type: ExtractCondition
+    stealGroup: Hypospray
+    owner: job-name-cmo
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractRDHardsuitObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ResearchDirector ]
+  - type: ExtractCondition
+    stealGroup: ClothingOuterHardsuitRd
+    owner: job-name-rd
+  - type: Objective
+    difficulty: 3
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractHandTeleporterObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ResearchDirector ]
+  - type: ExtractCondition
+    stealGroup: HandTeleporter
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractEnergyMagnumObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ HeadOfSecurity ]
+  - type: ExtractCondition
+    stealGroup: WeaponEnergyMagnum
+    owner: job-name-hos
+  - type: Objective
+    difficulty: 3
+  - type: ReputationCondition
+    reputation: 60
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractMagbootsObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ChiefEngineer ]
+  - type: ExtractCondition
+    stealGroup: ClothingShoesBootsMagAdv
+    owner: job-name-ce
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractClipboardObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ Quartermaster ]
+  - type: ExtractCondition
+    stealGroup: BoxFolderQmClipboard
+    owner: job-name-qm
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractKnuckleDustersObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ Quartermaster ]
+  - type: ExtractCondition
+    stealGroup: ClothingHandsKnuckleDustersQM
+    owner: job-name-qm
+
+- type: entity
+  abstract: true
+  parent: BasePirateTraitorExtractObjective
+  id: BasePirateTraitorCaptainExtractObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ Captain ]
+  - type: Objective
+    difficulty: 3.5
+  - type: ReputationCondition
+    reputation: 60
+
+- type: entity
+  parent: BasePirateTraitorCaptainExtractObjective
+  id: TraitorContractCaptainIdObjective
+  components:
+  - type: ExtractCondition
+    stealGroup: CaptainIDCard
+
+- type: entity
+  parent: BasePirateTraitorCaptainExtractObjective
+  id: TraitorContractCaptainJetpackObjective
+  components:
+  - type: ExtractCondition
+    stealGroup: JetpackCaptainFilled
+
+- type: entity
+  parent: BasePirateTraitorCaptainExtractObjective
+  id: TraitorContractCaptainGunObjective
+  components:
+  - type: ExtractCondition
+    stealGroup: WeaponAntiqueLaser
+    owner: job-name-captain
+
+- type: entity
+  parent: BasePirateTraitorCaptainExtractObjective
+  id: TraitorContractNukeDiskObjective
+  components:
+  - type: NotCommandRequirement
+  - type: ExtractCondition
+    stealGroup: NukeDisk
+    owner: objective-condition-steal-station
+  - type: Objective
+    difficulty: 4
+  - type: ReputationCondition
+    reputation: 75
+
+# Murder and execution contracts.
+- type: entity
+  abstract: true
+  parent: [BaseTraitorObjective, BaseTeachALessonObjective]
+  id: BasePirateTraitorMurderObjective
+  components:
+  - type: ReputationCondition
+    reputation: 30
+  - type: ContractObjective
+    reputation: 20
+    payment: 15
+
+- type: entity
+  parent: BasePirateTraitorMurderObjective
+  id: TraitorContractTeachRandomPersonObjective
+  components:
+  - type: Objective
+    difficulty: 1.75
+    unique: false
+  - type: TargetObjective
+    title: objective-condition-teach-lesson-title
+  - type: PickRandomPerson
+    filters:
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - TeachALessonCondition
+
+- type: entity
+  parent: BasePirateTraitorMurderObjective
+  id: TraitorContractTeachRandomHeadObjective
+  components:
+  - type: Objective
+    difficulty: 2
+  - type: TargetObjective
+    title: objective-condition-teach-lesson-title
+  - type: PickRandomPerson
+    filters:
+    - !type:BodyMindFilter
+      whitelist:
+        components:
+        - CommandStaff
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - TeachALessonCondition
+  - type: ReputationCondition
+    reputation: 40
+  - type: ContractObjective
+    reputation: 25
+    payment: 25
+
+- type: entity
+  parent: BasePirateTraitorMurderObjective
+  id: TraitorContractTeachRandomTraitorObjective
+  components:
+  - type: Objective
+    difficulty: 2
+  - type: TargetObjective
+    title: objective-condition-teach-lesson-title
+  - type: PickRandomTraitor
+    minReputation: 60
+  - type: ReputationCondition
+    reputation: 40
+  - type: ContractObjective
+    reputation: 30
+    payment: 35
+
+# Assist a fellow traitor.
+- type: entity
+  parent: BaseTraitorSocialObjective
+  id: TraitorContractAssistObjective
+  components:
+  - type: Objective
+    difficulty: 2.5
+  - type: TargetObjective
+    title: objective-condition-assist-traitor-title
+  - type: CodeCondition
+  - type: AssistRandomContract
+    blacklist:
+      components:
+      - SocialObjective
+      - DieCondition
+  - type: ContractObjective
+    reputation: 10
+    payment: 15
+
+# Sabotage.
+- type: entity
+  parent: BaseTraitorObjective
+  id: TraitorContractCritAnomalyObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    icon:
+      sprite: Structures/Specific/anomaly.rsi
+      state: anom2-pulse
+  - type: NotDepartmentRequirement
+    department: Science
+  - type: CodeCondition
+  - type: CritAnomalyCondition
+  - type: ReputationCondition
+    reputation: 30
+  - type: ContractObjective
+    reputation: 20
+    payment: 20
+
+# Kidnap for ransom.
+- type: entity
+  abstract: true
+  parent: [BaseTraitorObjective, BaseRansomObjective]
+  id: BasePirateTraitorRansomObjective
+  components:
+  - type: Objective
+    difficulty: 3
+    icon:
+      sprite: Objects/Tools/fulton.rsi
+      state: extraction_pack
+  - type: TargetObjective
+    title: objective-condition-ransom-title
+  - type: ReputationCondition
+    reputation: 30
+  - type: ContractObjective
+    reputation: 25
+    payment: 25
+  - type: StoreUnlocker
+    listings:
+    - SyndieFulton
+
+- type: entity
+  parent: BasePirateTraitorRansomObjective
+  id: TraitorContractRansomRandomPersonObjective
+  components:
+  - type: PickRandomPerson
+
+- type: entity
+  parent: BasePirateTraitorRansomObjective
+  id: TraitorContractRansomRandomHeadObjective
+  components:
+  - type: PickRandomPerson
+    filters:
+    - !type:BodyMindFilter
+      whitelist:
+        components:
+        - CommandStaff
+  - type: ContractObjective
+    reputation: 30
+    payment: 35
+
+# Capstone contract. It is prepaid and deliberately rare.
+- type: entity
+  parent: BaseTraitorObjective
+  id: TraitorContractDieObjective
+  components:
+  - type: Objective
+    difficulty: 0.5
+    icon:
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: icon
+  - type: ObjectiveLimit
+    limit: 1
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - EscapeShuttleCondition
+      - ExtractCondition
+  - type: DieCondition
+  - type: ReputationCondition
+    reputation: 90
+  - type: ContractObjective
+    reputation: 50
+    payment: 100
+    prepaid: true

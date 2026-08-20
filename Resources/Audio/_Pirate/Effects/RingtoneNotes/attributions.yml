@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Amplified copies of the vanilla PDA ringtone notes.
+
+- files: ["a.ogg", "asharp.ogg", "b.ogg", "c.ogg", "csharp.ogg", "d.ogg", "dsharp.ogg", "e.ogg", "f.ogg", "fsharp.ogg", "g.ogg", "gsharp.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Space Station 14 contributors, from Resources/Audio/Effects/RingtoneNotes. Amplified by 14 dB for the sampled song player."
+  source: "https://github.com/space-wizards/space-station-14/pull/5842"

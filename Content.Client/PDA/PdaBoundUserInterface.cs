@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Client.CartridgeLoader;
+using Content.Shared._Pirate.Reputation; // Pirate: traitor contracts.
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.PDA;
@@ -73,6 +74,8 @@ namespace Content.Client.PDA
             {
                 SendMessage(new PdaLockUplinkMessage());
             };
+
+            _menu.ContractsButton.OnPressed += _ => SendMessage(new PdaShowContractsMessage()); // Pirate: traitor contracts.
 
             _menu.OnProgramItemPressed += ActivateCartridge;
             _menu.OnInstallButtonPressed += InstallCartridge;

@@ -215,7 +215,8 @@ public sealed class EnchantingSystem : EntitySystem
         }
 
         // spawn a new one
-        if (!TrySpawnInContainer(id, item, comp.ContainerId, out var spawned))
+        // Pirate: use the prediction-aware spawn path so client and server agree on the enchant entity.
+        if (!PredictedTrySpawnInContainer(id, item, comp.ContainerId, out var spawned))
         {
             Log.Error($"Failed to spawn enchant {id} for {ToPrettyString(item)}!");
             // don't make it shiny without any enchants

@@ -1,0 +1,9 @@
+- files: ["damaged.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified by github user @Flareguy from plating.png, resprited by @mishutka09 (discord:1152277579206774854)"
+  source: "https://github.com/space-wizards/space-station-14/pull/21711"
+
+- files: ["snow.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from plating.png by github user SonicHDC"
+  source: "https://github.com/space-wizards/space-station-14/"

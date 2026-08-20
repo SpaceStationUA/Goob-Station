@@ -1,0 +1,25 @@
+- type: entity
+  parent: CentcomPDA
+  id: GalacticRespublicPDA
+  name: "кПК Галактичної Республіки"
+  description: "Рви та шматуй, доки не буде зроблено."
+  suffix: StarWars
+  components:
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-deathsquad
+  - type: Pda
+    id: GalacticRespublicIDCard
+  - type: Icon
+    sprite: _Goobstation/Objects/Devices/pda.rsi
+    state: pda-deathsquad
+  - type: Sprite
+    sprite: _Goobstation/Objects/Devices/pda.rsi
+    state: pda-deathsquad
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: PdaBorderColor
+    borderColor: "#04040a"
+    accentVColor: "#16bab5"

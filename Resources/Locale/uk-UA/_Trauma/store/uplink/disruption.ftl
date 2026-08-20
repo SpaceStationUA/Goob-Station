@@ -1,0 +1,10 @@
+uplink-syndicate-access-config-name = Конфігуратор доступу Кіберсан
+uplink-syndicate-access-config-desc = Конфігуратор доступу з маркуванням Кіберсан, сумісний з усіма ID-картками, крім Нанотрасен. Тепер із функцією швидкої заміни!
+uplink-syndicate-remote-name = Дистанційний пульт дверей Синдикату
+uplink-syndicate-remote-desc = Пульт дверей із маркуванням Синдикату; працює з доступами агентів Синдикату.
+uplink-shuttle-board-name = Плата консолі шатла Синдикату
+uplink-shuttle-board-desc = Друкована плата для консолі шатла Синдикату.
+uplink-shuttle-bundle-name = Ящик шатла Синдикату
+uplink-shuttle-bundle-desc = Найнеобхідніше для шатла.
+uplink-shuttle-iff-name = Плата консолі IFF Синдикату
+uplink-shuttle-iff-desc = Дає змогу керувати IFF і характеристиками непомітності цього судна.

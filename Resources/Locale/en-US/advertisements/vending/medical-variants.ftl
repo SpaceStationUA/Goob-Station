@@ -1,0 +1,29 @@
+advertisement-interdyne-1 = Go save some lives!
+advertisement-interdyne-2 = The best stuff for your trauma bay.
+advertisement-interdyne-3 = Only the sharpest tools.
+advertisement-interdyne-4 = Natural herbals!
+advertisement-interdyne-5 = This stuff kills!
+advertisement-interdyne-6 = Don't you want more?
+advertisement-interdyne-7 = Pong!
+advertisement-interdyne-8 = Make sure not to overdose people!
+advertisement-interdyne-9 = Go overdose people!
+
+advertisement-deforest-1 = Go save some lives!
+advertisement-deforest-2 = The best stuff for your medbay.
+advertisement-deforest-3 = Only the cleanest tools.
+advertisement-deforest-4 = High quality injectors!
+advertisement-deforest-5 = This stuff saves lives!
+advertisement-deforest-6 = Don't you want some?
+advertisement-deforest-7 = Beep!
+advertisement-deforest-8 = Make sure not to overdose people!
+advertisement-deforest-9 = Go overdose people!
+
+advertisement-nanomedgold-1 = Go save some lives! -DELUXE-
+advertisement-nanomedgold-2 = The best stuff for your luxury medbay.
+advertisement-nanomedgold-3 = Only the most pristine tools.
+advertisement-nanomedgold-4 = Deluxe chemicals!
+advertisement-nanomedgold-5 = This stuff saves lives.
+advertisement-nanomedgold-6 = Don't you want some?
+advertisement-nanomedgold-7 = Bam!
+advertisement-nanomedgold-8 = Make sure not to overdose people!
+advertisement-nanomedgold-9 = Go overdose people!

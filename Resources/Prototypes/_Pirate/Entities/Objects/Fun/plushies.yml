@@ -22,7 +22,7 @@
   - type: EmitSoundOnTrigger
     sound:
       collection: FelinidMeows
-  
+
 - type: entity
   parent: BasePlushie
   id: PlushieIpcCat # :3
@@ -153,7 +153,7 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Human/female_sigh.ogg
-      
+
 - type: entity
   parent: BasePlushie
   id: PlushieSkeleton
@@ -208,7 +208,7 @@
     sprite: _Pirate/Objects/Fun/Plushies/susie.rsi
     slots:
     - HEAD
-    
+
 - type: entity
   parent: BasePlushie
   id: PlushieTayler
@@ -263,3 +263,28 @@
     sprite: _Pirate/Objects/Fun/Plushies/pocket_assistant.rsi
     slots:
     - HEAD
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieNilaMil
+  name: "плюшева слаймолюдка-ботанік"
+  description: Смішна іграшка вашої слизової знайомої! На етикетці написано "Міла Ніл.  So evil...""
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/Plushies/toys.rsi
+    state: plushie_Nila_Mil
+  - type: EmitSoundOnUse
+    sound:
+      collection: Bubbles
+  - type: EmitSoundOnActivate
+    sound:
+      collection: Bubbles
+  - type: EmitSoundOnCollide
+    sound:
+      collection: Pops
+  - type: EmitSoundOnLand
+    sound:
+      collection: Pops
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: Pops

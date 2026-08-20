@@ -1,6 +1,25 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Upstreamrr todo <mailfix>
+- type: entity
+  parent: BaseItem
+  id: GlimmerMonitorCartridge
+  name: glimmer monitor cartridge
+  description: A cartridge that keeps track of glimmer.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Devices/cartridge.rsi
+    state: cart-psi
+  - type: Icon
+    sprite: _DV/Objects/Devices/cartridge.rsi
+    state: cart-psi
+  - type: UIFragment
+    ui: !type:GlimmerMonitorUi
+  - type: Cartridge
+    programName: glimmer-monitor-program-name
+    icon:
+      sprite: _DV/Objects/Devices/cartridge.rsi
+      state: cart-psi
+  - type: GlimmerMonitorCartridge
 
 #- type: entity
 #  parent: BaseItem

@@ -13,7 +13,7 @@
     - SpaceTrafficControlEventScheduler
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: KesslerSyndrome
@@ -29,7 +29,7 @@
     - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: AllAtOnce
@@ -56,7 +56,7 @@
     - Changeling # Goobstation - changeling playtest
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: AllerAtOnce
@@ -89,7 +89,7 @@
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
     - Changeling # Goobstation - changeling playtest
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
     - Shadowling # Einstein Engines - Shadowlings
 
 - type: gamePreset
@@ -105,7 +105,7 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Greenshift
@@ -118,7 +118,7 @@
   rules:
   - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Dynamic
@@ -148,7 +148,7 @@
   rules:
     - Secret
     - BasicStationEventScheduler
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SecretExtended #For Admin Use: Runs Extended but shows "Secret" in lobby.
@@ -162,7 +162,7 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - PsionicEventsScheduler # Pirate
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SecretGreenshift #For Admin Use: Runs Greenshift but shows "Secret" in lobby.
@@ -174,7 +174,7 @@
   rules:
   - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Sandbox
@@ -203,7 +203,7 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Deathmatch
@@ -233,7 +233,7 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Revolutionary
@@ -268,7 +268,7 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Zombie
@@ -287,7 +287,7 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Zombieteors
@@ -304,4 +304,4 @@
   - KesslerSyndromeScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - PsionicEventsScheduler # Pirate
+  - GlimmerEventScheduler # Pirate

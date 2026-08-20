@@ -1043,6 +1043,7 @@
   parent: VendingMachine
   id: VendingMachineMedicalBase
   name: NanoMed Civilian
+  suffix: Civilian # Pirate medical vendor variations
   description: It's a medical drug dispenser. Natural chemicals only!
   components:
   - type: VendingMachine
@@ -1087,6 +1088,7 @@
   parent: VendingMachineMedicalBase
   id: VendingMachineMedical
   name: NanoMed Plus
+  suffix: Departmental # Pirate medical vendor variations
   description: It's a medical drug dispenser. Natural chemicals only!
   components:
   - type: VendingMachine
@@ -2541,6 +2543,7 @@
   parent: VendingMachineWallmount
   id: VendingMachineWallMedicalCivilian
   name: NanoMed band-aid
+  suffix: Civilian, Wallmount # Pirate medical vendor variations
   description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
   components:
   - type: VendingMachine
@@ -2571,6 +2574,7 @@
   parent: VendingMachineWallMedicalCivilian
   id: VendingMachineWallMedical
   name: NanoMed
+  suffix: Departmental, Wallmount # Pirate medical vendor variations
   description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
   components:
   - type: VendingMachine

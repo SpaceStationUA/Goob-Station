@@ -1,7 +1,7 @@
 using Content.Shared.Examine;
-using Content.Shared.Abilities.Psionics;
+using Content.Shared._DV.Psionics.Components;
+using Content.Shared._DV.Psionics.Events;
 using Content.Shared.Humanoid;
-using Content.Shared.Psionics;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -11,14 +11,12 @@ using Content.Shared.Alert;
 using Content.Shared.Rounding;
 using Content.Shared.Actions;
 using Robust.Shared.Prototypes;
-using Content.Server.Abilities.Psionics;
 
 namespace Content.Server.Shadowkin;
 
 public sealed class ShadowkinSystem : EntitySystem
 {
     //[Dependency] private readonly StaminaSystem _stamina = default!; PIRATE
-    [Dependency] private readonly PsionicAbilitiesSystem _psionicAbilitiesSystem = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -28,7 +26,8 @@ public sealed class ShadowkinSystem : EntitySystem
     {
         base.Initialize();
         //SubscribeLocalEvent<ShadowkinComponent, ComponentStartup>(OnInit);
-        SubscribeLocalEvent<ShadowkinComponent, OnMindbreakEvent>(OnMindbreak);
+        SubscribeLocalEvent<ShadowkinComponent, PsionicMindBrokenEvent>(OnMindbreak);
+        SubscribeLocalEvent<ShadowkinComponent, MindBrokenAddedEvent>(OnMindBrokenAdded);
         SubscribeLocalEvent<ShadowkinComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<ShadowkinComponent, EyeColorInitEvent>(OnEyeColorChange);
     }
@@ -38,47 +37,62 @@ public sealed class ShadowkinSystem : EntitySystem
         _actionsSystem.AddAction(uid, ref component.ShadowkinSleepAction, ShadowkinSleepActionId, uid);
     } */
 
-    private void OnEyeColorChange(EntityUid uid, ShadowkinComponent component, EyeColorInitEvent args)
+    private void OnEyeColorChange(Entity<ShadowkinComponent> ent, ref EyeColorInitEvent args)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(uid, out var humanoid)
-            || humanoid.EyeColor == component.OldEyeColor)
+        if (!TryComp<HumanoidAppearanceComponent>(ent, out var humanoid))
             return;
 
-        component.OldEyeColor = humanoid.EyeColor;
-        Dirty(uid, humanoid);
+        // Remember the real eye color, but never capture the mindbroken black as the original.
+        if (humanoid.EyeColor != ent.Comp.OldEyeColor && humanoid.EyeColor != ent.Comp.BlackEyeColor)
+        {
+            ent.Comp.OldEyeColor = humanoid.EyeColor;
+            Dirty(ent, humanoid);
+        }
     }
 
-    private void OnMindbreak(EntityUid uid, ShadowkinComponent component, ref OnMindbreakEvent args)
+    private void OnMindbreak(Entity<ShadowkinComponent> ent, ref PsionicMindBrokenEvent args)
     {
-        if (TryComp<MindbrokenComponent>(uid, out var mindbreak))
-            mindbreak.MindbrokenExaminationText = "examine-mindbroken-shadowkin-message";
-
-        if (TryComp<HumanoidAppearanceComponent>(uid, out var humanoid))
-        {
-            component.OldEyeColor = humanoid.EyeColor;
-            humanoid.EyeColor = component.BlackEyeColor;
-            Dirty(uid, humanoid);
-        }
+        SetBlackEyes(ent, ent.Comp);
 
         //if (TryComp<StaminaComponent>(uid, out var stamina)) PIRATE
         //    _stamina.TakeStaminaDamage(uid, stamina.CritThreshold, stamina, uid);
     }
 
-    private void OnRejuvenate(EntityUid uid, ShadowkinComponent component, RejuvenateEvent args)
+    private void OnMindBrokenAdded(Entity<ShadowkinComponent> ent, ref MindBrokenAddedEvent args)
     {
-        if (!HasComp<MindbrokenComponent>(uid))
-            return;
+        SetBlackEyes(ent, ent.Comp);
+    }
 
-        RemComp<MindbrokenComponent>(uid);
-
-        if (TryComp<HumanoidAppearanceComponent>(uid, out var humanoid))
+    private void OnRejuvenate(Entity<ShadowkinComponent> ent, ref RejuvenateEvent args)
+    {
+        // Permanently mindbroken shadowkin keep their black eyes forever - an admin heal
+        // must not undo the mindbroken look. Everything else (desc, components) stays.
+        if (HasComp<MindBrokenComponent>(ent))
         {
-            humanoid.EyeColor = component.OldEyeColor;
-            Dirty(uid, humanoid);
+            SetBlackEyes(ent, ent.Comp);
+            return;
         }
 
-        EnsureComp<PsionicComponent>(uid, out _);
-        if (_prototypeManager.TryIndex<PsionicPowerPrototype>("ShadowkinPowers", out var shadowkinPowers))
-            _psionicAbilitiesSystem.InitializePsionicPower(uid, shadowkinPowers);
+        if (TryComp<HumanoidAppearanceComponent>(ent, out var humanoid))
+        {
+            humanoid.EyeColor = ent.Comp.OldEyeColor;
+            Dirty(ent, humanoid);
+        }
+    }
+
+    /// <summary>
+    /// Turns the shadowkin's eyes permanently black, remembering their original color.
+    /// </summary>
+    private void SetBlackEyes(Entity<ShadowkinComponent> ent, ShadowkinComponent component, HumanoidAppearanceComponent? humanoid = null)
+    {
+        if (!Resolve(ent, ref humanoid, false))
+            return;
+
+        if (humanoid.EyeColor == component.BlackEyeColor)
+            return;
+
+        component.OldEyeColor = humanoid.EyeColor;
+        humanoid.EyeColor = component.BlackEyeColor;
+        Dirty(ent, humanoid);
     }
 }
