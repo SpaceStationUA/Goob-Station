@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Converted from SS13 defib.dmi + belt.dmi (worn states)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    { "name": "icon" },
+    { "name": "equipped-BELT", "directions": 4 },
+    { "name": "charge100" },
+    { "name": "charge75" },
+    { "name": "charge50" },
+    { "name": "charge25" },
+    { "name": "nocell" },
+    { "name": "emagged", "delays": [ [0.3, 0.3] ] }
+  ]
+}

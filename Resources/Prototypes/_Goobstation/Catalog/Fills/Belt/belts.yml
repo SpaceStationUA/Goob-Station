@@ -7,7 +7,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: DefibrillatorCompact
+    # Pirate - defib moved to CMO locker (DefibrillatorBeltCMO)
       - id: EnergyScalpel
       - id: AdvancedRetractor
       - id: EnergyCautery

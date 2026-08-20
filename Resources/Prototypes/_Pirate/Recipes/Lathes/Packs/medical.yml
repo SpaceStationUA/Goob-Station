@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipePack
+  id: DefibrillatorBeltsPirate
+  recipes:
+  - DefibrillatorBeltCompact # Pirate - only the standard belt defib is printable; CMO/Combat/NT variants are contraband and cannot be printed

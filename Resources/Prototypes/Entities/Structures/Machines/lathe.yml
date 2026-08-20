@@ -643,6 +643,7 @@
     - EnvirosuitExtinguisherRefill
     - MedicalMisc
     - MedicalMiscRestricted
+    - DefibrillatorBeltsPirate # Pirate - belt defibrillators
     - MedicalVehiclesAdvanced
     - MedicalBoards
     - Janitor

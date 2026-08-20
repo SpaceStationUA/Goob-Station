@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Only the standard belt defibrillator is printable on the medical techfab.
+# The CMO/Combat/NT variants are contraband and cannot be printed at all.
+
+- type: latheRecipe
+  id: DefibrillatorBeltCompact
+  result: DefibrillatorBeltCompactEmpty
+  categories:
+  - Medical
+  completetime: 5
+  materials:
+    Steel: 250
+    Silver: 50

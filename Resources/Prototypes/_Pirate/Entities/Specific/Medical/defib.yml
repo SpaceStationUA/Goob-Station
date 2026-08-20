@@ -1,0 +1,309 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: DefibrillatorBeltBase
+  parent: DefibrillatorCompact
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/defibcompact.rsi
+    layers:
+    - state: icon
+    - state: screen
+      map: [ "enum.ToggleableVisuals.Layer" ]
+      visible: false
+      shader: unshaded
+    - state: charge100
+      map: [ "enum.DefibrillatorChargeLayers.Charge" ]
+      visible: false
+      shader: unshaded
+    - state: nocell
+      map: [ "enum.DefibrillatorChargeLayers.NoCell" ]
+      visible: false
+      shader: unshaded
+    - state: emagged
+      map: [ "enum.DefibrillatorChargeLayers.Emagged" ]
+      visible: false
+      shader: unshaded
+  - type: DefibrillatorChargeVisuals
+  - type: DefibrillatorEmag
+    prepDuration: 1
+    channelInterval: 1
+    channelDamage: 5
+    channelChargeCost: 25
+  - type: DefibrillatorHideInHand
+  - type: Item
+    size: Ginormous # too big for bags and boxes
+  # Both slots must be declared explicitly: YAML inheritance replaces the whole
+  # containers dict, and ItemSlotsSystem creates a container for every slot at runtime.
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+      paddles_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+        blacklist:
+          components:
+          - BatterySelfRecharger # blocks nuclear/microreactor and slime organ cells
+      paddles_slot:
+        name: defibrillator-paddles-slot-name
+        startingItem: DefibrillatorPaddles
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - DefibrillatorPaddles
+  - type: Clothing
+    slots: [belt]
+
+- type: entity
+  id: DefibrillatorBeltCompact
+  parent: DefibrillatorBeltBase
+  name: belt defibrillator
+  description: A compact defibrillator with a belt clip, for medics who need their hands free.
+  components:
+  - type: DefibrillatorSelfDrain
+    drainPerSecond: 0.05
+
+- type: entity
+  id: DefibrillatorBeltCompactEmpty
+  parent: DefibrillatorBeltCompact
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        blacklist:
+          components:
+          - BatterySelfRecharger
+      paddles_slot:
+        name: defibrillator-paddles-slot-name
+        startingItem: DefibrillatorPaddles
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - DefibrillatorPaddles
+
+- type: entity
+  id: DefibrillatorBeltCMO
+  parent: [ DefibrillatorBeltBase, BaseCommandContraband ]
+  name: chief medical officer's belt defibrillator
+  description: A premium belt defibrillator issued to the Chief Medical Officer. Pairs well with a chest rig.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/defibcmo.rsi
+    layers:
+    - state: icon
+    - state: charge100
+      map: [ "enum.DefibrillatorChargeLayers.Charge" ]
+      visible: false
+      shader: unshaded
+    - state: nocell
+      map: [ "enum.DefibrillatorChargeLayers.NoCell" ]
+      visible: false
+      shader: unshaded
+    - state: emagged
+      map: [ "enum.DefibrillatorChargeLayers.Emagged" ]
+      visible: false
+      shader: unshaded
+  - type: DefibrillatorHideInHand
+  - type: DefibrillatorSelfRecharge
+    rechargePerSecond: 0.1
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+      paddles_slot:
+        name: defibrillator-paddles-slot-name
+        startingItem: DefibrillatorPaddlesCMO
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - DefibrillatorPaddles
+
+- type: entity
+  id: DefibrillatorBeltCombat
+  parent: [ DefibrillatorBeltBase, BaseSyndicateContraband ]
+  name: combat belt defibrillator
+  description: A rugged red belt defibrillator for field medics. Doubles as a taser in a pinch.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/defibcombat.rsi
+    layers:
+    - state: icon
+    - state: charge100
+      map: [ "enum.DefibrillatorChargeLayers.Charge" ]
+      visible: false
+      shader: unshaded
+    - state: nocell
+      map: [ "enum.DefibrillatorChargeLayers.NoCell" ]
+      visible: false
+      shader: unshaded
+  - type: DefibrillatorHideInHand
+  - type: DefibrillatorSelfRecharge
+    rechargePerSecond: 0.1
+  - type: Tag
+    tags:
+    - EmagImmune # Syndicate combat gear cannot be emagged
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+      paddles_slot:
+        name: defibrillator-paddles-slot-name
+        startingItem: DefibrillatorPaddlesCombat
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - DefibrillatorPaddles
+
+- type: entity
+  id: DefibrillatorBeltNT
+  parent: [ DefibrillatorBeltCombat, BaseCentcommContraband ]
+  name: elite Nanotrasen defibrillator
+  description: A state-of-the-art belt defibrillator issued to elite Nanotrasen operatives. Self-recharging battery, revives through thick clothing, and can deliver a nasty shock.
+  components:
+  - type: Contraband
+    severity: Restricted
+    allowedDepartments: [ CentralCommand ]
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/defibnt.rsi
+    layers:
+    - state: icon
+    - state: charge100
+      map: [ "enum.DefibrillatorChargeLayers.Charge" ]
+      visible: false
+      shader: unshaded
+    - state: nocell
+      map: [ "enum.DefibrillatorChargeLayers.NoCell" ]
+      visible: false
+      shader: unshaded
+  - type: DefibrillatorHideInHand
+  - type: DefibrillatorSelfRecharge
+    rechargePerSecond: 0.1
+  - type: Tag
+    tags:
+    - EmagImmune # NT gear cannot be emagged
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+      paddles_slot:
+        name: defibrillator-paddles-slot-name
+        startingItem: DefibrillatorPaddlesNT
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - DefibrillatorPaddles
+
+- type: entity
+  id: DefibrillatorBeltNTEmpty
+  parent: DefibrillatorBeltNT
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+      paddles_slot:
+        name: defibrillator-paddles-slot-name
+        startingItem: DefibrillatorPaddlesNT
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - DefibrillatorPaddles
+
+# Shock paddles — detachable electrodes stored in the belt defibrillators.
+# Using them on a target zaps it through the parent belt (charge, cooldown, sounds).
+# They snap back into the belt when dropped or when the holder moves away.
+
+- type: entity
+  id: DefibrillatorPaddles
+  parent: BaseItem
+  name: defibrillator paddles
+  description: A pair of plastic-gripped paddles that deliver a powerful shock. Store them back in your belt before running off.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/defibpaddles.rsi
+    layers:
+    - state: icon
+  - type: Item
+    size: Normal
+  - type: Wieldable
+    freeHandsRequired: 1
+  - type: MeleeRequiresWield
+  - type: DefibrillatorPaddles
+
+- type: entity
+  id: DefibrillatorPaddlesCMO
+  parent: DefibrillatorPaddles
+  name: CMO defibrillator paddles
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/defibpaddles.rsi
+    layers:
+    - state: icon
+
+- type: entity
+  id: DefibrillatorPaddlesCombat
+  parent: DefibrillatorPaddles
+  name: combat defibrillator paddles
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/defibpaddles_combat.rsi
+    layers:
+    - state: icon
+  - type: ItemToggle
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Items/Defib/defib_zap.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Items/Defib/defib_zap.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    activatedDamage:
+      types:
+        Blunt: 8
+        Shock: 16
+
+- type: entity
+  id: DefibrillatorPaddlesNT
+  parent: DefibrillatorPaddles
+  name: elite Nanotrasen defibrillator paddles
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Medical/defibpaddles_nt.rsi
+    layers:
+    - state: icon
+  - type: ItemToggle
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Items/Defib/defib_zap.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Items/Defib/defib_zap.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    activatedDamage:
+      types:
+        Blunt: 8
+        Shock: 16
