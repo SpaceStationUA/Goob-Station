@@ -413,6 +413,10 @@ namespace Content.Shared.Cuffs
         /// </summary>
         private void OnHandCountChanged(Entity<CuffableComponent> ent, ref HandCountChangedEvent message)
         {
+            // Pirate: modular suit cleanup can remove hands while the owner or its cuffs are being deleted.
+            if (EntityManager.IsQueuedForDeletion(ent.Owner) || TerminatingOrDeleted(ent.Owner))
+                return;
+
             // TODO: either don't store a container ref, or make it actually nullable.
             if (ent.Comp.Container == default!)
                 return;
@@ -422,11 +426,20 @@ namespace Content.Shared.Cuffs
 
             while (ent.Comp.CuffedHandCount > handCount && ent.Comp.CuffedHandCount > 0)
             {
-                dirty = true;
-
                 var handcuffContainer = ent.Comp.Container;
                 var handcuffEntity = handcuffContainer.ContainedEntities[^1];
 
+                if (EntityManager.IsQueuedForDeletion(handcuffEntity) || TerminatingOrDeleted(handcuffEntity))
+                {
+                    if (Deleted(handcuffEntity) ||
+                        !_container.Remove(handcuffEntity, handcuffContainer, reparent: false, force: true))
+                        break;
+
+                    dirty = true;
+                    continue;
+                }
+
+                dirty = true;
                 _transform.PlaceNextTo(handcuffEntity, ent.Owner);
             }
 
