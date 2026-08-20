@@ -6,9 +6,9 @@ public sealed partial class PirateCVars
 {
     #region Custom ghosts
 
-    /// <summary>Maximum side of drawn content, in pixels; 0 removes the limit entirely.</summary>
+    /// <summary>Maximum custom ghost sprite side in pixels; 0 disables scaling.</summary>
     public static readonly CVarDef<int> CustomGhostMaxSize =
-        CVarDef.Create("pirate.custom_ghost_max_size", 28, CVar.SERVERONLY);
+        CVarDef.Create("pirate.custom_ghost_max_size", 32, CVar.SERVER | CVar.REPLICATED);
 
     #endregion
 }
