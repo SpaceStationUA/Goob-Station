@@ -53,7 +53,7 @@ public sealed partial class FeroxiUnderwaterComponent : Component
     /// Walk/sprint speed multiplier applied while underwater.
     /// </summary>
     [DataField]
-    public float SpeedModifier = 2f;
+    public float SpeedModifier = 1.5f;
 
     /// <summary>
     /// Unarmed melee damage multiplier applied while underwater. Only applies to unarmed attacks -
