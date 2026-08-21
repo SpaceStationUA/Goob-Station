@@ -96,6 +96,24 @@ namespace Content.Server.GameTicking
 
             _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, spawnableStations);
 
+            // Pirate: round-start assignment bypasses SpawnPlayer's role check. Revalidate
+            // assigned roles before spawning so restricted roles remain in the lobby.
+            foreach (var (player, (job, _)) in assignedJobs.ToArray())
+            {
+                if (job is null)
+                    continue;
+
+                var assignedJob = job.Value;
+                var ev = new IsRoleAllowedEvent(
+                    _playerManager.GetSessionById(player),
+                    new List<ProtoId<JobPrototype>> { assignedJob },
+                    null);
+                RaiseLocalEvent(ref ev);
+
+                if (ev.Cancelled)
+                    assignedJobs[player] = (null, EntityUid.Invalid);
+            }
+
             // Calculate extended access for stations.
             var stationJobCounts = spawnableStations.ToDictionary(e => e, _ => 0);
             foreach (var (netUser, (job, station)) in assignedJobs)
