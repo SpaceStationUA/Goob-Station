@@ -1,8 +1,8 @@
 - type: entity
   parent: [ MobMouse, MobCombat ]
   id: MobNukieMouse
-  name: "миша ядерного оперативника"
-  description: "Ядерний оперативник... МИША?!"
+  name: nuclear operative mouse
+  description: A Nuclear Operative... MOUSE?!
   suffix: Syndicate
   components:
   - type: GhostRole
@@ -58,8 +58,8 @@
 - type: entity
   parent: MobGiantSpiderAngry
   id: MobNukieSpider
-  name: "тарантул ядерного оперативника"
-  description: "Павук? ЯДЕРНИЙ ПАВУК?!"
+  name: nuclear operative tarantula
+  description: A spider? A NUKIE SPIDER?!
   suffix: Syndicate
   components:
   - type: GhostRole
@@ -167,8 +167,8 @@
 - type: entity
   parent: BaseMobCarp
   id: MobNukieCarp
-  name: "короп ядерного оперативника"
-  description: "Криваво-червоний короп, навчений бою «короп проти коропа»."
+  name: nuclear operative carp
+  description: A blood-red carp trained in carp-to-carp combat.
   suffix: Syndicate
   components:
   - type: RandomMetadata
@@ -224,8 +224,8 @@
 - type: entity
   parent: BaseMobBehonker
   id: MobNukieBehonker
-  name: "бехонкер ядерного оперативника"
-  description: "Горлекс вирішив, що було б кумедно мати Бехонкера. Так і сталося."
+  name: nuclear operative behonker
+  description: Gorlex thought it would be funny to have a behonker. It was.
   suffix: Syndicate
   components:
   - type: RandomMetadata

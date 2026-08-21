@@ -6,8 +6,8 @@
 - type: entity
   parent: BaseItem
   id: AvaliFeather
-  name: "перо авалі"
-  description: "Можливо, його було здобуто неетично."
+  name: feather
+  description: Probably not ethically sourced.
   components:
   - type: Appearance
   - type: Sprite

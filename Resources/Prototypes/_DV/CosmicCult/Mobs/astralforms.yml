@@ -2,8 +2,8 @@
 - type: entity
   parent: [ Incorporeal, BaseMob ]
   id: MobCosmicAstralProjection
-  name: "астральна проєкція"
-  description: "Ні тут, ні там."
+  name: astral projection
+  description: Neither here nor there.
   components:
   - type: ActionGrant
     actions:
@@ -122,8 +122,8 @@
 - type: entity
   parent: BaseMobCosmicAscended # Pirate: multiz - inherit z-level flight
   id: MobCosmicAstralAscended
-  name: "астральний піднесений"
-  description: "Трансцендентний, піднесений."
+  name: astral ascended
+  description: Transcendant, ascendant.
   components:
   - type: Sprite
     sprite: _DV/CosmicCult/Mobs/astralform.rsi
@@ -137,8 +137,8 @@
 - type: entity
   parent: BaseMobCosmicAscended # Pirate: multiz - inherit z-level flight
   id: MobCosmicCustodian
-  name: "згубний доглядач"
-  description: "Мерзота, створена зі згубної маси. Вона ширяє з невагомою, тривожною грацією."
+  name: malign custodian
+  description: An abomination wrought of malign mass. It floats with a weightless, unnerving grace.
   components:
   - type: CEZLevelContextualMover # Pirate: multiz - openings-only z-movement
   - type: MovementSpeedModifier
@@ -165,8 +165,8 @@
 - type: entity
   parent: BaseMobCosmicAscended # Pirate: multiz - inherit z-level flight
   id: MobCosmicOracle
-  name: "згубний оракул"
-  description: "Мерзота, створена зі згубної маси. Її погляд невпинно шукає."
+  name: malign oracle
+  description: An abomination wrought of malign mass. Its gaze seeks relentlessly.
   components:
   - type: CEZLevelContextualMover # Pirate: multiz - openings-only z-movement
   - type: MovementSpeedModifier
@@ -193,8 +193,8 @@
 - type: entity
   parent: BaseMobCosmicAscended # Pirate: multiz - inherit z-level flight
   id: MobCosmicLodestar
-  name: "згубна провідна зоря"
-  description: "Мерзота, створена зі згубної маси. Усередині жевріє пекуче світло."
+  name: malign lodestar
+  description: An abomination wrought of malign mass. A searing light glimmers within.
   components:
   - type: CEZLevelContextualMover # Pirate: multiz - openings-only z-movement
   - type: Sprite
