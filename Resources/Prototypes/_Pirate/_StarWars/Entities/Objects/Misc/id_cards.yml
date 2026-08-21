@@ -1,7 +1,7 @@
 - type: entity
   parent: IDCardStandard
   id: GalacticRespublicIDCard
-  name: "iD-карта Галактичної Республіки"
+  name: "iD-картка Галактичної Республіки"
   suffix: StarWars
   components:
   - type: Sprite

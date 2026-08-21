@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseCartridgeCaselessRifle
   id: CartridgeCaselessRifleTranquilizer
-  name: cartridge (.25 caseless tranq)
-  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. A reservoir injects a mix of sedative and mute toxin into the target for true silent takedowns.
+  name: "набій (.25 безгільзовий транквілізатор)"
+  description: "Малокаліберний набій, що використовує безгільзову технологію: замість звичайної латунної гільзи застосовано затверділий метальний заряд. Резервуар вводить у ціль суміш седативної речовини й німого токсину для справді безшумного усунення."
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifleTranquilizer
@@ -28,8 +28,8 @@
 - type: entity
   parent: BaseCartridgeCaselessRifle
   id: CartridgeCaselessRiflePoison
-  name: cartridge (.25 caseless toxin)
-  description: A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. A toxic payload is installed to kill the target over time.
+  name: "набій (.25 безгільзовий токсин)"
+  description: "Малокаліберний набій, що використовує безгільзову технологію: замість звичайної латунної гільзи застосовано затверділий метальний заряд. Токсичний заряд повільно вбиває ціль."
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRiflePoison

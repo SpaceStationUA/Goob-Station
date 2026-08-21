@@ -2,8 +2,8 @@
 - type: entity
   parent: BaseItem
   id: SolHandyFlag
-  name: Маленький ручний прапор Соларіанського Альянсу
-  description: "Аве Сол!"
+  name: "маленький ручний прапор Соларіанського Альянсу"
+  description: "Аве, Сол!"
   suffix: SAN
   components:
   - type: Sprite

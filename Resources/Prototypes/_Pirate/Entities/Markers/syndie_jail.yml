@@ -13,7 +13,7 @@
 - type: entity
   parent: MarkerBase
   id: MarkerSyndieJailLoot
-  name: syndie fulton loot beacon
+  name: "маяк здобичі фултона Синдикату"
   components:
   - type: Sprite
     layers:
@@ -30,7 +30,7 @@
   categories: [ Spawner ]
   parent: MarkerBase
   id: SyndicateMarshalSpawner
-  name: syndicate marshal spawner
+  name: "точка появи наглядача Синдикату"
   components:
   - type: Sprite
     layers:

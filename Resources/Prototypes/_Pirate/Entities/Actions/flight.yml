@@ -1,7 +1,7 @@
 - type: entity
   id: CEActionZFlightUp
-  name: Move up
-  description: Move up one floor
+  name: "Піднятися"
+  description: "Піднятися на один поверх"
   components:
   - type: Action
     useDelay: 1.5
@@ -13,8 +13,8 @@
 
 - type: entity
   id: CEActionZFlightDown
-  name: Move down
-  description: Move down one floor
+  name: "Спуститися"
+  description: "Спуститися на один поверх"
   components:
   - type: Action
     useDelay: 1.5
@@ -27,8 +27,8 @@
 - type: entity
   parent: BaseToggleAction
   id: CEActionZFlightToggle
-  name: Toggle flight mode
-  description: Toggle flight mode on or off
+  name: "Перемкнути режим польоту"
+  description: "Увімкнути або вимкнути режим польоту"
   components:
   - type: Action
     useDelay: 1.5

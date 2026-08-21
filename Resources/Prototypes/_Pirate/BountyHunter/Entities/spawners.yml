@@ -16,7 +16,7 @@
 - type: entity
   id: SpawnPointBountyHunter
   parent: MarkerBase
-  name: bounty hunter
+  name: "мисливець за головами"
   components:
   - type: SpawnPoint
   - type: Sprite
