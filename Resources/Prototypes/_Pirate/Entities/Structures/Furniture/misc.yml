@@ -1,0 +1,45 @@
+- type: entity
+  id: PunchingBag
+  parent: BaseStructure
+  name: боксерська груша
+  description: Важка груша для тренування ударів.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Furniture/punchingbag.rsi
+    drawdepth: HighFloorObjects
+    noRot: true
+    layers:
+    - state: punchingbag
+      map: ["base"]
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: InteractionOutline
+  - type: Anchorable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+        density: 50
+        mask:
+        - TableMask
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Pullable
+  - type: PunchingBagAnimations
+    animationState: swinging
+  - type: Construction
+    graph: PunchingBag
+    node: punchingbag

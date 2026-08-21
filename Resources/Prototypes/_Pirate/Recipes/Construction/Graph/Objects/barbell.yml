@@ -1,0 +1,24 @@
+- type: constructionGraph
+  id: Barbell
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: barbell
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 5
+
+    - node: barbell
+      entity: Barbell
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 5

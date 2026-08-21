@@ -1,0 +1,27 @@
+#region Будівницство
+- type: constructionGraph
+  id: TPSeat
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: adtbarbellchair
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+
+#region Розбірка
+    - node: adtbarbellchair
+      entity: ADTBarbellChair
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 2

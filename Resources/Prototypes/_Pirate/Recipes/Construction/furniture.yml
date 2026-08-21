@@ -12,6 +12,21 @@
   conditions:
     - !type:TileNotBlocked
 
+#region Крісла
+- type: construction
+  name: construction-name-barbell-chair
+  id: BarbellChairRecipe
+  graph: TPSeat
+  startNode: start
+  targetNode: adtbarbellchair
+  category: construction-category-furniture
+  description: construction-desc-barbell-chair
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
 #region Ліжка
 - type: construction
   id: DoubleBed
@@ -50,6 +65,22 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+#region Різне
+- type: construction
+  name: construction-name-barbell-bench
+  id: BarbellBenchRecipe
+  description: construction-desc-barbell-bench
+  graph: BarbellBench
+  startNode: start
+  targetNode: barbellbench
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
 
 #region Банери
 - type: construction
