@@ -114,7 +114,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         // Try the equipped species first, then its optional clothing fallback.
         if (speciesId != null)
         {
-            foreach (var species in GetClothingSpecies(speciesId, args.Slot))
+            foreach (var species in ClothingSpeciesHelper.GetClothingSpecies(_prototypeManager, speciesId, args.Slot))
             {
                 if (item.ClothingVisuals.TryGetValue($"{args.Slot}-{species}", out layers))
                     break;
@@ -184,7 +184,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         // Species-specific states: own species has priority over the configured fallback.
         if (speciesId != null)
         {
-            foreach (var species in GetClothingSpecies(speciesId, slot))
+            foreach (var species in ClothingSpeciesHelper.GetClothingSpecies(_prototypeManager, speciesId, slot))
             {
                 if (!rsi.TryGetState($"{state}-{species}", out _))
                     continue;
@@ -205,29 +205,6 @@ public sealed class ClientClothingSystem : ClothingSystem
         layers = new() { layer };
 
         return true;
-    }
-
-    /// Pirate edit start - clothing fallback
-    private IEnumerable<string> GetClothingSpecies(string speciesId, string slot)
-    {
-        yield return speciesId;
-
-        var normalizedSpeciesId = speciesId.ToLowerInvariant();
-        if (normalizedSpeciesId != speciesId)
-            yield return normalizedSpeciesId;
-
-        var species = _prototypeManager.EnumeratePrototypes<SpeciesPrototype>()
-            .FirstOrDefault(p => string.Equals(p.ID, speciesId, StringComparison.OrdinalIgnoreCase));
-        if (species is not null
-            && species.ClothingSpeciesFallback.FirstOrDefault(p => string.Equals(p.Key, slot, StringComparison.OrdinalIgnoreCase)) is { Key: not null, Value: var fallback }
-            && !string.Equals(fallback.ToString(), speciesId, StringComparison.OrdinalIgnoreCase))
-        {
-            var fallbackId = fallback.ToString();
-            yield return fallbackId;
-
-            if (fallbackId.ToLowerInvariant() != fallbackId)
-                yield return fallbackId.ToLowerInvariant();
-        }
     }
 
     // Pirate - add jumpskirt displacement
