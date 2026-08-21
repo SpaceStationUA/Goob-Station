@@ -1,0 +1,59 @@
+### Фенек (Великі)
+- type: marking
+  id: VulpEarFennecBig
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Ears.rsi
+      state: fennec
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Ears.rsi
+      state: fennec-inner
+
+### Лоповухі
+- type: marking
+  id: VulpEarFloppy
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Ears.rsi
+      state: floppy
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Ears.rsi
+      state: floppy-inner
+
+### Гострі
+- type: marking
+  id: VulpEarSharp
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Ears.rsi
+      state: sharp
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Ears.rsi
+      state: sharp-inner
+
+### Гострі (Маленькі)
+- type: marking
+  id: VulpEarSharpSmall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Ears.rsi
+      state: sharp_small
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Ears.rsi
+      state: sharp_small-inner
+
+### Маленькі
+- type: marking
+  id: VulpEarSmall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Ears.rsi
+      state: small
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Ears.rsi
+      state: small-inner

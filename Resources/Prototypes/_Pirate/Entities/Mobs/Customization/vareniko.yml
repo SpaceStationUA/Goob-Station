@@ -1,0 +1,60 @@
+# Волосся
+- type: marking
+  id: VarenikoHairVareniko
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Vulpkanin ]
+  playerRestriction: [ Vareniko ]
+  sprites:
+  - sprite: _Pirate/Mobs/Customization/Vareniko/hair.rsi
+    state: hair
+
+# Хвостик
+- type: marking
+  id: VulpTailVareniko
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vulpkanin ]
+  playerRestriction: [ Vareniko, v0id_ ]
+  layering:
+    tail_BACK: TailBehind
+    tail-tip_BACK: TailBehind
+    tail: TailOversuit
+    tail-tip: TailOversuit
+  colorLinks:
+    tail_BACK: tail
+    tail-tip_BACK: tail-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vareniko/tail.rsi
+      state: tail_BACK
+    - sprite: _Pirate/Mobs/Customization/Vareniko/tail.rsi
+      state: tail-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vareniko/tail.rsi
+      state: tail
+    - sprite: _Pirate/Mobs/Customization/Vareniko/tail.rsi
+      state: tail-tip
+
+# Анімація
+- type: marking
+  id: VulpTailVarenikoAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  playerRestriction: [ Vareniko, v0id_ ]
+  layering:
+    tail_wag_BACK: TailBehind
+    tail_wag-tip_BACK: TailBehind
+    tail_wag: TailOversuit
+    tail_wag-tip: TailOversuit
+  colorLinks:
+    tail_wag_BACK: tail_wag
+    tail_wag-tip_BACK: tail_wag-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vareniko/tail.rsi
+      state: tail_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/Vareniko/tail.rsi
+      state: tail_wag-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vareniko/tail.rsi
+      state: tail_wag
+    - sprite: _Pirate/Mobs/Customization/Vareniko/tail.rsi
+      state: tail_wag-tip

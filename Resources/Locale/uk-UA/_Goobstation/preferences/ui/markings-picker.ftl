@@ -2,9 +2,9 @@
 
 markings-category-Face = Обличчя
 markings-category-RightArm = Права рука
-markings-category-RightHand = Права рука
+markings-category-RightHand = Права кисть руки
 markings-category-LeftArm = Ліва рука
-markings-category-LeftHand = Ліва рука
+markings-category-LeftHand = Ліва кисть руки
 markings-category-Groin = Пах
 markings-category-RightLeg = Права нога
 markings-category-RightFoot = Права стопа

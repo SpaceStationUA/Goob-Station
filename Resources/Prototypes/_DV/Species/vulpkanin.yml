@@ -6,10 +6,13 @@
   roundStart: true
   prototype: MobVulpkanin
   sprites: MobVulpkaninSprites
+  clothingSpeciesFallback: # Pirate clothing fallback
+    outerClothing: Reptilian
+    shoes: Reptilian
   defaultSkinTone: "#985629"
   markingLimits: MobVulpkaninMarkingLimits
   dollPrototype: MobVulpkaninDummy
-  skinColoration: Hues
+  skinColoration: AnimalFur # Pirate edit
   maleFirstNames: NamesVulpakinMale
   femaleFirstNames: NamesVulpakinFemale
   lastNames: NamesVulpakinLast
@@ -60,13 +63,15 @@
       required: false
     RightFoot:
       points: 2
-      required: false
+      required: true # Pirate - paw pads
+      defaultMarkings: [ VulpPadsRight ] # Pirate - paw pads
     LeftLeg:
       points: 2
       required: false
     LeftFoot:
       points: 2
-      required: false
+      required: true # Pirate - paw pads
+      defaultMarkings: [ VulpPadsLeft ] # Pirate - paw pads
     RightArm:
       points: 2
       required: false
@@ -108,102 +113,102 @@
 - type: humanoidBaseSprite
   id: MobVulpkaninHead
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobVulpkaninHeadMale
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: head_m
 
 - type: humanoidBaseSprite
   id: MobVulpkaninHeadFemale
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: head_f
 
 - type: humanoidBaseSprite
   id: MobVulpkaninChest
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: chest_m
 
 - type: humanoidBaseSprite
   id: MobVulpkaninChestMale
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: chest_m
 
 - type: humanoidBaseSprite
   id: MobVulpkaninChestFemale
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: chest_f
 
 - type: humanoidBaseSprite
   id: MobVulpkaninGroin
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: groin_m
 
 - type: humanoidBaseSprite
   id: MobVulpkaninGroinMale
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: groin_m
 
 - type: humanoidBaseSprite
   id: MobVulpkaninGroinFemale
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: groin_f
 
 - type: humanoidBaseSprite
   id: MobVulpkaninLLeg
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: l_leg
 
 - type: humanoidBaseSprite
   id: MobVulpkaninLHand
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: l_hand
 
 - type: humanoidBaseSprite
   id: MobVulpkaninLArm
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: l_arm
 
 - type: humanoidBaseSprite
   id: MobVulpkaninLFoot
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: l_foot
 
 - type: humanoidBaseSprite
   id: MobVulpkaninRLeg
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: r_leg
 
 - type: humanoidBaseSprite
   id: MobVulpkaninRHand
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: r_hand
 
 - type: humanoidBaseSprite
   id: MobVulpkaninRArm
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: r_arm
 
 - type: humanoidBaseSprite
   id: MobVulpkaninRFoot
   baseSprite:
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: r_foot
 

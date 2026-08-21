@@ -9,12 +9,14 @@ using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes; // Pirate
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Prototypes; // Pirate
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 using static Robust.Client.GameObjects.SpriteComponent;
@@ -24,6 +26,7 @@ namespace Content.Client.Clothing;
 public sealed class ClientClothingSystem : ClothingSystem
 {
     public const string Jumpsuit = "jumpsuit";
+    private const string Jumpskirt = "jumpskirt"; // Pirate - add jumpskirt displacement
 
     /// <summary>
     /// This is a shitty hotfix written by me (Paul) to save me from renaming all files.
@@ -50,6 +53,7 @@ public sealed class ClientClothingSystem : ClothingSystem
     };
 
     [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Pirate edit - clothing fallback
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly DisplacementMapSystem _displacement = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
@@ -104,16 +108,24 @@ public sealed class ClientClothingSystem : ClothingSystem
             return;
 
         List<PrototypeLayerData>? layers = null;
+        // Pirate edit start - clothing fallback
+        var speciesId = inventory.SpeciesId ?? CompOrNull<HumanoidAppearanceComponent>(args.Equipee)?.Species.ToString();
 
-        // first attempt to get species specific data.
-        if (inventory.SpeciesId != null)
-            item.ClothingVisuals.TryGetValue($"{args.Slot}-{inventory.SpeciesId}", out layers);
-
+        // Try the equipped species first, then its optional clothing fallback.
+        if (speciesId != null)
+        {
+            foreach (var species in ClothingSpeciesHelper.GetClothingSpecies(_prototypeManager, speciesId, args.Slot))
+            {
+                if (item.ClothingVisuals.TryGetValue($"{args.Slot}-{species}", out layers))
+                    break;
+            }
+        }
+        // Pirate edit end
         // if that returned nothing, attempt to find generic data
         if (layers == null && !item.ClothingVisuals.TryGetValue(args.Slot, out layers))
         {
             // No generic data either. Attempt to generate defaults from the item's RSI & item-prefixes
-            if (!TryGetDefaultVisuals(uid, item, args.Slot, inventory.SpeciesId, out layers))
+            if (!TryGetDefaultVisuals(uid, item, args.Slot, speciesId, out layers)) // Pirate edit - clothing fallback
                 return;
         }
 
@@ -168,10 +180,22 @@ public sealed class ClientClothingSystem : ClothingSystem
         if (clothing.EquippedState != null)
             state = $"{clothing.EquippedState}";
 
-        // species specific
-        if (speciesId != null && rsi.TryGetState($"{state}-{speciesId}", out _))
-            state = $"{state}-{speciesId}";
-        else if (!rsi.TryGetState(state, out _))
+        // Pirate edit start - clothing fallback
+        // Species-specific states: own species has priority over the configured fallback.
+        if (speciesId != null)
+        {
+            foreach (var species in ClothingSpeciesHelper.GetClothingSpecies(_prototypeManager, speciesId, slot))
+            {
+                if (!rsi.TryGetState($"{state}-{species}", out _))
+                    continue;
+
+                state = $"{state}-{species}";
+                break;
+            }
+        }
+
+        if (!rsi.TryGetState(state, out _))
+        // Pirate edit end
             return false;
 
         var layer = new PrototypeLayerData();
@@ -182,6 +206,14 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         return true;
     }
+
+    // Pirate - add jumpskirt displacement
+    private bool IsJumpskirt(EntityUid equipment)
+    {
+        return TryComp<MetaDataComponent>(equipment, out var metadata) &&
+               metadata.EntityPrototype?.ID.Contains("Jumpskirt", StringComparison.OrdinalIgnoreCase) == true;
+    }
+    /// Pirate end
 
     private void OnVisualsChanged(EntityUid uid, InventoryComponent component, VisualsChangedEvent args)
     {
@@ -284,8 +316,23 @@ public sealed class ClientClothingSystem : ClothingSystem
         RaiseLocalEvent(equipee, ref hiddenEv);
         // Goob edit end
 
-        // Select displacement maps
-        var displacementData = inventory.Displacements.GetValueOrDefault(slot); //Default unsexed map
+        // Pirate edit start - add jumpskirt displacement
+        // Select displacement maps. Jumpskirts get their own map when configured,
+        // otherwise they fall back to the regular jumpsuit map.
+        var displacementSlot = slot;
+        if (slot == Jumpsuit && IsJumpskirt(equipment) &&
+            (inventory.Displacements.GetValueOrDefault(Jumpskirt) is not null ||
+             inventory.MaleDisplacements.GetValueOrDefault(Jumpskirt) is not null ||
+             inventory.FemaleDisplacements.GetValueOrDefault(Jumpskirt) is not null))
+        {
+            displacementSlot = Jumpskirt;
+        }
+
+        var displacementData = inventory.Displacements.GetValueOrDefault(displacementSlot) ??
+                               (displacementSlot == Jumpskirt
+                                   ? inventory.Displacements.GetValueOrDefault(Jumpsuit)
+                                   : null); // Default unsexed map
+        // Pirate edit end
 
         var equipeeSex = CompOrNull<HumanoidAppearanceComponent>(equipee)?.Sex;
         if (equipeeSex != null)
@@ -294,11 +341,21 @@ public sealed class ClientClothingSystem : ClothingSystem
             {
                 case Sex.Male:
                     if (inventory.MaleDisplacements.Count > 0)
-                        displacementData = inventory.MaleDisplacements.GetValueOrDefault(slot);
+        // Pirate edit start - add jumpskirt displacement
+                        displacementData = inventory.MaleDisplacements.GetValueOrDefault(displacementSlot) ??
+                                           (displacementSlot == Jumpskirt
+                                               ? inventory.MaleDisplacements.GetValueOrDefault(Jumpsuit)
+                                               : null);
+        // Pirate edit end
                     break;
                 case Sex.Female:
                     if (inventory.FemaleDisplacements.Count > 0)
-                        displacementData = inventory.FemaleDisplacements.GetValueOrDefault(slot);
+        // Pirate edit start - add jumpskirt displacement
+                        displacementData = inventory.FemaleDisplacements.GetValueOrDefault(displacementSlot) ??
+                                           (displacementSlot == Jumpskirt
+                                               ? inventory.FemaleDisplacements.GetValueOrDefault(Jumpsuit)
+                                               : null);
+        // Pirate edit end
                     break;
             }
         }

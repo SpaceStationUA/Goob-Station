@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/ParadiseSS13/Paradise edited by Floofers, resprite by Vareniko. Striped and spotted by Vareniko",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	{
+      "name": "l_faded",
+      "directions": 4
+    },
+	{
+      "name": "r_faded",
+      "directions": 4
+    },
+	{
+      "name": "l_point_crest",
+      "directions": 4
+    },
+	{
+      "name": "r_point_crest",
+      "directions": 4
+    },
+	{
+      "name": "l_point_sharp",
+      "directions": 4
+    },
+	{
+      "name": "r_point_sharp",
+      "directions": 4
+    },
+	{
+      "name": "l_spotted-1",
+      "directions": 4
+    },
+	{
+      "name": "r_spotted-1",
+      "directions": 4
+    },
+	{
+      "name": "l_spotted-2",
+      "directions": 4
+    },
+	{
+      "name": "r_spotted-2",
+      "directions": 4
+    },
+	{
+      "name": "l_striped",
+      "directions": 4
+    },
+	{
+      "name": "r_striped",
+      "directions": 4
+    }
+  ]
+}

@@ -121,12 +121,10 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [barks.]
+  chatMessages: [гавкає.]
   chatTriggers:
-    - bark
-    - barks
-    - barked
-    - barking
+    - гав
+    - гавкає
 
 - type: emote
   id: Snarl
@@ -140,12 +138,9 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [snarls.]
+  chatMessages: [гарчить.]
   chatTriggers:
-    - snarl
-    - snarls
-    - snarled
-    - snarling
+    - гарчить
 
 - type: emote
   id: Whine
@@ -159,12 +154,10 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [whines.]
+  chatMessages: [скиглить.]
   chatTriggers:
-    - whine
-    - whines
-    - whined
-    - whining
+    - скиглить
+    - скиглючи
 
 # REMOVED BY PIRATE
 # - type: emote
@@ -199,12 +192,10 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [awoos.]
+  chatMessages: [виє.]
   chatTriggers:
-    - awoo
-    - awoos
-    - awooing
-    - awooed
+    - виє
+    - виючи
 
 # Feroxi
 - type: emote

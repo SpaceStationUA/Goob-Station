@@ -1,0 +1,13 @@
+- type: entity
+  id: ActionJumpVulpkanin
+  name: Jump
+  description: Leap at a target and knock them down.
+  components:
+  - type: Action
+    priority: 0
+    useDelay: 20
+    icon: { sprite: Interface/Actions/jump.rsi, state: icon }
+  - type: TargetAction
+    range: 5
+  - type: WorldTargetAction
+    event: !type:VulpkaninJumpActionEvent

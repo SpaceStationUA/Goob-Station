@@ -1,0 +1,385 @@
+#region Статичні
+### Кайот
+- type: marking
+  id: VulpTailCoyote
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vulpkanin ]
+  layering:
+    coyote_BACK: TailBehind
+    coyote: TailOversuit
+  colorLinks:
+    coyote_BACK: coyote
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/coyote.rsi
+      state: coyote_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/coyote.rsi
+      state: coyote
+
+### Фенек
+- type: marking
+  id: VulpTailFennec
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vulpkanin ]
+  layering:
+    fennec_BACK: TailBehind
+    fennec-tip_BACK: TailBehind
+    fennec: TailOversuit
+    fennec-tip: TailOversuit
+  colorLinks:
+    fennec_BACK: fennec
+    fennec-tip_BACK: fennec-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fennec.rsi
+      state: fennec_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fennec.rsi
+      state: fennec-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fennec.rsi
+      state: fennec
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fennec.rsi
+      state: fennec-tip
+
+### Пухнастий
+- type: marking
+  id: VulpTailFluffy
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vulpkanin ]
+  layering:
+    fluffy_BACK: TailBehind
+    fluffy-tip_BACK: TailBehind
+    fluffy: TailOversuit
+    fluffy-tip: TailOversuit
+  colorLinks:
+    fluffy_BACK: fluffy
+    fluffy-tip_BACK: fluffy-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fluffy.rsi
+      state: fluffy_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fluffy.rsi
+      state: fluffy-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fluffy.rsi
+      state: fluffy
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fluffy.rsi
+      state: fluffy-tip
+
+### Лисячий
+- type: marking
+  id: VulpTailFox
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vulpkanin ]
+  layering:
+    fox_BACK: TailBehind
+    fox-inner_BACK: TailBehind
+    fox: TailOversuit
+    fox-inner: TailOversuit
+  colorLinks:
+    fox_BACK: fox
+    fox-inner_BACK: fox-inner
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fox.rsi
+      state: fox_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fox.rsi
+      state: fox-inner_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fox.rsi
+      state: fox
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fox.rsi
+      state: fox-inner
+
+### Хаскі
+- type: marking
+  id: VulpTailHusky
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vulpkanin ]
+  layering:
+    husky_BACK: TailBehind
+    husky-inner_BACK: TailBehind
+    husky-outer_BACK: TailBehind
+    husky: TailOversuit
+    husky-inner: TailOversuit
+    husky-outer: TailOversuit
+  colorLinks:
+    husky_BACK: husky
+    husky-inner_BACK: husky-inner
+    husky-outer_BACK: husky-outer
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky-inner_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky-outer_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky-inner
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky-outer
+
+### Довгий
+- type: marking
+  id: VulpTailLong
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vulpkanin ]
+  layering:
+    long_BACK: TailBehind
+    long-tip_BACK: TailBehind
+    long: TailOversuit
+    long-tip: TailOversuit
+  colorLinks:
+    long_BACK: long
+    long-tip_BACK: long-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/long.rsi
+      state: long_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/long.rsi
+      state: long-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/long.rsi
+      state: long
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/long.rsi
+      state: long-tip
+
+### Стандартний
+- type: marking
+  id: VulpTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vulpkanin ]
+  layering:
+    vulp_BACK: TailBehind
+    vulp-tip_BACK: TailBehind
+    vulp: TailOversuit
+    vulp-tip: TailOversuit
+  colorLinks:
+    vulp_BACK: vulp
+    vulp-tip_BACK: vulp-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp-tip
+
+### Стандартний (градіент)
+- type: marking
+  id: VulpTailFade
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vulpkanin ]
+  layering:
+    vulp_BACK: TailBehind
+    vulp-fade_BACK: TailBehind
+    vulp: TailOversuit
+    vulp-fade: TailOversuit
+  colorLinks:
+    vulp_BACK: vulp
+    vulp-fade_BACK: vulp-fade
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp-fade_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp-fade
+
+#region Анімовані
+### Кайот
+- type: marking
+  id: VulpTailCoyoteAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  layering:
+    coyote_wag_BACK: TailBehind
+    coyote_wag: TailOversuit
+  colorLinks:
+    coyote_wag_BACK: coyote_wag
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/coyote.rsi
+      state: coyote_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/coyote.rsi
+      state: coyote_wag
+
+### Фенек
+- type: marking
+  id: VulpTailFennecAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  layering:
+    fennec_wag_BACK: TailBehind
+    fennec_wag-tip_BACK: TailBehind
+    fennec_wag: TailOversuit
+    fennec_wag-tip: TailOversuit
+  colorLinks:
+    fennec_wag_BACK: fennec_wag
+    fennec_wag-tip_BACK: fennec_wag-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fennec.rsi
+      state: fennec_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fennec.rsi
+      state: fennec_wag-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fennec.rsi
+      state: fennec_wag
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fennec.rsi
+      state: fennec_wag-tip
+
+### Пухнастий
+- type: marking
+  id: VulpTailFluffyAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  layering:
+    fluffy_wag_BACK: TailBehind
+    fluffy_wag-tip_BACK: TailBehind
+    fluffy_wag: TailOversuit
+    fluffy_wag-tip: TailOversuit
+  colorLinks:
+    fluffy_wag_BACK: fluffy_wag
+    fluffy_wag-tip_BACK: fluffy_wag-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fluffy.rsi
+      state: fluffy_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fluffy.rsi
+      state: fluffy_wag-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fluffy.rsi
+      state: fluffy_wag
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fluffy.rsi
+      state: fluffy_wag-tip
+
+### Лисячий
+- type: marking
+  id: VulpTailFoxAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  layering:
+    fox_wag_BACK: TailBehind
+    fox_wag-inner_BACK: TailBehind
+    fox_wag: TailOversuit
+    fox_wag-inner: TailOversuit
+  colorLinks:
+    fox_wag_BACK: fox_wag
+    fox_wag-inner_BACK: fox_wag-inner
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fox.rsi
+      state: fox_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fox.rsi
+      state: fox_wag-inner_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fox.rsi
+      state: fox_wag
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fox.rsi
+      state: fox_wag-inner
+
+### Хаскі
+- type: marking
+  id: VulpTailHuskyAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  layering:
+    husky_wag_BACK: TailBehind
+    husky_wag-inner_BACK: TailBehind
+    husky_wag-outer_BACK: TailBehind
+    husky_wag: TailOversuit
+    husky_wag-inner: TailOversuit
+    husky_wag-outer: TailOversuit
+  colorLinks:
+    husky_wag_BACK: husky_wag
+    husky_wag-inner_BACK: husky_wag-inner
+    husky_wag-outer_BACK: husky_wag-outer
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky_wag-inner_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky_wag-outer_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky_wag
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky_wag-inner
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/husky.rsi
+      state: husky_wag-outer
+
+### Довгий
+- type: marking
+  id: VulpTailLongAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  layering:
+    long_wag_BACK: TailBehind
+    long_wag-tip_BACK: TailBehind
+    long_wag: TailOversuit
+    long_wag-tip: TailOversuit
+  colorLinks:
+    long_wag_BACK: long_wag
+    long_wag-tip_BACK: long_wag-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/long.rsi
+      state: long_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/long.rsi
+      state: long_wag-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/long.rsi
+      state: long_wag
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/long.rsi
+      state: long_wag-tip
+
+### Звичайний
+- type: marking
+  id: VulpTailAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  layering:
+    vulp_wag_BACK: TailBehind
+    vulp_wag-tip_BACK: TailBehind
+    vulp_wag: TailOversuit
+    vulp_wag-tip: TailOversuit
+  colorLinks:
+    vulp_wag_BACK: vulp_wag
+    vulp_wag-tip_BACK: vulp_wag-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp_wag-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp_wag
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp_wag-tip
+
+### Звичайний (градіент)
+- type: marking
+  id: VulpTailFadeAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  layering:
+    vulp_wag_BACK: TailBehind
+    vulp_wag-fade_BACK: TailBehind
+    vulp_wag: TailOversuit
+    vulp_wag-fade: TailOversuit
+  colorLinks:
+    vulp_wag_BACK: vulp_wag
+    vulp_wag-fade_BACK: vulp_wag-fade
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp_wag-fade_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp_wag
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
+      state: vulp_wag-fade

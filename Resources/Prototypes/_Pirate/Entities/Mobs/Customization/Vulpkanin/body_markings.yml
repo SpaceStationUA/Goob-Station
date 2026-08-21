@@ -1,0 +1,272 @@
+#region Торс
+### Живіт (Хвилястий)
+- type: marking
+  id: VulpBellyCrest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/chest.rsi
+      state: belly_crest
+
+### Живіт (Лисячий)
+- type: marking
+  id: VulpBellyFox
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vulpkanin]
+  sexRestriction: [male]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/chest.rsi
+      state: belly_fox
+
+
+- type: marking
+  id: VulpBellyFFox
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vulpkanin]
+  sexRestriction: [Female]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/chest.rsi
+      state: belly_fox-female
+
+### Живіт (Суцільний)
+- type: marking
+  id: VulpBellyFull
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vulpkanin]
+  sexRestriction: [male]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/chest.rsi
+      state: belly_full
+
+- type: marking
+  id: VulpBellyFFull
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vulpkanin]
+  sexRestriction: [Female]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/chest.rsi
+      state: belly_full-female
+
+#region Руки
+### Забарвлення (Градієнтне)
+- type: marking
+  id: VulpFadedArmLeft
+  markingCategory: LeftArm
+  bodyPart: LArm
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/arm.rsi
+      state: l_faded
+
+- type: marking
+  id: VulpFadedArmRight
+  markingCategory: RightArm
+  bodyPart: RArm
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/arm.rsi
+      state: r_faded
+
+### Забарвлення (Хвилясте)
+- type: marking
+  id: VulpPointCrestArmLeft
+  markingCategory: LeftArm
+  bodyPart: LArm
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/arm.rsi
+      state: l_point_crest
+
+- type: marking
+  id: VulpPointCrestArmRight
+  markingCategory: RightArm
+  bodyPart: RArm
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/arm.rsi
+      state: r_point_crest
+
+### Забарвлення (Гостре)
+- type: marking
+  id: VulpSharpArmLeft
+  markingCategory: LeftArm
+  bodyPart: LArm
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/arm.rsi
+      state: l_point_sharp
+
+- type: marking
+  id: VulpSharpArmRight
+  markingCategory: RightArm
+  bodyPart: RArm
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/arm.rsi
+      state: r_point_sharp
+
+#region Кисті рук
+### Забарвлення лап
+- type: marking
+  id: VulpPointHandLeft
+  markingCategory: LeftHand
+  bodyPart: LHand
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/hand.rsi
+      state: l_point
+
+- type: marking
+  id: VulpPointHandRight
+  markingCategory: RightHand
+  bodyPart: RHand
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/hand.rsi
+      state: r_point
+
+#region Ноги
+### Забарвлення (Градієнтне)
+- type: marking
+  id: VulpFadedLegLeft
+  bodyPart: LLeg
+  markingCategory: LeftLeg
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: l_faded
+
+- type: marking
+  id: VulpFadedLegRight
+  bodyPart: RLeg
+  markingCategory: RightLeg
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: r_faded
+
+### Забарвлення (Хвилясте)
+- type: marking
+  id: VulpPointCrestLegLeft
+  bodyPart: LLeg
+  markingCategory: LeftLeg
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: l_point_crest
+
+- type: marking
+  id: VulpPointCrestLegRight
+  bodyPart: RLeg
+  markingCategory: RightLeg
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: r_point_crest
+
+### Забарвлення (Гостре)
+- type: marking
+  id: VulpPointSharpLegLeft
+  bodyPart: LLeg
+  markingCategory: LeftLeg
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: l_point_sharp
+
+- type: marking
+  id: VulpPointSharpLegRight
+  bodyPart: RLeg
+  markingCategory: RightLeg
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: r_point_sharp
+
+### Плями
+- type: marking
+  id: VulpSpottedLegLeft
+  bodyPart: LLeg
+  markingCategory: LeftLeg
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: l_spotted-1
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: l_spotted-2
+
+- type: marking
+  id: VulpSpottedLegRight
+  bodyPart: RLeg
+  markingCategory: RightLeg
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: r_spotted-1
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: r_spotted-2
+
+### Смужки
+- type: marking
+  id: VulpStripedLegLeft
+  bodyPart: LLeg
+  markingCategory: LeftLeg
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: l_striped
+
+- type: marking
+  id: VulpStripedLegRight
+  bodyPart: RLeg
+  markingCategory: RightLeg
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/leg.rsi
+      state: r_striped
+
+#region Стопи
+### Подушечки лап
+- type: marking
+  id: VulpPadsLeft
+  bodyPart: LFoot
+  markingCategory: LeftFoot
+  speciesRestriction: [Vulpkanin]
+  coloration: PawPads
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/foot.rsi
+      state: l_pads
+
+- type: marking
+  id: VulpPadsRight
+  bodyPart: RFoot
+  markingCategory: RightFoot
+  speciesRestriction: [Vulpkanin]
+  coloration: PawPads
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/foot.rsi
+      state: r_pads
+
+### Забарвлення лап
+- type: marking
+  id: VulpPointFootLeft
+  bodyPart: LFoot
+  markingCategory: LeftFoot
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/foot.rsi
+      state: l_point
+
+- type: marking
+  id: VulpPointFootRight
+  bodyPart: RFoot
+  markingCategory: RightFoot
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/foot.rsi
+      state: r_point

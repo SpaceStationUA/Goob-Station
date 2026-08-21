@@ -1,0 +1,6 @@
+- type: markingColoration
+  id: PawPads
+  strategy: !type:ClampedHsvMarkingColoration
+    hue: [[0.0, 0.0]]
+    saturation: [[0.0, 0.4]]
+    value: [[0.0, 1.0]]

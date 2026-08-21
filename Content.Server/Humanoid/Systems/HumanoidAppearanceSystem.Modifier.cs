@@ -3,9 +3,11 @@
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings; // Pirate - Marking coloration clamp
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes; // Pirate - Marking coloration clamp
 using Robust.Shared.Utility;
 
 namespace Content.Server.Humanoid;
@@ -14,6 +16,7 @@ public sealed partial class HumanoidAppearanceSystem
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Pirate - Marking coloration clamp
 
     private void OnVerbsRequest(EntityUid uid, HumanoidAppearanceComponent component, GetVerbsEvent<Verb> args)
     {
@@ -88,6 +91,7 @@ public sealed partial class HumanoidAppearanceSystem
         }
 
         component.MarkingSet = message.MarkingSet;
+        MarkingColoration.Clamp(component.MarkingSet, _prototypeManager); // Pirate - Marking coloration clamp
         Dirty(uid, component);
 
         if (message.ResendState)

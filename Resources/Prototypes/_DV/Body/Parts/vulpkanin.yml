@@ -6,9 +6,9 @@
   id: PartVulpkaninBase
   components:
   - type: Sprite
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
   - type: Icon
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
   - type: BodyPart
     species: Vulpkanin
   - type: Damageable # Shitmed
@@ -20,10 +20,10 @@
   name: "vulpkanin chest"
   components:
   - type: Sprite
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: "chest_m"
   - type: Icon
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: "chest_m"
 
 - type: entity
@@ -32,10 +32,10 @@
   name: "vulpkanin groin"
   components:
   - type: Sprite
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: "groin_m"
   - type: Icon
-    sprite: _DV/Mobs/Species/Vulpkanin/parts.rsi
+    sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: "groin_m"
 
 - type: entity
