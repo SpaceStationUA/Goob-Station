@@ -16,7 +16,7 @@ marking-VulpBellyFFull = Живіт (Суцільний)
 
 ### Хвости
 marking-VulpTailCoyote-coyote = Хвіст
-marking-VulpTailCoyote = Кайот
+marking-VulpTailCoyote = Койот
 
 marking-VulpTailFennec-fennec = Хвіст
 marking-VulpTailFennec-fennec-tip = Кінчик
@@ -45,7 +45,7 @@ marking-VulpTail = Стандартний
 
 marking-VulpTailFade-vulp = Хвіст
 marking-VulpTailFade-vulp-fade = Градієнт
-marking-VulpTailFade = Стандартний (градіент)
+marking-VulpTailFade = Стандартний (Градієнт)
 
 ### Вуха
 marking-VulpEarFennecBig-fennec = Вуха

@@ -127,7 +127,7 @@
   speciesRestriction: [ Vulpkanin ]
   layering:
     long_BACK: TailBehind
-    tip_BACK: TailBehind
+    long-tip_BACK: TailBehind
     long: TailOversuit
     long-tip: TailOversuit
   colorLinks:
@@ -245,8 +245,8 @@
     fluffy_wag: TailOversuit
     fluffy_wag-tip: TailOversuit
   colorLinks:
-    fluffy_wag_BACK: fluffy
-    fluffy_wag-tip_BACK: fluffy-tip
+    fluffy_wag_BACK: fluffy_wag
+    fluffy_wag-tip_BACK: fluffy_wag-tip
   sprites:
     - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fluffy.rsi
       state: fluffy_wag_BACK

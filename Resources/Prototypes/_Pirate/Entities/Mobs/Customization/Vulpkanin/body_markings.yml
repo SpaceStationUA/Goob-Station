@@ -18,7 +18,7 @@
   sexRestriction: [male]
   sprites:
     - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/chest.rsi
-      state: belly_full
+      state: belly_fox
 
 
 - type: marking

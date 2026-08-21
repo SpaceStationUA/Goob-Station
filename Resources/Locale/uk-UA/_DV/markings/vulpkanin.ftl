@@ -22,7 +22,7 @@ marking-VulpEarJackal = Шакал
 
 marking-VulpEarTerrier-terrier = Вуха
 marking-VulpEarTerrier-terrier-inner = Внутрішня частина
-marking-VulpEarTerrier = Терьєр
+marking-VulpEarTerrier = Тер'єр
 
 marking-VulpEarWolf-wolf = Вуха
 marking-VulpEarWolf-wolf-inner = Внутрішня частина

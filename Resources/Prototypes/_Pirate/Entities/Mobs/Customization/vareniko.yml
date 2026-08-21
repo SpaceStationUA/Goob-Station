@@ -18,7 +18,7 @@
   playerRestriction: [ Vareniko, v0id_ ]
   layering:
     tail_BACK: TailBehind
-    tail_BACK-tip: TailBehind
+    tail-tip_BACK: TailBehind
     tail: TailOversuit
     tail-tip: TailOversuit
   colorLinks:
