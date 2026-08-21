@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: Laika
+  name: "Лайка"
   parent: MobSecDogBase
   id: MobSecDogLaika
-  description: Much like her namesake, Laika is a specimen of indeterminate breed, fresh off the streets and ready to tussle.
+  description: "Як і її тезка, Лайка — собака невизначеної породи, щойно з вулиць і готова до сутички."
   components:
   - type: GhostRole
     makeSentient: true

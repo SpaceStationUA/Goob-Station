@@ -1,8 +1,8 @@
 - type: entity
   parent: CrateSyndicate
   id: CrateSyndicateShuttleBundle
-  name: shuttle bundle crate
-  description: The bare necessities for a shuttle.
+  name: "ящик із набором для шатла"
+  description: "Усе найнеобхідніше для шатла."
   components:
   - type: EntityTableContainerFill
     containers:
