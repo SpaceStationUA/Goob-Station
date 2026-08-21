@@ -14,7 +14,7 @@ public sealed partial class VulpkaninJumpComponent : Component
     public float JumpSpeed = 7f;
 
     [DataField]
-    public float StaminaCost = 20f;
+    public float StaminaCost = 40f;
 
     [DataField]
     public TimeSpan StunTime = TimeSpan.FromSeconds(1);
