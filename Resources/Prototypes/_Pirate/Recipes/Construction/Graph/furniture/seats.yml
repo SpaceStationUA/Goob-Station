@@ -7,15 +7,15 @@
       actions:
         - !type:DestroyEntity {}
       edges:
-        - to: adtbarbellchair
+        - to: barbellchair
           steps:
             - material: Steel
               amount: 2
               doAfter: 1
 
 #region Розбірка
-    - node: adtbarbellchair
-      entity: ADTBarbellChair
+    - node: barbellchair
+      entity: BarbellChair
       edges:
         - to: start
           completed:

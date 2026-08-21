@@ -12,9 +12,12 @@
     overlayBaseState: barbell-overlay-up
     overlayRepFlickState: barbell-up
   - type: Appearance
+  - type: ContainerContainer
+    containers:
+      barbell-slot: !type:ContainerSlot
   - type: ItemSlots
     slots:
-      adt-aslot-barbell:
+      barbell-slot:
         insertSound: /Audio/_Pirate/Furniture/barbell/barbell_3.ogg
         ejectSound: /Audio/_Pirate/Furniture/barbell/barbell_2.ogg
         whitelist:
@@ -75,7 +78,7 @@
     - state: barbell
       map: ["base"]
     - state: barbell
-      map: ["adt-aslot-barbell"]
+      map: ["barbell-slot"]
       visible: false
   - type: Construction
     graph: BarbellBench

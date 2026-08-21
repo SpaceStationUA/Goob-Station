@@ -46,7 +46,7 @@
 #region Крісло для штанги
 - type: entity
   name: barbell chair
-  id: ADTBarbellChair
+  id: BarbellChair
   parent: ChairBase
   description: Крісло, на яке можна повісити штангу.
   placement:
@@ -58,7 +58,7 @@
     - state: barbell-chair
       map: ["base"]
     - state: barbell-chair
-      map: ["adt-aslot-barbell"]
+      map: ["barbell-slot"]
       visible: false
   - type: BarbellBench
     overlayPrototype: BarbellBenchOverlay
@@ -67,9 +67,12 @@
     overlayBaseState: barbell_chair-overlay
     overlayRepFlickState: barbell-raises-overlay
   - type: Appearance
+  - type: ContainerContainer
+    containers:
+      barbell-slot: !type:ContainerSlot
   - type: ItemSlots
     slots:
-      adt-aslot-barbell:
+      barbell-slot:
         insertSound: /Audio/_Pirate/Furniture/barbell/barbell_3.ogg
         ejectSound: /Audio/_Pirate/Furniture/barbell/barbell_2.ogg
         whitelist:
@@ -77,4 +80,4 @@
           - BarbellAttachment
   - type: Construction
     graph: TPSeat
-    node: adtbarbellchair
+    node: barbellchair

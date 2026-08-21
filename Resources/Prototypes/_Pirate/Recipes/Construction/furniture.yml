@@ -18,7 +18,7 @@
   id: BarbellChairRecipe
   graph: TPSeat
   startNode: start
-  targetNode: adtbarbellchair
+  targetNode: barbellchair
   category: construction-category-furniture
   description: construction-desc-barbell-chair
   objectType: Structure

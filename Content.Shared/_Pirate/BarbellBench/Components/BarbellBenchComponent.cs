@@ -9,7 +9,7 @@ public sealed partial class BarbellBenchComponent : Component
     public string OverlayPrototype = "BarbellBenchOverlay";
 
     [DataField("barbellSlotId")]
-    public string BarbellSlotId = "adt-aslot-barbell";
+    public string BarbellSlotId = "barbell-slot";
 
     [DataField("repSoundCollection")]
     public string RepSoundCollection = "BarbellBenchRep";
