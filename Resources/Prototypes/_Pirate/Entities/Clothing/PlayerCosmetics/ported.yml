@@ -810,8 +810,9 @@
   - type: StaticPrice
     price: 0
 
+# Pirate: neck and outer slots are explicit; a second clothing base conflicts with stain solutions.
 - type: entity
-  parent: [ ClothingOuterBase, ClothingNeckBase ]
+  parent: ClothingOuterBase
   id: ClothingOuterRainCape
   name: rain cape
   description: Surplus gear made from durable canvas.
@@ -840,7 +841,7 @@
       - state: GREEN-equipped-OUTERCLOTHING-anomalocarid
 
 - type: entity
-  parent: [ ClothingOuterBase, ClothingNeckBase ]
+  parent: ClothingOuterBase
   id: ClothingOuterWhitePoncho
   name: white poncho
   description: Waterproof!
@@ -869,7 +870,7 @@
       - state: WHITE-equipped-OUTERCLOTHING-anomalocarid
 
 - type: entity
-  parent: [ ClothingOuterBase, ClothingNeckBase ]
+  parent: ClothingOuterBase
   id: ClothingOuterQMPoncho
   name: quartermaster's poncho
   description: A warm, worn poncho. It's very comfortable.
@@ -904,7 +905,7 @@
       - state: QM-equipped-OUTERCLOTHING-anomalocarid
 
 - type: entity
-  parent: [ ClothingOuterBase, ClothingNeckBase ]
+  parent: ClothingOuterBase
   id: ClothingOuterBlackPoncho
   name: black poncho
   description: Waterproof (sinister)!
