@@ -8,5 +8,8 @@ public sealed partial class BarbellPinnedComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? Bench;
 
+    [DataField, AutoNetworkedField]
+    public double PinDurationSeconds = 27.0;
+
     public TimeSpan PinnedAt;
 }

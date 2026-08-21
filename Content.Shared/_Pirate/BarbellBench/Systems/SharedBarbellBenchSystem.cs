@@ -7,7 +7,6 @@ namespace Content.Shared._Pirate.BarbellBench.Systems;
 
 public abstract class SharedBarbellBenchSystem : EntitySystem
 {
-    [Dependency] private readonly ActionContainerSystem _actConts = default!;
     [Dependency] protected readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] protected readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
@@ -18,32 +17,22 @@ public abstract class SharedBarbellBenchSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BarbellBenchComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BarbellBenchComponent, StrappedEvent>(OnStrapped);
-    }
-
-    private void OnMapInit(Entity<BarbellBenchComponent> ent, ref MapInitEvent args)
-    {
-        _actConts.EnsureAction(ent.Owner, ref ent.Comp.BarbellRepAction, BarbellRepActionId);
-        Dirty(ent);
     }
 
     protected virtual void OnStrapped(Entity<BarbellBenchComponent> bench, ref StrappedEvent args)
     {
         if (Container.TryGetContainer(bench.Owner, bench.Comp.BarbellSlotId, out var barbellContainer) && barbellContainer.Count > 0)
         {
-            _actionsSystem.AddAction(args.Buckle, ref bench.Comp.BarbellRepAction, BarbellRepActionId, bench);
-            Dirty(bench);
+            _actionsSystem.RemoveProvidedActions(args.Buckle.Owner, bench.Owner);
+            EntityUid? action = null;
+            _actionsSystem.AddAction(args.Buckle, ref action, BarbellRepActionId, bench);
         }
     }
 
     protected virtual void OnUnstrapped(Entity<BarbellBenchComponent> bench, ref UnstrappedEvent args)
     {
-        if (bench.Comp.BarbellRepAction is { Valid: true } action)
-        {
-            if (_actionsSystem.GetAction(action) is { } act && act.Comp.AttachedEntity == args.Buckle.Owner)
-                _actionsSystem.RemoveProvidedAction(args.Buckle.Owner, bench.Owner, action);
-        }
+        _actionsSystem.RemoveProvidedActions(args.Buckle.Owner, bench.Owner);
 
         if (bench.Comp.IsPerformingRep)
         {

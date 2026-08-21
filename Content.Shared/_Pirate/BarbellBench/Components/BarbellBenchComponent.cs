@@ -23,8 +23,8 @@ public sealed partial class BarbellBenchComponent : Component
     [DataField]
     public float RepDuration = 3.0f;
 
-    [AutoNetworkedField]
-    public EntityUid? BarbellRepAction;
+    [DataField]
+    public double PinDurationSeconds = 27.0;
 
     [AutoNetworkedField]
     public EntityUid? OverlayEntity;

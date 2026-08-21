@@ -99,6 +99,7 @@ public sealed class PullController : VirtualController
         UpdatesAfter.Add(typeof(MoverController));
         SubscribeLocalEvent<PullableComponent, PullStartedMessage>(OnPullStarted); // Pirate: barbell
         SubscribeLocalEvent<PullableComponent, PullStoppedMessage>(OnPullStopped); // Pirate: barbell
+        SubscribeLocalEvent<PullableComponent, EntityTerminatingEvent>(OnPullableTerminating); // Pirate: barbell
         SubscribeLocalEvent<PullMovingComponent, PullStoppedMessage>(OnPullStop);
         SubscribeLocalEvent<ActivePullerComponent, MoveEvent>(OnPullerMove);
 
@@ -130,6 +131,11 @@ public sealed class PullController : VirtualController
     private void OnPullStopped(Entity<PullableComponent> ent, ref PullStoppedMessage args)
     {
         RestoreDensity(ent);
+    }
+
+    private void OnPullableTerminating(EntityUid uid, PullableComponent component, EntityTerminatingEvent args)
+    {
+        _originalDensities.Remove(uid);
     }
 
     private void RestoreDensity(EntityUid uid)

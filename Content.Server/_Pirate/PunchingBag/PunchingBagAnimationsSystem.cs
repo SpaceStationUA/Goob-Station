@@ -2,12 +2,24 @@ using Content.Shared._Pirate.PunchingBag;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Player;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server._Pirate.PunchingBag;
 
 public sealed class PunchingBagAnimationsSystem : SharedPunchingBagAnimationsSystem
 {
     private readonly Dictionary<EntityUid, float> _playerPullStrength = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<PullerComponent, ComponentShutdown>(OnPullerShutdown);
+    }
+
+    private void OnPullerShutdown(EntityUid uid, PullerComponent component, ComponentShutdown args)
+    {
+        _playerPullStrength.Remove(uid);
+    }
 
     protected override void PlayAnimation(EntityUid uid, EntityUid attacker, string animationState)
     {
@@ -18,8 +30,7 @@ public sealed class PunchingBagAnimationsSystem : SharedPunchingBagAnimationsSys
 
         RaiseNetworkEvent(new PunchingBagAnimationEvent(GetNetEntity(uid), animationState), filter);
 
-        PullerComponent? pullerComp = null;
-        if (Resolve(attacker, ref pullerComp))
+        if (TryComp<PullerComponent>(attacker, out var pullerComp))
         {
             if (!_playerPullStrength.TryGetValue(attacker, out var currentStrength))
             {
@@ -52,4 +63,3 @@ public sealed class PunchingBagAnimationsSystem : SharedPunchingBagAnimationsSys
         }
     }
 }
-
