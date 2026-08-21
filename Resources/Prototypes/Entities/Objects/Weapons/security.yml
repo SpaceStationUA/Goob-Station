@@ -47,7 +47,7 @@
     angle: 0
     animation: WeaponArcThrust
   - type: StaminaDamageOnHit # goob edited
-    damage: 15
+    damage: 8 # Pirate edit - was 15
     overtime: 40
     lightAttackDamageMultiplier: 4
     lightAttackOvertimeDamageMultiplier: 0
