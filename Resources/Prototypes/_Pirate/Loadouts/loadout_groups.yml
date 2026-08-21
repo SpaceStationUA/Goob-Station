@@ -425,6 +425,8 @@
   - WardrobeMNKGymBra
   - WardrobeMNKUnderGarment
   - WardrobeMNKOfficeSkirt
+  subgroups:
+  - PiratePassengerPortedUniform
 
 - type: loadoutGroup
   id: PiratePassengerNeck
@@ -448,6 +450,8 @@
   - WardrobePonchoSmallPink
   - WardrobePonchoArctic
   - WardrobePonchoBlack
+  subgroups:
+  - PiratePassengerPortedNeck
 
 
 - type: loadoutGroup
@@ -495,6 +499,8 @@
   - WardrobeBandBlue
   - WardrobeBandBlack
   - WardrobeConductorHat
+  subgroups:
+  - PiratePassengerPortedHead
 
 
 - type: loadoutGroup
@@ -518,6 +524,8 @@
   - WardrobeSlippersLizard
   - WardrobeShoesTourist
   - WardrobeSandals
+  subgroups:
+  - PiratePassengerPortedShoes
 
 - type: loadoutGroup
   id: PiratePassengerOuterClothing
@@ -556,6 +564,8 @@
   - WardrobeFlannelGreen
   - WardrobeFlannelRed
   - WardrobeCoatSpaceAsshole
+  subgroups:
+  - PiratePassengerPortedOuter
 
 - type: loadoutGroup
   id: PirateEEGenericHead

@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Pirate: footstep sounds bundled with the Impstation cosmetic port.
+
+- type: soundCollection
+  id: FootstepBoots
+  files:
+  - /Audio/_Pirate/PlayerCosmetics/Footsteps/boots1.ogg
+  - /Audio/_Pirate/PlayerCosmetics/Footsteps/boots2.ogg
+  - /Audio/_Pirate/PlayerCosmetics/Footsteps/boots3.ogg
+  - /Audio/_Pirate/PlayerCosmetics/Footsteps/boots4.ogg
+
+- type: soundCollection
+  id: FootstepHighheels
+  files:
+  - /Audio/_Pirate/PlayerCosmetics/Footsteps/highheels1.ogg
+  - /Audio/_Pirate/PlayerCosmetics/Footsteps/highheels2.ogg
+  - /Audio/_Pirate/PlayerCosmetics/Footsteps/highheels3.ogg
+  - /Audio/_Pirate/PlayerCosmetics/Footsteps/highheels4.ogg
+  - /Audio/_Pirate/PlayerCosmetics/Footsteps/highheels5.ogg

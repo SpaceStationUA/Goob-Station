@@ -1,0 +1,774 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Pirate: loadout entries for the curated player cosmetics port.
+- type: loadout
+  id: PirateWardrobeClothingHeadHatBeretCaptain
+  equipment:
+    head: ClothingHeadHatBeretCaptain
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatBeretHD
+  equipment:
+    head: ClothingHeadHatBeretHD
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatCaptainTricorne
+  equipment:
+    head: ClothingHeadHatCaptainTricorne
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatBellhopHD
+  equipment:
+    head: ClothingHeadHatBellhopHD
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadDevilHorns
+  equipment:
+    head: ClothingHeadDevilHorns
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadDeerstalker
+  equipment:
+    head: ClothingHeadDeerstalker
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadSailorCap
+  equipment:
+    head: ClothingHeadSailorCap
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatCMOClip
+  equipment:
+    head: ClothingHeadHatCMOClip
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatMusicianShako
+  equipment:
+    head: ClothingHeadHatMusicianShako
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatCuteTiara
+  equipment:
+    head: ClothingHeadHatCuteTiara
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatSimpleTiara
+  equipment:
+    head: ClothingHeadHatSimpleTiara
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatCircusClown
+  equipment:
+    head: ClothingHeadHatCircusClown
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatPilgrim
+  equipment:
+    head: ClothingHeadHatPilgrim
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatWideBrimmed
+  equipment:
+    head: ClothingHeadHatWideBrimmed
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatCardinal
+  equipment:
+    head: ClothingHeadHatCardinal
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatWitchhunter
+  equipment:
+    head: ClothingHeadHatWitchhunter
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatBishopMitre
+  equipment:
+    head: ClothingHeadHatBishopMitre
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatKippah
+  equipment:
+    head: ClothingHeadHatKippah
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatMcCrown
+  equipment:
+    head: ClothingHeadHatMcCrown
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatPilot
+  equipment:
+    head: ClothingHeadHatPilot
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingHeadHatPirates
+  equipment:
+    head: ClothingHeadHatPirates
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckCloakHd
+  equipment:
+    neck: ClothingNeckCloakHd
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckCloakMagicianCape
+  equipment:
+    neck: ClothingNeckCloakMagicianCape
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckCloakCaptainAdmiral
+  equipment:
+    neck: ClothingNeckCloakCaptainAdmiral
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckAngelWings
+  equipment:
+    neck: ClothingNeckAngelWings
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckDevilWings
+  equipment:
+    neck: ClothingNeckDevilWings
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckSailorAscot
+  equipment:
+    neck: ClothingNeckSailorAscot
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckImpishAccessories
+  equipment:
+    neck: ClothingNeckImpishAccessories
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckFeatherBoa
+  equipment:
+    neck: ClothingNeckFeatherBoa
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckScarfStripedLimeGreen
+  equipment:
+    neck: ClothingNeckScarfStripedLimeGreen
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckScarfWrappedBlack
+  equipment:
+    neck: ClothingNeckScarfWrappedBlack
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckScarfWrappedWhite
+  equipment:
+    neck: ClothingNeckScarfWrappedWhite
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckScarfAscot
+  equipment:
+    neck: ClothingNeckScarfAscot
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckMantleHD
+  equipment:
+    neck: ClothingNeckMantleHD
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckMantleLily
+  equipment:
+    neck: ClothingNeckMantleLily
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckCloakMystagogue
+  equipment:
+    neck: ClothingNeckCloakMystagogue
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckCloakBoat
+  equipment:
+    neck: ClothingNeckCloakBoat
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckSalvager
+  equipment:
+    neck: ClothingNeckSalvager
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckCloakWitchCloak
+  equipment:
+    neck: ClothingNeckCloakWitchCloak
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckHosRobe
+  equipment:
+    neck: ClothingNeckHosRobe
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckCMOOverShoulder
+  equipment:
+    neck: ClothingNeckCMOOverShoulder
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckCMOShawl
+  equipment:
+    neck: ClothingNeckCMOShawl
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckCentcommCloakBoat
+  equipment:
+    neck: ClothingNeckCentcommCloakBoat
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckHeadOfSecurityCloakBoat
+  equipment:
+    neck: ClothingNeckHeadOfSecurityCloakBoat
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingNeckMimeCloak
+  equipment:
+    neck: ClothingNeckMimeCloak
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformFuneralSuit
+  equipment:
+    jumpsuit: ClothingUniformFuneralSuit
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformFuneralSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformFuneralSuitSkirt
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformNightclubSuit
+  equipment:
+    jumpsuit: ClothingUniformNightclubSuit
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformNightclubSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformNightclubSuitSkirt
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformBrownSuit
+  equipment:
+    jumpsuit: ClothingUniformBrownSuit
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformBrownSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformBrownSuitSkirt
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformCreamSuit
+  equipment:
+    jumpsuit: ClothingUniformCreamSuit
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformCreamSuitSkirt
+  equipment:
+    jumpsuit: ClothingUniformCreamSuitSkirt
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformMiamiVice
+  equipment:
+    jumpsuit: ClothingUniformMiamiVice
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformMiamiViceSkirt
+  equipment:
+    jumpsuit: ClothingUniformMiamiViceSkirt
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformBrosBlazer
+  equipment:
+    jumpsuit: ClothingUniformBrosBlazer
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformBrosBlazerSkirt
+  equipment:
+    jumpsuit: ClothingUniformBrosBlazerSkirt
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformSailorSuit
+  equipment:
+    jumpsuit: ClothingUniformSailorSuit
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformJumpsuitTailcoatSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTailcoatSuit
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformMusicianSingerDress
+  equipment:
+    jumpsuit: ClothingUniformMusicianSingerDress
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformPinkPrincessDress
+  equipment:
+    jumpsuit: ClothingUniformPinkPrincessDress
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformGreenPrincessDress
+  equipment:
+    jumpsuit: ClothingUniformGreenPrincessDress
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformSkirtClayshaper
+  equipment:
+    jumpsuit: ClothingUniformSkirtClayshaper
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformSkirtDruid
+  equipment:
+    jumpsuit: ClothingUniformSkirtDruid
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformSkirtMoon
+  equipment:
+    jumpsuit: ClothingUniformSkirtMoon
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformSkirtTidal
+  equipment:
+    jumpsuit: ClothingUniformSkirtTidal
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformJumpsuitSafariPants
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSafariPants
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeUniformJabroni
+  equipment:
+    jumpsuit: UniformJabroni
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeUniformMaid
+  equipment:
+    jumpsuit: UniformMaid
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingCostumeBunnySuit
+  equipment:
+    jumpsuit: ClothingCostumeBunnySuit
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingUniformSwimsuitBlue
+  equipment:
+    jumpsuit: ClothingUniformSwimsuitBlue
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterCoatJokester
+  equipment:
+    outerClothing: ClothingOuterCoatJokester
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterCoatQmHuge
+  equipment:
+    outerClothing: ClothingOuterCoatQmHuge
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterCoatFieldJacket
+  equipment:
+    outerClothing: ClothingOuterCoatFieldJacket
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterCoatPufferDark
+  equipment:
+    outerClothing: ClothingOuterCoatPufferDark
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterCoatPufferRed
+  equipment:
+    outerClothing: ClothingOuterCoatPufferRed
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterCoatPufferBlue
+  equipment:
+    outerClothing: ClothingOuterCoatPufferBlue
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterCoatPufferMime
+  equipment:
+    outerClothing: ClothingOuterCoatPufferMime
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterCoatPufferSilver
+  equipment:
+    outerClothing: ClothingOuterCoatPufferSilver
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterCoatPufferPink
+  equipment:
+    outerClothing: ClothingOuterCoatPufferPink
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterApronHD
+  equipment:
+    outerClothing: ClothingOuterApronHD
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterChapsBrown
+  equipment:
+    outerClothing: ClothingOuterChapsBrown
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterChapsWhite
+  equipment:
+    outerClothing: ClothingOuterChapsWhite
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterChapsBlack
+  equipment:
+    outerClothing: ClothingOuterChapsBlack
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterChapsFancy
+  equipment:
+    outerClothing: ClothingOuterChapsFancy
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterRainCape
+  equipment:
+    outerClothing: ClothingOuterRainCape
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterWhitePoncho
+  equipment:
+    outerClothing: ClothingOuterWhitePoncho
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterQMPoncho
+  equipment:
+    outerClothing: ClothingOuterQMPoncho
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterBlackPoncho
+  equipment:
+    outerClothing: ClothingOuterBlackPoncho
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterApronCuteChef
+  equipment:
+    outerClothing: ClothingOuterApronCuteChef
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterApronCuteBar
+  equipment:
+    outerClothing: ClothingOuterApronCuteBar
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterCowVest
+  equipment:
+    outerClothing: ClothingOuterCowVest
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingOuterBlackVest
+  equipment:
+    outerClothing: ClothingOuterBlackVest
+  groupBy: "OuterCoat"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesHeelsRed
+  equipment:
+    shoes: ClothingShoesHeelsRed
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesHeelsBlack
+  equipment:
+    shoes: ClothingShoesHeelsBlack
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesHeelsBrown
+  equipment:
+    shoes: ClothingShoesHeelsBrown
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesHeelsGold
+  equipment:
+    shoes: ClothingShoesHeelsGold
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesHeelsBlue
+  equipment:
+    shoes: ClothingShoesHeelsBlue
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesHeelsGreen
+  equipment:
+    shoes: ClothingShoesHeelsGreen
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesCaptainHighheelBoots
+  equipment:
+    shoes: ClothingShoesCaptainHighheelBoots
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesMimeBoots
+  equipment:
+    shoes: ClothingShoesMimeBoots
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesKneeHighBoots
+  equipment:
+    shoes: ClothingShoesKneeHighBoots
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesLeatherBoots
+  equipment:
+    shoes: ClothingShoesLeatherBoots
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesFlipflopsBlack
+  equipment:
+    shoes: ClothingShoesFlipflopsBlack
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesAngelSandals
+  equipment:
+    shoes: ClothingShoesAngelSandals
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeClothingShoesImpishShoes
+  equipment:
+    shoes: ClothingShoesImpishShoes
+  groupBy: "ShoesOther"
+
+- type: loadoutGroup
+  id: PiratePassengerPortedHead
+  name: loadout-group-pirate-ported-head
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeClothingHeadHatBeretCaptain
+  - PirateWardrobeClothingHeadHatBeretHD
+  - PirateWardrobeClothingHeadHatCaptainTricorne
+  - PirateWardrobeClothingHeadHatBellhopHD
+  - PirateWardrobeClothingHeadDevilHorns
+  - PirateWardrobeClothingHeadDeerstalker
+  - PirateWardrobeClothingHeadSailorCap
+  - PirateWardrobeClothingHeadHatCMOClip
+  - PirateWardrobeClothingHeadHatMusicianShako
+  - PirateWardrobeClothingHeadHatCuteTiara
+  - PirateWardrobeClothingHeadHatSimpleTiara
+  - PirateWardrobeClothingHeadHatCircusClown
+  - PirateWardrobeClothingHeadHatPilgrim
+  - PirateWardrobeClothingHeadHatWideBrimmed
+  - PirateWardrobeClothingHeadHatCardinal
+  - PirateWardrobeClothingHeadHatWitchhunter
+  - PirateWardrobeClothingHeadHatBishopMitre
+  - PirateWardrobeClothingHeadHatKippah
+  - PirateWardrobeClothingHeadHatMcCrown
+  - PirateWardrobeClothingHeadHatPilot
+  - PirateWardrobeClothingHeadHatPirates
+
+- type: loadoutGroup
+  id: PiratePassengerPortedNeck
+  name: loadout-group-pirate-ported-neck
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeClothingNeckCloakHd
+  - PirateWardrobeClothingNeckCloakMagicianCape
+  - PirateWardrobeClothingNeckCloakCaptainAdmiral
+  - PirateWardrobeClothingNeckAngelWings
+  - PirateWardrobeClothingNeckDevilWings
+  - PirateWardrobeClothingNeckSailorAscot
+  - PirateWardrobeClothingNeckImpishAccessories
+  - PirateWardrobeClothingNeckFeatherBoa
+  - PirateWardrobeClothingNeckScarfStripedLimeGreen
+  - PirateWardrobeClothingNeckScarfWrappedBlack
+  - PirateWardrobeClothingNeckScarfWrappedWhite
+  - PirateWardrobeClothingNeckScarfAscot
+  - PirateWardrobeClothingNeckMantleHD
+  - PirateWardrobeClothingNeckMantleLily
+  - PirateWardrobeClothingNeckCloakMystagogue
+  - PirateWardrobeClothingNeckCloakBoat
+  - PirateWardrobeClothingNeckSalvager
+  - PirateWardrobeClothingNeckCloakWitchCloak
+  - PirateWardrobeClothingNeckHosRobe
+  - PirateWardrobeClothingNeckCMOOverShoulder
+  - PirateWardrobeClothingNeckCMOShawl
+  - PirateWardrobeClothingNeckCentcommCloakBoat
+  - PirateWardrobeClothingNeckHeadOfSecurityCloakBoat
+  - PirateWardrobeClothingNeckMimeCloak
+
+- type: loadoutGroup
+  id: PiratePassengerPortedUniform
+  name: loadout-group-pirate-ported-uniform
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeClothingUniformFuneralSuit
+  - PirateWardrobeClothingUniformFuneralSuitSkirt
+  - PirateWardrobeClothingUniformNightclubSuit
+  - PirateWardrobeClothingUniformNightclubSuitSkirt
+  - PirateWardrobeClothingUniformBrownSuit
+  - PirateWardrobeClothingUniformBrownSuitSkirt
+  - PirateWardrobeClothingUniformCreamSuit
+  - PirateWardrobeClothingUniformCreamSuitSkirt
+  - PirateWardrobeClothingUniformMiamiVice
+  - PirateWardrobeClothingUniformMiamiViceSkirt
+  - PirateWardrobeClothingUniformBrosBlazer
+  - PirateWardrobeClothingUniformBrosBlazerSkirt
+  - PirateWardrobeClothingUniformSailorSuit
+  - PirateWardrobeClothingUniformJumpsuitTailcoatSuit
+  - PirateWardrobeClothingUniformMusicianSingerDress
+  - PirateWardrobeClothingUniformPinkPrincessDress
+  - PirateWardrobeClothingUniformGreenPrincessDress
+  - PirateWardrobeClothingUniformSkirtClayshaper
+  - PirateWardrobeClothingUniformSkirtDruid
+  - PirateWardrobeClothingUniformSkirtMoon
+  - PirateWardrobeClothingUniformSkirtTidal
+  - PirateWardrobeClothingUniformJumpsuitSafariPants
+  - PirateWardrobeUniformJabroni
+  - PirateWardrobeUniformMaid
+  - PirateWardrobeClothingCostumeBunnySuit
+  - PirateWardrobeClothingUniformSwimsuitBlue
+
+- type: loadoutGroup
+  id: PiratePassengerPortedOuter
+  name: loadout-group-pirate-ported-outer
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeClothingOuterCoatJokester
+  - PirateWardrobeClothingOuterCoatQmHuge
+  - PirateWardrobeClothingOuterCoatFieldJacket
+  - PirateWardrobeClothingOuterCoatPufferDark
+  - PirateWardrobeClothingOuterCoatPufferRed
+  - PirateWardrobeClothingOuterCoatPufferBlue
+  - PirateWardrobeClothingOuterCoatPufferMime
+  - PirateWardrobeClothingOuterCoatPufferSilver
+  - PirateWardrobeClothingOuterCoatPufferPink
+  - PirateWardrobeClothingOuterApronHD
+  - PirateWardrobeClothingOuterChapsBrown
+  - PirateWardrobeClothingOuterChapsWhite
+  - PirateWardrobeClothingOuterChapsBlack
+  - PirateWardrobeClothingOuterChapsFancy
+  - PirateWardrobeClothingOuterRainCape
+  - PirateWardrobeClothingOuterWhitePoncho
+  - PirateWardrobeClothingOuterQMPoncho
+  - PirateWardrobeClothingOuterBlackPoncho
+  - PirateWardrobeClothingOuterApronCuteChef
+  - PirateWardrobeClothingOuterApronCuteBar
+  - PirateWardrobeClothingOuterCowVest
+  - PirateWardrobeClothingOuterBlackVest
+
+- type: loadoutGroup
+  id: PiratePassengerPortedShoes
+  name: loadout-group-pirate-ported-shoes
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeClothingShoesHeelsRed
+  - PirateWardrobeClothingShoesHeelsBlack
+  - PirateWardrobeClothingShoesHeelsBrown
+  - PirateWardrobeClothingShoesHeelsGold
+  - PirateWardrobeClothingShoesHeelsBlue
+  - PirateWardrobeClothingShoesHeelsGreen
+  - PirateWardrobeClothingShoesCaptainHighheelBoots
+  - PirateWardrobeClothingShoesMimeBoots
+  - PirateWardrobeClothingShoesKneeHighBoots
+  - PirateWardrobeClothingShoesLeatherBoots
+  - PirateWardrobeClothingShoesFlipflopsBlack
+  - PirateWardrobeClothingShoesAngelSandals
+  - PirateWardrobeClothingShoesImpishShoes
