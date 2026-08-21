@@ -69,13 +69,7 @@
     Plastic: 200
     Gold: 100
 
-- type: latheRecipe
-  id: DefibrillatorCompact
-  result: DefibrillatorCompactEmpty
-  completetime: 5
-  materials:
-    Steel: 250
-    Silver: 50
+# Pirate - DefibrillatorCompact and the belt defib recipes moved to _Pirate/Recipes/Lathes/medical.yml
 
 - type: latheRecipe
   id: VialBluespace

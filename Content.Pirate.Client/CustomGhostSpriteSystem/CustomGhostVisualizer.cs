@@ -1,12 +1,33 @@
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Ghost;
+using Content.Pirate.Common.CCVar;
 using Content.Pirate.Shared.CustomGhostSystem;
 using Robust.Client.GameObjects;
+using Robust.Shared.Configuration;
 
 namespace Content.Pirate.Client.CustomGhostSpriteSystem;
 
 public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
 {
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        Subs.CVar(_configuration, PirateCVars.CustomGhostMaxSize, OnMaxSizeChanged);
+    }
+
+    private void OnMaxSizeChanged(int maxSquare)
+    {
+        var query = AllEntityQuery<GhostComponent, AppearanceComponent, SpriteComponent>();
+        while (query.MoveNext(out var uid, out _, out var appearance, out var sprite))
+        {
+            ApplyScale(uid, appearance, sprite, maxSquare);
+        }
+    }
+
     protected override void OnAppearanceChange(EntityUid uid, GhostComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
@@ -28,7 +49,7 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
                 }
                 catch
                 {
-                    // Якщо state не існує, підміняємо на перший доступний у RSI
+                    // Fall back to a common RSI state.
                     var rsi = args.Sprite[0].Rsi;
                     if (rsi != null)
                     {
@@ -49,12 +70,9 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
                 args.Sprite.LayerSetRSI(0, spriteData);
             }
 
-            if (!AppearanceSystem.TryGetData<float>(uid, CustomGhostAppearance.Scale, out var scale, args.Component))
-                scale = 1f;
+            ApplyScale(uid, args.Component, args.Sprite, _configuration.GetCVar(PirateCVars.CustomGhostMaxSize));
 
-            args.Sprite.LayerSetScale(0, new Vector2(scale, scale));
-
-            // Зберігаємо прозорість привида.
+            // Preserve the existing ghost transparency.
             return;
         }
 
@@ -62,5 +80,27 @@ public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
         {
             args.Sprite.Color = args.Sprite.Color.WithAlpha(alpha);
         }
+    }
+
+    /// <summary>Scales a ghost down to its configured size limit.</summary>
+    private void ApplyScale(EntityUid uid, AppearanceComponent appearance, SpriteComponent sprite, int maxSquare)
+    {
+        if (!AppearanceSystem.TryGetData<float>(uid, CustomGhostAppearance.MaxSize, out var maxSize, appearance))
+            return;
+
+        var scale = 1f;
+
+        if (maxSquare > 0
+            && maxSize > 0f
+            && sprite.AllLayers.FirstOrDefault()?.Rsi is { } rsi)
+        {
+            var largestSide = Math.Max(rsi.Size.X, rsi.Size.Y);
+            var limit = maxSquare * maxSize;
+
+            if (largestSide > limit && largestSide > 0)
+                scale = limit / largestSide;
+        }
+
+        sprite.LayerSetScale(0, new Vector2(scale, scale));
     }
 }

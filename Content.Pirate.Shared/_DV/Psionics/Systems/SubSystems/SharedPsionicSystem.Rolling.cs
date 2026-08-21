@@ -4,6 +4,8 @@ using Content.Shared._DV.Psionics.Events;
 using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Popups;
+using Content.Shared.Actions;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -131,6 +133,10 @@ public abstract partial class SharedPsionicSystem
         // If they don't have it already, add it.
         EntityManager.AddComponents(psionic, powerEntity, removeExisting: false);
 
+        // MapInitEvent may not fire for components added to already-initialized entities,
+        // so manually trigger the power initialization that OnPowerInit would normally handle.
+        InitializePowerComponents(psionic.Owner, powerEntity);
+
         if (!midRound)
             return true;
         // For alternative means of getting psionics that aren't via spawning in, cause them to suffer.
@@ -139,6 +145,56 @@ public abstract partial class SharedPsionicSystem
         _jittering.DoJitter(psionic, TimeSpan.FromSeconds(3), false);
 
         return true;
+    }
+
+    /// <summary>
+    /// Pirate: Manually triggers the power initialization that <c>OnPowerInit</c> would
+    /// normally handle via <c>MapInitEvent</c>. <c>MapInitEvent</c> may not fire for
+    /// components added to already-initialized entities via <c>AddComponents</c>, so
+    /// callers must invoke this after adding power components from a prototype.
+    /// </summary>
+    public void InitializePowerComponents(EntityUid entity, EntityPrototype powerPrototype)
+    {
+        var actionSystem = EntityManager.System<SharedActionsSystem>();
+        foreach (var (_, entry) in powerPrototype.Components)
+        {
+            if (entry.Component is not Components.PsionicPowers.BasePsionicPowerComponent powerComp)
+                continue;
+
+            var compType = powerComp.GetType();
+            if (!EntityManager.TryGetComponent(entity, compType, out var comp))
+                continue;
+
+            var psionicPowerComp = (Components.PsionicPowers.BasePsionicPowerComponent) comp;
+
+            // Create the action button.
+            actionSystem.AddAction(entity, ref psionicPowerComp.ActionEntity, psionicPowerComp.ActionProtoId);
+            Dirty(entity, psionicPowerComp);
+
+            // Ensure the entity is registered as a psionic.
+            var psionicComp = EnsureComp<PsionicComponent>(entity);
+            psionicComp.PsionicPowersActionEntities.Add(psionicPowerComp.ActionEntity);
+            Dirty(entity, psionicComp);
+
+            // Merge any powers this power unlocks into the psionic's random pull.
+            if (psionicPowerComp.PowerPoolAdditions.Count > 0)
+            {
+                foreach (var (protoId, weight) in psionicPowerComp.PowerPoolAdditions)
+                    psionicComp.PowerPoolAdditions[protoId] = weight;
+                Dirty(entity, psionicComp);
+            }
+
+            // Feedback shown to the player when they first gain this power.
+            if (psionicPowerComp.PowerInitFeedback is { } feedback
+                && TryComp<ActorComponent>(entity, out _))
+            {
+                RaiseLocalEvent(entity, new PsionicPowerGainedEvent(entity, Loc.GetString(feedback)), broadcast: true);
+            }
+
+            // Raise a post-init event so specialized power systems (e.g. PsionicEruptionPowerSystem)
+            // receive the same initialization as MapInitEvent paths without duplicating base setup.
+            RaiseLocalEvent(entity, new PsionicPowerPostInitializedEvent(compType));
+        }
     }
 
     public bool GrantPsionicRoll(Entity<PotentialPsionicComponent?> potPsionic)

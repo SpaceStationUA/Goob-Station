@@ -1,10 +1,7 @@
 using Content.Server.Ghost.Components;
 using Content.Shared.Ghost;
 using Content.Pirate.Shared.CustomGhostSystem;
-using Content.Pirate.Common.CCVar;
 using Robust.Server.GameObjects;
-using Robust.Shared.Configuration;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -15,29 +12,11 @@ public sealed class CustomGhostSpriteSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly IResourceManager _resourceManager = default!;
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-
-    private GhostSpriteMeasurer _measurer = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        _measurer = new GhostSpriteMeasurer(_resourceManager);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
-        Subs.CVar(_configuration, PirateCVars.CustomGhostMaxSize, OnMaxSizeChanged);
-    }
-
-    private void OnMaxSizeChanged(int value)
-    {
-        foreach (var session in _playerManager.Sessions)
-        {
-            if (session.AttachedEntity is not { } uid || !HasComp<GhostComponent>(uid))
-                continue;
-
-            TrySetCustomSprite(uid, session.Name);
-        }
     }
 
     private void OnPlayerAttached(PlayerAttachedEvent args)
@@ -121,12 +100,8 @@ public sealed class CustomGhostSpriteSystem : EntitySystem
                     spriteData);
 
                 _appearanceSystem.SetData(ghostUid,
-                    CustomGhostAppearance.Scale,
-                    _measurer.GetScale(
-                        chosenRsi,
-                        chosenState,
-                        customGhostPrototype.MaxSize,
-                        _configuration.GetCVar(PirateCVars.CustomGhostMaxSize)));
+                    CustomGhostAppearance.MaxSize,
+                    customGhostPrototype.MaxSize);
 
                 if (customGhostPrototype.AlphaOverride > 0)
                 {
@@ -138,13 +113,11 @@ public sealed class CustomGhostSpriteSystem : EntitySystem
                 if (customGhostPrototype.GhostName != string.Empty)
                 {
                     _metaData.SetEntityName(ghostUid, customGhostPrototype.GhostName);
-                    // MetaData(ghostUid).EntityName = customGhostPrototype.GhostName;
                 }
 
                 if (customGhostPrototype.GhostDescription != string.Empty)
                 {
                     _metaData.SetEntityDescription(ghostUid, customGhostPrototype.GhostDescription);
-                    // MetaData(ghostUid).EntityDescription = customGhostPrototype.GhostDescription;
                 }
 
                 return true;

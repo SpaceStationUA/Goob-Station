@@ -107,7 +107,8 @@
   id: DefibrillatorSyndicate
   parent: [ DefibrillatorCompact, BaseSyndicateContraband ]
   name: interdyne defibrillator
-  description: Doubles as a self-defense weapon against war-crime inclined tiders.
+  # Pirate - desc changed, melee zap weapon removed
+  description: A compact medical defibrillator fitted for field use.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/defibsyndi.rsi
@@ -120,21 +121,3 @@
       - state: ready
         map: ["enum.PowerDeviceVisualLayers.Powered"]
         shader: unshaded
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 8
-  - type: ItemToggleMeleeWeapon
-    activatedSoundOnHit:
-      path: /Audio/Items/Defib/defib_zap.ogg
-      params:
-        variation: 0.250
-    activatedSoundOnHitNoDamage:
-      path: /Audio/Items/Defib/defib_zap.ogg
-      params:
-        variation: 0.250
-        volume: -10
-    activatedDamage:
-      types:
-        Blunt: 8
-        Shock: 16

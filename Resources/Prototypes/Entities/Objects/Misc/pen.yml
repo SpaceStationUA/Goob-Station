@@ -17,12 +17,15 @@
     tags:
     - Write
     - Pen
+  - type: StoreContracts # Pirate: register contracts UI for pen uplinks.
   - type: UserInterface # Goob starting here
     interfaces:
       enum.PenSpinUiKey.Key:
         type: PenSpinBoundUserInterface
       enum.StoreUiKey.Key:
-        type: StoreBoundUserInterface
+        type: UplinkBoundUserInterface # Pirate: expose the contract hub on pen uplinks.
+      enum.ContractsUiKey.Key: # Pirate
+        type: ContractsBUI
   - type: ActivatableUI
     key: enum.PenSpinUiKey.Key
     inHandsOnly: true

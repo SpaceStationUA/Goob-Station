@@ -256,3 +256,14 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: UplinkDefibrillatorBeltCombat
+  name: uplink-defibrillator-belt-combat-name
+  description: uplink-defibrillator-belt-combat-desc
+  icon: { sprite: _Pirate/Objects/Specific/Medical/defibcombat.rsi, state: icon }
+  productEntity: DefibrillatorBeltCombat
+  cost:
+    Telecrystal: 30
+  categories:
+  - UplinkWearables

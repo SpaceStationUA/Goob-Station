@@ -34,19 +34,28 @@ public sealed class TraitSystem : SharedTraitSystem
             !jobProto.ApplyTraits)
             return;
 
-        var (validTraits, disabledTraits) = ValidateTraits(args.Mob, args.Profile.TraitPreferences, args.Player, args.JobId, args.Profile.Species, args.Profile);
+        ApplyProfileTraits(args.Mob, args.Profile, args.Player, args.JobId);
+    }
+
+    public void ApplyProfileTraits(
+        EntityUid mob,
+        Content.Shared.Preferences.HumanoidCharacterProfile profile,
+        Robust.Shared.Player.ICommonSession? session,
+        string? jobId)
+    {
+        var (validTraits, disabledTraits) = ValidateTraits(mob, profile.TraitPreferences, session, jobId, profile.Species, profile);
 
         foreach (var traitId in validTraits)
         {
             if (!_prototypeManager.TryIndex(traitId, out var trait))
                 continue;
 
-            ApplyTrait(args.Mob, trait);
+            ApplyTrait(mob, trait);
         }
 
-        if (disabledTraits.Count > 0)
+        if (disabledTraits.Count > 0 && session != null)
         {
-            RaiseNetworkEvent(new DisabledTraitsEvent(disabledTraits), args.Player);
+            RaiseNetworkEvent(new DisabledTraitsEvent(disabledTraits), session);
         }
     }
 

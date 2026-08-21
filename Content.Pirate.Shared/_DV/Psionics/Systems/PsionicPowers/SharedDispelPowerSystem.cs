@@ -30,14 +30,25 @@ public abstract class SharedDispelPowerSystem : BasePsionicPowerSystem<DispelPow
         SubscribeLocalEvent<DispellableComponent, DispelledEvent>(OnDispelled);
         SubscribeLocalEvent<DamageOnDispelComponent, DispelledEvent>(OnDmgDispelled);
         SubscribeLocalEvent<DispelPowerComponent, PsionicStoppedShieldedEvent>(OnPsionicShieldingStopped, null,[typeof(SharedPsionicSystem)]);
+        SubscribeLocalEvent<DispelPowerComponent, PsionicPowerPostInitializedEvent>(OnPostInit);
         // Upstream stuff we're just gonna handle here
         SubscribeLocalEvent<RevenantComponent, DispelledEvent>(OnRevenantDispelled);
-    }
-
-    protected override void OnPowerInit(Entity<DispelPowerComponent> power, ref MapInitEvent args)
+    }    protected override void OnPowerInit(Entity<DispelPowerComponent> power, ref MapInitEvent args)
     {
         base.OnPowerInit(power, ref args);
+        InitDispelExtras(power);
+    }
 
+    private void OnPostInit(Entity<DispelPowerComponent> power, ref PsionicPowerPostInitializedEvent args)
+    {
+        if (args.PowerType != typeof(DispelPowerComponent))
+            return;
+
+        InitDispelExtras(power);
+    }
+
+    private void InitDispelExtras(Entity<DispelPowerComponent> power)
+    {
         // If the power was stripped (e.g. entity without psionic potential), skip the extras.
         if (!HasComp<DispelPowerComponent>(power))
             return;

@@ -12,7 +12,8 @@ public sealed class WetnessSystem : SharedWetnessSystem
 {
     private const string DropletRsi = "_Pirate/Effects/wetness.rsi";
     private const string DropletState = "droplets";
-    private const string DropletLayerKey = "wetness-droplets";
+
+    public const string DropletLayerKey = "wetness-droplets";
 
     [Dependency] private readonly SpriteSystem _sprite = null!;
 

@@ -25,6 +25,18 @@
                    FontColorOverride="#F2D3A0"
                    Margin="0 4 0 12" />
 
+            <!-- Last prescription -->
+            <Label Text="{Loc 'index-admin-last-prescription-header'}"
+                   StyleClasses="LabelSubText"
+                   FontColorOverride="#C9A36A"
+                   Margin="0 0 0 4" />
+            <PanelContainer Margin="0 0 0 10">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1E27" BorderColor="#2E323D" BorderThickness="1" />
+                </PanelContainer.PanelOverride>
+                <RichTextLabel Name="LastPrescriptionLabel" Margin="8 6" />
+            </PanelContainer>
+
             <!-- Prescription sender -->
             <Label Text="{Loc 'index-admin-send-prescription-header'}"
                    StyleClasses="LabelSubText"
@@ -51,6 +63,9 @@
 
             <!-- Fpoon guarantee -->
             <Button Name="FpoonButton" ToggleMode="True" Text="{Loc 'index-admin-fpoon-button'}" Margin="0 14 0 0" />
+
+            <!-- Index jumpscare -->
+            <Button Name="JumpscareButton" Text="{Loc 'index-admin-jumpscare-button'}" Margin="0 8 0 0" />
         </BoxContainer>
     </PanelContainer>
 </DefaultWindow>

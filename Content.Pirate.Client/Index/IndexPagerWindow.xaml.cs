@@ -20,14 +20,14 @@ public sealed partial class IndexPagerWindow : DefaultWindow
 
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-    private static readonly ResPath IndexLogoPath = new("/Textures/_Pirate/Interface/Misc/index_logo.rsi");
+    private static readonly ResPath IndexLogoPath = new("/Textures/_Pirate/Interface/Misc/index.rsi");
 
     public IndexPagerWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        IndexLogo.Texture = _resourceCache.GetResource<RSIResource>(IndexLogoPath).RSI["index_logo"].Frame0;
+        IndexLogo.Texture = _resourceCache.GetResource<RSIResource>(IndexLogoPath).RSI["index"].Frame0;
     }
 
     public void UpdateState(IndexPagerBoundUserInterfaceState state)

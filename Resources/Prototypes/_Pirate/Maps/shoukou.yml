@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#made by kraftorset, with love <3
+- type: gameMap
+  id: Shoukou
+  mapName: 'Shōkō'
+  mapPath: /Maps/_Pirate/shoukou.yml 
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
+  mapPreview: PirateMapPreviewShoukou
+  minPlayers: 1
+  maxPlayers: 35
+  stations:
+    Shoukou:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Станція Shōkō {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'TG'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/_Pirate/Shuttles/emergency_box.yml
+        - type: StationJobs
+          availableJobs:
+            #service
+            Captain: [ 1, 1 ]
+            NanotrasenRepresentative: [ 1, 1 ]
+            BlueshieldOfficer: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ]
+            Bartender: [ 2, 2 ]
+            Botanist: [ 2, 2 ]
+            Chef: [ 2, 2 ]
+            Janitor: [ 2, 2 ]
+            Chaplain: [ 1, 1 ]
+            Librarian: [ 1, 1 ]
+            Reporter: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
+            RadioHost: [ 1, 1 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 1, 2 ]
+            StationEngineer: [ 3, 4 ]
+            TechnicalAssistant: [ 2, 3 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 3, 3 ]
+            Paramedic: [ 1, 2 ]
+            MedicalIntern: [ 2, 2 ]
+            Psychologist: [ 1, 1 ]
+            Virologist: [ 1, 1 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 3, 4 ]
+            ForensicMantis: [ 1, 1 ]
+            ResearchAssistant: [ 2, 3 ]
+            Roboticist: [ 2, 2 ]
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            SecurityInstructor: [ 1, 1 ]
+            SecurityOfficer: [ 3, 5 ]
+            Detective: [ 1, 1 ]
+            SecurityCadet: [ 2, 3 ]
+            Lawyer: [ 2, 2 ]
+            Brigmedic: [ 1, 1 ]
+            #supply
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 3 ]
+            CargoTechnician: [ 2, 3 ]
+            #civilian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 2, 2 ]
+            #silicon
+            StationAi: [ 1, 1 ]
+            Borg: [ 2, 3 ]

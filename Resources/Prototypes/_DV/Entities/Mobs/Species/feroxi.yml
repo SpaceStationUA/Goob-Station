@@ -122,6 +122,8 @@
     deactivateSound: null
   # Pirate: port shark vision end
   - type: WaterAdapted # Pirate: feroxi water adaptation
+  - type: FeroxiUnderwater # Pirate: feroxi underwater
+  - type: ClawFootsteps # Pirate: claw footsteps
   - type: LanguageKnowledge # The Den, give Feroxi their own language.
     speaks:
     - TauCetiBasic
@@ -137,22 +139,40 @@
           32:
             sprite: _White/Mobs/Species/displacement.rsi
             state: jumpsuit-female
-      shoes:
+      shoes: # Pirate: feroxi-specific shoes displacement (was shared reptilian map)
         sizeMaps:
           32:
-            sprite: _White/Mobs/Species/displacement.rsi
+            sprite: _Pirate/Mobs/Species/Feroxi/displacement.rsi
             state: shoes
+      #region Pirate: feroxi outerclothing displacement
+      # Full-body outerwear (hardsuits/modsuits) covers the legs, which are reshaped
+      # on the Goob feroxi resprite. Reuses the hand-authored jumpsuit warp.
+      # Repeated in femaleDisplacements because a non-empty femaleDisplacements
+      # replaces the unsexed map wholesale per slot.
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Feroxi/displacement.rsi
+            state: outerclothing
+      #endregion Pirate: feroxi outerclothing displacement
     displacements:
       jumpsuit:
         sizeMaps:
           32:
             sprite: _White/Mobs/Species/displacement.rsi
             state: jumpsuit
-      shoes:
+      shoes: # Pirate: feroxi-specific shoes displacement (was shared reptilian map)
         sizeMaps:
           32:
-            sprite: _White/Mobs/Species/displacement.rsi
+            sprite: _Pirate/Mobs/Species/Feroxi/displacement.rsi
             state: shoes
+      #region Pirate: feroxi outerclothing displacement
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Feroxi/displacement.rsi
+            state: outerclothing
+      #endregion Pirate: feroxi outerclothing displacement
     # Goob-Feroxi-Resprite-End
 
 - type: entity
@@ -230,20 +250,38 @@
           32:
             sprite: _White/Mobs/Species/displacement.rsi
             state: jumpsuit-female
-      shoes:
+      shoes: # Pirate: feroxi-specific shoes displacement (was shared reptilian map)
         sizeMaps:
           32:
-            sprite: _White/Mobs/Species/displacement.rsi
+            sprite: _Pirate/Mobs/Species/Feroxi/displacement.rsi
             state: shoes
+      #region Pirate: feroxi outerclothing displacement
+      # Full-body outerwear (hardsuits/modsuits) covers the legs, which are reshaped
+      # on the Goob feroxi resprite. Reuses the hand-authored jumpsuit warp.
+      # Repeated in femaleDisplacements because a non-empty femaleDisplacements
+      # replaces the unsexed map wholesale per slot.
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Feroxi/displacement.rsi
+            state: outerclothing
+      #endregion Pirate: feroxi outerclothing displacement
     displacements:
       jumpsuit:
         sizeMaps:
           32:
             sprite: _White/Mobs/Species/displacement.rsi
             state: jumpsuit
-      shoes:
+      shoes: # Pirate: feroxi-specific shoes displacement (was shared reptilian map)
         sizeMaps:
           32:
-            sprite: _White/Mobs/Species/displacement.rsi
+            sprite: _Pirate/Mobs/Species/Feroxi/displacement.rsi
             state: shoes
+      #region Pirate: feroxi outerclothing displacement
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Pirate/Mobs/Species/Feroxi/displacement.rsi
+            state: outerclothing
+      #endregion Pirate: feroxi outerclothing displacement
     # Goob-Feroxi-Resprite-End

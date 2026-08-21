@@ -615,18 +615,12 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         return false;
     }
 
-    private bool AllRequiredPartsDeployed(EntityUid suit)
+    private bool AllRequiredPartsDeployed(Entity<ModularSuitComponent> suit)
     {
         if (!TryComp<ModularSuitEquippedComponent>(suit, out var equipped))
             return false;
 
-        var requiredParts = new HashSet<SuitPartType>
-        {
-            SuitPartType.Helmet,
-            SuitPartType.Torso,
-            SuitPartType.Gloves,
-            SuitPartType.Boots
-        };
+        var requiredParts = GetRequiredParts(suit);
 
         foreach (var partUid in equipped.EquippedParts.Values)
         {
@@ -635,6 +629,31 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
         }
 
         return requiredParts.Count == 0;
+    }
+
+    private HashSet<SuitPartType> GetRequiredParts(Entity<ModularSuitComponent> suit)
+    {
+        var requiredParts = new HashSet<SuitPartType>
+        {
+            SuitPartType.Helmet,
+            SuitPartType.Torso,
+            SuitPartType.Gloves,
+            SuitPartType.Boots
+        };
+
+        if (suit.Comp.Wearer is not { } wearer)
+            return requiredParts;
+
+        if (!Inventory.HasSlot(wearer, "head"))
+            requiredParts.Remove(SuitPartType.Helmet);
+        if (!Inventory.HasSlot(wearer, "outerClothing"))
+            requiredParts.Remove(SuitPartType.Torso);
+        if (!Inventory.HasSlot(wearer, "gloves"))
+            requiredParts.Remove(SuitPartType.Gloves);
+        if (!Inventory.HasSlot(wearer, "shoes"))
+            requiredParts.Remove(SuitPartType.Boots);
+
+        return requiredParts;
     }
 
     private bool TryStartSuitUnsealing(Entity<ModularSuitComponent> suit, EntityUid user)
@@ -865,13 +884,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
             return;
         }
 
-        var requiredParts = new HashSet<SuitPartType>
-        {
-            SuitPartType.Helmet,
-            SuitPartType.Torso,
-            SuitPartType.Gloves,
-            SuitPartType.Boots
-        };
+        var requiredParts = GetRequiredParts((uid, suit));
 
         var partContainer = Container.GetContainer(uid, PartContainer);
         foreach (var part in partContainer.ContainedEntities)

@@ -16,3 +16,27 @@
       state: bleed10
   - type: InstantAction
     event: !type:ToggleSharkVisionEvent
+
+- type: entity
+  parent: BaseToggleAction
+  id: ActionFeroxiDive
+  name: Dive
+  description: Slip beneath the surface. Only your dorsal fin stays visible, you swim 50% faster, your unarmed strikes hit twice as hard, and your footsteps fall silent.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon: _Pirate/Interface/Actions/feroxi_dive.png
+    itemIconStyle: NoItem
+    useDelay: 1
+
+- type: entity
+  parent: BaseToggleAction
+  id: ActionFeroxiSurface
+  name: Surface
+  description: Rise back out of the water. You surface on your own if you leave the water, or if you are knocked down or badly hurt.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon: _Pirate/Interface/Actions/feroxi_surface.png
+    itemIconStyle: NoItem
+    useDelay: 1

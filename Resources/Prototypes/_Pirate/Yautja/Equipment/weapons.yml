@@ -3,6 +3,7 @@
   id: GoobYautjaWeaponBase
   abstract: true
   components:
+  - type: YautjaResinBreaker
   - type: Sprite
     sprite: _Pirate/Yautja/weapons.rsi
     state: clan_sword
@@ -331,7 +332,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaHunterSpear
   name: "мисливський спис"
-  description: "Спис вишуканого дизайну Яутжа, придатний для двохручних уколів."
+  description: "Спис вишуканого дизайну Яутжа, придатний для двохручних уколів. При кидку застрягає в цілі."
   components:
   - type: Sharp
   - type: Sprite
@@ -354,7 +355,16 @@
         Piercing: 28
         Slash: 6
   - type: MeleeRequiresWield
+  - type: EmbeddableProjectile
+    offset: -0.15,0.0
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: ThrowingAngle
+    angle: 225
   - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 120
 
 - type: entity
   parent: GoobYautjaWeaponBase
@@ -436,7 +446,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaDuellingBlade
   name: "дуельний клинок"
-  description: "Примітивний, але смертельний клинок Яутжа для ритуального бою."
+  description: "Примітивний, але смертельний клинок Яутжа для ритуального бою. У двох руках працює як катана: блок і відбиття."
   components:
   - type: Sharp
   - type: Sprite
@@ -449,8 +459,15 @@
     damage:
       types:
         Slash: 32
+      woundSeverityMultipliers:
+        Slash: 2.5
+      armorPenetration: 0.3
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: Wieldable
+    wieldedInhandPrefix: duelling_blade
+  - type: TimedDeflectBlock
+  - type: DisarmMalus
 
 - type: entity
   parent: GoobYautjaWeaponBase
@@ -538,15 +555,15 @@
           !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
         hard: false
+        # Як у звичайних куль — б'є в скло/решітки (GlassLayer ↔ BulletImpassable)
         mask:
-        - Opaque
-        layer:
-        - Opaque
+        - Impassable
+        - BulletImpassable
 - type: entity
   parent: BaseItem
   id: GoobYautjaSpikeLauncher
   name: "пускова установка шипів"
-  description: "Компактний пристрій Яутжа у формі півмісяця, що швидко формує і випускає сплавні шипи."
+  description: "Компактний пристрій Яутжа у формі півмісяця, що швидко формує і випускає сплавні шипи. Регенерує заряд кожні 3 секунди."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/guns.rsi
@@ -555,7 +572,7 @@
   - type: Item
     sprite: _Pirate/Yautja/gun_inhands.rsi
     heldPrefix: spike_launcher
-    size: Huge
+    size: Normal
   - type: AmmoCounter
   - type: Gun
     projectileSpeed: 28
@@ -571,10 +588,17 @@
     proto: GoobYautjaSpikeProjectile
     capacity: 12
     count: 12
-  # Об'єднали WieldDelay із компонентом Wieldable для Goob-ТП
-  - type: Wieldable
-    wieldedInhandPrefix: spike_launcher
-  - type: GunRequiresWield
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 3
+    rechargeSound: null
+  # Одна рука; дві в руках — стріляють разом (як Dualetta), але не обов'язково.
+  - type: Multishot
+    missChance: 0
+    spreadMultiplier: 1
+    spreadAddition: 0
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Appearance
 
 - type: entity

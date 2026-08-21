@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.Defibrillator; //Pirate
 using Content.Server.Atmos.Rotting;
 using Content.Server.Chat.Systems;
 using Content.Server.DoAfter;
@@ -33,7 +34,6 @@ using Content.Shared._Shitmed.Damage;
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness.Systems;
 using Content.Shared.Chat;
-using Content.Shared.Mood;
 
 namespace Content.Server.Medical;
 
@@ -72,6 +72,12 @@ public sealed class DefibrillatorSystem : EntitySystem
     {
         if (args.Handled || args.Target is not { } target)
             return;
+
+        //Pirate
+        // Belt defibs are intentionally not used directly; the detachable paddles are the only items that should trigger the zap.
+        if (HasComp<DefibrillatorHideInHandComponent>(uid))
+            return;
+        //Pirate: portable defibs (end)
 
         args.Handled = TryStartZap(uid, target, args.User, component);
     }
@@ -276,9 +282,6 @@ public sealed class DefibrillatorSystem : EntitySystem
             ? component.FailureSound
             : component.SuccessSound;
         _audio.PlayPvs(sound, uid);
-
-        if (wasDead && !dead && session != null)
-            RaiseLocalEvent(user, new MoodEffectEvent("SavedLife")); // Pirate - port EE mood system
 
         // if we don't have enough power left for another shot, turn it off
         if (!_powerCell.HasActivatableCharge(uid))

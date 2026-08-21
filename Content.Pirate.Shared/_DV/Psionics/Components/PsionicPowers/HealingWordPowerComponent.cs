@@ -15,9 +15,9 @@ public sealed partial class HealingWordComponent : BasePsionicPowerComponent
 
     public override string? PowerMetapsionicFeedback { get; set; } = "healing-word-power-metapsionic-feedback";
 
-    public override int MinGlimmerChanged { get; set; } = 1;
+    public override int MinGlimmerChanged { get; set; } = 0;
 
-    public override int MaxGlimmerChanged { get; set; } = 5;
+    public override int MaxGlimmerChanged { get; set; } = 2;
 
     /// <summary>
     /// How much the target is healed on a successful cast.

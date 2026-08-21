@@ -189,7 +189,7 @@ public sealed class OracleSystem : EntitySystem
 
         while (i != 0)
         {
-            Spawn("MaterialBluespace1", Transform(user).Coordinates);
+            Spawn("MaterialBSCrystal1", Transform(user).Coordinates);
             i--;
         }
 

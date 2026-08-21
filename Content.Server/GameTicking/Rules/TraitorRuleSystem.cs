@@ -11,7 +11,6 @@ using Content.Server.Traitor.Uplink;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared._Pirate.Reputation; // Pirate
 using Content.Shared.Mind;
-using Content.Shared.Mood;
 using Content.Shared.NPC.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Random.Helpers;
@@ -197,7 +196,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             _popup.PopupEntity(Loc.GetString("antag-gain-remove-clumsy"), traitor, traitor, Shared.Popups.PopupType.Medium);
         }
 
-        RaiseLocalEvent(traitor, new MoodEffectEvent("TraitorFocused")); // Pirate - port EE mood system
         Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Finished");
         return true;
     }

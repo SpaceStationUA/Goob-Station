@@ -15,7 +15,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Nyanotrasen.StationEvents.Events;
 
 /// <summary>
-/// Forces a mind swap on all non-insulated potential psionic entities.
+/// Forces a mind swap on multiple pairs of non-insulated potential psionic entities.
 /// </summary>
 internal sealed class MassMindSwapRule : StationEventSystem<MassMindSwapRuleComponent>
 {
@@ -67,7 +67,6 @@ internal sealed class MassMindSwapRule : StationEventSystem<MassMindSwapRuleComp
 
     private void SwapMinds(MassMindSwapRuleComponent component)
     {
-        List<EntityUid> psionicPool = new();
         List<EntityUid> psionicActors = new();
 
         var query = EntityQueryEnumerator<PotentialPsionicComponent, MobStateComponent>();
@@ -76,41 +75,24 @@ internal sealed class MassMindSwapRule : StationEventSystem<MassMindSwapRuleComp
             if (!_mobStateSystem.IsAlive(psion, mobState) || !_psionic.CanBeTargeted(psion))
                 continue;
 
-            psionicPool.Add(psion);
-
+            // Only swap between connected players — no mindswapping NPCs
             if (HasComp<ActorComponent>(psion))
-            {
-                // This is so we don't bother mindswapping NPCs with NPCs.
                 psionicActors.Add(psion);
-            }
         }
 
-        // Shuffle the list of candidates.
-        _random.Shuffle(psionicPool);
+        var maxPairs = Math.Min(component.MaxNumberOfPairs, psionicActors.Count / 2);
+        if (maxPairs <= 0)
+            return;
 
-        foreach (var actor in psionicActors)
+        var swapPairCount = _random.Next(1, maxPairs + 1);
+
+        for (; swapPairCount > 0 && psionicActors.Count > 1; swapPairCount--)
         {
-            do
-            {
-                if (psionicPool.Count == 0)
-                    // We ran out of candidates. Exit early.
-                    return;
+            var target01 = _random.PickAndTake(psionicActors);
+            var target02 = _random.PickAndTake(psionicActors);
 
-                // Pop the last entry off.
-                var other = psionicPool[^1];
-                psionicPool.RemoveAt(psionicPool.Count - 1);
-
-                if (other == actor)
-                    // Don't be yourself. Find someone else.
-                    continue;
-
-                // A valid swap target has been found.
-                // Remove this actor from the pool of swap candidates before they go.
-                psionicPool.Remove(actor);
-
-                // Do the swap. Also ignore mindshields, because this is the big boi swap.
-                _mindSwap.SwapMinds(actor, other, false, component.IsTemporary, true);
-            } while (true);
+            // Do the swap. Also ignore mindshields, because this is the big boi swap.
+            _mindSwap.SwapMinds(target01, target02, false, component.IsTemporary, true);
         }
     }
 }

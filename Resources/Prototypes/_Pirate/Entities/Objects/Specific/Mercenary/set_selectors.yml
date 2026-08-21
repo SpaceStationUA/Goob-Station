@@ -1,0 +1,35 @@
+- type: entity
+  id: MercUndeterminedWeapon
+  name: mercenary weapon requisition
+  description: A small remote utilizing bluespace technology to drop in a weapon loadout directly to you. Choose wisely.
+  parent: [ BaseItem, BaseSetSelector ]
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Specific/Security/ertundetermined.rsi
+    state: icon
+  - type: SetSelector
+    possibleSets:
+    - MercWSPRSet
+    - MercEstocSet
+    - MercBanditSet
+    - MercAKMSet
+    - MercEnforcerSet
+    - MercVulkanMSet
+    maxSelectedSets: 1
+
+- type: entity
+  id: MercUndeterminedSidearm
+  name: mercenary sidearm requisition
+  description: A small remote utilizing bluespace technology to drop in a sidearm directly to you. Choose wisely.
+  parent: [ BaseItem, BaseSetSelector ]
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Specific/Security/ertundetermined.rsi
+    state: icon
+  - type: SetSelector
+    possibleSets:
+    - MercSvalinnSet
+    - MercEnergyMagnumSet
+    - MercCobraSet
+    - MercViperSet
+    maxSelectedSets: 1

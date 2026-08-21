@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Shared.MisandryBox.JumpScare;
 using Content.Pirate.Shared.Index;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Verbs;
@@ -17,6 +18,8 @@ public sealed class IndexAdminSystem : EntitySystem
 {
     private const int MaxPrescriptionLength = 300;
 
+    [Dependency] private readonly IFullScreenImageJumpscare _jumpscare = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly ISharedAdminManager _admin = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IndexPagerSystem _pager = default!;
@@ -34,11 +37,12 @@ public sealed class IndexAdminSystem : EntitySystem
             subs.Event<IndexAdminRemoveKarmaMessage>(OnRemoveKarma);
             subs.Event<IndexAdminSendPrescriptionMessage>(OnSendPrescription);
             subs.Event<IndexAdminGuaranteeFpoonMessage>(OnGuaranteeFpoon);
+            subs.Event<IndexAdminJumpscareMessage>(OnJumpscare);
         });
     }
 
     private static SpriteSpecifier AdminVerbIcon => new SpriteSpecifier.Rsi(
-        new ResPath("/Textures/_Pirate/Interface/Misc/index_logo.rsi"), "index_logo");
+        new ResPath("/Textures/_Pirate/Interface/Misc/index.rsi"), "index");
 
     private void OnPagerVerb(Entity<IndexPagerComponent> ent, ref GetVerbsEvent<Verb> args)
     {
@@ -125,6 +129,22 @@ public sealed class IndexAdminSystem : EntitySystem
 
         _pager.SetGuaranteeFpoon(memberUid, args.Enabled);
         _pager.UpdateAdminUi(ent);
+    }
+
+    /// <summary>
+    ///     The Index shows its face to the member - a fullscreen jumpscare, like when a Caduceus
+    ///     form is held too long. Nothing else happens.
+    /// </summary>
+    private void OnJumpscare(Entity<IndexPagerComponent> ent, ref IndexAdminJumpscareMessage args)
+    {
+        if (!_admin.IsAdmin(args.Actor) || !TryGetMember(ent, out var memberUid))
+            return;
+
+        if (!_player.TryGetSessionByEntity(memberUid, out var session))
+            return;
+
+        var image = new SpriteSpecifier.Texture(new ResPath(IndexPagerSystem.JumpscareImage));
+        _jumpscare.Jumpscare(image, session);
     }
 
     private bool TryGetMember(Entity<IndexPagerComponent> ent, out EntityUid memberUid)

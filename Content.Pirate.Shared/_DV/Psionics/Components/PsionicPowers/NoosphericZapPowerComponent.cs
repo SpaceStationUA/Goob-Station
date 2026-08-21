@@ -14,9 +14,9 @@ public sealed partial class NoosphericZapPowerComponent : BasePsionicPowerCompon
 
     public override string? PowerMetapsionicFeedback { get; set; } = "noospheric-zap-power-metapsionic-feedback";
 
-    public override int MinGlimmerChanged { get; set; } = 5;
+    public override int MinGlimmerChanged { get; set; } = 2;
 
-    public override int MaxGlimmerChanged { get; set; } = 15;
+    public override int MaxGlimmerChanged { get; set; } = 7;
 
     /// <summary>
     /// The prototype for the lightning.

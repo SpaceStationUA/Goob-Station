@@ -45,5 +45,5 @@ public sealed partial class PirateVars
     /// Note that this is randomized and this is an average value.
     /// </summary>
     public static readonly CVarDef<float> GlimmerLostPerSecond =
-        CVarDef.Create("glimmer.passive_drain_per_second", 0.05f, CVar.SERVERONLY);
+        CVarDef.Create("glimmer.passive_drain_per_second", 0.1f, CVar.SERVERONLY);
 }

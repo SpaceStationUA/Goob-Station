@@ -5,6 +5,7 @@ using Content.Shared._DV.Psionics.Events.PowerActionEvents;
 using Content.Shared.Popups;
 using Content.Shared.Speech;
 using Content.Shared.Stealth.Components;
+using Robust.Shared.Player;
 
 namespace Content.Shared._DV.Psionics.Systems.PsionicPowers;
 
@@ -25,6 +26,7 @@ public sealed class MindSwappedReturnPowerSystem : BasePsionicPowerSystem<MindSw
         base.Initialize();
 
         SubscribeLocalEvent<MindSwappedReturnPowerComponent, ComponentShutdown>(OnShutDown);
+        SubscribeLocalEvent<MindSwappedReturnPowerComponent, PsionicPowerPostInitializedEvent>(OnPostInit);
 
         _mindSwappedQuery = GetEntityQuery<MindSwappedReturnPowerComponent>();
     }
@@ -38,6 +40,31 @@ public sealed class MindSwappedReturnPowerSystem : BasePsionicPowerSystem<MindSw
             return;
 
         RemoveLink((psionic.Comp.OriginalEntity, targetComp));
+    }
+
+    /// <summary>
+    /// Pirate: the return power is granted at runtime to arbitrary entities - including telegnostic
+    /// projections and Yautja observation projections, which have no psionic potential. The
+    /// base implementation removes removable powers from non-potential entities on init, which
+    /// would delete the return power the instant it was added. Grant the action directly instead
+    /// (idempotent with the explicit grant in SwapMinds) and surface the gain feedback that the
+    /// base path would otherwise have shown.
+    /// </summary>
+    protected override void OnPowerInit(Entity<MindSwappedReturnPowerComponent> power, ref MapInitEvent args)
+    {
+        EnsureReturnAction(power);
+
+        if (power.Comp.PowerInitFeedback is { } feedback && TryComp<ActorComponent>(power, out _))
+            // Broadcast so server-side handlers (e.g. the chat feedback) receive it.
+            RaiseLocalEvent(power, new PsionicPowerGainedEvent(power, Loc.GetString(feedback)), broadcast: true);
+    }
+
+    private void OnPostInit(Entity<MindSwappedReturnPowerComponent> power, ref PsionicPowerPostInitializedEvent args)
+    {
+        if (args.PowerType != typeof(MindSwappedReturnPowerComponent))
+            return;
+
+        EnsureReturnAction(power);
     }
 
     protected override void OnPowerUsed(Entity<MindSwappedReturnPowerComponent> psionic, ref MindSwappedReturnPowerActionEvent args)

@@ -12,6 +12,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -57,8 +58,24 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
         SubscribeLocalEvent<YautjaBracerShieldComponent, ComponentShutdown>(OnShieldShutdown);
         SubscribeLocalEvent<YautjaBracerShieldComponent, DroppedEvent>(OnShieldDropped);
         SubscribeLocalEvent<YautjaBracerCloakTrackerComponent, MoveEvent>(OnCloakTrackerMove);
+        SubscribeLocalEvent<YautjaBracerCloakTrackerComponent, AttackAttemptEvent>(OnCloakedAttackAttempt);
+        SubscribeLocalEvent<YautjaBracerCloakTrackerComponent, ShotAttemptedEvent>(OnCloakedShotAttempt);
         SubscribeLocalEvent<YautjaCloakPackComponent, GotUnequippedEvent>(OnCloakPackUnequipped);
         SubscribeLocalEvent<MobStateChangedEvent>(OnWearerMobStateChanged);
+    }
+
+    private void OnCloakedAttackAttempt(
+        Entity<YautjaBracerCloakTrackerComponent> ent,
+        ref AttackAttemptEvent args)
+    {
+        args.Cancel();
+    }
+
+    private void OnCloakedShotAttempt(
+        Entity<YautjaBracerCloakTrackerComponent> ent,
+        ref ShotAttemptedEvent args)
+    {
+        args.Cancel();
     }
 
     private void OnBracerMapInit(Entity<YautjaBracerComponent> ent, ref MapInitEvent args)
@@ -259,10 +276,15 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
 
     private void SyncCloakActionToggle(EntityUid user, bool toggled)
     {
+        SyncInstantActionToggle<ToggleYautjaCloakEvent>(user, toggled);
+    }
+
+    private void SyncInstantActionToggle<TEvent>(EntityUid user, bool toggled) where TEvent : InstantActionEvent
+    {
         foreach (var (actionUid, _) in _actions.GetActions(user))
         {
             if (!TryComp<InstantActionComponent>(actionUid, out var instant)
-                || instant.Event is not ToggleYautjaCloakEvent)
+                || instant.Event is not TEvent)
             {
                 continue;
             }
@@ -500,6 +522,13 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
         if (AreClawsExtended(ent, user))
             return true;
 
+        // Не можна тримати кігті і щит одночасно.
+        if (IsShieldExtended(ent, user))
+        {
+            RetractShield(ent);
+            SyncInstantActionToggle<ToggleYautjaShieldEvent>(user, false);
+        }
+
         if (!TryComp<HandsComponent>(user, out var hands))
             return false;
 
@@ -634,6 +663,13 @@ public sealed class SharedYautjaBracerSystem : EntitySystem
     {
         if (IsShieldExtended(ent, user))
             return true;
+
+        // Не можна тримати кігті і щит одночасно.
+        if (AreClawsExtended(ent, user))
+        {
+            RetractClaws(ent);
+            SyncInstantActionToggle<ToggleYautjaClawsEvent>(user, false);
+        }
 
         if (!TryComp<HandsComponent>(user, out var hands))
             return false;

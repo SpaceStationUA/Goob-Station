@@ -19,7 +19,7 @@
   parent: [BaseSword, BaseAntiPsionicWeapon, BaseMantisContraband]
   id: MantisMeleeGreatsword # The risk/reward option, highly likely to knock you on your ass and get you killed, extremely difficult to use effectively
   name: Faust # Part of the reason it's so punishing, aside from the challenge, is because antags could possibly use it against psions - it needs to be unreliable
-  description: "A mnemolith greatsword whose unstable resonance makes it treacherous to wield. Faust rebounds violently from any impact that does not strike a psion, whipping back into its bearer even if it merely grazes a wall. It must be properly wielded--without absolute focus, the blade resists. Unmatched against psionic and otherworldly threats, perilous against anything else."
+  description: "A mnemolith greatsword whose unstable resonance makes it treacherous to wield. Faust rebounds violently from any impact that does not strike a psion, whipping back into its bearer even if it merely grazes a wall. It must be properly wielded--without absolute focus, the blade resists. Unmatched against psionic and otherworldly threats, perilous against anything else. Faust knows all outcomes."
   components:
   - type: Grammar # Faust is its name
     attributes:
@@ -51,7 +51,7 @@
         volume: -2
         variation: 0.05
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 0.3
     range: 1.85
     angle: 90
     maxTargets: 10 # When you see a stat that looks good, just remember that if you hit anything non-psionic, you lose
@@ -61,9 +61,9 @@
     heavyStaminaCost: 15 # Pirate - halved from 30, so heavy swings are less punishing to the wielder
     damage:
       types:
-        Slash: 28 # 18.66 DPS (same as CaptainSabre), or 23.33 DPS against psions (but if you miss, it hits you hard)
-        Holy: 20 # 40 total DPS against psionic supernaturals (no way are you landing every left click on a simplemob)
-        Structural: 30 # 20 structural DPS (but it'll only hurt psionic objects since it can't be thrown)
+        Slash: 28 # 8.4 DPS (Slash only), or 10.5 against psions (1.25×)
+        Holy: 20 # 14.4 total base DPS, or 18.0 against psionic supernaturals (1.25×)
+        Structural: 30 # 9.0 structural DPS
     soundHit:
       path: /Audio/_DEN/Weapons/Melee/fausthit.ogg
       params:

@@ -16,3 +16,15 @@
   license: "Custom"
   copyright: "Valve Software, Non-Commercial Steam Subscriber Agreement"
   source: "https://store.steampowered.com/app/220/HalfLife_2/"
+
+- files:
+  - hardclaw1.ogg
+  - hardclaw2.ogg
+  - hardclaw3.ogg
+  - hardclaw4.ogg
+  - woodclaw1.ogg
+  - woodclaw2.ogg
+  - woodclaw3.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/tree/21ce3d66d4ceff1e547f6e2c137231c599efcf2a/sound/effects/footstep"

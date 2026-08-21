@@ -1,0 +1,243 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: mercenary hardsuit (ClothingOuterHardsuitMercenary/ClothingHeadHelmetHardsuitMercenary) reskinned into the modular suit line-up, reusing the security modsuit's module loadout.
+- type: entity
+  parent: [ ClothingModularControllerBase, BaseMajorContraband ]
+  id: ClothingModularControllerMercenary
+  name: "контролер МОД-костюма «Гекон»"
+  description: "Контролер модульного костюма без клейма виробника: серійні номери спилено, гарантію втрачено кілька власників тому. Збирали його явно не на заводі."
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Mercenary/control.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Mercenary/control.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK
+      back-resomi:
+      - state: equipped-BACKPACK-resomi
+  - type: ToggleableVisuals
+    clothingVisuals:
+      back:
+      - state: sealed-equipped-BACKPACK
+      back-resomi:
+      - state: sealed-equipped-BACKPACK-resomi
+  - type: ContainerFill
+    containers:
+      suit_core:
+        - ModularSuitCorePlasma
+      suit_part:
+        - ClothingModularHelmetMercenary
+        - ClothingModularChestPlateMercenary
+        - ClothingModularGauntletsMercenary
+        - ClothingModularBootsMercenary
+  - type: ModularSuit
+    activeComponents:
+      head:
+        - type: PressureProtection
+          highPressureMultiplier: 0.08
+          lowPressureMultiplier: 1000
+        - type: TemperatureProtection
+          heatingCoefficient: 0.1
+          coolingCoefficient: 0.1
+      outerClothing:
+        - type: PressureProtection
+          highPressureMultiplier: 0.05
+          lowPressureMultiplier: 1000
+        - type: TemperatureProtection
+          heatingCoefficient: 0.01
+          coolingCoefficient: 0.01
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+
+- type: entity
+  parent: ClothingModularHelmetBase
+  id: ClothingModularHelmetMercenary
+  name: "шолом МОД-костюма «Гекон»"
+  description: "Легкий шолом із теплим бурштиновим світлом візора - ставка на швидкість, а не на витривалість. Подряпини на щелепі підказують, що попередньому власникові щастило не завжди."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Mercenary/helmet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Mercenary/helmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+      head-reptilian:
+      - state: equipped-HELMET-reptilian
+      head-vox:
+      - state: equipped-HELMET-vox
+      head-resomi:
+      - state: equipped-HELMET-resomi
+      head-vulpkanin:
+      - state: equipped-HELMET-vulpkanin
+      head-feroxi:
+      - state: equipped-HELMET-feroxi
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Mercenary/helmet.rsi
+      state: icon-sealed
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: sealed-equipped-HELMET
+      - state: visor-unshaded
+        shader: unshaded
+      head-reptilian:
+      - state: sealed-equipped-HELMET-reptilian
+      - state: visor-unshaded-reptilian
+        shader: unshaded
+      head-vox:
+      - state: sealed-equipped-HELMET-vox
+      - state: visor-unshaded-vox
+        shader: unshaded
+      head-resomi:
+      - state: sealed-equipped-HELMET-resomi
+      - state: visor-unshaded-resomi
+        shader: unshaded
+      head-vulpkanin:
+      - state: sealed-equipped-HELMET-vulpkanin
+      - state: visor-unshaded-vulpkanin
+        shader: unshaded
+      head-feroxi:
+      - state: sealed-equipped-HELMET-feroxi
+      - state: visor-unshaded-feroxi
+        shader: unshaded
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: PointLight
+    color: "#ffeead"
+
+- type: entity
+  parent: ClothingModularChestPlateBase
+  id: ClothingModularChestPlateMercenary
+  name: "нагрудник МОД-костюма «Гекон»"
+  description: "Композитна бронепластина, з якої не раз зафарбовували емблеми приватних армій. Свою справу знає, а от чиї це кольори тепер - краще не питати."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Mercenary/chestplate.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Mercenary/chestplate.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING-reptilian
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-vox
+      outerClothing-resomi:
+      - state: equipped-OUTERCLOTHING-resomi
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Mercenary/chestplate.rsi
+      state: icon-sealed
+  - type: ToggleableVisuals
+    clothingVisuals:
+      outerClothing:
+      - state: sealed-equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: sealed-equipped-OUTERCLOTHING-reptilian
+      outerClothing-vox:
+      - state: sealed-equipped-OUTERCLOTHING-vox
+      outerClothing-resomi:
+      - state: sealed-equipped-OUTERCLOTHING-resomi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.6
+        Caustic: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+
+- type: entity
+  parent: ClothingModularGauntletsBase
+  id: ClothingModularGauntletsMercenary
+  name: "рукавиці МОД-костюма «Гекон»"
+  description: "Рукавиці з частковою ізоляцією та стертими до блиску накладками на пальцях. Розраховані радше на надійний хват зброї, ніж на роботу з проводкою."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Mercenary/gauntlets.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Mercenary/gauntlets.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+      gloves-vox:
+      - state: equipped-HAND-vox
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Mercenary/gauntlets.rsi
+      state: icon-sealed
+  - type: ToggleableVisuals
+    clothingVisuals:
+      gloves:
+      - state: sealed-equipped-HAND
+      gloves-vox:
+      - state: sealed-equipped-HAND-vox
+  - type: Insulated
+    coefficient: 0.5
+
+- type: entity
+  parent: ClothingModularBootsBase
+  id: ClothingModularBootsMercenary
+  name: "чоботи МОД-костюма «Гекон»"
+  description: "Броньовані чоботи з протектором, збитим на десятку різних планет. Пахнуть пилом, машинним маслом і чужими грошима."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Mercenary/boots.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Mercenary/boots.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+      shoes-reptilian:
+      - state: equipped-FEET-reptilian
+      shoes-vox:
+      - state: equipped-FEET-vox
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Mercenary/boots.rsi
+      state: icon-sealed
+  - type: ToggleableVisuals
+    clothingVisuals:
+      shoes:
+      - state: sealed-equipped-FEET
+      shoes-reptilian:
+      - state: sealed-equipped-FEET-reptilian
+      shoes-vox:
+      - state: sealed-equipped-FEET-vox
+
+- type: entity
+  parent: [ ClothingModularControllerLockedBase, ClothingModularControllerMercenary ]
+  id: ClothingModularControllerMercenaryPreassembled
+  suffix: Preassembled
+  components:
+  - type: ModularSuitPreassembled
+    modules:
+    - MagnetSuitModule
+    - ArmorBossterSuitModule
+    - StorageSyndicateSuitModule
+    - AdvancedFlashlightSuitModuleDarkOrange
+    - JetpackSuitModule
+    - ApparatusSuitModule
+    - HolsterSuitModule
+    - GPSSuitModule
+    - TetherSuitModule
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper

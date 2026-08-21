@@ -6,6 +6,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Pirate.Client.Index;
@@ -17,17 +18,20 @@ public sealed partial class IndexAdminMenuWindow : DefaultWindow
     public Action<int>? OnAddKarma;
     public Action<int>? OnRemoveKarma;
     public Action<bool>? OnGuaranteeFpoon;
+    public Action? OnJumpscare;
+
+    private static readonly Color PrescriptionColor = Color.FromHex("#F2D3A0");
 
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-    private static readonly ResPath IndexLogoPath = new("/Textures/_Pirate/Interface/Misc/index_logo.rsi");
+    private static readonly ResPath IndexLogoPath = new("/Textures/_Pirate/Interface/Misc/index.rsi");
 
     public IndexAdminMenuWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        IndexLogo.Texture = _resourceCache.GetResource<RSIResource>(IndexLogoPath).RSI["index_logo"].Frame0;
+        IndexLogo.Texture = _resourceCache.GetResource<RSIResource>(IndexLogoPath).RSI["index"].Frame0;
 
         SendButton.OnPressed += _ => SendPrescription();
         PrescriptionInput.OnTextEntered += _ => SendPrescription();
@@ -38,6 +42,8 @@ public sealed partial class IndexAdminMenuWindow : DefaultWindow
         RemoveFiveButton.OnPressed += _ => OnRemoveKarma?.Invoke(5);
 
         FpoonButton.OnToggled += args => OnGuaranteeFpoon?.Invoke(args.Pressed);
+
+        JumpscareButton.OnPressed += _ => OnJumpscare?.Invoke();
     }
 
     private void SendPrescription()
@@ -56,6 +62,11 @@ public sealed partial class IndexAdminMenuWindow : DefaultWindow
         MemberNameLabel.Text = state.HasMember
             ? Loc.GetString("index-admin-member-label", ("name", state.MemberName))
             : Loc.GetString("index-admin-no-member");
+
+        var lastPrescription = string.IsNullOrEmpty(state.LastPrescription)
+            ? Loc.GetString("index-admin-no-prescriptions")
+            : state.LastPrescription;
+        LastPrescriptionLabel.SetMessage(FormattedMessage.FromUnformatted(lastPrescription), PrescriptionColor);
 
         if (FpoonButton.Pressed != state.NextWeaponFpoon)
             FpoonButton.Pressed = state.NextWeaponFpoon;

@@ -46,3 +46,6 @@ uplink-autosurgeon-cyberdeck-desc = Замінює очі користувача
 
 uplink-spaceblade-syndicate-name = Контрабандне космолезо
 uplink-spaceblade-syndicate-desc = Іграшкова дзиґа зі справжнього металу. Майже напевно безпечна.
+
+uplink-defibrillator-belt-combat-name = Бойовий поясний дефібрилятор
+uplink-defibrillator-belt-combat-desc = Міцний червоний поясний дефібрилятор для польових медиків. Самозаряджається, у комплекті з акумулятором і бойовими електродами, які можуть добряче вдарити струмом.

@@ -15,9 +15,9 @@ public sealed partial class PsionicEruptionPowerComponent : BasePsionicPowerComp
 
     public override string? PowerMetapsionicFeedback { get; set; } = "psionic-eruption-power-metapsionic-feedback";
 
-    public override int MinGlimmerChanged { get; set; } = -200;
+    public override int MinGlimmerChanged { get; set; } = -100;
 
-    public override int MaxGlimmerChanged { get; set; } = -100;
+    public override int MaxGlimmerChanged { get; set; } = -50;
 
     /// <summary>
     /// Minimum time for the Detonation DoAfter to take effect.

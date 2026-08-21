@@ -84,6 +84,16 @@ public sealed class AssayPowerSystem : SharedAssayPowerSystem
         if (InspectSelf(user, target, psionic, session))
             return;
 
+        // If the target only has potential (not yet a full psionic), show the potential text.
+        if (HasComp<PotentialPsionicComponent>(target) && !HasComp<PsionicComponent>(target))
+        {
+            var potential = Loc.GetString("assay-potential", ("entity", target));
+            ApplyAssayResponse(target, ref potential);
+            Popup.PopupEntity(potential, user, user, PopupType.Large);
+            SendDescToChat($"[font size={psionic.Comp.FontSize}][color={psionic.Comp.FontColor}]{potential}[/color][/font]", session);
+            return;
+        }
+
         // List the target's psionic powers
         var powers = new List<string>();
         foreach (var comp in EntityManager.GetComponents(target))
@@ -106,7 +116,7 @@ public sealed class AssayPowerSystem : SharedAssayPowerSystem
         }
 
         // Each power is described on its own line in the chat report.
-        var message = Loc.GetString("assay-body", ("entity", target)) + "\n" + string.Join("\n", powers);
+        var message = Loc.GetString("assay-psionic", ("entity", target)) + "\n" + string.Join("\n", powers);
         ApplyAssayResponse(target, ref message);
         SendDescToChat($"[font size={psionic.Comp.FontSize}][color={psionic.Comp.FontColor}]{message}[/color][/font]", session);
     }

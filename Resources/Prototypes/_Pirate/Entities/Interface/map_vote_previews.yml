@@ -183,3 +183,12 @@
   components:
   - type: Sprite
     state: piramide_tp
+    
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewShoukou
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: shoukou
+

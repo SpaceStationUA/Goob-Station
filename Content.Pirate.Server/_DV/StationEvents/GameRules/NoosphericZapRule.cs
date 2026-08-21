@@ -10,6 +10,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Stunnable;
+using Robust.Shared.Player;
 
 namespace Content.Server._DV.StationEvents.GameRules;
 
@@ -34,6 +35,9 @@ internal sealed class NoosphericZapRule : StationEventSystem<NoosphericZapRuleCo
         while (query.MoveNext(out var potPsion, out var potPsionComponent, out var mobStateComponent))
         {
             if (!_mobStateSystem.IsAlive(potPsion, mobStateComponent))
+                continue;
+
+            if (!HasComp<ActorComponent>(potPsion)) // Skip non-player entities.
                 continue;
 
             if (!_psionic.CanBeTargeted(potPsion))
