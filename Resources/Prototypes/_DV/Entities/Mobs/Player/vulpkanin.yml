@@ -7,6 +7,15 @@
   id: MobVulpkanin
   components:
     - type: CombatMode
+    # Pirate edit start
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2.625
+      baseSprintSpeed: 4.725
+    - type: VulpkaninJump
+      jumpAction: ActionJumpVulpkanin
+    - type: Stamina
+      baseCritThreshold: 110
+    # Pirate edit end
     - type: InteractionPopup
       successChance: 1
       interactSuccessString: hugging-success-generic
