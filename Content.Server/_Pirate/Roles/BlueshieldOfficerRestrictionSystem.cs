@@ -8,7 +8,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Server._Pirate.Roles;
 
 /// <summary>
-/// Keeps the Blueshield Officer from joining before enough command staff are present.
+/// Keeps the Blueshield Officer from joining before enough command staff are present,
+/// including round-start assignments.
 /// </summary>
 public sealed class BlueshieldOfficerRestrictionSystem : EntitySystem
 {
