@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # All the Vulpkanin customization
 
-### Pirate - Tails, Arms, Legs and Body markings moved to: _Pirate\Entities\Mobs\Customization\Vulpkanin
+### Pirate - VulpEarSharp, Tails, Arms, Legs and Body markings moved to: _Pirate\Entities\Mobs\Customization\Vulpkanin
 # Ears Markings
 - type: marking
   id: VulpEar
@@ -24,17 +24,6 @@
       state: vulp
     - sprite: _DV/Mobs/Customization/Vulpkanin/ear_markings.rsi
       state: vulp-fade
-
-- type: marking
-  id: VulpEarSharp
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Vulpkanin, Felinid]
-  sprites:
-    - sprite: _DV/Mobs/Customization/Vulpkanin/ear_markings.rsi
-      state: vulp
-    - sprite: _DV/Mobs/Customization/Vulpkanin/ear_markings.rsi
-      state: vulp-sharp
 
 - type: marking
   id: VulpEarJackal

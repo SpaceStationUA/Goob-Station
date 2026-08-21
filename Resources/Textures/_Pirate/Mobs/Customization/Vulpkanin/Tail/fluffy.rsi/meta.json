@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Created by Skarletto (Github). Modified by FairlySadPanda and TiniestShark (Github/Discord). Wagging animations by TiniestShark (Github).",
+    "copyright": "Created by Skarletto (Github). Modified by FairlySadPanda and TiniestShark (Github/Discord). Wagging animations by TiniestShark (Github), split into FRONT and BACK by Vareniko",
     "size": {"x": 32, "y": 32},
     "states": [
         {
