@@ -6,7 +6,7 @@
     - id: NoosphericZap
     - id: NoosphericFry
     - id: NoosphericSilence
-    - id: MassMindSwap
+    #- id: MassMindSwap # Pirate disable
     - id: GlimmerWispSpawn
     - id: FreeProber
     - id: GlimmerRevenantSpawn
@@ -14,7 +14,7 @@
     - id: GlimmerRandomSentience
     #- id: LockProbers
     - id: PsionicNosebleedEvent
-    - id: MinorMassMindSwap # Delta V
+    #- id: MinorMassMindSwap # Delta V # Pirate disable
     - id: NoosphericStorm
     - id: GlimmerFoxfireSpawn
     #- id: GlimmerRestyle
