@@ -427,6 +427,7 @@
   - WardrobeMNKOfficeSkirt
   subgroups:
   - PiratePassengerPortedUniform
+  - PiratePassengerFreshUniform
 
 - type: loadoutGroup
   id: PiratePassengerNeck
@@ -452,6 +453,7 @@
   - WardrobePonchoBlack
   subgroups:
   - PiratePassengerPortedNeck
+  - PiratePassengerFreshNeck
 
 
 - type: loadoutGroup
@@ -501,6 +503,7 @@
   - WardrobeConductorHat
   subgroups:
   - PiratePassengerPortedHead
+  - PiratePassengerFreshHead
 
 
 - type: loadoutGroup
@@ -526,6 +529,7 @@
   - WardrobeSandals
   subgroups:
   - PiratePassengerPortedShoes
+  - PiratePassengerFreshShoes
 
 - type: loadoutGroup
   id: PiratePassengerOuterClothing
@@ -566,6 +570,7 @@
   - WardrobeCoatSpaceAsshole
   subgroups:
   - PiratePassengerPortedOuter
+  - PiratePassengerFreshOuter
 
 - type: loadoutGroup
   id: PirateEEGenericHead

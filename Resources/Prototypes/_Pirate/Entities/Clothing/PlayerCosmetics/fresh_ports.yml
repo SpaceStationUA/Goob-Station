@@ -1,0 +1,1063 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Pirate: fresh player cosmetics curated after a visual review.
+# Sources and dates:
+# - Starlight (MIT; individual RSI metadata retains CC-BY-SA-3.0 attribution):
+#   https://github.com/ss14Starlight/space-station-14
+# - Lua Frontier (AGPL-3.0):
+#   https://github.com/Lua-Frontier/sector-frontier-14
+# Functional/role-specific components are intentionally omitted; these entries are visual-only loadout items.
+
+# Starlight: uniforms
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightBodysuitJeans
+  name: bodysuit and jeans
+  description: A practical bodysuit paired with sturdy jeans.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/bodysuit_jeans.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/bodysuit_jeans.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightDarkTurtleneck
+  name: dark turtleneck
+  description: A clean, understated turtleneck for a sharp silhouette.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/dark_turtleneck.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/dark_turtleneck.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightCoolTanktop
+  name: cool tank top
+  description: A sleeveless top for warm decks and warmer days.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/cool_tanktop.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/cool_tanktop.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightDruidRobes
+  name: druid robes
+  description: Simple robes with a quiet, natural look.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/druid_robes.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/druid_robes.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightFlamboyant
+  name: flamboyant outfit
+  description: A dramatic outfit for a dramatic entrance.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/flamboyant.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/flamboyant.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightFlamenco
+  name: flamenco dress
+  description: A festive dress with a bold stage presence.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/flamenco.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/flamenco.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightFlyCaptain
+  name: retro captain uniform
+  description: A bright retro uniform with a confident cut.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/fly_captain.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/fly_captain.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightKilt
+  name: kilt
+  description: A classic pleated kilt for a bold station-side look.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/kilt.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/kilt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightLilacDress
+  name: lilac dress
+  description: An elegant dress that looks woven from lilac petals.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/lilac_dress.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/lilac_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightLittleBlackDress
+  name: little black dress
+  description: A sleek evening dress for a night on the station.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/little_black_dress.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/little_black_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightLumberjackOveralls
+  name: lumberjack overalls
+  description: Hard-wearing overalls with a hint of pine.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/lumberjack.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/lumberjack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightMechanicOveralls
+  name: mechanic overalls
+  description: Durable overalls made for long shifts.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/mechanic_overalls.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/mechanic_overalls.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightTrendyTop
+  name: trendy top
+  description: A bright top for an effortlessly modern look.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/trendy_top.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/trendy_top.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightMessyDressShirt
+  name: messy dress shirt
+  description: A dress shirt thrown on in a hurry.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/messy_dress_shirt.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/messy_dress_shirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightPunkJeans
+  name: punk jeans
+  description: Slightly goth, unmistakably metal.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/punk_jeans.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/punk_jeans.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightSailor
+  name: sailor uniform
+  description: A crisp uniform for the saltiest spacer.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/sailor.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/sailor.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightSundress
+  name: sundress
+  description: A light dress for a leisurely stroll.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/sundress.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/sundress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightRuggedClothes
+  name: rugged clothes
+  description: Comfortable clothes for a rough shift.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/rugged_shirt.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/rugged_shirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightTieDye
+  name: tie-dye shirt
+  description: A colorful throwback from a brighter decade.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/tiedye.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/tiedye.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightVintage
+  name: vintage clothes
+  description: A retro outfit with timeless appeal.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/vintage.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/vintage.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightCargoOveralls
+  name: cargo overalls
+  description: Durable overalls that smell faintly of cardboard.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/cargo_overalls.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/cargo_overalls.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightRedRegalia
+  name: red regalia suit
+  description: A rich red suit for a memorable entrance.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/red_regalia.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/red_regalia.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightMimeFrills
+  name: frilly mime dress
+  description: A theatrical black-and-white dress with crisp frills.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/mime_frills.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/mime_frills.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshStarlightToga
+  name: toga
+  description: A simple draped garment for a grand ceremony.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/toga.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/toga.rsi
+
+# Starlight: headwear
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightBrimHat
+  name: wide-brimmed hat
+  description: Broad brims keep the glare off your face.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/brim_hat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/brim_hat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightFeatheredHat
+  name: feathered hat
+  description: A flamboyant hat with a proud feather.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/feather_hat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/feather_hat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightTVHead
+  name: television head
+  description: A portable screen that makes an unforgettable impression.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tv_head.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tv_head.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightPancakeHat
+  name: honey pancake hat
+  description: Golden pancakes drizzled with honey.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/pancake.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/pancake.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightGildedWideHat
+  name: gilded wide-brimmed hat
+  description: A cream-white hat with feathers and gold trim.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/belpero.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/belpero.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightBigTophat
+  name: big top hat
+  description: A very tall hat for someone very important.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tophatbig.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tophatbig.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.45"
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightBigTophatWhite
+  name: white big top hat
+  description: A bright white version of the towering classic.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tophatbigcolorable.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tophatbigcolorable.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.45"
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightBrassTophat
+  name: clockwork top hat
+  description: A polished top hat with whirring brass details.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tophatbrass.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tophatbrass.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.47"
+      head-hamster:
+      - state: equipped-HELMET-hamster
+        offset: "0, 0.27"
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightWideStrawHat
+  name: wide straw hat
+  description: A broad straw hat with a little mystery.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/widestrawhat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/widestrawhat.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.08"
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightWitchyHat
+  name: witchy hat
+  description: A tall, crooked hat for a little magic.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/witchyhat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/witchyhat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightYellowWizardHat
+  name: yellow wizard hat
+  description: A bright hat for a colorful spellcaster.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_yellow.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_yellow.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightGreenWizardHat
+  name: green wizard hat
+  description: A bright hat for a colorful spellcaster.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_green.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_green.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightPurpleWizardHat
+  name: purple wizard hat
+  description: A bright hat for a colorful spellcaster.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_purple.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_purple.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightOrangeWizardHat
+  name: orange wizard hat
+  description: A bright hat for a colorful spellcaster.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_orange.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_orange.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightPeachWizardHat
+  name: peach wizard hat
+  description: A warm peach-colored hat for a friendly spellcaster.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_peach.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_peach.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshStarlightBunnyGangHat
+  name: bunny gang hat
+  description: A playful hat with a secret-society air.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/bunnygang.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/bunnygang.rsi
+
+# Starlight: neck accessories
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshStarlightEyeAmulet
+  name: eye amulet
+  description: A watchful eye set in a simple pendant.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/eye_amulet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/eye_amulet.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshStarlightMoonAmulet
+  name: moon amulet
+  description: A small pendant that shines like moonlight.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/moon_amulet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/moon_amulet.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshStarlightStarAmulet
+  name: star amulet
+  description: A star-shaped pendant with a gentle shimmer.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/star_amulet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/star_amulet.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshStarlightSunAmulet
+  name: sun amulet
+  description: A warm golden pendant that catches the light.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/sun_amulet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/sun_amulet.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshStarlightBunnyScarf
+  name: bunny gang scarf
+  description: A soft scarf with a playful gang emblem.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/bunnygang.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/bunnygang.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshStarlightFoxfire
+  name: Foxfire Charm
+  description: Ghostly flames flutter around this mysterious charm.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/foxfire.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/foxfire.rsi
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        shader: unshaded
+      neck-resomi:
+      - state: equipped-NECK-resomi
+        shader: unshaded
+      neck-cyclorite:
+      - state: equipped-NECK-cyclorite
+        shader: unshaded
+      neck-rodentia:
+      - state: equipped-NECK-rodentia
+        shader: unshaded
+
+# Starlight: shoes
+- type: entity
+  parent: ClothingShoesBase
+  id: PirateFreshStarlightWinterBlueBoots
+  name: blue winter boots
+  description: Warm blue boots for cold decks.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/winterbootsblue.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/winterbootsblue.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: PirateFreshStarlightAristocratBoots
+  name: aristocrat boots
+  description: Tall boots with a touch of old-world drama.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/ari.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/ari.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: PirateFreshStarlightFurBoots
+  name: tall fur boots
+  description: Tall black boots with fur and gold accents.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/belpero.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/belpero.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: PirateFreshStarlightSlickShoes
+  name: slick shoes
+  description: Polished shoes for a sharply dressed spacer.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/slick_shoes.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/slick_shoes.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: PirateFreshStarlightSpaceCourierBoots
+  name: space courier boots
+  description: Pristine boots for making every delivery on time.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/space_courier_boots.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/space_courier_boots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: PirateFreshStarlightRatvarBoots
+  name: brass Ratvar boots
+  description: Boots coated in a warm clockwork brass.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/ratvar_boots.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/ratvar_boots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: PirateFreshStarlightPawBoots
+  name: paw boots
+  description: Soft boots made for pawed feet.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/pawboots.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/pawboots.rsi
+
+# Starlight: outer clothing
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshStarlightSpaceCourierCoat
+  name: space courier heavy coat
+  description: A sturdy coat for long routes through the void.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/space_courier_coat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/space_courier_coat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshStarlightSquidCoat
+  name: last coat
+  description: A weathered coat with a mysterious silhouette.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/squid_prisoner.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/squid_prisoner.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshStarlightInspectorCoat
+  name: inspector's coat
+  description: A long coat for someone who notices every detail.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/insp_coat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/insp_coat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshStarlightSovietGreatcoat
+  name: greatcoat
+  description: A heavy military-inspired greatcoat with a distinctive silhouette.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/soviet_greatcoat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/soviet_greatcoat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshStarlightGreytiderTrenchcoat
+  name: greytider trenchcoat
+  description: A practical trenchcoat for a gray station regular.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/greytider_trenchcoat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/greytider_trenchcoat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshStarlightFieldJacket
+  name: field jacket
+  description: A soft black jacket with relaxed cuffs.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/field_jacket.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/field_jacket.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshStarlightSeniorChefJacket
+  name: senior chef's jacket
+  description: A crisp jacket with a bright culinary trim.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/chef-senior.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/chef-senior.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshStarlightDarkPirateGarb
+  name: dark pirate garb
+  description: A weathered coat for a spacer with a taste for adventure.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/dark_pirate.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/dark_pirate.rsi
+
+# Lua Frontier: headwear
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshFrontierFoxEarsOrange
+  name: orange fox ears
+  description: A soft pair of orange fox ears.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_orange.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_orange.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshFrontierFoxEarsWhite
+  name: white fox ears
+  description: A soft pair of white fox ears.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_white.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_white.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshFrontierFoxEarsBlack
+  name: black fox ears
+  description: A soft pair of black fox ears.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_black.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateFreshFrontierFoxEarsBlue
+  name: blue fox ears
+  description: A soft pair of blue fox ears.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_blue.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_blue.rsi
+
+# Lua Frontier: capes
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierCapeCrystal
+  name: crystal cape
+  description: A soft pink cape with a blue crystal on the back.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/crystal.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/crystal.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierCapeNeon
+  name: neon cape
+  description: A cape in bright neon colors.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/neon.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/neon.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierCapeViolet
+  name: violet cape
+  description: A lilac cape with a heart on the back.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/violet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/violet.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierCapeGalaxy
+  name: galaxy cape
+  description: A cape patterned with a distant galaxy.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/galaxy.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/galaxy.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierCapeSirius
+  name: Sirius cape
+  description: A cape inspired by the brightest star in the night sky.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/sirius.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/sirius.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierCapeLua
+  name: Lua cape
+  description: A bright blue cape with a playful emblem.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/lua.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/lua.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierFlameCape
+  name: plasma flame cape
+  description: A cape patterned with vivid plasma flames.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/flame.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/flame.rsi
+
+# Lua Frontier: wings
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierVampireWings
+  name: vampire wings
+  description: Black wings that glow vermilion in the light.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/BlackVampire.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/BlackVampire.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierMageWings
+  name: mage wings
+  description: Decorative wings with a hint of magic.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Magic.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Magic.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierPegasusWings
+  name: pegasus wings
+  description: Majestic white wings for a storybook silhouette.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Pegas.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Pegas.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierSkeletonWings
+  name: skeleton wings
+  description: Eerie wings for a theatrical undead look.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Skeleton.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Skeleton.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierBlackSkeletonWings
+  name: black skeleton wings
+  description: Dark skeletal wings with a sharp outline.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/SkeletonBlack.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/SkeletonBlack.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierRedSkeletonWings
+  name: red skeleton wings
+  description: Crimson skeletal wings for a dramatic look.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/SkeletonRed.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/SkeletonRed.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierVioletWings
+  name: violet wings
+  description: Soft violet wings with an angelic shape.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Violet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Violet.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateFreshFrontierHorrorWings
+  name: horror wings
+  description: Strange wings that belong in a nightmare.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/horror.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/horror.rsi
+
+# Lua Frontier: outer clothing
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshFrontierLettermanBrown
+  name: brown letterman jacket
+  description: A classic leather varsity jacket in warm brown.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshFrontierLettermanBlue
+  name: blue letterman jacket
+  description: A blue varsity jacket with bright trim.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman_n.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman_n.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshFrontierLettermanRed
+  name: red letterman jacket
+  description: A red varsity jacket for a bold everyday look.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman_red.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman_red.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshFrontierLettermanScarlet
+  name: scarlet letterman jacket
+  description: A deep red jacket with an unusual emblem.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman_s.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman_s.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshFrontierDandyCoat
+  name: black technocoat
+  description: A sleek black coat with ornate gold details.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/dandy_coat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/dandy_coat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateFreshFrontierSaloCoat
+  name: vermilion coat
+  description: A vivid red coat with a distinctly Ukrainian space-western flair.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/salo_coat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/salo_coat.rsi
+
+# Lua Frontier: uniforms
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshFrontierKimono
+  name: shrine kimono
+  description: A ceremonial kimono with a bright, elegant pattern.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/kimonomiku.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/kimonomiku.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshFrontierRedSweater
+  name: red open-back sweater
+  description: A striking red sweater with a fashionable open back.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterred.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterred.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshFrontierBlueSweater
+  name: blue open-back sweater
+  description: A bright blue sweater with a fashionable open back.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterblue.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterblue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshFrontierBlackSweater
+  name: black open-back sweater
+  description: An elegant black sweater with a fashionable open back.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterblack.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshFrontierVioletSweater
+  name: violet open-back sweater
+  description: A rich violet sweater with a fashionable open back.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterviolet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterviolet.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateFreshFrontierRainbowSweater
+  name: rainbow open-back sweater
+  description: A bright rainbow sweater that brings color to any shift.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterraindbow.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterraindbow.rsi
