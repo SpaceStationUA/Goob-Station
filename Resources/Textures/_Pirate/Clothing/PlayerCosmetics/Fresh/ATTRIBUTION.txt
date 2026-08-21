@@ -1,0 +1,17 @@
+Fresh player cosmetics are curated from the following downstream projects.
+
+Starlight
+  Repository: https://github.com/ss14Starlight/space-station-14
+  License: MIT repository license; each copied RSI keeps its original
+  CC-BY-SA-3.0 or other license and copyright fields in meta.json.
+  Fresh examples:
+  - Foxfire Charm: https://github.com/ss14Starlight/space-station-14/commit/594e85d23e3085a42a047eda643b8bfdc3f5ff43
+  - Witchy hat: https://github.com/ss14Starlight/space-station-14/commit/4a2d5e962c2a39b2427f1c75b54a519483d7838a
+  - Assistant Manager blue winter boots: https://github.com/ss14Starlight/space-station-14/commit/a9f39a68f3782064a9843b39997e8919cf35d0c9
+
+Lua Frontier
+  Repository: https://github.com/Lua-Frontier/sector-frontier-14
+  License: AGPL-3.0.
+  Copied RSI metadata remains alongside every asset.
+  Fresh content source commit:
+  https://github.com/Lua-Frontier/sector-frontier-14/commit/f5750ee26875b1340b509ff4a1c708f3847c5bcd

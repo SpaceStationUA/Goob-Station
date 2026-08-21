@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2026 Space Station 14 Contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- files:
+  - boots1.ogg
+  - boots2.ogg
+  - boots3.ogg
+  - boots4.ogg
+  license: CC0-1.0
+  copyright: Made by DexD73 (freesound.org), modified by Sha-Seng.
+  source: https://freesound.org/s/583715/
+
+- files:
+  - highheels1.ogg
+  - highheels2.ogg
+  - highheels3.ogg
+  - highheels4.ogg
+  - highheels5.ogg
+  license: CC-BY-3.0
+  copyright: Original audio by Allen2001 (freesound.org), modified by DinnerCalzone.
+  source: https://freesound.org/people/Allen2001/sounds/595107/

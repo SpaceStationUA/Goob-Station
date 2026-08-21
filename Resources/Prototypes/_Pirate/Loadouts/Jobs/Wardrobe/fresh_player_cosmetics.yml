@@ -1,0 +1,677 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Pirate: loadout entries for the visually reviewed fresh cosmetics.
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightBrimHat
+  equipment:
+    head: PirateFreshStarlightBrimHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightFeatheredHat
+  equipment:
+    head: PirateFreshStarlightFeatheredHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightTVHead
+  equipment:
+    head: PirateFreshStarlightTVHead
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightPancakeHat
+  equipment:
+    head: PirateFreshStarlightPancakeHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightGildedWideHat
+  equipment:
+    head: PirateFreshStarlightGildedWideHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightBigTophat
+  equipment:
+    head: PirateFreshStarlightBigTophat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightBigTophatWhite
+  equipment:
+    head: PirateFreshStarlightBigTophatWhite
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightBrassTophat
+  equipment:
+    head: PirateFreshStarlightBrassTophat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightWideStrawHat
+  equipment:
+    head: PirateFreshStarlightWideStrawHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightWitchyHat
+  equipment:
+    head: PirateFreshStarlightWitchyHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightYellowWizardHat
+  equipment:
+    head: PirateFreshStarlightYellowWizardHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightGreenWizardHat
+  equipment:
+    head: PirateFreshStarlightGreenWizardHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightPurpleWizardHat
+  equipment:
+    head: PirateFreshStarlightPurpleWizardHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightOrangeWizardHat
+  equipment:
+    head: PirateFreshStarlightOrangeWizardHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightPeachWizardHat
+  equipment:
+    head: PirateFreshStarlightPeachWizardHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightBunnyGangHat
+  equipment:
+    head: PirateFreshStarlightBunnyGangHat
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierFoxEarsOrange
+  equipment:
+    head: PirateFreshFrontierFoxEarsOrange
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierFoxEarsWhite
+  equipment:
+    head: PirateFreshFrontierFoxEarsWhite
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierFoxEarsBlack
+  equipment:
+    head: PirateFreshFrontierFoxEarsBlack
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierFoxEarsBlue
+  equipment:
+    head: PirateFreshFrontierFoxEarsBlue
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightEyeAmulet
+  equipment:
+    neck: PirateFreshStarlightEyeAmulet
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightMoonAmulet
+  equipment:
+    neck: PirateFreshStarlightMoonAmulet
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightStarAmulet
+  equipment:
+    neck: PirateFreshStarlightStarAmulet
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightSunAmulet
+  equipment:
+    neck: PirateFreshStarlightSunAmulet
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightBunnyScarf
+  equipment:
+    neck: PirateFreshStarlightBunnyScarf
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightFoxfire
+  equipment:
+    neck: PirateFreshStarlightFoxfire
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierCapeCrystal
+  equipment:
+    neck: PirateFreshFrontierCapeCrystal
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierCapeNeon
+  equipment:
+    neck: PirateFreshFrontierCapeNeon
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierCapeViolet
+  equipment:
+    neck: PirateFreshFrontierCapeViolet
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierCapeGalaxy
+  equipment:
+    neck: PirateFreshFrontierCapeGalaxy
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierCapeSirius
+  equipment:
+    neck: PirateFreshFrontierCapeSirius
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierCapeLua
+  equipment:
+    neck: PirateFreshFrontierCapeLua
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierFlameCape
+  equipment:
+    neck: PirateFreshFrontierFlameCape
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierVampireWings
+  equipment:
+    neck: PirateFreshFrontierVampireWings
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierMageWings
+  equipment:
+    neck: PirateFreshFrontierMageWings
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierPegasusWings
+  equipment:
+    neck: PirateFreshFrontierPegasusWings
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierSkeletonWings
+  equipment:
+    neck: PirateFreshFrontierSkeletonWings
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierBlackSkeletonWings
+  equipment:
+    neck: PirateFreshFrontierBlackSkeletonWings
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierRedSkeletonWings
+  equipment:
+    neck: PirateFreshFrontierRedSkeletonWings
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierVioletWings
+  equipment:
+    neck: PirateFreshFrontierVioletWings
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierHorrorWings
+  equipment:
+    neck: PirateFreshFrontierHorrorWings
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightBodysuitJeans
+  equipment:
+    jumpsuit: PirateFreshStarlightBodysuitJeans
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightDarkTurtleneck
+  equipment:
+    jumpsuit: PirateFreshStarlightDarkTurtleneck
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightCoolTanktop
+  equipment:
+    jumpsuit: PirateFreshStarlightCoolTanktop
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightDruidRobes
+  equipment:
+    jumpsuit: PirateFreshStarlightDruidRobes
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightFlamboyant
+  equipment:
+    jumpsuit: PirateFreshStarlightFlamboyant
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightFlamenco
+  equipment:
+    jumpsuit: PirateFreshStarlightFlamenco
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightFlyCaptain
+  equipment:
+    jumpsuit: PirateFreshStarlightFlyCaptain
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightKilt
+  equipment:
+    jumpsuit: PirateFreshStarlightKilt
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightLilacDress
+  equipment:
+    jumpsuit: PirateFreshStarlightLilacDress
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightLittleBlackDress
+  equipment:
+    jumpsuit: PirateFreshStarlightLittleBlackDress
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightLumberjackOveralls
+  equipment:
+    jumpsuit: PirateFreshStarlightLumberjackOveralls
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightMechanicOveralls
+  equipment:
+    jumpsuit: PirateFreshStarlightMechanicOveralls
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightTrendyTop
+  equipment:
+    jumpsuit: PirateFreshStarlightTrendyTop
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightMessyDressShirt
+  equipment:
+    jumpsuit: PirateFreshStarlightMessyDressShirt
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightPunkJeans
+  equipment:
+    jumpsuit: PirateFreshStarlightPunkJeans
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightSailor
+  equipment:
+    jumpsuit: PirateFreshStarlightSailor
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightSundress
+  equipment:
+    jumpsuit: PirateFreshStarlightSundress
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightRuggedClothes
+  equipment:
+    jumpsuit: PirateFreshStarlightRuggedClothes
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightTieDye
+  equipment:
+    jumpsuit: PirateFreshStarlightTieDye
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightVintage
+  equipment:
+    jumpsuit: PirateFreshStarlightVintage
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightCargoOveralls
+  equipment:
+    jumpsuit: PirateFreshStarlightCargoOveralls
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightRedRegalia
+  equipment:
+    jumpsuit: PirateFreshStarlightRedRegalia
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightMimeFrills
+  equipment:
+    jumpsuit: PirateFreshStarlightMimeFrills
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightToga
+  equipment:
+    jumpsuit: PirateFreshStarlightToga
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierKimono
+  equipment:
+    jumpsuit: PirateFreshFrontierKimono
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierRedSweater
+  equipment:
+    jumpsuit: PirateFreshFrontierRedSweater
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierBlueSweater
+  equipment:
+    jumpsuit: PirateFreshFrontierBlueSweater
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierBlackSweater
+  equipment:
+    jumpsuit: PirateFreshFrontierBlackSweater
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierVioletSweater
+  equipment:
+    jumpsuit: PirateFreshFrontierVioletSweater
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierRainbowSweater
+  equipment:
+    jumpsuit: PirateFreshFrontierRainbowSweater
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightSpaceCourierCoat
+  equipment:
+    outerClothing: PirateFreshStarlightSpaceCourierCoat
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightSquidCoat
+  equipment:
+    outerClothing: PirateFreshStarlightSquidCoat
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightInspectorCoat
+  equipment:
+    outerClothing: PirateFreshStarlightInspectorCoat
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightSovietGreatcoat
+  equipment:
+    outerClothing: PirateFreshStarlightSovietGreatcoat
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightGreytiderTrenchcoat
+  equipment:
+    outerClothing: PirateFreshStarlightGreytiderTrenchcoat
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightFieldJacket
+  equipment:
+    outerClothing: PirateFreshStarlightFieldJacket
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightSeniorChefJacket
+  equipment:
+    outerClothing: PirateFreshStarlightSeniorChefJacket
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightDarkPirateGarb
+  equipment:
+    outerClothing: PirateFreshStarlightDarkPirateGarb
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierLettermanBrown
+  equipment:
+    outerClothing: PirateFreshFrontierLettermanBrown
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierLettermanBlue
+  equipment:
+    outerClothing: PirateFreshFrontierLettermanBlue
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierLettermanRed
+  equipment:
+    outerClothing: PirateFreshFrontierLettermanRed
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierLettermanScarlet
+  equipment:
+    outerClothing: PirateFreshFrontierLettermanScarlet
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierDandyCoat
+  equipment:
+    outerClothing: PirateFreshFrontierDandyCoat
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshFrontierSaloCoat
+  equipment:
+    outerClothing: PirateFreshFrontierSaloCoat
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightWinterBlueBoots
+  equipment:
+    shoes: PirateFreshStarlightWinterBlueBoots
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightAristocratBoots
+  equipment:
+    shoes: PirateFreshStarlightAristocratBoots
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightFurBoots
+  equipment:
+    shoes: PirateFreshStarlightFurBoots
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightSlickShoes
+  equipment:
+    shoes: PirateFreshStarlightSlickShoes
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightSpaceCourierBoots
+  equipment:
+    shoes: PirateFreshStarlightSpaceCourierBoots
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightRatvarBoots
+  equipment:
+    shoes: PirateFreshStarlightRatvarBoots
+  groupBy: "ShoesOther"
+
+- type: loadout
+  id: PirateWardrobeFreshStarlightPawBoots
+  equipment:
+    shoes: PirateFreshStarlightPawBoots
+  groupBy: "ShoesOther"
+
+- type: loadoutGroup
+  id: PiratePassengerFreshHead
+  name: loadout-group-pirate-fresh-head
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeFreshStarlightBrimHat
+  - PirateWardrobeFreshStarlightFeatheredHat
+  - PirateWardrobeFreshStarlightTVHead
+  - PirateWardrobeFreshStarlightPancakeHat
+  - PirateWardrobeFreshStarlightGildedWideHat
+  - PirateWardrobeFreshStarlightBigTophat
+  - PirateWardrobeFreshStarlightBigTophatWhite
+  - PirateWardrobeFreshStarlightBrassTophat
+  - PirateWardrobeFreshStarlightWideStrawHat
+  - PirateWardrobeFreshStarlightWitchyHat
+  - PirateWardrobeFreshStarlightYellowWizardHat
+  - PirateWardrobeFreshStarlightGreenWizardHat
+  - PirateWardrobeFreshStarlightPurpleWizardHat
+  - PirateWardrobeFreshStarlightOrangeWizardHat
+  - PirateWardrobeFreshStarlightPeachWizardHat
+  - PirateWardrobeFreshStarlightBunnyGangHat
+  - PirateWardrobeFreshFrontierFoxEarsOrange
+  - PirateWardrobeFreshFrontierFoxEarsWhite
+  - PirateWardrobeFreshFrontierFoxEarsBlack
+  - PirateWardrobeFreshFrontierFoxEarsBlue
+
+- type: loadoutGroup
+  id: PiratePassengerFreshNeck
+  name: loadout-group-pirate-fresh-neck
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeFreshStarlightEyeAmulet
+  - PirateWardrobeFreshStarlightMoonAmulet
+  - PirateWardrobeFreshStarlightStarAmulet
+  - PirateWardrobeFreshStarlightSunAmulet
+  - PirateWardrobeFreshStarlightBunnyScarf
+  - PirateWardrobeFreshStarlightFoxfire
+  - PirateWardrobeFreshFrontierCapeCrystal
+  - PirateWardrobeFreshFrontierCapeNeon
+  - PirateWardrobeFreshFrontierCapeViolet
+  - PirateWardrobeFreshFrontierCapeGalaxy
+  - PirateWardrobeFreshFrontierCapeSirius
+  - PirateWardrobeFreshFrontierCapeLua
+  - PirateWardrobeFreshFrontierFlameCape
+  - PirateWardrobeFreshFrontierVampireWings
+  - PirateWardrobeFreshFrontierMageWings
+  - PirateWardrobeFreshFrontierPegasusWings
+  - PirateWardrobeFreshFrontierSkeletonWings
+  - PirateWardrobeFreshFrontierBlackSkeletonWings
+  - PirateWardrobeFreshFrontierRedSkeletonWings
+  - PirateWardrobeFreshFrontierVioletWings
+  - PirateWardrobeFreshFrontierHorrorWings
+
+- type: loadoutGroup
+  id: PiratePassengerFreshUniform
+  name: loadout-group-pirate-fresh-uniform
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeFreshStarlightBodysuitJeans
+  - PirateWardrobeFreshStarlightDarkTurtleneck
+  - PirateWardrobeFreshStarlightCoolTanktop
+  - PirateWardrobeFreshStarlightDruidRobes
+  - PirateWardrobeFreshStarlightFlamboyant
+  - PirateWardrobeFreshStarlightFlamenco
+  - PirateWardrobeFreshStarlightFlyCaptain
+  - PirateWardrobeFreshStarlightKilt
+  - PirateWardrobeFreshStarlightLilacDress
+  - PirateWardrobeFreshStarlightLittleBlackDress
+  - PirateWardrobeFreshStarlightLumberjackOveralls
+  - PirateWardrobeFreshStarlightMechanicOveralls
+  - PirateWardrobeFreshStarlightTrendyTop
+  - PirateWardrobeFreshStarlightMessyDressShirt
+  - PirateWardrobeFreshStarlightPunkJeans
+  - PirateWardrobeFreshStarlightSailor
+  - PirateWardrobeFreshStarlightSundress
+  - PirateWardrobeFreshStarlightRuggedClothes
+  - PirateWardrobeFreshStarlightTieDye
+  - PirateWardrobeFreshStarlightVintage
+  - PirateWardrobeFreshStarlightCargoOveralls
+  - PirateWardrobeFreshStarlightRedRegalia
+  - PirateWardrobeFreshStarlightMimeFrills
+  - PirateWardrobeFreshStarlightToga
+  - PirateWardrobeFreshFrontierKimono
+  - PirateWardrobeFreshFrontierRedSweater
+  - PirateWardrobeFreshFrontierBlueSweater
+  - PirateWardrobeFreshFrontierBlackSweater
+  - PirateWardrobeFreshFrontierVioletSweater
+  - PirateWardrobeFreshFrontierRainbowSweater
+
+- type: loadoutGroup
+  id: PiratePassengerFreshOuter
+  name: loadout-group-pirate-fresh-outer
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeFreshStarlightSpaceCourierCoat
+  - PirateWardrobeFreshStarlightSquidCoat
+  - PirateWardrobeFreshStarlightInspectorCoat
+  - PirateWardrobeFreshStarlightSovietGreatcoat
+  - PirateWardrobeFreshStarlightGreytiderTrenchcoat
+  - PirateWardrobeFreshStarlightFieldJacket
+  - PirateWardrobeFreshStarlightSeniorChefJacket
+  - PirateWardrobeFreshStarlightDarkPirateGarb
+  - PirateWardrobeFreshFrontierLettermanBrown
+  - PirateWardrobeFreshFrontierLettermanBlue
+  - PirateWardrobeFreshFrontierLettermanRed
+  - PirateWardrobeFreshFrontierLettermanScarlet
+  - PirateWardrobeFreshFrontierDandyCoat
+  - PirateWardrobeFreshFrontierSaloCoat
+
+- type: loadoutGroup
+  id: PiratePassengerFreshShoes
+  name: loadout-group-pirate-fresh-shoes
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeFreshStarlightWinterBlueBoots
+  - PirateWardrobeFreshStarlightAristocratBoots
+  - PirateWardrobeFreshStarlightFurBoots
+  - PirateWardrobeFreshStarlightSlickShoes
+  - PirateWardrobeFreshStarlightSpaceCourierBoots
+  - PirateWardrobeFreshStarlightRatvarBoots
+  - PirateWardrobeFreshStarlightPawBoots
