@@ -1,0 +1,10 @@
+- type: entity
+  parent: BaseAction
+  id: ActionBarbellBenchPerformRep
+  components:
+  - type: Action
+    icon: { sprite: _Pirate/Interface/Actions/barbell-lift.rsi, state: icon }
+    itemIconStyle: NoItem
+    useDelay: 3.0
+  - type: InstantAction
+    event: !type:BarbellBenchPerformRepEvent

@@ -1,0 +1,13 @@
+- type: construction
+  id: PunchingBagRecipe
+  name: construction-name-punching-bag
+  description: construction-desc-punching-bag
+  graph: PunchingBag
+  startNode: start
+  targetNode: punchingbag
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
