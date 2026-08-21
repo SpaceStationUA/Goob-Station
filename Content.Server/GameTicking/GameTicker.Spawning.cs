@@ -103,9 +103,10 @@ namespace Content.Server.GameTicking
                 if (job is null)
                     continue;
 
+                var assignedJob = job.Value;
                 var ev = new IsRoleAllowedEvent(
                     _playerManager.GetSessionById(player),
-                    new List<ProtoId<JobPrototype>> { job },
+                    new List<ProtoId<JobPrototype>> { assignedJob },
                     null);
                 RaiseLocalEvent(ref ev);
 
