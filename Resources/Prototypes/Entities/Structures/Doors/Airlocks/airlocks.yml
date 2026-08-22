@@ -189,7 +189,7 @@
   suffix: Syndicate
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/hatch_syndicate.rsi
+    sprite: _Pirate/Structures/Doors/Airlocks/Standard/hatch_syndicate.rsi # Pirate Changes
 
 # Glass
 - type: entity
