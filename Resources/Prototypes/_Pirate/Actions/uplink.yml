@@ -1,8 +1,8 @@
 - type: entity
   parent: ActionOpenUplinkImplant
   id: ActionOpenContractsImplant
-  name: Open Contract Hub
-  description: Opens the syndicate contract hub
+  name: "Відкрити центр контрактів"
+  description: "Відкриває центр контрактів Синдикату"
   components:
   - type: InstantAction
     event: !type:OpenUiActionEvent

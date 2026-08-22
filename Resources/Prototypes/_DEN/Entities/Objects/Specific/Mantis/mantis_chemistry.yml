@@ -11,8 +11,8 @@
 - type: entity
   parent: BaseSyringe
   id: SyringeMantis
-  name: electrum syringe
-  description: "An electrum syringe with an eidolite barrel. Naturally antimicrobial."
+  name: "електрумовий шприц"
+  description: "Електрумовий шприц з ейдолітовим корпусом. Від природи антимікробний."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Specific/Mantis/syringemantis.rsi
@@ -47,8 +47,8 @@
 - type: entity
   parent: BaseChemistryEmptyBottle
   id: ChemistryEmptyBottleMantis
-  name: electrum bottle
-  description: "An eidolite bottle in a durable electrum shell. Useful for your rituals."
+  name: "електрумова пляшка"
+  description: "Ейдолітова пляшка в міцній електрумовій оболонці. Стане в пригоді для ваших ритуалів."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Specific/Mantis/bottlemantis.rsi
@@ -101,8 +101,8 @@
 - type: entity
   parent: PillCanister
   id: PillCanisterMantis
-  name: mantis pill canister
-  description: "An electrum pill canister with an eidolite window, etched with a Greek psi."
+  name: "контейнер пігулок псіо-екстрасенса"
+  description: "Електрумовий контейнер для пігулок з ейдолітовим віконцем, витравленим грецькою літерою псі."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Specific/Mantis/pillcanistermantis.rsi
@@ -120,7 +120,7 @@
   parent: PillCanisterMantis
   id: PillCanisterSpaceDrugsMantis
   suffix: LSD, 5
-  description: "A potent psychedelic that may awaken psionic abilities in those with potential, coloquially called \"space drugs.\""
+  description: "Потужний психоделік, що може пробудити псіонічні здібності у тих, хто має потенціал; у просторіччі його називають «космічними наркотиками»"
   components:
   - type: Label
     currentLabel: Космічний міраж 15u
@@ -137,7 +137,7 @@
   parent: [PillCanisterMantis, BaseMantisContraband]
   id: PillCanisterMindbreakerToxinMantis
   suffix: mindbreaker toxin, 5
-  description: "Permanently removes psionics when ingested. Not to be taken lightly."
+  description: "Назавжди позбавляє псіоніки після вживання. Не варто ставитися до цього легковажно."
   components:
   - type: Label
     currentLabel: mindbreaker toxin 20u
@@ -169,11 +169,11 @@
 
 # Cryptobiolin pill + canister (temporary psionic insulation)
 - type: entity
-  name: pill
+  name: "пігулка"
   suffix: cryptobiolin 15u
   parent: Pill
   id: PillCryptobiolin
-  description: "A temporary anti-psionic."
+  description: "Тимчасовий засіб проти псіоніки."
   components:
   - type: Label
     currentLabel: cryptobiolin 15u
@@ -196,7 +196,7 @@
   parent: PillCanisterMantis
   id: PillCanisterCryptobiolinMantis
   suffix: cryptobiolin, 10
-  description: "A drug which causes mild confusion, but renders you psionically insulated. Each pill lasts about five minutes."
+  description: "Препарат, що спричиняє легку сплутаність, але забезпечує псіонічну ізоляцію. Дія кожної пігулки триває близько п’яти хвилин."
   components:
   - type: Label
     currentLabel: cryptobiolin 15u

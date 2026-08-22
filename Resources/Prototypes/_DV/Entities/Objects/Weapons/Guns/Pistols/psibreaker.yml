@@ -1,8 +1,8 @@
 - type: entity
-  name: psi-breaker
+  name: "псі-брейкер"
   parent: [ BaseWeaponPistol, BaseMantisContraband]
   id: WeaponPistolPsiBreaker
-  description: A small, flashy pistol with a marble style grip. Provides no tactical advantage. Uses .35 auto ammo.
+  description: "Невеликий яскравий пістолет із мармуровим руків'ям. Не дає жодної тактичної переваги. Використовує набої .35 auto."
   components:
   - type: Sprite
     sprite: _DV/Objects/Weapons/Guns/Pistols/psibreaker.rsi

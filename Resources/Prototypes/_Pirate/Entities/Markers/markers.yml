@@ -1,6 +1,6 @@
 - type: entity
   id: MarkerSpecialforce
-  name: special forces spawn marker
+  name: "маркер спавну спецпризначенців"
   parent: MarkerBase
   components:
   - type: Sprite
@@ -10,7 +10,7 @@
 
 - type: entity
   id: MarkerMercSpawn
-  name: mercenary spawn marker
+  name: "маркер появи найманця"
   parent: MarkerBase
   components:
   - type: Sprite
