@@ -3,7 +3,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: LockMarkedStatusEffect
-  name: "позначений Замком"
+  name: lock marked
   categories: [ HideSpawnMenu ]
   components:
   - type: AccessDeniedStatusEffect
@@ -11,7 +11,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: LastRefugeStatusEffect
-  name: "останній притулок Доглядача"
+  name: caretaker's last refuge
   categories: [ HideSpawnMenu ]
   components:
   - type: HereticCloakedStatusEffect
@@ -23,5 +23,5 @@
 - type: entity
   parent: MobStatusEffectBase
   id: ExaminedMirrorMaidStatusEffect
-  name: "погляд дзеркальної служниці"
+  name: examined mirror maid
   categories: [ HideSpawnMenu ]

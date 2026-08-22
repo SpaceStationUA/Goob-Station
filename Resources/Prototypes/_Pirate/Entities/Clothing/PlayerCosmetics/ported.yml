@@ -10,8 +10,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretCaptain
-  name: "берет капітана"
-  description: "Синій берет із командною емблемою."
+  name: captain's beret
+  description: A regal blue beret with a commander's rank emblem. For captains that are more inclined towards style.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/beret_captain.rsi
@@ -26,8 +26,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCircusClown
-  name: "капелюх циркового клоуна"
-  description: "Загострений капелюх для яскравого сценічного образу."
+  name: circus clown hat
+  description: "Rumors suggest that the pointed end represents the narrowing path all clowns walk to their Last Laugh."
   components:
   - type: Icon
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/circusclownhat.rsi
@@ -45,8 +45,8 @@
 - type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatBeretHD
-  name: "берет керівника служби гостинності"
-  description: "Берет з емблемою служби гостинності."
+  name: hospitality director's beret
+  description: A beret with the service's insignia emblazoned on it. For hospitality directors that are more inclined towards style.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/beret_hd.rsi
@@ -62,8 +62,8 @@
 - type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatCaptainTricorne
-  name: "трикутний капелюх капітана"
-  description: "Адміральський стиль для особливих виходів."
+  name: captain's tricorne
+  description: It's good being the admiral.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/captricorne.rsi
@@ -77,8 +77,8 @@
 - type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatBellhopHD
-  name: "кашкет швейцара"
-  description: "Кашкет у стилі готельної служби"
+  name: hospitality director's bellhop hat
+  description: A hat styled after a hotel bellhop. Can I take your coat sir?
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/bellhop_hd.rsi
@@ -92,8 +92,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadDevilHorns
-  name: "обруч із диявольськими рогами"
-  description: "Маленькі роги для пустотливого образу"
+  name: devil horns headband
+  description: Little pointy horns for the impish and nefarious!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/devilhorns.rsi
@@ -108,8 +108,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadDeerstalker
-  name: "капелюх детектива"
-  description: "Модифікований для пошуку підказок."
+  name: deerstalker
+  description: Heavily modified to stalk clues instead.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/deerstalker.rsi
@@ -123,8 +123,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadSailorCap
-  name: "матроський кашкет"
-  description: "Додає морського стилю, але не захищає від морської хвороби"
+  name: sailor's hat
+  description: You aren't immune to seasickness wearing this, but it'll make you look cooler when heaving on the boat!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/sailorcap.rsi
@@ -138,8 +138,8 @@
 - type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatCMOClip
-  name: "шпилька головного лікаря"
-  description: "Блискуча шпилька у формі медичного хреста."
+  name: chief medical officer's hairclip
+  description: A shiny plastic hairclip fashioned after the iconic green medical cross.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Misc/cmo_clip.rsi
@@ -149,8 +149,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatMusicianShako
-  name: "шако музиканта"
-  description: "Урочистий музичний головний убір."
+  name: musician's shako
+  description: A sturdy shako. Somehow looks too refined for the logo slapped on the front.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/mus_shako.rsi
@@ -160,8 +160,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCuteTiara
-  name: "мила тіара"
-  description: "Недорогоцінна тіара для королівського образу."
+  name: Cute Tiara
+  description: A tiara fit for royalty, except that it's definitely not real gold.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/cutetiara.rsi
@@ -171,8 +171,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSimpleTiara
-  name: "проста тіара"
-  description: "Стримана елегантність без зайвого блиску."
+  name: Simple Tiara
+  description: A simple tiara for those seeking elegance through simplicity.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/simpletiara.rsi
@@ -182,8 +182,8 @@
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckCloakHd
-  name: "плащ керівника гостинності"
-  description: "Лаймово-зелений плащ для тих, хто вміє приймати гостей"
+  name: hospitality director's cloak
+  description: A lime-green cloak, showing your capacity for service. Sometimes, even with a smile!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/hd.rsi
@@ -193,8 +193,8 @@
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckCloakCaptainAdmiral
-  name: "адміральський плащ"
-  description: "Улюблений аксесуар космічних офіцерів"
+  name: admiral's cloak
+  description: "A favourite for many a naval officer"
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/capcloakadmiral.rsi
@@ -204,8 +204,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakMagicianCape
-  name: "плащ мага"
-  description: "Комірчастий плащ із червоною підкладкою."
+  name: magician's cape
+  description: "A collared cape with red lining, a staple accessory for any magician or vampire."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/magiciancape.rsi
@@ -213,8 +213,8 @@
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckMantleHD
-  name: "мантія керівника гостинності"
-  description: "Мантія для тих, хто дбає про комфорт станції."
+  name: hospitality director's mantle
+  description: This mantle shows you really know your stuff when it comes to growing plants, mopping puddles, and all those other things that makes this station hospitable.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Mantles/hdmantle.rsi
@@ -224,8 +224,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleLily
-  name: "мантія лілії"
-  description: "Мантія, стилізована під помаранчеву лілію."
+  name: lily mantle
+  description: A mantle designed to resemble an orange lily, granted in recognition of expert botany skill.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Mantles/lilymantle.rsi
@@ -244,8 +244,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckAngelWings
-  name: "крила янгола"
-  description: "Косметичні крила для світлого образу."
+  name: angelwings
+  description: I can be your angle....
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Misc/angelwings.rsi
@@ -258,8 +258,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckDevilWings
-  name: "крила диявола"
-  description: "Косметичні крила для пустотливого образу."
+  name: devil wings
+  description: ...or yuor devil.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Misc/devilwings.rsi
@@ -272,8 +272,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckSailorAscot
-  name: "матроський аскот"
-  description: "Стильний аксесуар для морського образу"
+  name: sailor's ascot
+  description: The preferred accessory for mystery solving whtieboys
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Misc/sailorascot.rsi
@@ -286,8 +286,8 @@
 - type: entity
   parent: [ClothingNeckBase, BaseCentcommContraband]
   id: ClothingNeckImpishAccessories
-  name: "пустотливі аксесуари"
-  description: "Яскравий декоративний комплект."
+  name: impish accessories
+  description: A colorful decorative accessory set.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Misc/impishaccessories.rsi
@@ -297,8 +297,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckFeatherBoa
-  name: "пір'яний боа"
-  description: "Ефектний сценічний аксесуар."
+  name: feather boa
+  description: WACH OUT!! It's a snake with a LOOOOT of feathers!! Just kidding. It's really just fashion accessory.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Misc/mus_boa.rsi
@@ -308,8 +308,8 @@
 - type: entity
   parent: ClothingScarfBase
   id: ClothingNeckScarfStripedLimeGreen
-  name: "смугастий лаймовий шарф"
-  description: "Яскравий шарф із зеленими смугами."
+  name: striped lime-green scarf
+  description: A stylish striped lime-green scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Scarfs/limegreen.rsi
@@ -319,8 +319,8 @@
 - type: entity
   parent: ClothingScarfBase
   id: ClothingNeckScarfWrappedBlack
-  name: "обмотаний чорний шарф"
-  description: "Довгий чорний шарф, що добре зігріває шию."
+  name: wrapped black scarf
+  description: An extra long black scarf that bundles around your neck to keep you warm.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Scarfs/wrappedscarfblack.rsi
@@ -330,8 +330,8 @@
 - type: entity
   parent: ClothingScarfBase
   id: ClothingNeckScarfWrappedWhite
-  name: "обмотаний білий шарф"
-  description: "Довгий білий шарф для холодних коридорів."
+  name: wrapped white scarf
+  description: An extra long white scarf that bundles around your neck to keep you warm.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Scarfs/wrappedscarfwhite.rsi
@@ -341,8 +341,8 @@
 - type: entity
   parent: ClothingScarfBase
   id: ClothingNeckScarfAscot
-  name: "аскот"
-  description: "Стильна альтернатива краватці."
+  name: ascot
+  description: A stylish alternative to the neck tie.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Scarfs/ascot.rsi
@@ -352,8 +352,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformFuneralSuit
-  name: "траурний костюм"
-  description: "Коли кольорам немає місця, а все довкола треба оплакати."
+  name: funeral suit
+  description: For when no color is allowed and all must be mourned.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpsuit/funeralsuit.rsi
@@ -363,8 +363,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformNightclubSuit
-  name: "костюм для нічного клубу"
-  description: "Перепустка не входить до комплекту"
+  name: nightclub suit
+  description: ID please?
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpsuit/nightclubsuit.rsi
@@ -374,8 +374,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformBrownSuit
-  name: "коричневий костюм"
-  description: "На ньому не видно навіть найгірших плям від кави."
+  name: brown suit
+  description: Not even the worst coffee spills will show up on this puppy, guaranteed.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpsuit/brownsuit.rsi
@@ -385,8 +385,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformCreamSuit
-  name: "кремовий костюм"
-  description: "Костюм для скромної, але впевненої людини."
+  name: cream suit
+  description: A suit fit for a humble, small town gentleman with something to say.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpsuit/creamsuit.rsi
@@ -396,8 +396,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformMiamiVice
-  name: "костюм у стилі «Маямі Вайс»"
-  description: "Для затримання клоуна опівдні та серфінгу о першій."
+  name: miami vice suit
+  description: When you need to arrest the clown at twelve o'clock and boogie board at one.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpsuit/miamivice.rsi
@@ -407,8 +407,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformBrosBlazer
-  name: "піджак і джинси BROS"
-  description: "BROS... Двоє!"
+  name: BROS blazer and jeans
+  description: BROS... Two!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpsuit/brosblazer.rsi
@@ -418,8 +418,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformSailorSuit
-  name: "матроський костюм"
-  description: "Не той тип корабля!"
+  name: sailor suit
+  description: Wrong kind of ship!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpsuit/sailoruniform.rsi
@@ -433,8 +433,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitTailcoatSuit
-  name: "костюм із фраком"
-  description: "Елегантний одяг із довгими фалдами для особливих виходів."
+  name: tailcoat suit
+  description: A rather fetching outfit with long tails, fit for any gentleperson looking to stand out.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpsuit/tailcoatsuit.rsi
@@ -444,8 +444,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformFuneralSuitSkirt
-  name: "траурний костюм зі спідницею"
-  description: "Коли кольорам немає місця, а все довкола треба оплакати."
+  name: funeral suitskirt
+  description: For when no color is allowed and all must be mourned.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/funeralsuit.rsi
@@ -455,8 +455,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformNightclubSuitSkirt
-  name: "костюм для нічного клубу зі спідницею"
-  description: "Перепустка не входить до комплекту"
+  name: nightclub suitskirt
+  description: ID please?
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/nightclubsuit.rsi
@@ -466,8 +466,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformBrownSuitSkirt
-  name: "коричневий костюм зі спідницею"
-  description: "На ньому не видно навіть найгірших плям від кави."
+  name: brown suitskirt
+  description: Not even the worst coffee spills will show up on this puppy, guaranteed.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/brownsuit.rsi
@@ -477,8 +477,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformCreamSuitSkirt
-  name: "кремовий костюм зі спідницею"
-  description: "Костюм для скромної, але впевненої людини."
+  name: cream suitskirt
+  description: A suit fit for a humble, small town gentleman with something to say.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/creamsuit.rsi
@@ -488,8 +488,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformMiamiViceSkirt
-  name: "костюм «Маямі Вайс» зі спідницею"
-  description: "Для затримання клоуна опівдні та серфінгу о першій."
+  name: miami vice suitskirt
+  description: When you need to arrest the clown at twelve o'clock and boogie board at one.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/miamivice.rsi
@@ -499,8 +499,8 @@
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformBrosBlazerSkirt
-  name: "піджак BROS зі спідницею"
-  description: "BROS... Двоє!"
+  name: BROS blazer and jeans skirt
+  description: BROS... Two!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/brosblazer.rsi
@@ -510,8 +510,8 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformMusicianSingerDress
-  name: "сукня співачки лаунжу"
-  description: "Шовкова сукня для нічних клубів і придорожніх барів."
+  name: lounge singer's dress
+  description: A form-fitting silk dress, perfect for preforming at fancy nightclubs. Or at dive bars on backwater space stations.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/mus_singerdress.rsi
@@ -522,10 +522,10 @@
     - shoes
 
 - type: entity
-  name: "рожева сукня принцеси"
+  name: Pink Princess Dress
   parent: ClothingUniformSkirtBase
   id: ClothingUniformPinkPrincessDress
-  description: "Пишна сукня для королівського образу, хоч і трохи свербить"
+  description: A sweet and fluffy dress fit for royalty though... it is a little itchy
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/pinkprincessdress.rsi
@@ -537,10 +537,10 @@
     - shoes
 
 - type: entity
-  name: "зелена сукня принцеси"
+  name: Green Princess Dress
   parent: ClothingUniformSkirtBase
   id: ClothingUniformGreenPrincessDress
-  description: "Гладка елегантна сукня; це лише костюм, звісно."
+  description: A smooth and elegant dress fit for royalty. It's totally just a costume though.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/greenprincessdress.rsi
@@ -554,8 +554,8 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformSkirtClayshaper
-  name: "вбрання глинотворця"
-  description: "Вільне від жаги до панування."
+  name: clayshaper's garb
+  description: Free from our hunger for dominion.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/clayshaperdress.rsi
@@ -568,8 +568,8 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformSkirtDruid
-  name: "вбрання друїда"
-  description: "Символ терпіння та щедрості."
+  name: druid's garb
+  description: Patient and generous.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/druidrobe.rsi
@@ -582,8 +582,8 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformSkirtMoon
-  name: "місячна драпіровка"
-  description: "Срібляста й невагома на вигляд."
+  name: moon drape
+  description: Silvered and weightless.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/moondress.rsi
@@ -596,8 +596,8 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformSkirtTidal
-  name: "припливні шати"
-  description: "Дивовижно зручний квадрат тканини."
+  name: tidal robes
+  description: It's very comfortable, for just being a square of cloth.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/tidalrobe.rsi
@@ -610,8 +610,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSafariPants
-  name: "сафарійний костюм зі штанами"
-  description: "Ідеальний для експедиції в джунглі."
+  name: safari suit (pants)
+  description: Perfect for a jungle excursion, with pants.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpsuit/safaripants.rsi
@@ -621,8 +621,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatJokester
-  name: "пальто жартівника"
-  description: "Яскраве червоне пальто для професійних коміків."
+  name: jokester's coat
+  description: A snazzy, striking red overcoat for professional comedians. The shoulder pads enable higher-brow humor.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Coats/clown_jokestercoat.rsi
@@ -632,8 +632,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatQmHuge
-  name: "величезне пальто квартирмейстера"
-  description: "Надзвичайно пухнасте зимове пальто для великих виходів."
+  name: quartermaster's XXXL winter coat
+  description: An oversized, exorbitantly fluffy winter coat for quartermasters.
   components:
   - type: TemperatureProtection
     heatingCoefficient: 1.1
@@ -646,8 +646,8 @@
 - type: entity
   parent: ClothingOuterCoatDetective
   id: ClothingOuterCoatFieldJacket
-  name: "польова куртка"
-  description: "М'яка чорна куртка з вільними манжетами."
+  name: field jacket
+  description: A soft black suit jacket with loose cuffs. The white lettering on the back marks the wearer as Nanotrasen security.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Coats/field_jacket.rsi
@@ -657,8 +657,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPufferDark
-  name: "коричнева пухова куртка"
-  description: "Об'ємна куртка з якісного нейлону."
+  name: brown puffer coat
+  description: An oversized puffer coat made of high-quality nylon.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Coats/big_puffercoat_dark.rsi
@@ -670,8 +670,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPufferRed
-  name: "червона пухова куртка"
-  description: "Тепла об'ємна куртка яскравого кольору."
+  name: red puffer coat
+  description: An oversized puffer coat made of a high-quality nylon.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Coats/big_puffercoat_red.rsi
@@ -683,8 +683,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPufferBlue
-  name: "синя пухова куртка"
-  description: "Тепла об'ємна куртка яскравого кольору."
+  name: blue puffer coat
+  description: An oversized puffer coat made of a high-quality nylon.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Coats/big_puffercoat_blue.rsi
@@ -696,8 +696,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPufferMime
-  name: "пухова куртка міма"
-  description: "Об'ємна куртка, виготовлена з високоякісного «нічого»."
+  name: mime puffer coat
+  description: An oversized puffer coat made of high-quality nothing.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Coats/big_puffercoat_mime.rsi
@@ -709,8 +709,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPufferSilver
-  name: "срібляста пухова куртка"
-  description: "Тепла об'ємна куртка яскравого кольору."
+  name: silver puffer coat
+  description: An oversized puffer coat made of a high-quality nylon.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Coats/big_puffercoat_silver.rsi
@@ -722,8 +722,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPufferPink
-  name: "рожева пухова куртка"
-  description: "Тепла об'ємна куртка яскравого кольору."
+  name: pink puffer coat
+  description: An oversized puffer coat made of a high-quality nylon.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Coats/big_puffercoat_pink.rsi
@@ -737,8 +737,8 @@
 - type: entity
   parent: [ClothingOuterStorageBase, BaseCommandContraband]
   id: ClothingOuterApronHD
-  name: "фартух керівника гостинності"
-  description: "Практичний фартух із яскравою обробкою."
+  name: hospitality director's apron
+  description: A thick lime-green apron, perfect for insulating your soft flesh from spills, soil and thorns.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/apronhd.rsi
@@ -748,8 +748,8 @@
 - type: entity
   parent: [ClothingOuterStorageFoldableBase, AllowSuitStorageClothingGasTanks, ClothingUniformFoldableBase]
   id: ClothingOuterChapsBrown
-  name: "коричневі чапси"
-  description: "Для родео, якщо не забути вдягнути штани"
+  name: Brown Chaps
+  description: Dress right for the rodeo with these Brown chaps. Just don't forget your pants!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/cowboy/brown.rsi
@@ -770,8 +770,8 @@
 - type: entity
   parent: [ClothingOuterStorageFoldableBase, AllowSuitStorageClothingGasTanks, ClothingUniformFoldableBase]
   id: ClothingOuterChapsWhite
-  name: "білі чапси"
-  description: "Класичний ковбойський аксесуар"
+  name: White Chaps
+  description: Dress right for the rodeo with these White chaps. Just don't forget your pants!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/cowboy/white.rsi
@@ -792,8 +792,8 @@
 - type: entity
   parent: [ClothingOuterStorageFoldableBase, AllowSuitStorageClothingGasTanks, ClothingUniformFoldableBase]
   id: ClothingOuterChapsBlack
-  name: "чорні чапси"
-  description: "Шкіряний стиль для далекої дороги"
+  name: Black Chaps
+  description: Dress right for the rodeo with these Black chaps. Just don't forget your pants!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/cowboy/black.rsi
@@ -814,8 +814,8 @@
 - type: entity
   parent: [ClothingOuterStorageFoldableBase, AllowSuitStorageClothingGasTanks, ClothingUniformFoldableBase]
   id: ClothingOuterChapsFancy
-  name: "ошатні чапси"
-  description: "Для тих, хто хоче виділитися на родео"
+  name: Fancy Chaps
+  description: Dress right for the rodeo with these Fancy chaps. Just don't forget your pants!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/cowboy/fancy.rsi
@@ -835,8 +835,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterRainCape
-  name: "дощовий плащ"
-  description: "Надійне спорядження з міцного полотна."
+  name: rain cape
+  description: Surplus gear made from durable canvas.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/poncho.rsi
@@ -864,8 +864,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterWhitePoncho
-  name: "біле пончо"
-  description: "Водонепроникне та просте"
+  name: white poncho
+  description: Waterproof!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/poncho.rsi
@@ -893,8 +893,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterQMPoncho
-  name: "пончо квартирмейстера"
-  description: "Тепле, зношене й дуже зручне пончо."
+  name: quartermaster's poncho
+  description: A warm, worn poncho. It's very comfortable.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/poncho.rsi
@@ -928,8 +928,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterBlackPoncho
-  name: "чорне пончо"
-  description: "Водонепроникне, але трохи моторошне"
+  name: black poncho
+  description: Waterproof (sinister)!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/poncho.rsi
@@ -958,8 +958,8 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterApronCuteChef
   suffix: Chef
-  name: "милий фартух кухаря"
-  description: "Милий фартух із мереживною оборкою."
+  name: apron
+  description: A cute frilly apron.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/aproncutechef.rsi
@@ -970,8 +970,8 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterApronCuteBar
   suffix: Bartender
-  name: "милий фартух кухаря"
-  description: "Милий фартух із мереживною оборкою."
+  name: apron
+  description: A cute frilly apron.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/aproncutebar.rsi
@@ -981,8 +981,8 @@
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothingGasTanks]
   id: ClothingOuterCowVest
-  name: "коров'ячий жилет"
-  description: "Синтетична коров'яча шкіра; жодна корова не постраждала."
+  name: Cow print vest
+  description: A vest made of synthetic cow skin. NO COWS WERE HARMED IN THE MAKING OF THIS PRODUCT.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/cowboy/cow_vest.rsi
@@ -1001,8 +1001,8 @@
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothingGasTanks]
   id: ClothingOuterBlackVest
-  name: "коров'ячий жилет"
-  description: "Гладкий жилет у стилі космічних ковбоїв."
+  name: Cow print vest
+  description: A slick black leather vest like the ones the cowboys used to wear.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/OuterClothing/Misc/cowboy/black_vest.rsi
@@ -1021,8 +1021,8 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesHeelsRed
-  name: "червоні підбори"
-  description: "Святкові підбори для впевненої ходи."
+  name: red high-heels
+  description: Fancy red high-heels, great for strutting around the station in style.
   components:
   - type: MeleeWeapon
     damage:
@@ -1039,8 +1039,8 @@
 - type: entity
   parent: ClothingShoesHeelsRed
   id: ClothingShoesHeelsBlack
-  name: "чорні підбори"
-  description: "Класичні чорні підбори."
+  name: black high-heels
+  description: Fancy black high-heels, great for strutting around the station in style.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Heels/heelsblack.rsi
@@ -1050,8 +1050,8 @@
 - type: entity
   parent: ClothingShoesHeelsRed
   id: ClothingShoesHeelsBrown
-  name: "коричневі підбори"
-  description: "Стильні підбори природного кольору."
+  name: brown high-heels
+  description: Fancy brown high-heels, great for strutting around the station in style.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Heels/heelsbrown.rsi
@@ -1061,8 +1061,8 @@
 - type: entity
   parent: ClothingShoesHeelsRed
   id: ClothingShoesHeelsGold
-  name: "золоті підбори"
-  description: "Надзвичайно ошатні підбори, що сяють на світлі."
+  name: golden high-heels
+  description: Extremely fancy golden high-heels, they glitter and shine.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Heels/heelsgold.rsi
@@ -1074,8 +1074,8 @@
 - type: entity
   parent: ClothingShoesHeelsRed
   id: ClothingShoesHeelsBlue
-  name: "сині підбори"
-  description: "Яскраві підбори для сміливого образу."
+  name: blue high-heels
+  description: Fancy blue high-heels, great for strutting around the station in style.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Heels/heelsblue.rsi
@@ -1085,8 +1085,8 @@
 - type: entity
   parent: ClothingShoesHeelsRed
   id: ClothingShoesHeelsGreen
-  name: "зелені підбори"
-  description: "Святкові підбори зеленого кольору."
+  name: green high-heels
+  description: Fancy green high-heels, great for strutting around the station in style.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Heels/heelsgreen.rsi
@@ -1096,8 +1096,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesCaptainHighheelBoots
-  name: "високі чоботи капітана"
-  description: "Стильні чоботи, що залишаються офіційними."
+  name: captain's high-heeled boots
+  description: Snazzy boots for when you want to be stylish, yet official.
   components:
   - type: MeleeWeapon
     damage:
@@ -1116,8 +1116,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesMimeBoots
-  name: "чоботи міма"
-  description: "Поліровані шкіряні чоботи для старанного артиста."
+  name: mime boots
+  description: Bottes en cuir ciré. Pour l'artiste qui travaille dur.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Boots/mimeboots.rsi
@@ -1130,8 +1130,8 @@
 - type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesKneeHighBoots
-  name: "високі чоботи до коліна"
-  description: "Модні чоботи на підборах для будь-якої нагоди."
+  name: knee high boots
+  description: Simple yet fashionable heeled boots, suitable for many occasions.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Boots/kneehighboots.rsi
@@ -1141,8 +1141,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesLeatherBoots
-  name: "шкіряні чоботи"
-  description: "Пара міцних шкіряних чобіт."
+  name: leather boots
+  description: A pair of durable leather boots.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Boots/leatherboots.rsi
@@ -1152,8 +1152,8 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesFlipflopsBlack
-  name: "чорні шльопанці"
-  description: "Зручне взуття для відпочинку"
+  name: black flip flops
+  description: A pair of black flip flops
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Misc/flipflopsblack.rsi
@@ -1163,8 +1163,8 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesAngelSandals
-  name: "сандалі янгола"
-  description: "Легкі декоративні сандалі"
+  name: angel sandals
+  description: Too holy to walk on these tiles!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Misc/angelsandals.rsi
@@ -1177,8 +1177,8 @@
 - type: entity
   parent: [ClothingShoesBaseButcherable, BaseCentcommContraband]
   id: ClothingShoesImpishShoes
-  name: "пустотливі черевики"
-  description: "Яскраве взуття для диявольського настрою."
+  name: impish shoes
+  description: Bright footwear for a devilish mood.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Shoes/Misc/impishshoes.rsi
@@ -1188,8 +1188,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakMystagogue
-  name: "плащ містагога"
-  description: "Зручний біло-фіолетовий плащ для нічних роздумів."
+  name: mystagogue's cloak
+  description: A comfy white and purple cloak, perfect for those sleepless nights when you're haunted by the yet unsolved mysteries of the universe.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/mystacloak.rsi
@@ -1201,8 +1201,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakBoat
-  name: "човновий плащ NanoTrasen"
-  description: "Розкішний синій плащ із червоною підкладкою та золотою облямівкою."
+  name: NanoTrasen boat cloak
+  description: A regal blue durathread boat cloak with a red felt lining and gold trim. Somehow, it's even more expensive than it looks.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/boatcloak.rsi
@@ -1212,8 +1212,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckSalvager
-  name: "плащ утилізатора"
-  description: "Його носять ті, хто легко розбирає станції."
+  name: salvager's cloak
+  description: Worn by dangerous people who've deconstructed stations with ease.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/salvage.rsi
@@ -1223,8 +1223,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakWitchCloak
-  name: "плащ відьми"
-  description: "зручний коричневий плащ, що огортає плечі."
+  name: Witch's cloak
+  description: a comfortable and encompassing brown cloak that comes up over your face.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/witchcloak.rsi
@@ -1234,8 +1234,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckHosRobe
-  name: "розкішна мантія голови служби безпеки"
-  description: "Зручна формальна мантія для ветеранів служби."
+  name: head of security's decadent robe
+  description: A comfy formal robe given to veteran heads of security.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/hosrobe.rsi
@@ -1247,8 +1247,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCMOOverShoulder
-  name: "медичний плащ через плече"
-  description: "Для головного лікаря, який носить лабораторний плащ наперекір правилам."
+  name: chief medical officer's over the shoulder coat
+  description: A coat for chief medical officers who know how to wear a coat but choose to otherwise as a power move.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/cmo_over_shoulder.rsi
@@ -1260,8 +1260,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCMOShawl
-  name: "шаль головного лікаря"
-  description: "Тепла шаль із медичною еполетою."
+  name: chief medical officer's shawl
+  description: A shawl with a shoulder epaulette fitting of a chief medical officer who wants to stay warm yet professional.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/cmo_shawl.rsi
@@ -1273,8 +1273,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCentcommCloakBoat
-  name: "човновий плащ Центрального командування"
-  description: "Смарагдовий плащ із червоною підкладкою та золотою облямівкою."
+  name: central command boat cloak
+  description: A emerald greeen durathread boat cloak with a red felt lining and gold trim. Somehow, it's even more expensive than it looks.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/boatcloakcc.rsi
@@ -1287,8 +1287,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckHeadOfSecurityCloakBoat
-  name: "човновий плащ голови служби безпеки"
-  description: "Сірий плащ із червоною підкладкою та золотою облямівкою."
+  name: head of security boat cloak
+  description: A rish gray durathread boat cloak with a red felt lining and gold trim. Somehow, it's even more expensive than it looks.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/boatcloakhos.rsi
@@ -1301,8 +1301,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMimeCloak
-  name: "плащ міма"
-  description: "Смугастий плащ для мовчазних артистів."
+  name: mime's cloak
+  description: A striped cloak for mimes.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Cloaks/mimecloak.rsi
@@ -1312,8 +1312,8 @@
 - type: entity
   parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatPilgrim
-  name: "капелюх паломника"
-  description: "Класичний капелюх для далеких мандрів."
+  name: pilgrim's hat
+  description: "Thou shalt not suffer a turkey to live."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/pilgrim_hat.rsi
@@ -1323,8 +1323,8 @@
 - type: entity
   parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatWideBrimmed
-  name: "широкополий капелюх"
-  description: "Широкі поля добре прикривають обличчя від сонця."
+  name: wide-brimmed hat
+  description: Works great as frisbee substitute.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/widebrim_hat.rsi
@@ -1334,8 +1334,8 @@
 - type: entity
   parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatCardinal
-  name: "кардинальський капелюх"
-  description: "Дуже помітний церемоніальний головний убір."
+  name: cardinal's hat
+  description: Keeps your head well protected from sun and reason.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/cardinal_hat.rsi
@@ -1345,8 +1345,8 @@
 - type: entity
   parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatWitchhunter
-  name: "капелюх мисливця на відьом"
-  description: "Для похмурих експедицій і ще похмуріших легенд."
+  name: witch hunter's hat
+  description: "Thou shalt not suffer a witch to live."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/witch_hunter_hat.rsi
@@ -1356,8 +1356,8 @@
 - type: entity
   parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatBishopMitre
-  name: "митра єпископа"
-  description: "Урочистий церковний головний убір"
+  name: bishop's mitre
+  description: How to wear this thing? Ah! The other way around!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/bishop_mitre.rsi
@@ -1367,8 +1367,8 @@
 - type: entity
   parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatKippah
-  name: "кипа"
-  description: "Невеликий куполоподібний головний убір."
+  name: kippah
+  description: Worn on the head like a dome.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/kippah.rsi
@@ -1378,8 +1378,8 @@
 - type: entity
   parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatMcCrown
-  name: "корона МакКарго"
-  description: "Картонна корона для короля вантажу."
+  name: mccargo crown
+  description: 'Crowns and tiaras, McCargo King.'
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hoods/mccargocrown.rsi
@@ -1393,8 +1393,8 @@
 - type: entity
   parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatPilot
-  name: "шолом пілота"
-  description: "Теплий шолом із клапанами для вух."
+  name: pilot's helmet
+  description: Can't hear the voices in my headset with these earflaps over my ears. And it feels good.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/pilot.rsi
@@ -1407,8 +1407,8 @@
 - type: entity
   parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatPirates
-  name: "піратський капелюх"
-  description: "Йо-хо-хо."
+  name: pirate's hat
+  description: Y'Arrgghhh.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Head/Hats/pirate_hat.rsi
@@ -1418,8 +1418,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: UniformJabroni
-  name: "костюм джаброні"
-  description: "Для митців і перформансів."
+  name: jabroni outfit
+  description: For artists, performance artists.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Costume/jabroni.rsi
@@ -1429,8 +1429,8 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: UniformMaid
-  name: "форма покоївки"
-  description: "Автентична форма з Космічної Франції"
+  name: maid uniform
+  description: Authentic, from Space France!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Costume/maid.rsi
@@ -1440,8 +1440,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingCostumeBunnySuit
-  name: "костюм зайчика"
-  description: "Готовий до панчіх і метелика."
+  name: bunny suit
+  description: Ready to go with stockings and a bow tie.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Costume/bunny.rsi
@@ -1451,8 +1451,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformSwimsuitBlue
-  name: "синій купальник"
-  description: "Обтислий гідродинамічний купальник."
+  name: blue swimsuit
+  description: A form-fitting, hydrodynamic blue swimsuit.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Costume/swimsuit.rsi

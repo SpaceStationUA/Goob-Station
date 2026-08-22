@@ -3,8 +3,8 @@
 - type: entity
   parent: [BaseItem, BaseMagicalContraband]
   id: DemonSoulFragment
-  name: "уламок демонічної душі"
-  description: "Душа демона, з якої можна зробити магічне чорнило, змішавши її з повною ампулою крові."
+  name: demonic soul fragment
+  description: The soul of a demon, can be made into a magical ink by mixing it into a full blood vial.
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Objects/Enchanting/demonsoul.rsi

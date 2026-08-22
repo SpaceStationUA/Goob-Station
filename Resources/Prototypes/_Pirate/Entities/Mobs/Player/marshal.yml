@@ -13,7 +13,7 @@
 - type: entity
   parent: MindRoleGhostRoleNeutral
   id: MindRoleSyndicateMarshal
-  name: "роль наглядача Синдикату"
+  name: Syndicate Marshal Role
   components:
   - type: MindRole
     antag: true
@@ -22,7 +22,7 @@
 - type: entity
   parent: MobHumanSyndicateAgentBase
   id: MobHumanSyndicateMarshal
-  name: "наглядач Синдикату"
+  name: syndicate marshal
   suffix: Human, Marshal
   components:
   - type: GhostRole

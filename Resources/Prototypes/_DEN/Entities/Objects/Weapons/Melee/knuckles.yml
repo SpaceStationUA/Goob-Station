@@ -11,8 +11,8 @@
 - type: entity
   parent: [ClothingHandsBase, BaseFoldable, BaseAntiPsionicWeapon, BaseMantisContraband]
   id: MantisMeleeFist
-  name: "маніфолд"
-  description: "Важка мнемолітова рукавиця, створена радше для контролю, ніж для чистої смертоносності; здатна відкидати ворогів і часом відбивати ворожий вогонь. Кажуть, свою назву вона отримала завдяки здатності згинати людей, а продумана конструкція дає змогу носити її на будь-якій руці. Смертоносна проти псіонічних і потойбічних загроз."
+  name: manifold
+  description: "A heavy mnemolith gauntlet designed for control rather than sheer lethality, capable of hurling foes back and, at times, deflecting incoming fire. Said to take its name from its capacity for folding men, and its clever design allows it to be worn on either hand. Deadly when wielded against psionic and otherworldly threats."
   components:
   - type: Foldable
     canFoldInsideContainer: true
@@ -83,8 +83,8 @@
 - type: entity
   parent: [BaseSyndicateContraband, MantisMeleeFist] # Traitor version, loosely comparable to BaseBallBatHomeRun, but with less damage and knockback because it's wearable
   id: MantisMeleeFistDouble
-  name: "здвоєний маніфолд"
-  description: "Важкі мнемолітові рукавиці, викувані забороненими ритуалами, здатні відкидати ворогів і часом відбивати ворожий вогонь. Кажуть, свою назву вони отримали завдяки здатності згинати людей. Смертоносні проти псіонічних і потойбічних загроз."
+  name: twinned manifold
+  description: "Heavy mnemolith gauntlets forged through forbidden rituals, capable of hurling foes back and, at times, deflecting incoming fire. Said to take their name from their capacity for folding men. Deadly when wielded against psionic and otherworldly threats."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Melee/Mantis/mantisfistdouble.rsi

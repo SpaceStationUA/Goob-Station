@@ -3,7 +3,7 @@
 - type: entity
   parent: BaseEnchant
   id: CurseInvisibility
-  name: "прокляття невидимості"
+  name: Curse of Invisibility
   components:
   - type: Enchant
     maxLevel: 1
