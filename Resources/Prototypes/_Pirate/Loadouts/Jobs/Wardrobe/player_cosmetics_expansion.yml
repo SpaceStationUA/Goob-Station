@@ -427,7 +427,7 @@
 # Wardrobe subgroups
 - type: loadoutGroup
   id: PiratePassengerExpansionHead
-  name: loadout-group-pirate-ported-head
+  name: loadout-group-pirate-expansion-head
   minLimit: 0
   loadouts:
   - PirateWardrobeExpansionFlamingHalo
@@ -455,7 +455,7 @@
 
 - type: loadoutGroup
   id: PiratePassengerExpansionNeck
-  name: loadout-group-pirate-ported-neck
+  name: loadout-group-pirate-expansion-neck
   minLimit: 0
   loadouts:
   - PirateWardrobeExpansionAngelPin
@@ -515,7 +515,7 @@
 
 - type: loadoutGroup
   id: PiratePassengerExpansionUniform
-  name: loadout-group-pirate-ported-uniform
+  name: loadout-group-pirate-expansion-uniform
   minLimit: 0
   loadouts:
   - PirateWardrobeExpansionBlueGalaxySuit
@@ -537,7 +537,7 @@
 
 - type: loadoutGroup
   id: PiratePassengerExpansionOuter
-  name: loadout-group-pirate-ported-outer
+  name: loadout-group-pirate-expansion-outer
   minLimit: 0
   loadouts:
   - PirateWardrobeExpansionVoidWizardRobes

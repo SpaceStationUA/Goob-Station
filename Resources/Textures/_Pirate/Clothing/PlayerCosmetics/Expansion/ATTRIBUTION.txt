@@ -18,6 +18,10 @@ Panta Rhei / Floof Station
   Repository: https://github.com/Floof-Station/Panta-Rhei
   Source snapshot: https://github.com/Floof-Station/Panta-Rhei/commit/37c57dfe640c8f3275f744c8aa7a1f2994bc728d
   Paths: _Euphoria/Clothing and _Floof/Clothing.
+  Kitten mittens icon source:
+    https://github.com/SPLURT-Station/S.P.L.U.R.T-Station-13/commit/8ea79b0128eec0d2d197dbae69a589e3c4bad877
+  Kitten mittens equipped state: Dunrab, introduced via
+    https://github.com/Floof-Station/Panta-Rhei/commit/bd5e28afaf5e69017c3c0267fcbd5274a68c9320
 
 Ganimed
   Repository: https://github.com/ss14-ganimed/Ganimed14

@@ -2,6 +2,11 @@
 #
 # Pirate: Ukrainian localization for the visually reviewed cosmetics expansion.
 
+loadout-group-pirate-expansion-head = Особливі головні убори
+loadout-group-pirate-expansion-neck = Особливі шийні аксесуари
+loadout-group-pirate-expansion-uniform = Особливі костюми та сукні
+loadout-group-pirate-expansion-outer = Особливий верхній одяг
+
 # Head
 ent-PirateExpansionFlamingHalo = полум'яний німб
     .desc = Живе кільце золотого полум'я, що ширяє над головою.
@@ -107,7 +112,7 @@ ent-PirateExpansionPrideAroWarmers = аромантичні прайд-нару�
     .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPrideBiWarmers = бісексуальні прайд-нарукавники
     .desc = Смугасті нарукавники в кольорах прайду.
-ent-PirateExpansionPrideGayWarmers = гей-прайд нарукавники
+ent-PirateExpansionPrideGayWarmers = нарукавники гей-прайду
     .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPrideIntersexWarmers = інтерсекс-прайд нарукавники
     .desc = Смугасті нарукавники в кольорах прайду.
