@@ -288,6 +288,9 @@
   id: PirateWardrobeFreshStarlightFlyCaptain
   equipment:
     jumpsuit: PirateFreshStarlightFlyCaptain
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobCaptain]
   groupBy: "JumpsuitOther"
 
 - type: loadout
@@ -372,6 +375,9 @@
   id: PirateWardrobeFreshStarlightCargoOveralls
   equipment:
     jumpsuit: PirateFreshStarlightCargoOveralls
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobCargoTechnician, JobQuartermaster]
   groupBy: "JumpsuitOther"
 
 - type: loadout
@@ -384,6 +390,9 @@
   id: PirateWardrobeFreshStarlightMimeFrills
   equipment:
     jumpsuit: PirateFreshStarlightMimeFrills
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobMime]
   groupBy: "JumpsuitOther"
 
 - type: loadout
@@ -468,6 +477,9 @@
   id: PirateWardrobeFreshStarlightSeniorChefJacket
   equipment:
     outerClothing: PirateFreshStarlightSeniorChefJacket
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobChef]
   groupBy: "OuterClothingOther"
 
 - type: loadout

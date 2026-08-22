@@ -1,0 +1,45 @@
+Player cosmetics expansion sources
+
+Every copied RSI directory retains its original meta.json, including the
+asset-specific copyright and license fields. Gameplay-capable source
+prototypes were adapted into visual-only Pirate wardrobe items.
+
+Arcane Station
+  Repository: https://github.com/ArcaneSS14/arcane
+  Source snapshot: https://github.com/ArcaneSS14/arcane/commit/89e48798b5befc02bf47ed0b97a0ef8c9fed833e
+  Paths: _Arcane/Clothing and _Orion/Clothing.
+
+Starlight
+  Repository: https://github.com/ss14Starlight/space-station-14
+  Source snapshot: https://github.com/ss14Starlight/space-station-14/commit/5231e13cb4a7feaabb7823b3c3ebe8fb3ba1a5ad
+  Paths: _Starlight/Clothing.
+
+Panta Rhei / Floof Station
+  Repository: https://github.com/Floof-Station/Panta-Rhei
+  Source snapshot: https://github.com/Floof-Station/Panta-Rhei/commit/37c57dfe640c8f3275f744c8aa7a1f2994bc728d
+  Paths: _Euphoria/Clothing and _Floof/Clothing.
+  Kitten mittens icon source:
+    https://github.com/SPLURT-Station/S.P.L.U.R.T-Station-13/commit/8ea79b0128eec0d2d197dbae69a589e3c4bad877
+  Kitten mittens equipped state: Dunrab, introduced via
+    https://github.com/Floof-Station/Panta-Rhei/commit/bd5e28afaf5e69017c3c0267fcbd5274a68c9320
+
+Ganimed
+  Repository: https://github.com/ss14-ganimed/Ganimed14
+  Source snapshot: https://github.com/ss14-ganimed/Ganimed14/commit/e7445f2597dd01394f24519efdf20ac059550c93
+  Paths: ADT/Clothing and _Ganimed/Clothing.
+
+StarHorizon
+  Repository: https://github.com/StarHorizon14/StarHorizon
+  Source snapshot: https://github.com/StarHorizon14/StarHorizon/commit/278c508e2a82e9f19524b9e3b0951d1705214f70
+  Paths: _Horizon/Clothing and _StarHorizon/Clothing.
+
+BoxStation / Harmony
+  Repository: https://github.com/ss14-boxstation/ss14-boxstation
+  Source snapshot: https://github.com/ss14-boxstation/ss14-boxstation/commit/c52c28ef9fd9a82ca77adb012fe3e2ec7ce02967
+  Path: _Harmony/Clothing/Multiple/headphones_purple_cat.rsi.
+
+Monolith
+  Repository: https://github.com/Monolith-Station/Monolith
+  Source snapshot: https://github.com/Monolith-Station/Monolith/commit/cfd4da633c82cd36276244e2e20320ee99d4887b
+  Watchdog asset revision: https://github.com/Monolith-Station/Monolith/commit/dc230618e36a9f34e7f2c366882dbeeb89849cd9
+  Path: _Mono/Clothing/Mask/gasdi-watchdog.rsi.

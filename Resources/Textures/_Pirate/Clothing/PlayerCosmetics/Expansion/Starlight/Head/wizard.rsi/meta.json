@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "SevenShades; source: https://github.com/ss14Starlight/space-station-14/commit/5231e13cb4a7feaabb7823b3c3ebe8fb3ba1a5ad",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "equipped-HELMET",
+      "directions": 4,
+      "delays": [
+                [0.25, 0.25, 0.25, 0.25],
+                [0.25, 0.25, 0.25, 0.25],
+                [0.25, 0.25, 0.25, 0.25],
+                [0.25, 0.25, 0.25, 0.25]
+            ]
+    },
+    {
+      "name": "equipped-HELMET-dog",
+      "directions": 4,
+      "delays": [
+                [0.25, 0.25, 0.25, 0.25],
+                [0.25, 0.25, 0.25, 0.25],
+                [0.25, 0.25, 0.25, 0.25],
+                [0.25, 0.25, 0.25, 0.25]
+            ]
+    }
+  ]
+}

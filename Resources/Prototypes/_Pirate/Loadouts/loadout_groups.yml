@@ -157,6 +157,8 @@
   - LoadoutHandsGlovesEnviroglovesEvening
   - LoadoutHandsClothWrap
   - ClothingHandsTacticalMaidGlovesLoadout
+  subgroups: # Pirate: player cosmetics expansion
+  - PiratePassengerExpansionHands
 
 - type: loadoutGroup
   id: PirateEEGenericMask
@@ -165,6 +167,8 @@
   loadouts:
   - LoadoutMaskBandWhite
   - LoadoutMaskNeckGaiterWhite
+  subgroups: # Pirate: player cosmetics expansion
+  - PiratePassengerExpansionMask
 
 - type: loadoutGroup
   id: PirateGenericPassengerJumpsuit
@@ -428,6 +432,7 @@
   subgroups:
   - PiratePassengerPortedUniform
   - PiratePassengerFreshUniform
+  - PiratePassengerExpansionUniform
 
 - type: loadoutGroup
   id: PiratePassengerNeck
@@ -454,6 +459,7 @@
   subgroups:
   - PiratePassengerPortedNeck
   - PiratePassengerFreshNeck
+  - PiratePassengerExpansionNeck
 
 
 - type: loadoutGroup
@@ -504,6 +510,7 @@
   subgroups:
   - PiratePassengerPortedHead
   - PiratePassengerFreshHead
+  - PiratePassengerExpansionHead
 
 
 - type: loadoutGroup
@@ -571,6 +578,7 @@
   subgroups:
   - PiratePassengerPortedOuter
   - PiratePassengerFreshOuter
+  - PiratePassengerExpansionOuter
 
 - type: loadoutGroup
   id: PirateEEGenericHead

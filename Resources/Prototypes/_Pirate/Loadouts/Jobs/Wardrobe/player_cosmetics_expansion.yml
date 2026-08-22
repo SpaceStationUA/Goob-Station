@@ -1,0 +1,551 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Pirate: wardrobe entries for the visually reviewed cosmetics expansion.
+
+# Head
+- type: loadout
+  id: PirateWardrobeExpansionFlamingHalo
+  equipment: { head: PirateExpansionFlamingHalo }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionBlackCatEars
+  equipment: { head: PirateExpansionBlackCatEars }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionVoidWizardHood
+  equipment: { head: PirateExpansionVoidWizardHood }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionPyromancerHood
+  equipment: { head: PirateExpansionPyromancerHood }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionCryomancerHood
+  equipment: { head: PirateExpansionCryomancerHood }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathChamomile
+  equipment: { head: PirateExpansionWreathChamomile }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathCornflower
+  equipment: { head: PirateExpansionWreathCornflower }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathGeranium
+  equipment: { head: PirateExpansionWreathGeranium }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathLilyOfTheValley
+  equipment: { head: PirateExpansionWreathLilyOfTheValley }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathPeony
+  equipment: { head: PirateExpansionWreathPeony }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathPinkLily
+  equipment: { head: PirateExpansionWreathPinkLily }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathPinkTulip
+  equipment: { head: PirateExpansionWreathPinkTulip }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathRedRose
+  equipment: { head: PirateExpansionWreathRedRose }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathSunflower
+  equipment: { head: PirateExpansionWreathSunflower }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathWhiteLily
+  equipment: { head: PirateExpansionWreathWhiteLily }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathWhiteRose
+  equipment: { head: PirateExpansionWreathWhiteRose }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWreathYellowTulip
+  equipment: { head: PirateExpansionWreathYellowTulip }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionFlyAgaricHat
+  equipment: { head: PirateExpansionFlyAgaricHat }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionCowHorns
+  equipment: { head: PirateExpansionCowHorns }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionDemonHorns
+  equipment: { head: PirateExpansionDemonHorns }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionTechpriestHood
+  equipment: { head: PirateExpansionTechpriestHood }
+  groupBy: "HeadOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWitchHunterHat
+  equipment: { head: PirateExpansionWitchHunterHat }
+  groupBy: "HeadOther"
+
+# Neck
+- type: loadout
+  id: PirateWardrobeExpansionAngelPin
+  equipment: { neck: PirateExpansionAngelPin }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionDevilPin
+  equipment: { neck: PirateExpansionDevilPin }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionHighEndHeadphones
+  equipment: { neck: PirateExpansionHighEndHeadphones }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionPurpleCatHeadphones
+  equipment: { neck: PirateExpansionPurpleCatHeadphones }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionBloodMantle
+  equipment: { neck: PirateExpansionBloodMantle }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionBeerWings
+  equipment: { neck: PirateExpansionBeerWings }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionDemonWings
+  equipment: { neck: PirateExpansionDemonWings }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionArcticFoxCape
+  equipment: { neck: PirateExpansionArcticFoxCape }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionHolocarpCloak
+  equipment: { neck: PirateExpansionHolocarpCloak }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionFireCloak
+  equipment: { neck: PirateExpansionFireCloak }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWhiteholeCloak
+  equipment: { neck: PirateExpansionWhiteholeCloak }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionAngelWings
+  equipment: { neck: PirateExpansionAngelWings }
+  groupBy: "NeckOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionTsdMantle
+  equipment: { neck: PirateExpansionTsdMantle }
+  groupBy: "NeckOther"
+
+# Mask
+- type: loadout
+  id: PirateWardrobeExpansionWatchdogRespirator
+  equipment: { mask: PirateExpansionWatchdogRespirator }
+
+# Hands
+- type: loadout
+  id: PirateWardrobeExpansionCatPawsWhite
+  equipment: { gloves: PirateExpansionCatPawsWhite }
+
+- type: loadout
+  id: PirateWardrobeExpansionCatPawsBrown
+  equipment: { gloves: PirateExpansionCatPawsBrown }
+
+- type: loadout
+  id: PirateWardrobeExpansionCatPawsBlack
+  equipment: { gloves: PirateExpansionCatPawsBlack }
+
+- type: loadout
+  id: PirateWardrobeExpansionCatPawsBlackWhite
+  equipment: { gloves: PirateExpansionCatPawsBlackWhite }
+
+- type: loadout
+  id: PirateWardrobeExpansionElegantMaidGloves
+  equipment: { gloves: PirateExpansionElegantMaidGloves }
+
+- type: loadout
+  id: PirateWardrobeExpansionRedRegaliaGloves
+  equipment: { gloves: PirateExpansionRedRegaliaGloves }
+
+- type: loadout
+  id: PirateWardrobeExpansionLongBlackGloves
+  equipment: { gloves: PirateExpansionLongBlackGloves }
+
+- type: loadout
+  id: PirateWardrobeExpansionLongWhiteGloves
+  equipment: { gloves: PirateExpansionLongWhiteGloves }
+
+- type: loadout
+  id: PirateWardrobeExpansionEmpressGloves
+  equipment: { gloves: PirateExpansionEmpressGloves }
+
+- type: loadout
+  id: PirateWardrobeExpansionGoldenEraGloves
+  equipment: { gloves: PirateExpansionGoldenEraGloves }
+
+- type: loadout
+  id: PirateWardrobeExpansionPrideAceWarmers
+  equipment: { gloves: PirateExpansionPrideAceWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionPrideAroWarmers
+  equipment: { gloves: PirateExpansionPrideAroWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionPrideBiWarmers
+  equipment: { gloves: PirateExpansionPrideBiWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionPrideGayWarmers
+  equipment: { gloves: PirateExpansionPrideGayWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionPrideIntersexWarmers
+  equipment: { gloves: PirateExpansionPrideIntersexWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionPrideLesbianWarmers
+  equipment: { gloves: PirateExpansionPrideLesbianWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionPrideNonbinaryWarmers
+  equipment: { gloves: PirateExpansionPrideNonbinaryWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionPridePanWarmers
+  equipment: { gloves: PirateExpansionPridePanWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionPrideRainbowWarmers
+  equipment: { gloves: PirateExpansionPrideRainbowWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionPrideTransWarmers
+  equipment: { gloves: PirateExpansionPrideTransWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionBeeWarmers
+  equipment: { gloves: PirateExpansionBeeWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionCoderWarmers
+  equipment: { gloves: PirateExpansionCoderWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionValidCoderWarmers
+  equipment: { gloves: PirateExpansionValidCoderWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionPurpleStripeWarmers
+  equipment: { gloves: PirateExpansionPurpleStripeWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionRainbowStripeWarmers
+  equipment: { gloves: PirateExpansionRainbowStripeWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionWhiteStripeWarmers
+  equipment: { gloves: PirateExpansionWhiteStripeWarmers }
+
+- type: loadout
+  id: PirateWardrobeExpansionBallMittens
+  equipment: { gloves: PirateExpansionBallMittens }
+
+- type: loadout
+  id: PirateWardrobeExpansionKittenMittens
+  equipment: { gloves: PirateExpansionKittenMittens }
+
+# Uniforms
+- type: loadout
+  id: PirateWardrobeExpansionBlueGalaxySuit
+  equipment: { jumpsuit: PirateExpansionBlueGalaxySuit }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionRedGalaxySuit
+  equipment: { jumpsuit: PirateExpansionRedGalaxySuit }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionFloweredBlackDress
+  equipment: { jumpsuit: PirateExpansionFloweredBlackDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionFlowerPrincessDress
+  equipment: { jumpsuit: PirateExpansionFlowerPrincessDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionFlyAgaricDress
+  equipment: { jumpsuit: PirateExpansionFlyAgaricDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionGentleYellowDress
+  equipment: { jumpsuit: PirateExpansionGentleYellowDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionSpiderDress
+  equipment: { jumpsuit: PirateExpansionSpiderDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionTangoDress
+  equipment: { jumpsuit: PirateExpansionTangoDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionGothicDress
+  equipment: { jumpsuit: PirateExpansionGothicDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionGrandRedDress
+  equipment: { jumpsuit: PirateExpansionGrandRedDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionVictorianBlackDress
+  equipment: { jumpsuit: PirateExpansionVictorianBlackDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionVictorianRedDress
+  equipment: { jumpsuit: PirateExpansionVictorianRedDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionLadyDress
+  equipment: { jumpsuit: PirateExpansionLadyDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionBlueSchoolDress
+  equipment: { jumpsuit: PirateExpansionBlueSchoolDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionVintageDress
+  equipment: { jumpsuit: PirateExpansionVintageDress }
+  groupBy: "JumpsuitOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionZeroKimono
+  equipment: { jumpsuit: PirateExpansionZeroKimono }
+  groupBy: "JumpsuitOther"
+
+# Outer clothing
+- type: loadout
+  id: PirateWardrobeExpansionVoidWizardRobes
+  equipment: { outerClothing: PirateExpansionVoidWizardRobes }
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionPyromancerRobes
+  equipment: { outerClothing: PirateExpansionPyromancerRobes }
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionCryomancerRobes
+  equipment: { outerClothing: PirateExpansionCryomancerRobes }
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionTechpriestRobes
+  equipment: { outerClothing: PirateExpansionTechpriestRobes }
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionWitchHunterRobes
+  equipment: { outerClothing: PirateExpansionWitchHunterRobes }
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionBrimstoneRobes
+  equipment: { outerClothing: PirateExpansionBrimstoneRobes }
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionRatvarRobes
+  equipment: { outerClothing: PirateExpansionRatvarRobes }
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionRoughSweater
+  equipment: { outerClothing: PirateExpansionRoughSweater }
+  groupBy: "OuterClothingOther"
+
+- type: loadout
+  id: PirateWardrobeExpansionSoftSweater
+  equipment: { outerClothing: PirateExpansionSoftSweater }
+  groupBy: "OuterClothingOther"
+
+# Wardrobe subgroups
+- type: loadoutGroup
+  id: PiratePassengerExpansionHead
+  name: loadout-group-pirate-expansion-head
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeExpansionFlamingHalo
+  - PirateWardrobeExpansionBlackCatEars
+  - PirateWardrobeExpansionVoidWizardHood
+  - PirateWardrobeExpansionPyromancerHood
+  - PirateWardrobeExpansionCryomancerHood
+  - PirateWardrobeExpansionWreathChamomile
+  - PirateWardrobeExpansionWreathCornflower
+  - PirateWardrobeExpansionWreathGeranium
+  - PirateWardrobeExpansionWreathLilyOfTheValley
+  - PirateWardrobeExpansionWreathPeony
+  - PirateWardrobeExpansionWreathPinkLily
+  - PirateWardrobeExpansionWreathPinkTulip
+  - PirateWardrobeExpansionWreathRedRose
+  - PirateWardrobeExpansionWreathSunflower
+  - PirateWardrobeExpansionWreathWhiteLily
+  - PirateWardrobeExpansionWreathWhiteRose
+  - PirateWardrobeExpansionWreathYellowTulip
+  - PirateWardrobeExpansionFlyAgaricHat
+  - PirateWardrobeExpansionCowHorns
+  - PirateWardrobeExpansionDemonHorns
+  - PirateWardrobeExpansionTechpriestHood
+  - PirateWardrobeExpansionWitchHunterHat
+
+- type: loadoutGroup
+  id: PiratePassengerExpansionNeck
+  name: loadout-group-pirate-expansion-neck
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeExpansionAngelPin
+  - PirateWardrobeExpansionDevilPin
+  - PirateWardrobeExpansionHighEndHeadphones
+  - PirateWardrobeExpansionPurpleCatHeadphones
+  - PirateWardrobeExpansionBloodMantle
+  - PirateWardrobeExpansionBeerWings
+  - PirateWardrobeExpansionDemonWings
+  - PirateWardrobeExpansionArcticFoxCape
+  - PirateWardrobeExpansionHolocarpCloak
+  - PirateWardrobeExpansionFireCloak
+  - PirateWardrobeExpansionWhiteholeCloak
+  - PirateWardrobeExpansionAngelWings
+  - PirateWardrobeExpansionTsdMantle
+
+- type: loadoutGroup
+  id: PiratePassengerExpansionHands
+  name: loadout-group-gloves
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeExpansionCatPawsWhite
+  - PirateWardrobeExpansionCatPawsBrown
+  - PirateWardrobeExpansionCatPawsBlack
+  - PirateWardrobeExpansionCatPawsBlackWhite
+  - PirateWardrobeExpansionElegantMaidGloves
+  - PirateWardrobeExpansionRedRegaliaGloves
+  - PirateWardrobeExpansionLongBlackGloves
+  - PirateWardrobeExpansionLongWhiteGloves
+  - PirateWardrobeExpansionEmpressGloves
+  - PirateWardrobeExpansionGoldenEraGloves
+  - PirateWardrobeExpansionPrideAceWarmers
+  - PirateWardrobeExpansionPrideAroWarmers
+  - PirateWardrobeExpansionPrideBiWarmers
+  - PirateWardrobeExpansionPrideGayWarmers
+  - PirateWardrobeExpansionPrideIntersexWarmers
+  - PirateWardrobeExpansionPrideLesbianWarmers
+  - PirateWardrobeExpansionPrideNonbinaryWarmers
+  - PirateWardrobeExpansionPridePanWarmers
+  - PirateWardrobeExpansionPrideRainbowWarmers
+  - PirateWardrobeExpansionPrideTransWarmers
+  - PirateWardrobeExpansionBeeWarmers
+  - PirateWardrobeExpansionCoderWarmers
+  - PirateWardrobeExpansionValidCoderWarmers
+  - PirateWardrobeExpansionPurpleStripeWarmers
+  - PirateWardrobeExpansionRainbowStripeWarmers
+  - PirateWardrobeExpansionWhiteStripeWarmers
+  - PirateWardrobeExpansionBallMittens
+  - PirateWardrobeExpansionKittenMittens
+
+- type: loadoutGroup
+  id: PiratePassengerExpansionMask
+  name: loadout-group-generic-mask
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeExpansionWatchdogRespirator
+
+- type: loadoutGroup
+  id: PiratePassengerExpansionUniform
+  name: loadout-group-pirate-expansion-uniform
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeExpansionBlueGalaxySuit
+  - PirateWardrobeExpansionRedGalaxySuit
+  - PirateWardrobeExpansionFloweredBlackDress
+  - PirateWardrobeExpansionFlowerPrincessDress
+  - PirateWardrobeExpansionFlyAgaricDress
+  - PirateWardrobeExpansionGentleYellowDress
+  - PirateWardrobeExpansionSpiderDress
+  - PirateWardrobeExpansionTangoDress
+  - PirateWardrobeExpansionGothicDress
+  - PirateWardrobeExpansionGrandRedDress
+  - PirateWardrobeExpansionVictorianBlackDress
+  - PirateWardrobeExpansionVictorianRedDress
+  - PirateWardrobeExpansionLadyDress
+  - PirateWardrobeExpansionBlueSchoolDress
+  - PirateWardrobeExpansionVintageDress
+  - PirateWardrobeExpansionZeroKimono
+
+- type: loadoutGroup
+  id: PiratePassengerExpansionOuter
+  name: loadout-group-pirate-expansion-outer
+  minLimit: 0
+  loadouts:
+  - PirateWardrobeExpansionVoidWizardRobes
+  - PirateWardrobeExpansionPyromancerRobes
+  - PirateWardrobeExpansionCryomancerRobes
+  - PirateWardrobeExpansionTechpriestRobes
+  - PirateWardrobeExpansionWitchHunterRobes
+  - PirateWardrobeExpansionBrimstoneRobes
+  - PirateWardrobeExpansionRatvarRobes
+  - PirateWardrobeExpansionRoughSweater
+  - PirateWardrobeExpansionSoftSweater

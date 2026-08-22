@@ -1,0 +1,1086 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Pirate: visually reviewed wardrobe cosmetics. Source-specific gameplay components are intentionally omitted.
+
+# Head
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionFlamingHalo
+  name: flaming halo
+  description: A living ring of golden flame that hovers above the wearer.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Head/lustrohalo.rsi
+    layers:
+    - state: icon
+      shader: unshaded
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Head/lustrohalo.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        shader: unshaded
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionBlackCatEars
+  name: animated black cat ears
+  description: Black cat ears that twitch with a life of their own.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/blackcatears.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/blackcatears.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionVoidWizardHood
+  name: void wizard hood
+  description: A gem-set hood animated by deep violet magic.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/wizard.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/wizard.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionPyromancerHood
+  name: pyromancer hood
+  description: A blazing hood with an ember-bright gaze.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/wizardfire.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/wizardfire.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionCryomancerHood
+  name: cryomancer hood
+  description: An icy hood with a cold blue glow.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/wizardfrost.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/wizardfrost.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathChamomile
+  name: chamomile wreath
+  description: A sunny wreath of chamomile flowers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/chamomile.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/chamomile.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathCornflower
+  name: cornflower wreath
+  description: A delicate wreath of blue cornflowers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/cornflower.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/cornflower.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathGeranium
+  name: geranium wreath
+  description: A vivid wreath of pink geranium blossoms.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/geranium.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/geranium.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathLilyOfTheValley
+  name: lily of the valley wreath
+  description: A wreath of tiny white lily bells.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/lily_of_the_valley.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/lily_of_the_valley.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathPeony
+  name: peony wreath
+  description: A lush wreath of full peony blooms.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/peony.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/peony.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathPinkLily
+  name: pink lily wreath
+  description: A soft wreath of pink lilies.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/pink_lily.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/pink_lily.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathPinkTulip
+  name: pink tulip wreath
+  description: A graceful wreath of pink tulips.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/pink_tulip.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/pink_tulip.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathRedRose
+  name: red rose wreath
+  description: A passionate wreath of deep red roses.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/red_rose.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/red_rose.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathSunflower
+  name: sunflower wreath
+  description: A cheerful wreath of bright sunflowers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/sunflower.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/sunflower.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathWhiteLily
+  name: white lily wreath
+  description: An elegant wreath of white lilies.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/white_lily.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/white_lily.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathWhiteRose
+  name: white rose wreath
+  description: A pristine wreath of white roses.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/white_rose.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/white_rose.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWreathYellowTulip
+  name: yellow tulip wreath
+  description: A vibrant wreath of golden tulips.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/yellow_tulip.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/yellow_tulip.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionFlyAgaricHat
+  name: fly agaric hat
+  description: A bright mushroom cap fashioned into a hat.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Misc/fly_agaric_hat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Misc/fly_agaric_hat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionCowHorns
+  name: decorated cow horns
+  description: Small cow horns dressed up with delicate accessories.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Misc/cow_horns.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Misc/cow_horns.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionDemonHorns
+  name: demon horns
+  description: Curved black horns with a mischievous little tail.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Misc/demon_horns.rsi
+    scale: 0.65, 0.65
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Misc/demon_horns.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionTechpriestHood
+  name: tech-priest hood
+  description: A severe red hood trimmed with cables and metal.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Head/chaplain_techpriest_hood.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Head/chaplain_techpriest_hood.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: PirateExpansionWitchHunterHat
+  name: witch hunter hat
+  description: A broad black hat with a stern red band.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Head/witchunterhat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Head/witchunterhat.rsi
+
+# Neck and multi-slot accessories
+- type: entity
+  parent: ClothingNeckPinBase
+  id: PirateExpansionAngelPin
+  name: angel pin
+  description: A tiny animated angel marking a trail of good deeds.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Neck/angeldevil.rsi
+    state: angel
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Neck/angeldevil.rsi
+    equippedPrefix: angel
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: PirateExpansionDevilPin
+  name: devil pin
+  description: A tiny animated devil celebrating every questionable deed.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Neck/angeldevil.rsi
+    state: devil
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Neck/angeldevil.rsi
+    equippedPrefix: devil
+
+- type: entity
+  parent: ClothingMultipleHeadphones
+  id: PirateExpansionHighEndHeadphones
+  name: high-end headphones
+  description: Premium headphones with animated lights that can be switched on and off.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Multiple/headphones_high-end.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Multiple/headphones_high-end.rsi
+    equippedPrefix: off
+    slots:
+    - HEAD
+    - EARS
+    - NECK
+
+- type: entity
+  parent: ClothingMultipleHeadphones
+  id: PirateExpansionPurpleCatHeadphones
+  name: purple cat headphones
+  description: Purple cat-ear headphones with animated lights and a power switch.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Box/Multiple/headphones_purple_cat.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Box/Multiple/headphones_purple_cat.rsi
+    equippedPrefix: off
+    slots:
+    - HEAD
+    - EARS
+    - NECK
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateExpansionBloodMantle
+  name: living blood mantle
+  description: A silver mantle that can awaken into a slow, unsettling drip.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/blood_mantle.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/blood_mantle.rsi
+    equippedPrefix: off
+  - type: ItemToggle
+  - type: ToggleClothingPrefix
+    prefixOn: on
+    prefixOff: off
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateExpansionBeerWings
+  name: golden beer wings
+  description: Sparkling golden wings with a lively shimmer.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/beer_wings.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/beer_wings.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateExpansionDemonWings
+  name: demon wings
+  description: Dark, sharply folded wings for a dramatic silhouette.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/demon_wings.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/demon_wings.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateExpansionArcticFoxCape
+  name: arctic fox cape
+  description: A pale fur cape with a grand, wintry shape.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/arctic_fox_cape.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/arctic_fox_cape.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateExpansionHolocarpCloak
+  name: holocarp cloak
+  description: A cloak made from an endlessly flowing holocarp projection.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/golo.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/golo.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateExpansionFireCloak
+  name: living fire cloak
+  description: An animated cloak that burns without giving off heat.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/fire.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/fire.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateExpansionWhiteholeCloak
+  name: white-hole cloak
+  description: An animated cloak with an impossible little universe at its center.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/whitehole.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/whitehole.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateExpansionAngelWings
+  name: radiant angel wings
+  description: A broad pair of clean white ceremonial wings.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/wingsagel.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/wingsagel.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: PirateExpansionTsdMantle
+  name: starry violet mantle
+  description: A dark violet mantle traced by animated lights.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Neck/tsd_mantles.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Neck/tsd_mantles.rsi
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+      - state: equipped-NECK-unshaded
+        shader: unshaded
+
+# Mask
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: PirateExpansionWatchdogRespirator
+  name: Watchdog respirator
+  description: A dark industrial respirator with a polarized red visor.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Monolith/Mask/gasdi-watchdog.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Monolith/Mask/gasdi-watchdog.rsi
+
+# Hands
+- type: entity
+  abstract: true
+  parent: ClothingHandsBase
+  id: PirateExpansionCatPawsBase
+  description: Extra-soft paw mittens with tiny pads.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Hands/paws.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Hands/paws.rsi
+
+- type: entity
+  parent: PirateExpansionCatPawsBase
+  id: PirateExpansionCatPawsWhite
+  name: white cat paw mittens
+  components:
+  - type: Sprite
+    state: white
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: white-equipped-HAND
+
+- type: entity
+  parent: PirateExpansionCatPawsBase
+  id: PirateExpansionCatPawsBrown
+  name: brown cat paw mittens
+  components:
+  - type: Sprite
+    state: brown
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: brown-equipped-HAND
+
+- type: entity
+  parent: PirateExpansionCatPawsBase
+  id: PirateExpansionCatPawsBlack
+  name: black cat paw mittens
+  components:
+  - type: Sprite
+    state: black
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: black-equipped-HAND
+
+- type: entity
+  parent: PirateExpansionCatPawsBase
+  id: PirateExpansionCatPawsBlackWhite
+  name: black and white cat paw mittens
+  components:
+  - type: Sprite
+    state: black_white
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: black_white-equipped-HAND
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionElegantMaidGloves
+  name: elegant maid gloves
+  description: Pristine long gloves with a neat formal cut.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Hands/elegantmaidgloves.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Hands/elegantmaidgloves.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionRedRegaliaGloves
+  name: red regalia gloves
+  description: Deep red formal gloves made for a commanding look.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Hands/red_regalia.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Hands/red_regalia.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionLongBlackGloves
+  name: long black gloves
+  description: Sleek black gloves reaching well above the wrist.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/long_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/long_black.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionLongWhiteGloves
+  name: long white gloves
+  description: Bright white gloves reaching well above the wrist.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/long_white.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/long_white.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionEmpressGloves
+  name: empress of light gloves
+  description: Brilliant blue gloves with a cold luminous color.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/empress_of_light_gloves.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/empress_of_light_gloves.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionGoldenEraGloves
+  name: golden era gloves
+  description: Black gloves finished with fine golden details.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/goldenera.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/goldenera.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPrideAceWarmers
+  name: asexual pride arm warmers
+  description: Striped pride arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/ace.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/ace.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPrideAroWarmers
+  name: aromantic pride arm warmers
+  description: Striped pride arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/aro.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/aro.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPrideBiWarmers
+  name: bisexual pride arm warmers
+  description: Striped pride arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/bi.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/bi.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPrideGayWarmers
+  name: gay pride arm warmers
+  description: Striped pride arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/gay.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/gay.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPrideIntersexWarmers
+  name: intersex pride arm warmers
+  description: Striped pride arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/inter.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/inter.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPrideLesbianWarmers
+  name: lesbian pride arm warmers
+  description: Striped pride arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/lesbian.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/lesbian.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPrideNonbinaryWarmers
+  name: non-binary pride arm warmers
+  description: Striped pride arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/non.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/non.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPridePanWarmers
+  name: pansexual pride arm warmers
+  description: Striped pride arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/pan.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/pan.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPrideRainbowWarmers
+  name: rainbow pride arm warmers
+  description: Striped pride arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/rainbow.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/rainbow.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPrideTransWarmers
+  name: transgender pride arm warmers
+  description: Striped pride arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/trans.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/trans.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionBeeWarmers
+  name: bee arm warmers
+  description: Cheerful black and yellow arm warmers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/beewarmer.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/beewarmer.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionCoderWarmers
+  name: coder arm warmers
+  description: Dark arm warmers made for long nights at a terminal.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/coderwarmer.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/coderwarmer.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionValidCoderWarmers
+  name: valid coder arm warmers
+  description: Red and black arm warmers for exceptionally valid code.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/codervalidwarmer.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/codervalidwarmer.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionPurpleStripeWarmers
+  name: purple striped arm warmers
+  description: Soft arm warmers with vivid purple stripes.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/stripewarmerpurple.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/stripewarmerpurple.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionRainbowStripeWarmers
+  name: rainbow striped arm warmers
+  description: Soft arm warmers with bright rainbow stripes.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/stripewarmerrainbow.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/stripewarmerrainbow.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionWhiteStripeWarmers
+  name: white striped arm warmers
+  description: Soft arm warmers with clean white stripes.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/stripewarmerwhite.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/stripewarmerwhite.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionBallMittens
+  name: ball mittens
+  description: Round padded mittens with a wonderfully silly shape.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Mittens/ball_mittens.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Mittens/ball_mittens.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: PirateExpansionKittenMittens
+  name: kitten mittens
+  description: Soft pink mittens decorated like tiny kittens.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Mittens/kitten_mittens.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Mittens/kitten_mittens.rsi
+
+# Uniforms
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionBlueGalaxySuit
+  name: blue galaxy suit
+  description: A dark suit crossed by a slowly moving blue galaxy.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/galaxy_blue.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/galaxy_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionRedGalaxySuit
+  name: red galaxy suit
+  description: A dark suit crossed by a slowly moving red galaxy.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/galaxy_red.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/galaxy_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionFloweredBlackDress
+  name: flowered black dress
+  description: A black evening dress scattered with bright flowers.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/dresseswithflowers.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/dresseswithflowers.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionFlowerPrincessDress
+  name: flower princess dress
+  description: A lavish lilac dress shaped like layered petals.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/flower_princess.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/flower_princess.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionFlyAgaricDress
+  name: fly agaric dress
+  description: A pale gown inspired by the stem of a bright mushroom.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/fly_agaric.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/fly_agaric.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionGentleYellowDress
+  name: gentle yellow dress
+  description: A warm yellow gown with clean white trim.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/gentle_yellow.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/gentle_yellow.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionSpiderDress
+  name: spiderweb dress
+  description: A dark dress woven with a striking white web.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/spider.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/spider.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionTangoDress
+  name: tango dress
+  description: A dramatic red and black dress made for the dance floor.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/tango_dress.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/tango_dress.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionGothicDress
+  name: gothic dress
+  description: A carefully layered black and white gothic dress.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_gothic.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_gothic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionGrandRedDress
+  name: grand red dress
+  description: A sweeping crimson ball gown with a bold silhouette.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_red.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_red.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionVictorianBlackDress
+  name: black Victorian dress
+  description: A formal black Victorian dress with restrained red accents.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_victorian_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_victorian_black.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionVictorianRedDress
+  name: red Victorian dress
+  description: A rich crimson Victorian dress with golden details.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_victorian_red.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_victorian_red.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionLadyDress
+  name: lady's monochrome dress
+  description: An airy monochrome dress with a broad layered skirt.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/lady.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/lady.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionBlueSchoolDress
+  name: blue school dress
+  description: A neat blue school outfit with a playful red bow.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/schoolskirt.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/schoolskirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionVintageDress
+  name: vintage rose dress
+  description: A vintage red and rose dress with a sharply tailored top.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Uniforms/dress_vintage.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Uniforms/dress_vintage.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: PirateExpansionZeroKimono
+  name: black and gold kimono
+  description: A modern black kimono with bold golden trim.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Uniforms/kimono_zero.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Uniforms/kimono_zero.rsi
+
+# Outer clothing
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateExpansionVoidWizardRobes
+  name: void wizard robes
+  description: Deep violet robes embroidered with shifting arcane shapes.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/wizard.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/wizard.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateExpansionPyromancerRobes
+  name: living pyromancer robes
+  description: Animated robes whose fiery pattern never stops moving.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/wizardfire.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/wizardfire.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateExpansionCryomancerRobes
+  name: cryomancer robes
+  description: Pale icy robes shaped around a brilliant blue core.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/wizardfrost.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/wizardfrost.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateExpansionTechpriestRobes
+  name: animated tech-priest robes
+  description: Heavy red robes alive with a procession of mechanical details.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Outer/chaplain_techpriest.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Outer/chaplain_techpriest.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateExpansionWitchHunterRobes
+  name: witch hunter robes
+  description: A dark hunter's coat marked by a severe golden emblem.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Outer/witch_hunter_robe.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Outer/witch_hunter_robe.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateExpansionBrimstoneRobes
+  name: brimstone robes
+  description: Black occult robes cut through by a severe red symbol.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/brimstone.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/brimstone.rsi
+  - type: HideClothingLayerClothing
+    hiddenSlots:
+    - shoes
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateExpansionRatvarRobes
+  name: Ratvar robes
+  description: Dark bronze robes patterned like old clockwork.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/ratvar_robes.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/ratvar_robes.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateExpansionRoughSweater
+  name: rough green sweater
+  description: A chunky green sweater with a deliberately rough knit.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/rough_sweater.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/rough_sweater.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: PirateExpansionSoftSweater
+  name: soft neon sweater
+  description: A soft blue sweater with bright pink accents.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/soft_sweater.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/soft_sweater.rsi

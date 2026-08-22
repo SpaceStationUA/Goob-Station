@@ -5,24 +5,36 @@
   id: PirateWardrobeClothingHeadHatBeretCaptain
   equipment:
     head: ClothingHeadHatBeretCaptain
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobCaptain]
   groupBy: "HeadOther"
 
 - type: loadout
   id: PirateWardrobeClothingHeadHatBeretHD
   equipment:
     head: ClothingHeadHatBeretHD
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobHeadOfPersonnel]
   groupBy: "HeadOther"
 
 - type: loadout
   id: PirateWardrobeClothingHeadHatCaptainTricorne
   equipment:
     head: ClothingHeadHatCaptainTricorne
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobCaptain]
   groupBy: "HeadOther"
 
 - type: loadout
   id: PirateWardrobeClothingHeadHatBellhopHD
   equipment:
     head: ClothingHeadHatBellhopHD
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobHeadOfPersonnel]
   groupBy: "HeadOther"
 
 - type: loadout
@@ -47,12 +59,18 @@
   id: PirateWardrobeClothingHeadHatCMOClip
   equipment:
     head: ClothingHeadHatCMOClip
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobChiefMedicalOfficer]
   groupBy: "HeadOther"
 
 - type: loadout
   id: PirateWardrobeClothingHeadHatMusicianShako
   equipment:
     head: ClothingHeadHatMusicianShako
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobMusician]
   groupBy: "HeadOther"
 
 - type: loadout
@@ -71,6 +89,9 @@
   id: PirateWardrobeClothingHeadHatCircusClown
   equipment:
     head: ClothingHeadHatCircusClown
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobClown]
   groupBy: "HeadOther"
 
 - type: loadout
@@ -113,6 +134,9 @@
   id: PirateWardrobeClothingHeadHatMcCrown
   equipment:
     head: ClothingHeadHatMcCrown
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobCargoTechnician, JobQuartermaster]
   groupBy: "HeadOther"
 
 - type: loadout
@@ -131,6 +155,9 @@
   id: PirateWardrobeClothingNeckCloakHd
   equipment:
     neck: ClothingNeckCloakHd
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobHeadOfPersonnel]
   groupBy: "NeckOther"
 
 - type: loadout
@@ -143,6 +170,9 @@
   id: PirateWardrobeClothingNeckCloakCaptainAdmiral
   equipment:
     neck: ClothingNeckCloakCaptainAdmiral
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobCaptain]
   groupBy: "NeckOther"
 
 - type: loadout
@@ -203,30 +233,45 @@
   id: PirateWardrobeClothingNeckMantleHD
   equipment:
     neck: ClothingNeckMantleHD
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobHeadOfPersonnel]
   groupBy: "NeckOther"
 
 - type: loadout
   id: PirateWardrobeClothingNeckMantleLily
   equipment:
     neck: ClothingNeckMantleLily
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobBotanist]
   groupBy: "NeckOther"
 
 - type: loadout
   id: PirateWardrobeClothingNeckCloakMystagogue
   equipment:
     neck: ClothingNeckCloakMystagogue
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobResearchDirector]
   groupBy: "NeckOther"
 
 - type: loadout
   id: PirateWardrobeClothingNeckCloakBoat
   equipment:
     neck: ClothingNeckCloakBoat
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobCaptain, JobHeadOfPersonnel, JobChiefEngineer, JobChiefMedicalOfficer, JobResearchDirector, JobHeadOfSecurity, JobQuartermaster, JobNanotrasenRepresentative]
   groupBy: "NeckOther"
 
 - type: loadout
   id: PirateWardrobeClothingNeckSalvager
   equipment:
     neck: ClothingNeckSalvager
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobSalvageSpecialist]
   groupBy: "NeckOther"
 
 - type: loadout
@@ -239,36 +284,54 @@
   id: PirateWardrobeClothingNeckHosRobe
   equipment:
     neck: ClothingNeckHosRobe
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobHeadOfSecurity]
   groupBy: "NeckOther"
 
 - type: loadout
   id: PirateWardrobeClothingNeckCMOOverShoulder
   equipment:
     neck: ClothingNeckCMOOverShoulder
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobChiefMedicalOfficer]
   groupBy: "NeckOther"
 
 - type: loadout
   id: PirateWardrobeClothingNeckCMOShawl
   equipment:
     neck: ClothingNeckCMOShawl
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobChiefMedicalOfficer]
   groupBy: "NeckOther"
 
 - type: loadout
   id: PirateWardrobeClothingNeckCentcommCloakBoat
   equipment:
     neck: ClothingNeckCentcommCloakBoat
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobNanotrasenRepresentative]
   groupBy: "NeckOther"
 
 - type: loadout
   id: PirateWardrobeClothingNeckHeadOfSecurityCloakBoat
   equipment:
     neck: ClothingNeckHeadOfSecurityCloakBoat
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobHeadOfSecurity]
   groupBy: "NeckOther"
 
 - type: loadout
   id: PirateWardrobeClothingNeckMimeCloak
   equipment:
     neck: ClothingNeckMimeCloak
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobMime]
   groupBy: "NeckOther"
 
 - type: loadout
@@ -359,6 +422,9 @@
   id: PirateWardrobeClothingUniformMusicianSingerDress
   equipment:
     jumpsuit: ClothingUniformMusicianSingerDress
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobMusician]
   groupBy: "JumpsuitOther"
 
 - type: loadout
@@ -437,6 +503,9 @@
   id: PirateWardrobeClothingOuterCoatQmHuge
   equipment:
     outerClothing: ClothingOuterCoatQmHuge
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobQuartermaster]
   groupBy: "OuterCoat"
 
 - type: loadout
@@ -467,6 +536,9 @@
   id: PirateWardrobeClothingOuterCoatPufferMime
   equipment:
     outerClothing: ClothingOuterCoatPufferMime
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobMime]
   groupBy: "OuterCoat"
 
 - type: loadout
@@ -485,6 +557,9 @@
   id: PirateWardrobeClothingOuterApronHD
   equipment:
     outerClothing: ClothingOuterApronHD
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobHeadOfPersonnel]
   groupBy: "OuterCoat"
 
 - type: loadout
@@ -527,6 +602,9 @@
   id: PirateWardrobeClothingOuterQMPoncho
   equipment:
     outerClothing: ClothingOuterQMPoncho
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobQuartermaster]
   groupBy: "OuterCoat"
 
 - type: loadout
@@ -539,12 +617,18 @@
   id: PirateWardrobeClothingOuterApronCuteChef
   equipment:
     outerClothing: ClothingOuterApronCuteChef
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobChef]
   groupBy: "OuterCoat"
 
 - type: loadout
   id: PirateWardrobeClothingOuterApronCuteBar
   equipment:
     outerClothing: ClothingOuterApronCuteBar
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobBartender]
   groupBy: "OuterCoat"
 
 - type: loadout
@@ -599,12 +683,18 @@
   id: PirateWardrobeClothingShoesCaptainHighheelBoots
   equipment:
     shoes: ClothingShoesCaptainHighheelBoots
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobCaptain]
   groupBy: "ShoesOther"
 
 - type: loadout
   id: PirateWardrobeClothingShoesMimeBoots
   equipment:
     shoes: ClothingShoesMimeBoots
+  effects:
+  - !type:RoleLoadoutRequirementEffect
+    roles: [JobMime]
   groupBy: "ShoesOther"
 
 - type: loadout
