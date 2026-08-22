@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: SyndieFulton
-  name: "фултон Синдикату"
-  description: "Фірмовий фултон Waffle Corp для відправлення цінних предметів до сховища Синдикату або розумних істот до в'язниці Синдикату."
+  name: syndicate fulton
+  description: These fultons are used by the Syndicate to extract items of value, or possibly even people.
   components:
   - type: Sprite
     sprite: Objects/Tools/fulton.rsi # TODO: unique sprite

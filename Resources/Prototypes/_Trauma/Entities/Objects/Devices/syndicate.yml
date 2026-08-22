@@ -27,8 +27,8 @@
 - type: entity
   parent: [ DoorRemoteCanEletrifyDoors, BaseSyndicateContraband ]
   id: DoorRemoteSyndicate
-  name: "пульт від дверей Синдикату"
-  description: "Пристрій, що дає змогу відчиняти двері та дистанційно блокувати їх. Цей працює з доступами агентів Синдикату."
+  name: syndicate door remote
+  description: A gadget which can open and bolt doors remotely. This one works for syndicate agents.
   components:
   - type: Sprite
     layers:
@@ -55,8 +55,8 @@
 - type: entity
   parent: BaseItem
   id: HandheldStationMapRecordsTablet
-  name: "карта станції"
-  description: "Показує поточну карту станції."
+  name: station map
+  description: Displays a readout of the current station.
   suffix: Records Tablet
   components:
   - type: GeneralStationRecordConsole

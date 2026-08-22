@@ -4,8 +4,8 @@
 
 - type: entity
   id: ImprovisedEnergySword
-  name: "саморобний енергетичний меч"
-  description: "Енергетичний меч, абияк зібраний із випадкових деталей. Пожирає заряд, як жоден інший."
+  name: improvised energy sword
+  description: A energy sword cobbled together from random parts. Burns through power like no other.
   parent: [BaseItem, BaseMajorContraband]
   components:
   - type: Sprite

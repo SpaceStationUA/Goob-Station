@@ -12,8 +12,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightBodysuitJeans
-  name: "боді та джинси"
-  description: "Практичне боді в парі з міцними джинсами."
+  name: bodysuit and jeans
+  description: A practical bodysuit paired with sturdy jeans.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/bodysuit_jeans.rsi
@@ -23,8 +23,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightDarkTurtleneck
-  name: "темний гольф"
-  description: "Стриманий гольф для чіткого силуету."
+  name: dark turtleneck
+  description: A clean, understated turtleneck for a sharp silhouette.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/dark_turtleneck.rsi
@@ -34,8 +34,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightCoolTanktop
-  name: "майка без рукавів"
-  description: "Легка майка для теплих палуб."
+  name: cool tank top
+  description: A sleeveless top for warm decks and warmer days.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/cool_tanktop.rsi
@@ -45,8 +45,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightDruidRobes
-  name: "шати друїда"
-  description: "Прості шати з природним настроєм."
+  name: druid robes
+  description: Simple robes with a quiet, natural look.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/druid_robes.rsi
@@ -56,8 +56,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightFlamboyant
-  name: "екстравагантне вбрання"
-  description: "Театральний образ для ефектного виходу."
+  name: flamboyant outfit
+  description: A dramatic outfit for a dramatic entrance.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/flamboyant.rsi
@@ -67,8 +67,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightFlamenco
-  name: "сукня фламенко"
-  description: "Святкова сукня з яскравою сценічною пластикою."
+  name: flamenco dress
+  description: A festive dress with a bold stage presence.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/flamenco.rsi
@@ -78,8 +78,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightFlyCaptain
-  name: "ретро-форма капітана"
-  description: "Яскрава ретро-форма впевненого крою."
+  name: retro captain uniform
+  description: A bright retro uniform with a confident cut.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/fly_captain.rsi
@@ -89,8 +89,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightKilt
-  name: "кілт"
-  description: "Класичний складчастий кілт для сміливого образу."
+  name: kilt
+  description: A classic pleated kilt for a bold station-side look.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/kilt.rsi
@@ -100,8 +100,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightLilacDress
-  name: "бузкова сукня"
-  description: "Елегантна сукня, ніби сплетена з пелюсток бузку."
+  name: lilac dress
+  description: An elegant dress that looks woven from lilac petals.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/lilac_dress.rsi
@@ -111,8 +111,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightLittleBlackDress
-  name: "маленька чорна сукня"
-  description: "Лаконічна вечірня сукня для нічних прогулянок станцією."
+  name: little black dress
+  description: A sleek evening dress for a night on the station.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/little_black_dress.rsi
@@ -122,8 +122,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightLumberjackOveralls
-  name: "комбінезон лісоруба"
-  description: "Міцний комбінезон із легким запахом хвої."
+  name: lumberjack overalls
+  description: Hard-wearing overalls with a hint of pine.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/lumberjack.rsi
@@ -133,8 +133,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightMechanicOveralls
-  name: "комбінезон механіка"
-  description: "Надійний одяг для довгих змін."
+  name: mechanic overalls
+  description: Durable overalls made for long shifts.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/mechanic_overalls.rsi
@@ -144,8 +144,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightTrendyTop
-  name: "модний топ"
-  description: "Яскравий топ для сучасного образу."
+  name: trendy top
+  description: A bright top for an effortlessly modern look.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/trendy_top.rsi
@@ -155,8 +155,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightMessyDressShirt
-  name: "недбала сорочка"
-  description: "Сорочка, накинута поспіхом перед зміною."
+  name: messy dress shirt
+  description: A dress shirt thrown on in a hurry.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/messy_dress_shirt.rsi
@@ -166,8 +166,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightPunkJeans
-  name: "панк-джинси"
-  description: "Трохи готики, трохи металу."
+  name: punk jeans
+  description: Slightly goth, unmistakably metal.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/punk_jeans.rsi
@@ -177,8 +177,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightSailor
-  name: "матроська форма"
-  description: "Охайна форма для найсолонішого космонавта."
+  name: sailor uniform
+  description: A crisp uniform for the saltiest spacer.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/sailor.rsi
@@ -188,8 +188,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightSundress
-  name: "літня сукня"
-  description: "Легка сукня для неквапливої прогулянки."
+  name: sundress
+  description: A light dress for a leisurely stroll.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/sundress.rsi
@@ -199,8 +199,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightRuggedClothes
-  name: "потертий одяг"
-  description: "Зручне вбрання для важкої зміни."
+  name: rugged clothes
+  description: Comfortable clothes for a rough shift.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/rugged_shirt.rsi
@@ -210,8 +210,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightTieDye
-  name: "футболка тай-дай"
-  description: "Барвистий привіт із яскравої епохи."
+  name: tie-dye shirt
+  description: A colorful throwback from a brighter decade.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/tiedye.rsi
@@ -221,8 +221,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightVintage
-  name: "вінтажний одяг"
-  description: "Ретрообраз, що не виходить із моди."
+  name: vintage clothes
+  description: A retro outfit with timeless appeal.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/vintage.rsi
@@ -232,8 +232,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightCargoOveralls
-  name: "вантажний комбінезон"
-  description: "Міцний комбінезон із легким запахом картону."
+  name: cargo overalls
+  description: Durable overalls that smell faintly of cardboard.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/cargo_overalls.rsi
@@ -243,8 +243,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightRedRegalia
-  name: "червоний костюм регалії"
-  description: "Насичено-червоний костюм для незабутнього виходу."
+  name: red regalia suit
+  description: A rich red suit for a memorable entrance.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/red_regalia.rsi
@@ -254,8 +254,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightMimeFrills
-  name: "сукня міма з воланами"
-  description: "Театральна чорно-біла сукня з чіткими воланами."
+  name: frilly mime dress
+  description: A theatrical black-and-white dress with crisp frills.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/mime_frills.rsi
@@ -265,8 +265,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshStarlightToga
-  name: "тога"
-  description: "Просте драпіроване вбрання для урочистої церемонії."
+  name: toga
+  description: A simple draped garment for a grand ceremony.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/toga.rsi
@@ -277,8 +277,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightBrimHat
-  name: "широкополий капелюх"
-  description: "Широкі поля прикривають обличчя від яскравого світла."
+  name: wide-brimmed hat
+  description: Broad brims keep the glare off your face.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/brim_hat.rsi
@@ -288,8 +288,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightFeatheredHat
-  name: "капелюх із пером"
-  description: "Ефектний капелюх із гордим пером."
+  name: feathered hat
+  description: A flamboyant hat with a proud feather.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/feather_hat.rsi
@@ -299,8 +299,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightTVHead
-  name: "телевізор на голові"
-  description: "Портативний екран для незабутнього образу."
+  name: television head
+  description: A portable screen that makes an unforgettable impression.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tv_head.rsi
@@ -310,8 +310,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightPancakeHat
-  name: "капелюх-оладок"
-  description: "Золотисті оладки, политі медом."
+  name: honey pancake hat
+  description: Golden pancakes drizzled with honey.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/pancake.rsi
@@ -321,8 +321,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightGildedWideHat
-  name: "позолочений широкополий капелюх"
-  description: "Кремовий капелюх із пір'ям і золотим оздобленням."
+  name: gilded wide-brimmed hat
+  description: A cream-white hat with feathers and gold trim.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/belpero.rsi
@@ -332,8 +332,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightBigTophat
-  name: "великий циліндр"
-  description: "Дуже високий капелюх для дуже важливої персони."
+  name: big top hat
+  description: A very tall hat for someone very important.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tophatbig.rsi
@@ -347,8 +347,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightBigTophatWhite
-  name: "білий великий циліндр"
-  description: "Світла версія величного класичного циліндра."
+  name: white big top hat
+  description: A bright white version of the towering classic.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tophatbigcolorable.rsi
@@ -362,8 +362,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightBrassTophat
-  name: "латунний циліндр"
-  description: "Відполірований циліндр із механізмами з латуні."
+  name: clockwork top hat
+  description: A polished top hat with whirring brass details.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/tophatbrass.rsi
@@ -380,8 +380,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightWideStrawHat
-  name: "широкий солом'яний капелюх"
-  description: "Широкий солом'яний капелюх із ноткою таємничості."
+  name: wide straw hat
+  description: A broad straw hat with a little mystery.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/widestrawhat.rsi
@@ -395,8 +395,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightWitchyHat
-  name: "відьомський капелюх"
-  description: "Високий кривий капелюх для маленької магії."
+  name: witchy hat
+  description: A tall, crooked hat for a little magic.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/witchyhat.rsi
@@ -406,8 +406,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightYellowWizardHat
-  name: "жовтий капелюх чарівника"
-  description: "Яскравий капелюх для барвистого чаклуна."
+  name: yellow wizard hat
+  description: A bright hat for a colorful spellcaster.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_yellow.rsi
@@ -417,8 +417,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightGreenWizardHat
-  name: "зелений капелюх чарівника"
-  description: "Яскравий капелюх для барвистого чаклуна."
+  name: green wizard hat
+  description: A bright hat for a colorful spellcaster.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_green.rsi
@@ -428,8 +428,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightPurpleWizardHat
-  name: "фіолетовий капелюх чарівника"
-  description: "Яскравий капелюх для барвистого чаклуна."
+  name: purple wizard hat
+  description: A bright hat for a colorful spellcaster.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_purple.rsi
@@ -439,8 +439,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightOrangeWizardHat
-  name: "помаранчевий капелюх чарівника"
-  description: "Яскравий капелюх для барвистого чаклуна."
+  name: orange wizard hat
+  description: A bright hat for a colorful spellcaster.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_orange.rsi
@@ -450,8 +450,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightPeachWizardHat
-  name: "персиковий капелюх чарівника"
-  description: "Теплий персиковий капелюх для дружнього чаклуна."
+  name: peach wizard hat
+  description: A warm peach-colored hat for a friendly spellcaster.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/wizard_peach.rsi
@@ -461,8 +461,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshStarlightBunnyGangHat
-  name: "капелюх кролячої банди"
-  description: "Грайливий капелюх із ноткою таємного товариства."
+  name: bunny gang hat
+  description: A playful hat with a secret-society air.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Head/Hats/bunnygang.rsi
@@ -473,8 +473,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshStarlightEyeAmulet
-  name: "амулет-око"
-  description: "Пильне око в простій підвісці."
+  name: eye amulet
+  description: A watchful eye set in a simple pendant.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/eye_amulet.rsi
@@ -484,8 +484,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshStarlightMoonAmulet
-  name: "місячний амулет"
-  description: "Маленька підвіска, що сяє місячним світлом."
+  name: moon amulet
+  description: A small pendant that shines like moonlight.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/moon_amulet.rsi
@@ -495,8 +495,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshStarlightStarAmulet
-  name: "зоряний амулет"
-  description: "Підвіска у формі зорі з м'яким мерехтінням."
+  name: star amulet
+  description: A star-shaped pendant with a gentle shimmer.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/star_amulet.rsi
@@ -506,8 +506,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshStarlightSunAmulet
-  name: "сонячний амулет"
-  description: "Тепла золота підвіска, що ловить світло."
+  name: sun amulet
+  description: A warm golden pendant that catches the light.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/sun_amulet.rsi
@@ -517,8 +517,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshStarlightBunnyScarf
-  name: "шарф кролячої банди"
-  description: "М'який шарф із грайливою емблемою."
+  name: bunny gang scarf
+  description: A soft scarf with a playful gang emblem.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/bunnygang.rsi
@@ -528,8 +528,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshStarlightFoxfire
-  name: "амулет Лисиччиного вогню"
-  description: "Примарні язики полум'я кружляють навколо загадкового амулета."
+  name: Foxfire Charm
+  description: Ghostly flames flutter around this mysterious charm.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/foxfire.rsi
@@ -553,8 +553,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: PirateFreshStarlightWinterBlueBoots
-  name: "сині зимові чоботи"
-  description: "Теплі сині чоботи для холодних палуб."
+  name: blue winter boots
+  description: Warm blue boots for cold decks.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/winterbootsblue.rsi
@@ -564,8 +564,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: PirateFreshStarlightAristocratBoots
-  name: "чоботи аристократа"
-  description: "Високі чоботи з відтінком старосвітської драми."
+  name: aristocrat boots
+  description: Tall boots with a touch of old-world drama.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/ari.rsi
@@ -575,8 +575,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: PirateFreshStarlightFurBoots
-  name: "високі хутряні чоботи"
-  description: "Високі чорні чоботи з хутром і золотими деталями."
+  name: tall fur boots
+  description: Tall black boots with fur and gold accents.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/belpero.rsi
@@ -586,8 +586,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: PirateFreshStarlightSlickShoes
-  name: "лаковані туфлі"
-  description: "Відполіровані туфлі для бездоганно вбраного космонавта."
+  name: slick shoes
+  description: Polished shoes for a sharply dressed spacer.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/slick_shoes.rsi
@@ -597,8 +597,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: PirateFreshStarlightSpaceCourierBoots
-  name: "чоботи космічного кур'єра"
-  description: "Охайні чоботи для своєчасної доставки."
+  name: space courier boots
+  description: Pristine boots for making every delivery on time.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/space_courier_boots.rsi
@@ -608,8 +608,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: PirateFreshStarlightRatvarBoots
-  name: "латунні чоботи Ратвара"
-  description: "Чоботи, вкриті теплим латунним блиском."
+  name: brass Ratvar boots
+  description: Boots coated in a warm clockwork brass.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/ratvar_boots.rsi
@@ -619,8 +619,8 @@
 - type: entity
   parent: ClothingShoesBase
   id: PirateFreshStarlightPawBoots
-  name: "чоботи для лап"
-  description: "М'які чоботи для лапатих стоп."
+  name: paw boots
+  description: Soft boots made for pawed feet.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Shoes/Boots/pawboots.rsi
@@ -631,8 +631,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshStarlightSpaceCourierCoat
-  name: "важке пальто космічного кур'єра"
-  description: "Міцне пальто для довгих маршрутів крізь порожнечу."
+  name: space courier heavy coat
+  description: A sturdy coat for long routes through the void.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/space_courier_coat.rsi
@@ -642,8 +642,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshStarlightSquidCoat
-  name: "потерте пальто"
-  description: "Пошарпане пальто з таємничим силуетом."
+  name: last coat
+  description: A weathered coat with a mysterious silhouette.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/squid_prisoner.rsi
@@ -653,8 +653,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshStarlightInspectorCoat
-  name: "пальто інспектора"
-  description: "Довге пальто для тих, хто помічає кожну деталь."
+  name: inspector's coat
+  description: A long coat for someone who notices every detail.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/insp_coat.rsi
@@ -664,8 +664,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshStarlightSovietGreatcoat
-  name: "шинель"
-  description: "Важка шинель із виразним військовим силуетом."
+  name: greatcoat
+  description: A heavy military-inspired greatcoat with a distinctive silhouette.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/soviet_greatcoat.rsi
@@ -675,8 +675,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshStarlightGreytiderTrenchcoat
-  name: "тренч сірого тайдера"
-  description: "Практичний тренч для звичайного мешканця станції."
+  name: greytider trenchcoat
+  description: A practical trenchcoat for a gray station regular.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/greytider_trenchcoat.rsi
@@ -686,8 +686,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshStarlightFieldJacket
-  name: "польова куртка"
-  description: "М'яка чорна куртка з вільними манжетами."
+  name: field jacket
+  description: A soft black jacket with relaxed cuffs.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/field_jacket.rsi
@@ -697,8 +697,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshStarlightSeniorChefJacket
-  name: "куртка старшого кухаря"
-  description: "Охайна куртка з яскравою кулінарною обробкою."
+  name: senior chef's jacket
+  description: A crisp jacket with a bright culinary trim.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/chef-senior.rsi
@@ -708,8 +708,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshStarlightDarkPirateGarb
-  name: "темне піратське вбрання"
-  description: "Потерте пальто для космонавта зі смаком до пригод."
+  name: dark pirate garb
+  description: A weathered coat for a spacer with a taste for adventure.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/OuterClothing/Coats/dark_pirate.rsi
@@ -720,8 +720,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshFrontierFoxEarsOrange
-  name: "помаранчеві лисичі вушка"
-  description: "М'які помаранчеві лисичі вушка."
+  name: orange fox ears
+  description: A soft pair of orange fox ears.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_orange.rsi
@@ -731,8 +731,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshFrontierFoxEarsWhite
-  name: "білі лисичі вушка"
-  description: "М'які білі лисичі вушка."
+  name: white fox ears
+  description: A soft pair of white fox ears.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_white.rsi
@@ -742,8 +742,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshFrontierFoxEarsBlack
-  name: "чорні лисичі вушка"
-  description: "М'які чорні лисичі вушка."
+  name: black fox ears
+  description: A soft pair of black fox ears.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_black.rsi
@@ -753,8 +753,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateFreshFrontierFoxEarsBlue
-  name: "сині лисичі вушка"
-  description: "М'які сині лисичі вушка."
+  name: blue fox ears
+  description: A soft pair of blue fox ears.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Head/Hats/foxyears_blue.rsi
@@ -765,8 +765,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierCapeCrystal
-  name: "кришталевий плащ"
-  description: "Ніжно-рожевий плащ із блакитним кристалом на спині."
+  name: crystal cape
+  description: A soft pink cape with a blue crystal on the back.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/crystal.rsi
@@ -776,8 +776,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierCapeNeon
-  name: "неоновий плащ"
-  description: "Плащ у яскравих неонових кольорах."
+  name: neon cape
+  description: A cape in bright neon colors.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/neon.rsi
@@ -787,8 +787,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierCapeViolet
-  name: "фіолетовий плащ"
-  description: "Бузковий плащ із серцем на спині."
+  name: violet cape
+  description: A lilac cape with a heart on the back.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/violet.rsi
@@ -798,8 +798,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierCapeGalaxy
-  name: "галактичний плащ"
-  description: "Плащ із далекою галактикою."
+  name: galaxy cape
+  description: A cape patterned with a distant galaxy.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/galaxy.rsi
@@ -809,8 +809,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierCapeSirius
-  name: "плащ Сіріуса"
-  description: "Плащ, натхненний найяскравішою зорею нічного неба."
+  name: Sirius cape
+  description: A cape inspired by the brightest star in the night sky.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/sirius.rsi
@@ -820,8 +820,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierCapeLua
-  name: "плащ Луа"
-  description: "Блакитний плащ із грайливою емблемою."
+  name: Lua cape
+  description: A bright blue cape with a playful emblem.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/lua.rsi
@@ -831,8 +831,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierFlameCape
-  name: "плащ плазмового полум'я"
-  description: "Плащ із яскравим візерунком плазмового полум'я."
+  name: plasma flame cape
+  description: A cape patterned with vivid plasma flames.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Capes/flame.rsi
@@ -843,8 +843,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierVampireWings
-  name: "крила вампіра"
-  description: "Чорні крила, що відливають багрянцем на світлі."
+  name: vampire wings
+  description: Black wings that glow vermilion in the light.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/BlackVampire.rsi
@@ -854,8 +854,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierMageWings
-  name: "крила мага"
-  description: "Декоративні крила з натяком на магію."
+  name: mage wings
+  description: Decorative wings with a hint of magic.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Magic.rsi
@@ -865,8 +865,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierPegasusWings
-  name: "крила пегаса"
-  description: "Величні білі крила для казкового силуету."
+  name: pegasus wings
+  description: Majestic white wings for a storybook silhouette.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Pegas.rsi
@@ -876,8 +876,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierSkeletonWings
-  name: "скелетні крила"
-  description: "Моторошні крила для театрального образу нежиті."
+  name: skeleton wings
+  description: Eerie wings for a theatrical undead look.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Skeleton.rsi
@@ -887,8 +887,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierBlackSkeletonWings
-  name: "чорні скелетні крила"
-  description: "Темні скелетні крила з гострим контуром."
+  name: black skeleton wings
+  description: Dark skeletal wings with a sharp outline.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/SkeletonBlack.rsi
@@ -898,8 +898,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierRedSkeletonWings
-  name: "червоні скелетні крила"
-  description: "Багряні скелетні крила для драматичного образу."
+  name: red skeleton wings
+  description: Crimson skeletal wings for a dramatic look.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/SkeletonRed.rsi
@@ -909,8 +909,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierVioletWings
-  name: "фіолетові крила"
-  description: "М'які фіолетові крила ангельської форми."
+  name: violet wings
+  description: Soft violet wings with an angelic shape.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/Violet.rsi
@@ -920,8 +920,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateFreshFrontierHorrorWings
-  name: "крила жаху"
-  description: "Дивні крила, яким місце у кошмарі."
+  name: horror wings
+  description: Strange wings that belong in a nightmare.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Neck/Wings/horror.rsi
@@ -932,8 +932,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshFrontierLettermanBrown
-  name: "коричнева куртка-варсіті"
-  description: "Класична шкіряна куртка-варсіті теплого коричневого кольору."
+  name: brown letterman jacket
+  description: A classic leather varsity jacket in warm brown.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman.rsi
@@ -943,8 +943,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshFrontierLettermanBlue
-  name: "синя куртка-варсіті"
-  description: "Синя куртка-варсіті з яскравою обробкою."
+  name: blue letterman jacket
+  description: A blue varsity jacket with bright trim.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman_n.rsi
@@ -954,8 +954,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshFrontierLettermanRed
-  name: "червона куртка-варсіті"
-  description: "Червона куртка-варсіті для сміливого повсякденного образу."
+  name: red letterman jacket
+  description: A red varsity jacket for a bold everyday look.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman_red.rsi
@@ -965,8 +965,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshFrontierLettermanScarlet
-  name: "багряна куртка-варсіті"
-  description: "Темно-червона куртка з незвичною емблемою."
+  name: scarlet letterman jacket
+  description: A deep red jacket with an unusual emblem.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/letterman_s.rsi
@@ -976,8 +976,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshFrontierDandyCoat
-  name: "чорне технопальто"
-  description: "Елегантне чорне пальто із золотими деталями."
+  name: black technocoat
+  description: A sleek black coat with ornate gold details.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/dandy_coat.rsi
@@ -987,8 +987,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateFreshFrontierSaloCoat
-  name: "кармінове пальто"
-  description: "Яскраве червоне пальто з українським космовестерн-настроєм."
+  name: vermilion coat
+  description: A vivid red coat with a distinctly Ukrainian space-western flair.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/OuterClothing/Coats/salo_coat.rsi
@@ -999,8 +999,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshFrontierKimono
-  name: "церемоніальне кімоно"
-  description: "Ошатне кімоно з яскравим візерунком."
+  name: shrine kimono
+  description: A ceremonial kimono with a bright, elegant pattern.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/kimonomiku.rsi
@@ -1010,8 +1010,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshFrontierRedSweater
-  name: "червоний светр із відкритою спиною"
-  description: "Ефектний червоний светр із модною відкритою спиною."
+  name: red open-back sweater
+  description: A striking red sweater with a fashionable open back.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterred.rsi
@@ -1021,8 +1021,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshFrontierBlueSweater
-  name: "синій светр із відкритою спиною"
-  description: "Яскравий синій светр із модною відкритою спиною."
+  name: blue open-back sweater
+  description: A bright blue sweater with a fashionable open back.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterblue.rsi
@@ -1032,8 +1032,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshFrontierBlackSweater
-  name: "чорний светр із відкритою спиною"
-  description: "Елегантний чорний светр із модною відкритою спиною."
+  name: black open-back sweater
+  description: An elegant black sweater with a fashionable open back.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterblack.rsi
@@ -1043,8 +1043,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshFrontierVioletSweater
-  name: "фіолетовий светр із відкритою спиною"
-  description: "Насичений фіолетовий светр із модною відкритою спиною."
+  name: violet open-back sweater
+  description: A rich violet sweater with a fashionable open back.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterviolet.rsi
@@ -1054,8 +1054,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateFreshFrontierRainbowSweater
-  name: "райдужний светр із відкритою спиною"
-  description: "Барвистий райдужний светр для яскравої зміни."
+  name: rainbow open-back sweater
+  description: A bright rainbow sweater that brings color to any shift.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Frontier/Uniforms/sweaterraindbow.rsi

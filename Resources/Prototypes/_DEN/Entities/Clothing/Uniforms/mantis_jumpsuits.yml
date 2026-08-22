@@ -1,8 +1,8 @@
 - type: entity
   parent: [ClothingUniformJumpsuitMantis, BaseFoldable]
   id: ClothingUniformJumpsuitMantisDark
-  name: "темна роба Мантіса"
-  description: "Похмура роба зі спадаючими штанами та оком, нанесеним на спині. Вирізи на стегнах можна скласти й закрити, якщо почуваєтеся надто відкрито."
+  name: dark mantis robe
+  description: "A gloomy robe with flowing pants and an eye emblazoned on the back. The thigh windows can be folded shut, if you're feeling exposed."
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Uniforms/Jumpsuit/mantis_dark.rsi

@@ -1,7 +1,7 @@
 - type: entity
   id: CEZLevelVerticalLadderBase
   abstract: true
-  name: "драбина"
+  name: ladder
   description: A vertical ladder for moving between floors.
   placement:
     mode: SnapgridCenter
@@ -45,8 +45,8 @@
 - type: entity
   parent: CEZLevelVerticalLadderBase
   id: CEZLevelVerticalLadderAperture
-  name: "драбина з отвором"
-  description: "Вертикальна драбина, що проходить крізь отвір у підлозі."
+  name: ladder with opening
+  description: A vertical ladder running through a floor opening.
   suffix: Aperture
   components:
   - type: CEZLevelAperture
@@ -56,7 +56,7 @@
   parent: CEZLevelVerticalLadderBase
   id: CEZLevelVerticalLadderTallBase
   abstract: true
-  name: "висока драбина"
+  name: tall ladder
   components:
   - type: Sprite
     state: ladder11
@@ -68,8 +68,8 @@
 - type: entity
   parent: CEZLevelVerticalLadderTallBase
   id: CEZLevelVerticalLadderTallAperture
-  name: "висока драбина з отвором"
-  description: "Висока вертикальна драбина, що проходить крізь отвір у підлозі."
+  name: tall ladder with opening
+  description: A tall vertical ladder running through a floor opening.
   suffix: Aperture
   components:
   - type: CEZLevelAperture

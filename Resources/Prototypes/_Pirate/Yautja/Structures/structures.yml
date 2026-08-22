@@ -24,7 +24,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsBorderStairs
   name: "граничні сходи Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -39,7 +39,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsBorderStairCut
   name: "розрізана гранична сходинка Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -54,7 +54,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsBorderStairsRune
   name: "руни граничних сходів Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -69,7 +69,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsBorderStairRuneCut
   name: "розрізана руна граничної сходинки Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -84,7 +84,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsHunterFeed
   name: "годівниця мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -99,7 +99,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsHunterArmorProp
   name: "реквізит броні мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -114,7 +114,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsHunterArmorProp2
   name: "реквізит броні мисливця Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -129,7 +129,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsHunterArmorProp3
   name: "реквізит броні мисливця Яутжа 3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -144,7 +144,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsHunterArmorProp4
   name: "реквізит броні мисливця Яутжа 4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -158,8 +158,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsPredTrophyVendorBottomLeft
-  name: "торговельний автомат трофеїв хижака Яутжа, нижній лівий"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "торгівельний автомат трофеїв хижака Яутжа знизу зліва"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -173,8 +173,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsPredTrophyVendorTopLeft
-  name: "торговельний автомат трофеїв хижака Яутжа, верхній лівий"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "торгівельний автомат трофеїв хижака Яутжа зверху зліва"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -188,8 +188,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsPredTrophyVendorCenter
-  name: "торговельний автомат трофеїв хижака Яутжа, центральний"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "торгівельний автомат трофеїв хижака Яутжа центр"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -203,8 +203,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsPredTrophyVendorTopCenter
-  name: "торговельний автомат трофеїв хижака Яутжа, верхній центральний"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "торгівельний автомат трофеїв хижака Яутжа зверху центр"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -217,8 +217,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsPredTrophyVendorBottomRight
-  name: "торговельний автомат трофеїв хижака Яутжа, нижній правий"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "торгівельний автомат трофеїв хижака Яутжа знизу справа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -232,8 +232,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsPredTrophyVendorTopRight
-  name: "торговельний автомат трофеїв хижака Яутжа, верхній правий"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "торгівельний автомат трофеїв хижака Яутжа зверху справа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -248,7 +248,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsBoneThrone
   name: "кістяний трон Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -262,8 +262,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsBoneThroneTop
-  name: "верхівка кістяного трону Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "верх кістяного трону Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -277,8 +277,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsClosed
-  name: "закритий модуль Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "закрите Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -292,8 +292,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsOpen
-  name: "відкритий модуль Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "відкрите Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -308,7 +308,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsHoe
   name: "мотига Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -323,7 +323,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsSpade
   name: "лопата Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -337,8 +337,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsHydro
-  name: "гідропоніка Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "гідро Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -352,8 +352,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsFountainHeadStatic
-  name: "нерухома голова фонтана Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "статична голова фонтана Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -367,8 +367,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsFountainHeadFlowing
-  name: "голова фонтана Яутжа з потоком"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "текуча голова фонтана Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -383,7 +383,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureAncientsmallstatueSmallStatueBase
   name: "стародавня статуя Яутжа — мала підставка"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/ancientsmallstatue.rsi
@@ -397,8 +397,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureAncientsmallstatueSmallStatueBaseColorable
-  name: "стародавня статуя Яутжа — мала підставка зі змінним кольором"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "стародавня статуя Яутжа — мала підставка колорна"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/ancientsmallstatue.rsi
@@ -411,8 +411,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureAncientsmallstatueStatueAncient
-  name: "стародавня статуя Яутжа — давня"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "стародавня статуя Яутжа — стародавня"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/ancientsmallstatue.rsi
@@ -427,7 +427,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureAncientsmallstatueStatueGrey
   name: "стародавня статуя Яутжа — сіра"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/ancientsmallstatue.rsi
@@ -442,7 +442,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureAncientsmallstatueStatueSandstone
   name: "стародавня статуя Яутжа — пісковикова"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/ancientsmallstatue.rsi
@@ -457,7 +457,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureConsolesEngineerconsole
   name: "консоль інженера Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/consoles.rsi
@@ -472,7 +472,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureCryogenics2Cell
   name: "кріокамера Яутжа — камера"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/cryogenics2.rsi
@@ -486,8 +486,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureCryogenics2CellOffEmpty
-  name: "кріокамера Яутжа — камера вимкнена, порожня"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "кріокамера Яутжа — камера вимкнена порожня"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/cryogenics2.rsi
@@ -501,8 +501,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureCryogenics2CellOffOccupied
-  name: "кріокамера Яутжа — камера вимкнена, зайнята"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "кріокамера Яутжа — камера вимкнена зайнята"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/cryogenics2.rsi
@@ -516,8 +516,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureCryogenics2CellOnEmpty
-  name: "кріокамера Яутжа — камера ввімкнена, порожня"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "кріокамера Яутжа — камера ввімкнена порожня"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/cryogenics2.rsi
@@ -531,8 +531,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureCryogenics2CellOnOccupied
-  name: "кріокамера Яутжа — камера ввімкнена, зайнята"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "кріокамера Яутжа — camera ввімкнена зайнята"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/cryogenics2.rsi
@@ -546,8 +546,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureCryogenics2PredCell
-  name: "кріокамера Яутжа — камера хижака"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "кріокамера Яутжа — хижа камера"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/cryogenics2.rsi
@@ -561,8 +561,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureCryogenics2PredCellOffEmpty
-  name: "кріокамера Яутжа — камера хижака вимкнена, порожня"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "кріокамера Яутжа — хижа камера вимкнена порожня"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/cryogenics2.rsi
@@ -576,8 +576,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureCryogenics2PredCellOffOccupied
-  name: "кріокамера Яутжа — камера хижака вимкнена, зайнята"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "кріокамера Яутжа — хижа камера вимкнена зайнята"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/cryogenics2.rsi
@@ -591,8 +591,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureCryogenics2PredCellOnEmpty
-  name: "кріокамера Яутжа — камера хижака ввімкнена, порожня"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "кріокамера Яутжа — хижа камера ввімкнена порожня"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/cryogenics2.rsi
@@ -605,8 +605,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureCryogenics2PredCellOnOccupied
-  name: "кріокамера Яутжа — камера хижака ввімкнена, зайнята"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "кріокамера Яутжа — хижа камера ввімкнена зайнята"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/cryogenics2.rsi
@@ -620,8 +620,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureEngineerJockeySpacejockey
-  name: "інженер-джокей — космічний джокей"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "інженер-джокей космо-джокей"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/engineerJockey.rsi
@@ -636,7 +636,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureEngineerPodPodBroken
   name: "інженерна капсула — зламана"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/engineerPod.rsi
@@ -651,7 +651,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureEngineerPodPod
   name: "інженерна капсула"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/engineerPod.rsi
@@ -666,7 +666,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsFloor
   name: "підлога Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -681,7 +681,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterTile1
   name: "плитка мисливця Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -696,7 +696,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterTile2
   name: "плитка мисливця Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -711,7 +711,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterTile3
   name: "плитка мисливця Яутжа 3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -726,7 +726,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterTile4
   name: "плитка мисливця Яутжа 4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -741,7 +741,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterTile5
   name: "плитка мисливця Яутжа 5"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -756,7 +756,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterTile6
   name: "плитка мисливця Яутжа 6"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -771,7 +771,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsOuterhull
   name: "зовнішній корпус Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -786,7 +786,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsDamaged1
   name: "пошкоджена підлога Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -800,7 +800,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsDamaged2
   name: "пошкоджена підлога Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -815,7 +815,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsDamaged3
   name: "пошкоджена підлога Яутжа 3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -830,7 +830,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsDamaged4
   name: "пошкоджена підлога Яутжа 4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -845,7 +845,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsDamaged5
   name: "пошкоджена підлога Яутжа 5"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -859,8 +859,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsOuterhullDir
-  name: "напрямний зовнішній корпус Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "зовнішній корпус Яутжа dir"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -874,8 +874,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsOuterhullAlt
-  name: "альтернативний зовнішній корпус Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "зовнішній корпус Яутжа альт"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -889,8 +889,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsOuterhullAltDir
-  name: "альтернативний напрямний зовнішній корпус Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "зовнішній корпус Яутжа альт dir"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -904,8 +904,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterGlow
-  name: "сяюча підлога мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "сяючий мисливець Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -920,7 +920,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterBridge
   name: "міст мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -934,8 +934,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterCatwalkAlpha
-  name: "напівпрозорий технічний поміст мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "катвок мисливця Яутжа альфа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -949,8 +949,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterCatwalk
-  name: "технічний поміст мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "катвок мисливця Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -964,8 +964,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterCatwalkAltAlpha
-  name: "альтернативний напівпрозорий технічний поміст мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "катвок мисливця Яутжа альт альфа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -979,8 +979,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterCatwalkAlt
-  name: "альтернативний технічний поміст мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "катвок мисливця Яутжа альт"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -994,8 +994,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterCatwalkNewAlpha
-  name: "новий напівпрозорий технічний поміст мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "новий катвок мисливця Яутжа альфа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1008,8 +1008,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterCatwalkNew
-  name: "новий технічний поміст мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "новий катвок мисливця Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1023,8 +1023,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterGrille
-  name: "решітка мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "ґрати мисливця Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1038,8 +1038,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterGrilleAlpha
-  name: "напівпрозорі ґрати мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "ґрати мисливця Яутжа альфа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1053,8 +1053,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterGrate
-  name: "решітка мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "ґрати мисливця Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1068,8 +1068,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterGrateAlpha
-  name: "напівпрозорі ґрати мисливця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "ґрати мисливця Яутжа альфа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1084,7 +1084,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN115
   name: "підлога Яутжа 11,5"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1099,7 +1099,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN66
   name: "підлога Яутжа 6,6"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1114,7 +1114,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN1715
   name: "підлога Яутжа 17,15"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1129,7 +1129,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN611
   name: "підлога Яутжа 6,11"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1144,7 +1144,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN612
   name: "підлога Яутжа 6,12"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1159,7 +1159,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsCorner1
   name: "кутова підлога Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1174,7 +1174,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsCorner2
   name: "кутова підлога Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1189,7 +1189,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsCorner3
   name: "кутова підлога Яутжа 3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1203,7 +1203,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsCorner4
   name: "кутова підлога Яутжа 4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1218,7 +1218,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsCorner5
   name: "кутова підлога Яутжа 5"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1233,7 +1233,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsCorner6
   name: "кутова підлога Яутжа 6"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1248,7 +1248,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsCorner7
   name: "кутова підлога Яутжа 7"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1263,7 +1263,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsCorner8
   name: "кутова підлога Яутжа 8"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1278,7 +1278,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsCorner9
   name: "кутова підлога Яутжа 9"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1293,7 +1293,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN22
   name: "підлога Яутжа 2,2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1308,7 +1308,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN32
   name: "підлога Яутжа 3,2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1323,7 +1323,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN204
   name: "підлога Яутжа 20,4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1338,7 +1338,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN214
   name: "підлога Яутжа 21,4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1353,7 +1353,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN216
   name: "підлога Яутжа 21,6"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1368,7 +1368,7 @@
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsN203
   name: "підлога Яутжа 20,3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1382,8 +1382,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterRed
-  name: "червоний мисливський знак Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "червоний мисливець Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1397,8 +1397,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterRed2
-  name: "червоний мисливський знак Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "червоний мисливець Яутжа 2"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1411,8 +1411,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterRed3
-  name: "червоний мисливський знак Яутжа 3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "червоний мисливець Яутжа 3"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1426,8 +1426,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterRed4
-  name: "червоний мисливський знак Яутжа 4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "червоний мисливець Яутжа 4"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1441,8 +1441,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterRed5
-  name: "червоний мисливський знак Яутжа 5"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "червоний мисливець Яутжа 5"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1456,8 +1456,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsHunterRed6
-  name: "червоний мисливський знак Яутжа 6"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "червоний мисливець Яутжа 6"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1471,8 +1471,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsBorderlessV
-  name: "вертикальна підлога Яутжа без меж"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "безмежна підлога Яутжа в"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1486,8 +1486,8 @@
 - type: entity
   parent: GoobYautjaFloorOverlayBase
   id: GoobYautjaStructureHunterFloorsBorderlessH
-  name: "горизонтальна підлога Яутжа без меж"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "безмежна підлога Яутжа г"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_floors.rsi
@@ -1502,7 +1502,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftengine
   name: "лівий двигун шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1517,7 +1517,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftengine1
   name: "лівий двигун шатла Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1532,7 +1532,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftengine2
   name: "лівий двигун шатла Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1547,7 +1547,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftengine3
   name: "лівий двигун шатла Яутжа 3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1562,7 +1562,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftengine4
   name: "лівий двигун шатла Яутжа 4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1577,7 +1577,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftengine5
   name: "лівий двигун шатла Яутжа 5"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1592,7 +1592,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftengine6
   name: "лівий двигун шатла Яутжа 6"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1606,7 +1606,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftengine7
   name: "лівий двигун шатла Яутжа 7"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1621,7 +1621,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftengine8
   name: "лівий двигун шатла Яутжа 8"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1636,7 +1636,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftengine9
   name: "лівий двигун шатла Яутжа 9"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1651,7 +1651,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleStanLeftengine
   name: "стандартний лівий двигун шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1666,7 +1666,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightengine
   name: "правий двигун шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1681,7 +1681,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightengine1
   name: "правий двигун шатла Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1696,7 +1696,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightengine2
   name: "правий двигун шатла Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1711,7 +1711,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightengine3
   name: "правий двигун шатла Яутжа 3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1726,7 +1726,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightengine4
   name: "правий двигун шатла Яутжа 4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1741,7 +1741,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightengine5
   name: "правий двигун шатла Яутжа 5"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1756,7 +1756,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightengine6
   name: "правий двигун шатла Яутжа 6"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1771,7 +1771,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightengine7
   name: "правий двигун шатла Яутжа 7"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1786,7 +1786,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightengine8
   name: "правий двигун шатла Яутжа 8"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1801,7 +1801,7 @@
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightengine9
   name: "правий двигун шатла Яутжа 9"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1814,8 +1814,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleStanRightengine
-  name: "стандартний правий двигун шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл станд. rightдвигун"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1829,8 +1829,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleMiddle
-  name: "середня секція шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл середина"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1844,8 +1844,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter1
-  name: "мисливська секція шатла Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1859,8 +1859,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter2
-  name: "мисливська секція шатла Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець2"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1874,8 +1874,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter3
-  name: "мисливська секція шатла Яутжа 3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець3"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1889,8 +1889,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterLW
-  name: "ліве крило мисливського шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець l w"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1904,8 +1904,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterRW
-  name: "праве крило мисливського шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець r w"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1919,8 +1919,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter4
-  name: "мисливська секція шатла Яутжа 4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець4"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1934,8 +1934,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterInnerW2
-  name: "внутрішнє крило мисливського шатла Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець внутр в 2"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1949,8 +1949,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter5
-  name: "мисливська секція шатла Яутжа 5"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець5"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1964,8 +1964,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleInside
-  name: "внутрішня частина шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл усередині"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1978,8 +1978,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter6
-  name: "мисливська секція шатла Яутжа 6"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець6"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -1993,8 +1993,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter7
-  name: "мисливська секція шатла Яутжа 7"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець7"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2008,8 +2008,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter8
-  name: "мисливська секція шатла Яутжа 8"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець8"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2023,8 +2023,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter9
-  name: "мисливська секція шатла Яутжа 9"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець9"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2038,8 +2038,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter10
-  name: "мисливська секція шатла Яутжа 10"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець10"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2053,8 +2053,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter11
-  name: "мисливська секція шатла Яутжа 11"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець11"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2068,8 +2068,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter12
-  name: "мисливська секція шатла Яутжа 12"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець12"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2083,8 +2083,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter13
-  name: "мисливська секція шатла Яутжа 13"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець13"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2098,8 +2098,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter14
-  name: "мисливська секція шатла Яутжа 14"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець14"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2113,8 +2113,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter15
-  name: "мисливська секція шатла Яутжа 15"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець15"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2127,8 +2127,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter16
-  name: "мисливська секція шатла Яутжа 16"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець16"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2142,8 +2142,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftFront
-  name: "ліва передня секція шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл лівий перед"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2157,8 +2157,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter17
-  name: "мисливська секція шатла Яутжа 17"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець17"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2172,8 +2172,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter18
-  name: "мисливська секція шатла Яутжа 18"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець18"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2187,8 +2187,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter19
-  name: "мисливська секція шатла Яутжа 19"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець19"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2202,8 +2202,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter20
-  name: "мисливська секція шатла Яутжа 20"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець20"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2217,8 +2217,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter21
-  name: "мисливська секція шатла Яутжа 21"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець21"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2231,8 +2231,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter22
-  name: "мисливська секція шатла Яутжа 22"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець22"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2246,8 +2246,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightFront
-  name: "права передня секція шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл правий перед"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2261,8 +2261,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter23
-  name: "мисливська секція шатла Яутжа 23"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець23"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2276,8 +2276,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter24
-  name: "мисливська секція шатла Яутжа 24"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець24"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2291,8 +2291,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter25
-  name: "мисливська секція шатла Яутжа 25"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець25"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2305,8 +2305,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter26
-  name: "мисливська секція шатла Яутжа 26"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець26"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2320,8 +2320,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter27
-  name: "мисливська секція шатла Яутжа 27"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець27"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2335,8 +2335,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunter28
-  name: "мисливська секція шатла Яутжа 28"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливець28"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2350,8 +2350,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleFrontMiddleWindow
-  name: "центральне переднє вікно шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл front середина window"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2365,8 +2365,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw1
-  name: "панель корпусу мисливського шатла Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2380,8 +2380,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw2
-  name: "панель корпусу мисливського шатла Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 2"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2395,8 +2395,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw3
-  name: "панель корпусу мисливського шатла Яутжа 3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 3"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2409,8 +2409,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw4
-  name: "панель корпусу мисливського шатла Яутжа 4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 4"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2424,8 +2424,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw5
-  name: "панель корпусу мисливського шатла Яутжа 5"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 5"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2439,8 +2439,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw6
-  name: "панель корпусу мисливського шатла Яутжа 6"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 6"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2454,8 +2454,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw7
-  name: "панель корпусу мисливського шатла Яутжа 7"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 7"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2469,8 +2469,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw8
-  name: "панель корпусу мисливського шатла Яутжа 8"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 8"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2484,8 +2484,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleLeftWindow
-  name: "ліве вікно шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл ліве вікно"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2499,8 +2499,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw9
-  name: "панель корпусу мисливського шатла Яутжа 9"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 9"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2514,8 +2514,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw10
-  name: "панель корпусу мисливського шатла Яутжа 10"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 10"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2529,8 +2529,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw11
-  name: "панель корпусу мисливського шатла Яутжа 11"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 11"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2543,8 +2543,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleRightWindow
-  name: "праве вікно шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл праве вікно"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2558,8 +2558,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw12
-  name: "панель корпусу мисливського шатла Яутжа 12"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 12"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2573,8 +2573,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw13
-  name: "панель корпусу мисливського шатла Яутжа 13"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 13"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2588,8 +2588,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw14
-  name: "панель корпусу мисливського шатла Яутжа 14"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 14"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2603,8 +2603,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleBottomWindow
-  name: "нижнє вікно шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл нижнє вікно"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2618,8 +2618,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw15
-  name: "панель корпусу мисливського шатла Яутжа 15"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 15"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2633,8 +2633,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw16
-  name: "панель корпусу мисливського шатла Яутжа 16"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 16"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2648,8 +2648,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureHunterShuttleHunterw17
-  name: "панель корпусу мисливського шатла Яутжа 17"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа шатл мисливецьw 17"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/hunter_shuttle.rsi
@@ -2663,8 +2663,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusSarcophagus0
-  name: "саркофаг Яутжа 0"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг саркофаг0"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2677,8 +2677,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusSarcophagus1
-  name: "саркофаг Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг саркофаг1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2692,8 +2692,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusSarcophagus2
-  name: "саркофаг Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг саркофаг2"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2707,8 +2707,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusSarcomat
-  name: "саркомат Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг саркомат"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2722,8 +2722,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusAncientCoffin
-  name: "стародавня труна Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг стародавня труна"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2737,8 +2737,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusAncientCoffinDeco
-  name: "стародавня труна Яутжа — декоративна"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг стародавня труна деко"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2752,8 +2752,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusAncientCoffinMumifiedOpen
-  name: "стародавня труна Яутжа — мумія, відкрита"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг стародавня труна муміфікована open"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2767,8 +2767,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusAncientCoffinMumifiedDecoOpen
-  name: "стародавня труна Яутжа — мумія, декоративна, відкрита"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг стародавня труна муміфікована деко відкр"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2782,8 +2782,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusAncientCoffinMumifiedDecoAltOpen
-  name: "стародавня труна Яутжа — мумія, альтернативна декоративна, відкрита"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг стародавня труна муміфікована деко альт відкр"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2796,8 +2796,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusAncientCoffinEmptyOpen
-  name: "стародавня труна Яутжа — порожня, відкрита"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг стародавня труна порожня відкр"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2811,8 +2811,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusAncientCoffinEmptyDecoOpen
-  name: "стародавня труна Яутжа — порожня, декоративна, відкрита"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг стародавня труна empty деко відкр"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2826,8 +2826,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusAncientCoffinBase
-  name: "основа стародавньої труни Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг стародавня труна база"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2841,8 +2841,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureSarcophagusAncientCoffinBaseDeco
-  name: "декоративна основа стародавньої труни Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа саркофаг стародавня труна база деко"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/sarcophagus.rsi
@@ -2856,8 +2856,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsBallisticshield
-  name: "вітрина щита Яутжа — балістичний щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита балістичний щит"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -2871,8 +2871,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsBallisticshieldReady
-  name: "вітрина щита Яутжа — готовий балістичний щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита балістичний щит готовий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -2886,8 +2886,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsRiotmetal
-  name: "вітрина щита Яутжа — металевий протиштурмовий щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита металевий протиштурмовий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -2901,8 +2901,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsRiotmetalReady
-  name: "вітрина щита Яутжа — готовий металевий протиштурмовий щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита металевий протиштурмовий готовий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -2916,8 +2916,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsRiot
-  name: "вітрина щита Яутжа — протиштурмовий щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита протиштурмовий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -2930,8 +2930,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsRiotReady
-  name: "вітрина щита Яутжа — готовий протиштурмовий щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита протиштурмовий готовий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -2945,8 +2945,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsAncientShield
-  name: "вітрина щита Яутжа — стародавній щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита стародавній щит"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -2960,8 +2960,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsAncientShieldReady
-  name: "вітрина щита Яутжа — готовий стародавній щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа river дисплей щита стародавній щит готовий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -2975,8 +2975,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsAncientShieldAlt
-  name: "вітрина щита Яутжа — альтернативний стародавній щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита стародавній щит альт"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -2990,8 +2990,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsAncientShieldAltReady
-  name: "вітрина щита Яутжа — готовий альтернативний стародавній щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита стародавній щит альт готовий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -3005,8 +3005,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsRomanShield
-  name: "вітрина щита Яутжа — римський щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита римський щит"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -3020,8 +3020,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsRomanShieldReady
-  name: "вітрина щита Яутжа — готовий римський щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита римський щит готовий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -3035,8 +3035,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsAncientShieldTemple
-  name: "вітрина щита Яутжа — стародавній храмовий щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита стародавній храмовий щит"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -3050,8 +3050,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsAncientShieldTempleReady
-  name: "вітрина щита Яутжа — готовий стародавній храмовий щит"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита стародавній храмовий щит готовий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -3065,8 +3065,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsLegacyBay
-  name: "вітрина щита Яутжа — реліквійна ніша"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита спадкова бухта"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -3080,8 +3080,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsEshield0
-  name: "вітрина щита Яутжа — енергетичний щит 0"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита е-щит0"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -3095,8 +3095,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureShieldsEshield1
-  name: "вітрина щита Яутжа — енергетичний щит 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа дисплей щита е-щит1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/shields.rsi
@@ -3110,8 +3110,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesGlobe
-  name: "глобус Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа глобус"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3125,8 +3125,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesAutolatheR
-  name: "декоративний автолат Яутжа R"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа автотокар r"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3139,8 +3139,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesAutolatheO
-  name: "декоративний автолат Яутжа O"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа автотокар o"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3156,14 +3156,14 @@
 - type: entity
   parent: GoobYautjaTechFab
   id: GoobYautjaStructureYautjaMachinesAutolathe
-  name: "автолат Яутжа"
+  name: "яутжа автотокар"
   description: "Стародавній мисливський фабрикатор: ритуальна зброя, маски, наручники та плащі."
 
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesAutolatheT
-  name: "декоративний автолат Яутжа T"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа автотокар t"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3177,8 +3177,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesAutolatheN
-  name: "декоративний автолат Яутжа N"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа автотокар n"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3192,8 +3192,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesVat
-  name: "чан Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа чан"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3207,8 +3207,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesVatBoiling
-  name: "киплячий чан Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа чан кипить"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3222,8 +3222,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesChair
-  name: "стілець Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа стілець"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3236,8 +3236,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesChairBuckledOverlay
-  name: "накладка пристебнутого стільця Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа стілець пристебнутий шар"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3251,8 +3251,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesComfychair
-  name: "зручний стілець Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа зручний стілець"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3266,8 +3266,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesJuicer0
-  name: "соковижималка Яутжа 0"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа соковижималка0"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3281,8 +3281,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesJuicer1
-  name: "соковижималка Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа соковижималка1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3296,8 +3296,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMw
-  name: "мікрохвильова піч Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мв"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3311,8 +3311,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMwo
-  name: "відкрита мікрохвильова піч Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мво"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3325,8 +3325,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMw1
-  name: "увімкнена мікрохвильова піч Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мв1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3340,8 +3340,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMw0
-  name: "вимкнена мікрохвильова піч Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мв0"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3355,8 +3355,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMwb
-  name: "зламана мікрохвильова піч Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мвб"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3370,8 +3370,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMwbloody
-  name: "закривавлена мікрохвильова піч Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мв кривавий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3385,8 +3385,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMwbloodyo
-  name: "відкрита закривавлена мікрохвильова піч Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мв кривавий о"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3400,8 +3400,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMwbloody1
-  name: "увімкнена закривавлена мікрохвильова піч Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мв кривавий 1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3415,8 +3415,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMwbloody0
-  name: "вимкнена закривавлена мікрохвильова піч Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мв кривавий 0"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3429,8 +3429,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFridge
-  name: "холодильник Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа холодильник"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3444,8 +3444,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFridge1
-  name: "холодильник Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа холодильник 1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3459,8 +3459,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFridgebroken
-  name: "зламаний холодильник Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа зламаний холодильник"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3474,8 +3474,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFridgeopen
-  name: "відкритий холодильник Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа відкритий холодильник"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3489,8 +3489,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesGrinder
-  name: "м'ясорубка Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мясорубка"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3504,8 +3504,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesGrbloody
-  name: "закривавлена м'ясорубка Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа кривава мясорубка"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3519,8 +3519,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesGruse
-  name: "запущена м'ясорубка Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мясорубка вживана"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3533,8 +3533,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesGridle
-  name: "м'ясорубка Яутжа на холостому ходу"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мясорубка холоста"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3548,8 +3548,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesGrjam
-  name: "заклинена м'ясорубка Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мясорубка заїла"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3563,8 +3563,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesProcessor
-  name: "харчовий процесор Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа процесор"
+  description: "Стародавня structure мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3578,8 +3578,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDinnerware
-  name: "автомат посуду Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа посуд"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3593,8 +3593,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDinnerwareVend
-  name: "автомат посуду Яутжа — видача"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа видача посуду"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3608,8 +3608,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDinnerwareDeny
-  name: "автомат посуду Яутжа — відмова"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа відмова посуду"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3623,8 +3623,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBlue
-  name: "синій диспенсер Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа синій"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3638,8 +3638,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMixer0
-  name: "міксер Яутжа 0"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа міксер 0"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3653,8 +3653,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMixer1
-  name: "міксер Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа міксер 1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3668,8 +3668,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMixer0Nopower
-  name: "міксер Яутжа 0 без живлення"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа міксер 0 без живлення"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3682,8 +3682,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMixer1Nopower
-  name: "міксер Яутжа 1 без живлення"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа міксер 1 без живлення"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3697,8 +3697,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDispenser
-  name: "диспенсер Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа диспенсер"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3712,8 +3712,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBeaker1
-  name: "мензурка Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мензурка 1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3727,8 +3727,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBeaker2
-  name: "мензурка Яутжа 2"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мензурка 2"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3742,8 +3742,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBeaker3
-  name: "мензурка Яутжа 3"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мензурка 3"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3757,8 +3757,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBeaker4
-  name: "мензурка Яутжа 4"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мензурка 4"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3772,8 +3772,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBeaker5
-  name: "мензурка Яутжа 5"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа мензурка 5"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3787,8 +3787,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesSodaDispenser
-  name: "диспенсер газованих напоїв Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа диспенсер газованих напоїв"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3802,8 +3802,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBoozeDispenser
-  name: "диспенсер алкоголю Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа диспенсер алкоголю"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3816,8 +3816,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTankHugger
-  name: "кріплення бака Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа обнімач бака"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3831,8 +3831,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTankBroken
-  name: "зламаний бак Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа зламаний бак"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3846,8 +3846,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFreezer
-  name: "морозильник Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа морозильник"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3861,8 +3861,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFreezer0
-  name: "морозильник Яутжа 0"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа морозильник 0"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3876,8 +3876,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFreezer1
-  name: "морозильник Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа морозильник 1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3891,8 +3891,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesAutodocClosed
-  name: "закритий автодок Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа автодок закритий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3906,8 +3906,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesAutodocOpen
-  name: "відкритий автодок Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа автодок відкритий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3921,8 +3921,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesAutodocOperate
-  name: "автодок Яутжа в роботі"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа автодок працює"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3936,8 +3936,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesSleeperOpen
-  name: "відкритий сліпер Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа спальник відкритий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3950,8 +3950,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesSleeper
-  name: "сліпер Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа спальник"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3965,8 +3965,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesSleeperClosed
-  name: "закритий сліпер Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа спальник закритий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3980,8 +3980,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBodyScanner
-  name: "сканер тіла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа сканер тіла"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3995,8 +3995,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesSleeperconsoleP
-  name: "активна консоль сліпера Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа консоль спальника p"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4010,8 +4010,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesSleeperconsole
-  name: "консоль сліпера Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа консоль спальника"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4025,8 +4025,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesCrew
-  name: "монітор екіпажу Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа екіпаж"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4040,8 +4040,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTerminal
-  name: "термінал Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа термінал"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4055,8 +4055,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesCmonitor
-  name: "консольний монітор Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа cмонітор"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4070,8 +4070,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesCameras
-  name: "монітор камер Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа камери"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4084,8 +4084,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesOverwatch
-  name: "монітор нагляду Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа оглядач"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4099,8 +4099,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesSmallmonitor
-  name: "малий монітор Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа малий монітор"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4114,8 +4114,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesAbed
-  name: "ліжко Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа ліжко 1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4129,8 +4129,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBed
-  name: "ліжко Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа ліжко"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4144,8 +4144,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesClosed
-  name: "закритий модуль Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "закрите Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4159,8 +4159,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesOpen
-  name: "відкритий модуль Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "відкрите Яутжа"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4174,8 +4174,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTable1
-  name: "стіл Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа стіл 1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4189,8 +4189,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTable2Idle
-  name: "стіл Яутжа 2 — режим очікування"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа стіл 2 простій"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4203,8 +4203,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTable2Active
-  name: "стіл Яутжа 2 — активний"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа стіл 2 активний"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4218,8 +4218,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesWeldtank
-  name: "бак зварювального пального Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа зварювальний бак"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4233,8 +4233,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesWatertank
-  name: "бак для води Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа водяний бак"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4248,8 +4248,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBodyScannerOpen
-  name: "відкритий сканер тіла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа сканер тіла відкритий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4263,8 +4263,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBodyScannerClosed
-  name: "закритий сканер тіла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа сканер тіла закритий"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4278,8 +4278,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesSmes
-  name: "сМЕС Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа smes"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4293,8 +4293,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDoorctrl
-  name: "контролер дверей Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа doorctrl"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4308,8 +4308,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDoorctrl0
-  name: "контролер дверей Яутжа 0"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа doorctrl0"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4323,8 +4323,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDoorctrl1
-  name: "контролер дверей Яутжа 1"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа doorctrl1"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4337,8 +4337,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDoorctrlDenied
-  name: "контролер дверей Яутжа — доступ заборонено"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа doorctrl заборонено"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4352,8 +4352,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDoorctrlP
-  name: "контролер дверей Яутжа P"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа doorctrl p"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4367,8 +4367,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesLadder10
-  name: "драбина Яутжа 10"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа драбина 10"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4382,8 +4382,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesLadder01
-  name: "драбина Яутжа 01"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа драбина 01"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4397,8 +4397,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesLadder11
-  name: "драбина Яутжа 11"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа драбина 11"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4412,8 +4412,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesLadderdown
-  name: "драбина Яутжа — вниз"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа драбина вниз"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4427,8 +4427,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesLadderup
-  name: "драбина Яутжа — вгору"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа драбина вгору"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4442,8 +4442,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesLadder00
-  name: "драбина Яутжа 00"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа драбина 00"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4456,8 +4456,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesSeeds
-  name: "насіння Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа насіння"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4471,8 +4471,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesNutri
-  name: "живильний модуль Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа поживні"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4486,8 +4486,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesNutriDeny
-  name: "живильний модуль Яутжа — відмова"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа поживні відмова"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4501,8 +4501,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesT20
-  name: "модуль Яутжа T 20"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа т 20"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4516,8 +4516,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesT40
-  name: "модуль Яутжа T 40"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа т 40"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4531,8 +4531,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesT60
-  name: "модуль Яутжа T 60"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа т 60"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4546,8 +4546,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesT80
-  name: "модуль Яутжа T 80"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа т 80"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4561,8 +4561,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesT100
-  name: "модуль Яутжа T 100"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа т 100"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4575,8 +4575,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTInactive
-  name: "модуль Яутжа T — неактивний"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа т неактивний"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4590,8 +4590,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTActive
-  name: "модуль Яутжа T — активний"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа т активний"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4605,8 +4605,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTBoom
-  name: "модуль Яутжа T — вибух"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа т бум"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4620,8 +4620,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTSignaller
-  name: "модуль Яутжа T — сигналізатор"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа т сигналізатор"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4635,8 +4635,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesTReinforced
-  name: "посилений модуль Яутжа T"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа т підкріплений"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4650,8 +4650,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDispensing
-  name: "модуль видачі Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа видача"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4665,8 +4665,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFilling
-  name: "модуль наповнення Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа наповнення"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4680,8 +4680,8 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesConsoleShuttle
-  name: "консоль шатла Яутжа"
-  description: "Стародавня споруда мисливських угідь Яутжа."
+  name: "яутжа консоль шатла"
+  description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi

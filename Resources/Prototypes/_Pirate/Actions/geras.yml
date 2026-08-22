@@ -5,8 +5,8 @@
 - type: entity
   parent: BaseAction
   id: ActionMorphGeras
-  name: "Перетворитися на гераса"
-  description: "Перетворює вас на гераса — швидшу мініатюрну форму, ціною скидання спорядження та речей із рук."
+  name: Morph into Geras
+  description: Morphs you into a geras, a faster miniature form, at the cost of dropping your equipment and held items.
   categories: [ HideSpawnMenu ]
   components:
   - type: ConfirmableAction

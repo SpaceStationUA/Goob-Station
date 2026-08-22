@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCoatMantis
-  name: "зимове пальто псіо-екстрасенса" # DeltaV - Rename Forensic Mantis to Psionic Mantis
-  description: "Розслідуйте холодні справи зі стилем."
+  name: psionic mantis' winter coat # DeltaV - Rename Forensic Mantis to Psionic Mantis
+  description: Solve cold cases in style.
   components:
     - type: Sprite
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/mantis_winter_coat.rsi
