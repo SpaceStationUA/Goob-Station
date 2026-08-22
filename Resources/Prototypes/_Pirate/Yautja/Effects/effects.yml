@@ -1,7 +1,7 @@
 - type: entity
   id: GoobYautjaCleanserAcid
   name: "синій розчиняючий гель"
-  description: "Яскраво-синій розчиняючий гель Яутжа, що роз'їдає польове обладнання."
+  description: "Яскравий синій розчиняючий гель Хижака, що з'їдає польове обладнання."
   categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn

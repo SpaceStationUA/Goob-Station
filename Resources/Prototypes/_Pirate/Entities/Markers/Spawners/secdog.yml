@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "спавнер Лайки"
+  name: спавнер Лайки
   id: SpawnMobSecDogLaika
   parent: MarkerBase
   suffix: улюблениця ГСБ
@@ -15,7 +15,7 @@
     - MobSecDogLaika
 
 - type: entity
-  name: "спавнер службової тварини"
+  name: спавнер службової тварини
   id: SpawnMobSecLaikaOrShiva
   parent: MarkerBase
   suffix: улюбленець СБ, Лайка або Шива

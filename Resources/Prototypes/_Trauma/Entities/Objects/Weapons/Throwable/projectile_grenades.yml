@@ -1,9 +1,9 @@
 - type: entity
   parent: GrenadeShrapnel
   id: GrenadeShrapnelFoam
-  name: "граната з пінними дротиками"
+  name: foam dart grenade
   suffix: Shrapnel
-  description: "Випускає набридливий шквал пінних дротиків, що спричиняють сильні пухирі."
+  description: Releases a bothersome spray of foam darts that cause severe welching.
   components:
   - type: Sprite
     sprite: Objects/Fun/Foam/foam_grenade.rsi

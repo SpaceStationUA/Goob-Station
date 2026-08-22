@@ -8,9 +8,9 @@
 - type: entity
   parent: Holopad
   id: GloomyHolopad
-  name: "похмурий голопад"
+  name: gloomy holopad
   suffix:
-  description: "Похмурий голопад з езотеричним мотивом ока."
+  description: "A somber holopad with an esoteric eye motif."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Machines/somberholopad.rsi

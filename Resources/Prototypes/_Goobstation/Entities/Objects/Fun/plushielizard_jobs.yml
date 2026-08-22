@@ -2,8 +2,8 @@
 - type: entity
   parent: BasePlushieLizardJob
   id: PlushieLizardJobBlueshieldOfficer
-  name: "плюшева ящірка — офіцер Блакитного Щита"
-  description: "Мила м’яка іграшка, що нагадує ящірколюдину в образі офіцера Блакитного Щита. Одного ляпаса цієї іграшки досить, щоб відлякати будь-яких лиходіїв."
+  name: blueshield officer lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a blueshield officer. One smack from this plushie is sure to ward off any evildoers.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Fun/plushielizard_jobs.rsi
@@ -12,8 +12,8 @@
 - type: entity
   parent: BasePlushieLizardJob
   id: PlushieLizardJobNanotrasenRepresentative
-  name: "плюшева ящірка — представник Нанотрейзен"
-  description: "Мила м’яка іграшка, що нагадує ящірколюдину в образі представника Нанотрейзен. Здається, вона завжди вас засуджує."
+  name: nanotrasen representative lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a nanotrasen representative. It seems to always be judgmental of you.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Fun/plushielizard_jobs.rsi
@@ -22,8 +22,8 @@
 - type: entity
   parent: BasePlushieLizardJob
   id: PlushieLizardJobShaftMiner
-  name: "плюшева ящірка — шахтар"
-  description: "Мила м’яка іграшка, що нагадує ящірколюдину в образі шахтаря. Від неї ледь пахне попелом. Багато частин полагоджено після того, як її підпалювали."
+  name: shaft miner lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a shaft miner. Smells faintly of ash. Many parts have been mended back after being set on fire.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Fun/plushielizard_jobs.rsi
@@ -32,8 +32,8 @@
 - type: entity
   parent: BasePlushieLizardJob
   id: PlushieLizardJobBrigmedic
-  name: "плюшева ящірка — бригмедик"
-  description: "Мила м’яка іграшка, що нагадує ящірколюдину в образі бригмедика. Від неї ледь пахне порохом і атропіном."
+  name: brigmedic lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a brigmedic. Smells faintly of gunpowder and atropine.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Fun/plushielizard_jobs.rsi
@@ -42,8 +42,8 @@
 - type: entity
   parent: BasePlushieLizardJob
   id: PlushieLizardJobCentCommOfficial
-  name: "плюшева ящірка — представник Центкому"
-  description: "Мила м’яка іграшка, що нагадує ящірколюдину в образі представника Центкому. Вона з гордістю носить свій капелюх. Або з якоюсь іншою емоцією, доступною плюшевим іграшкам."
+  name: centcomm official lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a centcomm officer. Wears its hat with pride. Or whatever emotion plushies feel.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Fun/plushielizard_jobs.rsi
@@ -52,8 +52,8 @@
 - type: entity
   parent: BasePlushieLizardJob
   id: PlushieLizardJobVirologist
-  name: "плюшева ящірка — вірусолог"
-  description: "Мила м’яка іграшка, що нагадує ящірколюдину в образі вірусолога. Здається, вона в ідеальному стані."
+  name: virologist lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a virologist. It looks to be in pristine condition.
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Fun/plushielizard_jobs.rsi

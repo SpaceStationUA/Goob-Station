@@ -10,8 +10,8 @@
 - type: entity
   parent: Fireplace
   id: SomberFireplace
-  name: "похмурий електрумовий камін"
-  description: "Авангардний камін у формі ока; його бездимне псіонічне полум’я хвилюється, мов рідина."
+  name: somber electrum fireplace
+  description: "An avant-garde fireplace shaped like an eye, its smokeless psionic flame rippling like liquid."
   components:
   - type: Sprite
     noRot: true
@@ -90,8 +90,8 @@
 - type: entity
   parent: BaseSignDirectional
   id: SomberHangingBrazier
-  name: "похмура підвісна жаровня"
-  description: "Електрумова жаровня, чиє бездимне псіонічне полум’я хвилюється, мов рідина."
+  name: somber hanging brazier
+  description: "An electrum brazier, its smokeless psionic flame rippling like liquid."
   placement:
     mode: WallmountLight
   components:
@@ -157,8 +157,8 @@
 - type: entity
   parent: Mannequin
   id: SomberMannequin
-  name: "похмурий манекен"
-  description: "Похмурий манекен з електрумовими очима, що викликають лише легке занепокоєння. Призначений для демонстрації одягу."
+  name: somber mannequin
+  description: "A gloomy mannequin with only slightly unsettling electrum eyes, made to display clothes."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Decoration/mannequin.rsi
@@ -210,8 +210,8 @@
 - type: entity
   parent: Mirror
   id: SomberMirror
-  name: "похмуре електрумове дзеркало"
-  description: "Блискуче електрумове дзеркало з полірованою підкладкою з мю-металу, що захищає від псіонічного ясновидіння. Спокійна мить наодинці."
+  name: somber electrum mirror
+  description: "A glossy electrum mirror with a polished mu-metal backing that prevents psionic scrying. A calm, private moment."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Wallmounts/mirror.rsi
@@ -222,8 +222,8 @@
 - type: entity
   parent: Dresser
   id: SomberDresser
-  name: "похмурий комод"
-  description: "Дорогий комод із похмурого візерунчастого дерева з електрумовими акцентами."
+  name: somber dresser
+  description: "An expensive dresser made of gloomy, patterned wood with electrum accents."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Furniture/furniture.rsi
@@ -261,7 +261,7 @@
 - type: entity
   parent: DresserFilled
   id: SomberDresserFilled
-  name: "похмурий комод"
+  name: somber dresser
   suffix: Filled
   components:
   - type: Sprite

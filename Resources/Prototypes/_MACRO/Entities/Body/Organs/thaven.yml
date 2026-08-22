@@ -1,8 +1,8 @@
 - type: entity
   id: OrganThavenBrain
   parent: OrganHumanBrain
-  name: "мозок тавена"
-  description: "Дивний мозок з унікальною нейронною структурою, що синхронізується з тавенами поблизу."
+  name: thaven brain
+  description: "A peculiar brain with a unique neural structure that synchronizes with nearby Thaven."
   components:
   - type: StrangeMoods
     mood: ThavenMoods
