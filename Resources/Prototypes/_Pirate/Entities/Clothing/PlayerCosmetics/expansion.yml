@@ -796,9 +796,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/dresseswithflowers.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/dresseswithflowers.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -810,9 +808,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/flower_princess.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/flower_princess.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -824,9 +820,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/fly_agaric.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/fly_agaric.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -838,9 +832,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/gentle_yellow.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/gentle_yellow.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -852,9 +844,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/spider.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/spider.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -866,9 +856,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/tango_dress.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/tango_dress.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -891,9 +879,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_red.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_red.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -905,9 +891,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_victorian_black.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_victorian_black.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -919,9 +903,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_victorian_red.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_victorian_red.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -933,9 +915,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/lady.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/lady.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
