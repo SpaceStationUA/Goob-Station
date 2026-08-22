@@ -13,3 +13,5 @@ job-greet-important-disconnect-admin-notify = Ви граєте за профе�
 job-greet-supervisors-warning = Як {$jobName}, ви підпорядковуєтесь безпосередньо {$supervisors}. Особливі обставини можуть це змінити.
 job-greet-crew-shortages = Оскільки ця станція спочатку була укомплектована мінімальним складом, на вашу ID-карту було додано додатковий доступ.
 job-not-available-wait-in-lobby = Раунд розпочався, але ви не отримали жодної з бажаних ролей (або не вибрали жодної бажаної ролі) і вирішили залишитися в лобі. Ви можете змінити цю поведінку на екрані налаштувань персонажа.
+# Pirate: Blueshield Officer joins are gated by the number of command staff.
+blueshield-officer-restriction = Приєднатися офіцером Блакитного Щита можна лише після появи щонайменше трьох членів командування на станції.

@@ -35,7 +35,10 @@ public sealed class BlueshieldOfficerRestrictionSystem : EntitySystem
     private void OnIsRoleAllowed(ref IsRoleAllowedEvent ev)
     {
         if (ev.Jobs?.Contains(BlueshieldOfficerJob) == true && !HasEnoughCommandStaff())
+        {
             ev.Cancelled = true;
+            ev.CancelReason = Loc.GetString("blueshield-officer-restriction");
+        }
     }
 
     private bool HasEnoughCommandStaff()

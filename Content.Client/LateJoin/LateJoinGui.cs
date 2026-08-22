@@ -45,6 +45,10 @@ namespace Content.Client.LateJoin
 
         private readonly Control _base;
 
+        // Pirate: this role has a server-side population gate that the regular
+        // client-side role requirements cannot evaluate.
+        private const string BlueshieldOfficerJob = "BlueshieldOfficer";
+
         public LateJoinGui()
         {
             MinSize = SetSize = new Vector2(360, 560);
@@ -239,6 +243,13 @@ namespace Content.Client.LateJoin
 
                         var jobButton = new JobButton(jobLabel, prototype.ID, prototype.LocalizedName, value);
 
+                        var restrictionTooltip = prototype.ID == BlueshieldOfficerJob
+                            ? Loc.GetString("blueshield-officer-restriction")
+                            : null;
+
+                        if (restrictionTooltip is not null)
+                            jobButton.ToolTip = restrictionTooltip;
+
                         var jobSelector = new BoxContainer
                         {
                             Orientation = LayoutOrientation.Horizontal,
@@ -268,7 +279,12 @@ namespace Content.Client.LateJoin
                             if (!reason.IsEmpty)
                             {
                                 var tooltip = new Tooltip();
-                                tooltip.SetMessage(reason);
+                                var message = restrictionTooltip is null
+                                    ? reason
+                                    : FormattedMessage.FromMarkupPermissive(
+                                        $"{reason.ToMarkup()}\n{FormattedMessage.EscapeText(restrictionTooltip)}");
+                                tooltip.SetMessage(message);
+                                jobButton.ToolTip = null;
                                 jobButton.TooltipSupplier = _ => tooltip;
                             }
 

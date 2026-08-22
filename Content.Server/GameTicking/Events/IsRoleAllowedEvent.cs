@@ -10,15 +10,23 @@ namespace Content.Server.GameTicking.Events;
 /// <param name="player">The player.</param>
 /// <param name="jobs">Optional list of job prototype IDs</param>
 /// <param name="antags">Optional list of antag prototype IDs</param>
+/// <param name="cancelReason">Optional player-facing explanation when the role is denied.</param>
 [ByRefEvent]
 public struct IsRoleAllowedEvent(
     ICommonSession player,
     List<ProtoId<JobPrototype>>? jobs,
     List<ProtoId<AntagPrototype>>? antags,
-    bool cancelled = false)
+    bool cancelled = false,
+    string? cancelReason = null)
 {
     public readonly ICommonSession Player = player;
     public readonly List<ProtoId<JobPrototype>>? Jobs = jobs;
     public readonly List<ProtoId<AntagPrototype>>? Antags = antags;
     public bool Cancelled = cancelled;
+
+    /// <summary>
+    ///     Optional player-facing explanation for a cancelled role assignment.
+    /// </summary>
+    // Pirate: role restrictions can provide a player-facing explanation.
+    public string? CancelReason = cancelReason;
 }

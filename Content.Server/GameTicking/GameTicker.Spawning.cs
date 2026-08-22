@@ -98,6 +98,7 @@ namespace Content.Server.GameTicking
 
             // Pirate: round-start assignment bypasses SpawnPlayer's role check. Revalidate
             // assigned roles before spawning so restricted roles remain in the lobby.
+            var assignmentCancelReasons = new Dictionary<NetUserId, string>(); // Pirate
             foreach (var (player, (job, _)) in assignedJobs.ToArray())
             {
                 if (job is null)
@@ -111,7 +112,12 @@ namespace Content.Server.GameTicking
                 RaiseLocalEvent(ref ev);
 
                 if (ev.Cancelled)
+                {
                     assignedJobs[player] = (null, EntityUid.Invalid);
+
+                    if (ev.CancelReason is { } reason)
+                        assignmentCancelReasons[player] = reason;
+                }
             }
 
             // Calculate extended access for stations.
@@ -124,7 +130,10 @@ namespace Content.Server.GameTicking
                     var evNoJobs = new NoJobsAvailableSpawningEvent(playerSession); // Used by gamerules to wipe their antag slot, if they got one
                     RaiseLocalEvent(evNoJobs);
 
-                    _chatManager.DispatchServerMessage(playerSession, Loc.GetString("job-not-available-wait-in-lobby"));
+                    _chatManager.DispatchServerMessage(playerSession,
+                        assignmentCancelReasons.TryGetValue(netUser, out var reason)
+                            ? reason
+                            : Loc.GetString("job-not-available-wait-in-lobby"));
                 }
                 else
                 {
@@ -170,7 +179,13 @@ namespace Content.Server.GameTicking
                 var ev = new IsRoleAllowedEvent(player, jobs, null);
                 RaiseLocalEvent(ref ev);
                 if (ev.Cancelled)
+                {
+                    // Pirate: surface server-side role restrictions to the player.
+                    if (ev.CancelReason is { } reason)
+                        _chatManager.DispatchServerMessage(player, reason);
+
                     return;
+                }
             }
 
             SpawnPlayer(player, character, station, jobId, lateJoin, silent);
