@@ -9312,30 +9312,6 @@ entities:
       dNAs: []
       fibers: []
       fingerprints: []
-    - type: StoreRefund
-      balanceSpent:
-        Telecrystal: 50
-      data:
-        id: UplinkDualettaBundle
-        description: uplink-dualetta-bundle-desc
-        categories:
-        - UplinkWeaponry
-        cost:
-          Telecrystal: 50
-        conditions:
-        - !type:StoreWhitelistCondition
-          blacklist:
-            tags:
-            - ContractorUplink
-        icon:
-          sprite: /Textures/_Goobstation/Objects/Weapons/Guns/Pistols/Dualetta.rsi
-          state: icon
-        productEntity: BriefcaseSyndieDualettaBundleFilled
-        purchaseAmount: 1
-        components: []
-        blockRefundListings: []
-        name: uplink-dualetta-bundle-name
-      storeEntity: invalid
     - type: InsideEntityStorage
       storage: 2346
 - proto: Bucket
@@ -63271,25 +63247,6 @@ entities:
       dNAs: []
       fibers: []
       fingerprints: []
-    - type: StoreRefund
-      balanceSpent:
-        Telecrystal: 20
-      data:
-        id: UplinkSyndicateDisabler
-        description: uplink-syndicate-disabler-desc
-        categories:
-        - UplinkWeaponry
-        cost:
-          Telecrystal: 20
-        icon:
-          sprite: _EinsteinEngines/Objects/Weapons/Guns/Battery/syndicate-disabler.rsi
-          state: base
-        productEntity: WeaponDisablerSyndicate
-        purchaseAmount: 1
-        components: []
-        blockRefundListings: []
-        name: uplink-syndicate-disabler-name
-      storeEntity: invalid
     - type: InsideEntityStorage
       storage: 1379
 - proto: WeaponGrapplingGun
@@ -63460,28 +63417,6 @@ entities:
       dNAs: []
       fibers: []
       fingerprints: []
-    - type: StoreRefund
-      balanceSpent:
-        Telecrystal: 20
-      data:
-        id: UplinkRevolverPython
-        description: uplink-revolver-python-desc
-        categories:
-        - UplinkWeaponry
-        cost:
-          Telecrystal: 20
-        conditions:
-        - !type:StoreWhitelistCondition
-          blacklist:
-            tags:
-            - ContractorUplink
-        productEntity: WeaponRevolverPythonAP
-        purchaseAmount: 1
-        reputation: 40
-        components: []
-        blockRefundListings: []
-        name: uplink-revolver-python-name
-      storeEntity: invalid
     - type: InsideEntityStorage
       storage: 2075
 - proto: WeaponRifleM90
