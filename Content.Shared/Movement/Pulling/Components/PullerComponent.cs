@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Alert;
-using Content.Shared.Movement.Pulling.Systems; // Pirate: barbell
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -44,12 +43,6 @@ public sealed partial class PullerComponent : Component
 
     [DataField]
     public ProtoId<AlertPrototype> PullingAlert = "Pulling";
-
-    // Pirate start: barbell
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(PullingSystem), Friend = AccessPermissions.ReadWrite, Other = AccessPermissions.ReadWrite)]
-    public float PulledDensityReduction = 0f;
-    // Pirate end: barbell
 
 }
 
