@@ -517,9 +517,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/mus_singerdress.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/mus_singerdress.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   name: Pink Princess Dress
@@ -532,9 +530,7 @@
   - type: Item
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/pinkprincessdress.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   name: Green Princess Dress
@@ -547,9 +543,7 @@
   - type: Item
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Jumpskirt/greenprincessdress.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -561,9 +555,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/clayshaperdress.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/clayshaperdress.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -575,9 +567,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/druidrobe.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/druidrobe.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -589,9 +579,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/moondress.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/moondress.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -603,9 +591,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/tidalrobe.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Uniforms/Other/tidalrobe.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase

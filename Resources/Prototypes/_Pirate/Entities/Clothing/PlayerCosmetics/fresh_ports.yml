@@ -52,9 +52,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/druid_robes.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/druid_robes.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -77,9 +75,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/flamenco.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/flamenco.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
@@ -113,9 +109,7 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/lilac_dress.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Uniforms/lilac_dress.rsi
-  - type: HideClothingLayerClothing
-    hiddenSlots:
-    - shoes
+  - type: ClothingLayerRemap
 
 - type: entity
   parent: ClothingUniformBase
