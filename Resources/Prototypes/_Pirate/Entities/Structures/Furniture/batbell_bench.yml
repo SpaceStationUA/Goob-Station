@@ -86,6 +86,7 @@
 
 - type: entity
   id: BarbellBenchOverlay
+  save: false
   name: barbell bench overlay
   description: Visual overlay for barbell bench.
   components:

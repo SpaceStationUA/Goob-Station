@@ -19,7 +19,7 @@ public sealed class PunchingBagAnimationsSystem : SharedPunchingBagAnimationsSys
         if (HasComp<PullerComponent>(attacker))
         {
             var strength = EnsureComp<PullStrengthComponent>(attacker);
-            strength.Progress = Math.Min(1f, strength.Progress + 0.02f);
+            strength.Progress = Math.Min(strength.HighStrengthThreshold, strength.Progress + strength.StrengthGain);
         }
     }
 }

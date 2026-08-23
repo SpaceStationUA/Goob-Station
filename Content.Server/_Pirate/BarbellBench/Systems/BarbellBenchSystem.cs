@@ -56,6 +56,7 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
         base.Initialize();
 
         SubscribeLocalEvent<BarbellBenchComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<BarbellBenchComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BarbellBenchComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<BarbellBenchComponent, BarbellBenchPerformRepEvent>(OnPerformRep);
         SubscribeLocalEvent<BarbellBenchComponent, EntInsertedIntoContainerMessage>(OnBarbellInserted);
@@ -66,6 +67,8 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
         SubscribeLocalEvent<BarbellPinnedComponent, ComponentShutdown>(OnPinnedShutdown);
         SubscribeLocalEvent<StaminaComponent, EnterStaminaCritEvent>(OnStaminaCrit);
         SubscribeLocalEvent<BarbellPinnedComponent, BeforeStaminaDamageEvent>(OnPinnedStaminaDamage);
+        SubscribeLocalEvent<PullStrengthComponent, RefreshStaminaCritThresholdEvent>(OnRefreshStaminaCritThreshold);
+        SubscribeLocalEvent<PullStrengthComponent, ComponentShutdown>(OnPullStrengthShutdown);
 
         SubscribeLocalEvent<BarbellPinnedComponent, InteractHandEvent>(OnPinnedInteractHand,
             before: new[] { typeof(SharedBuckleSystem) });
@@ -121,6 +124,11 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
         UpdateAppearance(uid, component);
     }
 
+    private void OnMapInit(EntityUid uid, BarbellBenchComponent component, MapInitEvent args)
+    {
+        EnsureOverlay(uid, component);
+    }
+
     private void OnShutdown(EntityUid uid, BarbellBenchComponent component, ComponentShutdown args)
     {
         if (component.OverlayEntity is { } overlay && Exists(overlay))
@@ -168,12 +176,12 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
                         var currentStrength = strength.Progress;
 
                         var previousStrength = currentStrength;
-                        currentStrength = Math.Min(1f, currentStrength + 0.02f);
+                        currentStrength = Math.Min(strength.HighStrengthThreshold, currentStrength + strength.StrengthGain);
                         strength.Progress = currentStrength;
 
-                        if ((previousStrength < 0.40f && currentStrength >= 0.40f) ||
-                            (previousStrength < 0.70f && currentStrength >= 0.70f) ||
-                            (previousStrength < 1.00f && currentStrength >= 1.00f))
+                        if ((previousStrength < strength.LowStrengthThreshold && currentStrength >= strength.LowStrengthThreshold) ||
+                            (previousStrength < strength.MediumStrengthThreshold && currentStrength >= strength.MediumStrengthThreshold) ||
+                            (previousStrength < strength.HighStrengthThreshold && currentStrength >= strength.HighStrengthThreshold))
                         {
                             var performer = args.Performer;
                             Timer.Spawn(TimeSpan.FromSeconds(0.5f), () =>
@@ -183,13 +191,12 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
                             });
                         }
 
-                        if (currentStrength >= 1.00f && !strength.StaminaBonusApplied)
+                        if (currentStrength >= strength.HighStrengthThreshold && !strength.StaminaBonusApplied)
                         {
                             if (TryComp<StaminaComponent>(args.Performer, out var staminaComp))
                             {
-                                staminaComp.CritThreshold += 25f;
                                 strength.StaminaBonusApplied = true;
-                                Dirty(args.Performer, staminaComp);
+                                _stamina.RefreshStaminaCritThreshold((args.Performer, staminaComp));
                             }
                         }
                     }
@@ -400,6 +407,19 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
     private void OnBuckleTerminating(EntityUid uid, BuckleComponent component, EntityTerminatingEvent args)
     {
         _performingReps.Remove(uid);
+    }
+
+    private void OnRefreshStaminaCritThreshold(Entity<PullStrengthComponent> ent,
+        ref RefreshStaminaCritThresholdEvent args)
+    {
+        if (ent.Comp.StaminaBonusApplied)
+            args.ThresholdValue += ent.Comp.StaminaBonus;
+    }
+
+    private void OnPullStrengthShutdown(EntityUid uid, PullStrengthComponent component, ComponentShutdown args)
+    {
+        if (TryComp<StaminaComponent>(uid, out var stamina))
+            _stamina.RefreshStaminaCritThreshold((uid, stamina));
     }
 
     public override void Update(float frameTime)
