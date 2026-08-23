@@ -69,3 +69,6 @@
 
 - type: Tag
   id: K9 # Pirate: marks a K9 unit for specialised clothing
+
+- type: Tag
+  id: BarbellAttachment

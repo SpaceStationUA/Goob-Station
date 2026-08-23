@@ -1,0 +1,33 @@
+- type: constructionGraph
+  id: PunchingBag
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: punchingbag
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 3
+            - material: Cloth
+              amount: 3
+              doAfter: 3
+
+    - node: punchingbag
+      entity: PunchingBag
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 5
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 3
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 3
