@@ -25,7 +25,16 @@ public sealed partial class PhotoCardWindow : BaseWindow
         RobustXamlLoader.Load(this);
 
         var resourceCache = IoCManager.Resolve<IResourceCache>();
+        // Pirate: photo card style classes only ever existed in the obsolete StyleNano/StyleSpace
+        // sheets, which are no longer the active stylesheet; set the card look directly instead.
+        FramePanel.PanelOverride = new StyleBoxFlat
+        {
+            BackgroundColor = Color.FromHex("#FFFFFF"),
+            BorderColor = Color.FromHex("#C0C0C0"),
+            BorderThickness = new Thickness(4),
+        };
         PhotoNameLabel.FontOverride = resourceCache.NotoStack(variation: "Bold", size: 12);
+        PhotoNameLabel.FontColorOverride = Color.FromHex("#111111");
         CaptionLabel.ModulateSelfOverride = Color.FromHex("#111111");
 
         CloseButton.OnPressed += _ => Close();
