@@ -27,6 +27,8 @@ public abstract class SharedBarbellBenchSystem : EntitySystem
             _actionsSystem.RemoveProvidedActions(args.Buckle.Owner, bench.Owner);
             EntityUid? action = null;
             _actionsSystem.AddAction(args.Buckle, ref action, BarbellRepActionId, bench);
+            if (action is { } actionUid)
+                _actionsSystem.SetUseDelay((actionUid, null), TimeSpan.FromSeconds(bench.Comp.RepDuration));
         }
     }
 

@@ -4,6 +4,7 @@ using Content.Server.Body.Systems;
 using Content.Shared._Pirate.BarbellBench;
 using Content.Shared._Pirate.BarbellBench.Components;
 using Content.Shared._Pirate.BarbellBench.Systems;
+using Content.Shared._Pirate.Movement.Components;
 using Content.Shared._EinsteinEngines.Silicon.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Alert;
@@ -72,7 +73,7 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
         SubscribeLocalEvent<BarbellPinnedComponent, GetVerbsEvent<InteractionVerb>>(OnPinnedGetVerbs,
             before: new[] { typeof(SharedBuckleSystem) });
 
-        SubscribeLocalEvent<BarbellStrengthComponent, EntityTerminatingEvent>(OnStrengthTerminating);
+        SubscribeLocalEvent<BuckleComponent, EntityTerminatingEvent>(OnBuckleTerminating);
         SubscribeLocalEvent<BarbellBenchComponent, UnstrappedEvent>(OnUnstrapped);
     }
 
@@ -90,6 +91,8 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
                 _actionsSystem.RemoveProvidedActions(buckledEntity, uid);
                 EntityUid? action = null;
                 _actionsSystem.AddAction(buckledEntity, ref action, SharedBarbellBenchSystem.BarbellRepActionId, uid);
+                if (action is { } actionUid)
+                    _actionsSystem.SetUseDelay((actionUid, null), TimeSpan.FromSeconds(component.RepDuration));
             }
         }
 
@@ -159,35 +162,14 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
 
                 if (!HasComp<SiliconComponent>(args.Performer))
                 {
-                    if (TryComp<PullerComponent>(args.Performer, out var pullerComp))
+                    if (HasComp<PullerComponent>(args.Performer))
                     {
-                        var strength = EnsureComp<BarbellStrengthComponent>(args.Performer);
+                        var strength = EnsureComp<PullStrengthComponent>(args.Performer);
                         var currentStrength = strength.Progress;
 
                         var previousStrength = currentStrength;
-                        currentStrength += 0.02f;
+                        currentStrength = Math.Min(1f, currentStrength + 0.02f);
                         strength.Progress = currentStrength;
-
-                        float targetReduction;
-                        if (currentStrength >= 1.00f)
-                        {
-                            targetReduction = 1.00f;
-                        }
-                        else if (currentStrength >= 0.70f)
-                        {
-                            targetReduction = 0.70f;
-                        }
-                        else if (currentStrength >= 0.40f)
-                        {
-                            targetReduction = 0.40f;
-                        }
-                        else
-                        {
-                            targetReduction = pullerComp.PulledDensityReduction;
-                        }
-
-                        pullerComp.PulledDensityReduction = targetReduction;
-                        Dirty(args.Performer, pullerComp);
 
                         if ((previousStrength < 0.40f && currentStrength >= 0.40f) ||
                             (previousStrength < 0.70f && currentStrength >= 0.70f) ||
@@ -415,7 +397,7 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
         _performingReps.Remove(args.Buckle.Owner);
     }
 
-    private void OnStrengthTerminating(EntityUid uid, BarbellStrengthComponent component, EntityTerminatingEvent args)
+    private void OnBuckleTerminating(EntityUid uid, BuckleComponent component, EntityTerminatingEvent args)
     {
         _performingReps.Remove(uid);
     }
