@@ -314,7 +314,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             ent.Comp.HeadColorAlpha);
         SpendNutrition(ent.Owner, ent.Comp, hunger);
         Squish(ent.Owner, ent.Comp);
-        Rebase(ent, humanoid);
+        Rebase(ent, humanoid, staged.PickerSpecies);
 
         _popup.PopupEntity(Loc.GetString("slime-morph-mimic-success"), ent.Owner, ent.Owner);
         UpdateUi(ent);
@@ -344,7 +344,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             ent.Comp.HeadColorAlpha);
         SpendNutrition(ent.Owner, ent.Comp, hunger);
         Squish(ent.Owner, ent.Comp);
-        Rebase(ent, humanoid);
+        Rebase(ent, humanoid, staged.PickerSpecies);
 
         _popup.PopupEntity(Loc.GetString("slime-morph-apply-success"), ent.Owner, ent.Owner);
         UpdateUi(ent);
@@ -378,7 +378,7 @@ public sealed class SlimeMorphSystem : EntitySystem
             ent.Comp.HeadColorAlpha);
         SpendNutrition(ent.Owner, ent.Comp, CompOrNull<HungerComponent>(ent.Owner));
         Squish(ent.Owner, ent.Comp);
-        Rebase(ent, humanoid);
+        Rebase(ent, humanoid, target.PickerSpecies);
 
         _popup.PopupEntity(Loc.GetString("slime-morph-revert-success"), ent.Owner, ent.Owner);
         UpdateUi(ent);
@@ -730,14 +730,26 @@ public sealed class SlimeMorphSystem : EntitySystem
         Dirty(uid, humanoid);
     }
 
-    /// <summary>After a body-changing commit, rebase the menu buffers onto the new body (self look).</summary>
-    private static void Rebase(Entity<SlimeMorphComponent> ent, HumanoidAppearanceComponent humanoid)
+    /// <summary>
+    /// After a body-changing commit, rebase the menu buffers onto the new body (self look). Keeps the
+    /// just-committed xenotype selected: Capture() defaults PickerSpecies to humanoid.Species, but a
+    /// mimic never changes the actual Species field, so that default would silently snap the picker
+    /// back to the slime's own species right after mimicking a target.
+    /// </summary>
+    private static void Rebase(Entity<SlimeMorphComponent> ent, HumanoidAppearanceComponent humanoid, string? pickerSpecies)
     {
         if (ent.Comp.Staged == null)
             return;
 
-        ent.Comp.Staged = Capture(humanoid);
-        ent.Comp.Opened = Capture(humanoid);
+        var effectiveSpecies = pickerSpecies ?? humanoid.Species;
+
+        var staged = Capture(humanoid);
+        staged.PickerSpecies = effectiveSpecies;
+        ent.Comp.Staged = staged;
+
+        var opened = Capture(humanoid);
+        opened.PickerSpecies = effectiveSpecies;
+        ent.Comp.Opened = opened;
     }
 
     private SlimeMorphAppearance SnapshotSelf(HumanoidAppearanceComponent humanoid)
