@@ -9,6 +9,7 @@ using Content.Shared.Administration; // Pirate: slime morph - QuickDialogEntry
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
+using Content.Shared.Wagging;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 
@@ -162,10 +163,23 @@ public sealed class SlimeMorphBoundUserInterface : BoundUserInterface
         var facialColor = Color.Black;
         var rest = new List<Marking>();
 
-        foreach (var marking in state.MarkingSet.GetForwardEnumerator())
+        foreach (var rawMarking in state.MarkingSet.GetForwardEnumerator())
         {
-            if (!_markingManager.TryGetMarking(marking, out var proto))
+            if (!_markingManager.TryGetMarking(rawMarking, out var proto))
                 continue;
+
+            // The Wagging system swaps a tail marking to "<id>Animated" while wagging; that variant
+            // is deliberately hidden from normal customization (speciesRestriction: []) and gets
+            // stripped by the character-profile validation Import runs, so a look exported mid-wag
+            // would silently lose its tail. Normalize back to the base, player-selectable marking.
+            var marking = rawMarking;
+            if (proto.ID.EndsWith(WaggingComponent.DefaultSuffix)
+                && _markingManager.Markings.TryGetValue(proto.ID[..^WaggingComponent.DefaultSuffix.Length], out var baseProto)
+                && baseProto.MarkingCategory == proto.MarkingCategory)
+            {
+                marking = new Marking(baseProto.ID, rawMarking.MarkingColors);
+                proto = baseProto;
+            }
 
             switch (proto.MarkingCategory)
             {

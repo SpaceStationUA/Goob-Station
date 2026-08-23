@@ -2,6 +2,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
@@ -225,6 +226,43 @@ public partial class InventorySystem : EntitySystem
         UpdateInventoryTemplate(ent);
         Dirty(ent);
     }
+
+    // Pirate: slime morph clothing species override
+    /// <summary>
+    /// Overrides the species used to pick clothing sprites/displacement maps for this entity's worn
+    /// items, independent of its actual HumanoidAppearanceComponent species. Null clears the
+    /// override, falling back to the entity's real species.
+    /// </summary>
+    public void SetSpeciesId(Entity<InventoryComponent> ent, string? speciesId)
+    {
+        if (ent.Comp.SpeciesId == speciesId)
+            return;
+
+        ent.Comp.SpeciesId = speciesId;
+        // Piggybacks on the client's existing InventoryTemplateUpdated -> re-render-all-slots path;
+        // the template itself is unchanged.
+        UpdateInventoryTemplate(ent);
+        Dirty(ent);
+    }
+    // Pirate: slime morph clothing species override
+    /// <summary>
+    /// Overrides the per-slot displacement maps used to warp clothing sprites to this entity's
+    /// actual body shape (e.g. digitigrade legs), independent of its real species. Pass empty
+    /// dictionaries to clear an override back to nothing.
+    /// </summary>
+    public void SetDisplacements(
+        Entity<InventoryComponent> ent,
+        Dictionary<string, DisplacementData> displacements,
+        Dictionary<string, DisplacementData> maleDisplacements,
+        Dictionary<string, DisplacementData> femaleDisplacements)
+    {
+        ent.Comp.Displacements = new(displacements); // Pirate: slime morph
+        ent.Comp.MaleDisplacements = new(maleDisplacements); // Pirate: slime morph
+        ent.Comp.FemaleDisplacements = new(femaleDisplacements); // Pirate: slime morph
+        UpdateInventoryTemplate(ent); // Pirate: slime morph
+        Dirty(ent);
+    }
+    // Pirate: slime morph clothing species override end
 
     /// <summary>
     /// Enumerator for iterating over an inventory's slot containers. Also has methods that skip empty containers.

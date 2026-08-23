@@ -27,7 +27,7 @@ public sealed partial class DetomatixCartridgeComponent : Component
     public float SongRange = 12f;
 
     [DataField]
-    public float SongVolume = 8f;
+    public float SongVolume = 0f;
 
     [DataField]
     public TimeSpan DetonationDelay = TimeSpan.FromSeconds(0.5);

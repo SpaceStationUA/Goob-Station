@@ -11,10 +11,10 @@ SPDX-License-Identifier: AGPL-3.0-only
     SetSize="430 592">
 
     <BoxContainer Name="ContentsRoot" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-        <PanelContainer StyleClasses="PhotoCardFramePanel" VerticalExpand="True" HorizontalExpand="True">
+        <PanelContainer Name="FramePanel" VerticalExpand="True" HorizontalExpand="True">
             <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" SeparationOverride="0">
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True" MinHeight="22" Margin="4 4 4 2">
-                    <Label Name="PhotoNameLabel" StyleClasses="PhotoCardPrimaryText" HorizontalExpand="True" VerticalAlignment="Center" ClipText="True"/>
+                    <Label Name="PhotoNameLabel" HorizontalExpand="True" VerticalAlignment="Center" ClipText="True"/>
                     <PanelContainer StyleClasses="BackgroundPanel" VerticalAlignment="Top" HorizontalAlignment="Right">
                         <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"/>
                     </PanelContainer>
