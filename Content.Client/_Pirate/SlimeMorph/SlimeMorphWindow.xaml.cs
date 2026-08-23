@@ -552,38 +552,27 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
 
         // Mirror the copied structural layers (baked muzzles, digitigrade legs, ...) so the preview
         // matches. Layers not present in state.BodyLayers are cleared back to the slime's own sprite.
-        foreach (var layer in PreviewableLayers)
+        var wanted = state.BodyLayers.ToDictionary(bodyLayer => bodyLayer.Layer);
+        foreach (var layer in comp.CustomBaseLayers.Keys.ToList())
         {
-            var info = state.BodyLayers.FirstOrDefault(b => b.Layer == layer);
-            if (info != null)
-            {
-                var f = info.ColorFactor;
-                var layerColor = new Color(
-                    state.SkinColor.R * f,
-                    state.SkinColor.G * f,
-                    state.SkinColor.B * f,
-                    state.SkinColor.A * state.CopiedLayerAlpha);
-                _humanoidSystem.SetBaseLayerId(preview, layer, info.SpriteId, false);
-                _humanoidSystem.SetBaseLayerColor(preview, layer, layerColor, false);
-            }
-            else
-            {
+            if (layer != HumanoidVisualLayers.Eyes && !wanted.ContainsKey(layer))
                 comp.CustomBaseLayers.Remove(layer);
-            }
+        }
+
+        foreach (var (layer, info) in wanted)
+        {
+            var f = info.ColorFactor;
+            var layerColor = new Color(
+                state.SkinColor.R * f,
+                state.SkinColor.G * f,
+                state.SkinColor.B * f,
+                state.CopiedLayerAlpha);
+            _humanoidSystem.SetBaseLayerId(preview, layer, info.SpriteId, false);
+            _humanoidSystem.SetBaseLayerColor(preview, layer, layerColor, false);
         }
 
         _humanoidSystem.UpdateSprite((preview, comp, sprite));
     }
-
-    // Mirrors SlimeMorphComponent.CopyableLayers - the structural layers mimic can copy a baked sprite onto.
-    private static readonly HumanoidVisualLayers[] PreviewableLayers =
-    {
-        HumanoidVisualLayers.Head,
-        HumanoidVisualLayers.LLeg,
-        HumanoidVisualLayers.RLeg,
-        HumanoidVisualLayers.LFoot,
-        HumanoidVisualLayers.RFoot,
-    };
 
     // ---- Button / selector styling ----
 

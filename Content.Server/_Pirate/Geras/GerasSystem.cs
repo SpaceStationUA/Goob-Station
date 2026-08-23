@@ -97,8 +97,8 @@ public sealed class GerasSystem : EntitySystem
         if (!args.IsRevert || args.NewEntity != ent.Owner)
             return;
 
-        // If the geras died or crit before reverting, its equipment spills out instead of re-equipping.
-        if (_mobState.IsIncapacitated(ent.Owner))
+        // If the geras died before reverting, its equipment spills out instead of re-equipping.
+        if (_mobState.IsDead(ent.Owner))
             DropWornItems(ent);
         else
             RestoreWornItems(ent);

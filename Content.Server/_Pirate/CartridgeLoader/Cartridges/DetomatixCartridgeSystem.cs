@@ -122,7 +122,7 @@ public sealed class DetomatixCartridgeSystem : EntitySystem
         // Keep the countdown server-side.
         EnsureComp<DetomatixArmedComponent>(device);
 
-        if (_container.TryGetContainingContainer((device, null, null), out var deviceContainer))
+        if (_container.TryGetOuterContainer(device, Transform(device), out var deviceContainer))
         {
             _popup.PopupEntity(
                 Loc.GetString("detomatix-device-armed-warning", ("device", Name(device))),

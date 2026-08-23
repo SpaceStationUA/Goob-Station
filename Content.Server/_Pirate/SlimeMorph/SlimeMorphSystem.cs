@@ -511,8 +511,12 @@ public sealed class SlimeMorphSystem : EntitySystem
 
     private void OnSetSex(Entity<SlimeMorphComponent> ent, ref SlimeMorphSetSexMessage args)
     {
-        if (ent.Comp.Staged is { } staged)
-            staged.Sex = args.Sex;
+        if (ent.Comp.Staged is not { } staged)
+            return;
+
+        staged.Sex = args.Sex;
+        if (!staged.FromTarget && staged.PickerSpecies is { } pickerSpecies)
+            staged.BodyLayers = GetBodyLayers(ent.Comp, pickerSpecies, staged.Sex);
     }
 
     private void OnSetGender(Entity<SlimeMorphComponent> ent, ref SlimeMorphSetGenderMessage args)

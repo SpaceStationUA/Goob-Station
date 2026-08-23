@@ -239,6 +239,9 @@ public sealed partial class SlimeLatchSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
+        if (!CanLatch(ent, target)) // Pirate: slime morph
+            return; // Pirate: slime morph
+
         Latch(ent, target);
         args.Handled = true;
     }

@@ -9,6 +9,7 @@ using Content.Shared.Administration; // Pirate: slime morph - QuickDialogEntry
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
+using Content.Shared.Wagging;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 
@@ -26,9 +27,6 @@ public sealed class SlimeMorphBoundUserInterface : BoundUserInterface
 
     // Latest state, kept so Export can rebuild a profile from the current look without round-tripping.
     private SlimeMorphUiState? _lastState;
-
-    // Matches WaggingComponent.Suffix - the transient marking-id suffix swapped in while wagging.
-    private const string WaggingSuffix = "Animated";
 
     public SlimeMorphBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -175,8 +173,8 @@ public sealed class SlimeMorphBoundUserInterface : BoundUserInterface
             // stripped by the character-profile validation Import runs, so a look exported mid-wag
             // would silently lose its tail. Normalize back to the base, player-selectable marking.
             var marking = rawMarking;
-            if (proto.ID.EndsWith(WaggingSuffix)
-                && _markingManager.Markings.TryGetValue(proto.ID[..^WaggingSuffix.Length], out var baseProto)
+            if (proto.ID.EndsWith(WaggingComponent.DefaultSuffix)
+                && _markingManager.Markings.TryGetValue(proto.ID[..^WaggingComponent.DefaultSuffix.Length], out var baseProto)
                 && baseProto.MarkingCategory == proto.MarkingCategory)
             {
                 marking = new Marking(baseProto.ID, rawMarking.MarkingColors);

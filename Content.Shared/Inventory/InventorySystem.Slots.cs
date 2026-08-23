@@ -256,9 +256,10 @@ public partial class InventorySystem : EntitySystem
         Dictionary<string, DisplacementData> maleDisplacements,
         Dictionary<string, DisplacementData> femaleDisplacements)
     {
-        ent.Comp.Displacements = displacements;
-        ent.Comp.MaleDisplacements = maleDisplacements;
-        ent.Comp.FemaleDisplacements = femaleDisplacements;
+        ent.Comp.Displacements = new(displacements); // Pirate: slime morph
+        ent.Comp.MaleDisplacements = new(maleDisplacements); // Pirate: slime morph
+        ent.Comp.FemaleDisplacements = new(femaleDisplacements); // Pirate: slime morph
+        UpdateInventoryTemplate(ent); // Pirate: slime morph
         Dirty(ent);
     }
     // Pirate: slime morph clothing species override end
