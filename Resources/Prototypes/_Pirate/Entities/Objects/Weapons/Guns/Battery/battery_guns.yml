@@ -348,7 +348,7 @@
     slots:
       flashlight:
         name: weapon-upgrade-slot-name-flashlight
-        priority: 5
+        priority: 0
         ejectOnBreak: true
         occludesLight: false
         whitelist:
