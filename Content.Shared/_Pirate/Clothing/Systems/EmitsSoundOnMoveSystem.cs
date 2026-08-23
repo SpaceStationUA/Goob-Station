@@ -73,6 +73,7 @@ public sealed class EmitsSoundOnMoveSystem : EntitySystem
             .WithVolume(sound.Params.Volume)
             .WithVariation(sound.Params.Variation ?? 0f);
 
-        _audio.PlayPredicted(sound, uid, uid, audioParams);
+        var user = parent is { Valid: true } ? parent : uid;
+        _audio.PlayPredicted(sound, uid, user, audioParams);
     }
 }
