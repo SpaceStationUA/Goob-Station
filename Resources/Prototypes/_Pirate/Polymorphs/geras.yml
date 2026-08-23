@@ -8,7 +8,7 @@
     entity: MobSlimesGeras
     transferName: true
     transferHumanoidAppearance: false
-    inventory: Drop
+    inventory: None # Pirate: GerasSystem stashes/restores items itself instead of dropping them
     transferDamage: true
     revertOnDeath: true
     revertOnCrit: true
