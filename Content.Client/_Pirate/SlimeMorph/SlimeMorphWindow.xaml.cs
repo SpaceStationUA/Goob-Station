@@ -550,29 +550,40 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
 
         _humanoidSystem.SetSkinColor(preview, state.SkinColor, false);
 
-        // Mirror the head base-sprite override (baked muzzles etc.) so the preview matches.
-        if (state.HeadLayer is { } headLayer)
+        // Mirror the copied structural layers (baked muzzles, digitigrade legs, ...) so the preview
+        // matches. Layers not present in state.BodyLayers are cleared back to the slime's own sprite.
+        foreach (var layer in PreviewableLayers)
         {
-            var f = state.HeadColorFactor;
-            var headColor = new Color(
-                state.SkinColor.R * f,
-                state.SkinColor.G * f,
-                state.SkinColor.B * f,
-                state.SkinColor.A * state.HeadColorAlpha);
-            _humanoidSystem.SetBaseLayerId(preview, HumanoidVisualLayers.Head, headLayer, false);
-            _humanoidSystem.SetBaseLayerColor(
-                preview,
-                HumanoidVisualLayers.Head,
-                headColor,
-                false);
-        }
-        else
-        {
-            comp.CustomBaseLayers.Remove(HumanoidVisualLayers.Head);
+            var info = state.BodyLayers.FirstOrDefault(b => b.Layer == layer);
+            if (info != null)
+            {
+                var f = info.ColorFactor;
+                var layerColor = new Color(
+                    state.SkinColor.R * f,
+                    state.SkinColor.G * f,
+                    state.SkinColor.B * f,
+                    state.SkinColor.A * state.CopiedLayerAlpha);
+                _humanoidSystem.SetBaseLayerId(preview, layer, info.SpriteId, false);
+                _humanoidSystem.SetBaseLayerColor(preview, layer, layerColor, false);
+            }
+            else
+            {
+                comp.CustomBaseLayers.Remove(layer);
+            }
         }
 
         _humanoidSystem.UpdateSprite((preview, comp, sprite));
     }
+
+    // Mirrors SlimeMorphComponent.CopyableLayers - the structural layers mimic can copy a baked sprite onto.
+    private static readonly HumanoidVisualLayers[] PreviewableLayers =
+    {
+        HumanoidVisualLayers.Head,
+        HumanoidVisualLayers.LLeg,
+        HumanoidVisualLayers.RLeg,
+        HumanoidVisualLayers.LFoot,
+        HumanoidVisualLayers.RFoot,
+    };
 
     // ---- Button / selector styling ----
 
