@@ -117,8 +117,8 @@
     angle: 40 # Standard knife swing, here for reference
     damage:
       types:
-        Slash: 15 # 15 DPS (Slash only), or 18.75 against psions (1.25×)
-        Holy: 7 # 22 total base DPS, or 27.5 against psionic supernaturals (1.25×)
+        Slash: 12 # 12 DPS (Slash only), or 15 against psions (1.25×)
+        Holy: 6 # 18 total base DPS, or 22.5 against psionic supernaturals (1.25×)
   - type: DisarmMalus
     malus: 0.3 # A third harder to disarm than CombatKnife due to the finger ring
   - type: Tag
@@ -157,8 +157,8 @@
     angle: 60 # Swings a little wider than the athame, but easier to disarm
     damage:
       types:
-        Slash: 20 # 17 DPS (Slash only), or 21.25 against psions (1.25×)
-        Holy: 10 # 25.5 total base DPS, or 31.875 against psionic supernaturals (1.25×)
+        Slash: 16 # 13.6 DPS (Slash only), or 17 against psions (1.25×)
+        Holy: 8 # 20.4 total base DPS, or 25.5 against psionic supernaturals (1.25×)
   - type: DisarmMalus
     malus: 0.1125 # Half as hard to disarm as CombatKnife, too big for the finger ring to help
   - type: MeleeThrowOnHit # Just a tiny knockback to look cool, barely moves anything

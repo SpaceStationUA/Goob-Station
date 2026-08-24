@@ -51,7 +51,7 @@
         volume: -2
         variation: 0.05
   - type: MeleeWeapon
-    attackRate: 0.3
+    attackRate: 0.4
     range: 1.85
     angle: 90
     maxTargets: 10 # When you see a stat that looks good, just remember that if you hit anything non-psionic, you lose
