@@ -41,7 +41,7 @@ public sealed partial class PsionicFlashPowerComponent : BasePsionicPowerCompone
     /// The sound to play when the ability is used.
     /// </summary>
     [DataField]
-    public SoundSpecifier AbilitySound = new SoundPathSpecifier("/Audio/Effects/flash.ogg");
+    public SoundSpecifier AbilitySound = new SoundPathSpecifier("/Audio/Weapons/flash.ogg");
 
     /// <summary>
     /// The effect to spawn when the ability is used.

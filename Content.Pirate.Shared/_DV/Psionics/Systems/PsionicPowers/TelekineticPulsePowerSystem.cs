@@ -61,14 +61,14 @@ public sealed class TelekineticPulsePowerSystem : BasePsionicPowerSystem<Telekin
             if (direction.LengthSquared() < 0.001f)
             {
                 direction = new Vector2(
-                    (_random.NextFloat() - 0.5f) * 2f,
-                    (_random.NextFloat() - 0.5f) * 2f
+                    _random.NextFloat(-1f, 1f),
+                    _random.NextFloat(-1f, 1f)
                 );
+                if (direction.LengthSquared() < 0.001f)
+                    direction = Vector2.UnitX;
             }
-            else
-            {
-                direction = direction.Normalized();
-            }
+
+            direction = direction.Normalized();
 
             // Apply the push force.
             if (TryComp<PhysicsComponent>(entity, out var physics))
