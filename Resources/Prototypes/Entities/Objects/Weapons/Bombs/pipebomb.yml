@@ -35,6 +35,9 @@
   - type: Construction
     graph: PipeBomb
     node: pipebomb
+  - type: Tag # Pirate: Trauma spear and trap construction.
+    tags:
+    - Pipebomb
 
 - type: entity
   parent: [ BaseItem, BaseMinorContraband ]

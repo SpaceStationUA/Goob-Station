@@ -7,6 +7,11 @@
   targetNode: clownHardsuit
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    FabricationKnowledge: 1
 
 - type: construction
   id: MimeHardsuit
@@ -15,6 +20,11 @@
   targetNode: mimeHardsuit
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    FabricationKnowledge: 1
 
 - type: construction
   id: BoneArmor
@@ -23,6 +33,12 @@
   targetNode: armor
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
+    ArmorKnowledge: 2
 
 - type: construction
   id: BoneHelmet
@@ -31,6 +47,12 @@
   targetNode: helmet
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
+    ArmorKnowledge: 2
 
 - type: construction
   id: cardHelmet
@@ -39,6 +61,12 @@
   targetNode: cardhelmet
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory: {}
+  practical:
+    TailoringKnowledge: 0
+    ArmorKnowledge: 0
 
 - type: construction
   id: cardArmour
@@ -47,6 +75,12 @@
   targetNode: cardarmour
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory: {}
+  practical:
+    TailoringKnowledge: 0
+    ArmorKnowledge: 0
 
 - type: construction
   id: BananaClownMask
@@ -55,6 +89,11 @@
   targetNode: mask
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BananiumKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
 
 - type: construction
   id: BananaClownJumpsuit
@@ -63,6 +102,11 @@
   targetNode: jumpsuit
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BananiumKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
 
 - type: construction
   id: BananaClownShoes
@@ -71,6 +115,11 @@
   targetNode: shoes
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BananiumKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
 
 - type: construction
   id: ClothingEyesHudMedSec
@@ -79,6 +128,12 @@
   targetNode: medsecHud
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+    ElectronicsKnowledge: 1
+  practical:
+    FabricationKnowledge: 1
 
 - type: construction
   id: ClothingShoeSlippersDuck
@@ -87,6 +142,11 @@
   targetNode: shoes
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    FabricationKnowledge: 1
 
 - type: construction
   id: ClothingShoeSlippersLizard
@@ -95,6 +155,11 @@
   targetNode: shoes
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    FabricationKnowledge: 1
 
 - type: construction
   id: ClothingEyesGlassesSecurity
@@ -103,6 +168,12 @@
   targetNode: glassesSec
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+    ElectronicsKnowledge: 1
+  practical:
+    FabricationKnowledge: 1
 
 - type: construction
   id: ClothingBeltQuiver
@@ -111,6 +182,12 @@
   targetNode: Quiver
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    FabricationKnowledge: 2
+    TailoringKnowledge: 2
 
 - type: construction
   id: ClothingHeadHelmetJustice
@@ -119,3 +196,9 @@
   targetNode: helmet
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    FabricationKnowledge: 1
+    ElectronicsKnowledge: 1

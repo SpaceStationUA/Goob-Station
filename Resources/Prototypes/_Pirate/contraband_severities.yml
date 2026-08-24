@@ -7,3 +7,12 @@
 - type: contrabandSeverity
   id: BloodCult
   examineText: contraband-examine-text-BloodCult
+
+# Pirate: Trauma revolutionary contraband levels.
+- type: contrabandSeverity
+  id: RevMinor
+  examineText: contraband-examine-text-RevMinor
+
+- type: contrabandSeverity
+  id: RevMajor
+  examineText: contraband-examine-text-RevMajor

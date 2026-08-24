@@ -7,6 +7,13 @@
   targetNode: bat
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    WeaponsKnowledge: 0
+  practical:
+    WeaponsKnowledge: 4
+    CarvingKnowledge: 4
 
 - type: construction
   id: ghost_sheet
@@ -15,6 +22,11 @@
   targetNode: ghost_sheet
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    FabricationKnowledge: 1
 
 - type: construction
   id: makeshifthandcuffs
@@ -23,6 +35,10 @@
   targetNode: cuffscable
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: makeshiftstunprod
@@ -31,6 +47,13 @@
   targetNode: msstunprod
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    WeaponsKnowledge: 1
+    FabricationKnowledge: 1
+  practical:
+    ElectronicsKnowledge: 4
 
 - type: construction
   id: muzzle
@@ -39,6 +62,12 @@
   targetNode: muzzle
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: pneumaticcannon
@@ -47,6 +76,13 @@
   targetNode: cannon
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 3
+    WeaponsKnowledge: 1
+  practical:
+    GunsmithingKnowledge: 2
+    MechanicsKnowledge: 3
 
 - type: construction
   id: gauze
@@ -55,6 +91,14 @@
   targetNode: gauze
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+    FirstAidKnowledge: 0
+  practical:
+    TailoringKnowledge: 2
+    FirstAidKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: blindfold
@@ -63,6 +107,12 @@
   targetNode: blindfold
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: flowerwreath
@@ -71,6 +121,11 @@
   targetNode: flowerwreath
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory: {}
+  practical:
+    FabricationKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: rag
@@ -79,6 +134,9 @@
   targetNode: rag
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory: {}
+  useQuality: false
 
 - type: construction
   id: improvisedshotgun
@@ -87,6 +145,13 @@
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 3
+    GunsmithingKnowledge: 2
+  practical:
+    GunsmithingKnowledge: 4
+    WeaponsKnowledge: 3
 
 - type: construction
   id: ShellShotgunImprovised
@@ -95,6 +160,14 @@
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitBullets
+  theory:
+    FabricationKnowledge: 3
+    GunsmithingKnowledge: 1
+  practical:
+    GunsmithingKnowledge: 2
+    WeaponsKnowledge: 2
 
 - type: construction
   id: riflestock
@@ -103,6 +176,11 @@
   targetNode: riflestock
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: firebomb
@@ -111,6 +189,12 @@
   targetNode: firebomb
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    MechanicsKnowledge: 2
+    WeaponsKnowledge: 2
 
 - type: construction
   id: CottonWovenCloth
@@ -119,6 +203,12 @@
   targetNode: cottoncloth
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: strawHat
@@ -127,6 +217,11 @@
   targetNode: strawhat
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
 
 - type: construction
   id: pipebomb
@@ -135,6 +230,12 @@
   targetNode: pipebomb
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    MechanicsKnowledge: 3
+    WeaponsKnowledge: 3
 
 - type: construction
   id: rollingpin
@@ -143,6 +244,11 @@
   targetNode: rollingpin
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    CarvingKnowledge: 3
 
 - type: construction
   id: PetCarrier
@@ -151,6 +257,10 @@
   targetNode: petCarrier
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: RepairMothershipPinpointer
@@ -159,6 +269,10 @@
   targetNode: repairedPinpointer
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: HardsuitGoliath
@@ -167,6 +281,13 @@
   targetNode: hardsuitGoliath
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+    ArmorKnowledge: 1
+  practical:
+    FabricationKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: scraparmor
@@ -175,6 +296,13 @@
   targetNode: scraparmorfinished
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+    ArmorKnowledge: 1
+  practical:
+    ArmorKnowledge: 4
+    MetalworkingKnowledge: 4
 
 - type: construction
   id: scraphelmet
@@ -183,6 +311,13 @@
   targetNode: scraphelmet
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+    ArmorKnowledge: 1
+  practical:
+    ArmorKnowledge: 4
+    MetalworkingKnowledge: 4
 
 - type: construction
   id: ClothingBagPet
@@ -191,3 +326,9 @@
   targetNode: bagPet
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
+  useQuality: false

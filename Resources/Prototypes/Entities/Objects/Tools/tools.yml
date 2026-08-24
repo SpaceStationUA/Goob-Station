@@ -428,6 +428,7 @@
   - type: Tag
     tags:
     - DroneUsable # Goobstation
+    - RCD # Pirate: Trauma revolutionary printer construction.
 
 - type: entity
   id: RPD
@@ -468,6 +469,9 @@
     maxCharges: 90
   - type: Sprite
     sprite: Objects/Tools/rpd.rsi
+  - type: Tag # Pirate: RPD must not satisfy the Trauma RCD construction step.
+    tags:
+    - DroneUsable
 
 
 - type: entity

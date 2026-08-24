@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesForge
+  name: forge gloves
+  description: Good for handling metal without burning yourself.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Hands/Gloves/forge.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Hands/Gloves/forge.rsi
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-brown
+  - type: FingerprintMask
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10
+        Caustic: 5
+  - type: DamageOnHoldingImmune
+  - type: Construction
+    graph: ClothingHandsGlovesForge
+    node: finish

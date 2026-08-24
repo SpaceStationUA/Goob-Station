@@ -1,0 +1,113 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: Trauma revolutionary access, communications, gadgets, and silicon laws.
+
+- type: accessLevel
+  id: Revolutionary
+  name: id-card-access-level-revolutionary
+
+- type: radioChannel
+  id: Revolutionary
+  name: chat-radio-revolutionary
+  keycode: 'r'
+  frequency: 1215
+  color: "#ff0004"
+
+- type: radioChannel
+  id: HeadRevolutionary
+  name: chat-radio-head-revolutionary
+  keycode: 'j'
+  frequency: 1216
+  color: "#ff0000"
+  longRange: true
+
+- type: siliconLaw
+  id: Rev1
+  order: 1
+  lawString: law-rev-1
+
+- type: siliconLaw
+  id: Rev2
+  order: 2
+  lawString: law-rev-2
+
+- type: siliconLaw
+  id: Rev3
+  order: 3
+  lawString: law-rev-3
+
+- type: siliconLaw
+  id: Rev4
+  order: 4
+  lawString: law-rev-4
+
+- type: siliconLaw
+  id: Rev5
+  order: 5
+  lawString: law-rev-5
+
+- type: siliconLawset
+  id: RevLawset
+  name: law-rev-name
+  laws:
+  - Rev1
+  - Rev2
+  - Rev3
+  - Rev4
+  - Rev5
+  obeysTo: laws-owner-crew
+
+- type: entity
+  parent: [ BaseRevMajorContraband, RadioJammer ]
+  id: RevRadioJammer
+  name: revolutionary radio jammer
+  components:
+  - type: RadioJammer
+    selectedPowerLevel: 0
+    settings:
+    - wattage: 1
+      range: 2.5
+      message: radio-jammer-component-set-message-low
+      name: radio-jammer-component-setting-low
+
+- type: entity
+  parent: [ BaseFlatpack, BaseRevMajorContraband ]
+  id: RevDoorFlatpack
+  name: revolutionary airlock flatpack
+  description: A flatpack used for constructing a door locked to revolutionary access cards.
+  components:
+  - type: Flatpack
+    entity: AirlockRevolutionary
+  - type: StaticPrice
+    price: 75
+
+- type: entity
+  parent: [ AirlockSyndicate, BaseRevMajorContraband ]
+  id: AirlockRevolutionary
+  suffix: Revolutionary, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsRevolutionary ]
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsRevolutionary
+  suffix: Revolutionary, Locked
+  components:
+  - type: AccessReader
+    access: [[ "Revolutionary" ]]
+
+- type: entity
+  parent: [ BaseSiliconLawboard, BaseRevMajorContraband ]
+  id: RevCircuitBoard
+  name: law board (Revolutionary)
+  description: An electronics board containing the Revolutionary lawset.
+  components:
+  - type: SiliconLawProvider
+    laws: RevLawset
+    lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
+  - type: StaticPrice
+    price: 10000

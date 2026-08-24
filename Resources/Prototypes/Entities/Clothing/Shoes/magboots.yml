@@ -68,6 +68,7 @@
     tags:
     - WhitelistChameleon
     - HighRiskItem
+    - AdvancedMagboots # Pirate: Trauma foundry construction dependency.
   - type: StaticPrice
     price: 750
   - type: StealTarget

@@ -7,6 +7,12 @@
   targetNode: icon
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+    WeaponsKnowledge: 1
 
 - type: construction
   id: BladedFlatcapBrown
@@ -15,6 +21,12 @@
   targetNode: icon
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+    WeaponsKnowledge: 1
 
 - type: construction
   id: Shiv
@@ -23,6 +35,11 @@
   targetNode: icon
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory: {}
+  practical:
+    WeaponsKnowledge: 1
 
 - type: construction
   id: ReinforcedShiv
@@ -31,6 +48,11 @@
   targetNode: icon
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory: {}
+  practical:
+    WeaponsKnowledge: 1
 
 - type: construction
   id: PlasmaShiv
@@ -39,6 +61,13 @@
   targetNode: icon
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 1
+    WeaponsKnowledge: 0
+  practical:
+    WeaponsKnowledge: 1
 
 - type: construction
   id: UraniumShiv
@@ -47,6 +76,13 @@
   targetNode: icon
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 1
+    WeaponsKnowledge: 0
+  practical:
+    WeaponsKnowledge: 1
 
 - type: construction
   id: Spear
@@ -55,6 +91,12 @@
   targetNode: spear
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    WeaponsKnowledge: 5
 
 - type: construction
   id: SpearReinforced
@@ -63,6 +105,12 @@
   targetNode: spear
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    WeaponsKnowledge: 5
 
 - type: construction
   id: SpearPlasma
@@ -71,6 +119,12 @@
   targetNode: spear
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    WeaponsKnowledge: 5
 
 - type: construction
   id: SpearUranium
@@ -79,6 +133,12 @@
   targetNode: spear
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    WeaponsKnowledge: 5
 
 - type: construction
   id: SpearSharkMinnow
@@ -87,6 +147,13 @@
   targetNode: spear
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    WeaponsKnowledge: 4
+    CarvingKnowledge: 4
 
 - type: construction
   id: Bola
@@ -95,6 +162,11 @@
   targetNode: bola
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    WeaponsKnowledge: 2
 
 - type: construction
   id: WoodenBuckler
@@ -103,6 +175,12 @@
   targetNode: woodenBuckler
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
+    ArmorKnowledge: 1
 
 - type: construction
   id: CardShield
@@ -111,6 +189,12 @@
   targetNode: cardShield
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ArmorKnowledge: 1
 
 - type: construction
   id: MakeshiftShield
@@ -119,6 +203,12 @@
   targetNode: makeshiftShield
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    ArmorKnowledge: 1
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: ImprovisedArrow
@@ -127,6 +217,12 @@
   targetNode: ImprovisedArrow
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitBullets
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    GunsmithingKnowledge: 2
 
 - type: construction
   id: ImprovisedArrowCarp
@@ -135,6 +231,13 @@
   targetNode: ImprovisedArrowCarp
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitBullets
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    GunsmithingKnowledge: 2
+    CarvingKnowledge: 3
 
 - type: construction
   id: ImprovisedArrowPlasma
@@ -143,6 +246,12 @@
   targetNode: ImprovisedArrowPlasma
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitBullets
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    GunsmithingKnowledge: 2
 
 - type: construction
   id: ImprovisedArrowUranium
@@ -151,6 +260,12 @@
   targetNode: ImprovisedArrowUranium
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitBullets
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    GunsmithingKnowledge: 2
 
 - type: construction
   id: CardArrow
@@ -159,6 +274,12 @@
   targetNode: CardArrow
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: Cardboard
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    WeaponsKnowledge: 1
 
 - type: construction
   id: ImprovisedBow
@@ -167,6 +288,13 @@
   targetNode: ImprovisedBow
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WeaponsKnowledge: 1
+    FabricationKnowledge: 1
+  practical:
+    WeaponsKnowledge: 1
+    CarvingKnowledge: 2
 
 - type: construction
   id: SpearBone
@@ -175,6 +303,13 @@
   targetNode: spear
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    WeaponsKnowledge: 0
+  practical:
+    WeaponsKnowledge: 4
+    CarvingKnowledge: 4
 
 - type: construction
   id: ClothingHandsKnuckleDustersBrass
@@ -191,3 +326,9 @@
   targetNode: cardSword
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    WeaponsKnowledge: 1

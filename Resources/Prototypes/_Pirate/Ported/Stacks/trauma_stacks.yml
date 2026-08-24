@@ -1,0 +1,64 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: stack
+  parent: BaseMediumStack
+  id: BarbedWire
+  name: stack-barbwire
+  icon: { sprite: /Textures/_Pirate/Objects/Materials/barbwire.rsi, state: icon }
+  spawn: BarbedWire1
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: Bracing
+  name: stack-bracing
+  icon: { sprite: /Textures/_Pirate/Objects/Tools/weaponreinforcement.rsi, state: icon }
+  spawn: WeaponBracing1
+
+- type: stack
+  parent: BaseVerySmallStack
+  id: Whetstone
+  name: stack-whetstone
+  icon: { sprite: /Textures/_Pirate/Objects/Tools/whetstone.rsi, state: icon }
+  spawn: Whetstone1
+
+- type: stack
+  id: RevGear
+  name: stack-rev-gear
+  icon: { sprite: _Pirate/Objects/Revs/components.rsi, state: gear }
+  spawn: RevGear
+  maxCount: 30
+
+- type: stack
+  id: RevBolt
+  name: stack-rev-bolt
+  icon: { sprite: _Pirate/Objects/Revs/components.rsi, state: bolt }
+  spawn: RevBolt
+  maxCount: 30
+
+- type: stack
+  id: RevNut
+  name: stack-rev-nut
+  icon: { sprite: _Pirate/Objects/Revs/components.rsi, state: nut }
+  spawn: RevNut
+  maxCount: 30
+
+- type: stack
+  id: RevGunParts
+  name: stack-rev-gun-parts
+  icon: { sprite: _Pirate/Objects/Revs/components.rsi, state: gunparts }
+  spawn: RevGunParts
+  maxCount: 30
+
+- type: stack
+  id: RevEngineParts
+  name: stack-rev-engine-parts
+  icon: { sprite: _Pirate/Objects/Revs/components.rsi, state: engineparts }
+  spawn: RevEngineParts
+  maxCount: 30
+
+- type: stack
+  id: RevBallBearings
+  name: stack-rev-ball-bearings
+  icon: { sprite: _Pirate/Objects/Revs/components.rsi, state: ballbearings }
+  spawn: RevBallBearings
+  maxCount: 30

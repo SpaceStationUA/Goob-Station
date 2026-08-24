@@ -12,6 +12,7 @@
   femaleFirstNames: NamesBorg
   dollPrototype: BorgChassisSelectable
   skinColoration: TintedHues
+  knowledge: Human # Pirate
 
 - type: speciesBaseSprites
   id: CyborgSprites

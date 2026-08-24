@@ -10,6 +10,7 @@
   markingLimits: MobResomiMarkingLimits
   dollPrototype: MobResomiDummy
   skinColoration: Hues
+  knowledge: Human # Pirate
   maleFirstNames: NamesResomiMale
   femaleFirstNames: NamesResomiFemale
   naming: First

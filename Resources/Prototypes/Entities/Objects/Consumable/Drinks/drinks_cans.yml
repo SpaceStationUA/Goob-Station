@@ -36,6 +36,7 @@
   - type: Tag
     tags:
     - DrinkCan
+    - MetalContainer # Pirate: improvised gauss magazine construction.
   - type: DnaSubstanceTrace
   # Pirate banking start
   - type: StaticPrice

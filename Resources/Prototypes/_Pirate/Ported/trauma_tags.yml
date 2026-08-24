@@ -1,0 +1,111 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: tags required by the ported Trauma construction and lathe pipelines.
+
+- type: Tag
+  id: AdvancedMagboots
+
+- type: Tag
+  id: Bracing
+
+- type: Tag
+  id: CartridgeRPG2
+
+- type: Tag
+  id: CartridgeTurret
+
+- type: Tag
+  id: DataChip
+
+- type: Tag
+  id: EncryptionRevolutionary
+
+- type: Tag
+  id: Firebomb
+
+- type: Tag
+  id: FlamethrowerBackpack
+
+- type: Tag
+  id: FlamethrowerGun
+
+- type: Tag
+  id: FlamethrowerTank
+
+- type: Tag
+  id: ForgeMold
+
+- type: Tag
+  id: FusionCore
+
+- type: Tag
+  id: MagazineTurret
+
+- type: Tag
+  id: OrganEggSack
+
+- type: Tag
+  id: PartCapacitor
+
+- type: Tag
+  id: Pipebomb
+
+- type: Tag
+  id: QMBoard
+
+- type: Tag
+  id: RCD
+
+- type: Tag
+  id: RechargingBoard
+
+- type: Tag
+  id: RevArmorPlate
+
+- type: Tag
+  id: RevFuelTank
+
+- type: Tag
+  id: RevID
+
+- type: Tag
+  id: RevReflectivePlate
+
+- type: Tag
+  id: RevRocket
+
+- type: Tag
+  id: RevTurretBoard
+
+- type: Tag
+  id: T45ArmL
+
+- type: Tag
+  id: T45ArmR
+
+- type: Tag
+  id: T45Chest
+
+- type: Tag
+  id: T45Frame
+
+- type: Tag
+  id: T45Helmet
+
+- type: Tag
+  id: T45LegL
+
+- type: Tag
+  id: T45LegR
+
+- type: Tag
+  id: TechfabMachineBoard
+
+- type: Tag
+  id: ThrowingKnife
+
+- type: Tag
+  id: Whetstone
+
+- type: Tag
+  id: WoodenSword

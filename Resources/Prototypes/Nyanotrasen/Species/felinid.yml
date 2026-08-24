@@ -9,6 +9,7 @@
   markingLimits: MobFelinidMarkingLimits
   dollPrototype: MobFelinidDummy
   skinColoration: HumanToned
+  knowledge: Human # Pirate
 
 - type: markingPoints
   id: MobFelinidMarkingLimits

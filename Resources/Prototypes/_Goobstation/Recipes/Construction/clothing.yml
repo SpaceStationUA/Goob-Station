@@ -6,6 +6,12 @@
   targetNode: cloak
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 2
+  practical:
+    ArmorKnowledge: 1
+    TailoringKnowledge: 2
 
 - type: construction
   id: makeshiftvoicechanger
@@ -13,6 +19,13 @@
   targetNode: end
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+    ElectronicsKnowledge: 2
+  practical:
+    ElectronicsKnowledge: 3
+    TailoringKnowledge: 1
 
 - type: construction
   id: MedicalGlasses
@@ -20,6 +33,9 @@
   targetNode: glassesMed
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: DiagnosticGlasses
@@ -27,6 +43,9 @@
   targetNode: glassesDiag
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: MedicalSecurityGlasses
@@ -34,6 +53,9 @@
   targetNode: glassesMedSec
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GlassesMedDiag
@@ -41,6 +63,9 @@
   targetNode: glassesMedDiag
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: HudMedDiagHUD
@@ -48,6 +73,9 @@
   targetNode: meddiagHud
   category: construction-category-clothing
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: BrassOuterClot

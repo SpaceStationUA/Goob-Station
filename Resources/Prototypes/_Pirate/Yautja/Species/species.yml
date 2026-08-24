@@ -12,6 +12,7 @@
   markingLimits: GoobMobYautjaMarkingLimits
   dollPrototype: MobHumanDummy
   skinColoration: Hues
+  knowledge: Human
   sexes:
   - Male
   - Female

@@ -2,6 +2,7 @@
 
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
+using Content.Shared._Pirate.Knowledge.Quality; // Pirate
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Containers;
@@ -408,6 +409,10 @@ namespace Content.Server.Construction
             var entChangeEv = new ConstructionChangeEntityEvent(newUid, uid, userUid);
             RaiseLocalEvent(uid, entChangeEv);
             RaiseLocalEvent(newUid, entChangeEv, broadcast: true);
+
+            // Pirate: transfer immutable quality metadata only when a construction stage changes entity.
+            var qualityTransfer = new QualityTransferEvent(newUid);
+            RaiseLocalEvent(uid, ref qualityTransfer);
 
             foreach (var logic in GetCurrentNode(newUid, newConstruction)!.TransformLogic)
             {

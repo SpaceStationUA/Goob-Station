@@ -15,5 +15,6 @@ public sealed partial class CharacterWindow : DefaultWindow
         CharacterInfoTabs.SetTabTitle(0, Loc.GetString("character-info-overview")); // Pirate: Starlight character descriptions.
         CharacterInfoTabs.SetTabTitle(1, Loc.GetString("character-info-ic"));
         CharacterInfoTabs.SetTabTitle(2, Loc.GetString("character-info-ooc"));
+        CharacterInfoTabs.SetTabTitle(3, Loc.GetString("knowledge-character-tab")); // Pirate
     }
 }

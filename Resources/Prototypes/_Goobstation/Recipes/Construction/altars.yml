@@ -9,3 +9,6 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0

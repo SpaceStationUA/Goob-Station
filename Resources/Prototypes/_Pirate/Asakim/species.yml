@@ -10,6 +10,7 @@
   sprites: MobAsakimSprites
   dollPrototype: MobAsakimDummy
   skinColoration: Hues
+  knowledge: Human
   defaultSkinTone: "#444541"
   markingLimits: MobAsakimMarkingLimits
   maleFirstNames: NamesReptilianMale

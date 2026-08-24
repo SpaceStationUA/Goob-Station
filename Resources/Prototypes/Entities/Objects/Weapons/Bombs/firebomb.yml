@@ -56,6 +56,9 @@
   - type: Construction
     graph: FireBomb
     node: firebomb
+  - type: Tag # Pirate: Trauma improvised spear construction.
+    tags:
+    - Firebomb
 
 # has igniter but no fuel or wires
 - type: entity

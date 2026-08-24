@@ -7,6 +7,13 @@
   targetNode: grenade
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 3
+    MechanicsKnowledge: 3
 
 - type: construction
   id: ModularMineRecipe
@@ -15,3 +22,10 @@
   targetNode: mine
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 3
+    MechanicsKnowledge: 3

@@ -5,6 +5,8 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: WeaponClass # Pirate
+    class: Energy
   - type: EnergySword
   - type: ItemToggle
     # Goobstation start

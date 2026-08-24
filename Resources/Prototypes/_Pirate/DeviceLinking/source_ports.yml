@@ -3,3 +3,19 @@
   name: signal-port-name-mass-driver-console-sender
   description: signal-port-description-mass-driver-console-sender
   defaultLinks: [ MassDriverConsoleReceiver ]
+
+# Pirate access scanner outputs.
+- type: sourcePort
+  id: AccessActive
+  name: signal-port-name-access-active
+  description: signal-port-description-access-active
+
+- type: sourcePort
+  id: AccessName
+  name: signal-port-name-access-name
+  description: signal-port-description-access-name
+
+- type: sourcePort
+  id: AccessJob
+  name: signal-port-name-access-job
+  description: signal-port-description-access-job

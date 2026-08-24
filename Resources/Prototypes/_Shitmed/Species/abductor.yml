@@ -9,6 +9,7 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobAbductorDummy
   skinColoration: HumanToned
+  knowledge: Abductor # Pirate
   defaultSkinTone: "#BFC2C7"
 
 - type: speciesBaseSprites

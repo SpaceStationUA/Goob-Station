@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: Tag
+  id: AdamantineScraps
+
+- type: Tag
+  id: AnvilTop
+
+- type: Tag
+  id: BrassScraps
+
+- type: Tag
+  id: Cement
+
+- type: Tag
+  id: IngotWorkableSteel
+
+- type: Tag
+  id: PlasteelScraps
+
+- type: Tag
+  id: SteelScraps

@@ -9,6 +9,10 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// </summary>
 public sealed class TakeAmmoEvent : EntityEventArgs
 {
+    // Pirate: Trauma multi-magazine guns can consume a battery without using its projectile.
+    public float FireCostMultiplier = 1f;
+    public bool SpawnProjectiles = true;
+
     public readonly EntityUid? User;
     public readonly int Shots;
     public List<(EntityUid? Entity, IShootable Shootable)> Ammo;

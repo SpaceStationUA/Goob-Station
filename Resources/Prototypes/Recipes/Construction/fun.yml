@@ -7,3 +7,6 @@
   targetNode: bananiumHorn
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BananiumKnowledge: 0

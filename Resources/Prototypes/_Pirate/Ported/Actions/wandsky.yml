@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseAction
+  id: ActionTogglePatrol
+  name: toggle patrol
+  description: Toggles the assigned securitrons' patrol route.
+  components:
+  - type: Sprite
+    layers:
+    - texture: Interface/AdminNotes/message.png
+  - type: InstantAction
+    event: !type:TogglePatrolActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionCRWaypoint
+  name: create or remove patrol waypoint
+  description: Adds a waypoint at the target, or removes one already there.
+  components:
+  - type: Sprite
+    layers:
+    - texture: Interface/AdminNotes/none_button.png
+  - type: Action
+    useDelay: 3
+    sound:
+      path: /Audio/Machines/chime.ogg
+  - type: TargetAction
+    range: 200
+    repeat: false
+  - type: WorldTargetAction
+    event: !type:PatrolWaypointActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionClearWaypoints
+  name: clear patrol waypoints
+  description: Disables patrol and removes every waypoint from this commander.
+  components:
+  - type: Sprite
+    layers:
+    - texture: Interface/AdminNotes/high_button.png
+  - type: InstantAction
+    event: !type:ClearPatrolWaypointsActionEvent
+
+- type: entity
+  id: SecuritronWaypoint
+  name: securitron waypoint
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+  - type: Appearance
+  - type: PatrolWaypoint
+  - type: HolopadHologram
+    rsiPath: _Pirate/Mobs/Silicon/Bots/beepsky.rsi
+    rsiState: secbot
+    shaderName: Hologram
+    color1: "#65b8e2"
+    color2: "#3a6981"

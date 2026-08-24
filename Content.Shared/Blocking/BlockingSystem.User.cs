@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Damage;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -55,6 +56,10 @@ public sealed partial class BlockingSystem
                 return;
 
             var blockFraction = blocking.IsBlocking ? blocking.ActiveBlockFraction : blocking.PassiveBlockFraction;
+            // Pirate: let the blocking user's shield skill modify this one block.
+            var skillEvent = new GetBlockFractionEvent(uid, component.BlockingItem.Value, blockFraction);
+            RaiseLocalEvent(uid, ref skillEvent);
+            blockFraction = skillEvent.Fraction;
             blockFraction = Math.Clamp(blockFraction, 0, 1);
             _damageable.TryChangeDamage(component.BlockingItem,
                 blockFraction * args.OriginalDamage);

@@ -1,0 +1,154 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: source dependencies omitted by the initial Trauma resource port.
+
+- type: entity
+  parent: Whetstone
+  id: Whetstone1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: WeaponBracing
+  id: WeaponBracing1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: BaseItem
+  id: PartCapacitor
+  name: capacitor
+  description: A capacitor for electronic devices.
+  components:
+  - type: Tag
+    tags:
+    - PartCapacitor
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Goobstation/Items/handling/component_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Goobstation/Items/handling/component_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/component_drop.ogg
+  - type: Sprite
+    sprite: Objects/Misc/stock_parts.rsi
+    state: adv_capacitor
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 12
+      Plastic: 12
+
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: RevTurretElectronics
+  name: revolutionary turret circuit board
+  description: Used to build turrets programmed to fire at targets without revolutionary identification.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: door_electronics
+  - type: Tag
+    tags:
+    - RevTurretBoard
+
+- type: entity
+  parent: [ BaseRevPart, BaseRevMajorContraband ]
+  id: RevGunParts
+  name: gun parts
+  description: A small pile of gun parts, ready for revolutionary machinery.
+  components:
+  - type: Sprite
+    state: gunparts
+  - type: Stack
+    stackType: RevGunParts
+
+- type: entity
+  parent: [ BaseRevPart, BaseRevMajorContraband ]
+  id: RevEngineParts
+  name: engine parts
+  description: A pile of engine parts, ready for revolutionary machinery.
+  components:
+  - type: Sprite
+    state: engineparts
+  - type: Stack
+    stackType: RevEngineParts
+
+- type: entity
+  parent: BaseRevPart
+  id: RevBallBearings
+  name: ball bearings
+  description: A small handful of metal balls.
+  components:
+  - type: Sprite
+    state: ballbearings
+  - type: Stack
+    stackType: RevBallBearings
+
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: RevArmorPlate
+  name: armor plate
+  description: A plate for bullet-resistant revolutionary equipment.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Revs/components.rsi
+    state: armorplate
+  - type: Tag
+    tags:
+    - RevArmorPlate
+
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: RevRocketFrame
+  name: rocket frame
+  description: A frame for a revolutionary rocket.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Rockets/unfinished.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - RevRocket
+
+- type: entity
+  parent: [ EncryptionKey, BaseRevMajorContraband ]
+  id: EncryptionKeyRev
+  name: revolutionary encryption key
+  description: An encryption key used by underground revolutionary groups.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Revolutionary
+    defaultChannel: Revolutionary
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+    layers:
+    - state: crypt_red
+    - state: synd_label
+  - type: Tag
+    tags:
+    - EncryptionRevolutionary
+
+- type: entity
+  parent: [ AgentIDCard, BaseRevMajorContraband ]
+  id: RevIDCard
+  name: revolutionary access card
+  components:
+  - type: Access
+    tags:
+    - Maintenance
+    - Revolutionary
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - WhitelistChameleonIdCard
+    - RevID
+  - type: ChameleonClothing
+    default: RevIDCard

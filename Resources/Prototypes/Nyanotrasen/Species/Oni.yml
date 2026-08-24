@@ -9,6 +9,7 @@
   markingLimits: MobOniMarkingLimits
   sprites: MobHumanSprites
   skinColoration: Hues
+  knowledge: Human # Pirate
   maleFirstNames: NamesOniFirstMale
   femaleFirstNames: NamesOniFirstFemale
   lastNames: NamesOniLast

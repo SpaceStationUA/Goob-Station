@@ -139,7 +139,10 @@ public record struct UnbuckleAttemptEvent(
 /// Event raised directed at a strap entity after something has been buckled to it.
 /// </summary>
 [ByRefEvent]
-public readonly record struct StrappedEvent(Entity<StrapComponent> Strap, Entity<BuckleComponent> Buckle);
+public readonly record struct StrappedEvent(
+    Entity<StrapComponent> Strap,
+    Entity<BuckleComponent> Buckle,
+    EntityUid? User = null); // Pirate - retain the actor for strap-specific mechanics.
 
 /// <summary>
 /// Event raised directed at a buckle entity after it has been buckled.
@@ -151,7 +154,10 @@ public readonly record struct BuckledEvent(Entity<StrapComponent> Strap, Entity<
 /// Event raised directed at a strap entity after something has been unbuckled from it.
 /// </summary>
 [ByRefEvent]
-public readonly record struct UnstrappedEvent(Entity<StrapComponent> Strap, Entity<BuckleComponent> Buckle);
+public readonly record struct UnstrappedEvent(
+    Entity<StrapComponent> Strap,
+    Entity<BuckleComponent> Buckle,
+    EntityUid? User = null); // Pirate - retain the actor for strap-specific mechanics.
 
 /// <summary>
 /// Event raised directed at a buckle entity after it has been unbuckled from some strap entity.

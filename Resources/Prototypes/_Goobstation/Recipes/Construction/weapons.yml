@@ -6,6 +6,11 @@
   targetNode: LitMolotov
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    WeaponsKnowledge: 2
 
 - type: construction
   name: recipes-wooden-wand-name
@@ -14,6 +19,11 @@
   targetNode: woodenWand
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: BladedPlasmaFlatcapGrey

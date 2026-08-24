@@ -13,6 +13,7 @@ namespace Content.Shared.Charges.Systems;
 public abstract class SharedChargesSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!; // Pirate: Trauma charge visuals.
 
     /*
      * Despite what a bunch of systems do you don't need to continuously tick linear number updates and can just derive it easily.
@@ -90,6 +91,13 @@ public abstract class SharedChargesSystem : EntitySystem
 
         ent.Comp.LastUpdate = _timing.CurTime;
         Dirty(ent);
+        UpdateChargeVisuals((ent.Owner, ent.Comp, null)); // Pirate: event-driven charge visuals.
+    }
+
+    private void UpdateChargeVisuals(Entity<LimitedChargesComponent?, AutoRechargeComponent?> entity)
+    {
+        var current = GetCurrentCharges(entity);
+        _appearance.SetData(entity.Owner, LimitedChargesState.HasCharges, current > 0);
     }
 
     [Pure]
@@ -141,6 +149,7 @@ public abstract class SharedChargesSystem : EntitySystem
 
         action.Comp1.LastCharges = Math.Clamp(action.Comp1.LastCharges + addCharges, 0, action.Comp1.MaxCharges);
         Dirty(action.Owner, action.Comp1);
+        UpdateChargeVisuals(action); // Pirate: event-driven charge visuals.
     }
 
     public bool TryUseCharge(Entity<LimitedChargesComponent?> entity)
@@ -183,6 +192,7 @@ public abstract class SharedChargesSystem : EntitySystem
         action.Comp.LastCharges = action.Comp.MaxCharges;
         action.Comp.LastUpdate = _timing.CurTime;
         Dirty(action);
+        UpdateChargeVisuals((action.Owner, action.Comp, null)); // Pirate: Trauma charge visuals.
     }
 
     /// <summary>
@@ -211,6 +221,7 @@ public abstract class SharedChargesSystem : EntitySystem
         action.Comp.LastCharges = adjusted;
         action.Comp.LastUpdate = _timing.CurTime;
         Dirty(action);
+        UpdateChargeVisuals((action.Owner, action.Comp, null)); // Pirate: Trauma charge visuals.
     }
 
     /// <summary>
@@ -236,6 +247,7 @@ public abstract class SharedChargesSystem : EntitySystem
 
         action.Comp.MaxCharges = adjusted;
         Dirty(action);
+        UpdateChargeVisuals((action.Owner, action.Comp, null)); // Pirate: keep max-charge changes consistent.
     }
 
     /// <summary>

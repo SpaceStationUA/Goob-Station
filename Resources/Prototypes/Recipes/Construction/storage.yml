@@ -11,6 +11,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: TallCabinet
@@ -23,6 +28,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: ChestDrawer
@@ -37,6 +47,12 @@
     - !type:TileNotBlocked
 
 # ItemCabinets
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
 - type: construction
   id: ShowCase
   graph: GlassBox
@@ -51,6 +67,12 @@
 
 # Shelfs
 # Normals
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
+
 - type: construction
   id: ShelfWood
   graph: Shelf
@@ -61,6 +83,10 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory: {}
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: ShelfMetal
@@ -72,6 +98,11 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: ShelfGlass
@@ -85,6 +116,12 @@
     - !type:WallmountCondition
 
 # Reinforced
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
 - type: construction
   id: ShelfRWood
   graph: Shelf
@@ -95,6 +132,11 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: ShelfRMetal
@@ -106,6 +148,11 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: ShelfRGlass
@@ -119,6 +166,12 @@
     - !type:WallmountCondition
 
 # Departmental
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
 - type: construction
   id: ShelfBar
   graph: Shelf
@@ -129,6 +182,11 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: ShelfKitchen
@@ -140,6 +198,11 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: ShelfChemistry
@@ -151,3 +214,8 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1

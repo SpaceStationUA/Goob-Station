@@ -10,6 +10,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: CdRack
@@ -21,3 +26,6 @@
   canBuildInImpassable: true
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0

@@ -1,0 +1,303 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# TODO: BRUH DO THIS WITH CODE
+
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: BaseBloomery
+  name: unlit bloomery
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Forging/bloomery.rsi
+    state: cold
+  - type: Animateable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Damageable
+    damageModifierSet: StructuralMetallic
+  - type: Construction
+    graph: BloomeryCold
+    node: bloomery
+
+- type: entity
+  abstract: true
+  parent: BaseBloomery
+  id: BaseBloomeryLit
+  name: lit bloomery
+  components:
+  - type: Sprite
+    state: burning
+  - type: Damageable
+    damageModifierSet: NormalMode
+  - type: PointLight
+    radius: 2
+    energy: 3
+    color: "#ff8227"
+
+- type: entity
+  abstract: true
+  parent: BaseBloomery
+  id: BaseBloomeryComplete
+  name: smoking bloomery
+  description: Looks ready, smash it open.
+  components:
+  - type: Sprite
+    state: complete
+
+# Unloaded
+
+- type: entity
+  parent: BaseBloomery
+  id: BloomeryCold
+  name: unlit bloomery
+  description: Needs to be loaded with charcoal and metal scraps before firing.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Brick1:
+            min: 13
+            max: 15
+
+# Loaded
+
+- type: entity
+  parent: BaseBloomery
+  id: BloomeryColdBrass
+  suffix: Brass
+  description: Loaded with brass, just needs firing.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            Brick1:
+              min: 13
+              max: 15
+            Charcoal1:
+              min: 4
+              max: 5
+            BrassScraps:
+              min: 1
+              max: 1
+  - type: Construction
+    node: bloomerybrass
+
+- type: entity
+  parent: BaseBloomery
+  id: BloomeryColdPlasteel
+  suffix: Plasteel
+  description: Loaded with plasteel, just needs firing.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            Brick1:
+              min: 13
+              max: 15
+            Charcoal1:
+              min: 4
+              max: 5
+            PlasteelScraps:
+              min: 1
+              max: 1
+  - type: Construction
+    node: bloomeryplasteel
+
+- type: entity
+  parent: BaseBloomery
+  id: BloomeryColdSteel
+  suffix: Steel
+  description: Loaded with steel, just needs firing.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Brick1:
+            min: 13
+            max: 15
+          Charcoal1:
+            min: 4
+            max: 5
+          SteelScraps:
+            min: 1
+            max: 1
+  - type: Construction
+    node: bloomerysteel
+
+# Lit
+
+- type: entity
+  parent: BaseBloomeryLit
+  id: BloomeryLitBrass
+  suffix: Brass
+  description: Loaded with brass, give it some time to burn and it will be ready.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 60000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BloomeryCompleteBrass:
+            min: 1
+            max: 1
+  - type: Construction
+    node: bloomerybrasslit
+  - type: BloomerySmelter
+    result: BloomeryCompleteBrass
+
+- type: entity
+  parent: BaseBloomeryLit
+  id: BloomeryLitSteel
+  suffix: Steel
+  description: Loaded with steel, give it some time to burn and it will be ready.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 60000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BloomeryCompleteSteel:
+            min: 1
+            max: 1
+  - type: Construction
+    node: bloomerysteellit
+  - type: BloomerySmelter
+    result: BloomeryCompleteSteel
+
+- type: entity
+  parent: BaseBloomeryLit
+  id: BloomeryLitPlasteel
+  name: lit bloomery
+  description: Loaded with plasteel, give it some time to burn and it will be ready.
+  categories: [HideSpawnMenu]
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 60000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BloomeryCompletePlasteel:
+            min: 1
+            max: 1
+  - type: Construction
+    node: bloomeryplasteellit
+  - type: BloomerySmelter
+    result: BloomeryCompletePlasteel
+
+# Complete
+
+- type: entity
+  parent: BaseBloomeryComplete
+  id: BloomeryCompletePlasteel
+  suffix: Plasteel
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Brick1:
+            min: 13
+            max: 15
+          PlasteelBloom:
+            min: 1
+            max: 1
+
+- type: entity
+  parent: BaseBloomeryComplete
+  id: BloomeryCompleteSteel
+  suffix: Steel
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Brick1:
+            min: 13
+            max: 15
+          SteelBloom:
+            min: 1
+            max: 1
+
+- type: entity
+  parent: BaseBloomeryComplete
+  id: BloomeryCompleteBrass
+  suffix: Brass
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Brick1:
+            min: 13
+            max: 15
+          BrassBloom:
+            min: 1
+            max: 1

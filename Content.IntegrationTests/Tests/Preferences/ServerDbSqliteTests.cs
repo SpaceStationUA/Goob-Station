@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Database;
+using Content.Shared._Pirate.Knowledge;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -15,6 +16,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests.Preferences
@@ -91,6 +93,50 @@ namespace Content.IntegrationTests.Tests.Preferences
             await db.InitPrefsAsync(username, originalProfile);
             var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.That(prefs.Characters.Single(p => p.Key == slot).Value.MemberwiseEquals(originalProfile));
+            await pair.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task PirateKnowledgeProfileRoundTripsUpdatesAndClears()
+        {
+            var pair = await PoolManager.GetServerClient();
+            var db = GetDb(pair.Server);
+            var username = new NetUserId(new Guid("26680d34-027b-4f89-8bd7-9c81de987b3d"));
+            var original = CharlieCharlieson().WithKnowledge(new KnowledgeProfile(new Dictionary<EntProtoId, int>
+            {
+                ["FabricationKnowledge"] = 2,
+                ["FirstAidKnowledge"] = 1,
+            }));
+
+            await db.InitPrefsAsync(username, original);
+            var loaded = (HumanoidCharacterProfile) (await db.GetPlayerPreferencesAsync(username))!.Characters[0];
+            Assert.Multiple(() =>
+            {
+                Assert.That(loaded.MemberwiseEquals(original), Is.True);
+                Assert.That(loaded.Knowledge.Mastery, Is.EquivalentTo(original.Knowledge.Mastery));
+                Assert.That(loaded.Knowledge.Mastery, Is.Not.SameAs(original.Knowledge.Mastery));
+            });
+
+            var updated = new HumanoidCharacterProfile(original);
+            updated.Knowledge.Mastery.Remove("FabricationKnowledge");
+            updated.Knowledge.Mastery["FirstAidKnowledge"] = 3;
+            updated.Knowledge.Mastery["ShootingKnowledge"] = 2;
+            await db.SaveCharacterSlotAsync(username, updated, 0);
+
+            loaded = (HumanoidCharacterProfile) (await db.GetPlayerPreferencesAsync(username))!.Characters[0];
+            Assert.That(loaded.Knowledge.Mastery, Is.EquivalentTo(new Dictionary<EntProtoId, int>
+            {
+                ["FirstAidKnowledge"] = 3,
+                ["ShootingKnowledge"] = 2,
+            }), "In-place dictionary changes were not detected by the EF value comparer.");
+
+            var cleared = new HumanoidCharacterProfile(updated).WithKnowledge(new KnowledgeProfile());
+            await db.SaveCharacterSlotAsync(username, cleared, 0);
+
+            loaded = (HumanoidCharacterProfile) (await db.GetPlayerPreferencesAsync(username))!.Characters[0];
+            Assert.That(loaded.Knowledge.Mastery, Is.Empty,
+                "Clearing a character's selected masteries left stale JSON data in the database.");
+
             await pair.CleanReturnAsync();
         }
 

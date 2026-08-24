@@ -8,6 +8,11 @@
   category: construction-category-machines
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: MachineFrame
@@ -19,6 +24,12 @@
   canBuildInImpassable: false
 
 # Switching
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MechanicsKnowledge: 1
+
 - type: construction
   id: TwoWayLeverRecipe
   graph: LeverGraph
@@ -29,6 +40,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MechanicsKnowledge: 1
 
 - type: construction
   id: LightSwitchRecipe
@@ -43,6 +59,12 @@
   conditions:
     - !type:WallmountCondition
   hide: true #TODO: Fix the lightswitch, issue #34659. Until then, keep hidden so people don't build it and get confused.
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MechanicsKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: SignalSwitchRecipe
@@ -56,6 +78,12 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MechanicsKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: SignalButtonRecipe
@@ -69,6 +97,12 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MechanicsKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: LightSwitchDirectionalRecipe
@@ -84,6 +118,12 @@
   conditions:
     - !type:WallmountCondition
   hide: true #TODO: Fix the lightswitch, issue #34659. Until then, keep hidden so people don't build it and get confused.
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MechanicsKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: SignalSwitchDirectionalRecipe
@@ -98,6 +138,12 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MechanicsKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: SignalButtonDirectionalRecipe
@@ -112,3 +158,9 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MechanicsKnowledge: 1
+  useQuality: false

@@ -88,6 +88,8 @@ namespace Content.Server.Database
                 .HasIndex(p => new { p.Slot, PrefsId = p.PreferenceId })
                 .IsUnique();
 
+            KnowledgeProfileModel.Configure(modelBuilder); // Pirate
+
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new { HumanoidProfileId = p.ProfileId, p.AntagName })
                 .IsUnique();
