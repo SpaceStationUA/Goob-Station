@@ -48,7 +48,5 @@ public abstract partial class SharedPsionicSystem
 
             Popup.PopupEntity(Loc.GetString("psionic-power-metapsionic-power-detected", ("power", args.Power)), detector, detector, PopupType.LargeCaution);
         }
-
-        args.Handled = true;
     }
 }
