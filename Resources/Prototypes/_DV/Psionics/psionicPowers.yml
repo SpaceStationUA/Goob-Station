@@ -29,6 +29,10 @@
       weight: 1
     - id: ShadeskipPowerEntity
       weight: 1
+    - id: TelekineticPulsePowerEntity
+      weight: 1
+    - id: PsionicFlashPowerEntity
+      weight: 1
 
 # Powers
 - type: entity
@@ -145,6 +149,18 @@
   - type: ShadeskipPower
     powerPoolAdditions:
       DarkSwapPowerEntity: 2
+
+- type: entity
+  id: TelekineticPulsePowerEntity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TelekineticPulsePower
+
+- type: entity
+  id: PsionicFlashPowerEntity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PsionicFlashPower
 
 # Temporary shadow kudzu left behind by DarkSwap. Despawns after 2 minutes.
 - type: entity

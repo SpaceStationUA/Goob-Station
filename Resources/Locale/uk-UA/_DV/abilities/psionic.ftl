@@ -15,6 +15,8 @@ psionic-power-name-revivify = Воскресіння
 psionic-power-name-darkswap = Темний Обмін
 psionic-power-name-assay = Аналіз
 psionic-power-name-shadeskip = Тіньовий Крок
+psionic-power-name-telekinetic-pulse = Телекінетичний Імпульс
+psionic-power-name-psionic-flash = Псіонічний спалах
 psionic-roll-failed = Ноосферний вплив не залишає сліду у вашій свідомості...
 psionic-partly-mindbroken = Псіонічний вплив на вашу свідомість слабшає...
 psionic-mindbroken = Ваша свідомість відступає від абстракції до реальності
@@ -137,6 +139,12 @@ psionic-eruption-power-metapsionic-feedback = {CAPITALIZE($entity)} - буря, 
 # Психокінетичний крик
 psychokinetic-scream-power-initialization-feedback = Безсловесний крик зростає в моєму горлі, старший за мову. Коли я його випущу, світло довкола розіб'ється.
 psychokinetic-scream-power-metapsionic-feedback = {CAPITALIZE($entity)} має голос, що розбиває саме світло.
+# Телекінетичний імпульс
+telekinetic-pulse-power-initialization-feedback = Коли я простягаю руку крізь завісу своєю психікою, я відкриваю джерело чистої кінетичної енергії. Вона тече крізь мене, але, схоже, я не маю тонкого контролю над нею.
+telekinetic-pulse-power-metapsionic-feedback = {CAPITALIZE($entity)} має сутність чистої кінетики, що тече крізь них.
+# Псіонічний спалах
+psionic-flash-power-initialization-feedback = Осліплююче світло виривається зсередини мого розуму, здатне палити зір тих, хто наважиться подивитися на мене.
+psionic-flash-power-metapsionic-feedback = {CAPITALIZE($entity)} випромінює осліплюючу псіонічну ауру.
 # Відгуки для конкретних сутностей
 # ПРИМІТКА: наступні три не мають прототипів сутностей у цій збірці - зарезервовані на майбутнє
 mantis-pendulum-hot-message = Маятник стає неприємно гарячим у вашій руці.
