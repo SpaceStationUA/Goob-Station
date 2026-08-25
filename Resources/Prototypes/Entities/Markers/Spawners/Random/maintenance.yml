@@ -137,6 +137,7 @@
       - id: ClothingHeadHatOutlawHat
       - id: ClothingHeadHatUshanka
       - id: ClothingHeadHatBunny
+      - id: ClothingMaskKitsune # starcup
       - id: ClothingMaskNeckGaiter
       - id: ClothingNeckScarfStripedZebra
       - id: ClothingOuterGhostSheet
@@ -164,6 +165,8 @@
         - id: ClothingNeckGenderfluidPin
         - id: ClothingNeckTransPin
         - id: ClothingNeckAutismPin
+        # starcup #983: maints loot
+        - id: ClothingHeadHatCuteTiara
     # Rare Group
     - !type:GroupSelector
       weight: 2

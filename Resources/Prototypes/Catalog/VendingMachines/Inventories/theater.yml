@@ -23,7 +23,15 @@
     ClothingOuterSanta: 2
     ClothingHeadHatSkub: 2
     ClothingOuterSkub: 2
+    ClothingHeadHatGreenEscoffion: 1 # starcup
+    ClothingHeadHatPrincess: 1 # starcup
     ClothingHeadHatBeretFrench: 2
+    # starcup #983 additions (imp / feath.)
+    ClothingHeadHatFeatheredCap: 1 # starcup
+    ClothingMaskKitsune: 1 # Den - Kitsune mask
+    ClothingMaskOniBlue: 1 # Nyano - Clothing addition
+    ClothingMaskOniRed: 1 # Nyano - Clothing addition
+    ClothingHeadHatCuteTiara: 1 # starcup
     ClothingOuterSuitChicken: 2
     ClothingHeadHatChickenhead: 2
     ClothingOuterSuitMonkey: 2
@@ -46,6 +54,9 @@
     ClothingOuterClownPriest: 1
     ClothingMaskSadMime: 1
     ClothingMaskScaredMime: 1
+    ClothingMaskKitsune: 1 # Den - Kitsune mask
+    ClothingMaskOniBlue: 1 # Nyano - Clothing addition
+    ClothingMaskOniRed: 1 # Nyano - Clothing addition
     ClothingUniformJumpsuitKimono: 1
     ClothingHeadHatCasa: 1
     FoodPoppy: 1
@@ -71,6 +82,8 @@
     ClothingHeadHatBunnyearsClown: 1 # Pirate
   contrabandInventory:
     ClothingHeadHatRichard: 1
+    # starcup #983 additions (tiaras)
+    ClothingHeadHatCuteTiara: 1 # starcup
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1
     ClothingOuterDogi: 1

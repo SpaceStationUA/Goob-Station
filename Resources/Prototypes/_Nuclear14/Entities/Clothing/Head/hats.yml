@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ ClothingHeadBase, TemperatureProtectionMinimal ] # starcup - replaced ClothingHeadWinterHatLightBase
+  id: ClothingHeadHatBeanieGreen
+  name: dark green beanie # starcup - changed from "green beanie" to differentiate better
+  description: A dark green beanie.
+  components:
+  - type: Sprite
+    sprite: _Nuclear14/Clothing/Head/FalloutHats/beanie.rsi
+  - type: Clothing
+    sprite: _Nuclear14/Clothing/Head/FalloutHats/beanie.rsi
