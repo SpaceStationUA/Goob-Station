@@ -1,0 +1,65 @@
+# Ported from Delta-V-UA (Space-station-14-UA/Delta-V-UA), Nyanotrasen/Structures/Walls/paper.rsi
+# Original texture license: CC-BY-SA-4.0, copyright Hyenh#6078 (see paper.rsi/meta.json)
+
+- type: entity
+  parent: WallSolid
+  id: WallPaper
+  name: паперова стіна
+  description: Стіна, зведена з щільно спресованої паперової маси. Виглядає крихкою, але тримається напрочуд міцно.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Walls/paper.rsi
+    layers:
+    - state: full
+  - type: Icon
+    sprite: _Pirate/Structures/Walls/paper.rsi
+    state: full
+  - type: IconSmooth
+    key: walls
+    base: paperwall
+  - type: Appearance
+  - type: Construction
+    graph: WallPaper
+    node: wallPaper
+
+# Construction graph: steel girder -> clad with SheetPaper -> paper wall.
+# Modeled on the vanilla SS14 wall-construction pattern (girder + material cladding,
+# pry off to deconstruct). Verify node/edge shape against an existing wall's graph
+# in this repo (e.g. Recipes/Constructible/Structures/Walls/) and adjust if it differs.
+- type: constructionGraph
+  id: WallPaper
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: girder
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 2
+
+  - node: girder
+    entity: WallGirder
+    edges:
+    - to: wallPaper
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: SheetPaper
+        amount: 5
+        doAfter: 2
+
+  - node: wallPaper
+    entity: WallPaper
+    edges:
+    - to: girder
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPaper
+        amount: 3
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Prying
+        doAfter: 1
