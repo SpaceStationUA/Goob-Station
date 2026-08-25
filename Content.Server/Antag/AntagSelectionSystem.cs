@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Content.Server._Goobstation.Antag;
+using Content.Server._Pirate.Antag; // Pirate - SecretTP tweak
 using Content.Server.Administration.Managers;
 using Content.Server.Antag.Components;
 using Content.Server.Chat.Managers;
@@ -428,6 +429,16 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
     {
+        // Pirate start - SecretTP tweak
+        if (session is not null && IsSecretTpActive())
+        {
+            var attempt = new PirateAntagAssignmentAttemptEvent(ent.Owner, session, def);
+            RaiseLocalEvent(ent.Owner, ref attempt, true);
+            if (attempt.Cancelled)
+                return;
+        }
+        // Pirate end - SecretTP tweak
+
         EntityUid? antagEnt = null;
         var isSpawner = false;
 
@@ -555,6 +566,20 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
         RaiseLocalEvent(ent, ref afterEv, true);
     }
+
+    // Pirate start - SecretTP tweak
+    private bool IsSecretTpActive()
+    {
+        var query = EntityQueryEnumerator<ActiveGameRuleComponent>();
+        while (query.MoveNext(out var rule, out _))
+        {
+            if (MetaData(rule).EntityPrototype?.ID == "SecretTP")
+                return true;
+        }
+
+        return false;
+    }
+    // Pirate end - SecretTP tweak
 
     /// <summary>
     /// Gets an ordered player pool based on player preferences and the antagonist definition.
