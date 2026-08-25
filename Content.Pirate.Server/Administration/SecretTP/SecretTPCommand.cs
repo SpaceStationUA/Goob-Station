@@ -1,6 +1,5 @@
 using Content.Server.Administration;
 using Content.Pirate.Server.SecretTP;
-using Content.Pirate.Server.SecretTP.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 

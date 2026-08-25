@@ -8,6 +8,7 @@ using Content.Shared._Pirate.CCVars; // Pirate: multiz
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
@@ -369,7 +370,7 @@ public sealed partial class GameTicker
             var activeRules = EntityQueryEnumerator<ActiveGameRuleComponent>();
             while (activeRules.MoveNext(out var activeRuleUid, out _))
             {
-                if (MetaData(activeRuleUid).EntityPrototype?.ID == "SecretTP")
+                if (MetaData(activeRuleUid).EntityPrototype?.ID == SecretTPConstants.RuleId)
                 {
                     secretTpActive = true;
                     break;

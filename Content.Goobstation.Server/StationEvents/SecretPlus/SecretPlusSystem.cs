@@ -14,6 +14,7 @@ using Content.Server.StationEvents;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Random.Helpers;
@@ -376,15 +377,18 @@ public sealed class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
                 return;
         }
 
-        var chaosScore = pirateSecretTp ? GetChaosScore(prototype!, ruleComp, players) : null;
-        if (pirateSecretTp && chaosScore is null)
+        if (pirateSecretTp && GetChaosScore(prototype!, ruleComp, players) is null)
             return;
         // Pirate end - SecretTP tweak
 
         var ruleUid = _ticker.AddGameRule(rule);
-        chaosScore ??= GetChaosScore(ruleUid, players); // Pirate - SecretTP tweak
+        // Pirate start - SecretTP tweak
+        var chaosScore = GetChaosScore(ruleUid, players);
+        if (chaosScore is null)
+            return;
 
-        scheduler.Comp.ChaosScore += chaosScore!.Value; // Pirate - SecretTP tweak
+        scheduler.Comp.ChaosScore += chaosScore!.Value;
+        // Pirate end - SecretTP tweak
 
         // if we hijack playercount, also hijack how many antags we pick
         if (players != null && TryComp<AntagSelectionComponent>(ruleUid, out var selection))
@@ -409,7 +413,7 @@ public sealed class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
     // Pirate start - SecretTP tweak
     private bool IsPirateSecretTp(EntityUid scheduler)
     {
-        return MetaData(scheduler).EntityPrototype?.ID == "SecretTP";
+        return MetaData(scheduler).EntityPrototype?.ID == SecretTPConstants.RuleId;
     }
     // Pirate end - SecretTP tweak
 

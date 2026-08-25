@@ -99,7 +99,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!Exists(rule) || !TryComp<AntagSelectionComponent>(rule, out var select))
             return;
 
-        MakeAntag((rule, select), args.Player, def, ignoreSpawner: true);
+        // Pirate stat - SecretTP tweak
+        if (!MakeAntag((rule, select), args.Player, def, ignoreSpawner: true))
+            return;
+        // Pirate end - SecretTP tweak
+
         args.TookRole = true;
         _ghostRole.UnregisterGhostRole((ent, Comp<GhostRoleComponent>(ent)));
     }
@@ -418,7 +422,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
         else
         {
-            MakeAntag(ent, session, def, ignoreSpawner);
+            // Pirate start - SecretTP tweak
+            if (!MakeAntag(ent, session, def, ignoreSpawner))
+                return false;
+            // Pirate end - SecretTP tweak
         }
 
         return true;
@@ -427,17 +434,21 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <summary>
     /// Makes a given player into the specified antagonist.
     /// </summary>
-    public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
+    // Pirate start - SecretTP tweak
+    public bool MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
     {
-        // Pirate start - SecretTP tweak
         if (session is not null && IsSecretTpActive())
         {
             var attempt = new PirateAntagAssignmentAttemptEvent(ent.Owner, session, def);
             RaiseLocalEvent(ent.Owner, ref attempt, true);
             if (attempt.Cancelled)
-                return;
+            {
+                _adminLogger.Add(LogType.AntagSelection,
+                    $"Rejected SecretTP antagonist assignment for {session.Name}: {attempt.RejectionReason ?? "no reason provided"}");
+                return false;
+            }
         }
-        // Pirate end - SecretTP tweak
+    // Pirate end - SecretTP tweak
 
         EntityUid? antagEnt = null;
         var isSpawner = false;
@@ -480,7 +491,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
             // </Trauma>
 
-            return;
+            return false; // Pirate - SecretTP tweak
         }
 
         if (def.UnequipOldGear && TryComp(player, out InventoryComponent? inventory) &&
@@ -520,12 +531,12 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                     ent.Comp.PreSelectedSessions[def].Remove(session);
                 }
 
-                return;
+                return false; // Pirate - SecretTP tweak
             }
 
             spawnerComp.Rule = ent;
             spawnerComp.Definition = def;
-            return;
+            return true; // Pirate - SecretTP tweak
         }
 
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
@@ -565,6 +576,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
         RaiseLocalEvent(ent, ref afterEv, true);
+        return true; // Pirate - SecretTP tweak
     }
 
     // Pirate start - SecretTP tweak
@@ -573,7 +585,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var query = EntityQueryEnumerator<ActiveGameRuleComponent>();
         while (query.MoveNext(out var rule, out _))
         {
-            if (MetaData(rule).EntityPrototype?.ID == "SecretTP")
+            if (MetaData(rule).EntityPrototype?.ID == SecretTPConstants.RuleId)
                 return true;
         }
 

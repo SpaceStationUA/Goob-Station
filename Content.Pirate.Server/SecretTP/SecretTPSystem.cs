@@ -20,7 +20,6 @@ using Content.Shared.Roles.Components;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Preferences;
 using Content.Server.Preferences.Managers;
-using Robust.Server.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -39,7 +38,6 @@ public sealed class SecretTPSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     private readonly Dictionary<EntityUid, TimeSpan> _pendingDeaths = new();
@@ -51,6 +49,7 @@ public sealed class SecretTPSystem : EntitySystem
         SubscribeLocalEvent<SecretTPComponent, ComponentRemove>(OnBudgetRemove);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _pendingDeaths.Clear());
         SubscribeLocalEvent<PirateGameRuleAddAttemptEvent>(OnGameRuleAddAttempt);
         SubscribeLocalEvent<GameRuleAddedEvent>(OnGameRuleAdded);
         SubscribeLocalEvent<GameRuleEndedEvent>(OnGameRuleEnded);
@@ -63,17 +62,17 @@ public sealed class SecretTPSystem : EntitySystem
 
     private void OnGameRuleAddAttempt(ref PirateGameRuleAddAttemptEvent ev)
     {
-        if (!TryGetActiveBudget(out var budget) || ev.RuleId == "SecretTP")
+        if (!TryGetActiveBudget(out var budget) || ev.RuleId == SecretTPConstants.RuleId)
             return;
 
-        if (budget.RuleBlacklist.Contains(ev.RuleId))
+        if (budget.RuleBlacklist.Contains(new ProtoId<EntityPrototype>(ev.RuleId)))
         {
             ev.Cancelled = true;
             ev.RejectionReason = Loc.GetString("cmd-secrettp-rule-blacklisted", ("rule", ev.RuleId));
             return;
         }
 
-        var missingDepartments = GetMissingDepartmentRequirements(budget, ev.RuleId);
+        var missingDepartments = GetMissingDepartmentRequirements(budget, new ProtoId<EntityPrototype>(ev.RuleId));
         if (missingDepartments.Count > 0)
         {
             ev.Cancelled = true;
@@ -133,14 +132,14 @@ public sealed class SecretTPSystem : EntitySystem
         var ruleId = MetaData(ev.Rule).EntityPrototype?.ID;
         if (ruleId is not null)
         {
-            if (budget.RuleBlacklist.Contains(ruleId))
+            if (budget.RuleBlacklist.Contains(new ProtoId<EntityPrototype>(ruleId)))
             {
                 ev.Cancelled = true;
                 ev.RejectionReason = Loc.GetString("cmd-secrettp-rule-blacklisted", ("rule", ruleId));
                 return;
             }
 
-            var missingDepartments = GetMissingDepartmentRequirements(budget, ruleId);
+            var missingDepartments = GetMissingDepartmentRequirements(budget, new ProtoId<EntityPrototype>(ruleId));
             if (missingDepartments.Count > 0)
             {
                 ev.Cancelled = true;
@@ -190,7 +189,7 @@ public sealed class SecretTPSystem : EntitySystem
 
     private void OnGameRuleAdded(ref GameRuleAddedEvent ev)
     {
-        if (!TryGetActiveBudget(out var budget) || ev.RuleId == "SecretTP")
+        if (!TryGetActiveBudget(out var budget) || ev.RuleId == SecretTPConstants.RuleId)
             return;
 
         if (budget.PendingRuleReservations.TryGetValue(ev.RuleId, out var pending) && pending.Count > 0)
@@ -266,13 +265,13 @@ public sealed class SecretTPSystem : EntitySystem
         if (!TryComp<SecretTPComponent>(ev.Scheduler, out var budget))
             return;
 
-        if (budget.RuleBlacklist.Contains(ev.Rule.Id))
+        if (budget.RuleBlacklist.Contains(ev.Rule))
         {
             ev.Cancelled = true;
             return;
         }
 
-        if (GetMissingDepartmentRequirements(budget, ev.Rule.Id).Count > 0)
+        if (GetMissingDepartmentRequirements(budget, ev.Rule).Count > 0)
         {
             ev.Cancelled = true;
             return;
@@ -353,7 +352,7 @@ public sealed class SecretTPSystem : EntitySystem
                     role.AntagPrototype is not { } antag)
                     continue;
 
-                if (countedAntags.Add(antag.Id) && budget.AntagPoints.TryGetValue(antag.Id, out var points))
+                if (countedAntags.Add(antag.Id) && budget.AntagPoints.TryGetValue(new ProtoId<AntagPrototype>(antag.Id), out var points))
                     used += points;
             }
         }
@@ -383,7 +382,7 @@ public sealed class SecretTPSystem : EntitySystem
                 continue;
 
             hasAssignedCrew = true;
-            if (_mobState.IsAlive(entity, mob) && budget.JobPoints.TryGetValue(jobId.Id, out var points))
+            if (_mobState.IsAlive(entity, mob) && budget.JobPoints.TryGetValue(new ProtoId<JobPrototype>(jobId.Id), out var points))
                 budget.TotalPoints += points;
         }
 
@@ -392,7 +391,7 @@ public sealed class SecretTPSystem : EntitySystem
 
         foreach (var (job, count) in GetSecretTPReadyManifest())
         {
-            if (budget.JobPoints.TryGetValue(job.Id, out var points))
+            if (budget.JobPoints.TryGetValue(job, out var points))
                 budget.TotalPoints += points * count;
         }
     }
@@ -446,7 +445,7 @@ public sealed class SecretTPSystem : EntitySystem
         if (string.IsNullOrEmpty(role.Id))
             role = definition.FallbackRoles.FirstOrDefault();
 
-        if (!string.IsNullOrEmpty(role.Id) && budget.AntagPoints.TryGetValue(role.Id, out var roleCost))
+        if (!string.IsNullOrEmpty(role.Id) && budget.AntagPoints.TryGetValue(new ProtoId<AntagPrototype>(role.Id), out var roleCost))
             return roleCost;
 
         if (definition.MindRoles is null)
@@ -459,22 +458,22 @@ public sealed class SecretTPSystem : EntitySystem
                 continue;
 
             var mindRole = (MindRoleComponent) component.Component;
-            if (mindRole.AntagPrototype is { } antag && budget.AntagPoints.TryGetValue(antag.Id, out var mindRoleCost))
+            if (mindRole.AntagPrototype is { } antag && budget.AntagPoints.TryGetValue(new ProtoId<AntagPrototype>(antag.Id), out var mindRoleCost))
                 return mindRoleCost;
         }
 
         return 0;
     }
 
-    private List<(string Department, int Required, int Available)> GetMissingDepartmentRequirements(
+    private List<(ProtoId<DepartmentPrototype> Department, int Required, int Available)> GetMissingDepartmentRequirements(
         SecretTPComponent budget,
-        string rule)
+        ProtoId<EntityPrototype> rule)
     {
         if (!budget.RuleMinimumAliveDepartments.TryGetValue(rule, out var requirements) ||
             requirements is null || requirements.Count == 0)
             return [];
 
-        var available = new Dictionary<string, int>();
+        var available = new Dictionary<ProtoId<DepartmentPrototype>, int>();
 
         var hasAssignedCrew = false;
         var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent>();
@@ -506,7 +505,7 @@ public sealed class SecretTPSystem : EntitySystem
             }
         }
 
-        var missing = new List<(string Department, int Required, int Available)>();
+        var missing = new List<(ProtoId<DepartmentPrototype> Department, int Required, int Available)>();
         foreach (var (department, required) in requirements)
         {
             var count = available.GetValueOrDefault(department);
@@ -517,19 +516,16 @@ public sealed class SecretTPSystem : EntitySystem
         return missing;
     }
 
-    private string GetDepartmentName(string department)
+    private string GetDepartmentName(ProtoId<DepartmentPrototype> department)
     {
-        return department switch
-        {
-            "Security" => Loc.GetString("cmd-secrettp-department-security"),
-            "Command" => Loc.GetString("cmd-secrettp-department-command"),
-            _ => department,
-        };
+        return _prototypes.TryIndex(department, out DepartmentPrototype? prototype)
+            ? Loc.GetString(prototype.Name)
+            : department.Id;
     }
 
     private string FormatMissingDepartmentRequirementsLocalized(
         string rule,
-        List<(string Department, int Required, int Available)> missing)
+        List<(ProtoId<DepartmentPrototype> Department, int Required, int Available)> missing)
     {
         var departments = string.Join("; ", missing.Select(requirement =>
             Loc.GetString("cmd-secrettp-department-entry",

@@ -1,19 +1,23 @@
+using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
+using Robust.Shared.Prototypes;
+
 namespace Content.Pirate.Server.SecretTP.Components;
 
 [RegisterComponent]
 public sealed partial class SecretTPComponent : Component
 {
     [DataField]
-    public Dictionary<string, int> JobPoints = new();
+    public Dictionary<ProtoId<JobPrototype>, int> JobPoints = new();
 
     [DataField]
-    public Dictionary<string, int> AntagPoints = new();
+    public Dictionary<ProtoId<AntagPrototype>, int> AntagPoints = new();
 
     [DataField]
-    public List<string> RuleBlacklist = new();
+    public List<ProtoId<EntityPrototype>> RuleBlacklist = new();
 
     [DataField]
-    public Dictionary<string, Dictionary<string, int>> RuleMinimumAliveDepartments = new();
+    public Dictionary<ProtoId<EntityPrototype>, Dictionary<ProtoId<DepartmentPrototype>, int>> RuleMinimumAliveDepartments = new();
 
     [DataField]
     public float GreenShiftWeight = 4f;
