@@ -7,6 +7,7 @@ using Content.Shared._Shitmed.Targeting;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
+using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -238,6 +239,9 @@ public sealed partial class SlimeLatchSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
+        if (!CanLatch(ent, target)) // Pirate: slime morph
+            return; // Pirate: slime morph
+
         Latch(ent, target);
         args.Handled = true;
     }
@@ -255,7 +259,8 @@ public sealed partial class SlimeLatchSystem : EntitySystem
         return !(IsLatched(ent) // already latched
             || _mobState.IsDead(target) // target dead
             || !_actionBlocker.CanInteract(ent, target) // can't reach
-            || !HasComp<MobStateComponent>(target)); // make any mob work
+            || !HasComp<MobStateComponent>(target) // make any mob work
+            || (TryComp<HumanoidAppearanceComponent>(target, out var humanoid) && humanoid.Species == "SlimePerson")); // Pirate: slime kinship - slimes don't hunt their own kind
     }
 
     public bool NpcTryLatch(Entity<SlimeComponent> ent, EntityUid target)

@@ -225,6 +225,12 @@
           tags:
           - Justice
   - type: Appearance
+  - type: EmitsSoundOnMove # Pirate: gear step sounds
+    soundCollection: # Pirate: gear step sounds
+      collection: PirateFootstepTacticalWebbing # Pirate: gear step sounds
+      params: # Pirate: gear step sounds
+        volume: -10 # Pirate: gear step sounds
+    requiresWorn: true # Pirate: slime morph
 
 - type: entity
   parent: [ ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSyndicateContraband ]

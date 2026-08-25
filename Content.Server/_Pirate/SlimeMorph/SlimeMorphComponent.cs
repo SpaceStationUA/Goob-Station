@@ -59,25 +59,59 @@ public sealed partial class SlimeMorphComponent : Component
     public float TintAlpha = 0.85f;
 
     /// <summary>
-    /// Head bases worth copying on mimic, keyed by the species' head prototype id. Visible baked
-    /// muzzles/noses have a brightness multiplier that normalizes them to the slime body; an empty
-    /// base may also be listed when a structural Head marking must replace rather than overlay the
-    /// slime head. Unlisted species keep the slime's own head.
+    /// Structural body-part layers worth copying on mimic (baked shapes markings can't reproduce,
+    /// like a muzzle head or digitigrade legs). Unlisted layers always keep the slime's own sprite.
     /// </summary>
     [DataField]
-    public Dictionary<string, float> HeadColorFactors = new()
+    public HumanoidVisualLayers[] CopyableLayers =
     {
-        ["MobVulpkaninHead"] = 0.84f,
-        ["MobTajaranHead"] = 0.86f,
-        ["MobFeroxiHead"] = 0.92f,
+        HumanoidVisualLayers.Head,
+        HumanoidVisualLayers.LLeg,
+        HumanoidVisualLayers.RLeg,
+        HumanoidVisualLayers.LFoot,
+        HumanoidVisualLayers.RFoot,
     };
 
     /// <summary>
-    /// Alpha applied to copied structural faces. Slime body art has about 0.66 average pixel alpha,
-    /// while the copied species heads and Unathi head markings are opaque.
+    /// Base sprites worth copying on mimic, keyed by the species' prototype id for that body part
+    /// (e.g. "MobVulpkaninHead", "MobVulpkaninLLeg"). Visible baked shapes have a brightness
+    /// multiplier that normalizes them to the slime body; an empty base may also be listed when a
+    /// structural marking must replace rather than overlay the slime's own sprite. A body part whose
+    /// base id isn't listed here keeps the slime's own sprite for that layer.
     /// </summary>
     [DataField]
-    public float HeadColorAlpha = 0.66f;
+    public Dictionary<string, float> CopyableLayerFactors = new()
+    {
+        ["MobVulpkaninHead"] = 0.84f,
+        ["MobVulpkaninLLeg"] = 0.84f,
+        ["MobVulpkaninRLeg"] = 0.84f,
+        ["MobVulpkaninLFoot"] = 0.84f,
+        ["MobVulpkaninRFoot"] = 0.84f,
+        ["MobTajaranHead"] = 0.86f,
+        ["MobTajaranLLeg"] = 0.86f,
+        ["MobTajaranRLeg"] = 0.86f,
+        ["MobTajaranLFoot"] = 0.86f,
+        ["MobTajaranRFoot"] = 0.86f,
+        ["MobFeroxiHead"] = 0.92f,
+        ["MobFeroxiLLeg"] = 0.92f,
+        ["MobFeroxiRLeg"] = 0.92f,
+        ["MobFeroxiLFoot"] = 0.92f,
+        ["MobFeroxiRFoot"] = 0.92f,
+        // Reptilian has no baked head worth copying (its snout is a marking), but its digitigrade
+        // legs are a distinct baked shape. Scales read close to base color, so no darkening yet -
+        // tune this once someone eyeballs it in-game.
+        ["MobReptilianLLegDigi"] = 1f,
+        ["MobReptilianRLegDigi"] = 1f,
+        ["MobReptilianLFootDigi"] = 1f,
+        ["MobReptilianRFootDigi"] = 1f,
+    };
+
+    /// <summary>
+    /// Alpha applied to copied structural layers. Slime body art has about 0.66 average pixel alpha,
+    /// while the copied species parts and Unathi head markings are opaque.
+    /// </summary>
+    [DataField]
+    public float CopiedLayerAlpha = 0.66f;
 
     /// <summary>
     /// Fraction of current nutrition consumed when committing a mimic. Self-edits are free.
@@ -138,8 +172,8 @@ public sealed class SlimeMorphWorking
     public float Width = 1f;
     public MarkingSet Markings = new();
 
-    /// <summary>Head base-sprite override (baked head shapes like muzzles); null = slime's own head.</summary>
-    public string? HeadLayer;
+    /// <summary>Base-sprite overrides for copied structural layers (baked heads, digitigrade legs, ...), keyed by layer. A layer missing here keeps the slime's own sprite.</summary>
+    public Dictionary<HumanoidVisualLayers, string> BodyLayers = new();
 
     /// <summary>Species used to populate marking pickers.</summary>
     public string? PickerSpecies;

@@ -21,4 +21,15 @@ public sealed partial class GerasComponent : Component
 
     [DataField]
     public EntityUid? GerasActionEntity;
+
+    /// <summary>
+    /// Clothing stashed away while in geras form, keyed by the inventory slot it came from.
+    /// Restored on a safe revert; spilled onto the ground instead if the geras dies.
+    /// </summary>
+    public Dictionary<string, EntityUid> StoredClothing = new();
+
+    /// <summary>
+    /// Held items stashed away while in geras form.
+    /// </summary>
+    public List<EntityUid> StoredHeldItems = new();
 }

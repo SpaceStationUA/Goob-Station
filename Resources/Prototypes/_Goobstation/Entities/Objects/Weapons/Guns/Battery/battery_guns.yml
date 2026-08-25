@@ -261,7 +261,7 @@
     slots:
       flashlight:
         name: weapon-upgrade-slot-name-flashlight
-        priority: 5
+        priority: 0 # DOWNSTREAM-TPirates: gun flashlights - lowest eject priority
         ejectOnBreak: true
         occludesLight: false
         whitelist:

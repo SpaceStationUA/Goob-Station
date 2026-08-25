@@ -550,25 +550,25 @@ public sealed partial class SlimeMorphWindow : DefaultWindow
 
         _humanoidSystem.SetSkinColor(preview, state.SkinColor, false);
 
-        // Mirror the head base-sprite override (baked muzzles etc.) so the preview matches.
-        if (state.HeadLayer is { } headLayer)
+        // Mirror the copied structural layers (baked muzzles, digitigrade legs, ...) so the preview
+        // matches. Layers not present in state.BodyLayers are cleared back to the slime's own sprite.
+        var wanted = state.BodyLayers.ToDictionary(bodyLayer => bodyLayer.Layer);
+        foreach (var layer in comp.CustomBaseLayers.Keys.ToList())
         {
-            var f = state.HeadColorFactor;
-            var headColor = new Color(
+            if (layer != HumanoidVisualLayers.Eyes && !wanted.ContainsKey(layer))
+                comp.CustomBaseLayers.Remove(layer);
+        }
+
+        foreach (var (layer, info) in wanted)
+        {
+            var f = info.ColorFactor;
+            var layerColor = new Color(
                 state.SkinColor.R * f,
                 state.SkinColor.G * f,
                 state.SkinColor.B * f,
-                state.SkinColor.A * state.HeadColorAlpha);
-            _humanoidSystem.SetBaseLayerId(preview, HumanoidVisualLayers.Head, headLayer, false);
-            _humanoidSystem.SetBaseLayerColor(
-                preview,
-                HumanoidVisualLayers.Head,
-                headColor,
-                false);
-        }
-        else
-        {
-            comp.CustomBaseLayers.Remove(HumanoidVisualLayers.Head);
+                state.CopiedLayerAlpha);
+            _humanoidSystem.SetBaseLayerId(preview, layer, info.SpriteId, false);
+            _humanoidSystem.SetBaseLayerColor(preview, layer, layerColor, false);
         }
 
         _humanoidSystem.UpdateSprite((preview, comp, sprite));
