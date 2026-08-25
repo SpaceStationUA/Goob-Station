@@ -24,7 +24,7 @@
         restitution: 0.3
         friction: 0.2
   - type: Item
-    size: Small
+    size: Ginormous
   - type: HeldSpeedModifier
     walkModifier: 0.7
     sprintModifier: 0.7
