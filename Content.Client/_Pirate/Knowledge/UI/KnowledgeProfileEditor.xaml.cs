@@ -61,8 +61,8 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
 
         var entries = _knowledge.AllKnowledges
             .Where(pair => pair.Value.Costs is not null)
-            .OrderBy(pair => Loc.GetString(_prototypes.Index(pair.Value.Category).Name), StringComparer.CurrentCulture)
-            .ThenBy(pair => _prototypes.Index<EntityPrototype>(pair.Key).Name, StringComparer.CurrentCulture)
+            .OrderBy(pair => Loc.GetString(_prototypes.Index(pair.Value.Category).Name))
+            .ThenBy(pair => _prototypes.Index<EntityPrototype>(pair.Key).Name)
             .ToList();
 
         ProtoId<KnowledgeCategoryPrototype>? currentCategory = null;

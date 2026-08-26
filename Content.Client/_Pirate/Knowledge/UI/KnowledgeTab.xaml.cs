@@ -36,8 +36,8 @@ public sealed partial class KnowledgeTab : BoxContainer
         var skills = _knowledge.GetAllKnowledge(player)?
             .Where(skill => !skill.Comp.Hidden)
             .Select(skill => (Skill: skill, Info: _knowledge.GetKnowledgeInfo(skill)))
-            .OrderBy(data => Loc.GetString(_prototypes.Index(data.Skill.Comp.Category).Name), StringComparer.CurrentCulture)
-            .ThenBy(data => data.Info.Name, StringComparer.CurrentCulture)
+            .OrderBy(data => Loc.GetString(_prototypes.Index(data.Skill.Comp.Category).Name))
+            .ThenBy(data => data.Info.Name)
             .ToList();
 
         KnowledgePlaceholder.Visible = skills is null || skills.Count == 0;
