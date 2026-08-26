@@ -1,0 +1,95 @@
+# SPDX-FileCopyrightText: 2025 Blitz
+# SPDX-FileCopyrightText: 2025 Shaman
+# SPDX-FileCopyrightText: 2025 Steven Higginbotham
+# SPDX-FileCopyrightText: 2025 juniwoofs
+# SPDX-FileCopyrightText: 2025 leo
+# SPDX-FileCopyrightText: 2025 portfiend
+# SPDX-FileCopyrightText: 2025 sheepie
+# SPDX-FileCopyrightText: 2025 sleepyyapril
+# SPDX-FileCopyrightText: 2026 Alex C
+# SPDX-FileCopyrightText: 2026 meatsmall
+#
+# SPDX-License-Identifier: MIT AND AGPL-3.0-or-later
+
+- type: entity
+  parent: ClothingNeckBase # starcup - no leashing, no folding
+  id: ClothingNeckCowBellCollar
+  name: cowbell collar
+  description: A way to inform others about the presence of livestock, or just to annoy everyone around you!
+  components:
+    - type: Sprite
+      sprite: _DEN/Clothing/Neck/Collars/collar_cowbell.rsi
+    - type: Clothing
+      sprite: _DEN/Clothing/Neck/Collars/collar_cowbell.rsi
+#   begin starcup: replace EmitsSoundOnMove
+#    - type: EmitsSoundOnMove
+#      soundCollection:
+#        collection: CowbellRings
+    - type: UseDelay # TODO - when Den finishes their rebase, ditch this and nab EmitSound
+      delay: 0.5
+    - type: EmitSoundOnLand
+      sound: &CowbellSound
+        collection: CowbellRings
+        params:
+          variation: 0.07
+          volume: -5
+    - type: EmitSoundOnActivate
+      sound: *CowbellSound
+    - type: EmitSoundOnTrigger
+      sound: *CowbellSound
+    - type: EmitSoundOnCollide
+      sound: *CowbellSound
+#   end starcup
+
+- type: entity
+  parent: ClothingNeckBase # starcup - no leashing, no folding
+  id: ClothingNeckSpikedCollar
+  name: spiked collar
+  description: A simple leather collar with decorative spikes. # starcup - not foldable
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Collars/collar_spiked.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Collars/collar_spiked.rsi
+
+- type: entity
+  parent: ClothingNeckBase # starcup - no leashing, no folding
+  id: ClothingNeckColorableCollar
+  name: white choker # starcup - decollared
+  description: A plain choker. # starcup - decollared
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Collars/colorable_collar.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Collars/colorable_collar.rsi
+
+- type: entity
+  parent: ClothingNeckBase # Floof - reparented # starcup - no leashing, no folding
+  id: ClothingNeckBellCollar
+  name: bell collar
+#  description: A way to inform others about your presence, or just to annoy everyone around you!
+  description: A fashionable accessory for making sure everyone knows you're here.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Collars/collar_bell.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Collars/collar_bell.rsi
+#   begin starcup: replace EmitsSoundOnMove
+#  - type: EmitsSoundOnMove
+#    soundCollection:
+#      collection: FootstepJester
+  - type: UseDelay # TODO - when Den finishes their rebase, ditch this and nab EmitSound
+    delay: 0.5
+  - type: EmitSoundOnLand
+    sound: &JingleSound
+      collection: FootstepJester
+      params:
+        variation: 0.07
+        volume: -5
+  - type: EmitSoundOnActivate
+    sound: *JingleSound
+  - type: EmitSoundOnTrigger
+    sound: *JingleSound
+  - type: EmitSoundOnCollide
+    sound: *JingleSound
+#   end starcup

@@ -322,6 +322,7 @@
   - CommonMessenger # Frontier
 
 - type: loadoutGroup
+  # Pirate: starcup made PassengerNeck parent NeckFashionable+Cloaks; our fork uses PiratePassengerNeck instead
   id: PassengerNeck
   name: loadout-group-passenger-neck
   minLimit: 0

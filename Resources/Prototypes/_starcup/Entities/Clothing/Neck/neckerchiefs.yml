@@ -1,0 +1,64 @@
+- type: entity
+  parent: ClothingNeckNeckerchief
+  id: ClothingNeckNeckerchiefGray
+  name: gray neckerchief
+  components:
+    - type: Clothing
+      clothingVisuals:
+        neck:
+          - state: equipped-NECK
+            color: "#686859"
+    - type: Sprite
+      color: "#686859"
+
+- type: entity
+  parent: ClothingNeckNeckerchief
+  id: ClothingNeckNeckerchiefBlack
+  name: black neckerchief
+  components:
+    - type: Clothing
+      clothingVisuals:
+        neck:
+          - state: equipped-NECK
+            color: "#373737"
+    - type: Sprite
+      color: "#373737"
+
+- type: entity
+  parent: ClothingNeckNeckerchief
+  id: ClothingNeckNeckerchiefDarkGreen
+  name: dark green neckerchief
+  components:
+    - type: Clothing
+      clothingVisuals:
+        neck:
+          - state: equipped-NECK
+            color: "#375b27"
+    - type: Sprite
+      color: "#375b27"
+
+- type: entity
+  parent: ClothingNeckNeckerchief
+  id: ClothingNeckNeckerchiefPink
+  name: pink neckerchief
+  components:
+    - type: Clothing
+      clothingVisuals:
+        neck:
+          - state: equipped-NECK
+            color: "#fc8cb8"
+    - type: Sprite
+      color: "#fc8cb8"
+
+- type: entity
+  parent: ClothingNeckNeckerchief
+  id: ClothingNeckNeckerchiefBrown
+  name: brown neckerchief
+  components:
+  - type: Clothing
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        color: "#41372e"
+  - type: Sprite
+    color: "#41372e"

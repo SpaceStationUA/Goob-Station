@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: 2022 Emisse <99158783+Emisse@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 Vordenburg <114301317+Vordenburg@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2022 mirrorcult <lunarautomaton6@gmail.com>
+# SPDX-FileCopyrightText: 2023 Debug <49997488+DebugOk@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2023 Fluffiest Floofers <thebluewulf@gmail.com>
+# SPDX-FileCopyrightText: 2023 Ubaser <134914314+UbaserB@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2024 FoxxoTrystan <45297731+FoxxoTrystan@users.noreply.github.com>
+# SPDX-FileCopyrightText: 2025 sleepyyapril <123355664+sleepyyapril@users.noreply.github.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckOldMantle
+  name: old wrap
+  description: A tattered fabric wrap, faded over the years. Smells faintly of cigars.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Mantles/oldmantle.rsi # starcup - changed namespace
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Mantles/oldmantle.rsi # starcup - changed namespace
+
+- type: entity
+  parent: [ TemperatureProtectionMinimal, ClothingNeckBase ] # starcup - gave temp protection
+  id: ClothingNeckUnathiMantle
+  name: hide mantle
+  description: A rather grisly selection of cured hides and skin, sewn together to form a ragged mantle. Unathi of Yss traditionally tan these over lava vents. # starcup - added lore
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Mantles/unathimantle.rsi # starcup - changed namespace
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Mantles/unathimantle.rsi # starcup - changed namespace
