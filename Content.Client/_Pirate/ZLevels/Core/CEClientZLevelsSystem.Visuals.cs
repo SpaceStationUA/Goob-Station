@@ -321,9 +321,12 @@ public sealed partial class CEClientZLevelsSystem
                 visualComp.DrawDepthBeforeElevation = null;
             }
         }
-        else if (ent.Comp.DrawDepth != depthDefault)
+        else
         {
-            _sprite.SetDrawDepth((ent.Owner, ent.Comp), depthDefault);
+            if (ent.Comp.DrawDepth != depthDefault)
+                _sprite.SetDrawDepth((ent.Owner, ent.Comp), depthDefault);
+
+            visualComp.DrawDepthBeforeElevation = null;
         }
 
         var noRotation = elevated || noRotDefault;
