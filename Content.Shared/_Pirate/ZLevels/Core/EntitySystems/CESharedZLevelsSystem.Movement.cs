@@ -2830,6 +2830,9 @@ public abstract partial class CESharedZLevelsSystem
         var ev = new CEZLevelMapMoveEvent(offset, targetZLevel);
         RaiseLocalEvent(ent, ref ev);
 
+        // Keep attached bodies' cached traversal depth in sync with their vehicle.
+        RefreshAttachedZPhysics(ent);
+
         if (ZPhysQuery.TryComp(ent, out var zPhysAfterMove))
         {
             if (_net.IsServer || _timing.IsFirstTimePredicted)

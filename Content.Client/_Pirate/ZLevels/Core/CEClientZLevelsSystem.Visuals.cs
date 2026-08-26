@@ -9,6 +9,7 @@ using Content.Client.Movement.Systems;
 using Content.Shared._DV.Carrying;
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
+using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
 using Robust.Client.GameObjects;
@@ -29,6 +30,7 @@ public sealed partial class CEClientZLevelsSystem
 
     private EntityQuery<SpriteComponent> _spriteQuery;
     private EntityQuery<BeingCarriedComponent> _carriedQuery;
+    private EntityQuery<BuckleComponent> _buckleQuery;
 
     // Continue driving bodies with pending visual offsets after deactivation.
     private readonly HashSet<EntityUid> _inactiveVisuals = new();
@@ -38,6 +40,7 @@ public sealed partial class CEClientZLevelsSystem
     {
         _spriteQuery = GetEntityQuery<SpriteComponent>();
         _carriedQuery = GetEntityQuery<BeingCarriedComponent>();
+        _buckleQuery = GetEntityQuery<BuckleComponent>();
 
         _cfg.OnValueChanged(CCVars.CEZLevelsRenderSmoothing,
             value => _renderSmoothingTau = MathF.Max(0f, value),
@@ -68,6 +71,7 @@ public sealed partial class CEClientZLevelsSystem
 
         DriveInactiveVisuals(frameTime);
         DriveCarriedVisuals(frameTime);
+        DriveBuckledVisuals(frameTime);
         DriveItemVisuals();
         TrackStaminaAnimationOffsets();
     }
@@ -106,6 +110,14 @@ public sealed partial class CEClientZLevelsSystem
         if (_carriedQuery.HasComp(uid))
             return false;
 
+        // Buckled riders are updated from their vehicle in the dedicated pass.
+        if (_buckleQuery.TryComp(uid, out var buckle) &&
+            buckle.BuckledTo is { } strap &&
+            ZPhysQuery.HasComp(strap))
+        {
+            return false;
+        }
+
         EnsureBodyVisualDefaults(zPhys, sprite);
 
         var target = GetVisualsLocalPosition((uid, zPhys), xform);
@@ -114,11 +126,13 @@ public sealed partial class CEClientZLevelsSystem
 
         return ApplyElevationVisuals(
             (uid, sprite),
+            zPhys,
             height,
             elevated,
             zPhys.SpriteOffsetDefault,
             zPhys.DrawDepthDefault,
-            zPhys.NoRotDefault);
+            zPhys.NoRotDefault,
+            zPhys.PreserveDynamicDrawDepth);
     }
 
     private void DriveCarriedVisuals(float frameTime)
@@ -141,11 +155,43 @@ public sealed partial class CEClientZLevelsSystem
 
             ApplyElevationVisuals(
                 (uid, sprite),
+                zPhys,
                 height,
                 elevated,
                 zPhys.SpriteOffsetDefault,
                 zPhys.DrawDepthDefault,
                 zPhys.NoRotDefault);
+        }
+    }
+
+    /// <summary>Updates mounted riders from their Z-physics strap.</summary>
+    private void DriveBuckledVisuals(float frameTime)
+    {
+        var query = EntityQueryEnumerator<BuckleComponent, CEZPhysicsComponent, SpriteComponent>();
+        while (query.MoveNext(out var uid, out var buckle, out var riderZ, out var sprite))
+        {
+            if (buckle.BuckledTo is not { } strap ||
+                !ZPhysQuery.TryComp(strap, out var strapZ) ||
+                !TransformQuery.TryComp(strap, out var strapXform))
+            {
+                continue;
+            }
+
+            EnsureBodyVisualDefaults(riderZ, sprite);
+
+            var target = GetVisualsLocalPosition((strap, strapZ), strapXform);
+            var height = AdvanceRenderHeight(riderZ, target, frameTime);
+            var elevated = UpdateElevatedLatch(riderZ, strapZ, height);
+
+            ApplyElevationVisuals(
+                (uid, sprite),
+                riderZ,
+                height,
+                elevated,
+                riderZ.SpriteOffsetDefault,
+                riderZ.DrawDepthDefault,
+                riderZ.NoRotDefault,
+                preserveDynamicDrawDepth: true);
         }
     }
 
@@ -244,19 +290,41 @@ public sealed partial class CEClientZLevelsSystem
 
     private bool ApplyElevationVisuals(
         Entity<SpriteComponent> ent,
+        CEZPhysicsComponent visualComp,
         float height,
         bool elevated,
         Vector2 offsetDefault,
         int depthDefault,
-        bool noRotDefault)
+        bool noRotDefault,
+        bool preserveDynamicDrawDepth = false)
     {
         var offset = offsetDefault + new Vector2(0f, height * ZLevelOffset);
         if (Vector2.DistanceSquared(ent.Comp.Offset, offset) > SpriteOffsetEpsilon * SpriteOffsetEpsilon)
             _sprite.SetOffset((ent.Owner, ent.Comp), offset);
 
-        var depth = elevated ? (int) Shared.DrawDepth.DrawDepth.OverMobs : depthDefault;
-        if (ent.Comp.DrawDepth != depth)
-            _sprite.SetDrawDepth((ent.Owner, ent.Comp), depth);
+        if (elevated)
+        {
+            if (preserveDynamicDrawDepth && visualComp.DrawDepthBeforeElevation == null)
+                visualComp.DrawDepthBeforeElevation = ent.Comp.DrawDepth;
+
+            var elevatedDepth = (int) Shared.DrawDepth.DrawDepth.OverMobs;
+            if (ent.Comp.DrawDepth != elevatedDepth)
+                _sprite.SetDrawDepth((ent.Owner, ent.Comp), elevatedDepth);
+        }
+        else if (preserveDynamicDrawDepth)
+        {
+            if (visualComp.DrawDepthBeforeElevation is { } previousDepth)
+            {
+                if (ent.Comp.DrawDepth != previousDepth)
+                    _sprite.SetDrawDepth((ent.Owner, ent.Comp), previousDepth);
+
+                visualComp.DrawDepthBeforeElevation = null;
+            }
+        }
+        else if (ent.Comp.DrawDepth != depthDefault)
+        {
+            _sprite.SetDrawDepth((ent.Owner, ent.Comp), depthDefault);
+        }
 
         var noRotation = elevated || noRotDefault;
         if (ent.Comp.NoRotation != noRotation)
@@ -317,7 +385,8 @@ public sealed partial class CEClientZLevelsSystem
     {
         sprite.Comp.NoRotation = comp.NoRotDefault;
         _sprite.SetOffset((sprite.Owner, sprite.Comp), comp.SpriteOffsetDefault);
-        _sprite.SetDrawDepth((sprite.Owner, sprite.Comp), comp.DrawDepthDefault);
+        _sprite.SetDrawDepth((sprite.Owner, sprite.Comp), comp.DrawDepthBeforeElevation ?? comp.DrawDepthDefault);
+        comp.DrawDepthBeforeElevation = null;
         comp.RenderElevated = false;
         comp.RenderHeight = 0f;
         comp.RenderHeightInitialized = false;

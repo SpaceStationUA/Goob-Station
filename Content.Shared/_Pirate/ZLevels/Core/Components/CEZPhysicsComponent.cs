@@ -134,6 +134,12 @@ public sealed partial class CEZPhysicsComponent : Component
     [DataField]
     public Vector2 SpriteOffsetDefault = Vector2.Zero;
 
+    /// <summary>Preserves a vehicle's runtime draw depth while grounded.</summary>
+    [DataField]
+    public bool PreserveDynamicDrawDepth;
+
+    [ViewVariables]
+    public int? DrawDepthBeforeElevation;
     [ViewVariables]
     public bool VisualsInitialized;
 
