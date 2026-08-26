@@ -36,7 +36,7 @@ public sealed partial class HumanoidCharacterProfile
         if (Knowledge.Mastery is null)
             return;
 
-        foreach (var (id, mastery) in Knowledge.Mastery.OrderBy(pair => pair.Key.Id, StringComparer.Ordinal))
+        foreach (var (id, mastery) in Knowledge.Mastery.OrderBy(pair => pair.Key.Id))
         {
             hash.Add(id);
             hash.Add(mastery);

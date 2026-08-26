@@ -252,14 +252,14 @@ public sealed class QualitySystem : EntitySystem
         var primary = requirements.Keys
             .Where(id => _knowledge.AllKnowledges.TryGetValue(id, out var prototype) &&
                          prototype.Category == CraftingCategory)
-            .OrderBy(id => id.Id, StringComparer.Ordinal)
+            .OrderBy(id => id.Id)
             .FirstOrDefault(FabricationKnowledge);
 
         EntProtoId? lowest = null;
         var lowestDelta = 0;
         var requiredMastery = 0;
 
-        foreach (var (id, required) in requirements.OrderBy(pair => pair.Key.Id, StringComparer.Ordinal))
+        foreach (var (id, required) in requirements.OrderBy(pair => pair.Key.Id))
         {
             if (id == primary)
                 continue;

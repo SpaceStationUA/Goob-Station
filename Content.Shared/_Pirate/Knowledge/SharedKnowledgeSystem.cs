@@ -697,7 +697,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         {
             var remove = profile.Mastery
                 .OrderByDescending(pair => SkillCost(pair.Key, pair.Value) ?? 0)
-                .ThenByDescending(pair => pair.Key.Id, StringComparer.Ordinal)
+                .ThenByDescending(pair => pair.Key.Id)
                 .First().Key;
             profile.Mastery.Remove(remove);
         }
@@ -729,7 +729,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         if (profile.Mastery is null)
             return;
 
-        foreach (var (id, mastery) in profile.Mastery.OrderBy(pair => pair.Key.Id, StringComparer.Ordinal))
+        foreach (var (id, mastery) in profile.Mastery.OrderBy(pair => pair.Key.Id))
         {
             if (SkillCost(id, mastery) is not { } cost || cost > points)
                 continue;
