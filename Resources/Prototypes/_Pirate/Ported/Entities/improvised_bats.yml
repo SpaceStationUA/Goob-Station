@@ -27,18 +27,6 @@
   - type: Tag
     tags:
     - Recyclable
-  - type: Solution
-    solution:
-      maxVol: 5
-  - type: SolutionRegeneration
-    solution: melee
-    generated:
-      reagents:
-      - ReagentId: Glennium
-        Quantity: 5
-  - type: MeleeChemicalInjector
-    transferAmount: 5
-    solution: melee
   - type: Item
     storedSprite:
       state: storage

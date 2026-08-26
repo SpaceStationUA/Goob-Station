@@ -10,25 +10,6 @@
 - type: stepTriggerType
   id: Caltrop
 
-- type: reagent
-  id: Glennium
-  name: reagent-name-glennium
-  group: Toxins
-  desc: reagent-desc-glennium
-  physicalDesc: reagent-physical-desc-powdery
-  color: "#1abcff"
-  metabolisms:
-    Bloodstream:
-      metabolismRate: 1
-      effects:
-      - !type:HealthChange
-        conditions:
-        - !type:NameContainsCondition
-          name: Glenn
-        damage:
-          types:
-            Blunt: 99999
-
 - type: soundCollection
   id: AmusingDuckCollection
   files:

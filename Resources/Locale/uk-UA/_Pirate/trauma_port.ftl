@@ -1,8 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-reagent-name-glennium = гленній
-reagent-desc-glennium = Надзвичайно токсична речовина, що реагує на ім'я Ґленн.
-
 barbed-contact-damage = Колючий дріт ріже вас.
 burned-popup-text = Ви обпеклися!
 ingot-heated-popup-text = Злиток нагрівається.
