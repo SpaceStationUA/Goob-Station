@@ -23,8 +23,8 @@ public sealed partial class WeaponClassPrototype : IPrototype
     [DataField]
     public SkillCurve MeleeDamage = new SumSkillCurve
     {
-        Curves =
-        [
+        Curves = new List<SkillCurve>
+        {
             new LinearSkillCurve { CurveScale = 0.2f },
             new CubicSkillCurve
             {
@@ -32,14 +32,14 @@ public sealed partial class WeaponClassPrototype : IPrototype
                 CurveScale = 1.7f,
                 CurveOffset = 0.95f,
             },
-        ],
+        },
     };
 
     [DataField]
     public SkillCurve AimSpeed = new SumSkillCurve
     {
-        Curves =
-        [
+        Curves = new List<SkillCurve>
+        {
             new LinearSkillCurve { CurveScale = 0.2f },
             new CubicSkillCurve
             {
@@ -47,7 +47,7 @@ public sealed partial class WeaponClassPrototype : IPrototype
                 CurveScale = 2.7f,
                 CurveOffset = 0.95f,
             },
-        ],
+        },
     };
 }
 

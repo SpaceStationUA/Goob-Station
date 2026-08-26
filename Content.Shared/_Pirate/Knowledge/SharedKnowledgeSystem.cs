@@ -103,7 +103,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
     private void OnOrganAdded(Entity<OrganComponent> ent, ref OrganAddedToBodyEvent args)
     {
-        if (!HasComp<BrainComponent>(ent.Owner))
+        if (TerminatingOrDeleted(ent.Owner) || TerminatingOrDeleted(args.Body) || !HasComp<BrainComponent>(ent.Owner))
             return;
 
         AdoptStore(args.Body, EnsureStore(ent.Owner));
@@ -111,7 +111,8 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
     private void OnOrganRemoved(Entity<OrganComponent> ent, ref OrganRemovedFromBodyEvent args)
     {
-        if (!HasComp<BrainComponent>(ent.Owner) || !_containerQuery.TryComp(ent.Owner, out var store))
+        if (TerminatingOrDeleted(ent.Owner) || TerminatingOrDeleted(args.OldBody) ||
+            !HasComp<BrainComponent>(ent.Owner) || !_containerQuery.TryComp(ent.Owner, out var store))
             return;
 
         UnlinkStore(args.OldBody, (ent.Owner, store));
@@ -119,19 +120,20 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
     private void OnPhysicalBrainInserted(Entity<BrainComponent> ent, ref BorgBrainInsertedEvent args)
     {
-        if (!_timing.ApplyingState)
+        if (!_timing.ApplyingState && !TerminatingOrDeleted(ent.Owner) && !TerminatingOrDeleted(args.Chassis))
             AdoptStore(args.Chassis, EnsureStore(ent.Owner));
     }
 
     private void OnPhysicalBrainRemoved(Entity<BrainComponent> ent, ref BorgBrainRemovedEvent args)
     {
-        if (!_timing.ApplyingState && _containerQuery.TryComp(ent.Owner, out var store))
+        if (!_timing.ApplyingState && !TerminatingOrDeleted(ent.Owner) && !TerminatingOrDeleted(args.Chassis) &&
+            _containerQuery.TryComp(ent.Owner, out var store))
             UnlinkStore(args.Chassis, (ent.Owner, store));
     }
 
     private void OnBorgWrapperInserted(Entity<BorgBrainComponent> ent, ref BorgBrainInsertedEvent args)
     {
-        if (_timing.ApplyingState)
+        if (_timing.ApplyingState || TerminatingOrDeleted(ent.Owner) || TerminatingOrDeleted(args.Chassis))
             return;
 
         var store = FindPhysicalStore(ent.Owner) ?? EnsureStore(ent.Owner);
@@ -140,7 +142,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
     private void OnBorgWrapperRemoved(Entity<BorgBrainComponent> ent, ref BorgBrainRemovedEvent args)
     {
-        if (_timing.ApplyingState)
+        if (_timing.ApplyingState || TerminatingOrDeleted(ent.Owner) || TerminatingOrDeleted(args.Chassis))
             return;
 
         var store = FindPhysicalStore(ent.Owner);
@@ -226,6 +228,9 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
     private Entity<KnowledgeContainerComponent>? FindPhysicalStore(EntityUid holder)
     {
+        if (TerminatingOrDeleted(holder))
+            return null;
+
         // MMI is a wrapper; its inserted brain is the physical knowledge store.
         if (TryComp<MMIComponent>(holder, out var mmi) && mmi.BrainSlot.Item is { } mmiBrain)
             return FindPhysicalStore(mmiBrain) ?? EnsureStore(mmiBrain);
