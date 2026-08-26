@@ -115,11 +115,14 @@ public abstract partial class SharedGunSystem
         if (Math.Abs(oldShots - newShots) + Math.Abs(oldCapacity - newCapacity) < 0.0001f)
             return;
 
-        ent.Comp.ShotsFloat = newShots;
-        ent.Comp.CapacityFloat = newCapacity;
         ent.Comp.Shots = (int) newShots;
         if ((int) newCapacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
             ent.Comp.Capacity = (int) newCapacity;
+
+        // Keep integer values authoritative for visuals while retaining fractional
+        // values for charge prediction and ammo-counter calculations.
+        ent.Comp.ShotsFloat = newShots;
+        ent.Comp.CapacityFloat = newCapacity;
 
         // Update the ammo counter predictively if the change was predicted. On the server this does nothing.
         UpdateAmmoCount(ent.Owner);
@@ -130,10 +133,11 @@ public abstract partial class SharedGunSystem
             return;
 
         // Update the visuals.
-        Appearance.SetData(ent.Owner, AmmoVisuals.HasAmmo, newShots != 0, appearance);
-        Appearance.SetData(ent.Owner, AmmoVisuals.AmmoCount, newShots, appearance);
-        if (newCapacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
-            Appearance.SetData(ent.Owner, AmmoVisuals.AmmoMax, newCapacity, appearance);
+        Appearance.SetData(ent.Owner, AmmoVisuals.HasAmmo, ent.Comp.Shots != 0, appearance);
+        Appearance.SetData(ent.Owner, AmmoVisuals.IsFull, ent.Comp.Shots == ent.Comp.Capacity, appearance);
+        Appearance.SetData(ent.Owner, AmmoVisuals.AmmoCount, ent.Comp.Shots, appearance);
+        if (ent.Comp.Capacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
+            Appearance.SetData(ent.Owner, AmmoVisuals.AmmoMax, ent.Comp.Capacity, appearance);
     }
 
     // For server side changes the client's ammo counter needs to be updated as well.

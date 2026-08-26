@@ -58,10 +58,10 @@ public sealed class PortedSupportIntegrationTest
     private static readonly EntProtoId PropagandaId = "RevPropaganda";
     private static readonly EntProtoId AdvancedPropagandaId = "RevPropagandaAdvanced";
     private static readonly EntProtoId HandcuffsId = "Handcuffs";
-    private static readonly ProtoId<EntityEffectPrototype> RelayStrappedEffectId = "PirateSupportRelayStrapped";
-    private static readonly ProtoId<EntityEffectPrototype> LockStrapEffectId = "PirateSupportLockStrap";
-    private static readonly ProtoId<EntityEffectPrototype> UnlockStrapEffectId = "PirateSupportUnlockStrap";
-    private static readonly ProtoId<EntityEffectPrototype> UnbuckleStrappedEffectId = "PirateSupportUnbuckleStrapped";
+    private const string RelayStrappedEffectId = "PirateSupportRelayStrapped";
+    private const string LockStrapEffectId = "PirateSupportLockStrap";
+    private const string UnlockStrapEffectId = "PirateSupportUnlockStrap";
+    private const string UnbuckleStrappedEffectId = "PirateSupportUnbuckleStrapped";
 
     [TestPrototypes]
     private const string TestPrototypes = @"
@@ -546,11 +546,11 @@ public sealed class PortedSupportIntegrationTest
             initialDamage = total.Float();
 
             var effects = server.System<SharedEntityEffectsSystem>();
-            Assert.That(effects.TryApplyEffect(cross, RelayStrappedEffectId, user: holder), Is.True);
+            Assert.That(effects.TryApplyEffect(cross, (ProtoId<EntityEffectPrototype>) RelayStrappedEffectId, user: holder), Is.True);
             var afterRelay = entMan.GetComponent<DamageableComponent>(victim).TotalDamage;
             Assert.That(afterRelay.Float(), Is.EqualTo(initialDamage + 7f).Within(0.01f));
 
-            Assert.That(effects.TryApplyEffect(cross, LockStrapEffectId, user: holder), Is.True);
+            Assert.That(effects.TryApplyEffect(cross, (ProtoId<EntityEffectPrototype>) LockStrapEffectId, user: holder), Is.True);
             var strapLock = entMan.GetComponent<StrapLockComponent>(cross);
             Assert.Multiple(() =>
             {
@@ -572,9 +572,9 @@ public sealed class PortedSupportIntegrationTest
             });
 
             var effects = server.System<SharedEntityEffectsSystem>();
-            Assert.That(effects.TryApplyEffect(cross, UnlockStrapEffectId, user: holder), Is.True);
+            Assert.That(effects.TryApplyEffect(cross, (ProtoId<EntityEffectPrototype>) UnlockStrapEffectId, user: holder), Is.True);
             Assert.That(entMan.GetComponent<StrapLockComponent>(cross).Locked, Is.False);
-            Assert.That(effects.TryApplyEffect(cross, UnbuckleStrappedEffectId, user: holder), Is.True);
+            Assert.That(effects.TryApplyEffect(cross, (ProtoId<EntityEffectPrototype>) UnbuckleStrappedEffectId, user: holder), Is.True);
 
             var buckle = entMan.GetComponent<BuckleComponent>(victim);
             var construction = entMan.GetComponent<ConstructionComponent>(cross);

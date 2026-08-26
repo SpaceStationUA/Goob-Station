@@ -51,7 +51,7 @@ public sealed class QualityIntegrationTest
 
 - type: stack
   id: PirateQualityIntegrationStack
-  name: pirate quality integration stack
+  name: pirate-quality-integration-stack
   spawn: PirateQualityIntegrationStackItem
   maxCount: 10
 

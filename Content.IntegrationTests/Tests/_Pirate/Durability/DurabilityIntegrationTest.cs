@@ -35,7 +35,7 @@ public sealed class DurabilityIntegrationTest
     private const string TestPrototypes = @"
 - type: stack
   id: PirateDurabilityRepairStack
-  name: pirate durability repair stack
+  name: pirate-durability-repair-stack
   spawn: PirateDurabilityRepairMaterial
   maxCount: 10
 

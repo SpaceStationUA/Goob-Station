@@ -871,6 +871,8 @@ public enum AmmoVisuals : byte
     AmmoCount,
     AmmoMax,
     HasAmmo, // used for generic visualizers. c# stuff can just check ammocount != 0
+    // Pirate: expose the full-magazine state used by battery and magazine visuals.
+    IsFull,
     MagLoaded,
     BoltClosed,
 }

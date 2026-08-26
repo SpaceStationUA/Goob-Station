@@ -397,9 +397,8 @@
         Slash: 0.3
         Piercing: 0.3
         Heat: 0.3
-        Ballistic: 0.3
       flatReductions:
-        Ballistic: 3.5
+        Piercing: 3.5 # Pirate: local damage taxonomy has no Ballistic type.
   - type: ExplosionResistance
     damageCoefficient: 0.75
 
@@ -460,11 +459,10 @@
       coefficients:
         Blunt: 0.7
         Slash: 0.7
-        Piercing: 0.7
-        Ballistic: 0.3
+        Piercing: 0.3 # Pirate: local damage taxonomy has no Ballistic type.
         Heat: 0.8
       flatReductions:
-        Ballistic: 3
+        Piercing: 3 # Pirate: local damage taxonomy has no Ballistic type.
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: ModifyDelayedKnockdown

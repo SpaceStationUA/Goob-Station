@@ -125,7 +125,7 @@
   - type: Projectile
     damage:
       types:
-        Ballistic: 20
+        Piercing: 20 # Pirate: local damage taxonomy has no Ballistic type.
   - type: Sprite
     state: bullet
 
@@ -148,7 +148,7 @@
   - type: Projectile
     damage:
       types:
-        Ballistic: 4
+        Piercing: 4 # Pirate: local damage taxonomy has no Ballistic type.
       armorPenetration: -10
   - type: Sprite
     state: shard
@@ -162,7 +162,7 @@
   - type: Projectile
     damage:
       types:
-        Ballistic: 10
+        Piercing: 10 # Pirate: local damage taxonomy has no Ballistic type.
         Slash: 5
       armorPenetration: 0.1
   - type: Sprite

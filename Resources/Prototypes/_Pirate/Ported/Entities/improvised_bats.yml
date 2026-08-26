@@ -28,7 +28,6 @@
     tags:
     - Recyclable
   - type: Solution
-    id: melee
     solution:
       maxVol: 5
   - type: SolutionRegeneration

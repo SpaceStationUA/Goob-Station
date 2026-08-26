@@ -70,10 +70,8 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
         SubscribeLocalEvent<KnowledgeContainerComponent, ComponentStartup>(OnContainerStartup);
         SubscribeLocalEvent<KnowledgeContainerComponent, ComponentShutdown>(OnContainerShutdown);
-        SubscribeLocalEvent<BrainComponent, ComponentStartup>(OnBrainStartup);
         SubscribeLocalEvent<KnowledgeContainerComponent, OrganAddedToBodyEvent>(OnBrainAdded);
         SubscribeLocalEvent<KnowledgeContainerComponent, OrganRemovedFromBodyEvent>(OnBrainRemoved);
-        SubscribeLocalEvent<BorgBrainComponent, ComponentStartup>(OnBorgBrainStartup);
         SubscribeLocalEvent<KnowledgeContainerComponent, BorgBrainInsertedEvent>(OnBorgBrainInserted);
         SubscribeLocalEvent<KnowledgeContainerComponent, BorgBrainRemovedEvent>(OnBorgBrainRemoved);
         SubscribeLocalEvent<KnowledgeHolderComponent, MindAddedMessage>(OnMindAdded);
@@ -93,16 +91,6 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
     {
         if (ent.Comp.Container is { } container)
             _containers.ShutdownContainer(container);
-    }
-
-    private void OnBrainStartup(Entity<BrainComponent> ent, ref ComponentStartup args)
-    {
-        EnsureStore(ent.Owner);
-    }
-
-    private void OnBorgBrainStartup(Entity<BorgBrainComponent> ent, ref ComponentStartup args)
-    {
-        EnsureStore(ent.Owner);
     }
 
     private void OnBorgBrainInserted(Entity<KnowledgeContainerComponent> ent, ref BorgBrainInsertedEvent args)

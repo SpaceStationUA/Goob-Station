@@ -1117,7 +1117,7 @@
     maxEquipmentAmount: 1
     pilotWhitelist:
       components:
-        - HumanoidProfile
+        - HumanoidAppearance
     startingEquipment:
       - WeaponMechMosinPortsEmpty
   - type: MeleeWeapon
@@ -1784,7 +1784,7 @@
     node: start
   - type: Strap
     buckleOnInteractHand: false
-    addBuckleVerb: false
+    addBuckleverb: false
     buckleOffset: "0, 0.2"
     whitelist:
       tags:
@@ -1938,7 +1938,6 @@
     tags:
     - RevFuelTank
   - type: Solution
-    id: beaker
     solution:
       maxVol: 100
   - type: MixableSolution

@@ -38,4 +38,4 @@
     node: anvil
   - type: PlaceableSurface
   - type: Temperature
-    heatCapacity: 76950
+    specificHeat: 500 # Pirate: local Temperature uses specific heat multiplied by fixture mass.

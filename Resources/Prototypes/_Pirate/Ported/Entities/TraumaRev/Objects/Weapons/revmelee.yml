@@ -75,7 +75,6 @@
     distance: 0.3
     speed: 1
   - type: Solution
-    id: melee
     solution:
       maxVol: 5
   - type: SolutionRegeneration
@@ -257,7 +256,6 @@
   - type: ThrowingAngle
     angle: 225
   - type: Solution
-    id: melee
     solution:
       maxVol: 5
   - type: MeleeChemicalInjector
@@ -479,7 +477,6 @@
         Piercing: 20 # 5 to crit
         Structural: 20
   - type: Solution
-    id: melee
     solution:
       maxVol: 3
   - type: MeleeChemicalInjector

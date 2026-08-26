@@ -20,7 +20,7 @@
   - type: Projectile
     damage:
       types:
-        Ballistic: 11
+        Piercing: 11 # Pirate: local damage taxonomy has no Ballistic type.
 
 - type: entity
   parent: BaseBullet
@@ -215,7 +215,7 @@
     maxEquipmentAmount: 2
     pilotWhitelist:
       components:
-      - HumanoidProfile
+      - HumanoidAppearance
     startingEquipment:
     - WeaponMechMeleePowerFist
     - WeaponMechCombatFlameThrower
