@@ -319,7 +319,7 @@ public sealed class PaperSystem : EntitySystem
 
     private string GetStationNumber(EntityUid paper, EntityUid actor)
     {
-        var stationUid = _station.GetOwningStation(paper) ?? _station.GetOwningStation(actor);
+        var stationUid = _station.GetOwningStation(paper) ?? _station.GetOwningStation(actor) ?? GetFallbackStation(); // Pirate: paperwork tags
         if (stationUid == null)
             return "0000";
 
@@ -364,7 +364,7 @@ public sealed class PaperSystem : EntitySystem
 
     private string GetStationSecurityCode(EntityUid paper, EntityUid actor)
     {
-        var stationUid = _station.GetOwningStation(paper) ?? _station.GetOwningStation(actor);
+        var stationUid = _station.GetOwningStation(paper) ?? _station.GetOwningStation(actor) ?? GetFallbackStation(); // Pirate: paperwork tags
         if (stationUid == null)
             return Loc.GetString("alert-level-unknown");
 
@@ -379,6 +379,23 @@ public sealed class PaperSystem : EntitySystem
             return localizedLevel;
 
         return ev.AlertLevel;
+    }
+
+    // Pirate: paperwork tags - grids not registered as station members (shuttles, debris, salvage wrecks, etc.)
+    // return no owning station. Prefer the station whose name actually looks like a crewed NT station (matches
+    // the same code/label patterns used above to parse [stn] from a station's own name), since a non-crew
+    // station entity (arena, trade outpost, etc.) could otherwise be picked instead. If none match, give up
+    // (null) and let the caller use its own placeholder rather than guessing by grid size.
+    private EntityUid? GetFallbackStation()
+    {
+        foreach (var station in _station.GetStationsSet())
+        {
+            var stationName = MetaData(station).EntityName;
+            if (StationCodeRegex.IsMatch(stationName) || StationLabelRegex.IsMatch(stationName))
+                return station;
+        }
+
+        return null;
     }
     #endregion
 
