@@ -18,4 +18,8 @@ public sealed partial class EnergyDomeComponent : Component
     /// </summary>
     [DataField]
     public bool AllowProjectilesFromInside;
+
+    /// <summary>Radius represented by the sprite at scale 1.</summary>
+    [DataField]
+    public float SpriteReferenceRadius = 1f;
 }
