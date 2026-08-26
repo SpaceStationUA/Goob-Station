@@ -363,4 +363,13 @@ public sealed partial class CEClientZLevelsSystem
 
         return ent.Comp.RenderHeightInitialized ? ent.Comp.RenderHeight : ent.Comp.LocalPosition;
     }
+
+    /// <summary>Returns the screen-facing Z offset for independently rendered overlays.</summary>
+    public Vector2 GetRenderScreenOffset(EntityUid ent)
+    {
+        if (!ZPhysQuery.TryComp(ent, out var zPhys) || !TransformQuery.TryComp(ent, out var xform))
+            return Vector2.Zero;
+
+        return new Vector2(0f, GetRenderHeight((ent, zPhys), xform) * ZLevelOffset);
+    }
 }

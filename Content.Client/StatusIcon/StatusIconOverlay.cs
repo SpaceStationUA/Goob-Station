@@ -3,6 +3,7 @@
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Content.Client._Pirate.Photo; // Pirate: camera
+using Content.Client._Pirate.ZLevels.Core; // Pirate: multiz
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -24,6 +25,7 @@ public sealed class StatusIconOverlay : Overlay
     private readonly TransformSystem _transform;
     private readonly StatusIconSystem _statusIcon;
     private readonly PhotoCaptureFilterSystem _photoCaptureFilter; // Pirate: camera
+    private readonly CEClientZLevelsSystem _zLevels; // Pirate: multiz
     private readonly ShaderInstance _unshadedShader;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
@@ -36,6 +38,7 @@ public sealed class StatusIconOverlay : Overlay
         _transform = _entity.System<TransformSystem>();
         _statusIcon = _entity.System<StatusIconSystem>();
         _photoCaptureFilter = _entity.System<PhotoCaptureFilterSystem>(); // Pirate: camera
+        _zLevels = _entity.System<CEClientZLevelsSystem>(); // Pirate: multiz
         _unshadedShader = _prototype.Index(UnshadedShader).Instance();
     }
 
@@ -60,7 +63,11 @@ public sealed class StatusIconOverlay : Overlay
 
             var bounds = comp.Bounds ?? _sprite.GetLocalBounds((uid, sprite));
 
-            var worldPos = _transform.GetWorldPosition(xform, xformQuery);
+            var elevationOffset = _zLevels.GetRenderScreenOffset(uid); // Pirate: multiz
+            Angle elevationRotation = eyeRot * -1; // Pirate: multiz
+            var elevationWorldOffset = elevationRotation.RotateVec(elevationOffset); // Pirate: multiz
+            var worldPos = _transform.GetWorldPosition(xform, xformQuery) + elevationWorldOffset; // Pirate: multiz
+            var layoutOffset = sprite.Offset - elevationOffset; // Pirate: multiz
 
             if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
                 continue;
@@ -103,8 +110,8 @@ public sealed class StatusIconOverlay : Overlay
                         accOffsetL += texture.Height;
                         countL++;
                     }
-                    yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float)(accOffsetL - proto.Offset) / EyeManager.PixelsPerMeter;
-                    xOffset = -(bounds.Width + sprite.Offset.X) / 2f;
+                    yOffset = (bounds.Height + layoutOffset.Y) / 2f - (float)(accOffsetL - proto.Offset) / EyeManager.PixelsPerMeter; // Pirate: multiz
+                    xOffset = -(bounds.Width + layoutOffset.X) / 2f; // Pirate: multiz
 
                 }
                 else
@@ -116,8 +123,8 @@ public sealed class StatusIconOverlay : Overlay
                         accOffsetR += texture.Height;
                         countR++;
                     }
-                    yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float)(accOffsetR - proto.Offset) / EyeManager.PixelsPerMeter;
-                    xOffset = (bounds.Width + sprite.Offset.X) / 2f - (float)texture.Width / EyeManager.PixelsPerMeter;
+                    yOffset = (bounds.Height + layoutOffset.Y) / 2f - (float)(accOffsetR - proto.Offset) / EyeManager.PixelsPerMeter; // Pirate: multiz
+                    xOffset = (bounds.Width + layoutOffset.X) / 2f - (float)texture.Width / EyeManager.PixelsPerMeter; // Pirate: multiz
 
                 }
 
