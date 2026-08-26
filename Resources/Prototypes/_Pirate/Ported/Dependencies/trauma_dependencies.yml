@@ -20,11 +20,11 @@
   metabolisms:
     Bloodstream:
       metabolismRate: 1
-      conditions:
-      - !type:NameContainsCondition
-        name: Glenn
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:NameContainsCondition
+          name: Glenn
         damage:
           types:
             Blunt: 99999
