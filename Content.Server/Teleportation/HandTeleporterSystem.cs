@@ -2,6 +2,7 @@
 
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 using Content.Shared.DoAfter;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
@@ -22,6 +23,7 @@ public sealed class HandTeleporterSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doafter = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!; // Pirate: multiz
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -108,7 +110,12 @@ public sealed class HandTeleporterSystem : EntitySystem
             if (xform.ParentUid != xform.GridUid) // Still, don't portal.
                 return;
 
-            if (!component.AllowPortalsOnDifferentGrids && xform.ParentUid != Transform(component.FirstPortal!.Value).ParentUid)
+            var firstXform = Transform(component.FirstPortal!.Value);
+            var sameGrid = xform.ParentUid == firstXform.ParentUid;
+            // Pirate: multiz - grids on different Z-levels of the same station network are still "the same place" for portal linking purposes
+            var sameZNetwork = !sameGrid && IsSameZNetwork(xform.MapUid, firstXform.MapUid);
+
+            if (!component.AllowPortalsOnDifferentGrids && !sameGrid && !sameZNetwork)
             {
                 // Whoops. Fizzle time. Crime time too because yippee I'm not refactoring this logic right now (I started to, I'm not going to.)
                 FizzlePortals(uid, component, user, true);
@@ -119,8 +126,15 @@ public sealed class HandTeleporterSystem : EntitySystem
             timeout.EnteredPortal = null;
             component.SecondPortal = Spawn(component.SecondPortalPrototype, Transform(user).Coordinates);
 
-            if (component.AllowPortalsOnDifferentMaps && TryComp<PortalComponent>(component.SecondPortal, out var portal))
-                portal.CanTeleportToOtherMaps = true;
+            // Pirate: multiz - Z-network levels are separate maps under the hood, so the portals still need CanTeleportToOtherMaps to actually teleport between them
+            var allowCrossMapTeleport = component.AllowPortalsOnDifferentMaps || sameZNetwork;
+            if (allowCrossMapTeleport)
+            {
+                if (TryComp<PortalComponent>(component.FirstPortal, out var firstPortal))
+                    firstPortal.CanTeleportToOtherMaps = true;
+                if (TryComp<PortalComponent>(component.SecondPortal, out var secondPortal))
+                    secondPortal.CanTeleportToOtherMaps = true;
+            }
 
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.High, $"{ToPrettyString(user):player} відкрив {ToPrettyString(component.SecondPortal.Value)} в {Transform(component.SecondPortal.Value).Coordinates} зв'язаний з {ToPrettyString(component.FirstPortal!.Value)} за допомогою {ToPrettyString(uid)}");
             _link.TryLink(component.FirstPortal!.Value, component.SecondPortal.Value, true);
@@ -131,6 +145,22 @@ public sealed class HandTeleporterSystem : EntitySystem
             FizzlePortals(uid, component, user, false);
         }
     }
+
+    // Pirate: multiz - grids on different Z-levels of the same station are still "the same place" for portal linking purposes
+    #region Pirate: multiz
+    private bool IsSameZNetwork(EntityUid? mapA, EntityUid? mapB)
+    {
+        if (mapA is null || mapB is null)
+            return false;
+
+        if (!_zLevels.TryGetZNetwork(mapA.Value, out var netA))
+            return false;
+        if (!_zLevels.TryGetZNetwork(mapB.Value, out var netB))
+            return false;
+
+        return netA.Value.Owner == netB.Value.Owner;
+    }
+    #endregion Pirate: multiz
 
     private void FizzlePortals(EntityUid uid, HandTeleporterComponent component, EntityUid user, bool instability)
     {
