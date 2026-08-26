@@ -48,7 +48,7 @@
     canDeviceNetworkUse: true
   - type: PowerCellDraw
     enabled: false
-    drawRate: 1.005
+    drawRate: 0.67
     useCharge: 0
   - type: UseDelay
     delay: 10

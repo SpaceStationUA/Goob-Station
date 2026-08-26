@@ -66,10 +66,18 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
         if (userXform.GridUid is not { } currentGridUid)
             return null;
 
-        // PeerGrids already includes the grid itself alongside every linked floor above/below.
-        IEnumerable<EntityUid> candidateGrids = TryComp<CEZLinkedGridComponent>(currentGridUid, out var linkedGrid)
-            ? linkedGrid.PeerGrids.Values
-            : new[] { currentGridUid };
+        // PeerGrids excludes the grid's own depth (see CEZLevelsSystem.GridSync), so the current grid
+        // has to be added back in alongside every linked floor above/below.
+        List<EntityUid> candidateGrids;
+        if (TryComp<CEZLinkedGridComponent>(currentGridUid, out var linkedGrid))
+        {
+            candidateGrids = new List<EntityUid>(linkedGrid.PeerGrids.Count + 1) { currentGridUid };
+            candidateGrids.AddRange(linkedGrid.PeerGrids.Values);
+        }
+        else
+        {
+            candidateGrids = new List<EntityUid> { currentGridUid };
+        }
 
         var userMapCoords = _transform.ToMapCoordinates(userCoords);
         var currentTile = _turfSystem.GetTileRef(userCoords);

@@ -365,7 +365,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         var enumerator = Transform(protectedEntity).ChildEnumerator;
         while (enumerator.MoveNext(out var child))
         {
-            if (HasComp<EnergyDomeComponent>(child))
+            if (HasComp<EnergyDomeComponent>(child) && !EntityManager.IsQueuedForDeletion(child))
                 return true;
         }
 
