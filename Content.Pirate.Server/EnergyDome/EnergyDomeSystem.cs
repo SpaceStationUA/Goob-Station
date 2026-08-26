@@ -318,8 +318,29 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             }
         }
 
+        if (status && !generator.Comp.Enabled && HasActiveDome(GetProtectedEntity(generator)))
+        {
+            _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
+            _popup.PopupEntity(
+                Loc.GetString("energy-dome-already-active"),
+                generator);
+            return false;
+        }
+
         Toggle(generator, status);
         return true;
+    }
+
+    private bool HasActiveDome(EntityUid protectedEntity)
+    {
+        var enumerator = Transform(protectedEntity).ChildEnumerator;
+        while (enumerator.MoveNext(out var child))
+        {
+            if (HasComp<EnergyDomeComponent>(child))
+                return true;
+        }
+
+        return false;
     }
 
     private void Toggle(Entity<EnergyDomeGeneratorComponent> generator, bool status)

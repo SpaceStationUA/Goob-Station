@@ -43,12 +43,12 @@
           - PowerCell
           - PowerCellSmall
   - type: EnergyDomeGenerator
-    damageEnergyDraw: 1.67
+    damageEnergyDraw: 2.505
     domePrototype: EnergyDomeMediumBlue
     canDeviceNetworkUse: true
   - type: PowerCellDraw
     enabled: false
-    drawRate: 0.67
+    drawRate: 1.005
     useCharge: 0
   - type: UseDelay
     delay: 10
