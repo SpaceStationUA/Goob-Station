@@ -4961,3 +4961,11 @@ Entries:
         з Omu & Starlight
   id: 480
   time: '2026-08-27T15:31:25.0000000+00:00'
+- author: AgentMaper
+  changes:
+    - type: Add
+      message: плюшева іграшка Ріка Картера
+    - type: Add
+      message: плюшевий Рік доданий на Бокс та Пердішн
+  id: 481
+  time: '2026-08-27T15:57:44.0000000+00:00'
