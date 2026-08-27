@@ -93,19 +93,15 @@ public sealed class TraumaBloodlossSystem : EntitySystem
         if (!TryGetBody(args.Trauma.Comp.HoldingWoundable, out var body))
             return;
 
-        var bleed = EnsureComp<ConstantBleedComponent>(body);
-        bleed.Amount += ent.Comp.Amount;
+        AdjustConstantBleed(body, ent.Comp.Amount); // Pirate: trauma bloodloss lifecycle
     }
 
     private void OnRemoved(Entity<TraumaBloodlossComponent> ent, ref TraumaBeingRemovedEvent args)
     {
-        if (!TryGetBody(args.Trauma.Comp.HoldingWoundable, out var body)
-            || !TryComp<ConstantBleedComponent>(body, out var bleed))
+        if (!TryGetBody(args.Trauma.Comp.HoldingWoundable, out var body))
             return;
 
-        bleed.Amount -= ent.Comp.Amount;
-        if (bleed.Amount <= 0)
-            RemComp<ConstantBleedComponent>(body);
+        AdjustConstantBleed(body, -ent.Comp.Amount); // Pirate: trauma bloodloss lifecycle
     }
 
     private bool TryGetBody(EntityUid? woundable, out EntityUid body)
