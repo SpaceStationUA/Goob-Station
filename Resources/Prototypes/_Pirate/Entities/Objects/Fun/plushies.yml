@@ -292,7 +292,7 @@
 - type: entity
   parent: BasePlushie
   id: PlushiePocketRickTvarPoviya
-  name: "плюшевий Рік Картер"
+  name: "плюшевий Шахтар"
   description: "Плюшева версія найкрасивішого та наймилішого шахтаря Нанотрейзен за оцінками чоловічого конкурсу краси"
   components:
   - type: Sprite
