@@ -10,7 +10,7 @@ public sealed class PillSystem : EntitySystem
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
-    private static readonly ResPath DefaultPillsRsi = new("Objects/Specific/Chemistry/pills.rsi"); // Pirate
+    private static readonly ResPath DefaultPillsRsi = new("/Textures/Objects/Specific/Chemistry/pills.rsi"); // Pirate
 
     public override void Initialize()
     {
