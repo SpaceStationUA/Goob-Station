@@ -395,26 +395,26 @@
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
     Click:
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
-    Crying:
-      collection: FemaleCry
+    Crying: # Pirate: chitinid emotes - use arachnid-specific cry instead of generic FemaleCry
+      path: /Audio/_Pirate/Voice/Arachnid/arachnid_cry.ogg
     Weh:
       collection: Weh
     Hew:
       collection: Hew
     Sneeze:
       collection: MaleSneezes
-    Cough:
-      collection: MaleCoughs
-    Yawn:
-      collection: MaleYawn
+    Cough: # Pirate: chitinid emotes - use arachnid-specific cough instead of generic MaleCoughs
+      path: /Audio/_Pirate/Voice/Arachnid/arachnid_cough.ogg
+    Yawn: # Pirate: chitinid emotes - use arachnid-specific yawn instead of generic MaleYawn
+      path: /Audio/_Pirate/Voice/Arachnid/arachnid_yawn.ogg
     Hiss:
       path: /Audio/Animals/snake_hiss.ogg
-    Gasp:
-      collection: MaleGasp
+    Gasp: # Pirate: chitinid emotes - use arachnid-specific gasp instead of generic MaleGasp
+      path: /Audio/_Pirate/Voice/Arachnid/arachnid_gasp.ogg
     DefaultDeathgasp:
       collection: MothDeathGasp
-    Sigh:
-      collection: MaleSigh
+    Sigh: # Pirate: chitinid emotes - use arachnid-specific sigh instead of generic MaleSigh
+      path: /Audio/_Pirate/Voice/Arachnid/arachnid_sigh.ogg
     Whistle:
       collection: Whistles
     Gulp: # Goob
@@ -430,7 +430,7 @@
     variation: 0.125
   sounds:
     Scream:
-      collection: FemaleScreams
+      collection: FeroxiScream # Pirate: feroxi emotes - use feroxi-specific scream instead of generic FemaleScreams
     Laugh:
       collection: FemaleLaugh
     Sneeze:
@@ -446,7 +446,7 @@
     Sigh:
       collection: FemaleSigh
     Crying:
-      collection: FemaleCry
+      collection: FeroxiCry # Pirate: feroxi emotes - use feroxi-specific cry instead of generic FemaleCry
     Whistle:
       collection: Whistles
     Weh:
@@ -467,6 +467,10 @@
       path: /Audio/_Goobstation/Voice/surprised.ogg
     Belch: # Frontier
       collection: Belch # Frontier
+    Chirp: # Pirate: feroxi emotes
+      collection: FeroxiChirps
+    Squeak: # Pirate: feroxi emotes
+      collection: FeroxiSqueak
 
 - type: emoteSounds
   id: MaleFeroxi
@@ -474,7 +478,7 @@
     variation: 0.125
   sounds:
     Scream:
-      collection: MaleScreams
+      collection: FeroxiScream # Pirate: feroxi emotes - use feroxi-specific scream instead of generic MaleScreams
     Laugh:
       collection: MaleLaugh
     Sneeze:
@@ -490,7 +494,7 @@
     Sigh:
       collection: MaleSigh
     Crying:
-      collection: MaleCry
+      collection: FeroxiCry # Pirate: feroxi emotes - use feroxi-specific cry instead of generic MaleCry
     Whistle:
       collection: Whistles
     Weh:
@@ -511,3 +515,7 @@
       path: /Audio/_Goobstation/Voice/surprised.ogg
     Belch: # Frontier
       collection: Belch # Frontier
+    Chirp: # Pirate: feroxi emotes
+      collection: FeroxiChirps
+    Squeak: # Pirate: feroxi emotes
+      collection: FeroxiSqueak

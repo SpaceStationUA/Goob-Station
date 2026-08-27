@@ -319,7 +319,7 @@ public sealed class PaperSystem : EntitySystem
 
     private string GetStationNumber(EntityUid paper, EntityUid actor)
     {
-        var stationUid = _station.GetOwningStation(paper) ?? _station.GetOwningStation(actor);
+        var stationUid = _station.GetOwningStation(paper) ?? _station.GetOwningStation(actor) ?? GetFallbackStation(); // Pirate: paperwork tags
         if (stationUid == null)
             return "0000";
 
@@ -362,9 +362,58 @@ public sealed class PaperSystem : EntitySystem
         return "0000";
     }
 
+    #region Pirate: paperwork tags
+    // Shared by GetStationNumber and GetFallbackStation so a station name that GetStationNumber can parse
+    // (code, label, or the "NTTG Station Box" token form) is also recognized when picking a fallback station.
+    private bool TryParseStationName(string stationName, out string value)
+    {
+        var codeMatch = StationCodeRegex.Match(stationName);
+        if (codeMatch.Success)
+        {
+            value = codeMatch.Value;
+            return true;
+        }
+
+        // Handles labels like "Станція: Дев" / "Station: Dev" (including no-space variants).
+        var stationLabelMatch = StationLabelRegex.Match(stationName);
+        if (stationLabelMatch.Success)
+        {
+            var labelValue = stationLabelMatch.Groups["value"].Value.Trim(',', '.', ':', ';');
+            if (!string.IsNullOrWhiteSpace(labelValue))
+            {
+                value = labelValue;
+                return true;
+            }
+        }
+
+        // Fallback for station names like: "NTTG Станція Бокс"
+        // or "NTTG Station Box", returning the short station name.
+        var tokens = stationName
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        for (var i = 0; i < tokens.Length - 1; i++)
+        {
+            var token = tokens[i].Trim(',', '.', ':', ';');
+            if (token.Equals("Станція", StringComparison.OrdinalIgnoreCase) ||
+                token.Equals("Station", StringComparison.OrdinalIgnoreCase))
+            {
+                var fallbackName = tokens[i + 1].Trim(',', '.', ':', ';');
+                if (!string.IsNullOrWhiteSpace(fallbackName))
+                {
+                    value = fallbackName;
+                    return true;
+                }
+            }
+        }
+
+        value = string.Empty;
+        return false;
+    }
+    #endregion
+
     private string GetStationSecurityCode(EntityUid paper, EntityUid actor)
     {
-        var stationUid = _station.GetOwningStation(paper) ?? _station.GetOwningStation(actor);
+        var stationUid = _station.GetOwningStation(paper) ?? _station.GetOwningStation(actor) ?? GetFallbackStation(); // Pirate: paperwork tags
         if (stationUid == null)
             return Loc.GetString("alert-level-unknown");
 
@@ -380,6 +429,33 @@ public sealed class PaperSystem : EntitySystem
 
         return ev.AlertLevel;
     }
+
+    #region Pirate: paperwork tags
+    // Pirate: paperwork tags - grids not registered as station members (shuttles, debris, salvage wrecks, etc.)
+    // return no owning station. Prefer the station whose name actually looks like a crewed NT station (matches
+    // the same code/label patterns used above to parse [stn] from a station's own name), since a non-crew
+    // station entity (arena, trade outpost, etc.) could otherwise be picked instead. If none match, give up
+    // (null) and let the caller use its own placeholder rather than guessing by grid size.
+    private EntityUid? GetFallbackStation()
+    {
+        EntityUid? match = null;
+        foreach (var station in _station.GetStationsSet())
+        {
+            var stationName = MetaData(station).EntityName;
+            if (!TryParseStationName(stationName, out _))
+                continue;
+
+            // More than one station looks like a crewed NT station: no way to tell which one actually
+            // owns this paper, so give up rather than arbitrarily picking one.
+            if (match != null)
+                return null;
+
+            match = station;
+        }
+
+        return match;
+    }
+    #endregion
     #endregion
 
     private void OnPaperWrite(Entity<ActivateOnPaperOpenedComponent> entity, ref PaperWriteEvent args)

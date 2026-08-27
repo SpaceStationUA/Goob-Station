@@ -1,6 +1,6 @@
 - type: entity
   name: terror spider
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, MobCombat ]
   id: MobTerrorSpider
   description: a deadly hybrid of a giant spider and xenomorph.
   abstract: true
@@ -27,6 +27,7 @@
     - Xenomorphivemind
   - type: ThermalVision
     # Pirate - local Goob thermal vision does not support Starlight's alternative screen shader.
+  - type: NightVision
   - type: OptionsVisualizer
     visuals:
       base:

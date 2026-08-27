@@ -74,3 +74,24 @@
 - type: entity
   id: ClothingBeltCombatSurgeryAdvancedFilledInterdyneGreen
   parent: [ ClothingBeltCombatSurgeryAdvancedFilledInterdyne, ClothingBeltCombatSurgeryGreen ]
+
+# Pirate: brigmedic EMT belt filled with BrigBuddy 5000 instead of the regular crew monitor
+- type: entity
+  id: ClothingBeltMedicalEMTFilledBrigmedic
+  parent: ClothingBeltMedicalEMT
+  suffix: Brigmedic, Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Brutepack
+        - id: Ointment
+        - id: Bloodpack
+        - id: Gauze
+        - id: HandheldBrigmedicCrewMonitor
+        - id: ParamedHypo
+        - id: CartridgeSaline
+        - id: CartridgeBicaridine
+        - id: CartridgeDermaline
+        - id: CartridgeAtropine

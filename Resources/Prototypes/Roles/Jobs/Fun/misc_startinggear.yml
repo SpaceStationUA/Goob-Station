@@ -136,7 +136,7 @@
     eyes: ClothingEyesGlassesMedSec
     id: BrigmedicPDA
     ears: ClothingHeadsetBrigmedic # EE parity like i was told to do
-    belt: ClothingBeltMedicalEMTFilled
+    belt: ClothingBeltMedicalEMTFilledBrigmedic # Pirate: give brigmedics the BrigBuddy 5000 instead of the regular crew monitor
     pocket1: WeaponPistolMk58 # EE parity, make corpsman able to carry weapons like the rest of security
     pocket2: WeaponDisabler # Goob
   storage:

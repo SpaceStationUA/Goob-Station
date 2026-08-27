@@ -28,6 +28,7 @@
     sound:
       path: /Audio/_Pirate/Machines/energyshield_ambient.ogg
   - type: EnergyDome
+  - type: Appearance
   - type: Tag
     tags:
       - HideContextMenu
@@ -70,12 +71,13 @@
   components:
   - type: EnergyDome
     allowProjectilesFromInside: true
+    spriteReferenceRadius: 2
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 1.8
+          radius: 1
         density: 0
         mask:
         - None
@@ -97,6 +99,8 @@
   id: EnergyDomeSlowing
   parent: EnergyDomeBase
   components:
+  - type: EnergyDome
+    spriteReferenceRadius: 3
   - type: Fixtures
     fixtures:
       fix1:
@@ -130,6 +134,8 @@
   id: DomeSmallFire
   parent: EnergyDomeBase
   components:
+  - type: EnergyDome
+    spriteReferenceRadius: 0.5
   - type: Fixtures
     fixtures:
       fix1:

@@ -43,7 +43,7 @@
           - PowerCell
           - PowerCellSmall
   - type: EnergyDomeGenerator
-    damageEnergyDraw: 1.67
+    damageEnergyDraw: 6
     domePrototype: EnergyDomeMediumBlue
     canDeviceNetworkUse: true
   - type: PowerCellDraw

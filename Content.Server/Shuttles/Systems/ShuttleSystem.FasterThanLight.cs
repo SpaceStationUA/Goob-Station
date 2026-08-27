@@ -223,7 +223,9 @@ public sealed partial class ShuttleSystem
 
             var audio = _audio.PlayPvs(sound, peerUid);
 
-            // Peers are always z-linked decks; map audio for the same reason as SetFtlCueAudio.
+            // Peers always scatter to their own separate FTL maps, so grid audio (which is
+            // client-positioned via GetGridPosition and detaches with its grid) would spam
+            // "Can't resolve PhysicsComponent"; map audio has no such position dependency.
             if (audio != null)
                 _audio.SetMapAudio(audio);
 
@@ -233,20 +235,6 @@ public sealed partial class ShuttleSystem
                 streamSink.Add(audioUid);
             }
         }
-    }
-
-    // Grid audio is client-positioned via GetGridPosition and detaches with its grid; on a multiz
-    // shuttle the decks scatter to separate FTL maps, so it spams "Can't resolve PhysicsComponent".
-    // Map audio (global, undetachable, no GetGridPosition) avoids that — use it for z-linked shuttles.
-    private void SetFtlCueAudio(EntityUid shuttleUid, Entity<AudioComponent>? audio)
-    {
-        if (audio == null)
-            return;
-
-        if (HasComp<CEZLinkedGridComponent>(shuttleUid))
-            _audio.SetMapAudio(audio);
-        else
-            _audio.SetGridAudio(audio);
     }
 
     // Peer travel loops are tracked separately because only the root grid owns the actual FTL component lifetime.
@@ -511,7 +499,7 @@ public sealed partial class ShuttleSystem
         component = AddComp<FTLComponent>(uid);
         component.State = FTLState.Starting;
         var audio = _audio.PlayPvs(_startupSound, uid);
-        SetFtlCueAudio(uid, audio); // Pirate: multiz
+        _audio.SetGridAudio(audio);
         component.StartupStream = audio?.Entity;
         #region Pirate: multiz
         // Mirror the startup cue immediately so passengers on peer decks hear the jump begin before the grids are moved into hyperspace.
@@ -629,7 +617,7 @@ public sealed partial class ShuttleSystem
         // Audio
         var wowdio = _audio.PlayPvs(comp.TravelSound, uid);
         comp.TravelStream = wowdio?.Entity;
-        SetFtlCueAudio(uid, wowdio); // Pirate: multiz
+        _audio.SetGridAudio(wowdio);
         #region Pirate: multiz
         // Start a matching travel loop on every linked deck so FTL ambience follows the whole multiz structure instead of only the root grid.
         comp.ZPeerTravelStreams ??= new List<EntityUid>();
@@ -792,7 +780,7 @@ public sealed partial class ShuttleSystem
         StopPeerFTLTravelAudio(comp);
         #endregion
         var audio = _audio.PlayPvs(_arrivalSound, uid);
-        SetFtlCueAudio(uid, audio); // Pirate: multiz
+        _audio.SetGridAudio(audio);
         #region Pirate: multiz
         // Arrival audio is mirrored too, otherwise riders on non-root decks would experience a silent exit from hyperspace.
         PlayFTLSoundForPeers(uid, _arrivalSound);
