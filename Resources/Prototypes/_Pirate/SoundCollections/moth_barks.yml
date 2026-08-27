@@ -1,0 +1,15 @@
+# Pirate: moth squeak bark - ported from ProjectOmu/OmuStation
+- type: soundCollection
+  id: MothSqueakBark
+  files:
+  - /Audio/_Pirate/Voice/Barks/Moth_Squeak/moth.ogg
+  - /Audio/_Pirate/Voice/Barks/Moth_Squeak/moth_ask.ogg
+  - /Audio/_Pirate/Voice/Barks/Moth_Squeak/moth_exclaim.ogg
+
+- type: bark
+  id: MothSqueak
+  name: Moth Squeak
+  soundCollection:
+    collection: MothSqueakBark
+  speciesWhitelist:
+    - Moth

@@ -1,0 +1,7 @@
+# Pirate: reptilian emotes - ported from ProjectOmu/OmuStation
+- type: soundCollection
+  id: ReptilianScreech
+  files:
+    - /Audio/_Pirate/Voice/Reptilian/humanoid_lizard_scream_2.ogg
+    - /Audio/_Pirate/Voice/Reptilian/humanoid_lizard_scream_3.ogg
+    - /Audio/_Pirate/Voice/Reptilian/humanoid_lizard_scream_4.ogg
