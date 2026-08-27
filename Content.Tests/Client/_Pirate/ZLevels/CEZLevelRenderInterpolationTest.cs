@@ -30,7 +30,7 @@ public sealed class CEZLevelRenderInterpolationTest
 
         var height = CEClientZLevelsSystem.InterpolateRenderHeight(0f, target, 1f / 240f, 0.5f, maxLag);
 
-        Assert.That(target - height, Is.LessThanOrEqualTo(maxLag));
+        Assert.That(height, Is.GreaterThanOrEqualTo(target - maxLag));
     }
 
     [Test]
