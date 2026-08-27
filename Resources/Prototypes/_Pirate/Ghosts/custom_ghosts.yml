@@ -400,3 +400,12 @@
   alpha: 1
   ghostName: Greengoblin
   ghostDescription: Also Known As ThermoManiac.
+
+- type: customGhost
+  id: Dynexust-ghost
+  ckey: Dynexust
+  sprite:
+    - _Pirate/Ghosts/Dynexust.rsi
+  alpha: 1
+  ghostName: Dynexust
+  ghostDescription: Дракончик; великий любитель унаті і всіх лускатиків (і вульп, але останнього не визнає).
