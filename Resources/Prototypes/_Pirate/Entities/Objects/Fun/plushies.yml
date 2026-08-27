@@ -288,3 +288,19 @@
   - type: EmitSoundOnTrigger
     sound:
       collection: Pops
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePocketRickTvarPoviya
+  name: "плюшевий Шахтар"
+  description: "Плюшева версія найкрасивішого та наймилішого шахтаря Нанотрейзен за оцінками чоловічого конкурсу краси"
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/Plushies/tvar-poviya.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      collection: RickKarter
+  - type: EmitSoundOnActivate
+    sound:
+      collection: RickKarter
