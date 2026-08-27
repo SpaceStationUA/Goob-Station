@@ -22,8 +22,6 @@
   whitelist:
     tags:
     - ReptilianEmotes
-  chatTriggers:
-    - screech
-    - screeches
-    - screeching
-    - screeched
+  # No chatTriggers: "screech"/"screeches"/"screeching"/"screeched" are already claimed by the
+  # base Scream emote (Voice/speech_emotes.yml), and EmotePrototype.ChatTriggers must be unique
+  # across all emotes. Still selectable from the emote menu.

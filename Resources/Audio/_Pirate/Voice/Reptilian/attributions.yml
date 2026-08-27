@@ -1,17 +1,17 @@
 - files: ["humanoid_lizard_scream_2.ogg"]
   copyright: 'by n Beats on YT'
   license: CC-BY-SA-3.0
-  source: youtube.com/watch?v=RQzI5ldSXkg
+  source: https://www.youtube.com/watch?v=RQzI5ldSXkg
 
 - files: ["humanoid_lizard_scream_3.ogg"]
   copyright: 'by n Beats on YT'
   license: CC-BY-SA-3.0
-  source: youtube.com/watch?v=RQzI5ldSXkg
+  source: https://www.youtube.com/watch?v=RQzI5ldSXkg
 
 - files: ["humanoid_lizard_scream_4.ogg"]
   copyright: 'sihiL'
-  license: CC0
-  source: freesound.org/people/-sihiL/sounds/213842
+  license: CC0-1.0
+  source: https://freesound.org/people/-sihiL/sounds/213842
 
 - files: ["Reptilian_lizard_purr.ogg"]
   copyright: '"raptor_purr.ogg" by Citadel-Station-13'
