@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Temperature.Systems;
+using Content.Goobstation.Shared.Temperature;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Robust.Server;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Reflection;
 using Robust.UnitTesting;
@@ -24,6 +26,8 @@ public sealed class TemperatureSystemTest : RobustIntegrationTest
             ContentStart = true,
             ContentAssemblies = PoolManager.GetAssemblies(client: false, includePoolAssembly: false),
             Pool = false,
+            // Content startup currently reports a known invalid prototype at Error level.
+            FailureLogLevel = LogLevel.Fatal,
             Options = new ServerOptions
             {
                 LoadConfigAndUserData = false,
@@ -44,6 +48,7 @@ public sealed class TemperatureSystemTest : RobustIntegrationTest
 
         using var server = StartServer(options);
         await server.WaitIdleAsync();
+        await server.WaitPost(() => server.CfgMan.SetCVar(RTCVars.FailureLogLevel, LogLevel.Error));
 
         await server.WaitAssertion(() =>
         {
@@ -52,27 +57,51 @@ public sealed class TemperatureSystemTest : RobustIntegrationTest
             var counter = entityManager.System<TemperatureEventCounterSystem>();
             var entity = entityManager.SpawnEntity(null, MapCoordinates.Nullspace);
             var temperature = entityManager.AddComponent<TemperatureComponent>(entity);
+            var lastTemperature = temperature.CurrentTemperature;
+            var requestedTemperature = lastTemperature + 1f;
+            var expectedTemperature = requestedTemperature + TemperatureEventCounterSystem.ImmunityAdjustment;
 
-            temperatureSystem.ForceChangeTemperature(entity, temperature.CurrentTemperature + 1f, temperature);
+            temperatureSystem.ForceChangeTemperature(entity, requestedTemperature, temperature);
 
-            Assert.That(counter.EventCount, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(counter.EventCount, Is.EqualTo(1));
+                Assert.That(counter.CurrentTemperature, Is.EqualTo(expectedTemperature).Within(0.001f));
+                Assert.That(counter.LastTemperature, Is.EqualTo(lastTemperature).Within(0.001f));
+                Assert.That(counter.TemperatureDelta, Is.EqualTo(expectedTemperature - lastTemperature).Within(0.001f));
+                Assert.That(temperature.CurrentTemperature, Is.EqualTo(expectedTemperature).Within(0.001f));
+            });
         });
     }
 
     [Reflect(false)]
     private sealed class TemperatureEventCounterSystem : EntitySystem
     {
+        public const float ImmunityAdjustment = 1f;
+
         public int EventCount { get; private set; }
+        public float CurrentTemperature { get; private set; }
+        public float LastTemperature { get; private set; }
+        public float TemperatureDelta { get; private set; }
 
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<TemperatureComponent, TemperatureImmunityEvent>(OnTemperatureImmunity);
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(OnTemperatureChange);
+        }
+
+        private void OnTemperatureImmunity(Entity<TemperatureComponent> _, ref TemperatureImmunityEvent args)
+        {
+            args.CurrentTemperature += ImmunityAdjustment;
         }
 
         private void OnTemperatureChange(Entity<TemperatureComponent> _, ref OnTemperatureChangeEvent args)
         {
             EventCount++;
+            CurrentTemperature = args.CurrentTemperature;
+            LastTemperature = args.LastTemperature;
+            TemperatureDelta = args.TemperatureDelta;
         }
     }
 }

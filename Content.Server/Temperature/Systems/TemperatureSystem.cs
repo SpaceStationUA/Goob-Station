@@ -89,7 +89,7 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
             return;
 
         var lastTemp = temperature.CurrentTemperature;
-        var delta = temperature.CurrentTemperature - temp;
+        var attemptDelta = temperature.CurrentTemperature - temp;
         temperature.CurrentTemperature = temp;
 
         // Goob start
@@ -104,13 +104,14 @@ public sealed partial class TemperatureSystem : SharedTemperatureSystem
         RaiseLocalEvent(uid, tempEv);
         temperature.CurrentTemperature = tempEv.CurrentTemperature;
 
-        var attemptEv = new TemperatureChangeAttemptEvent(temp, lastTemp, delta);
+        var attemptEv = new TemperatureChangeAttemptEvent(temp, lastTemp, attemptDelta);
         RaiseLocalEvent(uid, attemptEv);
         if (attemptEv.Cancelled)
             return;
         // Goob end
 
         // Pirate: notify listeners once, after all temperature modifiers have been applied.
+        var delta = temperature.CurrentTemperature - lastTemp;
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
             true);
     }
