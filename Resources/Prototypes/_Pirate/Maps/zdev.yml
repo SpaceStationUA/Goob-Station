@@ -1,0 +1,18 @@
+- type: gameMap
+  id: DevmapTP
+  mapName: Dev
+  mapPath: /ZNetworkSaves/DevmapTP/DevmapTP0.yml
+  minPlayers: 0
+  stations:
+    Empty:
+      stationProto: StandardNanotrasenStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Dev"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+      - type: CEStationZLevels
+        mapsAbove:
+        - /ZNetworkSaves/DevmapTP/DevmapTP2.yml
+        - /ZNetworkSaves/DevmapTP/DevmapTP1.yml
