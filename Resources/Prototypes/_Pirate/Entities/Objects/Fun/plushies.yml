@@ -326,3 +326,8 @@
   - type: EmitSoundOnLand
     sound:
       collection: Wurble
+  - type: Clothing
+    quickEquip: false
+    sprite: _Pirate/Objects/Fun/Plushies/susie.rsi
+    slots:
+    - HEAD
