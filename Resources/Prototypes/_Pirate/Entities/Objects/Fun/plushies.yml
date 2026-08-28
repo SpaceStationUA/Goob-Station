@@ -328,6 +328,6 @@
       collection: Wurble
   - type: Clothing
     quickEquip: false
-    sprite: _Pirate/Objects/Fun/Plushies/susie.rsi
+    sprite: _Pirate/Objects/Fun/Plushies/blakinka.rsi
     slots:
     - HEAD
