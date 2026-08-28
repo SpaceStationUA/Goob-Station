@@ -59,7 +59,7 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
-  - !type:AddPsionicPowerSpecial # Pirate - Research Director always gets Dispel as a proper psionic power.
+  - !type:AddPsionicComponentSpecial # Pirate - Research Director always gets Dispel as a proper psionic power.
     powerPrototype: DispelPowerEntity
   - !type:ModifyPsionicChanceSpecial # Pirate - Commands are much more likely to be psionic.
     jobBonusChance: 0.1
