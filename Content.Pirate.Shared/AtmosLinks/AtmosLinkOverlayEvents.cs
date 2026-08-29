@@ -5,9 +5,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Pirate.Shared.AtmosLinks;
 
-/// <summary>
-///     What kind of atmos device a marker belongs to. Only used to pick a color and a short label client side.
-/// </summary>
 [Serializable, NetSerializable]
 public enum AtmosLinkDeviceKind : byte
 {
@@ -20,9 +17,6 @@ public enum AtmosLinkDeviceKind : byte
     Firelock,
 }
 
-/// <summary>
-///     One device list (air alarm, fire alarm, ...) together with everything it links to.
-/// </summary>
 [Serializable, NetSerializable]
 public sealed class AtmosLinkGroup
 {
@@ -38,9 +32,6 @@ public sealed class AtmosLinkGroup
     }
 }
 
-/// <summary>
-///     An atmos device that no device list references, or a device list that links to nothing.
-/// </summary>
 [Serializable, NetSerializable]
 public sealed class AtmosLinkOrphan
 {
@@ -54,10 +45,6 @@ public sealed class AtmosLinkOrphan
     }
 }
 
-/// <summary>
-///     Snapshot of every atmos device link and every unlinked atmos device, sent to a mapper that
-///     enabled the overlay with the "atmoslinks" command.
-/// </summary>
 [Serializable, NetSerializable]
 public sealed class AtmosLinkOverlayDataEvent : EntityEventArgs
 {
@@ -71,9 +58,6 @@ public sealed class AtmosLinkOverlayDataEvent : EntityEventArgs
     }
 }
 
-/// <summary>
-///     Tells the client to drop the overlay.
-/// </summary>
 [Serializable, NetSerializable]
 public sealed class AtmosLinkOverlayDisableEvent : EntityEventArgs
 {

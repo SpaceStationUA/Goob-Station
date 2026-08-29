@@ -6,9 +6,6 @@ using Robust.Shared.Network;
 
 namespace Content.Pirate.Shared.Tools;
 
-/// <summary>
-/// Lets a tool refine part of a stack into something else without destroying the rest of it.
-/// </summary>
 public sealed class StackRefinableSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
@@ -28,8 +25,7 @@ public sealed class StackRefinableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        // Only complain about the count if they're actually holding the right tool, otherwise every
-        // interaction with a short stack would nag.
+        // Avoid a shortage popup for unrelated tools.
         if (!_tool.HasQuality(args.Used, ent.Comp.QualityNeeded))
             return;
 
@@ -58,7 +54,7 @@ public sealed class StackRefinableSystem : EntitySystem
         if (_net.IsClient)
             return;
 
-        // The stack can shrink while the do-after runs, so re-check before consuming.
+        // The stack can shrink during the do-after.
         if (!_stack.TryUse(ent.Owner, ent.Comp.Cost))
             return;
 
@@ -69,8 +65,7 @@ public sealed class StackRefinableSystem : EntitySystem
             SpawnNextToOrDrop(ent.Comp.RefineResult, ent);
         }
 
-        // Keep going while there's enough left, so a big stack doesn't need a click per pair.
-        // TryUse deletes the stack when it empties, so re-check existence before repeating.
+        // Repeat while another refinement can be paid for.
         if (Exists(ent) && !TerminatingOrDeleted(ent) && _stack.GetCount(ent.Owner) >= ent.Comp.Cost)
             args.Repeat = true;
     }

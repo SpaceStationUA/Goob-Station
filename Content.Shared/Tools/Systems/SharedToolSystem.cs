@@ -65,14 +65,18 @@ public abstract partial class SharedToolSystem : EntitySystem
         var ev = args.WrappedEvent;
         ev.DoAfter = args.DoAfter;
 
+#region Pirate: rod refining
+        // SharedDoAfterSystem only resets the outer event.
+        ev.Handled = false;
+        ev.Repeat = false;
+
         if (args.OriginalTarget != null)
             RaiseLocalEvent(GetEntity(args.OriginalTarget.Value), (object) ev);
         else
             RaiseLocalEvent((object) ev);
 
-        // Pirate: rod refining - carry the wrapped event's repeat request back out to the tool do-after.
-        // SharedDoAfterSystem only looks at the outer event, so without this no tool do-after can repeat.
         args.Repeat = ev.Repeat;
+#endregion Pirate: rod refining
 
         if (TryComp(uid, out UseDelayComponent? delay)) // Goobstation
             _delay.TryResetDelay((uid, delay));

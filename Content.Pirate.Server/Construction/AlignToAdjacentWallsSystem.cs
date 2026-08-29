@@ -7,9 +7,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Server.Construction;
 
-/// <summary>
-/// Turns a freshly built entity to match the wall run around it.
-/// </summary>
 public sealed class AlignToAdjacentWallsSystem : EntitySystem
 {
     [Dependency] private readonly SharedMapSystem _maps = default!;
@@ -29,10 +26,7 @@ public sealed class AlignToAdjacentWallsSystem : EntitySystem
         Align(ent);
     }
 
-    /// <summary>
-    /// Rotates the entity onto whichever axis has more adjacent walls. Leaves it alone on a tie, so a
-    /// free-standing door keeps whatever the construction step gave it.
-    /// </summary>
+    /// <summary>Aligns a constructed entity with the dominant adjacent-wall axis.</summary>
     public void Align(Entity<AlignToAdjacentWallsComponent> ent)
     {
         var xform = Transform(ent);

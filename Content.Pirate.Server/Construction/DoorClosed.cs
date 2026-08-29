@@ -5,10 +5,7 @@ using JetBrains.Annotations;
 
 namespace Content.Pirate.Server.Construction;
 
-/// <summary>
-/// Requires a door to be shut before the edge can be taken. Secret doors use this so they can only
-/// be bolted into a solid wall while closed, mirroring the /tg/station falsewall screwdriver check.
-/// </summary>
+/// <summary>Requires a door to match the configured closed state.</summary>
 [UsedImplicitly]
 [DataDefinition]
 public sealed partial class DoorClosed : IGraphCondition
@@ -24,7 +21,8 @@ public sealed partial class DoorClosed : IGraphCondition
 
     public bool Condition(EntityUid uid, IEntityManager entityManager)
     {
-        return IsClosed(uid, entityManager) == Closed;
+        return entityManager.TryGetComponent<DoorComponent>(uid, out var door)
+               && (door.State == DoorState.Closed) == Closed;
     }
 
     public bool DoExamine(ExaminedEvent args)
