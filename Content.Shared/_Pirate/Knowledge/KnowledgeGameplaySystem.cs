@@ -41,7 +41,9 @@ public sealed class KnowledgeGameplaySystem : EntitySystem
 
         SubscribeLocalEvent<KnowledgeHolderComponent, GetRecoilModifiersEvent>(OnGetRecoilModifiers);
         SubscribeLocalEvent<KnowledgeHolderComponent, AmmoShotUserEvent>(OnAmmoShot);
-        SubscribeLocalEvent<ProjectileComponent, ProjectileHitEvent>(OnProjectileHit);
+        // Pirate: keep this broadcast subscription component-agnostic because other systems may
+        // already subscribe to ProjectileComponent/ProjectileHitEvent for the same projectile.
+        SubscribeLocalEvent<ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<KnowledgeHolderComponent, UserModifyInjectTimeEvent>(OnModifyInjectTime);
         SubscribeLocalEvent<KnowledgeHolderComponent, GetBlockFractionEvent>(OnGetBlockFraction);
         SubscribeLocalEvent<KnowledgeHolderComponent, ModifyThrownSpeedEvent>(OnModifyThrownSpeed);
@@ -65,7 +67,7 @@ public sealed class KnowledgeGameplaySystem : EntitySystem
             _knowledge.AddExperience(store, ShootingKnowledge, 1, 20);
     }
 
-    private void OnProjectileHit(Entity<ProjectileComponent> ent, ref ProjectileHitEvent args)
+    private void OnProjectileHit(ref ProjectileHitEvent args)
     {
         if (args.Shooter is not { } shooter || !_mobState.IsAlive(args.Target) ||
             _knowledge.GetContainer(shooter) is not { } store)
