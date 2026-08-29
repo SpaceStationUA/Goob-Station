@@ -1,4 +1,5 @@
 using Content.Pirate.Shared._Pirate.Sprite.EdgeConnections;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Pirate.Server._Pirate.Sprite.EdgeConnections;
@@ -42,7 +43,7 @@ public sealed class EdgeConnectionSystem : EntitySystem
         if (args.Detaching)
         {
             _appearance.SetData(ent, EdgeConnectionVisuals.ConnectionMask, EdgeConnectionDirections.None);
-            RecalculateNeighborsAtCoordinates(args.Transform);
+            RecalculateNeighborsAtCoordinates(args.Transform.Coordinates);
             return;
         }
 
@@ -63,6 +64,9 @@ public sealed class EdgeConnectionSystem : EntitySystem
 
         if (!movedToNewTile && args.OldRotation.EqualsApprox(args.NewRotation))
             return;
+
+        if (movedToNewTile)
+            RecalculateNeighborsAtCoordinates(args.OldPosition);
 
         RecalculateEntity(ent);
         RecalculateNeighbors(ent);
@@ -152,12 +156,13 @@ public sealed class EdgeConnectionSystem : EntitySystem
         }
     }
 
-    private void RecalculateNeighborsAtCoordinates(TransformComponent xform)
+    private void RecalculateNeighborsAtCoordinates(EntityCoordinates coordinates)
     {
-        if (xform.GridUid is not { } gridUid || !TryComp(gridUid, out MapGridComponent? grid))
+        var gridUid = coordinates.EntityId;
+        if (!TryComp(gridUid, out MapGridComponent? grid))
             return;
 
-        var tile = _map.TileIndicesFor(gridUid, grid, xform.Coordinates);
+        var tile = _map.TileIndicesFor(gridUid, grid, coordinates);
 
         foreach (var (offset, _, _) in CardinalOffsets)
         {
