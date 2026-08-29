@@ -32,6 +32,12 @@ public sealed class KnowledgeGameplayIntegrationTest
     class: Knife
 
 - type: entity
+  id: PirateKnowledgeRifle
+  components:
+  - type: WeaponClass
+    class: Rifle
+
+- type: entity
   parent: BaseItem
   id: PirateKnowledgeDummyItem
 ";
@@ -210,6 +216,38 @@ public sealed class KnowledgeGameplayIntegrationTest
             component.Class = WeaponClassSystem.Unarmed;
             Assert.That(classes.IsUnarmed(holder, weapon), Is.True);
 
+            var shooting = knowledge.EnsureKnowledge(store, "ShootingKnowledge", 0, popup: false);
+            var rifleSkill = knowledge.EnsureKnowledge(store, "KnowledgeWeaponsRifle", 0, popup: false);
+            Assert.Multiple(() =>
+            {
+                Assert.That(shooting, Is.Not.Null);
+                Assert.That(rifleSkill, Is.Not.Null);
+            });
+
+            var rifle = entMan.SpawnEntity("PirateKnowledgeRifle", MapCoordinates.Nullspace);
+            var rifleComponent = entMan.GetComponent<WeaponClassComponent>(rifle);
+            var riflePrototype = prototypes.Index<WeaponClassPrototype>(rifleComponent.Class);
+
+            // GunSystem.GetRecoilAngle raises the same event on the user and then on the gun.
+            // Keep both dispatches here so a broken one cannot make an AKM's skill appear inert.
+            var lowRecoil = new GetRecoilModifiersEvent { Gun = rifle, User = holder };
+            entMan.EventBus.RaiseLocalEvent(holder, lowRecoil);
+            entMan.EventBus.RaiseLocalEvent(rifle, lowRecoil);
+            var shootingCurve = entMan.GetComponent<AimSpeedKnowledgeComponent>(shooting!.Value.Owner).Curve;
+            Assert.That(lowRecoil.Modifier,
+                Is.EqualTo(1f / shootingCurve.GetCurve(0) / riflePrototype.AimSpeed.GetCurve(0)).Within(0.0001f));
+
+            shooting.Value.Comp.LearnedLevel = 100;
+            rifleSkill!.Value.Comp.LearnedLevel = 100;
+            var highRecoil = new GetRecoilModifiersEvent { Gun = rifle, User = holder };
+            entMan.EventBus.RaiseLocalEvent(holder, highRecoil);
+            entMan.EventBus.RaiseLocalEvent(rifle, highRecoil);
+            Assert.That(highRecoil.Modifier,
+                Is.EqualTo(1f / shootingCurve.GetCurve(100) / riflePrototype.AimSpeed.GetCurve(100)).Within(0.0001f));
+            Assert.That(highRecoil.Modifier, Is.LessThan(lowRecoil.Modifier),
+                "Higher general and rifle skills must reduce the recoil spread modifier.");
+
+            entMan.DeleteEntity(rifle);
             entMan.DeleteEntity(weapon);
             entMan.DeleteEntity(holder);
         });
