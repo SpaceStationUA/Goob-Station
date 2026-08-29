@@ -28,7 +28,7 @@ public sealed class RouletteSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (component.State == RouletteState.Result && component.Result > 0)
+        if (component.State == RouletteState.Result)
         {
             var color = GetResultColor(component.Result);
             args.PushMarkup(Loc.GetString("roulette-examine-result", ("number", component.Result), ("color", color)));
@@ -53,7 +53,7 @@ public sealed class RouletteSystem : EntitySystem
         args.Handled = true;
         component.CancellationTokenSource?.Cancel();
         component.CancellationTokenSource = new CancellationTokenSource();
-        component.Result = _random.Next(1, 37);
+        component.Result = _random.Next(0, 37);
         component.State = RouletteState.Rolling;
         _appearance.SetData(uid, RouletteVisuals.State, RouletteState.Rolling);
         Dirty(uid, component);
@@ -83,11 +83,21 @@ public sealed class RouletteSystem : EntitySystem
 
     private static string GetResultColor(int result)
     {
-        return result % 2 == 0 ? "#BFBFBF" : "red";
+        return result switch
+        {
+            0 => "green",
+            1 or 3 or 5 or 7 or 9 or 12 or 14 or 16 or 18 or 19 or 21 or 23 or 25 or 27 or 30 or 32 or 34 or 36 => "red",
+            _ => "#BFBFBF"
+        };
     }
 
     private string GetResultColorName(int result)
     {
-        return Loc.GetString(result % 2 == 0 ? "roulette-color-black" : "roulette-color-red");
+        return Loc.GetString(result switch
+        {
+            0 => "roulette-color-green",
+            1 or 3 or 5 or 7 or 9 or 12 or 14 or 16 or 18 or 19 or 21 or 23 or 25 or 27 or 30 or 32 or 34 or 36 => "roulette-color-red",
+            _ => "roulette-color-black"
+        });
     }
 }
