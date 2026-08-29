@@ -72,7 +72,7 @@
     - map: ["computerLayerBody"]
       state: sombertelevision
     - map: ["computerLayerScreen"]
-      state: sombertelevision-on'
+      state: sombertelevision-on
   # Pirate edit start
   - type: GenericVisualizer
     visuals:
