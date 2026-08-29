@@ -152,6 +152,7 @@ namespace Content.IntegrationTests.Tests
             "PiramideTP",     // Pirate
             "Reach",
             "Saltern",
+            "SalternTP",
             "Serpentcrest",
             "Snowball",
             "TestTeg",        // Dev map
@@ -205,7 +206,8 @@ namespace Content.IntegrationTests.Tests
               "PiramideTP", // Pirate
               "Packed",
               "Reach",
-              "Saltern",
+              //"Saltern",
+              "SalternTP", // Pirate
               "Serpentcrest",
              // "Snowball", // fuck off not in pool
 			  "Shoukou", //Pirate
