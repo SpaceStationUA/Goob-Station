@@ -4,7 +4,9 @@
   id: EngiVendInventory
   startingInventory:
     ClothingEyesGlassesMeson: 4
+    ClothingEyesGlassesEngineering: 4 # Pirate: engineering goggles - stocked in tgstation's engivend too
     ClothingEyesHudDiagnostic: 4
+    ClothingEyesGlassesWelding: 3 # Pirate: welding visor toggle - stock the new welding goggles alongside the mask
     ClothingHeadHatWelding: 6
     CrowbarYellow: 8
     Multitool: 4

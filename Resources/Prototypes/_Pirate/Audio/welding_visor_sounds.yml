@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: MIT
+
+# Pirate: welding visor - ported from tgstation's SFX_VISOR_DOWN/SFX_VISOR_UP sound_effect datums.
+- type: soundCollection
+  id: PirateWeldingVisorDown
+  files:
+  - /Audio/_Pirate/Clothing/WeldingVisor/visor_down1.ogg
+  - /Audio/_Pirate/Clothing/WeldingVisor/visor_down2.ogg
+  - /Audio/_Pirate/Clothing/WeldingVisor/visor_down3.ogg
+
+- type: soundCollection
+  id: PirateWeldingVisorUp
+  files:
+  - /Audio/_Pirate/Clothing/WeldingVisor/visor_up1.ogg
+  - /Audio/_Pirate/Clothing/WeldingVisor/visor_up2.ogg

@@ -971,10 +971,18 @@
   - type: Clothing
     sprite: Clothing/Mask/welding-gas.rsi
   - type: BreathMask
-  - type: IngestionBlocker
   - type: IdentityBlocker
   - type: FlashImmunity
   - type: EyeProtection
+  - type: WeldingVisor # Pirate: welding visor toggle
+    # Unlike the welding masks/goggles, tgstation's gas/welding visor also plays a sound on toggle
+    # (the only welding item that does) - opt back in here.
+    soundLower:
+      collection: PirateWeldingVisorDown
+    soundRaise:
+      collection: PirateWeldingVisorUp
+  # Pirate: welding visor toggle - dropped IngestionBlocker; the face shield only gates flash/eye
+  # protection (matches tgstation's gas/welding visor_vars_to_toggle), you can eat through it either way.
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Steel: 150
@@ -988,6 +996,7 @@
   - type: HideLayerClothing
     slots:
     - Snout
+    hideOnToggle: true # Pirate: welding visor toggle - only hide the snout while the visor is actually lowered
 
 # Entity tables
 - type: entityTable

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da. Equipped-EYES-arachnid and equipped-EYES-moth modified from equipped-EYES by HTMLSystem",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da; icon and inhand-left/right re-synced from current tgstation (commit https://github.com/tgstation/tgstation/commit/21ce3d66d4ceff1e547f6e2c137231c599efcf2a) as they had gone stale against a since-redesigned upstream sprite. Equipped-EYES-arachnid and equipped-EYES-moth modified from equipped-EYES by HTMLSystem",
   "size": {
     "x": 32,
     "y": 32

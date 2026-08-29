@@ -1,0 +1,56 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/21ce3d66d4ceff1e547f6e2c137231c599efcf2a (icons/obj/clothing/glasses.dmi, icons/mob/clothing/eyes.dmi, icons/mob/inhands/clothing/glasses_lefthand.dmi/glasses_righthand.dmi, states trayson-/trayson-meson/trayson-t-ray).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-xray"
+        },
+        {
+            "name": "icon-tray"
+        },
+        {
+            "name": "equipped-EYES",
+            "directions": 4
+        },
+        {
+            "name": "xray-equipped-EYES",
+            "directions": 4
+        },
+        {
+            "name": "tray-equipped-EYES",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "xray-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "tray-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "xray-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "tray-inhand-right",
+            "directions": 4
+        }
+    ]
+}
